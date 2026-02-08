@@ -11,23 +11,24 @@ import { Render, WranglerConfig, DashButton } from "~/components";
 
 ## Account plan limits
 
-| Feature                                                                         | Workers Free | Workers Paid |
-| ------------------------------------------------------------------------------- | ------------ | ------------ |
-| [Requests](#daily-requests)                                                     | 100,000/day  | No limit     |
-| [CPU time](#cpu-time)                                                           | 10 ms        | 5 min        |
-| [Memory](#memory)                                                               | 128 MB       | 128 MB       |
-| [Subrequests](#subrequests)                                                     | 50/request   | 1,000/request |
-| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6            | 6            |
-| [Environment variables](#environment-variables)                                 | 64/Worker    | 128/Worker   |
-| [Environment variable<br/>size](#environment-variables)                         | 5 KB         | 5 KB         |
-| [Worker size](#worker-size)                                                     | 3 MB         | 10 MB        |
-| [Worker startup time](#worker-startup-time)                                     | 1 second     | 1 second     |
-| [Number of Workers](#number-of-workers)<sup>1</sup>                             | 100          | 500          |
-| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5           | 250          |
-| Number of [Static Asset](#static-assets) files per Worker version               | 20,000       | 100,000      |
-| Individual [Static Asset](#static-assets) file size                             | 25 MiB       | 25 MiB       |
+| Feature                                                                          | Workers Free | Workers Paid  |
+| -------------------------------------------------------------------------------- | ------------ | ------------- |
+| [Requests](#daily-requests)                                                      | 100,000/day  | No limit      |
+| [CPU time](#cpu-time)                                                            | 10 ms        | 5 min         |
+| [Memory](#memory)                                                                | 128 MB       | 128 MB        |
+| [Subrequests](#subrequests)                                                      | 50/request   | 1,000/request |
+| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6             |
+| [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker    |
+| [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB          |
+| [Worker size](#worker-size)                                                      | 3 MB         | 10 MB         |
+| [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second      |
+| [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500           |
+| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250           |
+| Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000       |
+| Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB        |
 
-<sup>1</sup> If you reach this limit, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
+<sup>1</sup> If you reach this limit, consider using [Workers for
+Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 <Render file="limits_increase" product="workers" />
 
@@ -35,12 +36,12 @@ import { Render, WranglerConfig, DashButton } from "~/components";
 
 ## Request and response limits
 
-| Limit                | Value                  |
-| -------------------- | ---------------------- |
-| URL size             | 16 KB                  |
-| Request header size  | 128 KB (total)         |
-| Response header size | 128 KB (total)         |
-| Response body size   | No enforced limit      |
+| Limit                | Value             |
+| -------------------- | ----------------- |
+| URL size             | 16 KB             |
+| Request header size  | 128 KB (total)    |
+| Response header size | 128 KB (total)    |
+| Response body size   | No enforced limit |
 
 Request body size limits depend on your Cloudflare account plan, not your Workers plan. Requests exceeding these limits return a `413 Request entity too large` error.
 
@@ -61,16 +62,16 @@ Cloudflare does not enforce response body size limits. [CDN cache limits](/cache
 
 CPU time measures how long the CPU spends executing your Worker code. Waiting on network requests (such as `fetch()` calls, KV reads, or database queries) does **not** count toward CPU time.
 
-| Limit                    | Workers Free | Workers Paid                    |
-| ------------------------ | ------------ | ------------------------------- |
-| CPU time per HTTP request | 10 ms       | 5 min (default: 30 seconds)     |
-| CPU time per Cron Trigger | 10 ms       | 30 seconds (< 1 hour interval) <br/> 15 min (>= 1 hour interval) |
+| Limit                     | Workers Free | Workers Paid                                                     |
+| ------------------------- | ------------ | ---------------------------------------------------------------- |
+| CPU time per HTTP request | 10 ms        | 5 min (default: 30 seconds)                                      |
+| CPU time per Cron Trigger | 10 ms        | 30 seconds (< 1 hour interval) <br/> 15 min (>= 1 hour interval) |
 
 Most Workers consume very little CPU time. The average Worker uses approximately 2.2 ms per request. Heavier workloads that handle authentication, server-side rendering, or parse large payloads typically use 10-20 ms.
 
 <Render file="isolate-cpu-flexibility" product="workers" />
 
-### Error: exceeded CPU time limit {#exceeded-cpu}
+### Error: exceeded CPU time limit {/* exceeded-cpu */}
 
 When a Worker exceeds its CPU time limit, Cloudflare returns **Error 1102** to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded CPU Time Limits` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededCpu`.
 
@@ -118,7 +119,7 @@ Each [isolate](/workers/reference/how-workers-works/#isolates) can consume up to
 
 When an isolate exceeds 128 MB, the Workers runtime lets in-flight requests complete and creates a new isolate for subsequent requests. During extremely high load, the runtime may cancel some incoming requests to maintain stability.
 
-### Error: exceeded memory limit {#exceeded-memory}
+### Error: exceeded memory limit {/* exceeded-memory */}
 
 When a Worker exceeds its memory limit, Cloudflare returns **Error 1102** to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded Memory` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededMemory`.
 
@@ -145,12 +146,12 @@ To view memory errors in the dashboard:
 
 Duration measures wall-clock time from start to end of a Worker invocation. There is no hard limit on duration for HTTP-triggered Workers. As long as the client remains connected, the Worker can continue processing, making subrequests, and setting timeouts.
 
-| Trigger type                                           | Duration limit |
-| ------------------------------------------------------ | -------------- |
-| HTTP request                                           | No limit       |
-| [Cron Trigger](/workers/configuration/cron-triggers/)  | 15 min         |
-| [Durable Object Alarm](/durable-objects/api/alarms/)   | 15 min         |
-| [Queue Consumer](/queues/configuration/javascript-apis/#consumer) | 15 min |
+| Trigger type                                                      | Duration limit |
+| ----------------------------------------------------------------- | -------------- |
+| HTTP request                                                      | No limit       |
+| [Cron Trigger](/workers/configuration/cron-triggers/)             | 15 min         |
+| [Durable Object Alarm](/durable-objects/api/alarms/)              | 15 min         |
+| [Queue Consumer](/queues/configuration/javascript-apis/#consumer) | 15 min         |
 
 When the client disconnects, all tasks associated with that request are canceled. Use [`event.waitUntil()`](/workers/runtime-apis/handlers/fetch/) to delay cancellation for another 30 seconds or until the promise you pass to `waitUntil()` completes.
 
@@ -167,9 +168,9 @@ Workers scale automatically across the Cloudflare global network. There is no ge
 
 Accounts on the Workers Free plan have a daily request limit of 100,000 requests, resetting at midnight UTC. When a Worker exceeds this limit, Cloudflare returns **Error 1027**.
 
-| Route mode  | Behavior                                                              |
-| ----------- | --------------------------------------------------------------------- |
-| Fail open   | Bypasses the Worker. Requests behave as if no Worker is configured.   |
+| Route mode  | Behavior                                                                        |
+| ----------- | ------------------------------------------------------------------------------- |
+| Fail open   | Bypasses the Worker. Requests behave as if no Worker is configured.             |
 | Fail closed | Returns a Cloudflare `1027` error page. Use this for security-critical Workers. |
 
 You can configure the fail mode by toggling the corresponding [route](/workers/configuration/routing/routes/).
@@ -180,10 +181,10 @@ You can configure the fail mode by toggling the corresponding [route](/workers/c
 
 A subrequest is any request a Worker makes using the [Fetch API](/workers/runtime-apis/fetch/) or to Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
 
-| Limit                               | Workers Free   | Workers Paid    |
-| ----------------------------------- | -------------- | --------------- |
-| Subrequests per request             | 50             | 1,000           |
-| Subrequests to internal services    | 1,000          | 1,000           |
+| Limit                            | Workers Free | Workers Paid |
+| -------------------------------- | ------------ | ------------ |
+| Subrequests per request          | 50           | 1,000        |
+| Subrequests to internal services | 1,000        | 1,000        |
 
 Each subrequest in a redirect chain counts against this limit. The total number of subrequests may exceed the number of `fetch()` calls in your code.
 
@@ -238,20 +239,20 @@ The runtime measures simultaneous open connections from the top-level request. W
 
 ## Environment variables
 
-| Limit                                       | Workers Free | Workers Paid |
-| ------------------------------------------- | ------------ | ------------ |
-| Variables per Worker (secrets + text)        | 64           | 128          |
-| Variable size                               | 5 KB         | 5 KB         |
-| Variables per account                       | No limit     | No limit     |
+| Limit                                 | Workers Free | Workers Paid |
+| ------------------------------------- | ------------ | ------------ |
+| Variables per Worker (secrets + text) | 64           | 128          |
+| Variable size                         | 5 KB         | 5 KB         |
+| Variables per account                 | No limit     | No limit     |
 
 ---
 
 ## Worker size
 
-| Limit                       | Workers Free | Workers Paid |
-| --------------------------- | ------------ | ------------ |
-| After compression (gzip)    | 3 MB         | 10 MB        |
-| Before compression          | 64 MB        | 64 MB        |
+| Limit                    | Workers Free | Workers Paid |
+| ------------------------ | ------------ | ------------ |
+| After compression (gzip) | 3 MB         | 10 MB        |
+| Before compression       | 64 MB        | 64 MB        |
 
 Larger Worker bundles can impact startup time. To check your compressed bundle size:
 
@@ -274,9 +275,9 @@ To reduce Worker size:
 
 ## Worker startup time
 
-| Limit               | Value    |
-| ------------------- | -------- |
-| Startup time        | 1 second |
+| Limit        | Value    |
+| ------------ | -------- |
+| Startup time | 1 second |
 
 A Worker must parse and execute its global scope (top-level code outside of handlers) within 1 second. Larger bundles and expensive initialization code in global scope increase startup time.
 
@@ -292,9 +293,9 @@ To reduce startup time, avoid expensive work in global scope. Move initializatio
 
 ## Number of Workers
 
-| Limit              | Workers Free | Workers Paid |
-| ------------------ | ------------ | ------------ |
-| Workers per account | 100         | 500          |
+| Limit               | Workers Free | Workers Paid |
+| ------------------- | ------------ | ------------ |
+| Workers per account | 100          | 500          |
 
 If you need more than 500 Workers, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
@@ -302,14 +303,14 @@ If you need more than 500 Workers, consider using [Workers for Platforms](/cloud
 
 ## Routes and domains
 
-| Limit                                                    | Value |
-| -------------------------------------------------------- | ----- |
-| [Routes](/workers/configuration/routing/routes/) per zone | 1,000 |
-| Routes per zone ([`wrangler dev --remote`](#routes-remote-dev)) | 50 |
-| [Custom domains](/workers/configuration/routing/custom-domains/) per zone | 100 |
-| Routed zones per Worker                                  | 1,000 |
+| Limit                                                                     | Value |
+| ------------------------------------------------------------------------- | ----- |
+| [Routes](/workers/configuration/routing/routes/) per zone                 | 1,000 |
+| Routes per zone ([`wrangler dev --remote`](#routes-remote-dev))           | 50    |
+| [Custom domains](/workers/configuration/routing/custom-domains/) per zone | 100   |
+| Routed zones per Worker                                                   | 1,000 |
 
-### Routes with `wrangler dev --remote` {#routes-remote-dev}
+### Routes with `wrangler dev --remote` {/* routes-remote-dev */}
 
 When you run a [remote development](/workers/development-testing/#remote-bindings) session using the `--remote` flag, Cloudflare enforces a limit of 50 routes per zone. The Quick Editor in the Cloudflare dashboard also uses `wrangler dev --remote`, so the same limit applies.
 
@@ -321,10 +322,10 @@ If you require more than 1,000 routes or 1,000 routed zones per Worker, consider
 
 ## Cache API limits
 
-| Feature              | Workers Free | Workers Paid |
-| -------------------- | ------------ | ------------ |
-| Maximum object size  | 512 MB       | 512 MB       |
-| Calls per request    | 50           | 1,000        |
+| Feature             | Workers Free | Workers Paid |
+| ------------------- | ------------ | ------------ |
+| Maximum object size | 512 MB       | 512 MB       |
+| Calls per request   | 50           | 1,000        |
 
 Calls per request is the number of `put()`, `match()`, or `delete()` Cache API calls per request. This shares the same quota as subrequests (`fetch()`).
 
@@ -338,9 +339,9 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 ## Log size
 
-| Limit                         | Value  |
-| ----------------------------- | ------ |
-| Log data per request          | 256 KB |
+| Limit                | Value  |
+| -------------------- | ------ |
+| Log data per request | 256 KB |
 
 This limit covers all data emitted via `console.log()` statements, exceptions, request metadata, and headers for a single request. After exceeding this limit, the system does not record additional context for that request in logs, tail logs, or [Tail Workers](/workers/observability/logs/tail-workers/).
 
@@ -356,16 +357,16 @@ Refer to the [Image Resizing documentation](/images/transform-images/) for limit
 
 ## Static Assets
 
-| Limit                              | Workers Free | Workers Paid |
-| ---------------------------------- | ------------ | ------------ |
-| Files per Worker version           | 20,000       | 100,000      |
-| Individual file size               | 25 MiB       | 25 MiB       |
-| `_headers` rules                   | 100          | 100          |
-| `_headers` characters per line     | 2,000        | 2,000        |
-| `_redirects` static redirects      | 2,000        | 2,000        |
-| `_redirects` dynamic redirects     | 100          | 100          |
-| `_redirects` total                 | 2,100        | 2,100        |
-| `_redirects` characters per rule   | 1,000        | 1,000        |
+| Limit                            | Workers Free | Workers Paid |
+| -------------------------------- | ------------ | ------------ |
+| Files per Worker version         | 20,000       | 100,000      |
+| Individual file size             | 25 MiB       | 25 MiB       |
+| `_headers` rules                 | 100          | 100          |
+| `_headers` characters per line   | 2,000        | 2,000        |
+| `_redirects` static redirects    | 2,000        | 2,000        |
+| `_redirects` dynamic redirects   | 100          | 100          |
+| `_redirects` total               | 2,100        | 2,100        |
+| `_redirects` characters per rule | 1,000        | 1,000        |
 
 :::note
 To use the increased file count limits in Wrangler, you must use version 4.34.0 or higher.
@@ -383,12 +384,12 @@ If your Worker is on an Unbound plan, limits match the Workers Paid plan.
 
 If your Worker is on a Bundled plan, limits match the Workers Paid plan with these exceptions:
 
-| Feature                    | Bundled plan limit |
-| -------------------------- | ------------------ |
-| Subrequests                | 50/request         |
-| CPU time (HTTP requests)   | 50 ms              |
-| CPU time (Cron Triggers)   | 50 ms              |
-| Cache API calls/request    | 50                 |
+| Feature                  | Bundled plan limit |
+| ------------------------ | ------------------ |
+| Subrequests              | 50/request         |
+| CPU time (HTTP requests) | 50 ms              |
+| CPU time (Cron Triggers) | 50 ms              |
+| Cache API calls/request  | 50                 |
 
 Bundled plan Workers have no duration limits for [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Object Alarms](/durable-objects/api/alarms/), or [Queue Consumers](/queues/configuration/javascript-apis/#consumer).
 
