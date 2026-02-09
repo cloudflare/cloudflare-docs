@@ -25,7 +25,7 @@ const response = await sandbox.exposePort(port: number, options: ExposePortOptio
 
 **Parameters**:
 
-- `port` - Port number to expose (1024-65535)
+- `port` - Port number to expose (1024-65535, excluding 3000)
 - `options`:
   - `hostname` - Your Worker's domain name (e.g., `'example.com'`). Required to construct preview URLs with wildcard subdomains like `https://8080-sandbox-abc123token.example.com`. Cannot be a `.workers.dev` domain as it doesn't support wildcard DNS patterns.
   - `name` - Friendly name for the port (optional)
