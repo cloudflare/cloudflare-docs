@@ -74,7 +74,7 @@ type Env = {
 
 export class MyWorkflow extends WorkflowEntrypoint<Env> {
 	async run(event: WorkflowEvent<unknown>, step: WorkflowStep) {
-		const apiResponse = await step.do("initial work", async () => {
+		await step.do("initial work", async () => {
 			let resp = await fetch("https://api.cloudflare.com/client/v4/ips");
 			return await resp.json<any>();
 		});
@@ -86,7 +86,7 @@ export class MyWorkflow extends WorkflowEntrypoint<Env> {
 			{
 				retries: {
 					limit: 5,
-					delay: "5 second",
+					delay: "5 seconds",
 					backoff: "exponential",
 				},
 				timeout: "15 minutes",

@@ -46,7 +46,8 @@ class PythonWorkflowStarter(WorkflowEntrypoint):
             # does stuff
             print('executing step2')
 
-        await await_step(step_1,step_2)
+        await step_1()
+        await step_2()
 
 async def on_fetch(request, env):
     await env.MY_WORKFLOW.create()
