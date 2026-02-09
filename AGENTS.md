@@ -175,6 +175,7 @@ compatibility_date = "2024-01-01"
 
 </WranglerConfig>
 ```
+You should generally use `$today` for the compatibility_date value for new projects. This magic string is automatically replaced with the current date at build time, ensuring documentation always suggests the latest date.
 
 ### TabItem (Starlight built-in)
 
