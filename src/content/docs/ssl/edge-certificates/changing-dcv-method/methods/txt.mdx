@@ -51,6 +51,7 @@ Repeat this process for all the DCV records returned in the `validation_records`
 If one or more of the hostnames on the certificate fail to validate, the certificate will not be issued or renewed.
 
 This means that a wildcard certificate covering `example.com` and `*.example.com` will require two DCV tokens to be placed at the authoritative DNS provider. Similarly, a certificate with five hostnames in the SAN (including a wildcard) will require five DCV tokens to be placed at the authoritative DNS provider.
+Certificates with several packs (RSA and ECDSA for example) may also require several DCV tokens.
 
 ### Complete DCV
 

@@ -12,16 +12,17 @@ description: With account-level custom nameservers, you can use the same custom
   provide the nameservers names do not have to exist as zones in Cloudflare.
 ---
 
-import { Example, Render, Tabs, TabItem } from "~/components";
+import { Example, Render, Tabs, TabItem, DashButton } from "~/components";
 
 <Render
 	file="acns-tcns-intro"
+	product="dns"
 	params={{
 		one: "Account",
 		two: "A",
 		three: "account",
 		four: "zones",
-		five: "account ",
+		five: "account",
 	}}
 />
 
@@ -40,10 +41,15 @@ For this configuration to be possible, a few conditions apply:
 
 <Render
 	file="acns-tcns-conditions"
+	product="dns"
 	params={{ one: "account", two: "you", three: "You" }}
 />
 
-<Render file="acns-tcns-byoip" params={{ one: "Account", two: "account" }} />
+<Render
+	file="acns-tcns-byoip"
+	product="dns"
+	params={{ one: "Account", two: "account" }}
+/>
 
 - Choosing a set from `ns_set 1` through `ns_set 5` will influence how Cloudflare assigns nameservers to your new zones if you configure [DNS zone defaults](/dns/nameservers/nameserver-options/#dns-zone-defaults).
 
@@ -56,8 +62,11 @@ For this configuration to be possible, a few conditions apply:
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Configurations** > **DNS Settings**.
+1. In the Cloudflare dashboard, go to the account **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **DNS Settings**.
 3. For **Account custom nameservers**, select **Configure custom nameservers**.
 4. Insert a fully qualified domain name for **Nameserver name** and choose a **Nameserver set**. Follow the [configuration conditions](#configuration-conditions).
 
@@ -98,11 +107,13 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name, and these 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
-2. Go to **DNS** > **Records**.
-3. For **Custom nameservers**, select **Configure**.
-4. Select **Use your account custom nameservers** and choose a nameserver set from the list.
-5. Select **Save** to confirm.
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. For **Custom nameservers**, select **Configure**.
+3. Select **Use your account custom nameservers** and choose a nameserver set from the list.
+4. Select **Save** to confirm.
 
 </TabItem>
 <TabItem label="API">
@@ -116,7 +127,7 @@ Use the endpoint [Update DNS Settings for a Zone](/api/resources/dns/subresource
 
 - If your domain uses [Cloudflare Registrar](/registrar/), [contact Cloudflare Support](/support/contacting-cloudflare-support/) to update your nameservers.
 - If your domain uses a different registrar, update the nameservers at your registrar to use the account custom nameservers.
-- If your zone is delegated to a parent zone, update the corresponding `NS` record at the parent zone.
+- If your zone is delegated, update the corresponding `NS` record at the parent zone.
 
 ### 3. (Optional) Make ACNS default for new zones
 
@@ -125,8 +136,11 @@ To make ACNS the default option for all new zones added to your account from now
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Configurations**.
+1. In the Cloudflare dashboard, go to the account **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **DNS Settings**.
 3. For **DNS zone defaults**, select **Configure defaults**.
 4. Change the **Nameserver assignment method** to **Account custom nameservers**.
 
@@ -176,8 +190,11 @@ Following the [configuration conditions](#configuration-conditions), each set mu
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Configurations** > **DNS Settings**.
+1. In the Cloudflare dashboard, go to the account **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **DNS Settings**.
 3. For **Account custom nameservers**, select **Delete** next to the ACNS name.
 
 </TabItem>

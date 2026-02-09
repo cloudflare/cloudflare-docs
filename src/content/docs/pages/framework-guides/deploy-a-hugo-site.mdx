@@ -1,11 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Hugo
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import { PagesBuildPreset, Render, TabItem, Tabs } from "~/components";
@@ -99,9 +94,11 @@ Inside of `hello-world.md`, add some initial content to create your post. Remove
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Hugo" }} />
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <PagesBuildPreset framework="hugo" />
+
+While `public` is the default build directory for Hugo sites, this setting can be configured with the [`publishDir` setting](https://gohugo.io/configuration/all/#publishdir).
 
 :::note[Base URL configuration]
 
@@ -138,4 +135,8 @@ If you plan to use [preview deployments](/pages/configuration/preview-deployment
 
 :::
 
-<Render file="framework-guides/learn-more" params={{ one: "Hugo" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Hugo" }}
+/>

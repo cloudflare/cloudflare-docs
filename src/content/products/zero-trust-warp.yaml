@@ -3,7 +3,7 @@ name: Zero Trust WARP Client
 product:
   title: Zero Trust WARP Client
   group: Cloudflare One
-  url: /cloudflare-one/connections/connect-devices/warp/
+  url: /cloudflare-one/team-and-resources/devices/warp/
   wrap: true
 
 meta:

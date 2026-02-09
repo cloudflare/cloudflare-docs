@@ -3,6 +3,92 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2026-01-28"
+    title: Black Forest Labs FLUX.2 [klein] 9B now available
+    description: |-
+      - [`@cf/black-forest-labs/flux-2-klein-9b`](/workers-ai/models/flux-2-klein-9b/) now available on Workers AI! Read [changelog](/changelog/2026-01-28-flux-2-klein-9b-workers-ai/) to get started
+  - publish_date: "2026-01-15"
+    title: Black Forest Labs FLUX.2 [klein] 4b now available
+    description: |-
+      - [`@cf/black-forest-labs/flux-2-klein-4b`](/workers-ai/models/flux-2-klein-4b/) now available on Workers AI! Read [changelog](/changelog/2026-01-15-flux-2-klein-4b-workers-ai/) to get started
+  - publish_date: "2025-12-03"
+    title: Deepgram Flux promotional period over on Dec 8, 2025 - now has pricing
+    description: |-
+      - Check out updated pricing on the [`@cf/deepgram/flux`](/workers-ai/models/flux/) model page or [pricing](/workers-ai/platform/pricing/) page
+      - Pricing will start Dec 8, 2025
+  - publish_date: "2025-11-25"
+    title: Black Forest Labs FLUX.2 dev now available
+    description: |-
+      - [`@cf/black-forest-labs/flux-2-dev`](/workers-ai/models/flux-2-dev/) now available on Workers AI! Read [changelog](/changelog/2025-11-25-flux-2-dev-workers-ai/) to get started
+  - publish_date: "2025-11-13"
+    title: Qwen3 LLM and Embeddings available on Workers AI
+    description: |-
+      - [`@cf/qwen/qwen3-30b-a3b-fp8`](/workers-ai/models/qwen3-30b-a3b-fp8/) and [`@cf/qwen/qwen3-embedding-0.6b`](/workers-ai/models/qwen3-embedding-0.6b) now available on Workers AI
+  - publish_date: "2025-10-21"
+    title: New voice and LLM models on Workers AI
+    description: |-
+      - Deepgram Aura 2 brings new text-to-speech capabilities to Workers AI. Check out [`@cf/deepgram/aura-2-en`](/workers-ai/models/aura-2-en/) and [`@cf/deepgram/aura-2-es`](/workers-ai/models/aura-2-es/) on how to use the new models.
+      - IBM Granite model is also up! This new LLM model is small but mighty, take a look at the docs for more [`@cf/ibm-granite/granite-4.0-h-micro`](/workers-ai/models/granite-4.0-h-micro/)
+  - publish_date: "2025-10-02"
+    title: Deepgram Flux now available on Workers AI
+    description: |-
+      - We're excited to be a launch partner with Deepgram and offer their new Speech Recognition model built specifically for enabling voice agents. Check out [Deepgram's blog](https://deepgram.com/flux) for more details on the release.
+      - Access the model through [`@cf/deepgram/flux`](/workers-ai/models/flux/) and check out the [changelog](/changelog/2025-10-02-deepgram-flux/) for in-depth examples.
+  - publish_date: "2025-09-24"
+    title: New local models available on Workers AI
+    description: |-
+      - We've added support for some regional models on Workers AI in support of uplifting local AI labs and AI sovereignty. Check out the [full blog post here](https://blog.cloudflare.com/sovereign-ai-and-choice).
+      - [`@cf/pfnet/plamo-embedding-1b`](/workers-ai/models/plamo-embedding-1b) creates embeddings from Japanese text.
+      - [`@cf/aisingapore/gemma-sea-lion-v4-27b-it`](/workers-ai/models/gemma-sea-lion-v4-27b-it) is a fine-tuned model that supports multiple South East Asian languages, including Burmese, English, Indonesian, Khmer, Lao, Malay, Mandarin, Tagalog, Tamil, Thai, and Vietnamese.
+      - [`@cf/ai4bharat/indictrans2-en-indic-1B`](/workers-ai/models/indictrans2-en-indic-1B) is a translation model that can translate between 22 indic languages, including Bengali, Gujarati, Hindi, Tamil, Sanskrit and even traditionally low-resourced languages like Kashmiri, Manipuri and Sindhi.
+  - publish_date: "2025-09-23"
+    title: "New document formats supported by Markdown conversion utility"
+    description: |-
+      - Our [Markdown conversion utility](/workers-ai/features/markdown-conversion/) now supports converting `.docx` and `.odt` files.
+  - publish_date: "2025-09-18"
+    title: Model Catalog updates (types, EmbeddingGemma, model deprecation)
+    description: |-
+      - Workers AI types got updated in the upcoming wrangler release, please use `npm i -D wrangler@latest` to update your packages.
+      - EmbeddingGemma model accuracy has been improved, we recommend re-indexing data to take advantage of the improved accuracy
+      - Some older Workers AI models are being deprecated on October 1st, 2025. We reccommend you use the newer models such as [Llama 4](/workers-ai/models/llama-4-scout-17b-16e-instruct/) and [gpt-oss](/workers-ai/models/gpt-oss-120b/). The following models are being deprecated:
+        - @hf/thebloke/zephyr-7b-beta-awq
+        - @hf/thebloke/mistral-7b-instruct-v0.1-awq
+        - @hf/thebloke/llama-2-13b-chat-awq
+        - @hf/thebloke/openhermes-2.5-mistral-7b-awq
+        - @hf/thebloke/neural-chat-7b-v3-1-awq
+        - @hf/thebloke/llamaguard-7b-awq
+        - @hf/thebloke/deepseek-coder-6.7b-base-awq
+        - @hf/thebloke/deepseek-coder-6.7b-instruct-awq
+        - @cf/deepseek-ai/deepseek-math-7b-instruct
+        - @cf/openchat/openchat-3.5-0106
+        - @cf/tiiuae/falcon-7b-instruct
+        - @cf/thebloke/discolm-german-7b-v1-awq
+        - @cf/qwen/qwen1.5-0.5b-chat
+        - @cf/qwen/qwen1.5-7b-chat-awq
+        - @cf/qwen/qwen1.5-14b-chat-awq
+        - @cf/tinyllama/tinyllama-1.1b-chat-v1.0
+        - @cf/qwen/qwen1.5-1.8b-chat
+        - @hf/nexusflow/starling-lm-7b-beta
+        - @cf/fblgit/una-cybertron-7b-v2-bf16
+  - publish_date: "2025-09-05"
+    title: Introducing EmbeddingGemma from Google
+    description: |-
+      - We’re excited to be a launch partner alongside Google to bring their newest embedding model to Workers AI. We're excited to introduce EmbeddingGemma delivers best-in-class performance for its size, enabling RAG and semantic search use cases. Take a look at [`@cf/google/embeddinggemma-300m`](/workers-ai/models/embeddinggemma-300m) for more details. Now available to use for embedding in AI Search too.
+  - publish_date: "2025-08-27"
+    title: Introducing Partner models to the Workers AI catalog
+    description: |-
+      - Read the [blog](https://blog.cloudflare.com/workers-ai-partner-models) for more details
+      - [`@cf/deepgram/aura-1`](/workers-ai/models/aura-1) is a text-to-speech model that allows you to input text and have it come to life in a customizable voice
+      - [`@cf/deepgram/nova-3`](/workers-ai/models/nova-3) is speech-to-text model that transcribes multilingual audio at a blazingly fast speed
+      - [`@cf/pipecat-ai/smart-turn-v2`](/workers-ai/models/smart-turn-v2) helps you detect when someone is done speaking
+      - [`@cf/leonardo/lucid-origin`](/workers-ai/models/lucid-origin) is a text-to-image model that generates images with sharp graphic design, stunning full-HD renders, or highly specific creative direction
+      - [`@cf/leonardo/phoenix-1.0`](/workers-ai/models/phoenix-1.0) is a text-to-image model with exceptional prompt adherence and coherent text
+      - WebSocket support added for audio models like `@cf/deepgram/aura-1`, `@cf/deepgram/nova-3`, `@cf/pipecat-ai/smart-turn-v2`
+  - publish_date: "2025-08-05"
+    title: Adding gpt-oss models to our catalog
+    description: |-
+      - Check out the [blog](https://blog.cloudflare.com/openai-gpt-oss-on-workers-ai) for more details about the new models
+      - Take a look at the [`gpt-oss-120b`](/workers-ai/models/gpt-oss-120b) and [`gpt-oss-20b`](/workers-ai/models/gpt-oss-20b) model pages for more information about schemas, pricing, and context windows
   - publish_date: "2025-04-09"
     title: Pricing correction for @cf/myshell-ai/melotts
     description: |-
@@ -34,11 +120,6 @@ entries:
     title: Meta Llama 3.1 now available on Workers AI
     description: |-
       Workers AI now suppoorts [Meta Llama 3.1](/workers-ai/models/llama-3.1-8b-instruct/).
-
-  - publish_date: "2024-07-11"
-    title: New community-contributed tutorial
-    description: |-
-      - Added community contributed tutorial on how to [create APIs to recommend products on e-commerce sites using Workers AI and Stripe](/developer-spotlight/tutorials/creating-a-recommendation-api/).
 
   - publish_date: "2024-06-27"
     title: Introducing embedded function calling

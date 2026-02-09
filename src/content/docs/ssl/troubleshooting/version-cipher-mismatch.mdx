@@ -10,7 +10,9 @@ description: Learn how to troubleshoot ERR_SSL_VERSION_OR_CIPHER_MISMATCH when
   using Cloudflare SSL/TLS.
 ---
 
-import { Render } from "~/components";
+import { Stream, Render } from "~/components";
+
+<Stream id="03e51d8a6f9a15e16969b8cc117d9225" title="ERR_SSL_VERSION_OR_CIPHER_MISMATCH" thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Mermaid%20thumbnail_Cipher.png" />
 
 After you [add a new domain](/fundamentals/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display one of the following errors:
 
@@ -51,7 +53,7 @@ If your visitors experience `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome) or `SS
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Choose your account and domain.
-3. Go to **SSL** > **Edge Certificates**.
+3. Go to the [**Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) page.
 4. Find the certificate with the **Type** of **Universal**.
 5. Make sure the **Status** is **Active**.
 

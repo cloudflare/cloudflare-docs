@@ -22,6 +22,10 @@
         {
             "property_id": "info",
             "value": "https://huggingface.co/TheBloke/Llama-2-13B-chat-AWQ"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2025-10-01"
         }
     ],
     "schema": {

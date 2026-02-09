@@ -3,7 +3,7 @@ name: Access
 product:
   title: Access
   group: Cloudflare One
-  url: /cloudflare-one/policies/access/
+  url: /cloudflare-one/access-controls/policies/
 
 meta:
   title: Cloudflare Access docs

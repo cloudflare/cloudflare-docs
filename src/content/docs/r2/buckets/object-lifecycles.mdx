@@ -3,6 +3,8 @@ title: Object lifecycles
 pcx_content_type: how-to
 ---
 
+import { DashButton } from "~/components";
+
 Object lifecycles determine the retention period of objects uploaded to your bucket and allow you to specify when objects should transition from Standard storage to Infrequent Access storage.
 
 A lifecycle configuration is a collection of lifecycle rules that define actions to apply to objects during their lifetime.
@@ -27,7 +29,9 @@ When you create an object lifecycle rule, you can specify which prefix you would
 
 ### Dashboard
 
-1. From the Cloudflare dashboard, select **R2**.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Locate and select your bucket from the list.
 3. From the bucket page, select **Settings**.
 4. Under **Object Lifecycle Rules**, select **Add rule**.
@@ -176,7 +180,9 @@ console.log(
 
 ### Dashboard
 
-1. From the Cloudflare dashboard, select **R2**.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Locate and select your bucket from the list.
 3. From the bucket page, select **Settings**.
 4. Under **Object lifecycle rules**, select the rules you would like to delete.

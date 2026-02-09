@@ -2,10 +2,10 @@
 pcx_content_type: get-started
 title: Getting started
 sidebar:
-  order: 1
+  order: 2
 ---
 
-import { WranglerConfig, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this guide, you will deploy a Worker that can make requests to one or more Containers in response to end-user requests.
 In this example, each container runs a small webserver written in Go.
@@ -17,10 +17,9 @@ This example Worker should give you a sense for simple Container use, and provid
 ### Ensure Docker is running locally
 
 In this guide, we will build and push a container image alongside your Worker code. By default, this process uses
-[Docker](https://www.docker.com/) to do so. You must have Docker running locally when you run `wrangler deploy`. For most people, the best way to install Docker is to follow the [docs for installing Docker Desktop](https://docs.docker.com/desktop/).
+[Docker](https://www.docker.com/) to do so.
 
-You can check that Docker is running properly by running the `docker info` command in your terminal. If Docker is running, the command will succeed. If Docker is not running,
-the `docker info` command will hang or return an error including the message "Cannot connect to the Docker daemon".
+<Render product="containers" file="docker-setup" />
 
 {/* FUTURE CHANGE: Add some image you can use if you don't have Docker running. */}
 {/* FUTURE CHANGE: Link to docs on alternative build/push options */}
@@ -29,9 +28,11 @@ the `docker info` command will hang or return an error including the message "Ca
 
 Run the following command to create and deploy a new Worker with a container, from the starter template:
 
-```sh
-npm create cloudflare@latest -- --template=cloudflare/templates/containers-template
-```
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"--template=cloudflare/templates/containers-template"}
+/>
 
 When you want to deploy a code change to either the Worker or Container code, you can run the following command using [Wrangler CLI](/workers/wrangler/):
 
@@ -40,7 +41,7 @@ When you want to deploy a code change to either the Worker or Container code, yo
 When you run `wrangler deploy`, the following things happen:
 
 - Wrangler builds your container image using Docker.
-- Wrangler pushes your image to a [Container Image Registry](/containers/image-management/) that is automatically
+- Wrangler pushes your image to a [Container Image Registry](/containers/platform-details/image-management/) that is automatically
   integrated with your Cloudflare account.
 - Wrangler deploys your Worker, and configures Cloudflare's network to be ready to spawn instances of your container
 
@@ -67,7 +68,7 @@ And see images deployed to the Cloudflare Registry with the following command:
 
 Now, open the URL for your Worker. It should look something like `https://hello-containers.YOUR_ACCOUNT_NAME.workers.dev`.
 
-If you make requests to the paths `/container/1` or `/container/2`, these requests are routed to specific containers.
+If you make requests to the paths `/container/1` or `/container/2`, your Worker routes requests to specific containers.
 Each different path after "/container/" routes to a unique container.
 
 If you make requests to `/lb`, you will load balanace requests to one of 3 containers chosen at random.
@@ -106,19 +107,32 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the
 
 <WranglerConfig>
 
-```toml
-[[containers]]
-max_instances = 10
-class_name = "MyContainer"
-image = "./Dockerfile"
-
-[[durable_objects.bindings]]
-name = "MY_CONTAINER"
-class_name = "MyContainer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyContainer"]
+```jsonc
+{
+	"containers": [
+		{
+			"max_instances": 10,
+			"class_name": "MyContainer",
+			"image": "./Dockerfile"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_CONTAINER",
+				"class_name": "MyContainer"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"MyContainer"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

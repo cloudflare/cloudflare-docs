@@ -1,12 +1,10 @@
 ---
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
-title: Additional reference
+title: Additional reference for Page Rules
 sidebar:
   order: 4
-head:
-  - tag: title
-    content: Additional reference | Page Rules
+  label: Additional reference
 ---
 
 import { Render } from "~/components";
@@ -28,11 +26,7 @@ Limitations include:
 - 12 wildcards per cookie regex
 - 1 wildcard in between each `|` in the cookie regex
 
-To learn how to configure **Bypass Cache on Cookie** with a variety of platforms, review these articles:
-
-- [Caching Static HTML with WordPress/WooCommerce](/support/third-party-software/content-management-system-cms/caching-static-html-with-wordpresswoocommerce/)
-- [Caching Static HTML with Magento (Business and Enterprise only)](/support/third-party-software/e-commerce/caching-static-html-with-magento-business-and-enterprise-only/)
-- [Customize cache](/cache/concepts/customize-cache/)
+To learn how to configure **Bypass Cache on Cookie** with a cache rule, refer to [Bypass Cache on Cookie](/cache/how-to/cache-rules/examples/bypass-cache-on-cookie/).
 
 :::note
 
@@ -58,7 +52,7 @@ If you specify a port in the **If the URL matches** field of a page rule, it mus
 
 ## Using Page Rules with Workers
 
-If the URL of the current request matches both a page rule and a [Workers custom route](/workers/configuration/routing/routes/), some Pages Rules settings will not be applied. For more details, refer to [Workers and Page Rules](/workers/configuration/workers-with-page-rules/).
+If the URL of the current request matches both a page rule and a [Workers custom route](/workers/configuration/routing/routes/), some Pages Rules settings will not be applied. For more details, refer to [Page Rules](/workers/configuration/workers-with-page-rules/).
 
 ## Page Rules are case-insensitive
 

@@ -2,14 +2,12 @@
 {}
 ---
 
-import { TabItem, Tabs, LinkButton } from "~/components";
+import { TabItem, Tabs, DashButton } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> 
 <TabItem label="Dashboard">
 
-<LinkButton href="https://dash.cloudflare.com/?to=/:account/ai/ai-gateway#create">
-	Create a Gateway
-</LinkButton>
+<DashButton url="/?to=/:account/ai/ai-gateway" />
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **AI** > **AI Gateway**.

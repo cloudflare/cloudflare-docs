@@ -1,11 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Astro
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import {
@@ -61,17 +56,13 @@ npm run astro add cloudflare
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Astro" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "Astro" }} />
 
 ### Deploy via the Cloudflare dashboard
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Astro" }} />
-
-<div>
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <PagesBuildPreset framework="astro" />
-
-</div>
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
@@ -157,4 +148,8 @@ const value = await myKV.get("key");
 
 To learn more about the Astro Cloudflare runtime, refer to the [Access to the Cloudflare runtime](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#access-to-the-cloudflare-runtime) in the Astro documentation.
 
-<Render file="framework-guides/learn-more" params={{ one: "Astro" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Astro" }}
+/>

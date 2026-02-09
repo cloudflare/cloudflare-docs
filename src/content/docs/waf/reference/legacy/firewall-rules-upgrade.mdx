@@ -36,8 +36,6 @@ In WAF custom rules you can [customize the response of the _Block_ action](/waf/
 
 The default block response is a Cloudflare standard HTML page. If you need to send a custom response for _Block_ actions, configure the custom rule to return a fixed response with a custom response code (403, by default) and a custom body (HTML, JSON, XML, or plain text).
 
-To define a custom response for a single rule, go to **Security** > **WAF** > [**Custom rules**](https://dash.cloudflare.com/?to=/:account/:zone/security/waf/custom-rules), edit the custom rule, and fill in the block-related options.
-
 :::note
 Custom block response configurations are not returned by the Firewall Rules API. You must use the [Rulesets API](/waf/custom-rules/create-api/#example-b) to manage this new feature.
 :::

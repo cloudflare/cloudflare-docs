@@ -3,11 +3,6 @@ pcx_content_type: how-to
 title: Hono
 tags:
   - Hono
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import {
@@ -52,7 +47,7 @@ You should be able to review your generated web application at `http://localhost
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Hono" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "Hono" }} />
 
 ### Deploy via the Cloudflare dashboard
 
@@ -88,7 +83,7 @@ For more tutorials involving Hono and Cloudflare Pages, refer to the following r
 <ResourcesBySelector
 	tags={["Hono"]}
 	types={["tutorial"]}
-	products={["Pages"]}
+	products={["pages"]}
 />
 
 ### Demo apps

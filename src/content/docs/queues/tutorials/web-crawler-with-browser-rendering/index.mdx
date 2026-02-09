@@ -4,10 +4,7 @@ difficulty: Intermediate
 title: Build a web crawler with Queues and Browser Rendering
 summary: Example of how to use Queues and Browser Rendering to power a web crawler.
 pcx_content_type: tutorial
-products:
-  - Workers
-  - Browser Rendering
-  - KV
+products: [workers, queues, browser-rendering]
 tags:
   - TypeScript
 sidebar:
@@ -20,7 +17,7 @@ description: Example of how to use Queues and Browser Rendering to power a web c
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
-This tutorial explains how to build and deploy a web crawler with Queues, [Browser Rendering](/browser-rendering/), and [Puppeteer](/browser-rendering/platform/puppeteer/).
+This tutorial explains how to build and deploy a web crawler with Queues, [Browser Rendering](/browser-rendering/), and [Puppeteer](/browser-rendering/puppeteer/).
 
 Puppeteer is a high-level library used to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to `cloudflare.com` and take a screenshot of the site, saving results to [Workers KV](/kv/).
 
@@ -94,11 +91,19 @@ Then, in your Wrangler file, add the following with the values generated in the 
 
 <WranglerConfig>
 
-```toml
-kv_namespaces = [
-  { binding = "CRAWLER_SCREENSHOTS_KV", id = "<GENERATED_NAMESPACE_ID>" },
-  { binding = "CRAWLER_LINKS_KV", id = "<GENERATED_NAMESPACE_ID>" }
-]
+```jsonc
+{
+	"kv_namespaces": [
+		{
+			"binding": "CRAWLER_SCREENSHOTS_KV",
+			"id": "<GENERATED_NAMESPACE_ID>"
+		},
+		{
+			"binding": "CRAWLER_LINKS_KV",
+			"id": "<GENERATED_NAMESPACE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -107,7 +112,7 @@ kv_namespaces = [
 
 Now, you need to set up your Worker for Browser Rendering.
 
-In your current directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
+In your current directory, install Cloudflare's [fork of Puppeteer](/browser-rendering/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
@@ -117,8 +122,12 @@ Then, add a Browser Rendering binding. Adding a Browser Rendering binding gives 
 
 <WranglerConfig>
 
-```toml
-browser = { binding = "CRAWLER_BROWSER" }
+```jsonc
+{
+	"browser": {
+		"binding": "CRAWLER_BROWSER"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -138,20 +147,29 @@ Creating queue queues-web-crawler.
 Created queue queues-web-crawler.
 ```
 
-### Add Queue bindings to wrangler.toml
+### Add Queue bindings to Wrangler configuration
 
 Then, in your Wrangler file, add the following:
 
 <WranglerConfig>
 
-```toml
-[[queues.consumers]]
-queue = "queues-web-crawler"
-max_batch_timeout = 60
-
-[[queues.producers]]
-queue = "queues-web-crawler"
-binding = "CRAWLER_QUEUE"
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				"queue": "queues-web-crawler",
+				"max_batch_timeout": 60
+			}
+		],
+		"producers": [
+			{
+				"queue": "queues-web-crawler",
+				"binding": "CRAWLER_QUEUE"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -162,40 +180,56 @@ Your final Wrangler file should look similar to the one below.
 
 <WranglerConfig>
 
-```toml
-#:schema node_modules/wrangler/config-schema.json
-name = "web-crawler"
-main = "src/index.ts"
-compatibility_date = "2024-07-25"
-compatibility_flags = ["nodejs_compat"]
-
-kv_namespaces = [
-  { binding = "CRAWLER_SCREENSHOTS_KV", id = "<GENERATED_NAMESPACE_ID>" },
-  { binding = "CRAWLER_LINKS_KV", id = "<GENERATED_NAMESPACE_ID>" }
-]
-
-browser = { binding = "CRAWLER_BROWSER" }
-
-[[queues.consumers]]
-queue = "queues-web-crawler"
-max_batch_timeout = 60
-
-[[queues.producers]]
-queue = "queues-web-crawler"
-binding = "CRAWLER_QUEUE"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "web-crawler",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"kv_namespaces": [
+		{
+			"binding": "CRAWLER_SCREENSHOTS_KV",
+			"id": "<GENERATED_NAMESPACE_ID>"
+		},
+		{
+			"binding": "CRAWLER_LINKS_KV",
+			"id": "<GENERATED_NAMESPACE_ID>"
+		}
+	],
+	"browser": {
+		"binding": "CRAWLER_BROWSER"
+	},
+	"queues": {
+		"consumers": [
+			{
+				"queue": "queues-web-crawler",
+				"max_batch_timeout": 60
+			}
+		],
+		"producers": [
+			{
+				"queue": "queues-web-crawler",
+				"binding": "CRAWLER_QUEUE"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
 
 ## 5. Add bindings to environment
 
-Add the bindings to the environment interface in `src/index.ts`, so TypeScript correctly types the bindings. Type the queue as `Queue<any>`. The following step will show you how to change this type.
+Add the bindings to the environment interface in `src/index.ts`, so TypeScript correctly types the bindings. The queue is typed as `Queue<Message>`, where `Message` is defined in the following step.
 
 ```ts
-import { BrowserWorker } from "@cloudflare/puppeteer";
+import type { BrowserWorker } from "@cloudflare/puppeteer";
 
 export interface Env {
-	CRAWLER_QUEUE: Queue<any>;
+	CRAWLER_QUEUE: Queue<Message>;
 	CRAWLER_SCREENSHOTS_KV: KVNamespace;
 	CRAWLER_LINKS_KV: KVNamespace;
 	CRAWLER_BROWSER: BrowserWorker;
@@ -217,7 +251,7 @@ export interface Env {
 }
 
 export default {
-	async fetch(req, env): Promise<Response> {
+	async fetch(req, env, ctx): Promise<Response> {
 		await env.CRAWLER_QUEUE.send({ url: await req.text() });
 		return new Response("Success!");
 	},
@@ -234,7 +268,7 @@ Add a `queue()` handler to the Worker to process the links you send.
 import puppeteer from "@cloudflare/puppeteer";
 import robotsParser from "robots-parser";
 
-async queue(batch: MessageBatch<Message>, env: Env): Promise<void> {
+async queue(batch, env, ctx): Promise<void> {
   let browser: puppeteer.Browser | null = null;
   try {
     browser = await puppeteer.launch(env.CRAWLER_BROWSER);
@@ -424,12 +458,12 @@ type KeyMetadata = {
 };
 
 export default {
-	async fetch(req: Request, env: Env): Promise<Response> {
+	async fetch(req, env, ctx): Promise<Response> {
 		// util endpoint for testing purposes
 		await env.CRAWLER_QUEUE.send({ url: await req.text() });
 		return new Response("Success!");
 	},
-	async queue(batch: MessageBatch<Message>, env: Env): Promise<void> {
+	async queue(batch, env, ctx): Promise<void> {
 		const crawlPage = async (url: string): Promise<Result> => {
 			const page = await (browser as puppeteer.Browser).newPage();
 
@@ -537,7 +571,7 @@ export default {
 
 		await browser.close();
 	},
-};
+} satisfies ExportedHandler<Env, Message>;
 ```
 
 ## 8. Deploy your Worker

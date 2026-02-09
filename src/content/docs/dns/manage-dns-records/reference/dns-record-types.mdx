@@ -28,7 +28,7 @@ At least one **IP address resolution** record is required for each domain on Clo
 These records include the following fields:
 
 - **Name**: A subdomain or the zone apex (`@`), which must:
-  - Be 63 characters or less
+  - Be composed of labels of 63 characters or less (`label1.label2.label3`), where the fully qualified domain name (`label1.label2.label3.example.com`) does not exceed 255 characters.
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
 - **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
@@ -103,7 +103,7 @@ When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/c
 These records include the following fields:
 
 - **Name**: A subdomain or the zone apex (`@`), which must:
-  - Be 63 characters or less
+  - Be composed of labels of 63 characters or less (`label1.label2.label3`), where the fully qualified domain name (`label1.label2.label3.example.com`) does not exceed 255 characters.
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
 - **Target**: The hostname where traffic should be directed (`example.com`).
@@ -125,7 +125,7 @@ DNS management for **example.com**:
 
 | Type  | Name | Content                | Proxy status |
 | ----- | ---- | ---------------------- | ------------ |
-| CNAME | abc  | `target.external.test` | DNS Only     |
+| CNAME | abc  | `target.external.test` | Proxied     |
 
 </Example>
 
@@ -144,6 +144,8 @@ In this example, a query for TXT in `abc.example.com` will **not** return the TX
 </Details>
 
 - Cloudflare uses a process called CNAME flattening to deliver better performance. This process supports a few features and can interact with [different setups that depend on CNAME records](/dns/cname-flattening/#aspects-to-keep-in-mind). Refer to the [CNAME flattening section](/dns/cname-flattening/) to learn more about this.
+
+- If you encounter a CNAME record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration. Refer to [proxying limitations](/dns/proxy-status/limitations/#proxy-eligibility) for details.
 
 :::note
 Specific CNAME record values with traffic proxied through Cloudflare will enable Orange-to-Orange (O2O) routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.
@@ -250,7 +252,7 @@ As the content of TXT records consist of one or more text strings delimited by d
 
 At Cloudflare, TXT records are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or a [Cloudflare for SaaS domain](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
 
-You could also use TXT to create email authentication records, but we recommend that you use our [Email Security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
+You could also use TXT to create email authentication records, but we recommend that you use our [Email security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 
 <Render file="api-field-definitions" product="dns" />
 
@@ -332,7 +334,7 @@ A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns
 
 Service Binding (SVCB) and HTTPS Service (HTTPS) records allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
 
-If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/) and [proxied DNS records](/dns/proxy-status/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
+If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), [proxied DNS records](/dns/proxy-status/), and is also using [Universal SSL](/ssl/edge-certificates/universal-ssl/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
 
 For more details and context, refer to the [announcement blog post](https://blog.cloudflare.com/speeding-up-https-and-http-3-negotiation-with-dns/) and [RFC 9460](https://www.rfc-editor.org/rfc/rfc9460.html).
 
@@ -355,7 +357,7 @@ If you are using Cloudflare for your [authoritative DNS](/dns/zone-setups/full-s
 With Enterprise accounts, you also have the option to change the SOA record values that Cloudflare will use:
 
 - As a DNS zone default: Define the SOA record values that Cloudflare will use for all new zones added to your account. Refer to [Configure DNS zone defaults](/dns/additional-options/dns-zone-defaults/) for step-by-step guidance.
-- For existing zones: Override the defaults or Cloudflare-generated values by going to **DNS** > **Records** > **DNS record options**.
+- For existing zones: Override the defaults or Cloudflare-generated values under **DNS record options** on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page.
 
 :::note
 If you are an Enterprise customer and these options are not displayed on your Cloudflare dashboard, reach out to your account team.
@@ -417,8 +419,11 @@ You only need to add NS records to your DNS records table in Cloudflare when you
 <Render file="api-field-definitions" product="dns" />
 
 :::note
-Your assigned Cloudflare nameservers, custom nameservers, and their corresponding [nameserver TTLs](/dns/nameservers/nameserver-options/#nameserver-ttl) are controlled via dedicated sections in [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records). For details, refer to [Nameservers](/dns/nameservers/).
+Your assigned Cloudflare nameservers, custom nameservers, and their corresponding [nameserver TTLs](/dns/nameservers/nameserver-options/#nameserver-ttl) are controlled via dedicated sections on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page. For details, refer to [Nameservers](/dns/nameservers/).
 :::
+
+#### Limits
+<Render file="ns-delegation-name-limit" product="dns" />
 
 ### DS and DNSKEY
 

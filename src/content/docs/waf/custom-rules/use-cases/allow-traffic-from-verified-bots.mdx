@@ -6,7 +6,7 @@ head:
     content: Allow traffic from search engine bots and other verified bots
 ---
 
-This example custom rule challenges requests from a list of countries, but allows traffic from search engine bots — such as Googlebot and Bingbot — and from other [verified bots](/bots/concepts/bot/#verified-bots).
+This example custom rule challenges requests from a list of countries, but allows traffic from search engine bots — such as Googlebot and Bingbot — and from other [verified bots](/bots/concepts/bot/verified-bots/).
 
 The rule expression uses the [`cf.client.bot`](/ruleset-engine/rules-language/fields/reference/cf.client.bot/) field to determine if the request originated from a known good bot or crawler.
 

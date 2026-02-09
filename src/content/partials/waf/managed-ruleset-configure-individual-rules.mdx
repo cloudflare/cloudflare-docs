@@ -1,0 +1,39 @@
+---
+params:
+  - rulesetName?
+---
+
+import { Steps } from "~/components";
+import { Image } from "astro:assets";
+
+import cloudflareManagedRulesetImg from "~/assets/images/waf/managed-rulesets/tags-config-cloudflare-managed-ruleset.png";
+import owaspCoreRulesetImg from "~/assets/images/waf/managed-rulesets/tags-config-owasp-core-ruleset.png";
+import sddRulesetImg from "~/assets/images/waf/managed-rulesets/tags-config-sdd-ruleset.png";
+
+<Steps>
+
+{/* prettier-ignore-start */}
+
+5. Search for rules using the available filters.
+
+6. In the results list, change the values for each rule as desired, using the displayed drop-down lists and toggles. For example, change the status of a rule using the **Status** toggle next to the rule.
+
+   To configure multiple rules with the same value, select the checkboxes for all the rules you want to configure. If not all the rules are displayed in the current page, you can extend your selection to all rules across all pages by selecting **Select all \<NUMBER> rules**. Then, use the buttons displayed in the top right corner of the table — for example, **Set status** — to update one or more fields for the selected rules.
+
+   { (props.rulesetName == "" || props.rulesetName == "Cloudflare Managed Ruleset") && (
+     <Image src={cloudflareManagedRulesetImg} alt="The Configure deployment page displaying selected rules in the Cloudflare Managed Ruleset." />
+   ) }
+
+   { props.rulesetName == "Cloudflare OWASP Core Ruleset" && (
+     <Image src={owaspCoreRulesetImg} alt="The Configure deployment page displaying selected rules in the Cloudflare OWASP Core Ruleset." />
+   ) }
+
+   { props.rulesetName == "Cloudflare Sensitive Data Detection" && (
+     <Image src={sddRulesetImg} alt="The Configure deployment page displaying selected rules in the Sensitive Data Detection ruleset." />
+   ) }
+
+7. Select **Next**, and then select **Save**.
+
+{/* prettier-ignore-end */}
+
+</Steps>

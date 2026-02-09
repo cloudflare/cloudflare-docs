@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, APIRequest } from "~/components";
+import { Render, APIRequest, DashButton } from "~/components";
 
 The following table represents the comparison operators that are supported and example values. Filters are added as escaped JSON strings formatted as `{"key":"<field>","operator":"<comparison_operator>","value":"<value>"}`.
 
@@ -53,6 +53,13 @@ Here are some examples of how the logical operators can be implemented. `X`, `Y`
 
 - (X AND Y) OR Z - `{"where":{"or":[{"and": [{X},{Y}]},{Z}]}}`
 
+Logpush filters act as a pass-through gate, not an exclusion list. When multiple conditions are joined with AND:
+
+- All conditions must evaluate to TRUE for the log to be pushed.
+- If any single condition is FALSE, the log is excluded.
+
+A common misconception is interpreting the filter as `exclude logs matching ALL conditions` rather than `include logs matching ALL conditions`.
+
 ## Set filters via API or dashboard
 
 Filters can be set via API or the Cloudflare dashboard. Note that using a filter is optional, but if used, it must contain the `where` key.
@@ -70,7 +77,7 @@ Here is an example request using cURL via API:
 			field_names: ["ClientIP", "EdgeStartTimestamp", "RayID"],
 			sample_rate: 0.1,
 			timestamp_format: "rfc3339",
-			"CVE-2021-44228": "true",
+			"CVE-2021-44228": true,
 		},
 		dataset: "http_requests",
 		filter: JSON.stringify({
@@ -89,11 +96,15 @@ Here is an example request using cURL via API:
 
 To set filters through the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the domain you want to use.
-2. Go to **Analytics & Logs** > **Logs**.
-3. Select **Add Logpush job**. A modal window will open.
-4. Select the dataset you want to push to a storage service.
-5. Below **Select data fields**, in the **Filter** section, you can set up your filters.
-6. You need to select a [dataset field](/logs/logpush/logpush-job/datasets/), an [Operator](/logs/logpush/logpush-job/filters/#logical-operators), and a **Value**.
-7. You can connect more filters using `AND` and `OR` logical operators.
-8. Select **Next** to continue the setting up of your Logpush job.
+1. In the Cloudflare dashboard, go to the **Logpush** page at the account or or domain (also known as zone) level.
+ 
+   For account: <DashButton url="/?to=/:account/logs" />
+ 
+   For domain (also known as zone): <DashButton url="/?to=/:account/:zone/analytics/logs" />
+
+
+2. Select the dataset you want to push to a storage service. Depending on your choice, you have access to [account-scoped datasets](/logs/logpush/logpush-job/datasets/account/) and [zone-scoped datasets](/logs/logpush/logpush-job/datasets/zone/), respectively.
+3. Below **Select data fields**, in the **Filter** section, you can set up your filters.
+4. You need to select a [dataset field](/logs/logpush/logpush-job/datasets/), an [Operator](/logs/logpush/logpush-job/filters/#logical-operators), and a **Value**.
+5. You can connect more filters using `AND` and `OR` logical operators.
+6. Select **Next** to continue the setting up of your Logpush job.

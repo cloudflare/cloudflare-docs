@@ -25,7 +25,10 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["workers-py"]
+dev = [
+	"workers-py",
+	"workers-runtime-sdk"
+]
 ```
 
 The above will allow your worker to depend on the [FastAPI](https://fastapi.tiangolo.com/) package.
@@ -45,6 +48,15 @@ uv run pywrangler deploy
 Your dependencies will get bundled with your worker automatically on deployment.
 
 The `pywrangler` CLI also supports all commands supported by the `wrangler` tool, for the full list of commands run `uv run pywrangler --help`.
+
+## Supported Libraries
+
+Python Workers support pure Python packages on [PyPI](https://pypi.org/),
+as well as [packages that are included in Pyodide](https://pyodide.org/en/stable/usage/packages-in-pyodide.html).
+
+If you would like to use a package that is not pure Python and not yet supported in Pyodide, request support via
+the [Python Packages Discussions](https://github.com/cloudflare/workerd/discussions/categories/python-packages) on the
+Cloudflare Workers Runtime GitHub repository.
 
 ## HTTP Client Libraries
 

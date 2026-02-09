@@ -1,11 +1,6 @@
 ---
 pcx_content_type: how-to
 title: VitePress
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import {
@@ -57,6 +52,7 @@ This step makes sure that unnecessary files are not going to be included in the 
 
 <Render
 	file="deploy-to-pages-steps-with-preset"
+	product="pages"
 	params={{ name: "VitePress" }}
 />
 
@@ -72,4 +68,8 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit and push new code to your VitePress project, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes to your site look before deploying them to production.
 
-<Render file="framework-guides/learn-more" params={{ one: "VitePress" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "VitePress" }}
+/>

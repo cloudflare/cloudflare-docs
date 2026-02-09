@@ -5,6 +5,7 @@ sidebar:
   order: 1
 
 ---
+import { DashButton } from "~/components";
 
 Google tag gateway for advertisers allows website owners using Cloudflare as a CDN to get the most out of ad measurement tools with just a few clicks. It allows you to deploy Google scripts using your own domain, enhancing data privacy and improving signal measurement recovery. Unlike standard setups where tags are requested from a Google domain, Google tag gateway for advertisers loads the tag from your domain and sends measurement events to your domain, where they are forwarded to Google.
 
@@ -12,7 +13,7 @@ Learn more about why we built it and how it works in our [blog post](https://blo
 
 ## Get started
 
-Site owners can enable this feature in one of two ways: through the Google tag console, or through the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/tag-management/google-tag-gateway). 
+Site owners can enable this feature in one of two ways: through the Google tag console, or through the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/tag-management/google-tag-gateway).
 
 ### Configure in Google Tag Manager
 The fastest way to set up Google tag gateway for advertisers is in Google Tag Manager. [Follow the steps in Google's Help Center](https://support.google.com/analytics/answer/16061641).
@@ -23,9 +24,11 @@ The fastest way to set up Google tag gateway for advertisers is in Google Tag Ma
 Your Cloudflare dashboard user must have one of the following [Account Roles](/fundamentals/manage-members/roles/#account-scoped-roles): Super Administrator, Administrator or Zaraz Admin. If you are using Domain Scoped Roles, your [Domain Role](/fundamentals/manage-members/roles/#domain-scoped-roles) must be Domain Administrator.
 :::
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Tag Management** > **Google tag gateway**.
-3. Select your domain.
+1. In the Cloudflare dashboard, go to the **Google Tag Gateway** page.
+
+   <DashButton url="/?to=/:account/tag-management/google-tag-gateway" />
+
+2. Select your domain.
 4. Enable the toggle for **Turn on and configure Google tag gateway**.
 
 ![Google tag gateway for advertisers configuration](~/assets/images/google-tag-gateway/google-tag-configuration.png)

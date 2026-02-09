@@ -92,38 +92,6 @@ To set up an integration with Upstash:
 
 To learn more about Upstash, refer to the [Upstash documentation](https://docs.upstash.com/redis).
 
-## Upstash Kafka
-
-To set up an integration with Upstash Kafka:
-
-1. Create a [Kafka cluster and topic](https://docs.upstash.com/kafka).
-
-2. Configure the Upstash Kafka credentials in your Worker:
-
-   You need to add your Upstash Kafka connection details as secrets to your Worker. Get these from your [Upstash Console](https://console.upstash.com) under your Kafka cluster details, then add them as secrets using Wrangler:
-
-   ```sh
-   # Add the Upstash Kafka URL as a secret
-   npx wrangler secret put UPSTASH_KAFKA_REST_URL
-   # When prompted, paste your Upstash Kafka REST URL
-   
-   # Add the Upstash Kafka username as a secret
-   npx wrangler secret put UPSTASH_KAFKA_REST_USERNAME
-   # When prompted, paste your Upstash Kafka username
-   
-   # Add the Upstash Kafka password as a secret
-   npx wrangler secret put UPSTASH_KAFKA_REST_PASSWORD
-   # When prompted, paste your Upstash Kafka password
-   ```
-
-3. In your Worker, install `@upstash/kafka`, a HTTP/REST based Kafka client:
-
-   <PackageManagers pkg="@upstash/kafka" />
-
-4. Use the [upstash-kafka](https://github.com/upstash/upstash-kafka/blob/main/README.md) JavaScript SDK to send data to Kafka.
-
-Refer to [Upstash documentation on Kafka setup with Workers](https://docs.upstash.com/kafka/real-time-analytics/realtime_analytics_serverless_kafka_setup#option-1-cloudflare-workers) for more information. Replace `url`, `username` and `password` with the variables set by the integration.
-
 ## Upstash QStash
 
 To set up an integration with Upstash QStash:

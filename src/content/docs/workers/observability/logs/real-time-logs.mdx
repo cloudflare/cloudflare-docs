@@ -8,7 +8,7 @@ sidebar:
   order: 3
 ---
 
-import { TabItem, Tabs, Steps } from "~/components";
+import { TabItem, Tabs, DashButton } from "~/components";
 
 With Real-time logs, access all your log events in near real-time for log events happening globally. Real-time logs is helpful for immediate feedback, such as the status of a new deployment.
 
@@ -23,14 +23,13 @@ Real-time logs are not available for zones on the [Cloudflare China Network](/ch
 ## View logs from the dashboard
 
 To view real-time logs associated with any deployed Worker using the Cloudflare dashboard:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, go to **Workers & Pages**.
-3. In **Overview**, select your **Worker**.
-4. Select **Logs**.
-5. In the right-hand navigation bar, select **Live**.
-</Steps>
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your **Worker**.
+3. Select **Logs**.
+4. In the right-hand navigation bar, select **Live**.
 
 ## View logs using `wrangler tail`
 

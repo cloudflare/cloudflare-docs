@@ -1,13 +1,13 @@
 ---
 title: Log and store upload events in R2 with event notifications
 pcx_content_type: tutorial
-products:
-  - Queues
-  - Workers
+products: [queues, workers]
 difficulty: Beginner
 reviewed: 2024-04-02
 tags:
   - TypeScript
+description: >-
+  This example provides a step-by-step guide on using event notifications to capture and store R2 upload logs in a separate bucket.
 ---
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
@@ -15,12 +15,6 @@ import { Render, PackageManagers, WranglerConfig } from "~/components";
 This example provides a step-by-step guide on using [event notifications](/r2/buckets/event-notifications/) to capture and store R2 upload logs in a separate bucket.
 
 ![Push-Based R2 Event Notifications](~/assets/images/reference-architecture/event-notifications-for-storage/pushed-based-event-notification.svg)
-
-## Prerequisites
-
-To continue, you will need:
-
-- A subscription to [Workers Paid](/workers/platform/pricing/#workers), required for using queues.
 
 ## 1. Install Wrangler
 
@@ -41,12 +35,6 @@ npx wrangler r2 bucket create example-log-sink-bucket
 ```
 
 ## 3. Create a queue
-
-:::note
-
-You will need a [Workers Paid plan](/workers/platform/pricing/) to create and use [Queues](/queues/) and Cloudflare Workers to consume event notifications.
-
-:::
 
 Event notifications capture changes to data in `example-upload-bucket`. You will need to create a new queue to receive notifications:
 
@@ -88,20 +76,31 @@ In your Worker project's [[Wrangler configuration file](/workers/wrangler/config
 
 <WranglerConfig>
 
-```toml
-name = "event-notification-writer"
-main = "src/index.ts"
-compatibility_date = "2024-03-29"
-compatibility_flags = ["nodejs_compat"]
-
-[[queues.consumers]]
-queue = "example-event-notification-queue"
-max_batch_size = 100
-max_batch_timeout = 5
-
-[[r2_buckets]]
-binding = "LOG_SINK"
-bucket_name = "example-log-sink-bucket"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "event-notification-writer",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"queues": {
+		"consumers": [
+			{
+				"queue": "example-event-notification-queue",
+				"max_batch_size": 100,
+				"max_batch_timeout": 5
+			}
+		]
+	},
+	"r2_buckets": [
+		{
+			"binding": "LOG_SINK",
+			"bucket_name": "example-log-sink-bucket"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

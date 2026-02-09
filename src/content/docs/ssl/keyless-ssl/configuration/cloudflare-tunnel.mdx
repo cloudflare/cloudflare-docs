@@ -10,7 +10,7 @@ head:
 
 import { Render } from "~/components";
 
-Through an integration with [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), you can send traffic to a key server through a secure channel and avoid exposing your key server to the public Internet.
+Through an integration with [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), you can send traffic to a key server through a secure channel and avoid exposing your key server to the public Internet.
 
 ---
 
@@ -60,5 +60,6 @@ When you receive the `network` value from the Tunnel route API, it will include 
 
 <Render
 	file="keyless-key-server-setup"
+	product="ssl"
 	params={{ one: "keyserver.keyless.example.com" }}
 />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { MdOutlineThumbUp, MdOutlineThumbDown } from "react-icons/md";
+import { track } from "~/util/zaraz";
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 
@@ -69,6 +70,10 @@ function Form({
 	const [passedTurnstile, setPassedTurnstile] = useState(false);
 
 	function submit(formData: FormData) {
+		track("submit docs feedback", {
+			selected_option: option,
+			selected_reason: formData.get("reason"),
+		});
 		formData.set("option", option!);
 
 		formData.set("page", document.location.pathname);
@@ -123,7 +128,7 @@ export default function FeedbackPrompt() {
 	const [submitted, setSubmitted] = useState(false);
 
 	return (
-		<div>
+		<div id="feedback-form">
 			<h2>{title}</h2>
 			{!option && <Buttons setTitle={setTitle} setOption={setOption} />}
 			{!submitted && (

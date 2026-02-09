@@ -3,6 +3,7 @@ pcx_content_type: how-to
 title: GitHub Actions
 description: Integrate Workers development into your existing GitHub Actions workflows.
 ---
+import { DashButton } from "~/components";
 
 You can deploy Workers with [GitHub Actions](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler). Here is how you can set up your GitHub Actions workflow.
 
@@ -17,12 +18,13 @@ To find your Cloudflare account ID, refer to [Find account and zone IDs](/fundam
 ### API token
 
 To create an API token to authenticate Wrangler in your CI job:
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select **Manage Account** > **Account API Tokens**.
-3. Select **Create Token** > find **Edit Cloudflare Workers** > select **Use Template**.
-4. Customize your token name.
-5. Scope your token.
+   <DashButton url="/?to=/:account/api-tokens" />
+
+2. Select **Create Token** > find **Edit Cloudflare Workers** > select **Use Template**.
+3. Customize your token name.
+4. Scope your token.
 
 You will need to choose the account and zone resources that the generated API token will have access to. We recommend scoping these down as much as possible to limit the access of your token. For example, if you have access to three different Cloudflare accounts, you should restrict the generated API token to only the account on which you will be deploying a Worker.
 

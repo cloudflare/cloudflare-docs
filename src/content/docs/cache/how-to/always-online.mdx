@@ -4,7 +4,7 @@ pcx_content_type: concept
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, DashButton } from "~/components"
 
 Cloudflare’s Always Online feature is now integrated with the [Internet Archive](https://archive.org/) so that visitors can access a portion of your website even when your origin server is unreachable and a Cloudflare-cached version is unavailable. When your origin is unreachable, Always Online checks Cloudflare’s cache for a stale or expired version of your website. If a version does not exist, Cloudflare goes to the Internet Archive to fetch and serve static portions of your website.
 
@@ -32,10 +32,12 @@ Visitors who interact with dynamic parts of a website, such as a shopping cart o
 
 Here is how to enable Always Online in the dashboard:
 
-1. Log in to your Cloudflare account.
+1. In the Cloudflare dashboard, go to the **Configuration** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
 2. Choose the domain that will use Always Online with Internet Archive integration.
-3. Select **Caching** > **Configuration**.
-4. Under **Always Online**, set the toggle to **On**.
+3. Under **Always Online**, set the toggle to **On**.
 
 :::note[Note]
 

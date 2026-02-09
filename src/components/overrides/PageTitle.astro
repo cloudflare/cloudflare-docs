@@ -6,7 +6,6 @@ import { Breadcrumbs } from "astro-breadcrumbs";
 import "astro-breadcrumbs/breadcrumbs.css";
 
 import Description from "~/components/Description.astro";
-import SpotlightAuthorDetails from "~/components/SpotlightAuthorDetails.astro";
 import LastReviewed from "~/components/LastReviewed.astro";
 import CopyPageButton from "~/components/CopyPageButton.tsx";
 import ComponentUsage from "~/components/ComponentUsage.astro";
@@ -15,7 +14,6 @@ import { getEntry } from "astro:content";
 
 const frontmatter = Astro.locals.starlightRoute.entry.data;
 
-const spotlightDetails = frontmatter.spotlight;
 const reviewed = frontmatter.reviewed;
 const summary = frontmatter.summary;
 const component = frontmatter.styleGuide?.component;
@@ -107,16 +105,6 @@ const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 {!hideTitle && <Default />}
 
 {reviewed && <LastReviewed date={reviewed} />}
-
-{
-	spotlightDetails && (
-		<SpotlightAuthorDetails
-			author={spotlightDetails.author}
-			platform={spotlightDetails.author_bio_source}
-			link={spotlightDetails.author_bio_link}
-		/>
-	)
-}
 
 {summary && <Description set:html={marked.parse(summary)} />}
 

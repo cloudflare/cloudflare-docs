@@ -4,7 +4,7 @@ styleGuide:
   component: Tabs
 ---
 
-import { Tabs, TabItem, Render } from '~/components';
+import { Tabs, TabItem, Render } from "~/components";
 
 This component can help you create a tabbed interface to show related information more efficiently. Use it when there are different ways of getting the same thing done:
 
@@ -13,24 +13,24 @@ This component can help you create a tabbed interface to show related informatio
 - Account-level vs zone-level navigation
 - GRE / IPsec tunnels
 
-
 ```mdx live
-import { Tabs, TabItem } from '~/components';
+import { Tabs, TabItem } from "~/components";
 
 <Tabs>
-  <TabItem label="Stars" icon="star">
-    Sirius, Vega, Betelgeuse
-  </TabItem>
-  <TabItem label="Moons" icon="moon">
-    Io, Europa, Ganymede
-  </TabItem>
+	<TabItem label="Stars" icon="star">
+		Sirius, Vega, Betelgeuse
+	</TabItem>
+	<TabItem label="Moons" icon="moon">
+		Io, Europa, Ganymede
+	</TabItem>
 </Tabs>
 ```
 
-### Tab icons 
+### Tab icons
 
 <Render
 	file="icons"
+	product="style-guide"
 	params={{
 		component: "tab labels",
 	}}
@@ -48,7 +48,7 @@ We use the following `syncKey` values in our docs:
 ### Example
 
 ```mdx live
-import { Tabs, TabItem } from '~/components';
+import { Tabs, TabItem } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -59,7 +59,6 @@ Dash instructions
 API instructions
 
 </TabItem> </Tabs>
-
 ```
 
 Will synchronize with:

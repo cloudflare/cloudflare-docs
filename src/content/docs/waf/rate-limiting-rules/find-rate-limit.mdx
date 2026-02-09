@@ -8,6 +8,8 @@ head:
     content: Find an appropriate rate limit
 ---
 
+import { Steps, DashButton } from "~/components";
+
 The **Request rate analysis** tab in [Security Analytics](/waf/analytics/security-analytics/) displays data on the request rate for traffic matching the selected filters and time period. Use this tab to determine the most appropriate rate limit for incoming traffic matching the applied filters.
 
 :::note
@@ -16,7 +18,7 @@ The **Request rate analysis** tab is only available to Enterprise customers.
 
 ## User interface overview
 
-The **Request rate analysis** tab is available at the zone level in **Security** > **Analytics**.
+The **Request rate analysis** tab is available at the zone level in the **Analytics** page.
 
 ![Screenshot of the Request rate analysis tab in Security Analytics](~/assets/images/waf/rate-limit-analytics.png)
 
@@ -26,10 +28,11 @@ The main chart displays the distribution of request rates for the top 50 unique 
 - [**JA3 fingerprint**](/bots/additional-configurations/ja3-ja4-fingerprint/) (only available to customers with Bot Management)
 - **IP & JA3** (only available to customers with Bot Management)
 - [**JA4 fingerprint**](/bots/additional-configurations/ja3-ja4-fingerprint/) (only available to customers with Bot Management)
+- **IP & JA4** (only available to customers with Bot Management)
 
 :::note
 
-For more information on how Cloudflare calculates the request rate of incoming traffic, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/).
+For more information on how Cloudflare calculates the request rate of incoming traffic, refer to [Request rate calculation](/waf/rate-limiting-rules/request-rate/).
 :::
 
 ---
@@ -38,20 +41,25 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 ### 1. Define the scope
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and zone.
+<Steps>
 
-2. Go to **Security** > **Analytics**.
+1. In the Cloudflare dashboard, go to the **Analytics** page.
 
-3. In the **Traffic analysis** tab, select a specific time period:
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
 
+2. In the **Traffic analysis** tab, select a specific time period:
    - To look at the regular rate distribution, specify a period with non-peak traffic.
    - To analyze the rate of offending visitors/bots, select a period corresponding to an attack.
 
-4. Apply filters to analyze a particular situation in your application where you want to apply rate limiting (for example, filter by `/login` URL path).
+3. Apply filters to analyze a particular situation in your application where you want to apply rate limiting (for example, filter by `/login` URL path).
 
-5. (Optional) To focus on non-automated/human traffic, use the bot score quick filter in the sidebar.
+4. (Optional) To focus on non-automated/human traffic, use the bot score quick filter in the sidebar.
+
+</Steps>
 
 ### 2. Find the rate
+
+<Steps>
 
 1. Switch to the **Request rate analysis** tab.
 
@@ -60,6 +68,8 @@ For more information on how Cloudflare calculates the request rate of incoming t
 3. Use the slider in the chart to move the horizontal line defining the rate limit. While you move the slider up and down, check the impact of defining a rate limiting rule with the selected limit on the displayed traffic.
 
    ![User adjusting the rate limit in the Request rate analysis chart to check the impact on recent traffic](/images/waf/rate-limit-adjust.gif)
+
+</Steps>
 
 :::note
 
@@ -72,11 +82,17 @@ Answering the following questions during your adjustments can help you with your
 
 ### 3. Validate your rate
 
+<Steps>
+
 1. Repeat the rate selection process described in the previous section, but selecting a portion of traffic where you know there was an attack or traffic peak. The rate you have chosen should block the outlier traffic during the attack and allow traffic during regular periods.
 
 2. (Optional) Check the [sampled logs](/waf/analytics/security-analytics/#sampled-logs) to verify the fingerprints and filters you selected.
 
+</Steps>
+
 ### 4. Create a rate limiting rule
+
+<Steps>
 
 1. In the **Request rate analysis** tab, select **Create rate limit rule** to go to the [rate limiting creation page](/waf/rate-limiting-rules/create-zone-dashboard/) with your filters, characteristics, and selected rate limit pre-populated.
 
@@ -85,3 +101,5 @@ Answering the following questions during your adjustments can help you with your
    It is recommended that you first deploy the rule with the _Log_ action to validate the threshold, and change the action later to block or challenge incoming requests when you are confident about the rule behavior.
 
 3. To save and deploy your rate limiting rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+
+</Steps>

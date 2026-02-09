@@ -1,0 +1,26 @@
+---
+title: Updated Email security roles
+description: More granular controls for Email security roles
+date: 2025-09-01T23:25:49Z
+---
+
+To provide more granular controls, we refined the [existing roles](/cloudflare-one/roles-permissions/#email-security-roles) for Email security and launched a new Email security role as well.
+
+All Email security roles no longer have read or write access to any of the other Zero Trust products:
+
+- **Email Configuration Admin**
+- **Email Integration Admin**
+- **Email security Read Only**
+- **Email security Analyst**
+- **Email security Policy Admin**
+- **Email security Reporting**
+
+To configure [Data Loss Prevention (DLP)](/cloudflare-one/email-security/outbound-dlp/) or [Remote Browser Isolation (RBI)](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/#set-up-clientless-web-isolation), you now need to be an admin for the Zero Trust dashboard with the **Cloudflare Zero Trust** role.
+
+Also through customer feedback, we have created a new additive role to allow **Email security Analyst** to create, edit, and delete Email security policies, without needing to provide access via the **Email Configuration Admin** role. This role is called **Email security Policy Admin**, which can read all settings, but has write access to [allow policies](/cloudflare-one/email-security/settings/detection-settings/allow-policies/), [trusted domains](/cloudflare-one/email-security/settings/detection-settings/trusted-domains/), and [blocked senders](/cloudflare-one/email-security/settings/detection-settings/blocked-senders/).
+
+This feature is available across these Email security packages:
+
+- **Advantage**
+- **Enterprise**
+- **Enterprise + PhishGuard**

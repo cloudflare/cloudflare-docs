@@ -40,7 +40,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "Qwen2_5_Coder_32B_Instruct_Prompt",
+                    "title": "Prompt",
                     "properties": {
                         "prompt": {
                             "type": "string",
@@ -129,7 +129,7 @@
                     ]
                 },
                 {
-                    "title": "Qwen2_5_Coder_32B_Instruct_Messages",
+                    "title": "Messages",
                     "properties": {
                         "messages": {
                             "type": "array",

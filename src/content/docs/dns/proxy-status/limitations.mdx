@@ -6,7 +6,7 @@ sidebar:
   label: Limitations
 ---
 
-import { Render, GlossaryTooltip } from "~/components";
+import { Render, GlossaryTooltip, Details } from "~/components";
 
 This page describes expected limitations when <GlossaryTooltip term="proxy status">proxying DNS records</GlossaryTooltip>. For further information about proxying, refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/).
 
@@ -14,7 +14,23 @@ This page describes expected limitations when <GlossaryTooltip term="proxy statu
 
 Only A, AAAA, and CNAME DNS records that serve HTTP or HTTPS traffic can be proxied. Other record types cannot be proxied.
 
-If you encounter a CNAME record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
+If you encounter a [CNAME record](/dns/manage-dns-records/reference/dns-record-types/#cname) that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
+
+<Details header="Non-proxiable targets">
+
+- Exact match:
+	- `dkim2.mcsv.net` ([Mailchimp documentation](https://mailchimp.com/help/set-up-email-domain-authentication/))
+  - `dkim3.mcsv.net` ([Mailchimp documentation](https://mailchimp.com/help/set-up-email-domain-authentication/))
+  - `zmverify.zoho.com` ([Zoho documentation](https://www.zoho.com/mail/help/adminconsole/domain-verification.html))
+  - `dkim.infusionmail.com` ([Keap documentation](https://help.keap.com/help/dmarc))
+- Exact match or subdomain of:
+	- `dkim.amazonses.com` ([Amazon SES documentation](https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#just-verify-domain-proc))
+- Subdomain of:
+	- `onmicrosoft.com` ([Microsoft documentation](https://learn.microsoft.com/defender-office-365/email-authentication-dkim-configure))
+  - `dkim.intercom.io` ([Intercom documentation](https://www.intercom.com/help/articles/9744849-connect-your-email-support-channel))
+  - `acm-validations.aws` ([AWS certificate manager documentation](https://docs.aws.amazon.com/acm/latest/userguide/dns-validation.html))
+
+</Details>
 
 ### Pre-signed DNSSEC
 

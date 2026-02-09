@@ -8,13 +8,20 @@ description: Learn how to create a token to perform actions using the Cloudflare
 
 ---
 
-import { Render } from "~/components"
+import { Stream, Render } from "~/components"
 
 :::note[Prerequisite]
 
 Before you begin, [find your zone and account IDs](/fundamentals/account/find-account-and-zone-ids/).
 
 :::
+
+<Stream
+  id="4e92423fc9126a22af2b0c37825d4195"
+  title="Create an API token"
+  thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/API%20token.png"
+/>
+
 
 1. Determine if you want a user token or an [Account API token](/fundamentals/api/get-started/account-owned-tokens/). Use Account API tokens if you prefer service tokens that are not associated with users and your [desired API endpoints are compatible](/fundamentals/api/get-started/account-owned-tokens/#compatibility-matrix).
 2. From the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens/), go to **My Profile** > **API Tokens** for user tokens. For Account Tokens, go to **Manage Account** > **API Tokens**.

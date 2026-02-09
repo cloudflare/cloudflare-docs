@@ -4,29 +4,31 @@ url: sase-2-stop-your-own-vpn
 title: SASE - Stop hosting your VPN service
 description: Cloudflare's SASE platform can replace your traditional, expensive VPN appliances, which deliver poor performance for users and create more security risks than solve them. Cloudflare's Zero Trust Network Access (ZTNA) service is a more secure, highly scalable cloud solution. In this video, we look at how easily you can deploy Cloudflare to secure access to internal resources.
 products:
-  - sase
+  - cloudflare-one
+pcx_content_type: video
 thumbnail:
   url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Video-2-Stop-hosting-your-own-VPN-service.jpg
-chapters: {
-  "Introduction to Corporate Network Security and Access Challenges": "0s",
-  "Cloudflare's SASE Approach to Securing Internal Applications": "01m15s",
-  "Connecting Internal Applications to Cloudflare with Secure Tunnels": "01m54s",
-  "Implementing Identity-Based, Clientless Access Control Access Control": "02m42s",
-  "Leveraging Anycast Networking for Faster and More Secure Application Access": "05m36s",
-  "Enhancing Security with Micro-Segmentation and Cloudflare's Global Network": "06m59s"
-}
+chapters:
+  {
+    "Introduction to Corporate Network Security and Access Challenges": "0s",
+    "Cloudflare's SASE Approach to Securing Internal Applications": "01m15s",
+    "Connecting Internal Applications to Cloudflare with Secure Tunnels": "01m54s",
+    "Implementing Identity-Based, Clientless Access Control Access Control": "02m42s",
+    "Leveraging Anycast Networking for Faster and More Secure Application Access": "05m36s",
+    "Enhancing Security with Micro-Segmentation and Cloudflare's Global Network": "06m59s",
+  }
 transcript: |
 
   WEBVTT
 
   1
   00:00:07.160 --> 00:00:12.140
-  Corporate networks are often used to allow 
+  Corporate networks are often used to allow
   employees to access sensitive information in
 
   2
   00:00:12.140 --> 00:00:15.920
-  private, self-hosted applications, 
+  private, self-hosted applications,
   such as an internal wiki,
 
   3
@@ -35,42 +37,42 @@ transcript: |
 
   4
   00:00:18.530 --> 00:00:22.040
-  While some applications have migrated into 
+  While some applications have migrated into
   the cloud as SaaS apps,
 
   5
   00:00:22.040 --> 00:00:25.160
-  there are still applications that are run and 
+  there are still applications that are run and
   maintained by IT.
 
   6
   00:00:25.490 --> 00:00:29.510
-  These days, most of these self-hosted 
+  These days, most of these self-hosted
   applications run in a web server and are
 
   7
   00:00:29.510 --> 00:00:33.980
-  deployed either in a private data center or 
+  deployed either in a private data center or
   in a public cloud such as AWS,
 
   8
   00:00:34.010 --> 00:00:38.390
-  Azure, or Google. Access to these 
+  Azure, or Google. Access to these
   applications is usually limited to internal
 
   9
   00:00:38.390 --> 00:00:42.290
-  employees, but it's common to allow some form 
+  employees, but it's common to allow some form
   of restricted access to partners or
 
   10
   00:00:42.290 --> 00:00:46.370
-  contractors. The old way of doing things was 
+  contractors. The old way of doing things was
   to have users either come into a physical
 
   11
   00:00:46.400 --> 00:00:51.140
-  office or connect remotely via a VPN, 
+  office or connect remotely via a VPN,
   giving them access to that corporate network
 
   12
@@ -79,27 +81,27 @@ transcript: |
 
   13
   00:00:52.760 --> 00:00:57.890
-  But these VPN solutions use on premises 
+  But these VPN solutions use on premises
   hardware appliances through which every user
 
   14
   00:00:57.890 --> 00:01:00.960
-  request passes, creating a bottleneck and a 
+  request passes, creating a bottleneck and a
   security risk.
 
   15
   00:01:00.990 --> 00:01:04.980
-  In fact, recently, many on premises VPN 
+  In fact, recently, many on premises VPN
   vendors such as Cisco,
 
   16
   00:01:05.010 --> 00:01:10.380
-  Checkpoint, and Fortinet have reported a wide 
+  Checkpoint, and Fortinet have reported a wide
   range of vulnerabilities which requires IT
 
   17
   00:01:10.380 --> 00:01:13.500
-  and security teams to scramble to update 
+  and security teams to scramble to update
   their systems.
 
   18
@@ -108,12 +110,12 @@ transcript: |
 
   19
   00:01:15.660 --> 00:01:19.440
-  Did you know that Cloudflare can be used to 
+  Did you know that Cloudflare can be used to
   easily create secure access to these
 
   20
   00:01:19.440 --> 00:01:22.410
-  self-hosted applications using our SASE 
+  self-hosted applications using our SASE
   platform?
 
   21
@@ -122,7 +124,7 @@ transcript: |
 
   22
   00:01:24.570 --> 00:01:28.470
-  Well, similar to how a legacy VPN works, 
+  Well, similar to how a legacy VPN works,
   but using a much,
 
   23
@@ -131,97 +133,97 @@ transcript: |
 
   24
   00:01:30.300 --> 00:01:33.600
-  Let's take a look at how we improve on the 
+  Let's take a look at how we improve on the
   old way of doing things,
 
   25
   00:01:33.600 --> 00:01:36.360
-  and create greater security for application 
+  and create greater security for application
   access.
 
   26
   00:01:36.360 --> 00:01:40.920
-  The first objective is to create connectivity 
+  The first objective is to create connectivity
   between the user's browser and the
 
   27
   00:01:40.920 --> 00:01:44.550
-  application. Right. So there are two parts to 
+  application. Right. So there are two parts to
   this. The connection from Cloudflare to the
 
   28
   00:01:44.550 --> 00:01:47.400
-  app and the connection between the user and 
+  app and the connection between the user and
   Cloudflare.
 
   29
   00:01:47.430 --> 00:01:51.270
-  Cloudflare is going to sit in the middle and 
+  Cloudflare is going to sit in the middle and
   apply security policies and use its vast
 
   30
   00:01:51.270 --> 00:01:54.660
-  network to protect the application and 
+  network to protect the application and
   improve response times.
 
   31
   00:01:54.660 --> 00:01:57.870
-  For the first part, to create connectivity 
+  For the first part, to create connectivity
   from Cloudflare to the app,
 
   32
   00:01:57.870 --> 00:02:01.530
-  we use tunnels that a variety of different 
+  we use tunnels that a variety of different
   methods you can use.
 
   33
   00:02:01.530 --> 00:02:06.270
-  You can connect on premises networks to 
+  You can connect on premises networks to
   Cloudflare via IPsec or GRE tunnels,
 
   34
   00:02:06.270 --> 00:02:08.700
-  typically using your existing network 
+  typically using your existing network
   hardware,
 
   35
   00:02:08.700 --> 00:02:13.200
-  or if your applications are running at a data 
+  or if your applications are running at a data
   center where Cloudflare already has its
 
   36
   00:02:13.200 --> 00:02:18.300
-  servers, we can connect directly from your 
+  servers, we can connect directly from your
   servers to our servers inside that data
 
   37
   00:02:18.330 --> 00:02:21.990
-  center. But for this example, 
+  center. But for this example,
   we're going to talk about using a software
 
   38
   00:02:22.020 --> 00:02:26.250
-  agent. It's just a small daemon that is 
+  agent. It's just a small daemon that is
   installed either directly on the application
 
   39
   00:02:26.250 --> 00:02:29.970
-  server or runs on a dedicated server on the 
+  server or runs on a dedicated server on the
   same local network.
 
   40
   00:02:30.000 --> 00:02:33.030
-  The software then creates a secure tunnel 
+  The software then creates a secure tunnel
   back to Cloudflare.
 
   41
   00:02:33.060 --> 00:02:36.990
-  This tunnel maintains a constant connection 
+  This tunnel maintains a constant connection
   to two Cloudflare data centers,
 
   42
   00:02:36.990 --> 00:02:40.140
-  so it's always available, 
+  so it's always available,
   and now your traffic can flow between your
 
   43
@@ -230,107 +232,107 @@ transcript: |
 
   44
   00:02:42.930 --> 00:02:46.200
-  Now for the second part, 
+  Now for the second part,
   we need to connect your users to Cloudflare,
 
   45
   00:02:46.200 --> 00:02:48.960
-  which we're going to do in this example using 
+  which we're going to do in this example using
   public DNS.
 
   46
   00:02:48.990 --> 00:02:51.720
-  We'll associate a public hostname with the 
+  We'll associate a public hostname with the
   application.
 
   47
   00:02:51.720 --> 00:02:54.480
-  Request to this hostname will resolve to 
+  Request to this hostname will resolve to
   Cloudflare,
 
   48
   00:02:54.480 --> 00:02:58.150
-  which in turn proxies and routes traffic down 
+  which in turn proxies and routes traffic down
   the tunnel to the application,
 
   49
   00:02:58.150 --> 00:03:02.710
-  but hold on a second. A public DNS record and 
+  but hold on a second. A public DNS record and
   a tunnel directly to the server?
 
   50
   00:03:02.740 --> 00:03:06.700
-  If we didn't take this any further, 
+  If we didn't take this any further,
   we could now access this internal application
 
   51
   00:03:06.700 --> 00:03:09.310
-  from anywhere just by heading to the new 
+  from anywhere just by heading to the new
   public hostname.
 
   52
   00:03:09.340 --> 00:03:13.270
-  What we need to do is add authentication and 
+  What we need to do is add authentication and
   authorization into the mix.
 
   53
   00:03:13.270 --> 00:03:16.270
-  Because Cloudflare is now in front of access 
+  Because Cloudflare is now in front of access
   to the application,
 
   54
   00:03:16.270 --> 00:03:19.750
-  we can integrate with your existing company 
+  we can integrate with your existing company
   identity providers.
 
   55
   00:03:19.750 --> 00:03:23.770
-  So anyone attempting to access is first 
+  So anyone attempting to access is first
   redirected to your identity provider to
 
   56
   00:03:23.800 --> 00:03:28.060
-  authenticate. Now this is where it gets 
+  authenticate. Now this is where it gets
   interesting because you can add multiple
 
   57
   00:03:28.060 --> 00:03:30.880
-  identity providers in front of the same 
+  identity providers in front of the same
   application.
 
   58
   00:03:30.880 --> 00:03:35.620
-  So for example, you might use your main 
+  So for example, you might use your main
   company directory where all your employee
 
   59
   00:03:35.620 --> 00:03:39.880
-  accounts reside, but you might also integrate 
+  accounts reside, but you might also integrate
   a separate identity service just for
 
   60
   00:03:39.880 --> 00:03:42.460
-  contractors, partners and other third party 
+  contractors, partners and other third party
   users.
 
   61
   00:03:42.490 --> 00:03:45.700
-  We also support consumer identity providers 
+  We also support consumer identity providers
   such as Facebook,
 
   62
   00:03:45.700 --> 00:03:50.620
-  Google or GitHub. In fact, 
+  Google or GitHub. In fact,
   any SAML or OAuth identity service can be
 
   63
   00:03:50.620 --> 00:03:55.300
-  used. Now, these identity integrations don't 
+  used. Now, these identity integrations don't
   just provide authentication.
 
   64
   00:03:55.300 --> 00:03:57.940
-  It's possible to import user and group 
+  It's possible to import user and group
   information.
 
   65
@@ -339,17 +341,17 @@ transcript: |
 
   66
   00:03:59.830 --> 00:04:02.710
-  Now that we've ensured a user has 
+  Now that we've ensured a user has
   authenticated,
 
   67
   00:04:02.710 --> 00:04:07.270
-  we can start to leverage their identity 
+  we can start to leverage their identity
   information and other data to create an
 
   68
   00:04:07.270 --> 00:04:12.100
-  access policy that defines who should and 
+  access policy that defines who should and
   should not get access to the application.
 
   69
@@ -358,27 +360,27 @@ transcript: |
 
   70
   00:04:13.960 --> 00:04:18.910
-  A range of different attributes can be used 
+  A range of different attributes can be used
   that define who is allowed or denied access.
 
   71
   00:04:18.910 --> 00:04:23.320
-  We started by adding an identity provider, 
+  We started by adding an identity provider,
   so users first need to authenticate.
 
   72
   00:04:23.350 --> 00:04:27.040
-  Let's take it a little further and leverage 
+  Let's take it a little further and leverage
   group information from the same identity
 
   73
   00:04:27.070 --> 00:04:32.410
-  service. We can say only users in the full 
+  service. We can say only users in the full
   time employees group have access to the
 
   74
   00:04:32.410 --> 00:04:37.360
-  internal wiki. The identity service can also 
+  internal wiki. The identity service can also
   tell us how they authenticated.
 
   75
@@ -387,12 +389,12 @@ transcript: |
 
   76
   00:04:39.100 --> 00:04:43.300
-  The requirement that they must have 
+  The requirement that they must have
   authenticated using MFA or multi-factor
 
   77
   00:04:43.300 --> 00:04:46.930
-  authentication. In fact, 
+  authentication. In fact,
   let's say that they have to specifically use
 
   78
@@ -401,7 +403,7 @@ transcript: |
 
   79
   00:04:50.320 --> 00:04:53.320
-  Finally, we only want users working from 
+  Finally, we only want users working from
   Canada,
 
   80
@@ -410,27 +412,27 @@ transcript: |
 
   81
   00:04:56.150 --> 00:05:01.160
-  So let's add to the policy that only traffic 
+  So let's add to the policy that only traffic
   coming from IP addresses geolocated in those
 
   82
   00:05:01.160 --> 00:05:06.200
-  countries is allowed. Now, 
+  countries is allowed. Now,
   full time employees working from somewhere in
 
   83
   00:05:06.200 --> 00:05:11.060
-  Canada who have authenticated using a strong 
+  Canada who have authenticated using a strong
   set of credentials will be able to access the
 
   84
   00:05:11.060 --> 00:05:13.160
-  company wiki. Let's take a look at this in 
+  company wiki. Let's take a look at this in
   action.
 
   85
   00:05:13.190 --> 00:05:15.710
-  The user just needs to navigate to the public 
+  The user just needs to navigate to the public
   hostname,
 
   86
@@ -439,112 +441,112 @@ transcript: |
 
   87
   00:05:17.330 --> 00:05:22.160
-  They have access from anywhere in the world 
+  They have access from anywhere in the world
   with only a browser to our privately hosted
 
   88
   00:05:22.160 --> 00:05:26.330
-  application. Simple. What a difference from 
+  application. Simple. What a difference from
   the old way of doing things.
 
   89
   00:05:26.360 --> 00:05:31.700
-  Also, it's important to note that all traffic 
+  Also, it's important to note that all traffic
   from browser to application is secured using
 
   90
   00:05:31.700 --> 00:05:36.410
-  standard TLS and SSL encryption, 
+  standard TLS and SSL encryption,
   keeping the application data safe.
 
   91
   00:05:36.440 --> 00:05:38.780
-  Let's turn our attention a little bit to 
+  Let's turn our attention a little bit to
   performance.
 
   92
   00:05:38.810 --> 00:05:42.890
-  We already mentioned that Cloudflare is a lot 
+  We already mentioned that Cloudflare is a lot
   more efficient than a traditional VPN.
 
   93
   00:05:42.920 --> 00:05:45.950
-  Let's think about somebody in Germany trying 
+  Let's think about somebody in Germany trying
   to access the wiki.
 
   94
   00:05:45.980 --> 00:05:48.680
-  Cloudflare uses something called Anycast 
+  Cloudflare uses something called Anycast
   networking,
 
   95
   00:05:48.680 --> 00:05:53.700
-  which means that a request to the hostname 
+  which means that a request to the hostname
   will resolve to the nearest Cloudflare data
 
   96
   00:05:53.700 --> 00:05:56.690
-  center, of which we have many in over 300 
+  center, of which we have many in over 300
   cities.
 
   97
   00:05:56.690 --> 00:06:00.620
-  We also have 12,000 network peering 
+  We also have 12,000 network peering
   relationships,
 
   98
   00:06:00.620 --> 00:06:03.860
-  allowing us to ensure fast connectivity from 
+  allowing us to ensure fast connectivity from
   user to application.
 
   99
   00:06:03.860 --> 00:06:09.140
-  So our user in Germany might on ramp to 
+  So our user in Germany might on ramp to
   Cloudflare at a data center in Berlin,
 
   100
   00:06:09.140 --> 00:06:12.590
-  whereas our Canadian user might on ramp in 
+  whereas our Canadian user might on ramp in
   Vancouver,
 
   101
   00:06:12.950 --> 00:06:17.930
-  and their requests are authenticated and the 
+  and their requests are authenticated and the
   policy evaluated all close to the end user
 
   102
   00:06:17.930 --> 00:06:22.700
-  and if authorized, their request is then 
+  and if authorized, their request is then
   routed via the most efficient network path to
 
   103
   00:06:22.730 --> 00:06:25.777
-  the Cloudflare data center that is then 
+  the Cloudflare data center that is then
   nearest the application.
 
   104
   00:06:25.777 --> 00:06:28.910
-  To further improve performance, 
+  To further improve performance,
   there are many more things we can do.
 
   105
   00:06:28.940 --> 00:06:33.140
-  Any of Cloudflare's existing performance 
+  Any of Cloudflare's existing performance
   services and network benefits apply to your
 
   106
   00:06:33.140 --> 00:06:37.040
-  application traffic. So, 
+  application traffic. So,
   for example, we can leverage Cloudflare's
 
   107
   00:06:37.040 --> 00:06:41.150
-  caching technologies so that any static data 
+  caching technologies so that any static data
   from the wiki such as images,
 
   108
   00:06:41.150 --> 00:06:47.540
-  files, videos is all cached locally at the 
+  files, videos is all cached locally at the
   data center that the user is accessing.
 
   109
@@ -553,42 +555,42 @@ transcript: |
 
   110
   00:06:50.150 --> 00:06:53.750
-  Setting up access like this can be typically 
+  Setting up access like this can be typically
   done in less than an hour,
 
   111
   00:06:53.750 --> 00:06:58.010
-  and it doesn't take long to migrate an entire 
+  and it doesn't take long to migrate an entire
   company's internal application
 
   112
   00:06:58.010 --> 00:07:03.470
-  infrastructure. Unlike your VPN, 
+  infrastructure. Unlike your VPN,
   access to each application only exposes that
 
   113
   00:07:03.470 --> 00:07:08.120
-  specific service. You don't need to worry 
+  specific service. You don't need to worry
   about firewalling off SSH and RDP,
 
   114
   00:07:08.150 --> 00:07:13.430
-  because Cloudflare is only allowing access to 
+  because Cloudflare is only allowing access to
   the specific application over HTTPS.
 
   115
   00:07:13.430 --> 00:07:18.920
-  This is called network micro-segmentation and 
+  This is called network micro-segmentation and
   really reduces concerns of access gained by
 
   116
   00:07:18.920 --> 00:07:23.840
-  lateral movement. Changes to authentication 
+  lateral movement. Changes to authentication
   policies can easily be made in our dashboard
 
   117
   00:07:23.840 --> 00:07:27.530
-  and in just a matter of seconds, 
+  and in just a matter of seconds,
   the entire global network is updated.
 
   118
@@ -597,7 +599,7 @@ transcript: |
 
   119
   00:07:28.940 --> 00:07:33.380
-  This video is part of a series which explains 
+  This video is part of a series which explains
   how to build your new corporate network using
 
   120
@@ -606,7 +608,7 @@ transcript: |
 
   121
   00:07:35.030 --> 00:07:37.430
-  Watch the other videos in this series to 
+  Watch the other videos in this series to
   learn more.
 
   122
@@ -619,15 +621,15 @@ transcript: |
 
   124
   00:07:42.620 --> 00:07:46.430
-  We also cover a wide variety of topics 
+  We also cover a wide variety of topics
   including application security,
 
   125
   00:07:46.430 --> 00:07:49.130
-  corporate networking, 
+  corporate networking,
   and all the developer content the Internet
 
   126
   00:07:49.130 --> 00:07:51.620
-  can hold. Follow us online and thanks for 
+  can hold. Follow us online and thanks for
   watching!

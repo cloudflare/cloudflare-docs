@@ -4,33 +4,35 @@ url: sase-4-connect-secure
 title: SASE - Connect and secure from any network to anywhere
 description: Build your new corporate network with Cloudflare, connecting any network into our modern SASE platform and secure applications, users, devices and your company data. In this video, you will learn all of the different methods of connecting networks to Cloudflare and what services can be used to improve security and performance.
 products:
-  - sase
+  - cloudflare-one
+pcx_content_type: video
 thumbnail:
   url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Video-4-Connect-and-secure-from-any-network-to-anywhere.jpg
-chapters: {
-  "Introduction to SASE and the Need for Modern, Secure Corporate Networking": "0s",
-  "Using Cloudflare to Unify and Secure Corporate Networks Across Multiple Locations": "01m57s",
-  "Enabling Secure Remote Access for Distributed Teams with Cloudflare's Zero Trust Approach": "02m47s",
-  "Integrating Private Networks and Data Centers using various methods": "04m17s",
-  "Cloudflare's Connectivity Cloud: Security, Performance, and Simplified Network Management": "05m17s"
-}
+chapters:
+  {
+    "Introduction to SASE and the Need for Modern, Secure Corporate Networking": "0s",
+    "Using Cloudflare to Unify and Secure Corporate Networks Across Multiple Locations": "01m57s",
+    "Enabling Secure Remote Access for Distributed Teams with Cloudflare's Zero Trust Approach": "02m47s",
+    "Integrating Private Networks and Data Centers using various methods": "04m17s",
+    "Cloudflare's Connectivity Cloud: Security, Performance, and Simplified Network Management": "05m17s",
+  }
 transcript: |
 
   WEBVTT
 
   1
   00:00:07.070 --> 00:00:10.970
-  When looking at Secure Access Service Edge or 
+  When looking at Secure Access Service Edge or
   SASE platforms,
 
   2
   00:00:10.970 --> 00:00:15.260
-  we often talk about a user getting remote 
+  we often talk about a user getting remote
   access into some privately hosted
 
   3
   00:00:15.260 --> 00:00:19.070
-  application. The focus is often user to 
+  application. The focus is often user to
   application,
 
   4
@@ -39,42 +41,42 @@ transcript: |
 
   5
   00:00:21.830 --> 00:00:25.970
-  and a user can only access an application 
+  and a user can only access an application
   over a specific address and port.
 
   6
   00:00:26.000 --> 00:00:29.570
-  But corporate networks exist to carry traffic 
+  But corporate networks exist to carry traffic
   in many other ways.
 
   7
   00:00:29.600 --> 00:00:33.230
-  Let's take, for example, 
+  Let's take, for example,
   a retail coffee company with many coffee
 
   8
   00:00:33.230 --> 00:00:37.790
-  shops each providing customers free access to 
+  shops each providing customers free access to
   the Internet with their guest Wi-Fi,
 
   9
   00:00:37.790 --> 00:00:40.940
-  but also connecting employees to internal 
+  but also connecting employees to internal
   applications.
 
   10
   00:00:40.970 --> 00:00:45.200
-  Each shop also houses point of sale devices, 
+  Each shop also houses point of sale devices,
   security cameras,
 
   11
   00:00:45.200 --> 00:00:48.980
-  and other network enabled equipment that need 
+  and other network enabled equipment that need
   access to the Internet,
 
   12
   00:00:48.980 --> 00:00:53.240
-  but also might require access to other 
+  but also might require access to other
   private networks to back up data or be
 
   13
@@ -83,42 +85,42 @@ transcript: |
 
   14
   00:00:54.890 --> 00:01:00.440
-  IT staff also need to remotely access these 
+  IT staff also need to remotely access these
   devices from a corporate office network.
 
   15
   00:01:00.470 --> 00:01:04.760
-  A lot of this traffic is private and should 
+  A lot of this traffic is private and should
   only remain on the corporate network.
 
   16
   00:01:04.790 --> 00:01:08.660
-  This is where Cloudflare's Connectivity Cloud 
+  This is where Cloudflare's Connectivity Cloud
   really comes into its own.
 
   17
   00:01:08.690 --> 00:01:11.180
-  The ability to mesh together different 
+  The ability to mesh together different
   networks,
 
   18
   00:01:11.180 --> 00:01:14.120
-  applications and users no matter where they 
+  applications and users no matter where they
   are.
 
   19
   00:01:14.150 --> 00:01:17.180
-  Let's dive deeper into our coffee company 
+  Let's dive deeper into our coffee company
   example.
 
   20
   00:01:17.210 --> 00:01:20.630
-  Right. First, they have their main 
+  Right. First, they have their main
   headquarters in Seattle.
 
   21
   00:01:20.630 --> 00:01:24.770
-  Most HQ employees live locally and about half 
+  Most HQ employees live locally and about half
   travel into the office,
 
   22
@@ -127,7 +129,7 @@ transcript: |
 
   23
   00:01:27.080 --> 00:01:31.310
-  Second, they have around 40 coffee shops down 
+  Second, they have around 40 coffee shops down
   the west coast of America,
 
   24
@@ -136,22 +138,22 @@ transcript: |
 
   25
   00:01:33.170 --> 00:01:37.910
-  And then they have an internal company wiki, 
+  And then they have an internal company wiki,
   which is running in a virtual environment in
 
   26
   00:01:37.910 --> 00:01:41.150
-  Amazon Web Services with its own virtual 
+  Amazon Web Services with its own virtual
   private network.
 
   27
   00:01:41.150 --> 00:01:46.340
-  And then finally, the security cameras at all 
+  And then finally, the security cameras at all
   their coffee shops need to back up data to a
 
   28
   00:01:46.340 --> 00:01:52.310
-  central service that you've got running on 
+  central service that you've got running on
   servers that you run and host in a rack in a
 
   29
@@ -160,177 +162,177 @@ transcript: |
 
   30
   00:01:54.470 --> 00:01:57.890
-  You see how these network locations are all 
+  You see how these network locations are all
   quite different.
 
   31
   00:01:57.950 --> 00:02:02.330
-  Cloudflare has a variety of ways all these 
+  Cloudflare has a variety of ways all these
   networks can be connected together.
 
   32
   00:02:02.660 --> 00:02:05.960
-  Let's start by connecting the headquarters 
+  Let's start by connecting the headquarters
   network in Seattle.
 
   33
   00:02:05.960 --> 00:02:10.640
-  We can use something called Magic WAN, 
+  We can use something called Magic WAN,
   which is our service that creates IPsec
 
   34
   00:02:10.670 --> 00:02:14.920
-  tunnels from the headquarters office back to 
+  tunnels from the headquarters office back to
   the Cloudflare network and assign a private
 
   35
   00:02:14.950 --> 00:02:19.720
-  network range to it. This is using regular 
+  network range to it. This is using regular
   standard IPsec protocols and can easily
 
   36
   00:02:19.720 --> 00:02:22.630
-  leverage functionality in a network, 
+  leverage functionality in a network,
   router or firewall that exists at
 
   37
   00:02:22.630 --> 00:02:25.870
-  headquarters. Next, let's look at each coffee 
+  headquarters. Next, let's look at each coffee
   shop.
 
   38
   00:02:26.260 --> 00:02:31.600
-  You can ship out to each location a physical 
+  You can ship out to each location a physical
   device running Cloudflare's Magic WAN
 
   39
   00:02:31.600 --> 00:02:35.830
-  connector. It's essentially a lightweight 
+  connector. It's essentially a lightweight
   appliance that can be plugged into the local
 
   40
   00:02:35.830 --> 00:02:40.780
-  ISP router. Each connector creates an IPsec 
+  ISP router. Each connector creates an IPsec
   connection back to Cloudflare,
 
   41
   00:02:40.780 --> 00:02:45.340
-  and each device can be administered remotely 
+  and each device can be administered remotely
   via the Cloudflare dashboard private network.
 
   42
   00:02:45.340 --> 00:02:47.920
-  Ranges can then be assigned to each coffee 
+  Ranges can then be assigned to each coffee
   shop.
 
   43
   00:02:47.920 --> 00:02:51.460
-  And now we have the beginnings of a new 
+  And now we have the beginnings of a new
   modern corporate network.
 
   44
   00:02:51.670 --> 00:02:56.920
-  So IT admins in the Seattle office can now 
+  So IT admins in the Seattle office can now
   remotely access point of sale devices in each
 
   45
   00:02:56.920 --> 00:03:00.850
-  coffee shop location. Also, 
+  coffee shop location. Also,
   because we want to provide customers in each
 
   46
   00:03:00.850 --> 00:03:03.670
-  shop free Internet access using the guest 
+  shop free Internet access using the guest
   WiFi,
 
   47
   00:03:03.700 --> 00:03:06.580
-  all traffic from that location is now routed 
+  all traffic from that location is now routed
   through Cloudflare,
 
   48
   00:03:06.580 --> 00:03:11.320
-  and we can use our secure web gateway to 
+  and we can use our secure web gateway to
   block any access to malicious websites,
 
   49
   00:03:11.320 --> 00:03:14.710
-  and this keeps customers safe while they sip 
+  and this keeps customers safe while they sip
   their cappuccinos.
 
   50
   00:03:17.740 --> 00:03:20.230
-  But what about the IT staff working from 
+  But what about the IT staff working from
   home?
 
   51
   00:03:20.230 --> 00:03:23.110
-  They're not connected to any of these 
+  They're not connected to any of these
   networks. No worries!
 
   52
   00:03:23.110 --> 00:03:26.050
-  They can use our device agent, 
+  They can use our device agent,
   which connects them to Cloudflare,
 
   53
   00:03:26.050 --> 00:03:29.680
-  and in turn gives them access to this new 
+  and in turn gives them access to this new
   corporate network as if they were connected
 
   54
   00:03:29.680 --> 00:03:33.940
-  in headquarters. Now it can manage the 
+  in headquarters. Now it can manage the
   devices in each coffee shop,
 
   55
   00:03:33.940 --> 00:03:36.820
-  no matter if they're on a plane, 
+  no matter if they're on a plane,
   sitting in an office,
 
   56
   00:03:36.820 --> 00:03:41.650
-  or in a coffee shop. When each network or 
+  or in a coffee shop. When each network or
   user connects,
 
   57
   00:03:41.650 --> 00:03:44.590
-  it does so to the nearest Cloudflare data 
+  it does so to the nearest Cloudflare data
   center,
 
   58
   00:03:44.590 --> 00:03:50.290
-  which is a key feature of our network where 
+  which is a key feature of our network where
   we use Anycast IP networking to ensure secure
 
   59
   00:03:50.320 --> 00:03:55.540
-  connections to users and offices are made to 
+  connections to users and offices are made to
   the geographically nearest Cloudflare data
 
   60
   00:03:55.570 --> 00:04:00.610
-  center, so that traffic is then secured and 
+  center, so that traffic is then secured and
   optimized as close as possible to the user or
 
   61
   00:04:00.610 --> 00:04:06.760
-  to that network. And we have data centers in 
+  to that network. And we have data centers in
   over 300 cities and have over 12,000 network
 
   62
   00:04:06.790 --> 00:04:10.360
-  peering relationships, 
+  peering relationships,
   allowing us to ensure fast connectivity from
 
   63
   00:04:10.360 --> 00:04:14.410
-  user to the network. Think of it like having 
+  user to the network. Think of it like having
   a coffee shop in every neighborhood so
 
   64
   00:04:14.410 --> 00:04:16.960
-  everyone doesn't have to walk far to get a 
+  everyone doesn't have to walk far to get a
   cup of coffee.
 
   65
@@ -339,17 +341,17 @@ transcript: |
 
   66
   00:04:19.450 --> 00:04:23.200
-  Remember, the backup service is running in a 
+  Remember, the backup service is running in a
   data center in San Jose.
 
   67
   00:04:23.230 --> 00:04:28.120
-  Most likely than not. Cloudflare is also 
+  Most likely than not. Cloudflare is also
   running our own servers in the same data
 
   68
   00:04:28.150 --> 00:04:33.250
-  center, and you can offer direct connections 
+  center, and you can offer direct connections
   from Cloudflare to your network switches,
 
   69
@@ -358,12 +360,12 @@ transcript: |
 
   70
   00:04:35.410 --> 00:04:38.470
-  And even if your servers are not in the exact 
+  And even if your servers are not in the exact
   same data center,
 
   71
   00:04:38.470 --> 00:04:42.610
-  we can create a virtual connection directly 
+  we can create a virtual connection directly
   from your rack to the nearest Cloudflare data
 
   72
@@ -376,37 +378,37 @@ transcript: |
 
   74
   00:04:47.290 --> 00:04:50.380
-  Let's say the company is launching a new 
+  Let's say the company is launching a new
   internal company wiki,
 
   75
   00:04:50.380 --> 00:04:54.220
-  and they're running the service in AWS, 
+  and they're running the service in AWS,
   Amazon Web Services.
 
   76
   00:04:54.220 --> 00:04:57.640
-  We don't need to connect the entire AWS 
+  We don't need to connect the entire AWS
   private network.
 
   77
   00:04:57.640 --> 00:05:02.590
-  We just install a software agent on the wiki 
+  We just install a software agent on the wiki
   server that creates a secure tunnel back to
 
   78
   00:05:02.620 --> 00:05:05.890
-  Cloudflare, and connects that application to 
+  Cloudflare, and connects that application to
   the network,
 
   79
   00:05:05.920 --> 00:05:10.390
-  that anyone on that network can now access 
+  that anyone on that network can now access
   the application policies and Cloudflare
 
   80
   00:05:10.390 --> 00:05:14.320
-  control who can access the wiki, 
+  control who can access the wiki,
   ensuring users authenticate with valid
 
   81
@@ -415,57 +417,57 @@ transcript: |
 
   82
   00:05:16.360 --> 00:05:19.930
-  You can see that Cloudflare is able to 
+  You can see that Cloudflare is able to
   connect to a wide variety of networks,
 
   83
   00:05:19.930 --> 00:05:24.430
-  from the physical office locations to virtual 
+  from the physical office locations to virtual
   application networks in the cloud,
 
   84
   00:05:24.430 --> 00:05:27.580
-  as well as direct your servers running in 
+  as well as direct your servers running in
   your data centers.
 
   85
   00:05:27.580 --> 00:05:32.730
-  So much of the complexity from legacy network 
+  So much of the complexity from legacy network
   architectures is abstracted into our
 
   86
   00:05:32.730 --> 00:05:36.840
-  Connectivity Cloud , making life much easier 
+  Connectivity Cloud , making life much easier
   for IT and network admins.
 
   87
   00:05:36.870 --> 00:05:41.040
-  And once connected to Cloudflare, 
+  And once connected to Cloudflare,
   it's not just about routing traffic.
 
   88
   00:05:41.040 --> 00:05:45.660
-  Firewalling, DNS, Load Balancing, 
+  Firewalling, DNS, Load Balancing,
   protecting from denial of service attacks,
 
   89
   00:05:45.660 --> 00:05:49.440
-  content caching, and a lot more are all 
+  content caching, and a lot more are all
   easily enabled.
 
   90
   00:05:49.440 --> 00:05:53.760
-  Any traffic destined for the Internet can 
+  Any traffic destined for the Internet can
   also be filtered to ensure only access to
 
   91
   00:05:53.790 --> 00:05:57.540
-  legitimate sites, and blocking any unsafe 
+  legitimate sites, and blocking any unsafe
   transfer of company data.
 
   92
   00:05:57.570 --> 00:06:01.890
-  The flexibility of Cloudflare's Connectivity 
+  The flexibility of Cloudflare's Connectivity
   Cloud allows you to connect all sorts of
 
   93
@@ -474,12 +476,12 @@ transcript: |
 
   94
   00:06:03.540 --> 00:06:08.070
-  It's possible to recreate your classic 
+  It's possible to recreate your classic
   corporate network and then apply on top of it
 
   95
   00:06:08.070 --> 00:06:13.320
-  all the modern Zero Trust services to ensure 
+  all the modern Zero Trust services to ensure
   high security without compromising the user
 
   96
@@ -488,7 +490,7 @@ transcript: |
 
   97
   00:06:15.360 --> 00:06:19.590
-  This video is part of a series which explains 
+  This video is part of a series which explains
   how to build your new corporate network using
 
   98
@@ -497,7 +499,7 @@ transcript: |
 
   99
   00:06:21.360 --> 00:06:23.670
-  Watch the other videos in this series to 
+  Watch the other videos in this series to
   learn more.
 
   100
@@ -510,15 +512,15 @@ transcript: |
 
   102
   00:06:28.710 --> 00:06:32.520
-  We also cover a wide variety of topics 
+  We also cover a wide variety of topics
   including application security,
 
   103
   00:06:32.520 --> 00:06:35.250
-  corporate networking, 
+  corporate networking,
   and all the developer content the Internet
 
   104
   00:06:35.250 --> 00:06:37.680
-  can hold. Follow us online and thanks for 
+  can hold. Follow us online and thanks for
   watching!

@@ -12,7 +12,7 @@ This week’s vulnerability analysis highlights emerging web application threats
 
 - XSS – Attribute Overloading: A novel cross-site scripting technique where attackers abuse custom or non-standard HTML attributes to smuggle payloads into the DOM. These payloads evade traditional sanitization logic, especially in frameworks that loosely validate attributes or trust unknown tokens.
 - XSS – onToggle Event Abuse: Exploits the lesser-used onToggle event (triggered by elements like `<details>`) to execute arbitrary JavaScript when users interact with UI elements. This vector is often overlooked by static analyzers and can be embedded in seemingly benign components.
-- SQLi – Obfuscated Boolean Logic: An advanced SQL injection variant that uses non-standard Boolean expressions, comment-based obfuscation, or alternate encodings (for example, `/*!true*/`, `AND/**/1=1`) to bypass basic input validation and WAF signatures. This technique is particularly dangerous in dynamic query construction contexts.
+
 
 **Impact**
 
@@ -49,17 +49,6 @@ These vulnerabilities target both user-facing components and back-end databases,
 			</td>
 			<td>100799</td>
 			<td>XSS - OnToggle</td>
-			<td>Log</td>
-			<td>Block</td>
-			<td>This is a New Detection</td>
-		</tr>
-		<tr>
-			<td>Cloudflare Managed Ruleset</td>
-			<td>
-				<RuleID id="7663ea44178441a0b3205c145563445f" />
-			</td>
-			<td>100800</td>
-			<td>SQLi - Obfuscated Boolean</td>
 			<td>Log</td>
 			<td>Block</td>
 			<td>This is a New Detection</td>

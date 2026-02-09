@@ -12,6 +12,7 @@ import {
 	PackageManagers,
 	WranglerConfig,
 	TypeScriptExample,
+	DashButton
 } from "~/components";
 
 This guide will instruct you through:
@@ -169,13 +170,10 @@ export class MyDurableObject extends DurableObject<Env> {
 from workers import DurableObject
 
 class MyDurableObject(DurableObject):
-    def __init__(self, ctx, env):
-        super().__init__(ctx, env)
-
     async def say_hello(self):
-        result = self.ctx.storage.sql \
-            .exec("SELECT 'Hello, World!' as greeting") \
-            .one()
+        result = self.ctx.storage.sql.exec(
+            "SELECT 'Hello, World!' as greeting"
+        ).one()
 
         return result.greeting
 ```
@@ -187,7 +185,7 @@ class MyDurableObject(DurableObject):
 In the code above, you have:
 
 1. Defined a RPC method, `sayHello()`, that can be called by a Worker to communicate with a Durable Object.
-2. Accessed a Durable Object's attached storage, which is a private SQLite database only accessible to the object, using [SQL API](/durable-objects/api/storage-api/#exec) methods (`sql.exec()`) available on `ctx.storage` .
+2. Accessed a Durable Object's attached storage, which is a private SQLite database only accessible to the object, using [SQL API](/durable-objects/api/sqlite-storage-api/#exec) methods (`sql.exec()`) available on `ctx.storage` .
 3. Returned an object representing the single row query result using `one()`, which checks that the query result has exactly one row.
 4. Return the `greeting` column from the row object result.
 
@@ -228,9 +226,9 @@ from workers import handler, Response, WorkerEntrypoint
 from urllib.parse import urlparse
 
 class Default(WorkerEntrypoint):
-    async def fetch(request, env, ctx):
+    async def fetch(request):
         url = urlparse(request.url)
-        stub = env.MY_DURABLE_OBJECT.getByName(url.path)
+        stub = self.env.MY_DURABLE_OBJECT.getByName(url.path)
         greeting = await stub.say_hello()
         return Response(greeting)
 ```
@@ -255,10 +253,17 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices
 
 <WranglerConfig>
 
-```toml
-[[durable_objects.bindings]]
-name = "MY_DURABLE_OBJECT"
-class_name = "MyDurableObject"
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DURABLE_OBJECT",
+				"class_name": "MyDurableObject"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -279,10 +284,17 @@ The Durable Object migration to create a new Durable Object class with SQLite st
 
 <WranglerConfig>
 
-```toml
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_sqlite_classes = ["MyDurableObject"] # Array of new classes
+```jsonc
+{
+	"migrations": [
+		{
+			"tag": "v1", // Should be unique for each entry
+			"new_sqlite_classes": [ // Array of new classes
+				"MyDurableObject"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -307,7 +319,9 @@ To deploy your Durable Object Worker:
 npx wrangler deploy
 ```
 
-Once deployed, you should be able to see your newly created Durable Object Worker on the [Cloudflare dashboard](https://dash.cloudflare.com/), **Workers & Pages** > **Overview**.
+Once deployed, you should be able to see your newly created Durable Object Worker on the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/workers-and-pages" />
 
 Preview your Durable Object Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
@@ -355,20 +369,17 @@ from workers import DurableObject, handler, Response
 from urllib.parse import urlparse
 
 class MyDurableObject(DurableObject):
-    def __init__(self, ctx, env):
-        super().__init__(ctx, env)
-
     async def say_hello(self):
-        result = self.ctx.storage.sql \
-            .exec("SELECT 'Hello, World!' as greeting") \
-            .one()
+        result = self.ctx.storage.sql.exec(
+            "SELECT 'Hello, World!' as greeting"
+        ).one()
 
         return result.greeting
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env, ctx):
+    async def fetch(self, request):
         url = urlparse(request.url)
-        stub = env.MY_DURABLE_OBJECT.getByName(url.path)
+        stub = self.env.MY_DURABLE_OBJECT.getByName(url.path)
         greeting = await stub.say_hello()
         return Response(greeting)
 ```

@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { DashButton } from "~/components";
+
 The Zaraz HTTP Events API allows you to send information to Zaraz from places that cannot run the [Web API](/zaraz/web-api/), such as your server or your mobile app. It is useful for tracking events that are happening outside the browser, like successful transactions, sign-ups and more. The API also allows sending multiple events in batches.
 
 ## Configure the API endpoint
@@ -17,9 +19,10 @@ The API is disabled unless you configure an endpoint for it. The endpoint determ
 
 To enable the API endpoint:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Zaraz** > **Settings**.
-3. Under **Endpoints** > **HTTP Events API**, set your desired path. Remember the path is relative to your domain, and it must start with a `/`.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+	<DashButton url="/?to=/:account/tag-management/settings" />
+2. Under **Endpoints** > **HTTP Events API**, set your desired path. Remember the path is relative to your domain, and it must start with a `/`.
 
 :::caution[Important]
 To avoid getting the API used by unwanted actors, Cloudflare recommends choosing a unique path.
@@ -97,7 +100,7 @@ For all available system keys, refer to the table below:
 
 :::note
 
-It is currently not possible to override location related properties, such as City, Country, and Continent. 
+It is currently not possible to override location related properties, such as City, Country, and Continent.
 :::
 
 ## Process API responses

@@ -1,6 +1,6 @@
 releaseNotes: |-
   This release contains two significant changes all customers should be aware of:
-  1. All DNS traffic now flows inside the WARP tunnel. Customers are no longer required to configure their local firewall rules to allow our [DoH IP addresses and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip).
+  1. All DNS traffic now flows inside the WARP tunnel. Customers are no longer required to configure their local firewall rules to allow our [DoH IP addresses and domains](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#doh-ip).
   2. When using MASQUE, the connection will fall back to HTTP/2 (TCP) when we detect that HTTP/3 traffic is blocked. This allows for a much more reliable connection on some public WiFi networks.
 
   **Changes and improvements**
@@ -11,7 +11,7 @@ releaseNotes: |-
   - Fixed an issue where some parts of the WARP Client UI were missing in high contrast mode.
   - Fixed an issue causing client notifications to fail in IPv6 only environments which prevented the client from receiving configuration changes to settings like device profile.
   - Added a TCP fallback for the MASQUE tunnel protocol to improve connectivity on networks that block UDP or HTTP/3 specifically.
-  - Added new IP addresses for [tunnel connectivity checks](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-checks). If your organization uses a firewall or other policies you will need to exempt these IPs.
+  - Added new IP addresses for [tunnel connectivity checks](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#connectivity-checks). If your organization uses a firewall or other policies you will need to exempt these IPs.
   - DNS over HTTPS traffic is now included in the WARP tunnel by default.
   - Improved the error message displayed in the client GUI when the rate limit for entering an incorrect admin override code is met.
   - Improved handling of non-SLAAC IPv6 interface addresses for better connectivity in IPv6 only environments.

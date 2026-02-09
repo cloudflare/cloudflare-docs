@@ -14,11 +14,11 @@ const currentProduct = await getEntry("products", currentSection!);
 
 if (!currentProduct) {
 	throw new Error(
-		`[ListTutorials] Unable to find product YAML for ${currentSection}.`,
+		`[ListTutorials] Unable to find product YAML for ${currentSection}.`
 	);
 }
 
-const productTitle = currentProduct.data.product.title;
+const productID = currentProduct.id;
 
 const docs = await getCollection("docs", (entry) => {
 	return (
@@ -27,9 +27,7 @@ const docs = await getCollection("docs", (entry) => {
 		// /src/content/r2/**/*.mdx
 		(entry.id.startsWith(`${currentSection}/`) ||
 			// products: [R2]
-			entry.data.products?.some(
-				(v: string) => v.toUpperCase() === productTitle.toUpperCase(),
-			))
+			entry.data.products?.some((product) => product.id === productID))
 	);
 });
 
@@ -48,7 +46,6 @@ const timeAgo = (date?: Date) => {
 		<tr>
 			<td>Name</td>
 			<td>Last Updated</td>
-			<td>Type</td>
 			<td>Difficulty</td>
 		</tr>
 	</thead>
@@ -69,7 +66,6 @@ const timeAgo = (date?: Date) => {
 							<Fragment set:html={anchor} />
 						</td>
 						<td>{timeAgo(tutorial.data.reviewed)}</td>
-						<td>📝 Tutorial</td>
 						<td>{tutorial.data.difficulty}</td>
 					</tr>
 				);

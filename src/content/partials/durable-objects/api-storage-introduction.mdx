@@ -1,0 +1,29 @@
+---
+{}
+---
+
+import { GlossaryTooltip, Details } from "~/components";
+
+The Durable Object Storage API allows <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> to access transactional and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects.
+
+The Durable Object Storage API comes with several methods, including SQL, point-in-time recovery (PITR), key-value (KV), and alarm APIs. Available API methods depend on the storage backend for a Durable Objects class, either [SQLite](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) or [KV](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage).
+
+| Methods <sup>1</sup> | SQLite-backed Durable Object class | KV-backed Durable Object class |
+| -------------------- | ---------------------------------- | ------------------------------ |
+| SQL API              | ✅                                 | ❌                             |
+| PITR API             | ✅                                 | ❌                             |
+| Synchronous KV API    | ✅ <sup>2, 3</sup>                 | ❌                             |
+| Asynchronous KV API   | ✅ <sup>3</sup>                    | ✅                             |
+| Alarms API           | ✅                                 | ✅                             |
+
+<Details header="Footnotes" open={true}>
+
+<sup>1</sup> Each method is implicitly wrapped inside a transaction, such that
+its results are atomic and isolated from all other storage operations, even when
+accessing multiple key-value pairs.
+
+<sup>2</sup> KV API methods like `get()`, `put()`, `delete()`, or `list()` store
+data in a hidden SQLite table `__cf_kv`. Note that you will be able to view this table when listing all tables, but you will not be able to access its content through the SQL API.
+
+<sup>3</sup> SQLite-backed Durable Objects also use [synchronous KV API methods](/durable-objects/api/sqlite-storage-api/#synchronous-kv-api) using `ctx.storage.kv`, whereas KV-backed Durable Objects only provide [asynchronous KV API methods](/durable-objects/api/legacy-kv-storage-api/#asynchronous-kv-api).
+</Details>

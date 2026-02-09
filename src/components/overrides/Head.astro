@@ -3,8 +3,9 @@ import Default from "@astrojs/starlight/components/Head.astro";
 import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
 
-import { getEntry } from "astro:content";
+import { getEntry, getEntries } from "astro:content";
 import { getOgImage } from "~/util/og";
+import { formatContentType } from "~/util/content-type";
 import type { CollectionEntry } from "astro:content";
 
 const DEFAULT_TITLE_DELIMITER = "|";
@@ -36,8 +37,9 @@ if (currentSection) {
 	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
 	if (currentSection === "changelog") {
 		const products = frontmatter.products;
-		if (products) {
-			product = await getEntry("products", products[0]);
+		if (products && products.length > 0) {
+			const primaryProduct = products[0];
+			product = await getEntry("products", primaryProduct.id);
 		}
 	}
 
@@ -131,12 +133,7 @@ if (
 if (frontmatter.pcx_content_type) {
 	["pcx_content_type", "algolia_content_type"].map((name) => {
 		const contentType = frontmatter.pcx_content_type;
-		const updatedName = contentType
-			? (contentType.charAt(0).toUpperCase() + contentType.slice(1)).replace(
-					"-",
-					" ",
-				)
-			: "";
+		const updatedName = contentType ? formatContentType(contentType) : "";
 		metaTags.push({
 			name,
 			content: updatedName,
@@ -145,9 +142,14 @@ if (frontmatter.pcx_content_type) {
 }
 
 if (frontmatter.products) {
+	const additionalProducts = await getEntries(frontmatter.products);
+	const additionalProductsNames = additionalProducts.map(
+		(product) => product.data.name,
+	);
+
 	metaTags.push({
 		name: "pcx_additional_products",
-		content: frontmatter.products.toString(),
+		content: additionalProductsNames.toString(),
 	});
 }
 
@@ -168,7 +170,10 @@ if (lastUpdated) {
 }
 
 if (frontmatter.reviewed) {
-	const daysBetween = differenceInCalendarDays(new Date(), frontmatter.reviewed);
+	const daysBetween = differenceInCalendarDays(
+		new Date(),
+		frontmatter.reviewed,
+	);
 
 	metaTags.push({
 		name: "pcx_last_reviewed",

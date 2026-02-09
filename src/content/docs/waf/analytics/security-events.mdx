@@ -5,7 +5,14 @@ sidebar:
   order: 2
 ---
 
-import { FeatureTable, GlossaryTooltip } from "~/components";
+import {
+	FeatureTable,
+	GlossaryTooltip,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
 Security Events allows you to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and helps you tailor your security configurations.
 
@@ -28,10 +35,23 @@ Available features vary according to your Cloudflare plan:
 
 To open Security Events for a given zone:
 
-- Old dashboard: Go to **Security** > **Events**.
-- New security dashboard: Go to **Security** > **Analytics** > **Events** tab.
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
-Additionally, Enterprise customers have access to the account-level dashboard in Account Home > **Security Center** > **Security Events**.
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. Select the **Events** tab.
+
+</TabItem> <TabItem label="Old dashboard">
+
+- In the Cloudflare dashboard, go to **Security** > **Events**.
+
+</TabItem> </Tabs>
+
+Additionally, Enterprise customers have access to the account-level dashboard:
+
+<DashButton url="/?to=/:account/security-center/events" />
 
 ## Adjust displayed data
 
@@ -45,9 +65,13 @@ You can adjust the scope of analytics by manually entering filter conditions. Al
 
 To manually add a filter:
 
+<Steps>
+
 1. Select **Add filter**.
 2. Select a field, an operator, and a value. For example, to filter events by IP address, select _IP_ for **Action**, select _equals_ for the operator, and enter the IP address.
 3. Select **Apply**.
+
+</Steps>
 
 Take the following into account when entering filter values:
 

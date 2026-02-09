@@ -4,7 +4,7 @@ source: https://support.cloudflare.com/hc/en-us/articles/200170076-Understanding
 title: Under Attack mode
 ---
 
-import { Example } from "~/components"
+import { DashButton, Example } from "~/components"
 
 Cloudflare's Under Attack mode performs additional security checks to help mitigate layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked. It is designed to be used as one of the last resorts when a zone is under attack (and will temporarily pause access to your site and impact your site analytics).
 
@@ -18,9 +18,11 @@ Under Attack mode is turned off by default for your zone.
 
 To put your entire zone in Under Attack mode:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. In the zone overview page, turn on **Under Attack Mode** in the **Quick Actions** sidebar.
+1. In the Cloudflare dashboard, select your account and zone from the **Account home** page.
+
+    <DashButton url="/?to=/:account/home" />
+
+2. In the zone overview page, turn on **Under Attack Mode** in the **Quick Actions** sidebar.
 
 ### Selectively
 
@@ -52,11 +54,12 @@ To turn it on for specific ASNs (hosts/ISPs that own IP addresses), countries, o
 
 To preview what Under Attack mode looks like for your visitors:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account.
-3. Go to **Manage Account** > **Configurations**.
-4. Go to **Custom Pages**.
-5. For **Managed Challenge / I'm Under Attack Mode™**, select **Custom Pages** > **View default**.
+1. In the Cloudflare dashboard, go to the **Configurations** page.
+
+    <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **Custom Pages**.
+3. For **Managed Challenge / I'm Under Attack Mode™**, select **Custom Pages** > **View default**.
 
 The `Checking your browser before accessing...` challenge determines whether to block or allow a visitor within five seconds. After passing the challenge, the visitor does not observe another challenge until the duration configured in [Challenge Passage](/cloudflare-challenges/challenge-types/challenge-pages/challenge-passage/).
 

@@ -1,0 +1,202 @@
+---
+title: S3
+pcx_content_type: get-started
+sidebar:
+  order: 2
+description: Use R2 with S3-compatible SDKs like boto3 and the AWS SDK.
+---
+
+import { LinkCard, PackageManagers, Render, Tabs, TabItem, Steps } from "~/components";
+
+R2 provides support for a [S3-compatible API](/r2/api/s3/api/), which means you can use any S3 SDK, library, or tool to interact with your buckets. If you have existing code that works with S3, you can use it with R2 by changing the endpoint URL.
+
+## 1. Create a bucket
+
+<Render file="create-bucket-steps" product="r2" />
+
+## 2. Generate API credentials
+
+To use the S3 API, you need to generate [credentials](/r2/api/tokens/) and get an Access Key ID and Secret Access Key:
+
+<Render file="generate-s3-api-token-steps" product="r2" />
+
+You also need your S3 API endpoint URL which you can find at the bottom of the Create API Token confirmation page once you have created your token, or on the R2 Overview page:
+
+```txt
+https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+```
+
+## 3. Use an AWS SDK
+
+The following examples show how to use Python and JavaScript SDKs. For other languages, refer to [S3-compatible SDK examples](/r2/examples/aws/) for [Go](/r2/examples/aws/aws-sdk-go/), [Java](/r2/examples/aws/aws-sdk-java/), [PHP](/r2/examples/aws/aws-sdk-php/), [Ruby](/r2/examples/aws/aws-sdk-ruby/), and [Rust](/r2/examples/aws/aws-sdk-rust/).
+
+<Tabs>
+<TabItem label="Python (boto3)">
+
+<Steps>
+
+1. Install [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html):
+
+   ```sh
+   pip install boto3
+   ```
+
+2. Create a test file to upload:
+
+   ```sh
+   echo 'Hello, R2!' > myfile.txt
+   ```
+
+3. Use your credentials to create an S3 client and interact with your bucket:
+
+   ```python
+   import boto3
+
+   s3 = boto3.client(
+       service_name='s3',
+       # Provide your R2 endpoint: https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+       endpoint_url='https://<ACCOUNT_ID>.r2.cloudflarestorage.com',
+       # Provide your R2 Access Key ID and Secret Access Key
+       aws_access_key_id='<ACCESS_KEY_ID>',
+       aws_secret_access_key='<SECRET_ACCESS_KEY>',
+       region_name='auto',  # Required by boto3, not used by R2
+   )
+
+   # Upload a file
+   s3.upload_file('myfile.txt', 'my-bucket', 'myfile.txt')
+   print('Uploaded myfile.txt')
+
+   # Download a file
+   s3.download_file('my-bucket', 'myfile.txt', 'downloaded.txt')
+   print('Downloaded to downloaded.txt')
+
+   # List objects
+   response = s3.list_objects_v2(Bucket='my-bucket')
+   for obj in response.get('Contents', []):
+       print(f"Object: {obj['Key']}")
+   ```
+
+4. Save this as `example.py` and run it:
+
+   ```sh
+   python example.py
+   ```
+
+   ```sh output
+   Uploaded myfile.txt
+   Downloaded to downloaded.txt
+   Object: myfile.txt
+   ```
+
+</Steps>
+
+Refer to [boto3 examples](/r2/examples/aws/boto3/) for more operations.
+
+</TabItem>
+<TabItem label="JavaScript">
+
+<Steps>
+
+1. Install the [@aws-sdk/client-s3](https://www.npmjs.com/package/@aws-sdk/client-s3) package:
+
+   ```sh
+   npm install @aws-sdk/client-s3
+   ```
+
+2. Use your credentials to create an S3 client and interact with your bucket:
+
+   ```js
+   import {
+   	S3Client,
+   	PutObjectCommand,
+   	GetObjectCommand,
+   	ListObjectsV2Command,
+   } from "@aws-sdk/client-s3";
+
+   const s3 = new S3Client({
+   	region: "auto", // Required by AWS SDK, not used by R2
+   	// Provide your R2 endpoint: https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+   	endpoint: "https://<ACCOUNT_ID>.r2.cloudflarestorage.com",
+   	credentials: {
+   		// Provide your R2 Access Key ID and Secret Access Key
+   		accessKeyId: "<ACCESS_KEY_ID>",
+   		secretAccessKey: "<SECRET_ACCESS_KEY>",
+   	},
+   });
+
+   // Upload a file
+   await s3.send(
+   	new PutObjectCommand({
+   		Bucket: "my-bucket",
+   		Key: "myfile.txt",
+   		Body: "Hello, R2!",
+   	}),
+   );
+   console.log("Uploaded myfile.txt");
+
+   // Download a file
+   const response = await s3.send(
+   	new GetObjectCommand({
+   		Bucket: "my-bucket",
+   		Key: "myfile.txt",
+   	}),
+   );
+   const content = await response.Body.transformToString();
+   console.log("Downloaded:", content);
+
+   // List objects
+   const list = await s3.send(
+   	new ListObjectsV2Command({
+   		Bucket: "my-bucket",
+   	}),
+   );
+   console.log(
+   	"Objects:",
+   	list.Contents.map((obj) => obj.Key),
+   );
+   ```
+
+3. Save this as `example.mjs` and run it:
+
+   ```sh
+   node example.mjs
+   ```
+
+   ```sh output
+   Uploaded myfile.txt
+   Downloaded: Hello, R2!
+   Objects: [ 'myfile.txt' ]
+   ```
+
+</Steps>
+
+Refer to [AWS SDK for JavaScript examples](/r2/examples/aws/aws-sdk-js-v3/) for more operations.
+
+</TabItem>
+</Tabs>
+
+## Next steps
+
+<LinkCard
+	title="Presigned URLs"
+	href="/r2/api/s3/presigned-urls/"
+	description="Generate temporary URLs for private object access."
+/>
+
+<LinkCard
+	title="Public buckets"
+	href="/r2/buckets/public-buckets/"
+	description="Serve files directly over HTTP with a public bucket."
+/>
+
+<LinkCard
+	title="CORS"
+	href="/r2/buckets/cors/"
+	description="Configure CORS for browser-based uploads."
+/>
+
+<LinkCard
+	title="Object lifecycles"
+	href="/r2/buckets/object-lifecycles/"
+	description="Set up lifecycle rules to automatically delete old objects."
+/>

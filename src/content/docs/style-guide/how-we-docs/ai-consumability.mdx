@@ -5,7 +5,7 @@ meta:
   title: AI consumability | How we docs
 ---
 
-import { Tabs, TabItem, Width } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
 We have various approaches for making our content visible to AI as well as making sure it's easily consumed in a plain-text format.
 
@@ -13,22 +13,7 @@ We have various approaches for making our content visible to AI as well as makin
 
 The primary proposal in this space is [`llms.txt`](https://llmstxt.org/), offering a well-known path for a Markdown list of all your pages.
 
-We have implemented `llms.txt`, `llms-full.txt` and also created per-page Markdown links as follows:
-
-- [`llms.txt`](/llms.txt)
-- [`llms-full.txt`](/llms-full.txt)
-  - We also provide a `llms-full.txt` file on a per-product basis, i.e [`/workers/llms-full.txt`](/workers/llms-full.txt)
-- [`/$page/index.md`](index.md)
-  - Add `/index.md` to the end of any page to get the Markdown version, i.e [`/style-guide/index.md`](/style-guide/index.md)
-- [`/markdown.zip`](/markdown.zip)
-  - An export of all of our documentation in the aforementioned `index.md` format.
-
-In the top right of this page, you will see a `Page options` button where you can copy the current page as Markdown that can be given to your LLM of choice.
-
-<Width size="medium">
-	![Page options
-	button](~/assets/images/style-guide/how-we-docs/page-options.png)
-</Width>
+<Render file="llms-txt" product="style-guide" />
 
 ## Textual representation of interactive elements
 

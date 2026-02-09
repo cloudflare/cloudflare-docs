@@ -9,7 +9,7 @@ description: Authenticated Origin Pulls helps ensure requests to your origin
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, Render } from "~/components"
 
 Authenticated Origin Pulls (AOP) helps ensure requests to your origin server come from the Cloudflare network, which provides an additional layer of security on top of [Full](/ssl/origin-configuration/ssl-modes/full/) or [Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/) encryption modes.
 
@@ -25,6 +25,11 @@ Although Cloudflare provides you a certificate to easily [configure zone-level a
 
 Using a custom certificate is possible with both [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) and [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) authenticated origin pulls and is required if you need your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant.
 
+:::note
+
+<Render file="aop-disablement-callout" product="ssl" />
+:::
+
 ## Limitations
 
 Authenticated Origin Pulls does not apply when your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
@@ -32,4 +37,4 @@ Authenticated Origin Pulls does not apply when your [SSL/TLS encryption mode](/s
 ## Related topics
 
 * [SSL/TLS Encryption Modes](/ssl/origin-configuration/ssl-modes/)
-* [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
+* [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)

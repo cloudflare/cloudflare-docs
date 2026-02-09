@@ -1,0 +1,36 @@
+---
+title: Type conversion functions
+pcx_content_type: reference
+sidebar:
+  order: 11
+head:
+  - tag: title
+    content: SQL Reference
+
+---
+
+import { Badge } from "~/components"
+
+## toUInt8 <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toUInt8(<expression>)
+```
+
+Converts any numeric expression, or expression resulting in a string representation of a decimal, into an unsigned 8 bit integer.
+
+Behaviour for negative numbers is undefined.
+
+## toUInt32
+
+Usage:
+
+```sql
+toUInt32(<expression>)
+```
+
+Converts any numeric expression, or expression resulting in a string representation of a decimal, into an unsigned 32 bit integer.
+
+Behaviour for negative numbers is undefined.

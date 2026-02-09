@@ -5,6 +5,7 @@ title: Supabase
 sidebar:
   order: 4
 description: Connect Hyperdrive to a Supabase Postgres database.
+reviewed: 2024-01-09
 ---
 
 import { Render } from "~/components";
@@ -26,6 +27,12 @@ GRANT postgres to hyperdrive_user;
 The database endpoint can be found in the [database settings page](https://supabase.com/dashboard/project/_/settings/database).
 
 With a database user, password, database endpoint (hostname and port) and database name (default: postgres), you can now set up Hyperdrive.
+
+:::note
+
+When connecting to Supabase from Hyperdrive, you should use the **Direct connection** connection string rather than the pooled connection strings. Hyperdrive will perform pooling of connections to ensure optimal access from Workers. 
+
+:::
 
 ## 2. Create a database configuration
 

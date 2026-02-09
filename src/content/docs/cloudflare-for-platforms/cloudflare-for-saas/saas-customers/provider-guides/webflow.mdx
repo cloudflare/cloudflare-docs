@@ -4,12 +4,16 @@ title: Webflow
 head:
   - tag: title
     content: Webflow | Provider guides
-description: Learn how to configure your Enterprise zone with Webflow.
+description: Learn how to configure your Cloudflare zone with Webflow.
 ---
 
 import { Render } from "~/components";
 
-<Render file="provider-guide-intro" params={{ providerName: "Webflow" }} />
+<Render
+	file="provider-guide-intro"
+	params={{ providerName: "Webflow" }}
+	product="cloudflare-for-platforms"
+/>
 
 ## Benefits
 
@@ -21,13 +25,21 @@ For more details about how O2O is different than other Cloudflare setups, refer 
 
 ## Enable
 
-You can enable O2O on any Cloudflare zone plan.
+Webflow customers can enable O2O on any Cloudflare zone plan.
 
-To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a `CNAME` DNS record.
+To enable O2O for a specific hostname within a Cloudflare Zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied `CNAME` DNS record with your Webflow site name as the target. Webflow's domain addition setup will walk you through other validation steps.
 
 | Type    | Name                 | Target                | Proxy status |
 | ------- | -------------------- | --------------------- | ------------ |
-| `CNAME` | `<YOUR_SHOP_DOMAIN>` | `shops.myshopify.com` | Proxied      |
+| `CNAME` | `<YOUR_DOMAIN>`      | `cdn.webflow.com`     | Proxied      |
+
+## Zone hold
+
+<Render
+	file="provider-guide-zone-hold"
+	params={{ providerName: "Webflow" }}
+	product="cloudflare-for-platforms"
+/>
 
 ## Product compatibility
 
@@ -38,7 +50,11 @@ To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dn
 
 ## Additional support
 
-<Render file="provider-guide-help" params={{ providerName: "Webflow" }} />
+<Render
+	file="provider-guide-help"
+	params={{ providerName: "Webflow" }}
+	product="cloudflare-for-platforms"
+/>
 
 ### DNS CAA records
 

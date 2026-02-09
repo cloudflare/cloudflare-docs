@@ -8,9 +8,9 @@ head:
     content: Get started - Dashboard
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
-Follow this guide to create a Workers application using [the Cloudflare dashboard](https://dash.cloudflare.com).
+Follow this guide to create a Workers application using the Cloudflare dashboard.
 
 <Render file="playground-callout" product="workers" />
 
@@ -22,13 +22,15 @@ Follow this guide to create a Workers application using [the Cloudflare dashboar
 
 To get started with a new Workers application:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to the **Workers & Pages** section of the dashboard.
-2. Select [Create](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create). From here, you can:
-    * You can select from the gallery of production-ready templates
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+3. Select **Create application**. From here, you can:
+    * Select from the gallery of production-ready templates
     * Import an existing Git repository on your own account
     * Let Cloudflare clone and bootstrap a public repository containing a Workers application.
-3. Once you've connected to your chosen [Git provider](/workers/ci-cd/builds/git-integration/github-integration/), configure your project and click `Deploy`.
+3. Once you have connected to your chosen [Git provider](/workers/ci-cd/builds/git-integration/github-integration/), configure your project and select **Deploy**.
 4. Cloudflare will kick off a new build and deployment. Once deployed, preview your Worker at its provided `workers.dev` subdomain.
 
 ## Continue development

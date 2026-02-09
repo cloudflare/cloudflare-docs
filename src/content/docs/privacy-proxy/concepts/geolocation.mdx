@@ -1,0 +1,92 @@
+---
+title: Geolocation
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+Privacy Proxy preserves user geolocation without exposing real IP addresses. This ensures location-based services work correctly while maintaining privacy.
+
+## Why geolocation matters
+
+Many online services use IP addresses to determine user location:
+
+- Search engines return locally relevant results.
+- Content providers enforce regional licensing restrictions.
+- E-commerce sites show local pricing and shipping options.
+- News sites display region-specific content.
+
+Traditional VPNs and proxies often break these services because traffic exits from data centers far from the user's actual location. Privacy Proxy solves this by selecting egress IP addresses that match the user's geographic region.
+
+## How geolocation works
+
+Privacy Proxy uses geohashes to preserve location without revealing precise coordinates.
+
+### Geohash encoding
+
+A [geohash](https://en.wikipedia.org/wiki/Geohash) is a compact representation of latitude and longitude. Geohashes use a hierarchical encoding where longer strings represent more precise locations:
+
+| Geohash length | Approximate area |
+| ---------------- | ------------------ |
+| 1 character | ~5,000 km |
+| 2 characters | ~1,250 km |
+| 3 characters | ~150 km |
+| 4 characters | ~40 km |
+| 5 characters | ~5 km |
+
+Privacy Proxy uses reduced-precision geohashes (typically four to five characters) to locate users to a city or region without pinpointing their exact location.
+
+### Egress IP selection
+
+When a client connects to Privacy Proxy:
+
+1. The client (or first-hop proxy in double-hop deployments) determines the user's approximate location.
+2. The client sends a geohash in the `sec-ch-geohash` header.
+3. Privacy Proxy validates the geohash and selects an egress IP address from a pool registered to that geographic area.
+4. Destination servers see the egress IP and geolocate the user to the correct region.
+
+### Geohash header format
+
+The `sec-ch-geohash` header includes the geohash and country code:
+
+```http
+sec-ch-geohash: xn76c-JP
+```
+
+The format is `<geohash>-<country_code>`. The country code helps resolve edge cases where geohashes span country borders.
+
+## Geolocation accuracy
+
+Cloudflare maintains egress IP pools in hundreds of cities worldwide. When you register egress IPs with geolocation databases, they map to specific locations.
+
+Privacy Proxy achieves:
+
+- **City-level accuracy** by default, so users get locally relevant search results.
+- **Country-level accuracy** as a fallback if city-level is not available.
+
+Users can opt for coarser geolocation (country and timezone only) if they prefer less precise location sharing.
+
+### The pizza test
+
+A simple way to verify geolocation accuracy is to search for "pizza near me" through the proxy. If results show pizza places in the user's actual city rather than a distant data center, geolocation is working correctly.
+
+## IPv6 and geolocation precision
+
+Privacy Proxy achieves better geolocation precision over IPv6. If your origin servers support IPv6 (AAAA DNS records), the proxy prefers IPv6 egress addresses, which are registered with greater geographic precision than IPv4 equivalents.
+
+To maximize geolocation accuracy for your users, ensure your services are reachable over IPv6.
+
+## Geolocation in double-hop deployments
+
+In [double-hop deployments](/privacy-proxy/concepts/deployment-models/#double-hop), Proxy A (which you operate) is responsible for determining and forwarding the geohash:
+
+1. Proxy A geolocates the client's IP address.
+2. Proxy A converts the location to a geohash with appropriate precision.
+3. Proxy A includes the geohash in the forwarded CONNECT request to Proxy B.
+4. Proxy B (Cloudflare) selects an egress IP based on the geohash.
+
+The geohash is cryptographically protected to prevent clients from spoofing their location.
+
+## Related resources
+
+- [Geo-egress: Improving WARP user experience on a larger network](https://blog.cloudflare.com/geoexit-improving-warp-user-experience-larger-network/) - How Cloudflare implements geolocation-aware egress.

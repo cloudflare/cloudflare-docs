@@ -1,5 +1,6 @@
 import { defineWorkspace, defineProject } from "vitest/config";
 import { defineWorkersProject } from "@cloudflare/vitest-pool-workers/config";
+import { getViteConfig } from "astro/config";
 
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -27,6 +28,13 @@ const workspace = defineWorkspace([
 		test: {
 			name: "Node",
 			include: ["**/*.node.test.ts"],
+		},
+		plugins: [tsconfigPaths()],
+	}),
+	getViteConfig({
+		test: {
+			name: "Astro",
+			include: ["**/*.astro.test.ts"],
 		},
 		plugins: [tsconfigPaths()],
 	}),

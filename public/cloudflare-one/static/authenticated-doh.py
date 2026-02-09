@@ -69,7 +69,7 @@ def request_doh_token(account_tag, user_id, client_id, client_secret):
                '-H', f"Cf-Access-Client-Id: {client_id}",
                '-H', f"Cf-Access-Client-Secret: {client_secret}"]
     if verbose:
-        print(f"Issuing request {' '.join(command)}")
+        print(f"Issuing request for {team_name}, {account_tag}, and {user_id}.")
     response = json.loads(subprocess.check_output(command))
     if verbose:
         print("Got response:")
@@ -94,7 +94,7 @@ def request(method, url, body):
         command.append('--data')
         command.append(json.dumps(body))
     if verbose:
-        print(f"Issuing request {' '.join(command)}")
+        print(f"Issuing request for {method} and {url}")
     response = json.loads(subprocess.check_output(command))
     if 'errors' in response and len(response['errors']) > 0:
         pprint(response)
@@ -145,9 +145,7 @@ client_secret = ""
 if client_id == "new":
     service_token_name = input('Please input name for service token > ')
     client_id, client_secret = request_create_service_token(service_token_name)
-    print(
-        f"Created service token with client_id {client_id} and client_secret {client_secret}. You may want to save these secrets.")
-
+    print(f"Created service token with client_id {client_id} and client_secret {client_secret}. You may want to save these secrets.")
 
 if len(client_secret) == 0:
     client_secret = read_string_option('CLIENT_SECRET', "client secret")

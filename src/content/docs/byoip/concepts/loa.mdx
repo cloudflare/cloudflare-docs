@@ -10,20 +10,26 @@ head:
 
 import { Render } from "~/components";
 
-A Letter of Agency (LOA) - sometimes referred to as a Letter of Authorization - is a document that authorizes Cloudflare to announce a prefix(es) on behalf of another entity. The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on behalf of another entity.
+A Letter of Agency (LOA) - sometimes referred to as a Letter of Authorization - is a document that authorizes Cloudflare to announce prefixes on behalf of another entity. The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on behalf of another entity.
 
 The letter must contain both the prefixes you are authorizing Cloudflare to announce and which ASN they will be announced under. Cloudflare can announce a prefix under your ASN or you can use Cloudflare's ASN, which is AS13335.
 
-:::note
-For all future onboardings, you must use AS13335. Current customers who are already using Cloudflare's AS209242 do not need to make any changes and can continue using that ASN.
-:::
+## Requirements
 
-Cloudflare accepts digital signatures on an LOA, as long as it is clear who is signing the LOA.
+- For all future onboardings, if using the Cloudflare ASN, you must use AS13335. Current customers who are already using Cloudflare's AS209242 do not need to make any changes and can continue using that ASN.
 
-:::note[Note]
-An LOA is a formal document which should be on company letterhead and contain a wet signature. The Letter of Agency must be a PDF. Transit providers may reject the LOA if it is in a JPG or PNG format.
-:::
+- Cloudflare accepts digital signatures on an LOA, as long as it is clear who is signing the LOA.
 
-You can use the below template when creating an LOA document.
+- An LOA is a formal document which should be on company letterhead and contain a wet signature. The Letter of Agency must be a PDF. Transit providers may reject the LOA if it is in a JPG or PNG format.
+
+## Auto-generated LOA
+
+If you are onboarding your own IPs via the [self-serve flow](/byoip/get-started/), you can set `delegate_loa_creation` (in the [Add Prefix API call](/api/resources/addressing/subresources/prefixes/methods/create/)) to `true` . This will allow Cloudflare to automatically generate the LOA, speeding up the process.
+
+Auto-generated LOAs rely on [RPKI-signed ROAs](/byoip/concepts/route-filtering-rpki/) and [ownership validation](/byoip/get-started/#validate-prefix-ownership) checks.
+
+## Template
+
+If you need to create an LOA document, you can use the template below.
 
 <Render file="loa" product="byoip" />

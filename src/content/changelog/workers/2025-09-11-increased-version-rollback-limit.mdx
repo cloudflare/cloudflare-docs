@@ -1,0 +1,18 @@
+---
+title: Worker version rollback limit increased from 10 to 100
+description: Workers can now be deployed and rolled back to their most recent 100 versions, up from the previous limit of 10.
+products:
+  - workers
+date: 2025-09-11
+---
+The number of recent versions available for a Worker rollback has been increased from 10 to 100.
+
+This allows you to: 
+
+* Promote any of the 100 most recent versions to be the active deployment. 
+
+* Split traffic using [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) between your latest code and any of the 100 most recent versions.
+
+You can do this through the Cloudflare dashboard or with [Wrangler's rollback command](/workers/wrangler/commands/#rollback)
+
+Learn more about [versioned deployments](/workers/configuration/versions-and-deployments/) and [rollbacks](/workers/configuration/versions-and-deployments/rollbacks/). 

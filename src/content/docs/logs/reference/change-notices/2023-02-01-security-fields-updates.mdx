@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, DashButton } from "~/components"
 
 Cloudflare will deploy some updates to security-related fields in Cloudflare Logs. These updates will affect the following datasets:
 
@@ -139,11 +139,13 @@ After updating Logpush jobs, you may need to update external filters or reports 
 
 ### Update Logpush job in the dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Analytics & Logs** > **Logs**.
-3. Select **Edit** next to the Logpush job you wish to edit.
-4. Under **Select data fields**, update the fields in your job. The new security log fields are available under **General**.
-5. Select **Save changes**.
+1. In the Cloudflare dashboard, go to the **Logpush** page.
+ 
+    <DashButton url="/?to=/:account/:zone/analytics/logs" />
+
+2. Select **Edit** next to the Logpush job you wish to edit.
+3. Under **Select data fields**, update the fields in your job. The new security log fields are available under **General**.
+4. Select **Save changes**.
 
 ### Update Logpush job via API
 

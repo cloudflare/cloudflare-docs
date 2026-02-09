@@ -7,6 +7,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 After you start the transfer process to Cloudflare Registrar, your previous registrar has five days to release the domain after a successful transfer request. If your transfer has not been completed within that time frame, something has likely gone wrong.
 
 Most issues with a stalled transfer can be solved by checking the following details and [restarting the transfer](#restart-your-transfer).
@@ -19,7 +21,7 @@ You have reapplied the registrar lock at your current registrar since requesting
 
 Your transfer has been rejected by your previous registrar. There are several reasons for this to happen:
 
-* You actively rejected the transfer request in the email you received from your registrar or on your registrar’s interface.
+* You actively rejected the transfer request in the email you received from your registrar or on your registrar's interface.
 * Your registrar determined the domain is not eligible for transfer.
 * Some registrars allow customers to enable a setting to reject all transfer requests.
 * In some instances, registrars may reject the transfer if they suspect malicious behavior.
@@ -41,7 +43,9 @@ Some registrars may prohibit transfer requests if you have WHOIS privacy service
 This solution does not apply to `.uk` domains.
 :::
 
-1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Select **Domain Registration** > **Manage Domains**.
-3. Find the correct domain and select **Manage**.
-4. Select **Cancel Transfer and Retry**. After you initiate the retry, you must re-enter your auth code and confirm your WHOIS information.
+1. In the Cloudflare dashboard, go to the **Manage Domains** page.
+
+    <DashButton url="/?to=/:account/registrar/domains" />
+
+2. Find the correct domain and select **Manage**.
+3. Select **Cancel Transfer and Retry**. After you initiate the retry, you must re-enter your auth code and confirm your WHOIS information.

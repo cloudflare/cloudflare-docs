@@ -7,13 +7,20 @@ sidebar:
   order: 2
 ---
 
-import { TabItem, Tabs, Steps, Render, WranglerConfig } from "~/components";
+import {
+	TabItem,
+	Tabs,
+	Steps,
+	Render,
+	WranglerConfig,
+	DashButton,
+} from "~/components";
 
 Workers Logs lets you automatically collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Data is written to your Cloudflare Account, and you can query it in the dashboard for each of your Workers. All newly created Workers will come with the observability setting enabled by default.
 
 Logs include [invocation logs](/workers/observability/logs/workers-logs/#invocation-logs), [custom logs](/workers/observability/logs/workers-logs/#custom-logs), errors, and uncaught exceptions.
 
-![Example showing the Workers Logs Dashboard](~/assets/images/workers-observability/preview.png)
+![Example showing the Workers Logs Dashboard](~/assets/images/workers-observability/wobs_workers_events_122.png)
 
 To send logs to a third party, use [Workers Logpush](/workers/observability/logs/logpush/) or [Tail Workers](/workers/observability/logs/tail-workers/).
 
@@ -27,10 +34,13 @@ You must add the observability setting for your Worker to write logs to Workers 
 
 <WranglerConfig>
 
-    ```toml
-    [observability]
-    enabled = true
-    head_sampling_rate = 1 # optional. default = 1.
+    ```jsonc
+    {
+      "observability": {
+        "enabled": true,
+        "head_sampling_rate": 1 // optional. default = 1.
+      }
+    }
     ```
 
 </WranglerConfig>
@@ -43,10 +53,17 @@ You must add the observability setting for your Worker to write logs to Workers 
 
     <WranglerConfig>
 
-    ```toml
-    [env.staging.observability]
-    enabled = true
-    head_sampling_rate = 1 # optional
+    ```jsonc
+    {
+      "env": {
+        "staging": {
+          "observability": {
+            "enabled": true,
+            "head_sampling_rate": 1 // optional
+          }
+        }
+      }
+    }
     ```
 
     </WranglerConfig>
@@ -56,14 +73,14 @@ You must add the observability setting for your Worker to write logs to Workers 
 
 ## View logs from the dashboard
 
-Access logs for your Worker from the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/observability/logs/).
+Access logs for your Worker from the Cloudflare dashboard:
 
-<Steps>
-	1. Log in to the [Cloudflare
-	dashboard](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/observability/logs/)
-	and select your account. 2. In Account Home, go to **Workers & Pages**. 3. In
-	**Overview**, select your **Worker**. 4. Select **Logs**.
-</Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your **Worker**.
+3. Select **Observability**.
 
 ## Best Practices
 
@@ -91,9 +108,14 @@ Invocation logs can be disabled in wrangler by adding the `invocation_logs = fal
 
 <WranglerConfig>
 
-```toml
-[observability.logs]
-invocation_logs = false
+```jsonc
+{
+	"observability": {
+		"logs": {
+			"invocation_logs": false
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -173,10 +195,13 @@ To enable head-based sampling, set `head_sampling_rate` within the observability
 
 <WranglerConfig>
 
-```toml
-[observability]
-enabled = true
-head_sampling_rate = 0.01 # 1% sampling rate
+```jsonc
+{
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 0.01 // 1% sampling rate
+	}
+}
 ```
 
 </WranglerConfig>

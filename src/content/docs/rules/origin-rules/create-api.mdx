@@ -22,6 +22,7 @@ When creating an origin rule via API, make sure you:
 
 <Render
 	file="rules-creation-workflow"
+	product="rules"
 	params={{ ruleName: "an origin rule", phaseName: "http_request_origin" }}
 />
 
@@ -65,7 +66,11 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	}}
 />
 
-<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 </Details>
 

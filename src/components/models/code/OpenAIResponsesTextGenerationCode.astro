@@ -16,7 +16,7 @@ const worker = `
 export default {
 	async fetch(request, env): Promise<Response> {
 		const response = await env.AI.run('${name}', {
-			instructions: 'You are a concise.',
+			instructions: 'You are a concise assistant.',
 			input: 'What is the origin of the phrase Hello, World?',
 		});
 

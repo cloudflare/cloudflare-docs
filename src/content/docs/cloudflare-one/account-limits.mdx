@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Account limits
 sidebar:
-  order: 12
+  order: 17
 ---
 
 import { Render } from "~/components";
@@ -11,22 +11,23 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## Access
 
-| Feature                     | Limit |
-| --------------------------- | ----- |
-| Applications count          | 500   |
-| Audit Logpush jobs          | 5     |
-| Email addresses per rule    | 1,000 |
-| Group count                 | 300   |
-| Group size                  | 1,000 |
-| IP addresses per rule       | 1,000 |
-| mTLS root certificates      | 50    |
-| Service tokens count        | 50    |
-| IdP count                   | 50    |
-| Reusable policies count     | 500   |
-| Rules count per application | 1,000 |
-| Rules count per group       | 1,000 |
-| Domains per application     | 5     |
-| Infrastructure targets      | 5,000 |
+| Feature                  | Limit |
+| ------------------------ | ----- |
+| Applications             | 500   |
+| Audit Logpush jobs       | 5     |
+| Email addresses per rule | 1,000 |
+| Rule groups              | 300   |
+| Rules per rule group     | 1,000 |
+| IP addresses per rule    | 1,000 |
+| mTLS root certificates   | 50    |
+| Service tokens           | 50    |
+| Identity providers       | 50    |
+| Reusable policies        | 500   |
+| Rules per application    | 1,000 |
+| Domains per application  | 5     |
+| Infrastructure targets   | 5,000 |
+| MCP portals              | 20    |
+| MCP servers per portal   | 10    |
 
 ## Gateway
 
@@ -61,12 +62,13 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## Cloudflare Tunnel
 
-| Feature                                  | Limit |
-| ---------------------------------------- | ----- |
-| `cloudflared` tunnels per account        | 1,000 |
-| WARP Connectors per account              | 10    |
-| IP routes per account                    | 1,000 |
-| Active `cloudflared` replicas per tunnel | 25    |
+| Feature                                            | Limit |
+| -------------------------------------------------- | ----- |
+| `cloudflared` tunnels per account                  | 1,000 |
+| WARP Connectors per account                        | 10    |
+| Routes (CIDR routes + Hostname routes) per account | 1,000 |
+| Active `cloudflared` replicas per tunnel           | 25    |
+| Virtual networks per account                       | 1,000 |
 
 ## Digital Experience Monitoring (DEX)
 
@@ -99,7 +101,8 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## WARP
 
-| Feature                                                                    | Character limit |
-| -------------------------------------------------------------------------- | --------------- |
-| Device profile expression                                                  | 10,000          |
-| Combined Split Tunnel and Local Domain Fallback entries per device profile | 1,000           |
+| Feature                                                                    | Limit  |
+| -------------------------------------------------------------------------- | ------ |
+| Characters per device profile expression                                   | 10,000 |
+| Combined Split Tunnel and Local Domain Fallback entries per device profile | 1,000  |
+| Device IP assignments per account 										  									 | 30     |

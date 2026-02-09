@@ -1,0 +1,18 @@
+---
+{}
+---
+
+import { DashButton } from "~/components";
+
+Use IPsec logs to troubleshoot issues with your IPsec tunnels during the key-exchange phase of the IPsec handshake. Configure a logpush job to forward these logs to your preferred storage service for analysis.
+
+## Set up an IPsec logpush job
+
+1. Go to the **Logpush** page.
+
+	<DashButton url="/?to=/:account/logs" />
+
+2. Select **Create a Logpush job**.
+3. Select **IPsec logs** as your dataset.
+
+Refer to the [Logpush documentation](/logs/logpush/) for more information about features, including the [available fields](/logs/logpush/logpush-job/datasets/account/ipsec_logs/) in the dataset.

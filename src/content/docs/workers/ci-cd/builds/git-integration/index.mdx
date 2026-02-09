@@ -6,6 +6,8 @@ sidebar:
   order: 3
 ---
 
+import { DashButton, Steps } from "~/components";
+
 Cloudflare supports connecting your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/) and [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/) repository to your Cloudflare Worker, and will automatically deploy your code every time you push a change.
 
 Adding a Git integration also lets you monitor build statuses directly in your Git provider using [pull request comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment), [check runs](/workers/ci-cd/builds/git-integration/github-integration/#check-run), or [commit statuses](/workers/ci-cd/builds/git-integration/gitlab-integration/#commit-status), so you can manage deployments without leaving your workflow.
@@ -33,6 +35,16 @@ For details on providing access to organization accounts, see [GitHub organizati
 
 ## Manage a Git Integration
 
-To manage your Git installation, go to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > your Worker > **Settings** > **Builds** > under **Git Repository**, select **Manage**.
+To manage your Git installation:
+
+<Steps>
+1. Go to the **Workers & Pages** page in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker.
+3. Go to **Settings** > **Builds**.
+4. Under **Git Repository**, select **Manage**.
+</Steps>
 
 This can be useful for managing repository access or troubleshooting installation issues by reinstalling. For more details, see the [GitHub](/workers/ci-cd/builds/git-integration/github-integration) and [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration) guides for how to manage your installation.

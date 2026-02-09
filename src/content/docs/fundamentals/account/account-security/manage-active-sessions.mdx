@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 <Render file="account-manage-active-sessions" product="fundamentals" />
 
@@ -13,7 +13,10 @@ import { Render } from "~/components";
 
 To view the active sessions associated with your email address:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+1. In the Cloudflare dashboard, go to the **Account home** page.
+
+    <DashButton url="/?to=/:account/home" />
+
 2. Go to **My Profile** > **Sessions**.
 
 ## Revoke active sessions

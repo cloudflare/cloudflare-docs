@@ -1,0 +1,25 @@
+---
+params:
+  - locateText
+  - productGatewayOrEgress
+  - magicWord
+---
+
+import { Aside, Markdown } from "~/components";
+
+5. <Markdown text={props.locateText} />
+6. In **Customer device ASN**, enter the ASN for your network.
+
+	{ props.magicWord !== "Magic Transit" && (
+		<>
+		<Aside type="note">Multiple tunnels or interconnects with the same ASN will not exchange routes if standard BGP loop prevention is enabled. Consider using a different ASN per session, or enabling duplicate ASNs (like Cisco's <code>allowas-in</code> feature) to exchange routes between networks. </Aside>
+		</>
+		)
+	}
+
+7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations and is not a security mechanism.
+8. (Optional) In **Additional Advertised prefix list**, input any additional prefixes you want to advertise alongside your existing routes. Leave this blank if you do not want to advertise extra routes. Typical prefixes to configure here include:
+	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
+	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/#add-ip-route-to-router).
+	{ props.magicWord !== "Magic Transit" && (<Markdown text={`- A route to \`100.64.0.0/12\`, the portion of CGNAT space [used by default for Cloudflare Source IPs](${props.magicWord === "WAN Tunnels" ? "/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/configure-cloudflare-source-ips/" : "/magic-wan/configuration/manually/how-to/configure-cloudflare-source-ips/"}).`} inline={false} />)}
+9. Select **Save**.

@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { TabItem, Tabs, Render } from "~/components";
+import { TabItem, Tabs, Render, DashButton } from "~/components";
 
 Log Explorer allows you to enable or disable which datasets are available to query in Log Search.
 
@@ -13,21 +13,45 @@ Log Explorer allows you to enable or disable which datasets are available to que
 
 Log Explorer currently supports the following datasets:
 
-- [HTTP requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) (`FROM http_requests`)
-- [Firewall events](/logs/logpush/logpush-job/datasets/zone/firewall_events/) (`FROM firewall_events`)
-- [Access](/cloudflare-one/policies/access/)
-- [CASB](/cloudflare-one/applications/casb/)
-- [Secure Web Gateway](/cloudflare-one/policies/gateway/)
-- [WARP](/warp-client/)
+### Zone level
+
+- [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/)	(`http_requests`)
+- [Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/)	(`firewall_events`)
+- [DNS Logs](/logs/logpush/logpush-job/datasets/zone/dns_logs/) (`dns_logs`)
+- [NEL Reports](/logs/logpush/logpush-job/datasets/zone/nel_reports/) (`nel_reports`)
+- [Page Shield Events](/logs/logpush/logpush-job/datasets/zone/page_shield_events/) (`page_shield_events`)
+- [Spectrum Events](/logs/logpush/logpush-job/datasets/zone/spectrum_events/) (`spectrum_events`)
+- [Zaraz Events](/logs/logpush/logpush-job/datasets/zone/zaraz_events/) (`zaraz_events`)
+
+### Account level
+
+- [Access requests](/logs/logpush/logpush-job/datasets/account/access_requests/)	(`access_requests`)
+- [CASB findings](/logs/logpush/logpush-job/datasets/account/casb_findings/)	(`casb_findings`)
+- [Device posture results](/logs/logpush/logpush-job/datasets/account/device_posture_results/) (`device_posture_results`)
+- [Gateway DNS](/logs/logpush/logpush-job/datasets/account/gateway_dns/)	(`gateway_dns`)
+- [Gateway HTTP](/logs/logpush/logpush-job/datasets/account/gateway_http/)	(`gateway_http`)
+- [Gateway Network](/logs/logpush/logpush-job/datasets/account/gateway_network/)	(`gateway_network`)
+- [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/)	(`zero_trust_network_sessions`)
+- [Audit Logs](/logs/logpush/logpush-job/datasets/account/audit_logs/) (`audit_logs`)
+- [Audit_logs_v2](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/) (`audit_logs_v2`)
+- [Browser Isolation User Actions](/logs/logpush/logpush-job/datasets/account/biso_user_actions/) (`biso_user_actions`)
+- [DNS firewall logs](/logs/logpush/logpush-job/datasets/account/dns_firewall_logs/) (`dns_firewall_logs`)
+- [Email security alerts](/logs/logpush/logpush-job/datasets/account/email_security_alerts/) (`email_security_alerts`)
+- [Magic IDS Detections](/logs/logpush/logpush-job/datasets/account/magic_ids_detections/) (`magic_ids_detections`) 
+- [Network Analytics](/logs/logpush/logpush-job/datasets/account/network_analytics_logs/) (`network_analytics_logs`)
+- [Sinkhole HTTP Logs](/logs/logpush/logpush-job/datasets/account/sinkhole_http_logs/) (`sinkhole_http_logs`)
+- [IP Sec Logs](/logs/logpush/logpush-job/datasets/account/ipsec_logs/) (`ipsec_logs`) 
 
 ## Enable Log Explorer
 
 In order for Log Explorer to begin storing logs, you need to enable the desired datasets. You can do this via the dashboard or the API.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Log Explorer** > **Manage datasets**.
-3. Select **Add dataset** to select the datasets you want to query. 
-4. Choose a dataset and then a zone. Then, select **Add**. You can always return to this page to enable more datasets or manage your existing ones.
+1. In the Cloudflare dashboard, go to the **Log Explorer** > **Manage datasets** page.
+
+   <DashButton url="/?to=/:account/log-explorer/manage-sources" />
+
+2. Select **Add dataset** to select the datasets you want to query. 
+3. Choose a dataset and then a zone. Then, select **Add**. You can always return to this page to enable more datasets or manage your existing ones.
 
 :::note
 It may take a few minutes for the logs to become available for querying.

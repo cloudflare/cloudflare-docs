@@ -1,4 +1,9 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import {
+	useEffect,
+	useState,
+	type ChangeEvent,
+	type KeyboardEvent,
+} from "react";
 import FieldBadges from "./fields/FieldBadges";
 import Markdown from "react-markdown";
 import type { CollectionEntry } from "astro:content";
@@ -95,6 +100,11 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 					placeholder="Search fields"
 					value={filters.search}
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+					onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+						if (e.key === "Escape") {
+							setFilters({ ...filters, search: "" });
+						}
+					}}
 				/>
 
 				<div className="mb-8! hidden md:block">

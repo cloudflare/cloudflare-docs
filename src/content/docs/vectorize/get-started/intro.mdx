@@ -120,10 +120,15 @@ To bind your index to your Worker, add the following to the end of your Wrangler
 
 <WranglerConfig>
 
-```toml
-[[vectorize]]
-binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
-index_name = "tutorial-index"
+```jsonc
+{
+	"vectorize": [
+		{
+			"binding": "VECTORIZE", // available in your Worker on env.VECTORIZE
+			"index_name": "tutorial-index"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

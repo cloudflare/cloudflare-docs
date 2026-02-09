@@ -1,11 +1,11 @@
 ---
-
 summary: Run multiple instances across Cloudflare's network
 pcx_content_type: example
 title: Stateless Instances
 sidebar:
   order: 2
 description: Run multiple instances across Cloudflare's network
+reviewed: 2025-06-24
 ---
 
 To simply proxy requests to one of multiple instances of a container, you can use the `getRandom` function:
@@ -31,10 +31,10 @@ export default {
 
 :::note
 This example uses the `getRandom` function, which is a temporary helper that will randomly
-select of of N instances of a Container to route requests to.
+select one of N instances of a Container to route requests to.
 
 In the future, we will provide improved latency-aware load balancing and autoscaling.
 
 This will make scaling stateless instances simple and routing more efficient. See the
-[autoscaling documentation](/containers/scaling-and-routing) for more details.
+[autoscaling documentation](/containers/platform-details/scaling-and-routing) for more details.
 :::

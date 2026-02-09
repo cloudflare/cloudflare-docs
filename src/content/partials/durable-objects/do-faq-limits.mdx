@@ -9,7 +9,7 @@ import {GlossaryTooltip, WranglerConfig} from "~/components";
 Durable Objects can scale horizontally across many Durable Objects. Each individual Object is inherently single-threaded.
 
 - An individual Object has a soft limit of 1,000 requests per second. You can have an unlimited number of individual objects per namespace.
-- A simple [storage](/durable-objects/api/storage-api/) `get()` on a small value that directly returns the response may realize a higher request throughput compared to a Durable Object that (for example) serializes and/or deserializes large JSON values.
+- A simple [storage](/durable-objects/api/sqlite-storage-api/) `get()` on a small value that directly returns the response may realize a higher request throughput compared to a Durable Object that (for example) serializes and/or deserializes large JSON values.
 - Similarly, a Durable Object that performs multiple `list()` operations may be more limited in terms of request throughput.
 
 A Durable Object that receives too many requests will, after attempting to queue them, return an [overloaded](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded) error to the caller.

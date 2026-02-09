@@ -1,10 +1,11 @@
 ---
 title: Onboard a domain
 pcx_content_type: tutorial
-
+description: >-
+  Learn how to connect the domain to Cloudflare, even if you purchased your domain name from another provider.
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { DashButton, GlossaryTooltip, Render, Stream } from "~/components"
 
 If you purchased your domain from a different provider, you can still connect the domain to Cloudflare. After you connect your domain to Cloudflare, Cloudflare will act as the [reverse proxy](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy) and [DNS provider](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-dns-provider) for your site.
 
@@ -14,14 +15,19 @@ The information below applies to a [full DNS setup](/dns/zone-setups/full-setup)
 To use Cloudflare as a reverse proxy but maintain your DNS provider, refer to [partial setup](/dns/zone-setups/partial-setup/). To use one or more DNS providers, refer to or [DNS Zone transfers](/dns/zone-setups/zone-transfers/).
 :::
 
+<Stream id="cb3498b26b1b58709dee5f025550cb1e" title="Onboard your domain to Cloudflare" thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Onboard%20your%20website%20or%20app%20to%20Cloudflare.png" />
+
 ## Prerequisites
 
 [Disable DNSSEC](/dns/dnssec/#disable-dnssec) at the registrar where you purchased your domain name to avoid connectivity errors when you change your nameservers.
 
 ## 1. Onboard a domain in Cloudflare
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select **Add** > **Connect a domain**.
+1. Log in to the Cloudflare dashboard.
+
+      <DashButton url="/?to=/:account/home" />
+
+2. Select **Onboard a domain**.
 3. Enter your website's <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip> (for example, `example.com`), choose how you would like to add your [DNS records](/dns/manage-dns-records/), and select **Continue**.
    :::note
    If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
@@ -30,7 +36,7 @@ To use Cloudflare as a reverse proxy but maintain your DNS provider, refer to [p
    :::
 
 4. Select a [plan](https://www.cloudflare.com/plans/#compare-features).
-5. [Review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) to ensure none are missing. Your DNS records must accurate for your domain to work properly.
+5. [Review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) to ensure none are missing. Your DNS records must be accurate for your domain to work properly.
 
    <Render file="dns-scan-intro" product="dns" /> <br />
 

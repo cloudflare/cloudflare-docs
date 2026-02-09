@@ -1,11 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Zola
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import { PagesBuildPreset, Render } from "~/components";
@@ -84,8 +79,6 @@ Upon running `zola init`, you will prompted with three questions:
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Zola" }} />
-
 <PagesBuildPreset framework="zola" />
 
 Below the configuration, make sure to set the **Environment Variables (advanced)** for specifying the `ZOLA_VERSION`.
@@ -128,4 +121,8 @@ This command uses:
 - The `base_url` set in `config.toml` when building from the `main` branch
 - The preview deployment URL (automatically provided by Cloudflare Pages as `$CF_PAGES_URL`) for all other branches
 
-<Render file="framework-guides/learn-more" params={{ one: "Zola" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Zola" }}
+/>

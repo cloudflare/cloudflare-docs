@@ -3,11 +3,11 @@ productName: Cloudflare One
 entries:
   - term: App Launcher
     general_definition: |-
-      the App Launcher portal provides end users with a single dashboard to open applications secured by Cloudflare Zero Trust.
+      the App Launcher portal provides end users with a single dashboard to open applications secured by Cloudflare One.
 
   - term: application
     general_definition: |-
-      the resource protected by Cloudflare Zero Trust, which can be a subdomain, a path, or a SaaS application.
+      the resource protected by Cloudflare One, which can be a subdomain, a path, or a SaaS application.
 
   - term: application token
     general_definition: |-
@@ -16,10 +16,6 @@ entries:
   - term: captive portal
     general_definition: |-
       a login screen shown to users when they connect to a public Wi-Fi. Captive portals typically occur in places such as airports, cafes, and hotels.
-
-  - term: CGNAT IP
-    general_definition: |-
-      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device in **My Team** > **Devices** > **Virtual IPv4/IPv6**.
 
   - term: cloudflared
     general_definition: |-
@@ -47,7 +43,7 @@ entries:
 
   - term: Cloudflare DEX
     general_definition: |-
-      Cloudflare Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance across your Zero Trust organization.
+      Cloudflare Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance across your Zero Trust Organization.
 
   - term: Cloudflare Gateway
     general_definition: |-
@@ -83,6 +79,10 @@ entries:
     general_definition: |-
       a collection of WARP client settings applied to a specific set of devices in your organization.
 
+  - term: device registration
+    general_definition: |-
+      an individual session of the WARP client on a physical device, with associated configuration including a unique public key, device profile, and virtual IP addresses (one IPv4 and one IPv6).
+
   - term: DNS filtering
     general_definition: |-
       DNS filtering uses the Domain Name System to block malicious websites and filter out harmful content, enhancing security and access control.
@@ -91,7 +91,7 @@ entries:
 
   - term: DoH subdomain
     general_definition: |-
-      a unique DoH subdomain for each DNS location in Cloudflare Zero Trust used in WARP client settings.
+      a unique DoH subdomain for each DNS location in Cloudflare One used in WARP client settings.
 
   - term: DNS location
     general_definition: |-
@@ -101,11 +101,15 @@ entries:
 
   - term: fleet
     general_definition: |-
-      a fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Cloudflare Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
+      a fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Zero Trust Organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
 
   - term: identity provider
     general_definition: |-
       an identity provider (IdP) stores and manages users' digital identities, enabling single sign-on and authentication for multiple applications.
+
+  - term: initial resolved IP
+    general_definition: |-
+      a unique, ephemeral IP address that Gateway assigns to DNS queries when filtering network traffic by hostname. The IP is randomly selected from the `100.80.0.0/16` (IPv4) or `2606:4700:0cf1:4000::/64` (IPv6) range.
 
   - term: JSON web token
     general_definition: |-
@@ -121,11 +125,19 @@ entries:
 
   - term: MCP client
     general_definition: |-
-      a Model Context Protocol (MCP) client is a user-facing AI tool that can request information and receive responses from an MCP server. Examples of MCP clients include Claude Desktop, Cursor AI, and Windsurf.
+      a Model Context Protocol (MCP) client is an AI program that can request information and receive responses from an MCP server. Examples of MCP clients include Claude Desktop, Cursor AI, and Windsurf.
 
   - term: MCP server
     general_definition: |-
-      a web application that allows generative AI tools to access third-party data sources and APIs using the Model Context Protocol (MCP). For example, you can use an MCP server to connect an AI assistant to your Google Drive account.
+      a web application that allows AI agents to access third-party data sources and APIs using the Model Context Protocol (MCP). For example, you can use an MCP server to connect an AI assistant to your Google Drive account.
+
+  - term: MCP server portal
+    general_definition: |-
+      a web application in Cloudflare One that serves as a gateway to multiple MCP servers.
+
+  - term: MCP server tool
+    general_definition: |-
+      an integration provided by an MCP server which allows an AI agent to perform a limited set of actions on a third-party system.
 
   - term: MDM file
     general_definition: |-
@@ -157,7 +169,7 @@ entries:
 
   - term: remotely-managed tunnel
     general_definition: |-
-      a Cloudflare Tunnel that was created in Zero Trust under **Networks** > **Tunnels**. Tunnel configuration is stored in Cloudflare, which allows you to manage the tunnel from the dashboard or using the API.
+      a Cloudflare Tunnel whose configuration is stored on Cloudflare rather than on your local machine. You can manage the tunnel in the dashboard under **Networks** > **Connectors** or by using the API.
 
   - term: RDP
     general_definition: |-
@@ -187,7 +199,7 @@ entries:
 
   - term: seat
     general_definition: |-
-      a unique user authenticating to an Access application or enrolling in WARP,
+      a unique, billable user within your Zero Trust organization who has performed [an authentication event](/cloudflare-one/team-and-resources/users/seat-management/#authentication-events). Service tokens do not consume seats.
 
   - term: service provider (SP)
     general_definition: |-
@@ -229,11 +241,11 @@ entries:
 
   - term: team domain
     general_definition: |-
-      a unique subdomain assigned to your Cloudflare account (for example, `<your-team-name>.cloudflareaccess.com`), where users will find the apps you have secured behind Cloudflare Zero Trust.
+      a unique subdomain assigned to your Cloudflare account (for example, `<your-team-name>.cloudflareaccess.com`), where users will find the apps you have secured behind Cloudflare One.
 
   - term: team name
     general_definition: |-
-      the customizable portion of your team domain (`<your-team-name>.cloudflareaccess.com`). You can view your team name in Zero Trust under **Settings** > **Custom Pages**.
+      the customizable portion of your team domain (`<your-team-name>.cloudflareaccess.com`). You can view your team name in Cloudflare One under **Settings**.
 
   - term: Terraform
     general_definition: |-
@@ -247,11 +259,11 @@ entries:
 
   - term: User risk score
     general_definition: |-
-      Cloudflare Zero Trust user risk score ranks the likelihood of a user to introduce risk to your organization's systems and data based on the detection of security risk behaviors. Risk scores add user and entity behavior analytics (UEBA) to the Zero Trust platform.
+      ranks the likelihood of a user to introduce risk to your organization's systems and data based on the detection of security risk behaviors. Risk scores add user and entity behavior analytics (UEBA) to the Cloudflare One platform.
 
   - term: User risk score level
     general_definition: |-
-      Cloudflare Zero Trust assigns a risk score of Low, Medium or High based on detections of users' activities, posture, and settings. A user's risk score is equal to the highest-level risk behavior they trigger.
+      Cloudflare One assigns a risk score of Low, Medium or High based on detections of users' activities, posture, and settings. A user's risk score is equal to the highest-level risk behavior they trigger.
 
   - term: Virtual network
     general_definition: |-
@@ -268,6 +280,10 @@ entries:
   - term: WARP client
     general_definition: |-
       an application that connects corporate devices to Cloudflare for private network access, advanced web filtering, and other security functions.
+
+  - term: WARP CGNAT IP
+    general_definition: |-
+      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range.
 
   - term: WARP Connector
     general_definition: |-

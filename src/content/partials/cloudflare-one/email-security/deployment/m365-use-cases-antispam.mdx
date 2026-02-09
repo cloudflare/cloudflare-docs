@@ -1,10 +1,9 @@
 ---
 inputParameters: spamQuarantinePolicy;;phishingQuarantinePolicy;;highPhishingQuarantinePolicy;;img
-
 ---
 
-import { Image } from "astro:assets"
-import { Markdown } from "~/components"
+import { Image } from "astro:assets";
+import { Markdown } from "~/components";
 
 To configure anti-spam policies:
 
@@ -22,14 +21,14 @@ To configure anti-spam policies:
 
 7. Set the following conditions and actions (you might need to scroll up or down to find them):
 
-- **Spam**: *Move messages to Junk Email folder*.
-- **High confidence spam**: *Quarantine message*.
+- **Spam**: _Move messages to Junk Email folder_.
+- **High confidence spam**: _Quarantine message_.
   - **Select quarantine policy**: {props.one}.
-- **Phishing**: *Quarantine message*.
+- **Phishing**: _Quarantine message_.
   - **Select quarantine policy**: {props.two}.
-- **High confidence phishing**: *Quarantine message*.
+- **High confidence phishing**: _Quarantine message_.
   - **Select quarantine policy**: {props.three}.
-- **Retain spam in quarantine for this many days**: Default is 15 days. Email Security recommends 15-30 days.
+- **Retain spam in quarantine for this many days**: Default is 15 days. Email security recommends 15-30 days.
   - Select the spam actions in the above step.
 
 8. Select **Save**.

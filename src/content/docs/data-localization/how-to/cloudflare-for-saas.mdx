@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, DashButton } from "~/components";
 
 In the following sections, we will give you some details about how to configure Cloudflare for SaaS with Regional Services and Customer Metadata Boundary.
 
@@ -15,9 +15,11 @@ To configure Regional Services for both hostnames [proxied](/dns/proxy-status/) 
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account and zone.
-2. Go to the **Custom Hostnames** tab.
-3. Follow these steps to [configure Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/).
+1. In the Cloudflare dashboard, go to the **Custom Hostnames** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/custom-hostnames" />
+
+2. Follow these steps to [configure Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/).
 
 </TabItem>
 

@@ -8,7 +8,7 @@ sidebar:
   order: 1
 ---
 
-import { InlineBadge, Render, Badge } from "~/components";
+import { InlineBadge, Render, Badge, DashButton } from "~/components";
 
 After you subscribe to Stream, you can create Live Inputs in Dash or via the API. Broadcast to your new Live Input using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
 
@@ -18,7 +18,8 @@ After you subscribe to Stream, you can create Live Inputs in Dash or via the API
 
 ## Use the dashboard
 
-**Step 1:** [Create a live input via the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create).
+**Step 1:** In the Cloudflare dashboard, go to the **Live inputs** page and create a live input.
+<DashButton url="/?to=/:account/stream/inputs" />
 
 ![Create live input field from dashboard](~/assets/images/stream/create-live-input-from-stream-dashboard.png)
 

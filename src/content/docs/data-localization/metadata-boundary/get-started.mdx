@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Details, APIRequest } from "~/components";
+import { Details, APIRequest, DashButton } from "~/components";
 
 You can configure the Metadata Boundary to select the region where your logs and analytics are stored via API or dashboard.
 
@@ -15,9 +15,11 @@ Currently, this can only be applied at the account-level. If you only want the M
 
 To configure Customer Metadata Boundary in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Manage Account** > **Configurations**.
-3. In **Customer Metadata Boundary**, select the region you want to use. You have the option to select `EU` or `US`. If you want to select both regions, select `Global` instead.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. In **Customer Metadata Boundary**, select the region you want to use. You have the option to select `EU` or `US`. If you want to select both regions, select `Global` instead.
 
 ## Configure Customer Metadata Boundary via API
 
@@ -71,6 +73,9 @@ Here is an example request using cURL to delete regions:
 
 To view or change your Customer Metadata Boundary setting:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Configurations** > **Preferences**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **Preferences**.
 3. Locate the **Customer Metadata Boundary** section.

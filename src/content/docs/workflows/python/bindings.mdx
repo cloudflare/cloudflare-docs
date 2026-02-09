@@ -4,40 +4,50 @@ pcx_content_type: concept
 sidebar:
   order: 3
   group:
-   hideIndex: true
-
+    hideIndex: true
 ---
-import { WranglerConfig } from "~/components"
 
-The Python Workers platform leverages FFI to access bindings to Cloudflare resources. Refer to the [bindings](/workers/languages/python/ffi/#using-bindings-from-python-workers) documentation for more information.
+import { WranglerConfig } from "~/components";
 
-From the configuration perspective, enabling Python Workflows requires adding the `python_workflows` compatibility flag to your `wrangler.toml` file.
+:::caution[Python Workflows are in beta, as well as the underlying platform.]
+
+You must add both `python_workflows` and `python_workers` compatibility flags to your Wrangler config file.
+
+Also, Python Workflows requires `compatibility_date = "2025-08-01"`, or later, to be set in your Wrangler config file.
+:::
+
+The Python Workers platform leverages [FFI](https://en.wikipedia.org/wiki/Foreign_function_interface) to access bindings to Cloudflare resources. Refer to the [bindings](/workers/languages/python/ffi/#using-bindings-from-python-workers) documentation for more information.
+
+From the configuration perspective, enabling Python Workflows requires adding the `python_workflows` compatibility flag to your Wrangler configuration file.
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-#:schema node_modules/wrangler/config-schema.json
-name = "workflows-starter"
-main = "src/index.ts"
-compatibility_date = "2024-10-22"
-compatibility_flags = ["python_workflows", "python_workers"]
-
-[[workflows]]
-# name of your workflow
-name = "workflows-starter"
-# binding name env.MY_WORKFLOW
-binding = "MY_WORKFLOW"
-# this is class that extends the Workflow class in src/index.ts
-class_name = "MyWorkflow"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "workflows-starter",
+	"main": "src/index.py",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["python_workflows", "python_workers"],
+	"workflows": [
+		{
+			// name of your workflow
+			"name": "workflows-starter",
+			// binding name env.MY_WORKFLOW
+			"binding": "MY_WORKFLOW",
+			// this is class that extends the Workflow class in src/index.py
+			"class_name": "MyWorkflow",
+		}
+	]
+}
 ```
 
 </WranglerConfig>
 
-
 And this is how you use the payload in your workflow:
 
 ```python
-from pyodide.ffi import to_js
+from workers import WorkflowEntrypoint
 
 class DemoWorkflowClass(WorkflowEntrypoint):
     async def run(self, event, step):
@@ -47,33 +57,37 @@ class DemoWorkflowClass(WorkflowEntrypoint):
             return payload
 ```
 
-
 ## Workflow
 
 The `Workflow` binding gives you access to the [Workflow](/workflows/build/workers-api/#workflow) class. All its methods are available
 on the binding.
 
-Under the hood, the `Workflow` binding is a Javascript object that is exposed to the Python script via [JsProxy](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.JsProxy). 
+Under the hood, the `Workflow` binding is a Javascript object that is exposed to the Python script via [JsProxy](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.JsProxy).
 This means that the values returned by its methods are also `JsProxy` objects, and need to be converted back into Python objects using `python_from_rpc`.
-
 
 ### `create`
 
 Create (trigger) a new instance of a given Workflow.
 
-* <code>create(options=None)</code>
-  * `options` - an **optional** dictionary of options to pass to the workflow instance. Should contain the same keys
-  as the [WorkflowInstanceCreateOptions](/workflows/build/workers-api/#workflowinstancecreateoptions) type.
+- <code>create(options=None)</code>* `options` - an **optional** dictionary of
+  options to pass to the workflow instance. Should contain the same keys as the
+  [WorkflowInstanceCreateOptions](/workflows/build/workers-api/#workflowinstancecreateoptions)
+  type.
 
 ```python
+from js import Object
 from pyodide.ffi import to_js
+from workers import WorkerEntrypoint, Response
 
-async def on_fetch(request, env, ctx):
-    event = {"foo": "bar"}
-    options = to_js({"params": event}, dict_converter=Object.fromEntries)
-    await env.MY_WORKFLOW.create(options)
-    return Response.json({"status": "success"})
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        event = {"foo": "bar"}
+        options = to_js({"params": event}, dict_converter=Object.fromEntries)
+        await self.env.MY_WORKFLOW.create(options)
+        return Response.json({"status": "success"})
 ```
+
 :::note
 
 Values returned from steps need to be converted into Javascript objects using `to_js`. This is why we explicitly construct the payload using `Object.fromEntries`.
@@ -86,56 +100,67 @@ The `create` method returns a [`WorkflowInstance`](/workflows/build/workers-api/
 
 Create (trigger) a batch of new workflow instances, up to 100 instances at a time. This is useful if you need to create multiple instances at once within the [instance creation limit](/workflows/reference/limits/).
 
-* <code>create_batch(batch)</code>
-  * `batch` - list of `WorkflowInstanceCreateOptions` to pass when creating an instance, including a user-provided ID and payload parameters.
+- <code>create_batch(batch)</code>* `batch` - list of `WorkflowInstanceCreateOptions` to pass when creating an instance, including a user-provided ID and payload parameters.
 
 Each element of the `batch` list is expected to include both `id` and `params` properties:
 
 ```python
 from pyodide.ffi import to_js
+from js import Object
+from workers import WorkerEntrypoint, Response
 
-# Create a new batch of 3 Workflow instances, each with its own ID and pass params to the Workflow instances
-listOfInstances = [
-  to_js({ "id": "id-abc123", "params": { "hello": "world-0" } }, dict_converter=Object.fromEntries),
-  to_js({ "id": "id-def456", "params": { "hello": "world-1" } }, dict_converter=Object.fromEntries),
-  to_js({ "id": "id-ghi789", "params": { "hello": "world-2" } }, dict_converter=Object.fromEntries)
-];
-
-await env.MY_WORKFLOW.create_batch(listOfInstances);
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Create a new batch of 3 Workflow instances, each with its own ID and pass params to the Workflow instances
+        listOfInstances = [
+            to_js({ "id": "id-abc123", "params": { "hello": "world-0" } }, dict_converter=Object.fromEntries),
+            to_js({ "id": "id-def456", "params": { "hello": "world-1" } }, dict_converter=Object.fromEntries),
+            to_js({ "id": "id-ghi789", "params": { "hello": "world-2" } }, dict_converter=Object.fromEntries)
+        ]
+        await self.env.MY_WORKFLOW.create_batch(listOfInstances)
+        return Response.json({"status": "success"})
 ```
 
 ### `get`
 
 Get a workflow instance by ID.
 
-* <code>get(id)</code>
-  * `id` - the ID of the workflow instance to get.
+- <code>get(id)</code>* `id` - the ID of the workflow instance to get.
 
 Returns a [`WorkflowInstance`](/workflows/build/workers-api/#workflowinstance) object, which can be used to query the status of the workflow instance.
 
 ```python
-instance = await env.MY_WORKFLOW.get("abc-123")
+from workers import WorkerEntrypoint, Response
 
-# FFI methods available for WorkflowInstance
-await instance.status()
-await instance.pause()
-await instance.resume()
-await instance.restart()
-await instance.terminate()
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        instance = await self.env.MY_WORKFLOW.get("abc-123")
+
+        # FFI methods available for WorkflowInstance
+        await instance.status()
+        await instance.pause()
+        await instance.resume()
+        await instance.restart()
+        await instance.terminate()
+        return Response.json({"status": "success"})
 ```
 
 ### `send_event`
 
 Send an event to a workflow instance.
 
-* <code>send_event(options)</code>
-  * `type` - the type of event to send to the workflow instance.
-  * `payload` - the payload to send to the workflow instance.
+- <code>send_event(options)</code>* `type` - the type of event to send to the
+  workflow instance. * `payload` - the payload to send to the workflow instance.
 
 ```python
 from pyodide.ffi import to_js
+from js import Object
+from workers import WorkerEntrypoint, Response
 
-await env.MY_WORKFLOW.send_event(to_js({ "type": "my-event-type", "payload": { "foo": "bar" } }, dict_converter=Object.fromEntries))
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        await self.env.MY_WORKFLOW.send_event(to_js({ "type": "my-event-type", "payload": { "foo": "bar" } }, dict_converter=Object.fromEntries))
+        return Response.json({"status": "success"})
 ```
 
 :::note
@@ -150,4 +175,4 @@ Refer to the [Workflows REST API documentation](/api/resources/workflows/subreso
 
 ## Command line (CLI)
 
-Refer to the [CLI quick start](/workflows/get-started/cli-quick-start/) to learn more about how to manage and trigger Workflows via the command-line.
+Refer to the [CLI quick start](/workflows/get-started/guide/) to learn more about how to manage and trigger Workflows via the command-line.

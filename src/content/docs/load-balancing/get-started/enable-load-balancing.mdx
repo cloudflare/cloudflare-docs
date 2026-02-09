@@ -10,15 +10,17 @@ description: Learn how to enable load balancing.
 
 ---
 
-import { Render } from "~/components"
+import { Render, DashButton } from "~/components"
 
 Load balancing is an add-on for your account, meaning your account needs a [billing profile](/billing/create-billing-profile/).
 
 To enable [Load Balancing](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing):
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Load Balancing**.
-3. Select **Enable Load Balancing** in the **Status** column.
-4. Choose your plan options and confirm payment.
+1. In the Cloudflare dashboard, go to the **Load Balancing** page.
+
+   <DashButton url="/?to=/:account/load-balancing" />
+
+2. Select **Enable Load Balancing** in the **Status** column.
+3. Choose your plan options and confirm payment.
 
 <Render file="non-contract-enablement" product="fundamentals" />

@@ -6,7 +6,7 @@ tags:
   - IPv6
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components";
+import { FeatureTable, TabItem, Tabs, DashButton } from "~/components";
 
 Cloudflare enables IPv6 on all domains without requiring additional configuration or hardware (as long as your host provides IPv6 support).
 
@@ -36,9 +36,11 @@ Alternatively, customers with an Enterprise account can disable Cloudflare's IPv
 
 To turn off IPv6 compatibility in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. Go to **Network**.
-3. Turn off **IPv6 Compatibility**.
+1. In the Cloudflare dashboard, go to the **Network** page.
+
+   <DashButton url="/?to=/:account/:zone/network" />
+
+2. Turn off **IPv6 Compatibility**.
 
 </TabItem> <TabItem label="API">
 

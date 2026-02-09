@@ -3,11 +3,6 @@ pcx_content_type: how-to
 title: Nuxt
 head: []
 description: Web framework making Vue.js-based development simple and powerful.
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import {
@@ -79,13 +74,13 @@ git push -u origin main
 
 ### Create a Pages project
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Nuxt.js" }} />
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <PagesBuildPreset framework="nuxt-js" />
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-4. After completing configuration, select the **Save and Deploy**.
+7. After completing configuration, select the **Save and Deploy**.
 
 Review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
@@ -111,7 +106,7 @@ This module is powered by the [`getPlatformProxy` helper function](/workers/wran
 
 :::note
 
-`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
+Wrangler configuration is used primarily for local development. Bindings specified in it are not available remotely, unless they are created as [remote bindings](/workers/development-testing/#remote-bindings).
 
 :::
 
@@ -172,7 +167,11 @@ export default defineEventHandler(({ context }) => {
 
 </TabItem> </Tabs>
 
-<Render file="framework-guides/learn-more" params={{ one: "Nuxt" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Nuxt" }}
+/>
 
 ## Related resources
 

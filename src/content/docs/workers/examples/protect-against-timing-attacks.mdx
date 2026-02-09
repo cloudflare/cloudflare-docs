@@ -13,6 +13,7 @@ sidebar:
   order: 1001
 description: Protect against timing attacks by safely comparing values using
   `timingSafeEqual`.
+reviewed: 2023-08-04
 ---
 
 If you want to get started quickly, click on the button below.
@@ -77,9 +78,9 @@ from workers import WorkerEntrypoint, Response
 from js import TextEncoder, crypto
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env):
+    async def fetch(self, request):
         auth_token = request.headers["Authorization"] or ""
-        secret = env.MY_SECRET_VALUE
+        secret = self.env.MY_SECRET_VALUE
 
         if secret is None:
             return Response("Missing secret binding", status=500)

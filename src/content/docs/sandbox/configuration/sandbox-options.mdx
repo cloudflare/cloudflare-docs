@@ -1,0 +1,218 @@
+---
+title: Sandbox options
+pcx_content_type: configuration
+sidebar:
+  order: 4
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Configure sandbox behavior by passing options when creating a sandbox instance with `getSandbox()`.
+
+## Available options
+
+```ts
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(binding, sandboxId, options?: SandboxOptions);
+```
+
+### keepAlive
+
+**Type**: `boolean`
+**Default**: `false`
+
+Keep the container alive indefinitely by preventing automatic shutdown. When `true`, the container automatically sends heartbeat pings every 30 seconds to prevent eviction and will never auto-timeout.
+
+**How it works**: The sandbox automatically schedules lightweight ping requests to the container every 30 seconds. This prevents the container from being evicted due to inactivity while minimizing resource overhead. You can also enable/disable keepAlive dynamically using [`setKeepAlive()`](/sandbox/api/lifecycle/#setkeepalive).
+
+The `keepAlive` flag persists across Durable Object hibernation and wakeup cycles. Once enabled, you do not need to re-set it after the sandbox wakes from hibernation.
+
+<TypeScriptExample>
+```ts
+// For long-running processes that need the container to stay alive
+const sandbox = getSandbox(env.Sandbox, 'user-123', {
+  keepAlive: true
+});
+
+// Run your long-running process
+await sandbox.startProcess('python long_running_script.py');
+
+// Important: Must explicitly destroy when done
+try {
+  // Your work here
+} finally {
+  await sandbox.destroy(); // Required to prevent containers running indefinitely
+}
+```
+</TypeScriptExample>
+
+:::caution[Resource management with keepAlive]
+When `keepAlive: true` is set, containers automatically send heartbeat pings to prevent eviction and will not automatically timeout. They must be explicitly destroyed using `destroy()` or disabled with `setKeepAlive(false)` to prevent containers running indefinitely and counting toward your account limits.
+:::
+
+### sleepAfter
+
+**Type**: `string | number`
+**Default**: `"10m"` (10 minutes)
+
+Duration of inactivity before the sandbox automatically sleeps. Accepts duration strings (`"30s"`, `"5m"`, `"1h"`) or numbers (seconds).
+
+:::note[Bug fix in v0.2.17]
+Prior to v0.2.17, the `sleepAfter` option passed to `getSandbox()` was ignored due to a timing issue. The option is now properly applied when creating sandbox instances.
+:::
+
+<TypeScriptExample>
+```ts
+// Sleep after 30 seconds of inactivity
+const sandbox = getSandbox(env.Sandbox, 'user-123', {
+  sleepAfter: '30s'
+});
+
+// Sleep after 5 minutes (using number)
+const sandbox2 = getSandbox(env.Sandbox, 'user-456', {
+  sleepAfter: 300  // 300 seconds = 5 minutes
+});
+```
+</TypeScriptExample>
+
+:::note[Ignored when keepAlive is true]
+When `keepAlive: true` is set, `sleepAfter` is ignored and the sandbox never sleeps automatically.
+:::
+
+### containerTimeouts
+
+**Type**: `object`
+
+Configure timeouts for container startup operations.
+
+<TypeScriptExample>
+```ts
+// Extended startup with custom Dockerfile work
+// (installing packages, starting services before SDK)
+const sandbox = getSandbox(env.Sandbox, 'data-processor', {
+  containerTimeouts: {
+    portReadyTimeoutMS: 180_000  // 3 minutes for startup work
+  }
+});
+
+// Wait longer during traffic spikes
+const sandbox2 = getSandbox(env.Sandbox, 'user-env', {
+  containerTimeouts: {
+    instanceGetTimeoutMS: 60_000   // 1 minute for provisioning
+  }
+});
+```
+</TypeScriptExample>
+
+**Available timeout options**:
+
+- `instanceGetTimeoutMS` - How long to wait for Cloudflare to provision a new container instance. Increase during traffic spikes when many containers provision simultaneously. **Default**: `30000` (30 seconds)
+- `portReadyTimeoutMS` - How long to wait for the sandbox API to become ready. Increase if you extend the base Dockerfile with custom startup work (installing packages, starting services). **Default**: `90000` (90 seconds)
+
+**Environment variable overrides**:
+- `SANDBOX_INSTANCE_TIMEOUT_MS` - Override `instanceGetTimeoutMS`
+- `SANDBOX_PORT_TIMEOUT_MS` - Override `portReadyTimeoutMS`
+
+Precedence: `options` > `env vars` > SDK defaults
+
+### Logging
+
+**Type**: Environment variables
+
+Control SDK logging for debugging and monitoring. Set these in your Worker's `wrangler.jsonc` file.
+
+**Available options**:
+- `SANDBOX_LOG_LEVEL` - Minimum log level: `debug`, `info`, `warn`, `error`. **Default**: `info`
+- `SANDBOX_LOG_FORMAT` - Output format: `json`, `pretty`. **Default**: `json`
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"SANDBOX_LOG_LEVEL": "debug",
+		"SANDBOX_LOG_FORMAT": "pretty"
+	}
+}
+```
+</WranglerConfig>
+
+:::note[Read at startup]
+Logging configuration is read when your Worker starts and cannot be changed at runtime. Changes require redeploying your Worker.
+:::
+
+Use `debug` + `pretty` for local development. Use `info` or `warn` + `json` for production (structured logging).
+
+### normalizeId
+
+**Type**: `boolean`
+**Default**: `false` (will become `true` in a future version)
+
+Lowercase sandbox IDs when creating sandboxes. When `true`, the ID you provide is lowercased before creating the Durable Object (e.g., "MyProject-123" → "myproject-123").
+
+**Why this matters**: Preview URLs extract the sandbox ID from the hostname, which is always lowercase due to DNS case-insensitivity. Without normalization, a sandbox created with "MyProject-123" becomes unreachable via preview URL because the URL routing looks for "myproject-123" (different Durable Object).
+
+<TypeScriptExample>
+```ts
+// Without normalization (default)
+const sandbox1 = getSandbox(env.Sandbox, 'MyProject-123');
+// Creates Durable Object with ID: "MyProject-123"
+// Preview URL: 8000-myproject-123.example.com
+// Problem: URL routes to "myproject-123" (different DO)
+
+// With normalization
+const sandbox2 = getSandbox(env.Sandbox, 'MyProject-123', {
+  normalizeId: true
+});
+// Creates Durable Object with ID: "myproject-123"
+// Preview URL: 8000-myproject-123.example.com
+// Works: URL routes to "myproject-123" (same DO)
+```
+</TypeScriptExample>
+
+:::caution[Different normalizeId values = different sandboxes]
+`getSandbox(ns, 'MyProject-123')` and `getSandbox(ns, 'MyProject-123', { normalizeId: true })` create two separate Durable Objects. If you have existing sandboxes with uppercase IDs, enabling normalization creates new sandboxes—you won't access the old ones.
+:::
+
+:::note[Future default]
+In a future SDK version, `normalizeId` will default to `true`. All sandbox IDs will be lowercase regardless of input casing. Use lowercase IDs now or explicitly set `normalizeId: true` to prepare for this change.
+:::
+
+## When to use normalizeId
+
+Use `normalizeId: true` when:
+
+- **Using preview URLs** - Required for port exposure if your IDs contain uppercase letters
+- **New projects** - Either enable this option OR use lowercase IDs from the start (both work)
+- **Migrating existing code** - Create new sandboxes with this enabled; old uppercase sandboxes will eventually be destroyed (explicitly or after timeout)
+
+**Best practice**: Use lowercase IDs from the start (`'my-project-123'` instead of `'MyProject-123'`).
+
+## When to use sleepAfter
+
+Use custom `sleepAfter` values to:
+
+- **Reduce costs** - Shorter timeouts (e.g., `"1m"`) for infrequent workloads
+- **Extend availability** - Longer timeouts (e.g., `"30m"`) for interactive workflows
+- **Balance performance** - Fine-tune based on your application's usage patterns
+
+The default 10-minute timeout works well for most applications. Adjust based on your needs.
+
+## When to use keepAlive
+
+Use `keepAlive: true` for:
+
+- **Long-running builds** - CI/CD pipelines that may have idle periods between steps
+- **Batch processing** - Jobs that process data in waves with gaps between batches  
+- **Monitoring tasks** - Processes that periodically check external services
+- **Interactive sessions** - User-driven workflows where the container should remain available
+
+With `keepAlive`, containers send automatic heartbeat pings every 30 seconds to prevent eviction and never sleep automatically. Use for scenarios where you control the lifecycle explicitly.
+
+## Related resources
+
+- [Expose services guide](/sandbox/guides/expose-services/) - Using `normalizeId` with preview URLs
+- [Preview URLs concept](/sandbox/concepts/preview-urls/) - Understanding DNS case-insensitivity  
+- [Background processes guide](/sandbox/guides/background-processes/) - Using `keepAlive` with long-running processes
+- [Lifecycle API](/sandbox/api/lifecycle/) - Create and manage sandboxes with `setKeepAlive()` 
+- [Sandboxes concept](/sandbox/concepts/sandboxes/) - Understanding sandbox lifecycle

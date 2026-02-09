@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Check tunnel health in the dashboard
 sidebar:
-  order: 3
+  order: 2
 ---
 
 import { Render } from "~/components";
@@ -11,10 +11,14 @@ import { Render } from "~/components";
 	file="tunnel-health/check-tunnel-healthchecks-dash"
 	product="networking-services"
 	params={{
-		dashInfo: "The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.",
-		productPath: "**Magic WAN** > **Network health**",
+		dashInfo:
+			"The dashboard displays tunnel health as measured from each Cloudflare location where your traffic is likely to land.",
 		graphQL: "/magic-wan/analytics/query-tunnel-health/",
-		notificationsPath: "[notifications wizard](/magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/)"
+		notificationsPath:
+			"[notifications wizard](/magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/)",
+		packetCaptures: "/magic-firewall/packet-captures/",
+		networkAnalytics: "/magic-wan/analytics/network-analytics/",
+		magicWord: "Magic WAN"
 	}}
 />
 
@@ -22,12 +26,20 @@ import { Render } from "~/components";
 	file="tunnel-health/health-checks-compatible-cmb-eu"
 	product="networking-services"
 	params={{
-		productName: "Magic WAN"
+		productName: "Magic WAN",
 	}}
 />
 
 ## Magic WAN Connector
 
-Magic WAN Connector also includes a heartbeat function, an additional way of communicating its health status which does not depend on successfully setting up any tunnels. The heartbeat function communicates periodically with Cloudflare via HTTPS and lets Cloudflare know that the Connector in question is connected to the Internet and reachable.
+<Render
+	file="tunnel-health/mconn-heartbeat-health"
+	product="networking-services"
+	params={{
+		heartbeatURL: "/magic-wan/configuration/connector/maintenance/heartbeat/"
+	}}
+/>
 
-Refer to [Heartbeat](/magic-wan/configuration/connector/maintenance/heartbeat/) to learn more.
+## Troubleshooting
+
+If your tunnels show as unhealthy or degraded, refer to [Troubleshoot tunnel health](/magic-wan/troubleshooting/tunnel-health/) for common issues and solutions.

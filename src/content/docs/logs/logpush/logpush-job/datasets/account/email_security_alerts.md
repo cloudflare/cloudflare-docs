@@ -1,7 +1,7 @@
 ---
 # Code generator. DO NOT EDIT.
 
-title: Email Security Alerts
+title: Email security Alerts
 pcx_content_type: configuration
 sidebar:
   order: 21
@@ -13,7 +13,7 @@ The descriptions below detail the fields available for `email_security_alerts`.
 
 Type: `string`
 
-The canonical ID for an Email Security Alert (for example, '4WtWkr6nlBz9sNH-2024-08-28T15:32:35').
+The canonical ID for an Email security Alert (for example, '4WtWkr6nlBz9sNH-2024-08-28T15:32:35').
 
 ## AlertReasons
 
@@ -67,7 +67,7 @@ List of links detected in this message, benign or otherwise; limited to 100 in t
 
 Type: `string`
 
-The message's mode of transport to Email Security. <br />Possible values are <em>unset</em> \| <em>api</em> \| <em>direct</em> \| <em>bcc</em> \| <em>journal</em> \| <em>retroScan</em>.
+The message's mode of transport to Email security. <br />Possible values are <em>unset</em> \| <em>api</em> \| <em>direct</em> \| <em>bcc</em> \| <em>journal</em> \| <em>retroScan</em>.
 
 ## MessageID
 
@@ -85,7 +85,7 @@ The origin of the message. <br />Possible values are <em>unset</em> \| <em>inter
 
 Type: `string`
 
-The original sender address as determined by Email Security mail processing (for example, 'firstlast@cloudflare.com').
+The original sender address as determined by Email security mail processing (for example, 'firstlast@cloudflare.com').
 
 ## ReplyTo
 
@@ -151,7 +151,7 @@ Value of the Subject header provided by the sender.
 
 Type: `array[string]`
 
-Threat categories attributed by Email Security processing (for example, 'CredentialHarvester', 'Dropper').
+Threat categories attributed by Email security processing (for example, 'CredentialHarvester', 'Dropper').
 
 ## Timestamp
 

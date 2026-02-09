@@ -4,6 +4,8 @@ pcx_content_type: tutorial
 sidebar:
   order: 3
   label: Magic Transit with CDN
+description: >-
+  Service bindings allow BYOIP customers to selectively route traffic on a per-IP address basis to the CDN pipeline. It is important to note that traffic routed to the CDN pipeline is protected at Layers 3 and 4 by the inherent DDoS protection capabilities.
 ---
 
 import {
@@ -14,6 +16,7 @@ import {
 	GlossaryTooltip,
 	APIRequest,
 	Render,
+	DashButton,
 } from "~/components";
 
 [Magic Transit](/magic-transit/) customers using BYOIP can also benefit from the performance, reliability, and security that Cloudflare offers for HTTP-based applications. [Service bindings](/byoip/service-bindings/) allow BYOIP customers to selectively route traffic on a per-IP address basis to the CDN pipeline (which includes [Cache](/cache/), [Web Application Firewall (WAF)](/waf/), and more).
@@ -24,18 +27,24 @@ It is important to note that traffic routed to the CDN pipeline is protected at 
 
 ## Before you begin
 
-<Render
-	file="service-bindings-prereqs"
-	params={{
-		pre_existing_product: "Magic Transit",
-		added_product: "CDN",
-	}}
-/>
+- Make sure your contract includes CDN according to your needs. If you find any issues related to subscription when following the steps below, reach out to your account team.
+
+- Plan for what IPs will be used:
+
+    <Render
+    	file="service-bindings-prereqs"
+    	product="byoip"
+    	params={{
+    		pre_existing_product: "Magic Transit",
+    		added_product: "CDN",
+    	}}
+    />
 
 ## 1. Get account information
 
 <Render
 	file="service-bindings-account-info"
+	product="byoip"
 	params={{
 		pre_existing_product: "Magic Transit",
 		added_product: "CDN",
@@ -46,6 +55,7 @@ It is important to note that traffic routed to the CDN pipeline is protected at 
 
 <Render
 	file="service-bindings-create-binding"
+	product="byoip"
 	params={{
 		pre_existing_product: "Magic Transit",
 		added_product: "CDN",
@@ -61,20 +71,22 @@ You can choose between two different scopes:
 - Account-level: uses the address map for all proxied DNS records across all of the zones within an account.
 - Zone-level: uses the address map for all proxied DNS records within a zone.
 
-:::note
-If you need to map only specific subdomains (and not all proxied DNS records) to specific IP addresses, you can use a [Subdomain setup](/dns/zone-setups/subdomain-setup/).
+:::tip
+If you need to map only specific subdomains (and not all proxied DNS records) to specific IP addresses, you can use a zone on [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 :::
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard" no-code="true">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **IP Addresses** > **Address Maps**.
-3. Select **Create an address map**.
-4. Choose the scope of the address map.
-5. Add the zones and IP addresses that you want to map.
-6. Name your address map.
-7. Review the information and select **Save and Deploy**.
+1. In the Cloudflare dashboard, go to the **Address Maps** page.
+
+   <DashButton url="/?to=/:account/ip-addresses/proxy-ips" />
+
+2. Select **Create an address map**.
+3. Choose the scope of the address map.
+4. Add the zones and IP addresses that you want to map.
+5. Name your address map.
+6. Review the information and select **Save and Deploy**.
 
 </TabItem>
 <TabItem label="API" no-code="true">
@@ -93,12 +105,14 @@ Make sure you have the correct Key/Token and permissions.
 
 To create a DNS record in the dashboard:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
-2.  Go to **DNS** > **Records**.
-3.  Select **Add record**.
-4.  Choose an address (`A`/`AAAA`) [record type](/dns/manage-dns-records/reference/dns-record-types/).
-5.  Complete the required fields, setting the **Proxy status** to **proxied**.
-6.  Select **Save**.
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Add record**.
+3. Choose an address (`A`/`AAAA`) [record type](/dns/manage-dns-records/reference/dns-record-types/).
+4. Complete the required fields, setting the **Proxy status** to **proxied**.
+5. Select **Save**.
 
 </TabItem>
 <TabItem label="API" no-code="true">
@@ -108,7 +122,7 @@ To create records with the API, use a [POST request](/api/resources/dns/subresou
 </TabItem>
 </Tabs>
 
-:::note
+:::tip
 As you create the necessary DNS records, [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) can help making sure that you have SSL/TLS certificates in place for all your hostnames.
 :::
 

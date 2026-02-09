@@ -59,3 +59,7 @@ This process may involve a few minutes of downtime.
 ## Renewal
 
 <Render file="dcv-certificate-renewal" product="ssl" />
+
+If the conditions are met but HTTP DCV fails successively, the process will fall back to TXT. This schedule varies according to the certificate validity period.
+
+<Render file="http-to-txt-schedule" product="ssl" />

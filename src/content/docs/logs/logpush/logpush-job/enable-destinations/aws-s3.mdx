@@ -16,9 +16,9 @@ Cloudflare Logpush supports pushing logs directly to Amazon S3 via the Cloudflar
 
 <Render file="enable-logpush-job" product="logs" />
 
-5. In **Select a destination**, choose **Amazon S3**.
+4. In **Select a destination**, choose **Amazon S3**.
 
-6. Enter or select the following destination information:
+5. Enter or select the following destination information:
    - **Bucket** - S3 bucket name
    - **Path** - bucket location within the storage container
    - **Organize logs into daily subfolders** (recommended)
@@ -29,21 +29,21 @@ Cloudflare Logpush supports pushing logs directly to Amazon S3 via the Cloudflar
 
 When you are done entering the destination details, select **Continue**.
 
-7. To prove ownership, Cloudflare will send a file to your designated destination. To find the token, select the **Open** button in the **Overview** tab of the ownership challenge file, then paste it into the Cloudflare dashboard to verify your access to the bucket. Enter the **Ownership Token** and select **Continue**.
+6. To prove ownership, Cloudflare will send a file to your designated destination. To find the token, select the **Open** button in the **Overview** tab of the ownership challenge file, then paste it into the Cloudflare dashboard to verify your access to the bucket. Enter the **Ownership Token** and select **Continue**.
 
-8. Select the dataset to push to the storage service.
+7. Select the dataset to push to the storage service.
 
-9. In the next step, you need to configure your logpush job:
+8. In the next step, you need to configure your logpush job:
    - Enter the **Job name**.
    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
-10. In **Advanced Options**, you can:
+9. In **Advanced Options**, you can:
     - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
     - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
     - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 
-11. Select **Submit** once you are done configuring your logpush job.
+10. Select **Submit** once you are done configuring your logpush job.
 
 ## Create and get access to an S3 bucket
 

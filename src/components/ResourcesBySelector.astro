@@ -1,24 +1,32 @@
 ---
 import { z } from "astro:schema";
-import { getCollection, type CollectionEntry } from "astro:content";
+import {
+	getCollection,
+	type CollectionEntry,
+	getEntries,
+	getEntry,
+	reference,
+} from "astro:content";
 import ResourcesBySelectorReact from "./ResourcesBySelector";
 
 type Props = z.input<typeof props>;
 
 type DocsData = keyof CollectionEntry<"docs">["data"];
 type VideosData = keyof CollectionEntry<"stream">["data"];
+type LearningPathsData = keyof CollectionEntry<"learning-paths">["data"];
 
-type ResourcesData = DocsData | VideosData;
+type ResourcesData = DocsData | VideosData | LearningPathsData;
 
 const props = z.object({
 	tags: z.string().array().optional(),
 	types: z.string().array(),
-	products: z.string().array().optional(),
+	products: reference("products").array().optional(),
 	directory: z.string().optional(),
 	filterables: z.custom<ResourcesData>().array().optional(),
-	columns: z.union([z.literal(2), z.literal(3)]).default(2),
+	columns: z.union([z.literal(1), z.literal(2), z.literal(3)]).default(2),
 	showDescriptions: z.boolean().default(true),
 	showLastUpdated: z.boolean().default(false),
+	filterPlacement: z.enum(["left", "top"]).default("top"),
 });
 
 const {
@@ -30,31 +38,82 @@ const {
 	columns,
 	showDescriptions,
 	showLastUpdated,
+	filterPlacement,
 } = props.parse(Astro.props);
 
 const docs = await getCollection("docs");
 const videos = await getCollection("stream");
+const learningPaths = await getCollection("learning-paths");
 
-const resources: Array<CollectionEntry<"docs"> | CollectionEntry<"stream">> = [
-	...docs,
-	...videos,
-].filter(({ id, collection, data }) => {
-	const type = "pcx_content_type" in data ? data.pcx_content_type : collection;
-	return (
-		types.includes(type ?? "") &&
-		(directory ? id.startsWith(directory) : true) &&
-		(tags ? data.tags?.some((v: string) => tags.includes(v)) : true) &&
-		(products
-			? data.products?.some((v) =>
-					products.includes(typeof v === "object" ? v.id : v),
-				)
-			: true)
+const filteredResources = [...docs, ...videos, ...learningPaths].filter(
+	({ id, collection, data }) => {
+		const type =
+			"pcx_content_type" in data ? data.pcx_content_type : collection;
+		return (
+			types.includes(type ?? "") &&
+			(directory ? id.startsWith(directory) : true) &&
+			(tags ? data.tags?.some((v: string) => tags.includes(v)) : true) &&
+			(products
+				? data.products?.some((v) =>
+						products.some((p) => p.id === (typeof v === "object" ? v.id : v))
+					)
+				: true)
+		);
+	}
+);
+
+// Enhance resources with resolved product titles
+const resources = await Promise.all(
+	filteredResources.map(async (resource) => {
+		if (resource.collection === "docs") {
+			const currentSection = resource.id.split("/")[0].replaceAll(".", "");
+			const currentProduct = await getEntry("products", currentSection);
+			if (currentProduct) {
+				resource.data.products.push(currentProduct);
+			}
+		}
+
+		const productEntries = await getEntries(resource.data.products);
+		const productTitles = productEntries.map((p) => {
+			if (p === undefined) {
+				throw new Error(
+					`Product value was not found. Check the filenames defined at https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/products to make sure they match what's defined in your frontmatter.products field.`
+				);
+			}
+			return p.data.name as string;
+		});
+
+		return {
+			...resource,
+			data: {
+				...resource.data,
+				productTitles,
+			},
+		};
+	})
+);
+
+// Check for duplicate IDs
+const idCounts = new Map<string, number>();
+const duplicateIds: string[] = [];
+
+for (const resource of resources) {
+	const count = idCounts.get(resource.id) || 0;
+	idCounts.set(resource.id, count + 1);
+	if (count === 1) {
+		duplicateIds.push(resource.id);
+	}
+}
+
+if (duplicateIds.length > 0) {
+	throw new Error(
+		`[ResourcesBySelector] Found duplicate resource IDs: ${duplicateIds.join(", ")}`
 	);
-});
+}
 
 if (resources.length === 0) {
 	throw new Error(
-		`[ResourcesBySelector] Couldn't resources related to your filtered options`,
+		`[ResourcesBySelector] Couldn't find resources related to your filtered options`
 	);
 }
 
@@ -67,6 +126,11 @@ const facets = resources.reduce(
 			if (val) {
 				if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
 					acc[filter] = [...new Set([...(acc[filter] || []), ...val])];
+				} else if (filter === "products" && page.data.productTitles) {
+					// Use resolved product titles instead of IDs for products filter
+					acc[filter] = [
+						...new Set([...(acc[filter] || []), ...page.data.productTitles]),
+					];
 				} else if (typeof val === "string") {
 					acc[filter] = [...new Set([...(acc[filter] || []), val])];
 				}
@@ -75,7 +139,7 @@ const facets = resources.reduce(
 
 		return acc;
 	},
-	{} as Record<string, string[]>,
+	{} as Record<string, string[]>
 );
 ---
 
@@ -87,6 +151,7 @@ const facets = resources.reduce(
 		columns={columns}
 		showDescriptions={showDescriptions}
 		showLastUpdated={showLastUpdated}
+		filterPlacement={filterPlacement}
 		client:load
 	/>
 </div>

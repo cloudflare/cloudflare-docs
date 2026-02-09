@@ -7,7 +7,7 @@ sidebar:
   order: 5
 ---
 
-import { Render } from "~/components";
+import { Render, FileTree } from "~/components";
 
 You can use a combination of Super Slurper and Sippy to effectively migrate all objects with minimal downtime.
 
@@ -26,3 +26,35 @@ You can use a combination of Super Slurper and Sippy to effectively migrate all 
 2. Enable Sippy on your R2 bucket, then start using the R2 bucket in your application.
    - New uploads will go to the R2 bucket.
    - Objects which were uploaded while Super Slurper was copying the objects will be copied on-demand (by Sippy) when they are requested by the application.
+
+### Optimizing your Slurper data migration performance
+
+For an account, you can run three concurrent Slurper migration jobs at any given time, and each Slurper migration job can process a set amount of requests per second.
+
+To increase overall throughput and reliability, we recommend splitting your migration into smaller, concurrent jobs using the prefix (or bucket subpath) option.
+
+When creating a migration job:
+
+1. Go to the **Source bucket** step.
+2. Under **Define rules**, in **Bucket subpath**, specify subpaths to divide your data by prefix.
+3. Complete the data migration set up.
+
+For example, suppose your source bucket contains:
+
+<FileTree>
+- photos
+   - 2024
+         - file1.jpg
+         - file2.jpg
+   - 2023
+         - file3.jpg
+   - 2019
+         - file4.jpg
+</FileTree>
+
+You can create separate jobs with prefixes such as:
+
+- `/photos/2024` to migrate all 2024 files
+- `/photos/202` to migrate all files from 2023 and 2024
+
+Each prefix runs as an independent migration job, allowing Slurper to transfer data in parallel. This improves total transfer speed and ensures that a failure in one job does not interrupt the others.

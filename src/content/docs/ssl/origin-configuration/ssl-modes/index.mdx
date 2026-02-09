@@ -43,6 +43,10 @@ Automatic SSL/TLS leverages advanced methods developed by the SSL/TLS Recommende
 Automatic SSL/TLS will not change your setting to a less secure encryption mode. For example, if your origin certificate expires, the encryption mode will not change from **Full (strict)** to **Full**. You must ensure the validity of your origin SSL/TLS configuration at all times.
 :::
 
+Automatic upgrades are applied gradually. Automatic SSL/TLS begins to upgrade the domain by starting with just 1% of its traffic. If no issues are found, the new SSL/TLS encryption mode is applied to traffic in 10% increments until 100% of traffic uses the recommended mode.  If origin connectivity fails during this process, Cloudflare aborts the upgrade, immediately rolls traffic back to the previous mode, and logs the failure. Once 100% of traffic has been successfully upgraded with no TLS-related errors, the domain's SSL/TLS setting is permanently updated.
+
+Flexible → Full/Strict transitions are handled with extra caution since the origin scheme change (HTTP → HTTPS) alters cache keys. In this case, the ramp-up may proceed more slowly to allow cache warm-up before resuming standard increments.
+
 #### Additional details
 
 - **Scan frequency**: Automatic scans currently occur approximately once per month, though they may happen more frequently in some cases (for example, configuration changes or upgrades). Scans stop when:

@@ -62,7 +62,7 @@ The **output\_options** object has the following settings:
   * Comment: the `{{/* comments */}}` are silently dropped.
 * **record\_delimiter**: string to be inserted in-between the records as separator.
 * **field\_delimiter**: string to join fields. Will be ignored when **record\_template** is set.
-* **timestamp\_format**: string to specify format for timestamps, such as `unixnano`, `unix`, or `rfc3339`. Default `unixnano`.
+* **timestamp\_format**: string to specify format for timestamps, such as `unixnano` (nanoseconds unit), `unix` (seconds unit), or `rfc3339` (seconds unit). Default `unixnano`. The API default is `unixnano` when `timestamp_format` is not specified for a job. However, when creating a Logpush job in the Cloudflare dashboard, `timestamp_format` will be set explicitly to `rfc3339` as the default.
 * **sample\_rate**: floating number to specify sampling rate (default 1.0: no sampling). Sampling is applied on top of filtering, and regardless of the current sample\_interval of the data.
 * **CVE-2021-44228**: bool, default false. If set to true, will cause all occurrences of `${` in the generated files to be replaced with `x{`.
 

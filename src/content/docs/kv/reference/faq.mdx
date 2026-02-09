@@ -3,10 +3,9 @@ title: FAQ
 pcx_content_type: faq
 sidebar:
   order: 10
-
 ---
 
-import { Glossary } from "~/components"
+import { Glossary } from "~/components";
 
 Frequently asked questions regarding Workers KV.
 
@@ -15,6 +14,13 @@ Frequently asked questions regarding Workers KV.
 ### Can I use Workers KV without using Workers?
 
 Yes, you can use Workers KV outside of Workers by using the [REST API](/api/resources/kv/) or the associated Cloudflare SDKs for the REST API. It is important to note the [limits of the REST API](/fundamentals/api/reference/limits/) that apply.
+
+### What are the key considerations when choosing how to access KV?
+
+When choosing how to access Workers KV, consider the following:
+
+- **Performance**: Accessing Workers KV via the [Workers Binding API](/kv/api/write-key-value-pairs/) is generally faster than using the [REST API](/api/resources/kv/), as it avoids the overhead of HTTP requests.
+- **Rate Limits**: Be aware of the different rate limits for each access method. [REST API](/api/resources/kv/) has a lower write rate limit compared to Workers Binding API. Refer to [What is the rate limit of Workers KV?](/kv/reference/faq/#what-is-the-rate-limit-of-workers-kv)
 
 ### Why can I not immediately see the updated value of a key-value pair?
 
@@ -31,7 +37,15 @@ Refer to [How KV works](/kv/concepts/how-kv-works/).
 ### If a Worker makes a bulk request to Workers KV, would each individual key get counted against the [Worker subrequest limit (of 1000)](/kv/platform/limits/)?
 
 No. A bulk request to Workers KV, regardless of the amount of keys included in the request, will count as a single operation. For example, you could make
-500 bulk KV requests and 500 R2 requests for a total of 1000 operations. 
+500 bulk KV requests and 500 R2 requests for a total of 1000 operations.
+
+### What is the rate limit of Workers KV?
+
+Workers KV's rate limit differs depending on the way you access it.
+
+Operations to Workers KV via the [REST API](/api/resources/kv/) are bound by the same [limits of the REST API](/fundamentals/api/reference/limits/). This limit is shared across all Cloudflare REST API requests.
+
+When writing to Workers KV via the [Workers Binding API](/kv/api/write-key-value-pairs/), the write rate limit is 1 write per second, per key, unlimited across KV keys.
 
 ## Pricing
 

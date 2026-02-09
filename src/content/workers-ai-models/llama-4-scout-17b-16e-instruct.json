@@ -48,7 +48,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "Ai_Cf_Meta_Llama_4_Prompt",
+                    "title": "Prompt",
                     "properties": {
                         "prompt": {
                             "type": "string",
@@ -137,7 +137,7 @@
                     ]
                 },
                 {
-                    "title": "Ai_Cf_Meta_Llama_4_Messages",
+                    "title": "Messages",
                     "properties": {
                         "messages": {
                             "type": "array",
@@ -453,7 +453,7 @@
                     ]
                 },
                 {
-                    "title": "Ai_Cf_Meta_Llama_4_Async_Batch",
+                    "title": "Async_Batch",
                     "type": "object",
                     "properties": {
                         "requests": {
@@ -462,7 +462,7 @@
                                 "type": "object",
                                 "oneOf": [
                                     {
-                                        "title": "Ai_Cf_Meta_Llama_4_Prompt_Inner",
+                                        "title": "Prompt_Inner",
                                         "properties": {
                                             "prompt": {
                                                 "type": "string",
@@ -551,7 +551,7 @@
                                         ]
                                     },
                                     {
-                                        "title": "Ai_Cf_Meta_Llama_4_Messages_Inner",
+                                        "title": "Messages_Inner",
                                         "properties": {
                                             "messages": {
                                                 "type": "array",

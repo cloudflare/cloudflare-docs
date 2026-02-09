@@ -1,15 +1,15 @@
 ---
-
 summary: Execute Workers code in reaction to Container status changes
 pcx_content_type: example
 title: Status Hooks
 sidebar:
   order: 5
 description: Execute Workers code in reaction to Container status changes
+reviewed: 2025-06-24
 ---
 
 When a Container starts, stops, and errors, it can trigger code execution in a Worker
-that has defined status hooks on the `Container` class.
+that has defined status hooks on the `Container` class. Refer to the [Container package docs](https://github.com/cloudflare/containers/blob/main/README.md#lifecycle-hooks) for more details.
 
 ```js
 import { Container } from '@cloudflare/containers';

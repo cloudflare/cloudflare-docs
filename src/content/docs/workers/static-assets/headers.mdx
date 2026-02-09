@@ -29,6 +29,10 @@ When serving static assets, Workers will attach some headers to the response by 
 
 Cloudflare reserves the right to attach new headers to static asset responses at any time in order to improve performance or harden the security of your Worker application.
 
-<Render file="custom_headers" params={{ product: "workers" }} />
+<Render
+	file="custom_headers"
+	params={{ product: "workers" }}
+	product="workers"
+/>
 
 [^1]: Due to a technical limitation that we hope to address in the future, the `CF-Cache-Status` header is not always entirely accurate. It is possible for false-positives and false-negatives to occur. This should be rare. In the meantime, this header should be considered as returning a "probablistic" result.

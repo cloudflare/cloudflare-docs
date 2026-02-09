@@ -4,7 +4,7 @@ title: Cloudflare 5xx errors
 source: null
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, DashButton } from "~/components";
 
 When troubleshooting most `5XX` errors, the correct course of action is to first contact your hosting provider or site administrator to troubleshoot and gather data. The following sections outline:
 
@@ -35,10 +35,11 @@ Error analytics per domain are available within [Zone Analytics](/analytics/acco
 
 To view Error Analytics:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and domain.
-3. Go to **Analytics & Logs**.
-4. Select **Add filter**, select **Edge status code** or **Origin status code** and choose any `5xx` error code that you want to diagnose.
+1. In the Cloudflare dashboard, go to the **HTTP Traffic** page.
+
+   <DashButton url="/?to=/:account/:zone/analytics/traffic" />
+
+2. Select **Add filter**, select **Edge status code** or **Origin status code** and choose any `5xx` error code that you want to diagnose.
 
 ### Log Explorer
 

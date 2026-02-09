@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 Global API key is the previous authorization scheme for interacting with the Cloudflare API. When possible, use [API tokens](/fundamentals/api/get-started/create-token/) instead of Global API key.
 
@@ -33,7 +33,10 @@ For these reasons, Global API key is not recommended for new customers. Current 
 
 To retrieve your Global API key:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and go to **User Profile** > **API Tokens**.
+1. In the Cloudflare dashboard and select **User Profile** > **API Tokens**.
+
+    <DashButton url="/?to=/:account/api-tokens" />
+
 2. In the **API Keys** section, click `View` button of **Global API Key**.
 
 ## Change your Global API key

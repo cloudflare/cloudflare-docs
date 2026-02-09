@@ -5,10 +5,17 @@ sidebar:
   order: 2
 ---
 
+import { DashButton } from "~/components";
+
 Security overview provides a high-level overview of your domain. It allows you to identify security action items and review the security posture of your domain.
+
+To acess Security overview in the new security dashboard, go to the **Overview** page.
+
+<DashButton url="/?to=/:account/:zone/security/overview" />
 
 The Security overview page displays the following information:
 
-- If you are on a Free plan, the dashboard will display **Traffic last 24 hours**, which allows you to review traffic from the 24 hours that has been mitigated by Cloudflare. If you are on a Business, Pro, or Enterprise plan, the dashboard will display **Traffic last 7 days**, which allows you to review traffic from the last seven days that has been mitigated by Cloudflare.
-- **Security category**: The dashboard will display security suggestions categorized by the different types of threats that Cloudflare detects and mitigates.
-- **All suggestions**: The dashboard displays the full list of available suggestions to improve your security posture.
+- **Traffic last 24 hours** (Free plan only): Allows you to review traffic from the last 24 hours that has been mitigated by Cloudflare.
+- **Traffic last 7 days** (paid plans): Allows you to review traffic from the last seven days that has been mitigated by Cloudflare.
+- **Security category**: Displays security suggestions categorized by the different types of threats that Cloudflare detects and mitigates.
+- **All suggestions**: Displays the full list of available suggestions to improve your security posture.

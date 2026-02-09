@@ -1,0 +1,15 @@
+---
+title: Return markdown
+description: Users can now retrieve markdown, rather than HTML, from Cloudflare documentation
+products:
+  - fundamentals
+date: 2025-10-01
+---
+
+Users can now specify that they want to retrieve Cloudflare documentation as markdown rather than the previous HTML default. This can significantly reduce token consumption when used alongside Large Language Model (LLM) tools.
+
+```sh
+curl https://developers.cloudflare.com/workers/ -H 'Accept: text/markdown'  -v
+```
+
+If you maintain your own site and want to adopt this practice using Cloudflare Workers for your own users you can follow the example [here](https://github.com/cloudflare/cloudflare-docs/pull/25493).

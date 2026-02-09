@@ -6,15 +6,25 @@ params:
 import { Markdown } from "~/components";
 
 - `cf.bot_management.*`
+- `cf.bot_detection.js_check_score`
 - `cf.client.bot`
 - `cf.threat_score`
 - `cf.verified_bot_category`
 - `cf.edge.server_ip`
 - `cf.edge.server_port`
 - `cf.edge.client_port`
+- `cf.hostname.metadata`
 - `cf.zone.name`
 - `cf.metal.id`
+- `cf.random_seed`
 - `cf.ray_id`
+- `cf.tls_version`
+- `cf.tls_cipher`
+- `cf.tls_client_hello_length`
+- `cf.tls_client_random`
+- `cf.tls_client_extensions_sha1`
+- `cf.tls_client_extensions_sha1_le`
+- `cf.tls_client_ciphers_sha1`
 - `cf.tls_client_auth.*`
 - `http.cookie`
 - `http.host`
@@ -57,10 +67,14 @@ import { Markdown } from "~/components";
     <ul>
       <li><code>http.request.jwt.claims</code></li>
       <li><code>http.request.jwt.claims.*</code></li>
+      <li><code>cf.sequence.current_op</code></li>
+      <li><code>cf.sequence.msec_since_op</code></li>
+      <li><code>cf.sequence.previous_ops</code></li>
       <li><code>cf.waf.auth_detected</code></li>
       <li><code>cf.waf.credential_check.*</code></li>
       <li><code>cf.waf.score</code></li>
       <li><code>cf.waf.score.*</code></li>
+      <li><code>cf.worker.upstream_zone</code></li>
     </ul>
   </>
 )}

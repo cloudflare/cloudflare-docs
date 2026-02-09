@@ -22,6 +22,7 @@ import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
+import Flux2 from "~/components/models/code/Flux-2.astro";
 import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
 import MelottsCode from "~/components/models/code/MelottsCode.astro";
 import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
@@ -29,6 +30,9 @@ import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 
 import { authorData } from "~/components/models/data";
 import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
+import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
+import DeepgramNova from "~/components/models/code/DeepgramNova.astro";
+import DeepgramFlux from "~/components/models/code/DeepgramFlux.astro";
 
 export const getStaticPaths = (async () => {
 	const models = await getCollection("workers-ai-models");
@@ -93,6 +97,18 @@ if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
 	CodeExamples = Flux1Schnell;
 }
 
+if (model.name === "@cf/black-forest-labs/flux-2-dev") {
+	CodeExamples = Flux2;
+}
+
+if (model.name === "@cf/black-forest-labs/flux-2-klein-4b") {
+	CodeExamples = Flux2;
+}
+
+if (model.name === "@cf/black-forest-labs/flux-2-klein-9b") {
+	CodeExamples = Flux2;
+}
+
 if (model.name === "@cf/openai/whisper-large-v3-turbo") {
 	CodeExamples = WhisperBase64Code;
 }
@@ -116,6 +132,18 @@ if (
 	CodeExamples = OpenAIResponsesTextGenerationCode;
 }
 
+if (model.name === "@cf/deepgram/aura-1") {
+	CodeExamples = DeepgramAura;
+}
+
+if (model.name === "@cf/deepgram/nova-3") {
+	CodeExamples = DeepgramNova;
+}
+
+if (model.name === "@cf/deepgram/flux") {
+	CodeExamples = DeepgramFlux;
+}
+
 const description = model.description;
 
 const isBeta = model.properties.find(
@@ -125,10 +153,9 @@ const isBeta = model.properties.find(
 let hasPlayground = model.task.name === "Text Generation";
 
 // temporary workaround for playground limitations
-if (model.name.includes("@cf/openai/gpt-oss") ) {
+if (model.name.includes("@cf/openai/gpt-oss")) {
 	hasPlayground = false;
 }
-
 
 const author = (authorData as any)[model.name.split("/")[1]];
 
@@ -213,6 +240,29 @@ const starlightPageProps = {
 	}
 
 	<ModelFeatures model={model} />
+	{
+		model.name === "@cf/deepgram/nova-3" && (
+			<Aside>
+				<p>
+					The <a href="/workers-ai/platform/pricing">pricing of this model</a>{" "}
+					is different based on transport. Transport-based pricing does not
+					apply to all models.
+				</p>
+				<p>
+					<ul>
+						<li>
+							WebSocket: $0.0092 per audio minute output (836.36 neurons per
+							audio minute output)
+						</li>
+						<li>
+							Regular HTTP: $0.0052 per audio minute output (472.73 neurons per
+							audio minute output)
+						</li>
+					</ul>
+				</p>
+			</Aside>
+		)
+	}
 
 	{
 		hasPlayground && (
@@ -252,7 +302,7 @@ const starlightPageProps = {
 			<>
 				<p>
 					The binding returns a <code>ReadableStream</code> with the image in
-					PNG format.
+					JPEG or PNG format (check the model's output schema).
 				</p>
 			</>
 		) : (

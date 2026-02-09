@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { DashButton, Render } from "~/components"
 
 <Render file="environment-definition" product="version-management" />
 
@@ -20,18 +20,20 @@ import { Render } from "~/components"
 
 To create a new environment:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and zone.
-3. Go to **Version Management**.
-4. Go to **Environments**.
-5. Select **Create Environment**.
-6. Provide the following information:
+1. In the Cloudflare dashboard, go to the **Account home** page and select your account and zone.
+
+    <DashButton url="/?to=/:account/home" />
+
+2. Go to **Version Management**.
+3. Go to **Environments**.
+4. Select **Create Environment**.
+5. Provide the following information:
 
 * **Environment Name**: A unique, descriptive name for the environment.
 * [**Traffic filter**](/version-management/reference/traffic-filters/): Limits which requests are sent to this environment.
 * **Initial position**: Controls where this environment should be in your testing process.
 
-7. Select **Create**.
+6. Select **Create**.
 
 :::note
 
@@ -47,13 +49,15 @@ You can only adjust the [**Read-only Environment**](/version-management/referenc
 
 To edit an environment:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and zone.
-3. Go to **Version Management**.
-4. Select **Environments**.
-5. On a specific environment, select **Edit**.
-6. Make any required changes.
-7. Select **Save**.
+1. In the Cloudflare dashboard, go to the **Account home** page and select your account and zone.
+
+    <DashButton url="/?to=/:account/home" />
+
+2. Go to **Version Management**.
+3. Select **Environments**.
+4. On a specific environment, select **Edit**.
+5. Make any required changes.
+6. Select **Save**.
 
 ***
 
@@ -75,11 +79,13 @@ When you roll back a version, you revert the environment to the previous version
 
 To roll back a version:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and zone.
-3. Go to **Version Management**.
-4. Select **Environments**.
-5. On a specific environment, select **Roll back**.
+1. In the Cloudflare dashboard, go to the **Account home** page and select your account and zone.
+
+    <DashButton url="/?to=/:account/home" />
+
+2. Go to **Version Management**.
+3. Select **Environments**.
+4. On a specific environment, select **Roll back**.
 
 ***
 
@@ -87,12 +93,14 @@ To roll back a version:
 
 To delete an environment:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and zone.
-3. Go to **Version Management**.
-4. Select **Environments**.
-5. On a specific environment, select **Edit**.
-6. Select **Delete Environment**.
+1. In the Cloudflare dashboard, go to the **Account home** page and select your account and zone.
+
+    <DashButton url="/?to=/:account/home" />
+
+2. Go to **Version Management**.
+3. Select **Environments**.
+4. On a specific environment, select **Edit**.
+5. Select **Delete Environment**.
 
 :::note
 

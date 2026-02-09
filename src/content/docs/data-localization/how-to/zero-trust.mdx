@@ -11,29 +11,29 @@ In the following sections, we will give you some details about how different Zer
 
 ## Gateway
 
-Regional Services can be used with Gateway in all [supported regions](/data-localization/region-support/). Be aware that Regional Services only apply when using the WARP client in Gateway with WARP mode.
+Regional Services can be used with Gateway in all [supported regions](/data-localization/region-support/). Be aware that Regional Services only apply when using the WARP client in Traffic and DNS mode.
 
 ### Egress policies
 
-Enterprise customers can purchase a [dedicated egress IP](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) (IPv4 and IPv6) or range of IPs geolocated to one or more Cloudflare network locations.
-This allows your egress traffic to geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/).
+Enterprise customers can purchase a [dedicated egress IP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) (IPv4 and IPv6) or range of IPs geolocated to one or more Cloudflare network locations.
+This allows your egress traffic to geolocate to the city selected in your [egress policies](/cloudflare-one/traffic-policies/egress-policies/).
 
 ### HTTP policies
 
-As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/connections/connect-devices/warp/) (in default [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/)).
+As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/team-and-resources/devices/warp/) (in default [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/)).
 
 {/* TODO: Reintroduce */}
 {/* <Render file="gateway/disable-udp" product="cloudflare-one" /> */}
 
 #### Data Loss Prevention (DLP)
 
-You are able to [log the payload of matched DLP rules](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules) and encrypt them with your public key so that only you can examine them later.
+You are able to [log the payload of matched DLP rules](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules) and encrypt them with your public key so that only you can examine them later.
 
-[Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#data-privacy).
+[Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#data-privacy).
 
 ### Network policies
 
-You are able to [configure SSH proxy and command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/). Generate a Hybrid Public Key Encryption (HPKE) key pair and upload the public key `sshkey.pub` to your dashboard. All proxied SSH commands are immediately encrypted using this public key. The matching private key – which is in your possession – is required to view logs.
+You are able to [configure SSH proxy and command logs](/cloudflare-one/traffic-policies/network-policies/ssh-logging/). Generate a Hybrid Public Key Encryption (HPKE) key pair and upload the public key `sshkey.pub` to your dashboard. All proxied SSH commands are immediately encrypted using this public key. The matching private key – which is in your possession – is required to view logs.
 
 ### DNS policies
 
@@ -43,7 +43,7 @@ Refer to the [WARP Settings](/data-localization/how-to/zero-trust/#warp-settings
 
 ### Custom certificates
 
-You can [bring your own certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/) to Gateway but these cannot yet be restricted to a specific region.
+You can [bring your own certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) to Gateway but these cannot yet be restricted to a specific region.
 
 ### Logs and Analytics
 
@@ -54,23 +54,27 @@ Customers also have the option to reduce the logs that Cloudflare stores:
 - You can [exclude PII from logs](/cloudflare-one/insights/logs/gateway-logs/manage-pii/)
 - You can [disable logging, or only log blocked requests](/cloudflare-one/insights/logs/gateway-logs/#selective-logging).
 
+#### Verify regional map application
+
+<Render file="verify-regional-map" product="data-localization" />
+
 ## Access
 
 To ensure that all reverse proxy requests for applications protected by Cloudflare Access will only occur in FedRAMP-compliant data centers, you should use [Regional Services](/data-localization/regional-services/get-started/) with the region set to FedRAMP.
 
 ## Cloudflare Tunnel
 
-You can [configure Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#region) to only connect to data centers within the United States, regardless of where the software was deployed.
+You can [configure Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#region) to only connect to data centers within the United States, regardless of where the software was deployed.
 
 ## WARP settings
 
 ### Local Domain Fallback
 
-You can use the WARP setting [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) in order to use a private DNS resolver, which you can manage yourself.
+You can use the WARP setting [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) in order to use a private DNS resolver, which you can manage yourself.
 
 ### Split Tunnels
 
-[Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) allow you to decide which IP addresses/ranges and/or domains are routed through or excluded from Cloudflare.
+[Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) allow you to decide which IP addresses/ranges and/or domains are routed through or excluded from Cloudflare.
 
 :::caution
 

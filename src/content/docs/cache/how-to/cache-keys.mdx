@@ -7,7 +7,7 @@ head:
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, DashButton } from "~/components"
 
 A Cache Key is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request.
 
@@ -16,7 +16,7 @@ A default cache key includes:
 1. Full URL:
    * scheme - could be HTTP or HTTPS.
    * host - for example, `www.cloudflare.com`
-   * URI with query string - for example, `/logo.jpg`
+   * URI with query string - for example, `/logo.jpg?utm_source=newsletter`
 2. Origin header sent by client (for CORS support).
 3. `x-http-method-override`, `x-http-method`, and `x-method-override` headers.
 4. `x-forwarded-host`, `x-host`, `x-forwarded-scheme` (unless http or https), `x-original-url`, `x-rewrite-url`, and `forwarded` headers.
@@ -25,14 +25,16 @@ A default cache key includes:
 
 Custom cache keys let you precisely set the cacheability setting for any resource. They provide the benefit of more control, though they may reduce your cache hit rate and result in cache sharding:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Caching** > **Cache Rules**.
-3. Select **Create rule**.
-4. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder).
-5. Under **Then**, in the **Cache eligibility** section, select **Eligible for cache**.
-6. Add the **Cache Key** setting to the rule and select the appropriate **Query String** setting.
-7. You can also select settings for **Headers**, **Cookie**, **Host**, and **User**.
-8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+1. In the Cloudflare dashboard, go to the **Cache Rules** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-rules" />
+
+2. Select **Create rule**.
+3. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder).
+4. Under **Then**, in the **Cache eligibility** section, select **Eligible for cache**.
+5. Add the **Cache Key** setting to the rule and select the appropriate **Query String** setting.
+6. You can also select settings for **Headers**, **Cookie**, **Host**, and **User**.
+7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 :::note
 When [URL normalization](/rules/normalization/) is enabled, we recommend also enabling [Normalize URLs to origin](/rules/normalization/manage/), especially if you are setting custom cache keys or using cache by device type, which also modifies the cache key. This helps ensure the URL in the cache key matches the URL sent to the origin, preventing cache poisoning and ensuring consistent behavior.
@@ -91,7 +93,7 @@ Headers control which headers go into the Cache Key. Similar to Query String, yo
 
 When you include a header, the header value is included in the Cache Key. For example, if an HTTP request contains an HTTP header like `X-Auth-API-key: 12345`, and you include the `X-Auth-API-Key header` in your Cache Key Template, then `12345` appears in the Cache Key.
 
-In the **Check if header contains** section, you can add header names and their values to the cache key. For custom headers, values are optional, but for the following restricted headers, you must include one to three specific values:
+In the **Include headers and selected values** section, you can add header names and their values to the cache key. For custom headers, values are optional, but for the following restricted headers, you must include one to 10 specific values:
 
   * `accept`
   * `accept-charset`
@@ -152,6 +154,10 @@ Cache keys options availability varies according to your plan.
 
 <FeatureTable id="cache.cache_key" />
 
+## Troubleshooting
+
+You can use [Cloudflare Trace](/rules/trace-request/) to find which Cache Key settings were applied to your request. When you send a request through the Trace tool, if the request was served from cache, it will show a cache hit in the **Cache Paremeters** section. Then select **View paremeter detail** to see exactly which Cache Key properties were used.
+
 ## Limitations
 
-The Prefetch feature is not compatible with the custom cache keys. With Cache Rules, the custom cache key is used to cache all assets. However, Prefetch always uses the default cache key. This results in a key mismatch.
+The [Prefetch](/speed/optimization/content/prefetch-urls/) feature is not compatible with the [Custom Cache Keys](/cache/how-to/cache-rules/examples/custom-cache-key/). With [Cache Rules](/cache/how-to/cache-rules/), the custom cache key is used to cache all assets. However, Prefetch always uses the default cache key. This results in a key mismatch.

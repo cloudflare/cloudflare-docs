@@ -59,14 +59,14 @@ Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare 
 
 ### Causes
 
-* [Full setup](/dns/zone-setups/full-setup/): You have either not [changed your authoritative nameservers](/dns/nameservers/update-nameservers/) or your change has not yet been authenticated by Cloudflare.
-* [Partial (CNAME) setup](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS provider or the record has not yet been authenticated by Cloudflare.
+* [Primary setup (Full)](/dns/zone-setups/full-setup/): You have either not [changed your authoritative nameservers](/dns/nameservers/update-nameservers/) or your change has not yet been authenticated by Cloudflare.
+* [CNAME setup (Partial)](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS provider or the record has not yet been authenticated by Cloudflare.
 
 After you add your domain, Cloudflare performs checks on a schedule to confirm you have updated your nameservers. The first check occurs after 60 seconds and the following attempts happen at gradually increased intervals. You can re-trigger the check [via API](/api/resources/zones/subresources/activation_check/methods/trigger/) or on the Dashboard, in the respective domain [Overview page](https://dash.cloudflare.com/?to=/:account/:zone/).
 
 ### Expected behavior for different plans
 
-If your domain is on the Free plan, it will be deleted automatically if it is not activated within 28 days.
+If your domain is on the Free plan, it will be automatically deleted if it is not activated within 28 days.
 
 Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed, or the domain is activated or [removed from Cloudflare](/fundamentals/manage-domains/remove-domain/).
 
@@ -82,14 +82,18 @@ Cloudflare has authenticated your [nameserver changes](/dns/nameservers/update-n
 
 ## Moved
 
-Your domain has failed multiple DNS checks, where either the Cloudflare nameservers are no longer present on your domain's `NS` records ([Full setup](/dns/zone-setups/full-setup/)) or no `SOA` record is returned for the zone ([Partial (CNAME) setup](/dns/zone-setups/partial-setup/)).
+Your domain has failed multiple DNS checks, where either the Cloudflare nameservers are no longer present on your domain's `NS` records ([Primary setup (Full)](/dns/zone-setups/full-setup/)) or no `SOA` record is returned for the zone ([CNAME setup (Partial)](/dns/zone-setups/partial-setup/)).
 
-Zones that do not have any active paid subscriptions and have been moved will be deleted automatically after 7 days.
+### Expected behavior for different plans
 
-:::caution
+If your domain is on the Free plan, it will be automatically deleted 7 days after it entered the moved status.
 
-If you have an active paid subscription and no longer wish to use Cloudflare, make sure to also [manually remove your domain](/fundamentals/manage-domains/remove-domain/).
-:::
+For moved zones with a paid plan (Pro, Business, Enterprise), deletion will occur after 7 days if any of the following is observed:
+
+- The paid plan is removed.
+- The domain is activated in another Cloudflare account.
+
+You can also [manually remove](/fundamentals/manage-domains/remove-domain/) your domain from Cloudflare.
 
 ## Deleted
 

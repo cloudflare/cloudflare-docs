@@ -6,9 +6,11 @@ sidebar:
 head:
   - tag: title
     content: Change your nameservers (Full setup)
+description: >-
+  If you want to use Cloudflare as your primary DNS provider and manage your DNS records, your domain should be using a full setup.
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton, Tabs, TabItem, APIRequest } from "~/components";
 
 <Render file="full-setup-definition" product="dns" />
 
@@ -33,7 +35,24 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 ## Add site to Cloudflare
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 In the Cloudflare dashboard, [add your domain](/fundamentals/manage-domains/add-site/).
+
+</TabItem> <TabItem label="API">
+
+<APIRequest
+  path="/zones"
+  method="POST"
+  json={{
+    "name": "<YOUR_DOMAIN>",
+    "account": {
+      "id": "<YOUR_ACCOUNT_ID>"
+    }
+  }}
+/>
+
+</TabItem> </Tabs>
 
 If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
 
@@ -41,7 +60,7 @@ Cloudflare requires your `apex domain` to be one level below a valid TLD defined
 
 ## Review DNS records
 
-When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a full setup, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
+When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a primary setup (full), Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
 <Render file="dns-scan-intro" product="dns" /> <br />
 
@@ -62,17 +81,31 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 
 ### Get nameserver names
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. On **Overview**, locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the Cloudflare dashboard, go to the zone **Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/" />
+
+2. Locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
 
    ![Find nameserver names on the Overview page of your domain](~/assets/images/dns/nameserver-names.png)
 
 <br />
 3. Keep this window open while you perform the next step.
 
+</TabItem> <TabItem label="API">
+
+<APIRequest
+  path="/zones/{zone_id}"
+  method="GET"
+/>
+
+</TabItem> </Tabs>
+
 :::note
 
-Cloudflare automatically assigns nameservers to a domain and these assignments cannot be changed. For more details, refer to [Nameserver assignments](/dns/zone-setups/reference/nameserver-assignment/).
+Cloudflare automatically assigns nameservers to a domain and these assignments cannot be changed. For more details, refer to [Nameserver assignments](/dns/nameservers/nameserver-options/#assignment-method).
 :::
 
 ### Update your registrar
@@ -108,13 +141,17 @@ When your domain is **Active**:
 - CLI commands will show your Cloudflare-assigned nameservers
 
 ```txt
-*Linux/Unix*
-dig <DOMAIN_NAME> +trace @1.1.1.1
-dig <DOMAIN_NAME> +trace @8.8.8.8
+*macOS/Linux*
+
+whois <DOMAIN_NAME>
+dig ns <DOMAIN_NAME> @1.1.1.1
+dig ns <DOMAIN_NAME> @8.8.8.8
+dig <DOMAIN_NAME> +trace
 
 *Windows*
-nslookup <DOMAIN_NAME> 1.1.1.1
-nslookup <DOMAIN_NAME> 8.8.8.8
+
+nslookup -type=ns <DOMAIN_NAME> 1.1.1.1
+nslookup -type=ns <DOMAIN_NAME> 8.8.8.8
 ```
 
 :::note

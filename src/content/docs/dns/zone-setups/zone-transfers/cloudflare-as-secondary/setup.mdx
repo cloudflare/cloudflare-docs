@@ -6,6 +6,8 @@ sidebar:
 head:
   - tag: title
     content: Set up incoming zone transfers (Cloudflare as Secondary)
+description: >-
+  With incoming zone transfers, you can keep your primary DNS provider and use Cloudflare as a secondary DNS provider.
 ---
 
 import { Render, TabItem, Tabs } from "~/components";
@@ -17,6 +19,7 @@ With [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-sec
 ## Before you begin
 
 - You should already have a registered domain, set up with your primary DNS provider.
+- Review the available options and plan for how you will use [DNSSEC with Cloudflare as secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/).
 - Make sure you have completed the following tasks at your primary DNS provider and at Cloudflare.
 
 ### At your primary DNS provider
@@ -72,9 +75,9 @@ Get the following values from your Cloudflare account:
 To create a secondary zone using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. In the top navigation bar, click **Add** > **Connect a domain**.
+2. Select **Onboard a domain**.
 3. Enter your zone name and choose **Secondary DNS** (if this option is not available, contact your account team).
-4. Click **Continue**.
+4. Select **Continue**.
 5. Select your plan type.
 6. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNS server.
    :::caution
@@ -84,12 +87,12 @@ To create a secondary zone using the dashboard:
    :::note
    <Render file="linked-peers-limit" product="dns" />
    :::
-8. Click **Continue**.
-9. Review the list of transferred records and click **Continue**.
+8. Select **Continue**.
+9. Review the list of transferred records and select **Continue**.
    :::note
    If no records appear, you may have misconfigured the TSIG or the IP address of the peer server or the [Access Control List](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) was improperly configured at your primary DNS provider.
    :::
-10. Click **Initiate zone transfer**.
+10. Select **Initiate zone transfer**.
 
 </TabItem> <TabItem label="API">
 
@@ -101,7 +104,7 @@ To create a secondary zone using the API, send a [POST](/api/resources/dns/subre
 
 At your registrar, add the secondary nameservers [specified in the Cloudflare dashboard](/dns/zone-setups/full-setup/setup/#get-nameserver-names). Do not remove your primary DNS provider's nameservers.
 
-When you have added the Cloudflare nameservers, go into your new secondary zone and click **Done, check nameservers**.
+When you have added the Cloudflare nameservers, go into your new secondary zone and select **Done, check nameservers**.
 
 ## 5. Create notifications (optional)
 

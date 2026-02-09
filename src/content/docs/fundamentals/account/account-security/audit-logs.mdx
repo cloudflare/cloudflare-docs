@@ -9,7 +9,7 @@ sidebar:
 
 ---
 
-import { APIRequest } from "~/components"
+import { DashButton, APIRequest } from "~/components"
 
 Cloudflare Audit Logs are account-based. All user-initiated actions are recorded automatically across both the Cloudflare API and dashboard. System-initiated logs are also captured to reflect actions taken automatically by Cloudflare systems, such as configuration updates, background processes, or internal policy enforcement.
 
@@ -35,7 +35,11 @@ Audit Logs (version 2) provide a unified and standardized system for tracking an
 
 ## Retention
 
-Audit logs are retained for 18 months before being deleted. Enterprise customers can use [Logpush](/logs/logpush/) to store audit logs for longer periods of time. Logpush for Audit Logs v2 will be available for GA. 
+- Audit logs are retained for 18 months before being deleted. No additional setup is required.
+
+- In the Audit Logs v2 UI, queries are limited to the most recent 90 days for performance reasons. To access the full 18 months of data, use the API or [Logpush](/logs/logpush/).
+
+- Enterprise customers can use [Logpush](/logs/logpush/) to store audit logs beyond 18 months.
 
 ## Access Audit Logs
 
@@ -93,8 +97,9 @@ For more information refer to the [API documentation](https://developers.cloudfl
 
 To access audit logs in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Manage Account** > **Audit Logs**.
+In the Cloudflare dashboard, go to the **Audit Logs** page.
+
+<DashButton url="/?to=/:account/audit-log" />
 
 :::note
 The Audit Logs v2 is shown by default. You can switch between Audit Logs v2 and v1 as needed.
@@ -108,12 +113,14 @@ For customers who already have a Logpush job set up for Audit Logs v1, note that
 
 To create a Logpush job:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Analytics & Logs** > **Logpush**.
-3. Select **Create a Logpush job**.
-4. In **Select a destination**, select the destination of your choice and add the destination details.
-5. In the datasets section, select the [Audit Logs v2 dataset](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/). Audit Logs v2 is an account-based dataset.
-6. Once you are done configuring your logpush job, select **Submit**.
+1. In the Cloudflare dashboard, go to the **Logpush** page.
+
+    <DashButton url="/?to=/:account/logs" />
+
+2. Select **Create a Logpush job**.
+3. In **Select a destination**, select the destination of your choice and add the destination details.
+4. In the datasets section, select the [Audit Logs v2 dataset](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/). Audit Logs v2 is an account-based dataset.
+5. Once you are done configuring your logpush job, select **Submit**.
 
 ## Audit Log structure
 

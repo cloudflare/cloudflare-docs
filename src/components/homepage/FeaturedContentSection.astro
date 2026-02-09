@@ -4,7 +4,7 @@ import { z } from "astro:schema";
 import { marked } from "marked";
 
 import { CardGrid, Card, LinkCard } from "@astrojs/starlight/components";
-import Stream from "../Stream.astro";
+import YouTube from "../YouTube.astro";
 
 const props = z.object({
 	title: z.string(),
@@ -54,12 +54,7 @@ const { title, text, image, cards, imagePosition } = props.parse(Astro.props);
 			title === "Developer Platform" ? (
 				<div class="[&>article]:gap-0">
 					<Card title="">
-						<Stream
-							id="d89f290431f98e551f2b1467f85d6561"
-							title="foo"
-							thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/cloudflare-stack.jpg"
-							showMoreVideos={false}
-						/>
+						<YouTube id="FH5-m0aiO5g" />
 
 						<LinkCard
 							title={"Explore our Developer Platform"}

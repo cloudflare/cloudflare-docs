@@ -7,6 +7,8 @@ head:
 
 ---
 
+import { DashButton } from "~/components";
+
 Consider the following sections on how you can remove domains from Cloudflare. Removing your domain cancels all active subscriptions, which will not be refunded per our [billing policy](/billing/billing-policy/). If you add this domain back to Cloudflare later, you will need to re-purchase all subscriptions. Removing your domain from Cloudflare does not change your domain registration.
 
 ## Before removing your domain
@@ -50,7 +52,9 @@ Please also note that domains in the `Initializing (Setup)` or `Pending` statuse
 
 ## Remove a domain activated in Cloudflare
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+1. Log in to the Cloudflare dashboard.
+
+    <DashButton url="/?to=/:account/home" />
 
 2. On the **Overview** page, find **Advanced Actions** and then select **Remove Site from Cloudflare**.
 

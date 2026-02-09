@@ -18,10 +18,10 @@ and [`setImmediate`](https://nodejs.org/api/timers.html#setimmediatecallback-arg
 import timers from "node:timers";
 
 export default {
-  async fetch() {
+  async fetch(): Promise<Response> {
     console.log("first");
-    const { promise1, resolve1 } = Promise.withResolvers();
-    const { promise2, resolve2 } = Promise.withResolvers();
+    const { promise: promise1, resolve: resolve1 } = Promise.withResolvers<void>();
+    const { promise: promise2, resolve: resolve2 } = Promise.withResolvers<void>();
     timers.setTimeout(() => {
       console.log("last");
       resolve1();
@@ -35,10 +35,8 @@ export default {
     await Promise.all([promise1, promise2]);
 
     return new Response("ok");
-
-}
-}
-
+  }
+} satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
 
@@ -55,4 +53,3 @@ compatibility, you must call functions from the `node:timers` module.
 :::
 
 The full `node:timers` API is documented in the [Node.js documentation for `node:timers`](https://nodejs.org/api/timers.html).
-```

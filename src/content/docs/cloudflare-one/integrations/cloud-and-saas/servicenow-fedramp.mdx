@@ -1,0 +1,27 @@
+---
+pcx_content_type: reference
+title: ServiceNow (FedRAMP)
+rss: file
+sidebar:
+  order: 16
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/fedramp-availability"
+	product="cloudflare-one"
+	params={{
+		integrationName: "ServiceNow (FedRAMP)",
+	}}
+/>
+
+<Render
+	file="casb/servicenow-integration"
+	product="cloudflare-one"
+	params={{
+		integrationName: "ServiceNow (FedRAMP)",
+		environmentName: "ServiceNow (FedRAMP) instance",
+		slugifiedName: "servicenow-fedramp",
+	}}
+/>

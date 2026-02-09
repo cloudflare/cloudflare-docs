@@ -1,18 +1,7 @@
 import { z } from "astro:schema";
-import type { SchemaContext } from "astro:content";
+import { reference, type SchemaContext } from "astro:content";
 
 import { sidebar, SidebarIconSchema } from "./types/sidebar";
-
-const spotlightAuthorDetails = z
-	.object({
-		author: z.string(),
-		author_bio_link: z.string().url(),
-		author_bio_source: z.string(),
-	})
-	.optional()
-	.describe(
-		"These are used to automatically add the [SpotlightAuthorDetails component](/style-guide/components/spotlight-author-details/) to the page.",
-	);
 
 export const baseSchema = ({ image }: SchemaContext) =>
 	z.object({
@@ -78,9 +67,8 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.date()
 			.optional()
 			.describe(
-				"A `YYYY-MM-DD` value that signals when the page was last explicitly reviewed from beginning to end. This is used to automatically add the [LastReviewed component](/style-guide/components/last-reviewed/). Commonly related to [tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/) and [reference architectures](/style-guide/documentation-content-strategy/content-types/reference-architecture/).",
+				"A `YYYY-MM-DD` value that signals when the page was last explicitly reviewed from beginning to end.",
 			),
-		spotlight: spotlightAuthorDetails,
 		release_notes_file_name: z
 			.string()
 			.array()
@@ -89,18 +77,15 @@ export const baseSchema = ({ image }: SchemaContext) =>
 				"Required for the [`ProductReleaseNotes`](/style-guide/components/usage/#productreleasenotes) component.",
 			),
 		products: z
-			.string()
-			.array()
-			.optional()
+			.array(reference("products"))
+			.default([])
 			.describe(
-				"The names of related products, which show on some grids for Examples, [Tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/), and [Reference Architectures](/style-guide/documentation-content-strategy/content-types/reference-architecture/)",
+				"The names of related products (according to their file name in `src/content/products`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
 			),
 		summary: z
 			.string()
 			.optional()
 			.describe("Renders a summary description directly below the page title."),
-		goal: z.string().array().optional(),
-		operation: z.string().array().optional(),
 		noindex: z
 			.boolean()
 			.optional()
@@ -149,5 +134,11 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.default(true)
 			.describe(
 				"Whether to show the FeedbackPrompt on the page, defaults to true",
+			),
+		wid: z
+			.string()
+			.optional()
+			.describe(
+				"What Id? Used as a generic identifier for external data sources",
 			),
 	});

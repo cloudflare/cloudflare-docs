@@ -1,0 +1,29 @@
+---
+title: Introducing email two-factor authentication
+description: Cloudflare now offers email two-factor authentication to protect your account
+date: 2025-10-30
+---
+
+Two-factor authentication (2FA) is one of the best ways to protect your account from the risk of account takeover. Cloudflare has offered phishing resistant 2FA options including hardware based keys (for example, a Yubikey) and app based TOTP (time-based one-time password) options which use apps like Google or Microsoft's Authenticator app. Unfortunately, while these solutions are very secure, they can be lost if you misplace the hardware based key, or lose the phone which includes that app. The result is that users sometimes get locked out of their accounts and need to contact support. 
+
+Today, we are announcing the addition of email as a 2FA factor for all Cloudflare accounts. Email 2FA is in wide use across the industry as a least common denominator for 2FA because it is low friction, loss resistant, and still improves security over username/password login only. We also know that most commercial email providers already require 2FA, so your email address is usually well protected already. 
+
+You can now enable email 2FA on the Cloudflare dashboard:
+
+1. Go to **Profile** at the top right corner.
+2. Select **Authentication**.
+3. Under **Two-Factor Authentication**, select **Set up**.  
+
+## Sign-in security best practices
+
+Cloudflare is critical infrastructure, and you should protect it as such. Review the following best practices and make sure you are doing your part to secure your account:
+
+- Use a unique password for every website, including Cloudflare, and store it in a password manager like 1Password or Keeper. These services are cross-platform and simplify the process of managing secure passwords.
+- Use 2FA to make it harder for an attacker to get into your account in the event your password is leaked.
+- Store your backup codes securely. A password manager is the best place since it keeps the backup codes encrypted, but you can also print them and put them somewhere safe in your home.
+- If you use an app to manage your 2FA keys, enable cloud backup, so that you don't lose your keys in the event you lose your phone.
+- If you use a custom email domain to sign in, [configure SSO](/fundamentals/manage-members/dashboard-sso/).
+- If you use a public email domain like Gmail or Hotmail, you can also use social login with Apple, GitHub, or Google to sign in.
+- If you manage a Cloudflare account for work:
+  - Have at least two administrators in case one of them unexpectedly leaves your company.
+  - Use SCIM to automate permissions management for members in your Cloudflare account.
