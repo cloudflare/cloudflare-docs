@@ -143,6 +143,13 @@ this.ctx.container.start({
 
 See [the Env Vars and Secrets Example](/containers/examples/env-vars-and-secrets/) for details.
 
+## Can I use Containers with Workers for Platforms?
+
+Yes, you can. It is easy to give each of your end-users their own Container instances, though not possible for each
+end-user to provider their own container images via Workers For Platforms.
+
+See [Using Workflows, Durable Objects, or Containers with User Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/#using-workflows-durable-objects-or-containers-with-user-workers) for details.
+
 ## How do I allow or disallow egress from my container?
 
 When booting a Container, you can specify `enableInternet`, which will toggle
