@@ -18,7 +18,7 @@ This guide will show you how to deploy your own remote MCP server on Cloudflare 
 
 You can start by deploying a [public MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) without authentication, then add user authentication and scoped authorization later. If you already know your server will require authentication, you can skip ahead to the [next section](/agents/guides/remote-mcp-server/#add-authentication).
 
-### Deploy using a quickstart button
+### Via the dashboard
 
 The button below will guide you through everything you need to do to deploy an [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) to your Cloudflare account:
 
@@ -26,9 +26,9 @@ The button below will guide you through everything you need to do to deploy an [
 
 Once deployed, this server will be live at your `workers.dev` subdomain (for example, `remote-mcp-server-authless.your-account.workers.dev/mcp`). You can connect to it immediately using the [AI Playground](https://playground.ai.cloudflare.com/) (a remote MCP client), [MCP inspector](https://github.com/modelcontextprotocol/inspector) or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-remote-mcp-server-to-claude-and-other-mcp-clients-via-a-local-proxy).
 
-If you are using the **Deploy to Cloudflare** button, a new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can clone this repository, [develop locally](/agents/guides/remote-mcp-server/#local-development), and start customizing the MCP server with your own [tools](/agents/model-context-protocol/tools/).
+A new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can clone this repository, [develop locally](/agents/guides/remote-mcp-server/#local-development), and start customizing the MCP server with your own [tools](/agents/model-context-protocol/tools/).
 
-### Deploy using the CLI
+### Via the CLI
 
 You can use the [Wrangler CLI](/workers/wrangler) to create a new MCP Server on your local machine and deploy it to Cloudflare.
 
@@ -91,7 +91,7 @@ You can use the [Wrangler CLI](/workers/wrangler) to create a new MCP Server on 
 
 You now have a remote MCP server that MCP clients can connect to.
 
-### Connect from an MCP client via a local proxy
+## Connect from an MCP client via a local proxy
 
 Now that your remote MCP server is running, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop or other MCP clients to it — even if your MCP client does not support remote transport or authorization on the client side. This lets you test what an interaction with your remote MCP server will be like with a real MCP client.
 
@@ -126,19 +126,15 @@ To learn how to use remote MCP servers with other MCP clients, refer to [Test a 
 
 ## Add Authentication
 
-The public MCP server example you deployed earlier allows any client to connect and invoke tools without logging in. In this section, we will walk through how to enable user authentication to your MCP server. To add authentication, you can either:
+The public MCP server example you deployed earlier allows any client to connect and invoke tools without logging in. To add user authentication to your MCP server, you can integrate Cloudflare Access or a third-party service as the OAuth provider. Your MCP server handles secure login flows and issues access tokens that MCP clients can use to make authenticated tool calls. Users sign in with the OAuth provider and grant their AI agent permission to interact with the tools exposed by your MCP server, using scoped permissions.
 
-- **Build OAuth logic directly into your MCP server**: You can integrate Cloudflare Access or a third-party service as the OAuth provider. The MCP server handles secure login flows and issues access tokens that MCP clients can use to make authenticated tool calls. Users sign in with the OAuth provider and grant their AI agent permission to interact with the tools exposed by your MCP server, using scoped permissions.
-- **Use Cloudflare Access as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)**: Your MCP server validates the Cloudflare Access JWT to ensure that requests come from Cloudflare Access. User sign in to your configured identity provider and are only allowed to connect to the MCP server if they pass your Access policies.
+### Cloudflare Access OAuth
 
-### Option 1: Use Cloudflare Access for OAuth
+You can configure your MCP server to require user authentication through Cloudflare Access.  Cloudflare Access acts as an identity aggregator and checks signals from your existing [identity providers](/cloudflare-one/integrations/identity-providers/) (such as GitHub, Okta, or Microsoft Entra ID), as well as device attributes such as IP address or client certificates.  When users connect to the MCP server using an MCP client, they will be prompted to log in to the configured identity provider and are only granted access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
 
+For a step-by-step deployment guide, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/access-controls/ai-controls/saas-mcp/).
 
-### Option 2: Use Cloudflare Access as a reverse proxy
-
-You can use Cloudflare Access to secure authentication to your MCP server, without managing OAuth logic within your code. This method allows you to restrict access to your tools based on user attributes from identity providers (like Google, Okta, or Microsoft Entra ID), email domains, IP addresses, and [other criteria](/cloudflare-one/access-controls/policies/).
-
-### Option 3: Third-party OAuth provider
+### Third-party OAuth
 
 You can connect your MCP server with any [OAuth provider](/agents/model-context-protocol/authorization/#2-third-party-oauth-provider) that supports the OAuth 2.0 specification, including GitHub, Google, Slack, [Stytch](/agents/model-context-protocol/authorization/#stytch), [Auth0](/agents/model-context-protocol/authorization/#stytch), [WorkOS](/agents/model-context-protocol/authorization/#stytch), and more.
 
