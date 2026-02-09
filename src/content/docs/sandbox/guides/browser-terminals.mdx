@@ -29,7 +29,7 @@ Add a route that proxies WebSocket connections to the sandbox terminal. The exam
 
 <TypeScriptExample>
 
-```
+```ts
 import { getSandbox } from '@cloudflare/sandbox';
 
 export { Sandbox } from '@cloudflare/sandbox';
@@ -63,7 +63,7 @@ Create the terminal in your browser code and attach the `SandboxAddon`. The addo
 
 <TypeScriptExample>
 
-```
+```ts
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
 import { SandboxAddon } from '@cloudflare/sandbox/xterm';
@@ -107,7 +107,7 @@ If you are building a custom terminal UI or running in an environment without xt
 
 <TypeScriptExample>
 
-```
+```ts
 const ws = new WebSocket('wss://example.com/ws/terminal?id=my-sandbox');
 ws.binaryType = 'arraybuffer';
 

@@ -30,7 +30,7 @@ const response = await sandbox.terminal(request: Request, options?: PtyOptions):
 **Returns**: `Promise<Response>` — WebSocket upgrade response
 
 <TypeScriptExample>
-```
+```ts
 // In your Worker's fetch handler
 return await sandbox.terminal(request, { cols: 120, rows: 30 });
 ```
@@ -39,7 +39,7 @@ return await sandbox.terminal(request, { cols: 120, rows: 30 });
 Works with both [default and explicitly created sessions](/sandbox/concepts/sessions/):
 
 <TypeScriptExample>
-```
+```ts
 // Default session
 return await sandbox.terminal(request);
 
@@ -47,7 +47,7 @@ return await sandbox.terminal(request);
 const session = await sandbox.getSession('dev');
 return await session.terminal(request);
 
-````
+```
 </TypeScriptExample>
 
 ## Client-side addon
@@ -72,7 +72,7 @@ const addon = new SandboxAddon(options: SandboxAddonOptions);
 - `onStateChange(state, error?)` - Callback for connection state changes
 
 <TypeScriptExample>
-```
+```ts
 import { Terminal } from '@xterm/xterm';
 import { SandboxAddon } from '@cloudflare/sandbox/xterm';
 

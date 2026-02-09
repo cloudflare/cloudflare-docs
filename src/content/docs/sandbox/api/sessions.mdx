@@ -33,7 +33,7 @@ const session = await sandbox.createSession(options?: SessionOptions): Promise<E
 **Returns**: `Promise<ExecutionSession>` with all sandbox methods bound to this session
 
 <TypeScriptExample>
-```
+```ts
 // Multiple isolated environments
 const prodSession = await sandbox.createSession({
   id: 'prod',
@@ -74,7 +74,7 @@ const session = await sandbox.getSession(sessionId: string): Promise<ExecutionSe
 **Returns**: `Promise<ExecutionSession>` bound to the specified session
 
 <TypeScriptExample>
-```
+```ts
 // First request - create session
 const session = await sandbox.createSession({ id: 'user-123' });
 await session.exec('git clone https://github.com/user/repo.git');
@@ -107,7 +107,7 @@ const result = await sandbox.deleteSession(sessionId: string): Promise<SessionDe
 - `timestamp` - Deletion timestamp
 
 <TypeScriptExample>
-```
+```ts
 // Create a temporary session for a specific task
 const tempSession = await sandbox.createSession({ id: 'temp-task' });
 
@@ -146,7 +146,7 @@ Call `setEnvVars()` **before** any other sandbox operations to ensure environmen
 :::
 
 <TypeScriptExample>
-```
+```ts
 const sandbox = getSandbox(env.Sandbox, 'user-123');
 
 // Set environment variables first
@@ -181,4 +181,3 @@ The `ExecutionSession` object has all sandbox methods bound to the specific sess
 
 - [Session management concept](/sandbox/concepts/sessions/) - How sessions work
 - [Commands API](/sandbox/api/commands/) - Execute commands
-```
