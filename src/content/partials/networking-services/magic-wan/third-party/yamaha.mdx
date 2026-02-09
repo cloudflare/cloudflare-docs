@@ -20,7 +20,7 @@ The necessary steps to setting up Magic WAN are to add IPsec tunnels and Magic s
 
 Before proceeding, ensure that you have the anycast IPs associated with your account. Check with your Cloudflare account team if you do not yet have them.
 
-## Magic IPsec Tunnels
+### Magic IPsec Tunnels
 
 1.Follow the Add Tunnels instructions to create the required IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
 
@@ -48,7 +48,7 @@ Before proceeding, ensure that you have the anycast IPs associated with your acc
 
 **FQDN ID: Copy this ID and save it. You will need it when configuring the IPsec tunnel on your RTX router.
 
-## Magic static routes
+### Magic static routes
 
 Static routes are required for any networks that will be reached via the IPsec tunnel. In our example, there is one network: 172.16.2.0/24.
 
@@ -157,7 +157,7 @@ dns server select 1 <ISP's DNS server IP> any .
 
 dns private address spoof on
 
-### Connection test
+## Connection test
 
 In the Yamaha RTX router CLI, you can run show ipsec sa, show status tunnel to check the status of the IPsec VPN.
 
