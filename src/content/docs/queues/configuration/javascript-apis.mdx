@@ -26,20 +26,20 @@ An example of writing a single message to a Queue:
 <Tabs syncKey="workersExamples">
 <TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
-type Environment = {
+interface Env {
   readonly MY_QUEUE: Queue;
-};
+}
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req, env, ctx): Promise<Response> {
     await env.MY_QUEUE.send({
       url: req.url,
       method: req.method,
       headers: Object.fromEntries(req.headers),
     });
-    return new Response('Sent!');
+    return new Response("Sent!");
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">
@@ -64,25 +64,24 @@ The Queues API also supports writing multiple messages at once:
 <Tabs syncKey="workersExamples">
 <TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
-const sendResultsToQueue = async (results: Array<any>, env: Environment) => {
-  const batch: MessageSendRequest[] = results.map((value) => ({
-    body: JSON.stringify(value),
-  }));
-  await env.queue.sendBatch(batch);
+const sendResultsToQueue = async (results: Array<unknown>, env: Env) => {
+	const batch: MessageSendRequest[] = results.map((value) => ({
+		body: value,
+	}));
+	await env.MY_QUEUE.sendBatch(batch);
 };
 ```
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">
 ```python
-import json
 from pyodide.ffi import to_js
 
 async def send_results_to_queue(results, env):
     batch = [
-        {"body": json.dumps(value)}
+        {"body": value}
         for value in results
     ]
-    await env.queue.sendBatch(to_js(batch))
+    await env.MY_QUEUE.sendBatch(to_js(batch))
 ```
 </TabItem>
 </Tabs>
@@ -105,9 +104,10 @@ interface Queue<Body = unknown> {
   * Sends a message to the Queue. The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
   * When the promise resolves, the message is confirmed to be written to disk.
 
-* `sendBatch(bodyIterable<MessageSendRequest<unknown>>)` <Type text="Promise<void>" />
+* `sendBatch(messagesIterable<MessageSendRequest<unknown>>, options?QueueSendBatchOptions)` <Type text="Promise<void>" />
 
   * Sends a batch of messages to the Queue. Each item in the provided [Iterable](https://www.typescriptlang.org/docs/handbook/iterators-and-generators.html) must be supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types). A batch can contain up to 100 messages, though items are limited to 128 KB each, and the total size of the array cannot exceed 256 KB.
+  * The optional `options` parameter can be used to apply settings (such as `delaySeconds`) to all messages in the batch. See [QueueSendBatchOptions](#queuesendbatchoptions).
   * When the promise resolves, the messages are confirmed to be written to disk.
 
 
@@ -117,10 +117,11 @@ interface Queue<Body = unknown> {
 A wrapper type used for sending message batches.
 
 ```ts
-type MessageSendRequest<Body = unknown> = {
+interface MessageSendRequest<Body = unknown> {
   body: Body;
-  options?: QueueSendOptions;
-};
+  contentType?: QueueContentType;
+  delaySeconds?: number;
+}
 ```
 
 
@@ -130,9 +131,15 @@ type MessageSendRequest<Body = unknown> = {
   * The body of the message.
   * The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
 
-* <code>options</code> <Type text="QueueSendOptions" />
+* <code>contentType</code> <Type text="QueueContentType" />
 
-  * Options to apply to the current message, including content type and message delay settings.
+  * The explicit content type of a message so it can be previewed correctly with the [List messages from the dashboard](/queues/examples/list-messages-from-dash/) feature. Optional argument.
+  * See [QueuesContentType](#queuescontenttype) for possible values.
+
+* <code>delaySeconds</code> <Type text="number" />
+
+  * The number of seconds to [delay a message](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
+  * Must be an integer between 0 and 43200 (12 hours).
 
 
 
@@ -209,17 +216,17 @@ If the `queue()` function throws, or the promise returned by it or any of the pr
 <Tabs syncKey="workersExamples">
 <TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
+interface Env {
+  // Add your bindings here
+}
+
 export default {
-  async queue(
-    batch: MessageBatch,
-    env: Environment,
-    ctx: ExecutionContext
-  ): Promise<void> {
+  async queue(batch, env, ctx): Promise<void> {
     for (const message of batch.messages) {
-      console.log('Received', message);
+      console.log("Received", message.body);
     }
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">
@@ -261,7 +268,7 @@ A batch of messages that are sent to a consumer Worker.
 ```ts
 interface MessageBatch<Body = unknown> {
   readonly queue: string;
-  readonly messages: Message<Body>[];
+  readonly messages: readonly Message<Body>[];
   ackAll(): void;
   retryAll(options?: QueueRetryOptions): void;
 }

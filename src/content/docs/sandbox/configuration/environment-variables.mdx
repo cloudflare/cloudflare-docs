@@ -36,6 +36,16 @@ await sandbox.setEnvVars({
 
 **Use when:** You need the same environment variables for multiple commands.
 
+**Unsetting variables**: Pass `undefined` or `null` to unset environment variables:
+
+```typescript
+await sandbox.setEnvVars({
+	API_KEY: 'new-key',     // Sets API_KEY
+	OLD_SECRET: undefined,  // Unsets OLD_SECRET
+	DEBUG_MODE: null        // Unsets DEBUG_MODE
+});
+```
+
 ### 2. Per-command with exec() options
 
 Pass environment variables for a specific command:
@@ -80,6 +90,56 @@ await session.exec("python seed.py");
 ```
 
 **Use when:** You need isolated execution contexts with different environment variables running concurrently.
+
+## Unsetting environment variables
+
+The Sandbox SDK supports unsetting environment variables by passing `undefined` or `null` values. This enables idiomatic JavaScript patterns for managing configuration:
+
+```typescript
+await sandbox.setEnvVars({
+	// Set new values
+	API_KEY: 'new-key',
+	DATABASE_URL: env.DATABASE_URL,
+	
+	// Unset variables (removes them from the environment)
+	OLD_API_KEY: undefined,
+	TEMP_TOKEN: null
+});
+```
+
+**Before this change**: Passing `undefined` values would throw a runtime error.
+
+**After this change**: `undefined` and `null` values run `unset VARIABLE_NAME` in the shell.
+
+### Use cases for unsetting
+
+**Remove sensitive data after use:**
+
+```typescript
+// Use a temporary token
+await sandbox.setEnvVars({ TEMP_TOKEN: 'abc123' });
+await sandbox.exec('curl -H "Authorization: $TEMP_TOKEN" api.example.com');
+
+// Clean up the token
+await sandbox.setEnvVars({ TEMP_TOKEN: undefined });
+```
+
+**Conditional environment setup:**
+
+```typescript
+await sandbox.setEnvVars({
+	API_KEY: env.API_KEY,
+	DEBUG_MODE: env.NODE_ENV === 'development' ? 'true' : undefined,
+	PROFILING: env.ENABLE_PROFILING ? 'true' : undefined
+});
+```
+
+**Reset to system defaults:**
+
+```typescript
+// Unset to fall back to container's default NODE_ENV
+await sandbox.setEnvVars({ NODE_ENV: undefined });
+```
 
 ## Common patterns
 

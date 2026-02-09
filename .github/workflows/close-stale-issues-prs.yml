@@ -20,12 +20,12 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-issue-message: "Hey there, we've marked this pull request as stale because there's no recent activity on it. This label helps us identify long-standing issues in our repo (and not used to auto-close issues)."
           stale-pr-message: "Hey there, we've marked this pull request as stale because there's no recent activity on it. This label is helps us identify PRs that might need updates (or to be closed out by our team if no longer relevant)."
-          days-before-stale: 35
+          days-before-stale: 14
           # setting to a negative number means they'll never be autoclosed
           days-before-close: -1
           # we are okay with PRs being auto-closed
-          days-before-pr-close: 25
+          days-before-pr-close: 30
           exempt-pr-labels: "never-stale"
           close-pr-message: "Hey there, we've closed out this pull request because it's been stale for a while and there's been no additional action on it. If these changes are still relevant, open a new pull request (or flag to us in a GitHub issue)."
           close-pr-label: "closed-as-stale"
-          operations-per-run: 100
+          operations-per-run: 500

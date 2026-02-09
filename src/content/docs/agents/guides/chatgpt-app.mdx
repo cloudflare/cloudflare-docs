@@ -321,53 +321,59 @@ const getWidgetHtml = async (host: string) => {
 	return html;
 };
 
-const server = new McpServer({ name: "Chess", version: "v1.0.0" });
+function createServer() {
+	const server = new McpServer({ name: "Chess", version: "v1.0.0" });
 
-// Register a UI resource that ChatGPT can render
-server.registerResource(
-	"chess",
-	"ui://widget/index.html",
-	{},
-	async (_uri, extra) => {
-		return {
-			contents: [
-				{
-					uri: "ui://widget/index.html",
-					mimeType: "text/html+skybridge",
-					text: await getWidgetHtml(extra.requestInfo?.headers.host as string),
-				},
-			],
-		};
-	},
-);
-
-// Register a tool that ChatGPT can call to render the UI
-server.registerTool(
-	"playChess",
-	{
-		title: "Renders a chess game menu, ready to start or join a game.",
-		annotations: { readOnlyHint: true },
-		_meta: {
-			"openai/outputTemplate": "ui://widget/index.html",
-			"openai/toolInvocation/invoking": "Opening chess widget",
-			"openai/toolInvocation/invoked": "Chess widget opened",
+	// Register a UI resource that ChatGPT can render
+	server.registerResource(
+		"chess",
+		"ui://widget/index.html",
+		{},
+		async (_uri, extra) => {
+			return {
+				contents: [
+					{
+						uri: "ui://widget/index.html",
+						mimeType: "text/html+skybridge",
+						text: await getWidgetHtml(extra.requestInfo?.headers.host as string),
+					},
+				],
+			};
 		},
-	},
-	async (_, _extra) => {
-		return {
-			content: [
-				{ type: "text", text: "Successfully rendered chess game menu" },
-			],
-		};
-	},
-);
+	);
 
-const mcpHandler = createMcpHandler(server);
+	// Register a tool that ChatGPT can call to render the UI
+	server.registerTool(
+		"playChess",
+		{
+			title: "Renders a chess game menu, ready to start or join a game.",
+			annotations: { readOnlyHint: true },
+			_meta: {
+				"openai/outputTemplate": "ui://widget/index.html",
+				"openai/toolInvocation/invoking": "Opening chess widget",
+				"openai/toolInvocation/invoked": "Chess widget opened",
+			},
+		},
+		async (_, _extra) => {
+			return {
+				content: [
+					{ type: "text", text: "Successfully rendered chess game menu" },
+				],
+			};
+		},
+	);
+
+	return server;
+}
 
 export default {
 	async fetch(req: Request, env: Env, ctx: ExecutionContext) {
 		const url = new URL(req.url);
-		if (url.pathname.startsWith("/mcp")) return mcpHandler(req, env, ctx);
+		if (url.pathname.startsWith("/mcp")) {
+			// Create a new server instance per request
+			const server = createServer();
+			return createMcpHandler(server)(req, env, ctx);
+		}
 
 		return (
 			(await routeAgentRequest(req, env)) ??
@@ -692,49 +698,55 @@ You might need to manually select the connector in the prompt box the first time
 
 ### MCP Server
 
-The Model Context Protocol (MCP) server defines tools and resources that ChatGPT can access:
+The Model Context Protocol (MCP) server defines tools and resources that ChatGPT can access. Note that we create a new server instance per request to prevent cross-client response leakage:
 
 ```ts
-const server = new McpServer({ name: "Chess", version: "v1.0.0" });
+function createServer() {
+	const server = new McpServer({ name: "Chess", version: "v1.0.0" });
 
-// Register a UI resource that ChatGPT can render
-server.registerResource(
-	"chess",
-	"ui://widget/index.html",
-	{},
-	async (_uri, extra) => {
-		return {
-			contents: [
-				{
-					uri: "ui://widget/index.html",
-					mimeType: "text/html+skybridge",
-					text: await getWidgetHtml(extra.requestInfo?.headers.host as string),
-				},
-			],
-		};
-	},
-);
-
-// Register a tool that ChatGPT can call to render the UI
-server.registerTool(
-	"playChess",
-	{
-		title: "Renders a chess game menu, ready to start or join a game.",
-		annotations: { readOnlyHint: true },
-		_meta: {
-			"openai/outputTemplate": "ui://widget/index.html",
-			"openai/toolInvocation/invoking": "Opening chess widget",
-			"openai/toolInvocation/invoked": "Chess widget opened",
+	// Register a UI resource that ChatGPT can render
+	server.registerResource(
+		"chess",
+		"ui://widget/index.html",
+		{},
+		async (_uri, extra) => {
+			return {
+				contents: [
+					{
+						uri: "ui://widget/index.html",
+						mimeType: "text/html+skybridge",
+						text: await getWidgetHtml(
+							extra.requestInfo?.headers.host as string,
+						),
+					},
+				],
+			};
 		},
-	},
-	async (_, _extra) => {
-		return {
-			content: [
-				{ type: "text", text: "Successfully rendered chess game menu" },
-			],
-		};
-	},
-);
+	);
+
+	// Register a tool that ChatGPT can call to render the UI
+	server.registerTool(
+		"playChess",
+		{
+			title: "Renders a chess game menu, ready to start or join a game.",
+			annotations: { readOnlyHint: true },
+			_meta: {
+				"openai/outputTemplate": "ui://widget/index.html",
+				"openai/toolInvocation/invoking": "Opening chess widget",
+				"openai/toolInvocation/invoked": "Chess widget opened",
+			},
+		},
+		async (_, _extra) => {
+			return {
+				content: [
+					{ type: "text", text: "Successfully rendered chess game menu" },
+				],
+			};
+		},
+	);
+
+	return server;
+}
 ```
 
 ### Game Engine with Agents

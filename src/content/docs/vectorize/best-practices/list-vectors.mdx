@@ -8,6 +8,12 @@ sidebar:
 
 The list-vectors operation allows you to enumerate all vector identifiers in a Vectorize index using paginated requests. This guide covers best practices for efficiently using this operation.
 
+:::note[Python SDK availability]
+
+The `client.vectorize.indexes.list_vectors()` method is not yet available in the current release of the [Cloudflare Python SDK](https://pypi.org/project/cloudflare/). While the method appears in the [API reference](/api/python/resources/vectorize/subresources/indexes/methods/list_vectors/), it has not been included in a published SDK version as of v4.3.1. In the meantime, you can use the [REST API](/api/resources/vectorize/subresources/indexes/methods/list_vectors/) or the Wrangler CLI to list vectors.
+
+:::
+
 ## When to use list-vectors
 
 Use list-vectors for:

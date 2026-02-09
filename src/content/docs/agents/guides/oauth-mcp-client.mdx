@@ -70,7 +70,7 @@ Instead of an automatic redirect, you can present the `authUrl` to your user as 
 
 ## Configure callback behavior
 
-After OAuth completes, the provider redirects back to your Agent's callback URL. Configure what happens next.
+After OAuth completes, the provider redirects back to your Agent's callback URL. By default, successful authentication redirects to your application origin, while failed authentication displays an HTML error page with the error message.
 
 ### Redirect to your application
 
@@ -93,9 +93,9 @@ export class MyAgent extends Agent<Env, never> {
 
 Users return to `/dashboard` on success or `/auth-error?error=<message>` on failure.
 
-### Close popup window
+### Custom handler for popup windows
 
-If you opened OAuth in a popup, close it automatically when complete:
+If you opened OAuth in a popup, use a custom handler to close it automatically. The handler receives an `MCPClientOAuthResult` object and must check `authSuccess` to handle both success and error cases:
 
 <TypeScriptExample>
 
@@ -112,13 +112,30 @@ export class MyAgent extends Agent<Env, never> {
 					return new Response("<script>window.close();</script>", {
 						headers: { "content-type": "text/html" },
 					});
-				} else {
-					// Error - show message, then close
-					return new Response(
-						`<script>alert('Authorization failed: ${result.authError}'); window.close();</script>`,
-						{ headers: { "content-type": "text/html" } },
-					);
 				}
+				// Error - show message briefly, then close
+				const errorJson = JSON.stringify(
+					result.authError ?? "Unknown error",
+				);
+				return new Response(
+					`<!DOCTYPE html>
+<html>
+<head><title>Authentication Failed</title></head>
+<body style="font-family:system-ui,sans-serif;max-width:400px;margin:80px auto;padding:0 20px;text-align:center;">
+  <h2 style="color:#c00;">Authentication Failed</h2>
+  <p id="err" style="color:#666;"></p>
+  <p style="color:#999;font-size:0.85em;">This window will close automatically...</p>
+  <script>
+    document.getElementById("err").textContent = ${errorJson};
+    setTimeout(() => window.close(), 3000);
+  </script>
+</body>
+</html>`,
+					{
+						headers: { "content-type": "text/html" },
+						status: 400,
+					},
+				);
 			},
 		});
 	}
@@ -126,6 +143,12 @@ export class MyAgent extends Agent<Env, never> {
 ```
 
 </TypeScriptExample>
+
+:::note[Important]
+
+Always check `result.authSuccess` in your custom handler. The handler is called for both successful and failed authentication attempts. Without this check, authentication errors will be ignored and users will not know why the connection failed.
+
+:::
 
 Your main application can detect the popup closing and refresh the connection status.
 
@@ -221,7 +244,7 @@ Connection states flow: `authenticating` (needs OAuth) → `connecting` (complet
 
 ## Handle failures
 
-When OAuth fails, the connection state becomes `"failed"`. Detect this in your UI and allow users to retry:
+When OAuth fails, the connection state becomes `"failed"` and the `error` field contains the error message. Display the error to your users and allow them to retry:
 
 <TypeScriptExample>
 
@@ -270,7 +293,7 @@ function App() {
 					<strong>{server.name}</strong>: {server.state}
 					{server.state === "failed" && (
 						<div>
-							<p>Connection failed. Please try again.</p>
+							{server.error && <p style={{ color: "red" }}>Error: {server.error}</p>}
 							<button
 								onClick={() => handleRetry(id, server.server_url, server.name)}
 							>
@@ -318,12 +341,30 @@ export class MyAgent extends Agent<Env, never> {
 					return new Response("<script>window.close();</script>", {
 						headers: { "content-type": "text/html" },
 					});
-				} else {
-					return new Response(
-						`<script>alert('Authorization failed: ${result.authError}'); window.close();</script>`,
-						{ headers: { "content-type": "text/html" } },
-					);
 				}
+				// Error - show message briefly, then close
+				const errorJson = JSON.stringify(
+					result.authError ?? "Unknown error",
+				);
+				return new Response(
+					`<!DOCTYPE html>
+<html>
+<head><title>Authentication Failed</title></head>
+<body style="font-family:system-ui,sans-serif;max-width:400px;margin:80px auto;padding:0 20px;text-align:center;">
+  <h2 style="color:#c00;">Authentication Failed</h2>
+  <p id="err" style="color:#666;"></p>
+  <p style="color:#999;font-size:0.85em;">This window will close automatically...</p>
+  <script>
+    document.getElementById("err").textContent = ${errorJson};
+    setTimeout(() => window.close(), 3000);
+  </script>
+</body>
+</html>`,
+					{
+						headers: { "content-type": "text/html" },
+						status: 400,
+					},
+				);
 			},
 		});
 	}
