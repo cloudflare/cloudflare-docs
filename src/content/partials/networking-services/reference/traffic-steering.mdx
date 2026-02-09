@@ -407,7 +407,7 @@ For more on {props.productName} tunnel weights, contact your Cloudflare customer
 
 ## BGP information
 
-Using BGP peering allows you to:
+Using BGP peering with your Cloudflare One or Magic Transit Virtual Network routing table allows you to:
 
 - Automate the process of adding or removing networks and subnets.
 - Take advantage of failure detection and session recovery features.
@@ -498,15 +498,18 @@ Cloudflare uses the following timers, which are not configurable:
 - **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the hold timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
 - **Graceful restart timer**: Tracks how long a router will wait for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
 
-### BGP limitations
+### BGP capabilities and limitations
 
 BGP multipath is supported. If BGP learns the same prefix on two different interconnects, Cloudflare distributes traffic destined for that prefix across each interconnect according to the usual ECMP behavior.
+
+BGP Graceful Restart is supported in a passive (helper/aware) mode. Cloudflare will maintain forwarding state for a restarting neighbor.
 
 BGP support currently has the following limitations:
 
 - The Cloudflare account ASN and your device ASN must be different. Only eBGP is supported.
 - Cloudflare always injects routes with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
+- If you are using BGP with IPsec/CNI (beta), you must set the ASN on the Cloudflare side to `13335`. Private ASNs are not yet supported.
 
 { props.magicWord === "Magic Transit" && (
   <>

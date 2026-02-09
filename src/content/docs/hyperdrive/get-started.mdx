@@ -249,11 +249,6 @@ export default {
 			// Sample query
 			const results = await sql.query(`SELECT * FROM pg_tables`);
 
-			// Clean up the client after the response is returned.
-			// Hyperdrive will keep the underlying database connection open
-			// in its pool and reuse it for future requests.
-			ctx.waitUntil(sql.end());
-
 			// Return result rows as JSON
 			return Response.json(results.rows);
 		} catch (e) {
@@ -271,8 +266,7 @@ Upon receiving a request, the code above does the following:
 
 1. Creates a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
 2. Initiates a query via `await sql.query()` that outputs all tables (user and system created) in the database (as an example query).
-3. Calls `ctx.waitUntil(sql.end())` to clean up the client connection after the response is returned. Hyperdrive keeps the underlying database connection open in its pool, so this only closes the local client — the pooled connection to your origin database is reused.
-4. Returns the response as JSON to the client.
+3. Returns the response as JSON to the client. Hyperdrive automatically cleans up the client connection when the request ends, and keeps the underlying database connection open in its pool for reuse.
 
 </TabItem>
 <TabItem label="MySQL">
@@ -318,11 +312,6 @@ export default {
 				'SHOW tables;'
 			);
 
-			// Clean up the client after the response is returned.
-			// Hyperdrive will keep the underlying database connection open
-			// in its pool and reuse it for future requests.
-			ctx.waitUntil(connection.end());
-
 			// Return result rows as JSON
 			return new Response(JSON.stringify({ results, fields }), {
 				headers: {
@@ -348,8 +337,7 @@ Upon receiving a request, the code above does the following:
 
 1. Creates a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
 2. Initiates a query via `await connection.query` that outputs all tables (user and system created) in the database (as an example query).
-3. Calls `ctx.waitUntil(connection.end())` to clean up the client connection after the response is returned. Hyperdrive keeps the underlying database connection open in its pool, so this only closes the local client — the pooled connection to your origin database is reused.
-4. Returns the response as JSON to the client.
+3. Returns the response as JSON to the client. Hyperdrive automatically cleans up the client connection when the request ends, and keeps the underlying database connection open in its pool for reuse.
 
 </TabItem>
 </Tabs>

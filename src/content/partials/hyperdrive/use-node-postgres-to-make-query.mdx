@@ -47,11 +47,6 @@ export default {
 			// Perform a simple query
 			const result = await client.query("SELECT * FROM pg_tables");
 
-			// Clean up the client after the response is returned.
-			// Hyperdrive keeps the underlying database connection open in its
-			// pool and reuses it for future requests.
-			ctx.waitUntil(client.end());
-
 			return Response.json({
 				success: true,
 				result: result.rows,

@@ -53,12 +53,12 @@ Build a simple counter agent from scratch. Replace `src/server.ts`:
 import { Agent, routeAgentRequest, callable } from "agents";
 
 // Define the state shape
-type CounterState = {
+export type CounterState = {
 	count: number;
 };
 
 // Create the agent
-export class Counter extends Agent<Env, CounterState> {
+export class CounterAgent extends Agent<Env, CounterState> {
 	// Initial state for new instances
 	initialState: CounterState = { count: 0 };
 
@@ -107,15 +107,15 @@ Update `wrangler.jsonc` to register the agent:
 	"durable_objects": {
 		"bindings": [
 			{
-				"name": "Counter",
-				"class_name": "Counter",
+				"name": "CounterAgent",
+				"class_name": "CounterAgent",
 			},
 		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": ["Counter"],
+			"new_sqlite_classes": ["CounterAgent"],
 		},
 	],
 }
@@ -130,19 +130,14 @@ Replace `src/client.tsx`:
 ```tsx title="src/client.tsx"
 import { useState } from "react";
 import { useAgent } from "agents/react";
-import type { Counter } from "./server";
-
-// Match your agent's state type
-type CounterState = {
-	count: number;
-};
+import type { CounterAgent, CounterState } from "./server";
 
 export default function App() {
 	const [count, setCount] = useState(0);
 
 	// Connect to the Counter agent
-	const agent = useAgent<Counter, CounterState>({
-		agent: "Counter",
+	const agent = useAgent<CounterAgent, CounterState>({
+		agent: "CounterAgent",
 		onStateUpdate: (state) => setCount(state.count),
 	});
 
@@ -186,7 +181,7 @@ flowchart LR
 
 | Concept              | What it means                                                                               |
 | -------------------- | ------------------------------------------------------------------------------------------- |
-| **Agent instance**   | Each unique name gets its own agent. `Counter:user-123` is separate from `Counter:user-456` |
+| **Agent instance**   | Each unique name gets its own agent. `CounterAgent:user-123` is separate from `CounterAgent:user-456` |
 | **Persistent state** | State survives restarts, deploys, and hibernation. It is stored in SQLite                   |
 | **Real-time sync**   | All clients connected to the same agent receive state updates instantly                     |
 | **Hibernation**      | When no clients are connected, the agent hibernates (no cost). It wakes on the next request |
@@ -201,7 +196,7 @@ If you are not using React:
 import { AgentClient } from "agents/client";
 
 const agent = new AgentClient({
-	agent: "Counter",
+	agent: "CounterAgent",
 	name: "my-counter", // optional, defaults to "default"
 	onStateUpdate: (state) => {
 		console.log("New count:", state.count);
@@ -268,13 +263,11 @@ Add the agent and state type parameters:
 
 ```ts
 import { useAgent } from "agents/react";
-import type { Counter } from "./server";
-
-type CounterState = { count: number };
+import type { CounterAgent, CounterState } from "./server";
 
 // Pass the agent and state types to useAgent
-const agent = useAgent<Counter, CounterState>({
-	agent: "Counter",
+const agent = useAgent<CounterAgent, CounterState>({
+	agent: "CounterAgent",
 	onStateUpdate: (state) => setCount(state.count),
 });
 

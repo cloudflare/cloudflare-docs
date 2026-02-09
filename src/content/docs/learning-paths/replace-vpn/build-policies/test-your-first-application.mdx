@@ -9,13 +9,13 @@ import { DashButton, Render } from "~/components";
 
 You have now set up your [Zero Trust organization](/learning-paths/replace-vpn/get-started/), [configured the WARP client](/learning-paths/replace-vpn/configure-device-agent/), [installed it on devices](/learning-paths/replace-vpn/connect-devices/), and created your [Access and Gateway policies](/learning-paths/replace-vpn/build-policies/). The next step is to test those policies.
 
-## Manually test your policies
+## 1. Manually test your policies
 
 Test if the Access or Gateway policy that you configured is working by using a device with the WARP client installed to reach an internal application or external website.
 
 If you cannot reach an application protected by Access or an external application through Gateway as expected, Cloudflare recommends starting with reviewing your WARP configuration.
 
-### Troubleshoot WARP
+### 1.1. Troubleshoot WARP
 
 If your manual test fails, troubleshoot the WARP client. Cloudflare recommends starting with reviewing your WARP configuration because misconfiguration is the most common cause of connectivity issues.
 
@@ -24,7 +24,7 @@ If your manual test fails, troubleshoot the WARP client. Cloudflare recommends s
 - [WARP connectivity status](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/connectivity-status/): Review the connectivity stage of the WARP daemon as it establishes a connection from the device to Cloudflare.
 - [WARP with Firewall](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/): Ensure you have exempted the correct IP addresses and domains to allow the WARP client to connect.
 
-### Review analytics
+### 1.2. Review analytics
 
 Analytics provide visualizations of [log data](/learning-paths/replace-vpn/build-policies/test-your-first-application/#review-logs). To review Access or Gateway analytics:
 
@@ -32,7 +32,7 @@ Analytics provide visualizations of [log data](/learning-paths/replace-vpn/build
 2. Select **[Access event analytics](/cloudflare-one/insights/analytics/access/)** for a summary of login events or **[Application Access Report](/cloudflare-one/insights/analytics/application-access/)** for a summary of overall Access Activity. 
 3. Select the **HTTP request analytics**, **DNS query analytics** or **Network session analytics** depending on [your Gateway investigation scope](/cloudflare-one/insights/analytics/gateway/).
 
-### Review logs
+### 1.3. Review logs
 
 [Logs](/cloudflare-one/insights/logs/) provide event-level (such as an authentication attempt or a DNS query) visibility into your Cloudflare One environment. 
 
@@ -47,7 +47,7 @@ To review traffic activity in the [Gateway logs](/cloudflare-one/insights/logs/g
 
 Refer to [Troubleshoot Gateway](/cloudflare-one/traffic-policies/troubleshoot-gateway/) to troubleshoot common issues with Gateway egress policies.
 
-## Monitor your policies and device connectivity
+## 2. Monitor your policies and device connectivity
 
 After you confirm your policies work by testing manually, use DEX to monitor connectivity and performance over time.
 
@@ -64,7 +64,7 @@ Refer to [Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) fo
 - You set up a DEX test, and it sends an HTTP GET request to `wiki.acme.org` from all three WARP devices on a five minute interval.
 - If WARP device connectivity drops, or if there are performance problems, you can see the DEX test results to troubleshoot the problem.
 
-### Create a DEX test
+### 2.1. Create a DEX test
 
 <Render file="dex/tests-intro" product="cloudflare-one" />
 
@@ -78,13 +78,13 @@ Refer to [DEX tests](/cloudflare-one/insights/dex/tests/) for more information.
 
 <Render file="dex/http-test-results-metrics" product="cloudflare-one" />
 
-### Notifications
+### 2.2. Set up notifications
 
 <Render file="dex/notifications-intro" product="cloudflare-one" />
 
 Refer to [DEX Notifications](/cloudflare-one/insights/dex/notifications/) for more information on DEX-specific notifications.
 
-#### Example notification setup
+#### Device anomaly notification setup
 
 Customers who want to be notified when Cloudflare detects a spike or drop in the number of devices connected to the WARP client can create a [Device connectivity anomaly](/cloudflare-one/insights/dex/notifications/#available-notifications) notification.
 

@@ -18,6 +18,7 @@ Build a Worker that takes a repository URL and a task description and uses Sandb
 <Render file="prereqs" product="workers" />
 
 You'll also need:
+
 - An [Anthropic API key](https://console.anthropic.com/) for Claude Code
 - [Docker](https://www.docker.com/) running locally
 
@@ -28,7 +29,9 @@ Create a new Sandbox SDK project:
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args={"claude-code-sandbox --template=cloudflare/sandbox-sdk/examples/claude-code"}
+	args={
+		"claude-code-sandbox --template=cloudflare/sandbox-sdk/examples/claude-code"
+	}
 />
 
 ```sh
@@ -75,8 +78,8 @@ Response:
 
 ```json
 {
-  "logs": "Done! I've removed the brain emoji from the README title. The heading now reads \"# Cloudflare Agents\" instead of \"# 🧠 Cloudflare Agents\".",
-  "diff": "diff --git a/README.md b/README.md\nindex 9296ac9..027c218 100644\n--- a/README.md\n+++ b/README.md\n@@ -1,4 +1,4 @@\n-# 🧠 Cloudflare Agents\n+# Cloudflare Agents\n \n ![npm install agents](assets/npm-install-agents.svg)\n "
+	"logs": "Done! I've removed the brain emoji from the README title. The heading now reads \"# Cloudflare Agents\" instead of \"# 🧠 Cloudflare Agents\".",
+	"diff": "diff --git a/README.md b/README.md\nindex 9296ac9..027c218 100644\n--- a/README.md\n+++ b/README.md\n@@ -1,4 +1,4 @@\n-# 🧠 Cloudflare Agents\n+# Cloudflare Agents\n \n ![npm install agents](assets/npm-install-agents.svg)\n "
 }
 ```
 
@@ -103,6 +106,7 @@ After first deployment, wait 2-3 minutes for container provisioning. Check statu
 ## What you built
 
 You created an API that:
+
 - Accepts a repository URL and natural language task descriptions
 - Creates a Sandbox and clones the repository into it
 - Kicks off Claude Code to implement the given task

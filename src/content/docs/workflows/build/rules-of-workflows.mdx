@@ -83,7 +83,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// timeout policies for each granular step - you might not to want to overload http.cat in
 		// case of it being down.
 		const httpCat = await step.do("get cutest cat from KV", async () => {
-			return await env.KV.get("cutest-http-cat");
+			return await this.env.KV.get("cutest-http-cat");
 		});
 
 		const image = await step.do("fetch cat image from http.cat", async () => {
@@ -111,7 +111,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// some extra calls to the first service in case the second one fails, and in some cases, makes
 		// the step non-idempotent altogether
 		const image = await step.do("get cutest cat from KV", async () => {
-			const httpCat = await env.KV.get("cutest-http-cat");
+			const httpCat = await this.env.KV.get("cutest-http-cat");
 			return fetch(`https://http.cat/${httpCat}`);
 		});
 	}
@@ -142,15 +142,15 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		const imageList: string[] = [];
 
 		await step.do("get first cutest cat from KV", async () => {
-			const httpCat = await env.KV.get("cutest-http-cat-1");
+			const httpCat = await this.env.KV.get("cutest-http-cat-1");
 
-			imageList.append(httpCat);
+			imageList.push(httpCat);
 		});
 
 		await step.do("get second cutest cat from KV", async () => {
-			const httpCat = await env.KV.get("cutest-http-cat-2");
+			const httpCat = await this.env.KV.get("cutest-http-cat-2");
 
-			imageList.append(httpCat);
+			imageList.push(httpCat);
 		});
 
 		// A long sleep can (and probably will) hibernate the engine which means that the first engine lifetime ends here
@@ -188,11 +188,11 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// multiple engine lifetimes, imageList will be built accordingly
 		const imageList: string[] = await Promise.all([
 			step.do("get first cutest cat from KV", async () => {
-				return await env.KV.get("cutest-http-cat-1");
+				return await this.env.KV.get("cutest-http-cat-1");
 			}),
 
 			step.do("get second cutest cat from KV", async () => {
-				return await env.KV.get("cutest-http-cat-2");
+				return await this.env.KV.get("cutest-http-cat-2");
 			}),
 		]);
 
@@ -221,7 +221,7 @@ It is not recommended to write code with any side effects outside of steps, unle
 
 For example, a `console.log()` outside of workflow steps may cause the logs to print twice when the engine restarts.
 
-However, logic involving non-serializable resources, like a database connection, should be executed outside of steps. Operations ouside of a `step.do` might be repeated more than once, due to the nature of the Workflows' instance lifecycle.
+However, logic involving non-serializable resources, like a database connection, should be executed outside of steps. Operations outside of a `step.do` might be repeated more than once, due to the nature of the Workflows' instance lifecycle.
 
 <TypeScriptExample filename="index.ts">
 
@@ -230,14 +230,14 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// 🔴 Bad: creating instances outside of steps
 		// This might get called more than once creating more instances than expected
-		const myNewInstance = await this.env.ANOTHER_WORKFLOW.create();
+		const badInstance = await this.env.ANOTHER_WORKFLOW.create();
 
 		// 🔴 Bad: using non-deterministic functions outside of steps
 		// this will produce different results if the instance has to restart, different runs of the same instance
 		// might go through different paths
-		const myRandom = Math.random();
+		const badRandom = Math.random();
 
-		if (myRandom > 0) {
+		if (badRandom > 0) {
 			// do some stuff
 		}
 
@@ -253,21 +253,21 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 		// ✅ Good: wrap non-deterministic function in a step
 		// after running successfully will not run again
-		const myRandom = await step.do("create a random number", async () => {
+		const goodRandom = await step.do("create a random number", async () => {
 			return Math.random();
 		});
 
 		// ✅ Good: calls that have no side effects can be done outside of steps
 		const db = createDBConnection(this.env.DB_URL, this.env.DB_TOKEN);
 
-		// ✅ Good: run funtions with side effects inside of a step
+		// ✅ Good: run functions with side effects inside of a step
 		// after running successfully will not run again
-		const myNewInstance = await step.do(
+		const goodInstance = await step.do(
 			"good step that returns state",
 			async () => {
-				const myNewInstance = await this.env.ANOTHER_WORKFLOW.create();
+				const instance = await this.env.ANOTHER_WORKFLOW.create();
 
-				return myNewInstance;
+				return instance;
 			},
 		);
 	}
@@ -294,14 +294,14 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// This will not be persisted across steps and `event.payload` will
 		// take on its original value.
 		await step.do("bad step that mutates the incoming event", async () => {
-			let userData = await env.KV.get(event.payload.user);
+			let userData = await this.env.KV.get(event.payload.user);
 			event.payload = userData;
 		});
 
 		// ✅ Good: persist data by returning it as state from your step
 		// Use that state in subsequent steps
 		let userData = await step.do("good step that returns state", async () => {
-			return await env.KV.get(event.payload.user);
+			return await this.env.KV.get(event.payload.user);
 		});
 
 		let someOtherData = await step.do(
@@ -329,7 +329,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// 🔴 Bad: Naming the step non-deterministically prevents it from being cached
 		// This will cause the step to be re-run if subsequent steps fail.
 		await step.do(`step #1 running at: ${Date.now()}`, async () => {
-			let userData = await env.KV.get(event.payload.user);
+			let userData = await this.env.KV.get(event.payload.user);
 			// Do not mutate event.payload
 			event.payload = userData;
 		});
@@ -337,8 +337,8 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// ✅ Good: give steps a deterministic name.
 		// Return dynamic values in your state, or log them instead.
 		let state = await step.do("fetch user data from KV", async () => {
-			let userData = await env.KV.get(event.payload.user);
-			console.log(`fetched at ${Date.now}`);
+			let userData = await this.env.KV.get(event.payload.user);
+			console.log(`fetched at ${Date.now()}`);
 			return userData;
 		});
 
@@ -347,12 +347,12 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// traversed in a deterministic fashion (no shuffles or random accesses) so,
 		// it's fine to dynamically name steps (e.g: create a step per list entry).
 		let catList = await step.do("get cat list from KV", async () => {
-			return await env.KV.get("cat-list");
+			return await this.env.KV.get("cat-list");
 		});
 
 		for (const cat of catList) {
 			await step.do(`get cat: ${cat}`, async () => {
-				return await env.KV.get(cat);
+				return await this.env.KV.get(cat);
 			});
 		}
 	}
@@ -490,14 +490,14 @@ This happens when you do not use the `await` keyword or fail to chain `.then()` 
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// 🔴 Bad: The step isn't await'ed, and any state or errors is swallowed before it returns.
-		const issues = step.do(`fetch issues from GitHub`, async () => {
+		const badIssues = step.do(`fetch issues from GitHub`, async () => {
 			// The step will return before this call is done
 			let issues = await getIssues(event.payload.repoName);
 			return issues;
 		});
 
 		// ✅ Good: The step is correctly await'ed.
-		const issues = await step.do(`fetch issues from GitHub`, async () => {
+		const goodIssues = await step.do(`fetch issues from GitHub`, async () => {
 			let issues = await getIssues(event.payload.repoName);
 			return issues;
 		});
@@ -557,7 +557,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Batch multiple Workflow invocations
 
-When creating multiple Workflow instances, use the [`createBatch`](/workflows/build/workers-api/#createBatch) method to batch the invocations together. This allows you to create multiple Workflow instances in a single request, which will reduce the number of requests made to the Workflows API. However, each individual instance in the batch will still count towards the [creation rate limit](/workflows/reference/limits/).
+When creating multiple Workflow instances, use the [`createBatch`](/workflows/build/workers-api/#createBatch) method to batch the invocations together. This allows you to create multiple Workflow instances in a single request, which will reduce the number of requests made to the Workflows API. However, each individual instance in the batch will still count towards the [creation rate limit](/workflows/reference/limits/). Unlike `create`, `createBatch` is idempotent: if an existing instance with the same ID is still within its [retention limit](/workflows/reference/limits/), it will be skipped and excluded from the returned array.
 
 <TypeScriptExample filename="index.ts">
 
@@ -581,8 +581,8 @@ export default {
 
 		// ✅ Good: Batch calls together
 		// This improves throughput.
-		let instances = await env.MY_WORKFLOW.createBatch(instances);
-		return Response.json({ instances });
+		let createdInstances = await env.MY_WORKFLOW.createBatch(instances);
+		return Response.json({ instances: createdInstances });
 	},
 };
 ```
