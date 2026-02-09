@@ -509,10 +509,7 @@ BGP support currently has the following limitations:
 - The Cloudflare account ASN and your device ASN must be different. Only eBGP is supported.
 - Cloudflare always injects routes with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
-
-
-- BGP with IPsec/CNI beta limitations
--- CF side ASN must be 13335, private ASN not yet supported
+- If you are using BGP with IPsec/CNI (beta), you must set the ASN on the Cloudflare side to `13335`. Private ASNs are not yet supported.
 
 { props.magicWord === "Magic Transit" && (
   <>
