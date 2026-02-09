@@ -170,7 +170,7 @@ Shows Wrangler configuration in both TOML and JSON formats with synced tabs. Aut
 ```toml
 name = "my-worker"
 main = "src/index.ts"
-compatibility_date = "2024-01-01"
+compatibility_date = "$today"
 ```
 
 </WranglerConfig>
