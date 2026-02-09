@@ -43,7 +43,7 @@ The PR description includes:
 - **Next steps** - Links to documentation for adding bindings, custom domains, and more
 
 :::note
-When you merge the PR, Workers Builds will update your build and deploy commands if they don't match the detected settings, ensuring successful deployments.
+When you merge the PR, Workers Builds will update your build and deploy commands if they do not match the detected settings, ensuring successful deployments.
 :::
 
 ## Name conflict PR
@@ -53,7 +53,7 @@ If Workers Builds detects a mismatch between your Worker name in the Cloudflare 
 This can happen when:
 - You rename your Worker in the dashboard but not in your config file
 - You connect a repository that was previously used with a different Worker
-- The `name` field in your config doesn't match the connected Worker
+- The `name` field in your config does not match the connected Worker
 
 The PR will update the `name` field in your Wrangler configuration to match the Worker name in the dashboard.
 

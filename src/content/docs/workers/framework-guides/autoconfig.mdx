@@ -6,7 +6,7 @@ sidebar:
 description: Learn how Wrangler automatically detects and configures your project for Cloudflare Workers.
 ---
 
-import { Details, Render } from "~/components";
+import { WranglerConfig } from "~/components";
 
 Wrangler can automatically detect your framework and configure your project for Cloudflare Workers. This allows you to deploy existing projects with a single command, without manually setting up configuration files or installing adapters.
 
@@ -55,12 +55,14 @@ When automatic configuration runs, the following files may be created or modifie
 
 A new Wrangler configuration file is created with settings appropriate for your framework:
 
+<WranglerConfig>
+
 ```jsonc
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "my-project",
   "main": "dist/_worker.js/index.js",
-  "compatibility_date": "2025-01-01",
+  "compatibility_date": "$today",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "binding": "ASSETS",
@@ -71,6 +73,8 @@ A new Wrangler configuration file is created with settings appropriate for your 
   }
 }
 ```
+
+</WranglerConfig>
 
 The exact configuration varies based on your framework.
 
@@ -160,7 +164,7 @@ For more details, refer to [Automatic pull requests](/workers/ci-cd/builds/autom
 
 ## Skipping automatic configuration
 
-If you don't want automatic configuration to run, ensure you have a valid Wrangler configuration file (`wrangler.toml`, `wrangler.json`, or `wrangler.jsonc`) in your project before running `wrangler deploy`.
+If you do not want automatic configuration to run, ensure you have a valid Wrangler configuration file (`wrangler.toml`, `wrangler.json`, or `wrangler.jsonc`) in your project before running `wrangler deploy`.
 
 You can also manually configure your project by following the framework-specific guides in the [Framework guides](/workers/framework-guides/).
 
