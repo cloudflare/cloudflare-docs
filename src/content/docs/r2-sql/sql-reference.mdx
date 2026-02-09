@@ -144,7 +144,9 @@ SELECT COUNT(department) FROM my_namespace.sales_data
 
 ## Approximate Aggregation Functions
 
-R2 SQL supports approximate aggregation functions for fast analysis of large datasets. These functions trade minor precision loss for better performance.
+Approximate aggregation functions produce statistically estimated results while using significantly less memory and compute than their exact counterparts. On large datasets, approximate functions can return results orders of magnitude faster than equivalent exact aggregations such as `COUNT(DISTINCT ...)`, typically with an average relative error of only a few percent.
+
+Use approximate functions when you are analyzing large datasets and an approximate result is acceptable — for example, understanding traffic distributions, identifying top values, or estimating cardinality across high-volume tables. Use exact aggregation functions when precise results are required, such as for billing or compliance reporting.
 
 ### Syntax
 
