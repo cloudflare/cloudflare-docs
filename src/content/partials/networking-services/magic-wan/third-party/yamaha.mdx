@@ -4,45 +4,34 @@
 
 # Yamaha RTX Router
 
-This tutorial describes how to configure the Yamaha RTX840,RTX1300 series router to connect to Cloudflare Magic WAN via IPsec tunnels.
+This tutorial describes how to configure the Yamaha RTX840 and RTX1300 series router to connect to Cloudflare Magic WAN via IPsec tunnels.
 
 ## Testing environment
 
-These configurations were tested on RTX840 and RTX1300 series with the following firmware versions:
+These configurations were tested on the Yamaha RTX840 and RTX1300 series with the following firmware versions:
 
-* **RTX840 series**:23.02.02
-
-* **RTX1300 series**:23.00.17
+- **RTX840 series**: 23.02.02
+- **RTX1300 series**: 23.00.17
 
 ## Magic WAN configuration
 
-The necessary steps to setting up Magic WAN are to add IPsec tunnels and Magic static routes to your Cloudflare account via the Cloudflare dashboard.
+You need to add IPsec tunnels and static routes to your Cloudflare account via the Cloudflare dashboard.
 
 Before proceeding, ensure that you have the anycast IPs associated with your account. Check with your Cloudflare account team if you do not yet have them.
 
-### Magic IPsec Tunnels
+### Magic IPsec tunnels
 
-1.Follow the Add Tunnels instructions to create the required IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
-
-* **Tunnel name**: Enter your tunnel name. In this example, it is RTX840-vpn01.
-
-* **Interface address**: Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is 172.30.223.2/31.
-
-* **Customer endpoint**: Enter the WAN IP address of your RTX router. In our example, this is 194.xx.xx.xx. This is the fixed Public IPv4 address you get from your ISP for your internet service.
-
-* **Cloudflare endpoint**: The Cloudflare anycast IP assigned to you by your account team.
-
-* **Health check rate**: Medium.
-
-* **Health check type**: Request.
-
-* **Health check direction**: Bidirectional.
-
-* **Health check target**: Default.
-
-* **Pre-shared key**: Select Use my own pre-shared key and paste a secure key of your own.
-
-* **Replay protection**: Disable.
+1. Follow the [Add Tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) instructions to create the required IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
+	- **Tunnel name**: Enter your tunnel name. In this example, it is `RTX840-vpn01`.
+	- **Interface address**: Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is `172.30.223.2/31`.
+	- **Customer endpoint**: Enter the WAN IP address of your RTX router. In our example, this is `194.xx.xx.xx`. This is the fixed public IPv4 address you get from your ISP for your internet service.
+	- **Cloudflare endpoint**: The Cloudflare anycast IP assigned to you by your account team.
+	- **Health check rate**: _Medium_.
+	- **Health check type**: _Request_.
+	- **Health check direction**: _Bidirectional_.
+	- **Health check target**: _Default_.
+	- **Pre-shared key**: Select *Use my own pre-shared key* and paste a secure key of your own.
+	- **Replay protection**: Do not check the box, to keep this disabled.
 
 2. After you create your tunnel, Cloudflare dashboard will load a list of tunnels set up for your account. Select the tunnel you have just created, and check the following setting:
 
@@ -52,7 +41,7 @@ Before proceeding, ensure that you have the anycast IPs associated with your acc
 
 Static routes are required for any networks that will be reached via the IPsec tunnel. In our example, there is one network: 172.16.2.0/24.
 
-Follow the Configure static routes instructions to create a static route (settings not mentioned here can be left with their default values):
+Follow the [Configure static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) instructions to create a static route (settings not mentioned here can be left with their default values):
 
 * **Description**: RTX840-lan01
 
