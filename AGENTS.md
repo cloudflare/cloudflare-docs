@@ -55,7 +55,7 @@ Every folder must have an `index.mdx`. Filenames must be lowercase with dashes b
 
 ### Allowed file types in `src/content/`
 
-Only `.mdx`, `.md`, `.json`, `.yml`, `.yaml`, `.txt` files are allowed. The CI will reject anything else. Images must go in `src/assets/images/`, not in `src/content/`.
+Only `.mdx`, `.json`, `.yml`, `.yaml`, `.txt` files are allowed. The CI will reject anything else. Images must go in `src/assets/images/`, not in `src/content/`.
 
 ### Frontmatter
 
