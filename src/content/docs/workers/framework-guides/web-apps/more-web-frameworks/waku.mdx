@@ -15,6 +15,10 @@ import {
 
 In this guide, you will create a new [Waku](https://waku.gg/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)). Waku is a minimal React framework built for [React 19](https://react.dev/blog/2024/12/05/react-19) and [React Server Components](https://react.dev/reference/rsc/server-components). The use of Server Components is completely optional. It can be configured to run Server Components during build and output static HTML or it can be configured to run with dynamic React server rendering. It is built on top of [Hono](https://hono.dev/) and [Vite](https://vite.dev/).
 
+:::tip[Already have a Waku project?]
+You can deploy an existing Waku project to Cloudflare Workers with a single command. Run `npx wrangler deploy` in your project directory and Wrangler will automatically configure your project. Refer to [Deploy an existing project](/workers/framework-guides/autoconfig/) for details.
+:::
+
 ## 1. Set up a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Waku's official setup tool, and provide the option to deploy instantly.

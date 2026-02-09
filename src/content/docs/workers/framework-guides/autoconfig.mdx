@@ -1,0 +1,179 @@
+---
+pcx_content_type: concept
+title: Deploy an existing project
+sidebar:
+  order: 1
+description: Learn how Wrangler automatically detects and configures your project for Cloudflare Workers.
+---
+
+import { Details, Render } from "~/components";
+
+Wrangler can automatically detect your framework and configure your project for Cloudflare Workers. This allows you to deploy existing projects with a single command, without manually setting up configuration files or installing adapters.
+
+:::note
+Minimum required Wrangler version: **TODO_VERSION**. Check your version by running `wrangler --version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+:::
+
+## How it works
+
+When you run `wrangler deploy` or `wrangler setup` in a project directory without a Wrangler configuration file, Wrangler will:
+
+1. **Detect your framework** - Analyzes your project to identify the framework you're using
+2. **Prompt for confirmation** - Shows the detected settings and asks you to confirm before making changes
+3. **Install adapters** - Installs any required Cloudflare adapters for your framework
+4. **Generate configuration** - Creates a `wrangler.jsonc` file with appropriate settings
+5. **Update package.json** - Adds helpful scripts like `deploy`, `preview`, and `cf-typegen`
+6. **Configure git** - Adds Wrangler-specific entries to `.gitignore`
+
+## Supported frameworks
+
+Automatic configuration supports the following frameworks:
+
+| Framework | Adapter/Tool | Notes |
+|-----------|--------------|-------|
+| [Next.js](/workers/framework-guides/web-apps/nextjs/) | `@opennextjs/cloudflare` | Runs `@opennextjs/cloudflare migrate` automatically |
+| [Astro](/workers/framework-guides/web-apps/astro/) | `@astrojs/cloudflare` | Runs `astro add cloudflare` automatically |
+| [SvelteKit](/workers/framework-guides/web-apps/sveltekit/) | `@sveltejs/adapter-cloudflare` | Runs `sv add sveltekit-adapter` automatically |
+| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/) | Built-in Cloudflare preset | |
+| [React Router](/workers/framework-guides/web-apps/react-router/) | Cloudflare Vite plugin | |
+| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset | |
+| [Qwik](/workers/framework-guides/web-apps/more-web-frameworks/qwik/) | Built-in Cloudflare adapter | |
+| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/) | Cloudflare Vite plugin | |
+| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/) | | |
+| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/) | Built-in Cloudflare preset | |
+| [Vite](/workers/vite-plugin/) | Cloudflare Vite plugin | |
+| [Hono](/workers/framework-guides/web-apps/more-web-frameworks/hono/) | | |
+| [Vike](/workers/framework-guides/web-apps/vike/) | | |
+| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/) | | |
+| Static sites | None | Any directory with an `index.html` |
+
+## Files created and modified
+
+When automatic configuration runs, the following files may be created or modified:
+
+### `wrangler.jsonc`
+
+A new Wrangler configuration file is created with settings appropriate for your framework:
+
+```jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "my-project",
+  "main": "dist/_worker.js/index.js",
+  "compatibility_date": "2025-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "dist"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
+```
+
+The exact configuration varies based on your framework.
+
+### `package.json`
+
+New scripts are added to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev",
+    "cf-typegen": "wrangler types"
+  }
+}
+```
+
+### `.gitignore`
+
+Wrangler-specific entries are added:
+
+```txt
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+```
+
+### `.assetsignore`
+
+For frameworks that generate worker files in the output directory, an `.assetsignore` file is created to exclude them from static asset uploads:
+
+```txt
+_worker.js
+_routes.json
+```
+
+## Using automatic configuration
+
+### Deploy with automatic configuration
+
+To deploy an existing project, run [`wrangler deploy`](/workers/wrangler/commands/#deploy) in your project directory:
+
+```sh
+npx wrangler deploy
+```
+
+Wrangler will detect your framework, show the configuration it will apply, and prompt you to confirm before making changes and deploying.
+
+### Configure without deploying
+
+To configure your project without deploying, use [`wrangler setup`](/workers/wrangler/commands/#setup):
+
+```sh
+npx wrangler setup
+```
+
+This is useful when you want to review the generated configuration before deploying.
+
+### Preview changes with dry run
+
+To see what changes would be made without actually modifying any files:
+
+```sh
+npx wrangler setup --dry-run
+```
+
+This outputs a summary of the configuration that would be generated.
+
+## Non-interactive mode
+
+To skip the confirmation prompts, use the [`--yes` flag](/workers/wrangler/commands/#deploy):
+
+```sh
+npx wrangler deploy --yes
+```
+
+This applies the configuration automatically using sensible defaults. This is useful in CI/CD environments or when you want to accept the detected settings without reviewing them.
+
+## Importing a repository from the dashboard
+
+When you import a GitHub or GitLab repository via the Cloudflare dashboard, autoconfig runs non-interactively. If your repository does not have a Wrangler configuration file, [Workers Builds](/workers/ci-cd/builds/) will create a pull request with the necessary configuration.
+
+The PR includes all the configuration changes described above. A preview deployment is generated so you can test the changes before merging. Once merged, your project is ready for deployment.
+
+For more details, refer to [Automatic pull requests](/workers/ci-cd/builds/automatic-prs/).
+
+## Skipping automatic configuration
+
+If you don't want automatic configuration to run, ensure you have a valid Wrangler configuration file (`wrangler.toml`, `wrangler.json`, or `wrangler.jsonc`) in your project before running `wrangler deploy`.
+
+You can also manually configure your project by following the framework-specific guides in the [Framework guides](/workers/framework-guides/).
+
+## Troubleshooting
+
+### Multiple frameworks detected
+
+If your project contains multiple frameworks, automatic configuration will fail with an error. In this case, you need to manually configure your project or specify a root directory that contains only one framework.
+
+### Framework not detected
+
+If your framework is not detected, ensure your `package.json` includes the framework as a dependency. If the framework is not in the [supported list](#supported-frameworks), you'll need to manually configure your project.
+
+### Configuration already exists
+
+If a Wrangler configuration file already exists, automatic configuration will not run. To reconfigure your project, delete the existing configuration file and run `wrangler deploy` or `wrangler setup` again.
