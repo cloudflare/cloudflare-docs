@@ -1,6 +1,6 @@
 ---
 title: Terminal
-pcx_content_type: configuration
+pcx_content_type: concept
 sidebar:
   order: 7
 description: Connect browser-based terminal UIs to sandbox shells via WebSocket.
@@ -8,17 +8,13 @@ description: Connect browser-based terminal UIs to sandbox shells via WebSocket.
 
 import { TypeScriptExample } from "~/components";
 
-Connect browser-based terminal UIs to sandbox shells via WebSocket. Terminal connections support automatic reconnection, buffered output replay, and multiple isolated sessions.
+Connect browser-based terminal UIs to sandbox shells via WebSocket. The server-side `terminal()` method proxies WebSocket connections to the container, and the client-side `SandboxAddon` integrates with xterm.js for terminal rendering.
 
-:::note
-Terminal connections are WebSocket-based and cannot be used with regular HTTP requests. Use the [Commands API](/sandbox/api/commands/) for non-interactive command execution. See [Browser terminal integration guide](/sandbox/guides/browser-terminals/) for complete implementation examples.
-:::
-
-## Methods
+## Server-side methods
 
 ### `terminal()`
 
-Proxy a WebSocket upgrade request to create a browser terminal connection.
+Proxy a WebSocket upgrade request to create a terminal connection.
 
 ```ts
 const response = await sandbox.terminal(request: Request, options?: PtyOptions): Promise<Response>
@@ -26,235 +22,186 @@ const response = await sandbox.terminal(request: Request, options?: PtyOptions):
 
 **Parameters**:
 
-- `request` - WebSocket upgrade request from the browser
+- `request` - WebSocket upgrade request from the browser (must include `Upgrade: websocket` header)
 - `options` (optional):
-  - `cols` - Terminal width in columns (default: 80)
-  - `rows` - Terminal height in rows (default: 24)
+  - `cols` - Terminal width in columns (default: `80`)
+  - `rows` - Terminal height in rows (default: `24`)
 
-**Returns**: `Promise<Response>` - WebSocket upgrade response
+**Returns**: `Promise<Response>` — WebSocket upgrade response
 
 <TypeScriptExample>
-```ts
-import { getSandbox } from '@cloudflare/sandbox';
-
-export { Sandbox } from "@cloudflare/sandbox";
-
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const upgradeHeader = request.headers.get('Upgrade');
-    
-    if (upgradeHeader?.toLowerCase() === 'websocket') {
-      const url = new URL(request.url);
-      const sandboxId = url.searchParams.get('id');
-      
-      if (!sandboxId) {
-        return new Response('Missing sandbox ID', { status: 400 });
-      }
-      
-      const sandbox = getSandbox(env.Sandbox, sandboxId);
-      
-      // Connect browser terminal to default session
-      return await sandbox.terminal(request, { cols: 120, rows: 30 });
-    }
-    
-    return new Response('Terminal endpoint requires WebSocket');
-  }
-};
+```
+// In your Worker's fetch handler
+return await sandbox.terminal(request, { cols: 120, rows: 30 });
 ```
 </TypeScriptExample>
 
----
-
-### Session terminal access
-
-Each session can have its own isolated terminal with independent shell state.
-
-```ts
-const session = await sandbox.getSession('development');
-const response = await session.terminal(request: Request, options?: PtyOptions): Promise<Response>
-```
+Works with both [default and explicitly created sessions](/sandbox/concepts/sessions/):
 
 <TypeScriptExample>
-```ts
-// Multiple terminals in the same sandbox
-const devSession = await sandbox.createSession({
-  id: 'development',
-  cwd: '/workspace/dev',
-  env: { NODE_ENV: 'development' }
-});
-
-const prodSession = await sandbox.createSession({
-id: 'production',
-cwd: '/workspace/prod',
-env: { NODE_ENV: 'production' }
-});
-
-// Route requests based on session parameter
-const url = new URL(request.url);
-const sessionId = url.searchParams.get('session');
-
-if (sessionId === 'dev') {
-return await devSession.terminal(request);
-} else if (sessionId === 'prod') {  
- return await prodSession.terminal(request);
-} else {
+```
 // Default session
 return await sandbox.terminal(request);
-}
+
+// Specific session
+const session = await sandbox.getSession('dev');
+return await session.terminal(request);
 
 ````
 </TypeScriptExample>
 
-## Terminal features
+## Client-side addon
 
-### Automatic reconnection
+The `@cloudflare/sandbox/xterm` module provides `SandboxAddon` for xterm.js, which handles the WebSocket connection, reconnection, and terminal resize forwarding.
 
-Terminals automatically reconnect when the WebSocket connection is lost, with exponential backoff and jitter to prevent thundering herd.
+### `SandboxAddon`
 
-### Buffered output replay
+```ts
+import { SandboxAddon } from '@cloudflare/sandbox/xterm';
 
-Terminal output is buffered server-side. When reconnecting, clients receive all missed output since the last connection, ensuring no data loss.
+const addon = new SandboxAddon(options: SandboxAddonOptions);
+```
 
-### Shell persistence
+**Options**:
 
-Each terminal maintains persistent shell state including:
-- Current working directory
-- Environment variables
-- Command history
-- Background processes
-
-### Multiple sessions
-
-Create multiple terminals in the same sandbox, each with isolated environments:
+- `getWebSocketUrl(params)` - Build the WebSocket URL for each connection attempt. Receives:
+  - `sandboxId` - Target sandbox ID
+  - `sessionId` (optional) - Target session ID
+  - `origin` - WebSocket origin derived from `window.location` (for example, `wss://example.com`)
+- `reconnect` - Enable automatic reconnection with exponential backoff (default: `true`)
+- `onStateChange(state, error?)` - Callback for connection state changes
 
 <TypeScriptExample>
-```ts
-// Frontend development terminal
-const frontendSession = await sandbox.createSession({
-id: 'frontend',
-cwd: '/workspace/frontend',
-env: { NODE_ENV: 'development' }
-});
-
-// Backend development terminal
-const backendSession = await sandbox.createSession({
-id: 'backend',
-cwd: '/workspace/backend',
-env: { NODE_ENV: 'development', DATABASE_URL: 'localhost:5432' }
-});
-
-// Users can switch between terminals in their browser
-// Each maintains independent shell state
-
-````
-
-</TypeScriptExample>
-
-## WebSocket protocol
-
-### Client to server
-
-**Binary data**: Terminal input (keyboard, paste, etc.)
-
 ```
-
-<binary data>
-```
-
-**Control messages**: JSON for terminal operations
-
-```json
-{
-	"type": "resize",
-	"cols": 120,
-	"rows": 30
-}
-```
-
-### Server to client
-
-**Binary data**: Terminal output (text, escape sequences, colors)
-
-```
-<binary data>
-```
-
-**Status messages**: JSON for connection state
-
-```json
-{"type": "ready"}
-{"type": "error", "message": "Session not found"}
-{"type": "exit", "code": 0, "signal": "SIGTERM"}
-```
-
-## Browser integration
-
-For xterm.js integration, use the `@cloudflare/sandbox/xterm` addon:
-
-<TypeScriptExample>
-```ts
 import { Terminal } from '@xterm/xterm';
 import { SandboxAddon } from '@cloudflare/sandbox/xterm';
 
-const terminal = new Terminal();
+const terminal = new Terminal({ cursorBlink: true });
+terminal.open(document.getElementById('terminal'));
+
 const addon = new SandboxAddon({
-sandboxId: 'my-sandbox',
-getWebSocketUrl: ({ sandboxId }) =>
-`wss://my-worker.example.com/ws/terminal?id=${sandboxId}`
+  getWebSocketUrl: ({ sandboxId, sessionId, origin }) => {
+    const params = new URLSearchParams({ id: sandboxId });
+    if (sessionId) params.set('session', sessionId);
+    return `${origin}/ws/terminal?${params}`;
+  },
+  onStateChange: (state, error) => {
+    console.log(`Terminal ${state}`, error);
+  }
 });
 
 terminal.loadAddon(addon);
-addon.connect();
-
-````
-</TypeScriptExample>
-
-See [Browser terminal integration guide](/sandbox/guides/browser-terminals/) for complete setup instructions.
-
-## Troubleshooting
-
-### WebSocket upgrade failed
-
-Ensure the request has proper WebSocket headers:
-
-<TypeScriptExample>
-```ts
-const upgradeHeader = request.headers.get('Upgrade');
-const connectionHeader = request.headers.get('Connection');
-
-console.log(upgradeHeader); // 'websocket'
-console.log(connectionHeader); // 'Upgrade'
-
-````
-
-</TypeScriptExample>
-
-### Session not found
-
-Sessions are created lazily. Ensure the session exists before connecting:
-
-<TypeScriptExample>
-```ts
-try {
-  const session = await sandbox.getSession('my-session');
-return await session.terminal(request);
-} catch (error) {
-// Session doesn't exist, create it first
-const session = await sandbox.createSession({ id: 'my-session' });
-return await session.terminal(request);
-}
+addon.connect({ sandboxId: 'my-sandbox' });
 
 ```
+
 </TypeScriptExample>
 
-### Connection drops frequently
+### `connect()`
 
-Check network stability and consider implementing custom reconnection logic in your client if the built-in exponential backoff is insufficient.
+Establish a connection to a sandbox terminal.
+
+```ts
+addon.connect(target: ConnectionTarget): void
+```
+
+**Parameters**:
+
+- `target`:
+  - `sandboxId` - Sandbox to connect to
+  - `sessionId` (optional) - Session within the sandbox
+
+Calling `connect()` with a new target disconnects from the current target and connects to the new one. Calling it with the same target while already connected is a no-op.
+
+### `disconnect()`
+
+Close the connection and stop any reconnection attempts.
+
+```ts
+addon.disconnect(): void
+```
+
+### Properties
+
+| Property    | Type                                            | Description              |
+| ----------- | ----------------------------------------------- | ------------------------ |
+| `state`     | `'disconnected' \| 'connecting' \| 'connected'` | Current connection state |
+| `sandboxId` | `string \| undefined`                           | Current sandbox ID       |
+| `sessionId` | `string \| undefined`                           | Current session ID       |
+
+## WebSocket protocol
+
+The `SandboxAddon` handles the WebSocket protocol automatically. These details are for building custom terminal clients without the addon. For a complete example, refer to [Connect without xterm.js](/sandbox/guides/browser-terminals/#connect-without-xtermjs).
+
+### Connection lifecycle
+
+1. Client opens a WebSocket to your Worker endpoint. Set `binaryType` to `arraybuffer`.
+2. The server replays any **buffered output** from a previous connection as binary frames. This may arrive before the `ready` message.
+3. The server sends a `ready` status message — the terminal is now accepting input.
+4. Binary frames flow in both directions: UTF-8 encoded keystrokes from the client, terminal output (including ANSI escape sequences) from the server.
+5. If the client disconnects, the PTY stays alive. Reconnecting to the same session replays buffered output so the terminal appears unchanged.
+
+### Control messages (client to server)
+
+Send JSON text frames to control the terminal.
+
+**Resize** — update terminal dimensions (both `cols` and `rows` must be positive):
+
+```json
+{ "type": "resize", "cols": 120, "rows": 30 }
+```
+
+### Status messages (server to client)
+
+The server sends JSON text frames for lifecycle events.
+
+**Ready** — the PTY is initialized. Buffered output (if any) has already been sent:
+
+```json
+{ "type": "ready" }
+```
+
+**Exit** — the shell process has terminated:
+
+```json
+{ "type": "exit", "code": 0, "signal": "SIGTERM" }
+```
+
+**Error** — an error occurred (for example, invalid control message or session not found):
+
+```json
+{ "type": "error", "message": "Session not found" }
+```
+
+## Types
+
+```ts
+interface PtyOptions {
+	cols?: number;
+	rows?: number;
+}
+
+type ConnectionState = "disconnected" | "connecting" | "connected";
+
+interface ConnectionTarget {
+	sandboxId: string;
+	sessionId?: string;
+}
+
+interface SandboxAddonOptions {
+	getWebSocketUrl: (params: {
+		sandboxId: string;
+		sessionId?: string;
+		origin: string;
+	}) => string;
+	reconnect?: boolean;
+	onStateChange?: (state: ConnectionState, error?: Error) => void;
+}
+```
 
 ## Related resources
 
-- [Browser terminal integration guide](/sandbox/guides/browser-terminals/) - Complete implementation guide
-- [Sessions API](/sandbox/api/sessions/) - Session management
-- [Commands API](/sandbox/api/commands/) - Non-interactive command execution
-- [WebSocket connections guide](/sandbox/guides/websocket-connections/) - WebSocket patterns
-```
+- [Terminal connections](/sandbox/concepts/terminal/) — How terminal connections work
+- [Browser terminals](/sandbox/guides/browser-terminals/) — Step-by-step setup guide
+- [Sessions API](/sandbox/api/sessions/) — Session management
+- [Commands API](/sandbox/api/commands/) — Non-interactive command execution

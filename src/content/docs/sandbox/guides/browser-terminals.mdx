@@ -1,719 +1,174 @@
 ---
-title: Browser terminal integration
+title: Browser terminals
 pcx_content_type: how-to
 sidebar:
   order: 9
-description: Build interactive terminal UIs with xterm.js connected to sandbox shells.
+description: Connect browser-based terminals to sandbox shells using xterm.js or raw WebSockets.
 ---
 
 import { TypeScriptExample, PackageManagers } from "~/components";
 
-Build interactive terminal experiences by connecting xterm.js to sandbox shells via WebSocket. This guide shows you how to create browser-based terminals with automatic reconnection, output buffering, and multiple session support.
+This guide shows you how to connect a browser-based terminal to a sandbox shell. You can use the `SandboxAddon` with xterm.js, or connect directly over WebSockets.
 
-## Overview
+## Prerequisites
 
-Browser terminal integration involves three components:
+You need an existing Cloudflare Worker with a sandbox binding. Refer to [Getting started](/sandbox/get-started/) if you do not have one.
 
-1. **Cloudflare Worker** - Handles WebSocket upgrades and proxies to sandbox
-2. **Sandbox container** - Runs the shell and manages terminal state
-3. **Browser client** - xterm.js terminal with SandboxAddon for connection management
+Install the terminal dependencies in your frontend project:
 
-## Set up the Worker
+<PackageManagers
+	type="install"
+	pkg="@xterm/xterm @xterm/addon-fit @cloudflare/sandbox"
+/>
 
-Create a Worker that handles WebSocket connections and proxies them to sandbox terminals:
+If you are not using xterm.js, you only need `@cloudflare/sandbox` for types.
+
+## Handle WebSocket upgrades in the Worker
+
+Add a route that proxies WebSocket connections to the sandbox terminal. The example below supports both the default session and named sessions via a query parameter:
 
 <TypeScriptExample>
+
 ```
 import { getSandbox } from '@cloudflare/sandbox';
 
-export { Sandbox } from "@cloudflare/sandbox";
-
-interface Env {
-Sandbox: DurableObjectNamespace;
-}
+export { Sandbox } from '@cloudflare/sandbox';
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
-    
-    // Handle WebSocket upgrade for terminal connections
-    if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
-      if (url.pathname === '/ws/terminal') {
-        return handleTerminal(request, env);
+
+    if (url.pathname === '/ws/terminal' && request.headers.get('Upgrade') === 'websocket') {
+      const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+      const sessionId = url.searchParams.get('session');
+
+      if (sessionId) {
+        const session = await sandbox.getSession(sessionId);
+        return await session.terminal(request);
       }
-      return new Response('Not found', { status: 404 });
+
+      return await sandbox.terminal(request, { cols: 80, rows: 24 });
     }
-    
-    // Serve your frontend HTML/assets
-    if (url.pathname === '/') {
-      return new Response(getTerminalHTML(), {
-        headers: { 'Content-Type': 'text/html' }
-      });
-    }
-    
+
     return new Response('Not found', { status: 404 });
   }
 };
+```
 
-async function handleTerminal(request: Request, env: Env): Promise<Response> {
-const url = new URL(request.url);
-const sandboxId = url.searchParams.get('id');
-const sessionId = url.searchParams.get('session');
-
-if (!sandboxId) {
-return new Response('Missing sandbox ID', { status: 400 });
-}
-
-const sandbox = getSandbox(env.Sandbox, sandboxId);
-
-if (sessionId) {
-// Connect to specific session
-const session = await sandbox.getSession(sessionId);
-return await session.terminal(request, { cols: 120, rows: 30 });
-} else {
-// Connect to default session  
- return await sandbox.terminal(request, { cols: 120, rows: 30 });
-}
-}
-
-````
 </TypeScriptExample>
 
-## Create the frontend
+## Connect with xterm.js and SandboxAddon
 
-Build a web page with xterm.js terminal:
-
-### Install dependencies
-
-<PackageManagers
-  type="install"
-  pkg="@xterm/xterm @xterm/addon-fit @cloudflare/sandbox"
-/>
-
-### HTML structure
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sandbox Terminal</title>
-  <link rel="stylesheet" href="https://unpkg.com/@xterm/xterm@5.5.0/css/xterm.css" />
-  <style>
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #1e1e1e;
-      color: white;
-    }
-
-    .terminal-container {
-      border: 1px solid #333;
-      border-radius: 8px;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .terminal-header {
-      background: #2d2d2d;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .connection-status {
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .status.connected { background: #22c55e; color: white; }
-    .status.connecting { background: #f59e0b; color: white; }
-    .status.disconnected { background: #ef4444; color: white; }
-
-    .session-select {
-      background: #1e1e1e;
-      color: white;
-      border: 1px solid #444;
-      border-radius: 4px;
-      padding: 4px 8px;
-    }
-
-    #terminal {
-      padding: 16px;
-    }
-  </style>
-</head>
-<body>
-  <div class="terminal-container">
-    <div class="terminal-header">
-      <span class="connection-status status disconnected" id="connection-status">
-        Disconnected
-      </span>
-
-      <select class="session-select" id="session-select">
-        <option value="">Default Session</option>
-        <option value="development">Development</option>
-        <option value="testing">Testing</option>
-        <option value="production">Production</option>
-      </select>
-
-      <button id="reconnect-btn" style="display: none;">Reconnect</button>
-    </div>
-
-    <div id="terminal"></div>
-  </div>
-
-  <script type="module" src="/terminal.js"></script>
-</body>
-</html>
-````
-
-### JavaScript implementation
+Create the terminal in your browser code and attach the `SandboxAddon`. The addon manages the WebSocket connection, automatic reconnection, and resize forwarding.
 
 <TypeScriptExample>
-```javascript
+
+```
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
 import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+import '@xterm/xterm/css/xterm.css';
 
-class SandboxTerminalApp {
-constructor() {
-this.terminal = null;
-this.addon = null;
-this.currentSandboxId = 'user-terminal';
-this.init();
-}
+const terminal = new Terminal({ cursorBlink: true });
+const fitAddon = new FitAddon();
+terminal.loadAddon(fitAddon);
 
-init() {
-this.setupTerminal();
-this.setupUI();
-this.connect();
-}
-
-setupTerminal() {
-// Create xterm.js terminal
-this.terminal = new Terminal({
-cursorBlink: true,
-fontSize: 14,
-fontFamily: '"Cascadia Code", "Fira Code", Monaco, "Ubuntu Mono", monospace',
-theme: {
-background: '#000000',
-foreground: '#ffffff',
-cursor: '#ffffff',
-selection: '#3e4451',
-black: '#000000',
-red: '#e06c75',
-green: '#98c379',
-yellow: '#e5c07b',
-blue: '#61afef',
-magenta: '#c678dd',
-cyan: '#56b6c2',
-white: '#ffffff',
-brightBlack: '#5c6370',
-brightRed: '#e06c75',
-brightGreen: '#98c379',
-brightYellow: '#e5c07b',
-brightBlue: '#61afef',
-brightMagenta: '#c678dd',
-brightCyan: '#56b6c2',
-brightWhite: '#ffffff'
-}
-});
-
-    // Add fit addon for automatic sizing
-    this.fitAddon = new FitAddon();
-    this.terminal.loadAddon(this.fitAddon);
-
-    // Create sandbox addon
-    this.addon = new SandboxAddon({
-      sandboxId: this.currentSandboxId,
-      getWebSocketUrl: ({ sandboxId, sessionId }) => {
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const params = new URLSearchParams({ id: sandboxId });
-        if (sessionId) params.set('session', sessionId);
-        return `${protocol}//${window.location.host}/ws/terminal?${params}`;
-      },
-      reconnect: true,
-      onStateChange: this.handleStateChange.bind(this)
-    });
-
-    this.terminal.loadAddon(this.addon);
-    this.terminal.open(document.getElementById('terminal'));
-
-    // Handle window resize
-    window.addEventListener('resize', () => this.fitAddon.fit());
-    this.fitAddon.fit();
-
-}
-
-setupUI() {
-const sessionSelect = document.getElementById('session-select');
-const reconnectBtn = document.getElementById('reconnect-btn');
-
-    // Session switching
-    sessionSelect.addEventListener('change', (e) => {
-      const sessionId = e.target.value || undefined;
-      this.addon.setSession(sessionId);
-    });
-
-    // Manual reconnect
-    reconnectBtn.addEventListener('click', () => {
-      this.addon.connect();
-      reconnectBtn.style.display = 'none';
-    });
-
-}
-
-connect() {
-this.addon.connect();
-}
-
-handleStateChange(state, error) {
-const statusEl = document.getElementById('connection-status');
-const reconnectBtn = document.getElementById('reconnect-btn');
-
-    // Update status indicator
-    statusEl.className = `connection-status status ${state}`;
-
-    switch (state) {
-      case 'connecting':
-        statusEl.textContent = 'Connecting...';
-        reconnectBtn.style.display = 'none';
-        break;
-
-      case 'connected':
-        statusEl.textContent = 'Connected';
-        reconnectBtn.style.display = 'none';
-        this.terminal.focus();
-        break;
-
-      case 'disconnected':
-        if (error) {
-          statusEl.textContent = `Error: ${error.message}`;
-          reconnectBtn.style.display = 'inline-block';
-        } else {
-          statusEl.textContent = 'Disconnected';
-        }
-        break;
-    }
-
-    // Log for debugging
-    console.log(`Terminal ${state}`, error);
-
-}
-}
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-new SandboxTerminalApp();
-});
-
-````
-</TypeScriptExample>
-
-## Advanced features
-
-### Multiple terminals with tabs
-
-Create a tabbed interface for multiple sessions:
-
-<TypeScriptExample>
-```javascript
-class MultiTerminalApp {
-  constructor() {
-    this.terminals = new Map();
-    this.activeTerminal = null;
-    this.setupTabs();
-  }
-
-  createTerminal(sessionId = null) {
-    const terminal = new Terminal(/* terminal options */);
-    const fitAddon = new FitAddon();
-    terminal.loadAddon(fitAddon);
-
-    const addon = new SandboxAddon({
-      sandboxId: 'multi-session-sandbox',
-      sessionId,
-      getWebSocketUrl: ({ sandboxId, sessionId }) => {
-        const params = new URLSearchParams({ id: sandboxId });
-        if (sessionId) params.set('session', sessionId);
-        return `wss://my-worker.example.com/ws/terminal?${params}`;
-      },
-      onStateChange: (state, error) => {
-        this.updateTabStatus(sessionId, state, error);
-      }
-    });
-
-    terminal.loadAddon(addon);
-
-    return { terminal, fitAddon, addon };
-  }
-
-  addTab(sessionId, label) {
-    const terminalData = this.createTerminal(sessionId);
-    this.terminals.set(sessionId, terminalData);
-
-    // Create tab UI
-    const tab = this.createTabElement(sessionId, label);
-    document.getElementById('tabs').appendChild(tab);
-
-    // Create terminal container
-    const container = document.createElement('div');
-    container.id = `terminal-${sessionId}`;
-    container.className = 'terminal-pane';
-    container.style.display = 'none';
-    document.getElementById('terminal-container').appendChild(container);
-
-    terminalData.terminal.open(container);
-    terminalData.addon.connect();
-
-    this.switchToTab(sessionId);
-  }
-
-  switchToTab(sessionId) {
-    // Hide all terminals
-    this.terminals.forEach((data, id) => {
-      document.getElementById(`terminal-${id}`).style.display = 'none';
-    });
-
-    // Show selected terminal
-    document.getElementById(`terminal-${sessionId}`).style.display = 'block';
-
-    const terminalData = this.terminals.get(sessionId);
-    terminalData.fitAddon.fit();
-    terminalData.terminal.focus();
-
-    this.activeTerminal = sessionId;
-  }
-
-  updateTabStatus(sessionId, state, error) {
-    const tab = document.querySelector(`[data-session="${sessionId}"]`);
-    if (tab) {
-      tab.className = `tab ${state}`;
-    }
-  }
-}
-````
-
-</TypeScriptExample>
-
-### Custom themes and preferences
-
-<TypeScriptExample>
-```javascript
-const themes = {
-  dark: {
-    background: '#1e1e1e',
-    foreground: '#d4d4d4',
-    cursor: '#d4d4d4'
-    // ... other colors
+const addon = new SandboxAddon({
+  getWebSocketUrl: ({ sandboxId, sessionId, origin }) => {
+    const params = new URLSearchParams({ id: sandboxId });
+    if (sessionId) params.set('session', sessionId);
+    return `${origin}/ws/terminal?${params}`;
   },
-  
-  light: {
-    background: '#ffffff',
-    foreground: '#000000', 
-    cursor: '#000000'
-    // ... other colors
-  },
-  
-  solarized: {
-    background: '#002b36',
-    foreground: '#839496',
-    cursor: '#839496'
-    // ... solarized colors
+  onStateChange: (state, error) => {
+    console.log(`Terminal ${state}`, error ?? '');
   }
-};
-
-function applyTheme(terminal, themeName) {
-const theme = themes[themeName];
-if (theme) {
-terminal.options.theme = theme;
-}
-}
-
-// Theme switcher
-document.getElementById('theme-select').addEventListener('change', (e) => {
-applyTheme(terminal, e.target.value);
 });
 
-````
-</TypeScriptExample>
+terminal.loadAddon(addon);
+terminal.open(document.getElementById('terminal'));
+fitAddon.fit();
 
-### Error handling and recovery
+// Connect to the default session
+addon.connect({ sandboxId: 'my-sandbox' });
 
-<TypeScriptExample>
-```javascript
-class RobustTerminal {
-  constructor(options) {
-    this.options = options;
-    this.reconnectAttempts = 0;
-    this.maxReconnectAttempts = 5;
-    this.setup();
-  }
+// Or connect to a specific session
+// addon.connect({ sandboxId: 'my-sandbox', sessionId: 'development' });
 
-  setup() {
-    this.addon = new SandboxAddon({
-      ...this.options,
-      onStateChange: (state, error) => {
-        this.handleConnectionState(state, error);
-      }
-    });
-  }
-
-  handleConnectionState(state, error) {
-    switch (state) {
-      case 'connected':
-        this.reconnectAttempts = 0;
-        this.showStatus('Connected', 'success');
-        break;
-
-      case 'connecting':
-        this.showStatus('Connecting...', 'info');
-        break;
-
-      case 'disconnected':
-        if (error) {
-          this.handleError(error);
-        } else {
-          this.showStatus('Disconnected', 'warning');
-        }
-        break;
-    }
-  }
-
-  handleError(error) {
-    console.error('Terminal error:', error);
-
-    if (error.message.includes('Session not found')) {
-      this.showStatus('Session expired. Creating new session...', 'warning');
-      // Let the addon handle reconnection
-      return;
-    }
-
-    if (this.reconnectAttempts >= this.maxReconnectAttempts) {
-      this.showStatus('Connection failed. Please refresh the page.', 'error');
-      this.showReconnectButton();
-      return;
-    }
-
-    this.reconnectAttempts++;
-    this.showStatus(`Connection error. Retrying... (${this.reconnectAttempts}/${this.maxReconnectAttempts})`, 'error');
-  }
-
-  showStatus(message, type) {
-    const statusEl = document.getElementById('status');
-    statusEl.textContent = message;
-    statusEl.className = `status ${type}`;
-  }
-
-  showReconnectButton() {
-    document.getElementById('reconnect-btn').style.display = 'block';
-  }
-}
-````
-
-</TypeScriptExample>
-
-## Production deployment
-
-### Enable compression
-
-Configure your Worker to serve compressed assets:
-
-<TypeScriptExample>
-```javascript
-function getCompressedResponse(content, contentType) {
-  return new Response(content, {
-    headers: {
-      'Content-Type': contentType,
-      'Content-Encoding': 'gzip',
-      'Cache-Control': 'public, max-age=3600'
-    }
-  });
-}
+window.addEventListener('resize', () => fitAddon.fit());
 ```
+
 </TypeScriptExample>
 
-### Add security headers
+For the full addon API, refer to the [Terminal API reference](/sandbox/api/terminal/).
+
+## Connect without xterm.js
+
+If you are building a custom terminal UI or running in an environment without xterm.js, connect directly over WebSockets. The protocol uses binary frames for terminal data and JSON text frames for control messages.
 
 <TypeScriptExample>
-```javascript
-const securityHeaders = {
-  'X-Content-Type-Options': 'nosniff',
-  'X-Frame-Options': 'DENY',
-  'X-XSS-Protection': '1; mode=block',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
-};
 
-function addSecurityHeaders(response) {
-Object.entries(securityHeaders).forEach(([key, value]) => {
-response.headers.set(key, value);
+```
+const ws = new WebSocket('wss://example.com/ws/terminal?id=my-sandbox');
+ws.binaryType = 'arraybuffer';
+
+const decoder = new TextDecoder();
+const encoder = new TextEncoder();
+
+ws.addEventListener('message', (event) => {
+  if (event.data instanceof ArrayBuffer) {
+    // Terminal output (binary) — includes ANSI escape sequences
+    const text = decoder.decode(event.data);
+    appendToDisplay(text);
+    return;
+  }
+
+  // Control message (JSON text)
+  const msg = JSON.parse(event.data);
+
+  switch (msg.type) {
+    case 'ready':
+      // Terminal is accepting input — send initial resize
+      ws.send(JSON.stringify({ type: 'resize', cols: 80, rows: 24 }));
+      break;
+
+    case 'exit':
+      console.log(`Shell exited: code ${msg.code}`);
+      break;
+
+    case 'error':
+      console.error('Terminal error:', msg.message);
+      break;
+  }
 });
-return response;
-}
 
-````
-</TypeScriptExample>
-
-### Monitor connection health
-
-<TypeScriptExample>
-```javascript
-class TerminalMonitor {
-  constructor(addon) {
-    this.addon = addon;
-    this.connectionTimes = [];
-    this.errorCount = 0;
-    this.setupMonitoring();
-  }
-
-  setupMonitoring() {
-    let connectTime;
-
-    this.addon.onStateChange = (state, error) => {
-      switch (state) {
-        case 'connecting':
-          connectTime = Date.now();
-          break;
-
-        case 'connected':
-          if (connectTime) {
-            const duration = Date.now() - connectTime;
-            this.connectionTimes.push(duration);
-            this.reportMetric('connection_time', duration);
-          }
-          this.errorCount = 0;
-          break;
-
-        case 'disconnected':
-          if (error) {
-            this.errorCount++;
-            this.reportMetric('connection_error', 1);
-          }
-          break;
-      }
-    };
-  }
-
-  reportMetric(name, value) {
-    // Send to your analytics service
-    console.log(`Metric: ${name} = ${value}`);
-  }
-
-  getStats() {
-    const avgConnectionTime = this.connectionTimes.length > 0
-      ? this.connectionTimes.reduce((a, b) => a + b) / this.connectionTimes.length
-      : 0;
-
-    return {
-      avgConnectionTime,
-      errorCount: this.errorCount,
-      totalConnections: this.connectionTimes.length
-    };
-  }
-}
-````
-
-</TypeScriptExample>
-
-## Troubleshooting
-
-### Connection keeps dropping
-
-Check network stability and WebSocket support:
-
-<TypeScriptExample>
-```javascript
-function diagnoseBrowserSupport() {
-  const support = {
-    webSocket: typeof WebSocket !== 'undefined',
-    textEncoder: typeof TextEncoder !== 'undefined',
-    es2018: (() => {
-      try {
-        eval('async () => {}');
-        return true;
-      } catch {
-        return false;
-      }
-    })()
-  };
-  
-  console.log('Browser support:', support);
-  return Object.values(support).every(Boolean);
-}
-```
-</TypeScriptExample>
-
-### High latency
-
-Monitor round-trip times:
-
-<TypeScriptExample>
-```javascript
-class LatencyMonitor {
-  constructor(addon) {
-    this.addon = addon;
-    this.terminal = terminal;
-    this.setupPing();
-  }
-  
-  setupPing() {
-    setInterval(() => {
-      if (this.addon.state === 'connected') {
-        this.ping();
-      }
-    }, 30000); // Ping every 30 seconds
-  }
-  
-  ping() {
-    const start = performance.now();
-    const testString = `echo "ping-${start}"`;
-    
-    // Listen for the response
-    const onData = (data) => {
-      if (data.includes(`ping-${start}`)) {
-        const latency = performance.now() - start;
-        console.log(`Terminal latency: ${latency.toFixed(2)}ms`);
-        this.terminal.off('data', onData);
-      }
-    };
-    
-    this.terminal.on('data', onData);
-    // Send the ping command
+// Send keystrokes as binary
+function sendInput(text: string): void {
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(encoder.encode(text));
   }
 }
 ```
+
 </TypeScriptExample>
 
-### Session management issues
+Key protocol details:
 
-Handle session lifecycle properly:
+- Set `binaryType` to `arraybuffer` before connecting.
+- Buffered output from a previous connection arrives as binary frames before the `ready` message.
+- Send keystrokes as binary (UTF-8). Send control messages (`resize`) as JSON text.
+- The PTY stays alive when a client disconnects. Reconnecting replays buffered output.
 
-<TypeScriptExample>
-```javascript
-async function ensureSession(sandbox, sessionId) {
-  try {
-    return await sandbox.getSession(sessionId);
-  } catch (error) {
-    if (error.message.includes('not found')) {
-      // Session expired, create a new one
-      console.log(`Creating new session: ${sessionId}`);
-      return await sandbox.createSession({ id: sessionId });
-    }
-    throw error;
-  }
-}
-```
-</TypeScriptExample>
+For the full protocol specification, refer to the [WebSocket protocol section](/sandbox/api/terminal/#websocket-protocol) in the API reference.
+
+## Best practices
+
+- **Always use FitAddon** — Without it, terminal dimensions do not match the container and text wraps incorrectly.
+- **Handle resize events** — Call `fitAddon.fit()` on window resize so the terminal and PTY stay in sync.
+- **Clean up on unmount** — Call `addon.disconnect()` when removing the terminal from the page.
+- **Use sessions for isolation** — If users need separate shell environments, create sessions with different working directories and environment variables.
 
 ## Related resources
 
-- [Terminal API reference](/sandbox/api/terminal/) - Complete API documentation
-- [xterm.js Addon reference](/sandbox/api/xterm-addon/) - SandboxAddon details
-- [WebSocket connections guide](/sandbox/guides/websocket-connections/) - WebSocket patterns
-- [Sessions concept](/sandbox/concepts/sessions/) - How sessions work
+- [Terminal API reference](/sandbox/api/terminal/) — Method signatures, addon API, and WebSocket protocol
+- [Terminal connections](/sandbox/concepts/terminal/) — How terminal connections work
+- [Session management](/sandbox/concepts/sessions/) — How sessions work
