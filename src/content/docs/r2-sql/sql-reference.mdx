@@ -104,7 +104,7 @@ GROUP BY column_list
 
 ### Supported Functions
 
-- **COUNT(\*)**: Counts total rows **note**: only `*` is supported
+- **COUNT(*)**: Counts total rows **note**: only `*` is supported
 - **SUM(column)**: Sums numeric values
 - **AVG(column)**: Calculates average of numeric values
 - **MIN(column)**: Finds minimum value
@@ -161,7 +161,7 @@ FROM table_name
 - **APPROX_PERCENTILE_CONT_WITH_WEIGHT(column, weight, percentile)**: Returns the approximate percentile weighted by the `weight` column. The `percentile` parameter must be between `0.0` and `1.0` inclusive. Works on integer and decimal columns.
 - **APPROX_MEDIAN(column)**: Returns the approximate median value. Equivalent to `APPROX_PERCENTILE_CONT(column, 0.5)`. Works on integer and decimal columns.
 - **APPROX_DISTINCT(column)**: Returns the approximate number of distinct values in a column. Works on any column type.
-- **APPROX_TOP_K(column, k)**: Returns the `k` most frequent values in a column along with their approximate counts. The `k` parameter must be a positive integer. Returns a JSON array of `\{"value", "count"\}` objects. Works on string columns.
+- **APPROX_TOP_K(column, k)**: Returns the `k` most frequent values in a column along with their approximate counts. The `k` parameter must be a positive integer. Returns a JSON array of `{"value", "count"}` objects. Works on string columns.
 
 ### Examples
 
