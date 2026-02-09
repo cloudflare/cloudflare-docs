@@ -140,12 +140,6 @@
 		"wrangler": "4.58.0"
 	},
 	"engines": {
-		"node": ">=22"
-	},
-	"volta": {
-		"node": "22.9.0"
-	},
-	"engines": {
 		"npm": "10.9.4",
 		"node": "22.x"
 	},
