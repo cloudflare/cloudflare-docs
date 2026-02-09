@@ -25,7 +25,7 @@ const response = await sandbox.exposePort(port: number, options: ExposePortOptio
 
 **Parameters**:
 
-- `port` - Port number to expose (1024-65535, excluding 3000)
+- `port` - Port number to expose (1024-65535, excluding 3000 which is reserved for the sandbox control plane)
 - `options`:
   - `hostname` - Your Worker's domain name (e.g., `'example.com'`). Required to construct preview URLs with wildcard subdomains like `https://8080-sandbox-abc123token.example.com`. Cannot be a `.workers.dev` domain as it doesn't support wildcard DNS patterns.
   - `name` - Friendly name for the port (optional)
@@ -209,7 +209,7 @@ const response = await sandbox.wsConnect(request: Request, port: number): Promis
 **Parameters**:
 
 - `request` - Incoming WebSocket upgrade request
-- `port` - Port number (1024-65535, excluding 3000)
+- `port` - Port number (1024-65535, excluding 3000 which is reserved for the sandbox control plane)
 
 **Returns**: `Promise<Response>` - WebSocket response establishing the connection
 
