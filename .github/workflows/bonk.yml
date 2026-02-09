@@ -9,6 +9,9 @@ on:
 jobs:
   bonk:
     if: github.event.sender.type != 'Bot'
+    concurrency:
+      group: pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
       id-token: write
