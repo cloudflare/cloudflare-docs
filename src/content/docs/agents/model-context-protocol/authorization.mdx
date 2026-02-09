@@ -29,9 +29,9 @@ The following sections describe each of these options and link to runnable code 
 
 ## Authorization options
 
-### (1) Cloudflare Access integration
+### (1) Cloudflare Access OAuth provider
 
-You can use Cloudflare Access as a Single Sign-On (SSO) provider to authorize users to your MCP server. Users log in using a [configured identity provider](/cloudflare-one/integrations/identity-providers/) or a [one-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/), and they are only granted access if their identity matches your [Access policies](/cloudflare-one/access-controls/policies/).
+Cloudflare Access allows you to add Single Sign-On (SSO) functionality to your MCP server. Users authenticate to your MCP server using a [configured identity provider](/cloudflare-one/integrations/identity-providers/) or a [one-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/), and they are only granted access if their identity matches your [Access policies](/cloudflare-one/access-controls/policies/).
 
 To deploy an [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access) with Cloudflare Access as the OAuth provider, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/access-controls/ai-controls/saas-mcp/).
 
