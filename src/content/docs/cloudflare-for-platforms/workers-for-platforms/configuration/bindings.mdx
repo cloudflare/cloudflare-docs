@@ -6,11 +6,13 @@ tags:
 sidebar:
   order: 5
 ---
+
 import { Aside } from "@astrojs/starlight/components";
 
 When you deploy User Workers through Workers for Platforms, you can attach [bindings](/workers/runtime-apis/bindings/) to give them access to resources like [KV namespaces](/kv/), [D1 databases](/d1/), [R2 buckets](/r2/), and more. This enables your end customers to build more powerful applications without you having to build the infrastructure components yourself.
 
 With bindings, each of your users can have their own:
+
 - [KV namespace](/kv/) that they can use to store and retrieve data
 - [R2 bucket](/r2/) that they can use to store files and assets
 - [Analytics Engine](/analytics/analytics-engine/) dataset that they can use to collect observability data
@@ -23,9 +25,11 @@ Each User Worker can only access the bindings that are explicitly attached to it
 ![Resource Isolation Model](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-5.svg "Resource Isolation Model")
 
 ## Adding a KV Namespace to a User Worker
+
 This example walks through how to create a [KV namespace](/kv/) and attach it to a User Worker. The same process can be used to attach to other [bindings](/workers/runtime-apis/bindings/).
 
 ### 1. Create a KV namespace
+
 Create a KV namespace using the [Cloudflare API](/api/resources/kv/subresources/namespaces/methods/bulk_update/).
 
 ### 2. Attach the KV namespace to the User Worker
@@ -55,6 +59,7 @@ curl -X PUT \
   }' \
   -F 'worker.js=@/path/to/worker.js'
 ```
+
 Now, the User Worker has can access the `USER_KV` binding through the `env` argument using `env.USER_DATA.get()`, `env.USER_DATA.put()`, and other KV methods.
 
 Note: If you plan to add new bindings to the Worker, use the `keep_bindings` parameter to ensure existing bindings are preserved while adding new ones.
@@ -75,3 +80,68 @@ curl -X PUT \
     "keep_bindings": ["kv_namespace"]
   }'
 ```
+
+## Using Workflows, Durable Objects, or Containers with User Workers
+
+To use [Workflows](/workflows/), [Durable Objects](/durable-objects/), or [Containers](/containers/) with User Workers:
+
+1. Create the resource outside of the Workers for Platforms namespace
+2. Create a User Worker and bind it to the resource you created
+
+### Example: Workflows with User Workers
+
+#### 1. Create a Workflow
+
+Create and deploy a Workflow using the [Workflows API](/api/resources/workflows/). This Workflow must exist outside of the Workers for Platforms namespace.
+
+#### 2. Bind the User Worker to the Workflow
+
+When uploading a User Worker to your WFP namespace, include a Workflow binding that references the Workflow using `script_name`:
+
+```bash
+curl -X PUT \
+  "https://api.cloudflare.com/client/v4/accounts/<account-id>/workers/dispatch/namespaces/<your-namespace>/scripts/<script-name>" \
+  -H "Content-Type: multipart/form-data" \
+  -H "Authorization: Bearer <api-token>" \
+  -F 'metadata={
+    "main_module": "worker.js",
+    "bindings": [
+      {
+        "type": "workflow",
+        "name": "MY_WORKFLOW",
+        "workflow": "my-workflow",
+        "script_name": "workflow-worker"
+      }
+    ]
+  }' \
+  -F 'worker.js=@/path/to/worker.js'
+```
+
+The `script_name` field specifies the Worker script where the Workflow is defined. This is the Worker you created outside the namespace, not the User Worker.
+
+#### 3. Use the Workflow in your User Worker
+
+Now the User Worker can trigger and manage Workflow instances:
+
+```javascript title="user-worker.js"
+export default {
+	async fetch(request, env) {
+		// Create a new Workflow instance
+		const instance = await env.MY_WORKFLOW.create({
+			params: { data: "Hello from User Worker" },
+		});
+
+		// Check the Workflow status
+		const status = await instance.status();
+
+		return Response.json({
+			instanceId: instance.id,
+			status: status,
+		});
+	},
+};
+```
+
+### Durable Objects and Containers
+
+The same pattern applies to [Durable Objects](/durable-objects/) and [Containers](/containers/) — create the resource outside of the Workers for Platforms namespace, then bind to it from your User Worker. Use `script_name` to specify the Worker associated with the resource you created outside the namespace, not the User Worker.
