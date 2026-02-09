@@ -8,9 +8,6 @@ sidebar:
 
 import { Render, WranglerConfig } from "~/components"
 
-## Workers Paid
-
-
 :::caution
 The following limits apply to both Workers Paid and Workers Free plans with the exception of **Message Retention**, which is non-configurable at 24 hours for the Workers Free plan.
 :::
@@ -32,8 +29,6 @@ The following limits apply to both Workers Paid and Workers Free plans with the 
 | `visibilityTimeout` (pull-based queues)       									| 12 hours                                                      |
 | `delaySeconds` (when sending or retrying)     									| 12 hours                                                      |
 
-
-
 <sup>1</sup> 1 KB is measured as 1000 bytes. Messages can include up to \~100 bytes of internal metadata that counts towards total message limits.
 
 <sup>2</sup> Exceeding the maximum message throughput will cause the `send()` and `sendBatch()` methods to throw an exception with a `Too Many Requests` error until your producer falls below the limit.
@@ -43,8 +38,6 @@ The following limits apply to both Workers Paid and Workers Free plans with the 
 <sup>4</sup> Individual queues that reach this limit will receive a `Storage Limit Exceeded` error when calling `send()` or `sendBatch()` on the queue.
 
 <sup>5</sup> Refer to [Workers limits](/workers/platform/limits/#cpu-time).
-
-<sup>6</sup> [Pull Consumers](/queues/configuration/pull-consumers) allow you to consume messages from a queue over HTTP. Pulls, acknowledgements, and retries over HTTP are not subject to the API rate limit.
 
 <Render file="limits_increase" product="workers" />
 
