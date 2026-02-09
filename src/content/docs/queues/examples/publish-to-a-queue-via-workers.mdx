@@ -54,25 +54,26 @@ interface Env {
 }
 
 export default {
-	async fetch(req, env): Promise<Response> {
+	async fetch(req, env, ctx): Promise<Response> {
 		// Validate the payload is JSON
 		// In a production application, we may more robustly validate the payload
 		// against a schema using a library like 'zod'
 		let messages;
 		try {
 			messages = await req.json();
-		} catch (e) {
+		} catch {
 			// Return a HTTP 400 (Bad Request) if the payload isn't JSON
-			return Response.json({ err: "payload not valid JSON" }, { status: 400 });
+			return Response.json({ error: "payload not valid JSON" }, { status: 400 });
 		}
 
 		// Publish to the Queue
 		try {
 			await env.YOUR_QUEUE.send(messages);
-		} catch (e: any) {
-			console.log(`failed to send to the queue: ${e}`);
+		} catch (e) {
+			const message = e instanceof Error ? e.message : "Unknown error";
+			console.error(`failed to send to the queue: ${message}`);
 			// Return a HTTP 500 (Internal Error) if our publish operation fails
-			return Response.json({ error: e.message }, { status: 500 });
+			return Response.json({ error: message }, { status: 500 });
 		}
 
 		// Return a HTTP 200 if the send succeeded!

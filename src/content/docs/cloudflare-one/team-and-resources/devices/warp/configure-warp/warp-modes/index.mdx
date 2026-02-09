@@ -7,25 +7,31 @@ sidebar:
 
 You can deploy the WARP client in different modes to control the types of traffic sent to Cloudflare Gateway. The WARP mode determines which Zero Trust features are available on the device.
 
-## Gateway with WARP (default)
+## Traffic and DNS mode (default)
 
-This mode is best suited for organizations that want to use advanced firewall/proxy functionalities and enforce device posture rules.
+The WARP client routes device traffic for all ports and protocols, and forwards DNS resolution to the [client DNS resolver](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/).
+
+Use when you want to enforce advanced firewall/proxy functionalities and device posture rules.
 
 | DNS filtering | Network filtering | HTTP filtering | Features enabled                                                                                                                                        |
 | ------------- | ----------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Yes           | Yes               | Yes            | DNS policies, network policies, HTTP policies, Browser Isolation, identity-based policies, device posture checks, AV scanning, and Data Loss Prevention |
 
-## Gateway with DoH
+## DNS only mode
 
-Gateway with DNS-over-HTTPS (DoH) is best suited for organizations that only want to apply DNS filtering to outbound traffic from their company devices. Network and HTTP traffic is handled by the default mechanisms on your devices.
+The WARP client forwards DNS resolution to the Cloudflare account resolver, but does not route device traffic. Network and HTTP traffic is handled by the default mechanisms on your devices.
+
+Use when you only want to apply DNS filtering to outbound traffic from your company devices.
 
 | DNS filtering | Network filtering | HTTP filtering | Features enabled |
 | ------------- | ----------------- | -------------- | ---------------- |
 | Yes           | No                | No             | DNS policies     |
 
-## Secure Web Gateway without DNS filtering
+## Traffic only mode
 
-Secure Web Gateway without DNS filtering mode (sometimes referred to as tunnel-only mode) is best suited for organizations that want to proxy network and HTTP traffic but keep their existing DNS filtering software. DNS traffic is handled by the default mechanism on your device.
+The WARP client routes device traffic for all ports and protocols. DNS resolution remains managed by the device operating system.
+
+Use when you want to proxy network and HTTP traffic but keep your existing DNS filtering software.
 
 | DNS filtering | Network filtering | HTTP filtering | Features enabled                                                                                                                          |
 | ------------- | ----------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -33,33 +39,35 @@ Secure Web Gateway without DNS filtering mode (sometimes referred to as tunnel-o
 
 :::note
 
-- Secure Web Gateway without DNS filtering mode disables all features that rely on WARP for DNS resolution, including [domain-based split tunneling](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels) and [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/).
+- Traffic only mode disables all features that rely on WARP for DNS resolution, including [domain-based split tunneling](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels) and [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/).
 - Only available on Windows, Linux, and macOS.
-- Secure Web Gateway without DNS filtering mode has a known limitation concerning [DNS servers with IPv6 addresses](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/known-limitations/#ipv6-dns-resolution-in-secure-web-gateway-without-dns-filtering-mode).
+- Traffic only mode has a known limitation concerning [DNS servers with IPv6 addresses](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/known-limitations/#ipv6-dns-resolution-in-traffic-only-mode).
 
 :::
 
-## Proxy mode
+## Local proxy mode
 
-Proxy mode is best suited for organizations that want to filter traffic directed to specific applications.
+The WARP client only forwards explicitly-directed local HTTP traffic.
+
+Use when you want to filter traffic directed to specific applications.
 
 | DNS filtering | Network filtering | HTTP filtering | Features enabled                                                                                                                          |
 | ------------- | ----------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | No            | No                | Yes            | HTTP policies, Browser Isolation, identity-based policies, AV scanning, and Data Loss Prevention for traffic sent through localhost proxy |
 
-### Set up proxy mode
+### Set up Local proxy mode
 
-When you create a Cloudflare One account, a default [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) is created in `Gateway with WARP` service mode. To set up proxy mode, you will need to edit the default device profile or create a new device profile and set the WARP service mode to `Proxy mode`.
+When you create a Cloudflare One account, a default [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) is created in Traffic and DNS mode. To set up Local proxy mode, you will need to edit the default device profile or create a new device profile and set the WARP service mode to Local proxy mode.
 
-The default profile is used for all devices that are not assigned to a specific profile. If you want to apply proxy mode to a specific group of devices, you will need to create a new device profile and assign it to those devices.
+The default profile is used for all devices that are not assigned to a specific profile. If you want to apply Local proxy mode to a specific group of devices, you will need to create a new device profile and assign it to those devices.
 
-To set up proxy mode:
+To set up Local proxy mode:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources** > **Device profiles**.
 2. Decide whether you would like to edit the default profile or create a new device profile.
 3. Select the device profile you want to configure > **Edit** (If you only see **View**, you lack the permissions required to modify profiles).
 4. Ensure the **Device tunnel protocol** is set to `MASQUE`.
-5. Under **Service mode**, select **Proxy mode**.
+5. Under **Service mode**, select **Local proxy mode**.
 6. Select **Save profile**.
 
 :::note[MDM deployment]
@@ -68,7 +76,7 @@ If you are deploying WARP through MDM, the configuration file will override any 
 
 :::
 
-For devices using proxy mode, the WARP client listens on the configured port at the address `127.0.0.1` (`localhost`). Cloudflare uses `40000` as the default port for WARP in proxy mode, but you can modify this to any available port. You must explicitly configure individual applications or your system proxy settings to use this proxy.
+For devices using Local proxy mode, the WARP client listens on the configured port at the address `127.0.0.1` (`localhost`). Cloudflare uses `40000` as the default port for WARP in Local proxy mode, but you can modify this to any available port. You must explicitly configure individual applications or your system proxy settings to use this proxy.
 
 Once configured, traffic to and from these applications will securely tunnel through WARP.
 
@@ -76,14 +84,16 @@ To make more complex routing decisions (such as, routing traffic directly to the
 
 ### Limitations
 
-- Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTP proxy communication.
+- Local proxy mode can only be used by applications/operating systems that support SOCKS5/HTTP proxy communication.
 - Requires the MASQUE [device tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). Wireguard is not supported.
 - Only available on Windows, Linux, and macOS.
-- Proxy mode has a timeout limit of 10 seconds for requests. If a request goes above the 10 second limit, Cloudflare will drop the connection.
+- Local proxy mode has a timeout limit of 10 seconds for requests. If a request goes above the 10 second limit, Cloudflare will drop the connection.
 
-## Device Information Only
+## Posture only mode
 
-This mode is best suited for organizations that only want to enforce [WARP client device posture checks](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) for zones in your account. DNS, Network and HTTP traffic is handled by the default mechanisms on your devices. To setup Device Information Only mode, refer to the [dedicated page](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/device-information-only/).
+The WARP client only provides asynchronous information to provide device health and posture data, which can be referenced in security policies. The client does not control device routing or forward DNS resolution.
+
+Use when you only want to enforce [WARP client device posture checks](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) for zones in your account. To set up Posture only mode, refer to the [dedicated page](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/device-information-only/).
 
 | DNS filtering | Network filtering | HTTP filtering | Features enabled                                                                     |
 | ------------- | ----------------- | -------------- | ------------------------------------------------------------------------------------ |
@@ -93,13 +103,13 @@ This mode is best suited for organizations that only want to enforce [WARP clien
 
 Each WARP mode offers a different set of Zero Trust features.
 
-| WARP Mode                                                                                                                                                           | DNS Filtering | Network Filtering | HTTP Filtering | Service mode (displayed in `warp-cli settings`) |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------- | -------------- | ----------------------------------------------- |
-| [**Gateway with WARP (default)**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default)                             | ✅            | ✅                | ✅             | `WarpWithDnsOverHttps`                          |
-| [**Gateway with DoH**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh)                                                 | ✅            | ❌                | ❌             | `DnsOverHttps`                                  |
-| [**Secure Web Gateway without DNS filtering**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) | ❌            | ✅                | ✅             | `TunnelOnly`                                    |
-| [**Proxy mode**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode)                                                             | ❌            | ❌                | ✅             | `WarpProxy on port 40000`                       |
-| [**Device Information Only**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#device-information-only)                                   | ❌            | ❌                | ❌             | `PostureOnly`                                   |
+| WARP Mode                                                                                                                                   | Best for                                            | DNS Filtering | Network Filtering | HTTP Filtering | Service mode (displayed in `warp-cli settings`) |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------------- | ----------------- | -------------- | ----------------------------------------------- |
+| [**Traffic and DNS mode (default)**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-and-dns-mode-default) | Full security with all filtering capabilities       | ✅            | ✅                | ✅             | `WarpWithDnsOverHttps`                          |
+| [**DNS only mode**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#dns-only-mode)                               | DNS filtering without routing device traffic        | ✅            | ❌                | ❌             | `DnsOverHttps`                                  |
+| [**Traffic only mode**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-only-mode)                       | Traffic routing with existing DNS infrastructure    | ❌            | ✅                | ✅             | `TunnelOnly`                                    |
+| [**Local proxy mode**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#local-proxy-mode)                         | Filtering traffic to specific applications          | ❌            | ❌                | ✅             | `WarpProxy on port 40000`                       |
+| [**Posture only mode**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#posture-only-mode)                       | Device posture checks without traffic routing       | ❌            | ❌                | ❌             | `PostureOnly`                                   |
 
 ## Related resources
 

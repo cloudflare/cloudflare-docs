@@ -77,21 +77,25 @@ return response;
 
 ### `.output()`
 
-- Defines the [output format](/images/transform-images/) for the transformed image such as AVIF, WebP, and JPEG.
-- Image [quality](/images/transform-images/transform-via-url/#quality) can be altered by specifying `quality` on a 1-100 scale.
+- You must define [a supported format](/images/transform-images/#supported-output-formats) such as AVIF, WebP, or JPEG for the [transformed image](/images/transform-images/).
+- This is required since there is no default format to fallback to.
+- [Image quality](/images/transform-images/transform-via-url/#quality) can be altered by specifying `quality` on a 1-100 scale.
 
 For example, to rotate, resize, and blur an image, then output the image as AVIF:
 
 ```ts
 const info = await env.IMAGES.info(stream);
-// stream contains a valid image, and width/height is available on the info object
+// Stream contains a valid image, and width/height is available on the info object
+
+// You can determine the format based on the use case
+const outputFormat = "image/avif";
 
 const response = (
 	await env.IMAGES.input(stream)
 		.transform({ rotate: 90 })
 		.transform({ width: 128 })
 		.transform({ blur: 20 })
-		.output({ format: "image/avif" })
+		.output({ format: outputFormat })
 ).response();
 
 return response;

@@ -22,7 +22,11 @@ const sandbox = getSandbox(binding, sandboxId, options?: SandboxOptions);
 **Type**: `boolean`
 **Default**: `false`
 
-Keep the container alive indefinitely by preventing automatic shutdown. When `true`, the container will never auto-timeout and must be explicitly destroyed using `destroy()`.
+Keep the container alive indefinitely by preventing automatic shutdown. When `true`, the container automatically sends heartbeat pings every 30 seconds to prevent eviction and will never auto-timeout.
+
+**How it works**: The sandbox automatically schedules lightweight ping requests to the container every 30 seconds. This prevents the container from being evicted due to inactivity while minimizing resource overhead. You can also enable/disable keepAlive dynamically using [`setKeepAlive()`](/sandbox/api/lifecycle/#setkeepalive).
+
+The `keepAlive` flag persists across Durable Object hibernation and wakeup cycles. Once enabled, you do not need to re-set it after the sandbox wakes from hibernation.
 
 <TypeScriptExample>
 ```ts
@@ -44,7 +48,7 @@ try {
 </TypeScriptExample>
 
 :::caution[Resource management with keepAlive]
-When `keepAlive: true` is set, containers will not automatically timeout. They must be explicitly destroyed using `destroy()` to prevent containers running indefinitely and counting toward your account limits.
+When `keepAlive: true` is set, containers automatically send heartbeat pings to prevent eviction and will not automatically timeout. They must be explicitly destroyed using `destroy()` or disabled with `setKeepAlive(false)` to prevent containers running indefinitely and counting toward your account limits.
 :::
 
 ### sleepAfter
@@ -53,6 +57,10 @@ When `keepAlive: true` is set, containers will not automatically timeout. They m
 **Default**: `"10m"` (10 minutes)
 
 Duration of inactivity before the sandbox automatically sleeps. Accepts duration strings (`"30s"`, `"5m"`, `"1h"`) or numbers (seconds).
+
+:::note[Bug fix in v0.2.17]
+Prior to v0.2.17, the `sleepAfter` option passed to `getSandbox()` was ignored due to a timing issue. The option is now properly applied when creating sandbox instances.
+:::
 
 <TypeScriptExample>
 ```ts
@@ -195,16 +203,16 @@ The default 10-minute timeout works well for most applications. Adjust based on 
 Use `keepAlive: true` for:
 
 - **Long-running builds** - CI/CD pipelines that may have idle periods between steps
-- **Batch processing** - Jobs that process data in waves with gaps between batches
+- **Batch processing** - Jobs that process data in waves with gaps between batches  
 - **Monitoring tasks** - Processes that periodically check external services
 - **Interactive sessions** - User-driven workflows where the container should remain available
 
-With `keepAlive`, containers never sleep automatically - use for scenarios where you control the lifecycle explicitly.
+With `keepAlive`, containers send automatic heartbeat pings every 30 seconds to prevent eviction and never sleep automatically. Use for scenarios where you control the lifecycle explicitly.
 
 ## Related resources
 
 - [Expose services guide](/sandbox/guides/expose-services/) - Using `normalizeId` with preview URLs
-- [Preview URLs concept](/sandbox/concepts/preview-urls/) - Understanding DNS case-insensitivity
+- [Preview URLs concept](/sandbox/concepts/preview-urls/) - Understanding DNS case-insensitivity  
 - [Background processes guide](/sandbox/guides/background-processes/) - Using `keepAlive` with long-running processes
-- [Lifecycle API](/sandbox/api/lifecycle/) - Create and manage sandboxes
+- [Lifecycle API](/sandbox/api/lifecycle/) - Create and manage sandboxes with `setKeepAlive()` 
 - [Sandboxes concept](/sandbox/concepts/sandboxes/) - Understanding sandbox lifecycle

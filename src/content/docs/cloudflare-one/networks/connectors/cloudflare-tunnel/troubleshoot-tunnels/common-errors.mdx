@@ -153,7 +153,7 @@ Proxied traffic through Cloudflare Tunnel is buffered by default unless the orig
 
 ## I see `Error: This route's network is inside an existing subnet's network at "100.96.0.0/12"`.
 
-This error occurs when you try to add a CIDR route that falls within Cloudflare WARP's <GlossaryTooltip term="CGNAT IP">CGNAT IP range</GlossaryTooltip>. The `100.96.0.0/12` range, which covers addresses from `100.96.0.1` to `100.111.255.254`, is reserved for internal WARP routing and cannot be added as a Cloudflare Tunnel route. To connect your private network, you will need to change its IP/CIDR so that it does not overlap with `100.96.0.0/12`.
+This error occurs when you try to add a CIDR route that falls within Cloudflare WARP's <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP range</GlossaryTooltip>. The `100.96.0.0/12` range, which covers addresses from `100.96.0.1` to `100.111.255.254`, is reserved for internal WARP routing and cannot be added as a Cloudflare Tunnel route. To connect your private network, you will need to change its IP/CIDR so that it does not overlap with `100.96.0.0/12`.
 
 ## Troubleshooting
 

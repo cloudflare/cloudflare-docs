@@ -123,6 +123,12 @@ This is due to the fact that, if the Durable Object wakes up after being inactiv
 
   - This method can be `async`.
 
+:::note[Catching exceptions in alarm handlers]
+
+Because alarms are only retried up to 6 times on error, it's recommended to catch any exceptions inside your `alarm()` handler and schedule a new alarm before returning if you want to make sure your alarm handler will be retried indefinitely. Otherwise, a sufficiently long outage in a downstream service that you depend on or a bug in your code that goes unfixed for hours can exhaust the limited number of retries, causing the alarm to not be re-run in the future until the next time you call `setAlarm`.
+
+:::
+
 ## Example
 
 This example shows how to both set alarms with the `setAlarm(timestamp)` method and handle alarms with the `alarm()` handler within your Durable Object.

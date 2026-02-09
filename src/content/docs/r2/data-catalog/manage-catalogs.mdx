@@ -238,6 +238,19 @@ To create an API token programmatically for use with R2 Data Catalog, you'll nee
 
 To learn more about how to create API tokens for R2 Data Catalog using the API, including required permission groups and usage examples, refer to the [Create API tokens via API documentation](/r2/api/tokens/#create-api-tokens-via-api).
 
+## R2 Local Uploads
+[Local Uploads](/r2/buckets/local-uploads) writes object data to a nearby location, then asynchronously copies it to your bucket. Data is queryable immediately and remains strongly consistent. This can significantly improve latency of writes from Apache Iceberg clients outside of the region of the respective R2 Data Catalog bucket.
+
+To enable R2 Local Uploads, you can use the following Wrangler command:
+
+```bash
+npx wrangler r2 bucket catalog local-uploads enable <R2_Data_Catalog_BUCKET_NAME>
+```
+
+## Limitations
+- R2 Data Catalog does not currently support R2 buckets in a non-default jurisdiction.
+
+
 ## Learn more
 
 <LinkCard

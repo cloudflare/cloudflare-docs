@@ -26,7 +26,7 @@ const session = await sandbox.createSession(options?: SessionOptions): Promise<E
 **Parameters**:
 - `options` (optional):
   - `id` - Custom session ID (auto-generated if not provided)
-  - `env` - Environment variables for this session
+  - `env` - Environment variables for this session: `Record<string, string | undefined>`
   - `cwd` - Working directory (default: `"/workspace"`)
 
 **Returns**: `Promise<ExecutionSession>` with all sandbox methods bound to this session
@@ -42,7 +42,11 @@ const prodSession = await sandbox.createSession({
 
 const testSession = await sandbox.createSession({
   id: 'test',
-  env: { NODE_ENV: 'test', API_URL: 'http://localhost:3000' },
+  env: { 
+    NODE_ENV: 'test', 
+    API_URL: 'http://localhost:3000',
+    DEBUG_MODE: undefined  // Skipped, not set in this session
+  },
   cwd: '/workspace/test'
 });
 
@@ -123,11 +127,13 @@ Deleting a session immediately terminates all running commands. The default sess
 Set environment variables in the sandbox.
 
 ```ts
-await sandbox.setEnvVars(envVars: Record<string, string>): Promise<void>
+await sandbox.setEnvVars(envVars: Record<string, string | undefined>): Promise<void>
 ```
 
 **Parameters**:
-- `envVars` - Key-value pairs of environment variables to set
+- `envVars` - Key-value pairs of environment variables to set or unset
+  - `string` values: Set the environment variable
+  - `undefined` or `null` values: Unset the environment variable
 
 :::caution
 Call `setEnvVars()` **before** any other sandbox operations to ensure environment variables are available from the start.
@@ -141,7 +147,8 @@ const sandbox = getSandbox(env.Sandbox, 'user-123');
 await sandbox.setEnvVars({
   API_KEY: env.OPENAI_API_KEY,
   DATABASE_URL: env.DATABASE_URL,
-  NODE_ENV: 'production'
+  NODE_ENV: 'production',
+  OLD_TOKEN: undefined  // Unsets OLD_TOKEN if previously set
 });
 
 // Now commands can access these variables

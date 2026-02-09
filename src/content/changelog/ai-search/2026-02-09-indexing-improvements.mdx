@@ -1,0 +1,29 @@
+---
+title: AI Search now with more granular controls over indexing
+description: Sync individual files on demand and limit website crawling to a specific sitemap.
+products:
+  - ai-search
+date: 2026-02-09
+---
+
+Get your content updates into [AI Search](/ai-search/) faster and avoid a full rescan when you do not need it.
+
+## Reindex individual files without a full sync
+
+Updated a file or need to retry one that errored? When you know exactly which file changed, you can now [reindex it directly](/ai-search/configuration/indexing/#controls) instead of rescanning your entire data source.
+
+Go to **Overview** > **Indexed Items** and select the sync icon next to any file to reindex it immediately.
+
+![Sync individual files from Indexed Items](~/assets/images/ai-search/individual-file-indexing.png)
+
+## Crawl only the sitemap you need
+
+By default, AI Search crawls all sitemaps listed in your `robots.txt`, up to the [maximum files per index limit](/ai-search/platform/limits-pricing/#limits). If your site has multiple sitemaps but you only want to index a specific set, you can now [specify a single sitemap URL](/ai-search/configuration/data-source/website/#sitemap) to limit what the crawler visits.
+
+For example, if your `robots.txt` lists both `blog-sitemap.xml` and `docs-sitemap.xml`, you can specify just `https://example.com/docs-sitemap.xml` to index only your documentation.
+
+Configure your selection anytime in **Settings** > **Parsing options** > **Specific sitemaps**, then trigger a sync to apply the changes.
+
+![Specify a sitemap in Parsinh options](~/assets/images/ai-search/specify-sitemap.png)
+
+Learn more about [indexing controls](/ai-search/configuration/indexing/#controls) and [website crawling configuration](/ai-search/configuration/data-source/website/#sitemap).

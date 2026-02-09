@@ -236,8 +236,8 @@ export interface Env {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Create a client using the pg driver (or any supported driver, ORM or query builder)
-		// with the Hyperdrive credentials. These credentials are only accessible from your Worker.
+		// Create a new client on each request. Hyperdrive maintains the underlying
+		// database connection pool, so creating a new client is fast.
 		const sql = new Client({
 			connectionString: env.HYPERDRIVE.connectionString,
 		});
@@ -266,7 +266,7 @@ Upon receiving a request, the code above does the following:
 
 1. Creates a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
 2. Initiates a query via `await sql.query()` that outputs all tables (user and system created) in the database (as an example query).
-3. Returns the response as JSON to the client.
+3. Returns the response as JSON to the client. Hyperdrive automatically cleans up the client connection when the request ends, and keeps the underlying database connection open in its pool for reuse.
 
 </TabItem>
 <TabItem label="MySQL">
@@ -291,14 +291,14 @@ export interface Env {
 export default {
  async fetch(request, env, ctx): Promise<Response> {
 
-		// Create a connection using the mysql2 driver (or any support driver, ORM or query builder)
-		// with the Hyperdrive credentials. These credentials are only accessible from your Worker.
+		// Create a new connection on each request. Hyperdrive maintains the underlying
+		// database connection pool, so creating a new connection is fast.
 		const connection = await createConnection({
 			host: env.HYPERDRIVE.host,
 			user: env.HYPERDRIVE.user,
 			password: env.HYPERDRIVE.password,
 			database: env.HYPERDRIVE.database,
-			port: env.HYPERDRIVE.port
+			port: env.HYPERDRIVE.port,
 
 			// The following line is needed for mysql2 compatibility with Workers
 			// mysql2 uses eval() to optimize result parsing for rows with > 100 columns
@@ -311,9 +311,6 @@ export default {
 			const [results, fields] = await connection.query(
 				'SHOW tables;'
 			);
-
-			// Clean up the client after the response is returned, before the Worker is killed
-			ctx.waitUntil(connection.end());
 
 			// Return result rows as JSON
 			return new Response(JSON.stringify({ results, fields }), {
@@ -340,7 +337,7 @@ Upon receiving a request, the code above does the following:
 
 1. Creates a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
 2. Initiates a query via `await connection.query` that outputs all tables (user and system created) in the database (as an example query).
-3. Returns the response as JSON to the client.
+3. Returns the response as JSON to the client. Hyperdrive automatically cleans up the client connection when the request ends, and keeps the underlying database connection open in its pool for reuse.
 
 </TabItem>
 </Tabs>

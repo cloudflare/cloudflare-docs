@@ -3,18 +3,17 @@ pcx_content_type: concept
 title: Limits
 sidebar:
   order: 2
-
 ---
 
-import { Render, Details } from "~/components";
+import { Render } from "~/components";
 
 | Feature                                                                                                             | Limit                                             |
 | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| Databases                                                                                                           | 50,000 (Workers Paid)[^1] / 10 (Free)             |
+| Databases per account                                                                                               | 50,000 (Workers Paid) [^1] / 10 (Free)            |
 | Maximum database size                                                                                               | 10 GB (Workers Paid) / 500 MB (Free)              |
-| Maximum storage per account                                                                                         | 1 TB (Workers Paid)[^2] / 5 GB (Free)             |
+| Maximum storage per account                                                                                         | 1 TB (Workers Paid) [^2] / 5 GB (Free)             |
 | [Time Travel](/d1/reference/time-travel/) duration (point-in-time recovery)                                         | 30 days (Workers Paid) / 7 days (Free)            |
-| Maximum Time Travel restore operations                                                                              | 10 restores per 10 minute (per database)          |
+| Maximum Time Travel restore operations                                                                              | 10 restores per 10 minutes (per database)          |
 | Queries per Worker invocation (read [subrequest limits](/workers/platform/limits/#how-many-subrequests-can-i-make)) | 1000 (Workers Paid) / 50 (Free)                   |
 | Maximum number of columns per table                                                                                 | 100                                               |
 | Maximum number of rows per table                                                                                    | Unlimited (excluding per-database storage limits) |
@@ -32,22 +31,14 @@ Limits for individual queries (listed above) apply to each individual statement 
 :::
 
 [^1]: The maximum number of databases per account can be increased by request on Workers Paid and Enterprise plans, with support for millions to tens-of-millions of databases (or more) per account. Refer to the guidance on limit increases on this page to request an increase.
+
 [^2]: The maximum storage per account can be increased by request on Workers Paid and Enterprise plans. Refer to the guidance on limit increases on this page to request an increase.
+
 [^3]: A single Worker script can have up to 1 MB of script metadata. A binding is defined as a binding to a resource, such as a D1 database, KV namespace, [environmental variable](/workers/configuration/environment-variables/), or secret. Each resource binding is approximately 150-bytes, however environmental variables and secrets are controlled by the size of the value you provide. Excluding environmental variables, you can bind up to \~5,000 D1 databases to a single Worker script.
+
 [^4]: Requests to Cloudflare API must resolve in 30 seconds. Therefore, this duration limit also applies to the entire batch call.
+
 [^5]: The imported file is uploaded to R2. Refer to [R2 upload limit](/r2/platform/limits).
-
-<Details header = "Footnotes" open={true}>
-1: The maximum number of databases per account can be increased by request on Workers Paid and Enterprise plans, with support for millions to tens-of-millions of databases (or more) per account. Refer to the guidance on limit increases on this page to request an increase.
-
-2: The maximum storage per account can be increased by request on Workers Paid and Enterprise plans. Refer to the guidance on limit increases on this page to request an increase.
-
-3: A single Worker script can have up to 1 MB of script metadata. A binding is defined as a binding to a resource, such as a D1 database, KV namespace, [environmental variable](/workers/configuration/environment-variables/), or secret. Each resource binding is approximately 150 bytes, however environmental variables and secrets are controlled by the size of the value you provide. Excluding environmental variables, you can bind up to \~5,000 D1 databases to a single Worker script.
-
-4: Requests to Cloudflare API must resolve in 30 seconds. Therefore, this duration limit also applies to the entire batch call.
-
-5: The imported file is uploaded to R2. Refer to [R2 upload limit](/r2/platform/limits).
-</Details>
 
 Cloudflare also offers other storage solutions such as [Workers KV](/kv/api/), [Durable Objects](/durable-objects/), and [R2](/r2/get-started/). Each product has different advantages and limits. Refer to [Choose a data or storage product](/workers/platform/storage-options/) to review which storage option is right for your use case.
 
@@ -57,4 +48,4 @@ Cloudflare also offers other storage solutions such as [Workers KV](/kv/api/), [
 
 Frequently asked questions related to D1 limits:
 
-<Render file="faq-limits" product="d1"/>
+<Render file="faq-limits" product="d1" />

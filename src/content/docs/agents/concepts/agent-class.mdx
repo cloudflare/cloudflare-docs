@@ -58,24 +58,24 @@ The base class provides `webSocketMessage(ws, message)`, `webSocketClose(ws, cod
 
 ```ts
 export class MyDurableObject extends DurableObject {
-  async fetch(request) {
-    // Creates two ends of a WebSocket connection.
-    const webSocketPair = new WebSocketPair();
-    const [client, server] = Object.values(webSocketPair);
+	async fetch(request) {
+		// Creates two ends of a WebSocket connection.
+		const webSocketPair = new WebSocketPair();
+		const [client, server] = Object.values(webSocketPair);
 
-    // Calling `acceptWebSocket()` connects the WebSocket to the Durable Object, allowing the WebSocket to send and receive messages.
-    this.ctx.acceptWebSocket(server);
+		// Calling `acceptWebSocket()` connects the WebSocket to the Durable Object, allowing the WebSocket to send and receive messages.
+		this.ctx.acceptWebSocket(server);
 
-    return new Response(null, {
-      status: 101,
-      webSocket: client
-    });
-  }
+		return new Response(null, {
+			status: 101,
+			webSocket: client,
+		});
+	}
 
-  async webSocketMessage(ws, message) {
-    // echo back the messages
-    ws.send(msg);
-  }
+	async webSocketMessage(ws, message) {
+		// echo back the messages
+		ws.send(msg);
+	}
 }
 ```
 
@@ -150,12 +150,12 @@ The extra plumbing that `Server` includes on addressing allows it to expose an `
 
 ```ts
 class MyServer extends Server {
-  onStart() {
-    // Some initialization logic that you wish
-    // to run every time the DO is started up.
-    const sql = this.ctx.storage.sql;
-    sql.exec(`...`);
-  }
+	onStart() {
+		// Some initialization logic that you wish
+		// to run every time the DO is started up.
+		const sql = this.ctx.storage.sql;
+		sql.exec(`...`);
+	}
 }
 ```
 
@@ -165,19 +165,19 @@ class MyServer extends Server {
 
 ```ts
 class MyServer extends Server {
-  async onRequest(request: Request) {
-    const url = new URL(request.url);
+	async onRequest(request: Request) {
+		const url = new URL(request.url);
 
-    return new Response(`Hello from ${url.origin}!`);
-  }
+		return new Response(`Hello from ${url.origin}!`);
+	}
 
-  async onConnect(conn, ctx) {
-    const { request } = ctx;
-    const url = new URL(request.url);
+	async onConnect(conn, ctx) {
+		const { request } = ctx;
+		const url = new URL(request.url);
 
-    // Connections are a WebSocket wrapper
-    conn.send(`Hello from ${url.origin}!`);
-  }
+		// Connections are a WebSocket wrapper
+		conn.send(`Hello from ${url.origin}!`);
+	}
 }
 ```
 
@@ -205,15 +205,15 @@ There's also `this.onStateUpdate` that you can override to react to state change
 
 ```ts
 class MyAgent extends Agent<Env, { count: number }> {
-  initialState = { count: 0 };
+	initialState = { count: 0 };
 
-  increment() {
-    this.setState({ count: this.state.count + 1 });
-  }
+	increment() {
+		this.setState({ count: this.state.count + 1 });
+	}
 
-  onStateUpdate(state, source) {
-    console.log("State updated:", state);
-  }
+	onStateUpdate(state, source) {
+		console.log("State updated:", state);
+	}
 }
 ```
 
@@ -225,23 +225,23 @@ The Agent provides a convenient `sql` template tag for executing queries against
 
 ```ts
 class MyAgent extends Agent {
-  onStart() {
-    this.sql`
+	onStart() {
+		this.sql`
       CREATE TABLE IF NOT EXISTS users (
         id TEXT PRIMARY KEY,
         name TEXT
       )
     `;
 
-    const userId = "1";
-    const userName = "Alice";
-    this.sql`INSERT INTO users (id, name) VALUES (${userId}, ${userName})`;
+		const userId = "1";
+		const userName = "Alice";
+		this.sql`INSERT INTO users (id, name) VALUES (${userId}, ${userName})`;
 
-    const users = this.sql<{ id: string; name: string }>`
+		const users = this.sql<{ id: string; name: string }>`
       SELECT * FROM users WHERE id = ${userId}
     `;
-    console.log(users); // [{ id: "1", name: "Alice" }]
-  }
+		console.log(users); // [{ id: "1", name: "Alice" }]
+	}
 }
 ```
 
@@ -251,10 +251,10 @@ class MyAgent extends Agent {
 
 ```ts
 class MyAgent extends Agent {
-  @callable({ description: "Add two numbers" })
-  async add(a: number, b: number) {
-    return a + b;
-  }
+	@callable({ description: "Add two numbers" })
+	async add(a: number, b: number) {
+		return a + b;
+	}
 }
 ```
 
@@ -262,10 +262,10 @@ Clients can invoke this method by sending a WebSocket message:
 
 ```json
 {
-  "type": "rpc",
-  "id": "unique-request-id",
-  "method": "add",
-  "args": [2, 3]
+	"type": "rpc",
+	"id": "unique-request-id",
+	"method": "add",
+	"args": [2, 3]
 }
 ```
 
@@ -283,14 +283,14 @@ Agents include a built-in task queue for deferred execution. This is useful for 
 
 ```ts
 class MyAgent extends Agent {
-  async onConnect() {
-    // Queue a task to be executed later
-    await this.queue("processTask", { userId: "123" });
-  }
+	async onConnect() {
+		// Queue a task to be executed later
+		await this.queue("processTask", { userId: "123" });
+	}
 
-  async processTask(payload: { userId: string }, queueItem: QueueItem) {
-    console.log("Processing task for user:", payload.userId);
-  }
+	async processTask(payload: { userId: string }, queueItem: QueueItem) {
+		console.log("Processing task for user:", payload.userId);
+	}
 }
 ```
 
@@ -304,30 +304,30 @@ Since Durable Objects only allow one alarm at a time, the `Agent` class works ar
 
 ```ts
 class MyAgent extends Agent {
-  async foo() {
-    // Schedule at a specific time
-    await this.schedule(new Date("2025-12-25T00:00:00Z"), "sendGreeting", {
-      message: "Merry Christmas!"
-    });
+	async foo() {
+		// Schedule at a specific time
+		await this.schedule(new Date("2025-12-25T00:00:00Z"), "sendGreeting", {
+			message: "Merry Christmas!",
+		});
 
-    // Schedule with a delay (in seconds)
-    await this.schedule(60, "checkStatus", { check: "health" });
+		// Schedule with a delay (in seconds)
+		await this.schedule(60, "checkStatus", { check: "health" });
 
-    // Schedule with a cron expression
-    await this.schedule("0 0 * * *", "dailyTask", { type: "cleanup" });
-  }
+		// Schedule with a cron expression
+		await this.schedule("0 0 * * *", "dailyTask", { type: "cleanup" });
+	}
 
-  async sendGreeting(payload: { message: string }) {
-    console.log(payload.message);
-  }
+	async sendGreeting(payload: { message: string }) {
+		console.log(payload.message);
+	}
 
-  async checkStatus(payload: { check: string }) {
-    console.log("Running check:", payload.check);
-  }
+	async checkStatus(payload: { check: string }) {
+		console.log("Running check:", payload.check);
+	}
 
-  async dailyTask(payload: { type: string }) {
-    console.log("Daily task:", payload.type);
-  }
+	async dailyTask(payload: { type: string }) {
+		console.log("Daily task:", payload.type);
+	}
 }
 ```
 
@@ -339,15 +339,15 @@ Schedules are stored in the `cf_agents_schedules` SQL table. Cron schedules auto
 
 ```ts
 class MyAgent extends Agent {
-  async onConnect() {
-    // Add an MCP server
-    await this.addMcpServer(
-      "GitHub",
-      "https://mcp.example.com/mcp",
-      "https://my-worker.example.workers.dev", // callback host for OAuth
-      "agents" // routing prefix
-    );
-  }
+	async onConnect() {
+		// Add an MCP server
+		await this.addMcpServer(
+			"GitHub",
+			"https://mcp.example.com/mcp",
+			"https://my-worker.example.workers.dev", // callback host for OAuth
+			"agents", // routing prefix
+		);
+	}
 }
 ```
 
@@ -357,21 +357,21 @@ Agents can receive and reply to emails using Cloudflare's [Email Routing](/email
 
 ```ts
 class MyAgent extends Agent {
-  async onEmail(email: AgentEmail) {
-    console.log("Received email from:", email.from);
-    console.log("Subject:", email.headers.get("subject"));
+	async onEmail(email: AgentEmail) {
+		console.log("Received email from:", email.from);
+		console.log("Subject:", email.headers.get("subject"));
 
-    const raw = await email.getRaw();
-    console.log("Raw email size:", raw.length);
+		const raw = await email.getRaw();
+		console.log("Raw email size:", raw.length);
 
-    // Reply to the email
-    await this.replyToEmail(email, {
-      fromName: "My Agent",
-      subject: "Re: " + email.headers.get("subject"),
-      body: "Thanks for your email!",
-      contentType: "text/plain"
-    });
-  }
+		// Reply to the email
+		await this.replyToEmail(email, {
+			fromName: "My Agent",
+			subject: "Re: " + email.headers.get("subject"),
+			body: "Thanks for your email!",
+			contentType: "text/plain",
+		});
+	}
 }
 ```
 
@@ -379,11 +379,11 @@ To route emails to your Agent, use `routeAgentEmail` in your Worker's email hand
 
 ```ts
 export default {
-  async email(message, env, ctx) {
-    await routeAgentEmail(message, env, {
-      resolver: createAddressBasedEmailResolver("my-agent")
-    });
-  }
+	async email(message, env, ctx) {
+		await routeAgentEmail(message, env, {
+			resolver: createAddressBasedEmailResolver("my-agent"),
+		});
+	},
 };
 ```
 
@@ -395,15 +395,15 @@ export default {
 import { getCurrentAgent } from "agents";
 
 function someUtilityFunction() {
-  const { agent, connection, request, email } = getCurrentAgent();
+	const { agent, connection, request, email } = getCurrentAgent();
 
-  if (agent) {
-    console.log("Current agent:", agent.name);
-  }
+	if (agent) {
+		console.log("Current agent:", agent.name);
+	}
 
-  if (connection) {
-    console.log("WebSocket connection ID:", connection.id);
-  }
+	if (connection) {
+		console.log("WebSocket connection ID:", connection.id);
+	}
 }
 ```
 
@@ -413,18 +413,18 @@ function someUtilityFunction() {
 
 ```ts
 class MyAgent extends Agent {
-  onError(connectionOrError: Connection | unknown, error?: unknown) {
-    if (error) {
-      // WebSocket connection error
-      console.error("Connection error:", error);
-    } else {
-      // Server error
-      console.error("Server error:", connectionOrError);
-    }
+	onError(connectionOrError: Connection | unknown, error?: unknown) {
+		if (error) {
+			// WebSocket connection error
+			console.error("Connection error:", error);
+		} else {
+			// Server error
+			console.error("Server error:", connectionOrError);
+		}
 
-    // Optionally throw to propagate the error
-    throw connectionOrError;
-  }
+		// Optionally throw to propagate the error
+		throw connectionOrError;
+	}
 }
 ```
 
@@ -438,26 +438,26 @@ The `destroy()` method can be safely called within scheduled tasks. When called 
 
 ```ts
 class MyAgent extends Agent {
-  async onStart() {
-    console.log("Agent is starting up...");
-    // Initialize your agent
-  }
+	async onStart() {
+		console.log("Agent is starting up...");
+		// Initialize your agent
+	}
 
-  async cleanup() {
-    // This wipes everything!
-    await this.destroy();
-  }
+	async cleanup() {
+		// This wipes everything!
+		await this.destroy();
+	}
 
-  async selfDestruct() {
-    // Safe to call from within a scheduled task
-    await this.schedule(60, "destroyAfterDelay", {});
-  }
+	async selfDestruct() {
+		// Safe to call from within a scheduled task
+		await this.schedule(60, "destroyAfterDelay", {});
+	}
 
-  async destroyAfterDelay() {
-    // This will safely destroy the Agent even when
-    // called from within the alarm handler
-    await this.destroy();
-  }
+	async destroyAfterDelay() {
+		// This will safely destroy the Agent even when
+		// called from within the alarm handler
+		await this.destroy();
+	}
 }
 ```
 
