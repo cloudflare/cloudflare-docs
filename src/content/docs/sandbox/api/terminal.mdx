@@ -25,6 +25,7 @@ const response = await sandbox.terminal(request: Request, options?: PtyOptions):
 ```
 
 **Parameters**:
+
 - `request` - WebSocket upgrade request from the browser
 - `options` (optional):
   - `cols` - Terminal width in columns (default: 80)
@@ -33,10 +34,10 @@ const response = await sandbox.terminal(request: Request, options?: PtyOptions):
 **Returns**: `Promise<Response>` - WebSocket upgrade response
 
 <TypeScriptExample>
-```
+```ts
 import { getSandbox } from '@cloudflare/sandbox';
 
-export { Sandbox } from '@cloudflare/sandbox';
+export { Sandbox } from "@cloudflare/sandbox";
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -74,7 +75,7 @@ const response = await session.terminal(request: Request, options?: PtyOptions):
 ```
 
 <TypeScriptExample>
-```
+```ts
 // Multiple terminals in the same sandbox
 const devSession = await sandbox.createSession({
   id: 'development',
@@ -83,9 +84,9 @@ const devSession = await sandbox.createSession({
 });
 
 const prodSession = await sandbox.createSession({
-  id: 'production', 
-  cwd: '/workspace/prod',
-  env: { NODE_ENV: 'production' }
+id: 'production',
+cwd: '/workspace/prod',
+env: { NODE_ENV: 'production' }
 });
 
 // Route requests based on session parameter
@@ -93,14 +94,15 @@ const url = new URL(request.url);
 const sessionId = url.searchParams.get('session');
 
 if (sessionId === 'dev') {
-  return await devSession.terminal(request);
+return await devSession.terminal(request);
 } else if (sessionId === 'prod') {  
-  return await prodSession.terminal(request);
+ return await prodSession.terminal(request);
 } else {
-  // Default session
-  return await sandbox.terminal(request);
+// Default session
+return await sandbox.terminal(request);
 }
-```
+
+````
 </TypeScriptExample>
 
 ## Terminal features
@@ -109,7 +111,7 @@ if (sessionId === 'dev') {
 
 Terminals automatically reconnect when the WebSocket connection is lost, with exponential backoff and jitter to prevent thundering herd.
 
-### Buffered output replay  
+### Buffered output replay
 
 Terminal output is buffered server-side. When reconnecting, clients receive all missed output since the last connection, ensuring no data loss.
 
@@ -117,7 +119,7 @@ Terminal output is buffered server-side. When reconnecting, clients receive all 
 
 Each terminal maintains persistent shell state including:
 - Current working directory
-- Environment variables  
+- Environment variables
 - Command history
 - Background processes
 
@@ -126,24 +128,26 @@ Each terminal maintains persistent shell state including:
 Create multiple terminals in the same sandbox, each with isolated environments:
 
 <TypeScriptExample>
-```
-// Frontend development terminal  
+```ts
+// Frontend development terminal
 const frontendSession = await sandbox.createSession({
-  id: 'frontend',
-  cwd: '/workspace/frontend',
-  env: { NODE_ENV: 'development' }
+id: 'frontend',
+cwd: '/workspace/frontend',
+env: { NODE_ENV: 'development' }
 });
 
 // Backend development terminal
 const backendSession = await sandbox.createSession({
-  id: 'backend', 
-  cwd: '/workspace/backend',
-  env: { NODE_ENV: 'development', DATABASE_URL: 'localhost:5432' }
+id: 'backend',
+cwd: '/workspace/backend',
+env: { NODE_ENV: 'development', DATABASE_URL: 'localhost:5432' }
 });
 
 // Users can switch between terminals in their browser
 // Each maintains independent shell state
-```
+
+````
+
 </TypeScriptExample>
 
 ## WebSocket protocol
@@ -151,27 +155,32 @@ const backendSession = await sandbox.createSession({
 ### Client to server
 
 **Binary data**: Terminal input (keyboard, paste, etc.)
+
 ```
+
 <binary data>
 ```
 
 **Control messages**: JSON for terminal operations
+
 ```json
 {
-  "type": "resize",
-  "cols": 120, 
-  "rows": 30
+	"type": "resize",
+	"cols": 120,
+	"rows": 30
 }
 ```
 
 ### Server to client
 
 **Binary data**: Terminal output (text, escape sequences, colors)
+
 ```
 <binary data>
 ```
 
 **Status messages**: JSON for connection state
+
 ```json
 {"type": "ready"}
 {"type": "error", "message": "Session not found"}
@@ -183,20 +192,21 @@ const backendSession = await sandbox.createSession({
 For xterm.js integration, use the `@cloudflare/sandbox/xterm` addon:
 
 <TypeScriptExample>
-```
+```ts
 import { Terminal } from '@xterm/xterm';
 import { SandboxAddon } from '@cloudflare/sandbox/xterm';
 
 const terminal = new Terminal();
 const addon = new SandboxAddon({
-  sandboxId: 'my-sandbox',
-  getWebSocketUrl: ({ sandboxId }) => 
-    `wss://my-worker.example.com/ws/terminal?id=${sandboxId}`
+sandboxId: 'my-sandbox',
+getWebSocketUrl: ({ sandboxId }) =>
+`wss://my-worker.example.com/ws/terminal?id=${sandboxId}`
 });
 
 terminal.loadAddon(addon);
 addon.connect();
-```
+
+````
 </TypeScriptExample>
 
 See [Browser terminal integration guide](/sandbox/guides/browser-terminals/) for complete setup instructions.
@@ -208,13 +218,15 @@ See [Browser terminal integration guide](/sandbox/guides/browser-terminals/) for
 Ensure the request has proper WebSocket headers:
 
 <TypeScriptExample>
-```
+```ts
 const upgradeHeader = request.headers.get('Upgrade');
 const connectionHeader = request.headers.get('Connection');
 
-console.log(upgradeHeader);    // 'websocket'  
+console.log(upgradeHeader); // 'websocket'
 console.log(connectionHeader); // 'Upgrade'
-```
+
+````
+
 </TypeScriptExample>
 
 ### Session not found
@@ -222,15 +234,16 @@ console.log(connectionHeader); // 'Upgrade'
 Sessions are created lazily. Ensure the session exists before connecting:
 
 <TypeScriptExample>
-```
+```ts
 try {
   const session = await sandbox.getSession('my-session');
-  return await session.terminal(request);
+return await session.terminal(request);
 } catch (error) {
-  // Session doesn't exist, create it first
-  const session = await sandbox.createSession({ id: 'my-session' });
-  return await session.terminal(request);
+// Session doesn't exist, create it first
+const session = await sandbox.createSession({ id: 'my-session' });
+return await session.terminal(request);
 }
+
 ```
 </TypeScriptExample>
 
@@ -241,6 +254,7 @@ Check network stability and consider implementing custom reconnection logic in y
 ## Related resources
 
 - [Browser terminal integration guide](/sandbox/guides/browser-terminals/) - Complete implementation guide
-- [Sessions API](/sandbox/api/sessions/) - Session management  
+- [Sessions API](/sandbox/api/sessions/) - Session management
 - [Commands API](/sandbox/api/commands/) - Non-interactive command execution
 - [WebSocket connections guide](/sandbox/guides/websocket-connections/) - WebSocket patterns
+```

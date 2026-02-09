@@ -15,7 +15,7 @@ Build interactive terminal experiences by connecting xterm.js to sandbox shells 
 Browser terminal integration involves three components:
 
 1. **Cloudflare Worker** - Handles WebSocket upgrades and proxies to sandbox
-2. **Sandbox container** - Runs the shell and manages terminal state  
+2. **Sandbox container** - Runs the shell and manages terminal state
 3. **Browser client** - xterm.js terminal with SandboxAddon for connection management
 
 ## Set up the Worker
@@ -26,10 +26,10 @@ Create a Worker that handles WebSocket connections and proxies them to sandbox t
 ```
 import { getSandbox } from '@cloudflare/sandbox';
 
-export { Sandbox } from '@cloudflare/sandbox';
+export { Sandbox } from "@cloudflare/sandbox";
 
 interface Env {
-  Sandbox: DurableObjectNamespace;
+Sandbox: DurableObjectNamespace;
 }
 
 export default {
@@ -56,26 +56,27 @@ export default {
 };
 
 async function handleTerminal(request: Request, env: Env): Promise<Response> {
-  const url = new URL(request.url);
-  const sandboxId = url.searchParams.get('id');
-  const sessionId = url.searchParams.get('session');
-  
-  if (!sandboxId) {
-    return new Response('Missing sandbox ID', { status: 400 });
-  }
-  
-  const sandbox = getSandbox(env.Sandbox, sandboxId);
-  
-  if (sessionId) {
-    // Connect to specific session
-    const session = await sandbox.getSession(sessionId);
-    return await session.terminal(request, { cols: 120, rows: 30 });
-  } else {
-    // Connect to default session  
-    return await sandbox.terminal(request, { cols: 120, rows: 30 });
-  }
+const url = new URL(request.url);
+const sandboxId = url.searchParams.get('id');
+const sessionId = url.searchParams.get('session');
+
+if (!sandboxId) {
+return new Response('Missing sandbox ID', { status: 400 });
 }
-```
+
+const sandbox = getSandbox(env.Sandbox, sandboxId);
+
+if (sessionId) {
+// Connect to specific session
+const session = await sandbox.getSession(sessionId);
+return await session.terminal(request, { cols: 120, rows: 30 });
+} else {
+// Connect to default session  
+ return await sandbox.terminal(request, { cols: 120, rows: 30 });
+}
+}
+
+````
 </TypeScriptExample>
 
 ## Create the frontend
@@ -84,14 +85,13 @@ Build a web page with xterm.js terminal:
 
 ### Install dependencies
 
-<PackageManagers 
-  type="install" 
+<PackageManagers
+  type="install"
   pkg="@xterm/xterm @xterm/addon-fit @cloudflare/sandbox"
 />
 
 ### HTML structure
 
-<TypeScriptExample>
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -108,14 +108,14 @@ Build a web page with xterm.js terminal:
       background: #1e1e1e;
       color: white;
     }
-    
+
     .terminal-container {
       border: 1px solid #333;
       border-radius: 8px;
       overflow: hidden;
       background: #000;
     }
-    
+
     .terminal-header {
       background: #2d2d2d;
       padding: 12px 16px;
@@ -123,18 +123,18 @@ Build a web page with xterm.js terminal:
       align-items: center;
       gap: 12px;
     }
-    
+
     .connection-status {
       padding: 4px 8px;
       border-radius: 4px;
       font-size: 12px;
       font-weight: 500;
     }
-    
+
     .status.connected { background: #22c55e; color: white; }
     .status.connecting { background: #f59e0b; color: white; }
     .status.disconnected { background: #ef4444; color: white; }
-    
+
     .session-select {
       background: #1e1e1e;
       color: white;
@@ -142,7 +142,7 @@ Build a web page with xterm.js terminal:
       border-radius: 4px;
       padding: 4px 8px;
     }
-    
+
     #terminal {
       padding: 16px;
     }
@@ -154,25 +154,24 @@ Build a web page with xterm.js terminal:
       <span class="connection-status status disconnected" id="connection-status">
         Disconnected
       </span>
-      
+
       <select class="session-select" id="session-select">
         <option value="">Default Session</option>
         <option value="development">Development</option>
         <option value="testing">Testing</option>
         <option value="production">Production</option>
       </select>
-      
+
       <button id="reconnect-btn" style="display: none;">Reconnect</button>
     </div>
-    
+
     <div id="terminal"></div>
   </div>
-  
+
   <script type="module" src="/terminal.js"></script>
 </body>
 </html>
-```
-</TypeScriptExample>
+````
 
 ### JavaScript implementation
 
@@ -183,53 +182,53 @@ import { FitAddon } from '@xterm/addon-fit';
 import { SandboxAddon } from '@cloudflare/sandbox/xterm';
 
 class SandboxTerminalApp {
-  constructor() {
-    this.terminal = null;
-    this.addon = null;
-    this.currentSandboxId = 'user-terminal';
-    this.init();
-  }
-  
-  init() {
-    this.setupTerminal();
-    this.setupUI();
-    this.connect();
-  }
-  
-  setupTerminal() {
-    // Create xterm.js terminal
-    this.terminal = new Terminal({
-      cursorBlink: true,
-      fontSize: 14,
-      fontFamily: '"Cascadia Code", "Fira Code", Monaco, "Ubuntu Mono", monospace',
-      theme: {
-        background: '#000000',
-        foreground: '#ffffff',
-        cursor: '#ffffff',
-        selection: '#3e4451',
-        black: '#000000',
-        red: '#e06c75',
-        green: '#98c379',
-        yellow: '#e5c07b',
-        blue: '#61afef',
-        magenta: '#c678dd',
-        cyan: '#56b6c2',
-        white: '#ffffff',
-        brightBlack: '#5c6370',
-        brightRed: '#e06c75',
-        brightGreen: '#98c379',
-        brightYellow: '#e5c07b',
-        brightBlue: '#61afef',
-        brightMagenta: '#c678dd',
-        brightCyan: '#56b6c2',
-        brightWhite: '#ffffff'
-      }
-    });
-    
+constructor() {
+this.terminal = null;
+this.addon = null;
+this.currentSandboxId = 'user-terminal';
+this.init();
+}
+
+init() {
+this.setupTerminal();
+this.setupUI();
+this.connect();
+}
+
+setupTerminal() {
+// Create xterm.js terminal
+this.terminal = new Terminal({
+cursorBlink: true,
+fontSize: 14,
+fontFamily: '"Cascadia Code", "Fira Code", Monaco, "Ubuntu Mono", monospace',
+theme: {
+background: '#000000',
+foreground: '#ffffff',
+cursor: '#ffffff',
+selection: '#3e4451',
+black: '#000000',
+red: '#e06c75',
+green: '#98c379',
+yellow: '#e5c07b',
+blue: '#61afef',
+magenta: '#c678dd',
+cyan: '#56b6c2',
+white: '#ffffff',
+brightBlack: '#5c6370',
+brightRed: '#e06c75',
+brightGreen: '#98c379',
+brightYellow: '#e5c07b',
+brightBlue: '#61afef',
+brightMagenta: '#c678dd',
+brightCyan: '#56b6c2',
+brightWhite: '#ffffff'
+}
+});
+
     // Add fit addon for automatic sizing
     this.fitAddon = new FitAddon();
     this.terminal.loadAddon(this.fitAddon);
-    
+
     // Create sandbox addon
     this.addon = new SandboxAddon({
       sandboxId: this.currentSandboxId,
@@ -242,55 +241,57 @@ class SandboxTerminalApp {
       reconnect: true,
       onStateChange: this.handleStateChange.bind(this)
     });
-    
+
     this.terminal.loadAddon(this.addon);
     this.terminal.open(document.getElementById('terminal'));
-    
+
     // Handle window resize
     window.addEventListener('resize', () => this.fitAddon.fit());
     this.fitAddon.fit();
-  }
-  
-  setupUI() {
-    const sessionSelect = document.getElementById('session-select');
-    const reconnectBtn = document.getElementById('reconnect-btn');
-    
+
+}
+
+setupUI() {
+const sessionSelect = document.getElementById('session-select');
+const reconnectBtn = document.getElementById('reconnect-btn');
+
     // Session switching
     sessionSelect.addEventListener('change', (e) => {
       const sessionId = e.target.value || undefined;
       this.addon.setSession(sessionId);
     });
-    
+
     // Manual reconnect
     reconnectBtn.addEventListener('click', () => {
       this.addon.connect();
       reconnectBtn.style.display = 'none';
     });
-  }
-  
-  connect() {
-    this.addon.connect();
-  }
-  
-  handleStateChange(state, error) {
-    const statusEl = document.getElementById('connection-status');
-    const reconnectBtn = document.getElementById('reconnect-btn');
-    
+
+}
+
+connect() {
+this.addon.connect();
+}
+
+handleStateChange(state, error) {
+const statusEl = document.getElementById('connection-status');
+const reconnectBtn = document.getElementById('reconnect-btn');
+
     // Update status indicator
     statusEl.className = `connection-status status ${state}`;
-    
+
     switch (state) {
       case 'connecting':
         statusEl.textContent = 'Connecting...';
         reconnectBtn.style.display = 'none';
         break;
-        
+
       case 'connected':
         statusEl.textContent = 'Connected';
         reconnectBtn.style.display = 'none';
         this.terminal.focus();
         break;
-        
+
       case 'disconnected':
         if (error) {
           statusEl.textContent = `Error: ${error.message}`;
@@ -300,17 +301,19 @@ class SandboxTerminalApp {
         }
         break;
     }
-    
+
     // Log for debugging
     console.log(`Terminal ${state}`, error);
-  }
+
+}
 }
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  new SandboxTerminalApp();
+new SandboxTerminalApp();
 });
-```
+
+````
 </TypeScriptExample>
 
 ## Advanced features
@@ -327,12 +330,12 @@ class MultiTerminalApp {
     this.activeTerminal = null;
     this.setupTabs();
   }
-  
+
   createTerminal(sessionId = null) {
     const terminal = new Terminal(/* terminal options */);
     const fitAddon = new FitAddon();
     terminal.loadAddon(fitAddon);
-    
+
     const addon = new SandboxAddon({
       sandboxId: 'multi-session-sandbox',
       sessionId,
@@ -345,49 +348,49 @@ class MultiTerminalApp {
         this.updateTabStatus(sessionId, state, error);
       }
     });
-    
+
     terminal.loadAddon(addon);
-    
+
     return { terminal, fitAddon, addon };
   }
-  
+
   addTab(sessionId, label) {
     const terminalData = this.createTerminal(sessionId);
     this.terminals.set(sessionId, terminalData);
-    
+
     // Create tab UI
     const tab = this.createTabElement(sessionId, label);
     document.getElementById('tabs').appendChild(tab);
-    
+
     // Create terminal container
     const container = document.createElement('div');
     container.id = `terminal-${sessionId}`;
     container.className = 'terminal-pane';
     container.style.display = 'none';
     document.getElementById('terminal-container').appendChild(container);
-    
+
     terminalData.terminal.open(container);
     terminalData.addon.connect();
-    
+
     this.switchToTab(sessionId);
   }
-  
+
   switchToTab(sessionId) {
     // Hide all terminals
     this.terminals.forEach((data, id) => {
       document.getElementById(`terminal-${id}`).style.display = 'none';
     });
-    
+
     // Show selected terminal
     document.getElementById(`terminal-${sessionId}`).style.display = 'block';
-    
+
     const terminalData = this.terminals.get(sessionId);
     terminalData.fitAddon.fit();
     terminalData.terminal.focus();
-    
+
     this.activeTerminal = sessionId;
   }
-  
+
   updateTabStatus(sessionId, state, error) {
     const tab = document.querySelector(`[data-session="${sessionId}"]`);
     if (tab) {
@@ -395,7 +398,8 @@ class MultiTerminalApp {
     }
   }
 }
-```
+````
+
 </TypeScriptExample>
 
 ### Custom themes and preferences
@@ -426,17 +430,18 @@ const themes = {
 };
 
 function applyTheme(terminal, themeName) {
-  const theme = themes[themeName];
-  if (theme) {
-    terminal.options.theme = theme;
-  }
+const theme = themes[themeName];
+if (theme) {
+terminal.options.theme = theme;
+}
 }
 
 // Theme switcher
 document.getElementById('theme-select').addEventListener('change', (e) => {
-  applyTheme(terminal, e.target.value);
+applyTheme(terminal, e.target.value);
 });
-```
+
+````
 </TypeScriptExample>
 
 ### Error handling and recovery
@@ -450,7 +455,7 @@ class RobustTerminal {
     this.maxReconnectAttempts = 5;
     this.setup();
   }
-  
+
   setup() {
     this.addon = new SandboxAddon({
       ...this.options,
@@ -459,18 +464,18 @@ class RobustTerminal {
       }
     });
   }
-  
+
   handleConnectionState(state, error) {
     switch (state) {
       case 'connected':
         this.reconnectAttempts = 0;
         this.showStatus('Connected', 'success');
         break;
-        
+
       case 'connecting':
         this.showStatus('Connecting...', 'info');
         break;
-        
+
       case 'disconnected':
         if (error) {
           this.handleError(error);
@@ -480,37 +485,38 @@ class RobustTerminal {
         break;
     }
   }
-  
+
   handleError(error) {
     console.error('Terminal error:', error);
-    
+
     if (error.message.includes('Session not found')) {
       this.showStatus('Session expired. Creating new session...', 'warning');
       // Let the addon handle reconnection
       return;
     }
-    
+
     if (this.reconnectAttempts >= this.maxReconnectAttempts) {
       this.showStatus('Connection failed. Please refresh the page.', 'error');
       this.showReconnectButton();
       return;
     }
-    
+
     this.reconnectAttempts++;
     this.showStatus(`Connection error. Retrying... (${this.reconnectAttempts}/${this.maxReconnectAttempts})`, 'error');
   }
-  
+
   showStatus(message, type) {
     const statusEl = document.getElementById('status');
     statusEl.textContent = message;
     statusEl.className = `status ${type}`;
   }
-  
+
   showReconnectButton() {
     document.getElementById('reconnect-btn').style.display = 'block';
   }
 }
-```
+````
+
 </TypeScriptExample>
 
 ## Production deployment
@@ -545,12 +551,13 @@ const securityHeaders = {
 };
 
 function addSecurityHeaders(response) {
-  Object.entries(securityHeaders).forEach(([key, value]) => {
-    response.headers.set(key, value);
-  });
-  return response;
+Object.entries(securityHeaders).forEach(([key, value]) => {
+response.headers.set(key, value);
+});
+return response;
 }
-```
+
+````
 </TypeScriptExample>
 
 ### Monitor connection health
@@ -564,16 +571,16 @@ class TerminalMonitor {
     this.errorCount = 0;
     this.setupMonitoring();
   }
-  
+
   setupMonitoring() {
     let connectTime;
-    
+
     this.addon.onStateChange = (state, error) => {
       switch (state) {
         case 'connecting':
           connectTime = Date.now();
           break;
-          
+
         case 'connected':
           if (connectTime) {
             const duration = Date.now() - connectTime;
@@ -582,7 +589,7 @@ class TerminalMonitor {
           }
           this.errorCount = 0;
           break;
-          
+
         case 'disconnected':
           if (error) {
             this.errorCount++;
@@ -592,17 +599,17 @@ class TerminalMonitor {
       }
     };
   }
-  
+
   reportMetric(name, value) {
     // Send to your analytics service
     console.log(`Metric: ${name} = ${value}`);
   }
-  
+
   getStats() {
-    const avgConnectionTime = this.connectionTimes.length > 0 
-      ? this.connectionTimes.reduce((a, b) => a + b) / this.connectionTimes.length 
+    const avgConnectionTime = this.connectionTimes.length > 0
+      ? this.connectionTimes.reduce((a, b) => a + b) / this.connectionTimes.length
       : 0;
-      
+
     return {
       avgConnectionTime,
       errorCount: this.errorCount,
@@ -610,7 +617,8 @@ class TerminalMonitor {
     };
   }
 }
-```
+````
+
 </TypeScriptExample>
 
 ## Troubleshooting
