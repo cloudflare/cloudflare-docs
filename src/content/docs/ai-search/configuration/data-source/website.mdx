@@ -48,7 +48,7 @@ Configure your `robots.txt` and sitemap to help AI Search crawl your site effici
 
 ### robots.txt
 
-The AI Search crawler uses the user agent `Cloudflare-AutoRAG`. Your `robots.txt` file should reference your sitemap and allow the crawler:
+The AI Search crawler uses the user agent `Cloudflare-AI-Search`. Your `robots.txt` file should reference your sitemap and allow the crawler:
 
 ```txt title="robots.txt"
 User-agent: *
@@ -74,7 +74,7 @@ To block all other crawlers but allow only AI Search:
 User-agent: *
 Disallow: /
 
-User-agent: Cloudflare-AutoRAG
+User-agent: Cloudflare-AI-Search
 Allow: /
 
 Sitemap: https://example.com/sitemap.xml
