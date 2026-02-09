@@ -1,0 +1,204 @@
+---
+pcx_content_type: how-to
+title: Expose your dev server
+description: Share your local Workers dev server with others using Cloudflare Tunnel.
+sidebar:
+  order: 5
+head: []
+---
+
+import { Tabs, TabItem } from "~/components";
+
+When you run `wrangler dev` or `vite dev` (with the [Cloudflare Vite plugin](/workers/vite-plugin/)), your Worker runs on a local HTTP server bound to `localhost:8787`. This means only your machine can reach it.
+
+To share your dev server with teammates, test from a mobile device, or receive webhooks from external services, you can use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) to create a public URL that routes traffic to your local server.
+
+## How it works
+
+[`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) runs alongside your dev server and creates an outbound-only connection to the Cloudflare network. Cloudflare assigns a public URL that proxies requests through this connection to `localhost:8787` on your machine.
+
+Your dev server stays on `localhost`. `cloudflared` handles TLS termination at the Cloudflare edge and encrypts the tunnel connection automatically. Hot reload continues to work because `wrangler dev` uses a stable proxy on port `8787` that persists across code changes.
+
+## Prerequisites
+
+- [Install `cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) on your machine.
+- A working Workers project with `wrangler dev` or `vite dev` running.
+
+## Quick tunnel (no account required)
+
+A [quick tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) generates a temporary public URL on `trycloudflare.com`. No Cloudflare account is needed. This is useful for quick testing or sharing a preview link.
+
+### Start your dev server
+
+<Tabs>
+  <TabItem label="npm">
+
+  ```sh
+  npx wrangler dev
+  ```
+
+  </TabItem>
+  <TabItem label="yarn">
+
+  ```sh
+  yarn wrangler dev
+  ```
+
+  </TabItem>
+  <TabItem label="pnpm">
+
+  ```sh
+  pnpm wrangler dev
+  ```
+
+  </TabItem>
+  <TabItem label="Vite">
+
+  ```sh
+  npx vite dev
+  ```
+
+  </TabItem>
+</Tabs>
+
+By default, this starts a server on `http://localhost:8787`.
+
+### Start a quick tunnel
+
+In a separate terminal:
+
+```sh
+cloudflared tunnel --url http://localhost:8787
+```
+
+`cloudflared` prints a URL like `https://random-words.trycloudflare.com`. Anyone with this URL can reach your dev server.
+
+### Send requests to the public URL
+
+```sh
+curl https://random-words.trycloudflare.com
+```
+
+The request travels through the Cloudflare network, through the tunnel, and reaches your local Worker.
+
+:::note
+Quick tunnels have a limit of 200 concurrent in-flight requests and do not support Server-Sent Events (SSE). For higher limits or persistent hostnames, use a [named tunnel](#named-tunnel-persistent-hostname).
+:::
+
+## Named tunnel (persistent hostname)
+
+A [named tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) gives you a stable hostname on your own domain. This requires a Cloudflare account with a domain.
+
+### Authenticate and create the tunnel
+
+```sh
+cloudflared tunnel login
+cloudflared tunnel create my-worker-dev
+```
+
+### Route DNS to the tunnel
+
+```sh
+cloudflared tunnel route dns my-worker-dev dev-worker.example.com
+```
+
+This creates a CNAME record pointing `dev-worker.example.com` to your tunnel.
+
+### Configure the tunnel
+
+Create `~/.cloudflared/config.yml`:
+
+```yaml
+tunnel: my-worker-dev
+credentials-file: ~/.cloudflared/<TUNNEL_ID>.json
+
+ingress:
+  - hostname: dev-worker.example.com
+    service: http://localhost:8787
+  - service: http_status:404
+```
+
+Replace `<TUNNEL_ID>` with the UUID printed when you created the tunnel.
+
+### Start your dev server and tunnel
+
+In one terminal, start your dev server:
+
+```sh
+npx wrangler dev
+```
+
+In a second terminal, start the tunnel:
+
+```sh
+cloudflared tunnel run my-worker-dev
+```
+
+Your Worker is now reachable at `https://dev-worker.example.com`.
+
+### Restrict access
+
+Anyone who knows the hostname can reach your dev server. To restrict access, [create a Cloudflare Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) for the hostname and configure a policy that limits access to your team.
+
+## Configuration
+
+### Port matching
+
+The port in the `cloudflared` command or configuration file must match the port your dev server listens on. If you change the dev server port, update the tunnel to match:
+
+```sh
+npx wrangler dev --port 3000
+```
+
+```sh
+cloudflared tunnel --url http://localhost:3000
+```
+
+### Interface binding
+
+By default, `wrangler dev` binds to `localhost`. Because `cloudflared` runs on the same machine and connects to `localhost`, this works without changes. You do not need `--ip 0.0.0.0`.
+
+Only use `--ip 0.0.0.0` if `cloudflared` runs on a different machine on your network:
+
+```sh
+npx wrangler dev --ip 0.0.0.0 --port 8787
+```
+
+### Local mode vs remote mode
+
+Use the default mode or `--local` — both run your Worker code locally, which is what you want when tunneling back to your machine. Do not use `--remote`, which uploads your code to the Cloudflare network and defeats the purpose of a tunnel to your local server.
+
+### Custom port with Vite
+
+When using the Cloudflare Vite plugin, configure the port in `vite.config.js`:
+
+```js
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+  plugins: [cloudflare()],
+  server: {
+    port: 8787,
+  },
+});
+```
+
+Then point `cloudflared` at the same port.
+
+## Common use cases
+
+| Use case | Approach |
+| --- | --- |
+| Share a preview link with a teammate | Quick tunnel — send them the `trycloudflare.com` URL |
+| Test from a mobile device on the same network | Quick tunnel or named tunnel — open the URL on your phone |
+| Receive webhooks from an external service (for example, Stripe or GitHub) | Quick tunnel or named tunnel — set the webhook URL to the tunnel hostname |
+| Persistent dev environment for a team | Named tunnel with a stable hostname and an [Access policy](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) |
+
+## Limitations
+
+- Quick tunnels generate a new URL each time you restart `cloudflared`. For stable URLs, use a named tunnel.
+- Quick tunnels are capped at 200 concurrent in-flight requests.
+- Quick tunnels do not support Server-Sent Events (SSE).
+- If you have an existing `~/.cloudflared/config.yaml`, quick tunnels may not work. Rename the file temporarily or use a named tunnel instead.
+- Tunnel latency adds round-trip time to every request. This is acceptable for development but is not representative of production performance.
