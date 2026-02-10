@@ -7,7 +7,7 @@ sidebar:
 head: []
 ---
 
-import { PackageManagers } from "~/components";
+import { PackageManagers, Tabs, TabItem } from "~/components";
 
 When you run `wrangler dev` or `vite dev` (with the [Cloudflare Vite plugin](/workers/vite-plugin/)), your Worker runs on a local HTTP server bound to `localhost:8787`. This means only your machine can reach it.
 
@@ -62,54 +62,70 @@ Quick tunnels have a limit of 200 concurrent in-flight requests and do not suppo
 
 ## Named tunnel (persistent hostname)
 
-A [named tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) gives you a stable hostname on your own domain. This requires a Cloudflare account with a domain.
+A named tunnel gives you a stable hostname on your own domain. This requires a Cloudflare account with a domain. You can create a named tunnel using the Cloudflare dashboard (recommended) or the `cloudflared` CLI.
 
-### Authenticate and create the tunnel
+<Tabs>
+  <TabItem label="Dashboard (Recommended)">
 
-```sh
-cloudflared tunnel login
-cloudflared tunnel create my-worker-dev
-```
+  Create and manage the tunnel from the Cloudflare One dashboard:
 
-### Route DNS to the tunnel
+  1. Log in to [Cloudflare One](https://one.dash.cloudflare.com) and go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
+  2. Select **Create a tunnel**, choose **Cloudflared**, and give it a name (for example, `my-worker-dev`).
+  3. Install and run `cloudflared` using the command shown in the dashboard.
+  4. On the **Published applications** tab, add a public hostname (for example, `dev-worker.example.com`) and set the service to `HTTP` / `localhost:8787`.
+  5. Select **Save**.
 
-```sh
-cloudflared tunnel route dns my-worker-dev dev-worker.example.com
-```
+  For full details, refer to [Create a tunnel (dashboard)](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
 
-This creates a CNAME record pointing `dev-worker.example.com` to your tunnel.
+  Start your dev server in a separate terminal:
 
-### Configure the tunnel
+  ```sh
+  npx wrangler dev
+  ```
 
-Create `~/.cloudflared/config.yml`:
+  Your Worker is now reachable at `https://dev-worker.example.com`.
 
-```yaml
-tunnel: my-worker-dev
-credentials-file: ~/.cloudflared/<TUNNEL_ID>.json
+  </TabItem>
+  <TabItem label="CLI">
 
-ingress:
-  - hostname: dev-worker.example.com
-    service: http://localhost:8787
-  - service: http_status:404
-```
+  Create and configure the tunnel locally with `cloudflared`:
 
-Replace `<TUNNEL_ID>` with the UUID printed when you created the tunnel.
+  ```sh
+  cloudflared tunnel login
+  cloudflared tunnel create my-worker-dev
+  cloudflared tunnel route dns my-worker-dev dev-worker.example.com
+  ```
 
-### Start your dev server and tunnel
+  Create `~/.cloudflared/config.yml`:
 
-In one terminal, start your dev server:
+  ```yaml
+  tunnel: my-worker-dev
+  credentials-file: ~/.cloudflared/<TUNNEL_ID>.json
 
-```sh
-npx wrangler dev
-```
+  ingress:
+    - hostname: dev-worker.example.com
+      service: http://localhost:8787
+    - service: http_status:404
+  ```
 
-In a second terminal, start the tunnel:
+  Replace `<TUNNEL_ID>` with the UUID printed when you created the tunnel.
 
-```sh
-cloudflared tunnel run my-worker-dev
-```
+  Start your dev server in one terminal:
 
-Your Worker is now reachable at `https://dev-worker.example.com`.
+  ```sh
+  npx wrangler dev
+  ```
+
+  In a second terminal, start the tunnel:
+
+  ```sh
+  cloudflared tunnel run my-worker-dev
+  ```
+
+  Your Worker is now reachable at `https://dev-worker.example.com`.
+
+  </TabItem>
+</Tabs>
 
 ### Restrict access
 
