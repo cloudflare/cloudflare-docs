@@ -1,0 +1,191 @@
+---
+title: File Watching
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { TypeScriptExample } from "~/components";
+
+Monitor filesystem changes in real-time using Linux's native inotify system. The file watching API provides efficient monitoring of files and directories with support for filtering, exclusions, and callback-based event handling.
+
+## Methods
+
+### `watch()`
+
+Watch a directory for filesystem changes in real-time.
+
+```ts
+await sandbox.watch(path: string, options?: WatchOptions): Promise<WatchHandle>
+```
+
+**Parameters**:
+
+- `path` - Absolute path or relative to `/workspace` (e.g., `/app/src` or `src`)
+- `options` (optional):
+  - `recursive` - Watch subdirectories recursively (default: `true`)
+  - `include` - Glob patterns to include (e.g., `['*.ts', '*.js']`)
+  - `exclude` - Glob patterns to exclude (default: `['.git', 'node_modules', '.DS_Store']`)
+  - `signal` - AbortSignal to cancel the watch
+  - `onEvent` - Callback for file change events
+  - `onError` - Callback for watch errors
+
+**Returns**: `WatchHandle` with `stop()` method and metadata properties
+
+<TypeScriptExample>
+```
+// Watch entire project directory
+const watcher = await sandbox.watch('/workspace', {
+  onEvent: (event) => {
+    console.log(`${event.type}: ${event.path}`);
+    console.log(`Is directory: ${event.isDirectory}`);
+  },
+  onError: (error) => {
+    console.error('Watch error:', error.message);
+  }
+});
+
+// Stop watching when done
+await watcher.stop();
+```
+</TypeScriptExample>
+
+<TypeScriptExample>
+```
+// Watch specific file types in a directory
+const watcher = await sandbox.watch('/workspace/src', {
+  include: ['*.ts', '*.tsx'],
+  exclude: ['*.test.ts', 'dist'],
+  onEvent: (event) => {
+    if (event.type === 'modify') {
+      console.log(`TypeScript file modified: ${event.path}`);
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+### `watchStream()`
+
+Get raw SSE stream for file watching (advanced usage).
+
+```ts
+const stream = await sandbox.watchStream(path: string, options?: WatchRequest): Promise<ReadableStream<Uint8Array>>
+```
+
+Most users should use `watch()` instead, which provides a higher-level API with proper lifecycle management.
+
+### `stopWatch()`
+
+Stop a specific watch by ID.
+
+```ts
+await sandbox.stopWatch(watchId: string): Promise<{ success: boolean }>
+```
+
+**Parameters**:
+
+- `watchId` - Watch ID from the WatchHandle
+
+### `listWatches()`
+
+List all active watches.
+
+```ts
+const result = await sandbox.listWatches(): Promise<WatchListResult>
+```
+
+**Returns**:
+
+```ts
+interface WatchListResult {
+	success: boolean;
+	watches: Array<{
+		id: string;
+		path: string;
+		startedAt: string;
+	}>;
+	count: number;
+	timestamp: string;
+}
+```
+
+## Types
+
+### `WatchHandle`
+
+Handle returned from `watch()` to control and inspect the watch.
+
+```ts
+interface WatchHandle {
+	/** Stop watching and clean up resources */
+	stop(): Promise<void>;
+	/** The watch ID (for debugging) */
+	readonly id: string;
+	/** The path being watched */
+	readonly path: string;
+}
+```
+
+### `WatchEvent`
+
+File system change event passed to the `onEvent` callback.
+
+```ts
+interface WatchEvent {
+	/** The type of change that occurred */
+	type: WatchEventType;
+	/** Absolute path to the file or directory that changed */
+	path: string;
+	/** Whether the changed path is a directory */
+	isDirectory: boolean;
+}
+```
+
+### `WatchEventType`
+
+Types of filesystem changes that can be detected.
+
+```ts
+type WatchEventType = "create" | "modify" | "delete" | "rename";
+```
+
+- **`create`** - File or directory was created
+- **`modify`** - File content or directory attributes changed
+- **`delete`** - File or directory was deleted
+- **`rename`** - File or directory was moved/renamed
+
+### `WatchOptions`
+
+Configuration options for watching directories.
+
+```ts
+interface WatchOptions {
+	/** Watch subdirectories recursively (default: true) */
+	recursive?: boolean;
+	/** Glob patterns to include (e.g., ['*.ts', '*.js']) */
+	include?: string[];
+	/** Glob patterns to exclude (default: ['.git', 'node_modules', '.DS_Store']) */
+	exclude?: string[];
+	/** AbortSignal to cancel the watch */
+	signal?: AbortSignal;
+	/** Callback for file change events */
+	onEvent?: (event: WatchEvent) => void;
+	/** Callback for errors (e.g., watch process died) */
+	onError?: (error: Error) => void;
+}
+```
+
+## Notes
+
+:::note[Container lifecycle]
+File watchers are automatically stopped when the sandbox container sleeps or is destroyed. You do not need to manually stop them on container shutdown.
+:::
+
+:::caution[Path requirements]
+All paths must exist when starting a watch. Watching non-existent paths returns an error. Create directories before watching them.
+:::
+
+## Related resources
+
+- [Watch filesystem changes guide](/sandbox/guides/file-watching/) - Patterns, best practices, and real-world examples

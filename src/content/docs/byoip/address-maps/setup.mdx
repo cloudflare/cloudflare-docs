@@ -6,7 +6,7 @@ sidebar:
   label: Setup
 ---
 
-import { GlossaryTooltip, APIRequest, DashButton } from "~/components";
+import { GlossaryTooltip, APIRequest, DashButton, Tabs, TabItem } from "~/components";
 
 Consider the sections below to learn how to set up address maps.
 
@@ -16,9 +16,9 @@ There is **no expected downtime** when setting up or updating your address maps.
 
 ## Create address maps
 
-To avoid any errors if you have [static IPs](/byoip/concepts/static-ips/), Cloudflare creates an address map during the static IP onboarding process, meaning you cannot create a new address map with your static IPs. You may only edit the Cloudflare-created map and add or edit your zones within the existing map.
+If you are using BYOIP, refer to the following steps. If you have [static IPs](/byoip/concepts/static-ips/), Cloudflare creates an address map during the static IP onboarding process, meaning you may only [edit](#manage-address-maps) the Cloudflare-created map.
 
-If you are using BYOIP instead, refer to the following steps:
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In the Cloudflare dashboard, go to the **Address Maps** page.
 
@@ -34,7 +34,37 @@ If you are using BYOIP instead, refer to the following steps:
 Creating an address map does not automatically change DNS configuration. DNS responses only begin to change when a zone or account is added to a map. Additionally, address maps that are not yet enabled will not take effect in DNS responses.
 :::
 
+</TabItem> <TabItem label="API">
+
+<APIRequest
+  path="/accounts/{account_id}/addressing/address_maps"
+  method="POST"
+  json={{
+    description: "Example address map",
+    enabled: true,
+    ips: [
+      "203.0.113.1",
+      "203.0.113.2"
+    ],
+    memberships: [
+      {
+        identifier: "<ZONE_ID>",
+        kind: "zone",
+      },
+    ],
+  }}
+/>
+
+
+:::note
+A zone membership will take priority over an account membership.
+:::
+
+</TabItem> </Tabs>
+
 ## Manage address maps
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In the Cloudflare dashboard, go to the **Address Maps** page.
 
@@ -47,6 +77,21 @@ Creating an address map does not automatically change DNS configuration. DNS res
 :::note
 You can also enable, disable, and delete address maps. This will likely change the IP addresses used for your zones.
 :::
+
+</TabItem> <TabItem label="API">
+
+Use the following API endpoints depending on what you want to achieve:
+
+- [Modify the properties of an address map](/api/resources/addressing/subresources/address_maps/methods/edit/)
+- [Add or remove IP addresses](/api/resources/addressing/subresources/address_maps/subresources/ips/)
+- [Add or remove accounts](/api/resources/addressing/subresources/address_maps/subresources/accounts/)
+- [Add or remove zones](/api/resources/addressing/subresources/address_maps/subresources/zones/)
+
+:::note
+A zone membership will take priority over an account membership.
+:::
+
+</TabItem> </Tabs>
 
 ## Non-SNI support
 

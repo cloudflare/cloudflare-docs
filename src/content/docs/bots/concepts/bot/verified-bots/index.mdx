@@ -32,16 +32,6 @@ Once Cloudflare approves a verified bot, it should appear on [Cloudflare Radar's
 
 ---
 
-## Transient false negatives
-
-Once Cloudflare lists a bot as a verified bot, this entry is cached and may get delisted if no traffic is seen in the Cloudflare network coming from the bot for a defined period of time.
-
-It takes 24 hours for an inactive IP to be removed as a verified bot.
-
-A bot can remain unlisted until Cloudflare sees traffic being sourced from the bot. When the bot is revalidated, it is listed as a verified bot again.
-
----
-
 ## Verification methods
 
 The bot must be verified using one of the following validation methods:
@@ -232,6 +222,16 @@ Verified Bot Categories is available on all plans.
 </details>
 
 Cloudflare reserves the right to re-assign verified bot categories if the bot's public documentation and observed behavior differ from the category listed in the bot submission form.
+
+---
+
+## Inactive verified bots
+
+Once Cloudflare lists a bot as a verified bot, this entry is cached and may get delisted if no traffic is seen in the Cloudflare network coming from the bot for a defined period of time.
+
+It takes approximately 24 hours for an inactive IP to be removed as a verified bot.
+
+---
 
 ### Known issues
 

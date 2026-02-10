@@ -24,9 +24,9 @@ When working with values in rule expressions, keep in mind the information in th
 
 Strings are sequences of bytes enclosed by specific delimiters.
 
-Cloudflare rules support two formats for specifying literal strings: [quoted literal strings](#quoted-string-syntax) and [raw strings](#raw-string-syntax). These formats have different delimiters and escaping mechanisms.
+Cloudflare rules support two formats for specifying literal strings, including regular expressions: [quoted literal strings](#quoted-string-syntax) and [raw strings](#raw-string-syntax). These formats have different delimiters and escaping mechanisms.
 
-While you can use either of the two string formats to specify regular expressions in an expression, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax), since the quoted string syntax has complex escaping rules and can lead to unexpected behaviors if not thoroughly tested.
+You can use either of the two string formats to specify regular expressions in an expression. However, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax), since the quoted string syntax has complex escaping rules and can lead to unexpected behaviors if not thoroughly tested.
 
 Regular expression matching is performed using the Rust regular expression engine.
 
@@ -93,11 +93,14 @@ regex_replace(http.host, r"\\", "a")
 http.request.uri.path matches r"/api/login\.aspx$"
 ```
 
-### Case sensitivity and regular expressions in values
+### Case sensitivity in string comparisons
 
-Since the evaluation of string literal values in expressions is case-sensitive, consider writing more than one simple expression to capture variants.
+Since the evaluation of string literal values in expressions is case-sensitive, consider one of the following options to capture capitalization variants in your expression:
 
-Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
+- Use the [`wildcard`](/ruleset-engine/rules-language/operators/#wildcard-matching) operator, which is case-insensitive, to match a string literal.
+- Use the [`lower()`](/ruleset-engine/rules-language/functions/#lower) function to convert the string to lowercase before comparison.
+- Use the [`matches`](/ruleset-engine/rules-language/operators/#regular-expression-matching) operator (only available in Business and Enterprise plans) with a regular expression that matches different variants.
+- Write several sub-expressions with the [`eq`](/ruleset-engine/rules-language/operators/#comparison-operators) or [`contains`](/ruleset-engine/rules-language/operators/#comparison-operators) operator, joined with the [`or`](/ruleset-engine/rules-language/operators/#supported-logical-operators) operator, to capture different variations of the string literal (for example, `<field> eq "a" or <field> eq "A"`).
 
 ### Regular expression limits
 

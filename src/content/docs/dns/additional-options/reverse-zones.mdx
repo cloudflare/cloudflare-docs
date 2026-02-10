@@ -54,16 +54,16 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
     </Details>
 
-  * For IPv6, consider the following examples:
+    * For IPv6, consider the following examples:
 
-  <Example>
-  * **IPv6 prefix**: `2001:DB8::0/32`
-  * **Reverse zone**: `8.b.d.0.1.0.0.2.ip6.arpa`
-  </Example>
-  <Example>
-  * **IPv6 prefix**: `2001:DB8::0/48`
-  * **Reverse zone**: `0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa`
-  </Example>
+    <Example>
+    * **IPv6 prefix**: `2001:DB8::0/32`
+    * **Reverse zone**: `8.b.d.0.1.0.0.2.ip6.arpa`
+    </Example>
+    <Example>
+    * **IPv6 prefix**: `2001:DB8::0/48`
+    * **Reverse zone**: `0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa`
+    </Example>
 
 3. If you are adding less than 200 PTR records, select the **Free** plan. If you are adding more, select a paid plan.
 
@@ -115,7 +115,9 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
   </Details>
 
-3\. Add the two Cloudflare nameservers provided for the zone at your Regional Internet Registry (RIR).
+### 3. Set Cloudflare nameservers
+
+Add the two Cloudflare nameservers provided for the zone at your Regional Internet Registry (RIR). The exact steps to update your nameservers will depend on the registry you are using.
 
 After this process, your reverse zone will be activated and you can perform reverse DNS lookups.
 

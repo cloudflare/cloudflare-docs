@@ -39,16 +39,17 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ## 3. Generate a short-lived certificate public key
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Service credentials**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Service credentials** > **SSH**.
 
-2. Go to the **SSH** tab.
+2. Select **Add a certificate**.
 
 3. In the **Application** dropdown, choose the Access application that represents your SSH server.
 
-4. Select **Generate certificate**. A row will appear with a public key scoped to your application.
+4. Select **Generate certificate**. A new row will appear in the short-lived certificates table with the name of your Access application.
 
-5. Save the key or keep it somewhere convenient for configuring your server.
-   You can return to copy this public key any time in the Service Auth dashboard.
+5. Select the short-lived certificate for your application.
+
+6. Copy its **CA public key**. You can return to copy this public key at any time.
 
 ## 4. Save your public key
 

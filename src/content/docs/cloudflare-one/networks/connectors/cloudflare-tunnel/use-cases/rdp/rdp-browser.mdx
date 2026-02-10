@@ -109,9 +109,8 @@ The DNS record does not need to point to an active destination IP address or hos
 
 12. <Render file="access/add-access-policies" product="cloudflare-one" />
 
-:::note
-Ensure that only **Allow** or **Block** policies are present. **Bypass** and **Service Auth** are not supported for browser-rendered applications.
-:::
+
+	<Render file="access/self-hosted-app/browser-rendering-policies" product="cloudflare-one" />
 
 13. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "rdp" }}/>
 

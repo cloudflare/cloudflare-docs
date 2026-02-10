@@ -1,0 +1,90 @@
+---
+title: Ownership challenge FAQ
+pcx_content_type: concept
+sidebar:
+  order: 9
+head:
+  - tag: title
+    content: Logpush ownership challenge
+---
+
+The ownership challenge is a one-time verification that proves you have read access to a destination bucket before Cloudflare pushes logs to it. This mechanism prevents you from accidentally configuring a Logpush job that pushes data to a bucket you do not control.
+
+## How it works
+
+When you create a Logpush job to a storage destination, Cloudflare requires you to prove ownership of that destination:
+
+1. You request an ownership challenge for your `destination_conf`.
+2. Cloudflare writes a JWT to an `ownership-challenge.txt` file in your bucket.
+3. You read the token from your bucket and submit it with your job creation request.
+4. Cloudflare validates the token and creates the job.
+
+For step-by-step instructions, refer to [Manage Logpush with cURL](/logs/logpush/examples/example-logpush-curl/).
+
+## What the challenge protects against
+
+The ownership challenge primarily protects you from accidental misconfiguration. Without this verification, you could inadvertently configure a job to push to a bucket you did not intend—for example, pushing to a bucket that is actually owned by someone else.
+
+The challenge also prevents malicious scenarios where someone could:
+
+- Point a Logpush job at another customer's bucket
+- Push bogus or malicious log data to that bucket
+- Pollute or corrupt the victim's log storage
+
+:::note
+You may find the ownership challenge cumbersome because it is unusual and difficult to script via Terraform. However, it exists to prevent costly mistakes.
+:::
+
+## Challenge token structure
+
+The ownership challenge is a JSON Web Token (JWT) containing claims that bind it to a specific context. The token includes:
+
+- **Object type** - Whether the job is zone-scoped, account-scoped, or tenant-scoped
+- **Object ID** - The specific zone or account identifier
+- **Destination configuration** - The full destination configuration string
+- **Destination fingerprint** - A hash of the bucket name and paths/prefixes
+- **Expiration** - The token expires after 7 days
+
+When you submit the challenge token, Cloudflare validates that all claims match your job creation request. This prevents the token from being reused for a different account, zone, or destination.
+
+## Security considerations
+
+### Can a compromised token be exploited?
+
+In practice, an attack using a compromised ownership challenge token is extremely unlikely. An attacker would need:
+
+1. Access to your Cloudflare account (to match the object ID in the token)
+2. Knowledge of the exact bucket name and paths/prefixes (to match the destination fingerprint)
+3. To act within 7 days (before the challenge expires)
+
+Your bucket's IAM/access controls and Cloudflare account security are the primary security layers, not the ownership challenge token.
+
+### Best practices
+
+- **Delete the challenge file after job creation** - Once your Logpush job is created, you can safely delete the `ownership-challenge.txt` file from your bucket.
+- **Restrict bucket permissions** - Grant write access only to Cloudflare's service accounts. For AWS S3, grant `PutObject` permission to `arn:aws:iam::391854517948:user/cloudflare-logpush`. For GCS, grant `Storage Object Admin` to `logpush@cloudflare-data.iam.gserviceaccount.com`.
+- **Monitor your Logpush jobs** - Use the [Logpush health dashboards](/logs/logpush/logpush-health/) to monitor job status and detect anomalies.
+
+## Which destinations require an ownership challenge?
+
+| Destination | Ownership challenge required |
+| --- | --- |
+| AWS S3 | Yes (or use access key/secret key) |
+| Google Cloud Storage | Yes |
+| Azure Blob Storage | Yes |
+| Sumo Logic | Yes |
+| S3-compatible storage | No |
+| HTTP endpoints | No |
+| Datadog | No |
+| Splunk | No |
+| New Relic | No |
+
+For destinations that do not require an ownership challenge, Cloudflare uses alternative authentication methods such as API keys or tokens.
+
+## Related resources
+
+- [API configuration](/logs/logpush/logpush-job/api-configuration/)
+- [Manage Logpush with cURL](/logs/logpush/examples/example-logpush-curl/)
+- [Logpush permissions](/logs/logpush/permissions/)
+- [Enable AWS S3 destination](/logs/logpush/logpush-job/enable-destinations/aws-s3/)
+- [Enable GCS destination](/logs/logpush/logpush-job/enable-destinations/google-cloud-storage/)

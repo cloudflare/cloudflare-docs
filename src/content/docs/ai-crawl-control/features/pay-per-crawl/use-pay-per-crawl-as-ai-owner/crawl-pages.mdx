@@ -2,16 +2,17 @@
 title: Crawl pages
 pcx_content_type: concept
 sidebar:
-  order: 15
+  order: 5
 ---
 
 import { Steps } from "~/components";
 
 ```mermaid
 graph LR
-A[Set up your<br>Cloudflare Account] --> B[Connect to<br>Stripe]
-B --> C[Verify your<br>AI crawler]
-C --> D[Crawl pages]:::highlight
+A[Set up your<br>Cloudflare Account] --> B[Verify your<br>AI crawler]
+B --> C[Discover<br>payable content]
+C --> D[Connect to<br>Stripe]
+D --> E[Crawl pages]:::highlight
 classDef highlight fill:#F6821F,color:white
 ```
 
@@ -31,45 +32,48 @@ To access this content, the AI crawler must provide headers for paid access.
 
 ## 2. Access paid content
 
-### 2.1. Include WBA headers
-
-Include Web Bot Auth headers by following the steps [Sign your requests](/bots/reference/bot-verification/web-bot-auth/#4-after-verification-sign-your-requests)
-
-### 2.2. Include payment headers
+### 2.1. Include payment headers
 
 Your AI crawler can specify the price it is willing to pay by providing one of two headers:
 
 - `crawler-exact-price`: This is the exact price the AI crawler is configured to pay for access. This value should exactly match the price set in the response header `crawler-price`. Include this header in your second request if your AI crawler first received a HTTP status code 402, and you wish to access the content by paying the `crawler-price`.
 - `crawler-max-price`: This is the maximum price the AI crawler is configured to pay for access on any content. Use this option if you wish to access any pay per crawl content with a crawl price equal or lower than the maximum price. If a page's `crawler-price` is higher than your `crawler-max-price`, your AI crawler will receive a HTTP 402 response.
 
-:::note
-Note that if a content owner has explicitly blocked your AI crawler (instead of charging your crawler), you cannot access their content, even if you provide `crawler-exact-price` or `crawler-max-price` headers.
+### 2.2. Sign your request with Web Bot Auth
+
+Include Web Bot Auth headers by following the steps in [Sign your requests](/bots/reference/bot-verification/web-bot-auth/#4-after-verification-sign-your-requests).
+
+:::caution[Important]
+Payment headers (`crawler-exact-price` or `crawler-max-price`) **must be included in the `signature-input` header components**. When [choosing components to sign](/bots/reference/bot-verification/web-bot-auth/#41-choose-a-set-of-components-to-sign), add your payment header to the list of signed components for successful payment processing.
 :::
 
 ### 2.3. Review response headers
 
 When you specify a header to indicate payment, you may receive one of two responses:
 
-#### Successful HTTP/2 200 response
+#### Successful HTTP 200 response
 
 The value of the `crawler-charged` header indicates the exact amount that will be billed to your Cloudflare account for the request.
 
 ```txt
-HTTP/2 200
+HTTP 200
 date: Fri, 06 Jun 2025 08:42:38 GMT
 crawler-charged: USD 0.01
 ```
 
-#### Unsuccessful HTTP/2 402 response
+#### Unsuccessful response
 
-If the request is unsuccessful due to an incorrect price header, you will receive a response with the `crawler-price` header. Your request header values must be adjusted to match the `crawler-price`.
+If the request is unsuccessful, you will receive an error response with a `crawler-error` header indicating the specific issue.
 
 ```txt
 HTTP/2 402
 date: Fri, 06 Jun 2025 08:42:38 GMT
 content-type: text/plain; charset=utf-8
 crawler-price: USD 0.01
+crawler-error: InvalidCrawlerExactPrice
 ```
+
+Refer to [Pay Per Crawl error codes](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-ai-owner/error-codes/) for a complete list of error codes and troubleshooting guidance.
 
 ## 3. Track your spending
 
@@ -85,4 +89,6 @@ Cloudflare strongly recommends tracking and saving these values to keep an accur
 
 You may wish to refer to the following resources.
 
-- [Pay Per Crawl FAQs](/ai-crawl-control/features/pay-per-crawl/faq).
+- [Discover payable content](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-ai-owner/discover-payable-content/)
+- [Pay Per Crawl error codes](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-ai-owner/error-codes/)
+- [Pay Per Crawl FAQs](/ai-crawl-control/features/pay-per-crawl/faq/)

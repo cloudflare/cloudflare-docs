@@ -31,7 +31,7 @@ To set up a monorepo workflow:
 
 1. Find the Workers associated with your project in the [Workers & Pages Dashboard](https://dash.cloudflare.com).
 2. Connect your monorepo to each Worker in the repository.
-3. Set the root directory for each Worker to specify the location of its `wrangler.toml` and where build and deploy commands should run.
+3. Set the root directory for each Worker to specify the location of its `wrangler.jsonc` and where build and deploy commands should run.
 4. Optionally, configure unique build and deploy commands for each Worker.
 5. Optionally, configure [build watch paths](/workers/ci-cd/builds/build-watch-paths/) for each Worker to monitor specific paths for changes.
 
@@ -43,7 +43,7 @@ In the example `ecommerce-monorepo`, a Workers project should be created for `pr
 
 A Git connection to `ecommerce-monorepo` should be added in all of the Workers projects. If you are using a monorepo tool, such as [Turborepo](https://turbo.build/), you can configure a different deploy command for each Worker, for example, `turbo deploy -F product-service`.
 
-Set the root directory of each Worker to where its wrangler.toml is located. For example, for `product-service`, the root directory should be `/workers/product-service/`. Optionally, you can add [build watch paths](/workers/ci-cd/builds/build-watch-paths/) to optimize your builds.
+Set the root directory of each Worker to where its Wrangler configuration file is located. For example, for `product-service`, the root directory should be `/workers/product-service/`. Optionally, you can add [build watch paths](/workers/ci-cd/builds/build-watch-paths/) to optimize your builds.
 
 When a new commit is made to `ecommerce-monorepo`, a build and deploy will be triggered for each of the Workers if the change is within its included watch paths using the configured commands for that Worker.
 
@@ -53,13 +53,13 @@ When a new commit is made to `ecommerce-monorepo`, a build and deploy will be tr
   - workers/
     - product-service/
       - src/
-      - wrangler.toml
+      - wrangler.jsonc
     - order-service/
       - src/
-      - wrangler.toml
+      - wrangler.jsonc
     - notification-service/
       - src/
-      - wrangler.toml
+      - wrangler.jsonc
   - packages/
     - schema/
   - README.md

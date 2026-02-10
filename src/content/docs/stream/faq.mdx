@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Frequently asked questions about Cloudflare Stream
-
 ---
 
-import { GlossaryTooltip, DashButton } from "~/components"
+import { GlossaryTooltip, DashButton } from "~/components";
 
 ## Stream
 
@@ -19,23 +18,21 @@ Cloudflare decides on which bitrate, resolution, and codec is best for you. We d
 
 ### Can I download original video files from Stream?
 
-You cannot download the *exact* input file that you uploaded. However, depending on your use case, you can use the [Downloadable Videos](/stream/viewing-videos/download-videos/) feature to get encoded MP4s for use cases like offline viewing.
+You cannot download the _exact_ input file that you uploaded. However, depending on your use case, you can use the [Downloadable Videos](/stream/viewing-videos/download-videos/) feature to get encoded MP4s for use cases like offline viewing.
 
 ### Is there a limit to the amount of videos I can upload?
 
-* By default, a video upload can be at most 30 GB.
+- By default, a video upload can be at most 30 GB.
 
-* By default, you can have up to 120 videos queued or being encoded simultaneously. Videos in the `ready` status are playable but may still be encoding certain quality levels until the `pctComplete` reaches 100. Videos in the `error`, `ready`, or `pendingupload` state do not count toward this limit. If you need the concurrency limit raised, [contact Cloudflare support](/support/contacting-cloudflare-support/) explaining your use case and why you would like the limit raised.
+- By default, you can have up to 120 videos queued or being encoded simultaneously. Videos in the `ready` status are playable but may still be encoding certain quality levels until the `pctComplete` reaches 100. Videos in the `error`, `ready`, or `pendingupload` state do not count toward this limit. If you need the concurrency limit raised, [contact Cloudflare support](/support/contacting-cloudflare-support/) explaining your use case and why you would like the limit raised.
 
 :::note
 
-
 The limit to the number of videos only applies to videos being uploaded to Cloudflare Stream. This limit is not related to the number of end users streaming videos.
-
 
 :::
 
-* An account cannot upload videos if the total video duration exceeds the video storage capacity purchased.
+- An account cannot upload videos if the total video duration exceeds the video storage capacity purchased.
 
 Limits apply to Direct Creator Uploads at the time of upload URL creation.
 
@@ -79,9 +76,7 @@ You can embed the Stream player on the following platforms:
 
 :::note[Note]
 
-
 Cloudflare Stream is not available on Chromium, as Chromium does not support H.264 videos.
-
 
 :::
 
@@ -100,13 +95,13 @@ Cloudflare Stream is not available on Chromium, as Chromium does not support H.2
 
 If you are producing a brand new file for Cloudflare Stream, we recommend you use the following settings:
 
-* MP4 containers, AAC audio codec, H264 video codec, 30 or below frames per second
-* moov atom should be at the front of the file (Fast Start)
-* H264 progressive scan (no interlacing)
-* H264 high profile
-* Closed GOP
-* Content should be encoded and uploaded in the same frame rate it was recorded
-* Mono or Stereo audio (Stream will mix audio tracks with more than 2 channels down to stereo)
+- MP4 containers, AAC audio codec, H264 video codec, 30 or below frames per second
+- moov atom should be at the front of the file (Fast Start)
+- H264 progressive scan (no interlacing)
+- H264 high profile
+- Closed GOP
+- Content should be encoded and uploaded in the same frame rate it was recorded
+- Mono or Stereo audio (Stream will mix audio tracks with more than 2 channels down to stereo)
 
 Below are bitrate recommendations for encoding new videos for Stream:
 
@@ -149,7 +144,7 @@ Content-Security-Policy: connect-src 'self' *.videodelivery.net *.cloudflarestre
 
 To ensure **only** videos from **your** Cloudflare Stream account can be played on your website, replace `*` in `*.cloudflarestream.com` and `*.videodelivery.net` in the examples above with `customer-<CODE>`, replacing `<CODE>` with your unique customer code. To find your unique customer code in the Cloudflare dashboard, go to the **Stream** page.
 
-<DashButton url="/?to=/:account/stream" />
+<DashButton url="/?to=/:account/stream/videos" />
 
 This code is unique to your Cloudflare Account.
 

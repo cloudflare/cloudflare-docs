@@ -184,7 +184,7 @@ navigator.sendBeacon("https://example.com", "hello world");
 When the `enable_web_file_system` compatibility flag is set, Workers supports the [Web File System Access API](https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API), which allows you to read and write files and directories to a virtual file system within the Worker environment. This API provides access to the same in-memory virtual file system as the [`node:fs` module](/workers/runtime-apis/nodejs/fs/) but does not require Node.js compatibility to be enabled.
 
 ```js
-const root = await navigator.storage.getDirctory();
+const root = await navigator.storage.getDirectory();
 
 export default {
 	async fetch(request) {

@@ -3,6 +3,15 @@ link: "/realtime/changelog/"
 productName: Realtime
 productLink: "/realtime/"
 entries:
+  - publish_date: "2025-11-21"
+    title: WebSocket adapter video (JPEG) support
+    description: |-
+      Updated Media Transport Adapters (WebSocket adapter) to support video egress as JPEG frames in addition to audio.
+
+      - Stream audio and video between WebRTC tracks and WebSocket endpoints
+      - Video egress-only as JPEG at approximately 1 FPS for snapshots, thumbnails, and computer vision pipelines
+      - Clarified media formats for PCM audio and JPEG video over Protocol Buffers
+      - Updated docs: [Adapters](/realtime/sfu/media-transport-adapters/), [WebSocket adapter](/realtime/sfu/media-transport-adapters/websocket-adapter/)
   - publish_date: "2025-08-29"
     title: Media Transport Adapters (WebSocket) open beta
     description: |-

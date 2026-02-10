@@ -5,14 +5,15 @@ params:
   - cfVsCoreDashNamingMwanCni
 ---
 
-import { APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Markdown, Render, TabItem, Tabs, DashButton } from "~/components";
 
 DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, Magic WAN Connector forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
 
 <pre class="mermaid">
 	{`
 		flowchart LR
-		accTitle: An example of Connector in DHCP Relay mode
+		accTitle: DHCP Relay diagram
+		accDescr: The graph shows Magic WAN Connector sending DHCP discover messages to a DHCP server offsite.
 				a(Magic WAN Connector) <--> b(Cloudflare/Magic WAN) <--> c(DHCP server)
 
 				subgraph Site A
@@ -28,7 +29,7 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 	`}
 </pre>
 
-_The above graph shows Magic WAN Connector sending DHCP discover messages to a DHCP server offsite._
+_The graph shows Magic WAN Connector sending DHCP discover messages to a DHCP server offsite._
 
 :::caution
 DHCP relay will not work if your DHCP server is behind a <a href={props.cfTunnelURL}>Cloudflare Tunnel</a>. To enable DHCP relay functionality, use either a {props.cfVsCoreDashNamingMwanCni}.
@@ -52,9 +53,16 @@ To configure DHCP relay:
 	<>
 		<Markdown
 	text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Go to **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
-	`}
+		1. Go to the **Connectors** page.
+		`}
+	inline={false}
+	/>
+		<DashButton url="/?to=/:account/magic-networks/connections" />
+
+		<Markdown
+	text={`
+		2. Go to the **Appliances** tab > **Profiles**.
+		`}
 	inline={false}
 	/>
 	</>

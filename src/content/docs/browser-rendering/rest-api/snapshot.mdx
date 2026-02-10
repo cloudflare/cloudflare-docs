@@ -84,9 +84,9 @@ console.log(snapshot.content);
 ## Advanced usage
 
 :::note[Looking for more parameters?]
-Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/snapshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/snapshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
-  
+
 ### Create a snapshot from custom HTML
 
 The `html` property in the JSON payload, it sets the html to `<html><body>Advanced Snapshot</body></html>` then does the following steps:
@@ -130,6 +130,11 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 <Render
   file="improve-blurry-screenshot-resolution"
+  product="browser-rendering"
+/>
+
+<Render
+  file="javascript-heavy-pages"
   product="browser-rendering"
 />
 

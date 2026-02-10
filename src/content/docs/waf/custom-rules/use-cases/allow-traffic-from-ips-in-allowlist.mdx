@@ -8,25 +8,36 @@ head:
 
 import { Steps } from "~/components";
 
-This example skips WAF rules for requests from IP addresses in an allowlist (defined using an [IP list](/waf/tools/lists/custom-lists/#ip-lists)).
+This example blocks incoming requests from IP addresses that are not present in an allowlist (defined using an [IP list](/waf/tools/lists/custom-lists/#ip-lists)).
 
 <Steps>
 
 1.  [Create an IP list](/waf/tools/lists/create-dashboard/) with the IP addresses for which you want to allow access.<br/>
     For example, create an IP list named `allowed_ips` with one or more IP addresses. For more information on the accepted IP address formats, refer to [IP lists](/waf/tools/lists/custom-lists/#ip-lists).
 
-2.  [Create a custom rule](/waf/custom-rules/create-dashboard/) skipping all rules for any request from the IPs in the list you created (`allowed_ips` in the current example).
-    - **Expression**: `(ip.src in $allowed_ips)`
-    - **Action**: _Skip:_
-      - _All remaining custom rules_
-      - _Skip phases_:
-        - _All rate limiting rules_
-        - _All Super Bot Fight Mode rules_
-        - _All managed rules_
+2.  [Create a custom rule](/waf/custom-rules/create-dashboard/) blocking any requests from IPs not present in the list you created (`allowed_ips` in the current example).
+    - **When incoming requests match**:
+
+      | Field             | Operator       | Value         |
+      | ----------------- | -------------- | ------------- |
+      | IP Source Address | is not in list | `allowed_ips` |
+
+      If you are using the Expression Editor:<br/>
+      `(not ip.src in $allowed_ips)`
+
+    - **Action**: _Block_
+
+3.  (Optional) Update your expression with any extra filters, like blocking non-allowlisted IPs only for specific URI paths:
+
+    | Field             | Operator       | Value         |     |
+    | ----------------- | -------------- | ------------- | --- |
+    | IP Source Address | is not in list | `allowed_ips` | And |
+    | URI Path          | wildcard       | `/admin/*`    |     |
+
+    If you are using the Expression Editor:<br/>
+    `(not ip.src in $allowed_ips and http.request.uri.path wildcard "/admin/*")`
 
 </Steps>
-
-Make sure the new rule appears before any other custom rules in the rules list.
 
 ## Other resources
 

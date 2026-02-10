@@ -89,7 +89,7 @@ export default {
 }
 };
 
-````
+```
 </TypeScriptExample>
 
 **Client connects:**
@@ -98,7 +98,7 @@ export default {
 const ws = new WebSocket('wss://your-worker.com');
 ws.onmessage = (event) => console.log(event.data);
 ws.send('Hello!'); // Receives: "Echo: Hello!"
-````
+```
 
 ## Expose WebSocket service via preview URL
 
@@ -129,10 +129,11 @@ export default {
     }
 
     return new Response('Not found', { status: 404 });
+
 }
 };
 
-````
+```
 </TypeScriptExample>
 
 **Client connects to preview URL:**
@@ -146,7 +147,7 @@ const { url } = await response.json();
 const ws = new WebSocket(url);
 ws.onmessage = (event) => console.log(event.data);
 ws.send('Hello!'); // Receives: "Echo: Hello!"
-````
+```
 
 ## Connect from Worker to get real-time data
 
@@ -158,30 +159,50 @@ import { getSandbox } from '@cloudflare/sandbox';
 
 export { Sandbox } from '@cloudflare/sandbox';
 
+let initialized = false;
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+
+     // Get or create a sandbox instance
     const sandbox = getSandbox(env.Sandbox, 'data-processor');
 
-    // Incoming HTTP request needs real-time data from sandbox
-    const wsRequest = new Request('ws://internal', {
-      headers: {
-        'Upgrade': 'websocket',
-        'Connection': 'Upgrade'
+
+    // Check for WebSocket upgrade
+    const upgrade = request.headers.get('Upgrade')?.toLowerCase();
+
+    if (upgrade === 'websocket') {
+      // Initialize server on first connection
+      if (!initialized) {
+        await sandbox.writeFile(
+          '/workspace/server.js',
+          `Bun.serve({
+            port: 8080,
+            fetch(req, server) {
+              server.upgrade(req);
+            },
+            websocket: {
+              message(ws, msg) {
+                ws.send(\`Echo: \${msg}\`);
+              }
+            }
+          });`
+        );
+        await sandbox.startProcess(
+          'bun /workspace/server.js'
+        );
+        initialized = true;
       }
-    });
-
-    // Connect to WebSocket service in sandbox
-    const wsResponse = await sandbox.wsConnect(wsRequest, 8080);
-
-    // Process WebSocket stream and return HTTP response
-    // (Implementation depends on your needs)
+      // Connect to WebSocket server
+      return await sandbox.wsConnect(request, 8080);
+    }
 
     return new Response('Processed real-time data');
 
 }
 };
 
-````
+```
 </TypeScriptExample>
 
 This pattern is useful when you need streaming data from sandbox services but want to return HTTP responses to clients.
@@ -196,7 +217,7 @@ Verify request has WebSocket headers:
 ```ts
 console.log(request.headers.get('Upgrade'));    // 'websocket'
 console.log(request.headers.get('Connection')); // 'Upgrade'
-````
+```
 
 </TypeScriptExample>
 

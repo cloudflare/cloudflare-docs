@@ -3,12 +3,10 @@ title: Authorization
 tags:
   - MCP
 sidebar:
-  order: 2
-  group:
-    hideIndex: true
+  order: 3
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing, LinkCard } from "~/components";
 
 When building a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server, you need both a way to allow users to login (authentication) and allow them to grant the MCP client access to resources on their account (authorization).
 
@@ -257,5 +255,14 @@ Benefits:
 
 ## Next steps
 
-- [Learn how to use the Workers OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider)
-- Learn how to use a third-party OAuth provider, using the [GitHub](/agents/guides/remote-mcp-server/#add-authentication) example MCP server.
+<LinkCard
+	title="Workers OAuth Provider"
+	href="https://github.com/cloudflare/workers-oauth-provider"
+	description="OAuth provider library for Workers."
+/>
+
+<LinkCard
+	title="GitHub OAuth example"
+	href="/agents/guides/remote-mcp-server/#add-authentication"
+	description="Use GitHub as a third-party OAuth provider."
+/>

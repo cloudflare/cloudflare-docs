@@ -67,6 +67,67 @@ wrangler containers images delete [IMAGE] [OPTIONS]
 - `IMAGE` <Type text="string" /> <MetaInfo text="required" />
   - Image to delete of the form `IMAGE:TAG`
 
+<AnchorHeading title="`registries`" slug="containers-registries" depth={3} />
+
+Configure and view registries available to your container.
+[Read more](/containers/platform-details/image-management/#using-amazon-ecr-container-images) about our currently supported external registries.
+
+<AnchorHeading
+	title="`registries list`"
+	slug="containers-registries-list"
+	depth={4}
+/>
+
+List registries your containers are able to use.
+
+```txt
+wrangler containers registries list [OPTIONS]
+```
+
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as clean JSON.
+  - Default: false
+
+<AnchorHeading
+	title="`registries configure`"
+	slug="containers-registries-configure"
+	depth={4}
+/>
+
+Configure a new registry for your account.
+
+```txt
+wrangler containers registries configure [DOMAIN] [OPTIONS]
+```
+
+- `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
+  - domain to configre for the registry
+- `--public-credential` <Type text="string" /> <MetaInfo text="required" />
+  - The public part of the registry credentials, e.g. `AWS_ACCESS_KEY_ID` for ECR
+- `--secret-store-id` <Type text="string" /> <MetaInfo text="optional" />
+  - The ID of the secret store to use to store the registry credentials
+- `--secret-name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name Wrangler should store the registry credentials under
+
+When run interactively, wrangler will prompt you for your secret and store it in Secrets Store.
+To run non-interactively, you can send your secret value to wrangler through stdin to have
+the secret created for you.
+
+<AnchorHeading
+	title="`registries delete`"
+	slug="containers-registries-delete"
+	depth={4}
+/>
+
+Remove a registry configuration from your account.
+
+```txt
+wrangler containers registries delete [DOMAIN] [OPTIONS]
+```
+
+- `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
+  - domain of the registry to delete
+
 <AnchorHeading title="`info`" slug="containers-info" depth={3} />
 
 Get information about a specific Container, including top-level details and a list of instances.

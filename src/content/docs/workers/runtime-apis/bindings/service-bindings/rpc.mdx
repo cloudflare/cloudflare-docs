@@ -53,11 +53,14 @@ For example, a Worker that declares a binding to the [environment variable](/wor
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-
-[vars]
-GREETING = "Hello"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"vars": {
+		"GREETING": "Hello"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -113,13 +116,18 @@ You can use this to group multiple pieces of compute together. For example, you 
 
 <WranglerConfig>
 
-```toml
-name = "todo-app"
-
-[[d1_databases]]
-binding = "D1"
-database_name = "todo-app-db"
-database_id = "<unique-ID-for-your-database>"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "todo-app",
+	"d1_databases": [
+		{
+			"binding": "D1",
+			"database_name": "todo-app-db",
+			"database_id": "<unique-ID-for-your-database>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -172,13 +180,18 @@ You can then declare a Service binding directly to `AdminEntrypoint` in another 
 
 <WranglerConfig>
 
-```toml
-name = "admin-app"
-
-[[services]]
-binding = "ADMIN"
-service = "todo-app"
-entrypoint = "AdminEntrypoint"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "admin-app",
+	"services": [
+		{
+			"binding": "ADMIN",
+			"service": "todo-app",
+			"entrypoint": "AdminEntrypoint"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

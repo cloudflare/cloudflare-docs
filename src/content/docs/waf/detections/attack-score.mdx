@@ -17,7 +17,7 @@ Attack score allows you to identify these attack variations and their malicious 
 To maximize protection, Cloudflare recommends that you use both Managed Rules and attack score.
 
 :::note
-This feature is available to Enterprise customers. Business plans have access to a single field (WAF Attack Score Class).
+The full feature is available to Enterprise customers. Business plans only have access to a single field (WAF Attack Score Class).
 :::
 
 ## Available scores
@@ -46,7 +46,9 @@ You can use these fields in expressions of [custom rules](/waf/custom-rules/) an
 - A score of `1` indicates that the request is almost certainly malicious.
 - A score of `99` indicates that the request is likely clean.
 
-The special score `100` indicates that the Cloudflare WAF did not score the request.
+The special score `100` indicates that the request reached the Cloudflare WAF attack score classification system, but the system decided not to score the request.
+
+In [Logpush](/logs/logpush/), you may also get the special score `0`, which means that the request did not reach the stage where attack scores are calculated (for example, the request has already been mitigated by a previous rule or another protection system). The value `0` is not shown in the Cloudflare dashboard.
 
 The global WAF Attack Score is mathematically derived from individual attack scores (for example, from SQLi Attack Score and XSS Attack Score), reflecting their interdependence. However, the global score is not a sum of individual scores. A low global score usually indicates medium to low individual scores, while a high global score suggests higher individual scores.
 

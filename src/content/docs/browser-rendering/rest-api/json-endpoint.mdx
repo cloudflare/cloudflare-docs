@@ -4,7 +4,7 @@ title: /json - Capture structured data using AI
 tags:
   - JSON
 sidebar:
-  order: 9
+  order: 8
 ---
 
 import { Tabs, TabItem, Render } from "~/components";
@@ -296,7 +296,7 @@ console.log(json);
 ## Advanced Usage
 
 :::note[Looking for more parameters?]
-Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/json/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/json/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
 
 ### Using a custom model (BYO API Key)
@@ -305,6 +305,12 @@ Browser Rendering can use a custom model for which you supply credentials. List 
 
 - `model` should be formed as `<provider>/<model_name>` and the provider must be one of these [supported providers](/ai-gateway/usage/chat-completion/#supported-providers).
 - `authorization` is the bearer token or API key that allows Browser Rendering to call the provider on your behalf.
+
+:::caution[Anthropic models and response_format]
+
+When using Anthropic models (such as Claude), do not use the `response_format` parameter. Anthropic's API expects `output_schema` instead of `response_format`, which will cause an `invalid_request_error`. Use only the `prompt` parameter with Anthropic models until this is resolved.
+
+:::
 
 This example uses the `custom_ai` parameter to instruct Browser Rendering to use a Anthropic's Claude Sonnet 4 model. The prompt asks the model to extract the main `<h1>` and `<h2>` headings from the target URL and return them in a structured JSON object.
 
@@ -374,6 +380,8 @@ In this example, Browser Rendering first calls Anthropic's Claude Sonnet 4 model
   }
 ]
 ```
+
+<Render file="javascript-heavy-pages" product="browser-rendering" />
 
 <Render file="setting-custom-user-agent" product="browser-rendering" />
 

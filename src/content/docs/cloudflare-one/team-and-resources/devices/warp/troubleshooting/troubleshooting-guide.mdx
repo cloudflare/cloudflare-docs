@@ -61,7 +61,7 @@ Understand the WARP client's architecture, installation paths, and modes to help
 <Stream
         id="31178cc41d0ec56d42ef892160589635"
         title="Understand Cloudflare WARP basics"
-        thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Understand-Cloudflare-WARP-Basics%20thumbnail.png"
+        thumbnail="https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/4fdd3005-7995-4876-8faa-4375f9236500/public"
         showMoreVideos={false}
         chapters={{
           "Introduction and WARP GUI Basics": "0s",
@@ -249,11 +249,11 @@ Refers to the [Lock WARP Switch](/cloudflare-one/team-and-resources/devices/warp
 Switch Locked: false
 ```
 
-When the Lock WARP switch is enabled (`true`), users will need an [Admin override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#admin-override) code to temporarily turn off WARP on their device.
+When the Lock WARP switch is enabled (`true`), users will need an [admin override code](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-admin-override-codes) to temporarily turn off WARP on their device.
 
 ##### Mode
 
-Refers to the [WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) the device is using. In the example file, the WARP mode is `WarpWithDnsOverHttps` which is Gateway with WARP mode. Refer to the [WARP modes comparison matrix](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) to match your `warp-settings.txt` file's value with the mode name.
+Refers to the [WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) the device is using. In the example file, the WARP mode is `WarpWithDnsOverHttps` which is Traffic and DNS mode. Refer to the [WARP modes comparison matrix](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) to match your `warp-settings.txt` file's value with the mode name.
 
 ```txt
 Mode: WarpWithDnsOverHttps
@@ -288,7 +288,7 @@ Refers to your [Local Domain Fallback](/cloudflare-one/team-and-resources/device
 
 ##### Allow Mode Switch
 
-Refers to the [Mode switch](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#mode-switch) setting. In the example file, the mode switch is enabled (`true`) which means the user has the option to switch between [Gateway with WARP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode and [Gateway with DNS-over-HTTPS (DoH)](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode.
+Refers to the [Mode switch](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#mode-switch) setting. In the example file, the mode switch is enabled (`true`) which means the user has the option to switch between [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-and-dns-mode-default) mode and [Gateway with DNS-over-HTTPS (DoH)](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#dns-only-mode) mode.
 
 ```txt
 Allow Mode Switch: true
@@ -454,7 +454,7 @@ Both methods update the client with the latest configuration.
 On the end user device, open the WARP GUI and toggle WARP on and off.
 
 :::note[What if the end user cannot turn off WARP?]
-If the end user's [WARP switch](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#lock-warp-switch) is locked, they will need an [admin override code](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#admin-override) to be able to toggle the WARP switch.
+If the end user's [WARP switch](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#lock-warp-switch) is locked, they will need an [admin override code](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-admin-override-codes) to be able to toggle the WARP switch.
 
 [Resetting the encryption keys](#option-b-reset-the-encryption-keys) may be a faster solution.
 :::

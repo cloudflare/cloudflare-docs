@@ -10,7 +10,7 @@ description: >-
 
 import { Render } from "~/components";
 
-If you initially set up [incoming zone transfers (Cloudflare as secondary)](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/), you can later convert your zone to use a full setup.
+If you initially set up [incoming zone transfers (Cloudflare as secondary)](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/), you can later convert your zone to use a [primary setup](/dns/zone-setups/full-setup/) (also know as full setup).
 
 <Render file="conversion-subdomain-setup-callout" product="dns" />
 
@@ -27,7 +27,7 @@ Follow the steps below to achieve this conversion.
    - If you have [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/), confirm each record has the appropriate setting (**Proxied** or **DNS only**).
    - If [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) is disabled, make sure all of your DNS records are listed as **DNS only**.
 
-3. (Optional) For consistency, use the [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint to specify SOA record fields according to your needs. Once Cloudflare automatically generates an SOA record for your zone on full setup, the field overrides will be considered.
+3. (Optional) For consistency, use the [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint to specify SOA record fields according to your needs. Once Cloudflare automatically generates an SOA record for your zone on primary setup (full), the field overrides will be considered.
 
 ## 3. Convert your zone
 

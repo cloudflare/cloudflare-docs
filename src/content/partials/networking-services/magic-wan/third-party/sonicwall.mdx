@@ -12,7 +12,7 @@ This tutorial shows you how to use Magic WAN with the following versions of the 
 
 - **Hardware tested**:
   - SonicWall NSv 470
-  - SonicWal 3700
+  - SonicWall 3700
 - **Software versions tested**:
   - SonicOS 7.0.1
 
@@ -22,7 +22,7 @@ You can connect your SonicWall appliance through <a href={props.ipsecTunnelsUrl}
 
 ![Topology diagram showing how to connect SonicWall appliances to Magic WAN](~/assets/images/magic-wan/third-party/sonicwall/topology.png)
 
-The following instructions show how to setup an IPsec connection on your SonicWall device. We will use the IP ranges from the above topology example to create the connections needed. Settings not explicitly mentioned can be left with their default values.
+The following instructions show how to set up an IPsec connection on your SonicWall device. We will use the IP ranges from the above topology example to create the connections needed. Settings not explicitly mentioned can be left with their default values.
 
 ## 1. Create an IPsec tunnel on your Cloudflare account
 
@@ -67,8 +67,8 @@ Static routes are required for any networks that will be reached via the IPsec t
    - **IPsec Primary Gateway Name or Address**: Enter Cloudflare's anycast IP address for the primary gateway (in blue).
 4. In the **IKE Authentication** group, add the following settings:
    - **Shared secret**: Paste the pre-shared key you use to create the IPsec tunnel in step 1 (in purple).
-   - **Local IKE ID**: Select _Domain name_ from the dropdown menu, and paste here the **FQDN ID** you saved from step 1, after creating the IPsec tunnel (in green).
-   - **Peer IKE IDE**: Select _IPv4_ Address from the dropdown menu, and enter the Cloudflare anycast IP address (in blue).
+   - **Local IKE ID**: Select _Domain name_ from the drop-down menu, and paste here the **FQDN ID** you saved from step 1, after creating the IPsec tunnel (in green).
+   - **Peer IKE IDE**: Select _IPv4_ Address from the drop-down menu, and enter the Cloudflare anycast IP address (in blue).
 
 <div class="large-img">
 
@@ -92,7 +92,7 @@ Static routes are required for any networks that will be reached via the IPsec t
    - **Life Time (seconds)**: `28800`
 8. Select **Advanced**.
 9. Enable **Disable IPsec Anti-Replay**.
-10. In **VPN Policy bound to** select your WAN interface from the dropdown menu, to bind it to your VPN.
+10. In **VPN Policy bound to** select your WAN interface from the drop-down menu, to bind it to your VPN.
 11. Select **Save**.
 
 <div class="large-img">
@@ -116,7 +116,7 @@ You will need to use a different IP pair for each tunnel/site.
 
 <div class="large-img">
 
-![Enable ping to that your interface can be pinged for debugging and Magic WAN health checks](~/assets/images/magic-wan/third-party/sonicwall/6-vpn-ping.png)
+![Enable ping so that your interface can be pinged for debugging and Magic WAN health checks](~/assets/images/magic-wan/third-party/sonicwall/6-vpn-ping.png)
 
 </div>
 
@@ -144,7 +144,7 @@ To add an address object:
 
 <div class="large-img">
 
-![Enter the appropriate settings for you object](~/assets/images/magic-wan/third-party/sonicwall/7-address-objects-settings.png)
+![Enter the appropriate settings for your object](~/assets/images/magic-wan/third-party/sonicwall/7-address-objects-settings.png)
 
 </div>
 
@@ -174,7 +174,7 @@ An additional access rule is required for Magic WAN health checks to work proper
 1. Select **Policy** > **Rules and Policies**.
 2. Select **Access Rules** > **Add**.
 3. Enter a descriptive name for your policy.
-4. In **Source / Destination** > **Destination > Port/Services**, select _ICMP_ from the dropdown.
+4. In **Source / Destination** > **Destination > Port/Services**, select _ICMP_ from the drop-down menu.
 5. Select **Optional Settings**.
 6. In **Others**, enable **Allow Management traffic**.
 

@@ -104,3 +104,46 @@ To remove an API key:
 :::caution[Impact of key deletion]
 Deleting an API key will immediately stop all requests that depend on it. Make sure to update your applications or configure alternative keys before deletion.
 :::
+
+## Multiple keys per provider
+
+AI Gateway supports storing multiple API keys for the same provider. This allows you to:
+
+- Use different keys for different use cases (for example, development vs production)
+- Gradually migrate between keys during rotation
+
+### Key aliases
+
+Each API key can be assigned an alias to identify it. When you add a key, you can specify a custom alias, or the system will use `default` as the alias.
+
+When making requests, AI Gateway uses the key with the `default` alias by default. To use a different key, include the `cf-aig-byok-alias` header with the alias of the key you want to use.
+
+### Example: Using a specific key alias
+
+If you have multiple OpenAI keys configured with different aliases (for example, `default`, `production`, and `testing`), you can specify which one to use:
+
+```bash
+# Uses the key with alias "default" (no header needed)
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  -H "Content-Type: application/json" \
+  -d '{"model": "gpt-4", "messages": [...]}'
+```
+
+```bash
+# Uses the key with alias "production"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  -H 'cf-aig-byok-alias: production' \
+  -H "Content-Type: application/json" \
+  -d '{"model": "gpt-4", "messages": [...]}'
+```
+
+```bash
+# Uses the key with alias "testing"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  -H 'cf-aig-byok-alias: testing' \
+  -H "Content-Type: application/json" \
+  -d '{"model": "gpt-4", "messages": [...]}'
+```

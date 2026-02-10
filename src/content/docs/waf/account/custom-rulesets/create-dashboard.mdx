@@ -12,13 +12,17 @@ head:
 
 import { Render, Steps, DashButton } from "~/components";
 
-:::note
-This feature requires an Enterprise plan with a paid add-on.
+:::note[Notes]
+
+Custom rulesets at the account level require an Enterprise plan with a paid add-on.
+
+You can create and deploy custom rulesets at the account or zone level. However, the Cloudflare dashboard currently does not support working with custom rulesets at the zone level. You will need to use the Cloudflare API to configure or deploy these rulesets.
+
 :::
 
-Custom rulesets are configured at the account level.
-
 ## Create and deploy a custom ruleset
+
+To create and deploy a custom ruleset at the account level:
 
 <Steps>
 
@@ -39,7 +43,7 @@ Custom rulesets are configured at the account level.
    - Select **Custom filter expression** to define a custom expression that defines when to execute the custom ruleset. Use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**. Alternatively, select **Edit expression** to define your expression using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
 
    :::caution
-   Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression for the ruleset using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
+   Custom rulesets deployed at the account level only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression for the ruleset using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
    :::
 
 6. To create a new rule, select **Add rule**.
@@ -81,7 +85,7 @@ Custom rulesets are configured at the account level.
 </Steps>
 
 :::caution
-Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression for the ruleset using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
+Custom rulesets deployed at the account level only apply to incoming traffic of Enterprise domains. The Expression Builder in the Cloudflare dashboard will automatically include this filter. If you define a custom expression for the ruleset using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
 :::
 
 ## Delete a custom ruleset

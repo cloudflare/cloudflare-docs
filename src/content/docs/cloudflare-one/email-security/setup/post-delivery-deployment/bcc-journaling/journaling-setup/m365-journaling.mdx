@@ -7,9 +7,11 @@ sidebar:
 
 import { GlossaryTooltip, Render } from "~/components";
 
-When you receive an email, the email lands on your Microsoft 365 inbox, and then Email security receives a copy of that email. The following email flow shows how this works:
+Microsoft 365 journaling is a post-delivery setup method that ensures a copy of every incoming and outgoing email is forwarded to Cloudflare for analysis. When you create a [journal rule](https://learn.microsoft.com/en-us/exchange/security-and-compliance/journaling/journaling#journal-rules) in the Microsoft Purview compliance portal, Cloudflare can scan messages that have already landed in your inbox.
 
-![Email flow when setting up Microsoft 365 with Email security.](~/assets/images/email-security/deployment/api-setup/journaling/Email_Security_MS365_Journaling_Diagram.png)
+The following diagram shows how this works:
+
+![Email flow when setting up Microsoft 365 with Email security.](~/assets/email-security/M365Deployment_Journaling.png)
 
 To enable Microsoft 365 journaling deployment:
 
@@ -79,6 +81,15 @@ Once saved, the rule is automatically active. However, it may take a few minutes
 	file="email-security/post-verification-setup"
 	product="cloudflare-one"
 />
+
+## Verify successful addition
+
+To verift that your domain has been added successfully and that your emails are being scanned:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), select **Email security**.
+2. Go to **Settings** > **Domain management** > **Domains**, then select **View**.
+3. Under **Your domains**, locate your domain, and verify that **Status** is set to **Active**. The **Configured method** should be **BCC/Journaling**.
+
 
 ## Next steps
 

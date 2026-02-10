@@ -35,9 +35,9 @@ The Workers for Platforms architecture consists of several key components that w
 
 ![Figure 1: Workers for Platforms: Main Flow](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-1.svg "Figure 1: Workers for Platforms: Main Flow")
 
-1. **Client Request**: Send request from a client application to the platform's [Dynamic Dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker).
+1. **Client Request**: Send request from a client application to the platform's [Dynamic Dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dynamic-dispatch-worker).
 
-2. **Routing**: Identify the correct workload to execute and route the request to the respective [User Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) in the [Dispatch Namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). Each customer's workload runs in an isolated User Worker with its own resources and security boundaries.
+2. **Routing**: Identify the correct workload to execute and route the request to the respective [User Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers) in the [Dispatch Namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace). Each customer's workload runs in an isolated User Worker with its own resources and security boundaries.
 
 ## Invocation & Metadata Flow
 

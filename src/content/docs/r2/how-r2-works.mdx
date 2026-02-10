@@ -17,6 +17,7 @@ Cloudflare R2 is an S3-compatible object storage service with no egress fees, bu
 R2 is ideal for storing and serving unstructured data that needs to be accessed frequently over the internet, without incurring egress fees. It's a good fit for workloads like serving web assets, training AI models, and managing user-generated content.
 
 ## Architecture
+
 R2's architecture is composed of multiple components:
 
 - **R2 Gateway:** The entry point for all API requests that handles authentication and routing logic. This service is deployed across Cloudflare's global network via [Cloudflare Workers](/workers/).
@@ -31,9 +32,8 @@ R2's architecture is composed of multiple components:
 
 R2 supports multiple client interfaces including [Cloudflare Workers Binding](/r2/api/workers/workers-api-usage/), [S3-compatible API](/r2/api/s3/api/), and a [REST API](/api/resources/r2/) that powers the Cloudflare Dashboard and Wrangler CLI. All requests are routed through the R2 Gateway, which coordinates with the Metadata Service and Distributed Storage Infrastructure to retrieve the object data.
 
-
-
 ## Write data to R2
+
 When a write request (e.g. uploading an object) is made to R2, the following sequence occurs:
 
 1. **Request handling:** The request is received by the R2 Gateway at the edge, close to the user, where it is authenticated.
@@ -47,6 +47,7 @@ When a write request (e.g. uploading an object) is made to R2, the following seq
 ![Write data to R2](public/images/r2/write-data-to-r2.png)
 
 ## Read data from R2
+
 When a read request (e.g. fetching an object) is made to R2, the following sequence occurs:
 
 1. **Request handling:** The request is received by the R2 Gateway at the edge, close to the user, where it is authenticated.
@@ -60,9 +61,12 @@ When a read request (e.g. fetching an object) is made to R2, the following seque
 ![Read data to R2](public/images/r2/read-data-to-r2.png)
 
 ## Performance
+
 The performance of your operations can be influenced by factors such as the bucket's geographical location, request origin, and access patterns.
 
-To further optimize R2 performance for object read requests, you can enable [Cloudflare Cache](/cache/) when using a [custom domain](/r2/buckets/public-buckets/#custom-domains). When caching is enabled, [read requests](/r2/how-r2-works/#read-data-from-r2) can bypass the R2 Gateway Worker and be served directly from Cloudflare's edge cache, reducing latency. However, note that it may cause consistency trade-offs since cached data may not reflect the latest version immediately.
+To optimize upload performance for cross-region requests, enable [Local Uploads](/r2/buckets/local-uploads/) on your bucket.
+
+To optimize read performance, enable [Cloudflare Cache](/cache/) when using a [custom domain](/r2/buckets/public-buckets/#custom-domains). When caching is enabled, read requests can bypass the R2 Gateway and be served directly from Cloudflare's edge cache, reducing latency. Note that cached data may not reflect the latest version immediately.
 
 ![Read data to R2 with Cloudflare Cache](public/images/r2/read-data-to-r2-with-cloudflare-cache.png)
 

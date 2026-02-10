@@ -3,29 +3,17 @@ title: Google AI Studio
 pcx_content_type: get-started
 ---
 
-import { Render } from "~/components";
+import { Render, Details, Tabs, TabItem } from "~/components";
 
 [Google AI Studio](https://ai.google.dev/aistudio) helps you build quickly with Google Gemini models.
 
 ## Endpoint
 
+**Base URL:**
+
 ```txt
 https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio
 ```
-
-## Prerequisites
-
-When making requests to Google AI Studio, you will need:
-
-- Your AI Gateway Account ID.
-- Your AI Gateway gateway name.
-- An active Google AI Studio API token.
-- The name of the Google AI Studio model you want to use.
-
-## URL structure
-
-Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/`.
-
 Then you can append the endpoint you want to hit, for example: `v1/models/{model}:{generative_ai_rest_resource}`
 
 So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/v1/models/{model}:{generative_ai_rest_resource}`.
@@ -34,7 +22,28 @@ So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{
 
 ### cURL
 
-```bash title="Example fetch request"
+<Details header="With API Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```bash title=""
+curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/google-ai-studio/v1/models/gemini-2.5-flash:generateContent" \
+ --header 'content-type: application/json' \
+ --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+ --header 'x-goog-api-key: {google_studio_api_key}' \
+ --data '{
+      "contents": [
+          {
+            "role":"user",
+            "parts": [
+              {"text":"What is Cloudflare?"}
+            ]
+          }
+        ]
+      }'
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```bash title=""
 curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/google-ai-studio/v1/models/gemini-2.5-flash:generateContent" \
  --header 'content-type: application/json' \
  --header 'x-goog-api-key: {google_studio_api_key}' \
@@ -49,34 +58,95 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/google-ai
         ]
       }'
 ```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="With Stored Keys (BYOK) / Unified Billing" open>
+```bash title=""
+curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/google-ai-studio/v1/models/gemini-2.5-flash:generateContent" \
+ --header 'content-type: application/json' \
+ --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+ --data '{
+      "contents": [
+          {
+            "role":"user",
+            "parts": [
+              {"text":"What is Cloudflare?"}
+            ]
+          }
+        ]
+      }'
+```
+</Details>
 
-### Use `@google/genai` with JavaScript
+### `@google/genai`
 
 If you are using the `@google/genai` package, you can set your endpoint like this:
 
-```js title="JavaScript example"
+<Details header="With Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```js title=""
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = env.GOOGLE_AI_STUDIO_TOKEN;
-const account_id = "";
-const gateway_name = "";
-
 const ai = new GoogleGenAI({
-  apiKey,
+  apiKey: "{google_studio_api_key}",
+  httpOptions: {
+	  baseUrl: `https://gateway.ai.cloudflare.com/v1/${account_id}/${gateway_name}/google-ai-studio`,
+	  headers: {
+		  'cf-aig-authorization': 'Bearer {cf_aig_token}',
+	  }	
+  }
 });
 
 const response = await ai.models.generateContent({
   model: "gemini-2.5-flash",
   contents: "What is Cloudflare?",
-  config: {
-    httpOptions: {
-      baseUrl: `https://gateway.ai.cloudflare.com/v1/${account_id}/${gateway_name}/google-ai-studio`,
-    },
-  },
 });
 
 console.log(response.text);
 ```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```js title=""
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({
+  apiKey: "{google_studio_api_key}",
+  httpOptions: {
+	  baseUrl: `https://gateway.ai.cloudflare.com/v1/${account_id}/${gateway_name}/google-ai-studio`,
+  }
+});
+
+const response = await ai.models.generateContent({
+  model: "gemini-2.5-flash",
+  contents: "What is Cloudflare?",
+});
+
+console.log(response.text);
+```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="With Stored Keys (BYOK) / Unified Billing" open>
+```js title=""
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({
+  apiKey: "{cf_aig_token}",
+  httpOptions: {
+	  baseUrl: `https://gateway.ai.cloudflare.com/v1/${account_id}/${gateway_name}/google-ai-studio`,
+  }
+});
+
+const response = await ai.models.generateContent({
+  model: "gemini-2.5-flash",
+  contents: "What is Cloudflare?",
+});
+
+console.log(response.text);
+```
+</Details>
 
 <Render
 	file="chat-completions-providers"

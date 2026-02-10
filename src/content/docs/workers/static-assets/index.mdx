@@ -60,14 +60,18 @@ The **assets directory** specified in your [Wrangler configuration file](/worker
 
 <WranglerConfig>
 
-    ```toml {3-4}
-    	name = "my-spa"
-    	main = "src/index.js"
-    	compatibility_date = "2025-01-01"
-    	[assets]
-    	directory = "./dist"
-    	binding = "ASSETS"
-    	```
+    ```jsonc
+    {
+      "$schema": "./node_modules/wrangler/config-schema.json",
+      "name": "my-spa",
+      "main": "src/index.js",
+      "compatibility_date": "$today",
+      "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS"
+      }
+    }
+    ```
 
 </WranglerConfig>
 
@@ -76,6 +80,8 @@ If you are using the [Cloudflare Vite plugin](/workers/vite-plugin/), you do not
 :::
 
 By adding an [**assets binding**](/workers/static-assets/binding/#binding), you can directly fetch and serve assets within your Worker code.
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js {13}
 // index.js
@@ -95,6 +101,24 @@ export default {
 };
 ```
 
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+from urllib.parse import urlparse
+
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		# Example of serving static assets
+		url = urlparse(request.url)
+		if url.path.startswith("/api/):
+			return Response.json({"name": "Cloudflare"})
+
+		return await self.env.ASSETS.fetch(request)
+```
+
+</TabItem></Tabs>
+
 ### Routing behavior
 
 By default, if a requested URL matches a file in the static assets directory, that file will be served — without invoking Worker code. If no matching asset is found and a Worker script is present, the request will be processed by the Worker. The Worker can return a response or choose to defer again to static assets by using the [assets binding](/workers/static-assets/binding/) (e.g. `env.ASSETS.fetch(request)`). If no Worker script is present, a `404 Not Found` response is returned.
@@ -106,12 +130,14 @@ The default behavior for requests which don't match a static asset can be change
 
 <WranglerConfig>
 
-    ```toml
-    	[assets]
-    	directory = "./dist"
-    	not_found_handling = "single-page-application"
-
-    	```
+    ```jsonc
+    {
+      "assets": {
+        "directory": "./dist",
+        "not_found_handling": "single-page-application"
+      }
+    }
+    ```
 
 </WranglerConfig>
 

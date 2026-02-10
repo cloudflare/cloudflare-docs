@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Sentinel
 sidebar:
   order: 105
-
 ---
 
 import { Details } from "~/components";
@@ -30,9 +29,10 @@ This guide provides clear, step-by-step instructions for integrating Cloudflare 
 3. Select **Create Logpush Job**. Choose the log type you want to export (for example, **HTTP requests**).
 4. For the destination, select **Azure Blob Storage**.
 5. Enter your Azure Blob Storage details:
-    - SAS Token (Shared Access Signature)
+   - SAS Token (Shared Access Signature)
 
-    To generate a SAS token from the Azure portal, first navigate to your storage account. Under the **Data Storage** section, select **Containers** and choose the relevant container. Within the settings, locate and select **Shared access signature**. Configure the required permissions, such as `write` and `create`, and specify the start and expiration dates for the token. Once configured, generate the SAS token accordingly.
+   To generate a SAS token from the Azure portal, first navigate to your storage account. Under the **Data Storage** section, select **Containers** and choose the relevant container. Within the settings, locate and select **Shared access signature**. Configure the required permissions, such as `write` and `create`, and specify the start and expiration dates for the token. Once configured, generate the SAS token accordingly.
+
 6. Save and activate the Logpush job.
 
 For complete details, refer to the [Cloudflare Logpush to Azure documentation](/logs/logpush/logpush-job/enable-destinations/azure/).
@@ -290,10 +290,8 @@ SecurityRuleDescription<br />
 
 </Details>
 
-## Resources 
+## Resources
 
 [Download Cloudflare's CCF Sentinel Solution](https://marketplace.microsoft.com/en-us/product/azure-application/cloudflare.azure-sentinel-solution-cloudflare-ccf?tab=Overview)<br />
-[Microsoft Data Lake Overview](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-lake-overview)<br /> 
+[Microsoft Data Lake Overview](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-lake-overview)<br />
 [About the CCF Platform](https://learn.microsoft.com/en-us/azure/sentinel/create-codeless-connector)
-
-

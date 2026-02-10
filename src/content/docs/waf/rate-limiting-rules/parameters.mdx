@@ -223,7 +223,7 @@ You cannot use both **IP with NAT support** and **IP** as characteristics of the
 
 ### Do not use `cf.colo.id` as a field in expressions
 
-You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/).
+You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [Request rate calculation](/waf/rate-limiting-rules/request-rate/).
 
 ### Use a lowercased header name (for API users)
 
@@ -254,8 +254,10 @@ To use claims inside a JSON Web Token (JWT), you must first set up a [token vali
 
 ## Configuration restrictions
 
-- If the rule expression includes [custom lists](/waf/tools/lists/custom-lists/), you must enable the **Also apply rate limiting to cached assets** parameter.
+- If the rule filter expression, defined in the **When incoming requests match** parameter, includes [custom lists](/waf/tools/lists/custom-lists/), you must enable the **Also apply rate limiting to cached assets** parameter.
+
+- The rule filter expression cannot contain [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response).
 
 - The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response) and [custom lists](/waf/tools/lists/custom-lists/). If you use custom lists, you must enable the **Also apply rate limiting to cached assets** parameter.
 
-- When creating a rate limiting rule [at the account level](/waf/account/rate-limiting-rulesets/) as part of a rate limiting ruleset, the rule expression cannot contain [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response) or [custom lists](/waf/tools/lists/custom-lists/).
+- When creating a rate limiting ruleset [at the account level](/waf/account/rate-limiting-rulesets/), the ruleset deployment expression (defining the scope) cannot contain [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response) or [custom lists](/waf/tools/lists/custom-lists/).

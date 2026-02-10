@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: /links - Retrieve links from a webpage
 sidebar:
-  order: 10
+  order: 9
 ---
 
 import { Tabs, TabItem, Render } from "~/components";
@@ -142,10 +142,11 @@ console.log(links);
 ```
 
 </TabItem> </Tabs>
+
 ## Advanced usage
 
 :::note[Looking for more parameters?]
-Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/links/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/links/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
 
 ### Retrieve only visible links
@@ -253,6 +254,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
     "excludeExternalLinks": true
   }'
 ```
+
+<Render file="javascript-heavy-pages" product="browser-rendering" />
 
 <Render file="setting-custom-user-agent" product="browser-rendering" />
 

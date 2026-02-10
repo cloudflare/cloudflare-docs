@@ -16,22 +16,26 @@
             "value": "true"
         },
         {
-            "property_id": "partner",
-            "value": "true"
-        },
-        {
-            "property_id": "realtime",
-            "value": "true"
-        },
-        {
             "property_id": "price",
             "value": [
                 {
                     "unit": "per 1k characters",
-                    "price": 0.0150,
+                    "price": 0.015,
                     "currency": "USD"
                 }
             ]
+        },
+        {
+            "property_id": "partner",
+            "value": "true"
+        },
+        {
+            "property_id": "terms",
+            "value": "https://deepgram.com/terms"
+        },
+        {
+            "property_id": "realtime",
+            "value": "true"
         }
     ],
     "schema": {

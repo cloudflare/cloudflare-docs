@@ -72,6 +72,61 @@ export default {
 When using `wrangler dev`, you must add `EXPOSE` directives to your Dockerfile for each port you plan to expose. Without this, you'll see "Connection refused: container port not found". See [Local development](#local-development) section below for setup details.
 :::
 
+:::caution[Uppercase sandbox IDs don't work with preview URLs]
+Preview URLs extract the sandbox ID from the hostname, which is always lowercase (e.g., `8000-myproject-123.yourdomain.com`). If you created your sandbox with an uppercase ID like `"MyProject-123"`, the URL routes to `"myproject-123"` (a different Durable Object), making your sandbox unreachable.
+
+To fix this, use `normalizeId: true` when creating sandboxes for port exposure:
+
+```ts
+const sandbox = getSandbox(env.Sandbox, 'MyProject-123', { normalizeId: true });
+```
+
+This lowercases the ID during creation so it matches preview URL routing. Without this, `exposePort()` throws an error.
+
+**Best practice**: Use lowercase IDs from the start (`'my-project-123'`).
+
+See [Sandbox options](/sandbox/configuration/sandbox-options/#normalizeid) for details.
+:::
+
+## Stable URLs with custom tokens
+
+For production deployments or when sharing URLs with users, use custom tokens to maintain consistent preview URLs across container restarts:
+
+<TypeScriptExample>
+```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
+// Without custom token - URL changes on restart
+const exposed = await sandbox.exposePort(8080, { hostname });
+// https://8080-sandbox-id-random16chars12.yourdomain.com
+
+// With custom token - URL stays the same across restarts
+const stable = await sandbox.exposePort(8080, { 
+  hostname, 
+  token: 'api-v1' 
+});
+// https://8080-sandbox-id-api-v1.yourdomain.com
+// Same URL after container restart ✓
+
+return Response.json({
+  'Temporary URL (changes on restart)': exposed.url,
+  'Stable URL (consistent)': stable.url
+});
+```
+</TypeScriptExample>
+
+**Token requirements:**
+- 1-16 characters long
+- Lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (_) only
+- Must be unique within each sandbox
+
+**Use cases:**
+- Production APIs with stable endpoints
+- Sharing demo URLs with external users
+- Integration testing with predictable URLs
+- Documentation with consistent examples
+
 ## Name your exposed ports
 
 When exposing multiple ports, use names to stay organized:
@@ -81,15 +136,23 @@ When exposing multiple ports, use names to stay organized:
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
-// Start and expose API server
+// Start and expose API server with stable token
 await sandbox.startProcess('node api.js', { env: { PORT: '8080' } });
 await new Promise(resolve => setTimeout(resolve, 2000));
-const api = await sandbox.exposePort(8080, { hostname, name: 'api' });
+const api = await sandbox.exposePort(8080, { 
+  hostname, 
+  name: 'api',
+  token: 'api-prod'
+});
 
-// Start and expose frontend
+// Start and expose frontend with stable token
 await sandbox.startProcess('npm run dev', { env: { PORT: '5173' } });
 await new Promise(resolve => setTimeout(resolve, 2000));
-const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
+const frontend = await sandbox.exposePort(5173, { 
+  hostname, 
+  name: 'frontend',
+  token: 'web-app'
+});
 
 console.log('Services:');
 console.log('- API:', api.exposedAt);
@@ -292,12 +355,32 @@ if (!ports.some(p => p.port === 8080)) {
 ```
 </TypeScriptExample>
 
+### Uppercase sandbox ID error
+
+**Error**: `Preview URLs require lowercase sandbox IDs`
+
+**Cause**: You created a sandbox with uppercase characters (e.g., `"MyProject-123"`) but preview URLs always use lowercase in routing, causing a mismatch.
+
+**Solution**:
+
+<TypeScriptExample>
+```
+// Create sandbox with normalization
+const sandbox = getSandbox(env.Sandbox, 'MyProject-123', { normalizeId: true });
+await sandbox.exposePort(8080, { hostname });
+```
+</TypeScriptExample>
+
+This creates the Durable Object with ID `"myproject-123"`, matching the preview URL routing.
+
+See [Sandbox options - normalizeId](/sandbox/configuration/sandbox-options/#normalizeid) for details.
+
 ## Preview URL Format
 
-**Production**: `https://{port}-{sandbox-id}.yourdomain.com`
+**Production**: `https://{port}-{sandbox-id}-{token}.yourdomain.com`
 
-- Port 8080: `https://8080-abc123.yourdomain.com`
-- Port 5173: `https://5173-abc123.yourdomain.com`
+- Auto-generated token: `https://8080-abc123-random16chars12.yourdomain.com`
+- Custom token: `https://8080-abc123-my-api-v1.yourdomain.com`
 
 **Local development**: `http://localhost:8787/...`
 

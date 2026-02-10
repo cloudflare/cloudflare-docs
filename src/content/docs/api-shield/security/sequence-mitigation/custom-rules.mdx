@@ -11,14 +11,15 @@ import { GlossaryTooltip, Render } from "~/components"
 
 API Shield sequence custom rules use the configured API Shield <GlossaryTooltip term="session identifier">session identifier</GlossaryTooltip> to track the order of requests a user has made and the time between requests, and makes them available via [Cloudflare Rules](/rules). This allows you to write rules that match valid or invalid sequences.
 
-These rules are different from [cookie sequence rules](/bots/additional-configurations/sequence-rules/) in a few ways: 
+These rules are similar to [cookie sequence rules](/bots/additional-configurations/sequence-rules/) but have a different set of prerequisties:
 
-- They need the `fraud_acct_ent` entitlement on a Cloudflare account.
+- They also need the `fraud_acct_ent` entitlement on a Cloudflare account.
 - They require [session identifiers](/api-shield/get-started/#session-identifiers) to be set in API Shield.
-- Because they use an API's session identifiers, they can be used for APIs designed for mobile applications.
-- Because Cloudflare stores the user state in memory and not in a cookie, the session lifetime is limited to 10 minutes.
+- Because they require session identifiers, they can only be used on traffic that can be clearly attributed to individual users through session identifiers (authenticated traffic).
+- Because Cloudflare stores the user state in memory and not in a cookie, a session's sequence lifetime is limited to 10 minutes.
+- You must set up at least one [API sequence rule](/api-shield/security/sequence-mitigation/manage-sequence-rules/) to activate the sequence system.
 
-Rules built using these custom rules are different from sequence mitigation rules built [via API or the Cloudflare dashboard](/api-shield/security/sequence-mitigation/). The custom rules syntax enables free-form logic and response options that the dashboard does not.
+Rules built using these custom rules are similar to the sequence rules that can be configured [via the API or the Cloudflare dashboard](/api-shield/security/sequence-mitigation/) as they make use of the same underlying technology. However, these custom rules allow for greater flexibility by using free-form logic on top of the recorded sequence and providing access to the full response options that rulesets offers.
 
 ## Availability
 

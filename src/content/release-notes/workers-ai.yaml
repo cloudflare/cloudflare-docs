@@ -3,6 +3,27 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2026-01-28"
+    title: Black Forest Labs FLUX.2 [klein] 9B now available
+    description: |-
+      - [`@cf/black-forest-labs/flux-2-klein-9b`](/workers-ai/models/flux-2-klein-9b/) now available on Workers AI! Read [changelog](/changelog/2026-01-28-flux-2-klein-9b-workers-ai/) to get started
+  - publish_date: "2026-01-15"
+    title: Black Forest Labs FLUX.2 [klein] 4b now available
+    description: |-
+      - [`@cf/black-forest-labs/flux-2-klein-4b`](/workers-ai/models/flux-2-klein-4b/) now available on Workers AI! Read [changelog](/changelog/2026-01-15-flux-2-klein-4b-workers-ai/) to get started
+  - publish_date: "2025-12-03"
+    title: Deepgram Flux promotional period over on Dec 8, 2025 - now has pricing
+    description: |-
+      - Check out updated pricing on the [`@cf/deepgram/flux`](/workers-ai/models/flux/) model page or [pricing](/workers-ai/platform/pricing/) page
+      - Pricing will start Dec 8, 2025
+  - publish_date: "2025-11-25"
+    title: Black Forest Labs FLUX.2 dev now available
+    description: |-
+      - [`@cf/black-forest-labs/flux-2-dev`](/workers-ai/models/flux-2-dev/) now available on Workers AI! Read [changelog](/changelog/2025-11-25-flux-2-dev-workers-ai/) to get started
+  - publish_date: "2025-11-13"
+    title: Qwen3 LLM and Embeddings available on Workers AI
+    description: |-
+      - [`@cf/qwen/qwen3-30b-a3b-fp8`](/workers-ai/models/qwen3-30b-a3b-fp8/) and [`@cf/qwen/qwen3-embedding-0.6b`](/workers-ai/models/qwen3-embedding-0.6b) now available on Workers AI
   - publish_date: "2025-10-21"
     title: New voice and LLM models on Workers AI
     description: |-
@@ -19,9 +40,9 @@ entries:
       - We've added support for some regional models on Workers AI in support of uplifting local AI labs and AI sovereignty. Check out the [full blog post here](https://blog.cloudflare.com/sovereign-ai-and-choice).
       - [`@cf/pfnet/plamo-embedding-1b`](/workers-ai/models/plamo-embedding-1b) creates embeddings from Japanese text.
       - [`@cf/aisingapore/gemma-sea-lion-v4-27b-it`](/workers-ai/models/gemma-sea-lion-v4-27b-it) is a fine-tuned model that supports multiple South East Asian languages, including Burmese, English, Indonesian, Khmer, Lao, Malay, Mandarin, Tagalog, Tamil, Thai, and Vietnamese.
-      - [`@cf/ai4bharat/indictrans2-en-indic-1B`](/workers-ai/models/indictrans2-en-indic-1B) is a translation model that can translate between 22 indic languages, including Bengali, Gujarati, Hindi, Tamil, Sanskrit and even traditionally low-resourced languages like Kashmiri, Manipuri and Sindhi. 
+      - [`@cf/ai4bharat/indictrans2-en-indic-1B`](/workers-ai/models/indictrans2-en-indic-1B) is a translation model that can translate between 22 indic languages, including Bengali, Gujarati, Hindi, Tamil, Sanskrit and even traditionally low-resourced languages like Kashmiri, Manipuri and Sindhi.
   - publish_date: "2025-09-23"
-    title: 'New document formats supported by Markdown conversion utility'
+    title: "New document formats supported by Markdown conversion utility"
     description: |-
       - Our [Markdown conversion utility](/workers-ai/features/markdown-conversion/) now supports converting `.docx` and `.odt` files.
   - publish_date: "2025-09-18"
@@ -99,11 +120,6 @@ entries:
     title: Meta Llama 3.1 now available on Workers AI
     description: |-
       Workers AI now suppoorts [Meta Llama 3.1](/workers-ai/models/llama-3.1-8b-instruct/).
-
-  - publish_date: "2024-07-11"
-    title: New community-contributed tutorial
-    description: |-
-      - Added community contributed tutorial on how to [create APIs to recommend products on e-commerce sites using Workers AI and Stripe](https://web.archive.org/web/20250714161553/https://developers.cloudflare.com/developer-spotlight/tutorials/creating-a-recommendation-api/).
 
   - publish_date: "2024-06-27"
     title: Introducing embedded function calling

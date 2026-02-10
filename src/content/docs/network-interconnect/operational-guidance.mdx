@@ -1,24 +1,25 @@
 ---
 pcx_content_type: concept
 title: Operational guidance
+description: Maintenance windows and troubleshooting guidance for CNI
 sidebar:
   order: 7
 ---
 
 import { Render } from "~/components"
 
-## Understanding Maintenance and Availability
+## Understanding maintenance and availability
 
 Also refer to [Monitoring and alerts](/network-interconnect/monitoring-and-alerts).
 
-Cloudflare performs regular network maintenance that may impact CNI connectivity.
+Regular network maintenance may impact Cloudflare Network Interconnect (CNI) connectivity.
 
 - **Maintenance impact**: Maintenance windows average six hours. Customers who are not redundantly connected to diverse devices, for instance in single-homed PoPs, will experience a complete service disruption on CNI in that location.
 - **Designing for availability**: For critical applications, deploy CNI in locations that support diversity on the device level (multi-homed PoPs). Cloudflare does not guarantee coordinated maintenance between PoP locations.
 
 ## Troubleshooting
 
-When facing connectivity problems, your first action should be to check for broader service disruptions. Visit `https://www.cloudflarestatus.com/` to see if any scheduled maintenance or active incidents are impacting services. This helps determine if the issue originates outside your network. Refer to [Monitoring and alerts](/network-interconnect/monitoring-and-alerts/).
+When facing connectivity problems, your first action should be to check for broader service disruptions. Visit [Cloudflare Status](https://www.cloudflarestatus.com/) to see if any scheduled maintenance or active incidents are impacting services. This helps determine if the issue originates outside your network. Refer to [Monitoring and alerts](/network-interconnect/monitoring-and-alerts/).
 
 If no system-wide problems are reported, gather the following information before submitting a support case. Providing comprehensive details facilitates a faster resolution:
 
@@ -26,4 +27,4 @@ If no system-wide problems are reported, gather the following information before
 - **Identification**: The CNI IP address or point-to-point prefix for the impacted CNI. If your CNI is part of a Magic setup, please also provide the name of the Magic Transit/WAN interconnect as listed in your dashboard.
 - **Physical Layer**: Light levels of the CNI link (if applicable).
 - **Service Impact**: Confirmation whether Magic Transit / WAN traffic was affected.
-- **Problem Description**: A clear summary of the issue (for example, CNI down, BGP session down, prefixes withdrawn).
+- **Problem Description**: A clear summary of the issue (for example, CNI down, Border Gateway Protocol (BGP) session down, prefixes withdrawn).

@@ -5,6 +5,8 @@ sidebar:
   order: 4
 ---
 
+import { Render } from "~/components";
+
 :::note
 
 Integration profiles require [Cloudflare CASB](/cloudflare-one/integrations/cloud-and-saas/).
@@ -18,6 +20,8 @@ Detection entries in integration profiles are managed by the third-party platfor
 
 Microsoft provides [Purview Information Protection sensitivity labels](https://learn.microsoft.com/en-us/purview/sensitivity-labels) to classify and protect sensitive data.
 
+<Render file="dlp/mip-nested-labels-limitation" product="cloudflare-one" />
+
 ### Setup
 
 To add MIP sensitivity labels to a DLP Profile, simply integrate your Microsoft account with [Cloudflare CASB](/cloudflare-one/integrations/cloud-and-saas/microsoft-365/). A new integration profile will appear under **Data loss prevention** > **DLP profiles**. The profile is named **MIP Sensitivity Labels** followed by the name of the CASB integration.
@@ -26,4 +30,4 @@ MIP sensitivity labels can also be added to a [custom DLP profile](/cloudflare-o
 
 ### Syncing
 
-Allow 24 hours for label additions and edits in your Microsoft account to propagate to Cloudflare DLP. At this time, deletions in your Microsoft account will not delete entries in your Cloudflare DLP Profile.
+Allow 24 hours for label additions and edits in your Microsoft account to propagate to Cloudflare DLP. Deletions in your Microsoft account will not delete entries in your Cloudflare DLP Profile.

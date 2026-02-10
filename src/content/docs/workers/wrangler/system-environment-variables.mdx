@@ -51,6 +51,10 @@ Wrangler supports the following environment variables:
 
   - The email address associated with your Cloudflare account, usually used for older authentication method with `CLOUDFLARE_API_KEY=`.
 
+- `CLOUDFLARE_ENV` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The [environment](/workers/wrangler/environments/) to use for Wrangler commands. This allows you to select an environment without using the `--env` flag. For example, `CLOUDFLARE_ENV=production wrangler deploy` will deploy to the `production` environment. The `--env` command line argument takes precedence over this environment variable.
+
 - `WRANGLER_SEND_METRICS` <Type text="string" /> <MetaInfo text="optional" />
 
   - Options for this are `true` and `false`. Defaults to `true`. Controls whether Wrangler can send anonymous usage data to Cloudflare for this project. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).

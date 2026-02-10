@@ -40,7 +40,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "Mistral_Small_3_1_24B_Instruct_Prompt",
+                    "title": "Prompt",
                     "properties": {
                         "prompt": {
                             "type": "string",
@@ -115,7 +115,7 @@
                     ]
                 },
                 {
-                    "title": "Mistral_Small_3_1_24B_Instruct_Messages",
+                    "title": "Messages",
                     "properties": {
                         "messages": {
                             "type": "array",

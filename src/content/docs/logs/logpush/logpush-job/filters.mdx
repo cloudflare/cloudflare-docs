@@ -53,6 +53,13 @@ Here are some examples of how the logical operators can be implemented. `X`, `Y`
 
 - (X AND Y) OR Z - `{"where":{"or":[{"and": [{X},{Y}]},{Z}]}}`
 
+Logpush filters act as a pass-through gate, not an exclusion list. When multiple conditions are joined with AND:
+
+- All conditions must evaluate to TRUE for the log to be pushed.
+- If any single condition is FALSE, the log is excluded.
+
+A common misconception is interpreting the filter as `exclude logs matching ALL conditions` rather than `include logs matching ALL conditions`.
+
 ## Set filters via API or dashboard
 
 Filters can be set via API or the Cloudflare dashboard. Note that using a filter is optional, but if used, it must contain the `where` key.

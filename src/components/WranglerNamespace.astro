@@ -5,7 +5,7 @@ import WranglerCommand from "./WranglerCommand.astro";
 
 const props = z.object({
 	namespace: z.string(),
-	headingLevel: z.number().default(2)
+	headingLevel: z.number().default(2),
 });
 
 const { namespace, headingLevel } = props.parse(Astro.props);
@@ -22,6 +22,10 @@ const definitions: NonNullable<(typeof node)["definition"]>[] = [];
 
 function flattenSubtree(node: (typeof registry)["subtree"]) {
 	for (const value of node.values()) {
+		// skip commands marked as hidden
+		if (value.definition?.metadata?.hidden) {
+			continue;
+		}
 		if (value.definition?.type === "command") {
 			definitions.push(value.definition);
 		} else {
@@ -37,11 +41,14 @@ flattenSubtree(node.subtree);
 	definitions.map((definition) => {
 		if (definition.type !== "command") {
 			throw new Error(
-				`[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`,
+				`[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`
 			);
 		}
 		return (
-			<WranglerCommand command={definition.command.replace("wrangler ", "")} headingLevel={headingLevel} />
+			<WranglerCommand
+				command={definition.command.replace("wrangler ", "")}
+				headingLevel={headingLevel}
+			/>
 		);
 	})
 }

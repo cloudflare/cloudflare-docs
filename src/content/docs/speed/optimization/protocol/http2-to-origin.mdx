@@ -33,7 +33,55 @@ If you wish to disable HTTP/2 to Origin, you can follow these steps:
 
 ## Connection multiplexing
 
-Cloudflare’s HTTP/2 multiplexing to origin reduces active connections by pooling many requests into fewer TCP connections. If a request arrives and the current connection has not reached the stream limit, Cloudflare reuses the existing connection. If the limit has not been reached, Cloudflare may open additional connections to handle more requests. Because multiplexing reuses fewer TCP connections, the overall number of active connections to your origin will typically be lower, which is often helpful for systems sensitive to connection overhead. During surges (like failovers), Cloudflare scales connections by first using available streams, then opening new ones as needed.
+Cloudflare supports HTTP/2 multiplexing from its global edge network to your origin servers. Instead of opening a new TCP connection for every incoming request, multiple HTTP/2 streams share a single long-lived TCP connection. This significantly reduces the cost of connection setup and teardown, improving efficiency and performance between Cloudflare and your origin.
+
+By pooling many requests into fewer TCP connections, Cloudflare lowers the number of active connections your origin must maintain — particularly valuable for backends sensitive to connection overhead or resource limits.
+
+### How it works
+
+When a new request arrives, Cloudflare attempts to reuse an existing HTTP/2 connection to the origin:
+
+- If the connection has not reached its concurrent stream limit, Cloudflare multiplexes the request over that same connection.
+- If the stream limit has been reached, Cloudflare opens a new TCP connection as needed.
+
+Connections are kept alive and reused until they become idle or hit their concurrency limit.
+
+#### Connection lifecycle
+
+- **Connection reuse**: Cloudflare maintains persistent (keep-alive) TCP connections to your origin. Reuse continues until the HTTP/2 stream limit is reached or the connection goes idle.
+
+- **Idle timeout (900s)**: If a connection remains idle (no active streams) for 900 seconds, Cloudflare closes it. Attempting to reuse a closed connection may result in a `520` error.
+
+- **Keep-alives**: Cloudflare sends periodic TCP keep-alives to detect unresponsive origins. After two unanswered probes, the connection is reset.
+
+	- First probe after ~30 seconds of inactivity
+	- Second probe after 15 seconds
+
+- **Connection tear-down**: Connections may also close due to:
+
+	- Load balancing decisions
+	- Data center or node maintenance
+	- Reaching the maximum concurrency limit
+	- Origin or intermediary network closing idle connections
+
+### Benefits
+
+| Advantage              | Description                                                                                       |
+|------------------------|---------------------------------------------------------------------------------------------------|
+| Fewer TCP handshakes   | Multiple requests share a single long-lived TCP connection, minimizing connection churn.          |
+| Lower latency          | Eliminates repeated TCP/TLS handshakes, reducing round-trip delays for new requests.              |
+| Reduced origin load    | Fewer concurrent connections for the origin to manage, easing load on resource-constrained systems. |
+| Adaptive scaling       | During surges (for example, failovers), Cloudflare reuses available streams first, then opens new connections as needed. |
+
+### Default behavior by plan
+
+| Plan                     | Default State                               | Max concurrent streams per connection | Configurable? |
+|--------------------------|-----------------------------------------------|----------------------------------------|---------------|
+| Free / Pro / Business    | Enabled by default                           | 200                                    | No            |
+| Enterprise               | Disabled by default (1 stream per connection) | 1–200+                                 | Yes           |
+
+- **Free/Pro/Business**: Multiplexing is automatically enabled. Each connection supports up to 200 concurrent streams.
+- **Enterprise**: Multiplexing starts effectively disabled (1 stream). You can enable and configure concurrency per zone (up to 200+ concurrent streams).
 
 ### Configuration
 
@@ -63,15 +111,87 @@ Refer to the [API documentation](/api/python/resources/zones/subresources/settin
 
 </Details>
 
+<Details header="Terraform ">
+
+```hcl
+resource "cloudflare_zone_setting" "example" {
+  zone_id    = "<ZONE_ID>"
+  setting_id = "origin_h2_max_streams"
+  value      = 50
+}
+```
+
+</Details>
+
 :::note
 If your origin does not support multiplexing, enabling HTTP/2 to origin may result in 5xx errors, particularly 520s.
 
-During the HTTP/2 handshake, our edge reads the SETTINGS_MAX_CONCURRENT_STREAMS that your origin advertises, and it will respect that lower limit if your origin is configured with a stricter concurrency cap than Cloudflare’s setting. This allows you to control concurrency on a per-origin basis, while still benefiting from Cloudflare’s multiplexing framework.
+During the HTTP/2 handshake, our edge reads the SETTINGS_MAX_CONCURRENT_STREAMS that your origin advertises, and it will respect that lower limit if your origin is configured with a stricter concurrency cap than Cloudflare's setting. This allows you to control concurrency on a per-origin basis, while still benefiting from Cloudflare's multiplexing framework.
 :::
+
+### Timeouts and error codes
+
+| Condition               | Default / Range                        | Error code | Description                                           |
+|-------------------------|----------------------------------------|------------|-------------------------------------------------------|
+| Proxy Read Timeout      | 100s (up to 6000s for Enterprise)      | `524`        | Origin took too long to respond.                     |
+| Proxy Idle Timeout      | 900s (fixed)                            | `520`        | Connection closed due to idleness.                   |
+| TCP Keep-Alive Interval | 30s initial, 15s between probes        | `520`        | After two missed probes, Cloudflare resets the connection. |
+| TCP Handshake Timeout   | 19s                                     | `522`        | Origin did not complete the SYN handshake.           |
+| TCP ACK Timeout         | 90s                                     | `522`        | Origin stopped acknowledging data.                  |
+
+### Common scenarios
+
+**Failover events**
+
+When traffic shifts suddenly (for example, during origin failover), Cloudflare reuses active connections where possible. If concurrency limits are reached, it opens new ones. Active connection counts may spike temporarily, but overall total connections remain lower than without multiplexing.
+
+**Long-Lived or idle requests**
+
+	- If your requests exceed 100 seconds (for example, streaming), increase the Proxy Read Timeout (Enterprise only).
+	- Origins that close connections faster than 900 seconds may experience connection churn, but Cloudflare automatically reestablishes new connections as needed.
+
+**Potential 5xx errors**
+
+Some 5xx errors, like `520` or `522`, may be related to idle timeouts or unreachable origins. If concurrency is set too high for an underpowered origin, bursts of simultaneous requests can overwhelm it and lead to stream resets or short spikes of 5xx errors. Enterprise customers who encounter this can ask their Cloudflare account team or support to lower the concurrency limit, which reduces how many requests are sent to the origin at the same time and helps prevent overload.
+
+### FAQ
+
+#### Does Cloudflare use a fixed multiplexing ratio?
+
+Free, Pro, and Business plans use 200 concurrent streams per connection. Enterprise users can configure between 1–200+ streams.
+
+#### How does Cloudflare scale connections during spikes or failovers?
+
+Cloudflare first reuses existing keep-alive connections. If they reach concurrency limits, new connections are opened as needed. Even during surges, total connection count is typically lower than without multiplexing.
+
+#### What if my backend is sensitive to parallel requests?
+
+Enterprise users can lower the concurrency limit. Cloudflare also honors your origin's `SETTINGS_MAX_CONCURRENT_STREAMS`, allowing your server to enforce stricter limits. Cloudflare's CDN also provides Cache Locking, which helps avoid multiple parallel requests to your origin during revalidation. Refer to [Revalidation](/cache/concepts/revalidation/) for more information.
+
+#### Can I gradually roll out higher concurrency?
+
+Yes. You can adjust your origin's HTTP/2 settings or Cloudflare's zone setting incrementally to increase concurrency safely.
+
+#### From where does Cloudflare connect to my origin?
+
+Cloudflare operates a flat anycast network. Any data center may connect directly to your origin — there is no L1/L2 hierarchy. Origin connections may come from multiple data centers worldwide.
+
+#### Does Cloudflare prewarm connections to origins?
+
+No. Connections are created on demand and reused where possible. There is no persistent idle pool.
+
+#### How are idle connections managed?
+
+Idle connections are closed after 900 seconds of inactivity. They are not reopened proactively; new connections are created as traffic resumes.
+
+#### Can Cloudflare close active TCP connections?
+
+Only if the origin closes them, a network error occurs, or Cloudflare performs maintenance or load redistribution. There is no hard maximum lifetime for active connections.
+
 
 ## Protocol compatibility
 
 Note that if the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
 We connect to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2).
 
-If you are unsure if your server supports HTTP/2, we suggest checking your origin server’s documentation or using a testing tool for HTTP/2 implementation (for example, [h2spec](https://github.com/summerwind/h2spec)).
+If you are unsure if your server supports HTTP/2, we suggest checking your origin server's documentation or using a testing tool for HTTP/2 implementation (for example, [h2spec](https://github.com/summerwind/h2spec)).

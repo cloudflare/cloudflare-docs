@@ -14,7 +14,7 @@ const currentProduct = await getEntry("products", currentSection!);
 
 if (!currentProduct) {
 	throw new Error(
-		`[ListTutorials] Unable to find product YAML for ${currentSection}.`,
+		`[ListTutorials] Unable to find product YAML for ${currentSection}.`
 	);
 }
 
@@ -46,7 +46,6 @@ const timeAgo = (date?: Date) => {
 		<tr>
 			<td>Name</td>
 			<td>Last Updated</td>
-			<td>Type</td>
 			<td>Difficulty</td>
 		</tr>
 	</thead>
@@ -67,7 +66,6 @@ const timeAgo = (date?: Date) => {
 							<Fragment set:html={anchor} />
 						</td>
 						<td>{timeAgo(tutorial.data.reviewed)}</td>
-						<td>📝 Tutorial</td>
 						<td>{tutorial.data.difficulty}</td>
 					</tr>
 				);

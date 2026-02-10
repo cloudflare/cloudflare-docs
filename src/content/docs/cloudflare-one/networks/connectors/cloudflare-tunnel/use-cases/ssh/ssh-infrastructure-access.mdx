@@ -1,8 +1,8 @@
 ---
 pcx_content_type: how-to
-title: SSH with Access for Infrastructure (recommended)
+title: SSH with Access for Infrastructure
 sidebar:
-  order: 2
+  order: 3
   label: SSH with Access for Infrastructure
 ---
 
@@ -29,7 +29,7 @@ import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
 To connect your devices to Cloudflare:
 
-1. [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your devices in Gateway with WARP mode.
+1. [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your devices in Traffic and DNS mode.
 2. [Enable the Gateway proxy for TCP](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy).
 3. [Create device enrollment rules](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 
@@ -53,8 +53,15 @@ To connect your devices to Cloudflare:
 
 <Render file="access/add-infrastructure-app" product="cloudflare-one" />
 
-## 6. (Recommended) Modify order of precedence in Gateway
+## 6. (Recommended) Configure network policies
 
+Traffic from the WARP client to your infrastructure targets is filtered by both [Gateway network policies](/cloudflare-one/traffic-policies/initial-setup/network/) and the application-specific Access policies.
+
+### Catch-all block policy
+
+<Render file="tunnel/catch-all-policy" product="cloudflare-one"/>
+
+### Allow Access infrastructure targets
 <Render
 	file="access/modify-gateway-policy-precedence"
 	product="cloudflare-one"
@@ -129,10 +136,8 @@ To turn off SSH command logging, delete your uploaded public key:
 <Tabs>
 <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings** > **SSH log encryption public key**.
-
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings** > **SSH log encryption public key**.
 2. Select **Remove**.
-
 3. Select **Remove key** to confirm.
 
 Cloudflare will stop logging SSH commands to your targets, as well as any commands subject to [Gateway Audit SSH](/cloudflare-one/traffic-policies/network-policies/ssh-logging/) policies.
@@ -475,4 +480,8 @@ By completing all four troubleshooting steps, you should have resolved any conne
 
 ### 5. Get help
 
-<Render file="warp/support-ticket-best-practices" product="cloudflare-one" params={{ sshMode: true }} />
+<Render
+	file="warp/support-ticket-best-practices"
+	product="cloudflare-one"
+	params={{ sshMode: true }}
+/>

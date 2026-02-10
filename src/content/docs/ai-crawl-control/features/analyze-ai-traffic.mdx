@@ -18,20 +18,34 @@ To view AI Crawl Control metrics:
 
    <DashButton url="/?to=/:account/:zone/ai" />
 
-You can find meaningful information across both **Crawlers** and **Metrics** tabs.
+You can find meaningful information across the **Overview**, **Crawlers**, and **Metrics** tabs.
 
-## View AI crawler activity
+## View the Overview tab
 
-The **Crawlers** tab provides you with the following information:
+The **Overview** tab provides a snapshot of AI crawler activity:
+
+| Component                         | What you can do                                                                                                                                                                                                                                        |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Executive summary**             | Review total request volume, volume change, most common status code, most popular path, and high-volume crawler activity.                                                                                                                              |
+| **Managed robots.txt status**     | Check whether [Cloudflare managed robots.txt](/bots/additional-configurations/managed-robots-txt/) is enabled for your zone.                                                                                                                           |
+| **Metrics with trend charts**     | Monitor total requests, allowed requests, unsuccessful requests, and total referrals (paid plans only).                                                                                                                                                |
+| **Crawlers grouped by operators** | Explore crawlers organized by company (OpenAI, Microsoft, Google, ByteDance, Anthropic, Meta) with allowed requests, referrals (paid plans only), and activity change percentages. Select a crawler or operator to drill down in the **Crawlers** tab. |
+| **Filters**                       | Customize your view by date range, crawler, operator, hostname, or path. All metrics update dynamically.                                                                                                                                               |
+
+## View the Crawlers tab
+
+The **Crawlers** tab provides detailed information about individual AI crawlers and allows you to set **Block** or **Allow** controls:
 
 | Metric                  | Description                                                             |
 | ----------------------- | ----------------------------------------------------------------------- |
 | **Total requests**      | Total number of requests to crawl your website from common AI crawlers. |
 | **Requests by crawler** | Number of requests made by each AI crawler.                             |
 
-## View AI Crawl Control metrics
+For more information on managing crawler access, refer to [Manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/).
 
-The **Metrics** tab provides you with the following metrics to help you understand how AI crawlers are interacting with your website.
+## View the Metrics tab
+
+The **Metrics** tab provides detailed analytics and charts to help you understand how AI crawlers are interacting with your website.
 
 ### Analyze referrer data
 
@@ -112,8 +126,8 @@ The **Crawlers** tab includes an actions menu for each crawler with the followin
 
 | Action                         | Description                                                                                                                               |
 | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| **View Metrics**               | Filter the **Metrics** tab to the selected crawler.                                                                                           |
+| **View Metrics**               | Filter the **Metrics** tab to the selected crawler.                                                                                       |
 | **View on Cloudflare Radar**   | Learn more about each verified crawler on Cloudflare Radar.                                                                               |
-| **View in Security Analytics** | Filter Security Analytics by detection IDs ([Bot Management](/bots/get-started/bot-management/) customers).                              |
+| **View in Security Analytics** | Filter Security Analytics by detection IDs ([Bot Management](/bots/get-started/bot-management/) customers).                               |
 | **Copy User Agent**            | Copy user agent strings for use in [WAF custom rules](/waf/custom-rules/), [Redirect Rules](/rules/url-forwarding/), or robots.txt files. |
-| **Copy Detection ID**          | Copy detection IDs for use in [WAF custom rules](/waf/custom-rules/) ([Bot Management](/bots/get-started/bot-management/) customers).    |
+| **Copy Detection ID**          | Copy detection IDs for use in [WAF custom rules](/waf/custom-rules/) ([Bot Management](/bots/get-started/bot-management/) customers).     |
