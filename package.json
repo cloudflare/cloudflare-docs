@@ -22,7 +22,11 @@
 		"start": "npx astro dev",
 		"sync": "npx astro sync",
 		"test": "npx vitest",
-		"lint": "npx eslint"
+		"lint": "npx eslint",
+		"ai-setup:import-from-opencode": "npx rulesync import --targets opencode --features rules,commands,subagents",
+		"ai-setup:claudecode": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets claudecode --features rules,commands,subagents",
+		"ai-setup:cursor": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets cursor --features commands,subagents",
+		"ai-setup:copilot": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets copilot --features commands,subagents"
 	},
 	"devDependencies": {
 		"@actions/core": "1.11.1",
