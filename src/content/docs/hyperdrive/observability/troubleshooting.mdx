@@ -68,6 +68,54 @@ If your queries are not getting cached despite Hyperdrive having caching enabled
 | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `Code generation from strings disallowed for this context` | The database driver you are using is attempting to use the `eval()` command, which is unsupported on Cloudflare Workers (common in `mysql2` driver). | Configure the database driver to not use `eval()`. See how to [configure `mysql2` to disable the usage of `eval()`](/hyperdrive/examples/connect-to-mysql/mysql-drivers-and-libraries/mysql2/). |
 
+### Stale connection and I/O context errors
+
+These errors occur when a database client or connection is created in the global scope (outside of a request handler) or is reused across requests. Workers do not allow [I/O across requests](/workers/runtime-apis/bindings/#making-changes-to-bindings), and database connections from a previous request context become unusable. Always [create database clients inside your handlers](/hyperdrive/concepts/connection-lifecycle/#cleaning-up-client-connections).
+
+#### Workers runtime errors
+
+| Error Message                                    | Details                                                                                                               | Recommended fixes                                                                                                            |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `Disallowed operation called within global scope. Asynchronous I/O (ex: fetch() or connect()), setting a timeout, and generating random values are not allowed within global scope.` | Your Worker is attempting to open a database connection or perform I/O during script startup, outside of a request handler. | Move the database client creation into your `fetch`, `queue`, or other handler function. |
+| `Cannot perform I/O on behalf of a different request. I/O objects (such as streams, request/response bodies, and others) created in the context of one request handler cannot be accessed from a different request's handler.` | A database connection or client created during one request is being reused in a subsequent request. | Create a new database client on every request instead of caching it in a global variable. Hyperdrive's connection pooling already eliminates the connection startup overhead. |
+
+#### node-postgres (`pg`) errors
+
+| Error Message                                    | Details                                                                                                               | Recommended fixes                                                                                                            |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `Connection terminated` | The client's `.end()` method was called, or the connection was cleaned up at the end of a previous request. | Create a new `Client` inside your handler instead of reusing one from a prior request. |
+| `Connection terminated unexpectedly` | The underlying connection was dropped without an explicit `.end()` call — for example, when a previous request's context was garbage collected. | Create a new `Client` inside your handler for every request. |
+| `Client has encountered a connection error and is not queryable` | A socket-level error occurred on the connection (common when reusing a client across requests). | Create a new `Client` inside your handler. Do not store clients in global variables. |
+| `Client was closed and is not queryable` | A query was attempted on a client whose `.end()` method was already called. | Create a new `Client` inside your handler instead of reusing one. |
+| `Cannot use a pool after calling end on the pool` | `pool.connect()` was called on a `Pool` instance that has already been ended. | Do not use `new Pool()` in the global scope. Create a `new Client()` inside your handler — Hyperdrive handles connection pooling for you. |
+| `Client has already been connected. You cannot reuse a client.` | `client.connect()` was called on a client that was already connected in a previous invocation. | Create a new `Client` per request. node-postgres clients cannot be reconnected once connected. |
+
+#### Postgres.js (`postgres`) errors
+
+Postgres.js error messages include the error code and the target host. The `code` property on the error object contains the error code.
+
+| Error Message                                    | Details                                                                                                               | Recommended fixes                                                                                                            |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `write CONNECTION_ENDED <host>:<port>` | A query was attempted after `sql.end()` was called, or the connection was cleaned up from a prior request. Error code: `CONNECTION_ENDED`. | Create a new `postgres()` instance inside your handler. |
+| `write CONNECTION_DESTROYED <host>:<port>` | The connection was forcefully terminated — for example, during `sql.end({ timeout })` expiration, or because the connection was already terminated. Error code: `CONNECTION_DESTROYED`. | Create a new `postgres()` instance inside your handler for every request. |
+| `write CONNECTION_CLOSED <host>:<port>` | The underlying socket was closed unexpectedly while queries were still pending. Error code: `CONNECTION_CLOSED`. | Create a new `postgres()` instance inside your handler. If this occurs within a single request, check for network issues or query timeouts. |
+
+#### mysql2 errors
+
+| Error Message                                    | Details                                                                                                               | Recommended fixes                                                                                                            |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `Can't add new command when connection is in closed state` | A query was attempted on a connection that has already been closed or encountered a fatal error. | Create a new connection inside your handler instead of reusing one from global scope. |
+| `Connection lost: The server closed the connection.` | The underlying socket was closed by the server or was garbage collected between requests. Error code: `PROTOCOL_CONNECTION_LOST`. | Create a new connection inside your handler for every request. |
+| `Pool is closed.` | `pool.getConnection()` was called on a pool that has already been closed. | Do not use `createPool()` in the global scope. Create a new `createConnection()` inside your handler — Hyperdrive handles pooling for you. |
+
+#### mysql errors
+
+| Error Message                                    | Details                                                                                                               | Recommended fixes                                                                                                            |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `Cannot enqueue Query after fatal error.` | A query was attempted on a connection that previously encountered a fatal error. Error code: `PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR`. | Create a new connection inside your handler instead of reusing one from global scope. |
+| `Cannot enqueue Query after invoking quit.` | A query was attempted on a connection after `.end()` was called. Error code: `PROTOCOL_ENQUEUE_AFTER_QUIT`. | Create a new connection inside your handler for every request. |
+| `Cannot enqueue Handshake after already enqueuing a Handshake.` | `.connect()` was called on a connection that was already connected in a previous request. Error code: `PROTOCOL_ENQUEUE_HANDSHAKE_TWICE`. | Create a new connection per request. mysql connections cannot be reconnected once connected. |
+
 ### Improve performance
 
 Having query traffic written as transactions can limit performance. This is because in the case of a transaction, the connection must be held for the duration of the transaction, which limits connection multiplexing. If there are multiple queries per transaction, this can be particularly impactful on connection multiplexing. Where possible, we recommend not wrapping queries in transactions to allow the connections to be shared more aggressively.

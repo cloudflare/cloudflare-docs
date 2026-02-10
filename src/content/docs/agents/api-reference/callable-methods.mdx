@@ -69,13 +69,13 @@ Add the `@callable()` decorator to any method you want to expose:
 ```ts
 import { Agent, callable } from "agents";
 
-type State = {
+export type CounterState = {
 	count: number;
 	items: string[];
 };
 
-export class CounterAgent extends Agent<Env, State> {
-	initialState: State = { count: 0, items: [] };
+export class CounterAgent extends Agent<Env, CounterState> {
+	initialState: CounterState = { count: 0, items: [] };
 
 	@callable()
 	increment(): number {

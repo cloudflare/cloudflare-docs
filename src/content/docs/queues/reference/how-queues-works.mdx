@@ -40,21 +40,22 @@ A producer is the term for a client that is publishing or producing messages on 
 For example, if we bound a queue named `my-first-queue` to a binding of `MY_FIRST_QUEUE`, messages can be written to the queue by calling `send()` on the binding:
 
 ```ts
-type Environment = {
+interface Env {
   readonly MY_FIRST_QUEUE: Queue;
-};
+}
 
 export default {
-  async fetch(req, env, context): Promise<Response> {
-    let message = {
+  async fetch(req, env, ctx): Promise<Response> {
+    const message = {
       url: req.url,
       method: req.method,
       headers: Object.fromEntries(req.headers),
     };
 
     await env.MY_FIRST_QUEUE.send(message); // This will throw an exception if the send fails for any reason
+    return new Response("Sent!");
   },
-} satisfies ExportedHandler<Environment>;
+} satisfies ExportedHandler<Env>;
 ```
 
 :::note
@@ -78,38 +79,49 @@ Messages published to a queue can be published in different formats, depending o
 To explicitly set the content type or specify an alternative content type, pass the `contentType` option to the `send()` method of your queue:
 
 ```ts
-type Environment = {
+interface Env {
   readonly MY_FIRST_QUEUE: Queue;
-};
+}
 
 export default {
-  async fetch(req, env): Promise<Response> {
-    let message = {
+  async fetch(req, env, ctx): Promise<Response> {
+    const message = {
       url: req.url,
       method: req.method,
       headers: Object.fromEntries(req.headers),
     };
     try {
       await env.MY_FIRST_QUEUE.send(message, { contentType: "json" }); // "json" is the default
+      return new Response("Sent!");
     } catch (e) {
       // Catch cases where send fails, including due to a mismatched content type
-      console.log(e)
-      return Response.json({"msg": e}, { status: 500 })
+      const msg = e instanceof Error ? e.message : "Unknown error";
+      return Response.json({ error: msg }, { status: 500 });
     }
   },
-} satisfies ExportedHandler<Environment>;
+} satisfies ExportedHandler<Env>;
 ```
 
 To only accept simple strings when writing to a queue, set `{ contentType: "text" }` instead:
 
 ```ts
+interface Env {
+  readonly MY_FIRST_QUEUE: Queue;
+}
+
+export default {
+  async fetch(req, env, ctx): Promise<Response> {
     try {
-      // This will throw an exception (error) if you write to pass a non-string to the queue, such as a
-      // native JavaScript object or ArrayBuffer.
+      // This will throw an exception (error) if you pass a non-string to the queue,
+      // such as a native JavaScript object or ArrayBuffer.
       await env.MY_FIRST_QUEUE.send("hello there", { contentType: "text" }); // explicitly set 'text'
+      return new Response("Sent!");
     } catch (e) {
-      console.log(e)
-      return Response.json({"msg": e}, { status: 500 })
+      const msg = e instanceof Error ? e.message : "Unknown error";
+      return Response.json({ error: msg }, { status: 500 });
+    }
+  },
+} satisfies ExportedHandler<Env>;
 ```
 
 The [`QueuesContentType`](/queues/configuration/javascript-apis/#queuescontenttype) API documentation describes how each format is serialized to a queue.
@@ -128,13 +140,20 @@ A queue can only have one type of consumer configured.
 A consumer is the term for a client that is subscribing to or *consuming* messages from a queue. In its most basic form, a consumer is defined by creating a `queue` handler in a Worker:
 
 ```ts
+interface Env {
+  // Add your bindings here, e.g. KV namespaces, R2 buckets, D1 databases
+}
+
 export default {
-  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+  async queue(batch, env, ctx): Promise<void> {
     // Do something with messages in the batch
     // i.e. write to R2 storage, D1 database, or POST to an external API
-    // You can also iterate over each message in the batch by looping over batch.messages
+    for (const msg of batch.messages) {
+      // Process each message
+      console.log(msg.body);
+    }
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 You then connect that consumer to a queue with `wrangler queues consumer <queue-name> <worker-script-name>` or by defining a `[[queues.consumers]]` configuration in your [Wrangler configuration file](/workers/wrangler/configuration/) manually:
@@ -175,24 +194,29 @@ Notably, you can use the same consumer with multiple queues. The queue handler t
 For example, a consumer configured to consume messages from multiple queues would resemble the following:
 
 ```ts
+interface Env {
+  // Add your bindings here
+}
+
 export default {
-  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+  async queue(batch, env, ctx): Promise<void> {
     // MessageBatch has a `queue` property we can switch on
     switch (batch.queue) {
-      case 'log-queue':
+      case "log-queue":
         // Write the batch to R2
         break;
-      case 'debug-queue':
+      case "debug-queue":
         // Write the message to the console or to another queue
         break;
-      case 'email-reset':
+      case "email-reset":
         // Trigger a password reset email via an external API
         break;
       default:
-      // Handle messages we haven't mentioned explicitly (write a log, push to a DLQ)
+        // Handle messages we haven't mentioned explicitly (write a log, push to a DLQ)
+        break;
     }
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 ### Remove a consumer

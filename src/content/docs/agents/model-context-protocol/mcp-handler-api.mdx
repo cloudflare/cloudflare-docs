@@ -114,7 +114,18 @@ const handler = createMcpHandler(server, { transport });
 
 ## Stateless MCP Servers
 
-Many MCP Servers are stateless, meaning they don't maintain any session state between requests. The `createMcpHandler` function is a lightweight alternative to the `McpAgent` class that can be used to serve an MCP server straight from a Worker. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
+Many MCP Servers are stateless, meaning they do not maintain any session state between requests. The `createMcpHandler` function is a lightweight alternative to the `McpAgent` class that can be used to serve an MCP server straight from a Worker. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
+
+:::caution[Breaking change in MCP SDK 1.26.0]
+
+**Important:** If you are upgrading from MCP SDK versions before 1.26.0, you must update how you create `McpServer` instances in stateless servers.
+
+MCP SDK 1.26.0 introduces a guard that prevents connecting to a server instance that has already been connected to a transport. This fixes a security vulnerability ([CVE](https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-345p-7cg4-v4c7)) where sharing server or transport instances could leak cross-client response data.
+
+**If your stateless MCP server declares `McpServer` or transport instances in the global scope, you must create new instances per request.**
+
+See the [migration guide](/agents/model-context-protocol/mcp-handler-api/#migration-guide-for-mcp-sdk-1260) below for details.
+:::
 
 <TypeScriptExample>
 
@@ -123,38 +134,43 @@ import { createMcpHandler } from "agents/mcp";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
-const server = new McpServer({
-	name: "Hello MCP Server",
-	version: "1.0.0",
-});
+function createServer() {
+	const server = new McpServer({
+		name: "Hello MCP Server",
+		version: "1.0.0",
+	});
 
-server.tool(
-	"hello",
-	"Returns a greeting message",
-	{ name: z.string().optional() },
-	async ({ name }) => {
-		return {
-			content: [
-				{
-					text: `Hello, ${name ?? "World"}!`,
-					type: "text",
-				},
-			],
-		};
-	},
-);
+	server.tool(
+		"hello",
+		"Returns a greeting message",
+		{ name: z.string().optional() },
+		async ({ name }) => {
+			return {
+				content: [
+					{
+						text: `Hello, ${name ?? "World"}!`,
+						type: "text",
+					},
+				],
+			};
+		},
+	);
+
+	return server;
+}
 
 export default {
 	fetch: async (request: Request, env: Env, ctx: ExecutionContext) => {
-		const handler = createMcpHandler(server);
-		return handler(request, env, ctx);
+		// Create new server instance per request
+		const server = createServer();
+		return createMcpHandler(server)(request, env, ctx);
 	},
 };
 ```
 
 </TypeScriptExample>
 
-Each request to this MCP server creates a new session. The server doesn't maintain state between requests. This is the simplest way to implement an MCP server.
+Each request to this MCP server creates a new session and server instance. The server does not maintain state between requests. This is the simplest way to implement an MCP server.
 
 ## Stateful MCP Servers
 
@@ -234,6 +250,121 @@ With persistent storage, the transport preserves:
 - Initialization status
 
 This allows MCP clients to reconnect and resume their session in the event of a connection loss.
+
+## Migration Guide for MCP SDK 1.26.0
+
+The MCP SDK 1.26.0 introduces a breaking change for stateless MCP servers that addresses a critical security vulnerability where responses from one client could leak to another client when using shared server or transport instances.
+
+### Who is affected?
+
+| Server Type | Affected? | Action Required |
+|-------------|-----------|-----------------|
+| Stateful servers using `Agent`/Durable Object | No | No changes needed |
+| Stateless servers using `createMcpHandler` | Yes | Create new `McpServer` per request |
+| Stateless servers using raw SDK transport | Yes | Create new `McpServer` and transport per request |
+
+### Why is this necessary?
+
+The previous pattern of declaring `McpServer` instances in the global scope allowed responses from one client to leak to another client. This is a security vulnerability. The new SDK version prevents this by throwing an error if you try to connect a server that is already connected.
+
+### Before (broken with SDK 1.26.0)
+
+<TypeScriptExample>
+
+```ts
+import { createMcpHandler } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
+// INCORRECT: Global server instance
+const server = new McpServer({
+	name: "Hello MCP Server",
+	version: "1.0.0",
+});
+
+server.tool("hello", "Returns a greeting", {}, async () => {
+	return {
+		content: [{ text: "Hello, World!", type: "text" }],
+	};
+});
+
+export default {
+	fetch: async (request: Request, env: Env, ctx: ExecutionContext) => {
+		// This will fail on second request with MCP SDK 1.26.0+
+		return createMcpHandler(server)(request, env, ctx);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### After (correct)
+
+<TypeScriptExample>
+
+```ts
+import { createMcpHandler } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
+// CORRECT: Factory function to create server instance
+function createServer() {
+	const server = new McpServer({
+		name: "Hello MCP Server",
+		version: "1.0.0",
+	});
+
+	server.tool("hello", "Returns a greeting", {}, async () => {
+		return {
+			content: [{ text: "Hello, World!", type: "text" }],
+		};
+	});
+
+	return server;
+}
+
+export default {
+	fetch: async (request: Request, env: Env, ctx: ExecutionContext) => {
+		// Create new server instance per request
+		const server = createServer();
+		return createMcpHandler(server)(request, env, ctx);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### For raw SDK transport users
+
+If you are using the raw SDK transport directly (not via `createMcpHandler`), you must also create new transport instances per request:
+
+<TypeScriptExample>
+
+```ts
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+
+function createServer() {
+	const server = new McpServer({
+		name: "Hello MCP Server",
+		version: "1.0.0",
+	});
+
+	// Register tools...
+
+	return server;
+}
+
+export default {
+	async fetch(request: Request) {
+		// Create new transport and server per request
+		const transport = new WebStandardStreamableHTTPServerTransport();
+		const server = createServer();
+		server.connect(transport);
+		return transport.handleRequest(request);
+	},
+};
+```
+
+</TypeScriptExample>
 
 ### WorkerTransport
 

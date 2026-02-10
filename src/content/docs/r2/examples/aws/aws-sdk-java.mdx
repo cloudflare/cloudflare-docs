@@ -9,7 +9,12 @@ import { Render } from "~/components";
 <Render file="keys" product="r2" />
 <br />
 
-This example uses version 2 of the [aws-sdk-java](https://github.com/aws/aws-sdk-java-v2/#using-the-sdk) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
+This example uses version 2 of the [aws-sdk-java](https://github.com/aws/aws-sdk-java-v2/#using-the-sdk) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client.
+
+:::note
+
+You must set `chunkedEncodingEnabled(false)` in the `S3Configuration` when building your client. The AWS SDK for Java v2 uses chunked transfer encoding by default for `putObject` requests, which causes a signature mismatch error (HTTP 403) with R2. Disabling chunked encoding ensures the request signature is calculated correctly.
+:::
 
 ```java
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -18,6 +23,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.services.s3.S3Configuration;
+import software.amazon.awssdk.core.sync.RequestBody;
 import java.net.URI;
 import java.util.List;
 
@@ -69,6 +75,7 @@ public class CloudflareR2Client {
 
         S3Configuration serviceConfiguration = S3Configuration.builder()
             .pathStyleAccessEnabled(true)
+            .chunkedEncodingEnabled(false)
             .build();
 
         return S3Client.builder()
@@ -105,6 +112,22 @@ public class CloudflareR2Client {
         }
     }
 
+    /**
+     * Uploads an object to the specified bucket
+     */
+    public void putObject(String bucketName, String key, String content) {
+        try {
+            PutObjectRequest request = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .build();
+
+            s3Client.putObject(request, RequestBody.fromString(content));
+        } catch (S3Exception e) {
+            throw new RuntimeException("Failed to put object " + key + " in bucket " + bucketName + ": " + e.getMessage(), e);
+        }
+    }
+
     public static void main(String[] args) {
         S3Config config = new S3Config(
             "<ACCOUNT_ID>",
@@ -120,8 +143,12 @@ public class CloudflareR2Client {
             System.out.println("* " + bucket.name())
         );
 
-        // List objects in a specific bucket
+        // Upload an object to a bucket
         String bucketName = "demos";
+        r2Client.putObject(bucketName, "example.txt", "Hello, R2!");
+        System.out.println("Uploaded example.txt to bucket '" + bucketName + "'");
+
+        // List objects in a specific bucket
         System.out.println("\nObjects in bucket '" + bucketName + "':");
         r2Client.listObjects(bucketName).forEach(object ->
             System.out.printf("* %s (size: %d bytes, modified: %s)%n",

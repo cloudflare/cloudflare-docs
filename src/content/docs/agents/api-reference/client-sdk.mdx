@@ -174,7 +174,14 @@ The query function is cached and only re-called when:
 
 - `queryDeps` change
 - `cacheTtl` expires
+- The WebSocket connection closes (automatic cache invalidation)
 - The component remounts
+
+:::note[Automatic cache invalidation on disconnect]
+
+When the WebSocket connection closes — whether due to network issues, server restarts, or explicit disconnection — the async query cache is automatically invalidated. This ensures that when the client reconnects, the query function is re-executed to fetch fresh data. This is particularly important for authentication tokens that may have expired during the disconnection period.
+
+:::
 
 ## State synchronization
 
@@ -464,7 +471,7 @@ const user = await agent.call("getUser", [id]);
 
 ### 2. Reconnection is automatic
 
-The client auto-reconnects and the agent automatically sends the current state on each connection. Your `onStateUpdate` callback will fire with the latest state — no manual re-sync is needed.
+The client auto-reconnects and the agent automatically sends the current state on each connection. Your `onStateUpdate` callback will fire with the latest state — no manual re-sync is needed. If you use an async `query` function for authentication, the cache is automatically invalidated on disconnect, ensuring fresh tokens are fetched on reconnect.
 
 ### 3. Optimize query caching
 

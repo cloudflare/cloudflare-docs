@@ -3,7 +3,6 @@ title: Python Workers API
 pcx_content_type: concept
 sidebar:
   order: 2
-
 ---
 
 This guide covers the Python Workflows SDK, with instructions on how to build and create workflows using Python.
@@ -16,7 +15,7 @@ The `WorkflowEntrypoint` is the main entrypoint for a Python workflow. It extend
 from workers import WorkflowEntrypoint
 
 class MyWorkflow(WorkflowEntrypoint):
-    def run(self, event, step):
+    async def run(self, event, step):
         # steps here
 ```
 
@@ -62,6 +61,8 @@ async def run(self, event, step):
   * `timestamp` - a `datetime.datetime` object or seconds from the Unix epoch to sleep the workflow instance until.
 
 ```python
+import datetime
+
 async def run(self, event, step):
     await step.sleep_until("my-sleep-step", datetime.datetime.now() + datetime.timedelta(seconds=10))
 ```
@@ -76,7 +77,6 @@ async def run(self, event, step):
 async def run(self, event, step):
     await step.wait_for_event("my-wait-for-event-step", "my-event-type")
 ```
-
 
 ### `event` parameter
 
@@ -131,6 +131,8 @@ You can bind a step to a specific retry policy by passing a `WorkflowStepConfig`
 With Python Workflows, you need to make sure that your `dict` respects the [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) type.
 
 ```python
+from workers import WorkflowEntrypoint
+
 class DemoWorkflowClass(WorkflowEntrypoint):
     async def run(self, event, step):
         @step.do('step-name', config={"retries": {"limit": 1, "delay": "10 seconds"}})
@@ -146,6 +148,8 @@ Note that `env` is a JavaScript object exposed to the Python script via [JsProxy
 Let's consider the previous binding called `MY_WORKFLOW`. Here's how you would create a new instance:
 
 ```python
+from workers import Response, WorkerEntrypoint
+
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
         instance = await self.env.MY_WORKFLOW.create()

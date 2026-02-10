@@ -38,10 +38,12 @@ This guide covers how to connect WARP client user devices to a private network b
 
 ## 3. Route device IPs through Cloudflare
 
-WARP clients and WARP Connectors are accessed using their [device IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/). Therefore, traffic to your device IPs must route through Cloudflare on both the WARP Connector host and WARP client devices. For example, if your devices use the default <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP range</GlossaryTooltip> (`100.96.0.0/12`)
+WARP clients and WARP Connectors are accessed using their [device IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/). Therefore, traffic to your device IPs must route through Cloudflare on both the WARP Connector host and WARP client devices.
 
 1. In your WARP Connector device profile, go to [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
-2. Ensure that `100.96.0.0/12` routes through the WARP tunnel. For example, for **Exclude** split tunnel mode, delete `100.64.0.0/10` from the list and re-add `100.64.0.0/11` and `100.112.0.0/12`.
+2.
+	<Render file="tunnel/cgnat-split-tunnels" product="cloudflare-one" params={{ feature: "WARP Connector"}}  />
+
 3. Repeat the previous steps for all WARP client device profiles.
 
 ## 4. Route traffic from subnet to WARP Connector
