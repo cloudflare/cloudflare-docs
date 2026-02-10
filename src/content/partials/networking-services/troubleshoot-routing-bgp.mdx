@@ -148,9 +148,7 @@ Using identical prefix lengths from both Cloudflare and your ISP prevents path h
 
 #### Solution
 
-1. **Check tunnel health**: Degraded tunnels have 500,000 added to their route priority. Down tunnels have 1,000,000 added. Traffic shifts to healthier paths, which may be in different regions.
-
-   <Markdown text={`Refer to [Troubleshoot tunnel health](${props.tunnelHealthLink}) for diagnostic steps.`} inline={false} />
+1. **Check tunnel health**: Degraded tunnels have 500,000 added to their route priority. Down tunnels have 1,000,000 added. Traffic shifts to healthier paths, which may be in different regions. Refer to <a href={props.tunnelHealthLink}>Troubleshoot tunnel health</a> for diagnostic steps.
 
 2. **Review route priorities**: Lower priority values indicate higher preference. Verify your routes have the expected priority configuration.
 
@@ -159,9 +157,7 @@ Using identical prefix lengths from both Cloudflare and your ISP prevents path h
 
 3. **Check regional scoping**: If you use region-scoped routes, ensure all regions have route coverage. Traffic arriving at a region without a matching route is dropped.
 
-4. **Use Network Analytics**: Review traffic patterns to identify where traffic is landing and which paths it follows.
-
-   <Markdown text={`Refer to [Network Analytics](${props.networkAnalyticsLink}) for usage instructions.`} inline={false} />
+4. **Use Network Analytics**: Review traffic patterns to identify where traffic is landing and which paths it follows. Refer to <a href={props.networkAnalyticsLink}>Network Analytics</a> for usage instructions.
 
 ### CNI link failures
 
@@ -295,10 +291,11 @@ show bgp ipv4 unicast neighbors <YOUR_NEIGHBOR_IP> advertised-routes
 
 ## Resources
 
+<Markdown text={`
 - [Traffic steering](${props.trafficSteeringLink}): Route prioritization, BGP communities, and ECMP behavior
-${props.advertisePrefixesLink ? `- [Advertise prefixes](${props.advertisePrefixesLink}): BGP control methods and safe withdrawal procedures` : ""}
 - [Configure routes](${props.configureRoutesLink}): Static route configuration
 - [Network Interconnect](/network-interconnect/): CNI setup and BGP peering
 - [Troubleshoot tunnel health](${props.tunnelHealthLink}): Tunnel-specific diagnostic steps
 - [Network Analytics](${props.networkAnalyticsLink}): Traffic analysis and monitoring
 - [Cloudflare Status](https://www.cloudflarestatus.com/): Maintenance and incident notifications
+`} inline={false} />
