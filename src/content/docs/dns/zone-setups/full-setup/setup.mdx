@@ -10,7 +10,7 @@ description: >-
   If you want to use Cloudflare as your primary DNS provider and manage your DNS records, your domain should be using a full setup.
 ---
 
-import { Render, DashButton, Tabs, TabItem, APIRequest } from "~/components";
+import { Render, DashButton, Tabs, TabItem, APIRequest, Details } from "~/components";
 
 <Render file="full-setup-definition" product="dns" />
 
@@ -121,7 +121,9 @@ Depending on your use case, you may have to perform this step on the DNS records
 
 3. Add the nameservers provided by Cloudflare. If their names are not **copied exactly**, your DNS will not resolve correctly.
 
+<Details header="Provider-specific instructions">
 <Render file="ns-update-providers" product="dns" />
+</Details>
 
 :::note
 
