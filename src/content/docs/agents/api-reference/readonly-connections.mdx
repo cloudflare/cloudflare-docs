@@ -30,10 +30,10 @@ This is useful for scenarios like:
 import { Agent, type Connection, type ConnectionContext } from "agents";
 
 export class DocAgent extends Agent<Env, DocState> {
-  shouldConnectionBeReadonly(connection: Connection, ctx: ConnectionContext) {
-    const url = new URL(ctx.request.url);
-    return url.searchParams.get("mode") === "view";
-  }
+	shouldConnectionBeReadonly(connection: Connection, ctx: ConnectionContext) {
+		const url = new URL(ctx.request.url);
+		return url.searchParams.get("mode") === "view";
+	}
 }
 ```
 
@@ -44,12 +44,12 @@ export class DocAgent extends Agent<Env, DocState> {
 ```ts
 // Client - view-only mode
 const agent = useAgent({
-  agent: "DocAgent",
-  name: "doc-123",
-  query: { mode: "view" },
-  onStateUpdateError: (error) => {
-    toast.error("You're in view-only mode");
-  }
+	agent: "DocAgent",
+	name: "doc-123",
+	query: { mode: "view" },
+	onStateUpdateError: (error) => {
+		toast.error("You're in view-only mode");
+	},
 });
 ```
 
@@ -149,12 +149,14 @@ Use `isConnectionReadonly` to check a connection's current status:
 <TypeScriptExample>
 
 ```ts
-@callable()
-async getPermissions() {
-  const { connection } = getCurrentAgent();
-  if (connection) {
-    return { canEdit: !this.isConnectionReadonly(connection) };
-  }
+export class MyAgent extends Agent<Env, State> {
+	@callable()
+	async getPermissions() {
+		const { connection } = getCurrentAgent();
+		if (connection) {
+			return { canEdit: !this.isConnectionReadonly(connection) };
+		}
+	}
 }
 ```
 
@@ -500,11 +502,13 @@ The readonly check happens inside `this.setState()`, not at the start of the cal
 <TypeScriptExample>
 
 ```ts
-@callable()
-async processOrder(orderId: string) {
-  await sendConfirmationEmail(orderId); // runs even for readonly connections
-  await chargePayment(orderId);         // runs too
-  this.setState({ ...this.state, orders: [...this.state.orders, orderId] }); // throws
+export class MyAgent extends Agent<Env, State> {
+	@callable()
+	async processOrder(orderId: string) {
+		await sendConfirmationEmail(orderId); // runs even for readonly connections
+		await chargePayment(orderId); // runs too
+		this.setState({ ...this.state, orders: [...this.state.orders, orderId] }); // throws
+	}
 }
 ```
 
@@ -515,13 +519,15 @@ To avoid this, either check permissions before side effects or structure your co
 <TypeScriptExample>
 
 ```ts
-@callable()
-async processOrder(orderId: string) {
-  // Write state first — throws immediately for readonly connections
-  this.setState({ ...this.state, orders: [...this.state.orders, orderId] });
-  // Side effects only run if setState succeeded
-  await sendConfirmationEmail(orderId);
-  await chargePayment(orderId);
+export class MyAgent extends Agent<Env, State> {
+	@callable()
+	async processOrder(orderId: string) {
+		// Write state first — throws immediately for readonly connections
+		this.setState({ ...this.state, orders: [...this.state.orders, orderId] });
+		// Side effects only run if setState succeeded
+		await sendConfirmationEmail(orderId);
+		await chargePayment(orderId);
+	}
 }
 ```
 
