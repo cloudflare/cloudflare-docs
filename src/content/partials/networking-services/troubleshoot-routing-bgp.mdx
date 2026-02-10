@@ -18,8 +18,8 @@ If you are experiencing routing or BGP issues, check these items first:
 
 <Markdown text={`
 1. **BGP session state**: Verify session is **Established**, not stuck in **Connect** or **Active**.
-2. **Firewall rules**: Ensure TCP port \`179\` is permitted bidirectionally between your router and Cloudflare.
-${props.magicWord === "Magic Transit" ? `3. **Prefix advertisement status**: Confirm prefixes show **Advertised** in the dashboard, not **Withdrawn** or **Approved**.
+2. **Firewall rules**: Ensure TCP port \`179\` is permitted bidirectionally between your router and Cloudflare.${props.magicWord === "Magic Transit" ? `
+3. **Prefix advertisement status**: Confirm prefixes show **Advertised** in the dashboard, not **Withdrawn** or **Approved**.
 4. **Route propagation timing**: Allow two to five minutes for changes to propagate globally. Cloudflare propagates changes within minutes, but has no control over how quickly external ISPs refresh their BGP tables.` : ""}
 5. **Tunnel or CNI health**: Check that underlying connectivity is healthy. Degraded tunnels affect route priority.
 6. **Static route conflicts**: Static routes take precedence over BGP routes at equal priority.
