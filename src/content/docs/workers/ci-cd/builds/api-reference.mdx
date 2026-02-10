@@ -34,7 +34,7 @@ The Builds API uses a **Worker tag** to identify Workers. In the API, this is ca
 | Worker name (`id`) | `my-worker` | The name you gave your Worker |
 | Worker tag (`external_script_id`) | `1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d` | Immutable UUID assigned by Cloudflare |
 
-Every Builds API endpoint that references a Worker requires the **tag**, not the name. This is not documented clearly in the REST API reference.
+Every Builds API endpoint that references a Worker requires the **tag**, not the name.
 
 ## Complete workflow
 
@@ -289,38 +289,38 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/trigg
 A common use case is creating a script that redeploys your current active deployment to refresh build-time data. This script demonstrates chaining multiple API calls together:
 
 ```js
-import process from "node:process";
-import { ofetch } from "ofetch";
-
 async function redeploy() {
   const accountId = "<ACCOUNT_ID>";
   const workerName = "<WORKER_NAME>";
+  const apiToken = process.env.CF_API_TOKEN;
 
   // Step 1: Get the active deployment's version ID
-  const deployments = await ofetch(
+  const deploymentsResponse = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${workerName}/deployments`,
     {
-      headers: { Authorization: `Bearer ${process.env.CF_API_TOKEN}` },
+      headers: { Authorization: `Bearer ${apiToken}` },
     }
   );
+  const deployments = await deploymentsResponse.json();
   const versionId = deployments.result.deployments[0].versions[0].version_id;
 
   // Step 2: Get the build that created this version
-  const buildsByVersion = await ofetch(
+  const buildsResponse = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/${accountId}/builds/builds?version_ids=${versionId}`,
     {
-      headers: { Authorization: `Bearer ${process.env.CF_API_TOKEN}` },
+      headers: { Authorization: `Bearer ${apiToken}` },
     }
   );
+  const buildsByVersion = await buildsResponse.json();
   const build = buildsByVersion.result.builds[versionId];
 
   // Step 3: Retrigger using the same trigger, branch, and commit
-  await ofetch(
+  await fetch(
     `https://api.cloudflare.com/client/v4/accounts/${accountId}/builds/triggers/${build.trigger.trigger_uuid}/builds`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.CF_API_TOKEN}`,
+        Authorization: `Bearer ${apiToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -489,17 +489,11 @@ Your Worker is now connected to GitHub. Future pushes to `main` will automatical
 
 ## Troubleshooting
 
-### "Authentication error" when calling Builds API
-
-Your token is missing the **Workers Builds Configuration** permission. Create a new token with the correct permissions.
-
-### Cannot find Worker tag
-
-Your token is missing the **Workers Scripts (Read)** permission. The Worker tag comes from a different API (`/workers/scripts`), not the Builds API.
-
 ### "Resource not found" error
 
-You are likely using the Worker name instead of the Worker tag. The Builds API requires the `tag` (a UUID like `1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`), not the Worker name.
+You are likely using the Worker name instead of the Worker tag. The Builds API requires the `tag` (a UUID like `1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`), not the Worker name. Refer to [Step 1](#step-1-get-your-worker-tag) to get your Worker tag.
+
+For other build errors, refer to [Troubleshooting builds](/workers/ci-cd/builds/troubleshoot/).
 
 ## Related resources
 
