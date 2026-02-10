@@ -147,9 +147,14 @@ See [the Env Vars and Secrets Example](/containers/examples/env-vars-and-secrets
 
 Yes. You can give each of your end-users their own Container instances. However, end-users cannot provide their own container images through Workers for Platforms — the container image is defined by you (the platform provider), not by User Workers.
 
-This is useful when you want to offer a managed service where each end-user gets an isolated container instance running your pre-built image (for example, a code sandbox, a database sidecar, or a per-tenant backend), while User Workers handle the custom application logic.
+This is useful when your platform needs to run server-side processes that go beyond what a Worker alone can handle, while still letting each end-user have their own isolated environment. For example:
 
-For more information, refer to [Using Workflows, Durable Objects, or Containers with User Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/#using-workflows-durable-objects-or-containers-with-user-workers).
+- **Code execution platforms**: Each end-user gets their own container running a sandboxed runtime (such as Node.js or Python) where their code executes safely. The User Worker receives code submissions and dispatches them to the container.
+- **Per-tenant backends**: Each end-user gets a container running your application server (for example, a database or API service), and their User Worker acts as the entry point that routes requests to the container.
+
+If you are building a code execution or sandbox use case, consider the [Sandbox SDK](/sandbox/), which provides a higher-level API built on Containers specifically designed for running untrusted code in isolated environments.
+
+For more information on binding Containers to User Workers, refer to [Using Workflows, Durable Objects, or Containers with User Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/#using-workflows-durable-objects-or-containers-with-user-workers).
 
 ## How do I allow or disallow egress from my container?
 

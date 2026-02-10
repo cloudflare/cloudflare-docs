@@ -7,7 +7,7 @@ sidebar:
   order: 5
 ---
 
-import { Aside } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from "~/components";
 
 When you deploy User Workers through Workers for Platforms, you can attach [bindings](/workers/runtime-apis/bindings/) to give them access to resources like [KV namespaces](/kv/), [D1 databases](/d1/), [R2 buckets](/r2/), and more. This enables your end customers to build more powerful applications without you having to build the infrastructure components yourself.
 
@@ -34,10 +34,10 @@ Create a KV namespace using the [Cloudflare API](/api/resources/kv/subresources/
 
 ### 2. Attach the KV namespace to the User Worker
 
-Use the [Upload User Worker API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to attach the KV namespace binding to the Worker. You can do this when you're first uploading the Worker script or when updating an existing Worker.
+Use the [Upload User Worker API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to attach the KV namespace binding to the Worker. You can do this when you first upload the Worker script or when updating an existing Worker.
 
 :::note
-When using the API to upload scripts, bindings must be specified in the `metadata` object of your multipart upload request. You cannot upload the Wrangler configuration file as a module to configure the bindings. For more details about multipart uploads, see [Multipart upload metadata](/workers/configuration/multipart-upload-metadata/).
+When using the API to upload scripts, bindings must be specified in the `metadata` object of your multipart upload request. You cannot upload the Wrangler configuration file as a module to configure the bindings. For more details about multipart uploads, refer to [Multipart upload metadata](/workers/configuration/multipart-upload-metadata/).
 :::
 
 ##### Example API request
@@ -83,45 +83,74 @@ curl -X PUT \
 
 ## Using Workflows, Durable Objects, or Containers with User Workers
 
-To use [Workflows](/workflows/), [Durable Objects](/durable-objects/), or [Containers](/containers/) with User Workers:
+[Workflows](/workflows/), [Durable Objects](/durable-objects/), and [Containers](/containers/) cannot be defined inside a Workers for Platforms dispatch namespace. Instead, you (the platform provider) create these resources outside the namespace and then bind User Workers to them using `script_name`.
 
-1. Deploy a Worker and register the resource (Workflow, Durable Object, or Container) outside of the Workers for Platforms namespace.
-2. Upload a User Worker to your namespace and bind it to that resource using `script_name`.
+This means end-users cannot define their own Workflow classes, Durable Object classes, or container images through Workers for Platforms. As the platform provider, you define the resource logic, and User Workers can only interact with pre-defined resources through bindings.
+
+To set this up:
+
+1. Deploy a standard Worker (outside the dispatch namespace) that defines the resource — for example, a class extending `WorkflowEntrypoint` or a Durable Object class.
+2. Register the resource (for example, register a Workflow via the API) pointing to that Worker.
+3. Upload a User Worker to your namespace with a binding that references the resource using `script_name`.
 
 ### Example: Workflows with User Workers
 
 #### 1. Deploy a Worker with a Workflow definition
 
-A Workflow is defined as a class within a Worker script. You must first deploy a standard Worker (outside of the Workers for Platforms namespace) that exports a class extending `WorkflowEntrypoint`.
+A Workflow is defined as a class within a Worker script. You must first deploy a standard Worker (outside of the Workers for Platforms dispatch namespace) that exports a class extending `WorkflowEntrypoint`.
 
 For a complete guide on writing a Workflow, refer to the [Workflows get started guide](/workflows/get-started/guide/).
 
 #### 2. Register the Workflow
 
-After deploying the Worker script, register the Workflow using the [Workflows API](/api/resources/workflows/methods/update/). The registration points to the deployed Worker script and the exported class:
+After deploying the Worker script, register the Workflow using the [Workflows API](/api/resources/workflows/methods/update/). The registration points to the deployed Worker script and the exported class.
+
+In this example, `workflow-worker` is the name of the Worker script you deployed in Step 1 and `MyWorkflow` is the name of the exported class that extends `WorkflowEntrypoint`.
+
+<Tabs syncKey="deployMethod"> <TabItem label="REST API">
 
 ```bash
 curl -X PUT \
-  "https://api.cloudflare.com/client/v4/accounts/<account-id>/workflows/my-workflow" \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workflows/my-workflow" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <api-token>" \
+  -H "Authorization: Bearer $API_TOKEN" \
   -d '{
     "class_name": "MyWorkflow",
     "script_name": "workflow-worker"
   }'
 ```
 
-In this example, `workflow-worker` is the name of the Worker script you deployed in Step 1 and `MyWorkflow` is the name of the exported class that extends `WorkflowEntrypoint`.
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"],
+});
+
+await client.workflows.update("my-workflow", {
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	class_name: "MyWorkflow",
+	script_name: "workflow-worker",
+});
+```
+
+</TabItem> </Tabs>
 
 #### 3. Bind the User Worker to the Workflow
 
-When uploading a User Worker to your Workers for Platforms namespace, include a Workflow binding that references the Workflow using `script_name`:
+When uploading a User Worker to your Workers for Platforms namespace, include a Workflow binding that references the Workflow using `script_name`.
+
+The `script_name` field specifies the Worker script where the Workflow is defined. This is the Worker you deployed in Step 1 outside the namespace, not the User Worker.
+
+<Tabs syncKey="deployMethod"> <TabItem label="REST API">
 
 ```bash
 curl -X PUT \
-  "https://api.cloudflare.com/client/v4/accounts/<account-id>/workers/dispatch/namespaces/<your-namespace>/scripts/<script-name>" \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE_NAME/scripts/$SCRIPT_NAME" \
   -H "Content-Type: multipart/form-data" \
-  -H "Authorization: Bearer <api-token>" \
+  -H "Authorization: Bearer $API_TOKEN" \
   -F 'metadata={
     "main_module": "worker.js",
     "bindings": [
@@ -136,7 +165,51 @@ curl -X PUT \
   -F 'worker.js=@/path/to/worker.js'
 ```
 
-The `script_name` field specifies the Worker script where the Workflow is defined. This is the Worker you deployed in Step 1 outside the namespace, not the User Worker.
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"],
+});
+
+const scriptContent = `export default {
+  async fetch(request, env) {
+    const instance = await env.MY_WORKFLOW.create({
+      params: { data: "Hello from User Worker" },
+    });
+    const status = await instance.status();
+    return Response.json({ instanceId: instance.id, status });
+  },
+};`;
+
+const scriptFile = new File([scriptContent], "worker.mjs", {
+	type: "application/javascript+module",
+});
+
+await client.workersForPlatforms.dispatch.namespaces.scripts.update(
+	process.env["NAMESPACE_NAME"],
+	"user-worker-name",
+	{
+		account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+		metadata: {
+			main_module: "worker.mjs",
+			bindings: [
+				{
+					type: "workflow",
+					name: "MY_WORKFLOW",
+					workflow: "my-workflow",
+					script_name: "workflow-worker",
+				},
+			],
+		},
+		files: [scriptFile],
+	},
+);
+```
+
+</TabItem> </Tabs>
 
 #### 4. Use the Workflow in your User Worker
 
@@ -163,4 +236,8 @@ export default {
 
 ### Durable Objects and Containers
 
-The same pattern applies to [Durable Objects](/durable-objects/) and [Containers](/containers/) — create the resource outside of the Workers for Platforms namespace, then bind to it from your User Worker. Use `script_name` to specify the Worker associated with the resource you created outside the namespace, not the User Worker.
+The same pattern applies to [Durable Objects](/durable-objects/) and [Containers](/containers/) — deploy a Worker that defines the Durable Object class or Container class outside of the Workers for Platforms dispatch namespace, then bind User Workers to it using `script_name`.
+
+For Durable Objects, use a `durable_object_namespace` binding with `script_name` and `class_name` pointing to the external Worker. For Containers, use a `container` binding with `script_name` pointing to the Worker that defines the Container class.
+
+In both cases, the platform provider defines the resource logic. End-users interact with the resource through their User Worker bindings but cannot define their own Durable Object or Container classes within the dispatch namespace.
