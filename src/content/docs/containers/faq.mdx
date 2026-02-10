@@ -145,10 +145,11 @@ See [the Env Vars and Secrets Example](/containers/examples/env-vars-and-secrets
 
 ## Can I use Containers with Workers for Platforms?
 
-Yes, you can. It is easy to give each of your end-users their own Container instances, though not possible for each
-end-user to provider their own container images via Workers For Platforms.
+Yes. You can give each of your end-users their own Container instances. However, end-users cannot provide their own container images through Workers for Platforms — the container image is defined by you (the platform provider), not by User Workers.
 
-See [Using Workflows, Durable Objects, or Containers with User Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/#using-workflows-durable-objects-or-containers-with-user-workers) for details.
+This is useful when you want to offer a managed service where each end-user gets an isolated container instance running your pre-built image (for example, a code sandbox, a database sidecar, or a per-tenant backend), while User Workers handle the custom application logic.
+
+For more information, refer to [Using Workflows, Durable Objects, or Containers with User Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/#using-workflows-durable-objects-or-containers-with-user-workers).
 
 ## How do I allow or disallow egress from my container?
 

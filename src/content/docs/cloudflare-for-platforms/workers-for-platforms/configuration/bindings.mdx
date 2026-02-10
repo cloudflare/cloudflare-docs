@@ -60,7 +60,7 @@ curl -X PUT \
   -F 'worker.js=@/path/to/worker.js'
 ```
 
-Now, the User Worker has can access the `USER_KV` binding through the `env` argument using `env.USER_DATA.get()`, `env.USER_DATA.put()`, and other KV methods.
+Now, the User Worker can access the `USER_KV` binding through the `env` argument using `env.USER_KV.get()`, `env.USER_KV.put()`, and other KV methods.
 
 Note: If you plan to add new bindings to the Worker, use the `keep_bindings` parameter to ensure existing bindings are preserved while adding new ones.
 
@@ -85,18 +85,37 @@ curl -X PUT \
 
 To use [Workflows](/workflows/), [Durable Objects](/durable-objects/), or [Containers](/containers/) with User Workers:
 
-1. Create the resource outside of the Workers for Platforms namespace
-2. Create a User Worker and bind it to the resource you created
+1. Deploy a Worker and register the resource (Workflow, Durable Object, or Container) outside of the Workers for Platforms namespace.
+2. Upload a User Worker to your namespace and bind it to that resource using `script_name`.
 
 ### Example: Workflows with User Workers
 
-#### 1. Create a Workflow
+#### 1. Deploy a Worker with a Workflow definition
 
-Create and deploy a Workflow using the [Workflows API](/api/resources/workflows/). This Workflow must exist outside of the Workers for Platforms namespace.
+A Workflow is defined as a class within a Worker script. You must first deploy a standard Worker (outside of the Workers for Platforms namespace) that exports a class extending `WorkflowEntrypoint`.
 
-#### 2. Bind the User Worker to the Workflow
+For a complete guide on writing a Workflow, refer to the [Workflows get started guide](/workflows/get-started/guide/).
 
-When uploading a User Worker to your WFP namespace, include a Workflow binding that references the Workflow using `script_name`:
+#### 2. Register the Workflow
+
+After deploying the Worker script, register the Workflow using the [Workflows API](/api/resources/workflows/methods/update/). The registration points to the deployed Worker script and the exported class:
+
+```bash
+curl -X PUT \
+  "https://api.cloudflare.com/client/v4/accounts/<account-id>/workflows/my-workflow" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <api-token>" \
+  -d '{
+    "class_name": "MyWorkflow",
+    "script_name": "workflow-worker"
+  }'
+```
+
+In this example, `workflow-worker` is the name of the Worker script you deployed in Step 1 and `MyWorkflow` is the name of the exported class that extends `WorkflowEntrypoint`.
+
+#### 3. Bind the User Worker to the Workflow
+
+When uploading a User Worker to your Workers for Platforms namespace, include a Workflow binding that references the Workflow using `script_name`:
 
 ```bash
 curl -X PUT \
@@ -117,9 +136,9 @@ curl -X PUT \
   -F 'worker.js=@/path/to/worker.js'
 ```
 
-The `script_name` field specifies the Worker script where the Workflow is defined. This is the Worker you created outside the namespace, not the User Worker.
+The `script_name` field specifies the Worker script where the Workflow is defined. This is the Worker you deployed in Step 1 outside the namespace, not the User Worker.
 
-#### 3. Use the Workflow in your User Worker
+#### 4. Use the Workflow in your User Worker
 
 Now the User Worker can trigger and manage Workflow instances:
 
