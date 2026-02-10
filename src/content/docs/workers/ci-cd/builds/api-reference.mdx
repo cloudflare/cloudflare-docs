@@ -1,0 +1,510 @@
+---
+pcx_content_type: how-to
+title: Use the Builds API
+description: Learn how to programmatically trigger builds, manage triggers, and monitor your Workers Builds using the API.
+sidebar:
+  order: 11
+---
+
+This guide walks you through using the Workers Builds API to programmatically manage your builds. Before diving into specific endpoints, this guide covers two important concepts that will help you get started faster.
+
+## Before you start
+
+### 1. Create an API token with the correct permissions
+
+The Builds API requires a user-scoped API token with specific permissions. Create your token at [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens).
+
+**Required permissions:**
+
+| Permission | Access | Why you need it |
+|------------|--------|-----------------|
+| Workers Builds Configuration | Edit | Trigger builds, update triggers, manage environment variables |
+| Workers Scripts | Read | Retrieve Worker tags (required for all Builds API calls) |
+
+:::caution[Common mistake]
+If you only add the **Workers Builds Configuration** permission, you will not be able to retrieve Worker tags. You need **both** permissions.
+:::
+
+### 2. Worker tags vs Worker names
+
+The Builds API uses a **Worker tag** to identify Workers. In the API, this is called `external_script_id` — this is the same as the Worker tag, just with a different name.
+
+| Identifier | Example | Where it comes from |
+|------------|---------|---------------------|
+| Worker name (`id`) | `my-worker` | The name you gave your Worker |
+| Worker tag (`external_script_id`) | `1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d` | Immutable UUID assigned by Cloudflare |
+
+Every Builds API endpoint that references a Worker requires the **tag**, not the name. This is not documented clearly in the REST API reference.
+
+## Complete workflow
+
+Here is the typical workflow for interacting with the Builds API:
+
+```txt
+┌─────────────────────────────────────────────────────────────────┐
+│ 1. Get Worker tag (from Workers Scripts API)                    │
+│    GET /workers/scripts → find your Worker → note the "tag"     │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 2. Get trigger UUID (using the Worker tag)                      │
+│    GET /builds/workers/{tag}/triggers → note "trigger_uuid"     │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│ 3. Do things with builds                                        │
+│    - Trigger a build: POST /builds/triggers/{trigger_uuid}/...  │
+│    - List builds: GET /builds/workers/{tag}/builds              │
+│    - Get logs: GET /builds/builds/{build_uuid}/logs             │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Step 1: Get your Worker tag
+
+Call the Workers Scripts API to list all your Workers and find the `tag` for the Worker you want to work with:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  | jq '.result[] | {name: .id, tag: .tag}'
+```
+
+Example output:
+
+```json
+{
+  "name": "my-worker",
+  "tag": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
+}
+{
+  "name": "another-worker",
+  "tag": "8a1b2c3d4e5f67890abcdef123456789"
+}
+```
+
+Save the `tag` value for your Worker. You will use it in all subsequent API calls.
+
+## Step 2: Get your trigger UUID
+
+Each Worker can have a maximum of two triggers:
+
+| Trigger type | Purpose | Typical branch pattern |
+|--------------|---------|------------------------|
+| **Production** | Deploys to your live Worker | `main` or `master` |
+| **Preview** | Creates preview deployments for testing | `*` (all branches except production) |
+
+:::note
+The two-trigger limit is enforced by the API. If you attempt to create a third trigger, the request will fail.
+:::
+
+Each trigger has its own configuration, including separate build commands, deploy commands, and environment variables. This allows you to have different settings for production and preview builds (for example, different `NODE_ENV` values or API keys).
+
+Use the Worker tag to list triggers:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/triggers" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  | jq '.result[] | {trigger_uuid, trigger_name, branch_includes, branch_excludes}'
+```
+
+Example output:
+
+```json
+{
+  "trigger_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+  "trigger_name": "Deploy production",
+  "branch_includes": ["main"],
+  "branch_excludes": []
+}
+{
+  "trigger_uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "trigger_name": "Deploy non-production branches",
+  "branch_includes": ["*"],
+  "branch_excludes": ["main"]
+}
+```
+
+Save the `trigger_uuid` for the trigger you want to work with. Remember, you will have at most two triggers: one for your production branch (for example, `main`) that deploys to your live Worker, and optionally one for all other branches that creates preview deployments.
+
+## Step 3: Work with builds
+
+Now that you have the Worker tag and trigger UUID, you can trigger builds, list build history, and get logs.
+
+### Trigger a manual build
+
+Use the `trigger_uuid` from [Step 2](#step-2-get-your-trigger-uuid).
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/builds" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"branch": "main"}'
+```
+
+You can specify either `branch` or `commit_hash`:
+
+| Field | Description |
+|-------|-------------|
+| `branch` | Git branch name to build (for example, `main`) |
+| `commit_hash` | Specific commit SHA to build |
+
+The response includes the `build_uuid` which you can use to monitor the build.
+
+### List builds for a Worker
+
+Use the `worker_tag` from [Step 1](#step-1-get-your-worker-tag).
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/builds" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  | jq '.result[] | {build_uuid, status, branch, created_at}'
+```
+
+The response includes `build_uuid` for each build, which you need for getting logs or canceling builds.
+
+### Get build logs
+
+Use the `build_uuid` from [List builds](#list-builds-for-a-worker) or from the response when triggering a build.
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/builds/{build_uuid}/logs" \
+  --header "Authorization: Bearer <API_TOKEN>"
+```
+
+### Cancel a running build
+
+Use the `build_uuid` from [List builds](#list-builds-for-a-worker) or from the response when triggering a build.
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/builds/{build_uuid}/cancel" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --request PUT
+```
+
+## Update trigger configuration
+
+Use the `trigger_uuid` from [Step 2](#step-2-get-your-trigger-uuid).
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request PATCH \
+  --data '{
+    "build_command": "npm run build:prod",
+    "deploy_command": "npx wrangler deploy"
+  }'
+```
+
+**Editable fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `trigger_name` | string | Display name for the trigger |
+| `build_command` | string | Command to build your project |
+| `deploy_command` | string | Command to deploy your Worker |
+| `root_directory` | string | Path to your project root |
+| `branch_includes` | array | Branch patterns to trigger builds |
+| `branch_excludes` | array | Branch patterns to exclude |
+| `path_includes` | array | File path patterns that trigger builds |
+| `path_excludes` | array | File path patterns to ignore |
+| `build_caching_enabled` | boolean | Turn on or off build caching |
+
+## Manage build environment variables
+
+Environment variables are set per trigger, meaning you can have different values for production and preview builds. For example, you might set `NODE_ENV=production` on your production trigger and `NODE_ENV=development` on your preview trigger.
+
+:::note
+These are **build-time** environment variables, available only during the build process. For runtime environment variables, refer to [Environment variables](/workers/configuration/environment-variables/).
+:::
+
+### List environment variables
+
+Use the `trigger_uuid` from [Step 2](#step-2-get-your-trigger-uuid).
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/environment_variables" \
+  --header "Authorization: Bearer <API_TOKEN>"
+```
+
+### Set environment variables
+
+You can set different variables for each trigger. For example, to set production environment variables:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{production_trigger_uuid}/environment_variables" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request PATCH \
+  --data '{
+    "variables": [
+      {"key": "NODE_ENV", "value": "production", "type": "text"},
+      {"key": "API_KEY", "value": "prod-secret-key", "type": "secret"}
+    ]
+  }'
+```
+
+And different values for preview builds:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{preview_trigger_uuid}/environment_variables" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request PATCH \
+  --data '{
+    "variables": [
+      {"key": "NODE_ENV", "value": "development", "type": "text"},
+      {"key": "API_KEY", "value": "dev-secret-key", "type": "secret"}
+    ]
+  }'
+```
+
+Use `type: "text"` for plain values and `type: "secret"` for sensitive values that should be masked in logs.
+
+### Delete an environment variable
+
+Use the `trigger_uuid` from [Step 2](#step-2-get-your-trigger-uuid). The `variable_key` is the key name you set (for example, `NODE_ENV`).
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/environment_variables/{variable_key}" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --request DELETE
+```
+
+## Purge build cache
+
+Use the `trigger_uuid` from [Step 2](#step-2-get-your-trigger-uuid). This clears cached dependencies and build artifacts for that trigger.
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/purge_build_cache" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --request POST
+```
+
+## Example: Redeploy script
+
+A common use case is creating a script that redeploys your current active deployment to refresh build-time data. This script demonstrates chaining multiple API calls together:
+
+```js
+import process from "node:process";
+import { ofetch } from "ofetch";
+
+async function redeploy() {
+  const accountId = "<ACCOUNT_ID>";
+  const workerName = "<WORKER_NAME>";
+
+  // Step 1: Get the active deployment's version ID
+  const deployments = await ofetch(
+    `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${workerName}/deployments`,
+    {
+      headers: { Authorization: `Bearer ${process.env.CF_API_TOKEN}` },
+    }
+  );
+  const versionId = deployments.result.deployments[0].versions[0].version_id;
+
+  // Step 2: Get the build that created this version
+  const buildsByVersion = await ofetch(
+    `https://api.cloudflare.com/client/v4/accounts/${accountId}/builds/builds?version_ids=${versionId}`,
+    {
+      headers: { Authorization: `Bearer ${process.env.CF_API_TOKEN}` },
+    }
+  );
+  const build = buildsByVersion.result.builds[versionId];
+
+  // Step 3: Retrigger using the same trigger, branch, and commit
+  await ofetch(
+    `https://api.cloudflare.com/client/v4/accounts/${accountId}/builds/triggers/${build.trigger.trigger_uuid}/builds`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.CF_API_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        branch: build.build_trigger_metadata.branch,
+        commit_hash: build.build_trigger_metadata.commit_hash,
+      }),
+    }
+  );
+
+  console.log("Redeploy triggered successfully");
+}
+
+redeploy();
+```
+
+This script:
+1. Gets the currently deployed version from the Workers deployments API
+2. Finds the build that created that version using `version_ids` query parameter
+3. Triggers a new build with the same branch and commit
+
+## Example: Set up Workers Builds from scratch
+
+This example walks through the complete process of connecting a GitHub repository to a Worker and setting up automated builds using only the API.
+
+### Prerequisites
+
+Before using the API, you must first install the Cloudflare GitHub App through the dashboard:
+
+1. Go to **Workers & Pages** in the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select any Worker and go to **Settings** > **Builds** > **Connect**.
+3. Select **GitHub** and authorize the Cloudflare GitHub App for your account or organization.
+
+This one-time setup creates the connection between your GitHub account and Cloudflare. Once complete, you can use the API for everything else.
+
+### Step 1: Get your GitHub account information
+
+After installing the GitHub App, you need your GitHub account ID and repository ID. You can find these from an existing trigger or from the GitHub API.
+
+From GitHub's API:
+
+```bash
+# Get your GitHub user/org ID
+curl -s "https://api.github.com/users/<GITHUB_USERNAME>" | jq '.id'
+
+# Get a repository ID
+curl -s "https://api.github.com/repos/<GITHUB_USERNAME>/<REPO_NAME>" | jq '.id'
+```
+
+### Step 2: Create a repository connection
+
+Create a connection between your GitHub repository and Cloudflare:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/repos/connections" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request PUT \
+  --data '{
+    "provider_type": "github",
+    "provider_account_id": "<GITHUB_USER_ID>",
+    "provider_account_name": "<GITHUB_USERNAME>",
+    "repo_id": "<GITHUB_REPO_ID>",
+    "repo_name": "<REPO_NAME>"
+  }'
+```
+
+Save the `repo_connection_uuid` from the response.
+
+### Step 3: Get your Worker tag
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  | jq '.result[] | {name: .id, tag: .tag}'
+```
+
+### Step 4: Create a production trigger
+
+Create a trigger that deploys when you push to `main`:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '{
+    "external_script_id": "<WORKER_TAG>",
+    "repo_connection_uuid": "<REPO_CONNECTION_UUID>",
+    "trigger_name": "Deploy production",
+    "build_command": "npm run build",
+    "deploy_command": "npx wrangler deploy",
+    "root_directory": "/",
+    "branch_includes": ["main"],
+    "branch_excludes": [],
+    "path_includes": ["*"],
+    "path_excludes": []
+  }'
+```
+
+### Step 5: Create a preview trigger (optional)
+
+Create a second trigger for preview deployments on all other branches:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '{
+    "external_script_id": "<WORKER_TAG>",
+    "repo_connection_uuid": "<REPO_CONNECTION_UUID>",
+    "trigger_name": "Deploy preview branches",
+    "build_command": "npm run build",
+    "deploy_command": "npx wrangler versions upload",
+    "root_directory": "/",
+    "branch_includes": ["*"],
+    "branch_excludes": ["main"],
+    "path_includes": ["*"],
+    "path_excludes": []
+  }'
+```
+
+Note the different `deploy_command`: production uses `wrangler deploy` while preview uses `wrangler versions upload` to create preview URLs without affecting the live deployment.
+
+### Step 6: Set environment variables for each trigger
+
+Set production environment variables:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{production_trigger_uuid}/environment_variables" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request PATCH \
+  --data '{
+    "variables": [
+      {"key": "NODE_ENV", "value": "production", "type": "text"}
+    ]
+  }'
+```
+
+Set preview environment variables:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{preview_trigger_uuid}/environment_variables" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request PATCH \
+  --data '{
+    "variables": [
+      {"key": "NODE_ENV", "value": "development", "type": "text"}
+    ]
+  }'
+```
+
+### Step 7: Trigger your first build
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{production_trigger_uuid}/builds" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"branch": "main"}'
+```
+
+Your Worker is now connected to GitHub. Future pushes to `main` will automatically trigger production deployments, and pushes to other branches will create preview deployments.
+
+## Troubleshooting
+
+### "Authentication error" when calling Builds API
+
+Your token is missing the **Workers Builds Configuration** permission. Create a new token with the correct permissions.
+
+### Cannot find Worker tag
+
+Your token is missing the **Workers Scripts (Read)** permission. The Worker tag comes from a different API (`/workers/scripts`), not the Builds API.
+
+### "Resource not found" error
+
+You are likely using the Worker name instead of the Worker tag. The Builds API requires the `tag` (a UUID like `1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`), not the Worker name.
+
+## Related resources
+
+- [Workers Builds REST API reference](/api/resources/workers_builds/) - Complete endpoint documentation
+- [Workers Scripts REST API reference](/api/resources/workers/subresources/scripts/) - For retrieving Worker tags
+- [Workers Builds overview](/workers/ci-cd/builds/) - Dashboard setup and configuration
+- [Build configuration](/workers/ci-cd/builds/configuration/) - Build settings and options
+- [Create API token](/fundamentals/api/get-started/create-token/) - How to create tokens with the correct permissions
