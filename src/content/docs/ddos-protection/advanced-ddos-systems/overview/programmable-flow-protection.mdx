@@ -11,7 +11,7 @@ head:
     content: Cloudflare Programmable Flow Protection (Beta)
 ---
 
-import { Steps, Tabs, TabItem } from "~/components";
+import { Render, Steps, Tabs, TabItem } from "~/components";
 
 Programmable Flow Protection is a DDoS protection system that protects against DDoS attacks over custom or standardized Layer 7 UDP-based protocols, such as gaming protocols, financial services protocols, VoIP, telecom, and streaming. In terms of topology, it supports both asymmetric and symmetric configurations, but it will only inspect ingress traffic.
 
@@ -410,44 +410,10 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flo
 
 ### Create a rule
 
-Once a program is uploaded, you must add a rule to execute it. To add a rule, use the following `POST` endpoint.
-
-Your rule must define a:
-
-- `Name`
-- `Program ID`
-- `Scope` (one of: `global`, `regional`, `datacenter`)
-- `Mode` (one of: `enabled`, `monitoring`, `disabled`)
-- `Expression`
-
-The `Expression` field specifies what traffic a rule will apply to. If a rule's expression is set to `true`, then that rule will apply to all traffic in an account. Alternatively, an expression can specify the following fields to match on:
-
-- `ip.src`
-- `ip.dst`
-- `udp.srcport`
-- `udp.dstport`
-
-```shell title="Example expression"
-"ip.src in { 1.2.3.4/24, 2.3.4.5/24 } and udp.dstport eq 42"
-```
-
-Refer to the [Advanced DDoS Protection](/ddos-protection/advanced-ddos-systems/concepts/#scope) documentation for more information about scope and mode parameters, and the [Ruleset Engine](/ruleset-engine/rules-language/expressions/) documentation for more information about expressions.
-
-If it is successful, the API will return the created rule ID.
-
-```bash wrap title="Request"
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "scope": "global",
-  "name": "my global rule",
-  "program_id": "<PROGRAM_ID>",
-  "mode": "monitoring"
-}'
-```
-
-Cloudflare recommends that any program is first executed with a rule in `monitoring` mode. This ensures that your program executes on production traffic but does not drop any real traffic. Instead, Cloudflare will log your program's expected verdict (pass or drop) to the [Network Analytics](/analytics/network-analytics/) dashboard.
+<Render
+	file="advanced-ddos/create-pfp-rule"
+	product="ddos-protection"
+/>
 
 ### View all rules
 
