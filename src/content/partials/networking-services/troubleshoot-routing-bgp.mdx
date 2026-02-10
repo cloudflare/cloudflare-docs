@@ -1,5 +1,6 @@
 ---
 params:
+  - magicWord
   - productName
   - trafficSteeringLink
   - configureRoutesLink
@@ -7,34 +8,50 @@ params:
   - networkAnalyticsLink
 ---
 
+import { AnchorHeading, Aside, Markdown } from "~/components";
+
 This guide helps you diagnose and resolve common routing and BGP issues with {props.productName}. These issues can affect traffic delivery, cause unexpected latency, or result in connectivity loss.
 
 ## Quick diagnostic checklist
 
 If you are experiencing routing or BGP issues, check these items first:
 
+<Markdown text={`
 1. **BGP session state**: Verify session is **Established**, not stuck in **Connect** or **Active**.
-2. **Firewall rules**: Ensure TCP port `179` is permitted bidirectionally between your router and Cloudflare.
-3. **Prefix advertisement status** (Magic Transit): Confirm prefixes show **Advertised** in the dashboard, not **Withdrawn** or **Approved**.
-4. **Route propagation timing** (Magic Transit): Allow two to five minutes for changes to propagate globally. Cloudflare propagates changes within minutes, but has no control over how quickly external ISPs refresh their BGP tables.
+2. **Firewall rules**: Ensure TCP port \`179\` is permitted bidirectionally between your router and Cloudflare.
+${props.magicWord === "Magic Transit" ? `3. **Prefix advertisement status**: Confirm prefixes show **Advertised** in the dashboard, not **Withdrawn** or **Approved**.
+4. **Route propagation timing**: Allow two to five minutes for changes to propagate globally. Cloudflare propagates changes within minutes, but has no control over how quickly external ISPs refresh their BGP tables.` : ""}
 5. **Tunnel or CNI health**: Check that underlying connectivity is healthy. Degraded tunnels affect route priority.
 6. **Static route conflicts**: Static routes take precedence over BGP routes at equal priority.
+`} inline={false} />
 
-## Route propagation timing
+{ props.magicWord === "Magic Transit" && (
+<>
+	<AnchorHeading title="Route propagation timing" depth={2} />
+	<Markdown
+	text={`
+When you advertise or withdraw a BYOIP prefix, changes propagate across Cloudflare's network within minutes.
+	`}
+	inline={false}
+	/>
 
-When you advertise or withdraw a Magic Transit BYOIP prefix, changes propagate across Cloudflare's network within minutes.
+	<Aside type="caution" title="ISP route refresh delays may impact traffic">
+	Cloudflare's action to advertise or withdraw a route takes effect across the global network within minutes. However, Cloudflare has no control over how quickly external ISPs refresh their BGP tables after the change.
+	</Aside>
 
-:::caution[ISP route refresh delays may impact traffic]
-Cloudflare's action to advertise or withdraw a route takes effect across the global network within minutes. However, Cloudflare has no control over how quickly external ISPs refresh their BGP tables after the change.
-:::
-
+	<Markdown
+	text={`
 | Action | Cloudflare propagation | Global Internet propagation |
 | :--- | :--- | :--- |
 | Prefix advertisement | 1-2 minutes | 2-5 minutes typical |
 | Prefix withdrawal | 1-2 minutes | 2-15 minutes (BGP path hunting) |
+	`}
+	inline={false}
+	/>
 
-### Why withdrawals take longer
-
+	<AnchorHeading title="Why withdrawals take longer" depth={3} />
+	<Markdown
+	text={`
 When a route is withdrawn, Internet networks perform BGP path hunting. They search for alternative paths before converging on the new routing state. This behavior is amplified by:
 
 - Cloudflare's global anycast network and extensive peering relationships
@@ -42,18 +59,28 @@ When a route is withdrawn, Internet networks perform BGP path hunting. They sear
 - Multiple Tier-1 networks needing to converge independently
 
 During path hunting, traffic may be routed suboptimally or dropped entirely.
+	`}
+	inline={false}
+	/>
 
-:::note
-When failing traffic off Cloudflare, use the same-length prefix strategy. Advertise the identical prefix from your alternate provider before withdrawing from Cloudflare. This prevents path hunting because BGP does not need to search for alternative routes.
-:::
+	<Aside type="note">
+	When failing traffic off Cloudflare, use the same-length prefix strategy. Advertise the identical prefix from your alternate provider before withdrawing from Cloudflare. This prevents path hunting because BGP does not need to search for alternative routes.
+	</Aside>
 
+	<Markdown
+	text={`
 Refer to [Safely withdraw a BYOIP prefix](/magic-transit/how-to/safely-withdraw-byoip-prefix/) for the recommended procedure.
+	`}
+	inline={false}
+	/>
+</>
+)}
 
 ## Resolve common issues
 
 ### BGP session not establishing
 
-This section covers BGP peering sessions between your network and Cloudflare, established over [CNI](/network-interconnect/) or tunnels.
+This section covers BGP peering sessions between your network and Cloudflare, established over [CNI](/network-interconnect/) or tunnels. { props.magicWord === "Magic Transit" && (<Markdown text={` These sessions are separate from how Cloudflare advertises your prefixes to the Internet, which is covered in [Route propagation timing](#route-propagation-timing).`} />)}
 
 #### Symptoms
 
@@ -77,45 +104,68 @@ This section covers BGP peering sessions between your network and Cloudflare, es
 3. Verify your ASN configuration matches the dashboard settings. Only eBGP is supported, so your ASN must differ from the Cloudflare account ASN.
 4. If using MD5 authentication, verify the password matches on both sides.
 
-### Prefixes not reachable after advertisement (Magic Transit)
+{ props.magicWord === "Magic Transit" && (
+<>
+	<AnchorHeading title="Prefixes not reachable after advertisement" depth={3} />
 
-#### Symptoms
-
+	<AnchorHeading title="Symptoms" depth={4} />
+	<Markdown
+	text={`
 - Dashboard shows prefix as **Advertised**
 - External hosts cannot reach IPs in the prefix
 - Traffic is dropped
+	`}
+	inline={false}
+	/>
 
-#### Causes
-
+	<AnchorHeading title="Causes" depth={4} />
+	<Markdown
+	text={`
 - Route propagation still in progress
 - Missing return path routing on your network
 - ROA/RPKI validation issues with upstream ISPs
+	`}
+	inline={false}
+	/>
 
-#### Solution
-
+	<AnchorHeading title="Solution" depth={4} />
+	<Markdown
+	text={`
 1. **Wait for propagation**: Allow up to five minutes for full global propagation. Changes propagate across Cloudflare quickly but external networks update at varying speeds.
 2. **Verify return path routing**: Ensure your network has routes to send return traffic back through Cloudflare for egress configurations. For ingress-only or direct server return configurations, route return traffic through your tunnels.
 3. **Check external visibility**: Use BGP looking glass tools such as [bgp.he.net](https://bgp.he.net) or [RIPE RIS](https://ris.ripe.net/) to confirm your prefix is visible from external networks.
 4. **Verify RPKI configuration**: If you use Resource Public Key Infrastructure (RPKI), confirm your Route Origin Authorization (ROA) records match your prefix and the ASN configuration in Cloudflare.
+	`}
+	inline={false}
+	/>
 
-### Traffic loss during prefix withdrawal (Magic Transit)
+	<AnchorHeading title="Traffic loss during prefix withdrawal" depth={3} />
 
-#### Symptoms
-
+	<AnchorHeading title="Symptoms" depth={4} />
+	<Markdown
+	text={`
 - Prefix withdrawn through API or dashboard
 - External traffic continues arriving at Cloudflare but is dropped
 - Connectivity loss persists for several minutes after withdrawal
+	`}
+	inline={false}
+	/>
 
-#### Cause
-
+	<AnchorHeading title="Cause" depth={4} />
+	<Markdown
+	text={`
 This is BGP path hunting behavior. When Cloudflare withdraws your prefix, Internet networks search for alternative paths. Convergence typically takes two to five minutes but can extend beyond 11 minutes. During this period, traffic may:
 
 - Route to Cloudflare through cached paths at ISPs
 - Loop between Tier-1 providers that have not yet converged
 - Be dropped before reaching your network
+	`}
+	inline={false}
+	/>
 
-#### Solution
-
+	<AnchorHeading title="Solution" depth={4} />
+	<Markdown
+	text={`
 Follow the safe prefix withdrawal procedure:
 
 1. **Before withdrawal**: Advertise the same prefix (identical prefix length) from your alternate provider. This gives BGP an immediate alternative path.
@@ -126,6 +176,11 @@ Follow the safe prefix withdrawal procedure:
 Using identical prefix lengths from both Cloudflare and your ISP prevents path hunting. Networks immediately have an alternative route available.
 
 Refer to [Safely withdraw a BYOIP prefix](/magic-transit/how-to/safely-withdraw-byoip-prefix/) for detailed instructions.
+	`}
+	inline={false}
+	/>
+</>
+)}
 
 ### Unexpected traffic routing or latency
 
@@ -258,7 +313,7 @@ If you have worked through this guide and still experience routing issues, gathe
 
 ### Helpful diagnostic data
 
-- **External BGP visibility** (Magic Transit): Results from looking glass tools showing your prefix
+{ props.magicWord === "Magic Transit" && (<Markdown text={`- **External BGP visibility**: Results from looking glass tools showing your prefix`} inline={false} />)}
 - **Router logs**: BGP neighbor logs covering the incident timeframe
 - **Traceroute results**: From affected source networks to your prefix
 - **For CNI issues**: Optical light level readings from your equipment
@@ -288,7 +343,7 @@ show bgp ipv4 unicast neighbors <YOUR_NEIGHBOR_IP> advertised-routes
 ## Resources
 
 - <a href={props.trafficSteeringLink}>Traffic steering</a>: Route prioritization, BGP communities, and ECMP behavior
-- [Advertise prefixes](/magic-transit/how-to/advertise-prefixes/) (Magic Transit): BGP control methods and safe withdrawal procedures
+{ props.magicWord === "Magic Transit" && (<Markdown text={`- [Advertise prefixes](/magic-transit/how-to/advertise-prefixes/): BGP control methods and safe withdrawal procedures`} inline={false} />)}
 - <a href={props.configureRoutesLink}>Configure routes</a>: Static route configuration
 - [Network Interconnect](/network-interconnect/): CNI setup and BGP peering
 - <a href={props.tunnelHealthLink}>Troubleshoot tunnel health</a>: Tunnel-specific diagnostic steps
