@@ -138,7 +138,7 @@ Your Worker is now reachable at `https://dev-worker.example.com`.
 
 ### Restrict access
 
-Anyone who knows the hostname can reach your dev server. To restrict access, [create a Cloudflare Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) for the hostname and configure a policy that limits access to your team.
+Anyone who knows the hostname can reach your dev server. To restrict access, [create a Cloudflare Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for the hostname and configure a policy that limits access to your team.
 
 ## Configuration
 
@@ -193,7 +193,7 @@ Then point `cloudflared` at the same port.
 | Share a preview link with a teammate | Quick tunnel — send them the `trycloudflare.com` URL |
 | Test from a mobile device on the same network | Quick tunnel or named tunnel — open the URL on your phone |
 | Receive webhooks from an external service (for example, Stripe or GitHub) | Quick tunnel or named tunnel — set the webhook URL to the tunnel hostname |
-| Persistent dev environment for a team | Named tunnel with a stable hostname and an [Access policy](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) |
+| Persistent dev environment for a team | Named tunnel with a stable hostname and an [Access policy](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) |
 
 ## Limitations
 
