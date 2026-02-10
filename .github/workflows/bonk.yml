@@ -10,7 +10,7 @@ jobs:
   bonk:
     if: github.event.sender.type != 'Bot'
     concurrency:
-      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.head_ref }}
       cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
