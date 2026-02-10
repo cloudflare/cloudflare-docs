@@ -22,7 +22,9 @@ Private images do not currently support custom paths.
 
 :::
 
-The example below uses a Worker that takes in a regular URL without a signed token and returns a tokenized URL that expires after one day. You can, however, set this expiration period to whatever you need, by changing the const `EXPIRATION` value.
+## Generate signed URLs from your backend
+
+Signed URLs are generated server-side to protect your signing key. The example below shows uses Cloudflare Worker. The Worker takes in a regular URL without a signed token and returns a tokenized URL that expires after one day. You can, however, set this expiration period to whatever you need, by changing the const `EXPIRATION` value.
 
 <TypeScriptExample>
 
