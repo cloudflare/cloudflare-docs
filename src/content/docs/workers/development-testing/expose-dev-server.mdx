@@ -7,7 +7,7 @@ sidebar:
 head: []
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { PackageManagers } from "~/components";
 
 When you run `wrangler dev` or `vite dev` (with the [Cloudflare Vite plugin](/workers/vite-plugin/)), your Worker runs on a local HTTP server bound to `localhost:8787`. This means only your machine can reach it.
 
@@ -17,7 +17,7 @@ To share your dev server with teammates, test from a mobile device, or receive w
 
 [`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) runs alongside your dev server and creates an outbound-only connection to the Cloudflare network. Cloudflare assigns a public URL that proxies requests through this connection to `localhost:8787` on your machine.
 
-Your dev server stays on `localhost`. `cloudflared` handles TLS termination at the Cloudflare edge and encrypts the tunnel connection automatically. Hot reload continues to work because `wrangler dev` uses a stable proxy on port `8787` that persists across code changes.
+Your dev server stays on `localhost`. `cloudflared` handles TLS termination and encrypts the tunnel connection automatically. Hot reload continues to work because `wrangler dev` uses a stable proxy on port `8787` that persists across code changes.
 
 ## Prerequisites
 
@@ -30,36 +30,11 @@ A [quick tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-w
 
 ### Start your dev server
 
-<Tabs>
-  <TabItem label="npm">
+<PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-  ```sh
-  npx wrangler dev
-  ```
+Or, if you are using the [Cloudflare Vite plugin](/workers/vite-plugin/):
 
-  </TabItem>
-  <TabItem label="yarn">
-
-  ```sh
-  yarn wrangler dev
-  ```
-
-  </TabItem>
-  <TabItem label="pnpm">
-
-  ```sh
-  pnpm wrangler dev
-  ```
-
-  </TabItem>
-  <TabItem label="Vite">
-
-  ```sh
-  npx vite dev
-  ```
-
-  </TabItem>
-</Tabs>
+<PackageManagers type="exec" pkg="vite" args="dev" />
 
 By default, this starts a server on `http://localhost:8787`.
 
@@ -164,10 +139,6 @@ Only use `--ip 0.0.0.0` if `cloudflared` runs on a different machine on your net
 npx wrangler dev --ip 0.0.0.0 --port 8787
 ```
 
-### Local mode vs remote mode
-
-Use the default mode or `--local` — both run your Worker code locally, which is what you want when tunneling back to your machine. Do not use `--remote`, which uploads your code to the Cloudflare network and defeats the purpose of a tunnel to your local server.
-
 ### Custom port with Vite
 
 When using the Cloudflare Vite plugin, configure the port in `vite.config.js`:
@@ -201,4 +172,3 @@ Then point `cloudflared` at the same port.
 - Quick tunnels are capped at 200 concurrent in-flight requests.
 - Quick tunnels do not support Server-Sent Events (SSE).
 - If you have an existing `~/.cloudflared/config.yaml`, quick tunnels may not work. Rename the file temporarily or use a named tunnel instead.
-- Tunnel latency adds round-trip time to every request. This is acceptable for development but is not representative of production performance.
