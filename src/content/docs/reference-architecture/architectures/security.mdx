@@ -2,27 +2,27 @@
 title: Cloudflare Security Architecture
 pcx_content_type: reference-architecture
 products:
-  - Workers
-  - Turnstile
-  - Access
-  - Gateway
-  - CASB
-  - Email Security
-  - Data Loss Prevention
-  - Magic WAN
-  - Magic Firewall
-  - Magic Transit
-  - API Shield
-  - Bots
-  - Data Localization Suite
-  - DDoS Protection
-  - DNS Firewall
-  - Page Shield
-  - SSL/TLS
-  - Spectrum
-  - Security Center
-  - Turnstile
-  - WAF
+  [
+    access,
+    casb,
+    dlp,
+    gateway,
+    email-security-cf1,
+    workers,
+    turnstile,
+    magic-wan,
+    magic-firewall,
+    magic-transit,
+    api-shield,
+    bots,
+    ddos-protection,
+    dns-firewall,
+    page-shield,
+    ssl,
+    spectrum,
+    security-center,
+    waf,
+  ]
 sidebar:
   order: 1
   label: Security Architecture
@@ -30,7 +30,7 @@ description: This document provides insight into how this network and platform
   are architected from a security perspective, how they are operated, and what
   services are available for businesses to address their own security
   challenges.
-updated: 2024-06-19
+reviewed: 2024-06-19
 ---
 
 import { Render, PublicStats } from "~/components";
@@ -52,7 +52,7 @@ This document is designed for IT and security professionals who are looking at u
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
-<Render file="what-is-cloudflare-link" />
+<Render file="what-is-cloudflare-link" product="reference-architecture" />
 
 - [How Cloudflare strengthens security everywhere you do business](https://cf-assets.www.cloudflare.com/slt3lc6tev37/is7XGR7xZ8CqW0l9EyHZR/1b4311823f602f72036385a66fb96e8c/Everywhere_Security-Cloudflare-strengthens-security-everywhere-you_do-business.pdf) (10 minutes)
 
@@ -113,7 +113,7 @@ In summary, Cloudflare not only has built the right technology to secure our net
 
 ## Using Cloudflare to protect your business
 
-The reason the Cloudflare network exists is to provide services to customers to protect their own assets, such as users, applications, and data. The following section details what these services are, their basic architecture, and how they are used by customers. Note that this section does not go into extensive detail on each service. Instead, please refer to our [Architecture Center](https://cloudflare.com/architecture) or [product documentation](/products/) to understand more about a specific product, service, or solution. The goal in this document is to provide information about the overall set of security services available and the general use cases they are designed for. As such, we provide a table of contents so you can jump to a section of interest.
+The reason the Cloudflare network exists is to provide services to customers to protect their own assets, such as users, applications, and data. The following section details what these services are, their basic architecture, and how they are used by customers. Note that this section does not go into extensive detail on each service. Instead, please refer to our [Architecture Center](https://cloudflare.com/architecture) or [product documentation](/directory/) to understand more about a specific product, service, or solution. The goal in this document is to provide information about the overall set of security services available and the general use cases they are designed for. As such, we provide a table of contents so you can jump to a section of interest.
 
 1. [Securing public and private resources](#securing-public-and-private-resources)
 2. [Protecting public resources](#protecting-public-resources)
@@ -526,9 +526,9 @@ Existing private infrastructure can be complex. Cloudflare provides a variety of
 | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Magic WAN](/magic-wan/)                                                                                      | IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                                   | Connecting existing network routers to Cloudflare. Allowing all traffic into and out of the network to go through Cloudflare.                                               |
 | [Magic WAN Connector](/magic-wan/configuration/connector/)                                                    | Appliance-based IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                   | Uses the same technology as Magic WAN; however, instead of using existing networking devices, a dedicated appliance or virtual machine is used — the Magic WAN Connector.   |
-| [cloudflared](/cloudflare-one/connections/connect-networks/)                                                  | Software agent deployed on servers or alongside services like Kubernetes for creating a tunnel for incoming connections to private applications or networks. | IT admins or application owners can easily install this tunnel software to expose their application to the Cloudflare network.                                              |
-| [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/)                    | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks.                          | Similar to cloudflared, but supports East to West traffic and is often used in place of Magic WAN when there is no ability to create an IPsec tunnel from existing devices. |
-| [WARP Desktop Agent](/cloudflare-one/connections/connect-devices/warp/)                                       | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks.                                        | Connecting end user devices like phones and laptops to be part of the Cloudflare network.                                                                                   |
+| [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/)                                         | Software agent deployed on servers or alongside services like Kubernetes for creating a tunnel for incoming connections to private applications or networks. | IT admins or application owners can easily install this tunnel software to expose their application to the Cloudflare network.                                              |
+| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)           | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks.                          | Similar to cloudflared, but supports East to West traffic and is often used in place of Magic WAN when there is no ability to create an IPsec tunnel from existing devices. |
+| [WARP Desktop Agent](/cloudflare-one/team-and-resources/devices/warp/)                                        | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks.                                        | Connecting end user devices like phones and laptops to be part of the Cloudflare network.                                                                                   |
 | [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) | Direct connection between your physical networks and Cloudflare.                                                                                             | When your applications live in the same data centers we operate in, we can connect those networks directly to Cloudflare.                                                   |
 
 For more details on how these methods work, please refer to our [SASE reference architecture](/reference-architecture/architectures/sase/).
@@ -539,19 +539,19 @@ All the above methods are for connecting networks and applications to Cloudflare
 
 ##### Device agent
 
-For the best user experience and the greatest degree of access control, we recommend deploying our [device agent](/cloudflare-one/connections/connect-devices/warp/) to devices. Supported on Windows, macOS, Linux, iOS, and Android, the agent performs two main roles. First, it routes all traffic from the device to Cloudflare, allowing for access to all your existing connected private networks and applications. Second, the agent provides device posture information such as operating system version, encrypted storage status, and other details. This information is then associated with the authenticated user and can be used as part of access control policy. The agent can be installed manually, but most enterprises deploy it using their device management (MDM) software.
+For the best user experience and the greatest degree of access control, we recommend deploying our [device agent](/cloudflare-one/team-and-resources/devices/warp/) to devices. Supported on Windows, macOS, Linux, iOS, and Android, the agent performs two main roles. First, it routes all traffic from the device to Cloudflare, allowing for access to all your existing connected private networks and applications. Second, the agent provides device posture information such as operating system version, encrypted storage status, and other details. This information is then associated with the authenticated user and can be used as part of access control policy. The agent can be installed manually, but most enterprises deploy it using their device management (MDM) software.
 
 ##### Browser proxy
 
-There may be instances where you cannot install software on end user devices. In those instances, Cloudflare provides a proxy endpoint where browsers can be configured to on-ramp their traffic to Cloudflare. This is either done manually by the end user, or by using [automated browser configuration](/cloudflare-one/connections/connect-devices/agentless/pac-files) files.
+There may be instances where you cannot install software on end user devices. In those instances, Cloudflare provides a proxy endpoint where browsers can be configured to on-ramp their traffic to Cloudflare. This is either done manually by the end user, or by using [automated browser configuration](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) files.
 
 ##### Isolated browser
 
-In some situations, you have no ability to modify the end device in any way. In those instances we provide the ability for a user to access a browser that runs directly on our edge network. This [browser isolation service](/cloudflare-one/policies/browser-isolation/) requires users to point their browser at a Cloudflare URL, which in turn runs a headless, secure browser on one of our edge servers. Secure vectors are then used over HTTPS and WebRTC connections. For more information, refer to [this architecture](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/).
+In some situations, you have no ability to modify the end device in any way. In those instances we provide the ability for a user to access a browser that runs directly on our edge network. This [browser isolation service](/cloudflare-one/remote-browser-isolation/) requires users to point their browser at a Cloudflare URL, which in turn runs a headless, secure browser on one of our edge servers. Secure vectors are then used over HTTPS and WebRTC connections. For more information, refer to [this architecture](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/).
 
 #### Integrating identity systems
 
-Users cannot just sign up and access your private resources; their identity and associated credentials are typically created and managed in an enterprise identity provider (IdP). Cloudflare integrates with both [enterprise and consumer-based identity services](/cloudflare-one/identity/), as well as providing a simple one-time password (OTP) via email service for when you have a need to authenticate a user with only an email address.
+Users cannot just sign up and access your private resources; their identity and associated credentials are typically created and managed in an enterprise identity provider (IdP). Cloudflare integrates with both [enterprise and consumer-based identity services](/cloudflare-one/integrations/identity-providers/), as well as providing a simple one-time password (OTP) via email service for when you have a need to authenticate a user with only an email address.
 
 Cloudflare supports integrations with multiple identity providers, including of the same type. So if you manage an Okta instance for your employees, but may have acquired another company with its own Okta instance, both can be integrated with Cloudflare. Cloudflare then acts as a proxy for the SSO process. Applications are configured using SAML and OIDC to use Cloudflare for authentication and then Cloudflare in turn redirects users through the authentication flow of an integrated IdP. Group information can also be synchronized via SCIM into Cloudflare to be used in access control policies.
 
@@ -563,12 +563,12 @@ This centralization of identity into a common access control layer allows you to
 
 The focus on this document is about security, and now that applications, devices, identities, and networks are all connected, every request to and from any resource on the network, and also to the Internet, is now subject to Cloudflare's access control and firewall services. There are two services that apply policy-based controls to traffic.
 
-- **Zero Trust Network Access**: Our [Access](/cloudflare-one/policies/access/) product manages access to specific networks or applications that are deemed private. It enforces authentication either for users via an existing identity provider, or for other applications via service tokens or mTLS.
-- **Secure Web Gateway**: Our [Gateway](/cloudflare-one/policies/gateway/) product is used to analyze traffic and apply policies, no matter the destination. It is most commonly used to allow, block, or isolate traffic that is destined for the Internet. This can be used to apply access controls to SaaS applications, but any traffic flowing through Cloudflare can be inspected and acted upon by Gateway. Therefore it can also be used to add additional access controls to non-Internet, private tunneled applications.
+- **Zero Trust Network Access**: Our [Access](/cloudflare-one/access-controls/policies/) product manages access to specific networks or applications that are deemed private. It enforces authentication either for users via an existing identity provider, or for other applications via service tokens or mTLS.
+- **Secure Web Gateway**: Our [Gateway](/cloudflare-one/traffic-policies/) product is used to analyze traffic and apply policies, no matter the destination. It is most commonly used to allow, block, or isolate traffic that is destined for the Internet. This can be used to apply access controls to SaaS applications, but any traffic flowing through Cloudflare can be inspected and acted upon by Gateway. Therefore it can also be used to add additional access controls to non-Internet, private tunneled applications.
 
 ![Cloudflare's ZTNA and SWG services can be combined to secure both private and Internet access.](~/assets/images/reference-architecture/security/security-ref-arch-21.svg)
 
-Both of these technologies can be combined to ensure appropriate access to private applications. For users with our [device agent](/cloudflare-one/connections/connect-devices/warp/) installed, the policies can also include device-level requirements. When combined with identity data, policies such as the following can be written to control access to, for example, an internal database administration tool.
+Both of these technologies can be combined to ensure appropriate access to private applications. For users with our [device agent](/cloudflare-one/team-and-resources/devices/warp/) installed, the policies can also include device-level requirements. When combined with identity data, policies such as the following can be written to control access to, for example, an internal database administration tool.
 
 - User must have authenticated via the company IdP, and used MFA as part of the authentication
 - User must be in the "Database Administrators" group in the IdP
@@ -583,15 +583,15 @@ It is possible to define access groups of users that can be applied across multi
 
 All traffic is flowing through Cloudflare, so therefore all data is flowing through Cloudflare. This allows you to apply data controls on that traffic. Typically, employees are allowed access to sensitive applications and data only on managed devices where the device agent installs Cloudflare certificates that allow Cloudflare to terminate SSL connections on our network. This in turn allows for inspection of the contents of HTTPS web traffic and policy can be written to manage and secure that data.
 
-Cloudflare has a [data loss prevention](/cloudflare-one/policies/data-loss-prevention/) (DLP) service that defines profiles that can be used to identify sensitive data. These profiles are then used in Gateway policies to match specific traffic and either allow, block, or isolate it.
+Cloudflare has a [data loss prevention](/cloudflare-one/data-loss-prevention/) (DLP) service that defines profiles that can be used to identify sensitive data. These profiles are then used in Gateway policies to match specific traffic and either allow, block, or isolate it.
 
 The same DLP profiles can also be used in our Cloud Access Security Broker (CASB) service, where Cloudflare is integrated via APIs to SaaS applications. We then scan the storage and configuration of those applications looking for misconfiguration or sensitive data that's publicly exposed.
 
 #### Securing Internet access
 
-A lot of this section has focused on protecting access to private networks and applications, but a business must also protect their employees and their devices. Our [secure web gateway](/cloudflare-one/policies/gateway/) (SWG) service sits between users connected to Cloudflare and any resource they are attempting to access, both public and private. Policies can be written to prevent employees from accessing high-risk websites or known sites that distribute malware. Policies can also be written to mitigate phishing attacks by blocking access to domains and websites known to be part of phishing campaigns. Protecting users and their devices from Internet threats also reduces associated risks of those same users and devices accessing private resources.
+A lot of this section has focused on protecting access to private networks and applications, but a business must also protect their employees and their devices. Our [secure web gateway](/cloudflare-one/traffic-policies/) (SWG) service sits between users connected to Cloudflare and any resource they are attempting to access, both public and private. Policies can be written to prevent employees from accessing high-risk websites or known sites that distribute malware. Policies can also be written to mitigate phishing attacks by blocking access to domains and websites known to be part of phishing campaigns. Protecting users and their devices from Internet threats also reduces associated risks of those same users and devices accessing private resources.
 
-Another critical private resource to secure is email. This is often one of the most private of all resources, as it contains confidential communications across your entire organization. It's also a common attack surface, mostly by way of phishing attacks. [Email Security](https://www.cloudflare.com/zero-trust/products/email-security/) (CES) examines all emails in your employee's inboxes and detects spoofed, malicious, or suspicious emails and can be configured to act accordingly. CES can be integrated by changing your domain MX records and redirecting all email via Cloudflare. Another option, for Microsoft and Google, is to integrate via API and inspect email already in a user’s inbox. For suspicious emails, links in the email are rewritten to leverage Cloudflare's [browser isolation service](/cloudflare-one/policies/browser-isolation/) so that when a user heads to that website, their local machine is protected against any malicious code that might be running in the browser.
+Another critical private resource to secure is email. This is often one of the most private of all resources, as it contains confidential communications across your entire organization. It's also a common attack surface, mostly by way of phishing attacks. [Email security](https://www.cloudflare.com/zero-trust/products/email-security/) (CES) examines all emails in your employee's inboxes and detects spoofed, malicious, or suspicious emails and can be configured to act accordingly. CES can be integrated by changing your domain MX records and redirecting all email via Cloudflare. Another option, for Microsoft and Google, is to integrate via API and inspect email already in a user’s inbox. For suspicious emails, links in the email are rewritten to leverage Cloudflare's [browser isolation service](/cloudflare-one/remote-browser-isolation/) so that when a user heads to that website, their local machine is protected against any malicious code that might be running in the browser.
 
 ![Cloud email security filters unwanted email traffic from your users inboxes.](~/assets/images/reference-architecture/security/security-ref-arch-23.svg)
 

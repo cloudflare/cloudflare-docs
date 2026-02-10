@@ -3,7 +3,7 @@ title: Cron triggers are now supported in Python Workers
 description: You can now set up scheduled handlers in your Python Workers
 products:
   - workers
-date: 2025-04-24T12:00:00Z
+date: 2025-04-24
 ---
 
 import { WranglerConfig } from "~/components";
@@ -25,13 +25,20 @@ Define a cron trigger configuration in your Wrangler configuration file:
 
 <WranglerConfig>
 
-```toml
-[triggers]
-# Schedule cron triggers:
-# - At every 3rd minute
-# - At 15:00 (UTC) on first day of the month
-# - At 23:59 (UTC) on the last weekday of the month
-crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
+```jsonc
+{
+	"triggers": {
+		// Schedule cron triggers:
+		// - At every 3rd minute
+		// - At 15:00 (UTC) on first day of the month
+		// - At 23:59 (UTC) on the last weekday of the month
+		"crons": [
+			"*/3 * * * *",
+			"0 15 1 * *",
+			"59 23 LW * *"
+		]
+	}
+}
 ```
 
 </WranglerConfig>

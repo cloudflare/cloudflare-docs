@@ -2,35 +2,23 @@
 {}
 ---
 
-The following procedure makes two changes to the `sshd_config` file on the remote target machine. The first change requires that you uncomment a field already set in most default configurations; the second change adds a new field.
+Configure your SSH server to trust the Cloudflare SSH CA by updating the `sshd_config` file on the remote target machine.
 
-1. While staying within the `/etc/ssh` directory on the remote machine, open the `sshd_config` file.
+1. While in the `/etc/ssh` directory on the remote machine, open the `sshd_config` file.
 
    ```sh
-   vim /etc/ssh/sshd_config
+    sudo vim /etc/ssh/sshd_config
    ```
 
-2. Go to the row named `PubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
+2. Press `i` to enter insert mode, then add the following lines at the top of the file, above all other directives:
 
    ```txt
-   # PubkeyAuthentication yes
-   ```
-
-3. Remove the `#` symbol to uncomment the line:
-
-	   ```txt
    PubkeyAuthentication yes
-   ```
-
-4. Add a new line below `PubkeyAuthentication`:
-
-   ```txt
    TrustedUserCAKeys /etc/ssh/ca.pub
    ```
 
-5. Save the file and quit the editor. You might need to use the following command again to save and exit.
+   :::caution[Be aware of your include statements]
+   If there are any include statements below these lines, the configurations in those files will not take precedence.
+   :::
 
-   ```txt
-   :w !sudo tee %
-   :q!
-   ```
+3. Press `esc` and then type `:x` and press `Enter` to save and exit.

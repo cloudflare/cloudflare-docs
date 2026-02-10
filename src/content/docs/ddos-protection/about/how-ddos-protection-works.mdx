@@ -11,13 +11,13 @@ learning_center:
 
 import { GlossaryTooltip } from "~/components"
 
-To detect and mitigate <GlossaryTooltip term="distributed denial-of-service (DDoS) attack">DDoS attacks</GlossaryTooltip>, Cloudflare’s autonomous edge and centralized DDoS systems analyze traffic samples out of path, which allows Cloudflare to asynchronously detect DDoS attacks without causing latency or impacting performance.
+To detect and mitigate <GlossaryTooltip term="distributed denial-of-service (DDoS) attack">DDoS attacks</GlossaryTooltip>, Cloudflare's autonomous edge and centralized DDoS systems analyze traffic samples out of path, which allows Cloudflare to asynchronously detect DDoS attacks without causing latency or impacting performance.
 
 The analyzed samples include:
 
 - **Packet fields** such as the source IP, source port, destination IP, destination port, protocol, TCP flags, sequence number, options, and packet rate.
 - **HTTP request metadata** such as HTTP headers, user agent, query-string, path, host, HTTP method, HTTP version, TLS cipher version, and request rate.
-- **HTTP response metrics** such as error codes returned by customers’ origin servers and their rates.
+- **HTTP response metrics** such as error codes returned by customers' origin servers and their rates.
 
 Cloudflare uses a set of dynamic rules that scan for attack patterns, known attack tools, suspicious patterns, protocol violations, requests causing large amounts of origin errors, excessive traffic hitting the origin or cache, and additional attack vectors. Each rule has a predefined sensitivity level and default action that varies based on the rule's confidence that the traffic is indeed part of an attack.
 

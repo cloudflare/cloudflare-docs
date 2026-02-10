@@ -1,9 +1,9 @@
 entries:
   - name: Expiring Access Service Token Alert
-    audience: "[Access](/cloudflare-one/policies/access/) customers who want to receive a notification when their service token is about to expire."
+    audience: "[Access](/cloudflare-one/access-controls/policies/) customers who want to receive a notification when their service token is about to expire."
     availability: Purchase of Access
     associatedProducts: Cloudflare Access
-    nextSteps: Extend the expiration date of the service token. For more details, refer to [Renew your service token](/cloudflare-one/identity/service-tokens/#renew-service-tokens).
+    nextSteps: Extend the expiration date of the service token. For more details, refer to [Renew your service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#renew-service-tokens).
     otherFilters: None.
 
   - name: Usage Based Billing
@@ -65,6 +65,13 @@ entries:
     associatedProducts: Security Center
     nextSteps: Review the insight and decide whether you want to resolve it, archive it, or export it.
     otherFilters: You can select the insight(s) you want to be alerted on.
+
+  - name: Abuse report
+    audience: Customers who want to be alerted in the event that an abuse report is filed against their website.
+    availability: All Cloudflare plans.
+    associatedProducts: Security Center
+    nextSteps: View our guidance on [customer abuse report obligations](/fundamentals/reference/report-abuse/abuse-report-obligations/) and more information on how to [view and submit abuse reports](/fundamentals/reference/report-abuse/submit-report/).
+    otherFilters: You can filter the reports based on date, report status, report type, and domain.
 
   - name: Maintenance Notification
     audience: Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/disruptive-maintenance/) for specific data centers. The notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.
@@ -188,7 +195,7 @@ entries:
     otherFilters: |-
       Available filters include:
 
-      * You can search for and add pools from your list of pools.
+      * You can search for and add pools from your list of pools. If no pools are selected, the alert will apply to all pools in the account.
       * You can also choose the trigger that fires the notification when the Load Balancing pool is **enabled**, **disabled**, and **either enabled or disabled**.
 
   - name: Load Balancing Health Alert
@@ -341,10 +348,10 @@ entries:
     otherFilters: None.
 
   - name: Access mTLS Certificate Expiration Alert
-    audience: "[Access](/cloudflare-one/policies/access/) customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate."
-    availability: Purchase of [Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) and/or [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
+    audience: "[Access](/cloudflare-one/access-controls/policies/) customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate."
+    availability: Purchase of [Access](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/) and/or [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
     associatedProducts: SSL/TLS
-    nextSteps: Upload a [renewed certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
+    nextSteps: Upload a [renewed certificate](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
     otherFilters: None.
 
   - name: Advanced Certificate Alert
@@ -371,7 +378,7 @@ entries:
     otherFilters: None.
 
   - name: Universal SSL Alert
-    audience: Customers with universal certificates who want to receive a notification on validation, issuance, and renewal of certificates.
+    audience: Customers with universal certificates who want to receive a notification on validation, issuance, renewal, and expiration notices.
     availability: All Cloudflare plans.
     associatedProducts: SSL/TLS
     nextSteps: You only need to take action if you are notified that you have a certificate that failed. You can find the reasons why a certificate is not being issued in [Troubleshooting SSL errors](/ssl/troubleshooting/general-ssl-errors/).
@@ -394,7 +401,7 @@ entries:
     availability: |-
       [Bring your own CA](/ssl/client-certificates/byo-ca/).
 
-      The mTLS Certificate Store refers to customer uploaded certificates and does not include client certificates generated with the [Cloudflare CA](/ssl/client-certificates/create-a-client-certificate/).
+      The mTLS Certificate Store refers to customer uploaded certificates and does not include client certificates generated with the [Cloudflare CA](/ssl/client-certificates/#how-it-works).
     associatedProducts: SSL/TLS
     nextSteps: Upload a renewed certificate.
     otherFilters: None.
@@ -508,15 +515,10 @@ entries:
     audience: Customers who want to be warned about changes in health status for their Cloudflare Tunnels.
     availability: All Cloudflare Zero Trust plans.
     associatedProducts: Tunnel
-    nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/).
+    nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/).
     otherFilters: None.
     additional_information: |-
-      | <div style="width:75px">Health status</div> | Description  |
-      | ------------- | ------------ |
-      | Healthy       | The tunnel is active and serving traffic through four connections to the Cloudflare global network. |
-      | Degraded      | The tunnel is active and serving traffic, but at least one individual connection has failed. Further degradation in [tunnel availability](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) could risk the tunnel going down and failing to serve traffic.|
-      | Down          | The tunnel cannot serve traffic as it has no connections to the Cloudflare global network.|
-      | Inactive      | This value is reserved for tunnels which have been created, but have never been run.|
+      Refer to [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/#tunnel-status) to review the list of possible tunnel statuses (`Healthy`, `Inactive`, `Down` and `Degraded`).
 
   - name: Device connectivity anomaly
     audience: Zero Trust customers who want to be notified when Cloudflare detects a spike or drop in the number of devices connected to the WARP client.
@@ -530,7 +532,7 @@ entries:
         - **Colo**: Cloudflare data center that the device is connected to.
         - **Platform**: Operating system of the device.
         - **Version**: WARP client version (for example, `2024.3.409.0`).
-        - **Mode**: [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) deployed on the device.
+        - **Mode**: [WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) deployed on the device.
 
   - name: DEX test latency
     audience: Zero Trust customers who wish to receive alerts when there is a spike or drop in application latency, as measured by the HTTP test [Resource Fetch time](/cloudflare-one/insights/dex/tests/http/#test-results) or Traceroute test [Round trip time](/cloudflare-one/insights/dex/tests/traceroute/#test-results). Requires setting up a [DEX test](/cloudflare-one/insights/dex/tests/).

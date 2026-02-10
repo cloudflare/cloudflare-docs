@@ -1,0 +1,16 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements**
+  - WARP proxy mode now uses the operating system's DNS settings. Changes made to system DNS settings while in proxy mode require the client to be turned off then back on to take effect.
+  - Fixed an issue affecting clients in Split Tunnel Include mode, where access to split-tunneled traffic was blocked after reconnecting the client.
+  - For macOS deployments, the WARP client can now be managed using an `mdm.xml` file placed in `/Library/Application Support/Cloudflare/mdm.xml`. This new configuration option offers an alternative to the still supported method of deploying a managed plist through an MDM solution.
+
+  **Known issues**
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.4 or later.
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+version: 2025.5.943.0
+releaseDate: 2025-07-23T20:41:33.758Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.5.943.0
+packageSize: 96660802
+platformName: macOS

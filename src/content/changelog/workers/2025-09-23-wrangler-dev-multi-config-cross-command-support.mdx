@@ -1,0 +1,44 @@
+---
+title: Improved support for running multiple Workers with `wrangler dev`
+description: Workers running with wrangler dev using multiple config files can now communicate with Workers running in separate dev commands.
+products:
+  - workers
+date: 2025-09-23
+---
+
+You can run multiple Workers in a single dev command by passing multiple config files to `wrangler dev`:
+
+```sh
+wrangler dev --config ./web/wrangler.jsonc --config ./api/wrangler.jsonc
+```
+
+Previously, if you ran the command above and then also ran wrangler dev for a different Worker, the Workers running in separate wrangler dev sessions could not communicate with each other. This prevented you from being able to use [Service Bindings](https://developers.cloudflare.com/workers/runtime-apis/bindings/service-bindings/) and [Tail Workers](https://developers.cloudflare.com/workers/observability/logs/tail-workers/) in local development, when running separate wrangler dev sessions.
+	
+Now, the following works as expected:
+
+```sh
+# Terminal 1: Run your application that includes both Web and API workers
+wrangler dev --config ./web/wrangler.jsonc --config ./api/wrangler.jsonc
+
+# Terminal 2: Run your auth worker separately
+wrangler dev --config ./auth/wrangler.jsonc
+```
+
+These Workers can now communicate with each other across separate dev commands, regardless of your development setup.
+
+```js title="./api/src/index.ts"
+export default {
+  async fetch(request, env) {
+    // This service binding call now works across dev commands
+    const authorized = await env.AUTH.isAuthorized(request);
+
+    if (!authorized) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    return new Response('Hello from API Worker!', { status: 200 });
+  },
+};
+```
+
+Check out the [Developing with multiple Workers](/workers/development-testing/multi-workers) guide to learn more about the different approaches and when to use each one.

@@ -1,11 +1,12 @@
 ---
 title: aws-sdk-net
 pcx_content_type: example
+reviewed: 2022-10-21
 ---
 
 import { Render } from "~/components";
 
-<Render file="keys" />
+<Render file="keys" product="r2" />
 <br />
 
 This example uses version 3 of the [aws-sdk-net](https://www.nuget.org/packages/AWSSDK.S3) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
@@ -14,28 +15,18 @@ This example uses version 3 of the [aws-sdk-net](https://www.nuget.org/packages/
 
 In this example, you will pass credentials explicitly to the `IAmazonS3` initialization. If you wish, use a shared AWS credentials file or the SDK store in-line with other AWS SDKs. Refer to [Configure AWS credentials](https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/net-dg-config-creds.html) for more details.
 
-:::note[Compatibility]
-Client version `3.7.963.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
-
-To mitigate, users can use `3.7.962.0` or add the following to their AmazonS3Config:
-
-```csharp
-RequestChecksumCalculation = "WHEN_REQUIRED",
-ResponseChecksumValidation = "WHEN_REQUIRED"
-```
-
-:::
-
 ```csharp
 private static IAmazonS3 s3Client;
 
 public static void Main(string[] args)
 {
-	var accessKey = "<ACCESS_KEY>";
-	var secretKey = "<SECRET_KEY>";
+	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+	var accessKey = "<ACCESS_KEY_ID>";
+	var secretKey = "<SECRET_ACCESS_KEY>";
 	var credentials = new BasicAWSCredentials(accessKey, secretKey);
 	s3Client = new AmazonS3Client(credentials, new AmazonS3Config
 		{
+			// Provide your Cloudflare account ID
 			ServiceURL = "https://<ACCOUNT_ID>.r2.cloudflarestorage.com",
 		});
 }
@@ -55,8 +46,11 @@ static async Task ListBuckets()
 		Console.WriteLine("{0}", s3Bucket.BucketName);
 	}
 }
-// sdk-example
-// my-bucket-name
+```
+
+```sh output
+sdk-example
+my-bucket
 ```
 
 ```csharp
@@ -64,7 +58,7 @@ static async Task ListObjectsV2()
 {
 	var request = new ListObjectsV2Request
 	{
-		BucketName = "sdk-example"
+		BucketName = "my-bucket"
 	};
 
 	var response = await s3Client.ListObjectsV2Async(request);
@@ -74,8 +68,11 @@ static async Task ListObjectsV2()
 		Console.WriteLine("{0}", s3Object.Key);
 	}
 }
-// dog.png
-// cat.png
+```
+
+```sh output
+dog.png
+cat.png
 ```
 
 ## Upload and retrieve objects
@@ -92,29 +89,35 @@ static async Task PutObject()
 	var request = new PutObjectRequest
 	{
 		FilePath = @"/path/file.txt",
-		BucketName = "sdk-example",
+		BucketName = "my-bucket",
 		DisablePayloadSigning = true,
-    DisableDefaultChecksumValidation = true
+		DisableDefaultChecksumValidation = true
 	};
 
 	var response = await s3Client.PutObjectAsync(request);
 
 	Console.WriteLine("ETag: {0}", response.ETag);
 }
-// ETag: "186a71ee365d9686c3b98b6976e1f196"
+```
+
+```sh output
+ETag: "186a71ee365d9686c3b98b6976e1f196"
 ```
 
 ```csharp
 static async Task GetObject()
 {
-  var bucket = "sdk-example";
-  var key = "file.txt"
+	var bucket = "my-bucket";
+	var key = "file.txt";
 
 	var response = await s3Client.GetObjectAsync(bucket, key);
 
 	Console.WriteLine("ETag: {0}", response.ETag);
 }
-// ETag: "186a71ee365d9686c3b98b6976e1f196"
+```
+
+```sh output
+ETag: "186a71ee365d9686c3b98b6976e1f196"
 ```
 
 ## Generate presigned URLs
@@ -127,7 +130,7 @@ static string? GeneratePresignedUrl()
 	AWSConfigsS3.UseSignatureVersion4 = true;
 	var presign = new GetPreSignedUrlRequest
 	{
-		BucketName = "sdk-example",
+		BucketName = "my-bucket",
 		Key = "file.txt",
 		Verb = HttpVerb.GET,
 		Expires = DateTime.Now.AddDays(7),
@@ -139,5 +142,8 @@ static string? GeneratePresignedUrl()
 
 	return presignedUrl;
 }
-// URL: https://<accountid>.r2.cloudflarestorage.com/sdk-example/file.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
+```
+
+```sh output
+https://<ACCOUNT_ID>.r2.cloudflarestorage.com/my-bucket/file.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
 ```

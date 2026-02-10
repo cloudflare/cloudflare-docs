@@ -9,6 +9,5 @@ product:
 
 meta:
   title: Cloudflare Randomness Beacon docs
-  description: "Explore drand: a distributed service providing public randomness
-    in an application-agnostic, secure, and efficient way."
+  description: Explore drand, a distributed service providing randomness to applications
   author: "@cloudflare"

@@ -7,9 +7,22 @@ head: []
 description: Learn how to set up and maintain load balancers.
 ---
 
-import { AvailableNotifications, Render, TabItem, Tabs } from "~/components";
+import {
+	AvailableNotifications,
+	Render,
+	TabItem,
+	Tabs,
+	Stream,
+} from "~/components";
 
-<Render file="load-balancer-definition" /> <br />
+<Render file="load-balancer-definition" product="load-balancing" /> <br />
+
+<Stream
+	id="ce39fdf599aed3661f60e8f780761808"
+	title="Set up Load Balancer"
+	thumbnail="https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/51022c1e-c6d4-424e-f439-002ffb4b8400/public"
+	showMoreVideos={false}
+/>
 
 For more details about load balancers, refer to [Load balancers](/load-balancing/load-balancers/).
 
@@ -17,11 +30,11 @@ For more details about load balancers, refer to [Load balancers](/load-balancing
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="load-balancer-create" />
+<Render file="load-balancer-create" product="load-balancing" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="load-balancer-create-api" />
+<Render file="load-balancer-create-api" product="load-balancing" />
 
 </TabItem> </Tabs>
 

@@ -7,6 +7,7 @@ head:
   - tag: title
     content: Serve images from custom paths
 ---
+import { DashButton } from "~/components";
 
 You can use Transform Rules to rewrite URLs for every image that you transform through Images.
 
@@ -16,7 +17,12 @@ This page covers examples for the following scenarios:
 - Modify existing URLs to be compatible with transformations in Images
 - Transform every image requested on your zone with Images
 
-To create a rule, log in to the Cloudflare dashboard and select your account and website. Then, go to **Rules** > **Overview** and select **Create rule** next to **URL Rewrite Rules**.
+To create a rule:
+1. In the Cloudflare dashboard, go to the **Rules Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Select **Create rule** next to **URL Rewrite Rules**.
 
 ## Before you start
 

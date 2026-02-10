@@ -1,0 +1,34 @@
+---
+title: Event subscriptions
+pcx_content_type: overview
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Event subscriptions overview
+description: Subscribe to events from Cloudflare services to build custom workflows, integrations, and logic with Workers.
+---
+
+import { LinkCard } from "~/components"
+
+Event subscriptions allow you to receive messages when events occur across your Cloudflare account. Cloudflare products (e.g., [KV](/kv/), [Workers AI](/workers-ai), [Workers](/workers)) can publish structured events to a queue, which you can then consume with Workers or [HTTP pull consumers](/queues/configuration/pull-consumers/) to build custom workflows, integrations, or logic.
+
+![Event subscriptions architecture](public/images/queues/queues-event-subscriptions.png)
+
+## What is an event?
+
+An event is a structured record of something happening in your Cloudflare account – like a Workers AI batch request being queued, a Worker build completing, or an R2 bucket being created. When you subscribe to these events, your queue will automatically start receiving messages when the events occur.
+
+## Learn more
+
+<LinkCard
+	title="Manage event subscriptions"
+	href="/queues/event-subscriptions/manage-event-subscriptions/"
+	description="Learn how to create, configure, and manage event subscriptions for your queues."
+/>
+
+<LinkCard
+	title="Events & schemas"
+	href="/queues/event-subscriptions/events-schemas/"
+	description="Explore available event types and their corresponding data schemas."
+/>

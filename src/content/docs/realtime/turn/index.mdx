@@ -2,7 +2,7 @@
 title: TURN Service
 pcx_content_type: navigation
 sidebar:
-  order: 10
+  order: 3
 ---
 
 Separately from the SFU, Realtime offers a managed TURN service. TURN acts as a relay point for traffic between WebRTC clients like the browser and SFUs, particularly in scenarios where direct communication is obstructed by NATs or firewalls. TURN maintains an allocation of public IP addresses and ports for each session, ensuring connectivity even in restrictive network environments.
@@ -24,9 +24,9 @@ Use of alternate port 53 only by itself is not recommended. Port 53 is blocked b
 
 ## Regions
 
-Realtime TURN service is available in every Cloudflare data center.
+Cloudflare Realtime TURN service runs on [Cloudflare's global network](https://www.cloudflare.com/network) - a growing global network of thousands of machines distributed across hundreds of locations, with the notable exception of the Cloudflare's [China Network](/china-network/).
 
-When a client tries to connect to `turn.cloudflare.com`, it _automatically_ connects to the Cloudflare location closest to them. We achieve this using anycast routing.
+When a client tries to connect to `turn.cloudflare.com`, it _automatically_ connects to the Cloudflare location closest to them. We achieve this using [anycast routing](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/).
 
 To learn more about the architecture that makes this possible, read this [technical deep-dive about Realtime](https://blog.cloudflare.com/cloudflare-calls-anycast-webrtc).
 

@@ -1,0 +1,71 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+	lora: z.boolean(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export default {
+	async fetch(request, env): Promise<Response> {
+		const response = await env.AI.run('${name}', {
+			instructions: 'You are a concise assistant.',
+			input: 'What is the origin of the phrase Hello, World?',
+		});
+
+		return Response.json(response);
+	},
+} satisfies ExportedHandler<Env>;
+`;
+
+const python = `
+import os
+import requests
+
+ACCOUNT_ID = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
+AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+
+prompt = "Tell me all about PEP-8"
+response = requests.post(
+  f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/v1/responses",
+    headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
+    json={
+			"model": "${name}",
+      "input": "Tell me all about PEP-8"
+    }
+)
+result = response.json()
+print(result)
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \
+  -d '{
+    "model": "${name}",
+    "input": "What are the benefits of open-source models?"
+  }'
+`;
+---
+
+<>
+	<Details header="Worker">
+		<Code code={worker} lang="ts" />
+	</Details>
+
+	<Details header="Python">
+		<Code code={python} lang="py" />
+	</Details>
+
+	<Details header="curl">
+		<Code code={curl} lang="sh" />
+	</Details>
+

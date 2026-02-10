@@ -11,7 +11,7 @@ head:
 
 import { GlossaryTooltip } from "~/components"
 
-When you have a <GlossaryTooltip term="partial setup" link="/dns/zone-setups/partial-setup/">partial zone</GlossaryTooltip>, Cloudflare handles DNS records a bit differently from full zones in order to internally resolve the origin server where proxied HTTP requests are sent to.
+When you have a partial zone (<GlossaryTooltip term="CNAME setup" link="/dns/zone-setups/partial-setup/">CNAME setup</GlossaryTooltip>), Cloudflare handles DNS records a bit differently from primary zones (full setup) in order to internally resolve the origin server where proxied HTTP requests are sent to.
 
 ## Records within the same zone
 
@@ -63,9 +63,9 @@ When you avoid this situation - meaning you do not have the **target** of the CN
 
 ## Records pointing to a partial zone within the same account
 
-You could also [create a CNAME record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) in a zone (partial or full setup) that points to a record in another partial zone within your account.
+You could also [create a CNAME record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) in a zone (partial or full) that points to a record in another partial zone within your account.
 
-In this case, Cloudflare will always resolve the CNAME target based on the value at your authoritative DNS provider of the partial target zone.
+In this case, Cloudflare will always resolve the CNAME target based on the value at your authoritative DNS provider of the CNAME target zone.
 
 ```mermaid
     flowchart TD
@@ -79,6 +79,34 @@ In this case, Cloudflare will always resolve the CNAME target based on the value
         end
         subgraph Cloudflare zone 2
         E[<code>A</code> record for <code>www\.partialzone.com</code> to <code>203.0.113.1</code>]
+        end
+      end
+      subgraph Authoritative DNS
+      C
+      end
+```
+
+### Auth DNS points to `cdn.cloudflare.net`
+
+Considering the following scenario:
+
+- The target zone (Cloudflare zone 2 in this example) is a partial zone and the DNS record on the partial zone is proxied.
+- The DNS record on the authoritative DNS server points to `cdn.cloudflare.net`
+
+If such setup is in place, the subdomain (`www.partialzone.com` in this example) will resolve to a Cloudflare proxy IP, which will ultimately result in an error. Consider using [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) and [Orange-to-Orange](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) setup instead.
+
+```mermaid
+    flowchart TD
+      accTitle: DNS resolution flow with CNAME target in a zone within the same account and auth DNS pointing to cdn.cloudflare.net
+      A[Request to <code>www\.alice.com</code>] --> B[<code>CNAME</code> record for <code>www\.alice.com</code> to <code>www\.partialzone.com</code>]
+      B --> C[<code>CNAME</code> record for <code>www\.partialzone.com</code> to <code>www\.partialzone.com.cdn.cloudflare.net</code>]
+      C --> D[<code>Cloudflare proxy IP</code>]
+      subgraph Cloudflare account
+        subgraph Cloudflare zone 1
+          B
+        end
+        subgraph Cloudflare zone 2
+        E[Proxied <code>A</code> record for <code>www\.partialzone.com</code> to <code>203.0.113.1</code>]
         end
       end
       subgraph Authoritative DNS

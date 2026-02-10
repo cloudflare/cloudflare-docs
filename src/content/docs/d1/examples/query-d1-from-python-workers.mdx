@@ -1,13 +1,13 @@
 ---
-type: example
 summary: Learn how to query D1 from a Python Worker
-languages:
+tags:
   - Python
 pcx_content_type: example
 title: Query D1 from Python Workers
 sidebar:
   order: 10
 description: Learn how to query D1 from a Python Worker
+reviewed: 2024-04-02
 ---
 
 import { WranglerConfig } from "~/components";
@@ -60,16 +60,23 @@ In your Wrangler file, create a new `[[d1_databases]]` configuration block and s
 
 <WranglerConfig>
 
-```toml
-name = "python-and-d1"
-main = "src/entry.py"
-compatibility_flags = ["python_workers"] # Required for Python Workers
-compatibility_date = "2024-03-29"
-
-[[d1_databases]]
-binding = "DB" # This will be how you refer to your database in your Worker
-database_name = "YOUR_DATABASE_NAME"
-database_id = "YOUR_DATABASE_ID"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "python-and-d1",
+	"main": "src/entry.py",
+	"compatibility_flags": [ // Required for Python Workers
+		"python_workers"
+	],
+	"compatibility_date": "$today",
+	"d1_databases": [
+		{
+			"binding": "DB", // This will be how you refer to your database in your Worker
+			"database_name": "YOUR_DATABASE_NAME",
+			"database_id": "YOUR_DATABASE_ID"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -81,15 +88,19 @@ The value of `binding` is how you will refer to your database from within your W
 To create a Python Worker, create an empty file at `src/entry.py`, matching the value of `main` in your Wrangler file with the contents below:
 
 ```python
-from workers import Response
+from workers import Response, WorkerEntrypoint
 
-async def on_fetch(request, env):
-    # Do anything else you'd like on request here!
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Do anything else you'd like on request here!
 
-    # Query D1 - we'll list all tables in our database in this example
-    results = await env.DB.prepare("PRAGMA table_list").all()
-    # Return a JSON response
-    return Response.json(results)
+        try:
+            # Query D1 - we'll list all tables in our database in this example
+            results = await self.env.DB.prepare("PRAGMA table_list").run()
+            # Return a JSON response
+            return Response.json(results)
+        except Exception as e:
+            return Response.json({"error": "Database query failed"}, status=500)
 
 ```
 

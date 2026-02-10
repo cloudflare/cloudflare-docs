@@ -8,23 +8,24 @@ head:
     content: Fix VERSION_OR_CIPHER_MISMATCH
 description: Learn how to troubleshoot ERR_SSL_VERSION_OR_CIPHER_MISMATCH when
   using Cloudflare SSL/TLS.
-
 ---
 
-import { Render } from "~/components"
+import { Stream, Render } from "~/components";
+
+<Stream id="03e51d8a6f9a15e16969b8cc117d9225" title="ERR_SSL_VERSION_OR_CIPHER_MISMATCH" thumbnail="https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/5183edaa-5d65-4344-adda-37f2cbe69c00/public" />
 
 After you [add a new domain](/fundamentals/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display one of the following errors:
 
-* `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome)
-* `Unsupported protocol The client and server don’t support a common SSL protocol version or cipher suite` (Chrome)
-* `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox)
+- `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome)
+- `Unsupported protocol The client and server don’t support a common SSL protocol version or cipher suite` (Chrome)
+- `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox)
 
 This error occurs when your domain or subdomain is not covered by an SSL/TLS certificate, which is usually caused by:
 
-* A [delay in certificate activation](#certificate-activation).
-* An [unproxied domain or subdomain DNS record](#proxied-dns-records).
-* An [expired Custom certificate](#certificate-expiration).
-* A [multi-level subdomain](#multi-level-subdomains) (`test.dev.example.com`).
+- A [delay in certificate activation](#certificate-activation).
+- An [unproxied domain or subdomain DNS record](#proxied-dns-records).
+- An [expired Custom certificate](#certificate-expiration).
+- A [multi-level subdomain](#multi-level-subdomains) (`test.dev.example.com`).
 
 ## Decision tree
 
@@ -40,11 +41,11 @@ E -- No --> G>Are you accessing a multi-level subdomain?]
 G -- Yes --> H[Get an advanced or custom certificate]
 ```
 
-***
+---
 
 ## Certificate activation
 
-<Render file="universal-ssl-enable-full" />
+<Render file="universal-ssl-enable-full" product="ssl" />
 
 ### Potential issues
 
@@ -52,7 +53,7 @@ If your visitors experience `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome) or `SS
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Choose your account and domain.
-3. Go to **SSL** > **Edge Certificates**.
+3. Go to the [**Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) page.
 4. Find the certificate with the **Type** of **Universal**.
 5. Make sure the **Status** is **Active**.
 
@@ -66,7 +67,7 @@ Since Universal certificates can take up to 24 hours to be issued, wait and [mon
 
 If your certificate is still not **Active** after 24 hours, try the various troubleshooting steps used to [resolve timeout issues](/ssl/edge-certificates/universal-ssl/troubleshooting/#resolve-a-timed-out-state). If these methods are successful (and your certificate becomes **Active**), unpause Cloudflare using whichever method you used previously.
 
-***
+---
 
 ## Proxied DNS records
 
@@ -76,7 +77,7 @@ If the **Proxy status** of `A`, `AAAA`, or `CNAME` records for a hostname are **
 
 ![Proxy status affects how Cloudflare treats traffic intended for specific DNS records](~/assets/images/dns/proxy-status-screenshot.png)
 
-***
+---
 
 ## Certificate expiration
 
@@ -84,12 +85,12 @@ If you have a [Custom certificate](/ssl/edge-certificates/custom-certificates/) 
 
 If it is expired, [upload a replacement certificate](/ssl/edge-certificates/custom-certificates/renewing/).
 
-***
+---
 
 ## Multi-level subdomains
 
-<Render file="ussl-limitations-table" />
+<Render file="ussl-limitations-table" product="ssl" />
 
 This means that you might experience `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome) or `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox) on multi-level subdomains.
 
-<Render file="ussl-limitations-solutions" />
+<Render file="ussl-limitations-solutions" product="ssl" />

@@ -3,12 +3,13 @@ import Default from "@astrojs/starlight/components/Head.astro";
 import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
 
-import { getEntry } from "astro:content";
+import { getEntry, getEntries } from "astro:content";
 import { getOgImage } from "~/util/og";
+import { formatContentType } from "~/util/content-type";
 import type { CollectionEntry } from "astro:content";
 
 const DEFAULT_TITLE_DELIMITER = "|";
-const NOINDEX_PRODUCTS = ["email-security", "security"];
+const NOINDEX_PRODUCTS = ["email-security"];
 const CHATBOT_DEPRIORITIZE_PRODUCTS = ["firewall", "style-guide"];
 
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
@@ -29,38 +30,47 @@ const shouldChatbotDeprioritize =
 	frontmatter.sidebar.hidden ||
 	frontmatter.chatbot_deprioritize;
 
+// if not a top-level page, add metadata values from src/content/products/ entries
 if (currentSection) {
-	const product = await getEntry("products", currentSection);
+	// if entry for product, grab and proceed
+	let product = await getEntry("products", currentSection);
+	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
+	if (currentSection === "changelog") {
+		const products = frontmatter.products;
+		if (products && products.length > 0) {
+			const primaryProduct = products[0];
+			product = await getEntry("products", primaryProduct.id);
+		}
+	}
 
 	if (product) {
-		if (product.data.meta.title) {
-			const titleIdx = head.findIndex((x) => x.tag === "title");
+		let productMetaName = product.data.meta.title
+			? product.data.meta.title
+			: "Cloudflare Docs";
 
-			let title: string;
-
-			if (titleIdx !== -1) {
-				const existingTitle = head[titleIdx].content?.split(
-					` ${DEFAULT_TITLE_DELIMITER} `,
-				)[0];
-				title = `${existingTitle} · ${product.data.meta.title}`;
-
-				head[titleIdx] = {
-					tag: "title",
-					content: title,
-				};
-			} else {
-				title = `${frontmatter.title} · ${product.data.meta.title}`;
-				head.push({
-					tag: "title",
-					content: title,
-				});
-			}
-
-			metaTags.push({
-				property: "og:title",
-				content: title,
-			});
+		if (currentSection === "changelog") {
+			productMetaName = "Changelog";
 		}
+
+		const titleIdx = head.findIndex((x) => x.tag === "title");
+		let title: string;
+
+		// Prefer the title set via frontmatter.head.title. If not, grab the regular frontmatter title value.
+		const existingTitle = head[titleIdx].content
+			? head[titleIdx].content?.split(` ${DEFAULT_TITLE_DELIMITER} `)[0]
+			: frontmatter.title;
+
+		title = `${existingTitle} · ${productMetaName}`;
+
+		head[titleIdx] = {
+			tag: "title",
+			content: title,
+		};
+
+		metaTags.push({
+			property: "og:title",
+			content: title,
+		});
 
 		if (product.data.product.title) {
 			["pcx_product", "algolia_product_filter"].map((name) => {
@@ -122,17 +132,24 @@ if (
 
 if (frontmatter.pcx_content_type) {
 	["pcx_content_type", "algolia_content_type"].map((name) => {
+		const contentType = frontmatter.pcx_content_type;
+		const updatedName = contentType ? formatContentType(contentType) : "";
 		metaTags.push({
 			name,
-			content: frontmatter.pcx_content_type as string,
+			content: updatedName,
 		});
 	});
 }
 
 if (frontmatter.products) {
+	const additionalProducts = await getEntries(frontmatter.products);
+	const additionalProductsNames = additionalProducts.map(
+		(product) => product.data.name,
+	);
+
 	metaTags.push({
 		name: "pcx_additional_products",
-		content: frontmatter.products.toString(),
+		content: additionalProductsNames.toString(),
 	});
 }
 
@@ -152,8 +169,11 @@ if (lastUpdated) {
 	});
 }
 
-if (frontmatter.updated) {
-	const daysBetween = differenceInCalendarDays(new Date(), frontmatter.updated);
+if (frontmatter.reviewed) {
+	const daysBetween = differenceInCalendarDays(
+		new Date(),
+		frontmatter.reviewed,
+	);
 
 	metaTags.push({
 		name: "pcx_last_reviewed",

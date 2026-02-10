@@ -1,7 +1,8 @@
 ---
 {}
-
 ---
+
+import { APIRequest } from "~/components";
 
 ## Receive email
 
@@ -23,19 +24,17 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
       <summary>API example</summary>
       <div>
 
-   ```bash title="Request"
-   curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
-   --header "x-auth-email: <EMAIL>" \
-   --header "x-auth-key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "type":"A",
-     "name":"www.example.com",
-     "content":"192.0.2.1",
-     "ttl":3600,
-     "proxied":false
-   }'
-   ```
+	 <APIRequest
+   	path="/zones/{zone_id}/dns_records"
+   	method="POST"
+   	json={{
+       "type":"A",
+       "name":"mail.example.com",
+       "content":"192.0.2.1",
+       "ttl":3600,
+       "proxied":false
+     }}
+   />
 
    ```json title="Response"
    {
@@ -43,12 +42,12 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
        "id": "<ID>",
        "zone_id": "<ZONE_ID>",
        "zone_name": "example.com",
-       "name": "www.example.com",
+       "name": "mail.example.com",
        "type": "A",
        "content": "192.0.2.1",
        "proxiable": true,
        "proxied": false,
-       "ttl": 1,
+       "ttl": 3600,
        "locked": false,
        "meta": {
          "source": "primary"
@@ -69,26 +68,25 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
 
 3. [Add an `MX` record](/dns/manage-dns-records/how-to/create-dns-records/) that points to that subdomain.
 
-   | **Type** | **Name** | **Mail server**    | **TTL** |
-   | -------- | -------- | ------------------ | ------- |
-   | MX       | `@`      | `mail.example.com` | Auto    |
+   | **Type** | **Name** | **Mail server**    | **TTL** | **Priority** |
+   | -------- | -------- | ------------------ | ------- | ------------ |
+   | MX       | `@`      | `mail.example.com` | Auto    | 5            |
 
       <details>
       <summary>API example</summary>
       <div>
 
-   ```bash title="Request"
-   curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
-   --header "x-auth-email: <EMAIL>" \
-   --header "x-auth-key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "type":"MX",
-     "name":"example.com",
-     "content":"mail.example.com",
-     "ttl":3600
-   }'
-   ```
+	 <APIRequest
+   	path="/zones/{zone_id}/dns_records"
+   	method="POST"
+   	json={{
+      "type":"MX",
+      "name":"example.com",
+      "content":"mail.example.com",
+			"priority": 5,
+      "ttl":3600
+    }}
+   />
 
    ```json title="Response"
    {
@@ -99,7 +97,7 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
        "name": "example.com",
        "type": "MX",
        "content": "mail.example.com",
-       "priority": 10,
+       "priority": 5,
        "proxiable": false,
        "proxied": false,
        "ttl": 3600,
@@ -125,6 +123,5 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
 
 
 If you encounter issues with your email setup, refer to our [troubleshooting guide](/dns/troubleshooting/email-issues/).
-
 
 :::

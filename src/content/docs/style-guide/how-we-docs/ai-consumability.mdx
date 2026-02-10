@@ -1,0 +1,100 @@
+---
+pcx_content_type: how-to
+title: AI consumability
+meta:
+  title: AI consumability | How we docs
+---
+
+import { Tabs, TabItem, Render } from "~/components";
+
+We have various approaches for making our content visible to AI as well as making sure it's easily consumed in a plain-text format.
+
+## AI discoverability
+
+The primary proposal in this space is [`llms.txt`](https://llmstxt.org/), offering a well-known path for a Markdown list of all your pages.
+
+<Render file="llms-txt" product="style-guide" />
+
+## Textual representation of interactive elements
+
+HTML is easily parsed - after all, the browser has to parse it to decide how to render the page you're reading now - it tends to not be very _portable_. This limitation is especially painful in an AI context, because all the extra presentation information consumes additional tokens.
+
+For example, given our [`Tabs`](/style-guide/components/tabs/), the panels are hidden until the tab itself is clicked:
+
+<Tabs>
+	<TabItem label="One">One Content</TabItem>
+	<TabItem label="Two">Two Content</TabItem>
+</Tabs>
+
+If we run the resulting HTML from this component through a solution like [`turndown`](https://www.npmjs.com/package/turndown):
+
+```md
+- [One](#tab-panel-6)
+- [Two](#tab-panel-7)
+
+One Content
+
+Two Content
+```
+
+The references to the panels `id`, usually handled by JavaScript, are visible but non-functional.
+
+### Turning our components into "Markdownable" HTML
+
+To solve this, we created a [`rehype plugin`](https://github.com/cloudflare/cloudflare-docs/blob/d5a19deded110bce6a7c5d45e702d36527da0a4e/src/plugins/rehype/filter-elements.ts) for:
+
+- Removing non-content tags (`script`, `style`, `link`, etc) via a [tags allowlist](https://github.com/cloudflare/cloudflare-docs/blob/d5a19deded110bce6a7c5d45e702d36527da0a4e/src/plugins/rehype/filter-elements.ts#L19-L104)
+- [Transforming custom elements](https://github.com/cloudflare/cloudflare-docs/blob/d5a19deded110bce6a7c5d45e702d36527da0a4e/src/plugins/rehype/filter-elements.ts#L189-L227) like `starlight-tabs` into standard unordered lists
+- [Adapting our Expressive Code codeblocks HTML](https://github.com/cloudflare/cloudflare-docs/blob/d5a19deded110bce6a7c5d45e702d36527da0a4e/src/plugins/rehype/filter-elements.ts#L143-L178) to the [HTML that CommonMark expects](https://spec.commonmark.org/0.31.2/#example-142)
+
+Taking the `Tabs` example from the previous section and running it through our plugin will now give us a normal unordered list with the content properly associated with a given list item:
+
+```md
+- One
+
+  One Content
+
+- Two
+
+  Two Content
+```
+
+For example, take a look at our Markdown test fixture (or any page by appending `/index.md` to the URL):
+
+- [`/style-guide/fixtures/markdown/`](/style-guide/fixtures/markdown/)
+- [`/style-guide/fixtures/markdown/index.md`](/style-guide/fixtures/markdown/index.md)
+
+### Saving on tokens
+
+Most AI pricing is around input & output tokens and our approach greatly reduces the amount of input tokens required.
+
+For example, let's take a look at the amount of tokens required for the [Workers Get Started](/workers/get-started/guide/) using [OpenAI's tokenizer](https://platform.openai.com/tokenizer):
+
+- HTML: 15,229 tokens
+- turndown: 3,401 tokens (4.48x less than HTML)
+- index.md: 2,110 tokens (7.22x less than HTML)
+
+When providing our content to AI, we can see a real-world ~7x saving in input tokens cost.
+
+## Curating content
+
+Other than the work making our content [discoverable](#ai-discoverability), most of the other work of making content for AI aligns with SEO or content best practices, such as:
+
+- Using semantic HTML
+- Adding headings
+- Reducing inconsistencies in naming or outdated information
+
+For more details, refer to [Google's AI guidance](https://developers.google.com/search/docs/appearance/ai-features#seo-best-practices).
+
+### `noindex` directives
+
+The only _special_ work we have done is adding a [`noindex` directives](https://developers.google.com/search/docs/crawling-indexing/block-indexing) to specific types of content (via a [frontmatter tag](/style-guide/frontmatter/custom-properties/#noindex)).
+
+{/* prettier-ignore */}
+```html title="noindex meta tag"
+<meta name="robots" content="noindex">
+```
+
+For example, we have certain pages that discuss deprecated features, such as [Wrangler 1](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/). While technically accurate, they are no longer advisable to follow and could potentially confuse AI outputs.
+
+At the moment, it's unclear whether all AI crawlers will respect these directives, but it's the only signal we have to exclude something from their indexing (and we do not want to set up [WAF](/waf/) rules for individual pages).

@@ -1,0 +1,141 @@
+---
+pcx_content_type: overview
+title: Overview
+
+description: Build scalable, fully-managed RAG applications with Cloudflare AI Search. Create retrieval-augmented generation pipelines to deliver accurate, context-aware AI without managing infrastructure.
+tags:
+  - AI
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Cloudflare AI Search
+---
+
+import {
+	CardGrid,
+	Description,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+	LinkButton,
+	Feature,
+} from "~/components";
+
+<Description>
+	Create AI-powered search for your data
+</Description>
+
+<Plan type="all" />
+
+AI Search (formerly AutoRAG) is Cloudflare’s managed search service. You can connect your data such as websites or unstructured content, and it automatically creates a continuously updating index that you can query with natural language in your applications or AI agents. It natively integrates with Cloudflare’s developer platform tools like Vectorize, AI Gateway, R2, and Workers AI, while also supporting third-party providers and open standards. 
+
+It supports retrieval-augmented generation (RAG) patterns, enabling you to build enterprise search, natural language search, and AI-powered chat without managing infrastructure.
+
+<div>
+	<LinkButton href="/ai-search/get-started">Get started</LinkButton>
+	<LinkButton
+		target="_blank"
+		variant="secondary"
+		icon="external"
+		href="https://www.youtube.com/watch?v=JUFdbkiDN2U"
+	>
+		Watch AI Search demo
+	</LinkButton>
+</div>
+
+---
+
+## Features
+
+<Feature header="Automated indexing" href="/ai-search/configuration/indexing/" cta="View indexing">
+
+Automatically and continuously index your data source, keeping your content fresh without manual reprocessing.
+
+</Feature>
+
+<Feature header="Multitenancy support" href="/ai-search/how-to/multitenancy/" cta="Add filters">
+
+Create multitenancy by scoping search to each tenant’s data using folder-based metadata filters.
+
+</Feature>
+
+<Feature header="Workers Binding" href="/ai-search/usage/workers-binding/" cta="Add to Worker">
+
+Call your AI Search instance for search or AI Search directly from a Cloudflare Worker using the native binding integration.
+
+</Feature>
+
+<Feature header="Similarity caching" href="/ai-search/configuration/cache/" cta="Use caching">
+
+Cache repeated queries and results to improve latency and reduce compute on repeated requests.
+
+</Feature>
+
+---
+
+## Related products
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+
+Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+
+</RelatedProduct>
+
+<RelatedProduct header="AI Gateway" href="/ai-gateway/" product="ai-gateway">
+
+Observe and control your AI applications with caching, rate limiting, request retries, model fallback, and more.
+
+</RelatedProduct>
+
+<RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
+
+Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
+
+</RelatedProduct>
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+</RelatedProduct>
+
+<RelatedProduct header="R2" href="/r2/" product="r2">
+
+Store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+
+</RelatedProduct>
+
+---
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Get started"
+	href="/workers-ai/get-started/workers-wrangler/"
+	icon="open-book"
+>
+	Build and deploy your first Workers AI application.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Workers community on Discord to ask questions, share what you
+	are building, and discuss the platform with other developers.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Workers.
+</LinkTitleCard>
+
+</CardGrid>

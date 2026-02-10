@@ -7,6 +7,8 @@ sidebar:
 head:
   - tag: title
     content: DNSSEC migration tutorial
+description: >-
+  Follow this tutorial to migrate an existing DNS zone to Cloudflare without having to disable DNSSEC.
 ---
 
 import { Details, APIRequest } from "~/components";
@@ -14,7 +16,6 @@ import { Details, APIRequest } from "~/components";
 Follow this tutorial to migrate an existing DNS zone to Cloudflare without having to disable DNSSEC.
 
 :::caution
-
 This procedure involves cross-importing the [zone signing keys (ZSKs)](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) from one provider to the other. To learn more about this, consider this article [about multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/about/) or refer to [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
 :::
 
@@ -34,23 +35,23 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 
    To import the zone file using the API, refer to the [Import DNS Records endpoint](/api/resources/dns/subresources/records/methods/import/).
 
-3. Go to **DNS** > **Settings**, and select **Enable DNSSEC**. Or use the following [API request](/api/resources/dns/subresources/dnssec/methods/edit/).
+3. On the [**DNS Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) page, select **Enable DNSSEC**. Or use the following [API request](/api/resources/dns/subresources/dnssec/methods/edit/).
 
 <APIRequest
 	path="/zones/{zone_id}/dnssec"
 	method="PATCH"
 	json={{
-  	"status": "active",
+		status: "active",
 	}}
 />
 
-4. Go to **DNS** > **Settings**, and enable **Multi-signer DNSSEC**. Or use the following [API request](/api/resources/dns/subresources/dnssec/methods/edit/).
+4. On the [**DNS Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) page, enable **Multi-signer DNSSEC**. Or use the following [API request](/api/resources/dns/subresources/dnssec/methods/edit/).
 
 <APIRequest
 	path="/zones/{zone_id}/dnssec"
 	method="PATCH"
 	json={{
-  	"dnssec_multi_signer": true,
+		dnssec_multi_signer: true,
 	}}
 />
 
@@ -60,23 +61,21 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 
 You can do this [on the dashboard](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) or through the [Create DNS Record endpoint](/api/resources/dns/subresources/records/methods/create/), as in the following example.
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-    "type": "DNSKEY",
-    "name": "<ZONE_NAME>",
-    "data": {
-      "flags": 256,
-      "protocol": 3,
-      "algorithm": 13,
-      "public_key": "<PUBLIC_KEY>"
-    },
-    "ttl":3600
-   }'
-```
+<APIRequest
+	path="/zones/{zone_id}/dns_records"
+	method="POST"
+	json={{
+		type: "DNSKEY",
+		name: "<ZONE_NAME>",
+		data: {
+			flags: 256,
+			protocol: 3,
+			algorithm: 13,
+			public_key: "<PUBLIC_KEY>",
+		},
+		ttl: 3600,
+	}}
+/>
 
 2. Get Cloudflare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
 
@@ -135,8 +134,8 @@ multisigner.info.    3600    IN    DNSKEY    256 3 13 pxEU<bla_bla_bla>0xOg==
 
 ## 3. Set up registrar
 
-1. Add Cloudflare DS record to your registrar. You can see your Cloudflare DS record on the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/dns) by going to **DNS** > **Settings** > **DS Record**.
-2. Add Cloudflare assigned nameservers to your registrar. You can see your Cloudflare nameservers by going to **DNS** > **Records**.
+1. Add Cloudflare DS record to your registrar. You can see your Cloudflare DS record on the [**DNS Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) page, under **DS Record**.
+2. Add Cloudflare assigned nameservers to your registrar. You can see your Cloudflare nameservers on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page
 
 At this point your zone is in a [multi-signer DNSSEC setup](/dns/dnssec/multi-signer-dnssec/).
 

@@ -13,8 +13,29 @@ import { productsByGroup } from "~/util/products";
 
 import { render } from "astro:content";
 
-const notes = await getChangelogs({
+let notes = await getChangelogs({
 	filter: (entry) => !entry.data.hidden,
+});
+
+const seen = new Map<string, number>();
+
+notes = notes.flatMap((note) => {
+	const products = note.data.products.map((product) => product.id);
+
+	// PCX-19256 - We only want to count dedicated entries against the product length, otherwise specific entries can get obscured
+	if (products.length === 1) {
+		for (const product of products) {
+			const previous = seen.get(product) || 0;
+
+			seen.set(product, previous + 1);
+
+			if (previous >= 5) {
+				return [];
+			}
+		}
+	}
+
+	return note;
 });
 
 const props = {
@@ -48,7 +69,7 @@ const props = {
 
 			return (
 				<div
-					class:list={["mt-0! sm:flex", { "hidden!": idx >= 10 }]}
+					class:list={["mt-0! sm:flex", { "hidden!": idx >= 50 }]}
 					data-products={JSON.stringify(
 						productIds.concat(
 							productGroups.map((group) =>
@@ -86,22 +107,19 @@ const props = {
 		})
 	}
 	<div class="flex items-center justify-center">
-		<button
-			id="changelogs-next-button"
-			class="bg-cl1-brand-orange text-cl1-black h-12 cursor-pointer rounded-sm px-6 font-medium"
+		<a
+			id="changelog-search-button"
+			href="/search/?contentType=Changelog+entry"
+			class="bg-cl1-brand-orange text-cl1-black mr-2 flex h-12 items-center justify-center rounded-sm px-6 font-medium no-underline"
 		>
-			Load more items
-		</button>
+			Search for historical entries
+		</a>
 	</div>
 </StarlightPage>
 
 <script>
 	const filter = document.querySelector<HTMLSelectElement>(
 		"#changelogs-next-filter",
-	);
-
-	const button = document.querySelector<HTMLButtonElement>(
-		"#changelogs-next-button",
 	);
 
 	const url = new URL(window.location.href);
@@ -125,21 +143,6 @@ const props = {
 		const products: string[] = JSON.parse(e.dataset.products);
 		return products.includes(value);
 	}
-
-	button?.addEventListener("click", () => {
-		const hidden = [
-			...document.querySelectorAll<HTMLElement>("[data-products]"),
-		]
-			.filter(
-				(e) =>
-					e.classList.contains("hidden!") && filterByProduct(e, filter!.value),
-			)
-			.slice(0, 10);
-
-		hidden.forEach((e) => e.classList.remove("hidden!"));
-
-		hideButton();
-	});
 
 	function updateFilter() {
 		const entries = [
@@ -173,27 +176,6 @@ const props = {
 		}
 
 		history.replaceState(null, "", url.href);
-
-		hideButton();
-	}
-
-	function hideButton() {
-		const entries = [
-			...document.querySelectorAll<HTMLDivElement>("[data-products]"),
-		];
-
-		if (entries.length === 0) return;
-
-		const filtered = entries.filter((p) => filterByProduct(p, filter!.value));
-
-		const visible = filtered.filter((p) => !p.classList.contains("hidden!"));
-		const hidden = filtered.length - visible.length;
-
-		if (hidden > 0) {
-			button!.classList.remove("hidden!");
-		} else {
-			button!.classList.add("hidden!");
-		}
 	}
 </script>
 

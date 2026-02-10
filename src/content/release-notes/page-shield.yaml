@@ -1,10 +1,18 @@
 ---
-link: /page-shield/changelog/
+link: /page-shield/release-notes/
 productName: Page Shield
 productLink: "/page-shield/"
-productArea: Application security
-productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2025-10-08"
+    title: Updated machine learning (ML) model
+    description: |-
+      The latest ML model has been deployed to all Page Shield add-on customers with better classification precision. Scripts with false positive classification may have a different pattern than the previous model deployment.
+
+  - publish_date: "2025-09-12"
+    title: Scoped alerts now support policies in log mode
+    description: |-
+      [Scoped alerts](/page-shield/alerts/) now take into account your Page Shield policies deployed in log mode. This allows you to simulate an end-to-end workflow before switching your policies to [allow mode](/page-shield/policies/#policy-actions).
+
   - publish_date: "2025-05-20"
     title: Updated machine learning (ML) model
     description: |-

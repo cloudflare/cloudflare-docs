@@ -9,8 +9,6 @@ description: Review recent changes to Cloudflare Access.
 
 import { ProductChangelog, Render } from "~/components";
 
-<Render file="survey" />
-
 {/* <!-- All changelog entries live in src/content/changelogs/access/. */}
 
 <ProductChangelog product="access" hideEntry="2024-06-16-cloudflare-one" />
@@ -25,13 +23,13 @@ You can now filter Access policies by their action, selectors, rule groups, and 
 
 **Private self-hosted applications and reusable policies GA**
 
-[Private self-hosted applications](/cloudflare-one/applications/non-http/self-hosted-private-app/) and [reusable Access policies](/cloudflare-one/policies/access/policy-management/) are now generally available (GA) for all customers.
+[Private self-hosted applications](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) and [reusable Access policies](/cloudflare-one/access-controls/policies/policy-management/) are now generally available (GA) for all customers.
 
 ## 2025-01-21
 
 **Access Applications support private hostnames/IPs and reusable Access policies.**
 
-Cloudflare Access self-hosted applications can now be defined by [private IPs](/cloudflare-one/applications/non-http/self-hosted-private-app/), [private hostnames](/cloudflare-one/applications/non-http/self-hosted-private-app/) (on port 443) and [public hostnames](/cloudflare-one/applications/configure-apps/self-hosted-public-app/). Additionally, we made Access policies into their own object which can be reused across multiple applications. These updates involved significant updates to the overall Access dashboard experience. The updates will be slowly rolled out to different customer cohorts. If you are an Enterprise customer and would like early access, reach out to your account team.
+Cloudflare Access self-hosted applications can now be defined by [private IPs](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/), [private hostnames](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) (on port 443) and [public hostnames](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). Additionally, we made Access policies into their own object which can be reused across multiple applications. These updates involved significant updates to the overall Access dashboard experience. The updates will be slowly rolled out to different customer cohorts. If you are an Enterprise customer and would like early access, reach out to your account team.
 
 ## 2025-01-15
 
@@ -43,19 +41,19 @@ Enterprise customers can now use Logpush to export SSH command logs for Access f
 
 **SCIM GA for Okta and Microsoft Entra ID**
 
-Cloudflare's SCIM integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) and [Microsoft Entra ID](/cloudflare-one/identity/idp-integration/entra-id/#synchronize-users-and-groups) (formerly AzureAD) are now out of beta and generally available (GA) for all customers. These integrations can be used for Access and Gateway policies and Zero Trust user management. Note: This GA release does not include [Dashboard SSO SCIM](/fundamentals/account/account-security/scim-setup/) support.
+Cloudflare's SCIM integrations with [Okta](/cloudflare-one/integrations/identity-providers/okta/#synchronize-users-and-groups) and [Microsoft Entra ID](/cloudflare-one/integrations/identity-providers/entra-id/#synchronize-users-and-groups) (formerly AzureAD) are now out of beta and generally available (GA) for all customers. These integrations can be used for Access and Gateway policies and Zero Trust user management. Note: This GA release does not include [Dashboard SSO SCIM](/fundamentals/account/account-security/scim-setup/) support.
 
 ## 2024-10-23
 
 **SSH with Access for Infrastructure**
 
-Admins can now use [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) to manage privileged access to SSH servers. Access for Infrastructure provides improved control and visibility over who accessed what service and what they did during their SSH session. Access for Infrastructure also eliminates the risk and overhead associated with managing SSH keys by using short-lived SSH certificates to access SSH servers.
+Admins can now use [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) to manage privileged access to SSH servers. Access for Infrastructure provides improved control and visibility over who accessed what service and what they did during their SSH session. Access for Infrastructure also eliminates the risk and overhead associated with managing SSH keys by using short-lived SSH certificates to access SSH servers.
 
 ## 2024-08-26
 
 **Reduce automatic seat deprovisioning minimum to 1 month, down from 2 months.**
 
-Admins can now configure Zero Trust seats to [automatically expire](/cloudflare-one/identity/users/seat-management/#enable-seat-expiration) after 1 month of user inactivity. The previous minimum was 2 months.
+Admins can now configure Zero Trust seats to [automatically expire](/cloudflare-one/team-and-resources/users/seat-management/#enable-seat-expiration) after 1 month of user inactivity. The previous minimum was 2 months.
 
 ## 2024-06-06
 
@@ -67,7 +65,7 @@ Applications now load more quickly for customers with a large number of applicat
 
 **Add option to bypass CORS to origin server**
 
-Access admins can [defer all CORS enforcement to their origin server](/cloudflare-one/identity/authorization-cookie/cors/#bypass-options-requests-to-origin) for specific Access applications.
+Access admins can [defer all CORS enforcement to their origin server](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/#bypass-options-requests-to-origin) for specific Access applications.
 
 ## 2024-04-15
 

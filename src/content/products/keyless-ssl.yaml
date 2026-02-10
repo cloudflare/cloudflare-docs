@@ -7,4 +7,4 @@ product:
   url: /ssl/keyless-ssl/
 
 meta:
-  description: Keyless SSL allows security-conscious clients to upload their own custom certificates and benefit from Cloudflare, but without exposing their TLS private keys.
+  description: Use Cloudflare SSL while keeping exclusive access to your private keys

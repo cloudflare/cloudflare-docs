@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Get started with Super Bot Fight Mode
-
 ---
 
-import { Render } from "~/components"
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
 
 Super Bot Fight Mode is included in your Pro, Business, or Enterprise subscription. When enabled, the product:
 
@@ -22,32 +21,113 @@ Accounts with an Enterprise subscription but not the [Bot Management add-on](/bo
 
 ## Considerations
 
-<Render file="about-plan-considerations" />
+<Render file="about-plan-considerations" product="bots" />
+
+### WAF custom rules
+
+[WAF custom rules](/waf/custom-rules/) are executed before Super Bot Fight Mode.
+
+This order has a critical impact on traffic processing. If a WAF custom rule performs a terminating action (such as _Block_, _Managed Challenge_, or _JS Challenge_), the request will not be processed further, and the Super Bot Fight Mode configuration will not be evaluated.
+
+To configure exceptions to Super Bot Fight Mode, you should use the [_Skip_ action in your WAF custom rules](/waf/custom-rules/skip/). The _Skip_ action allows the request to bypass the Super Bot Fight Mode phase without terminating the request, enabling it to continue through the rest of the security stack.
 
 ## Enable Super Bot Fight Mode
 
-<Render file="sbfm-upgrade" />
+<Render file="sbfm-upgrade" product="bots" />
 
-<Render file="get-started-pro-biz-steps" />
+To start using Super Bot Fight Mode:
 
-### Conditions
+{/* prettier-ignore-start */}
 
-<Render file="flexible-sbfm" />
+<Tabs syncKey="dashNewNav">
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **Bot traffic**.
+      3. Go to **Super Bot Fight Mode**.
+      4. Turn **Super Bot Fight Mode** on.
+      5. Choose how your domain should respond to various types of traffic by selecting the associated edit icon:
+
+          - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
+          - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
+          - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
+          - For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
+
+    </Steps>
+  </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Go to **Security** > **Bots**.
+      3. Select **Configure Super Bot Fight Mode**.
+      4. Choose how your domain should respond to various types of traffic:
+
+          - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
+          - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
+          - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
+    </Steps>
+  </TabItem>
+</Tabs>
+
+{/* prettier-ignore-end */}
+
+:::caution[Warning]
+
+If your organization also uses [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
+:::
+
+<Render file="flexible-sbfm" product="bots" />
+
+---
 
 ## Disable Super Bot Fight Mode
 
-<Render file="disable-sbfm" />
+If you find that **Super Bot Fight Mode** is causing problems with your application traffic, you may want to disable it.
 
-<Render file="flexible-sbfm" />
+To disable Super Bot Fight Mode:
+
+{/* prettier-ignore-start */}
+
+<Tabs syncKey="dashNewNav">
+    <TabItem label="New dashboard" icon="rocket">
+        <Steps>
+          1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+              <DashButton url="/?to=/:account/:zone/security/settings" />
+          2. Filter by **Bot traffic**.
+          3. Go to **Super Bot Fight Mode**.
+          4. For all bot groupings (**Definitely automated traffic**, **Likely automated traffic**, and **Verified bots**), set the value to **Allow**.
+          5. For all other options (**Static resource protection**, **JavaScript detections**, and **Optimize for WordPress**), select the edit icon and ensure they are off.
+        </Steps>
+    </TabItem>
+    <TabItem label="Old dashboard">
+        <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Bots**.
+         3. Select **Configure Super Bot Fight Mode**.
+         4. For all bot groupings (**Definitely automated traffic**, **Likely automated traffic**, and **Verified bots**), set the value to **Allow**.
+         5. For all other options (**Static resource protection**, **JavaScript detections**, and **Optimize for WordPress**), select the edit icon and ensure they are off.
+        </Steps>
+    </TabItem>
+</Tabs>
+
+{/* prettier-ignore-end */}
+
+<Render file="flexible-sbfm" product="bots" />
+
+---
 
 ## Block AI bots
 
 Refer to [Block AI bots](/bots/additional-configurations/block-ai-bots/).
 
 :::note
-
 You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/security-analytics/).
 :::
+
+---
 
 ## Analytics
 
@@ -63,8 +143,10 @@ To access the **Bot Report**, go to **Security** > **Bots**. If you see a double
 
 You can see bot-related actions by going to **Security** > **Events**. Any requests challenged by this product will be labeled **Super Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
 
+---
+
 ## Ruleset Engine
 
-<Render file="bfm-ruleset-engine" />
+Super Bot Fight Mode runs during the `http_request_sbfm` phase of the [Ruleset Engine](/ruleset-engine/about/phases/).
 
-<Render file="bfm-change-notice" />
+<Render file="bfm-change-notice" product="bots" />

@@ -2,8 +2,8 @@ releaseNotes: |
   This release contains minor fixes and improvements.
 
   **Changes and improvements:**
-  - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
-  - Added [pre-login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/) configuration details to the `warp-diag` output.
+  - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) solution.
+  - Added [pre-login](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/) configuration details to the `warp-diag` output.
   - Added a `tunnel reset mtu` subcommand to the `warp-cli`.
   - Added a JSON output option to the `warp-cli`.
   - Added the ability for `warp-cli` to use the team name provided in the MDM file for initial registration.

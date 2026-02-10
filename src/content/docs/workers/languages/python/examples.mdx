@@ -1,47 +1,99 @@
 ---
-pcx_content_type: content
+pcx_content_type: example
 title: Examples
 head:
   - tag: title
     content: Python Worker Examples
-
+reviewed: 2024-04-03
 ---
 
 Cloudflare has a wide range of Python examples in the [Workers Example gallery](/workers/examples/?languages=Python).
 
 In addition to those examples, consider the following ones that illustrate Python-specific behavior.
 
+## Modules in your Worker
+
+Let's say your Worker has the following structure:
+
+```
+├── src
+│   ├── module.py
+│   └── main.py
+├── uv.lock
+├── pyproject.toml
+└── wrangler.toml
+```
+
+In order to import `module.py` in `main.py`, you would use the following import statement:
+
+```python
+import module
+```
+
+In this case, the main module is set to `src/main.py` in the wrangler.toml file like so:
+
+```toml
+main = "src/main.py"
+```
+
+This means that the `src` directory does not need to be specified in the import statement.
+
 ## Parse an incoming request URL
 
 ```python
-from workers import Response
+from workers import WorkerEntrypoint, Response
 from urllib.parse import urlparse, parse_qs
 
-async def on_fetch(request, env):
-    # Parse the incoming request URL
-    url = urlparse(request.url)
-    # Parse the query parameters into a Python dictionary
-    params = parse_qs(url.query)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Parse the incoming request URL
+        url = urlparse(request.url)
+        # Parse the query parameters into a Python dictionary
+        params = parse_qs(url.query)
 
-    if "name" in params:
-        greeting = "Hello there, {name}".format(name=params["name"][0])
-        return Response(greeting)
+        if "name" in params:
+            greeting = "Hello there, {name}".format(name=params["name"][0])
+            return Response(greeting)
 
 
-    if url.path == "/favicon.ico":
-      return Response("")
+        if url.path == "/favicon.ico":
+          return Response("")
 
-    return Response("Hello world!")
+        return Response("Hello world!")
 ```
 
 ## Parse JSON from the incoming request
 
 ```python
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-async def on_fetch(request):
-    name = (await request.json()).name
-    return Response("Hello, {name}".format(name=name))
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        name = (await request.json()).name
+        return Response("Hello, {name}".format(name=name))
+```
+
+## Read bundled asset files in your Worker
+
+Let's say your Worker has the following structure:
+
+```
+├── src
+│   ├── file.html
+│   └── main.py
+└── wrangler.jsonc
+```
+
+In order to read a file in your Worker, you would do the following:
+
+```python
+from pathlib import Path
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        html_file = Path(__file__).parent / "file.html"
+        return Response(html_file.read_text(), headers={"Content-Type": "text/html"})
 ```
 
 ## Emit logs from your Python Worker
@@ -49,28 +101,29 @@ async def on_fetch(request):
 ```python
 # To use the JavaScript console APIs
 from js import console
-from workers import Response
+from workers import WorkerEntrypoint, Response
 # To use the native Python logging
 import logging
 
-async def on_fetch(request):
-    # Use the console APIs from JavaScript
-    # https://developer.mozilla.org/en-US/docs/Web/API/console
-    console.log("console.log from Python!")
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Use the console APIs from JavaScript
+        # https://developer.mozilla.org/en-US/docs/Web/API/console
+        console.log("console.log from Python!")
 
-    # Alternatively, use the native Python logger
-    logger = logging.getLogger(__name__)
+        # Alternatively, use the native Python logger
+        logger = logging.getLogger(__name__)
 
-    # The default level is warning. We can change that to info.
-    logging.basicConfig(level=logging.INFO)
+        # The default level is warning. We can change that to info.
+        logging.basicConfig(level=logging.INFO)
 
-    logger.error("error from Python!")
-    logger.info("info log from Python!")
+        logger.error("error from Python!")
+        logger.info("info log from Python!")
 
-    # Or just use print()
-    print("print() from Python!")
+        # Or just use print()
+        print("print() from Python!")
 
-    return Response("We're testing logging!")
+        return Response("We're testing logging!")
 ```
 
 ## Publish to a Queue
@@ -79,41 +132,112 @@ async def on_fetch(request):
 from js import Object
 from pyodide.ffi import to_js as _to_js
 
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
 # to_js converts between Python dictionaries and JavaScript Objects
 def to_js(obj):
    return _to_js(obj, dict_converter=Object.fromEntries)
 
-async def on_fetch(request, env):
-    # Bindings are available on the 'env' parameter
-    # https://developers.cloudflare.com/queues/
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Bindings are available on the 'env' attribute
+        # https://developers.cloudflare.com/queues/
 
-    # The default contentType is "json"
-    # We can also pass plain text strings
-    await env.QUEUE.send("hello", contentType="text")
-    # Send a JSON payload
-    await env.QUEUE.send(to_js({"hello": "world"}))
+        # The default contentType is "json"
+        # We can also pass plain text strings
+        await self.env.QUEUE.send("hello", contentType="text")
+        # Send a JSON payload
+        await self.env.QUEUE.send(to_js({"hello": "world"}))
 
-    # Return a response
-    return Response.json({"write": "success"})
+        # Return a response
+        return Response.json({"write": "success"})
 ```
 
 ## Query a D1 Database
 
 ```python
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-async def on_fetch(request, env):
-    results = await env.DB.prepare("PRAGMA table_list").all()
-    # Return a JSON response
-    return Response.json(results)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        results = await self.env.DB.prepare("PRAGMA table_list").run()
+        # Return a JSON response
+        return Response.json(results)
 ```
 
 Refer to [Query D1 from Python Workers](/d1/examples/query-d1-from-python-workers/) for a more in-depth tutorial that covers how to create a new D1 database and configure bindings to D1.
 
-## Next steps
+## Durable Object
 
-* If you're new to Workers and Python, refer to the [get started](/workers/languages/python/) guide
-* Learn more about [calling JavaScript methods and accessing JavaScript objects](/workers/languages/python/ffi/) from Python
-* Understand the [supported packages and versions](/workers/languages/python/packages/) currently available to Python Workers.
+```python
+from workers import WorkerEntrypoint, Response, DurableObject
+from pyodide.ffi import to_js
+
+class List(DurableObject):
+    async def get_messages(self):
+        messages = await self.ctx.storage.get("messages")
+        return messages if messages else []
+
+    async def add_message(self, message):
+        messages = await self.get_messages()
+        messages.append(message)
+        await self.ctx.storage.put("messages", to_js(messages))
+        return
+
+    async def say_hello(self):
+        result = self.ctx.storage.sql.exec(
+            "SELECT 'Hello, World!' as greeting"
+        ).one()
+
+        return result.greeting
+```
+
+Refer to [Durable Objects documentation](/durable-objects/get-started/) for more information.
+
+## Cron Trigger
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def scheduled(self, controller, env, ctx):
+  			print("cron processed")
+```
+
+Refer to [Cron Triggers documentation](/workers/configuration/cron-triggers/) for more information.
+
+## Workflows
+
+```python
+from workers import WorkflowEntrypoint
+
+class MyWorkflow(WorkflowEntrypoint):
+    async def run(self, event, step):
+        @step.do("dependency a")
+        async def step_a():
+            # do some work
+            return 10
+
+        @step.do("dependency b")
+        async def step_b():
+            # do some work
+            return 20
+
+        @step.do("my final step", depends=[step_a, step_b], concurrent=True)
+        async def my_final_step(result_a=0, result_b=0):
+            # should return 30
+            return result_a + result_b
+
+        await my_final_step()
+```
+
+Refer to the [Python Workflows documentation](/workflows/python/) for more information.
+
+## More Examples
+
+Or you can clone [the examples repository](https://github.com/cloudflare/python-workers-examples) to explore
+even more examples:
+
+```bash
+git clone https://github.com/cloudflare/python-workers-examples
+```

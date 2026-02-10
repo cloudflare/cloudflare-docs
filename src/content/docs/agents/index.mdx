@@ -1,7 +1,9 @@
 ---
 title: Build Agents on Cloudflare
-type: overview
+
 pcx_content_type: overview
+tags:
+  - AI
 sidebar:
   order: 1
 head:
@@ -9,7 +11,21 @@ head:
     content: Agents
 ---
 
-import { LinkTitleCard, TypeScriptExample } from "~/components";
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkButton,
+	LinkTitleCard,
+	PackageManagers,
+	Plan,
+	RelatedProduct,
+	Render,
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 Agents are systems that use AI models to make decisions and execute tasks autonomously. They integrate with external APIs, execute custom functions, and maintain access to your data sources to handle complex workflows.
 
@@ -17,104 +33,137 @@ Think of agents as digital assistants with persistent context, they remember pre
 
 Built on Cloudflare's infrastructure, agents are stateful classes that run on Durable Objects. They handle HTTP requests, WebSocket connections, task scheduling, AI model integration and more.
 
-> **Note**: Stateful agents require Durable Object migrations in your `wrangler.jsonc` (e.g., `new_sqlite_classes`) for proper state management.
+### Ship your first Agent
 
-## Quick start
+To use the Agent starter template and create your first Agent with the Agents SDK:
 
-```bash
-npm create cloudflare@latest my-agent -- --template=cloudflare/agents-starter
-cd my-agent && npx wrangler dev
+1. Create a new project:
+
+```sh
+npx create-cloudflare@latest --template cloudflare/agents-starter
 ```
 
-Or add to an existing project:
+2. Install dependencies:
 
-```bash
-npm install agents
+```sh
+npm install
 ```
 
-## Your first agent
+3. Set up your environment:
 
-Create a simple joke agent that remembers previous interactions:
+Create a `.dev.vars` file:
+
+```txt
+OPENAI_API_KEY=your_openai_api_key
+```
+
+4. Run locally:
+
+```sh
+npm start
+```
+
+5. Deploy:
+
+```sh
+npm run deploy
+```
+
+Head to the guide on [building a chat agent](/agents/getting-started/build-a-chat-agent/) to learn how the starter project is built and how to use it as a foundation for your own agents.
+
+If you are already building on [Workers](/workers/), you can install the `agents` package directly into an existing project:
+
+```sh
+npm i agents
+```
+
+And then define your first Agent by creating a class that extends the `Agent` class:
 
 <TypeScriptExample>
 
-```typescript
+```ts
 import { Agent } from "agents";
 
-export class JokeAgent extends Agent {
-	initialState = {
-		jokesShared: 0,
-		favoriteTypes: [],
-	};
-
-	async onMessage(connection, message) {
-		const response = await this.ai.run(`
-      You are a friendly joke-telling agent.
-      Previous jokes shared: ${this.state.jokesShared}
-      User message: "${message}"
-
-      If they ask for a joke, tell them one.
-      If they mention a joke type they like, remember it.
-      Be conversational and fun!
-    `);
-
-		connection.send(response);
-
-		// Update state based on interaction
-		const isJokeRequest = message.toLowerCase().includes("joke");
-		await this.setState({
-			jokesShared: isJokeRequest
-				? this.state.jokesShared + 1
-				: this.state.jokesShared,
-		});
-	}
+export class MyAgent extends Agent {
+	// Define methods on the Agent:
+	// https://developers.cloudflare.com/agents/api-reference/agents-api/
+	//
+	// Every Agent has built in state via this.setState and this.sql
+	// Built-in scheduling via this.schedule
+	// Agents support WebSockets, HTTP requests, state synchronization and
+	// can run for seconds, minutes or hours: as long as the tasks need.
 }
-
-export default {
-	fetch: JokeAgent.serve(),
-};
 ```
 
 </TypeScriptExample>
 
-This agent remembers how many jokes it has shared and adapts its responses based on conversation history.
+Lastly, add the [Durable Objects](/durable-objects/) binding to your wrangler file:
 
-## Core capabilities
+<WranglerConfig>
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MyAgent",
+				"class_name": "MyAgent"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"MyAgent"
+			]
+		}
+	]
+}
+```
+</WranglerConfig>
 
-- Persistent state with automatic synchronization
-- WebSocket connections with real-time messaging
-- HTTP request handling
-- Task scheduling with cron expressions
-- Email integration
-- AI model integration via `this.ai.run()` backed by Cloudflare AI Gateway or your provider
-- React hooks for frontend integration
+Dive into the [Agent SDK reference](/agents/api-reference/agents-api/) to learn more about how to use the Agents SDK package and defining an `Agent`.
 
-## Architecture
+### Why build agents on Cloudflare?
 
-Each agent instance runs on a [Durable Object](/durable-objects/) and handles multiple concurrent connections. State changes are automatically persisted and synchronized to connected clients.
+We built the Agents SDK with a few things in mind:
 
-Agents can call external APIs, schedule future tasks, and communicate with other agents through defined interfaces.
+- **Batteries (state) included**: Agents come with [built-in state management](/agents/api-reference/store-and-sync-state/), with the ability to automatically sync state between an Agent and clients, trigger events on state changes, and read+write to each Agent's SQL database.
+- **Communicative**: You can connect to an Agent via [WebSockets](/agents/api-reference/websockets/) and stream updates back to client in real-time. Handle a long-running response from a reasoning model, the results of an [asynchronous workflow](/agents/api-reference/run-workflows/), or build a chat app that builds on the `useAgent` hook included in the Agents SDK.
+- **Extensible**: Agents are code. Use the [AI models](/agents/api-reference/using-ai-models/) you want, bring-your-own headless browser service, pull data from your database hosted in another cloud, add your own methods to your Agent and call them.
 
-<LinkTitleCard
-	title="Core concepts"
-	href="/agents/concepts/"
-	description="How agents work"
-/>
+Agents built with Agents SDK can be deployed directly to Cloudflare and run on top of [Durable Objects](/durable-objects/) — which you can think of as stateful micro-servers that can scale to tens of millions — and are able to run wherever they need to. Run your Agents close to a user for low-latency interactivity, close to your data for throughput, and/or anywhere in between.
 
-<LinkTitleCard
-	title="Getting started"
-	href="/agents/getting-started/"
-	description="Build your first agent"
-/>
+---
 
-<LinkTitleCard
-	title="API reference"
-	href="/agents/api-reference/"
-	description="Complete API documentation"
-/>
+### Build on the Cloudflare Platform
 
-<LinkTitleCard
-	title="Guides"
-	href="/agents/guides/"
-	description="Implementation patterns and examples"
-/>
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+</RelatedProduct>
+
+<RelatedProduct header="AI Gateway" href="/ai-gateway/" product="ai-gateway">
+
+Observe and control your AI applications with caching, rate limiting, request retries, model fallback, and more.
+
+</RelatedProduct>
+
+<RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
+
+Build full-stack AI applications with Vectorize, Cloudflare's vector database. Adding Vectorize enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context and memory to an LLM.
+
+</RelatedProduct>
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+
+Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
+
+</RelatedProduct>
+
+<RelatedProduct header="Workflows" href="/workflows/" product="workflows">
+
+Build stateful agents that guarantee executions, including automatic retries, persistent state that runs for minutes, hours, days, or weeks.
+
+</RelatedProduct>

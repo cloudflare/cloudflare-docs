@@ -2,19 +2,19 @@
 {}
 ---
 
-import { Aside, TypeScriptExample } from "~/components";
+import { TypeScriptExample } from "~/components";
 
 ### Navigation requests
 
 If you have a Worker script (`main`), have configured `assets.not_found_handling`, and use the [`assets_navigation_prefers_asset_serving` compatibility flag](/workers/configuration/compatibility-flags/#navigation-requests-prefer-asset-serving) (or set a compatibility date of `2025-04-01` or greater), _navigation requests_ will not invoke the Worker script. A _navigation request_ is a request made with the `Sec-Fetch-Mode: navigate` header, which browsers automatically attach when navigating to a page. This reduces billable invocations of your Worker script, and is particularly useful for client-heavy applications which would otherwise invoke your Worker script very frequently and unnecessarily.
 
-<Aside type="note">
+:::note
 This can lead to surprising but intentional behavior. For example, if you define an API endpoint in a Worker script (e.g. `/api/date`) and then fetch it with a client-side request in your SPA (e.g. `fetch("/api/date")`), the Worker script will be invoked and your API response will be returned as expected. However, if you navigate to `/api/date` in your browser, you will be served an HTML file. Again, this is to reduce the number of billable invocations for your application while still maintaining SPA-like functionality. This behavior can be disabled by setting the [`assets_navigation_has_no_effect` compatibility flag](/workers/configuration/compatibility-flags/#navigation-requests-prefer-asset-serving).
-</Aside>
+:::
 
-<Aside type="tip">
+:::note
 If you wish to run the Worker script ahead of serving static assets (e.g. to log requests, or perform some authentication checks), you can additionally configure the [`assets.run_worker_first` setting](/workers/static-assets/routing/worker-script/#run_worker_first). This will retain your `assets.not_found_handling` behavior when no other asset matches, while still allowing you to control access to your application with your Worker script.
-</Aside>
+:::
 
 #### Client-side callbacks
 

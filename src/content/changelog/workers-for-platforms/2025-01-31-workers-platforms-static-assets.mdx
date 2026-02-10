@@ -3,7 +3,7 @@ title: Workers for Platforms now supports Static Assets
 description: Workers for Platforms customers can now serve static assets for User Workers directly from Cloudflare's global edge
 products:
   - workers-for-platforms
-date: 2025-01-31T17:00:00Z
+date: 2025-01-31
 ---
 
 import { Render, TypeScriptExample } from "~/components";
@@ -23,14 +23,14 @@ This allows your platform to serve entire front-end applications from Cloudflare
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    
+
     // Check real-time inventory
     if (url.pathname === '/api/inventory/check') {
       const product = url.searchParams.get('product');
       const inventory = await env.INVENTORY_KV.get(product);
       return new Response(inventory);
     }
-    
+
     // Serve static assets (HTML, CSS, images)
     return env.ASSETS.fetch(request);
   }

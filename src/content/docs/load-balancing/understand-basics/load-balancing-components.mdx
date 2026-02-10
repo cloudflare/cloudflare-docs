@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Load Balancing components
 sidebar:
   order: 3
-
 ---
 
-import { GlossaryDefinition, Render } from "~/components"
+import { GlossaryDefinition, Render } from "~/components";
 
 This page provides a simplified overview of the three main components of the Cloudflare Load Balancing solution and how they relate to one another.
 
@@ -22,7 +21,7 @@ Note that you can use the root domain as a Load Balancer hostname. When doing so
 Private load balancers are not automatically associated with a hostname. Private load balancers are created with either a CGNAT IP address or a custom RFC-1918 IP address.
 :::
 
-<Render file="load-balancing-diagram" />
+<Render file="load-balancing-diagram" product="load-balancing" />
 
 ## Pools
 
@@ -46,12 +45,10 @@ Finally, monitors are the component you can use to guarantee only [healthy pools
 
 When you configure a monitor and attach it to endpoints, the monitor will issue health monitor requests to your endpoints at regular intervals. This process makes it possible for your load balancer to intelligently handle traffic, considering which endpoints are actually available.
 
-<Render file="health-check-diagram" />
+<Render file="health-check-diagram" product="load-balancing" />
 
 :::note
 
-
 Health monitors associated with load balancers are different from [**Standalone health checks**](/health-checks/).
-
 
 :::

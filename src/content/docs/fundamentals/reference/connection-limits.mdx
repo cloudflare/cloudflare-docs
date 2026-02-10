@@ -19,7 +19,7 @@ When HTTP/HTTPS traffic is [proxied through Cloudflare](/fundamentals/concepts/h
 
 :::note
 
-If you are using [Cloudflare tunnels](/cloudflare-one/connections/connect-networks/), refer to [Origin configuration](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/) to view or modify your connection settings.
+If you are using [Cloudflare tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/), refer to [Origin configuration](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/) to view or modify your connection settings.
 :::
 
 | Type                                                                                      | Limit (seconds) | HTTP status code at limit                                                                                                              | [Configurable](/fundamentals/reference/connection-limits/#configurable-limits) |
@@ -28,7 +28,7 @@ If you are using [Cloudflare tunnels](/cloudflare-one/connections/connect-networ
 | <GlossaryTooltip term="ACK (Acknowledge)">TCP ACK</GlossaryTooltip> Timeout               | 90              | [522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/)                | No                                                                             |
 | <GlossaryTooltip term="TCP Keep-Alive">TCP Keep-Alive</GlossaryTooltip> Interval          | 30              | [520](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-520/)                | No                                                                             |
 | <GlossaryTooltip term="idle connection">Proxy Idle</GlossaryTooltip> Timeout              | 900             | [520](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-520/)                | No                                                                             |
-| <GlossaryTooltip term="proxy read timeout">Proxy Read Timeout</GlossaryTooltip>           | 100             | [524](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/)                | [Yes](/api/resources/zones/subresources/settings/methods/edit/)                       |
+| <GlossaryTooltip term="proxy read timeout">Proxy Read Timeout</GlossaryTooltip>           | 120             | [524](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/)                | <GlossaryTooltip term="proxy read timeout config">Yes</GlossaryTooltip>        |
 | <GlossaryTooltip term="proxy write timeout">Proxy Write Timeout</GlossaryTooltip>         | 30              | [524](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/)                | No                                                                             |
 | HTTP/2 Pings to Origin                                                                    | Off             | -                                                                                                                                      | Yes                                                                            |
 | <GlossaryTooltip term="idle connection">HTTP/2 Connection Idle</GlossaryTooltip>          | 900             | No                                                                                                                                     | No                                                                             |
@@ -45,11 +45,11 @@ Ensure HTTP keep-alive connections are enabled on your origin. Cloudflare reuses
 
 ## Request limits
 
-URLs have a limit of 16 KB. Request headers have a total limit of 32 KB, but each header is limited to 16 KB.
+URLs have a limit of 16 KB. Request headers have a total limit of 128 KB.
 
 ## Response limits
 
-Response headers observe a total limit of 32 KB, but each header is limited to 16 KB.
+Response headers observe a total limit of 128 KB.
 
 ## Cache limits 
 

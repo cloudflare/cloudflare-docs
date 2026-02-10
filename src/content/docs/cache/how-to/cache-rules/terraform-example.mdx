@@ -56,7 +56,9 @@ resource "cloudflare_ruleset" "cache_rules_example" {
         cache_deception_armor      = true
         custom_key {
           query_string {
-            exclude = ["*"]
+            exclude {
+              all = true
+            }
           }
           header {
             include        = ["habc", "hdef"]

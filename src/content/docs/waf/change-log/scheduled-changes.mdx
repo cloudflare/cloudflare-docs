@@ -1,61 +1,12 @@
 ---
-type: table
-pcx_content_type: release-notes
 title: Scheduled changes
 sidebar:
   order: 2
 tableOfContents: false
 ---
 
-import { RSSButton, RuleID } from "~/components";
+import { ProductChangelog } from "~/components";
 
-<RSSButton href="/waf/change-log/index.xml" />
+<ProductChangelog product="waf" scheduled />
 
-<table style="width: 100%">
-  <thead>
-    <tr>
-      <th>Announcement Date</th>
-      <th>Release Date</th>
-      <th>Release Behavior</th>
-      <th>Legacy Rule ID</th>
-      <th>Rule ID</th>
-      <th>Description</th>
-      <th>Comments</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>2025-07-01</td>
-			<td>2025-07-07</td>
-			<td>Log</td>
-			<td>100795</td>
-			<td>
-				<RuleID id="b6558cac8c874bd6878734057eb35ee6" />
-			</td>
-			<td>Next.js - Auth Bypass</td>
-			<td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>2025-07-01</td>
-			<td>2025-07-07</td>
-			<td>Log</td>
-			<td>100796</td>
-			<td>
-				<RuleID id="58fcf6d9c05d4b7a8f41e0a3c329aeb0" />
-			</td>
-			<td>Fortinet FortiVoice - Buffer Error - CVE:CVE-2025-32756</td>
-			<td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>2025-07-01</td>
-			<td>2025-07-07</td>
-			<td>Log</td>
-			<td>100797</td>
-			<td>
-				<RuleID id="34ed0624bc864ea88bbea55bab314023" />
-			</td>
-			<td>Roundcube - Remote Code Execution - CVE:CVE-2025-49113</td>
-			<td>This is a New Detection</td>
-    </tr>
-  </tbody>
-</table>
+For other WAF updates, refer to the [changelog](/changelog/?product=waf).

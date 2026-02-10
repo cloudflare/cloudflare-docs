@@ -1,11 +1,11 @@
 ---
-type: example
 summary: Connect Hyperdrive to an AWS RDS or AWS Aurora MySQL database instance.
 pcx_content_type: example
 title: AWS RDS and Aurora
 sidebar:
   order: 14
 description: Connect Hyperdrive to an AWS RDS database instance.
+reviewed: 2023-09-28
 ---
 
 import { Render } from "~/components";
@@ -16,7 +16,7 @@ This example shows you how to connect Hyperdrive to an Amazon Relational Databas
 
 To allow Hyperdrive to connect to your database, you will need to ensure that Hyperdrive has valid user credentials and network access.
 
-<Render file="public-connectivity" />
+<Render file="public-connectivity" product="hyperdrive" />
 
 ### AWS Console
 
@@ -25,7 +25,7 @@ When creating or modifying an instance in the AWS console:
 1. Configure a **database cluster** and other settings you wish to customize.
 2. Under **Settings** > **Credential settings**, note down the **Master username** and **Master password** (Aurora only).
 3. Under the **Connectivity** header, ensure **Public access** is set to **Yes**.
-4. Select an **Existing VPC security group** that allows public Internet access from `0.0.0.0/0` to the port your database instance is configured to listen on (default: `5432` for PostgreSQL instances).
+4. Select an **Existing VPC security group** that allows public Internet access from `0.0.0.0/0` to the port your database instance is configured to listen on (default: `3306` for MySQL instances).
 5. Select **Create database**.
 
 :::caution
@@ -64,11 +64,11 @@ Support for AWS Aurora MySQL databases is coming soon. Join our early preview su
 
 Once your database is created, you will need to create a user for Hyperdrive to connect as. Although you can use the **Master username** configured during initial database creation, best practice is to create a less privileged user.
 
-To create a new user, log in to the database and use the `CREATE ROLE` command:
+To create a new user, log in to the database and use the `CREATE USER` command:
 
 ```sh
 # Log in to the database
-psql postgresql://MASTER_USERNAME:MASTER_PASSWORD@ENDPOINT_NAME:PORT/database_name
+mysql -h ENDPOINT_NAME -P PORT -u MASTER_USERNAME -p database_name
 ```
 
 Run the following SQL statements:
@@ -78,23 +78,23 @@ Run the following SQL statements:
 CREATE ROLE hyperdrive;
 
 -- Allow Hyperdrive to connect
-GRANT CONNECT ON DATABASE postgres TO hyperdrive;
+GRANT USAGE ON mysql_db.* TO hyperdrive;
 
 -- Grant database privileges to the hyperdrive role
-GRANT ALL PRIVILEGES ON DATABASE postgres to hyperdrive;
+GRANT ALL PRIVILEGES ON mysql_db.* to hyperdrive;
 
 -- Create a specific user for Hyperdrive to log in as
-CREATE ROLE hyperdrive_user LOGIN PASSWORD 'sufficientlyRandomPassword';
+CREATE USER 'hyperdrive_user'@'%' IDENTIFIED WITH caching_sha2_password BY 'sufficientlyRandomPassword';
 
 -- Grant this new user the hyperdrive role privileges
-GRANT hyperdrive to hyperdrive_user;
+GRANT hyperdrive to 'hyperdrive_user'@'%';
 ```
 
-Refer to AWS' [documentation on user roles in PostgreSQL](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.Roles.html) for more details.
+Refer to AWS' [documentation on user roles in MySQL](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.MySQL.CommonDBATasks.privilege-model.html) for more details.
 
-With a database user, password, database endpoint (hostname and port), and database name (default: `postgres`), you can now set up Hyperdrive.
+With a database user, password, database endpoint (hostname and port), and database name, you can now set up Hyperdrive.
 
 ## 3. Create a database configuration
 
-<Render file="create-hyperdrive-config-mysql" />
-<Render file="create-hyperdrive-config-mysql-next-steps" />
+<Render file="create-hyperdrive-config-mysql" product="hyperdrive" />
+<Render file="create-hyperdrive-config-mysql-next-steps" product="hyperdrive" />

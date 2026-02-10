@@ -36,8 +36,8 @@ To solve this problem, add a `10.0.1.0/24` route to Tunnel-A and assign it the `
 | ------------------ | --------------- |
 | `10.0.1.0/24`      | staging         |
 
-The user can now [toggle between the two virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) in their WARP client, similar to the concept of switching VPN profiles in a VPN client. When a user selects `production`, they can connect to the entire `10.0.0.0/8` range served by Tunnel-A. When they select `staging`, they can connect to all of `10.0.0.0/8` in Tunnel-A except for `10.0.1.0/24`, which will be served by Tunnel-B.
+The user can now [toggle between the two virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) in their WARP client, similar to the concept of switching VPN profiles in a VPN client. When a user selects `production`, they can connect to the entire `10.0.0.0/8` range served by Tunnel-A. When they select `staging`, they can connect to all of `10.0.0.0/8` in Tunnel-A except for `10.0.1.0/24`, which will be served by Tunnel-B.
 
 ## Set up virtual networks
 
-For setup instructions, refer to [Create a virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#create-a-virtual-network).
+For setup instructions, refer to [Create a virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#create-a-virtual-network).

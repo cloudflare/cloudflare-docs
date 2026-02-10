@@ -5,7 +5,7 @@ sidebar:
   order: 14
 ---
 
-import { FeatureTable, Render, TabItem, Tabs } from "~/components";
+import { FeatureTable, Render, TabItem, Tabs, DashButton } from "~/components";
 
 Automatic HTTPS Rewrites prevents end users from seeing "mixed content" errors by rewriting URLs from `http` to `https` for resources or links on your web site that can be served with HTTPS.
 
@@ -31,9 +31,11 @@ For security reasons, this feature will run on URLs pointing to `localhost` if t
 
 To enable **Automatic HTTPS Rewrites** in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. Go to **SSL/TLS** > **Edge Certificates**.
-3. For **Automatic HTTPS Rewrites**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **Automatic HTTPS Rewrites**, switch the toggle to **On**.
 
 </TabItem> <TabItem label="API">
 

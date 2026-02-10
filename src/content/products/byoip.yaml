@@ -3,12 +3,11 @@ name: BYOIP
 product:
   title: BYOIP
   url: /byoip/
-  group: Core platform
-  additional_groups: [Application performance, Network security]
+  group: Network security
+  additional_groups: [Application performance]
 
 meta:
   title: Cloudflare BYOIP docs
   description:
-    With BYOIP, Cloudflare announces your IPs in all our locations. Use
-    your IPs with Magic Transit, Spectrum, or CDN services.
+    Get Cloudflare's security and performance while using your own IPs
   author: "@cloudflare"

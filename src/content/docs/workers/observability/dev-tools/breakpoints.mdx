@@ -9,11 +9,15 @@ head: []
 
 ## Debug via breakpoints
 
-As of Wrangler 3.9.0, you can debug via breakpoints in your Worker. Breakpoints provide the ability to review what is happening at a given point in the execution of your Worker. Breakpoint functionality exists in both DevTools and VS Code.
+When developing a Worker locally using Wrangler or Vite, you can debug via breakpoints in your Worker. Breakpoints provide the ability to review what is happening at a given point in the execution of your Worker. Breakpoint functionality exists in both DevTools and VS Code.
 
 For more information on breakpoint debugging via Chrome's DevTools, refer to [Chrome's article on breakpoints](https://developer.chrome.com/docs/devtools/javascript/breakpoints/).
 
-### Setup VS Code to use breakpoints
+### VSCode debug terminals
+
+Using VSCode's built-in [JavaScript Debug Terminals](https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_javascript-debug-terminal), all you have to do is open a JS debug terminal (`Cmd + Shift + P` and then type `javascript debug`) and run `wrangler dev` (or `vite dev`) from within the debug terminal. VSCode will automatically connect to your running Worker (even if you're running multiple Workers at once!) and start a debugging session.
+
+### Setup VS Code to use breakpoints with `launch.json` files
 
 To setup VS Code for breakpoint debugging in your Worker project:
 
@@ -22,19 +26,19 @@ To setup VS Code for breakpoint debugging in your Worker project:
 
 ```json
 {
-  "configurations": [
-    {
-      "name": "Wrangler",
-      "type": "node",
-      "request": "attach",
-      "port": 9229,
-      "cwd": "/",
-      "resolveSourceMapLocations": null,
-      "attachExistingChildren": false,
-      "autoAttachChildProcesses": false,
-      "sourceMaps": true // works with or without this line
-    }
-  ]
+	"configurations": [
+		{
+			"name": "Wrangler",
+			"type": "node",
+			"request": "attach",
+			"port": 9229,
+			"cwd": "/",
+			"resolveSourceMapLocations": null,
+			"attachExistingChildren": false,
+			"autoAttachChildProcesses": false,
+			"sourceMaps": true // works with or without this line
+		}
+	]
 }
 ```
 

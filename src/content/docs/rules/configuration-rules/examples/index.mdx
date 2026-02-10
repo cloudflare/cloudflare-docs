@@ -1,11 +1,15 @@
 ---
-type: overview
 pcx_content_type: navigation
-title: Examples
+title: Configuration Rules examples
 sidebar:
   order: 10
+  group:
+    label: Examples
 ---
 
-import { ListExamples } from "~/components";
+import { ResourcesBySelector } from "~/components";
 
-<ListExamples directory="rules/configuration-rules/examples/" />
+<ResourcesBySelector
+	directory="rules/configuration-rules/examples/"
+	types={["example"]}
+/>

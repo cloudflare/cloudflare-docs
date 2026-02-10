@@ -34,6 +34,10 @@
         {
             "property_id": "max_total_tokens",
             "value": "4096"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2025-10-01"
         }
     ],
     "schema": {

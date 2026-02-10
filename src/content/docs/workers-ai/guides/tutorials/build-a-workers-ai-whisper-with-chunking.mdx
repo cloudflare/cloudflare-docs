@@ -1,10 +1,11 @@
 ---
-updated: 2025-04-03
+reviewed: 2025-04-03
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Whisper-large-v3-turbo with Cloudflare Workers AI
 tags:
   - AI
+description: Learn how to transcribe large audio files using Workers AI.
 ---
 
 In this tutorial you will learn how to:
@@ -56,13 +57,16 @@ cd whisper-tutorial
 
 You must create an AI binding for your Worker to connect to Workers AI. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
 
-To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind Workers AI to your Worker, add the following to the end of your Wrangler configuration file:
 
 <WranglerConfig>
 
-```toml
-[ai]
-binding = "AI"
+```jsonc
+{
+	"ai": {
+		"binding": "AI"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -75,9 +79,13 @@ In your wrangler file, add or update the following settings to enable Node.js AP
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-compatibility_flags = [ "nodejs_compat" ]
-compatibility_date = "2024-09-23"
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"compatibility_date": "$today"
+}
 ```
 
 </WranglerConfig>

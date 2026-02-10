@@ -1,10 +1,9 @@
 ---
-type: example
+
 summary: Examine the contents of a Headers object by logging to console with a Map.
 tags:
   - Debugging
   - Headers
-languages:
   - JavaScript
   - Rust
   - TypeScript
@@ -16,6 +15,7 @@ title: Logging headers to console
 sidebar:
   order: 1001
 description: Examine the contents of a Headers object by logging to console with a Map.
+reviewed: 2020-09-30
 ---
 
 If you want to get started quickly, click on the button below.
@@ -51,24 +51,26 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-async def on_fetch(request):
-    print(dict(request.headers))
-    return Response('Hello world')
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        print(dict(request.headers))
+        return Response('Hello world')
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">
+
 ```rs
 use worker::*;
 
 #[event(fetch)]
-async fn fetch(req: HttpRequest, \_env: Env, \_ctx: Context) -> Result<Response> {
-console_log!("{:?}", req.headers());
-Response::ok("hello world")
+async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<Response> {
+    console_log!("{:?}", req.headers());
+    Response::ok("hello world")
 }
+```
 
-````
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
@@ -98,7 +100,7 @@ app.get('*', (c) => {
 });
 
 export default app;
-````
+```
 
 </TabItem> </Tabs>
 

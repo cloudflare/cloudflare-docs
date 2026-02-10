@@ -13,8 +13,3 @@ meta:
     powerful filters to block, challenge, log, or allow matching requests.
     Firewall Rules have been replaced with WAF custom rules.
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/c/security/6
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/waf/firewall-rules
-  learning_center: https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/

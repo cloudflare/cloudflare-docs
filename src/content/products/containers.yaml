@@ -6,6 +6,6 @@ product:
   group: Developer platform
 
 meta:
-  title: Containers docs
+  title: Cloudflare Containers docs
   description: Enhance your Workers with serverless containers
   author: "@cloudflare"

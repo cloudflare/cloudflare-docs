@@ -4,6 +4,8 @@ title: Registrant contact updates
 
 ---
 
+import { DashButton } from "~/components";
+
 It is important that you keep your contact details accurate and up-to-date. [ICANN rules state](https://www.icann.org/resources/pages/registrant-contact-information-wdrp-2017-08-31-en) that if you do not have updated contact information, your domain name registration may be suspended or even cancelled.
 
 The contact information you can update includes:
@@ -17,12 +19,14 @@ The contact information you can update includes:
 
 To update your registrant contacts:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Domain Registration** > **Manage domains**.
-3. Find **Default contact** and select **Edit**.
-4. Update the relevant information, and select **Save**.
-5. Find the domain where you want to update your contact information, and select **Manage**.
-6. Select the **Contacts** tab, and edit the contact information.
+1. In the Cloudflare dashboard, go to the **Manage domains** page.
+
+    <DashButton url="/?to=/:account/registrar/domains" />
+
+2. Find **Default contact** and select **Edit**.
+3. Update the relevant information, and select **Save**.
+4. Find the domain where you want to update your contact information, and select **Manage**.
+5. Select the **Contacts** tab, and edit the contact information.
 
 If you change any of the following fields, Cloudflare Registrar will require a Change of Registrant approval before the changes are finalized:
 

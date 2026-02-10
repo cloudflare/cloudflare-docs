@@ -1,0 +1,75 @@
+---
+import { z } from "astro:schema";
+import { marked } from "marked";
+
+import Type from "./Type.astro";
+import MetaInfo from "./MetaInfo.astro";
+
+const props = z.object({
+	key: z.string(),
+	definition: z.custom<any>(),
+	extraDetails: z
+		.object({
+			content: z.string(),
+			mode: z.enum(["append", "replace"]),
+		})
+		.optional(),
+});
+
+const { key, definition, extraDetails } = props.parse(Astro.props);
+
+const type = definition.type ?? definition.choices;
+const description = definition.description ?? definition.describe;
+let sanitizedDescription;
+
+// CED-191 and CED-137 for context. We can't assume that descriptions exist, but if they do we want replace unsanitized characters
+if (description) {
+	sanitizedDescription = description
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;");
+} else {
+	sanitizedDescription = "";
+}
+
+const required = definition.demandOption;
+const defaultValue = definition.default;
+const alias = definition.alias;
+
+const name = definition.positional ? `[${key.toUpperCase()}]` : `--${key}`;
+
+let typeText;
+if (Array.isArray(type)) {
+	typeText = type.map((t) => `"${t}"`).join(" | ");
+} else {
+	typeText = type;
+}
+
+let aliasText;
+if (alias) {
+	if (Array.isArray(alias)) {
+		aliasText = `aliases: --${alias.join(", --")}`;
+	} else {
+		aliasText = `alias: --${alias}`;
+	}
+}
+---
+
+<li>
+	<code>{name}</code>
+	<Type text={typeText} />{" "}
+	{aliasText && <MetaInfo text={aliasText} />}
+	{required && <MetaInfo text="required" />}
+	{defaultValue !== undefined && <MetaInfo text={`default: ${defaultValue}`} />}
+	{
+		extraDetails?.mode === "replace" ? (
+			<Fragment set:html={marked.parse(extraDetails.content)} />
+		) : (
+			<>
+				<Fragment set:html={marked.parse(sanitizedDescription)} />
+				{extraDetails && (
+					<Fragment set:html={marked.parse(extraDetails.content)} />
+				)}
+			</>
+		)
+	}
+</li>

@@ -1,6 +1,8 @@
 import { parse } from "node-html-parser";
 import { process } from "../util/rehype";
 
+import YAML from "yaml";
+
 import rehypeParse from "rehype-parse";
 import rehypeBaseUrl from "../plugins/rehype/base-url";
 import rehypeFilterElements from "../plugins/rehype/filter-elements";
@@ -13,7 +15,7 @@ export async function htmlToMarkdown(
 	url: string,
 ): Promise<string | undefined> {
 	const dom = parse(html);
-	const content = dom.querySelector(".sl-markdown-content");
+	const content = dom.querySelector(".sl-markdown-content:not(.md-ignore)");
 
 	if (!content) {
 		return;
@@ -39,14 +41,17 @@ export async function htmlToMarkdown(
 
 	const withFrontmatter = [
 		"---",
-		`title: ${title}`,
-		description ? `description: ${description}` : [],
-		lastUpdated ? `lastUpdated: ${lastUpdated}` : [],
-		chatbotDeprioritize ? `chatbotDeprioritize: ${chatbotDeprioritize}` : [],
-		tags ? `tags: ${tags}` : [],
-		`source_url:`,
-		`  html: ${url.replace("index.md", "")}`,
-		`  md: ${url}`,
+		YAML.stringify({
+			title,
+			description,
+			lastUpdated,
+			chatbotDeprioritize: Boolean(chatbotDeprioritize),
+			tags,
+			source_url: {
+				html: url.replace("index.md", ""),
+				md: url,
+			},
+		}).trim(),
 		"---\n",
 		markdown,
 	]

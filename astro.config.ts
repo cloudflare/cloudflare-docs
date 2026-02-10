@@ -4,6 +4,7 @@ import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
 import starlightLinksValidator from "starlight-links-validator";
+import starlightScrollToTop from "starlight-scroll-to-top";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
@@ -19,6 +20,9 @@ import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
 import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
+import { createSitemapLastmodSerializer } from "./sitemap.serializer.ts";
+
+import skills from "astro-skills";
 
 async function autogenSections() {
 	const sections = (
@@ -56,7 +60,8 @@ async function autogenStyles() {
 const sidebar = await autogenSections();
 const customCss = await autogenStyles();
 
-const runLinkCheck = process.env.RUN_LINK_CHECK || false;
+const RUN_LINK_CHECK =
+	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
 
 // https://astro.build/config
 export default defineConfig({
@@ -127,7 +132,7 @@ export default defineConfig({
 			customCss,
 			pagination: false,
 			plugins: [
-				...(runLinkCheck
+				...(RUN_LINK_CHECK
 					? [
 							starlightLinksValidator({
 								errorOnInvalidHashes: false,
@@ -137,16 +142,23 @@ export default defineConfig({
 									"/api/**",
 									"/changelog/**",
 									"/http/resources/**",
+									"/llms.txt",
+									"/llms-full.txt",
 									"{props.*}",
 									"/",
 									"/glossary/",
-									"/products/",
+									"/directory/",
 									"/rules/snippets/examples/?operation=*",
 									"/rules/transform/examples/?operation=*",
 									"/ruleset-engine/rules-language/fields/reference/**",
 									"/workers/examples/?languages=*",
 									"/workers/examples/?tags=*",
+									"/workers/llms-full.txt",
 									"/workers-ai/models/**",
+									"**index.md",
+									"/markdown.zip",
+									"/style-guide/index.md",
+									"/style-guide/fixtures/markdown/index.md",
 								],
 							}),
 						]
@@ -155,27 +167,40 @@ export default defineConfig({
 					clientOptionsModule: "./src/plugins/docsearch/index.ts",
 				}),
 				starlightImageZoom(),
+				starlightScrollToTop({
+					tooltipText: "Back to top",
+					showTooltip: true,
+					svgPath: "M12 6L6 12M12 6L18 12M12 12L6 18M12 12L18 18",
+					showProgressRing: true,
+					progressRingColor: "white",
+					showOnHomepage: false, // Hide on homepage (default)
+				}),
 			],
 			lastUpdated: true,
 			markdown: {
 				headingLinks: false,
 			},
 			routeMiddleware: "./src/plugins/starlight/route-data.ts",
+			disable404Route: true,
 		}),
 		liveCode({}),
 		icon(),
 		sitemap({
 			filter(page) {
-				return !page.startsWith(
-					"https://developers.cloudflare.com/style-guide/",
-				);
+				if (page.includes("/style-guide/")) {
+					return false;
+				}
+
+				if (page.endsWith("/404/")) {
+					return false;
+				}
+
+				return true;
 			},
-			serialize(item) {
-				item.lastmod = new Date().toISOString();
-				return item;
-			},
+			serialize: createSitemapLastmodSerializer(),
 		}),
 		react(),
+		skills(),
 	],
 	vite: {
 		resolve: {

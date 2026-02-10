@@ -48,8 +48,25 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 	}
 
 	:global(starlight-theme-select > label > select) {
-		line-height: 1.25rem;
-	}
+        line-height: 1.25rem;
+        margin: 1px 1px;
+    }
+
+    :global(
+        starlight-theme-select > label > select:focus,
+        starlight-theme-select > label > select:focus-visible
+    ) {
+        margin: 1px 1px;
+        outline-offset: -4px;
+    }
+
+    :global(starlight-theme-select > label > .label-icon) {
+        left: 8%;
+    }
+
+    :global(starlight-theme-select > label > .caret) {
+        left: 75%;
+    }
 
 	@media screen and (min-width: 800px) {
 		#right-group {

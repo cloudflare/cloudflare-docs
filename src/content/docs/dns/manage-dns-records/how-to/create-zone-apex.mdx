@@ -3,10 +3,9 @@ pcx_content_type: reference
 title: Create zone apex record
 sidebar:
   order: 3
-
 ---
 
-import { Example, Render } from "~/components"
+import { Example, Render } from "~/components";
 
 When you add a domain to Cloudflare, you may also need to create or review the DNS record on your zone apex. Zone apex refers to the domain (`example.com`) or subdomain (`blog.example.com`) that you are [adding to Cloudflare](/dns/concepts/#zone).
 
@@ -14,7 +13,7 @@ Usually, the zone apex record makes your domain accessible by visitors. In this 
 
 ### ANAME or ALIAS
 
-<Render file="aname-alias-callout" />
+<Render file="aname-alias-callout" product="dns" />
 
 ## Zone apex record
 
@@ -28,10 +27,14 @@ To create a zone apex record, use `@` for the record **Name**, as in the followi
 
 </Example>
 
-<Render file="dns-record-steps" product="dns" params={{
-    name: "your zone apex",
-		example: "@"
-}} />
+<Render
+	file="dns-record-steps"
+	product="dns"
+	params={{
+		name: "your zone apex",
+		example: "@",
+	}}
+/>
 
 ## Domain redirects
 

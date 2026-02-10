@@ -3,6 +3,8 @@ title: Getting started
 pcx_content_type: overview
 sidebar:
   order: 1
+  group:
+    hideIndex: true
 ---
 
 import { DirectoryListing } from "~/components";
@@ -11,48 +13,13 @@ Start building agents that can remember context and make decisions. This guide w
 
 Agents maintain state across conversations and can execute workflows. Use them for customer support automation, personal assistants, or interactive experiences.
 
-## What you'll learn
+## What you will learn
 
 Building with agents involves understanding a few core concepts:
 
-- **State management**: How agents remember information across interactions
-- **Decision making**: How agents analyze requests and choose actions
-- **Tool integration**: How agents access external APIs and data sources
-- **Conversation flow**: How agents maintain context and personality
+- **State management**: How agents remember information across interactions.
+- **Decision making**: How agents analyze requests and choose actions.
+- **Tool integration**: How agents access external APIs and data sources.
+- **Conversation flow**: How agents maintain context and personality.
 
-## Ready to build?
-
-- [**Build a Chat Agent**](/agents/getting-started/build-a-chat-agent) - Create a conversational agent with memory and context in 15 minutes
-- [**Testing your Agent**](/agents/getting-started/testing-your-agent) - Learn how to test and debug your agents during development
-- [**Prompting**](/agents/getting-started/prompting) - Best practices for writing effective prompts that guide agent behavior
-
-## Understanding the basics
-
-Every agent has three key components:
-
-1. **Identity and State**: Who the agent is and what it remembers
-2. **Decision Logic**: How it processes messages and chooses responses
-3. **Actions**: What it can do (respond, call APIs, update state)
-
-```ts
-export class MyAgent extends Agent {
-	initialState = {
-		name: "Assistant",
-		conversationCount: 0,
-	};
-
-	async onMessage(connection, message) {
-		// Agent decides what to do
-		const response = await this.ai.run(`
-      As ${this.state.name}, respond to: "${message}"
-      This is conversation #${this.state.conversationCount}
-    `);
-
-		// Agent takes action
-		connection.send(response);
-		await this.setState({
-			conversationCount: this.state.conversationCount + 1,
-		});
-	}
-}
-```
+<DirectoryListing />

@@ -6,18 +6,21 @@ sidebar:
 head:
   - tag: title
     content: Troubleshooting - Cipher suites — Edge certificates
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 If you encounter issues with edge certificate cipher suites, refer to the following scenarios.
 
 ## Compatibility with Minimum TLS Version
 
-When you adjust the setting used for your domain's [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/), your domain only allows HTTPS connections using that TLS protocol version.
+When you adjust the setting used for your domain's [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/), your domain only allows HTTPS connections using that TLS protocol version. As explained in [About cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/#related-ssltls-settings), although configured independently, cipher suites and TLS versions are closely related.
 
-This setting can cause issues if you are not supporting TLS 1.2 ciphers on your domain. If you experience issues, review your domain's [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) setting and Cloudflare's [supported ciphers list](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/).
+Minimum TLS Version can cause issues if you are not supporting TLS 1.2 ciphers on your domain. If you experience issues, review your domain's [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) setting and Cloudflare's [supported ciphers list](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/).
+
+### Testing Minimum TLS version with curl
+
+<Render file="test-tls-version" product="ssl" />
 
 ## Compatibility with certificate encryption
 
@@ -37,7 +40,7 @@ Including the `settings` only will result in the error message `The SSL attribut
 
 ## TLS 1.3 settings
 
-<Render file="tls-13-cipher-limitations" />
+<Render file="tls-13-cipher-limitations" product="ssl" />
 
 ## SSL Labs weak ciphers report
 
@@ -51,6 +54,6 @@ Even though applications on Cloudflare are not vulnerable to [CVE-2019-1559](/ss
 
 To remove these warnings, refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) and exclude the following ciphers:
 
-* `ECDHE-ECDSA-AES256-SHA384`
-* `ECDHE-ECDSA-AES128-SHA256`
-* `ECDHE-RSA-AES256-SHA384`
+- `ECDHE-ECDSA-AES256-SHA384`
+- `ECDHE-ECDSA-AES128-SHA256`
+- `ECDHE-RSA-AES256-SHA384`

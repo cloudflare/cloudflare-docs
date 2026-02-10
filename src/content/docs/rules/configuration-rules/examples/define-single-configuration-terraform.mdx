@@ -2,8 +2,7 @@
 pcx_content_type: example
 summary: Create a configuration rule using Terraform to turn off Email
   Obfuscation and Browser Integrity Check for API requests in a given zone.
-products:
-  - Configuration Rules
+products: [configuration-rules]
 title: Define a single configuration rule using Terraform
 description: Create a configuration rule using Terraform to turn off Email
   Obfuscation and Browser Integrity Check for API requests in a given zone.
@@ -37,6 +36,10 @@ resource "cloudflare_ruleset" "http_config_rules_example" {
 }
 ```
 
-<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
-<Render file="terraform-additional-resources" />
+<Render file="terraform-additional-resources" product="rules" />

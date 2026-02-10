@@ -1,13 +1,14 @@
 ---
-updated: 2023-01-06
-category: 🔐 Zero Trust
+reviewed: 2023-01-06
+category: Zero Trust
 difficulty: Advanced
 pcx_content_type: tutorial
 title: Isolate risky Entra ID users
+description: >-
+  Microsoft Entra ID (formerly Azure Active Directory) calculates a user's risk level based on the probability that their account has been compromised. With Cloudflare Zero Trust, you can synchronize the Entra ID risky users list with Cloudflare Access and apply more stringent Zero Trust policies to users at higher risk.
 ---
 
 import { WranglerConfig } from "~/components";
-
 
 Microsoft Entra ID (formerly Azure Active Directory) calculates a user's [risk level](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-investigate-risk) based on the probability that their account has been compromised. With Cloudflare Zero Trust, you can synchronize the Entra ID risky users list with Cloudflare Access and apply more stringent Zero Trust policies to users at higher risk.
 
@@ -20,18 +21,18 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 ## Prerequisites
 
 - Microsoft Entra ID Premium P2 license
-- [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) add-on
-- [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) enabled on your devices
+- [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) add-on
+- [Gateway HTTP filtering](/cloudflare-one/traffic-policies/initial-setup/http/) enabled on your devices
 - [npm](https://docs.npmjs.com/getting-started) installation
 - [Node.js](https://nodejs.org/en/) installation
 
 ## 1. Set up Entra ID as an identity provider
 
-Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/entra-id/#set-up-entra-id-as-an-identity-provider) for Entra ID.
+Refer to [our IdP setup instructions](/cloudflare-one/integrations/identity-providers/entra-id/#set-up-entra-id-as-an-identity-provider) for Entra ID.
 
 :::note
 
-- When you configure the IdP in Zero Trust, be sure to select **Enable group membership change reauthentication**.
+- When you configure the IdP in Cloudflare One, be sure to select **Enable group membership change reauthentication**.
 - Save the **Application (client) ID**, **Directory (tenant) ID**, and **Client secret** as you will need them again in a later step.
   :::
 
@@ -48,7 +49,6 @@ Once the base IdP integration is tested and working, enable additional permissio
 4. Select **Microsoft Graph**.
 
 5. Select **Application permissions** and add the following [permissions](https://learn.microsoft.com/en-us/graph/permissions-reference):
-
    - `IdentityRiskyUser.ReadAll`
    - `Directory.ReadWriteAll`
    - `Group.Create`
@@ -81,28 +81,30 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
    ```
 
 3. Modify the [Wrangler configuration file](/workers/wrangler/configuration/) to include the following values:
-
    - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/account/find-account-and-zone-ids/).
    - `<TENANT_ID>`: your Entra ID **Directory (tenant) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-entra-id-as-an-identity-provider).
    - `<CLIENT_ID>`: your Entra ID **Application (client) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-entra-id-as-an-identity-provider).
 
-
    <WranglerConfig>
 
-   ```toml
-   name = "risky-users"
-   compatibility_date = "2023-01-04"
-   main = "src/index.js"
-   workers_dev = false
-
-   account_id = "<ACCOUNT-ID>"
-
-   [vars]
-   AZURE_AD_TENANT_ID = "<TENANT-ID>"
-   AZURE_AD_CLIENT_ID = "<CLIENT-ID>"
-
-   [triggers]
-   crons = ["* * * * *"]
+   ```jsonc
+   {
+     "$schema": "./node_modules/wrangler/config-schema.json",
+     "name": "risky-users",
+     "compatibility_date": "$today",
+     "main": "src/index.js",
+     "workers_dev": false,
+     "account_id": "<ACCOUNT-ID>",
+     "vars": {
+       "AZURE_AD_TENANT_ID": "<TENANT-ID>",
+       "AZURE_AD_CLIENT_ID": "<CLIENT-ID>"
+     },
+     "triggers": {
+       "crons": [
+         "* * * * *"
+       ]
+     }
+   }
    ```
 
    </WranglerConfig>
@@ -140,7 +142,7 @@ After the initial run, the auto-generated groups will appear in the Entra ID das
 
 Next, synchronize Entra ID risky user groups with Cloudflare Access:
 
-1. [Enable SCIM synchronization](/cloudflare-one/identity/idp-integration/entra-id/#synchronize-users-and-groups).
+1. [Enable SCIM synchronization](/cloudflare-one/integrations/identity-providers/entra-id/#synchronize-users-and-groups).
 
 2. In Entra ID, assign the following groups to your SCIM enterprise application:
    - `IdentityProtection-RiskyUser-RiskLevel-high`
@@ -151,13 +153,13 @@ Cloudflare Access will now synchronize changes in group membership with Entra ID
 
 ## 5. Create a browser isolation policy
 
-Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-policies/) to isolate traffic for risky user groups.
+Finally, create a [Gateway HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to isolate traffic for risky user groups.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies** > **HTTP**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies** > **HTTP**.
 
 2. Select **Add a policy**.
 
-3. Build an [Isolate policy](/cloudflare-one/policies/browser-isolation/isolation-policies/) that contains a _User Group Names_ rule. For example, the following policy serves `app1.example.com` and `app2.example.com` in a remote browser for all members flagged as high risk:
+3. Build an [Isolate policy](/cloudflare-one/remote-browser-isolation/isolation-policies/) that contains a _User Group Names_ rule. For example, the following policy serves `app1.example.com` and `app2.example.com` in a remote browser for all members flagged as high risk:
 
    | Selector         | Operator | Value                                         | Logic | Action  |
    | ---------------- | -------- | --------------------------------------------- | ----- | ------- |

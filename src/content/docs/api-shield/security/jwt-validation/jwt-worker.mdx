@@ -1,7 +1,7 @@
 ---
 title: Configure the Worker
 pcx_content_type: how-to
-type: overview
+
 sidebar:
   order: 3
 head:
@@ -11,7 +11,7 @@ head:
 
 import { Steps } from "~/components"
 
-Use a Worker to automatically keep your identity provider’s latest public key in the JWT Validation configuration.
+Use a Worker to automatically keep your identity provider’s latest public key in the JWT validation configuration.
 
 ## Prerequisites
 
@@ -132,7 +132,7 @@ curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | jq 
 	*/
 	async function updateCredentials(bearer) {
 		// Cloudflare API endpoint for credentials update
-		const url = `https://api.cloudflare.com/client/v4/zones/${zone_id}/api_gateway/token_validation/${token_config_id}/credentials`;
+		const url = `https://api.cloudflare.com/client/v4/zones/${zone_id}/token_validation/config/${token_config_id}/credentials`;
 		const init = {
 			body: await fetchCredentials(),
 			method: "PUT",

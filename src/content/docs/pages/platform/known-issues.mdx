@@ -3,12 +3,10 @@ pcx_content_type: concept
 title: Known issues
 sidebar:
   order: 4
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
+
 ---
+
+import { DashButton } from "~/components";
 
 Here are some known bugs and issues with Cloudflare Pages:
 
@@ -63,13 +61,15 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 If you would like to enable [Cloudflare Access](https://www.cloudflare.com/teams-access/)] for your preview deployments and your `*.pages.dev` domain, you must:
 
-1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. From Account Home, select **Workers & Pages**.
-3. In **Overview**, select your Pages project.
-4. Go to **Settings** > **Enable access policy**.
-5. Select **Edit** on the Access policy created for your preview deployments.
-6. In Edit, go to **Overview**.
-7. In the **Subdomain** field, delete the wildcard (`*`) and select **Save application**. You may need to change the **Application name** at this step to avoid an error.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
+3. Go to **Settings** > **Enable access policy**.
+4. Select **Manage** on the Access policy created for your preview deployments.
+5. Under **Access** > **Applications**, select your project.
+6. Select **Configure**.
+7. Under **Public hostname**, in the **Subdomain** field, delete the wildcard (`*`) and select **Save application**. You may need to change the **Application name** at this step to avoid an error.
 
 At this step, your `*.pages.dev` domain has been secured behind Access. To resecure your preview deployments:
 
@@ -116,6 +116,8 @@ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_NAM
 ```
 
 To find your Cloudflare API token, log in to the [Cloudflare dashboard](https://dash.cloudflare.com), select the user icon on the upper righthand side of your screen > go to **My Profile** > **API Tokens**.
+
+You need a token with `Cloudflare Pages Edit` permissions.
 
 To find your Account ID, refer to [Find your zone and account ID](/fundamentals/account/find-account-and-zone-ids/).
 

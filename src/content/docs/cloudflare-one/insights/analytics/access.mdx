@@ -1,36 +1,40 @@
 ---
 pcx_content_type: reference
-title: Access analytics
+title: Access event analytics
 sidebar:
   order: 3
 ---
 
-Access analytics provide Cloudflare One users with data on how Access is protecting their network.
+import { Render } from "~/components";
 
-To view Access analytics in [Zero Trust](https://one.dash.cloudflare.com), go to **Analytics**, then select **Access**.
+Access event analytics allows you to review login attempts to the applications you protect behind [Access](/cloudflare-one/access-controls/policies/). Access event analytics are powered by [Access authentication logs](/cloudflare-one/insights/logs/audit-logs/).
 
-You can view the following data and filters in Access analytics:
+To view Access event analytics:
 
-**Zero Trust data:**
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Insights**.
+2. Go to **Dashboards**.
+3. Select **Access event analytics**.
 
-- Applications accessed
-- Failed logins
-- Connected users
+Access Event Analytics aggregates authentication activity based on your [Access policies](/cloudflare-one/access-controls/policies/policy-management/).
 
-**Logins over time:**
+<Render file="analytics/access-analytics-comparison" product="cloudflare-one" />
 
-- Total count of all logins per day
-- Filter to see logins for a specific application
+<Render file="analytics/observability-tools-note" product="cloudflare-one" />
 
-**Applications and users:**
+## Available insights
 
-- Top applications accessed
-- Top connected users
+The Access event analytics dashboard includes a chart of Access activity over time. You can view a chronological chart of access events. The Access event analytics dashboard shows when access requests occurred, helping you spot spikes in login attempts.
 
-**Time filters:**
+- Events are displayed on the vertical axis.
+- Time (in your local timezone) is shown along the horizontal axis.
 
-- Last hour
-- Last 24 hours
-- Last 7 days
-- Last 30 days
-- Current calendar month
+The Access event analytics dashboard also shows data on your usage patterns with metrics including:
+
+- Top used applications
+- Top users
+- Top IP addresses
+- Top identities
+- Top countries
+- Top application types
+
+These insights help you detect anomalies, and optimize policy rules.

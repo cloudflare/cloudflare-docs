@@ -1,26 +1,15 @@
 ---
 title: aws-sdk-rust
 pcx_content_type: example
+reviewed: 2025-03-25
 ---
 
 import { Render } from "~/components";
 
-<Render file="keys" />
+<Render file="keys" product="r2" />
 <br />
 
 This example uses the [aws-sdk-s3](https://crates.io/crates/aws-sdk-s3) crate from the [AWS SDK for Rust](https://github.com/awslabs/aws-sdk-rust). You must pass in the R2 configuration credentials when instantiating your `S3` client:
-
-:::note[Compatibility]
-Client versions may introduce modifications to the default checksum behavior that could be incompatible with R2 APIs.
-
-If you encounter checksum-related errors, add the following to your config:
-
-```rust
-.request_checksum_calculation(RequestChecksumCalculation::WhenRequired)
-.response_checksum_validation(ResponseChecksumValidation::WhenRequired)
-```
-
-:::
 
 ## Basic Usage
 
@@ -31,9 +20,12 @@ use aws_smithy_types::date_time::Format::DateTime;
 #[tokio::main]
 async fn main() -> Result<(), s3::Error> {
     let bucket_name = "sdk-example";
-    let account_id = "<accountid>";
-    let access_key_id = "<access_key_id>";
-    let access_key_secret = "<access_key_secret>";
+    // Provide your Cloudflare account ID
+    let account_id = "<ACCOUNT_ID>";
+    // Retrieve your S3 API credentials for your R2 bucket via API tokens
+    // (see: https://developers.cloudflare.com/r2/api/tokens)
+    let access_key_id = "<ACCESS_KEY_ID>";
+    let access_key_secret = "<SECRET_ACCESS_KEY>";
 
     // Configure the client
     let config = aws_config::from_env()
@@ -45,7 +37,7 @@ async fn main() -> Result<(), s3::Error> {
             None,
             "R2",
         ))
-        .region("auto")
+        .region("auto") // Required by SDK but not used by R2
         .load()
         .await;
 

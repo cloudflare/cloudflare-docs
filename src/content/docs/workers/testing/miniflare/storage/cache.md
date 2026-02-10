@@ -1,6 +1,6 @@
 ---
 order: 4
-title: ✨ Cache
+title: Cache
 ---
 
 - [Cache Reference](/workers/runtime-apis/cache)

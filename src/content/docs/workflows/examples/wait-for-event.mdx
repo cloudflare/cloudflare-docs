@@ -1,15 +1,14 @@
 ---
-type: example
+
 summary: Implement a Cloudflare Workflow that processes user-uploaded images, awaits human approval, and performs AI-based image tagging upon approval.
-products:
-  - Workflows
-languages:
+tags:
   - Typescript
 pcx_content_type: example
 title: Human-in-the-Loop Image Tagging with waitForEvent
 sidebar:
   order: 3
 description: Human-in-the-loop Workflow with waitForEvent API
+reviewed: 2025-04-17
 ---
 
 import {  GitHubCode, WranglerConfig } from "~/components"
@@ -63,7 +62,7 @@ The Workflow configuration is defined in the `wrangler.jsonc` file. This file in
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "workflows-waitforevent",
 	"main": "src/index.ts",
-	"compatibility_date": "2025-04-14",
+	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 1,

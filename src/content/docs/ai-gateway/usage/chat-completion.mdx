@@ -1,0 +1,58 @@
+---
+title: Unified API (OpenAI compat)
+pcx_content_type: reference
+tags:
+  - AI
+sidebar:
+  order: 2
+---
+
+import {
+	Details,
+  Tabs,
+  TabItem
+} from "~/components";
+import CodeSnippets from "~/components/ai-gateway/code-examples.astro";
+
+Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint, enabling integration with multiple AI providers using a single URL. This feature simplifies the integration process, allowing for seamless switching between different models without significant code modifications.
+
+## Endpoint URL
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions
+```
+
+Replace `{account_id}` and `{gateway_id}` with your Cloudflare account and gateway IDs.
+
+## Parameters
+
+Switch providers by changing the `model` and `apiKey` parameters.
+
+Specify the model using `{provider}/{model}` format. For example:
+
+- `openai/gpt-5-mini`
+- `google-ai-studio/gemini-2.5-flash`
+- `anthropic/claude-sonnet-4-5`
+
+## Examples
+
+<CodeSnippets forceAPI="unified" />
+
+## Supported Providers
+
+The OpenAI-compatible endpoint supports models from the following providers:
+
+- [Anthropic](/ai-gateway/usage/providers/anthropic/)
+- [OpenAI](/ai-gateway/usage/providers/openai/)
+- [Groq](/ai-gateway/usage/providers/groq/)
+- [Mistral](/ai-gateway/usage/providers/mistral/)
+- [Cohere](/ai-gateway/usage/providers/cohere/)
+- [Perplexity](/ai-gateway/usage/providers/perplexity/)
+- [Workers AI](/ai-gateway/usage/providers/workersai/)
+- [Google-AI-Studio](/ai-gateway/usage/providers/google-ai-studio/)
+- [Google Vertex AI](/ai-gateway/usage/providers/vertex/)
+- [xAI](/ai-gateway/usage/providers/grok/)
+- [DeepSeek](/ai-gateway/usage/providers/deepseek/)
+- [Cerebras](/ai-gateway/usage/providers/cerebras/)
+- [Baseten](/ai-gateway/usage/providers/baseten/)
+- [Parallel](/ai-gateway/usage/providers/parallel/)

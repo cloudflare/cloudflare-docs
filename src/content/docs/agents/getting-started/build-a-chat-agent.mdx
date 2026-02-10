@@ -2,16 +2,16 @@
 title: Build a Chat Agent
 pcx_content_type: tutorial
 sidebar:
-  order: 3
+  order: 4
 head: []
 description: Build a streaming AI chat agent with tool integration using Cloudflare Workers and the Agents framework.
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
 A complete guide to building a streaming AI chat agent with tool integration using Cloudflare Workers and the Agents framework.
 
-> **Complete example**: See the full implementation in the [agents-starter repository](https://github.com/cloudflare/agents-starter) on GitHub.
+> **Complete example**: Refer to the full implementation in the [agents-starter repository](https://github.com/cloudflare/agents-starter) on GitHub.
 
 ## Prerequisites
 
@@ -23,13 +23,10 @@ A complete guide to building a streaming AI chat agent with tool integration usi
 ## Step 1: Set up the project
 
 ```bash
-# Create the project using the Cloudflare agents starter template
 npm create cloudflare@latest chat-agent -- --template=cloudflare/agents-starter
 
-# Navigate to the project directory
 cd chat-agent
 
-# Install dependencies
 npm install
 ```
 
@@ -37,51 +34,35 @@ npm install
 
 You have two options for setting up your OpenAI API key:
 
-**Option A: Using wrangler.jsonc (recommended for production)**
+**Option A: Using `.dev.vars` (recommended for development)**
 
-```json
-{
-	"compatibility_date": "2024-09-23",
-	"compatibility_flags": ["nodejs_compat"],
-	"vars": {
-		"OPENAI_API_KEY": "your-openai-api-key-here"
-	},
-	"define": {
-		"process.env.NODE_ENV": "\"production\""
-	}
-}
+Create a `.dev.vars` file in your project root:
+
+```txt
+OPENAI_API_KEY=your-key-here
 ```
 
-**Option B: Using .dev.vars (recommended for development)**
+**Option B: Using Cloudflare secrets (recommended for production)**
+
+For production deployments, use Cloudflare secrets instead of putting API keys in configuration files:
 
 ```bash
-echo "OPENAI_API_KEY=your-key-here" > .dev.vars
-
-```
-
-**⚠️ Security Best Practice**: For production deployments, use Cloudflare secrets instead of putting API keys in `wrangler.jsonc`:
-
-```bash
-# Set the OpenAI API key as a secret (recommended for production)
 wrangler secret put OPENAI_API_KEY
 ```
 
 ## Step 3: Test the agent locally
 
 ```bash
-# Start the development server
 npm start
-
-# The server will be available at http://localhost:5174
 ```
 
-Open your browser to `http://localhost:5174` and start chatting!
+The server will be available at `http://localhost:5174`. Open your browser and start chatting.
 
 ## Understanding the code
 
 ### Project structure
 
-```
+```txt
 chat-agent/
 ├── src/
 │   ├── server.ts      # Main agent implementation
@@ -222,29 +203,27 @@ If the user asks to schedule a task, use the schedule tool to schedule the task.
 ## Deploy to Cloudflare Workers
 
 ```bash
-# Deploy to production
 npm run deploy
 ```
 
-Your agent will be available at: `https://your-project-name.your-subdomain.workers.dev`
+Your agent will be available at `https://your-project-name.your-subdomain.workers.dev`.
 
 ### Environment variables in production
 
 For production deployment, set your OpenAI API key as a secret:
 
 ```bash
-# Set the OpenAI API key as a secret
 wrangler secret put OPENAI_API_KEY
 ```
 
 ## Features
 
-- **Streaming Responses**: Real-time AI responses with typing indicators
-- **Tool Integration**: Execute actions with or without user confirmation
-- **Task Scheduling**: Schedule tasks to run at specific times
-- **Modern UI**: Dark/light mode, responsive design
-- **Debug Mode**: View detailed message processing
-- **Type Safety**: Full TypeScript support
+- **Streaming Responses**: Real-time AI responses with typing indicators.
+- **Tool Integration**: Execute actions with or without user confirmation.
+- **Task Scheduling**: Schedule tasks to run at specific times.
+- **Modern UI**: Dark/light mode, responsive design.
+- **Debug Mode**: View detailed message processing.
+- **Type Safety**: Full TypeScript support.
 
 ## Troubleshooting
 
@@ -252,25 +231,25 @@ wrangler secret put OPENAI_API_KEY
 
 **"OPENAI_API_KEY is not set"**
 
-- Make sure you've set the API key in `.dev.vars` or `wrangler.jsonc`
-- For production, use `wrangler secret put OPENAI_API_KEY`
+- Make sure you have set the API key in `.dev.vars` for local development.
+- For production, use `wrangler secret put OPENAI_API_KEY`.
 
 **"npm run dev" not found**
 
-- Use `npm start` instead (the script is named "start")
+- Use `npm start` instead (the script is named `start`).
 
 **Server not accessible**
 
-- Check that the server is running on port 5174 (not 8787)
-- Look for the correct URL in the terminal output
+- Check that the server is running on port 5174 (not 8787).
+- Look for the correct URL in the terminal output.
 
 **Tool execution errors**
 
-- Make sure tools are properly exported in `tools` object
-- Check that confirmation-required tools have execution functions in `executions`
+- Make sure tools are properly exported in the `tools` object.
+- Check that confirmation-required tools have execution functions in `executions`.
 
 ### Development tips
 
-- Use the browser's developer tools to see detailed error messages
-- Check the terminal output for server logs
-- The debug mode in the UI shows detailed message processing
+- Use the browser developer tools to view detailed error messages.
+- Check the terminal output for server logs.
+- The debug mode in the UI shows detailed message processing.

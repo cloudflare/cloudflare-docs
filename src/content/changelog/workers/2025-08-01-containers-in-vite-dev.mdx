@@ -1,0 +1,84 @@
+---
+title: Develop locally with Containers and the Cloudflare Vite plugin
+description: The Cloudflare Vite plugin now supports configuring Containers in your Worker
+products:
+  - workers
+date: 2025-08-01
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now configure and run [Containers](/containers) alongside your [Worker](/workers) during local development when using the [Cloudflare Vite plugin](/workers/vite-plugin/). Previously, you could only develop locally when using [Wrangler](/workers/wrangler/) as your local development server.
+
+#### Configuration
+
+You can simply configure your Worker and your Container(s) in your Wrangler configuration file:
+
+<WranglerConfig>
+```jsonc
+{
+  "name": "container-starter",
+  "main": "src/index.js",
+  "containers": [
+    {
+      "class_name": "MyContainer",
+      "image": "./Dockerfile",
+      "instances": 5
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "MyContainer",
+        "name": "MY_CONTAINER"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "new_sqlite_classes": [
+        "MyContainer"
+      ],
+      "tag": "v1"
+    }
+  ],
+}
+```
+</WranglerConfig>
+
+#### Worker Code
+
+Once your Worker and Containers are configured, you can access the Container instances from your Worker code:
+
+```ts
+import { Container, getContainer } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+  defaultPort = 4000; // Port the container is listening on
+  sleepAfter = "10m"; // Stop the instance if requests not sent for 10 minutes
+}
+
+async fetch(request, env) {
+  const { "session-id": sessionId } = await request.json();
+  // Get the container instance for the given session ID
+  const containerInstance = getContainer(env.MY_CONTAINER, sessionId)
+  // Pass the request to the container instance on its default port
+  return containerInstance.fetch(request);
+}
+```
+
+#### Local development
+
+To develop your Worker locally, start a local dev server by running
+
+```sh
+vite dev
+```
+
+in your terminal.
+
+![Local Dev video](~/assets/images/workers/changelog/worker-with-containers-in-vite.gif)
+
+#### Resources
+
+Learn more about [Cloudflare Containers](https://developers.cloudflare.com/containers/) or the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/) in our developer docs.

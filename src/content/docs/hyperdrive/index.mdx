@@ -1,7 +1,7 @@
 ---
 title: Hyperdrive
 order: 0
-type: overview
+
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -32,7 +32,7 @@ Turn your existing regional database into a globally distributed database.
 
 Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe from [Cloudflare Workers](/workers/), irrespective of your users' location.
 
-Hyperdrive supports any Postgres or MySQL database, including those hosted on AWS, Google Cloud, Azure, Neon and Planetscale. Hyperdrive also supports Postgres-compatible databases like CockroachDB and Timescale.
+Hyperdrive supports any Postgres or MySQL database, including those hosted on AWS, Google Cloud, Azure, Neon and PlanetScale. Hyperdrive also supports Postgres-compatible databases like CockroachDB and Timescale.
 You do not need to write new code or replace your favorite tools: Hyperdrive works with your existing code and tools you use.
 
 Use Hyperdrive's connection string from your Cloudflare Workers application with your existing Postgres drivers and object-relational mapping (ORM) libraries:
@@ -42,30 +42,29 @@ Use Hyperdrive's connection string from your Cloudflare Workers application with
 	<Tabs>
 	<TabItem label="index.ts">
 ```ts
-import postgres from 'postgres';
+import { Client } from "pg";
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Hyperdrive provides a unique generated connection string to connect to
-		// your database via Hyperdrive that can be used with your existing tools
-		const sql = postgres(env.HYPERDRIVE.connectionString);
+		// Create a new client instance for each request. Hyperdrive maintains the
+		// underlying database connection pool, so creating a new client is fast.
+		const client = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
+		});
 
-    	try {
-    		// Sample SQL query
-    		const results = await sql`SELECT * FROM pg_tables`;
+		try {
+			// Connect to the database
+			await client.connect();
+			// Sample SQL query
+			const result = await client.query("SELECT * FROM pg_tables");
 
-    		// Close the client after the response is returned
-    		ctx.waitUntil(sql.end());
-
-    		return Response.json(results);
-    	} catch (e) {
-    		return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
-    	}
-    },
-
+			return Response.json(result.rows);
+		} catch (e) {
+			return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
+		}
+	},
 } satisfies ExportedHandler<{ HYPERDRIVE: Hyperdrive }>;
-
-````
+```
 
     </TabItem>
     <TabItem label="wrangler.jsonc">
@@ -89,7 +88,7 @@ export default {
 			}
 		]
 	}
-````
+```
 
 </TabItem>
 </Tabs>
@@ -98,37 +97,35 @@ export default {
 	<Tabs>
 	<TabItem label="index.ts">
 ```ts
-import { createConnection  } from 'mysql2/promise';
+import { createConnection } from 'mysql2/promise';
 
 export default {
- async fetch(request, env, ctx): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
+    // Create a new connection on each request. Hyperdrive maintains the
+    // underlying database connection pool, so creating a new client is fast.
     const connection = await createConnection({
-     host: env.DB_HOST,
-     user: env.DB_USER,
-     password: env.DB_PASSWORD,
-     database: env.DB_NAME,
-     port: env.DB_PORT
+		 host: env.HYPERDRIVE.host,
+		 user: env.HYPERDRIVE.user,
+		 password: env.HYPERDRIVE.password,
+		 database: env.HYPERDRIVE.database,
+		 port: env.HYPERDRIVE.port,
 
-    	 // This is needed to use mysql2 with Workers
+     // This is needed to use mysql2 with Workers
      // This configures mysql2 to use static parsing instead of eval() parsing (not available on Workers)
      disableEval: true
+  });
 
-});
+  const [results, fields] = await connection.query('SHOW tables;');
 
-const [results, fields] = await connection.query(
-'SHOW tables;'
-);
+  return new Response(JSON.stringify({ results, fields }), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '\*',
+    },
+  });
+}} satisfies ExportedHandler<{ HYPERDRIVE: Hyperdrive }>;
 
-return new Response(JSON.stringify({ results, fields }), {
-headers: {
-'Content-Type': 'application/json',
-'Access-Control-Allow-Origin': '\*',
-},
-});
-},
-} satisfies ExportedHandler<Env>;
-
-````
+```
 
     </TabItem>
     <TabItem label="wrangler.jsonc">
@@ -152,7 +149,7 @@ headers: {
 			}
 		]
 	}
-````
+```
 
 </TabItem>
 </Tabs>
@@ -184,9 +181,9 @@ Hyperdrive allows you to connect to any MySQL database.
 
 </Feature>
 
-<Feature header="Query Caching" href="/hyperdrive/configuration/query-caching/" cta="Learn about Query Caching">
+<Feature header="Query Caching" href="/hyperdrive/concepts/query-caching/" cta="Learn about Query Caching">
 
-Use Hyperdrive to cache the most popular queries executed against your database.
+Default-on caching for your most popular queries executed against your database.
 
 </Feature>
 

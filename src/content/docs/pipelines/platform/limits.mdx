@@ -5,23 +5,16 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
+While in open beta, the following limits are currently in effect:
 
-| Feature                                       | Limit                                                         |
-| --------------------------------------------- | ------------------------------------------------------------- |
-| Maximum requests per second, per pipeline     | 14,000 default (configurable up to 100,000)                   |
-| Maximum payload per request                   | 1 MB                                          								|
-| Maximum data throughput per pipeline          | 14 MB/s default (configurable up to 100 MB/s)             |
-| Shards per pipeline	                      		| 2 default (configurable up to 15) 	                          |
-| Maximum batch size 	                        	| 100 MB                                          							|
-| Maximum batch records	                				| 10,000,000                                          					|
-| Maximum batch duration	                      | 300s 	                                          							|
+| Feature                                    | Limit  |
+| ------------------------------------------ | ------ |
+| Maximum streams per account                | 20     |
+| Maximum payload size per ingestion request | 1 MB   |
+| Maximum ingest rate per stream             | 5 MB/s |
+| Maximum sinks per account                  | 20     |
+| Maximum pipelines per account              | 20     |
 
-
-## Exceeding requests per second or throughput limits
-If you consistently exceed the requests per second or throughput limits, your pipeline might not be able to keep up with the load. The pipeline will communicate backpressure by returning a 429 response to HTTP requests or throwing an error if using the Workers API.
-
-If you are consistently seeing backpressure from your pipeline, consider the following strategies:
-* Increase the [shard count](/pipelines/build-with-pipelines/shards) to increase the maximum throughput of your pipeline.
-* Send data to a second pipeline if you receive an error. You can setup multiple pipelines to write to the same R2 bucket.
+<Render file="limits_increase" product="workers" />

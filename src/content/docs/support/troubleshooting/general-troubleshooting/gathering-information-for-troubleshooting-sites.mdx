@@ -4,7 +4,7 @@ source: https://support.cloudflare.com/hc/en-us/articles/203118044-Gathering-inf
 title: Gathering information for troubleshooting sites
 ---
 
-## Overview
+## About this guide
 
 It is important to capture as much information as possible to diagnose an issue and to [provide adequate details to Cloudflare support](/support/contacting-cloudflare-support/). This article explains how to gather troubleshooting information commonly requested by Cloudflare Support.
 
@@ -16,7 +16,34 @@ customers due to security and liability concerns.
 
 ---
 
-## Generate a HAR file
+## Quick reference: Choose the right tool
+
+Use this table to quickly identify which troubleshooting method to use based on your issue:
+
+| Issue Type | Recommended Tool | When to Use |
+|------------|------------------|-------------|
+| Page not loading correctly | [HAR file](#generate-a-har-file) | Visual issues, broken elements, slow page loads |
+| JavaScript errors | [Console log](#export-console-log) | CORS errors, scripts failing, browser-side errors |
+| Protocol errors (QUIC/HTTP2) | [NetLog dump](#capture-a-netlog-dump) | `ERR_QUIC_PROTOCOL_ERROR`, `ERR_HTTP2_PROTOCOL_ERROR` |
+| Slow response times | [curl (performance)](#performance) | Measuring latency, TLS handshake times |
+| HTTP errors (5xx, 4xx) | [curl (HTTP errors)](#http-errors) | Determining if errors originate from Cloudflare or origin |
+| Caching issues | [curl (caching)](#caching) | Cache misses, stale content, cache headers |
+| SSL/TLS certificate issues | [curl (SSL/TLS)](#ssltls-certificates) | Certificate errors, TLS version issues |
+| Connection timeouts/drops | [Traceroute](#perform-a-traceroute) / [MTR](#perform-a-mtr) | Network path issues, latency between hops |
+| Packet loss, connection resets | [Packet capture](#run-packet-captures) | Layer 3/4 issues, SSL handshake failures |
+| Identifying serving location | [Cloudflare data center](#identify-the-cloudflare-data-center-serving-your-request) | Determine which Cloudflare PoP is serving requests |
+
+---
+
+## Browser-based troubleshooting
+
+These tools capture information directly from your web browser and are useful for diagnosing issues with how pages load and render.
+
+### Generate a HAR file
+
+:::tip[When to use]
+Use a HAR file when you experience **visual issues, broken page elements, slow page loads, or need to capture the full sequence of HTTP requests** made by your browser. This is often the first thing Cloudflare Support will request.
+:::
 
 A HTTP Archive (HAR) records all web browser requests including the request and response headers, the body content, and the page load time. Be sure to use Incognito Mode or a Private Browsing window.
 
@@ -32,7 +59,7 @@ For security reasons Cloudflare support cannot open compressed files such as ZIP
 
 Some browsers either require a browser extension or cannot generate a HAR. When installing a browser extension, follow the instructions from the extension provider.
 
-### In Chrome
+#### In Chrome
 
 1. In a browser page viewed in Incognito Mode, right-click anywhere and select **Inspect Element**.
 
@@ -58,7 +85,7 @@ As of Chrome 130, this exports a sanitized HAR with redacted cookies and persona
 
 :::
 
-### In Firefox
+#### In Firefox
 
 1. While using a Private Window, use the application menu and select **Tools** > **Web Developer** > **Network** or press _Ctrl+Shift+I_ (Windows/Linux) or _Cmd+Option+I_ (OS X).
 
@@ -66,7 +93,7 @@ As of Chrome 130, this exports a sanitized HAR with redacted cookies and persona
 
 3. After duplicating the issue, right-click and choose **Save All As HAR**.
 
-### In Microsoft Edge
+#### In Microsoft Edge
 
 1. In a Private window, navigate to **Developer tools** (use `F12` as a shortcut) and select the **Network** tab.
 
@@ -74,7 +101,7 @@ As of Chrome 130, this exports a sanitized HAR with redacted cookies and persona
 
 3. After duplicating the issue, click on **Export as HAR** followed by **Save As...**.
 
-### In Safari
+#### In Safari
 
 1. In Safari, ensure a **Develop** menu appears at the top of a Private Window in the browser window. Otherwise, go to **Safari** > **Preferences** > **Advanced** and select **Show Develop Menu in menu bar**
 
@@ -84,7 +111,7 @@ As of Chrome 130, this exports a sanitized HAR with redacted cookies and persona
 
 4. Ctrl + click on a resource within Web Inspector and click **Export HAR**.
 
-### In Mobile
+#### In Mobile
 
 **For Android:**
 
@@ -118,13 +145,15 @@ As of Chrome 130, this exports a sanitized HAR with redacted cookies and persona
 
 Refer to [Okta](https://support.okta.com/help/s/article/How-to-generate-a-HAR-capture-on-an-iOS-device?language=en_US) or [Apple's](https://developer.apple.com/library/archive/documentation/AppleApplications/Conceptual/Safari_Developer_Guide/GettingStarted/GettingStarted.html#//apple_ref/doc/uid/TP40007874-CH2-SW1) support article on how to generate a HAR file from an iOS device. Attach the HAR file to your support ticket alongside a screen recording from the affected iOS device. Apple devices now have [built-in screen recording functionality](https://support.apple.com/en-us/HT207935).
 
----
+### Export Console Log
 
-## Export Console Log
+:::tip[When to use]
+Use a console log when you experience **JavaScript errors, CORS issues, or when requests are blocked or cancelled by the browser**. This captures browser-side errors that may not appear in a HAR file.
+:::
 
 In certain situations when request is not issued or cancelled by the browser (for example, due to [CORS](https://developer.mozilla.org/en-US/docs/Glossary/CORS)), we need to get JS console log output, in addition to the HAR file, to identify the root cause.
 
-### In Chrome
+#### In Chrome
 
 1. Go to the **Console** tab from the DevTools bar.
 2. Go to the Console Settings and select **Preserve Log**.
@@ -134,7 +163,7 @@ In certain situations when request is not issued or cancelled by the browser (fo
 
 ![How to find the console tab in Chrome's developer tools.](~/assets/images/support/console_snapshot.png)
 
-### In Firefox
+#### In Firefox
 
 1. Go to the **Console** tab from the Web Developer Tools bar.
 2. Go to the Console Settings and select **Persist Log** and **Show Timestamps**.
@@ -142,7 +171,7 @@ In certain situations when request is not issued or cancelled by the browser (fo
 4. Right click, **Select All** messages and **Export Visible Messages to File**.
 5. Attach the log file to your support ticket.
 
-### In Microsoft Edge
+#### In Microsoft Edge
 
 1. Go to the **Console** tab from the Developer Tools bar.
 2. Go to the Console Settings and select **Preserve Log**.
@@ -150,7 +179,7 @@ In certain situations when request is not issued or cancelled by the browser (fo
 4. Right click on any of the items within the **Console** tab and select **Save as** log file.
 5. Attach the log file to your support ticket.
 
-### In Safari
+#### In Safari
 
 1. Go to the **Console** tab from the Web Inspector bar.
 2. Tick the box **Preserve Log**.
@@ -158,9 +187,11 @@ In certain situations when request is not issued or cancelled by the browser (fo
 4. Select all the messages, right click and **Save Selected** to a log file.
 5. Attach the log file to your support ticket.
 
----
+### Capture a NetLog dump
 
-## Capture a NetLog dump
+:::tip[When to use]
+Use a NetLog dump when you experience **protocol-level errors** such as `ERR_QUIC_PROTOCOL_ERROR` or `ERR_HTTP2_PROTOCOL_ERROR`. This provides detailed network-level debugging information that goes beyond what a HAR file captures.
+:::
 
 In some cases, in order to further troubleshoot issues related to protocols (errors such as `ERR_QUIC_PROTOCOL_ERROR`, `ERR_HTTP2_PROTOCOL_ERROR`, etc..) our Support team may ask you to provide a [NetLog dump](https://www.chromium.org/for-testers/providing-network-details/).
 
@@ -183,7 +214,15 @@ You can only generate a NetLog dump on the Google Chrome, Opera or Microsoft Edg
 
 ---
 
-## Identify the Cloudflare data center serving your request
+## Command-line troubleshooting
+
+These tools are run from your terminal or command prompt and are useful for testing connectivity, performance, and server responses without browser overhead.
+
+### Identify the Cloudflare data center serving your request
+
+:::tip[When to use]
+Use this when you need to **determine which Cloudflare Point of Presence (PoP) is serving your requests**. This is helpful when troubleshooting regional issues or verifying traffic routing.
+:::
 
 [A map of our data centers](https://www.cloudflare.com/network-map) is listed on the [Cloudflare status page](https://www.cloudflarestatus.com/), sorted by continent.
 The three-letter code in the data center name is the [IATA code](http://en.wikipedia.org/wiki/IATA_airport_code) of the nearest major international airport.
@@ -192,9 +231,11 @@ Determine the Cloudflare data center serving requests for your browser by visiti
 
 Replace `www.example.com` with your domain and hostname. Note the `colo` field from the output.
 
----
+### Troubleshoot requests with curl
 
-## Troubleshoot requests with curl
+:::tip[When to use]
+Use curl when you need to **test HTTP requests without browser interference**, measure performance metrics, check HTTP headers, or determine if an issue originates from Cloudflare or your origin server.
+:::
 
 [curl](https://curl.se/) is a command line tool for sending HTTP/HTTPS requests and is useful for troubleshooting:
 
@@ -226,7 +267,7 @@ Review the [curl command options](https://curl.se/docs/manpage.html) for additio
 
 View the sections below for tips on troubleshooting HTTP errors, performance, caching, and SSL/TLS certificates:
 
-### HTTP errors
+#### HTTP errors
 
 When troubleshooting HTTP errors in responses from Cloudflare, test whether your origin caused the errors by sending requests directly to your origin web server. To troubleshoot HTTP errors, run a curl directly to your origin web server IP address (bypassing Cloudflare’s proxy):
 
@@ -242,7 +283,7 @@ directly to your origin web server, contact your hosting provider for
 assistance.
 :::
 
-### Performance
+#### Performance
 
 curl measures latency or performance degradation for HTTP/HTTPS requests via the [`-w` or `--write-out` curl option](https://curl.haxx.se/docs/manpage.html#-w). The example curl below measures several performance vectors in the request transaction such as duration of the TLS handshake, DNS lookup, redirects, transfers, etc:
 
@@ -275,9 +316,9 @@ by denoting a new line with `\n` before each variable. Otherwise, all
 metrics are displayed together on a single line.
 :::
 
-### Caching
+#### Caching
 
-cURL helps review the HTTP response headers that influence caching. In particular, review several HTTP headers when troubleshooting Cloudflare caching:
+curl helps review the HTTP response headers that influence caching. In particular, review several HTTP headers when troubleshooting Cloudflare caching:
 
 - CF-Cache-Status
 - Cache-Control/Pragma
@@ -290,7 +331,7 @@ cURL helps review the HTTP response headers that influence caching. In particula
 You can refer to the [Cloudflare Cache documentation](/cache/get-started/) for more details.
 :::
 
-### SSL/TLS certificates
+#### SSL/TLS certificates
 
 #### Reviewing Certificates with curl
 
@@ -321,15 +362,25 @@ If troubleshooting browser support or confirming what TLS versions are supported
 - `--tlsv1.2 --tls-max 1.2`
 - `--tlsv1.3 --tls-max 1.3`
 
----
+### Temporarily pause Cloudflare
 
-## Temporarily pause Cloudflare
+:::tip[When to use]
+Use this when you need to **quickly determine if an issue is caused by Cloudflare or your origin server**. Pausing Cloudflare routes traffic directly to your origin, bypassing Cloudflare's proxy.
+:::
 
 For more details, refer to [Pause Cloudflare](/fundamentals/manage-domains/pause-cloudflare/).
 
 ---
 
-## Perform a traceroute
+## Network troubleshooting
+
+These tools help diagnose network-level issues such as routing problems, packet loss, and connection failures between your location and Cloudflare or your origin server.
+
+### Perform a traceroute
+
+:::tip[When to use]
+Use traceroute when you experience **connection timeouts, slow connections, or need to identify where in the network path an issue occurs**. This shows each hop between your device and the destination.
+:::
 
 Traceroute is a network diagnostic tool that measures the route latency of packets across a network. Most operating systems support the `traceroute` command. If you experience connectivity issues with your Cloudflare-proxied website and [ask Cloudflare Support for assistance](/support/contacting-cloudflare-support/), ensure to provide output from a traceroute.
 
@@ -341,7 +392,7 @@ requests.
 
 Review the instructions below for running traceroute on different operating systems. Replace `www.example.com` with your domain and hostname in the examples below:
 
-### Run traceroute on Windows
+#### Run traceroute on Windows
 
 1. Open the **Start** menu.
 
@@ -367,7 +418,7 @@ tracert -6 www.example.com
 
 6. You can copy the results to save in a file or paste in another program.
 
-### Run traceroute on Linux
+#### Run traceroute on Linux
 
 1. Open a terminal window.
 
@@ -387,7 +438,7 @@ traceroute -6 www.example.com
 
 3. You can copy the results to save in a file or paste in another program.
 
-### Run traceroute on Mac OS
+#### Run traceroute on Mac OS
 
 1. Open the **Network Utility** application.
 2. Click the **Traceroute** tab.
@@ -396,19 +447,21 @@ traceroute -6 www.example.com
 
 Alternatively, follow the same Linux traceroute instructions above when using the Mac OS terminal program.
 
----
+### Add the CF-RAY header to your logs
 
-## Add the CF-RAY header to your logs
+:::tip[When to use]
+Use this when you need to **correlate specific requests with Cloudflare's logs** for troubleshooting. The CF-RAY header uniquely identifies each request through Cloudflare's network and is essential for Support investigations.
+:::
 
 The **CF-RAY** header traces a website request through Cloudflare's network. Provide the **CF-RAY** of a web request to Cloudflare support when troubleshooting an issue. You can also add **CF-RAY** to your logs by editing your origin web server configuration with the snippet below that corresponds to your brand of web server:
 
-### For Apache web servers, add `%{CF-Ray}i` to LogFormat
+#### For Apache web servers, add `%{CF-Ray}i` to LogFormat
 
 ```
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" %{CF-Ray}i" cf_custom
 ```
 
-### For Nginx web servers, add '$http_cf_ray' to log_format
+#### For Nginx web servers, add '$http_cf_ray' to log_format
 
 ```
 log_format cf_custom '$remote_addr - $remote_user [$time_local] '
@@ -417,11 +470,13 @@ log_format cf_custom '$remote_addr - $remote_user [$time_local] '
 '$http_cf_ray';
 ```
 
----
+### Perform a MTR
 
-## Perform a MTR
+:::tip[When to use]
+Use MTR when you need **more detailed network diagnostics than traceroute provides**. MTR combines traceroute and ping to show real-time latency and packet loss at each hop, making it easier to identify intermittent network issues.
+:::
 
-Traceroute (MTR) is a tool that combines traceroute and ping, which is another common method for testing network connectivity and speed. In addition to the hops along the network path, MTR shows constantly updating information about the latency and packet loss along the route to the destination. This helps in troubleshooting network issues by allowing you to see what’s happening along the path in real-time.
+My Traceroute (MTR) is a [tool](https://www.cloudflare.com/learning/network-layer/what-is-mtr/) that combines traceroute and ping to measure a network path's health, which is another common method for testing network connectivity and speed. In addition to the hops along the network path, MTR shows constantly updating information about the latency and packet loss along the route to the destination. This helps in troubleshooting network issues by allowing you to see what's happening along the path in real-time.
 
 MTR works by discovering the network path in a similar manner to traceroute, and then regularly sending packets to continue collecting information to provide an updated view into the network’s health and speed.
 
@@ -433,7 +488,7 @@ For MacOS users, MTR can be installed through [homebrew](https://formulae.brew.s
 For Windows users, see [WinMTR](https://github.com/White-Tiger/WinMTR/releases).
 :::
 
-### How do I use MTR to generate network path report?
+#### How do I use MTR to generate network path report?
 
 **Using MTR on NIX based machines**
 
@@ -457,11 +512,11 @@ mtr -P <tcp port> -T <destination ip>
 
 Please refer to this documentation, which explains more about analysing MTR: [How to read MTR](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/).
 
----
+### Run Packet Captures
 
-## Run Packet Captures
-
-**Why and when do you need Packet Captures?**
+:::tip[When to use]
+Use packet captures when you experience **connection resets, packet loss, SSL handshake failures, or HTTP errors like 520, 524, and 525**. These issues occur at layers 3/4 and don't appear in HTTP logs, requiring deep packet-level analysis.
+:::
 
 Issues that happen at the layers 3/4 occur before requests reaching Cloudflare's logging system, so they do not show up in the HTTP logs. Therefore, troubleshooting issues related to connection resets, packet loss or SSL handshake failures can be tricky without a deep investigation at the packet level.
 

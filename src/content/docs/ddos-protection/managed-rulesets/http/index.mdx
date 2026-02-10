@@ -43,7 +43,7 @@ For more information on the available configuration parameters, refer to [Manage
 
 ## Origin Protect rules
 
-Cloudflare HTTP DDoS Protection can also initiate mitigation based on the origin health. Floods of requests that cause a high number of zone errors (default sensitivity level is 1,000 errors per second) can initiate mitigation to alleviate the strain on the zone.
+Cloudflare HTTP DDoS Protection can also initiate mitigation based on the origin health. [Adaptive DDoS Protection for Origins](/ddos-protection/managed-rulesets/adaptive-protection/) detects and mitigates traffic that deviates from your site's origin errors profile. Floods of requests that cause a high number of zone errors (default sensitivity level is 1,000 errors per second) can initiate mitigation to alleviate the strain on the zone.
 
 | Rule ID                            | Description                                           |
 | ---------------------------------- | ----------------------------------------------------- |
@@ -53,9 +53,15 @@ Cloudflare HTTP DDoS Protection can also initiate mitigation based on the origin
 This rule is available for zones on any plan.
 :::
 
-The rule is adaptive for zones on the Pro, Business, or Enterprise plan. It performs an additional check for better detection accuracy: the errors-per-second rate must also be at least five times the normal traffic levels.
+While Cloudflare's network is built to automatically monitor and mitigate large DDoS attacks, Cloudflare also helps mitigate smaller DDoS attacks, based on the following general rules: 
 
-All HTTP errors in the 52x range (Internal Server Error) and all errors in the 53x range excluding [530](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-530) are considered when factoring in the error rate.
+- For zones on any plan, Cloudflare will apply mitigations when the HTTP error rate is above the _High_ (default) sensitivity level of 1,000 errors-per-second rate threshold. You can decrease the sensitivity level by configuring the HTTP DDoS Attack Protection managed ruleset.
+
+- For zones on Pro, Business, and Enterprise plans, Cloudflare performs an additional check for better detection accuracy: the errors-per-second rate must also be at least five times the normal origin traffic levels before applying DDoS mitigations.
+
+All HTTP errors in the `52x` range (Internal Server Error) and all errors in the `53x` range excluding [`530`](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-530) are considered when factoring in the error rate. For DDoS mitigations based on HTTP error rate, you cannot exclude specific HTTP error codes.
+
+For more information on the types of DDoS attacks covered by Cloudflare's DDoS protection, refer to [DDoS attack coverage](/ddos-protection/about/attack-coverage/).
 
 ## Availability
 

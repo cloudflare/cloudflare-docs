@@ -1,12 +1,18 @@
 ---
-title: Configure a Page Shield alert
+title: Configure an alert
 pcx_content_type: how-to
 sidebar:
   order: 2
   label: Configure an alert
-description: Configure scoped or unscoped Page Shield alerts to get notified about relevant client-side changes on your zones.
+description: Configure scoped or unscoped client-side resource alerts to get notified about relevant client-side changes on your zones.
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
-<Render file="alerts-configure" />
+<Render file="alerts-configure" product="page-shield" />
+
+## Manage alerts
+
+To edit, delete, or disable an alert, go to the **Notifications** page.
+
+<DashButton url="/?to=/:account/notifications" />

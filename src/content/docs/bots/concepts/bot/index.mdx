@@ -10,7 +10,7 @@ learning_center:
 
 import { Render } from "~/components";
 
-<Render file="what-is-a-bot" />
+A **bot** is a software application programmed to do certain tasks.
 
 Bots can be used for good (chatbots, search engine crawlers) or for evil (inventory hoarding, credential stuffing).
 
@@ -19,15 +19,12 @@ Bots can be used for good (chatbots, search engine crawlers) or for evil (invent
 For more background, refer to [What is a bot?](https://www.cloudflare.com/learning/bots/what-is-a-bot/).
 :::
 
-## Verified bots
+## Verified bots and signed agents
 
-<Render file="verified-bots" />
-
-For more information, refer to [Verified bots](/bots/concepts/bot/verified-bots/overview/).
+<Render file="verified-bots" product="bots" />
 
 :::note
-
-The method for allowing or blocking verified bots depends on [your plan](/bots/get-started/).
+The method for allowing or blocking verified bots depends on [your plan](/bots/concepts/bot/verified-bots/#availability). 
 :::
 
 ## AI bots
@@ -36,7 +33,26 @@ You can opt into a managed rule that will block bots that we categorize as artif
 
 ### Which bots are blocked
 
-<Render file="list-ai-bots" />
+When you enable this feature, Cloudflare will block the following bots:
+
+- `Amazonbot` (Amazon)
+- `Applebot` (Apple)
+- `Bytespider` (ByteDance)
+- `ClaudeBot` (Anthropic)
+- `DuckAssistBot` (DuckDuckGo)
+- `Google-CloudVertexBot` (Google)
+- `GoogleOther` (Google)
+- `GPTBot` (OpenAI)
+- `Meta-ExternalAgent` (Meta)
+- `PetalBot` (Huawei)
+- `TikTokSpider` (ByteDance)
+- `CCBot` (Common Crawl)
+
+In addition to this list, [verified bots](https://radar.cloudflare.com/bots#verified-bots) that are classified as AI crawlers, as well as a number of unverified bots that behave similarly, are included in the rule. This rule does not include verified bots that fall into the `Search Engine` categories.
+
+These categories, and the bots classified in these categories, may change from time to time.
+
+If you are a bot operator and feel your bot may have been incorrectly categorized, [add your bot to the list of verified bots](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots).
 
 ### How it works
 
@@ -51,9 +67,6 @@ This behavior remains the same if the setting for verified, definitely automated
 For self-serve non-Bot Management customers, all rules for verified, definitely automated, and likely bots run in the phase following the AI bots rule.
 
 ```mermaid
----
-title: Rule phases
----
 flowchart LR
 accTitle: AI bots rule phases diagram
 accDescr: This diagram details the phases in which AI bots rules run.

@@ -4,18 +4,19 @@
 
 ## Local development
 
-During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/development-testing/#remote-bindings).
+**Local simulations**: During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
-You can configure [**remote bindings** during local development](/workers/development-testing/#remote-bindings), allowing your bindings to connect to a deployed resource on a per-binding basis.
+**Remote binding connections:**: Allows you to connect to remote resources on a [per-binding basis](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 | Binding                                 | Local simulations | Remote binding connections |
 | --------------------------------------- | :---------------: | :------------------------: |
 | **AI**                                  |        ❌         |             ✅             |
 | **Assets**                              |        ✅         |             ❌             |
 | **Analytics Engine**                    |        ✅         |             ❌             |
-| **Browser Rendering**                   |        ❌         |             ✅             |
+| **Browser Rendering**                   |        ✅         |             ✅             |
 | **D1**                                  |        ✅         |             ✅             |
-| **Durable Objects**                     |        ✅         |             ❌             |
+| **Durable Objects**                     |        ✅         |             ❌ [^1]            |
+| **Containers**                          |        ✅         |             ❌             |
 | **Email Bindings**                      |        ✅         |             ✅             |
 | **Hyperdrive**                          |        ✅         |             ❌             |
 | **Images**                              |        ✅         |             ✅             |
@@ -26,11 +27,9 @@ You can configure [**remote bindings** during local development](/workers/develo
 | **Rate Limiting**                       |        ✅         |             ❌             |
 | **Service Bindings (multiple Workers)** |        ✅         |             ✅             |
 | **Vectorize**                           |        ❌         |             ✅             |
-| **Workflows**                           |        ✅         |             ✅             |
+| **Workflows**                           |        ✅         |             ❌             |
 
-- **Local simulations:** Bindings connect to local resource simulations. Supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
-
-- **Remote binding connections:** Bindings connect to remote resources via `experimental_remote: true` configuration. Supported in [`wrangler dev --x-remote-bindings`](/workers/development-testing/#using-wrangler-with-remote-bindings) and the [Cloudflare Vite plugin](/workers/development-testing/#using-vite-with-remote-bindings).
+[^1]: Refer to [Using remote resources with Durable Objects and Workflows](/workers/development-testing/#using-remote-resources-with-durable-objects-and-workflows) for recommended workarounds.
 
 ## Remote development
 
@@ -46,6 +45,7 @@ Supported only in [`wrangler dev --remote`](/workers/wrangler/commands/#dev) - t
 | **Browser Rendering**                   |         ✅         |
 | **D1**                                  |         ✅         |
 | **Durable Objects**                     |         ✅         |
+| **Containers**                          |         ❌         |
 | **Email Bindings**                      |         ✅         |
 | **Hyperdrive**                          |         ✅         |
 | **Images**                              |         ✅         |
@@ -57,5 +57,3 @@ Supported only in [`wrangler dev --remote`](/workers/wrangler/commands/#dev) - t
 | **Service Bindings (multiple Workers)** |         ✅         |
 | **Vectorize**                           |         ✅         |
 | **Workflows**                           |         ❌         |
-
----

@@ -27,6 +27,24 @@ jobs:
             node_modules/.astro/assets
           key: static
 
+      - run: |
+          FILES=$(
+            find src/content \
+              -type f \
+              -not -name '*.mdx' \
+              -not -name '*.md' \
+              -not -name '*.json' \
+              -not -name '*.yml' \
+              -not -name '*.yaml' \
+              -not -name '*.txt' \
+              -not -wholename 'src/content/collections/*'
+          )
+
+          if [ -n "$FILES" ]; then
+            echo "Found files with invalid file extensions:\n\n$FILES"
+            exit 1
+          fi
+
       - run: npm ci
 
       - run: npx tsx bin/post-codeowners-comment/index.ts
@@ -48,7 +66,6 @@ jobs:
       - run: npm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_OPTIONS: "--max-old-space-size=4192"
           RUN_LINK_CHECK: true
 
       - run: npm run check:worker

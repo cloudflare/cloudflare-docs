@@ -1,10 +1,9 @@
 ---
 pcx_content_type: concept
 title: Queueing method
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The **queueing method** determines the order that visitors exit an active waiting room and reach your application.
 
@@ -12,9 +11,7 @@ Only certain customers can use queue methods besides First In First Out (FIFO). 
 
 :::note[Note:]
 
-
 Regardless of the queueing method, if `queueAll` is enabled or an event is prequeueing, users in the waiting room will not be accepted to the origin. These users will always get a waiting room page that refreshes automatically.
-
 
 :::
 
@@ -52,4 +49,4 @@ Use this setup for event-only endpoints or to perform application maintenance.
 
 ## Change queueing methods
 
-<Render file="change-queueing-method" />
+<Render file="change-queueing-method" product="waiting-room" />

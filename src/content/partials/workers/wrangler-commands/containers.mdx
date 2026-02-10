@@ -14,22 +14,13 @@ wrangler containers build [PATH] [OPTIONS]
 
 - `PATH` <Type text="string" /> <MetaInfo text="optional" />
   - Path for the directory containing the Dockerfile to build.
-
-#### Options:
-
 - `-t, --tag` <Type text="string" /> <MetaInfo text="required" />
   - Name and optionally a tag (format: "name:tag").
 - `--path-to-docker` <Type text="string" /> <MetaInfo text="optional" />
-  - Path to your docker binary if it's not on $PATH.
+  - Path to your docker binary if it's not on `$PATH`.
   - Default: "docker"
 - `-p, --push` <Type text="boolean" /> <MetaInfo text="optional" />
   - Push the built image to Cloudflare's managed registry.
-  - Default: false
-- `--platform` <Type text="string" /> <MetaInfo text="optional" />
-  - Platform to build for. Defaults to the architecture supported by Workers (linux/amd64).
-  - Default: "linux/amd64"
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Return output as clean JSON.
   - Default: false
 
 <AnchorHeading title="`delete`" slug="containers-delete" depth={3} />
@@ -42,10 +33,6 @@ wrangler containers delete <CONTAINER_ID> [OPTIONS]
 
 - `CONTAINER_ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the Container to delete.
-- `-y, --skip-confirmation` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip deletion confirmation prompt.
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Return output as JSON rather than a table.
 
 <AnchorHeading title="`images`" slug="containers-images" depth={3} />
 
@@ -58,8 +45,6 @@ List images in your containers registry.
 ```txt
 wrangler containers images list [OPTIONS]
 ```
-
-#### Options:
 
 - `--filter` <Type text="string" /> <MetaInfo text="optional" />
   - Regex to filter results.
@@ -80,13 +65,68 @@ wrangler containers images delete [IMAGE] [OPTIONS]
 ```
 
 - `IMAGE` <Type text="string" /> <MetaInfo text="required" />
-  - Image to delete.
+  - Image to delete of the form `IMAGE:TAG`
 
-#### Options:
+<AnchorHeading title="`registries`" slug="containers-registries" depth={3} />
+
+Configure and view registries available to your container.
+[Read more](/containers/platform-details/image-management/#using-amazon-ecr-container-images) about our currently supported external registries.
+
+<AnchorHeading
+	title="`registries list`"
+	slug="containers-registries-list"
+	depth={4}
+/>
+
+List registries your containers are able to use.
+
+```txt
+wrangler containers registries list [OPTIONS]
+```
 
 - `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as clean JSON.
   - Default: false
+
+<AnchorHeading
+	title="`registries configure`"
+	slug="containers-registries-configure"
+	depth={4}
+/>
+
+Configure a new registry for your account.
+
+```txt
+wrangler containers registries configure [DOMAIN] [OPTIONS]
+```
+
+- `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
+  - domain to configre for the registry
+- `--public-credential` <Type text="string" /> <MetaInfo text="required" />
+  - The public part of the registry credentials, e.g. `AWS_ACCESS_KEY_ID` for ECR
+- `--secret-store-id` <Type text="string" /> <MetaInfo text="optional" />
+  - The ID of the secret store to use to store the registry credentials
+- `--secret-name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name Wrangler should store the registry credentials under
+
+When run interactively, wrangler will prompt you for your secret and store it in Secrets Store.
+To run non-interactively, you can send your secret value to wrangler through stdin to have
+the secret created for you.
+
+<AnchorHeading
+	title="`registries delete`"
+	slug="containers-registries-delete"
+	depth={4}
+/>
+
+Remove a registry configuration from your account.
+
+```txt
+wrangler containers registries delete [DOMAIN] [OPTIONS]
+```
+
+- `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
+  - domain of the registry to delete
 
 <AnchorHeading title="`info`" slug="containers-info" depth={3} />
 
@@ -98,8 +138,6 @@ wrangler containers info <CONTAINER_ID> [OPTIONS]
 
 - `CONTAINER_ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the Container to get information about.
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Return output as JSON rather than a table.
 
 <AnchorHeading title="`list`" slug="containers-list" depth={3} />
 
@@ -108,9 +146,6 @@ List the Containers in your account.
 ```txt
 wrangler containers list [OPTIONS]
 ```
-
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Return output as JSON rather than a table.
 
 <AnchorHeading title="`push`" slug="containers-push" depth={3} />
 
@@ -122,12 +157,6 @@ wrangler containers push [TAG] [OPTIONS]
 
 - `TAG` <Type text="string" /> <MetaInfo text="required" />
   - The name and tag of the container image to push.
-
-#### Options:
-
 - `--path-to-docker` <Type text="string" /> <MetaInfo text="optional" />
-  - Path to your docker binary if it's not on $PATH.
+  - Path to your docker binary if it's not on `$PATH`.
   - Default: "docker"
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Return output as clean JSON.
-  - Default: false

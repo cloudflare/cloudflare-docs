@@ -3,10 +3,9 @@ title: Manage subscriptions
 pcx_content_type: how-to
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Once your customer has a zone provisioned, you can add zone and account-level subscriptions.
 
@@ -14,7 +13,7 @@ Once your customer has a zone provisioned, you can add zone and account-level su
 
 ### Create zone subscription
 
-<Render file="create-zone-subscription" />
+<Render file="create-zone-subscription" product="tenant" />
 
 ### Get zone subscription details
 
@@ -22,9 +21,9 @@ To get the details of a zone subscription, send a [`GET`](/api/resources/zones/s
 
 ### Update zone subscription
 
-To update a subscription on a zone, typically used to update an existing subscription's 'component\_values' or to downgrade a zone's subscription, send a [`PUT`](/api/resources/zones/subresources/subscriptions/methods/update/) request to the `/zones/<ZONE_ID>/subscription` endpoint.
+To update a subscription on a zone, typically used to update an existing subscription's 'component_values' or to downgrade a zone's subscription, send a [`PUT`](/api/resources/zones/subresources/subscriptions/methods/update/) request to the `/zones/<ZONE_ID>/subscription` endpoint.
 
-***
+---
 
 ## Account subscriptions
 
@@ -32,7 +31,7 @@ Depending on your agreement, you may be allowed to resell other add-on services.
 
 ### Create account subscription
 
-<Render file="create-account-subscription" />
+<Render file="create-account-subscription" product="tenant" />
 
 ### Get account subscription details
 

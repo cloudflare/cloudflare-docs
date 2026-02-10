@@ -1,11 +1,11 @@
 ---
-type: example
 summary: Implement a Time To Live (TTL) for Durable Object instances.
 pcx_content_type: example
 title: Durable Object Time To Live
 sidebar:
   order: 4
 description: Use the Durable Objects Alarms API to implement a Time To Live (TTL) for Durable Object instances.
+reviewed: 2025-01-21
 ---
 
 import { TabItem, Tabs, GlossaryTooltip, WranglerConfig } from "~/components";
@@ -46,8 +46,7 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
   async fetch(request, env) {
-    const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-        const stub = env.MY_DURABLE_OBJECT.get(id)
+    const stub = env.MY_DURABLE_OBJECT.getByName("foo");
     return await stub.fetch(request);
   },
 };
@@ -85,11 +84,39 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
   async fetch(request, env) {
-    const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-        const stub = env.MY_DURABLE_OBJECT.get(id)
+    const stub = env.MY_DURABLE_OBJECT.getByName("foo");
     return await stub.fetch(request);
   },
 } satisfies ExportedHandler<Env>;
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from workers import DurableObject, Response, WorkerEntrypoint
+import time
+
+# Durable Object
+class MyDurableObject(DurableObject):
+	# Time To Live (TTL) in milliseconds
+	timeToLiveMs = 1000
+
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+
+	async def fetch(self, _request):
+		# Extend the TTL immediately following every fetch request to a Durable Object.
+		await self.ctx.storage.setAlarm(int(time.time() * 1000) + self.timeToLiveMs)
+		...
+
+	async def alarm(self):
+		await self.ctx.storage.deleteAll()
+
+# Worker
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		stub = self.env.MY_DURABLE_OBJECT.getByName("foo")
+		return await stub.fetch(request)
 ```
 
 </TabItem> </Tabs>
@@ -98,17 +125,28 @@ To test and deploy this example, configure your Wrangler file to include a Durab
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "durable-object-ttl"
-main = "src/index.ts"
-
-[[durable_objects.bindings]]
-name = "MY_DURABLE_OBJECT"
-class_name = "MyDurableObject"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyDurableObject"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "durable-object-ttl",
+	"main": "src/index.ts",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DURABLE_OBJECT",
+				"class_name": "MyDurableObject"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"MyDurableObject"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

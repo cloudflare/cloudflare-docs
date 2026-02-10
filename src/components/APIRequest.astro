@@ -20,10 +20,13 @@ const props = z
 		json: z.union([Record, z.array(Record)]).optional(),
 		form: Record.optional(),
 		code: z.custom<Omit<ComponentProps<typeof Code>, "title">>().optional(),
+		roles: z.union([z.boolean(), z.string()]).default(true),
 	})
 	.strict();
 
-let { path, method, parameters, json, form, code } = props.parse(Astro.props);
+let { path, method, parameters, json, form, code, roles } = props.parse(
+	Astro.props,
+);
 
 if (json && form) {
 	throw new Error(`[APIRequest] Cannot use both "json" and "form" properties.`);
@@ -146,11 +149,17 @@ if (jsonSchema?.required) {
 	}
 }
 
-const tokenGroups = operation["x-api-token-group"];
+let tokenGroups = operation["x-api-token-group"];
+
+if (typeof roles === "string") {
+	tokenGroups = tokenGroups?.filter((group) =>
+		group.toLowerCase().includes(roles.toLowerCase()),
+	);
+}
 ---
 
 {
-	tokenGroups && (
+	tokenGroups && roles && (
 		<Details header="Required API token permissions">
 			<span>
 				At least one of the following{" "}

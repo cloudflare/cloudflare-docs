@@ -6,11 +6,13 @@ sidebar:
   badge: Beta
 ---
 
-import { GlossaryTooltip, Details, GitHubCode, APIRequest, Tabs, TabItem, TypeScriptExample } from "~/components"
+import { GlossaryTooltip, Details, GitHubCode, APIRequest, Tabs, TabItem, TypeScriptExample, DashButton } from "~/components"
 
 D1 read replication can lower latency for read queries and scale read throughput by adding read-only database copies, called read replicas, across regions globally closer to clients.
 
-Your application can use read replicas with D1 [Sessions API](/d1/worker-api/d1-database/#withsession). A session encapsulates all the queries from one logical session for your application. For example, a session may correspond to all queries coming from a particular web browser session. All queries within a session read from a database instance which is as up-to-date as your query needs it to be. Sessions API ensures [sequential consistency](/d1/best-practices/read-replication/#replica-lag-and-consistency-model) for all queries in a session.
+To use read replication, you must use the [D1 Sessions API](/d1/worker-api/d1-database/#withsession), otherwise all queries will continue to be executed only by the primary database.
+
+A session encapsulates all the queries from one logical session for your application. For example, a session may correspond to all queries coming from a particular web browser session. All queries within a session read from a database instance which is as up-to-date as your query needs it to be. Sessions API ensures [sequential consistency](/d1/best-practices/read-replication/#replica-lag-and-consistency-model) for all queries in a session.
 
 To checkout D1 read replication, deploy the following Worker code using Sessions API, which will prompt you to create a D1 database and enable read replication on said database.
 
@@ -69,7 +71,9 @@ D1 read replication achieves this by attaching a <GlossaryTooltip term="bookmark
 
 Read replication can be enabled at the database level in the Cloudflare dashboard. Check **Settings** for your D1 database to view if read replication is enabled.
 
-1. Go to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1).
+1. In the Cloudflare dashboard, go to the **D1** page.
+
+   <DashButton url="/?to=/:account/workers/d1" />
 2. Select an existing database > **Settings** > **Enable Read Replication**.
 
 ### Start a session without constraints
@@ -408,7 +412,10 @@ To see the impact of read replication and check the how D1 requests are processe
 - The `meta` object within the [`D1Result`](/d1/worker-api/return-object/#d1result) return object, which includes new fields:
   - `served_by_region`
   - `served_by_primary`
-- The [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/d1), where you can view your database metrics breakdown by region that processed D1 requests.
+- The Cloudflare dashboard, where you can view your database metrics breakdown by region that processed D1 requests.
+
+## Pricing
+D1 read replication is built into D1, so you don’t pay extra storage or compute costs for read replicas. You incur the exact same D1 [usage billing](/d1/platform/pricing/#billing-metrics) with or without replicas, based on `rows_read` and `rows_written` by your queries.
 
 ## Known limitations
 

@@ -8,7 +8,7 @@ head:
     content: Get Started — Regional Services
 ---
 
-import { Details } from "~/components";
+import { Details, APIRequest, DashButton, Render } from "~/components";
 
 :::note
 
@@ -22,10 +22,12 @@ You can use Regional Services through the dashboard or via API.
 
 To use Regional Services, you need to first create a DNS record in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account and domain.
-2. Go to the **DNS** tab.
-3. Follow these steps to [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
-4. From the **Region** dropdown, select the region you would like to use on your domain. This value will be applied to all DNS records on the same hostname. This means that if you have two DNS records of the same hostname and change the region for one of them, both records will have the same region.
+1. In the Cloudflare dashboard, go to the **Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Follow these steps to [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
+3. From the **Region** dropdown, select the region you would like to use on your domain. This value will be applied to all DNS records on the same hostname. This means that if you have two DNS records of the same hostname and change the region for one of them, both records will have the same region.
 
 :::note
 
@@ -45,26 +47,26 @@ These are some examples of API requests.
 
 <Details header="List all the available regions">
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/regional_hostnames/regions" \
---header "Authorization: Bearer <API_TOKEN>" | jq .
-```
+<APIRequest
+	path="/accounts/{account_id}/addressing/regional_hostnames/regions"
+	method="GET"
+/>
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": [
-  {
-   "key": "ca",
-   "label": "Canada"
-  },
-  {
-   "key": "eu",
-   "label": "Europe"
-  }
- ],
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": [
+		{
+			"key": "ca",
+			"label": "Canada"
+		},
+		{
+			"key": "eu",
+			"label": "Europe"
+		}
+	],
+	"messages": []
 }
 ```
 
@@ -72,23 +74,25 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/regi
 
 <Details header="Create a new regional hostname entry">
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{"hostname": "ca.regional.ipam.rocks", "region_key": "ca"}' | jq .
-```
+<APIRequest
+	path="/zones/{zone_id}/addressing/regional_hostnames"
+	method="POST"
+	json={{
+		hostname: "ca.regional.ipam.rocks",
+		region_key: "ca",
+	}}
+/>
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": {
-  "hostname": "ca.regional.ipam.rocks",
-  "region_key": "ca",
-  "created_on": "2023-01-13T23:59:45.276558Z"
- },
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": {
+		"hostname": "ca.regional.ipam.rocks",
+		"region_key": "ca",
+		"created_on": "2023-01-13T23:59:45.276558Z"
+	},
+	"messages": []
 }
 ```
 
@@ -96,23 +100,23 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_h
 
 <Details header="List all regional hostnames for a zone or get a specific one">
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames" \
---header "Authorization: Bearer <API_TOKEN>" | jq .
-```
+<APIRequest
+	path="/zones/{zone_id}/addressing/regional_hostnames"
+	method="GET"
+/>
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": [
-  {
-   "hostname": "ca.regional.ipam.rocks",
-   "region_key": "ca",
-   "created_on": "2023-01-14T00:47:57.060267Z"
-  }
- ],
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": [
+		{
+			"hostname": "ca.regional.ipam.rocks",
+			"region_key": "ca",
+			"created_on": "2023-01-14T00:47:57.060267Z"
+		}
+	],
+	"messages": []
 }
 ```
 
@@ -120,21 +124,21 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_h
 
 <Details header="List all regional hostnames for a specific zone">
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
---header "Authorization: Bearer <API_TOKEN>" | jq .
-```
+<APIRequest
+	path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
+	method="GET"
+/>
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": {
-  "hostname": "ca.regional.ipam.rocks",
-  "region_key": "ca",
-  "created_on": "2023-01-13T23:59:45.276558Z"
- },
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": {
+		"hostname": "ca.regional.ipam.rocks",
+		"region_key": "ca",
+		"created_on": "2023-01-13T23:59:45.276558Z"
+	},
+	"messages": []
 }
 ```
 
@@ -142,24 +146,24 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_h
 
 <Details header="Patch the region for a specific hostname">
 
-```bash title="Request"
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{"region_key": "eu"}' | jq .
-```
+<APIRequest
+	path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
+	method="PATCH"
+	json={{
+		region_key: "eu",
+	}}
+/>
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": {
-  "hostname": "ca.regional.ipam.rocks",
-  "region_key": "eu",
-  "created_on": "2023-01-13T23:59:45.276558Z"
- },
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": {
+		"hostname": "ca.regional.ipam.rocks",
+		"region_key": "eu",
+		"created_on": "2023-01-13T23:59:45.276558Z"
+	},
+	"messages": []
 }
 ```
 
@@ -167,22 +171,25 @@ curl --request PATCH \
 
 <Details header="Delete the region configuration">
 
-```bash title="Request"
-curl --request DELETE \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
---header "Authorization: Bearer <API_TOKEN>" | jq .
-```
+<APIRequest
+	path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
+	method="DELETE"
+/>
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": null,
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": null,
+	"messages": []
 }
 ```
 
 </Details>
+
+## Verify regional map for Zero Trust
+
+<Render file="verify-regional-map" product="data-localization" />
 
 ## Terraform support
 

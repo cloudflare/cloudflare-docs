@@ -8,15 +8,15 @@ sidebar:
 
 import { Render } from "~/components"
 
-In clientless access deployments, users connect to internal applications via public hostnames. You will need to own a domain, add it to Cloudflare, and configure Cloudflare as the [authoritative DNS provider](/dns/zone-setups/full-setup/setup/#update-your-nameservers) for that domain. Enterprise customers who cannot change their authoritative DNS provider have the option to configure a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
+In clientless access deployments, users connect to internal applications via public hostnames. You will need to own a domain, add it to Cloudflare, and configure Cloudflare as the [authoritative DNS provider](/dns/zone-setups/full-setup/setup/#update-your-nameservers) for that domain. Enterprise customers who cannot change their authoritative DNS provider have the option to configure a [CNAME setup](/dns/zone-setups/partial-setup/).
 
 You only need to add one domain to Cloudflare, since you can create an infinite number of subdomains to manage all of your private applications.
 
 ## Add a site to Cloudflare
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select **Add a site**.
-3. Enter your website’s apex domain (`example.com`).
+2. Select **Onboard a domain**.
+3. Enter your website's apex domain (`example.com`).
 4. Select a [plan](https://www.cloudflare.com/plans/#compare-features) for this website. Everything you need to do with the domain in Cloudflare Zero Trust is available on the **Free** plan.
 5. Select **Continue**. Cloudflare will scan your website for any configured DNS records.
 

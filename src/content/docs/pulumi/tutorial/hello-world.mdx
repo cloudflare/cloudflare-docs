@@ -1,11 +1,10 @@
 ---
 title: Deploy a Worker
 pcx_content_type: tutorial
-products:
-  - Workers
-updated: 2024-09-13
+products: [workers]
+reviewed: 2024-09-13
 difficulty: Beginner
-languages:
+tags:
   - JavaScript
   - TypeScript
   - Python
@@ -18,6 +17,8 @@ sidebar:
 head:
   - tag: title
     content: Deploy a Worker
+description: >-
+  In this tutorial, you will follow step-by-step instructions to deploy a Hello World application using Cloudflare Workers and Pulumi infrastructure as code (IaC).
 ---
 
 import { TabItem, Tabs } from "~/components";
@@ -31,7 +32,7 @@ You will provision resources that qualify under free tier offerings for both Pul
 ## Before you begin
 
 Ensure you have:
- 
+
 - A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://www.cloudflare.com/sign-up) before continuing. Your token must have the following:
   - `Account-Workers Scripts-Edit` permission
   - `Zone-Workers Route-Edit` permission
@@ -283,13 +284,13 @@ const content = `export default {
     const options = { headers: { 'content-type': 'text/plain' } };
     return new Response("Hello World!", options);
   },
-};`
+};`;
 
 const worker = new cloudflare.WorkersScript("hello-world-worker", {
 	accountId: accountId,
 	name: "hello-world-worker",
 	content: content,
-  module: true, // ES6 module
+	module: true, // ES6 module
 });
 ```
 
@@ -310,13 +311,13 @@ const content = `export default {
     const options = { headers: { 'content-type': 'text/plain' } };
     return new Response("Hello World!", options);
   },
-};`
+};`;
 
 const worker = new cloudflare.WorkersScript("hello-world-worker", {
-  accountId: accountId,
-  name: "hello-world-worker",
-  content: content,
-  module: true, // ES6 module
+	accountId: accountId,
+	name: "hello-world-worker",
+	content: content,
+	module: true, // ES6 module
 });
 ```
 
@@ -499,16 +500,16 @@ Add the following code snippet to your entrypoint file **after** the Worker scri
 
 ```javascript
 const zone = cloudflare.getZone({
-  accountId: accountId,
-  name: domain
+	accountId: accountId,
+	name: domain,
 });
 
-const zoneId = zone.then(z => z.zoneId);
+const zoneId = zone.then((z) => z.zoneId);
 
 const route = new cloudflare.WorkersRoute("hello-world-route", {
-  zoneId: zoneId,
-  pattern: "hello-world." + domain,
-  scriptName: worker.name,
+	zoneId: zoneId,
+	pattern: "hello-world." + domain,
+	scriptName: worker.name,
 });
 ```
 
@@ -518,16 +519,16 @@ const route = new cloudflare.WorkersRoute("hello-world-route", {
 
 ```typescript
 const zone = cloudflare.getZone({
-  accountId: accountId,
-  name: domain
+	accountId: accountId,
+	name: domain,
 });
 
-const zoneId = zone.then(z => z.zoneId);
+const zoneId = zone.then((z) => z.zoneId);
 
 const route = new cloudflare.WorkersRoute("hello-world-route", {
-  zoneId: zoneId,
-  pattern: "hello-world." + domain,
-  scriptName: worker.name,
+	zoneId: zoneId,
+	pattern: "hello-world." + domain,
+	scriptName: worker.name,
 });
 ```
 
@@ -622,12 +623,12 @@ variables:
 Below the `worker` resource, add the following code:
 
 ```yaml
-  route:
-    type: cloudflare:WorkersRoute
-    properties:
-      zoneId: ${zone.id}
-      pattern: "hello-world.${domain}"
-      scriptName: ${worker.name}
+route:
+  type: cloudflare:WorkersRoute
+  properties:
+    zoneId: ${zone.id}
+    pattern: "hello-world.${domain}"
+    scriptName: ${worker.name}
 ```
 
 </TabItem></Tabs>
@@ -644,14 +645,14 @@ Add the following code snippet to your entrypoint file **after** the Route resou
 
 ```javascript
 const record = new cloudflare.Record("hello-world-record", {
-  name: route.pattern,
-  type: "A",
-  content: "192.0.2.1",
-  zoneId: zoneId,
-  proxied: true
+	name: route.pattern,
+	type: "A",
+	content: "192.0.2.1",
+	zoneId: zoneId,
+	proxied: true,
 });
 
-exports.url = pulumi.interpolate`https://${record.hostname}`
+exports.url = pulumi.interpolate`https://${record.hostname}`;
 ```
 
 </TabItem>  <TabItem label="TypeScript" icon="seti:typescript">
@@ -660,11 +661,11 @@ exports.url = pulumi.interpolate`https://${record.hostname}`
 
 ```typescript
 const record = new cloudflare.Record("hello-world-record", {
-  name: route.pattern,
-  type: "A",
-  content: "192.0.2.1",
-  zoneId: zoneId,
-  proxied: true,
+	name: route.pattern,
+	type: "A",
+	content: "192.0.2.1",
+	zoneId: zoneId,
+	proxied: true,
 });
 
 export const url = pulumi.interpolate`https://${record.hostname}`;
@@ -793,38 +794,37 @@ const content = `export default {
     const options = { headers: { 'content-type': 'text/plain' } };
     return new Response("Hello World!", options);
   },
-};`
+};`;
 
 const worker = new cloudflare.WorkersScript("hello-world-worker", {
-  accountId: accountId,
-  name: "hello-world-worker",
-  content: content,
-  module: true, // ES6 module
+	accountId: accountId,
+	name: "hello-world-worker",
+	content: content,
+	module: true, // ES6 module
 });
 
 const zone = cloudflare.getZone({
-  accountId: accountId,
-  name: domain
+	accountId: accountId,
+	name: domain,
 });
 
-const zoneId = zone.then(z => z.zoneId);
+const zoneId = zone.then((z) => z.zoneId);
 
 const route = new cloudflare.WorkersRoute("hello-world-route", {
-  zoneId: zoneId,
-  pattern: "hello-world." + domain,
-  scriptName: worker.name,
+	zoneId: zoneId,
+	pattern: "hello-world." + domain,
+	scriptName: worker.name,
 });
 
 const record = new cloudflare.Record("hello-world-record", {
-  name: route.pattern,
-  type: "A",
-  content: "192.0.2.1",
-  zoneId: zoneId,
-  proxied: true
+	name: route.pattern,
+	type: "A",
+	content: "192.0.2.1",
+	zoneId: zoneId,
+	proxied: true,
 });
 
-exports.url = pulumi.interpolate`https://${record.hostname}`
-
+exports.url = pulumi.interpolate`https://${record.hostname}`;
 ```
 
 </TabItem>
@@ -845,38 +845,37 @@ const content = `export default {
     const options = { headers: { 'content-type': 'text/plain' } };
     return new Response("Hello World!", options);
   },
-};`
+};`;
 
 const worker = new cloudflare.WorkersScript("hello-world-worker", {
-  accountId: accountId,
-  name: "hello-world-worker",
-  content: content,
-  module: true, // ES6 module
+	accountId: accountId,
+	name: "hello-world-worker",
+	content: content,
+	module: true, // ES6 module
 });
 
 const zone = cloudflare.getZone({
-  accountId: accountId,
-  name: domain
+	accountId: accountId,
+	name: domain,
 });
 
-const zoneId = zone.then(z => z.zoneId);
+const zoneId = zone.then((z) => z.zoneId);
 
 const route = new cloudflare.WorkersRoute("hello-world-route", {
-  zoneId: zoneId,
-  pattern: "hello-world." + domain,
-  scriptName: worker.name,
+	zoneId: zoneId,
+	pattern: "hello-world." + domain,
+	scriptName: worker.name,
 });
 
 const record = new cloudflare.Record("hello-world-record", {
-  name: route.pattern,
-  type: "A",
-  content: "192.0.2.1",
-  zoneId: zoneId,
-  proxied: true,
+	name: route.pattern,
+	type: "A",
+	content: "192.0.2.1",
+	zoneId: zoneId,
+	proxied: true,
 });
 
 export const url = pulumi.interpolate`https://${record.hostname}`;
-
 ```
 
 </TabItem>

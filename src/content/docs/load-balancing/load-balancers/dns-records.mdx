@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: DNS records for load balancing
-
 ---
 
-When you [create a load balancer](/load-balancing/load-balancers/create-load-balancer/), Cloudflare automatically creates an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record. Private load balancers do not receive an automatic DNS record. Instead, you can configure a hostname using your internal DNS system or by applying a [Gateway Firewall override](/cloudflare-one/policies/gateway/dns-policies/#override) to a hostname.
+When you [create a load balancer](/load-balancing/load-balancers/create-load-balancer/), Cloudflare automatically creates an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record. Private load balancers do not receive an automatic DNS record. Instead, you can configure a hostname using your internal DNS system or by applying a [Gateway Firewall override](/cloudflare-one/traffic-policies/dns-policies/#override) to a hostname.
 
 ## Supported records
 
@@ -21,47 +20,41 @@ For customers on Enterprise plans, Cloudflare supports load balancing for `A`, `
 
 For hostnames with existing DNS records, the LB record takes precedence when it is more or equally specific:
 
-* **Scenario 1**:
+- **Scenario 1**:
+  - **A, AAAA, or CNAME**: `x.example.com`
+  - **LB record**: `x.example.com`
+  - **Outcome**: LB record takes precedence because it is as specific as the DNS record.
 
-  * **A, AAAA, or CNAME**: `x.example.com`
-  * **LB record**: `x.example.com`
-  * **Outcome**: LB record takes precedence because it is as specific as the DNS record.
+- **Scenario 2**:
+  - **A, AAAA, or CNAME**: `y.example.com`
+  - **LB record**: `*.example.com` (wildcard record)
+  - **Outcome**: DNS record takes precedence because it is more specific.
 
-* **Scenario 2**:
-
-  * **A, AAAA, or CNAME**: `y.example.com`
-  * **LB record**: `*.example.com` (wildcard record)
-  * **Outcome**: DNS record takes precedence because it is more specific.
-
-* **Scenario 3**:
-
-  * **A, AAAA, or CNAME**: `*.example.com`
-  * **LB record**: `*.example.com`
-  * **Outcome**: LB record takes precedence because it is as specific as the DNS record.
+- **Scenario 3**:
+  - **A, AAAA, or CNAME**: `*.example.com`
+  - **LB record**: `*.example.com`
+  - **Outcome**: LB record takes precedence because it is as specific as the DNS record.
 
 :::note
 
-
 This behavior only applies to [supported records](#supported-records) (determined by your plan type).
-
 
 :::
 
 If the DNS record points to a [SaaS provider](/cloudflare-for-platforms/cloudflare-for-saas/) and an active [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) exists, the custom hostname will take precedence over the Load Balancing record:
 
-* **Scenario 4**:
-
-  * **CNAME**: `x.example.com` with target to a Cloudflare for SaaS provider
-  * **LB record**: `x.example.com`
-  * **Active custom hostname on the SaaS provider side**: `x.example.com`
-  * **Outcome**: Custom hostname takes precedence.
+- **Scenario 4**:
+  - **CNAME**: `x.example.com` with target to a Cloudflare for SaaS provider
+  - **LB record**: `x.example.com`
+  - **Active custom hostname on the SaaS provider side**: `x.example.com`
+  - **Outcome**: Custom hostname takes precedence.
 
 ## Disabling a load balancer
 
 When you disable a load balancer, requests to a specific hostname depend on your existing DNS records:
 
-* If you have existing DNS records, these records will be served.
-* If there are no existing records, requests to the hostname will fail.
+- If you have existing DNS records, these records will be served.
+- If there are no existing records, requests to the hostname will fail.
 
 In both cases, disabling your load balancer prevents traffic from going to any associated endpoint or fallback pools.
 
