@@ -212,7 +212,7 @@ function Editor() {
 
 ## API reference
 
-### shouldConnectionBeReadonly
+### `shouldConnectionBeReadonly`
 
 An overridable hook that determines if a connection should be marked as readonly when it connects.
 
@@ -224,7 +224,7 @@ An overridable hook that determines if a connection should be marked as readonly
 
 Default: returns `false` (all connections are writable).
 
-### setConnectionReadonly
+### `setConnectionReadonly`
 
 Mark or unmark a connection as readonly. Can be called at any time.
 
@@ -233,7 +233,7 @@ Mark or unmark a connection as readonly. Can be called at any time.
 | `connection` | `Connection` | The connection to update                  |
 | `readonly`   | `boolean`    | `true` to make readonly (default: `true`) |
 
-### isConnectionReadonly
+### `isConnectionReadonly`
 
 Check if a connection is currently readonly.
 
@@ -242,7 +242,7 @@ Check if a connection is currently readonly.
 | `connection` | `Connection` | The connection to check |
 | **Returns**  | `boolean`    | `true` if readonly      |
 
-### onStateUpdateError (client)
+### `onStateUpdateError` (client)
 
 Callback on `AgentClient` and `useAgent` options. Called when the server rejects a state update.
 
