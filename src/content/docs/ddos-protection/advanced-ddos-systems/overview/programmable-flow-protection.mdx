@@ -11,7 +11,7 @@ head:
     content: Cloudflare Programmable Flow Protection (Beta)
 ---
 
-import { Steps } from "~/components";
+import { Steps, Tabs, TabItem } from "~/components";
 
 Programmable Flow Protection is a DDoS protection system that protects against DDoS attacks over custom or standardized Layer 7 UDP-based protocols, such as gaming protocols, financial services protocols, VoIP, telecom, and streaming. In terms of topology, it supports both asymmetric and symmetric configurations, but it will only inspect ingress traffic.
 
@@ -38,7 +38,7 @@ After Programmable Flow Protection has been enabled to your account:
   
    The program is validated by the system and deployed to your userspace in Cloudflare's servers across the world. The API compiles the program, then runs a verifier against the compiled program to enforce memory checks and verify program termination. If the program fails compilation or verification, the API will return a detailed error message.
   
-2. Create a [rule](#create-a-rule). 
+2. Create a [rule](#create-a-rule).
 
     A rule for Programmable Flow Protection must contain the following fields:
 
@@ -47,8 +47,8 @@ After Programmable Flow Protection has been enabled to your account:
         - `Scope` (one of: `global`, `regional`, `datacenter`)
         - `Mode` (one of: `enabled`, `monitoring`, `disabled`)
         - `Expression`
-        
-        The `Expression` field specifies what traffic a rule will apply to. If a rule’s expression is set to `true`, then that rule will apply to all traffic in an account. Alternatively, an expression can specify the following fields to match on:
+
+        The `Expression` field specifies what traffic a rule will apply to. If a rule's expression is set to `true`, then that rule will apply to all traffic in an account. Alternatively, an expression can specify the following fields to match on:
 
         - `ip.src`
         - `ip.dst`
@@ -58,12 +58,13 @@ After Programmable Flow Protection has been enabled to your account:
         The `Expression` field is similar to the `Filter` field, except the `Expression` field applies to all modes while a `Filter` field is specified for each mode.
 
         :::note
-        A rule for Programmable Flow Protection does not contain burst sensitivity, rate sensitivity, or profile sensitivity. 
-        ::: 
+        A rule for Programmable Flow Protection does not contain burst sensitivity, rate sensitivity, or profile sensitivity.
+        :::
 
-3. Observe the program's behavior in the [Network Analytics](/analytics/network-analytics/) dashboard.
+3. To observe the program's behavior, query the `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups` group in GraphQL.
 
-4. When you are ready, enable the mitigation mode.
+4. When you are ready, [update the existing rule](#update-a-rule) to set the mode value to `enabled`.
+
 </Steps>
 
 You can create additional rules with different [rule settings](/ddos-protection/advanced-ddos-systems/concepts/#rule-settings) [scoped](/ddos-protection/advanced-ddos-systems/concepts/#scope) to various regions and Cloudflare locations to change the [mode](/ddos-protection/advanced-ddos-systems/concepts/#mode) (Mitigation or Monitoring) to accommodate for your traffic patterns and business use cases.
@@ -73,9 +74,8 @@ You can create additional rules with different [rule settings](/ddos-protection/
 - The current program limit for deployment is restricted to one program per account.
 - The system supports the [Data Localization suite](/data-localization/).
 - Currently, it is only possible to control the system via the API.
-- To view data for Programmable Flow Protection, query the `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups` group in GraphQL.
 - For more information on beta services, refer to section 2.6 in the [Enterprise Terms of Service](https://www.cloudflare.com/enterpriseterms/).
-:::
+  :::
 
 ### Write a basic program
 
@@ -207,6 +207,7 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
    ```c
    return CF_EBPF_PASS;
    ```
+
 </Steps>
 
 ---
@@ -215,7 +216,7 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
 
 The example program below parses the UDP payload into a known custom application header and ensures that the last byte is considered valid.
 
-```c 
+```c
 #include <linux/ip.h>
 #include <linux/udp.h>
 #include <arpa/inet.h>
@@ -286,7 +287,7 @@ Once it has the correct offset, the program casts the UDP payload into the expec
 
 ## Helper functions
 
- helper function is a function provided by the Cloudflare runtime that a customer program calls.
+A helper function is a function provided by the Cloudflare runtime that a customer program calls.
 
 Helper functions are crucial because the BPF Instruction Set Architecture (ISA) only supports certain system calls. For safety purposes, Cloudflare will only compile a BPF object file with a predetermined list of known libraries that a program developer cannot modify.
 
@@ -296,10 +297,112 @@ Helper functions may be removed or changed. New helper functions may be introduc
 
 The table below provides a list of currently supported helper functions:
 
-| Function name       | Input parameters                                                                  | Output parameters | Description                                                                                                                                                                                                                                |
-| ------------------- | --------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `cf_ebpf_rand`      | None                                                                              | `uint64_t`        | Generates a random unsigned integer.                                                                                                                                                                                                       |
+| Function name       | Input parameters                                                               | Output parameters | Description                                                                                                                                                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cf_ebpf_rand`      | None                                                                           | `uint64_t`        | Generates a random unsigned integer.                                                                                                                                                                                                    |
 | `parse_packet_data` | `cf_ebpf_generic_ctx`<br />`cf_ebpf_packet_data`<br />`cf_ebpf_parsed_headers` | `int`             | Use input `cf_ebpf_generic_ctx` and `cf_ebpf_packet_data` to generate valid `cf_ebpf_parsed_headers`.<br />Upon success, `cf_ebpf_parsed_headers` will contain valid IP and UDP headers.<br />Returns `0` on success or `1` on failure. |
+
+---
+
+## Program API endpoints
+
+### Upload a program
+
+To upload a program, use the following API endpoint. The Cloudflare API will receive the source code in the `C` file, compile it into BPF bytecode, and run the verifier against it.
+
+If compilation or verification fails, the API will return a detailed error message.
+
+If compilation and verification succeeds, Cloudflare will store the source code and object file to the account and return the program ID.
+
+Be sure to use the `@` before specifying the path to the source code file. The `Authorization` header is populated by creating a Cloudflare API token of type `Account.DDoS Protection`.
+
+```bash title="Request"
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: text/x-csrc" \
+--data-binary "@<PATH_TO_SOURCE_CODE_FILE>"
+```
+
+<Tabs>
+<TabItem label="Example successful response">
+
+```json wrap output
+{
+	"result": {
+		"id": "ae6bdb2c-d269-4e4b-8e33-2d12d92c8930",
+		"account_id": 8835764,
+		"created_on": "2025-11-10T15:53:08.680909289Z",
+		"modified_on": "2025-11-10T15:53:08.680909339Z",
+		"state": "success"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+</TabItem>
+<TabItem label="Example unsuccessful response">
+
+```json wrap output
+{
+	"result": {
+		"id": "932e102f-7b3f-45ca-83f5-5ac36a5cd8eb",
+		"account_id": 8835764,
+		"created_on": "2025-11-10T15:55:26.465227278Z",
+		"modified_on": "2025-11-10T15:55:26.465227328Z",
+		"err_msg": "eBPF verification failed: 61: Upper bound must be at most packet_size (valid_access(r3.offset, width=1) for read)\n\n (error: exit status 1)",
+		"state": "failed_verifier"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+</TabItem>
+</Tabs>
+
+### Update a program
+
+During the development process, you may find it useful to update the same program (identified by the same program ID) instead of repeatedly creating new programs as new resources.
+
+For example, the above program (ID `932e102f-7b3f-45ca-83f5-5ac36a5cd8eb`) failed to pass the verifier, so you can edit it further and try using the same program ID with a `PATCH` operation to avoid polluting your set of programs with files that failed to compile or verify.
+
+```bash wrap title="Request"
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: text/x-csrc" \
+--data-binary "@<PATH_TO_SOURCE_CODE_FILE>"
+```
+
+### View all programs
+
+To view all uploaded programs and their program IDs and success status, use the following `GET` endpoint. Programs will be ordered alphanumerically by their resource IDs by default. To change the order of returned resources, use the supported pagination query parameters.
+
+```bash wrap title="Request"
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+### Delete a program
+
+To delete a stored program by its ID, use the following `DELETE` endpoint. If an active rule exists that references this program, the API will refuse to delete the program. The referencing rule must be deleted before deleting its program.
+
+```bash wrap title="Request"
+curl --request DELETE \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+To delete all stored programs for an account, use the following `DELETE` endpoint. If any active rule exists that references any program, the API will refuse to delete the programs. The referencing rules must be deleted before deleting its program.
+
+```bash wrap title="Request"
+curl --request DELETE \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
 
 ---
 
@@ -317,11 +420,22 @@ Your rule must define a:
 - `Mode` (one of: `enabled`, `monitoring`, `disabled`)
 - `Expression`
 
-Refer to the [Advanced DDoS Protection](/ddos-protection/advanced-ddos-systems/concepts/#scope) documentation for more information about scope and mode parameters.
+The `Expression` field specifies what traffic a rule will apply to. If a rule's expression is set to `true`, then that rule will apply to all traffic in an account. Alternatively, an expression can specify the following fields to match on:
 
-If it is successful, the API will return the created rule ID. 
+- `ip.src`
+- `ip.dst`
+- `udp.srcport`
+- `udp.dstport`
 
-```bash wrap
+```shell title="Example expression"
+"ip.src in { 1.2.3.4/24, 2.3.4.5/24 } and udp.dstport eq 42"
+```
+
+Refer to the [Advanced DDoS Protection](/ddos-protection/advanced-ddos-systems/concepts/#scope) documentation for more information about scope and mode parameters, and the [Ruleset Engine](/ruleset-engine/rules-language/expressions/) documentation for more information about expressions.
+
+If it is successful, the API will return the created rule ID.
+
+```bash wrap title="Request"
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
@@ -333,13 +447,13 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmabl
 }'
 ```
 
-Cloudflare recommends that any program is first executed with a rule in **Monitoring** mode. This ensures that your program executes on production traffic but does not drop any real traffic. Instead, Cloudflare will log your program's expected verdict (pass or drop) to the [Network Analytics](/analytics/network-analytics/) dashboard.
+Cloudflare recommends that any program is first executed with a rule in `monitoring` mode. This ensures that your program executes on production traffic but does not drop any real traffic. Instead, Cloudflare will log your program's expected verdict (pass or drop) to the [Network Analytics](/analytics/network-analytics/) dashboard.
 
 ### View all rules
 
 To view rules and their associated rule IDs, use the following `GET` endpoint.
 
-```bash wrap
+```bash wrap title="Request"
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
@@ -348,9 +462,9 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmabl
 
 To update an existing rule, use the following `PATCH` endpoint.
 
-You can modify the mode and scope of an existing rule. This example modifies an existing rule to make it run in disabled mode.
+You can modify the mode and scope of an existing rule. The example below modifies an existing rule to make it run in `disabled` mode.
 
-```bash wrap
+```bash wrap title="Request"
 curl --request PATCH \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules/$RULE_ID \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
@@ -366,7 +480,7 @@ To delete an existing rule, use the following `DELETE` endpoint.
 
 This does not delete the referenced program, but deletes the directive to execute the program.
 
-```bash wrap
+```bash wrap title="Request"
 curl --request DELETE \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules/$RULE_ID \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
@@ -374,15 +488,17 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flo
 
 To delete all rules for an account, use the following `DELETE` endpoint.
 
-This does not delete the referenced program(s), but deletes the directive to execute all referenced program(s).
+This does not delete the referenced programs, but deletes the directive to execute all referenced programs.
 
-```bash wrap
+```bash wrap title="Request"
 curl --request DELETE \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-### Debug Packet CAPture (PCAP)
+---
+
+## Debug Packet CAPture (PCAP)
 
 This API endpoint debugs a program by intaking:
 
@@ -393,9 +509,8 @@ This API endpoint debugs a program by intaking:
 
 This endpoint runs the referenced BPF program against the input PCAP and outputs a new annotated PCAP file. The output PCAP file will contain the exact same packets as the input PCAP file, and will also include the program verdict annotated in the **Packet Comment** section of each packet.
 
-```bash wrap
-curl --request POST \
-'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID/pcap?ip_offset=<IP_OFFSET_VALUE>' \
+```bash wrap title="Request"
+curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID/pcap?ip_offset=<IP_OFFSET_VALUE>' \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/vnd.tcpdump.pcap" \
 --data-binary "@<PATH_TO_INPUT_PCAP_FILE>" \
@@ -413,13 +528,13 @@ The Packet Comment annotation may contain:
 
 ## Safe program and rule deployment best practices
 
-You will want to safely deploy and test programs without impacting existing production traffic. An initial deployment approach could be to set a global scoped rule to **Disabled** or set a colo or region level scoped rule to **Monitoring** with a filter expression only acting on some subset of IP traffic.
+You will want to safely deploy and test programs without impacting existing production traffic. An initial deployment approach could be to set a global scoped rule to `disabled` or set a colo or region level scoped rule to `monitoring` with a filter expression only acting on some subset of IP traffic.
 
-Each Cloudflare region or colo will apply the most granular rule. So, the colos or regions specified in the monitoring rule will execute the developer program in **Monitoring** mode, while every other Cloudflare location will not execute the program at all. The **Monitoring** rule would only work on traffic that matches the filter expression.
+Each Cloudflare region or colo will apply the most granular rule. So, the colos or regions specified in the `monitoring` rule will execute the developer program in `monitoring` mode, while every other Cloudflare location will not execute the program at all. The `monitoring` rule would only work on traffic that matches the filter expression.
 
-Then, after verifying the correct behavior with Network Analytics, you can update and expand the monitoring rule's scope and filter expression. Eventually, you can delete the **Disabled** and **Monitoring** rules and apply a global **Enabled** rule.
+Then, after verifying the correct behavior with Network Analytics, you can update and expand the `monitoring` rule's scope and filter expression. Eventually, you can delete the `disabled` and `monitoring` rules and apply a global `enabled` rule.
 
-Using the `Expression` field to limit programs to a subset of IPs or prefixes and the `Mode` field to dictate whether a program actually drops packets ensures a program’s safety and granularity upon rollout.
+Using the `Expression` field to limit programs to a subset of IPs or prefixes and the `Mode` field to dictate whether a program actually drops packets ensures a program's safety and granularity upon rollout.
 
 ---
 
@@ -431,17 +546,20 @@ You can use the Cloudflare [GraphQL](/analytics/graphql-api/) API to granularly 
 
 For example, the curl command below executes a query that shows the total sum of bits and packets that went through Programmable Flow Protection in a time frame.
 
-`{TOKEN}` and `{ACCOUNT_TAG}` must be changed to correlate to the user's account.
+`$CLOUDFLARE_API_TOKEN` and `<ACCOUNT_TAG>` must be changed to correlate to the user's account.
 
-Cloudflare recommends using a [client](/analytics/graphql-api/getting-started/explore-graphql-schema/) like GraphQL to explore all the dimensions and fields available for querying in `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups.`
+Cloudflare recommends using a [client](/analytics/graphql-api/getting-started/explore-graphql-schema/) like GraphQL to explore all the dimensions and fields available for querying in `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups`.
 
-```shell wrap
+```bash wrap title="Request"
 echo '{ "query":
   "query PFPActivity {
     viewer {
-      accounts(filter: { accountTag: $accountTag }) {
+      accounts(filter: { accountTag: \"<ACCOUNT_TAG>\" }) {
         programmableFlowProtectionNetworkAnalyticsAdaptiveGroups(
-          filter: $filter
+          filter: {
+            datetime_geq: \"2025-12-03T11:00:00Z\"
+            datetime_leq: \"2025-12-04T11:10:00Z\"
+          }
           limit: 10
         ) {
           sum {
@@ -451,41 +569,34 @@ echo '{ "query":
         }
       }
     }
-  }",
-  "variables": {
-    "accountTag": "{ACCOUNT_TAG}",
-    "filter": {
-      "datetime_geq": "2025-12-03T11:00:00Z",
-      "datetime_leq": "2025-12-04T11:10:00Z"
-    }
-  }
+  }"
 }' | tr -d '\n' | curl --silent \
 https://api.cloudflare.com/client/v4/graphql \
---header "Authorization: Bearer {TOKEN}" \
---header "Accept: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
---data @- | jq .
+--data @-
+```
 
+```json wrap output title="Example response"
 {
-  "data": {
-    "viewer": {
-      "accounts": [
-        {
-          "programmableFlowProtectionNetworkAnalyticsAdaptiveGroups": [
-            {
-              "sum": {
-                "bits": 16680384000,
-                "packets": 23020000
-                }
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "errors": null
+	"data": {
+		"viewer": {
+			"accounts": [
+				{
+					"programmableFlowProtectionNetworkAnalyticsAdaptiveGroups": [
+						{
+							"sum": {
+								"bits": 16680384000,
+								"packets": 23020000
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"errors": null
 }
-
 ```
 
 ---
