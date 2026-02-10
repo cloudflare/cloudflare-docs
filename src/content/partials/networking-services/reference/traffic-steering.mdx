@@ -16,6 +16,7 @@ params:
   - setupBgpPeering
   - legacyHCs
   - tunnelHCsPage
+  - sourceIPsURL?
 ---
 
 import { AnchorHeading, Aside, Markdown, Render } from "~/components";
@@ -238,7 +239,7 @@ For Cloudflare One customers, there are several reasons to consider moving to Un
 
 - [Automatic Return Routing](#automatic-return-routing-beta)
 - [BGP over IPsec/GRE](#release-status)
-- [Cloudflare Source IPs](/magic-wan/configuration/manually/how-to/configure-cloudflare-source-ips/) using private IP space with customizable IPv4 range
+- [Cloudflare Source IPs](${props.sourceIPsURL}) using private IP space with customizable IPv4 range
 - Customizable Cloudflare One Client IPv4 ranges
 - IPv6 support
 - Improved performance between Cloudflare One Client and IPsec/GRE/CNI
