@@ -242,24 +242,24 @@ For Cloudflare One customers, there are several reasons to consider moving to Un
 - Customizable Cloudflare One Client IPv4 ranges
 - IPv6 support
 - Improved performance between Cloudflare One Client and IPsec/GRE/CNI
-- Support for Cloudflare Mesh client and IPsec/GRE/CNI connectivity
+- Support for WARP Connector client and IPsec/GRE/CNI connectivity in the same account.
 		`}
 		inline={false}
 		/>
 	</>
 )}
 
-### Current limitations
+### Beta limitations
 
 The following limitations apply to accounts using Unified Routing mode. This list will get shorter as Cloudflare adds support for additional features.
 
-| Limitation | Details |
+| Current Beta Limitation | Details |
 | --- | --- |
 | Performance | Typically around 150 Mbps for each onramp |
 | Network analytics | Not yet fully supported |
-| Basic packet captures | Do not include Automatic Return Routing or BGP-over-tunnels traffic |
+| Basic packet captures | Captures exclude Automatic Return Routing or BGP-over-tunnels traffic |
 | Full packet captures | Not yet supported |
-| Advanced Magic Firewall features | GeoIP/Country rules, IP Lists, ASN Lists, Threat Intel Lists, IDS, Rate Limiting, SIP, Managed Rulesets |
+| Advanced Magic Firewall features: GeoIP/Country rules, IP Lists, ASN Lists, Threat Intel Lists, IDS, Rate Limiting, SIP, Managed Rulesets | Not yet supported |
 | Gateway filtering rules | Not supported on traffic where both the onramp and offramp is IPsec/GRE/CNI |
 | Load Balancer | Not supported to IPsec/GRE/CNI destinations |
 
