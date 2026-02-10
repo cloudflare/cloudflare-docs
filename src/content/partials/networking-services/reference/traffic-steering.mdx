@@ -253,7 +253,7 @@ For Cloudflare One customers, there are several reasons to consider moving to Un
 
 The following limitations apply to accounts using Unified Routing mode. This list will get shorter as Cloudflare adds support for additional features.
 
-| Current Beta Limitation | Details |
+| Current Beta limitations | Details |
 | --- | --- |
 | Performance | Typically around 150 Mbps for each onramp |
 | Network analytics | Not yet fully supported |
@@ -326,7 +326,7 @@ Configure scoping for your traffic in the **Region code** section when adding or
     inline={false}
   />
 
-		<AnchorHeading title="Map routes prefixes bigger than onboarded prefixes" depth={3} />
+		<AnchorHeading title="Map route prefixes bigger than onboarded prefixes" depth={3} />
 		<Markdown
     text={`
 		If you have multiple onboarded \`/24\` subnets that belong to a larger contiguous block, you can configure a summary static route for the corresponding supernet (like a \`/23\` or a \`/22\`) instead of adding each \`/24\` individually. This eliminates the need to configure each \`/24\` route, as all traffic will be routed through the same GRE tunnels.
@@ -450,7 +450,7 @@ Because ECMP is probabilistic, the algorithm routes roughly the same number of f
 
 For example, consider a scenario with many very low-bandwidth TCP connections and one very high-bandwidth TCP connection. Packets for the high-bandwidth connection have the same hash and thus use the same tunnel. As a result, that tunnel utilizes greater bandwidth than the others.
 
-:::note[Note]
+:::note
 {props.productName} supports a weight field that you can apply to a route so that a specified percentage of traffic uses a certain tunnel rather than other equal-cost tunnels. Refer to [Route prioritization](#route-prioritization) for more information.
 
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
