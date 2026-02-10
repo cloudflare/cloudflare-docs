@@ -5,7 +5,7 @@ head: []
 description: Incrementally deploy code changes to your Workers with gradual deployments.
 ---
 
-import { Example, DashButton } from "~/components";
+import { Example, DashButton, TypeScriptExample } from "~/components";
 
 Gradual Deployments give you the ability to incrementally deploy new [versions](/workers/configuration/versions-and-deployments/#versions) of Workers by splitting traffic across versions.
 
@@ -150,6 +150,376 @@ Selected operation under **Modify request header**: _Set dynamic_
 **Value**: `regex_replace(http.request.uri.path, "/asset/(.*)", "${1}")`
 
 </Example>
+
+## Cohort-based deployments
+
+Cohort-based deployments extend gradual deployments by allowing you to route requests to different version configurations based on named user segments. Instead of applying the same percentage split to all traffic, you can define independent version percentages for each cohort.
+
+Use cohort-based deployments to:
+
+- Test changes with internal users or beta testers before external customers.
+- Roll out to free-tier customers before enterprise customers to limit blast radius.
+- Hold back specific user segments during incident response.
+
+### How cohort-based deployments work
+
+A cohort-based deployment includes:
+
+- A default `versions` array that applies to requests without a matching cohort.
+- A `cohorts` array where each cohort has its own name and version configuration.
+
+When a request arrives, the system checks the `Cloudflare-Workers-Cohort` header. If the header value matches a defined cohort name, that cohort's version configuration is used. Otherwise, the default `versions` array applies.
+
+### Deployment configuration
+
+Create a cohort-based deployment using the API. The following example shows a deployment where the default configuration sends 100% of traffic to one version, while the `canary` cohort splits traffic 50/50 between two versions:
+
+```json
+{
+	"strategy": "percentage",
+	"versions": [
+		{
+			"version_id": "abc123-stable-version",
+			"percentage": 100
+		}
+	],
+	"cohorts": [
+		{
+			"name": "canary",
+			"versions": [
+				{
+					"version_id": "abc123-stable-version",
+					"percentage": 50
+				},
+				{
+					"version_id": "def456-new-version",
+					"percentage": 50
+				}
+			]
+		},
+		{
+			"name": "enterprise",
+			"versions": [
+				{
+					"version_id": "abc123-stable-version",
+					"percentage": 100
+				}
+			]
+		}
+	]
+}
+```
+
+#### Cohort naming rules
+
+Cohort names must follow these rules:
+
+- Alphanumeric characters, hyphens (`-`), and underscores (`_`) only.
+- Maximum 20 characters.
+- Case-insensitive matching (for example, `CANARY` and `canary` route to the same cohort).
+- Each cohort name must be unique within a deployment.
+
+Invalid cohort names or duplicate names cause the deployment to fail with a `400` error.
+
+### Set the cohort header
+
+To route a request to a specific cohort, set the `Cloudflare-Workers-Cohort` header on the incoming request.
+
+```sh
+curl -s https://example.com -H 'Cloudflare-Workers-Cohort: canary'
+```
+
+#### Using Transform Rules
+
+You can use [Transform Rules](/rules/transform/request-header-modification/) to set the cohort header based on request properties such as cookies, URL patterns, or other headers. This allows you to implement cohort routing without modifying your application code.
+
+For example, to set the cohort based on a cookie value:
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+http.cookie contains "cohort="
+```
+
+Selected operation under **Modify request header**: _Set dynamic_
+
+**Header name**: `Cloudflare-Workers-Cohort`
+
+**Value**: `regex_replace(http.cookie, ".*cohort=([^;]+).*", "${1}")`
+
+</Example>
+
+#### Authenticated cohort assignment
+
+If cohort membership must be enforced (for example, only actual beta testers can access canary code), set the header server-side after authenticating the user. This prevents clients from spoofing their cohort.
+
+The following pattern uses an upstream Worker to:
+
+1. Authenticate the user.
+2. Determine their cohort based on trusted user data.
+3. Set the cohort header before forwarding to the target Worker.
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		// 1. Authenticate the user (your auth logic here)
+		const user = await authenticateUser(request);
+
+		// 2. Determine cohort from trusted user data
+		const cohort = user.isBetaTester ? "canary" : "enterprise";
+
+		// 3. Set header and forward to downstream Worker
+		const modifiedRequest = new Request(request, {
+			headers: new Headers(request.headers),
+		});
+		modifiedRequest.headers.set("Cloudflare-Workers-Cohort", cohort);
+
+		return env.DOWNSTREAM_SERVICE.fetch(modifiedRequest);
+	},
+};
+```
+
+</TypeScriptExample>
+
+With this pattern, even if a client sends `Cloudflare-Workers-Cohort: canary`, your upstream Worker overwrites it with the correct value based on their actual user attributes.
+
+### Routing precedence
+
+When multiple routing signals are present, they are evaluated in this order:
+
+1. **Version Override** (`Cloudflare-Workers-Version-Overrides` header)
+2. **Cohort Header** (`Cloudflare-Workers-Cohort` header)
+3. **Version Key** (`Cloudflare-Workers-Version-Key` header)
+4. **Random percentage** (based on configured percentages)
+
+### Accessing the current cohort
+
+You can access the cohort that was used to route the current request via `ctx.options.cohort`:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const cohort = ctx.options?.cohort; // "canary", "enterprise", or undefined
+
+		// Log or use the cohort value
+		console.log(`Request routed via cohort: ${cohort ?? "default"}`);
+
+		// You can include it in responses for debugging
+		return new Response(`Hello from ${cohort ?? "default"} cohort`);
+	},
+};
+```
+
+</TypeScriptExample>
+
+If the request did not match any cohort and used the default `versions` array, `ctx.options.cohort` will be `undefined`.
+
+### Cohort propagation in service bindings
+
+Cohorts do not automatically propagate across [service bindings](/workers/runtime-apis/bindings/service-bindings/). When Worker A calls Worker B via a service binding, Worker B receives no cohort information unless explicitly passed.
+
+To propagate a cohort to a downstream Worker, use the `.with()` method:
+
+<TypeScriptExample>
+
+```ts
+// Worker A - sending cohort to Worker B
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const cohort =
+			request.headers.get("Cloudflare-Workers-Cohort") || "default";
+
+		// Pass cohort to downstream Worker
+		return env.WORKER_B.with({ cohort }).fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+The receiving Worker can access the cohort via `ctx.options.cohort`:
+
+<TypeScriptExample>
+
+```ts
+// Worker B - receiving cohort from Worker A
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		// Access the cohort passed via .with()
+		const cohort = ctx.options?.cohort;
+
+		console.log(`Received cohort: ${cohort}`); // "canary"
+
+		// Worker B's version was selected based on this cohort
+		return new Response(`Running in cohort: ${cohort}`);
+	},
+};
+```
+
+</TypeScriptExample>
+
+The `.with()` method affects which version of Worker B is invoked and makes the cohort value available in `ctx.options.cohort`. The override does not persist through further hops — if Worker B calls Worker C, it must also use `.with()` to propagate the cohort.
+
+#### Multi-hop propagation
+
+The `.with()` method only affects the immediate downstream call. Each Worker in the chain must explicitly propagate the cohort:
+
+<TypeScriptExample>
+
+```ts
+// Worker A (entry point)
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const cohort = request.headers.get("Cloudflare-Workers-Cohort");
+
+		// Explicitly pass cohort to Worker B
+		return env.WORKER_B.with({ cohort }).fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+<TypeScriptExample>
+
+```ts
+// Worker B (middle of chain)
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const cohort = ctx.options?.cohort; // "canary" from Worker A
+
+		// Must explicitly pass to Worker C — cohort does not auto-propagate
+		return env.WORKER_C.with({ cohort }).fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+<TypeScriptExample>
+
+```ts
+// Worker C (end of chain)
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const cohort = ctx.options?.cohort; // "canary" from Worker B
+		return new Response(`Final cohort: ${cohort}`);
+	},
+};
+```
+
+</TypeScriptExample>
+
+If Worker B does not call `.with()`, Worker C receives no cohort and uses its default version configuration:
+
+<TypeScriptExample>
+
+```ts
+// Worker B - does NOT propagate cohort
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const cohort = ctx.options?.cohort; // "canary"
+
+		// Worker C will NOT receive the cohort
+		return env.WORKER_C.fetch(request); // No .with()!
+	},
+};
+```
+
+</TypeScriptExample>
+
+<TypeScriptExample>
+
+```ts
+// Worker C receives no cohort
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const cohort = ctx.options?.cohort; // undefined
+		// Uses default version configuration
+		return new Response("Running default version");
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Cohort-based deployments for Durable Objects
+
+When using cohort-based deployments with [Durable Objects](/durable-objects/), the cohort of the **first request** to a Durable Object instance determines which version that instance runs. Subsequent requests to the same Durable Object use that version, regardless of their cohort header.
+
+#### How version assignment works
+
+1. A request arrives with `Cloudflare-Workers-Cohort: canary`.
+2. The request creates or accesses Durable Object instance `room-123`.
+3. The Durable Object instance is assigned a version based on the `canary` cohort's configuration.
+4. All future requests to `room-123` use that version, even if they have a different cohort header.
+
+This ensures Durable Object state consistency — multiple versions of code do not operate on the same persistent state simultaneously.
+
+#### Example
+
+Given this deployment configuration:
+
+```json
+{
+	"versions": [{ "version_id": "v1-stable", "percentage": 100 }],
+	"cohorts": [
+		{
+			"name": "canary",
+			"versions": [{ "version_id": "v2-new", "percentage": 100 }]
+		}
+	]
+}
+```
+
+The following table shows how version assignment works:
+
+| Request | Cohort   | DO Instance | Version Used | Reason                                              |
+| :------ | :------- | :---------- | :----------- | :-------------------------------------------------- |
+| 1st     | `canary` | `room-123`  | `v2-new`     | First request, canary cohort config applies         |
+| 2nd     | `stable` | `room-123`  | `v2-new`     | Same DO instance, version locked from first request |
+| 3rd     | `canary` | `room-456`  | `v2-new`     | New DO instance, canary cohort config applies       |
+| 4th     | (none)   | `room-789`  | `v1-stable`  | New DO instance, default config applies             |
+
+The cohort header on subsequent requests does not change which version a Durable Object runs. Version assignment is locked on first access.
+
+### Error handling
+
+At runtime, invalid or unknown cohort header values fall back to the default `versions` configuration. At deploy time, invalid cohort names or duplicates will cause the deployment to fail with a `400` error.
 
 ## Version overrides
 
