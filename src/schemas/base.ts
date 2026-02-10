@@ -1,18 +1,7 @@
 import { z } from "astro:schema";
-import type { SchemaContext } from "astro:content";
+import { reference, type SchemaContext } from "astro:content";
 
 import { sidebar, SidebarIconSchema } from "./types/sidebar";
-
-const spotlightAuthorDetails = z
-	.object({
-		author: z.string(),
-		author_bio_link: z.string().url(),
-		author_bio_source: z.string(),
-	})
-	.optional()
-	.describe(
-		"These are used to automatically add the [SpotlightAuthorDetails component](/style-guide/components/spotlight-author-details/) to the page.",
-	);
 
 export const baseSchema = ({ image }: SchemaContext) =>
 	z.object({
@@ -23,8 +12,8 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			),
 		pcx_content_type: z
 			.union([
-				z.literal("api"),
 				z.literal("changelog"),
+				z.literal("changelog-entry"),
 				z.literal("configuration"),
 				z.literal("concept"),
 				z.literal("design-guide"),
@@ -40,6 +29,7 @@ export const baseSchema = ({ image }: SchemaContext) =>
 				z.literal("reference"),
 				z.literal("reference-architecture"),
 				z.literal("reference-architecture-diagram"),
+				z.literal("release-notes"),
 				z.literal("troubleshooting"),
 				z.literal("tutorial"),
 				z.literal("video"),
@@ -73,31 +63,40 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"Difficulty is displayed as a column in the [ListTutorials component](/style-guide/components/list-tutorials/).",
 			),
-		updated: z
+		reviewed: z
 			.date()
 			.optional()
 			.describe(
-				"This is used to automatically add the [LastReviewed component](/style-guide/components/last-reviewed/).",
+				"A `YYYY-MM-DD` value that signals when the page was last explicitly reviewed from beginning to end.",
 			),
-		spotlight: spotlightAuthorDetails,
-		release_notes_file_name: z.string().array().optional(),
-		release_notes_product_area_name: z.string().optional(),
-		products: z
+		release_notes_file_name: z
 			.string()
 			.array()
 			.optional()
 			.describe(
-				"The names of related products, which show on some grids for Examples, [Tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/), and [Reference Architectures](/style-guide/documentation-content-strategy/content-types/reference-architecture/)",
+				"Required for the [`ProductReleaseNotes`](/style-guide/components/usage/#productreleasenotes) component.",
 			),
-		languages: z.string().array().optional(),
-		summary: z.string().optional(),
-		goal: z.string().array().optional(),
-		operation: z.string().array().optional(),
+		products: z
+			.array(reference("products"))
+			.default([])
+			.describe(
+				"The names of related products (according to their file name in `src/content/products`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
+			),
+		summary: z
+			.string()
+			.optional()
+			.describe("Renders a summary description directly below the page title."),
 		noindex: z
 			.boolean()
 			.optional()
 			.describe(
-				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/).",
+				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/). Companion to the `chatbot_deprioritize` property.",
+			),
+		chatbot_deprioritize: z
+			.boolean()
+			.optional()
+			.describe(
+				"If true, this property will de-prioritize this page in the responses surfaced by Support AI. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/). Companion to the `noindex` property.",
 			),
 		sidebar,
 		hideChildren: z
@@ -111,7 +110,9 @@ export const baseSchema = ({ image }: SchemaContext) =>
 				component: z.string(),
 			})
 			.optional()
-			.describe("Used by overrides for style guide component documentation"),
+			.describe(
+				"Used by overrides for style guide component documentation, which helps us display the [usage counts](/style-guide/components/usage/) for components directly on the component page itself.",
+			),
 		banner: z
 			.object({
 				content: z.string(),
@@ -123,6 +124,21 @@ export const baseSchema = ({ image }: SchemaContext) =>
 					.object({ id: z.string(), days: z.number().optional().default(7) })
 					.optional(),
 			})
-			.optional(),
+			.optional()
+			.describe(
+				"Displays a [Banner](https://developers.cloudflare.com/style-guide/frontmatter/banner/) on the current docs page.",
+			),
 		icon: SidebarIconSchema(),
+		feedback: z
+			.boolean()
+			.default(true)
+			.describe(
+				"Whether to show the FeedbackPrompt on the page, defaults to true",
+			),
+		wid: z
+			.string()
+			.optional()
+			.describe(
+				"What Id? Used as a generic identifier for external data sources",
+			),
 	});

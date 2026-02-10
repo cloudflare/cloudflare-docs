@@ -2,9 +2,84 @@
 link: "/ai-gateway/changelog/"
 productName: AI Gateway
 productLink: "/ai-gateway/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  # - publish_date: "2025-11-25"
+  #   description: |-
+  #     New easy to use [utility](/ai-gateway/integrations/utility/) for simplified AI Gateway integration. Drop `useAIGateway({ binding: env.AI })` anwhere in any worker project and AI requests will be automatically routed through AI Gateway.
+  - publish_date: "2025-11-21"
+    description: |-
+      Unified Billing now supports opt-in Zero Data Retention. This ensures supported upstream AI providers (eg [OpenAI ZDR](https://platform.openai.com/docs/guides/your-data#zero-data-retention)) do not retain request and response data.
+  - publish_date: "2025-11-14"
+    description: |-
+      - Supports adding OpenAI compatible [Custom Providers](/ai-gateway/configuration/custom-providers/) for inferencing with AI providers that are not natively supported by AI Gateway
+      - Cost and usage tracking for voice models
+      - You can now use Workers AI via AI Gateway with no additional configuration. Previously, this required generating / passing additional Workers AI tokens.
+  - publish_date: "2025-11-06"
+    title: Unified Billing
+    description: |-
+      - [Unified Billing](/ai-gateway/features/unified-billing/) is now in open beta. Connect multiple AI providers (e.g. OpenAI, Anthropic) without any additional setup and pay through a single Cloudflare invoice. To use it, purchase credits in the Cloudflare Dashboard and spend them across providers via AI Gateway.
+  - publish_date: "2025-11-03"
+    description: |-
+      New supported providers 
+        - [Baseten](/ai-gateway/usage/providers/baseten/)
+        - [Ideogram](/ai-gateway/usage/providers/ideogram/)
+        - [Deepgram](/ai-gateway/usage/providers/deepgram/)
+
+  - publish_date: "2025-10-29"
+    description: |-
+      - Add support for pipecat model on Workers AI
+      - Fix OpenAI realtime websocket authentication.
+  - publish_date: "2025-10-24"
+    description: |-
+      - Added cost tracking and observability support for async video generation requests for OpenAI Sora 2 and Google AI Studio Veo 3.
+      - `cf-aig-eventId` and `cf-aig-log-id` headers are now returned on all requests including failed requests
+  - publish_date: "2025-10-14"
+    description: The Model playground is now available in the AI Gateway Cloudflare Dashboard, allowing you to request and compare model behaviour across all models supported by AI Gateway.
+  - publish_date: "2025-10-07"
+    description: |-
+      - Add support for [Deepgram on Workers AI](/ai-gateway/usage/websockets-api/realtime-api/#deepgram-workers-ai) using Websocket transport.
+      - Added [Parallel](/ai-gateway/usage/providers/parallel/) as a provider.
+  - publish_date: "2025-09-24"
+    title: OTEL Tracing
+    description: |-
+      Added OpenTelemetry (OTEL) tracing export for better observability and debugging of AI Gateway requests.
+
+  - publish_date: "2025-09-21"
+    description: |-
+      - Added support for [Fal AI](/ai-gateway/usage/providers/fal/) provider.
+      - You can now set up custom Stripe usage reporting, and report usage and costs for your users directly to Stripe from AI Gateway.
+      - Fixed incorrectly geoblocked requests for certain regions.
+
+  - publish_date: "2025-09-19"
+    description: |-
+      - New API endpoint (`/compat/v1/models`) for listing available models along with their costs.
+      - Unified API now supports Google Vertex AI providers and all their models.
+      - BYOK support for requests using WebSocket transport.
+  - publish_date: "2025-08-28"
+    title: Data Loss Prevention
+    description: |-
+      [Data loss prevention](/ai-gateway/features/dlp/) capabilities are now available to scan both incoming prompts and outgoing AI responses for sensitive information, ensuring your AI applications maintain security and compliance standards.
+  - publish_date: "2025-08-25"
+    title: Dynamic routing
+    description: |-
+      Introduced [Dynamic routing](/ai-gateway/features/dynamic-routing/) that lets you visually or via JSON define flexible request flows that segment users, enforce quotas, and choose models with fallbacks—without changing application code.
+  - publish_date: "2025-08-21"
+    title: Bring your own keys (BYOK)
+    description: |-
+      Introduced [Bring your own keys (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) allowing you to save your AI provider keys securely with Cloudflare Secret Store and manage them through the Cloudflare dashboard.
+  - publish_date: "2025-06-18"
+    title: New GA providers
+    description: |-
+      We have moved the following providers out of beta and into GA:
+        - [Cartesia](/ai-gateway/usage/providers/cartesia/)
+        - [Cerebras](/ai-gateway/usage/providers/cerebras/)
+        - [DeepSeek](/ai-gateway/usage/providers/deepseek/)
+        - [ElevenLabs](/ai-gateway/usage/providers/elevenlabs/)
+        - [OpenRouter](/ai-gateway/usage/providers/openrouter/)
+  - publish_date: "2025-05-28"
+    title: OpenAI Compatibility
+    description: |-
+      * Introduced a new [OpenAI-compatible chat completions endpoint](/ai-gateway/usage/chat-completion/) to simplify switching between different AI providers without major code modifications.
   - publish_date: "2025-04-22"
     description: |-
       * Increased Max Number of Gateways per account: Raised the maximum number of gateways per account from 10 to 20 for paid users. This gives you greater flexibility in managing your applications as you build and scale.
@@ -13,7 +88,7 @@ entries:
   - publish_date: "2025-04-02"
     title: Cache Key Calculation Changes
     description: |-
-      * We have updated how [cache](/ai-gateway/configuration/caching/) keys are calculated. As a result, new cache entries will be created, and you may experience more cache misses than usual during this transition. Please monitor your traffic and performance, and let us know if you encounter any issues.
+      * We have updated how [cache](/ai-gateway/features/caching/) keys are calculated. As a result, new cache entries will be created, and you may experience more cache misses than usual during this transition. Please monitor your traffic and performance, and let us know if you encounter any issues.
   - publish_date: "2025-03-18"
     title: WebSockets
     description: |-
@@ -21,7 +96,7 @@ entries:
   - publish_date: "2025-02-26"
     title: Guardrails
     description: |-
-      * Added [Guardrails](/ai-gateway/guardrails/) help deploy AI applications safely by intercepting and evaluating both user prompts and model responses for harmful content.
+      * Added [Guardrails](/ai-gateway/features/guardrails/) help deploy AI applications safely by intercepting and evaluating both user prompts and model responses for harmful content.
   - publish_date: "2025-02-19"
     title: Updated Log Storage Settings
     description: |-
@@ -44,7 +119,7 @@ entries:
   - publish_date: "2025-01-02"
     title: DeepSeek
     description: |-
-      * **Configuration**: Added [DeepSeek](/ai-gateway/providers/deepseek/) as a new provider.
+      * **Configuration**: Added [DeepSeek](/ai-gateway/usage/providers/deepseek/) as a new provider.
 
   - publish_date: "2024-12-17"
     title: AI Gateway Dashboard
@@ -60,7 +135,7 @@ entries:
   - publish_date: "2024-11-28"
     title: OpenRouter
     description: |-
-      * **Configuration**: Added [OpenRouter](/ai-gateway/providers/openrouter/) as a new provider.
+      * **Configuration**: Added [OpenRouter](/ai-gateway/usage/providers/openrouter/) as a new provider.
 
   - publish_date: "2024-11-19"
     title: WebSockets API
@@ -74,7 +149,7 @@ entries:
   - publish_date: "2024-10-28"
     title: Grok
     description: |-
-      * **Providers**: Added [Grok](/ai-gateway/providers/grok/) as a new provider.
+      * **Providers**: Added [Grok](/ai-gateway/usage/providers/grok/) as a new provider.
 
   - publish_date: "2024-10-17"
     title: Vercel SDK
@@ -109,12 +184,12 @@ entries:
   - publish_date: "2024-08-02"
     title: Mistral AI
     description: |-
-      * **Providers**: Added [Mistral AI](/ai-gateway/providers/mistral/) as a new provider.
+      * **Providers**: Added [Mistral AI](/ai-gateway/usage/providers/mistral/) as a new provider.
 
   - publish_date: "2024-07-23"
     title: Google AI Studio
     description: |-
-      * **Providers**: Added [Google AI Studio](/ai-gateway/providers/google-ai-studio/) as a new provider.
+      * **Providers**: Added [Google AI Studio](/ai-gateway/usage/providers/google-ai-studio/) as a new provider.
 
   - publish_date: "2024-07-10"
     title: Custom metadata
@@ -129,12 +204,12 @@ entries:
   - publish_date: "2024-06-24"
     title: Custom cache key headers
     description: |-
-      AI Gateway now supports [custom cache key headers](/ai-gateway/configuration/caching/#custom-cache-key-cf-aig-cache-key).
+      AI Gateway now supports [custom cache key headers](/ai-gateway/features/caching/#custom-cache-key-cf-aig-cache-key).
 
   - publish_date: "2024-06-18"
     title: Access an AI Gateway through a Worker
     description: |-
-      Workers AI now natively supports [AI Gateway](/ai-gateway/providers/workersai/#worker).
+      Workers AI now natively supports [AI Gateway](/ai-gateway/usage/providers/workersai/#worker).
 
   - publish_date: "2024-05-22"
     title: AI Gateway is now GA
@@ -144,7 +219,7 @@ entries:
   - publish_date: "2024-05-16"
 
     description: |-
-      * **Providers**: Added [Cohere](/ai-gateway/providers/cohere/) and [Groq](/ai-gateway/providers/groq/) as new providers.
+      * **Providers**: Added [Cohere](/ai-gateway/usage/providers/cohere/) and [Groq](/ai-gateway/usage/providers/groq/) as new providers.
 
   - publish_date: "2024-05-09"
 

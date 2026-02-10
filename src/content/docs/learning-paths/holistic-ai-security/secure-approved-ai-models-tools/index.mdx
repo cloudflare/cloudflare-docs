@@ -1,0 +1,53 @@
+---
+title: Secure approved AI models and tools
+pcx_content_type: overview
+sidebar:
+  label: Overview
+  order: 5
+---
+
+## Manage posture and use within trusted AI tools
+
+As you decide which AI tools to sanction within your organization, you can develop security controls with the expectation of consistent use.
+
+Cloudflare supports API-based cloud access security broker (CASB) integrations with popular AI services like [OpenAI (ChatGPT)](/cloudflare-one/integrations/cloud-and-saas/openai/), [Anthropic (Claude)](/cloudflare-one/integrations/cloud-and-saas/anthropic/), and [Google Gemini](/cloudflare-one/integrations/cloud-and-saas/google-workspace/gemini/). These integrations allow you to report on AI tool usage and flag sensitive data with Data Loss Prevention (DLP) Profiles.
+
+Since these integrations are out-of-bound connections to SaaS applications, they do not require inline user traffic to create detections. This means you can immediately gain visibility into how your employees are using sanctioned AI tools without having to install the Cloudflare device client on every user's machine.
+
+![OpenAI API CASB Integration showing riskier features that are toggled on, security posture risks like unused admin credentials, and an uploaded attachment with a DLP profile match.](~/assets/images/learning-paths/holistic-ai-security/casb-posture-findings-openai.png)
+
+## Manage findings from your CASB integrations
+
+[CASB](/cloudflare-one/integrations/cloud-and-saas/) **Posture Findings** allow you to report on misconfigurations, unauthorized user activity, and other data security issues. You can use it to get insights into issues like:
+
+- Misconfigured sharing settings: See who in your organization has access to your tenant.
+- API key management: Ensure you are following best practices.
+- Anomalous and suspicious activity: Detect things like pending invites and file uploads.
+
+By combining this with DLP profiles, you can report on data exposure within an AI tool without capturing and decrypting inline user traffic. For example, you can detect sensitive data or specific patterns (regex) within user prompts. For more information, refer to [Scan for sensitive data](/cloudflare-one/cloud-and-saas-findings/casb-dlp/).
+
+## Secure access to MCP servers for your organization
+
+The Model Context Protocol (MCP) is an emerging standard that allows AI agents to communicate with both public and private APIs. An MCP server acts as a translation layer, which enables these AI agents to understand datasets, perform actions, and develop context beyond their original training.
+
+Cloudflare has been an early supporter of the MCP standard. Many of our customers are already building custom MCP servers and use cases, and our engineering teams have worked to deliver MCP functionality for our public API. You can review our [changelog](/changelog/?product=ai) to see some of the MCP servers we have already released.
+
+Just like an API, an MCP server is a primary entry point for AI agents to interact with and manipulate your structured data. Since anyone can build and host an MCP server, it is crucial to have a comprehensive secure access strategy as your business starts to adopt these new agentic workflows.
+
+As with any new technology, it can be difficult to manage the growing use of MCP servers among your employees. This space will continue to expand, but your first step should always be to gain visibility and understand usage before developing a security strategy to control inputs and outputs.
+
+This section will discuss the process of consolidating and securing access to your internal MCP servers, while introducing logging for user prompts.
+
+### Use Cloudflare Access as your OAuth provider
+
+The Model Context Protocol supports [OAuth 2.1 for authorization](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization). You can configure your MCP server to use Cloudflare Access as its OAuth provider. This allows you to secure the MCP server with Access policies, using signals from your existing identity providers (IdPs), device posture providers, and other rules to control who can log in to the server. Once the user is authenticated through Access, Access passes an OAuth ID token to the MCP server. You can then implement server-side access controls based on the user identity attributes included in the token. For example, you may wish to limit access to specific tools based on user emails.
+
+To set up the Cloudflare Access OAuth integration, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/access-controls/ai-controls/saas-mcp/).
+
+### Consolidate MCP servers into a portal
+
+MCP server portals allow you to centralize management of your MCP servers and tools. An MCP server portal is added as an Access application on one of your Cloudflare domains. Users log in to the configured portal URL (for example, `https://<subdomain>.<domain>/mcp`) from an MCP client and gain access to all MCP servers in the portal that they are allowed to access. MCP server portals support both unauthenticated MCP servers and MCP servers secured with any OAuth provider. We recommend using [Cloudflare Access as your server's OAuth provider](#use-cloudflare-access-as-your-oauth-provider) if you want the full security benefits of Cloudflare Access on top of the ergonomic benefits provided by MCP portals.
+
+To define user access to your systems, you can configure Access policies for a portal as a whole while maintaining granular access control for the MCP servers that a user sees in their portals. Additionally, you can turn on or off the individual tools available through the portal and only expose the tools relevant for your specific use case. Prompts and responses made using the portal are logged in Cloudflare Access, providing you with visibility into how users are interacting with your MCP servers.
+
+To get started with MCP server portals, refer to [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/).

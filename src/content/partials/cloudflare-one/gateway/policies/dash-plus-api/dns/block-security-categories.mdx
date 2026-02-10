@@ -2,7 +2,7 @@
 {}
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Render, APIRequest } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -14,23 +14,22 @@ import { Tabs, TabItem, Render } from "~/components";
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-DNS-SecurityCategories-Blocklist",
-  "description": "Block security categories based on Cloudflare's threat intelligence",
-  "precedence": 20,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-DNS-SecurityCategories-Blocklist",
+		description:
+			"Block security categories based on Cloudflare's threat intelligence",
+		precedence: 20,
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic:
+			"any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
+		identity: "",
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">

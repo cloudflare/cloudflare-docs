@@ -2,7 +2,7 @@
 {}
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, DashButton } from "~/components";
 
 Then, enable the Authenticated Origin Pulls feature as an option for your Cloudflare zone.
 
@@ -12,9 +12,11 @@ This step sets the TLS Client Auth to require Cloudflare to use a client certifi
 
 To enable **Authenticated Origin Pulls** in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. Go to **SSL/TLS** > **Origin Server**.
-3. For **Authenticated Origin Pulls**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **Origin Server** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
+
+2. For **Authenticated Origin Pulls**, switch the toggle to **On**.
 
 :::caution
 

@@ -11,7 +11,7 @@ import { Render, PackageManagers, WranglerConfig, CURL } from "~/components";
 
 Asynchronous batch processing lets you send a collection (batch) of inference requests in a single call. Instead of expecting immediate responses for every request, the system queues them for processing and returns the results later.
 
-Batch processing is useful for large workloads such as summarization or embeddings when there is no human interaction. Using the batch API will guarantee that your requests are fulfilled eventually, rather than erroring out if Cloudflare does have enough capacity at a given time.
+Batch processing is useful for large workloads such as summarization or embeddings when there is no human interaction. Using the batch API will guarantee that your requests are fulfilled eventually, rather than erroring out if Cloudflare does not have enough capacity at a given time.
 
 When you send a batch request, the API immediately acknowledges receipt with a status like `queued` and provides a unique `request_id`. This ID is later used to poll for the final responses once the processing is complete.
 
@@ -33,9 +33,4 @@ This will create a repository in your GitHub account and deploy a ready-to-use W
 
 ## Supported Models
 
-- [@cf/meta/llama-3.3-70b-instruct-fp8-fast](/workers-ai/models/llama-3.3-70b-instruct-fp8-fast/)
-- [@cf/baai/bge-small-en-v1.5](/workers-ai/models/bge-small-en-v1.5/)
-- [@cf/baai/bge-base-en-v1.5](/workers-ai/models/bge-base-en-v1.5/)
-- [@cf/baai/bge-large-en-v1.5](/workers-ai/models/bge-large-en-v1.5/)
-- [@cf/baai/bge-m3](/workers-ai/models/bge-m3/)
-- [@cf/meta/m2m100-1.2b](/workers-ai/models/m2m100-1.2b/)
+Refer to our [model catalog](/workers-ai/models/?capabilities=Batch) for supported models.

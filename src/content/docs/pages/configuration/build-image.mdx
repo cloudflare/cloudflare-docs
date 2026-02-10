@@ -2,17 +2,13 @@
 pcx_content_type: concept
 title: Build image
 rss: https://github.com/cloudflare/cloudflare-docs/commits/production/src/content/partials/pages/_platform-language-support-and-tools.atom
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import {
 	PagesBuildEnvironment,
 	PagesBuildEnvironmentLanguages,
 	PagesBuildEnvironmentTools,
+	DashButton,
 } from "~/components";
 
 Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go.
@@ -78,23 +74,25 @@ You can add the following environment variable to disable automatic dependency i
 | ------------------------- | ------------- |
 | `SKIP_DEPENDENCY_INSTALL` | `1` or `true` |
 
-## V2 build system
+## v3 build system
 
-The [v2 build system](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/) announced in May 2023 brings several improvements to project builds.
+The v3 build system updates the default tools, libraries and languages to their LTS versions, as of May 2025.
 
-### V1 to V2 Migration
+### v2 to v3 Migration
 
 To migrate to this new version, configure your Pages project settings in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > in **Overview**, select your Pages project.
-3. Go to **Settings** > **Build & deployments** > **Build system version** and select the latest version.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v2. To fix this, you must specify the version you wish to use by [overriding](/pages/configuration/build-image/#overriding-default-versions) the default versions.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
+3. Go to **Deployments** > **All deployments** > and select the latest version.
+
+If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v3. To fix this, you must specify the version you wish to use by [overriding](/pages/configuration/build-image/#overriding-default-versions) the default versions.
 
 ### Limitations
 
-The following features are not currently supported when using the v2 build system:
+The following features are not currently supported when using the v3 build system:
 
 - Specifying Node.js versions as codenames (for example, `hydrogen` or `lts/hydrogen`).
 - Detecting Yarn version from `yarn.lock` file version.
@@ -107,3 +105,38 @@ The following features are not currently supported when using the v2 build syste
 Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) container.
 
 <PagesBuildEnvironment />
+
+
+## Build Image Policy
+
+### Build Image Version Deprecation
+
+If you are currently using the v1 or v2 build image, your project will be automatically moved to v3:
+
+- **v1 build image**: If you are using the Pages v1 build image, your project will be automatically moved to v3 on August 25, 2026.
+- **v2 build image**: If you are using the Pages v2 build image, your project will be automatically moved to v3 on February 23, 2027.
+
+You will receive 6 months’ notice before the deprecation date via the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/), dashboard notifications, and email.
+
+Going forward, the v3 build image will receive rolling updates to preinstalled software per the policy below. There will be no further build image version changes.
+
+### Preinstalled Software Updates
+
+Preinstalled software (languages and tools) will be updated before reaching end-of-life (EOL). These updates apply only if you have not [overridden the default version](/pages/configuration/build-image/#override-default-versions).
+
+- **Minor version updates**: May be updated to the latest available minor version without notice. For tools that do not follow semantic versioning (e.g., Bun or Hugo), updates that may contain breaking changes will receive 3 months’ notice.
+- **Major version updates**: Updated to the next stable long-term support (LTS) version with 3 months’ notice.
+
+**How you'll be notified (for changes requiring notice):**
+- [Cloudflare Changelog](https://developers.cloudflare.com/changelog/)
+- Dashboard notifications for projects that will receive the update
+- Email notifications to project owners
+
+To maintain a specific version and avoid automatic updates, [override the default version](/pages/configuration/build-image/#override-default-versions).
+
+### Best Practices
+
+To avoid unexpected build failures:
+- **Monitor announcements** via the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/), dashboard notifications, and email
+- **Plan for migration** when you receive update notices
+- **Pin specific versions** of critical preinstalled software by [overriding default versions](/pages/configuration/build-image/#override-default-versions)

@@ -1,13 +1,13 @@
 ---
 title: Zero Trust and Virtual Desktop Infrastructure
 pcx_content_type: reference-architecture-diagram
-products:
-  - Gateway
-  - Access
+products: [access, gateway]
 sidebar:
   order: 1
   label: Zero Trust and Virtual Desktop Infrastructure
-updated: 2024-12-17
+reviewed: 2024-12-17
+description: >-
+  This document provides a reference and guidance for using Cloudflare's Zero Trust services. It offers a vast improvement over remote access to web applications with greater security.
 ---
 
 ## Introduction
@@ -41,7 +41,7 @@ The diagram above shows the general flow of how user traffic goes from their loc
 **Option 1: Clientless RBI**
 
 - Device agent not required
-- RBI URL can be protected by an [Access policy](/cloudflare-one/policies/access/) with authentication
+- RBI URL can be protected by an [Access policy](/cloudflare-one/access-controls/policies/) with authentication
 - A simpler way to begin rolling out Cloudflare Zero trust while transitioning away from VDI
 - A great option for third party contractor access who cannot install software on their device
 
@@ -57,7 +57,7 @@ The diagram above shows the general flow of how user traffic goes from their loc
 
 When replacing your VDI is not an option and a fully virtualized desktop is required for legacy applications, Cloudflare's [SASE platform](https://www.cloudflare.com/zero-trust/) can still help secure these environments by authorizing the access to them using identity based Zero Trust policies, as well as securing the Internet bound traffic from the devices themselves.
 
-![Figure 3: Using Cloudflare Access ZTNA to secure VDI.](~/assets/images/reference-architecture/zero-trust-and-virtual-desktop-infrastructure/figure3.svg "Figure 3: Figure 3: Using Cloudflare Access ZTNA to secure VDI.")
+![Figure 3: Using Cloudflare Access ZTNA to secure VDI.](~/assets/images/reference-architecture/zero-trust-and-virtual-desktop-infrastructure/figure3.svg "Figure 3: Using Cloudflare Access ZTNA to secure VDI.")
 
 The diagram above displays a general Zero Trust deployment using best practices for authenticating your remote users to the VDI infrastructure
 
@@ -82,16 +82,16 @@ Cloudflare's SASE platform is capable of much more than replacing VPNs and bolst
 
 ## Summary
 
-As shown, we have seen several ways to incorporate Cloudflare's Zero Trust services with your existing VDI, either by replacing it completely in favor of Remote Browser Isolation technology or further securing it with our [Access](/cloudflare-one/policies/access/) or [Gateway](/cloudflare-one/policies/gateway/) services.
+As shown, we have seen several ways to incorporate Cloudflare's Zero Trust services with your existing VDI, either by replacing it completely in favor of Remote Browser Isolation technology or further securing it with our [Access](/cloudflare-one/access-controls/policies/) or [Gateway](/cloudflare-one/traffic-policies/) services.
 
 For more thorough background, explanation and action steps to a smooth migration be sure to read the following resources:
 
 - [Decommissioning your VDI Blog Post](https://blog.cloudflare.com/decommissioning-virtual-desktop/)
 - [Leveraging Cloudflare's Secure Web Gateway with PAC files for VDI](/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/#use-cases)
 - [Connect to private network services with Browser Isolation](https://blog.cloudflare.com/browser-isolation-private-network/)
-- [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation)
+- [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation)
 - [Determine When to use PAC Files](/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/#use-cases)
-- [Agentless DNS Configurations](/cloudflare-one/connections/connect-devices/agentless/dns/)
-- [PAC Files for Agentless HTTP Filtering](/cloudflare-one/connections/connect-devices/agentless/pac-files/)
+- [Agentless DNS Configurations](/cloudflare-one/networks/resolvers-and-proxies/dns/)
+- [PAC Files for Agentless HTTP Filtering](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/)
 
 As always, if you have any questions on these services, be sure to reach out to your Cloudflare team or contact us to [talk to an expert](https://www.cloudflare.com/products/zero-trust/plans/enterprise/).

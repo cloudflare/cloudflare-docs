@@ -1,8 +1,10 @@
 ---
-updated: 2025-04-25
+reviewed: 2025-04-25
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrate from Vercel to Workers
+description: >-
+  Migrate your Vercel application to Cloudflare Workers. You should already have an existing project deployed on Vercel that you would like to host on Workers.
 ---
 
 import { WranglerConfig } from "~/components";
@@ -13,7 +15,7 @@ You should already have an existing project deployed on Vercel that you would li
 
 ## Frameworks
 
-Some frameworks like Next.js, Astro with on demand rendering, and others have specific guides for migrating to Cloudflare Workers. Refer to our [framework guides](/workers/frameworks/) for more information. If your framework has a **Deploy an existing project on Workers** guide, follow that guide for specific instructions. Otherwise, continue with the steps below.
+Some frameworks like Next.js, Astro with on demand rendering, and others have specific guides for migrating to Cloudflare Workers. Refer to our [framework guides](/workers/framework-guides/) for more information. If your framework has a **Deploy an existing project on Workers** guide, follow that guide for specific instructions. Otherwise, continue with the steps below.
 
 ## Find your build command and build directory
 
@@ -35,11 +37,11 @@ For a **static site**, you will need to add the following to your wrangler file.
 
 ```jsonc
 {
-  "name": "<your-project-name>",
-  "compatibility_date": "2025-04-23",
-  "assets": {
-    "directory": "<your-build-directory>",
-  }
+	"name": "<your-project-name>",
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "<your-build-directory>",
+	},
 }
 ```
 
@@ -51,18 +53,18 @@ For a **single page application**, you will need to add the following to your wr
 
 ```jsonc
 {
-  "name": "<your-project-name>",
-  "compatibility_date": "2025-04-23",
-  "assets": {
-    "directory": "<your-build-directory>",
-		"not_found_handling": "single-page-application"
-  }
+	"name": "<your-project-name>",
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "<your-build-directory>",
+		"not_found_handling": "single-page-application",
+	},
 }
 ```
 
 </WranglerConfig>
 
-Some frameworks provide specific guides for migrating to Cloudflare Workers. Please refer to our [framework guides](/workers/frameworks/) for more information. If your framework includes a “Deploy an existing project on Workers” guide, follow it for detailed instructions.
+Some frameworks provide specific guides for migrating to Cloudflare Workers. Please refer to our [framework guides](/workers/framework-guides/) for more information. If your framework includes a “Deploy an existing project on Workers” guide, follow it for detailed instructions.
 
 ## Create a new Workers project
 

@@ -2,7 +2,23 @@
 {}
 ---
 
-import { Render, Details } from "~/components";
+import { Render, Details, APIRequest, Tabs, TabItem } from "~/components";
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Service credentials** > **SSH**.
+
+2. Select **Add a certificate**.
+
+3. Under **SSH with Access for Infrastructure**, select **Generate SSH CA**. A new row will appear in the short-lived certificates table called **SSH with Access for Infrastructure**.
+
+4. Select the **SSH with Access for Infrastructure** certificate.
+
+5. Copy its **CA public key**. You can return to copy this public key at any time.
+
+</TabItem>
+<TabItem label="API">
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
@@ -12,17 +28,19 @@ import { Render, Details } from "~/components";
 
 2. If you have not yet generated a Cloudflare SSH CA, make a `POST` request to the Cloudflare API:
 
-   ```bash
-   curl --request POST \
-   "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/gateway_ca" \
-   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-   ```
+<APIRequest
+  path="/accounts/{account_id}/access/gateway_ca"
+  method="POST"
+/>
 
 3. If you have already created a Cloudflare SSH CA or receive the error message `access.api.error.gateway_ca_already_exists`, make a `GET` request instead:
 
-   ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/gateway_ca \
-   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-   ```
+<APIRequest
+  path="/accounts/{account_id}/access/gateway_ca"
+  method="GET"
+/>
 
 4. Copy the `public_key` value returned in the response.
+
+</TabItem>
+</Tabs>

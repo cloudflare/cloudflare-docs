@@ -5,18 +5,16 @@ import { marked } from "marked";
 import { Breadcrumbs } from "astro-breadcrumbs";
 import "astro-breadcrumbs/breadcrumbs.css";
 
-import { Aside } from "@astrojs/starlight/components";
 import Description from "~/components/Description.astro";
-import SpotlightAuthorDetails from "~/components/SpotlightAuthorDetails.astro";
 import LastReviewed from "~/components/LastReviewed.astro";
 import CopyPageButton from "~/components/CopyPageButton.tsx";
+import ComponentUsage from "~/components/ComponentUsage.astro";
 
 import { getEntry } from "astro:content";
 
 const frontmatter = Astro.locals.starlightRoute.entry.data;
 
-const spotlightDetails = frontmatter.spotlight;
-const updated = frontmatter.updated;
+const reviewed = frontmatter.reviewed;
 const summary = frontmatter.summary;
 const component = frontmatter.styleGuide?.component;
 
@@ -25,8 +23,8 @@ const slug = Astro.locals.starlightRoute.entry.slug;
 const breadcrumbProps: Record<string, any> = {
 	crumbs: [
 		{
-			text: "Products",
-			href: "/products/",
+			text: "Directory",
+			href: "/directory/",
 		},
 	],
 	truncated: true,
@@ -75,60 +73,46 @@ const hideTitle = Astro.locals.starlightRoute.hideTitle;
 const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 ---
 
-{
-	!hideBreadcrumbs && (
-		<Breadcrumbs {...breadcrumbProps}>
-			<svg
-				slot="separator"
-				xmlns="http://www.w3.org/2000/svg"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			>
-				<polyline points="9 18 15 12 9 6" />
-			</svg>
-		</Breadcrumbs>
-	)
-}
+<div class="flex items-center justify-between">
+	{
+		!hideBreadcrumbs && (
+			<Breadcrumbs {...breadcrumbProps}>
+				<svg
+					slot="separator"
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<polyline points="9 18 15 12 9 6" />
+				</svg>
+			</Breadcrumbs>
+		)
+	}
+
+	{
+		frontmatter.template !== "splash" && (
+			<CopyPageButton client:idle />
+		)
+	}
+</div>
 
 {!hideTitle && <Default />}
 
-{updated && <LastReviewed date={updated} />}
-
-{
-	spotlightDetails && (
-		<SpotlightAuthorDetails
-			author={spotlightDetails.author}
-			platform={spotlightDetails.author_bio_source}
-			link={spotlightDetails.author_bio_link}
-		/>
-	)
-}
+{reviewed && <LastReviewed date={reviewed} />}
 
 {summary && <Description set:html={marked.parse(summary)} />}
 
 {
 	component && (
-		<Aside>
-			To see a list of pages this component is used on, please visit the{" "}
-			<a href={`/style-guide/components/usage/#${component.toLowerCase()}`}>
-				usage page
-			</a>
-			.
-		</Aside>
-	)
-}
-
-{
-	frontmatter.template !== "splash" && (
-		<div class="flex items-center justify-end">
-			<CopyPageButton client:idle />
-		</div>
+			<div class="sl-markdown-content md-ignore">
+				<ComponentUsage component={component} />
+			</div>
 	)
 }
 

@@ -1,5 +1,8 @@
 ---
 title: Use browser rendering with AI
+tags:
+  - AI
+  - LLM
 sidebar:
   order: 2
 ---
@@ -33,15 +36,22 @@ npm i zod-to-json-schema
 3. Activate the nodejs compatibility flag and add your Browser Rendering binding to your new Wrangler configuration:
 
 <WranglerConfig>
-```toml
-compatibility_flags = [ "nodejs_compat" ]
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_compat"
+	]
+}
 ```
 </WranglerConfig>
 
 <WranglerConfig>
-```toml
-[browser]
-binding = "MY_BROWSER"
+```jsonc
+{
+	"browser": {
+		"binding": "MY_BROWSER"
+	}
+}
 ```
 </WranglerConfig>
 
@@ -256,10 +266,10 @@ async function getLLMResult(env, prompt: string, schema?: any) {
 }
 ```
 
-You can run this script to test it using Wrangler's `--remote` flag:
+You can run this script to test it via:
 
 ```sh
-npx wrangler dev --remote
+npx wrangler dev
 ```
 
 With your script now running, you can go to `http://localhost:8787/` and should see something like the following:

@@ -1,0 +1,26 @@
+---
+title: Conditional functions
+pcx_content_type: reference
+sidebar:
+  order: 6
+head:
+  - tag: title
+    content: SQL Reference
+
+---
+
+## if
+
+Usage:
+
+```sql
+if(<condition>, <true_expression>, <false_expression>)
+```
+
+Returns `<true_expression>` if `<condition>` evaluates to true, else returns `<false_expression>`.
+
+Example:
+
+```sql
+if(temp > 20, 'It is warm', 'Bring a jumper')
+```

@@ -1,0 +1,32 @@
+---
+pcx_content_type: troubleshooting
+title: Error 429
+source: null
+---
+
+import { FeatureTable, Render } from "~/components";
+
+## 429 Too Many Requests
+
+The `429 Too Many Requests` status code indicates that the client has sent too many requests in a specified amount of time, as determined by the server's rate-limiting rules. The server may include a `Retry-After` header in the response to specify when the client can try again.
+
+For more details, refer to [RFC 6585](https://tools.ietf.org/html/rfc6585).
+
+### Common use cases
+
+Servers use this status code to prevent excessive API requests from overloading the system. For example, a client making repeated API calls within a short time frame may trigger a 429 response. Websites or services may impose rate limits to manage traffic spikes or prevent abuse, temporarily blocking excessive requests from users.
+
+### Cloudflare-specific information
+
+#### Cloudflare API limits
+
+<Render file="api-rate-limits" product="fundamentals" />
+
+#### R2 managed public buckets
+
+Cloudflare applies rate limiting to requests for R2 managed public buckets accessed via `r2.dev`. This helps protect customers from abuse and overuse of public buckets. For details, refer to [Rate limiting on managed public buckets through `r2.dev`](/r2/platform/limits/#rate-limiting-on-managed-public-buckets-through-r2dev).
+
+#### Website end users
+
+Cloudflare will generate a `429` response when a request is being [rate limited](https://www.cloudflare.com/rate-limiting/). If visitors to your site encounter this error, it will be visible in the [Rate Limiting Analytics](/waf/reference/legacy/old-rate-limiting/#analytics) dashboard.
+

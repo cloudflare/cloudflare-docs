@@ -1,0 +1,42 @@
+---
+pcx_content_type: reference
+title: Records transfer
+sidebar:
+  order: 9
+---
+
+Consider the sections below to understand the expected behaviors, depending on DNS record type and proxied status.
+
+
+## Proxied records
+
+For each [proxied DNS record](/dns/proxy-status/) in your zone, Cloudflare will transfer out two `A` and two `AAAA` records.
+
+These records correspond to the [Cloudflare IP addresses](https://www.cloudflare.com/ips) used for proxying traffic.
+
+## DNS-only CNAME records
+
+As explained in [DNS record types](/dns/manage-dns-records/reference/dns-record-types/#cname), Cloudflare uses a process called [CNAME flattening](/dns/cname-flattening/) to return the final IP address instead of the CNAME target. CNAME flattening improves performance and is also what allows you to set a CNAME record on the zone apex.
+
+Depending on the [settings](/dns/cname-flattening/set-up-cname-flattening/) you have, when you use DNS-only CNAME records with outgoing zone transfers, you can expect the following:
+
+- For DNS-only CNAME records on the zone apex, Cloudflare will always transfer out the flattened IP addresses.
+- For DNS-only CNAME records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**CNAME flattening for all CNAME records**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
+
+:::note[Per-record CNAME flattening]
+
+For records using [per-record CNAME flattening](/dns/cname-flattening/set-up-cname-flattening/#per-record) (meaning **CNAME flattening for all CNAME records** is disabled), Cloudflare will transfer out the CNAME, not the flattened IP address.
+
+:::
+
+## Records that are not transferred
+
+The following records are not transferred out when you use Cloudflare as primary:
+
+- [CAA records](/ssl/edge-certificates/caa-records/)
+- TXT records used for TLS certificate validation
+- DNS-only [Load Balancing](/load-balancing/load-balancers/dns-records/) records
+
+:::note
+Proxied Load Balancing records are transferred as explained in [Proxied records](#proxied-records).
+:::

@@ -1,0 +1,73 @@
+{
+    "id": "3ae8936e-593e-4fb2-85ee-95dd8a057588",
+    "source": 1,
+    "name": "@cf/black-forest-labs/flux-2-dev",
+    "description": "FLUX.2 [dev] is an image model from Black Forest Labs where you can generate highly realistic and detailed images, with multi-reference support.",
+    "task": {
+        "id": "3d6e1f35-341b-4915-a6c8-9a7142a9033a",
+        "name": "Text-to-Image",
+        "description": "Generates images from input text. These models can be used to generate and modify images based on text prompts."
+    },
+    "created_at": "2025-11-24 15:44:06.050",
+    "tags": [],
+    "properties": [
+        {
+            "property_id": "terms",
+            "value": "https://bfl.ai/legal/terms-of-service"
+        },
+        {
+            "property_id": "partner",
+            "value": "true"
+        },
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per input 512x512 tile, per step",
+                    "price": 0.00021,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per output 512x512 tile, per step",
+                    "price": 0.00041,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
+    "schema": 
+        {
+        "input": {
+            "type": "object",
+            "properties": {
+                "multipart": {
+                    "type": "object",
+                    "properties": {
+                        "body": {
+                            "type": "object"
+                        },
+                        "contentType": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "body",
+                        "contentType"
+                    ]
+                },
+                "required": [
+                    "multipart"
+                ]
+            }
+        },
+        "output": {
+            "type": "object",
+            "properties": {
+                "image": {
+                    "type": "string",
+                    "description": "Generated image as Base64 string."
+                }
+            }
+        }
+    }
+}

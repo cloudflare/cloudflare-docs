@@ -1,0 +1,11 @@
+name: Origin Rules
+
+product:
+  title: Origin Rules
+  group: Application performance
+  url: /rules/origin-rules/
+  show: false
+
+meta:
+  title: Cloudflare Origin Rules docs
+  author: "@cloudflare"

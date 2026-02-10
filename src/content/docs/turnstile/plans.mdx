@@ -1,0 +1,42 @@
+---
+title: Plans
+
+hideChildren: true
+pcx_content_type: navigation
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Cloudflare Turnstile plans
+
+---
+
+import { FeatureTable, Tabs, TabItem, Details } from "~/components"
+
+Cloudflare Turnstile is available on the following plans:
+
+<Details header="Free plan">
+The Free plan is best for:
+
+- Personal websites and blogs
+- Small to medium businesses
+- Development and testing environments
+- Most production applications
+</Details>
+
+<Details header="Enterprise plan">
+The Enterprise plan is best for:
+- Large enterprises with high-volume traffic
+- Organizations requiring advanced bot detection and device fingerprinting
+- Organizations requiring custom branding, companies with strict compliance requirements
+- Multi-domain or complex hosting environments
+</Details>
+
+<FeatureTable id="security.turnstile" />
+
+:::note[Notes]
+
+- If you upgrade from Free to Enterprise, your existing widgets and configurations will be preserved during the upgrade process.
+- Free users are limited to 20 widgets per account. Customers with Enterprise Bot Management and Enterprise Turnstile can have this limit increased. Contact your account team to discuss your requirements.
+- Turnstile can be used independently without requiring other Cloudflare services.
+:::

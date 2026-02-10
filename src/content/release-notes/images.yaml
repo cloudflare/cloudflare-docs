@@ -2,8 +2,6 @@
 link: "/images/platform/changelog/"
 productName: Images
 productLink: "/images/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2024-04-04"
     title: Images upload widget

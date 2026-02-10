@@ -1,0 +1,124 @@
+---
+pcx_content_type: how-to
+title: Metadata
+meta:
+  title: Metadata | How we docs
+---
+
+import { GitHubCode } from "~/components";
+
+Page-level metadata - content type, associated products, last updated, word count - lets you take a broader, more strategic view of your content.
+
+It helps you answer questions like the following:
+
+- As a writer:
+  - Am I missing something obvious in the content strategy?
+  - What are some pages I should be updating right now?
+  - How does X tutorial compare with all tutorials? Is it getting more traffic than the baseline?
+- As a manager:
+  - Are we over or underinvesting in a specific product area? Or a specific content type?
+  - How does the traffic to this set of products compare to another?
+  - How can I communicate broader trends to my stakeholders?
+
+You cannot answer these questions without some level of rollup reporting, which you can only get through metadata.
+
+## What we track
+
+At Cloudflare, we track the following information about different pages:
+
+| Value                        | Description                                                                                                                                   | Examples                                        |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| **Product**                  | The top-level subfolder of the page.                                                                                                          | `dns`, `bots`                                   |
+| **Product Group**            | The primary area that each product falls into.                                                                                                | `Application Performance`, `Developer Platform` |
+| **Tags**                     | Specific [atttributes](/style-guide/frontmatter/tags/) related to a page's content or purpose.                                                | `AI`, `JavaScript`, `Headers`                   |
+| **Content type**             | The primary purpose of the page, which corresponds to our listed [content types](/style-guide/documentation-content-strategy/content-types/). | `how-to`, `faq`                                 |
+| **Last modified**            | How many days ago was this page last updated?                                                                                                 | `63`                                            |
+| **Last reviewed** (optional) | How many days ago was this page last reviewed?                                                                                                | `100`                                           |
+
+Of all of these values, there is a bit of nuance to our **Last reviewed** metadata. **Last reviewed** differs from **Last modified** because a review is more thorough than an update. A review implies that all contents of the page have been vetted for accuracy.
+
+Because of this extra effort, we only track **Last reviewed** for content types that are particularly important to the user journey and require an additional level of maintenance. At the moment, those content types are [tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/).
+
+---
+
+## How we track
+
+We set these values at two different levels, the folder level and the page level.
+
+### Folder-level attributes
+
+We set two values at a folder level, `Product` and `Product Group`. We take this approach because we can assume that these values apply every page within that folder.
+
+For example, here's the content from our [DNS folder](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/products/dns.yaml).
+
+<GitHubCode
+	repo="cloudflare/cloudflare-docs"
+	file="src/content/products/dns.yaml"
+	commit="eeb4aadac6e1ca1f25f698385c1217cabda1adac"
+	lang="yaml"
+	code={{ title: "dns.yaml", mark: [4, 6] }}
+/>
+
+### Page-level attributes
+
+We primarily set page-level attributes through the [page's frontmatter](/style-guide/frontmatter/custom-properties/).
+
+For example, here are the values set for our [Build a Slackbot tutorial](/workers/tutorials/build-a-slackbot/).
+
+<GitHubCode
+	repo="cloudflare/cloudflare-docs"
+	file="src/content/docs/workers/tutorials/build-a-slackbot/index.mdx"
+	commit="c33f3a8f71fd7b8c7d68d9f0b179abdc1e8d330a"
+	lang="mdx"
+	lines="1-10"
+	code={{ title: "build-a-slackbot.mdx", mark: [2, 4, 6, 7] }}
+/>
+
+However, the `last_modified` value is pulled automatically from the git history of a file.
+
+---
+
+## How we use values
+
+We choose to render all of these values as specific `meta` properties for each page.
+
+For example, these are the `meta` properties and values on the [AI Crawl Control - Get Started page](/ai-crawl-control/get-started/).
+
+{/* prettier-ignore */}
+```html title="Get Started | AI Crawl Control"
+<meta name="pcx_content_group" content="Core platform" >
+<meta name="pcx_product" content="AI Crawl Control" >
+<meta name="pcx_content_type" content="get-started" >
+<meta name="pcx_last_modified" content="7" >
+```
+
+We render these values using a custom override for our [`Head.astro`](https://github.com/cloudflare/cloudflare-docs/blob/production/src/components/overrides/Head.astro) file. If specific values are set, we then add them as meta tags onto the page.
+
+<GitHubCode
+	repo="cloudflare/cloudflare-docs"
+	file="src/components/overrides/Head.astro"
+	commit="80573b88bd2a491240e404938feb506d347093db"
+	lang="ts"
+	lines="65-72"
+	code={{ title: "Head.astro" }}
+/>
+
+### Benefits
+
+We get two primary benefits from structuring our content this way.
+
+First, our metadata is easily consumable by anyone who crawls our pages. We started using these values for our Algolia search configuration and internal reporting, but have since expanded to sharing this data with other teams that consume our content for AI systems too.
+
+Additionally, this decisions means that our GitHub repo is always the source of truth. We do not have to keep a spreadsheet or mapping updated elsewhere, the source of truth is always in our repo and - by extension - a lot more likely to be accurate than if we maintained multiple sources of truth.
+
+---
+
+## How we ensure quality
+
+It's difficult to avoid errors with this kind of metadata, specifically because we are relying on freeform text entry in the frontmatter of individual files.
+
+We utilize [Zod schemas](https://zod.dev/) heavily in our Astro site, which are defined in [`src/schemas/`](https://github.com/cloudflare/cloudflare-docs/tree/production/src/schemas).
+
+These allow us to provide [Intellisense guidance](https://docs.astro.build/en/reference/experimental-flags/content-intellisense/) for contributors using IDEs for local development.
+
+![Intellisense in action](~/assets/images/style-guide/how-we-docs/intellisense.png)

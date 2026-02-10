@@ -6,7 +6,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, Steps, DashButton } from "~/components";
 
 By enabling Cloudflare Email Address Obfuscation, email addresses on your web page will be hidden from bots, while keeping them visible to humans. In fact, there are no visible changes to your website for visitors.
 
@@ -28,10 +28,15 @@ Cloudflare enables email address obfuscation automatically when you sign up.
 
 To disable **Email Address Obfuscation** in the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and website.
-3. Go to **Scrape Shield**.
-4. For **Email Address Obfuscation**, switch the toggle to **Off**.
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Scrape Shield** page.
+
+   <DashButton url="/?to=/:account/:zone/content-protection" />
+
+2. For **Email Address Obfuscation**, switch the toggle to **Off**.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 
@@ -47,13 +52,13 @@ To prevent Cloudflare from obfuscating specific email addresses, you can:
 
 - Add the following comment in the page HTML code:
 
-  ```
+  ```html
   <!--email_off-->contact@example.com<!--/email_off-->
   ```
 
 - Return email addresses in JSON format for AJAX calls, making sure your web server returns a content type of `application/json`.
 
-- Disable the Email Obfuscation feature by creating a [Configuration Rule](/rules/configuration-rules/) to be applied on a specific endpoint.
+- Disable the Email Obfuscation feature by creating a [configuration rule](/rules/configuration-rules/) to be applied on a specific endpoint.
 
 ---
 
@@ -61,20 +66,20 @@ To prevent Cloudflare from obfuscating specific email addresses, you can:
 
 To prevent unexpected website behavior, email addresses are not obfuscated when they appear in:
 
-- Any HTML tag attribute, except for the _href_ attribute of the _a_ tag.
+- Any HTML tag attribute, except for the `href` attribute of the `a` tag.
 - Other HTML tags:
-  - _script_ tags: `<script></script>`
-  - _noscript_ tags: `<noscript></noscript>`
-  - _textarea_ tags: `<textarea></textarea>`
-  - _xmp_ tags: `<xmp></xmp>`
-  - _head_ tags: `<head></head>`
+  - `<script></script>`
+  - `<noscript></noscript>`
+  - `<textarea></textarea>`
+  - `<xmp></xmp>`
+  - `<head></head>`
 - Any page that does not have a MIME type of `text/html` or `application/xhtml+xml`.
 
-:::caution
+:::note[Notes]
 
-Email Obfuscation will not apply in the following cases:
-
-- You are using the `Cache-Control: no-transform` header.
-- The HTML/JS code is specifically added by a [Worker](/workers/).
+- Email Obfuscation will not apply in the following cases:
+  - You are using the `Cache-Control: no-transform` header.
+  - The HTML/JavaScript code is specifically added by a [Worker](/workers/).
+- Email Obfuscation might not work as expected when the HTML page includes `<template></template>` tags.
 
 :::

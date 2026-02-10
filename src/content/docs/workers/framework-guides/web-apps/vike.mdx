@@ -1,0 +1,121 @@
+---
+pcx_content_type: how-to
+title: Vike
+sidebar:
+  order: 9
+tags: ["full-stack"]
+description: Create a Vike application and deploy it to Cloudflare Workers
+---
+
+import { Steps, PackageManagers } from "~/components";
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+You can deploy your [Vike](https://vike.dev) app to Cloudflare using the Vike extension [`vike-photon`](https://vike.dev/vike-photon).
+
+All app types (SSR/SPA/SSG) are supported.
+
+
+## What is Vike?
+
+[Vike](https://vike.dev) is a Next.js/Nuxt alternative for advanced applications, powered by a modular architecture for unprecedented flexibility and stability.
+
+## New app
+
+Use [vike.dev/new](https://vike.dev/new) to scaffold a new Vike app that uses `vike-photon` with `@photonjs/cloudflare`.
+
+
+## Add to existing app
+
+<Steps>
+
+1.  <PackageManagers pkg="wrangler vike-photon @photonjs/cloudflare" />
+
+2.  ```diff lang=ts title="pages/+config.ts"
+      import type { Config } from 'vike/types'
+    + import vikePhoton from 'vike-photon/config'
+
+      export default {
+    +   extends: [vikePhoton]
+      } satisfies Config
+    ```
+
+3.  ```diff lang=json title="package.json"
+      {
+        "scripts": {
+          "dev": "vike dev",
+    +     "preview": "vike build && vike preview",
+    +     "deploy": "vike build && wrangler deploy"
+        }
+      }
+    ```
+    ```diff lang=jsonc title="wrangler.jsonc"
+    + {
+    +   "$schema": "node_modules/wrangler/config-schema.json",
+    +   "compatibility_date": "2025-08-06",
+    +   "name": "my-vike-cloudflare-app",
+    +   "main": "virtual:photon:cloudflare:server-entry",
+    +   // Only required if your app depends a Node.js API
+    +   "compatibility_flags": ["nodejs_compat"]
+    + }
+    ```
+
+4.  ```diff lang=bash title=".gitignore"
+    + .wrangler/
+    ```
+
+5.  **(Optional)** By default, Photon uses a built-in server that supports basic features like SSR. If you need additional server functionalities (e.g. [file uploads](https://hono.dev/examples/file-upload) or [API routes](https://vike.dev/api-routes)), then [create your own server](https://vike.dev/vike-photon#server).
+
+</Steps>
+
+## Cloudflare APIs (bindings)
+
+To access Cloudflare APIs (such as [D1](/d1/) and [KV](/kv/)), use [bindings](/workers/runtime-apis/bindings/) which are available via the `env` object [imported from `cloudflare:workers`](/workers/runtime-apis/bindings/#importing-env-as-a-global).
+
+```ts
+import { env } from 'cloudflare:workers'
+// Key-value store
+env.KV.get('my-key')
+// Environment variable
+env.LOG_LEVEL
+// ...
+```
+
+> Example of using Cloudflare D1:
+> <PackageManagers
+> 	type="create"
+> 	pkg="vike@latest"
+> 	args="--react --hono --drizzle --cloudflare"
+> />
+> Or go to [vike.dev/new](https://vike.dev/new) and select `Cloudflare` with an ORM.
+
+## TypeScript
+
+If you use TypeScript, run [`wrangler types`](/workers/wrangler/commands/#types) whenever you change your Cloudflare configuration to update the `worker-configuration.d.ts` file.
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="types"
+/>
+
+Then commit:
+
+```bash
+git commit -am "update cloudflare types"
+```
+
+Make sure TypeScript loads it:
+
+```diff lang=json title="tsconfig.json"
+  {
+    "compilerOptions": {
++     "types": ["./worker-configuration.d.ts"]
+   }
+  }
+```
+
+See also: [Cloudflare Workers > TypeScript](/workers/languages/typescript/).
+
+## See also
+
+- [Vike Docs > Cloudflare](https://vike.dev/cloudflare)

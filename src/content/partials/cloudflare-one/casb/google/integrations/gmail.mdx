@@ -9,6 +9,7 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/integration-description"
+	product="cloudflare-one"
 	params={{
 		integrationName: props.integrationName,
 		integrationAccountType: props.environmentName,
@@ -17,12 +18,13 @@ import { Render } from "~/components";
 
 ## Integration prerequisites
 
-<Render file="casb/google/google-prereqs" />
+<Render file="casb/google/google-prereqs" product="cloudflare-one" />
 
 ## Integration permissions
 
 <Render
 	file="casb/integration-perms"
+	product="cloudflare-one"
 	params={{
 		parentIntegration: "Google Workspace",
 		parentSlug: "google-workspace",
@@ -33,6 +35,7 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/security-findings"
+	product="cloudflare-one"
 	params={{
 		integrationName: props.integrationName,
 		slugRelativePath: props.slugifiedName,
@@ -41,8 +44,8 @@ import { Render } from "~/components";
 
 ### Gmail administrator settings
 
-<Render file="casb/google/gmail-admin-settings" />
+<Render file="casb/google/gmail-admin-settings" product="cloudflare-one" />
 
 ### Email forwarding
 
-<Render file="casb/google/email-forwarding" />
+<Render file="casb/google/email-forwarding" product="cloudflare-one" />

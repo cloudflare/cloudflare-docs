@@ -24,6 +24,7 @@ When creating a URL rewrite rule via API, make sure you:
 
 <Render
 	file="rules-creation-workflow"
+	product="rules"
 	params={{
 		ruleName: "a URL rewrite rule",
 		phaseName: "http_request_transform",
@@ -44,6 +45,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	json={{
 		rules: [
 			{
+				ref: "rewrite_eu_to_emea",
 				expression: '(http.request.uri.query contains "eu")',
 				description: "My first static URL rewrite rule",
 				action: "rewrite",
@@ -62,6 +64,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 ```json output
 {
 	"result": {
+		"ref": "rewrite_eu_to_emea",
 		"id": "<RULESET_ID>",
 		"name": "Zone-level Transform Ruleset",
 		"description": "Zone-level ruleset that will execute Transform Rules.",
@@ -94,6 +97,12 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 }
 ```
 
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
 </Details>
 
 <Details header="Example: Add a rule that performs a dynamic URL rewrite">
@@ -106,6 +115,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	json={{
 		rules: [
 			{
+				ref: "rewrite_2012_to_archive",
 				expression: 'starts_with(http.request.uri.path, "/news/2012/")',
 				description: "My first dynamic URL rewrite rule",
 				action: "rewrite",
@@ -131,6 +141,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 		"version": "2",
 		"rules": [
 			{
+				"ref": "rewrite_2012_to_archive",
 				"id": "<RULE_ID>",
 				"version": "1",
 				"action": "rewrite",
@@ -155,6 +166,12 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	"messages": []
 }
 ```
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 </Details>
 

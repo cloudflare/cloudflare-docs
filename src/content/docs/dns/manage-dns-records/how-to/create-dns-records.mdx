@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, Render, TabItem, Tabs, Details } from "~/components";
+import { GlossaryTooltip, Render, TabItem, Tabs, Details, DashButton, DirectoryListing } from "~/components";
 
 Consider the sections below for step-by-step instructions on managing DNS records at Cloudflare.
 
@@ -15,21 +15,27 @@ To better understand what DNS records are, refer to [Overview](/dns/manage-dns-r
 If your domain is added to Cloudflare by a hosting partner, manage your DNS records via the hosting partner.
 :::
 
-## Create DNS records
+---
+
+## Basic operations
+
+### Create DNS records
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To create a DNS record in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
-2. Go to **DNS** > **Records**.
-3. Select **Add record**.
-4. Choose a record [**Type**](/dns/manage-dns-records/reference/dns-record-types/).
-5. Complete the required fields, which vary per record. Particularly important fields (for some records) include:
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Add record**.
+3. Choose a record [**Type**](/dns/manage-dns-records/reference/dns-record-types/).
+4. Complete the required fields, which vary per record. Particularly important fields (for some records) include:
    - **Proxy status**: For `A`, `AAAA`, and `CNAME` records, decide whether hostname traffic is <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied through Cloudflare</GlossaryTooltip>.
    - **TTL**: Short for [_Time to Live_](/dns/manage-dns-records/reference/ttl/), this field controls how long each record is valid and — as a result — how long it takes for record updates to reach your end users.
    - **Comment** and **Tag**: [Record attributes](/dns/manage-dns-records/reference/record-attributes/) meant for your reference.
-6. Select **Save**.
+5. Select **Save**.
 
 </TabItem>
 
@@ -41,19 +47,19 @@ For specific API examples, refer to [DNS record types](/dns/manage-dns-records/r
 
 </TabItem> </Tabs>
 
----
-
-## Edit DNS records
+### Edit DNS records
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To edit DNS records in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
-2. Go to **DNS** > **Records**.
-3. On a specific record, select **Edit**.
-4. Make any necessary changes.
-5. Select **Save**.
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. On a specific record, select **Edit**.
+3. Make any necessary changes.
+4. Select **Save**.
 
 </TabItem>
 
@@ -63,19 +69,19 @@ To update part of a record with the API, use a [PATCH request](/api/resources/dn
 
 </TabItem> </Tabs>
 
----
-
-## Delete DNS records
+### Delete DNS records
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To delete DNS records in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
-2. Go to **DNS** > **Records**.
-3. On a specific record, select **Edit**.
-4. Select **Delete**.
-5. Select **Delete** again to confirm.
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. On a specific record, select **Edit**.
+3. Select **Delete**.
+4. Select **Delete** again to confirm.
 
 </TabItem>
 
@@ -87,6 +93,22 @@ To delete records with the API, use a [DELETE request](/api/resources/dns/subres
 
 ---
 
-## Batch record changes
+## Use cases
 
-For guidance on how to apply several changes to your zone records in just one action, refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/).
+### Update an origin IP address
+
+If your hosting provider changes or your origin IP address changes, update the **Content** value of the relevant DNS records (usually `A` or `AAAA` records).
+
+If you are not sure which IP address to use, refer to your hosting provider's documentation.
+
+### Originless setups
+
+If you need a placeholder address for an originless setup (also referred to as parked domain or redirect-only), you can use the reserved IPv6 address `100::` or the reserved IPv4 address `192.0.2.0` in a <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied</GlossaryTooltip> DNS record.
+
+This allows you to route requests using products such as [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Workers](/workers/).
+
+---
+
+## Further guidance
+
+<DirectoryListing folder="/dns/manage-dns-records/how-to/"/>

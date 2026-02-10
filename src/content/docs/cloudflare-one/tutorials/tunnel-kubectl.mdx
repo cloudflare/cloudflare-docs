@@ -1,8 +1,11 @@
 ---
-updated: 2024-10-02
-category: 🔐 Zero Trust
+reviewed: 2024-10-02
+category: Zero Trust
+difficulty: Intermediate
 pcx_content_type: tutorial
 title: Use Cloudflare Tunnels with Kubernetes client-go plugin
+description: >-
+  This tutorial explains how to use Cloudflare Tunnels with Kubernetes client-go credential plugins for authentication. By following these steps, you can securely access your Kubernetes cluster through a Cloudflare Tunnel.
 ---
 
 # Use Cloudflare Tunnels with Kubernetes client-go credential plugins
@@ -81,21 +84,21 @@ Ensure your Kubernetes API server is configured to accept authentication from Cl
    apiVersion: v1
    kind: Config
    clusters:
-   - cluster:
-       server: https://k8s.example.com
-     name: cloudflare-k8s
+     - cluster:
+         server: https://k8s.example.com
+       name: cloudflare-k8s
    users:
-   - name: cloudflare-user
-     user:
-       exec:
-         apiVersion: client.authentication.k8s.io/v1beta1
-         command: /path/to/cloudflare-k8s-auth.sh
-         interactiveMode: Never
+     - name: cloudflare-user
+       user:
+         exec:
+           apiVersion: client.authentication.k8s.io/v1beta1
+           command: /path/to/cloudflare-k8s-auth.sh
+           interactiveMode: Never
    contexts:
-   - context:
-       cluster: cloudflare-k8s
-       user: cloudflare-user
-     name: cloudflare-k8s-context
+     - context:
+         cluster: cloudflare-k8s
+         user: cloudflare-user
+       name: cloudflare-k8s-context
    current-context: cloudflare-k8s-context
    ```
 
@@ -116,4 +119,4 @@ If you encounter issues:
 - Verify that the Kubernetes API server is properly set up to accept authentication from Cloudflare Tunnels
 - Review the Cloudflare Tunnel logs for any error messages
 
-For more information, refer to the [Cloudflare Tunnels documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/) and the [Kubernetes client-go credential plugins documentation](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#client-go-credential-plugins).
+For more information, refer to the [Cloudflare Tunnels documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and the [Kubernetes client-go credential plugins documentation](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#client-go-credential-plugins).

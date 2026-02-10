@@ -5,12 +5,17 @@ sidebar:
   order: 4
 ---
 
+import { DashButton } from "~/components";
+
 MTA Strict Transport Security ([MTA-STS](https://datatracker.ietf.org/doc/html/rfc8461)) was introduced by email service providers including Microsoft, Google and Yahoo as a solution to protect against downgrade and man-in-the-middle attacks in SMTP sessions, as well as solving the lack of security-first communication standards in email.
 
 Suppose that `example.com` is your domain and uses Email Routing. Here is how you can enable MTA-STS for it.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **DNS** > **Records** and create a new CNAME record with the name `_mta-sts` that points to Cloudflare’s record `_mta-sts.mx.cloudflare.net`. Make sure to disable the proxy mode.
+1. In the Cloudflare dashboard, go to the **Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Create a new CNAME record with the name `_mta-sts` that points to Cloudflare’s record `_mta-sts.mx.cloudflare.net`. Make sure to disable the proxy mode.
 
 ![MTA-STS CNAME record](~/assets/images/email-routing/mta-sts-record.png)
 
@@ -35,13 +40,15 @@ To do this you need to deploy a Worker that allows email clients to pull Cloudfl
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    return await fetch("https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt")
-  },
+	async fetch(request, env, ctx) {
+		return await fetch(
+			"https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt",
+		);
+	},
 };
 ```
 
-This Worker proxies `https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt` to your own domain. 
+This Worker proxies `https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt` to your own domain.
 
 5. After deploying it, go to the Worker configuration, then **Settings** > **Domains & Routes** > **+Add**. Type the subdomain `mta-sts.example.com`.
 

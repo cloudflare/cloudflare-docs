@@ -10,3 +10,7 @@ When a client visits your application, Cloudflare directs their request to a hea
 Cloudflare performs layer 7 load balancing when traffic to your hostname is **proxied** through Cloudflare. In the **Load Balancing** dashboard, these load balancers are marked with an orange cloud.
 
 ![DNS-only load balancers are marked with an orange cloud](~/assets/images/load-balancing/proxied-load-balancer.png)
+
+:::warning
+Note that if a [DNS-only (grey cloud)](/dns/proxy-status/) CNAME record points to a proxied load balancer, the IP returned for it would be endpoint IP and a HTTP request sent to it would not be proxied.
+:::

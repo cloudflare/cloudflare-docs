@@ -1,0 +1,42 @@
+---
+title: Subscribe to events from Cloudflare services with Queues
+description: Subscribe to events from Cloudflare services to build custom workflows, integrations, and logic.
+products:
+  - queues
+date: 2025-08-19 12:00:00 UTC
+---
+
+You can now subscribe to events from other Cloudflare services (for example, [Workers KV](/kv/), [Workers AI](/workers-ai), [Workers](/workers)) and consume those events via [Queues](/queues/), allowing you to build custom workflows, integrations, and logic in response to account activity.
+
+![Event subscriptions architecture](~/assets/images/queues/queues-event-subscriptions.png)
+
+Event subscriptions allow you to receive messages when events occur across your Cloudflare account. Cloudflare products can publish structured events to a queue, which you can then consume with [Workers](/workers/) or [pull via HTTP from anywhere](/queues/configuration/pull-consumers/).
+
+To create a subscription, use the dashboard or [Wrangler](/workers/wrangler/commands/#subscription-create):
+
+```bash
+npx wrangler queues subscription create my-queue --source r2 --events bucket.created
+```
+
+An event is a structured record of something happening in your Cloudflare account – like a Workers AI batch request being queued, a Worker build completing, or an R2 bucket being created. Events follow a consistent structure:
+
+```json title="Example R2 bucket created event"
+{
+  "type": "cf.r2.bucket.created",
+  "source": {
+    "type": "r2"
+  },
+  "payload": {
+    "name": "my-bucket",
+    "location": "WNAM"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventTimestamp": "2025-07-28T10:30:00Z"
+  }
+}
+```
+
+Current [event sources](/queues/event-subscriptions/events-schemas/) include [R2](/r2/), [Workers KV](/kv/), [Workers AI](/workers-ai/), [Workers Builds](/workers/ci-cd/builds/), [Vectorize](/vectorize/), [Super Slurper](/r2/data-migration/super-slurper/), and [Workflows](/workflows/). More sources and events are on the way.
+
+For more information on event subscriptions, available events, and how to get started, refer to our [documentation](/queues/event-subscriptions/).

@@ -12,12 +12,13 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		if (request.url.endsWith("/markdown.zip")) {
-			const res = await this.env.VENDORED_MARKDOWN.get("markdown.zip");
+		if (request.url.endsWith("/llms-full.txt")) {
+			const { pathname } = new URL(request.url);
+			const res = await this.env.VENDORED_MARKDOWN.get(pathname.slice(1));
 
 			return new Response(res?.body, {
 				headers: {
-					"Content-Type": "application/zip",
+					"Content-Type": "text/markdown; charset=utf-8",
 				},
 			});
 		}
@@ -27,6 +28,22 @@ export default class extends WorkerEntrypoint<Env> {
 			const res = await this.env.ASSETS.fetch(htmlUrl, request);
 
 			if (res.status === 404) {
+				const redirect = await redirectsEvaluator(
+					new Request(htmlUrl, request),
+					this.env.ASSETS,
+				);
+
+				if (redirect) {
+					const location = redirect.headers.get("location");
+
+					return new Response(null, {
+						status: redirect.status,
+						headers: {
+							Location: location + "index.md",
+						},
+					});
+				}
+
 				return res;
 			}
 
@@ -45,6 +62,7 @@ export default class extends WorkerEntrypoint<Env> {
 				return new Response(markdown, {
 					headers: {
 						"content-type": "text/markdown; charset=utf-8",
+						"x-robots-tag": "noindex",
 					},
 				});
 			}
@@ -82,6 +100,23 @@ export default class extends WorkerEntrypoint<Env> {
 			console.error("Unknown error", error);
 		}
 
-		return this.env.ASSETS.fetch(request);
+		const response = await this.env.ASSETS.fetch(request);
+
+		if (response.status === 404) {
+			const section = new URL(response.url).pathname.split("/").at(1);
+
+			if (!section) return response;
+
+			const notFoundResponse = await this.env.ASSETS.fetch(
+				`http://fakehost/${section}/404/`,
+			);
+
+			return new Response(notFoundResponse.body, {
+				status: 404,
+				headers: notFoundResponse.headers,
+			});
+		}
+
+		return response;
 	}
 }

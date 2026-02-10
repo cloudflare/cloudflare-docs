@@ -1,0 +1,110 @@
+---
+{}
+---
+
+import {Type, MetaInfo, AnchorHeading} from "~/components";
+
+<AnchorHeading title="get" slug="do-kv-async-get" depth={3} />
+
+- <code>ctx.storage.get(key <Type text="string" />, options <Type text="Object" />{" "}<MetaInfo text="optional" />)</code>: <Type text="Promise<any>" />
+  - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
+
+- <code>ctx.storage.get(keys <Type text="Array<string>" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise<Map<string, any>>" />
+  - Retrieves the values associated with each of the provided keys. The type of each returned value in the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Results in the `Map` will be sorted in increasing order of their UTF-8 encodings, with any requested keys that do not exist being omitted. Supports up to 128 keys at a time.
+
+#### Supported options
+
+- `allowConcurrency`: <Type text='boolean' />
+  - By default, the system will pause delivery of I/O events to the Object while a storage operation is in progress, in order to avoid unexpected race conditions. Pass `allowConcurrency: true` to opt out of this behavior and allow concurrent events to be delivered.
+
+- `noCache`: <Type text='boolean'/>
+  - If true, then the key/value will not be inserted into the in-memory cache. If the key is already in the cache, the cached value will be returned, but its last-used time will not be updated. Use this when you expect this key will not be used again in the near future. This flag is only a hint. This flag will never change the semantics of your code, but it may affect performance.
+
+<AnchorHeading title="put" slug="do-kv-async-put" depth={3} />
+
+- <code>put(key <Type text="string" />, value <Type text="any" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
+  - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
+
+    The size of keys and values have different limits depending on the Durable Object storage backend you are using. Refer to either:
+    - [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
+    - [KV-backed Durable Object limits](/durable-objects/platform/limits/#key-value-backed-durable-objects-general-limits).<br/><br/>
+
+- <code>put(entries <Type text="Object" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
+  - Takes an Object and stores each of its keys and values to storage.
+  - Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
+  - Supports up to 128 key-value pairs at a time. The size of keys and values have different limits depending on the flavor of Durable Object you are using. Refer to either:
+    - [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
+    - [KV-backed Durable Object limits](/durable-objects/platform/limits/#key-value-backed-durable-objects-general-limits)
+
+<AnchorHeading title="delete" slug="do-kv-async-delete" depth={3} />
+
+- <code>delete(key <Type text="string" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise<boolean>" />
+  - Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
+
+- <code>delete(keys <Type text="Array<string>" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise<number>" />
+  - Deletes the provided keys and their associated values. Supports up to 128 keys at a time. Returns a count of the number of key-value pairs deleted.
+
+#### Supported options
+
+- `put()`, `delete()` and `deleteAll()` support the following options:
+
+- `allowUnconfirmed` <Type text ='boolean' />
+  - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. If the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead.
+
+  - This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds.
+
+  - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed` to `true` to opt out of the default behavior.
+
+  - If you want to allow some outgoing network messages to proceed immediately but not others, you can use the allowUnconfirmed option to avoid blocking the messages that you want to proceed and then separately call the [`sync()`](#sync) method, which returns a promise that only resolves once all previous writes have successfully been persisted to disk.
+
+- `noCache` <Type text ='boolean' />
+  - If true, then the key/value will be discarded from memory as soon as it has completed writing to disk.
+
+  - Use `noCache` if the key will not be used again in the near future. `noCache` will never change the semantics of your code, but it may affect performance.
+
+  - If you use `get()` to retrieve the key before the write has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
+
+:::note[Automatic write coalescing]
+
+If you invoke `put()` (or `delete()`) multiple times without performing any `await` in the meantime, the operations will automatically be combined and submitted atomically. In case of a machine failure, either all of the writes will have been stored to disk or none of the writes will have been stored to disk.
+:::
+
+:::note[Write buffer behavior]
+
+The `put()` method returns a `Promise`, but most applications can discard this promise without using `await`. The `Promise` usually completes immediately, because `put()` writes to an in-memory write buffer that is flushed to disk asynchronously. However, if an application performs a large number of `put()` without waiting for any I/O, the write buffer could theoretically grow large enough to cause the isolate to exceed its 128 MB memory limit. To avoid this scenario, such applications should use `await` on the `Promise` returned by `put()`. The system will then apply backpressure onto the application, slowing it down so that the write buffer has time to flush. Using `await` will disable automatic write coalescing.
+:::
+
+<AnchorHeading title="list" slug="do-kv-async-list" depth={3} />
+
+- <code>list(options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise<Map<string, any>>" />
+  - Returns all keys and values associated with the current Durable Object in ascending sorted order based on the keys' UTF-8 encodings.
+  - The type of each returned value in the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key.
+
+  - Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/durable-objects/platform/limits/). If that is a concern, pass options to `list` as documented below.
+
+#### Supported options
+
+- `start` <Type text ='string' />
+  - Key at which the list results should start, inclusive.
+
+- `startAfter` <Type text ='string' />
+  - Key after which the list results should start, exclusive. Cannot be used simultaneously with `start`.
+
+- `end` <Type text ='string' />
+  - Key at which the list results should end, exclusive.
+
+- `prefix` <Type text ='string' />
+  - Restricts results to only include key-value pairs whose keys begin with the prefix.
+
+- `reverse` <Type text='boolean' />
+  - If true, return results in descending order instead of the default ascending order.
+  - Enabling `reverse` does not change the meaning of `start`, `startKey`, or `endKey`. `start` still defines the smallest key in lexicographic order that can be returned (inclusive), effectively serving as the endpoint for a reverse-order list. `end` still defines the largest key in lexicographic order that the list should consider (exclusive), effectively serving as the starting point for a reverse-order list.
+
+- `limit` <Type text ='number' />
+  - Maximum number of key-value pairs to return.
+
+- `allowConcurrency` <Type text ='boolean' />
+  - Same as the option to [`get()`](#do-kv-async-get), above.
+
+- `noCache` <Type text ='boolean' />
+  - Same as the option to [`get()`](#do-kv-async-get), above.

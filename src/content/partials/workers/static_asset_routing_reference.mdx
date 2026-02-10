@@ -14,8 +14,9 @@ In most cases, configuring `assets.not_found_handling` to <code>{props.not_found
 	Request@{ shape: stadium, label: "Incoming request" }
 	Request-->RunWorkerFirst
 	RunWorkerFirst@{ shape: diamond, label: "Run Worker script first?" }
-	RunWorkerFirst-->|No|RequestMatchesAsset
-	RunWorkerFirst-->|Yes|WorkerScriptInvoked
+	RunWorkerFirst-->|Request matches run_worker_first path|WorkerScriptInvoked
+	RunWorkerFirst-->|Request matches run_worker_first negative path|AssetServing
+	RunWorkerFirst-->|No matches|RequestMatchesAsset
 	RequestMatchesAsset@{ shape: diamond, label: "Request matches asset?" }
 	RequestMatchesAsset-->|Yes|AssetServing
 	RequestMatchesAsset-->|No|WorkerScriptPresent

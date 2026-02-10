@@ -1,12 +1,10 @@
 ---
 pcx_content_type: how-to
 title: Use Direct Upload with continuous integration
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
+
 ---
+
+import { DashButton } from "~/components";
 
 Cloudflare Pages supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide will teach you how to deploy your application to Pages, using continuous integration.
 
@@ -25,13 +23,14 @@ $ CLOUDFLARE_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages deploy <DIRECTORY> --pro
 
 To generate an API token:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens).
-2. Select **My Profile** from the dropdown menu of your user icon on the top right of your dashboard.
-3. Select **API Tokens** > **Create Token**.
-4. Under **Custom Token**, select **Get started**.
-5. Name your API Token in the **Token name** field.
-6. Under **Permissions**, select _Account_, _Cloudflare Pages_ and _Edit_:
-7. Select **Continue to summary** > **Create Token**.
+1. In the Cloudflare dashboard, go to the **API Tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+2. Select **Create Token**.
+3. Under **Custom Token**, select **Get started**.
+4. Name your API Token in the **Token name** field.
+5. Under **Permissions**, select _Account_, _Cloudflare Pages_ and _Edit_:
+6. Select **Continue to summary** > **Create Token**.
 
 ![Follow the instructions above to create an API token for Cloudflare Pages](~/assets/images/pages/how-to/select-api-token-for-pages.png)
 
@@ -39,7 +38,13 @@ Now that you have created your API token, you can use it to push your project fr
 
 ### Get project account ID
 
-To find your account ID, log in to the Cloudflare dashboard > select your zone in **Account Home** > find your account ID in **Overview** under **API** on the right-side menu. If you have not added a zone, add one by selecting **Add site**. You can purchase a domain from [Cloudflare's registrar](/registrar/).
+To find your account ID, go to the **Zone Overview** page in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/:zone/" />
+
+Find your account ID in the **API** section on the right-hand side menu.
+
+If you have not added a zone, add one by selecting **Add** > **Connect a domain**. You can purchase a domain from [Cloudflare's registrar](/registrar/).
 
 ## Use GitHub Actions
 
@@ -76,17 +81,16 @@ jobs:
     name: Deploy to Cloudflare Pages
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # Run your project's build step
       # - name: Build
       #   run: npm install && npm run build
-      - name: Publish
-        uses: cloudflare/pages-action@v1
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: YOUR_PROJECT_NAME # e.g. 'my-project'
-          directory: YOUR_DIRECTORY_OF_STATIC_ASSETS # e.g. 'dist'
+          command: pages deploy YOUR_DIRECTORY_OF_STATIC_ASSETS --project-name=YOUR_PROJECT_NAME
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
 

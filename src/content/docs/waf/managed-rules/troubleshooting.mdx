@@ -1,0 +1,69 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshoot managed rules
+sidebar:
+  order: 4
+  label: Troubleshooting
+---
+
+import { RuleID } from "~/components";
+
+By default, WAF's managed rulesets are compatible with most websites and web applications. However, false positives and false negatives may occur:
+
+- **False positives**: Legitimate requests detected and mitigated as malicious.
+- **False negatives**: Malicious requests that were not mitigated and reached your origin server.
+
+## Troubleshoot false positives
+
+You can use [Security Events](/waf/analytics/security-events/) to help you identify what caused legitimate requests to get blocked. Add filters and adjust the report duration as needed.
+
+If you encounter a false positive caused by a managed rule, do one of the following:
+
+- **Add an exception**: [Exceptions](/waf/managed-rules/waf-exceptions/) allow you to skip the execution of WAF managed rulesets or some of their rules for certain requests.
+
+- **Adjust the OWASP managed ruleset**: A request blocked by the rule with ID <RuleID id="6179ae15870a4bb7b2d480d4843b323c" /> and description `949110: Inbound Anomaly Score Exceeded` refers to the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). To resolve the issue, [configure the OWASP managed ruleset](/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard/).
+
+- **Disable the corresponding managed rule(s)**: Create an override to disable specific rules. This may avoid false positives, but you will also reduce the overall site security. Refer to the [dashboard instructions](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) on configuring a managed ruleset, or to the [API instructions](/ruleset-engine/managed-rulesets/override-managed-ruleset/) on creating an override.
+
+:::note
+If you contact Cloudflare Support to verify whether a WAF managed rule triggers as expected, [provide a HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) captured while sending the specific request of concern.
+:::
+
+### Additional recommendations
+
+- If one specific rule causes false positives, disable that specific rule and not the entire ruleset.
+
+- For false positives with the administrator area of your website, add an [exception](/waf/managed-rules/waf-exceptions/) disabling a managed rule for the admin section of your site resources. You can use an expression similar to the following:
+
+  `http.host eq "example.com" and starts_with(http.request.uri.path, "/admin")`
+
+## Troubleshoot false negatives
+
+To identify false negatives, review the HTTP logs on your origin server.
+
+To reduce false negatives, use the following checklist:
+
+- Are DNS records that serve HTTP traffic [proxied through Cloudflare](/dns/proxy-status/)?<br/>
+  Cloudflare only mitigates requests in proxied traffic.
+
+- Have you deployed any of the [WAF managed rulesets](/waf/managed-rules/#available-managed-rulesets) in your zone?<br/>
+  You must [deploy a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#deploy-a-managed-ruleset) to apply its rules.
+
+- Are Managed Rules being skipped via an [exception](/waf/managed-rules/waf-exceptions/)?<br/>
+  Use [Security Events](/waf/analytics/security-events/) to search for requests being skipped. If necessary, adjust the exception expression so that it matches the attack traffic that should have been blocked.
+
+- Have you enabled any necessary managed rules that are not enabled by default?<br/>
+  Not all rules of WAF managed rulesets are enabled by default, so you should review individual managed rules.
+  - For example, Cloudflare allows requests with empty user agents by default. To block requests with an empty user agent, enable the rule with ID <RuleID id="b57df4f17f7f4ea4b8db33e20a6dbbd3"/> in the Cloudflare Managed Ruleset.
+  - Another example: If you want to block unmitigated SQL injection (SQLi) attacks, make sure the relevant managed rules tagged with `sqli` are enabled in the Cloudflare Managed Ruleset.
+
+  For instructions, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
+
+- Is the attack traffic matching a custom rule [skipping all Managed Rules](/waf/custom-rules/skip/)?<br/>
+  If necessary, adjust the custom rule expression so that it does not apply to the attack traffic.
+
+- Is the attack traffic matching an allowed ASN, IP range, or IP address in [IP Access rules](/waf/tools/ip-access-rules/)?<br/>
+  Review your IP Access rules and make sure that any allow rules do not match the attack traffic.
+
+- Is the malicious traffic reaching your origin IP addresses directly, therefore bypassing Cloudflare protection?<br/>
+  Block all traffic except from [Cloudflare's IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) at your origin server.

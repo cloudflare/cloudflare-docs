@@ -1,0 +1,48 @@
+---
+pcx_content_type: how-to
+title: Provision with Okta
+sidebar:
+  label: Okta
+---
+
+import { Render } from "~/components";
+
+<Render file="idp-group-deprecation" product="fundamentals" />
+
+Once you have [gathered the required data](/fundamentals/account/account-security/scim-setup/#gather-the-required-data), the following steps will be required to finish the provisioning with Okta.
+
+## Set up your Okta SCIM application
+
+1. In the Okta dashboard, go to **Applications** > **Applications**.
+2. Select **Browse App Catalog**.
+3. Locate and select **SCIM 2.0 Test App (OAuth Bearer Token)**.
+4. Select **Add Integration** and name your integration.
+5. Enable the following options:
+   - **Do not display application icon to users**
+   - **Do not display application icon in the Okta Mobile App**
+6. Disable **Automatically log in when user lands on login page**.
+7. Select **Next**, then select **Done**.
+
+## Integrate the Cloudflare API
+
+:::note
+The **Update User Attributes** option is not supported.
+:::
+
+1. In your integration page, go to **Provisioning** > **Configure API Integration**.
+2. Enable **Enable API Integration**.
+3. In SCIM 2.0 Base URL, enter: `https://api.cloudflare.com/client/v4/accounts/<accountID>/scim/v2`, substituting `accountID` for your [Cloudflare Account ID](/fundamentals/account/account-security/scim-setup/#get-your-account-id).
+4. In the **OAuth Bearer Token** field, enter your API token value.
+5. Deselect **Import Groups**.
+
+## Configure user & group sync in Okta
+
+1. In **Provisioning to App**, select **Edit**.
+2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
+3. Select **Done**.
+4. In the Assignments tab, add the users you want to synchronize with Cloudflare dashboard. You can add users in batches by assigning a group. If a user is removed from the application assignment via either direct user assignment or removed from the group that was assigned to the app, this will trigger a deprovisioning event from Okta to Cloudflare.
+5. In the Push Groups tab, add the Okta groups you want to synchronize with Cloudflare dashboard. View these Okta groups in the dashboard under Manage Account > Manage members > Members > User Groups.
+
+To verify the integration, select **View Logs** in the Okta SCIM application, and check the Audit Logs in the Cloudflare dashboard by navigating to **Manage Account** > **Audit Log**.
+
+This will provision all of the users in the group(s) affected to your Cloudflare account with "minimal account access."

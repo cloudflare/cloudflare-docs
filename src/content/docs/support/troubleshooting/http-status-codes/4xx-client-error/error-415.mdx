@@ -1,0 +1,19 @@
+---
+pcx_content_type: troubleshooting
+title: Error 415
+source: null
+---
+
+## 415 Unsupported Media Type
+
+The `415 Unsupported Media Type` status code indicates that the server refuses to process the request because the format of the payload is not supported. One way to identify and fix this issue would be to look at the `Content-Type` or `Content-Encoding` headers sent in the client's request.
+
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+This may be triggered by submitting a file type or format that the server is not configured to handle, such as uploading an unsupported image or document format, may also trigger this error.
+
+### Cloudflare-specific information
+
+Cloudflare typically passes this response from the origin server if it encounters an unsupported media type in the client's request payload.

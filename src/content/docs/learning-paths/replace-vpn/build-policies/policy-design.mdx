@@ -26,22 +26,22 @@ We recommend the following approach when planning your Zero Trust Network Access
 
 #### Identity
 
-Determine which identity provider you will use as the source of truth for user email, user groups, and other [identity-based attributes](/cloudflare-one/policies/gateway/identity-selectors/).
+Determine which identity provider you will use as the source of truth for user email, user groups, and other [identity-based attributes](/cloudflare-one/traffic-policies/identity-selectors/).
 
 :::note
 
 Ensure that the [identity provider is connected to Cloudflare](/learning-paths/replace-vpn/get-started/configure-idp/) and available to users in your [device enrollment permissions](/learning-paths/replace-vpn/configure-device-agent/device-enrollment-permissions/).
 :::
 
-If you plan to grant access to services based on group membership, [view the user registry](/cloudflare-one/insights/logs/users/) and verify that the target users have that group value in their User Registry.
+If you plan to grant access to services based on group membership, [view the user registry](/cloudflare-one/team-and-resources/users/users/) and verify that the target users have that group value in their User Registry.
 
 #### Device posture
 
-Most customers will also build policies that are contingent on the use of a corporate device. For example, all users on corporate devices can access `*.jira.internal.com`, but users on personal devices can only access `dev.internal.jira.com`. In order for this to be effective, we recommend defining a source of truth for your corporate devices. This is sometimes the presence of a specific [issued certificate](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/), the presence of a [process with a matched hash](/cloudflare-one/identity/devices/warp-client-checks/application-check/), or an API integration with a supported [thirty-party endpoint security provider](/cloudflare-one/identity/devices/service-providers/) like Crowdstrike or SentinelOne.
+Most customers will also build policies that are contingent on the use of a corporate device. For example, all users on corporate devices can access `*.jira.internal.com`, but users on personal devices can only access `dev.internal.jira.com`. In order for this to be effective, we recommend defining a source of truth for your corporate devices. This is sometimes the presence of a specific [issued certificate](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/client-certificate/), the presence of a [process with a matched hash](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/application-check/), or an API integration with a supported [thirty-party endpoint security provider](/cloudflare-one/integrations/service-providers/) like Crowdstrike or SentinelOne.
 
 :::note
 
-Be sure to [enable the device posture checks](/cloudflare-one/identity/devices/) that you want to use in your policies.
+Be sure to [enable the device posture checks](/cloudflare-one/reusable-components/posture-checks/) that you want to use in your policies.
 :::
 
 ### 2. Define your networks

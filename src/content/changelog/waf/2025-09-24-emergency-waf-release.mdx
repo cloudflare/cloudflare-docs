@@ -1,0 +1,44 @@
+---
+title: "WAF Release - 2025-09-24 - Emergency"
+description: Cloudflare WAF managed rulesets 2025-09-24 emergency release
+date: 2025-09-24
+---
+
+import { RuleID } from "~/components";
+
+This week highlights a critical vendor-specific vulnerability: a deserialization flaw in the License Servlet of Fortra’s GoAnywhere MFT. By forging a license response signature, an attacker can trigger deserialization of arbitrary objects, potentially leading to command injection.
+
+**Key Findings**
+
+* GoAnywhere MFT (CVE-2025-10035): Deserialization vulnerability in the License Servlet that allows attackers with a forged license response signature to deserialize arbitrary objects, potentially resulting in command injection.
+
+**Impact**
+
+GoAnywhere MFT (CVE-2025-10035): Exploitation enables attackers to escalate privileges or achieve remote code execution via command injection.
+
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th>Ruleset</th>
+      <th>Rule ID</th>
+      <th>Legacy Rule ID</th>
+      <th>Description</th>
+      <th>Previous Action</th>
+      <th>New Action</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="8fe242c7c0d64d689f4fc9a1e08b39f3" />
+      </td>
+      <td>100787</td>
+      <td>Fortra GoAnywhere - Auth Bypass - CVE:CVE-2025-10035</td>
+      <td>N/A</td>
+      <td>Block</td>
+      <td>This is a New Detection</td>
+    </tr>
+  </tbody>
+</table>

@@ -180,6 +180,13 @@ export function flattenSidebar(sidebar: SidebarEntry[]): Link[] {
 	});
 }
 
+function getBadge(link: string): any {
+	if (link.startsWith("/api")) return { text: "API", variant: "note" };
+	if (link.includes("/mcp-server-cloudflare"))
+		return { text: "MCP", variant: "note" };
+	return undefined;
+}
+
 async function handleGroup(group: Group): Promise<SidebarEntry> {
 	const index = group.entries.find(
 		(entry) => entry.type === "link" && entry.href.endsWith(`/${group.label}/`),
@@ -207,6 +214,11 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	if (frontmatter.sidebar.group?.badge) {
 		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
+	} else if (frontmatter.wid) {
+		const availabilityBadge = await productAvailabilityBadge(frontmatter.wid);
+		if (availabilityBadge) {
+			group.badge = availabilityBadge;
+		}
 	}
 
 	if (frontmatter.hideChildren) {
@@ -283,6 +295,11 @@ async function handleLink(link: Link): Promise<Link> {
 
 	if (link.badge) {
 		link.badge = inferBadgeVariant(link.badge);
+	} else if (frontmatter.wid) {
+		const availabilityBadge = await productAvailabilityBadge(frontmatter.wid);
+		if (availabilityBadge) {
+			link.badge = availabilityBadge;
+		}
 	}
 
 	if (frontmatter.external_link && !frontmatter.sidebar.group?.hideIndex) {
@@ -291,19 +308,32 @@ async function handleLink(link: Link): Promise<Link> {
 			icon: frontmatter.icon,
 			label: link.label.concat(externalLinkArrow),
 			href: frontmatter.external_link,
-			badge: frontmatter.external_link.startsWith("/api")
-				? {
-						text: "API",
-						variant: "note",
-					}
-				: undefined,
+			badge: getBadge(frontmatter.external_link) ?? link.badge,
 			attrs: {
+				target: "_blank",
 				"data-external-link": true,
 			},
 		};
 	}
 
 	return link;
+}
+
+async function productAvailabilityBadge(
+	wid: string,
+): Promise<Badge | undefined> {
+	try {
+		const availabilityEntry = await getEntry("product-availability", wid);
+		if (
+			availabilityEntry &&
+			availabilityEntry.data.availability?.toLowerCase() === "beta"
+		) {
+			return { text: "Beta", variant: "caution" };
+		}
+	} catch (_error) {
+		// If the entry doesn't exist in the collection, return undefined
+	}
+	return undefined;
 }
 
 function inferBadgeVariant(badge: Badge) {

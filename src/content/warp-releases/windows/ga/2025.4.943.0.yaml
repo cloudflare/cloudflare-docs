@@ -1,0 +1,20 @@
+releaseNotes: |-
+  This release contains a hotfix for [managed networks](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) for the 2025.4.929.0 release.
+
+  **Changes and improvements**
+  - Fixed an issue where it could take up to 3 minutes for the correct device profile to be applied in some circumstances. In the worst case, it should now only take up to 40 seconds. This will be improved further in a future release.
+
+  **Known issues**
+  - DNS resolution may be broken when the following conditions are all true:
+    - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+    - A custom DNS server address is configured on the primary network adapter.
+    - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+    To work around this issue, reconnect the WARP client by toggling off and back on.
+  - Microsoft has confirmed a regression with Windows 11 starting around 24H2 that may cause performance issues for some users. These performance issues could manifest as mouse lag, audio cracking, or other slowdowns. A fix from Microsoft is expected in early July.
+  - Devices with `KB5055523` installed may receive a warning about `Win32/ClickFix.ABA` being present in the installer. To resolve this false positive, update Microsoft Security Intelligence to [version 1.429.19.0](https://www.microsoft.com/en-us/wdsi/definitions/antimalware-definition-release-notes?requestVersion=1.429.19.0) or later.
+version: 2025.4.943.0
+releaseDate: 2025-05-22T21:34:06.697Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2025.4.943.0
+packageSize: 130314240
+platformName: Windows

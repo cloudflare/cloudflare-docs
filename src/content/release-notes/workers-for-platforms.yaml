@@ -2,8 +2,6 @@
 link: "/cloudflare-for-platforms/workers-for-platforms/platform/changelog/"
 productName: Workers for Platforms
 productLink: "/cloudflare-for-platforms/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2024-04-16"
     title: Workers for Platforms available to all users

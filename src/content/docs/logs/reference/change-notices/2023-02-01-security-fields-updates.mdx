@@ -6,12 +6,12 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, DashButton } from "~/components"
 
 Cloudflare will deploy some updates to security-related fields in Cloudflare Logs. These updates will affect the following datasets:
 
-* [HTTP Requests](/logs/reference/log-fields/zone/http_requests/)
-* [Firewall Events](/logs/reference/log-fields/zone/firewall_events/)
+* [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/)
+* [Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/)
 
 ## Timeline
 
@@ -63,7 +63,7 @@ For more information on these actions, refer to the [Actions](/ruleset-engine/ru
 
 ## HTTP Requests dataset changes
 
-The following fields will be renamed in the [HTTP Requests](/logs/reference/log-fields/zone/http_requests/) dataset according to the two-phase strategy outlined in the [timeline](#timeline):
+The following fields will be renamed in the [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) dataset according to the two-phase strategy outlined in the [timeline](#timeline):
 
 
 
@@ -93,7 +93,7 @@ The following fields are now deprecated and they will be removed from the HTTP R
 
 ## Firewall Events dataset changes
 
-The following fields will be added to the [Firewall Events](/logs/reference/log-fields/zone/firewall_events/) dataset:
+The following fields will be added to the [Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/) dataset:
 
 
 
@@ -139,15 +139,17 @@ After updating Logpush jobs, you may need to update external filters or reports 
 
 ### Update Logpush job in the dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Analytics & Logs** > **Logs**.
-3. Select **Edit** next to the Logpush job you wish to edit.
-4. Under **Select data fields**, update the fields in your job. The new security log fields are available under **General**.
-5. Select **Save changes**.
+1. In the Cloudflare dashboard, go to the **Logpush** page.
+ 
+    <DashButton url="/?to=/:account/:zone/analytics/logs" />
+
+2. Select **Edit** next to the Logpush job you wish to edit.
+3. Under **Select data fields**, update the fields in your job. The new security log fields are available under **General**.
+4. Select **Save changes**.
 
 ### Update Logpush job via API
 
-Follow the instructions in [Update output\_options](/logs/tutorials/examples/example-logpush-curl/#optional---update-output_options) to update the fields in the Logpush job.
+Follow the instructions in [Update output\_options](/logs/logpush/examples/example-logpush-curl/#optional---update-output_options) to update the fields in the Logpush job.
 
 ### Update Logpush job via Terraform
 

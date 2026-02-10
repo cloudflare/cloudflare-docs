@@ -2,9 +2,69 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2026-01-29"
+    description: |-
+      - Updated v8 to version 14.5.
+  - publish_date: "2026-01-13"
+    description: |-
+      - Updated v8 to version 14.4.
+  - publish_date: "2025-12-19"
+    description: |-
+      - Allow null name when creating dynamic workers.
+  - publish_date: "2025-11-25"
+    description: |-
+      - Updated v8 to version 14.3.
+  - publish_date: "2025-10-25"
+    description: |-
+      - The maximum WebSocket message size limit has been increased from 1 MiB to 32 MiB.
+  - publish_date: "2025-10-22"
+    description: |-
+      - Warnings which were previously only visible via the devtools console in preview sessions are now also sent to the tail Worker, if one is attached.
+  - publish_date: "2025-10-17"
+    description: |-
+      - Updated v8 to version 14.2.
+      - Backported an optimization to `JSON.parse()`. More details are [available in this blog post](https://blog.cloudflare.com/unpacking-cloudflare-workers-cpu-performance-benchmarks/#json-parsing) and [the upstream patch](https://chromium-review.googlesource.com/c/v8/v8/+/7027411).
+  - publish_date: "2025-09-18"
+    description: |-
+      - Updated v8 to version 14.1.
+  - publish_date: "2025-09-11"
+    description: |-
+      - The node:fs and Web File System APIs are now available within Workers.
+  - publish_date: "2025-08-21"
+    description: |-
+      - Updated v8 to version 14.0.
+      - `Uint8Array` type in JavaScript now supports base64 and hex operations.
+  - publish_date: "2025-08-14"
+    description: |-
+      - Enable V8 Sandbox for improved isolation and security.
+  - publish_date: "2025-08-11"
+    description: |-
+      - The MessageChannel and MessagePort APIs are now available in Workers.
+  - publish_date: "2025-06-27"
+    description: |-
+      - Updated v8 to version 13.9.
+  - publish_date: "2025-06-23"
+    description: |-
+      - Enable FinalizationRegistry API. See [We shipped FinalizationRegistry in Workers: why you should never use it](https://blog.cloudflare.com/we-shipped-finalizationregistry-in-workers-why-you-should-never-use-it/) for details.
+  - publish_date: "2025-06-04"
+    description: |-
+      - Updated v8 to version 13.8.
+  - publish_date: "2025-05-27"
+    description: |-
+      - Historically, in some cases, the same instance of `ctx` would be passed to multiple invocations of the event handler. We now always pass a new object for each event. We made this change retroactive to all compatibility dates because we suspect it fixes security bugs in some workers and does not break any worker. However, the old behavior can be restored using the compat flag `nonclass_entrypoint_reuses_ctx_across_invocations`.
+  - publish_date: "2025-05-22"
+    description: |-
+      - Enabled explicit resource context management and support for Float16Array
+  - publish_date: "2025-05-20"
+    description: |-
+      - Updated v8 to version 13.7.
+  - publish_date: "2025-04-16"
+    description: |-
+      - Updated v8 to version 13.6.
+  - publish_date: "2025-04-14"
+    description: |-
+      - JSRPC message size limit has been increased to 32MiB.
   - publish_date: "2025-04-03"
     description: |-
       - Websocket client exceptions are now JS exceptions rather than internal errors.
@@ -20,7 +80,7 @@ entries:
       - [Workers Builds](/workers/ci-cd/builds/) now supports building projects that use **pnpm 10** as the package manager. If your build previously failed due to this unsupported version, retry your build. No config changes needed.
   - publish_date: "2025-02-13"
     description: |-
-      - [Smart Placement](/workers/configuration/smart-placement/) no longer runs Workers in the same location as D1 databases they are bound to. The same [placement logic](/workers/configuration/smart-placement/#understand-how-smart-placement-works) now applies to all Workers that use Smart Placement, regardless of whether they use D1 bindings.
+      - [Smart Placement](/workers/configuration/placement/) no longer runs Workers in the same location as D1 databases they are bound to. The same [placement logic](/workers/configuration/placement/#understand-how-smart-placement-works) now applies to all Workers that use Smart Placement, regardless of whether they use D1 bindings.
   - publish_date: "2025-02-11"
     description: |-
       - When Workers generate an "internal error" exception in response to certain failures, the exception message may provide a reference ID that customers can include in support communication for easier error identification.  For example, an exception with the new message might look like: `internal error; reference = 0123456789abcdefghijklmn`.
@@ -92,11 +152,6 @@ entries:
   - publish_date: "2024-07-17"
     description: |-
       - Updated v8 to version 12.7.
-  - publish_date: "2024-07-11"
-    description: |-
-      - Added community contributed tutorial on how to create [custom access control for files in R2 using D1 and Workers](/developer-spotlight/tutorials/custom-access-control-for-files/).
-      - Added community contributed tutorial on how to [send form submissions using Astro and Resend](/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/).
-      - Added community contributed tutorial on how to [create a sitemap from Sanity CMS with Workers](/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/).
   - publish_date: "2024-07-03"
     description: |-
       - The [`node:crypto`](/workers/runtime-apis/nodejs/crypto/) implementation now includes the scrypt(...) and scryptSync(...) APIs.
@@ -123,7 +178,7 @@ entries:
       - Blob and Body objects now include a new `bytes()` method, reflecting [recent](https://w3c.github.io/FileAPI/#bytes-method-algo) [additions](https://fetch.spec.whatwg.org/#dom-body-bytes) to web standards.
   - publish_date: "2024-06-03"
     description: |-
-      - Workers with [Smart Placement](/workers/configuration/smart-placement/) enabled now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+      - Workers with [Smart Placement](/workers/configuration/placement/) enabled now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
   - publish_date: "2024-05-17"
     description: |-
       - Updated v8 to version 12.6.

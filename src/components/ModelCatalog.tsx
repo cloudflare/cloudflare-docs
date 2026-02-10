@@ -3,6 +3,7 @@ import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
 import type { WorkersAIModelsSchema } from "~/schemas";
+import { setSearchParams } from "~/util/url";
 
 type Filters = {
 	search: string;
@@ -21,6 +22,8 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 	// List of model names to pin at the top
 	const pinnedModelNames = [
+		"@cf/openai/gpt-oss-120b",
+		"@cf/openai/gpt-oss-20b",
 		"@cf/meta/llama-4-scout-17b-16e-instruct",
 		"@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 		"@cf/meta/llama-3.1-8b-instruct-fast",
@@ -66,6 +69,30 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 			capabilities,
 		});
 	}, []);
+
+	useEffect(() => {
+		const params = new URLSearchParams();
+
+		if (filters.search) {
+			params.set("search", filters.search);
+		}
+
+		if (filters.authors.length > 0) {
+			filters.authors.forEach((author) => params.append("authors", author));
+		}
+
+		if (filters.tasks.length > 0) {
+			filters.tasks.forEach((task) => params.append("tasks", task));
+		}
+
+		if (filters.capabilities.length > 0) {
+			filters.capabilities.forEach((capability) =>
+				params.append("capabilities", capability),
+			);
+		}
+
+		setSearchParams(params);
+	}, [filters]);
 
 	const mapped = sortedModels.map((model) => ({
 		model: {
@@ -158,7 +185,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 				<div className="mb-8! hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Tasks
+						Tasks
 					</span>
 
 					{tasks.map((task) => (
@@ -191,7 +218,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 				<div className="mb-8! hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Capabilities
+						Capabilities
 					</span>
 
 					{capabilities.map((capability) => (
@@ -226,7 +253,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 				<div className="hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Authors
+						Authors
 					</span>
 
 					{authors.map((author) => (

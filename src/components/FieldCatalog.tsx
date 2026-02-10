@@ -1,21 +1,25 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import {
+	useEffect,
+	useState,
+	type ChangeEvent,
+	type KeyboardEvent,
+} from "react";
 import FieldBadges from "./fields/FieldBadges";
 import Markdown from "react-markdown";
 import type { CollectionEntry } from "astro:content";
+import { setSearchParams } from "~/util/url";
 
 type Fields = CollectionEntry<"fields">["data"]["entries"];
 
 type Filters = {
 	search: string;
 	categories: string[];
-	keywords: string[];
 };
 
 const FieldCatalog = ({ fields }: { fields: Fields }) => {
 	const [filters, setFilters] = useState<Filters>({
 		search: "",
 		categories: [],
-		keywords: [],
 	});
 
 	const mapped = fields.sort((f1, f2) => {
@@ -58,7 +62,6 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 	});
 
 	useEffect(() => {
-		// On component load, check for deep-links to categories in the query param
 		const params = new URLSearchParams(window.location.search);
 		const categories = params.getAll("field-category");
 		const searchTerm = params.get("search-term") ?? "";
@@ -72,6 +75,22 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 		});
 	}, []);
 
+	useEffect(() => {
+		const params = new URLSearchParams();
+
+		if (filters.search) {
+			params.set("search-term", filters.search);
+		}
+
+		if (filters.categories.length > 0) {
+			filters.categories.forEach((category) =>
+				params.append("field-category", category),
+			);
+		}
+
+		setSearchParams(params);
+	}, [filters]);
+
 	return (
 		<div className="md:flex">
 			<div className="mr-8 w-full md:w-1/4">
@@ -81,11 +100,16 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 					placeholder="Search fields"
 					value={filters.search}
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+					onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+						if (e.key === "Escape") {
+							setFilters({ ...filters, search: "" });
+						}
+					}}
 				/>
 
 				<div className="mb-8! hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Categories
+						Categories
 					</span>
 
 					{categories.map((category) => (

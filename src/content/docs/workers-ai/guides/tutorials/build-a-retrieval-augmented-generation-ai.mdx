@@ -1,19 +1,16 @@
 ---
-updated: 2024-11-21
+reviewed: 2024-11-21
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
-products:
-  - Workers
-  - D1
-  - Vectorize
+products: [workers, d1, vectorize]
 tags:
   - AI
   - Hono
-languages:
   - JavaScript
 sidebar:
   order: 2
+description: Build your first AI app with Cloudflare AI. This guide uses Workers AI, Vectorize, D1, and Cloudflare Workers.
 ---
 
 import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
@@ -21,7 +18,7 @@ import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
 This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers.
 
 :::note[Looking for a managed option?]
-[AutoRAG](/autorag) offers a fully managed way to build RAG pipelines on Cloudflare, handling ingestion, indexing, and querying out of the box. [Get started](/autorag/get-started/).
+[AI Search](/ai-search/) offers a fully managed way to build RAG pipelines on Cloudflare, handling ingestion, indexing, and querying out of the box. [Get started](/ai-search/get-started/).
 :::
 
 At the end of this tutorial, you will have built an AI tool that allows you to store information and query it using a Large Language Model. This pattern, known as Retrieval Augmented Generation, or RAG, is a useful project you can build by combining multiple aspects of Cloudflare's AI toolkit. You do not need to have experience working with AI tools to build this application.
@@ -57,7 +54,7 @@ In your project directory, C3 has generated several files.
 <Details header="What files did C3 create?">
 
 1. `wrangler.jsonc`: Your [Wrangler](/workers/wrangler/configuration/#sample-wrangler-configuration) configuration file.
-2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
+2. `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
 3. `package.json`: A minimal Node dependencies configuration file.
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
 5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
@@ -77,8 +74,14 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
 
 ```sh
-npx wrangler dev --remote
+npx wrangler dev
 ```
+
+You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
+
+## 3. Adding the AI binding
+
+To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/) as a [remote binding](/workers/development-testing/#remote-bindings). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
 
 :::note
 
@@ -88,19 +91,17 @@ If you have issues with this step or you do not have access to a browser interfa
 
 :::
 
-You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
-
-## 3. Adding the AI binding
-
-To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
-
 This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/models/llama-3-8b-instruct/), which generates text.
 
 <WranglerConfig>
 
-```toml
-[ai]
-binding = "AI"
+```jsonc
+{
+	"ai": {
+		"binding": "AI",
+		"remote": true
+	}
+}
 ```
 
 </WranglerConfig>
@@ -121,7 +122,7 @@ export default {
 
 By querying the LLM through the `AI` binding, we can interact directly with Cloudflare AI's large language models directly in our code. In this example, we are using the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/models/llama-3-8b-instruct/), which generates text.
 
-You can deploy your Worker using `wrangler`:
+Deploy your Worker using `wrangler`:
 
 ```sh
 npx wrangler deploy
@@ -151,12 +152,16 @@ Then, add the configuration details for your new Vectorize index to the [Wrangle
 
 <WranglerConfig>
 
-```toml
-# ... existing wrangler configuration
-
-[[vectorize]]
-binding = "VECTOR_INDEX"
-index_name = "vector-index"
+```jsonc
+{
+	// ... existing wrangler configuration
+	"vectorize": [
+		{
+			"binding": "VECTOR_INDEX",
+			"index_name": "vector-index"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -175,13 +180,17 @@ Then, paste the configuration details output from the previous command into the 
 
 <WranglerConfig>
 
-```toml
-# ... existing wrangler configuration
-
-[[d1_databases]]
-binding = "DB" # available in your Worker on env.DB
-database_name = "database"
-database_id = "abc-def-geh" # replace this with a real database_id (UUID)
+```jsonc
+{
+	// ... existing wrangler configuration
+	"d1_databases": [
+		{
+			"binding": "DB", // available in your Worker on env.DB
+			"database_name": "database",
+			"database_id": "abc-def-geh" // replace this with a real database_id (UUID)
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -206,13 +215,17 @@ To begin, add a new `[[workflows]]` block to your [Wrangler configuration file](
 
 <WranglerConfig>
 
-```toml
-# ... existing wrangler configuration
-
-[[workflows]]
-name = "rag"
-binding = "RAG_WORKFLOW"
-class_name = "RAGWorkflow"
+```jsonc
+{
+	// ... existing wrangler configuration
+	"workflows": [
+		{
+			"name": "rag",
+			"binding": "RAG_WORKFLOW",
+			"class_name": "RAGWorkflow"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -243,9 +256,7 @@ env.RAG_WORKFLOW.create({ params: { text } });
 
 To expand on your Workers function in order to handle multiple routes, we will add `hono`, a routing library for Workers. This will allow us to create a new route for adding notes to our database. Install `hono` using `npm`:
 
-```sh
-npm install hono
-```
+<PackageManagers pkg="hono" />
 
 Then, import `hono` into your `src/index.js` file. You should also update the `fetch` handler to use `hono`:
 
@@ -371,7 +382,7 @@ app.get("/", async (c) => {
 	let notes = [];
 	if (vecId) {
 		const query = `SELECT * FROM notes WHERE id = ?`;
-		const { results } = await c.env.DB.prepare(query).bind(vecId).all();
+		const { results } = await c.env.DB.prepare(query).bind(vecId).run();
 		if (results) notes = results.map((vec) => vec.text);
 	}
 
@@ -408,11 +419,9 @@ If you are working with larger documents, you have the option to use Anthropic's
 
 To begin, install the `@anthropic-ai/sdk` package:
 
-```sh
-npm install @anthropic-ai/sdk
-```
+<PackageManagers pkg="@anthropic-ai/sdk" />
 
-In `src/index.js`, you can update the `GET /` route to check for the `ANTHROPIC_API_KEY` environment variable. If it's set, we can generate text using the Anthropic SDK. If it isn't set, we'll fall back to the existing Workers AI code:
+In `src/index.js`, you can update the `GET /` route to check for the `ANTHROPIC_API_KEY` environment variable. If it is set, we can generate text using the Anthropic SDK. If it is not set, we'll fall back to the existing Workers AI code:
 
 ```js
 import Anthropic from '@anthropic-ai/sdk';
@@ -421,7 +430,7 @@ app.get('/', async (c) => {
   // ... Existing code
 	const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
 
-	let modelUsed: string = ""
+	let modelUsed = ""
 	let response = null
 
 	if (c.env.ANTHROPIC_API_KEY) {
@@ -498,9 +507,7 @@ For large pieces of text, it is recommended to split the text into smaller chunk
 
 To implement this, we'll add a new NPM package to our project, `@langchain/textsplitters':
 
-```sh
-npm install @langchain/textsplitters
-```
+<PackageManagers pkg="@langchain/textsplitters" />
 
 The `RecursiveCharacterTextSplitter` class provided by this package will split the text into smaller chunks. It can be customized to your liking, but the default config works in most cases:
 

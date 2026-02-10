@@ -144,6 +144,10 @@
 }
 
 @layer base {
+	pre {
+		white-space: pre-wrap;
+	}
+
 	:root {
 		--blue-accent-200: rgb(15, 0, 107);
 		--blue-accent-600: rgb(46, 105, 255);

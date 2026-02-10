@@ -5,7 +5,7 @@ title: Validation checks
 
 import { GlossaryTooltip } from "~/components";
 
-Cloudflare performs a validation check for every request. The Validation component executes prior to all other WAF features like custom rules or WAF Managed Rules. The validation check blocks malformed requests like Shellshock attacks and requests with certain attack patterns in their HTTP headers before any <GlossaryTooltip term="allowlist">allowlist</GlossaryTooltip> logic occurs.
+Cloudflare performs a validation check for every request. The Validation component executes prior to all other security features like custom rules or Managed Rules. The validation check blocks malformed requests like Shellshock attacks and requests with certain attack patterns in their HTTP headers before any <GlossaryTooltip term="allowlist">allowlist</GlossaryTooltip> logic occurs.
 
 :::note
 Currently, you cannot disable validation checks. They run early in Cloudflare's infrastructure before the configuration for domains has been loaded.

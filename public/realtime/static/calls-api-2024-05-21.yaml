@@ -432,7 +432,202 @@ paths:
                       - mid: "7"
                         sessionId: "2a45361d5fd7cc14eface0587c276c94"
                         trackName: "new-track-name"
-
+  /apps/{appId}/sessions/{sessionId}/datachannels/establish:
+    post:
+      tags:
+        - Establish a data channel transport
+      summary: Pull a server events channel to establish a data channel transport. It only allows to pull the server-events channel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EstablishDataChannelsTransportRequest"
+            examples:
+              ask_for_an_offer:
+                description: Ask for an offer to pull the server-events channel
+                value:
+                  datachannel:
+                    location: remote
+                    dataChannelName: server-events
+              send_an_offer:
+                description: Send an offer with an application media section to pull the server-events channel
+                value:
+                  datachannel:
+                    location: remote
+                    dataChannelName: server-events
+                  sessionDescription:
+                    sdp: |
+                      v=0
+                      o=- 0 0 IN IP4 127.0.0.1
+                      s=-
+                      c=IN IP4 127.0.0.1
+                      t=0 0
+                      m=application 9 UDP/DTLS/SCTP webrtc-datachannel
+                      ...
+                    type: offer
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+        - in: path
+          name: sessionId
+          schema:
+            type: string
+          required: true
+          description: Current PeerConnection session ID
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EstablishDataChannelsTransportResponse"
+              examples:
+                ask_for_an_offer:
+                  value:
+                    requiresImmediateRenegotiation: true
+                    datachannel:
+                      location: remote
+                      dataChannelName: server-events
+                      id: 0
+                send_an_offer:
+                  value:
+                    requiresImmediateRenegotiation: false
+                    datachannel:
+                      location: remote
+                      dataChannelName: server-events
+                      id: 0
+                    sessionDescription:
+                      sdp: |
+                        v=0
+                        o=- 0 0 IN IP4 127.0.0.1
+                        s=-
+                        c=IN IP4 127.0.0.1
+                        t=0 0
+                        m=application 9 UDP/DTLS/SCTP webrtc-datachannel
+                        ...
+                      type: answer
+  /apps/{appId}/sessions/{sessionId}/datachannels/new:
+    post:
+      tags:
+        - Add data channel(s)
+      summary: Solve the given data channel object(s) and add the data channel(s) to the WebRTC session. It requires to have a data channels transport established
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DataChannelsRequest"
+            examples:
+              local_datachannels:
+                description: Share a data channel to be consumed by remote peers
+                value:
+                  datachannels:
+                    - location: local
+                      dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+              remote_datachannels:
+                description: Consume a remote data channel
+                value:
+                  datachannels:
+                    - location: remote
+                      sessionId: "2a45361d5fd7cc14eface0587c276c94"
+                      dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+        - in: path
+          name: sessionId
+          schema:
+            type: string
+          required: true
+          description: Current PeerConnection session ID
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataChannelsResponse"
+              examples:
+                local_datachannels:
+                  value:
+                    datachannels:
+                      - dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+                        location: local
+                        id: 3
+                remote_datachannels:
+                  value:
+                    datachannels:
+                      - sessionId: 2a45361d5fd7cc14eface0587c276c94
+                        location: remote
+                        dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+                        id: 4
+  /apps/{appId}/sessions/{sessionId}/datachannels/close:
+    put:
+      tags:
+        - Close data channel(s)
+      summary: Close local or remote data channel(s)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CloseDataChannelsRequest"
+                - example:
+                    datachannels:
+                      - id: 2
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+        - in: path
+          name: sessionId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CloseDataChannelsResponse"
+              example:
+                datachannels:
+                  - location: remote
+                    sessionId: 2a45361d5fd7cc14eface0587c276c94
+                    dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+                    id: 2
   /apps/{appId}/sessions/{sessionId}:
     get:
       tags:
@@ -709,3 +904,89 @@ components:
                   errorDescription:
                     type: string
           description: Array of track objects with results
+    DataChannelObject:
+      type: object
+      properties:
+        location:
+          type: string
+          enum:
+            - local
+            - remote
+          description: Choose local to broadcast into the given dataChannelName. Choose remote to consume a broadcast from someone else
+        sessionId:
+          type: string
+          description: Session ID of the data channel owner. It should be set for remote data channels only
+        dataChannelName:
+          type: string
+          description: Given name for the data channel
+        id:
+          type: number
+          description: Data channel id
+    DataChannelsRequest:
+      type: object
+      properties:
+        dataChannels:
+          type: array
+          items:
+            $ref: "#/components/schemas/DataChannelObject"
+    DataChannelsResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        dataChannels:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/DataChannelObject"
+              - properties:
+                  errorCode:
+                    type: string
+                  errorDescription:
+                    type: string
+    EstablishDataChannelsTransportRequest:
+      type: object
+      properties:
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+        dataChannel:
+          $ref: "#/components/schemas/DataChannelObject"
+    EstablishDataChannelsTransportResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+        requiresImmediateRenegotiation:
+          type: boolean
+        dataChannel:
+          $ref: "#/components/schemas/DataChannelObject"
+    CloseDataChannelsRequest:
+      type: object
+      properties:
+        dataChannels:
+          type: array
+          items:
+            $ref: "#/components/schemas/DataChannelObject"
+    CloseDataChannelsResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        dataChannels:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/DataChannelObject"
+              - properties:
+                  errorCode:
+                    type: string
+                  errorDescription:
+                    type: string

@@ -1,0 +1,17 @@
+---
+pcx_content_type: troubleshooting
+title: Error 10050
+source: null
+---
+
+## Error 10050: Invalid redirect source URL with user info
+
+This error indicates that the source URL includes unsupported user information.
+
+### Common causes
+
+This error occurs when the source URL of a URL redirect includes a user info component (for example, `https://user:password@example.com`), which is not supported.
+
+### Resolution
+
+You need to remove the user information component from the redirect source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.

@@ -14,7 +14,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
 					"accept-encoding": "identity",
 				},
 			});
-		} else if (pathname.endsWith("/index.md")) {
+		} else if (
+			pathname.endsWith("/index.md") ||
+			context.request.headers.get("accept")?.includes("text/markdown")
+		) {
 			const htmlUrl = new URL(pathname.replace("index.md", ""), context.url);
 			const html = await (await fetch(htmlUrl)).text();
 

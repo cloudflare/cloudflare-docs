@@ -1,0 +1,40 @@
+releaseNotes: |-
+  This release contains improvements and new exciting features, including [post-quantum cryptography](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum). By tunneling your corporate network traffic over Cloudflare, you can now gain the immediate protection of post-quantum cryptography without needing to upgrade any of your individual corporate applications or systems.
+
+  **Changes and improvements**
+  - Fixed a device registration issue causing WARP connection failures when changing networks.
+  - Captive portal improvements and fixes:
+     - Captive portal sign in notifications will now be sent through operating system notification services.
+     - Fix for firewall configuration issue affecting clients in DoH only mode.
+  - Improved the connectivity status message in the client GUI.
+  -  The WARP client now applies post-quantum cryptography end-to-end on enabled devices accessing resources behind a Cloudflare Tunnel. This feature can be [enabled by MDM](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum).
+  - Improvement to handle client configuration changes made by MDM while WARP is not running.
+  - Fixed an issue affecting Split Tunnel Include mode, where traffic outside the tunnel was blocked when switching between Wi-Fi and Ethernet networks.
+  - Added a WARP client device posture check for SAN attributes to the [client certificate check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/client-certificate/).
+
+  **Known issues**
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+version: 2025.5.893.0
+releaseDate: 2025-06-30T19:44:34.251Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.5.893.0
+packageSize: 44788578
+platformName: Linux
+linuxPlatforms:
+  bookworm-arm: 43683734
+  bullseye-arm: 43921012
+  bullseye-intel: 45157598
+  jammy-arm: 43698840
+  buster-intel: 45330130
+  centos8-arm: 46519510
+  focal-intel: 45241412
+  focal-arm: 43987292
+  jammy-intel: 44954550
+  noble-intel: 44788578
+  centos8-intel: 47444252
+  fedora35-intel: 47529176
+  fedora34-intel: 47835020
+  fedora34-arm: 46732148
+  bookworm-intel: 44948710
+  noble-arm: 44061636
+  buster-arm: 44005728
+  fedora35-arm: 46342283

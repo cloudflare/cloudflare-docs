@@ -15,12 +15,20 @@ terms = terms.sort((a, b) => a.term.localeCompare(b.term));
 const INITIAL_VISIBLE_ROWS = 20;
 ---
 
-<table id="glossary-table">
+<div class="my-4">
+	<input
+		type="text"
+		id="glossary-search"
+		placeholder="Search terms..."
+		class="focus:ring-cl1-brand-orange w-full rounded-md border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:outline-none"
+	/>
+</div>
+<table id="glossary-table" class="table-fixed">
 	<thead>
 		<tr>
-			<td>Term</td>
-			<td>Definition</td>
-			{!product && <td>Product</td>}
+			<th class="min-w-64">Term</th>
+			<th class="w-full">Definition</th>
+			{!product && <th class="min-w-48">Product</th>}
 		</tr>
 	</thead>
 	<tbody>
@@ -46,7 +54,7 @@ const INITIAL_VISIBLE_ROWS = 20;
 		<div class="flex items-center justify-center">
 			<button
 				id="glossary-button"
-				class="h-12 cursor-pointer rounded-sm bg-cl1-brand-orange px-6 font-medium text-cl1-black"
+				class="bg-cl1-brand-orange text-cl1-black h-12 cursor-pointer rounded-sm px-6 font-medium"
 			>
 				View more terms
 			</button>
@@ -55,39 +63,14 @@ const INITIAL_VISIBLE_ROWS = 20;
 }
 
 <script>
-	// function filterRows(search: string) {
-	//     const table =
-	//         document.querySelector<HTMLTableElement>("#glossary-table");
-
-	//     if (!table) return;
-
-	//     const rows =
-	//         table.querySelectorAll<HTMLTableRowElement>("tbody > tr");
-
-	//     if (!rows) return;
-
-	//     for (const row of rows) {
-	//         if (!row.textContent?.includes(search)) {
-	//             row.classList.add("hidden")
-	//         } else {
-	//             row.classList.remove("hidden")
-	//         }
-	//     }
-	// }
-
-	// const search = document.querySelector<HTMLInputElement>("#glossary-search");
-
-	// if (search) {
-	//     search.addEventListener("input", () => {
-	//         filterRows(search.value)
-	//     })
-	// }
-
 	const button = document.querySelector<HTMLAnchorElement>("#glossary-button");
+	const searchInput =
+		document.querySelector<HTMLInputElement>("#glossary-search");
+	const table = document.querySelector<HTMLTableElement>("#glossary-table");
+
+	let isSearching = false;
 
 	function showRows() {
-		const table = document.querySelector<HTMLTableElement>("#glossary-table");
-
 		if (!table) return;
 
 		const rows =
@@ -102,10 +85,59 @@ const INITIAL_VISIBLE_ROWS = 20;
 		extraRows.forEach((row) => row.classList.remove("hidden"));
 	}
 
+	function filterRows(searchTerm: string) {
+		if (!table) return;
+
+		const rows = table.querySelectorAll<HTMLTableRowElement>("tbody > tr");
+		const normalizedSearchTerm = searchTerm.toLowerCase().trim();
+
+		isSearching = normalizedSearchTerm.length > 0;
+
+		if (button) {
+			if (isSearching) {
+				button.classList.add("hidden");
+			} else {
+				const hiddenRows =
+					table.querySelectorAll<HTMLTableRowElement>("tbody > tr.hidden");
+				if (hiddenRows.length > 0) {
+					button.classList.remove("hidden");
+				}
+			}
+		}
+
+		let index = 0;
+		for (const row of rows) {
+			if (isSearching) {
+				const rowText = row.textContent?.toLowerCase() || "";
+				const matches = rowText.includes(normalizedSearchTerm);
+
+				if (matches) {
+					row.classList.remove("hidden");
+				} else {
+					row.classList.add("hidden");
+				}
+			} else {
+				if (index > 20) {
+					row.classList.add("hidden");
+				} else {
+					row.classList.remove("hidden");
+				}
+			}
+			index++;
+		}
+	}
+
 	if (button) {
 		button.addEventListener("click", (e) => {
 			e.preventDefault();
 			showRows();
+		});
+	}
+
+	if (searchInput) {
+		searchInput.addEventListener("input", (e) => {
+			const target = e.target as HTMLInputElement;
+			filterRows(target.value);
 		});
 	}
 </script>

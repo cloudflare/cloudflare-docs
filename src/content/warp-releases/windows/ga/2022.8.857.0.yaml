@@ -5,10 +5,10 @@ releaseNotes: |-
   that we've made server side changes to significantly reduce captcha issues for
   users with IPv6 enabled (no client related change but wanted to call out the
   work).
-   
+
   **Notable updates**
-   
-  - Added ability for ZT Administrators to specify if they want embedded WebView2 browser to be used instead of the default system browser. See [Deployment documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#install-warp-on-windows) for more information
+
+  - Added ability for ZT Administrators to specify if they want embedded WebView2 browser to be used instead of the default system browser. See [Deployment documentation](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#install-warp-on-windows) for more information
   - Modified GUI app to now be built on .Net 6.0 as .Net 5.0 is now end of life and upgraded the internal version of our upgrade engine (Sparkle). No user facing changes expected.
   - Modified GUI when in Include Only split tunneling mode to correctly state that just the routes included in the split tunnel configuration are protected. This is just a string change.
   - Fixed issue where `warp-cli set-custom-endpoint` could be used by users without local admin rights as a way to bypass Gateway policies.
@@ -27,7 +27,7 @@ releaseNotes: |-
   - Fixed issue where the Zero Trust client was starting in connected mode when dash settings `Switched Locked` and `Auto Connect` were turned off/disabled. The client should only ever auto connect when these are enabled.
   - Fixed issue where DNS functionality may be in a broken state when device wakes from sleep
   - Improved performance of warp-diag to now collects logs in parallel and now collect additional routes to help with debugging.
-   
+
   **Known issues**
   - No known issues
 version: 2022.8.857.0

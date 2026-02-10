@@ -1,0 +1,414 @@
+---
+title: Watch filesystem changes
+pcx_content_type: how-to
+sidebar:
+  order: 3
+description: Monitor files and directories in real-time to build responsive development tools and automation workflows.
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide shows you how to monitor filesystem changes in real-time using the Sandbox SDK's file watching capabilities. File watching is essential for building development tools, automated workflows, and responsive applications that react to file system changes.
+
+## Basic file watching
+
+Start by watching a directory for any changes:
+
+<TypeScriptExample>
+```
+const watcher = await sandbox.watch('/workspace/src', {
+  onEvent: (event) => {
+    console.log(`${event.type} event: ${event.path}`);
+    console.log(`Is directory: ${event.isDirectory}`);
+  },
+  onError: (error) => {
+    console.error('Watch failed:', error.message);
+  }
+});
+
+// Always clean up when done
+process.on('exit', () => watcher.stop());
+```
+</TypeScriptExample>
+
+The watcher will detect four types of events:
+- **create** - Files or directories created
+- **modify** - File content or attributes changed  
+- **delete** - Files or directories removed
+- **rename** - Files or directories moved/renamed
+
+## Filter by file type
+
+Use `include` patterns to watch only specific file types:
+
+<TypeScriptExample>
+```
+// Only watch TypeScript and JavaScript files
+const watcher = await sandbox.watch('/workspace/src', {
+  include: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+  onEvent: (event) => {
+    console.log(`${event.type}: ${event.path}`);
+  }
+});
+```
+</TypeScriptExample>
+
+Common include patterns:
+- `*.ts` - TypeScript files
+- `*.js` - JavaScript files  
+- `*.json` - JSON configuration files
+- `*.md` - Markdown documentation
+- `package*.json` - Package files specifically
+
+## Exclude directories
+
+Use `exclude` patterns to ignore certain directories or files:
+
+<TypeScriptExample>
+```
+const watcher = await sandbox.watch('/workspace', {
+  exclude: [
+    'node_modules',    // Dependencies
+    'dist',           // Build output  
+    '*.log',          // Log files
+    '.git',           // Git metadata (excluded by default)
+    '*.tmp'           // Temporary files
+  ],
+  onEvent: (event) => {
+    console.log(`Change detected: ${event.path}`);
+  }
+});
+```
+</TypeScriptExample>
+
+:::note[Default exclusions]
+The following patterns are excluded by default: `.git`, `node_modules`, `.DS_Store`. You can override this by providing your own `exclude` array.
+:::
+
+## Build responsive development tools
+
+### Auto-restarting development server
+
+Build a development server that automatically restarts when source files change:
+
+<TypeScriptExample>
+```
+let serverProcess: { stop: () => Promise<void> } | null = null;
+
+async function startServer() {
+  if (serverProcess) {
+    await serverProcess.stop();
+  }
+  
+  console.log('Starting development server...');
+  serverProcess = await sandbox.startProcess('npm run dev', {
+    onOutput: (stream, data) => {
+      console.log(`[server] ${data}`);
+    }
+  });
+}
+
+const watcher = await sandbox.watch('/workspace/src', {
+  include: ['*.ts', '*.js', '*.json'],
+  onEvent: async (event) => {
+    if (event.type === 'modify') {
+      console.log(`Detected change in ${event.path}, restarting server...`);
+      await startServer();
+    }
+  }
+});
+
+// Initial server start
+await startServer();
+```
+</TypeScriptExample>
+
+### Auto-building on changes
+
+Trigger builds automatically when source files are modified:
+
+<TypeScriptExample>
+```
+let buildInProgress = false;
+
+const watcher = await sandbox.watch('/workspace/src', {
+  include: ['*.ts', '*.tsx'],
+  onEvent: async (event) => {
+    if (event.type === 'modify' && !buildInProgress) {
+      buildInProgress = true;
+      console.log('Building TypeScript project...');
+      
+      try {
+        const result = await sandbox.exec('npm run build');
+        if (result.success) {
+          console.log('Build completed successfully');
+        } else {
+          console.error('Build failed:', result.stderr);
+        }
+      } catch (error) {
+        console.error('Build error:', error);
+      } finally {
+        buildInProgress = false;
+      }
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+### Live documentation updates
+
+Watch documentation files and rebuild docs when they change:
+
+<TypeScriptExample>
+```
+const watcher = await sandbox.watch('/workspace/docs', {
+  include: ['*.md', '*.mdx'],
+  onEvent: async (event) => {
+    if (event.type === 'modify') {
+      console.log(`Documentation updated: ${event.path}`);
+      
+      // Rebuild documentation site
+      const result = await sandbox.exec('npm run build:docs');
+      if (result.success) {
+        console.log('Documentation rebuilt');
+      }
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+## Advanced patterns
+
+### Debounced file operations
+
+Avoid excessive operations by debouncing rapid file changes:
+
+<TypeScriptExample>
+```
+let debounceTimeout: NodeJS.Timeout | null = null;
+const changedFiles = new Set<string>();
+
+const watcher = await sandbox.watch('/workspace/src', {
+  onEvent: (event) => {
+    changedFiles.add(event.path);
+    
+    // Clear existing timeout
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+    
+    // Set new timeout to process changes
+    debounceTimeout = setTimeout(async () => {
+      console.log(`Processing ${changedFiles.size} changed files...`);
+      
+      // Process all accumulated changes
+      for (const filePath of changedFiles) {
+        await processFile(filePath);
+      }
+      
+      changedFiles.clear();
+      debounceTimeout = null;
+    }, 1000); // Wait 1 second after last change
+  }
+});
+
+async function processFile(filePath: string) {
+  // Your file processing logic
+  console.log(`Processing ${filePath}`);
+}
+```
+</TypeScriptExample>
+
+### Multi-directory watching
+
+Watch multiple directories with different configurations:
+
+<TypeScriptExample>
+```
+// Watch source code for builds
+const srcWatcher = await sandbox.watch('/workspace/src', {
+  include: ['*.ts', '*.tsx'],
+  onEvent: async (event) => {
+    if (event.type === 'modify') {
+      await sandbox.exec('npm run build:src');
+    }
+  }
+});
+
+// Watch tests for test runs
+const testWatcher = await sandbox.watch('/workspace/tests', {
+  include: ['*.test.ts', '*.spec.ts'],
+  onEvent: async (event) => {
+    if (event.type === 'modify') {
+      await sandbox.exec(`npm test -- ${event.path}`);
+    }
+  }
+});
+
+// Watch config files for full rebuilds
+const configWatcher = await sandbox.watch('/workspace', {
+  include: ['package.json', 'tsconfig.json', 'vite.config.ts'],
+  recursive: false, // Only watch root level
+  onEvent: async (event) => {
+    console.log('Configuration changed, rebuilding project...');
+    await sandbox.exec('npm run build');
+  }
+});
+```
+</TypeScriptExample>
+
+### Graceful shutdown
+
+Use AbortSignal for clean shutdown handling:
+
+<TypeScriptExample>
+```
+const controller = new AbortController();
+
+const watcher = await sandbox.watch('/workspace/src', {
+  signal: controller.signal,
+  onEvent: (event) => {
+    console.log(`Event: ${event.type} - ${event.path}`);
+  },
+  onError: (error) => {
+    if (error.name === 'AbortError') {
+      console.log('Watch cancelled gracefully');
+    } else {
+      console.error('Watch error:', error);
+    }
+  }
+});
+
+// Handle shutdown signals
+process.on('SIGINT', () => {
+  console.log('Shutting down file watcher...');
+  controller.abort();
+});
+```
+</TypeScriptExample>
+
+## Best practices
+
+### Resource management
+
+Always stop watchers to prevent resource leaks:
+
+<TypeScriptExample>
+```
+const watchers: Array<{ stop: () => Promise<void> }> = [];
+
+// Create watchers
+const srcWatcher = await sandbox.watch('/workspace/src', options);
+const testWatcher = await sandbox.watch('/workspace/tests', options);
+watchers.push(srcWatcher, testWatcher);
+
+// Clean shutdown
+async function shutdown() {
+  console.log('Stopping all watchers...');
+  await Promise.all(watchers.map(w => w.stop()));
+  console.log('All watchers stopped');
+}
+
+process.on('exit', shutdown);
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
+```
+</TypeScriptExample>
+
+### Error handling
+
+Implement robust error handling for production use:
+
+<TypeScriptExample>
+```
+const watcher = await sandbox.watch('/workspace/src', {
+  onEvent: async (event) => {
+    try {
+      await handleFileChange(event);
+    } catch (error) {
+      console.error(`Failed to handle ${event.type} event for ${event.path}:`, error);
+      // Don't let errors stop the watcher
+    }
+  },
+  onError: async (error) => {
+    console.error('Watch system error:', error);
+    
+    // Attempt to restart watcher on critical errors
+    if (error.message.includes('inotify')) {
+      console.log('Attempting to restart file watcher...');
+      await watcher.stop();
+      // Recreate watcher with same options
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+### Performance optimization
+
+For high-frequency changes, use server-side filtering:
+
+<TypeScriptExample>
+```
+// Efficient - filtering happens at kernel/inotify level
+const watcher = await sandbox.watch('/workspace', {
+  include: ['*.ts'],           // Only TypeScript files
+  exclude: ['node_modules']    // Skip dependencies
+});
+
+// Less efficient - all events sent to JavaScript
+const watcher2 = await sandbox.watch('/workspace', {
+  onEvent: (event) => {
+    if (!event.path.endsWith('.ts')) return;
+    if (event.path.includes('node_modules')) return;
+    // Handle event
+  }
+});
+```
+</TypeScriptExample>
+
+## Troubleshooting
+
+### Path not found errors
+
+Ensure directories exist before watching them:
+
+<TypeScriptExample>
+```
+const watchPath = '/workspace/src';
+
+// Check if path exists first
+try {
+  const exists = await sandbox.readDir(watchPath);
+  const watcher = await sandbox.watch(watchPath, options);
+} catch (error) {
+  if (error.message.includes('not found')) {
+    console.log(`Creating directory ${watchPath}...`);
+    await sandbox.exec(`mkdir -p ${watchPath}`);
+    // Now start watching
+    const watcher = await sandbox.watch(watchPath, options);
+  }
+}
+```
+</TypeScriptExample>
+
+### High CPU usage
+
+If watching large directories causes performance issues:
+
+1. Use specific `include` patterns instead of watching everything
+2. Exclude large directories like `node_modules` and `dist`
+3. Watch specific subdirectories instead of the entire project
+4. Use non-recursive watching for shallow monitoring
+
+:::note[Container lifecycle]
+File watchers are automatically stopped when the sandbox sleeps or shuts down. They will restart when the sandbox wakes up, but you may need to re-establish them in your application logic.
+:::
+
+## Related resources
+
+- [File Watching API reference](/sandbox/api/file-watching/) - Complete API documentation
+- [Manage files guide](/sandbox/guides/manage-files/) - File operations
+- [Background processes guide](/sandbox/guides/background-processes/) - Long-running processes

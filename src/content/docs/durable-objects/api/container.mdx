@@ -1,0 +1,187 @@
+---
+title: Durable Object Container
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import {
+	Render,
+	Tabs,
+	TabItem,
+	GlossaryTooltip,
+	Type,
+	MetaInfo,
+	TypeScriptExample,
+} from "~/components";
+
+## Description
+
+When using a [Container-enabled Durable Object](/containers), you can access the Durable Object's associated container via
+the `container` object which is on the `ctx` property. This allows you to start, stop, and interact with the container.
+
+:::note
+It is likely preferable to use the official `Container` class, which provides helper methods and
+a more idiomatic API for working with containers on top of Durable Objects.
+:::
+
+<TypeScriptExample filename="index.ts">
+```ts
+export class MyDurableObject extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+    	// boot the container when starting the DO
+    	this.ctx.blockConcurrencyWhile(async () => {
+    		this.ctx.container.start();
+    });
+    }
+
+}
+
+```
+</TypeScriptExample>
+
+
+## Attributes
+
+### `running`
+
+`running` returns `true` if the container is currently running. It does not ensure that the container has fully started and ready to accept requests.
+
+```js
+	this.ctx.container.running;
+```
+
+## Methods
+
+### `start`
+
+`start` boots a container. This method does not block until the container is fully started.
+You may want to confirm the container is ready to accept requests before using it.
+
+```js
+this.ctx.container.start({
+	env: {
+		FOO: "bar",
+	},
+	enableInternet: false,
+	entrypoint: ["node", "server.js"],
+});
+```
+
+#### Parameters
+
+- `options` (optional): An object with the following properties:
+  - `env`: An object containing environment variables to pass to the container. This is useful for passing configuration values or secrets to the container.
+  - `entrypoint`: An array of strings representing the command to run in the container.
+  - `enableInternet`: A boolean indicating whether to enable internet access for the container.
+
+#### Return values
+
+- None.
+
+### `destroy`
+
+`destroy` stops the container and optionally returns a custom error message to the `monitor()` error callback.
+
+```js
+this.ctx.container.destroy("Manually Destroyed");
+```
+
+#### Parameters
+
+- `error` (optional): A string that will be sent to the error handler of the `monitor` method. This is useful for logging or debugging purposes.
+
+#### Return values
+
+- A promise that returns once the container is destroyed.
+
+### `signal`
+
+`signal` sends an IPC signal to the container, such as SIGKILL or SIGTERM. This is useful for stopping the container gracefully or forcefully.
+
+```js
+const SIGTERM = 15;
+this.ctx.container.signal(SIGTERM);
+```
+
+#### Parameters
+
+- `signal`: a number representing the signal to send to the container. This is typically a POSIX signal number, such as SIGTERM (15) or SIGKILL (9).
+
+#### Return values
+
+- None.
+
+### `getTcpPort`
+
+`getTcpPort` returns a TCP port from the container. This can be used to communicate with the container over TCP and HTTP.
+
+```js
+const port = this.ctx.container.getTcpPort(8080);
+const res = await port.fetch("http://container/set-state", {
+	body: initialState,
+	method: "POST",
+});
+```
+
+```js
+const conn = this.ctx.container.getTcpPort(8080).connect('10.0.0.1:8080');
+await conn.opened;
+
+try {
+  if (request.body) {
+    await request.body.pipeTo(conn.writable);
+  }
+  return new Response(conn.readable);
+} catch (err) {
+  console.error("Request body piping failed:", err);
+  return new Response("Failed to proxy request body", { status: 502 });
+}
+```
+
+#### Parameters
+
+- `port` (number): a TCP port number to use for communication with the container.
+
+#### Return values
+
+- `TcpPort`: a `TcpPort` object representing the TCP port. This object can be used to send requests to the container over TCP and HTTP.
+
+### `monitor`
+
+`monitor` returns a promise that resolves when a container exits and errors if a container errors. This is useful for setting up
+callbacks to handle container status changes in your Workers code.
+
+```js
+class MyContainer extends DurableObject {
+	constructor(ctx, env) {
+		super(ctx, env);
+		function onContainerExit() {
+			console.log("Container exited");
+		}
+
+		// the "err" value can be customized by the destroy() method
+		async function onContainerError(err) {
+			console.log("Container errored", err);
+		}
+
+		this.ctx.container.start();
+		this.ctx.container.monitor().then(onContainerExit).catch(onContainerError);
+	}
+}
+```
+
+#### Parameters
+
+- None
+
+#### Return values
+
+- A promise that resolves when the container exits.
+
+## Related resources
+
+- [Containers](/containers)
+- [Get Started With Containers](/containers/get-started)

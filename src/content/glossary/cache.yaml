@@ -68,6 +68,7 @@ entries:
       the duration for which a cached copy of a resource is considered valid before it needs to be refreshed or revalidated.
     associated_products:
       - Magic WAN
+      - DNS
 
   - term: cache lock
     general_definition: |-

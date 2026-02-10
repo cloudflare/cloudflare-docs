@@ -5,14 +5,17 @@ sidebar:
   order: 7
 ---
 
+import { DashButton } from "~/components";
+
 Zaraz Monitoring shows you different metrics regarding Zaraz. This helps you to detect issues when they occur. For example, if a third-party analytics provider stops collecting data, you can use the information presented by Zaraz Monitoring to find where in the workflow the problem occurred.
 
 You can also check activity data in the **Activity last 24hr** section, when you access [tools](/zaraz/get-started/), [actions](/zaraz/custom-actions/) and [triggers](/zaraz/custom-actions/create-trigger/) in the dashboard.
 
 To use Zaraz Monitoring:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Zaraz** > **Monitoring**.
+1. In the Cloudflare dashboard, go to the **Monitoring** page.
+
+	<DashButton url="/?to=/:account/tag-management/monitoring" />
 3. Select one of the options (Loads, Events, Triggers, Actions). Zaraz Monitoring will show you how the traffic for that section evolved for the time period selected.
 
 ## Zaraz Monitoring options

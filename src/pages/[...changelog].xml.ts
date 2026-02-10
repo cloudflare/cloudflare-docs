@@ -8,9 +8,8 @@ import { entryToString } from "~/util/container";
 export async function getStaticPaths() {
 	const releaseNotes = await getCollection("docs", (entry) => {
 		return (
-			(entry.data.pcx_content_type === "changelog" &&
-				entry.data.release_notes_file_name) ||
-			entry.data.release_notes_product_area_name
+			entry.data.pcx_content_type === "changelog" &&
+			entry.data.release_notes_file_name
 		);
 	});
 
@@ -39,21 +38,14 @@ export const GET: APIRoute = async (context) => {
 
 	const entry = context.props.entry;
 
-	if (
-		!entry.data.release_notes_file_name &&
-		!entry.data.release_notes_product_area_name
-	) {
+	if (!entry.data.release_notes_file_name) {
 		throw new Error(
-			`One of release_notes_file_name or release_notes_product_area_name is required on ${entry.id}, to generate RSS feeds.`,
+			`release_notes_file_name is required on ${entry.id}, to generate RSS feeds.`,
 		);
 	}
 
 	const releaseNotes = await getCollection("release-notes", (releaseNote) => {
-		return (
-			entry.data.release_notes_file_name?.includes(releaseNote.id) ||
-			releaseNote.data.productArea ===
-				entry.data.release_notes_product_area_name
-		);
+		return entry.data.release_notes_file_name?.includes(releaseNote.id);
 	});
 
 	const mapped = await Promise.all(
@@ -111,14 +103,10 @@ export const GET: APIRoute = async (context) => {
 		return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
 	});
 
-	const rssName =
-		entry.data.release_notes_product_area_name ||
-		releaseNotes[0].data.productName;
+	const rssName = releaseNotes[0].data.productName;
 
 	const site = new URL(context.site ?? "");
 	site.pathname = entry.id.concat("/");
-
-	const isArea = Boolean(entry.data.release_notes_product_area_name);
 
 	return rss({
 		title: `Changelog | ${rssName}`,
@@ -133,7 +121,6 @@ export const GET: APIRoute = async (context) => {
 				}) as string,
 				pubDate: new Date(entry.date),
 				link: entry.link,
-				customData: isArea ? `<product>${entry.product}</product>` : undefined,
 			};
 		}),
 	});

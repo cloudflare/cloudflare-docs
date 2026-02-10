@@ -5,7 +5,14 @@ sidebar:
   order: 1
 ---
 
-import { GlossaryTooltip, Render, TabItem, Tabs } from "~/components";
+import {
+	GlossaryTooltip,
+	Render,
+	TabItem,
+	Tabs,
+	Badge,
+	APIRequest,
+} from "~/components";
 
 TLS inspection (also known as TLS decryption or HTTPS inspection) allows Cloudflare Gateway to perform deeper traffic analysis and take actions like scanning request bodies for sensitive data, upgrading to a remote browser isolation session, and redirecting based on the complete URL and path of requests.
 
@@ -19,14 +26,14 @@ To decide why and how you should turn on TLS inspection, we recommend you start 
 
 ### 1. Identify your goals
 
-Cloudflare Zero Trust requires TLS inspection for most advanced security and <GlossaryTooltip term="Cloudflare Data Loss Prevention (DLP)" link="/cloudflare-one/policies/data-loss-prevention/">data loss prevention (DLP)</GlossaryTooltip> features.
+Cloudflare Zero Trust requires TLS inspection for most advanced security and <GlossaryTooltip term="Cloudflare Data Loss Prevention (DLP)" link="/cloudflare-one/data-loss-prevention/">data loss prevention (DLP)</GlossaryTooltip> features.
 
 Some security organizations choose to avoid TLS inspection due to concerns about user privacy and acceptable use. This is an important and sometimes complicated organization decision, but you can simplify it by establishing goals related to your security practices. Questions to consider:
 
 - Is your organizational use of TLS inspection designed to protect from the "known" (such as sensitive data in corporate-sanctioned SaaS applications) or the "unknown" (such as users downloading or uploading files to brand-new blob storage buckets)?
 - Do you intend to primarily block by domain or hostname or by building policies for complete URLs?
 - Do you plan to scan the body of requests or files against DLP profiles or scan downloaded files with an antivirus or anti-malware engine?
-- Do you intend to use inline <GlossaryTooltip term="Cloudflare Browser Isolation" link="/cloudflare-one/policies/browser-isolation/">Remote Browser Isolation</GlossaryTooltip> to take advantage of data security capabilities like copy/paste blocking, keyboard blocking, and print blocking?
+- Do you intend to use inline <GlossaryTooltip term="Cloudflare Browser Isolation" link="/cloudflare-one/remote-browser-isolation/">Remote Browser Isolation</GlossaryTooltip> to take advantage of data security capabilities like copy/paste blocking, keyboard blocking, and print blocking?
 
 If the answer to a majority of these questions is no and your organization relies mostly on hostname or DNS-based security controls, then you may not need to inspect most, if not all TLS traffic. Because Cloudflare operates both as a secure web gateway and as a secure DNS resolver for your connected users, you can apply policy control that may increase your security posture without the need to broadly inspect TLS traffic.
 
@@ -36,17 +43,28 @@ To turn on TLS inspection for your Zero Trust organization:
 
 <Render file="gateway/enable-tls-decryption" product="cloudflare-one" />
 
+#### Inspect on all ports <Badge text="Beta" variant="caution" size="small" />
+
+<Render
+	file="gateway/inspect-on-all-ports"
+	product="cloudflare-one"
+	params={{
+		turnOnProcedure:
+			"you can turn on [protocol detection](/cloudflare-one/traffic-policies/network-policies/protocol-detection/) and configure Gateway to [inspect traffic on all ports](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports)",
+	}}
+/>
+
 ### 3. Determine the certificate used for inspection
 
-TLS inspection requires a trusted private root certificate to be able to inspect and filter encrypted traffic. A [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/) is a simple and common solution that is usually appropriate for testing or proof-of-concept conditions when deployed to your devices. You can [generate a Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) in Zero Trust.
+TLS inspection requires a trusted private root certificate to be able to inspect and filter encrypted traffic. A [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) is a simple and common solution that is usually appropriate for testing or proof-of-concept conditions when deployed to your devices. You can [generate a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) in Zero Trust.
 
-Alternatively, if you already have a root CA that you use for other inspection or trust applications, we recommend [using your own certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). A few reasons for this include:
+Alternatively, if you already have a root CA that you use for other inspection or trust applications, we recommend [using your own certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/). A few reasons for this include:
 
 - Assuming the root certificate is already deployed on the relevant fleet of devices, using a single certificate streamlines your IT management.
 - If external services like Git workflows or CLI tools rely on an existing certificate store, presenting the same certificate in inspection is far less likely to interrupt their traffic flow, although these are things that you may wish to exempt from inspection.
-- If you are using [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) or a [Magic WAN](/magic-wan/) IPsec/GRE tunnel to on-ramp traffic to Cloudflare, devices behind those tunnels will not be able to use HTTP policies that require TLS inspection unless they have a certificate that matches your organization's certificate of choice. Your network infrastructure most likely already has your own device certificates deployed, so using your own existing public key infrastructure for inspection will simplify protection.
+- If you are using [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) or a [Magic WAN](/magic-wan/) IPsec/GRE tunnel to on-ramp traffic to Cloudflare, devices behind those tunnels will not be able to use HTTP policies that require TLS inspection unless they have a certificate that matches your organization's certificate of choice. Your network infrastructure most likely already has your own device certificates deployed, so using your own existing public key infrastructure for inspection will simplify protection.
 
-Once you generate a Cloudflare certificate or upload a custom certificate, you will need to set it as **Available** to deploy it across the Cloudflare network and as **In-Use** to use it for inspection. For more information, refer to [Activate a root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate).
+Once you generate a Cloudflare certificate or upload a custom certificate, you will need to set it as **Available** to deploy it across the Cloudflare network and as **In-Use** to use it for inspection. For more information, refer to [Activate a root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#activate-a-root-certificate).
 
 ### 4. Build a baseline Do Not Inspect policy
 
@@ -76,57 +94,38 @@ For example, if users are issued a corporate-managed iPhone with limited permiss
 
 1. Create a list of device serial numbers that you do not want to inspect.
 
-   ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/lists \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "description": "The serial numbers for administrators",
-     "items": [
-       {
-         "value": "8GE8721REF"
-       }
-     ],
-     "name": "Admin Serial Numbers",
-     "type": "SERIAL"
-   }'
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/gateway/lists"
+   	method="POST"
+   	json={{
+   		description: "The serial numbers for administrators",
+   		items: [
+   			{
+   				value: "8GE8721RE",
+   			},
+   		],
+   		name: "Admin Serial Numbers",
+   		type: "SERIAL",
+   	}}
+   />
 
 2. Create a Do Not Inspect policy that checks the device against the list of serial numbers.
 
-   ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "name": "Do not inspect corporate devices",
-     "conditions": [
-       {
-         "type": "device_posture",
-         "expression": {
-           "any": {
-             "in": {
-               "lhs": {
-                 "splat": "device_posture.checks.passed"
-               },
-               "rhs": [
-                 "{serial_number_list_uuid}"
-               ]
-             }
-           }
-         }
-       }
-     ],
-     "action": "off",
-     "precedence": 14002,
-     "enabled": true,
-     "filters": [
-       "http"
-     ]
-   }'
-   ```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Do not inspect corporate devices",
+		traffic: "",
+		identity: "",
+		device_posture:
+			'any(device_posture.checks.passed[*] in {"<SERIAL_NUMBER_LIST_UUID>"})',
+		action: "off",
+		precedence: 14002,
+		enabled: true,
+		filters: ["http"],
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -140,28 +139,16 @@ If you filter your network-connected devices with Magic WAN tunnels, the WARP Co
 
 </TabItem> <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "name": "Do not inspect corporate devices",
-  "conditions": [
-    {
-      "type": "traffic",
-      "expression": {
-        "in": {
-          "lhs": "http.conn.internal_src_ip",
-          "rhs": [
-            {
-              "cidr": "203.0.113.0/24"
-            }
-          ]
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Do not inspect corporate devices",
+		traffic: "http.conn.internal_src_ip in {203.0.113.0/24}",
+		identity: "",
+		device_posture: "",
+		action: "off",
+	}}
+/>
 
 </TabItem> </Tabs>

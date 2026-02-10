@@ -1,0 +1,36 @@
+---
+title: R2 Data Catalog now supports automatic snapshot expiration
+description: Automatically remove old Apache Iceberg table snapshots to improve performance and reduce storage costs
+products:
+  - r2
+date: 2025-12-18
+---
+
+[R2 Data Catalog](/r2/data-catalog/) now supports automatic snapshot expiration for Apache Iceberg tables.
+
+In Apache Iceberg, a snapshot is metadata that represents the state of a table at a given point in time. Every mutation creates a new snapshot which enable powerful features like time travel queries and rollback capabilities but will accumulate over time.
+
+Without regular cleanup, these accumulated snapshots can lead to:
+ - Metadata overhead
+ - Slower table operations
+ - Increased storage costs.
+
+Snapshot expiration in R2 Data Catalog automatically removes old table snapshots based on your configured retention policy, improving performance and storage costs.
+
+```bash
+# Enable catalog-level snapshot expiration
+# Expire snapshots older than 7 days, always retain at least 10 recent snapshots
+npx wrangler r2 bucket catalog snapshot-expiration enable my-bucket \
+  --older-than-days 7 \
+  --retain-last 10
+```
+
+Snapshot expiration uses two parameters to determine which snapshots to remove:
+- `--older-than-days`: age threshold in days
+-  `--retain-last`: minimum snapshot count to retain
+
+Both conditions must be met before a snapshot is expired, ensuring you always retain recent snapshots even if they exceed the age threshold.
+
+This feature complements [automatic compaction](/r2/data-catalog/table-maintenance/), which optimizes query performance by combining small data files into larger ones. Together, these automatic maintenance operations keep your Iceberg tables performant and cost-efficient without manual intervention.
+
+To learn more about snapshot expiration and how to configure it, visit our [table maintenance documentation](/r2/data-catalog/table-maintenance/) or see [how to manage catalogs](/r2/data-catalog/manage-catalogs/).

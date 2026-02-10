@@ -5,15 +5,16 @@ sidebar:
   order: 9
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, APIRequest, DashButton } from "~/components";
 
 Use import and export to have more control over your DNS records and make processes like migrating a domain or bulk editing [record comments](/dns/manage-dns-records/reference/record-attributes/) easier.
 
 ## Import records
 
-:::caution
- <Render file="zone-file-size-limit" />
-:::
+### Limits
+
+- <Render file="zone-file-size-limit" product="dns" />
+- The API rate limit is three requests per minute per user.
 
 ### Format your zone file
 
@@ -27,15 +28,25 @@ If you are using certain record types — for example, `CNAME`, `DNAME`, `MX`, `
 
 To import a zone file using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. Go to **DNS** > **Records**.
-3. Select **Import and Export**.
-4. For **Import DNS records**, select your [formatted file](#format-your-zone-file).
-5. If you do not want [applicable records](/dns/proxy-status/) proxied, unselect **Proxy imported DNS records**.
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Import and Export**.
+3. For **Import DNS records**, select your [formatted file](#format-your-zone-file).
+4. If you do not want [applicable records](/dns/proxy-status/) proxied, unselect **Proxy imported DNS records**.
 
 </TabItem> <TabItem label="API">
 
 To import records using the API, send a [POST request](/api/resources/dns/subresources/records/methods/import/) with a properly [formatted file](#format-your-zone-file).
+
+<APIRequest
+	path="/zones/{zone_id}/dns_records/import"
+	method="POST"
+	form={{
+		file: "@your_formatted_file.txt",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -45,20 +56,7 @@ To import records using the API, send a [POST request](/api/resources/dns/subres
 
 You can also bulk export records from Cloudflare.
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-To export records using the dashboard:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. Go to **DNS** > **Records**.
-3. Select **Import and Export**.
-4. Select **Export**.
-
-</TabItem> <TabItem label="API">
-
-To export records using the API, send a [GET request](/api/resources/dns/subresources/records/methods/export/).
-
-</TabItem> </Tabs>
+<Render file="export-dns-records" product="dns" />
 
 ---
 
@@ -108,7 +106,7 @@ On export, [proxied DNS records](/dns/proxy-status/) will present a tag `cf-prox
 When importing zone files, the value in the `cf-proxied` tag will take precedence in determining whether a record should be proxied. This means that:
 
 - If the tag is present, its value will be considered for the respective record regardless of the **Proxy imported DNS records** option being selected (via dashboard), or the `proxied` parameter being generally set to `true` or `false` (via API).
-- If the tag is absent, the proxied status will fall back to the general import option, meaning **Proxy imported DNS records** selected or not (via dashboard)  or the `proxied` parameter set to `true` or `false` (via API).
+- If the tag is absent, the proxied status will fall back to the general import option, meaning **Proxy imported DNS records** selected or not (via dashboard) or the `proxied` parameter set to `true` or `false` (via API).
 
 #### cf-flatten-cname
 

@@ -1,11 +1,15 @@
 ---
-type: overview
 pcx_content_type: navigation
-title: Examples
+title: Redirect examples
 sidebar:
   order: 10
+  group:
+    label: Examples
 ---
 
-import { ListExamples } from "~/components";
+import { ResourcesBySelector } from "~/components";
 
-<ListExamples directory="rules/url-forwarding/examples/" />
+<ResourcesBySelector
+	directory="rules/url-forwarding/examples/"
+	types={["example"]}
+/>

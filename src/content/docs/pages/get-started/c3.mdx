@@ -8,11 +8,7 @@ description: Use C3 (`create-cloudflare` CLI) to set up and deploy new
   applications using framework-specific setup guides to ensure each new
   application follows Cloudflare and any third-party best practices for
   deployment.
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
+
 ---
 
 import {
@@ -42,7 +38,6 @@ To create a Pages project you must now specify the `--platform=pages` arg, other
 
 If you choose the "Framework Starter" option, you will be prompted to choose a framework to use. The following frameworks are currently supported:
 
-- [Analog](/pages/framework-guides/deploy-an-analog-site/)
 - [Angular](/pages/framework-guides/deploy-an-angular-site/)
 - [Astro](/pages/framework-guides/deploy-an-astro-site/)
 - [Docusaurus](/pages/framework-guides/deploy-a-docusaurus-site/)
@@ -100,7 +95,7 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
 
   - The possible values for this option are:
 
-    - `hello-world`: Hello World Starter
+    - `hello-world`: Hello World example
     - `web-framework`: Framework Starter
     - `demo`: Application Starter
     - `remote-template`: Template from a GitHub repo

@@ -8,7 +8,7 @@ head:
     content: Get Started
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, PackageManagers } from "~/components";
 
 This guide will instruct you through setting up and deploying your first Workers AI project with embedded function calling. You will use Workers, a Workers AI binding, the [`ai-utils package`](https://github.com/cloudflare/ai-utils), and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network with embedded function calling.
 
@@ -20,9 +20,7 @@ Follow the [Workers AI Get Started Guide](/workers-ai/get-started/workers-wrangl
 
 Next, run the following command in your project repository to install the Worker AI utilities package.
 
-```sh
-npm install @cloudflare/ai-utils --save
-```
+<PackageManagers pkg="@cloudflare/ai-utils" />
 
 ## 3. Add Workers AI Embedded function calling
 

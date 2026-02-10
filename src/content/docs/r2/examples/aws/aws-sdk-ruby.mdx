@@ -1,26 +1,15 @@
 ---
 title: aws-sdk-ruby
 pcx_content_type: example
+reviewed: 2022-06-02
 ---
 
 import { Render } from "~/components";
 
-<Render file="keys" />
+<Render file="keys" product="r2" />
 <br />
 
 Many Ruby projects also store these credentials in environment variables instead.
-
-:::note[Compatibility]
-Client version `1.178.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
-
-To mitigate, users can use `1.177.0` or add the following to their s3 client instantiation:
-
-```ruby
-request_checksum_calculation: "when_required",
-response_checksum_validation: "when_required"
-```
-
-:::
 
 Add the following dependency to your `Gemfile`:
 
@@ -34,10 +23,12 @@ Then you can use Ruby to operate on R2 buckets:
 require "aws-sdk-s3"
 
 @r2 = Aws::S3::Client.new(
-  access_key_id: "#{access_key_id}",
-  secret_access_key: "#{secret_access_key}",
-  endpoint: "https://#{cloudflare_account_id}.r2.cloudflarestorage.com",
-  region: "auto",
+  # Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+  access_key_id: "#{ACCESS_KEY_ID}",
+  secret_access_key: "#{SECRET_ACCESS_KEY}",
+  # Provide your Cloudflare account ID
+  endpoint: "https://#{ACCOUNT_ID}.r2.cloudflarestorage.com",
+  region: "auto", # Required by SDK but not used by R2
 )
 
 # List all buckets on your account

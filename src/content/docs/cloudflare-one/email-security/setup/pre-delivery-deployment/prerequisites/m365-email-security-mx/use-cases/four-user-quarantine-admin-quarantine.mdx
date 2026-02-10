@@ -1,0 +1,75 @@
+---
+title: 4 - User managed quarantine and administrative quarantine
+pcx_content_type: integration-guide
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: User managed quarantine and administrative quarantine - Microsoft 365
+---
+
+import { Render } from "~/components";
+
+In this tutorial, you will learn to deliver `SPAM` and `SPOOF` messages to the user managed quarantine, and `MALICIOUS` messages to the administrative quarantine (this requires an administrator to release the emails).
+
+## Create quarantine policies
+
+<Render
+	file="email-security/deployment/m365-use-case-2-4-create-quarantine-policy"
+	product="cloudflare-one"
+/>
+
+## Configure quarantine notifications
+
+<Render
+	file="email-security/deployment/m365-use-case-configure-quarantine-notifications"
+	product="cloudflare-one"
+/>
+
+## Configure anti-spam policies
+
+To configure anti-spam policies:
+
+1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
+
+2. Go to **Email & collaboration** > **Policies & rules**.
+
+3. Select **Threat policies**.
+
+4. Under **Policies**, select **Anti-spam**.
+
+5. Select the **Anti-spam inbound policy (Default)** text (not the checkbox).
+
+6. In the **Actions** section, scroll down and select **Edit actions**.
+
+7. Set the following conditions and actions (you might need to scroll up or down to find them):
+   - **Spam**: _Quarantine message_.
+     - **Select quarantine policy**: _UserNotifyUserRelease_.
+   - **High confidence spam**: _Quarantine message_.
+     - **Select quarantine policy**: _UserNotifyAdminRelease_.
+   - **Phishing**: _Quarantine message_.
+     - **Select quarantine policy**: _UserNotifyAdminRelease_.
+   - **High confidence phishing**: _Quarantine message_.
+     - **Select quarantine policy**: _UserNotifyAdminRelease_.
+   - **Retain spam in quarantine for this many days**: Default is 15 days. Email security recommends 15-30 days.
+
+8. Select **Save**.
+
+## Create transport rules
+
+<Render
+	file="email-security/deployment/m365-use-case-transport-rules"
+	product="cloudflare-one"
+	params={{
+		one: "`Email security User Quarantine Message`",
+		two: "`UCE`, `SPOOF`",
+		three:
+			"_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_",
+		four: "step4-rules-case4.png",
+		five: "`Email security User Quarantine Message Admin Release`",
+		six: "`MALICIOUS`",
+		seven:
+			"_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_",
+		eight: "step10-admin-release-case4.png",
+	}}
+/>

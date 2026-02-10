@@ -11,7 +11,7 @@ Indexes are the "atom" of Vectorize. Vectors are inserted into an index and enab
 
 Creating an index requires three inputs:
 
-- A name, for example `prod-search-index` or `recommendations-idx-dev`.
+- A kebab-cased name, such as `prod-search-index` or `recommendations-idx-dev`.
 - The (fixed) [dimension size](#dimensions) of each vector, for example 384 or 1536.
 - The (fixed) [distance metric](#distance-metrics) to use for calculating vector similarity.
 
@@ -23,9 +23,9 @@ The configuration of an index cannot be changed after creation.
 
 ### wrangler CLI
 
-<Render file="vectorize-wrangler-version" />
+<Render file="vectorize-wrangler-version" product="vectorize" />
 
-<Render file="vectorize-legacy" />
+<Render file="vectorize-legacy" product="vectorize" />
 
 To create an index with `wrangler`:
 
@@ -55,7 +55,7 @@ headers = {
 }
 
 body = {
-	"name": "demo-index"
+	"name": "demo-index",
 	"description": "some index description",
   "config": {
     "dimensions": 1024,
@@ -89,7 +89,6 @@ The following table highlights some example embeddings models and their output d
 | Google Cloud - `multimodalembedding`     | 1408              | Multi-modal (text, images) |
 
 :::note[Learn more about Workers AI]
-
 Refer to the [Workers AI documentation](/workers-ai/models/#text-embeddings) to learn about its built-in embedding models.
 :::
 

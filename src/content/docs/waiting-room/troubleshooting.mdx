@@ -136,3 +136,11 @@ If the session duration is set to a higher value, a user who makes only a single
 For example, if the session duration is set to 30 minutes and you look at the last 10 minutes of active users in Google Analytics, the number of active users reported by Waiting Room will be higher, since it includes users from the last 30 minutes.
 
 Another key difference is that Waiting Room runs on requests made to the origin, while Google Analytics requires a user-agent to run JavaScript (via Google Tag). Waiting Room creates new sessions and tracks user metrics based on the HTTP request path, without requiring any additional JavaScript execution by a user-agent. In contrast, Google Analytics requires user-agents to execute JavaScript and make a secondary request to report details to Google Analytics. If a large portion of the traffic is automated, it may not be captured by Google Analytics. However, Waiting Room analytics will count such traffic as new users and consider them active for the configured session duration.
+
+### Why did my traffic exceed the New Users Per Minute threshold?
+
+Waiting Room is a distributed system, and achieving perfect global counting in real time is challenging due to the time required for state propagation across data centers worldwide. The budgeting logic is structured around both data center-specific and global budgets. Data center budgets are allocated based on the historical traffic received by each data center, while global budgets (a portion of the total available budget) are maintained to allow new users to enter from any data center globally. 
+
+In the case of a rapid spike — rising to several thousand users within a minute — the global state propagation process takes approximately two minutes, resulting in a delay before all data centers become aware of the spike. If this information is not disseminated quickly enough to other locations, temporary overshooting may occur, particularly when lower limits are in place.
+
+This occurs because the portion of the budget reserved for new users to enter a data center is equally available to all data centers. Until the usage of this budget is synchronized across all data centers, each data center may consume a portion that collectively exceeds 100% of the global budget allocated for new users.

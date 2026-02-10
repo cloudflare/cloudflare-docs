@@ -1,0 +1,82 @@
+---
+pcx_content_type: how-to
+title: SentinelOne
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: SentinelOne - Posture checks
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="posture/service-provider-intro"
+	params={{ one: "SentinelOne" }}
+	product="cloudflare-one"
+/>
+
+## Prerequisites
+
+- SentinelOne agent is deployed on the device.
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "Service providers",
+  		link: "/cloudflare-one/integrations/service-providers/",
+  	}}
+  />
+
+## Set up SentinelOne as a service provider
+
+### 1. Obtain SentinelOne settings
+
+The following SentinelOne values are needed to set up the SentinelOne posture check:
+
+- API Token
+- REST API URL
+
+To retrieve those values:
+
+1. Log in to your SentinelOne Dashboard.
+2. Go to **Settings** > **Users** > **Create new Service User**.
+3. Select **Create New Service User**.
+4. Enter a **Name** and **Expiration Date** and select **Next**.
+5. Set **Scope of Access** to _Viewer_.
+6. Select **Create User**. SentinelOne will generate an API Token for this user.
+7. Copy the **API Token** to a safe location.
+8. Select **Close**.
+9. Copy the **Rest API URL** from your browser's address bar (for example, `https://<S1-DOMAIN>.sentinelone.net`).
+
+### 2. Add SentinelOne as a service provider
+
+<Render file="posture/add-service-provider" params={{ provider: "SentinelOne" }} product="cloudflare-one"/>
+5. In **Client Secret**, enter your **API Token**.
+6. In **Rest API URL**, enter `https://<S1-DOMAIN>.sentinelone.net`.
+7. Choose a **Polling frequency** for how often Cloudflare One should query SentinelOne for information.
+8. Select **Test and save**.
+
+### 3. Configure the posture check
+
+<Render
+	file="posture/configure-posture-check"
+	product="cloudflare-one"
+	params={{ one: "SentinelOne" }}
+/>
+
+## Device posture attributes
+
+Device posture data is gathered from the SentinelOne Management APIs. For more information, refer to `https://<S1-DOMAIN>.sentinelone.net/api-doc/overview`.
+
+| Selector          | Description                                                                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Infected          | Whether the device is infected                                                                                                           |
+| Active Threats    | Number of active threats on the device                                                                                                   |
+| Is Active         | Whether the SentinelOne Agent is active                                                                                                  |
+| Network status    | Whether the SentinelOne Agent is connected to the SentinelOne service                                                                    |
+| Operational State | The [operational state](https://community.sentinelone.com/s/login/?ec=302&startURL=%2Fs%2Farticle%2F000005285) of the SentinelOne Agent. |
+
+### Detect user risk behavior
+
+SentinelOne provides endpoint detection and response (EDR) signals to determine [user risk score](/cloudflare-one/team-and-resources/users/risk-score/). User risk scores allow you to detect users that present security risks to your organization. For more information, refer to [Predefined risk behaviors](/cloudflare-one/team-and-resources/users/risk-score/#predefined-risk-behaviors).

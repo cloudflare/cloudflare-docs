@@ -3,7 +3,7 @@ title: Introducing Media Transformations from Cloudflare Stream
 description: >
   Dynamically optimize, clip, and resize video from any origin, no storage
   migration needed.
-date: 2025-03-06T12:00:00Z
+date: 2025-03-06
 ---
 
 Today, we are thrilled to announce Media Transformations, a new service that
@@ -25,7 +25,7 @@ an MP4 that can be used in an HTML video element without a player library.
 If your zone already has Image Transformations enabled, then it is ready to
 optimize videos with Media Transformations, too.
 
-``` text title="URL format"
+```text title="URL format"
 https://example.com/cdn-cgi/media/<OPTIONS>/<SOURCE-VIDEO>
 ```
 
@@ -34,10 +34,10 @@ original is nearly 30 megabytes and wider than necessary for this layout.
 Consider a simple width adjustment:
 
 <video controls>
-  <source src="https://developers.cloudflare.com/cdn-cgi/media/width=640/https://pub-d9fcbc1abcd244c1821f38b99017347f.r2.dev/aus-mobile.mp4" />
+	<source src="https://developers.cloudflare.com/cdn-cgi/media/width=640/https://pub-d9fcbc1abcd244c1821f38b99017347f.r2.dev/aus-mobile.mp4" />
 </video>
 
-``` text title="Example URL"
+```text title="Example URL"
 https://example.com/cdn-cgi/media/width=640/<SOURCE-VIDEO>
 https://developers.cloudflare.com/cdn-cgi/media/width=640/https://pub-d9fcbc1abcd244c1821f38b99017347f.r2.dev/aus-mobile.mp4
 ```

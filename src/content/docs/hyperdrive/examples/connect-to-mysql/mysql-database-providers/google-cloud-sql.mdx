@@ -1,11 +1,11 @@
 ---
-type: example
 summary: Connect Hyperdrive to a Google Cloud SQL database instance.
 pcx_content_type: example
 title: Google Cloud SQL
 sidebar:
   order: 12
 description: Connect Hyperdrive to a Google Cloud SQL database instance.
+reviewed: 2023-09-28
 ---
 
 import { Render } from "~/components";
@@ -16,7 +16,7 @@ This example shows you how to connect Hyperdrive to a Google Cloud SQL MySQL dat
 
 To allow Hyperdrive to connect to your database, you will need to ensure that Hyperdrive has valid user credentials and network access.
 
-<Render file="public-connectivity" />
+<Render file="public-connectivity" product="hyperdrive" />
 
 ### Cloud Console
 
@@ -40,5 +40,5 @@ With the username, password, public IP address and (optional) database name (def
 
 ## 2. Create a database configuration
 
-<Render file="create-hyperdrive-config-mysql" />
-<Render file="create-hyperdrive-config-mysql-next-steps" />
+<Render file="create-hyperdrive-config-mysql" product="hyperdrive" />
+<Render file="create-hyperdrive-config-mysql-next-steps" product="hyperdrive" />

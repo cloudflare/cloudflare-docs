@@ -6,26 +6,14 @@ type Props = z.infer<typeof props>;
 
 const props = z.object({
 	file: z.string(),
-	product: z.string().optional(),
+	product: z.string(),
 	params: z.record(z.string(), z.any()).optional(),
 });
 
 let { file, product, params } = props.parse(Astro.props);
 
-if (!product) {
-	const fromSlug = Astro.params.slug?.split("/")[0];
-
-	if (!fromSlug) {
-		throw new Error(
-			`[Render] Unable to infer which folder ${file} is in, please provide a "product" input with your "file" input.`,
-		);
-	}
-
-	product = fromSlug;
-}
-
 const id = `${product}/${file}`;
-const partial = await getEntry("partials", id);
+let partial = await getEntry("partials", id);
 
 if (!partial) {
 	throw new Error(

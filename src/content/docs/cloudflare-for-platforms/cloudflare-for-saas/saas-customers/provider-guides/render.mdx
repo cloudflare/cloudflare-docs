@@ -1,0 +1,87 @@
+---
+pcx_content_type: configuration
+title: Render
+head:
+  - tag: title
+    content: Render | Provider guides
+description: Learn how to configure your Enterprise zone with Render.
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="provider-guide-intro"
+	product="cloudflare-for-platforms"
+	params={{
+		providerName: "Render",
+		providerUrl: "https://render.com",
+		providerAssets: "web services and static sites",
+	}}
+/>
+
+## Benefits
+
+<Render
+	file="provider-guide-benefits"
+	product="cloudflare-for-platforms"
+	params={{ providerName: "Render", providerAssets: "services" }}
+/>
+
+## How it works
+
+For additional detail about how traffic routes when O2O is enabled, refer to [How O2O works](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/).
+
+## Enable
+
+Render customers can enable O2O on any Cloudflare zone plan. Cloudflare support for O2O setups is only available for Enterprise customers.
+
+To enable O2O for a specific hostname within a Cloudflare zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied `CNAME` DNS record with your Render site name as the target. Render's domain addition setup will walk you through other validation steps.
+
+| Type    | Name              | Target                                                     | Proxy status |
+| ------- | ----------------- | ---------------------------------------------------------- | ------------ |
+| `CNAME` | `<YOUR_HOSTNAME>` | `<RENDER_SUBDOMAIN>` (for example, `example.onrender.com`) | Proxied      |
+
+:::note
+
+For more details about Render setup, refer to their [documentation](https://render.com/docs/configure-cloudflare-dns).
+
+If you cannot activate your domain using [proxied DNS records](/dns/proxy-status/), reach out to your Cloudflare account team or your Render support team.
+
+:::
+
+### Additional requirements for wildcard subdomains
+
+With O2O enabled, adding a wildcard subdomain to a Render service requires that the corresponding root domain is also routed to Render. If the root domain is routed elsewhere, wildcard routing will fail.
+
+If your root domain needs to route somewhere besides Render, add individual subdomains to your Render service instead of a wildcard.
+
+## Product compatibility
+
+<Render
+	file="provider-guide-compatibility"
+	product="cloudflare-for-platforms"
+/>
+
+## Zone hold
+
+<Render
+	file="provider-guide-zone-hold"
+	params={{ providerName: "Render" }}
+	product="cloudflare-for-platforms"
+/>
+
+## Additional support
+
+<Render
+	file="provider-guide-help"
+	params={{ providerName: "Render" }}
+	product="cloudflare-for-platforms"
+/>
+
+### Resolving SSL errors
+
+If you encounter SSL errors, check if you have a `CAA` record.
+
+If you have a `CAA` record, verify that it permits SSL certificates to be issued by Google Trust Services (`pki.goog`).
+
+For more details, refer to [CAA records](/ssl/edge-certificates/troubleshooting/caa-records/#what-caa-records-are-added-by-cloudflare).

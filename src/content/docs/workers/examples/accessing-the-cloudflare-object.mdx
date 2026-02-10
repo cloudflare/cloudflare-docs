@@ -1,8 +1,8 @@
 ---
-type: example
+
 summary: Access custom Cloudflare properties and control how Cloudflare features
   are applied to every request.
-languages:
+tags:
   - JavaScript
   - TypeScript
   - Python
@@ -14,6 +14,7 @@ sidebar:
   order: 11
 description: Access custom Cloudflare properties and control how Cloudflare
   features are applied to every request.
+reviewed: 2022-02-25
 ---
 
 If you want to get started quickly, click on the button below.
@@ -90,14 +91,15 @@ export default app;
 
 ```py
 import json
-from workers import Response
+from workers import Response, WorkerEntrypoint
 from js import JSON
 
-def on_fetch(request):
-    error = json.dumps({ "error": "The `cf` object is not available inside the preview." })
-    data = request.cf if request.cf is not None else error
-    headers = {"content-type":"application/json"}
-    return Response(JSON.stringify(data, None, 2), headers=headers)
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		error = json.dumps({ "error": "The `cf` object is not available inside the preview." })
+		data = request.cf if request.cf is not None else error
+		headers = {"content-type":"application/json"}
+		return Response(JSON.stringify(data, None, 2), headers=headers)
 ```
 
 </TabItem> </Tabs>

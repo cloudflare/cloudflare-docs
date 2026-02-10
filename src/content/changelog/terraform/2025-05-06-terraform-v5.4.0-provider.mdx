@@ -1,0 +1,84 @@
+---
+title: Terraform v5.4.0 now available
+description: Terraform v5.4.0 fixes a number of known bugs in the v5 Provider
+products:
+  - fundamentals
+date: 2025-05-06
+---
+
+Earlier this year, we announced the launch of the new [Terraform v5 Provider](/changelog/2025-02-03-terraform-v5-provider/). Unlike the earlier Terraform providers, v5 is automatically generated based on the OpenAPI Schemas for our REST APIs. Since launch, we have seen an unexpectedly high number of [issues](https://github.com/cloudflare/terraform-provider-cloudflare) reported by customers. These issues currently impact about 15% of resources. We have been working diligently to address these issues across the company, and have released the v5.4.0 release which includes a number of bug fixes. Please keep an eye on this changelog for more information about upcoming releases.
+
+### Changes
+
+- Removes the `worker_platforms_script_secret` resource from the provider (see [migration guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade#cloudflare_worker_secret) for alternatives—applicable to both Workers and Workers for Platforms)
+- Removes duplicated fields in `cloudflare_cloud_connector_rules` resource
+- Fixes `cloudflare_workers_route` id issues [#5134](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5134) [#5501](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5501)
+- Fixes issue around refreshing resources that have unsupported response types
+  <details>
+  	<summary>Affected resources</summary>
+  	<ul>
+  		<li>`cloudflare_certificate_pack`</li>
+  		<li>`cloudflare_registrar_domain`</li>
+  		<li>`cloudflare_stream_download`</li>
+  		<li>`cloudflare_stream_webhook`</li>
+  		<li>`cloudflare_user`</li>
+  		<li>`cloudflare_workers_kv`</li>
+  		<li>`cloudflare_workers_script`</li>
+  	</ul>
+  </details>
+- Fixes `cloudflare_workers_kv` state refresh issues
+- Fixes issues around configurability of nested properties without computed values for the following resources
+  <details>
+  	<summary>Affected resources</summary>
+  	<ul>
+  		<li>`cloudflare_account`</li>
+  		<li>`cloudflare_account_dns_settings`</li>
+  		<li>`cloudflare_account_token`</li>
+  		<li>`cloudflare_api_token`</li>
+  		<li>`cloudflare_cloud_connector_rules`</li>
+  		<li>`cloudflare_custom_ssl`</li>
+  		<li>`cloudflare_d1_database`</li>
+  		<li>`cloudflare_dns_record`</li>
+  		<li>`email_security_trusted_domains`</li>
+  		<li>`cloudflare_hyperdrive_config`</li>
+  		<li>`cloudflare_keyless_certificate`</li>
+  		<li>`cloudflare_list_item`</li>
+  		<li>`cloudflare_load_balancer`</li>
+  		<li>`cloudflare_logpush_dataset_job`</li>
+  		<li>`cloudflare_magic_network_monitoring_configuration`</li>
+  		<li>`cloudflare_magic_transit_site`</li>
+  		<li>`cloudflare_magic_transit_site_lan`</li>
+  		<li>`cloudflare_magic_transit_site_wan`</li>
+  		<li>`cloudflare_magic_wan_static_route`</li>
+  		<li>`cloudflare_notification_policy`</li>
+  		<li>`cloudflare_pages_project`</li>
+  		<li>`cloudflare_queue`</li>
+  		<li>`cloudflare_queue_consumer`</li>
+  		<li>`cloudflare_r2_bucket_cors`</li>
+  		<li>`cloudflare_r2_bucket_event_notification`</li>
+  		<li>`cloudflare_r2_bucket_lifecycle`</li>
+  		<li>`cloudflare_r2_bucket_lock`</li>
+  		<li>`cloudflare_r2_bucket_sippy`</li>
+  		<li>`cloudflare_ruleset`</li>
+  		<li>`cloudflare_snippet_rules`</li>
+  		<li>`cloudflare_snippets`</li>
+  		<li>`cloudflare_spectrum_application`</li>
+  		<li>`cloudflare_workers_deployment`</li>
+  		<li>`cloudflare_zero_trust_access_application`</li>
+  		<li>`cloudflare_zero_trust_access_group`</li>
+  	</ul>
+  </details>
+- Fixed defaults that made `cloudflare_workers_script` fail when using Assets
+- Fixed Workers Logpush setting in `cloudflare_workers_script` mistakenly being readonly
+- Fixed `cloudflare_pages_project` broken when using "source"
+
+The detailed [changelog](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v5.4.0) is available on GitHub.
+
+### Upgrading
+
+If you are evaluating a move from v4 to v5, please make use of the [migration guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade). We have provided automated migration scripts using Grit which simplify the transition, although these do not support implementations which use Terraform modules, so customers making use of modules need to migrate manually. Please make use of `terraform plan` to test your changes before applying, and let us know if you encounter any additional issues either by reporting to our [GitHub repository](https://github.com/cloudflare/terraform-provider-cloudflare), or by opening a [support ticket](https://www.support.cloudflare.com/s/?language=en_US).
+
+### For more info
+
+- [Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs)
+- [Documentation on using Terraform with Cloudflare](https://developers.cloudflare.com/terraform/)

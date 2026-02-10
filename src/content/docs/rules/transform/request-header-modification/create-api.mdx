@@ -1,7 +1,7 @@
 ---
 title: Create a request header transform rule via API
 pcx_content_type: how-to
-type: overview
+
 sidebar:
   order: 3
   label: Create a rule via API
@@ -25,6 +25,7 @@ When creating a request header transform rule via API, make sure you:
 
 <Render
 	file="rules-creation-workflow"
+	product="rules"
 	params={{
 		ruleName: "a request header transform rule",
 		phaseName: "http_request_late_transform",
@@ -45,6 +46,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	json={{
 		rules: [
 			{
+				ref: "add_header_source",
 				expression: '(starts_with(http.request.uri.path, "/en/"))',
 				description: "My first request header transform rule",
 				action: "rewrite",
@@ -71,6 +73,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 		"version": "2",
 		"rules": [
 			{
+				"ref": "add_header_source",
 				"id": "<RULE_ID>",
 				"version": "1",
 				"action": "rewrite",
@@ -97,6 +100,12 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 }
 ```
 
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
 </Details>
 
 <Details header="Example: Add an HTTP request header with a dynamic value">
@@ -109,6 +118,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	json={{
 		rules: [
 			{
+				ref: "add_header_bot_score",
 				expression: '(starts_with(http.request.uri.path, "/en/"))',
 				description: "My first request header transform rule",
 				action: "rewrite",
@@ -135,6 +145,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 		"version": "2",
 		"rules": [
 			{
+				"ref": "add_header_bot_score",
 				"id": "<RULE_ID>",
 				"version": "1",
 				"action": "rewrite",
@@ -161,6 +172,12 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 }
 ```
 
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
 </Details>
 
 <Details header="Example: Remove an HTTP request header">
@@ -173,6 +190,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	json={{
 		rules: [
 			{
+				ref: "remove_header_cf_connecting_ip",
 				expression: '(starts_with(http.request.uri.path, "/en/"))',
 				description: "My first request header transform rule",
 				action: "rewrite",
@@ -198,6 +216,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 		"version": "2",
 		"rules": [
 			{
+				"ref": "remove_header_cf_connecting_ip",
 				"id": "<RULE_ID>",
 				"version": "1",
 				"action": "rewrite",
@@ -222,6 +241,12 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	"messages": []
 }
 ```
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 </Details>
 

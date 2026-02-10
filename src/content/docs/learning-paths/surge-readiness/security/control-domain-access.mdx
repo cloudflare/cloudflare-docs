@@ -1,0 +1,37 @@
+---
+title: Control domain access
+pcx_content_type: overview
+sidebar:
+  order: 8
+---
+
+[IP Access Rules](/waf/tools/ip-access-rules/) specify an action based on the origin of your user across a single domain or all of the domains in your account.
+
+IP Access Rules can be applied based on:
+
+
+
+* IPv4 address or range: Specified in CIDR notation as `/16` or `/24`
+* IPv6 address or range: Specified in CIDR notation as `/32`, `/48`, `/64`
+* ASN
+* Country or the Tor network
+
+
+:::note
+
+We recommend locking down your origin with an Access Control List (ACL) which only allows [Cloudflare IPs](http://www.cloudflare.com/ips).
+
+:::
+
+Actions:
+
+- Block: Ensures that an IP address will never be allowed to access your site.
+- CAPTCHA Challenge: Rules will be shown a CAPTCHA before allowed access.
+- Javascript Challenge: Rules will be shown a five second javascript confirmation.
+- Allowlist: Ensures that an IP address will never be blocked from accessing your site. This supersedes any Cloudflare security profile.
+
+:::note
+
+Challenge Passage timeout applies to IP reputation, IUAM mode and user IP Firewall (CAPTCHA or JS Challenge): [cf_clearance cookie](/fundamentals/reference/policies-compliances/cloudflare-cookies/#additional-cookies-used-by-the-challenge-platform) is set with `Max-age=Challenge Passage`.
+:::
+

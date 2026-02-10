@@ -2,18 +2,19 @@
 {}
 ---
 
-import { Render } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
 Install the [mysql2](https://github.com/sidorares/node-mysql2) driver:
 
-```sh
-# mysql2 v3.13.0 or later is required
-npm install mysql2
-```
+<PackageManagers pkg="mysql2@>3.13.0" />
+
+:::note
+`mysql2` v3.13.0 or later is required
+:::
 
 Add the required Node.js compatibility flags and Hyperdrive binding to your `wrangler.jsonc` file:
 
-<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive"/>
+<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive" />
 
 Create a new `connection` instance and pass the Hyperdrive parameters:
 
@@ -23,7 +24,8 @@ import { createConnection } from "mysql2/promise";
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Create a connection using the mysql2 driver with the Hyperdrive credentials (only accessible from your Worker).
+		// Create a new connection on each request. Hyperdrive maintains the underlying
+		// database connection pool, so creating a new connection is fast.
 		const connection = await createConnection({
 			host: env.HYPERDRIVE.host,
 			user: env.HYPERDRIVE.user,
@@ -39,13 +41,14 @@ export default {
 			// Sample query
 			const [results, fields] = await connection.query("SHOW tables;");
 
-			// Clean up the client after the response is returned, before the Worker is killed
-			ctx.waitUntil(connection.end());
-
 			// Return result rows as JSON
 			return Response.json({ results, fields });
 		} catch (e) {
 			console.error(e);
+			return Response.json(
+				{ error: e instanceof Error ? e.message : e },
+				{ status: 500 },
+			);
 		}
 	},
 } satisfies ExportedHandler<Env>;

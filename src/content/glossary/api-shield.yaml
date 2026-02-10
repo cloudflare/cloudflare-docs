@@ -15,7 +15,7 @@ entries:
 
   - term: session identifier
     general_definition: |-
-      A session identifier is a unique number that a website assigns to identify a specific user for the duration of their visit.
+      A session identifier is a unique identifier that a website assigns to identify a specific user for the duration of their visit.
 
   - term: source endpoint
     general_definition: |-

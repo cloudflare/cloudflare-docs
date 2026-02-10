@@ -4,7 +4,7 @@ title: Crawler Hints
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, DashButton } from "~/components"
 
 Crawler Hints aims to increase the proportion of relevant crawls and limit crawls that do not find fresh content to reduce the need for repeated crawls.
 
@@ -12,7 +12,7 @@ Crawler Hints aims to increase the proportion of relevant crawls and limit crawl
 
 Search engines and similar services operate massive networks of bots that crawl the Internet to identify the content most relevant to a user query. Content on the web is always changing though, and search engine crawlers must continually wander the Internet and guess how frequently they should check a site for content updates.
 
-With Crawler Hints, Cloudflare can proactively tell a crawler about the best time to index or when content changes. Additionally, Crawler Hints supports [IndexNow](https://www.indexnow.org/), which allows websites to notify search engines whenever content on their website content is created, updated, or deleted. Crawler Hints uses cache-status `MISS` to determine when content has likely been updated and sends it to IndexNow's crawler. If an asset's response has an HTTP status code greater than 4xx, the Crawler hints will not report that to [IndexNow](https://www.indexnow.org/).
+With Crawler Hints, Cloudflare can proactively tell a crawler about the best time to index or when content changes. Additionally, Crawler Hints supports [IndexNow](https://www.indexnow.org/), which allows websites to notify search engines whenever content on their website content is created, updated, or deleted. Crawler Hints uses cache-status [`MISS`](/cache/concepts/cache-responses/#miss) to determine when content has likely been updated and sends it to IndexNow's crawler. If an asset's response has an HTTP status code greater than 4xx, the Crawler hints will not report that to [IndexNow](https://www.indexnow.org/).
 
 ## Benefits
 
@@ -26,9 +26,11 @@ Crawler Hints also means less traffic hitting your origin, improving resource co
 
 ## Enable Crawler Hints
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
-2. Go to **Caching** > **Configuration**.
-3. Enable **Crawler Hints**.
+1. In the Cloudflare dashboard, go to the **Configuration** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
+2. Enable **Crawler Hints**.
 
 After enabling Crawler Hints, Cloudflare will begin sending hints to search engines about when they should crawl particular parts of your website.
 

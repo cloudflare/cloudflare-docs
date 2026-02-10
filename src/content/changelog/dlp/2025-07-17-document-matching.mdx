@@ -1,0 +1,25 @@
+---
+title: "New detection entry type: Document Matching for DLP"
+description: Upload a document as a detection entry type to be identified in traffic utilizing Gateway or at rest with CASB.
+date: 2025-07-17
+---
+
+You can now create [document-based](/cloudflare-one/data-loss-prevention/detection-entries/#documents) detection entries in DLP by uploading example documents. Cloudflare will encrypt your documents and create a unique fingerprint of the file. This fingerprint is then used to identify similar documents or snippets within your organization's traffic and stored files.
+
+![DLP](~/assets/images/changelog/dlp/document-match.png)
+
+**Key features and benefits:**
+
+- **Upload documents, forms, or templates:** Easily upload .docx and .txt files (up to 10 MB) that contain sensitive information you want to protect.
+
+- **Granular control with similarity percentage:** Define a minimum similarity percentage (0-100%) that a document must meet to trigger a detection, reducing false positives.
+
+- **Comprehensive coverage:** Apply these document-based detection entries in:
+
+    - **Gateway policies:** To inspect network traffic for sensitive documents as they are uploaded or shared.
+
+    - **CASB (Cloud Access Security Broker):** To scan files stored in cloud applications for sensitive documents at rest.
+
+- **Identify sensitive data:** This new detection entry type is ideal for identifying sensitive data within completed forms, templates, or even small snippets of a larger document, helping you prevent data exfiltration and ensure compliance.
+
+Once uploaded and processed, you can add this new document entry into a DLP profile and policies to enhance your data protection strategy.

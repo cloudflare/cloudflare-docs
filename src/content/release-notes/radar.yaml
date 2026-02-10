@@ -2,9 +2,76 @@
 link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-12-16"
+    title: New client type dimension in Web Crawlers and Mixed Purpose entry
+    description: |-
+      * Added new Mixed Purpose entry to the `crawl_purpose` dimension of the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API, which as of this release includes Googlebot and Bingbot.
+      * Added new dimension `client_type` to the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API.
+        * Added new **HTML page requests by client type graph** to the [AI Insights page](https://radar.cloudflare.com/ai-insights#html-page-requests-by-client-type).
+  - publish_date: "2025-11-24"
+
+    title: Add HTTP origins insights
+    description: |-
+      * Added new [`Origins`](/api/resources/radar/subresources/origins/) API.
+      * Extended [`Annotations`](/api/resources/radar/subresources/annotations/) and [`Traffic Anomalies`](/api/resources/radar/subresources/traffic_anomalies/) APIs to support origin outages and anomalies.
+  - publish_date: "2025-10-27"
+    title: Add TLD insights
+    description: |-
+      * Added new dimensions `tld` and `tld_dns_magnitude` to the [DNS](/api/resources/radar/subresources/dns/) API.
+      * Added new endpoints [`/tlds`](/api/resources/radar/subresources/tlds/methods/list/) and [`/tlds/{tld}`](/api/resources/radar/subresources/tlds/methods/get/).
+  - publish_date: "2025-10-09"
+    title: Add CT log activity statistics
+    description: |-
+      * Added new CT log activity stats to the [Get Certificate Log Details](/api/resources/radar/subresources/ct/subresources/logs/methods/get/) API response.
+  - publish_date: "2025-10-06"
+    title: Add PQ encryption browser support check
+    description: |-
+      * Added a [post-quantum encryption browser support check](https://radar.cloudflare.com/adoption-and-usage#browser-support) to the PQ encryption card in the Adoption & Usage section.
+  - publish_date: "2025-09-29"
+    title: Add geolocation, ADM1 dimension to HTTP endpoints, and NetFlows endpoints
+    description: |-
+      * Added new [geolocation endpoints](/api/resources/radar/subresources/geolocations/).
+      * Added new ADM1 dimension to [`HTTP`](/api/resources/radar/subresources/http/) `summary` and `timeseries_groups` endpoints.
+      * Added new [`NetFlows`](/api/resources/radar/subresources/netflows/) summary by dimension endpoint [summary_v2](/api/resources/radar/subresources/netflows/methods/summary_v2/).
+      * Added new `geoId` filter to all [`HTTP`](/api/resources/radar/subresources/http/) and [`NetFlows`](/api/resources/radar/subresources/netflows/) endpoints.
+  - publish_date: "2025-09-22"
+    title: Add IRR AS-SET membership lookup endpoint
+    description: |-
+      * Added IRR AS-SET membership lookup endpoint
+        * [ `/entities/asns/{asn}/as_set` ](/api/resources/radar/subresources/entities/subresources/asns/methods/as_set/)
+  - publish_date: "2025-08-27"
+    title: Add industry and vertical to AI Bots and Web Crawlers, and bot kind to Bots
+    description: |-
+      * Added vertical and industry dimensions/filters to:
+        * [`/ai/bots/summary/{dimension}`](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/summary/)
+        * [`/ai/bots/timeseries_groups/{dimension}`](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/)
+        * [`/bots/crawlers/summary/{dimension}`](/api/resources/radar/subresources/bots/subresources/web_crawlers/methods/summary/)
+        * [`/bots/crawlers/timeseries_groups/{dimension}`](/api/resources/radar/subresources/bots/subresources/web_crawlers/methods/timeseries_groups/)
+      * Added bot kind dimension/filter to:
+        * [`/bots/summary/{dimension}`](/api/resources/radar/subresources/bots/methods/summary/)
+        * [`/bots/timeseries_groups/{dimension}`](/api/resources/radar/subresources/bots/methods/timeseries_groups/)
+      * Added new `botKind` filter to:
+        * [`/bots/timeseries`](/api/resources/radar/subresources/bots/methods/timeseries/)
+      * Added new `kind` property/filter to:
+        * [`/bots`](/api/resources/radar/subresources/bots/methods/list/)
+        * [`/bots/{bot_slug}`](/api/resources/radar/subresources/bots/methods/get/)
+  - publish_date: "2025-08-14"
+    title: Add AI Bots crawl purpose
+    description: |-
+      * Added AI Bots crawl purpose dimension and filter to [summary](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/summary/) and [timeseries_groups](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/) endpoints.
+  - publish_date: "2025-08-06"
+    title: Add Certificate Transparency (CT) endpoints
+    description: |-
+      * Added [CT endpoints](/api/resources/radar/subresources/ct/).
+  - publish_date: "2025-07-01"
+    title: Add Bots and Web Crawlers endpoints
+    description: |-
+      * Added new [bots endpoints](/api/resources/radar/subresources/bots/), replacing the deprecated verified bots
+      endpoints. Use the following replacements:
+        * `/verified_bots/top/bots` → `/bots/summary/bot`
+        * `/verified_bots/top/categories` → `/bots/summary/bot_category`
+      * Added [web crawlers endpoints](/api/resources/radar/subresources/bots/subresources/web_crawlers/).
   - publish_date: "2025-03-20"
     title: Endpoint deprecations and new BGP real-time routes endpoint
     description: |-

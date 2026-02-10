@@ -2,13 +2,13 @@
 {}
 ---
 
-import { Example, TabItem, Tabs } from "~/components";
+import { Example, TabItem, Tabs, DashButton } from "~/components";
 
 The fallback origin is where Cloudflare will route traffic sent to your custom hostnames (must be proxied).
 
 :::note
 
-If you are an Enterprise customer, you can route custom hostnames to distinct origins by using [custom origin server](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/).
+To route custom hostnames to distinct origins, refer to [custom origin server](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/).
 
 :::
 
@@ -28,11 +28,12 @@ To create your fallback origin:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. Go to **SSL/TLS** > **Custom Hostnames**.
-4. For **Fallback Origin**, enter the hostname for your fallback origin.
-5. Select **Add Fallback Origin**.
+1. In the Cloudflare dashboard, go to the **Custom Hostnames** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/custom-hostnames" />
+
+2. For **Fallback Origin**, enter the hostname for your fallback origin.
+3. Select **Add Fallback Origin**.
 
 </TabItem> <TabItem label="API">
 

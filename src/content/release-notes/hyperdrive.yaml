@@ -2,9 +2,21 @@
 link: "/hyperdrive/platform/release-notes/"
 productName: Hyperdrive
 productLink: "/hyperdrive/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-12-04"
+    title: Connect to remote databases during local development with wrangler dev
+    description: |-
+      The `localConnectionString` configuration field and `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environment variable now support connecting to remote databases over TLS during local development with `wrangler dev`. 
+
+      When using a remote database connection string, your Worker code runs locally on your machine while connecting directly to the remote database. Hyperdrive caching does not take effect. 
+
+      Refer to [Local development](/hyperdrive/configuration/local-development/) for instructions on how to configure remote database connections for local development.
+  - publish_date: "2025-07-03"
+    title: Hyperdrive now supports configurable connection counts
+    description: |-
+      Hyperdrive configurations can now be set to use a specific number of connections to your origin database. There is a minimum of 5 connections for all configurations and a maximum according to your [Workers plan](/hyperdrive/platform/limits/).
+
+      This limit is a soft maximum. Hyperdrive may make more than this amount of connections in the event of unexpected networking issues in order to ensure high availability and resiliency.
   - publish_date: "2025-05-05"
     title: Hyperdrive improves regional caching for prepared statements for faster cache hits
     description: |-
@@ -39,7 +51,7 @@ entries:
     description: |-
       Hyperdrive query caching now happens in all locations where Hyperdrive can be accessed. When making a query in a location that has cached the query result, your latency may be decreased by up to 90%.
 
-      Refer to [documentation on how Hyperdrive caches query results](/hyperdrive/configuration/how-hyperdrive-works/#query-caching).
+      Refer to [documentation on how Hyperdrive caches query results](/hyperdrive/concepts/how-hyperdrive-works/#query-caching).
   - publish_date: "2024-11-19"
     title: Hyperdrive now supports clear-text password authentication
     description: |-

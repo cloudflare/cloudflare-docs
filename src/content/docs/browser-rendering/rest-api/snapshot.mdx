@@ -5,11 +5,30 @@ sidebar:
   order: 6
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
 The `/snapshot` endpoint captures both the HTML content and a screenshot of the webpage in one request. It returns the HTML as a text string and the screenshot as a Base64-encoded image.
 
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot
+```
+
+## Required fields
+You must provide either `url` or `html`:
+-  `url` (string)
+-  `html` (string)
+
+## Common use cases
+
+-  Capture both the rendered HTML and a visual screenshot in a single API call
+-  Archive pages with visual and structural data together
+-  Build monitoring tools that compare visual and DOM differences over time
+
 ## Basic usage
+
+### Capture a snapshot from a URL
 
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
@@ -46,12 +65,15 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 import Cloudflare from "cloudflare";
 
 const client = new Cloudflare({
-	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
-	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"],
 });
 
 const snapshot = await client.browserRendering.snapshot.create({
-	account_id: "account_id",
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://example.com/",
+	addScriptTag: [
+        { content: "document.body.innerHTML = \"Snapshot Page\";" }
+    ]
 });
 
 console.log(snapshot.content);
@@ -60,6 +82,12 @@ console.log(snapshot.content);
 </TabItem> </Tabs>
 
 ## Advanced usage
+
+:::note[Looking for more parameters?]
+Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/snapshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+:::
+
+### Create a snapshot from custom HTML
 
 The `html` property in the JSON payload, it sets the html to `<html><body>Advanced Snapshot</body></html>` then does the following steps:
 
@@ -100,4 +128,22 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 }
 ```
 
-Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/snapshot/) for all available parameters.
+<Render
+  file="improve-blurry-screenshot-resolution"
+  product="browser-rendering"
+/>
+
+<Render
+  file="javascript-heavy-pages"
+  product="browser-rendering"
+/>
+
+<Render
+  file="setting-custom-user-agent"
+  product="browser-rendering"
+/>
+
+<Render
+  file="faq"
+  product="browser-rendering"
+/>

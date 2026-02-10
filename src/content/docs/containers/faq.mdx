@@ -1,0 +1,166 @@
+---
+pcx_content_type: navigation
+title: Frequently Asked Questions
+sidebar:
+  order: 10
+---
+
+import { WranglerConfig } from "~/components";
+
+Frequently Asked Questions:
+
+## How do Container logs work?
+
+To get logs in the Dashboard, including live tailing of logs, toggle `observability` to true
+in your Worker's wrangler config:
+
+<WranglerConfig>
+
+```json
+{
+	"observability": {
+		"enabled": true
+	}
+}
+```
+
+</WranglerConfig>
+
+Logs are subject to the same [limits as Worker logs](/workers/observability/logs/workers-logs/#limits), which means that they are
+retained for 3 days on Free plans and 7 days on Paid plans.
+
+See [Workers Logs Pricing](/workers/observability/logs/workers-logs/#pricing) for details on cost.
+
+If you are an Enterprise user, you are able to export container logs via [Logpush](/logs/logpush/)
+to your preferred destination.
+
+## How are container instance locations selected?
+
+When initially deploying a Container, Cloudflare will select various locations across our
+network to deploy instances to. These locations will span multiple regions.
+
+When a Container instance is requested with `this.ctx.container.start`, the nearest free
+container instance will be selected from the pre-initialized locations. This will
+likely be in the same region as the external request, but may not be. Once the container
+instance is running, any future requests will be routed to the initial location.
+
+An Example:
+
+- A user deploys a Container. Cloudflare automatically readies instances across its Network.
+- A request is made from a client in Bariloche, Argentia. It reaches the Worker in
+  Cloudflare's location in Neuquen, Argentina.
+- This Worker request calls `MY_CONTAINER.get("session-1337")` which brings up a Durable
+  Object, which then calls `this.ctx.container.start`.
+- This requests the nearest free Container instance.
+- Cloudflare recognizes that an instance is free in Buenos Aires, Argentina, and
+  starts it there.
+- A different user needs to route to the same container. This user's request reaches
+  the Worker running in Cloudflare's location in San Diego.
+- The Worker again calls `MY_CONTAINER.get("session-1337")`.
+- If the initial container instance is still running, the request is routed to the location
+  in Buenos Aires. If the initial container has gone to sleep, Cloudflare will once
+  again try to find the nearest "free" instance of the Container, likely
+  one in North America, and start an instance there.
+
+## How do container updates and rollouts work?
+
+See [rollout documentation](/containers/platform-details/rollouts/) for details.
+
+## How does scaling work?
+
+See [scaling & routing documentation](/containers/platform-details/scaling-and-routing/) for details.
+
+## What are cold starts? How fast are they?
+
+A cold start is when a container instance is started from a completely stopped state.
+
+If you call `env.MY_CONTAINER.get(id)` with a completely novel ID and launch
+this instance for the first time, it will result in a cold start.
+
+This will start the container image from its entrypoint for the first time. Depending
+on what this entrypoint does, it will take a variable amount of time to start.
+
+Container cold starts can often be the 2-3 second range, but this is dependent
+on image size and code execution time, among other factors.
+
+## How do I use an existing container image?
+
+See [image management documentation](/containers/platform-details/image-management/#using-existing-images) for details.
+
+## Is disk persistent? What happens to my disk when my container sleeps?
+
+All disk is ephemeral. When a Container instance goes to sleep, the next time
+it is started, it will have a fresh disk as defined by its container image.
+
+Persistent disk is something the Cloudflare team is exploring in the future, but
+is not slated for the near term.
+
+## What happens if I run out of memory?
+
+If you run out of memory, your instance will throw an Out of Memory (OOM) error and
+will be restarted.
+
+Containers do not use swap memory.
+
+## How long can instances run for? What happens when a host server is shutdown?
+
+Cloudflare will not actively shut off a container instance after a specific amount of
+time. If you do not set `sleepAfter` on your Container class, or stop the instance
+manually, it will continue to run unless its host server is restarted. This
+happens on an irregular cadence, but frequently enough where Cloudflare does not
+guarantee that any instance will run for any set period of time.
+
+When a container instance is going to be shut down, it is sent a `SIGTERM` signal,
+and then a `SIGKILL` signal after 15 minutes. You should perform any necessary
+cleanup to ensure a graceful shutdown in this time. The container instance
+will be rebooted elsewhere shortly after this.
+
+## How can I pass secrets to my container?
+
+You can use [Worker Secrets](/workers/configuration/secrets/) or the [Secrets Store](/secrets-store/integrations/workers/)
+to define secrets for your Workers.
+
+Then you can pass these secrets to your Container using the `envVars` property:
+
+```javascript
+class MyContainer extends Container {
+	defaultPort = 5000;
+	envVars = {
+		MY_SECRET: this.env.MY_SECRET,
+	};
+}
+```
+
+Or when starting a Container instance on a Durable Object:
+
+```javascript
+this.ctx.container.start({
+	env: {
+		MY_SECRET: this.env.MY_SECRET,
+	},
+});
+```
+
+See [the Env Vars and Secrets Example](/containers/examples/env-vars-and-secrets/) for details.
+
+## How do I allow or disallow egress from my container?
+
+When booting a Container, you can specify `enableInternet`, which will toggle
+internet access on or off.
+
+To disable it, configure it on your Container class:
+
+```javascript
+class MyContainer extends Container {
+	defaultPort = 7000;
+	enableInternet = false;
+}
+```
+
+or when starting a Container instance on a Durable Object:
+
+```javascript
+this.ctx.container.start({
+	enableInternet: false,
+});
+```
