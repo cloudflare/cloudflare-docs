@@ -7,6 +7,48 @@ import { fileURLToPath } from "node:url";
 import fs from "fs";
 import { dirname, join } from "path";
 
+import * as z from "zod";
+
+/**
+ * downloadToDotTempIfNotPresent is a convenience function for handling downloads to a .tmp directory
+ * within the source repo
+ *
+ * @param url - source URL
+ * @param dotTmpDestination - path relative to .tmp/ as destination for downloaded file
+ */
+
+export async function downloadToDotTempIfNotPresent(
+	url: string,
+	dotTmpDestination: string,
+) {
+	const source = z.string().url().parse(url);
+	const relativeDestination = z
+		.string()
+		.refine((val) => !val.includes("\\"), {
+			message: "dotTmpDestination paths should only contain forward slashes.",
+		})
+		.refine((val) => !val.startsWith("/"), {
+			message: "dotTmpDestination must be a relative path.",
+		})
+		.parse(dotTmpDestination);
+
+	const destinationParts = relativeDestination.split("/");
+	const universalRelativeDestination = join(...destinationParts);
+
+	const dotTmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
+
+	const destination = join(dotTmpPath, universalRelativeDestination);
+
+	if (!fs.existsSync(destination)) {
+		fs.mkdirSync(dirname(destination), { recursive: true });
+
+		const response = await fetch(source);
+		const content = await response.text();
+
+		fs.writeFileSync(destination, content);
+	}
+}
+
 /**
  * middlecache loader expects a middlecache path
  *
@@ -28,26 +70,13 @@ export function middlecacheLoader(
 			let middlecacheBaseUrl = "https://middlecache.ced.cloudflare.com/";
 			if (options.url) middlecacheBaseUrl = options.url;
 
-			const pathParts = path.split("/");
-			const universalPath = join(...pathParts);
-
-			const tmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
-
-			const destination = join(tmpPath, "middlecache", universalPath);
-
-			context.logger.debug(`Remote to local load from: ${destination}`);
-
-			if (!fs.existsSync(destination)) {
-				fs.mkdirSync(dirname(destination), { recursive: true });
-
-				context.logger.debug(`Download of ${path} starting...`);
-
-				const response = await fetch(middlecacheBaseUrl + path);
-				const content = await response.text();
-
-				fs.writeFileSync(destination, content);
-				context.logger.debug(`Download of ${path} completed.`);
-			}
+			context.logger.debug(
+				`Remote to local load from: ${middlecacheBaseUrl}${path}`,
+			);
+			await downloadToDotTempIfNotPresent(
+				`${middlecacheBaseUrl}${path}`,
+				`middlecache/${path}`,
+			);
 
 			const fileLoader = file(`.tmp/middlecache/${path}`, options as any);
 
