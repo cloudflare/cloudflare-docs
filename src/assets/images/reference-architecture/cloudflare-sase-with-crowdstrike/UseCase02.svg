@@ -117,7 +117,7 @@
 <path d="M562.37 258.1L560.33 260.29L571.16 270.36L560.33 280.43L562.37 282.63L575.57 270.36L562.37 258.1Z" fill="#9E9E9E"/>
 <path d="M513.64 674.41H188.98V592.38" stroke="#9E9E9E" stroke-width="3" stroke-miterlimit="10"/>
 <path d="M503.7 662.14L501.66 664.34L512.49 674.41L501.66 684.48L503.7 686.68L516.9 674.41L503.7 662.14Z" fill="#9E9E9E"/>
-<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" font-weight="500" letter-spacing="0em"><tspan x="358.8" y="1032.22">3. Investigate</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" font-weight="500" letter-spacing="0em"><tspan x="358.8" y="1032.22">4. Investigate</tspan></text>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" font-weight="500" letter-spacing="0em"><tspan x="718.39" y="569.41">3. Logs [Logpush]</tspan></text>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="22" font-weight="500" letter-spacing="0em"><tspan x="292.19" y="246.82">2. Internet traffic</tspan></text>
 <path d="M136.49 866.11C136.9 866.11 137.23 865.78 137.23 865.37C137.23 864.96 136.9 864.63 136.49 864.63C136.08 864.63 135.75 864.96 135.75 865.37C135.75 865.78 136.08 866.11 136.49 866.11Z" fill="#3E74FF"/>
