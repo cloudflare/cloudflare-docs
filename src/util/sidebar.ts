@@ -368,12 +368,12 @@ export const lookupProductTitle = async (product: string, module: string) => {
 	} else if (product === "1.1.1.1") {
 		const entry = await getEntry("directory", "1111");
 
-		return entry?.data?.product?.title;
+		return entry?.data?.entry?.title;
 	}
 
 	const entry = await getEntry("directory", product);
 
-	return entry?.data?.product?.title ?? "Unknown";
+	return entry?.data?.entry?.title ?? "Unknown";
 };
 
 export function sortBySidebarOrder(a: any, b: any): number {
