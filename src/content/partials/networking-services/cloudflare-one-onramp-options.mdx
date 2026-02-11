@@ -71,7 +71,7 @@ The Cloudflare WARP client is a device agent that securely connects end-user dev
 Use WARP client to secure remote workforce devices, replace traditional VPN solutions, enforce DNS filtering and web security policies, implement device posture checks, and enable WARP-to-WARP connectivity between enrolled devices.
 
 :::note[Important to know]
-WARP client is on-ramp only — it establishes outbound connections to Cloudflare but cannot receive unsolicited inbound traffic directly from external networks. However, enrolled WARP devices can communicate with each other via [WARP-to-WARP](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/) using virtual IP addresses, since both devices have active connections to Cloudflare.
+WARP client is on-ramp only — it establishes outbound connections to Cloudflare but cannot receive unsolicited inbound traffic directly from external networks. However, enrolled WARP devices can communicate with each other via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) using virtual IP addresses, since both devices have active connections to Cloudflare.
 :::
 
 For detailed configuration, refer to the [WARP client documentation](/cloudflare-one/team-and-resources/devices/warp/).
@@ -382,7 +382,7 @@ When using multiple connectivity options, follow these guidelines to avoid routi
 
 - **Avoid overlapping CIDR ranges**: Do not configure the same IP range for multiple tunnel types. If an overlap exists, Cloudflare Tunnel takes priority over Magic WAN routes.
 - **No automatic failover**: Cloudflare does not automatically fail over traffic between different connectivity options. Plan your routing to handle failures within each tunnel type.
-- **Virtual Networks**: Use [Virtual Networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/virtual-networks/) to handle overlapping private IP ranges from different environments (for example, multiple cloud VPCs using `10.0.0.0/8`).
+- **Virtual Networks**: Use [Virtual Networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) to handle overlapping private IP ranges from different environments (for example, multiple cloud VPCs using `10.0.0.0/8`).
 
 ### MTU planning
 
@@ -499,7 +499,7 @@ This pattern serves organizations with strict compliance requirements that prohi
 - [Magic Transit](/magic-transit/)
 - <a href={props.connectorURL}>Magic WAN Connector</a>
 - [Cloudflare Network Interconnect](/network-interconnect/)
-- [Virtual Networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/virtual-networks/)
+- [Virtual Networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/)
 - [DNS locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) - Filter DNS traffic without device agents
 - [Proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) - Filter web traffic using PAC files
 - [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) - Secure web access without device agents
