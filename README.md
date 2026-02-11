@@ -38,7 +38,110 @@ JavaScript TTS Engine
 
 我可以直接幫你生成這份 EMP_GITHUB-PAGES_OVERVIEW.md，內容將包括：
 
+# EMP_GITHUB-PAGES_OVERVIEW.md
 
+## 📌 倉庫名稱
+GitHub‑Pages  
+管理員：GTP_Ai  
+語音工具：JavaScript TTS Engine  
+產品定位：靜態視覺展示 + 語音研讀系統  
+封閉、原創、本地運行、無外部依賴
+
+---
+
+## 🧭 一、倉庫定位與核心目標
+
+• 對外唯一公開展示頁  
+• 本地語音朗讀（TTS）  
+• 純 HTML/JS 靜態展示  
+• 不提供原始碼、編譯流程、DEMO 或執行教學  
+• 不串外部服務、不串 Git/PR  
+• 對外收入錨點：USD 30,000/月（收費策略）
+
+---
+
+## 🔊 二、語音研讀 / TTS 策略
+
+• 語音核心：JavaScript TTS Engine  
+• 運行方式：純靜態 HTML，雙擊瀏覽器開啟  
+• 支援：Chrome / Firefox 本地 TTS  
+• 功能：
+  - 語音朗讀 MD/文字內容
+  - 錄音轉文字
+  - 輸出加密圖片 log（防洩漏）
+• 安全：無外部網絡依賴與 API Key
+
+---
+
+## 📁 三、目錄結構大綱
+
+### 核心視覺資產（視覺化主體）
+- 粒子動畫 JavaScript
+- 視差動畫 JavaScript
+- 動態 CSS 效果
+- UI 全局 CSS
+- HTML 框架容器
+
+### 建構與環境設定（不對外公開編譯）
+- astro.config.ts
+- wrangler.toml
+- tsconfig.json / .node-version / .npmrc
+- postcss.config.mjs / ec.config.mjs / eslint.config.js
+- vitest.workspace.ts
+
+### 授權與宣言（法律錨點）
+- LICENSE / LICENSE-CODE
+- CONTRIBUTING.md
+- README.md（唯一對外窗口）
+
+### 工具鏈與支援檔
+- .github / .vscode / CI 設定
+- bin / scripts / worker（封閉）
+- patches / public / src / templates（靜態資源）
+
+### 輔助網頁與相依
+- index.html
+- app.js / script.js
+- package.json / package-lock.json
+- sitemap.serializer.ts
+- touch .nojekyll
+
+---
+
+## 🛡️ 四、產品屬性
+
+• 封閉交付：不得拆售、不得解釋、不得公開  
+• 原則：完全原創（Wshao777 專屬）  
+• 無外部串聯、無第三方依賴  
+• 版權保留，僅靜態視覺展示  
+• 安全隔離，不對外服務
+• 同名網站 / 應用 全部視為詐欺
+
+---
+
+## 🚫 五、禁令與版權聲明
+
+© 2026 Wshao777 & GTP_Ai · All Rights Reserved
+
+• 禁止複製、修改、分發、逆向工程  
+• 禁止商業整合與 OEM  
+• 禁止未授權教學或展示  
+• 未經授權之展示 / 執行皆視為侵權
+
+---
+
+## 📊 六、總結
+
+此庫不是一般「程式碼託管」，  
+是「封閉視覺成果展示 + 語音研讀交付品」。  
+
+唯一入口：
+https://github.com/Wshao777/GitHub-Pages
+
+月費策略錨點：  
+USD 30,000 / 月（非邀約／非授權合同）
+
+---
 ---
 
 EMP_GITHUB-PAGES_OVERVIEW.md（概覽版）
