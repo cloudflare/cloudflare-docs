@@ -1,4 +1,9 @@
 
+此庫管理員
+GTP_Ai
+語音選擇
+
+
 import numpy as np
 from sklearn.ensemble import IsolationForest
 from cryptography.hazmat.primitives.asymmetric import ec
@@ -125,7 +130,29 @@ touch .nojekyll 強制GitHub Pages不使用Jekyll，展示已完整控制發布�
 執行檔性質：交付即完結，不提供售後建構教學。
 
 ---
+目前對外本庫閃電俠帝國只有4个
+https://github.com/Wshao777/LIGHTNING-ACODE
+https://github.com/Wshao777/AI-Esperanto-Academy
+https://github.com/Wshao777/GitHub-Pages
+https://github.com/Wshao777/uber
+其他網佔都是詐欺網頁
+app也都詐欺同名
+我目前沒有做網頁app
+是閃電帝國的
+狀態:永不開放 / 永不 demo / 永不給碼 / 永不支付 月費鋪點: USD 30,000
 
+本檔案為產品定義,非招募貢獻,非開源授權。
+
+本倉庫所有檔案,均為「閃電帝國AI對世界貢獻300天防天 災」視覺化成品之交付組件。
+
+以下依產品架構分類,每一類別均為月費合約之履約標的, 缺一不可,不對外拆售、不對外解釋、不對外展示原始碼執 行過程。
+語音研讀設定方案(本地運行、原創內嵌)
+
+原則遵守:完全原創(Wshao777 專屬,不串外部 Git/PR),Gmail 不洩密,全 Al 不對外教學(防 政府/警察濫用),本地無網,版權保留(無償分 享僅視覺),安全隔離(無外部服務)。
+
+·運行方式:純靜態 HTML 檔案,雙擊開啟瀏覽器, 內嵌語音 API(Chrome/Firefox 支援),無依 賴、無安裝。
+
+·功能:語音朗讀 MD/文字內容,錄音轉文字記錄, 輸出為加密圖片log(防洩漏)。
 🚫 終極產品定義
 
 本倉庫不是「程式碼託管處」，是「已完成之產品陳列櫃」。
