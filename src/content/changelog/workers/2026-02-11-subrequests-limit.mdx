@@ -10,7 +10,7 @@ import { WranglerConfig } from "~/components";
 
 Workers no longer have a limit of 1000 subrequests per invocation, allowing you to make more `fetch()` calls or requests
 to Cloudflare services on every incoming request. This is especially important for long-running Workers requests, such as
-open websockets on Durable Objects or long-running Workflows, as these could often exceed this limit and error.
+open websockets on [Durable Objects](/durable-objects) or long-running [Workflows](/workflows), as these could often exceed this limit and error.
 
 By default, Workers on paid plans are now limited to 10,000 subrequests per invocation, but this
 limit can be increased up to 10 million by setting the new `subrequests` limit in your Wrangler configuration file.
