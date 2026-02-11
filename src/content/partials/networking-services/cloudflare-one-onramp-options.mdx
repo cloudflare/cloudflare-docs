@@ -223,7 +223,7 @@ IPsec and GRE tunnels require a Magic WAN subscription.
 
 <Details header="Magic WAN Connector details">
 
-Magic WAN Connector is a plug-and-play SD-WAN appliance that automates connectivity to Cloudflare's network. It establishes IPsec tunnels automatically and provides traffic steering and shaping. You can deploy it as a hardware appliance (Dell VEP1460) or virtual appliance (VMware ESXi, Proxmox, KVM).
+Magic WAN Connector is a plug-and-play SD-WAN appliance that automates connectivity to Cloudflare's network. It establishes IPsec tunnels automatically and provides traffic steering and shaping. You can deploy it as a hardware appliance (Dell VEP1460) or virtual appliance (VMware ESXi, Proxmox).
 
 Use Magic WAN Connector for zero-touch branch office deployments, to replace edge routers, achieve high throughput (1 Gbps or higher), or manage multiple sites through a centralized dashboard.
 
@@ -350,7 +350,7 @@ WARP Connector and Magic WAN Connector both provide site-level connectivity, but
 | **Protocol** | MASQUE / WireGuard | IPsec |
 | **Deployment model** | Software on Linux host (can run alongside other workloads) | Dedicated hardware appliance or virtual machine |
 | **Best for** | Cloud VPCs, development environments, sites without dedicated network hardware, smaller deployments | Enterprise branch offices, data centers, sites requiring high throughput (1 Gbps+) |
-| **Platform support** | Linux only (x86_64). Currently in beta. | Hardware appliance (Dell VEP1460) or virtual (VMware ESXi, Proxmox, KVM) |
+| **Platform support** | Linux only (x86_64). Currently in beta. | Hardware appliance (Dell VEP1460) or virtual (VMware ESXi, Proxmox) |
 | **High availability** | Not currently supported | Supported through multiple connectors per site |
 | **Management** | Configured as a device in the WARP client settings | Centralized through the Magic WAN dashboard with zero-touch provisioning |
 
