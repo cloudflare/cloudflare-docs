@@ -23,7 +23,7 @@ Read the [announcement](https://blog.cloudflare.com/markdown-for-agents/) in our
 
 ## How to use
 
-To fetch the markdown version of any page from a zone with Markdown for Agents enabled, the client needs to add the `Accept` negotiation header with `text/markdown` as one of the options. Cloudflare will detect this, fetch the original HTML version from the origin, and convert it to markdown before serving it to the client.
+To fetch the Markdown version of any page from a zone with Markdown for Agents enabled, the client needs to add the `Accept` negotiation header with `text/markdown` as one of the options. Cloudflare will detect this, fetch the original HTML version from the origin, and convert it to Markdown before serving it to the client.
 
 Here's a curl example with the `Accept` negotiation header requesting this page from our developer documentation:
 
