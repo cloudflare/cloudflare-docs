@@ -45,9 +45,11 @@ Cloudflare Tunnel provides a secure way to connect your resources to Cloudflare 
 
 Use Cloudflare Tunnel when you need to expose private web applications, protect origin servers by hiding their IP addresses, or deploy cloud-native ingress for Kubernetes services.
 
-:::note[Important to know] Cloudflare Tunnel is off-ramp only and does not support server-initiated protocols (VoIP, SIP). Your origin sees the `cloudflared` process IP instead of the original client IP.
+:::note[Important to know]
+Cloudflare Tunnel is off-ramp only and does not support server-initiated protocols (VoIP, SIP). Your origin sees the `cloudflared` process IP instead of the original client IP.
 
-For HTTP traffic, use the `CF-Connecting-IP` header to retrieve the client IP. For non-HTTP protocols (SSH, RDP, TCP), the original source IP is not available to the origin server. :::
+For HTTP traffic, use the `CF-Connecting-IP` header to retrieve the client IP. For non-HTTP protocols (SSH, RDP, TCP), the original source IP is not available to the origin server.
+:::
 
 For detailed configuration, refer to the [Cloudflare Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
 
@@ -63,7 +65,9 @@ The Cloudflare WARP client is a device agent that securely connects end-user dev
 
 Use WARP client to secure remote workforce devices, replace traditional VPN solutions, enforce DNS filtering and web security policies, implement device posture checks, and enable WARP-to-WARP connectivity between enrolled devices.
 
-:::note[Important to know] WARP client is on-ramp only — it establishes outbound connections to Cloudflare but cannot receive unsolicited inbound traffic directly from external networks. However, enrolled WARP devices can communicate with each other via [WARP-to-WARP](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/) using virtual IP addresses, since both devices have active connections to Cloudflare.:::
+:::note[Important to know]
+WARP client is on-ramp only — it establishes outbound connections to Cloudflare but cannot receive unsolicited inbound traffic directly from external networks. However, enrolled WARP devices can communicate with each other via [WARP-to-WARP](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/) using virtual IP addresses, since both devices have active connections to Cloudflare.
+:::
 
 For detailed configuration, refer to the [WARP client documentation](/cloudflare-one/team-and-resources/devices/warp/).
 
@@ -83,11 +87,15 @@ For VPN replacement and Zero Trust Network Access (ZTNA) use cases, Cloudflare T
 
 Deploy WARP Connector supplementally when you need bidirectional connectivity for specific use cases like Active Directory Group Policy updates, SCCM, SIP traffic, VoIP traffic, or DevOps pipelines.
 
-:::caution[Magic WAN compatibility] Accounts on Legacy routing mode do not support WARP Connector when Magic WAN is enabled. Your account must be on Cloudflare One Unified Routing for both to work together. :::
+:::caution[Magic WAN compatibility]
+Accounts on Legacy routing mode do not support WARP Connector when Magic WAN is enabled. Your account must be on Cloudflare One Unified Routing for both to work together.
+:::
 
-:::note[Important to know] WARP Connector does not currently support high availability or redundancy configurations. A single WARP Connector instance represents a single point of failure for that subnet.
+:::note[Important to know]
+WARP Connector does not currently support high availability or redundancy configurations. A single WARP Connector instance represents a single point of failure for that subnet.
 
-Plan your deployment accordingly and consider Magic WAN Connector or IPsec tunnels if high availability is a requirement. :::
+Plan your deployment accordingly and consider Magic WAN Connector or IPsec tunnels if high availability is a requirement.
+:::
 
 For detailed configuration, refer to the [WARP Connector documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
 
@@ -170,7 +178,9 @@ Generic Routing Encapsulation (GRE) tunnels provide lightweight, stateless netwo
 
 Use GRE tunnels when you need to connect branch offices or data centers with minimal configuration overhead, integrate with Magic Transit for DDoS protection, or deploy redundant tunnels alongside IPsec.
 
-:::note[Important to know] GRE does not encrypt traffic (use IPsec if encryption is required). Requires a static public IP and careful MTU planning (1476 bytes MTU, MSS clamping at 1436 bytes or lower). :::
+:::note[Important to know]
+GRE does not encrypt traffic (use IPsec if encryption is required). Requires a static public IP and careful MTU planning (1476 bytes MTU, MSS clamping at 1436 bytes or lower).
+:::
 
 For detailed configuration, refer to the [GRE and IPsec tunnels documentation](/cloudflare-one/networks/connectors/wan-tunnels/reference/gre-ipsec-tunnels/).
 
@@ -186,15 +196,19 @@ IPsec tunnels provide encrypted, stateful network connectivity between your infr
 
 Use IPsec tunnels when you need to encrypt traffic over the public Internet, meet compliance requirements for encrypted connections, or replace expensive MPLS links.
 
-:::note[Important to know] Requires a static public IP and supports IKEv2 only (not IKEv1). If behind NAT, initiate IKE on port 4500.
+:::note[Important to know]
+Requires a static public IP and supports IKEv2 only (not IKEv1). If behind NAT, initiate IKE on port 4500.
 
-When traffic from Magic WAN egresses to the public Internet through Gateway, source IP addresses are translated to Cloudflare dedicated egress IP addresses. :::
+When traffic from Magic WAN egresses to the public Internet through Gateway, source IP addresses are translated to Cloudflare dedicated egress IP addresses.
+:::
 
 For cloud environments (AWS, Azure, GCP), use [Magic Cloud Networking](#magic-cloud-networking) to automate IPsec tunnel creation instead of configuring tunnels manually.
 
 For detailed configuration, refer to the [GRE and IPsec tunnels documentation](/cloudflare-one/networks/connectors/wan-tunnels/reference/gre-ipsec-tunnels/).
 
-:::note[Key consideration] IPsec and GRE tunnels require a Magic WAN subscription.:::
+:::note[Key consideration]
+IPsec and GRE tunnels require a Magic WAN subscription.
+:::
 
 </Details>
 
@@ -208,7 +222,9 @@ Magic WAN Connector is a plug-and-play SD-WAN appliance that automates connectiv
 
 Use Magic WAN Connector for zero-touch branch office deployments, to replace edge routers, achieve high throughput (1 Gbps or higher), or manage multiple sites through a centralized dashboard.
 
-:::note[Key consideration] Magic WAN Connector requires a Magic WAN subscription and dedicated hardware or VM (cannot run alongside other software on the same host). :::
+:::note[Key consideration]
+Magic WAN Connector requires a Magic WAN subscription and dedicated hardware or VM (cannot run alongside other software on the same host).
+:::
 
 For detailed configuration, refer to the [Magic WAN Connector documentation](/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/).
 
@@ -232,11 +248,15 @@ Use CNI when you need to meet security requirements that prohibit public Interne
 | **Partner Interconnect** | Virtual connection through connectivity partners (Megaport, Equinix Fabric, PacketFabric) | Customers not colocated with Cloudflare or who prefer managed connectivity |
 | **Cloud Interconnect** | Private connection from cloud providers (AWS, GCP, Azure) | Customers with workloads in public clouds requiring private connectivity |
 
-:::note[Key consideration] CNI requires an Enterprise plan and is available only in locations where Cloudflare has interconnect facilities. :::
+:::note[Key consideration]
+CNI requires an Enterprise plan and is available only in locations where Cloudflare has interconnect facilities.
+:::
 
-:::caution[Using CNI with Cloudflare Tunnel] `cloudflared` establishes connections to multiple Cloudflare regions for redundancy. If your CNI connection only advertises routes to one Cloudflare region, Cloudflare Tunnel may operate in a degraded state with reduced redundancy.
+:::caution[Using CNI with Cloudflare Tunnel]
+`cloudflared` establishes connections to multiple Cloudflare regions for redundancy. If your CNI connection only advertises routes to one Cloudflare region, Cloudflare Tunnel may operate in a degraded state with reduced redundancy.
 
-Evaluate whether Cloudflare Tunnel is necessary if CNI already provides private connectivity to your infrastructure. :::
+Evaluate whether Cloudflare Tunnel is necessary if CNI already provides private connectivity to your infrastructure.
+:::
 
 For detailed configuration, refer to the [Cloudflare Network Interconnect documentation](/cloudflare-one/networks/connectors/wan-tunnels/network-interconnect/).
 
@@ -272,7 +292,9 @@ MCN is not a separate tunnel type — it orchestrates your cloud provider's nati
 - Azure (single VPC)
 - GCP (single VPC)
 
-:::note[Key consideration] Magic Cloud Networking requires a Magic WAN subscription and Magic Cloud Networking entitlement. Contact your account team to enable MCN. :::
+:::note[Key consideration]
+Magic Cloud Networking requires a Magic WAN subscription and Magic Cloud Networking entitlement. Contact your account team to enable MCN.
+:::
 
 ### Deployment notes
 
