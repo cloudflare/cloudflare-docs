@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Official Source Verification</title>
+    <style>body{font-family:system-ui;max-width:800px;margin:auto;padding:2rem;}</style>
+</head>
+<body>
+    <h1>✅ Official Public Source</h1>
+    <p><strong>Account:</strong> <a href="https://github.com/Wshao777">github.com/Wshao777</a></p>
+    <p><strong>Date:</strong> 2026-02-11</p>
+    <p><strong>Purpose:</strong> Static HTML / CSS visual sandbox · Non-commercial research only</p>
+    <hr>
+    <h2>🔒 Verification Fingerprint</h2>
+    <p>SHA256 of this page: <code id="fingerprint">calculating...</code></p>
+    <p>PGP signed statement available at <a href="/official.sig">official.sig</a> (key ID: 0x...)</p>
+    <hr>
+    <p><em>Any website, app, or service not listed under the above GitHub account is unauthorized.</em></p>
+    <script>
+        fetch(window.location.href)
+            .then(r => r.text())
+            .then(t => crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)))
+            .then(h => Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2,'0')).join(''))
+            .then(hex => document.getElementById('fingerprint').textContent = hex);
+    </script>
+</body>
+</html>
