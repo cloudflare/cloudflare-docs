@@ -6,17 +6,17 @@ products:
 date: 2026-02-12
 ---
 
-Cloudflare's network now supports real-time content conversion at the source, for enabled zones using [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Content_negotiation) headers. When AI systems request pages from any website that uses Cloudflare and has Markdown for Agents enabled, they can express the preference for `text/markdown` in the request and our network will automatically and efficiently convert the HTML to markdown, when possible, on the fly.
+Cloudflare's network now supports real-time content conversion at the source, for enabled zones using [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Content_negotiation) headers. When AI systems request pages from any website that uses Cloudflare and has Markdown for Agents enabled, they can express the preference for `text/markdown` in the request: our network will automatically and efficiently convert the HTML to markdown, when possible, on the fly.
 
 
-Here's a curl example with the `Accept` negotiation header requesting this page from our developer documentation:
+Here is a curl example with the `Accept` negotiation header requesting this page from our developer documentation:
 
 ```bash
 curl https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/ \
   -H "Accept: text/markdown"
 ```
 
-The response to this request is now formatting in markdown:
+The response to this request is now formatted in markdown:
 
 ```http
 HTTP/2 200
@@ -39,4 +39,4 @@ ultimately resulting in better results while minimizing token waste.
 ...
 ```
 
-Read our [developer documentation](/fundamentals/reference/markdown-for-agents/) and our [blog announcement](https://blog.cloudflare.com/markdown-for-agents/) for more details.
+Refer to our [developer documentation](/fundamentals/reference/markdown-for-agents/) and our [blog announcement](https://blog.cloudflare.com/markdown-for-agents/) for more details.
