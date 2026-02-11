@@ -273,9 +273,9 @@ For detailed configuration, refer to the <a href={props.cniURL}>Cloudflare Netwo
 
 <Details header="Magic Cloud Networking details">
 
-Magic Cloud Networking (MCN) is an automation layer that simplifies connecting cloud environments to Magic WAN. Rather than manually configuring IPsec tunnels, MCN automatically discovers your cloud resources and creates the necessary VPN tunnels and routes on both sides (cloud provider and Magic WAN).
+Magic Cloud Networking is an automation layer that simplifies connecting cloud environments to Magic WAN. Rather than manually configuring IPsec tunnels, Magic Cloud Networking automatically discovers your cloud resources and creates the necessary VPN tunnels and routes on both sides (cloud provider and Magic WAN).
 
-MCN is not a separate tunnel type — it orchestrates your cloud provider's native VPN functionality (AWS VPN Gateway, Azure VPN, GCP Cloud VPN) to establish IPsec connectivity to Magic WAN.
+Magic Cloud Networking is not a separate tunnel type — it orchestrates your cloud provider's native VPN functionality (AWS VPN Gateway, Azure VPN, GCP Cloud VPN) to establish IPsec connectivity to Magic WAN.
 
 ### Use cases
 
@@ -298,13 +298,13 @@ MCN is not a separate tunnel type — it orchestrates your cloud provider's nati
 - GCP (single VPC)
 
 :::note[Key consideration]
-Magic Cloud Networking requires a Magic WAN subscription and Magic Cloud Networking entitlement. Contact your account team to enable MCN.
+Magic Cloud Networking requires a Magic WAN subscription and Magic Cloud Networking entitlement. Contact your account team to enable Magic Cloud Networking.
 :::
 
 ### Deployment notes
 
-- **Azure VNet sizing**: MCN creates a GatewaySubnet (`/27`) within your VNet for the Azure VPN Gateway. Ensure your VNet has sufficient address space. A `/20` or larger VNet is recommended to avoid address exhaustion.
-- **Cloud provider costs**: MCN uses your cloud provider's native VPN services. Standard VPN gateway and data transfer costs from your cloud provider apply in addition to Magic WAN costs.
+- **Azure VNet sizing**: Magic Cloud Networking creates a GatewaySubnet (`/27`) within your VNet for the Azure VPN Gateway. Ensure your VNet has sufficient address space. A `/20` or larger VNet is recommended to avoid address exhaustion.
+- **Cloud provider costs**: Magic Cloud Networking uses your cloud provider's native VPN services. Standard VPN gateway and data transfer costs from your cloud provider apply in addition to Magic WAN costs.
 - **Tunnel creation time**: Cloud provider VPN gateways can take 15-45 minutes to provision. Plan for this delay when onboarding new VPCs.
 
 For detailed configuration, refer to the [Magic Cloud Networking documentation](/magic-wan/configuration/magic-cloud-networking/).
