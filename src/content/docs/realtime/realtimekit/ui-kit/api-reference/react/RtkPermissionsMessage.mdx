@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: RtkPermissionsMessage
+description: API reference for RtkPermissionsMessage component (React Library)
+---
+A component which shows permission related troubleshooting
+ information.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPermissionsMessage } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkPermissionsMessage />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPermissionsMessage } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkPermissionsMessage
+      meeting={meeting}
+    />
+  );
+}
+```
+

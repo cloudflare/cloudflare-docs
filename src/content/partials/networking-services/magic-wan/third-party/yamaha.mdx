@@ -1,0 +1,217 @@
+---
+params:
+  - addTunnelsUrl
+  - configureStaticRoutesUrl
+---
+
+This tutorial describes how to configure the Yamaha RTX840 and RTX1300 series router to connect to Cloudflare Magic WAN via IPsec tunnels.
+
+## Testing environment
+
+These configurations were tested on the Yamaha RTX840 and RTX1300 series with the following firmware versions:
+
+- **RTX840 series**: 23.02.02
+- **RTX1300 series**: 23.00.17
+
+## Magic WAN configuration
+
+You need to add IPsec tunnels and static routes to your Cloudflare account via the Cloudflare dashboard.
+
+Before proceeding, ensure that you have the anycast IPs associated with your account. Check with your Cloudflare account team if you do not yet have them.
+
+### Magic IPsec tunnels
+
+1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
+	- **Tunnel name**: Enter your tunnel name. In this example, it is `RTX840-vpn01`.
+	- **Interface address**: Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is `172.30.223.2/31`.
+	- **Customer endpoint**: Enter the WAN IP address of your RTX router. In our example, this is `194.xx.xx.xx`. This is the fixed public IPv4 address you get from your ISP for your internet service.
+	- **Cloudflare endpoint**: The Cloudflare anycast IP assigned to you by your account team.
+	- **Health check rate**: _Medium_.
+	- **Health check type**: _Request_.
+	- **Health check direction**: _Bidirectional_.
+	- **Health check target**: _Default_.
+	- **Pre-shared key**: Select **Use my own pre-shared key** and paste a secure key of your own.
+	- **Replay protection**: Do not check the box, to keep this disabled.
+
+2. After you create your tunnel, the Cloudflare dashboard will load a list of tunnels set up for your account. Select the IPsec tunnel you have just created, and check the following setting:
+	- **FQDN ID**: Copy this ID and save it. You will need it when configuring the IPsec tunnel on your RTX router.
+
+### Magic static routes
+
+Static routes are required for any networks that will be reached via the IPsec tunnel. In our example, there is one network: `172.16.2.0/24`.
+
+Follow the <a href={props.configureStaticRoutesUrl}>Configure static routes</a> instructions to create a static route (settings not mentioned here can be left with their default values):
+
+- **Description**: `RTX840-lan01`
+- **Prefix**: `172.16.2.0/24`
+- **Tunnel/Next hop**: _RTX840-vpn01_
+
+## RTX router configuration
+
+Use the CLI to configure these settings.
+
+### Route settings
+
+```txt
+ip route default gateway tunnel 1
+
+ip route <Cloudflare Anycast IP> gateway <ISP provided Gateway IP>
+
+ip route < ISP's DNS server IP > gateway <ISP provided Gateway IP>
+```
+
+### LAN settings
+
+```txt
+ip lan1 address 172.16.2.254/24
+```
+
+### Wired WAN settings
+
+```txt
+ip lan2 address 194.xx.xx.xx/29
+
+ip lan2 nat descriptor 1000
+```
+
+### IPsec VPN main side settings
+
+```txt
+tunnel select 1
+
+ipsec tunnel 1
+
+ipsec sa policy 1 1 esp aes256-cbc sha256-hmac anti-replay-check=off
+
+ipsec ike version 1 2
+
+ipsec ike duration ipsec-sa 1 3600
+
+ipsec ike duration isakmp-sa 1 28800
+
+ipsec ike encryption 1 aes256-cbc
+
+ipsec ike group 1 modp2048
+
+ipsec ike hash 1 sha256
+
+ipsec ike keepalive log 1 off
+
+ipsec ike keepalive use 1 on rfc4306 10 6
+
+ipsec ike local address 1 194.xx.xx.xx
+
+ipsec ike log 1 key-info message-info payload-info
+
+ipsec ike local name 1 <Cloudflare Magic IPsec Tunnel FQDN IP> fqdn
+
+ipsec ike pfs 1 on
+
+ipsec ike proposal-limitation 1 on
+
+ipsec ike pre-shared-key 1 text <Pre-shared key>
+
+ipsec ike remote address 1 <Cloudflare Anycast IP>
+
+ipsec ike remote name 1 <Cloudflare Anycast IP> ipv4-addr
+
+ip tunnel address 172.30.223.3/31
+
+ip tunnel tcp mss limit auto
+
+tunnel enable 1
+
+ipsec auto refresh on
+
+! Note: 172.30.223.3/31 is internal tunnel IP on the RTX side.
+```
+
+### NAT settings
+
+```txt
+nat descriptor type 1000 masquerade
+
+nat descriptor address outer 1000 primary
+
+nat descriptor masquerade static 1000 1 194.xx.xx.xx udp 500
+
+nat descriptor masquerade static 1000 2 194.xx.xx.xx esp
+```
+
+### DHCP settings
+
+```txt
+dhcp service server
+
+dhcp server rfc2131 compliant except remain-silent
+
+dhcp scope 1 172.16.2.2-172.16.2.191/24
+```
+
+### DNS settings
+
+```txt
+dns host lan1
+
+dns server select 1 <ISP's DNS server IP> any .
+
+dns private address spoof on
+```
+
+## Connection test
+
+In the Yamaha RTX router CLI, you can run `show ipsec sa` and `show status tunnel` to check the status of the IPsec VPN.
+
+### `show ipsec sa`
+
+```txt
+Total: isakmp:1 send:1 recv:1
+
+sa    sgw   isakmp        connection    	dir 	 life[s] 	           remote-id
+
+------------------------------------------------------------------------------------------
+
+1     1    	     -     		ike         	  -   	 27384         （Cloudflare Anycast IP）
+
+2     1         1    		 tun[0001]esp  send 	 2185           （Cloudflare Anycast IP）
+
+3     1         1    		 tun[0001]esp  recv 	 2185           （Cloudflare Anycast IP）
+```
+
+### `show status tunnel 1`
+
+```txt
+TUNNEL[1]:
+
+Description:
+
+Interface type: IPsec
+
+Current status is Online.
+
+from 2025/12/08 13:14:20.
+
+20 minutes 56 seconds  connection.
+
+Maximum Transmission Unit(MTU):
+
+IPv4: 1280 octets
+
+IPv6: 1280 octets
+
+Received:    (IPv4) 171847 packets [58823472 octets]
+
+(IPv6) 0 packet [0 octet]
+
+Transmitted: (IPv4) 154224 packets [19191955 octets]
+
+(IPv6) 0 packet [0 octet]
+
+IKE keepalive:
+
+[Type]: rfc4306
+
+[Status]: OK
+
+[Next send]: 1 sec after
+```

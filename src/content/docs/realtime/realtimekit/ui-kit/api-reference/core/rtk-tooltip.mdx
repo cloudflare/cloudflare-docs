@@ -1,0 +1,44 @@
+---
+pcx_content_type: navigation
+title: rtk-tooltip
+description: API reference for rtk-tooltip component (Web Components (HTML) Library)
+---
+Tooltip component which follows RTK Design System.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `delay` | `number` | ✅ | - | Delay before showing the tooltip |
+| `disabled` | `boolean` | ✅ | - | Disabled |
+| `kind` | `TooltipKind` | ✅ | - | Tooltip kind |
+| `label` | `string` | ✅ | - | Tooltip label |
+| `open` | `boolean` | ✅ | - | Open |
+| `placement` | `Placement` | ✅ | - | Placement of menu |
+| `size` | `Size` | ✅ | - | Size |
+| `variant` | `TooltipVariant` | ✅ | - | Tooltip variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-tooltip></rtk-tooltip>
+```
+
+### With Properties
+
+```html
+<rtk-tooltip>
+</rtk-tooltip>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-tooltip");
+
+  el.delay= 42;
+  el.disabled= true;
+</script>
+```

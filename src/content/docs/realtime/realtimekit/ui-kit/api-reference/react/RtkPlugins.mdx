@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: RtkPlugins
+description: API reference for RtkPlugins component (React Library)
+---
+A component which lists all available plugins from their preset,
+ and ability to enable or disable plugins.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPlugins } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkPlugins />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPlugins } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkPlugins
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

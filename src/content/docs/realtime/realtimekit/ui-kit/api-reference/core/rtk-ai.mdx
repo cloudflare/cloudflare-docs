@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: rtk-ai
+description: API reference for rtk-ai component (Web Components (HTML) Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `view` | `AIView` | ✅ | - | View type |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-ai></rtk-ai>
+```
+
+### With Properties
+
+```html
+<rtk-ai
+ size="md">
+</rtk-ai>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-ai");
+
+  el.meeting= meeting
+</script>
+```

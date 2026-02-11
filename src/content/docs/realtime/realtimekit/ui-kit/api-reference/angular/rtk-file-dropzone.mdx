@@ -1,0 +1,31 @@
+---
+pcx_content_type: navigation
+title: rtk-file-dropzone
+description: API reference for rtk-file-dropzone component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `hostEl` | `HTMLElement` | ✅ | - | Host element on which drop events to attach |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-file-dropzone></rtk-file-dropzone>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-file-dropzone
+ [hostEl]="htmlelement">
+</rtk-file-dropzone>
+```
+

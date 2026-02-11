@@ -1,0 +1,51 @@
+---
+pcx_content_type: navigation
+title: rtk-mixed-grid
+description: API reference for rtk-mixed-grid component (Web Components (HTML) Library)
+---
+A grid component which handles screenshares, plugins and participants.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `aspectRatio` | `string` | ✅ | - | Aspect Ratio of participant tile  Format: `width:height` |
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `gap` | `number` | ✅ | - | Gap between participant tiles |
+| `gridSize` | `GridSize1` | ✅ | - | Grid size |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `layout` | `GridLayout1` | ✅ | - | Grid Layout |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participants` | `Peer[]` | ✅ | - | Participants |
+| `pinnedParticipants` | `Peer[]` | ✅ | - | Pinned Participants |
+| `plugins` | `RTKPlugin[]` | ✅ | - | Active Plugins |
+| `screenShareParticipants` | `Peer[]` | ✅ | - | Screenshare Participants |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-mixed-grid></rtk-mixed-grid>
+```
+
+### With Properties
+
+```html
+<rtk-mixed-grid
+ aspectRatio="example"
+ gridSize="md">
+</rtk-mixed-grid>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-mixed-grid");
+
+  el.gap= 42;
+</script>
+```

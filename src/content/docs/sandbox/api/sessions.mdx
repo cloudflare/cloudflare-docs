@@ -24,6 +24,7 @@ const session = await sandbox.createSession(options?: SessionOptions): Promise<E
 ```
 
 **Parameters**:
+
 - `options` (optional):
   - `id` - Custom session ID (auto-generated if not provided)
   - `env` - Environment variables for this session: `Record<string, string | undefined>`
@@ -32,7 +33,7 @@ const session = await sandbox.createSession(options?: SessionOptions): Promise<E
 **Returns**: `Promise<ExecutionSession>` with all sandbox methods bound to this session
 
 <TypeScriptExample>
-```
+```ts
 // Multiple isolated environments
 const prodSession = await sandbox.createSession({
   id: 'prod',
@@ -42,10 +43,10 @@ const prodSession = await sandbox.createSession({
 
 const testSession = await sandbox.createSession({
   id: 'test',
-  env: { 
-    NODE_ENV: 'test', 
+  env: {
+    NODE_ENV: 'test',
     API_URL: 'http://localhost:3000',
-    DEBUG_MODE: undefined  // Skipped, not set in this session
+    DEBUG_MODE: undefined // Skipped, not set in this session
   },
   cwd: '/workspace/test'
 });
@@ -67,12 +68,13 @@ const session = await sandbox.getSession(sessionId: string): Promise<ExecutionSe
 ```
 
 **Parameters**:
+
 - `sessionId` - ID of an existing session
 
 **Returns**: `Promise<ExecutionSession>` bound to the specified session
 
 <TypeScriptExample>
-```
+```ts
 // First request - create session
 const session = await sandbox.createSession({ id: 'user-123' });
 await session.exec('git clone https://github.com/user/repo.git');
@@ -95,15 +97,17 @@ const result = await sandbox.deleteSession(sessionId: string): Promise<SessionDe
 ```
 
 **Parameters**:
+
 - `sessionId` - ID of the session to delete (cannot be `"default"`)
 
 **Returns**: `Promise<SessionDeleteResult>` containing:
+
 - `success` - Whether deletion succeeded
 - `sessionId` - ID of the deleted session
 - `timestamp` - Deletion timestamp
 
 <TypeScriptExample>
-```
+```ts
 // Create a temporary session for a specific task
 const tempSession = await sandbox.createSession({ id: 'temp-task' });
 
@@ -113,6 +117,7 @@ try {
   // Clean up the session when done
   await sandbox.deleteSession('temp-task');
 }
+
 ```
 </TypeScriptExample>
 
@@ -131,6 +136,7 @@ await sandbox.setEnvVars(envVars: Record<string, string | undefined>): Promise<v
 ```
 
 **Parameters**:
+
 - `envVars` - Key-value pairs of environment variables to set or unset
   - `string` values: Set the environment variable
   - `undefined` or `null` values: Unset the environment variable
@@ -140,7 +146,7 @@ Call `setEnvVars()` **before** any other sandbox operations to ensure environmen
 :::
 
 <TypeScriptExample>
-```
+```ts
 const sandbox = getSandbox(env.Sandbox, 'user-123');
 
 // Set environment variables first
@@ -148,7 +154,7 @@ await sandbox.setEnvVars({
   API_KEY: env.OPENAI_API_KEY,
   DATABASE_URL: env.DATABASE_URL,
   NODE_ENV: 'production',
-  OLD_TOKEN: undefined  // Unsets OLD_TOKEN if previously set
+  OLD_TOKEN: undefined // Unsets OLD_TOKEN if previously set
 });
 
 // Now commands can access these variables
@@ -168,6 +174,7 @@ The `ExecutionSession` object has all sandbox methods bound to the specific sess
 | **Processes** | [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs) |
 | **Files** | [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout) |
 | **Environment** | [`setEnvVars()`](/sandbox/api/sessions/#setenvvars) |
+| **Terminal** | [`terminal()`](/sandbox/api/terminal/#terminal) |
 | **Code Interpreter** | [`createCodeContext()`](/sandbox/api/interpreter/#createcodecontext), [`runCode()`](/sandbox/api/interpreter/#runcode), [`listCodeContexts()`](/sandbox/api/interpreter/#listcodecontexts), [`deleteCodeContext()`](/sandbox/api/interpreter/#deletecodecontext) |
 
 ## Related resources

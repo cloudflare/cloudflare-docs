@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-grid-pagination
+description: API reference for rtk-grid-pagination component (Angular Library)
+---
+A component which allows you to change current page and view mode
+ of active participants list. This is reflected in the `rtk-grid` component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size Prop |
+| `states` | `States` | ✅ | - | States |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `GridPaginationVariants` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-grid-pagination></rtk-grid-pagination>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-grid-pagination
+ [meeting]="meeting"
+ size="md"
+ [variant]="gridpaginationvariants">
+</rtk-grid-pagination>
+```
+
