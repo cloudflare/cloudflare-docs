@@ -763,37 +763,6 @@ An error is returned if no authentication method is available, or if API key/ema
 
 <WranglerCommand command="whoami" />
 
-When `--json` is passed, the command outputs structured JSON and exits with a non-zero status code if you are not authenticated. This is useful for scripting:
-
-```sh
-# Check auth status in a shell script
-if wrangler whoami --json > /dev/null 2>&1; then
-  echo "Authenticated"
-else
-  echo "Not authenticated — please run: wrangler login"
-  exit 1
-fi
-
-# Parse account info with jq
-wrangler whoami --json | jq '.accounts'
-```
-
-When authenticated, the JSON output has the following shape:
-
-```json
-{
-  "loggedIn": true,
-  "authType": "OAuth Token",
-  "email": "user@example.com",
-  "accounts": [
-    { "name": "My Account", "id": "account-id" }
-  ],
-  "tokenPermissions": ["account:read", "workers:write"]
-}
-```
-
-When not authenticated, the output is `{"loggedIn":false}` and the exit code is non-zero.
-
 ---
 
 ## `versions`
