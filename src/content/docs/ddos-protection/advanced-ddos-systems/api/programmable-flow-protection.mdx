@@ -28,25 +28,25 @@ The `{account_id}` argument is the [account ID](/fundamentals/account/find-accou
 
 The following table summarizes the available operations.
 
-### Rule API endpoints
-
-| Operation | Verb + Endpoint |
-| --- | --- |
-| Create a rule | `POST /accounts/{account_id}/magic/programmable_flow_protection/configs/rules` |
-| Update a rule | `PUT /accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}` |
-| List rules | `GET /accounts/{account_id}/magic/programmable_flow_protection/configs/rules` |
-| Delete a rule | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}` |
-| Delete all rules | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/rules` |
-
 ### Program API endpoints
 
 | Operation | Verb + Endpoint |
 | --- | --- |
 | Upload a program | `POST /accounts/{account_id}/magic/programmable_flow_protection/configs/programs` |
-| Update a program | `PUT /accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}` |
+| Update a program | `PATCH /accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}` |
 | List programs | `GET /accounts/{account_id}/magic/programmable_flow_protection/configs/programs` |
 | Delete a program | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}` |
 | Delete all programs | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/programs` |
+
+### Rule API endpoints
+
+| Operation | Verb + Endpoint |
+| --- | --- |
+| Create a rule | `POST /accounts/{account_id}/magic/programmable_flow_protection/configs/rules` |
+| Update a rule | `PATCH /accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}` |
+| List rules | `GET /accounts/{account_id}/magic/programmable_flow_protection/configs/rules` |
+| Delete a rule | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}` |
+| Delete all rules | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/rules` |
 
 ### Debug Packet CAPture (PCAP) API endpoint
 
