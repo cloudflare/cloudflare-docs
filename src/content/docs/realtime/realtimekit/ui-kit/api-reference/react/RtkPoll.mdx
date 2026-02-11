@@ -1,0 +1,46 @@
+---
+pcx_content_type: navigation
+title: RtkPoll
+description: API reference for RtkPoll component (React Library)
+---
+A poll component.
+ Shows a poll where a user can vote.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `permissions` | `RTKPermissionsPreset` | ✅ | - | Permissions Object |
+| `poll` | `Poll` | ✅ | - | Poll |
+| `self` | `string` | ✅ | - | Self ID |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPoll } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkPoll />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPoll } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkPoll
+      permissions={rtkpermissionspreset}
+      poll={poll}
+      self="example"
+    />
+  );
+}
+```
+

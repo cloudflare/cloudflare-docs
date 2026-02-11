@@ -93,10 +93,6 @@ export default {
 		// Sample query to get all users
 		const allUsers = await db.select().from(users);
 
-		// Clean up the client after the response is returned.
-		// Hyperdrive keeps the underlying connection open in its pool.
-		ctx.waitUntil(connection.end());
-
 		return Response.json(allUsers);
 	},
 } satisfies ExportedHandler<Env>;

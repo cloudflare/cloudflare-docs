@@ -5,6 +5,7 @@ product:
   url: /sdk/
   group: Core platform
   additional_groups: [Developer platform]
+  show: false
 
 meta:
   title: Cloudflare SDK

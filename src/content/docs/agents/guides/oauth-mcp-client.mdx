@@ -70,7 +70,7 @@ Instead of an automatic redirect, you can present the `authUrl` to your user as 
 
 ## Configure callback behavior
 
-After OAuth completes, the provider redirects back to your Agent's callback URL. Configure what happens next.
+After OAuth completes, the provider redirects back to your Agent's callback URL. By default, successful authentication redirects to your application origin, while failed authentication displays an HTML error page with the error message.
 
 ### Redirect to your application
 
@@ -267,7 +267,9 @@ function App() {
 					{server.state === "failed" && (
 						<div>
 							{server.error && <p className="error">{server.error}</p>}
-							<button onClick={() => handleRetry(id, server.server_url, server.name)}>
+							<button
+								onClick={() => handleRetry(id, server.server_url, server.name)}
+							>
 								Retry Connection
 							</button>
 						</div>

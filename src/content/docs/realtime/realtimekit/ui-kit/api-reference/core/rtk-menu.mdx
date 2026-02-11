@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: rtk-menu
+description: API reference for rtk-menu component (Web Components (HTML) Library)
+---
+A menu component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `offset` | `number` | ✅ | - | Offset in px |
+| `placement` | `Placement` | ✅ | - | Placement of menu |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-menu></rtk-menu>
+```
+
+### With Properties
+
+```html
+<rtk-menu
+ size="md">
+</rtk-menu>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-menu");
+
+  el.offset= 42;
+</script>
+```

@@ -1,0 +1,292 @@
+---
+title: CrowdStrike and Cloudflare - A unified security ecosystem for automated, Risk-based protection
+pcx_content_type: reference-architecture
+products: [access, gateway, zero-trust-warp, logs, api]
+sidebar:
+  order: 1
+  label: Cloudflare SASE with CrowdStrike
+reviewed: 2026-02-10
+description: This reference architecture outlines how Cloudflare and CrowdStrike solutions integrate to create a unified security ecosystem that combines endpoint protection with zero trust network access, threat intelligence sharing, and automated remediation workflows. Organizations can leverage this integration to implement risk-based access policies, improve threat detection, and orchestrate security responses across both platforms.
+---
+
+## Abstract
+
+This reference architecture outlines how Cloudflare and CrowdStrike solutions integrate to create a unified security ecosystem that combines endpoint protection with zero trust network access, threat intelligence sharing, and automated remediation workflows. Organizations can leverage this integration to implement risk-based access policies, improve threat detection, and orchestrate security responses across both platforms.
+
+## Introduction
+
+Today's cybersecurity landscape presents organizations with a complex set of challenges. The expanding attack surface created by remote work, cloud migration, and sophisticated threats requires a cohesive approach that spans endpoint protection, network security, and identity management.
+
+Cloudflare One and CrowdStrike Falcon® provide a powerful integrated solution to these challenges. By combining CrowdStrike's industry-leading security platform with Cloudflare's secure network and zero trust capabilities, organizations can implement comprehensive protection that secures both their devices and network traffic while simplifying management through automation and policy consistency.
+
+### Why integrate Cloudflare and CrowdStrike?
+
+**Context-aware zero trust:** Identity alone is no longer sufficient for trust. Cloudflare Access ingests real-time Falcon Zero Trust Assessment (ZTA) scores to enforce dynamic, risk-based policies. This ensures that only devices verified as healthy and compliant can access sensitive resources, effectively blocking compromised endpoints even if user credentials are valid.
+
+**Unified visibility and extended detection and response (XDR):** Network and endpoint data often reside in disconnected silos. This integration streams Cloudflare's rich network logs (from Cloudflare Gateway, Cloudflare Web Application Firewall (WAF), and Cloudflare Email Security services) directly into CrowdStrike Falcon® Next-Gen SIEM. This unified view allows analysts to correlate network blocks with specific endpoint processes, providing a complete picture of the attack chain.
+
+**Automated remediation:** By connecting enforcement points, across Cloudflare and CrowdStrike, security teams can move from manual reaction to automated protection. A threat detected on the endpoint can trigger an immediate block at the network edge (and vice versa), drastically reducing risk and mean time to respond (MTTR) without increasing operational overhead.
+
+### Key integration points
+
+The integration between Cloudflare and CrowdStrike creates a powerful security ecosystem where device security posture directly influences access decisions. When a user attempts to access an application, the Cloudflare One platform verifies the request by checking multiple factors: the CrowdStrike Falcon® agent's security assessment, user identity from supported providers, and additional contextual information. Access is granted only when all policy requirements are met, ensuring that only secure devices can reach sensitive resources.
+
+This continuous verification process is enhanced by bidirectional data sharing between the platforms:
+
+1. **Device posture assessment:** CrowdStrike's real-time Zero Trust Assessment (ZTA) telemetry informs Cloudflare Zero Trust access decisions.
+2. **Unified security logging:** Cloudflare forwards security telemetry to CrowdStrike's Falcon Next-Gen SIEM.
+3. **Email security intelligence:** Cloudflare Email Security alerts feed into CrowdStrike's logging and analysis tools.
+4. **Automated remediation workflows:** Security events trigger coordinated, automated responses across both platforms, orchestrated via Crowdstrike Falcon Fusion SOAR.
+
+## Integration architecture overview
+
+The integration between Cloudflare and CrowdStrike establishes a comprehensive security architecture centered on a bi-directional intelligence exchange. This ecosystem connects device endpoint security with zero trust network access and automated response.
+
+The architecture is defined by the following key flows:
+
+- **Zero trust access control:**
+  - The user's endpoint runs both the Cloudflare WARP client and the CrowdStrike Falcon agent.
+  - CrowdStrike Falcon Device Posture and ZTA scores are shared with Cloudflare via a service-to-service API.
+  - Cloudflare uses this real-time device health information as a critical factor in its Cloudflare Access decisions, enforcing zero trust policies for both public and private applications.
+- **Unified security telemetry:**
+  - Cloudflare sends network and security logs (via Logpush) to CrowdStrike Falcon NextGen SIEM for centralized correlation, analysis, and threat detection.
+- **Automated remediation:**
+  - Security events and threat detections within the CrowdStrike platform trigger automated containment and response workflows, orchestrated via Falcon Fusion SOAR (security orchestration, automation, and response), which leverages API automation to take bi-directional action across both platforms.
+
+This integrated approach enables secure access to various application types:
+
+- Internet applications (SaaS, web apps)
+- Self-hosted applications (on premises, data center)
+- SaaS applications (protected through identity proxy)
+
+![High level architecture of integration between Cloudflare and CrowdStrike](~/assets/images/reference-architecture/cloudflare-sase-with-crowdstrike/Main_Arch.svg "Figure 1: High level architecture - Integration")
+
+### Key use cases
+
+The integration between Cloudflare and CrowdStrike enables six use cases that address critical security challenges:
+
+#### 1. [Zero trust access with device posture and user risk score](#use-case-detail-zero-trust-with-user-and-device-risk-posture)
+
+**Challenge:** With a hybrid workforce, users access sensitive applications from personal or infected devices outside the corporate perimeter, bypassing traditional firewall controls.
+
+**Solution:** Integrate CrowdStrike Falcon ZTA scores directly into Cloudflare Access policies to enforce real-time conditional access.
+
+#### 2. [Unified threat hunting](#use-case-detail-unified-threat-hunting)
+
+**Challenge:** Security analysts struggle to correlate network alerts (e.g., a blocked malicious domain) with specific endpoint behavior because data resides in separate silos.
+
+**Solution:** Stream Cloudflare Gateway, WAF, and Email Security logs via Logpush to CrowdStrike Falcon Next-Gen SIEM for centralized analysis.
+
+#### 3. [Automated edge remediation](#use-case-detail-automated-edge-remediation)
+
+**Challenge:** Manual incident response is too slow to stop automated attacks. By the time an analyst sees an alert, the adversary may have already moved laterally or exfiltrated data.
+
+**Solution:** Leverage CrowdStrike Falcon Fusion SOAR to automatically trigger remediation actions, within Cloudflare, based on detected threats.
+
+#### 4. [Compromised user lifecycle: Detection and response](#use-case-detail-compromised-user-lifecycle--detection-and-response)
+
+**Challenge:** A user's laptop is infected with malware. While an endpoint detection and response (EDR) tool might detect it, the user still has valid session tokens allowing them to access SaaS apps and sensitive data.
+
+**Solution:** A closed-loop response where endpoint detection immediately revokes network access and triggers investigation.
+
+#### 5. [Insider threat and data protection](#use-case-detail-insider-threat-and-data-protection)
+
+**Challenge:** A departing employee attempts to upload proprietary source code to a personal cloud storage site. The traffic is encrypted, and the device is "healthy," bypassing standard checks.
+
+**Solution:** Combine Cloudflare Data Loss Prevention (DLP) inspection with CrowdStrike behavioral analytics to detect and block data theft.
+
+#### 6. [Proactive application defense](#use-case-detail-proactive-application-defense)
+
+**Challenge:** Attackers use automated botnets to scan applications for vulnerabilities. WAFs block known signatures, but low-and-slow attacks can slip through regular filters.
+
+**Solution:** Use endpoint data to inform application security, creating an immune system for web assets.
+
+## Use case detail: Zero trust with user and device risk posture
+
+This use case demonstrates how the integration helps prevent compromised or unmanaged devices from accessing corporate resources.
+
+### Phase 1: Device and use risk assessment
+
+The CrowdStrike Falcon agent continuously monitors the endpoint, calculating a ZTA score (1–100) based on OS health, patch levels, and threat activity. In parallel, Cloudflare continuously updates the user risk score based on user and entity behavior analytics (UEBA) .
+
+### Phase 2: Policy evaluation
+
+When a user requests access to an application, Cloudflare Access intercepts the request and queries the CrowdStrike API for the device's current ZTA score.
+
+### Phase 3: Access enforcement
+
+Cloudflare permits connection only if the ZTA score meets the minimum threshold defined in the zero trust policy; otherwise, the user is presented with a Cloudflare Access Block Page, typically instructing them to remediate the device.
+
+![Zero Trust access flow showing device posture and user risk score evaluation](~/assets/images/reference-architecture/cloudflare-sase-with-crowdstrike/UseCase01.svg "Figure 2: Zero Trust access with device posture and user risk score")
+
+## Use case detail: Unified threat hunting
+
+This use case focuses on providing comprehensive visibility, eliminating blind spots between network traffic and endpoint activity.
+
+### Phase 1: Data ingestion
+
+Cloudflare Logpush filters and forwards HTTP requests, DNS queries, and firewall events to the Falcon Next-Gen SIEM data intake API.
+
+### Phase 2: Correlation
+
+Falcon Next-Gen SIEM indexes this data alongside endpoint telemetry, allowing analysts to query a single dataset.
+
+### Phase 3: Investigation
+
+An analyst investigating an endpoint alert can instantly pivot to see every network request that device made through Cloudflare, identifying the phishing site or C2 server that caused the infection.
+
+![Unified threat hunting workflow between Cloudflare and CrowdStrike](~/assets/images/reference-architecture/cloudflare-sase-with-crowdstrike/UseCase02.svg "Figure 3: Unified threat hunting")
+
+## Use case detail: Automated edge remediation
+
+This use case demonstrates how implementing CrowdStrike Falcon Fusion SOAR helps reduce the MTTR for rapidly evolving threats.
+
+### Phase 1: Threat detection
+
+CrowdStrike Falcon detects a specific indicator of compromise (IOC), such as a malicious IP address attacking multiple endpoints.
+
+### Phase 2: Orchestration
+
+A Falcon Fusion SOAR workflow is triggered by the detection.
+
+### Phase 3: Edge mitigation
+
+The workflow calls the Cloudflare API to add the malicious IP to a blocklist in Cloudflare WAF or Gateway, instantly protecting the entire organization from that threat source.
+
+![Automated edge remediation workflow from threat detection to edge mitigation](~/assets/images/reference-architecture/cloudflare-sase-with-crowdstrike/UseCase03.svg "Figure 4: Automated edge remediation")
+
+## Use case detail: Compromised user lifecycle — Detection and response
+
+This use case outlines how the combined integration pillars are leveraged to contain active endpoint compromise and prevent lateral movement.
+
+### Phase 1: Detection and signal sharing
+
+The Falcon agent detects malware execution. It immediately drops the device's ZTA score to "Critical" and sends an alert to the SIEM.
+
+### Phase 2: Instant access revocation
+
+Cloudflare Access, checking the ZTA score on the very next request, blocks the user from accessing Salesforce, email, or internal tools effectively quarantining the device from the network.
+
+### Phase 3: Investigate and remediate
+
+Falcon Fusion SOAR automates a response playbook: It isolates the endpoint (network containment) and adds the user to a custom list, in Cloudflare, effectively tagging them in the logs for deeper retrospective analysis in Falcon Next-Gen SIEM and enforcing additional policies attached to the custom list.
+
+![Compromised user lifecycle showing detection, access revocation, and remediation](~/assets/images/reference-architecture/cloudflare-sase-with-crowdstrike/UseCase04.svg "Figure 5: Compromised user lifecycle - detection and response")
+
+## Use case detail: Insider threat and data protection
+
+This use case demonstrates how the unified approach helps preventing and responding to data exfiltration by trusted insider actors.
+
+### Phase 1: DLP monitoring
+
+Cloudflare DLP scans upload traffic. It detects source code markers and logs the event to Falcon Next-Gen SIEM via Logpush, while momentarily blocking the specific request.
+
+### Phase 2: Risk scoring and correlation
+
+Falcon Next-Gen SIEM correlates this DLP event with endpoint activity (e.g., recent USB usage or large file copies). This behavior triggers a "High Risk" user tag.
+
+### Phase 3: Adaptive control
+
+Falcon Fusion SOAR updates the Cloudflare Zero Trust policy to require "step-up authentication" or remote browser isolation (RBI) for this specific user, preventing further data movement even for legitimate tasks until cleared by HR or security.
+
+![Insider threat and data protection workflow with DLP monitoring and adaptive controls](~/assets/images/reference-architecture/cloudflare-sase-with-crowdstrike/UseCase05.svg "Figure 6: Insider threat and data protection")
+
+## Use case detail: Proactive application defense
+
+This use case explores the power of the integrated solutions to defend public applications against botnets and zero-day exploits.
+
+### Phase 1: Attack identification
+
+Cloudflare WAF blocks a series of SQL injection attempts from a specific subnet. These logs are sent to Falcon Next-Gen SIEM.
+
+### Phase 2: Cross-domain analysis
+
+CrowdStrike Threat Intelligence enriches the log data, identifying the subnet as part of a known targeted ransomware group.
+
+### Phase 3: Defensive tuning
+
+Falcon Fusion SOAR triggers a workflow to update Cloudflare WAF rules: It increases the "Bot Fight Mode" sensitivity for that region and creates a proactive block rule for the entire autonomous system number (ASN) associated with the attack, hardening the application before the main assault begins.
+
+![Proactive application defense workflow from attack identification to defensive tuning](~/assets/images/reference-architecture/cloudflare-sase-with-crowdstrike/UseCase06.svg "Figure 7: Proactive application defense")
+
+## Implementation components
+
+The integration between Cloudflare and CrowdStrike leverages several key components from each platform to create a cohesive security ecosystem.
+
+### Cloudflare components
+
+1. **Zero Trust Network Access (ZTNA)**: Controls access to applications based on identity, device posture, and other contextual signals
+   - Application access policies
+   - Private network access
+   - Service token authentication
+   - Device posture verification
+2. **Secure Web Gateway (SWG)**: Inspects and filters Internet-bound traffic
+   - URL filtering
+   - Malware protection
+   - Content categories
+   - File type controls
+3. **Data Loss Prevention (DLP)**: Prevents unauthorized data exfiltration
+   - Built-in data profiles (PII, financial data, secrets)
+   - Custom data patterns
+   - Exact data matching
+   - Context awareness
+4. **Remote Browser Isolation (RBI)**: Executes web content in a secure cloud environment
+   - File upload/download controls
+   - Clipboard restrictions
+   - Keyboard input controls
+   - Visual presentation only
+5. **Email Security**: Prevents email-based threats
+   - Phishing protection
+   - Malicious attachment scanning
+   - Business email compromise detection
+   - Link isolation
+6. **API-driven Cloud Access Security Broker (CASB)**: Monitors SaaS usage and security
+   - SaaS posture management
+   - Permission monitoring
+   - Data security scanning
+   - Public share detection
+7. **Web Application Firewall (WAF)**
+   - Machine learning (ML) detection and blocking
+   - Custom rule creation
+   - Managed rule sets
+   - Rate limiting
+
+### CrowdStrike components
+
+1. **Falcon Endpoint Agent**: Provides comprehensive endpoint protection
+   - Behavior monitoring
+   - Malware prevention
+   - Device security posture assessment
+   - Vulnerability management
+2. **Zero Trust Assessment (ZTA)**: Evaluates device security in real time
+   - OS security assessment
+   - Sensor status monitoring
+   - Overall device health scoring
+   - Continuous evaluation
+3. **Falcon Next-Gen SIEM**: Centralizes security monitoring and analysis
+   - Log ingestion, correlation, and real-time searching
+   - Threat detection rules and alert triggering
+   - Security visualization with customizable dashboards
+   - Alert management and long-term data storage
+4. **Falcon Insight XDR**: Provides extended detection and response capabilities
+   - Cross-domain detection
+   - Automated investigation
+   - Threat hunting
+   - Guided remediation
+5. **Falcon Fusion SOAR:** Orchestrates and automates complex security workflows across the Cloudflare and CrowdStrike platforms for unified incident response
+   - Security orchestration
+   - Playbook execution
+   - Automated containment and enrichment
+   - Bi-directional actioning
+
+## Summary
+
+The integration between Cloudflare and CrowdStrike provides organizations with a comprehensive security solution that combines endpoint security, zero trust network access, and application protection. By leveraging the strengths of both platforms, organizations can achieve better visibility into their security posture, automate responses to threats, and more effectively protect their applications and data.
+
+This reference architecture demonstrates how these solutions work together to address key security challenges, including zero trust adoption, application protection, and data security. By implementing this integrated approach, organizations can enhance their security posture while reducing the operational burden on their security teams.
+
+## Resources
+
+- [Cloudflare Zero Trust documentation](https://developers.cloudflare.com/cloudflare-one/identity/devices/service-providers/crowdstrike/)
+- [CrowdStrike LogScale integration](https://library.humio.com/integrations/integrations-cloudflare-package-area1.html)
+- [Cloudflare Email Security with CrowdStrike LogScale](https://blog.cloudflare.com/cloudflare-email-security-and-falcon-logscale/)

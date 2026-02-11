@@ -1,0 +1,32 @@
+---
+pcx_content_type: navigation
+title: rtk-broadcast-message-modal
+description: API reference for rtk-broadcast-message-modal component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States1` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-broadcast-message-modal></rtk-broadcast-message-modal>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-broadcast-message-modal
+ [meeting]="meeting">
+</rtk-broadcast-message-modal>
+```
+

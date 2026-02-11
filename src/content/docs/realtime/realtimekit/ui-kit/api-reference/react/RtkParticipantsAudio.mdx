@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: RtkParticipantsAudio
+description: API reference for RtkParticipantsAudio component (React Library)
+---
+A component which plays all the audio from participants and screenshares.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `preloadedAudioElem` | `HTMLAudioElement` | ✅ | - | Pass existing audio element |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkParticipantsAudio } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkParticipantsAudio />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkParticipantsAudio } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkParticipantsAudio
+      meeting={meeting}
+      preloadedAudioElem={htmlaudioelement}
+    />
+  );
+}
+```
+

@@ -1,0 +1,47 @@
+---
+pcx_content_type: navigation
+title: RtkGridPagination
+description: API reference for RtkGridPagination component (React Library)
+---
+A component which allows you to change current page and view mode
+ of active participants list. This is reflected in the `rtk-grid` component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size Prop |
+| `states` | `States` | ✅ | - | States |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `GridPaginationVariants` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkGridPagination } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkGridPagination />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkGridPagination } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkGridPagination
+      meeting={meeting}
+      size="md"
+      variant={gridpaginationvariants}
+    />
+  );
+}
+```
+

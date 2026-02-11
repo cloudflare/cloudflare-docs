@@ -102,7 +102,7 @@ Objects that include `Function` or `Symbol` types, and objects with circular ref
 {/* prettier-ignore */}
 - <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
-  - `timestamp` - a JavaScript `Date` object or seconds from the Unix epoch to sleep the Workflow instance until.
+  - `timestamp` - a JavaScript `Date` object or milliseconds from the Unix epoch to sleep the Workflow instance until.
 
 :::note
 
@@ -122,7 +122,7 @@ More information about the limits imposed on Workflow can be found in the [Workf
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// Other steps in your Workflow
-		let event = await step.waitForEvent<IncomingStripeWebhook>(
+		let stripeEvent = await step.waitForEvent<IncomingStripeWebhook>(
 			"receive invoice paid webhook from Stripe",
 			{ type: "stripe-webhook", timeout: "1 hour" },
 		);

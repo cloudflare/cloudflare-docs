@@ -59,7 +59,7 @@ await sandbox.mountBucket('datasets', '/datasets', {
 // Mount a subdirectory within the bucket
 await sandbox.mountBucket('shared-bucket', '/user-data', {
   endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-  prefix: '/users/user-123'
+  prefix: '/users/user-123/'
 });
 ```
 </TypeScriptExample>
@@ -115,7 +115,7 @@ interface MountBucketOptions {
 	credentials?: BucketCredentials;
 	readOnly?: boolean;
 	prefix?: string;
-	s3fsOptions?: string[];
+	s3fsOptions?: Record<string, string>;
 }
 ```
 
@@ -137,12 +137,13 @@ interface MountBucketOptions {
 - `readOnly` (optional) - Mount in read-only mode
   - Default: `false`
 
-- `prefix` (optional) - Mount a subdirectory within the bucket
-  - Must start with `/` (e.g., `'/sessions/user123'` or `'/data/uploads/'`)
-  - Enables multi-tenant isolation within a single bucket
+- `prefix` (optional) - Subdirectory within the bucket to mount
+  - When specified, only contents under this prefix are visible at the mount point
+  - Must start and end with `/` (e.g., `/data/uploads/`)
+  - Default: Mount entire bucket
 
-- `s3fsOptions` (optional) - Advanced s3fs mount flags as string array
-  - Example: `['use_cache=/tmp/cache']`
+- `s3fsOptions` (optional) - Advanced s3fs mount flags
+  - Example: `{ 'use_cache': '/tmp/cache' }`
 
 ### `BucketProvider`
 

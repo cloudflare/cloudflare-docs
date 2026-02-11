@@ -58,10 +58,6 @@ export default {
 			// Sample SQL query
 			const result = await client.query("SELECT * FROM pg_tables");
 
-			// Clean up the client after the response is returned.
-			// Hyperdrive keeps the underlying connection open in its pool.
-			ctx.waitUntil(client.end());
-
 			return Response.json(result.rows);
 		} catch (e) {
 			return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
@@ -120,10 +116,6 @@ export default {
   });
 
   const [results, fields] = await connection.query('SHOW tables;');
-
-  // Clean up the client after the response is returned.
-  // Hyperdrive keeps the underlying connection open in its pool.
-  ctx.waitUntil(connection.end());
 
   return new Response(JSON.stringify({ results, fields }), {
     headers: {

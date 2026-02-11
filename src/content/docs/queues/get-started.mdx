@@ -102,13 +102,13 @@ In your Worker project directory, open the `src` folder and add the following to
 ```ts null {8}
 export default {
   async fetch(request, env, ctx): Promise<Response> {
-    let log = {
+    const log = {
       url: request.url,
       method: request.method,
       headers: Object.fromEntries(request.headers),
     };
     await env.<MY_QUEUE>.send(log);
-    return new Response('Success!');
+    return new Response("Success!");
   },
 } satisfies ExportedHandler<Env>;
 ```
@@ -119,7 +119,7 @@ Also add the queue to `Env` interface in `index.ts`.
 
 ```ts null {2}
 export interface Env {
-   <MY_QUEUE>: Queue<any>;
+   <MY_QUEUE>: Queue;
 }
 ```
 
@@ -164,17 +164,18 @@ To create a consumer Worker, open your `index.ts` file and add the following `qu
 ```ts null {11}
 export default {
   async fetch(request, env, ctx): Promise<Response> {
-    let log = {
+    const log = {
       url: request.url,
       method: request.method,
       headers: Object.fromEntries(request.headers),
     };
     await env.<MY_QUEUE>.send(log);
-    return new Response('Success!');
+    return new Response("Success!");
   },
-  async queue(batch, env): Promise<void> {
-    let messages = JSON.stringify(batch.messages);
-    console.log(`consumed from our queue: ${messages}`);
+  async queue(batch, env, ctx): Promise<void> {
+    for (const message of batch.messages) {
+      console.log("consumed from our queue:", JSON.stringify(message.body));
+    }
   },
 } satisfies ExportedHandler<Env>;
 ```

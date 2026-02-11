@@ -190,9 +190,70 @@ For example: `https://my-worker.workers.dev/agents/my-agent/default/callback`
 
 OAuth tokens are securely stored in SQLite, and persist across agent restarts.
 
+### Protecting instance names in OAuth callbacks
+
+When using `sendIdentityOnConnect: false` to hide sensitive instance names (like session IDs or user IDs), the default OAuth callback URL would expose the instance name. To prevent this security issue, you must provide a custom `callbackPath`.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, routeAgentRequest, getAgentByName } from "agents";
+
+export class SecureAgent extends Agent {
+	static options = { sendIdentityOnConnect: false };
+
+	async onRequest(request: Request) {
+		// callbackPath is required when sendIdentityOnConnect is false
+		const result = await this.addMcpServer(
+			"github",
+			"https://mcp.github.com/mcp",
+			{
+				callbackPath: "mcp-oauth-callback", // Custom path without instance name
+			},
+		);
+
+		if (result.state === "authenticating") {
+			return Response.redirect(result.authUrl);
+		}
+
+		return new Response("Connected!");
+	}
+}
+
+// Route the custom callback path to the agent
+export default {
+	async fetch(request: Request, env: Env) {
+		const url = new URL(request.url);
+
+		// Route custom MCP OAuth callback to agent instance
+		if (url.pathname.startsWith("/mcp-oauth-callback")) {
+			// Implement this to extract the instance name from your session/auth mechanism
+			const instanceName = await getInstanceNameFromSession(request);
+
+			const agent = await getAgentByName(env.SecureAgent, instanceName);
+			return agent.fetch(request);
+		}
+
+		// Standard agent routing
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+};
+```
+
+</TypeScriptExample>
+
+:::note[How callback matching works]
+
+OAuth callbacks are matched by the `state` query parameter (format: `{serverId}:{stateValue}`), not by URL path. This means your custom `callbackPath` can be any path you choose, as long as requests to that path are routed to the correct agent instance.
+
+:::
+
 ### Custom OAuth callback handling
 
-For custom OAuth completion behavior:
+Configure how OAuth completion is handled. By default, successful authentication redirects to your application origin, while failed authentication displays an HTML error page.
 
 <TypeScriptExample>
 
@@ -203,7 +264,7 @@ export class MyAgent extends Agent {
 			// Redirect after successful auth
 			successRedirect: "https://myapp.com/success",
 
-			// Redirect on error
+			// Redirect on error with error message in query string
 			errorRedirect: "https://myapp.com/error",
 
 			// Or use a custom handler
@@ -397,6 +458,7 @@ async addMcpServer(
   url: string,
   options?: {
     callbackHost?: string;
+    callbackPath?: string;
     agentsPrefix?: string;
     client?: ClientOptions;
     transport?: {
@@ -416,7 +478,8 @@ async addMcpServer(
 - `url` (string, required) — URL of the MCP server endpoint
 - `options` (object, optional) — Connection configuration:
   - `callbackHost` — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
-  - `agentsPrefix` — URL prefix for OAuth callback path. Default: `"agents"`
+  - `callbackPath` — Custom callback URL path that bypasses the default `/agents/{class}/{name}/callback` construction. **Required when `sendIdentityOnConnect` is `false`** to prevent leaking the instance name. When set, the callback URL becomes `{callbackHost}/{callbackPath}`. You must route this path to the agent instance via `getAgentByName`
+  - `agentsPrefix` — URL prefix for OAuth callback path. Default: `"agents"`. Ignored when `callbackPath` is provided
   - `client` — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
   - `transport` — Transport layer configuration:
     - `headers` — Custom HTTP headers for authentication
@@ -494,6 +557,63 @@ The `state` field indicates the connection lifecycle:
 - `failed` — Connection failed (see `error` field for details)
 
 The `error` field contains an error message when `state` is `"failed"`. Error messages from external OAuth providers are automatically escaped to prevent XSS attacks, making them safe to display directly in your UI.
+
+### `configureOAuthCallback()`
+
+Configure OAuth callback behavior for MCP servers requiring authentication. This method allows you to customize what happens after a user completes OAuth authorization.
+
+```ts
+this.mcp.configureOAuthCallback(options: {
+  successRedirect?: string;
+  errorRedirect?: string;
+  customHandler?: () => Response | Promise<Response>;
+}): void
+```
+
+#### Parameters
+
+- `options` (object, required) — OAuth callback configuration:
+  - `successRedirect` (string, optional) — URL to redirect to after successful authentication
+  - `errorRedirect` (string, optional) — URL to redirect to after failed authentication. Error message is appended as `?error=<message>` query parameter
+  - `customHandler` (function, optional) — Custom handler for complete control over the callback response. Must return a Response
+
+#### Default behavior
+
+When no configuration is provided:
+
+- **Success**: Redirects to your application origin
+- **Failure**: Displays an HTML error page with the error message
+
+If OAuth fails, the connection state becomes `"failed"` and the error message is stored in the `server.error` field for display in your UI.
+
+#### Usage
+
+Configure in `onStart()` before any OAuth flows begin:
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent {
+	onStart() {
+		// Option 1: Simple redirects
+		this.mcp.configureOAuthCallback({
+			successRedirect: "/dashboard",
+			errorRedirect: "/auth-error",
+		});
+
+		// Option 2: Custom handler (e.g., for popup windows)
+		this.mcp.configureOAuthCallback({
+			customHandler: () => {
+				return new Response("<script>window.close();</script>", {
+					headers: { "content-type": "text/html" },
+				});
+			},
+		});
+	}
+}
+```
+
+</TypeScriptExample>
 
 ## Advanced: MCPClientManager
 

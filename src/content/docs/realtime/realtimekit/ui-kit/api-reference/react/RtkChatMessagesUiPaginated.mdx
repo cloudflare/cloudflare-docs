@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: RtkChatMessagesUiPaginated
+description: API reference for RtkChatMessagesUiPaginated component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `privateChatRecipient` | `Participant \| null` | ✅ | - | Selected recipient for private chat; when unset, messages are loaded for public chat (Everyone). |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkChatMessagesUiPaginated } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkChatMessagesUiPaginated />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkChatMessagesUiPaginated } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkChatMessagesUiPaginated
+      meeting={meeting}
+      privateChatRecipient={participant | null}
+      size="md"
+    />
+  );
+}
+```
+

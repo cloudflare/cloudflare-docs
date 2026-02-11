@@ -137,11 +137,11 @@ Your final Wrangler file should look similar to the example below.
 
 ## 3. Add bindings to environment
 
-Add the bindings to the environment interface in `worker-configuration.d.ts`, so TypeScript correctly types the bindings. Type the queue as `Queue<any>`. Refer to the following step for instructions on how to change this type.
+Add the bindings to the environment interface in `worker-configuration.d.ts`, so TypeScript correctly types the bindings. The queue is typed as `Queue<Message>`, where `Message` is defined in the following step.
 
 ```ts title="worker-configuration.d.ts"
 interface Env {
-	EMAIL_QUEUE: Queue<any>;
+	EMAIL_QUEUE: Queue<Message>;
 }
 ```
 
@@ -151,7 +151,7 @@ The application will send a message to the queue when the Worker receives a requ
 
 ```ts title="src/index.ts"
 export default {
-	async fetch(req: Request, env: Env): Promise<Response> {
+	async fetch(req, env, ctx): Promise<Response> {
 		try {
 			await env.EMAIL_QUEUE.send(
 				{ email: await req.text() },
@@ -162,7 +162,7 @@ export default {
 			return new Response("Error!", { status: 500 });
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 This will accept requests to any subpath and forwards the request's body. It expects that the request body to contain only an email. In production, you should check that the request was a `POST` request. You should also avoid sending such sensitive information (email) directly to the queue. Instead, you can send a message to the queue that contains a unique identifier for the user. Then, your consumer queue can use the unique identifier to look up the email address in a database and use that to send the email.
@@ -181,7 +181,7 @@ interface Message {
 }
 
 export default {
-	async fetch(req: Request, env: Env): Promise<Response> {
+	async fetch(req, env, ctx): Promise<Response> {
 		try {
 			await env.EMAIL_QUEUE.send(
 				{ email: await req.text() },
@@ -192,7 +192,7 @@ export default {
 			return new Response("Error!", { status: 500 });
 		}
 	},
-	async queue(batch: MessageBatch<Message>, env: Env): Promise<void> {
+	async queue(batch, env, ctx): Promise<void> {
 		for (const message of batch.messages) {
 			try {
 				console.log(message.body.email);
@@ -204,7 +204,7 @@ export default {
 			}
 		}
 	},
-};
+} satisfies ExportedHandler<Env, Message>;
 ```
 
 The above `queue()` handler will log the email address to the console and send the email. It will also retry the message if sending the email fails. The `delaySeconds` is set to five seconds to avoid sending the email too quickly.
@@ -245,7 +245,7 @@ Next, update the `Env` interface in `worker-configuration.d.ts` to include the `
 
 ```ts title="worker-configuration.d.ts" ins={3}
 interface Env {
-	EMAIL_QUEUE: Queue<any>;
+	EMAIL_QUEUE: Queue<Message>;
 	RESEND_API_KEY: string;
 }
 ```
@@ -268,7 +268,7 @@ interface Message {
 }
 
 export default {
-	async fetch(req: Request, env: Env): Promise<Response> {
+	async fetch(req, env, ctx): Promise<Response> {
 		try {
 			await env.EMAIL_QUEUE.send(
 				{ email: await req.text() },
@@ -279,7 +279,7 @@ export default {
 			return new Response("Error!", { status: 500 });
 		}
 	},
-	async queue(batch: MessageBatch<Message>, env: Env): Promise<void> {
+	async queue(batch, env, ctx): Promise<void> {
 		// Initialize Resend
 		const resend = new Resend(env.RESEND_API_KEY);
 		for (const message of batch.messages) {
@@ -308,7 +308,7 @@ export default {
 			}
 		}
 	},
-};
+} satisfies ExportedHandler<Env, Message>;
 ```
 
 The `queue()` handler will now send the email using the Resend API. It also checks if sending the email failed and will retry the message.
@@ -323,7 +323,7 @@ interface Message {
 }
 
 export default {
-	async fetch(req: Request, env: Env): Promise<Response> {
+	async fetch(req, env, ctx): Promise<Response> {
 		try {
 			await env.EMAIL_QUEUE.send(
 				{ email: await req.text() },
@@ -334,7 +334,7 @@ export default {
 			return new Response("Error!", { status: 500 });
 		}
 	},
-	async queue(batch: MessageBatch<Message>, env: Env): Promise<void> {
+	async queue(batch, env, ctx): Promise<void> {
 		// Initialize Resend
 		const resend = new Resend(env.RESEND_API_KEY);
 		for (const message of batch.messages) {
@@ -361,7 +361,7 @@ export default {
 			}
 		}
 	},
-};
+} satisfies ExportedHandler<Env, Message>;
 ```
 
 To test the application, start the development server using the following command:
