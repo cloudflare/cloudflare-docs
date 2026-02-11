@@ -51,7 +51,7 @@ Cloudflare offers multiple mechanisms to control the announcement and withdrawal
 - **Addressing API**: Manually control prefix advertisements through API calls. Refer to [Advertise or withdraw a BGP prefix](#advertise-or-withdraw-a-bgp-prefix).
 - **BGP peering with route reflectors**: Control advertisements through BGP sessions to Cloudflare's globally distributed route reflectors, either over the Internet or over a CNI connection with Dataplane v1. Contact your Cloudflare account team if you need this option. Refer to [BGP control with Cloudflare Route Reflectors](#bgp-control-with-cloudflare-route-reflectors).
 - **Magic Network Monitoring**: Automatically announce prefixes based on user-defined traffic thresholds observed in your network. Refer to [Magic Network Monitoring](/magic-network-monitoring/).
-- **BGP peering with Magic Transit routing table**: Automatically control prefix advertisements based on BGP routes learned through CNI with Dataplane v2, or GRE and IPsec tunnels (beta). Refer to [BGP control to Magic routing table](#bgp-control-to-magic-routing-table).
+- **BGP peering with Magic Transit routing table**: Automatically control prefix advertisements based on BGP routes learned through CNI with Dataplane v2, or GRE and IPsec tunnels (beta, requires [Unified Routing](/magic-transit/reference/traffic-steering/#unified-routing-mode-beta)). Refer to [BGP control to Magic routing table](#bgp-control-to-magic-routing-table).
 
 :::caution[Important]
 You should only use one control method per prefix at any given time. Mixing multiple control planes can lead to conflicting advertisement states, causing unpredictable routing behavior.

@@ -1,0 +1,11 @@
+name: Style Guide
+
+entry:
+  title: Style Guide
+  url: /style-guide/
+  show: false
+
+meta:
+  title: Cloudflare Style Guide
+  description: Style guide to follow for contributing to Cloudflare docs.
+  author: "@cloudflare"

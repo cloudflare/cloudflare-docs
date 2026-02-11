@@ -1,0 +1,44 @@
+---
+pcx_content_type: navigation
+title: RtkStageToggle
+description: API reference for RtkStageToggle component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | States |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkStageToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkStageToggle />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkStageToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkStageToggle
+      meeting={meeting}
+      size="md"
+      variant="button"
+    />
+  );
+}
+```
+

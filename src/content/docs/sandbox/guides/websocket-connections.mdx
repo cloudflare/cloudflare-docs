@@ -89,7 +89,7 @@ export default {
 }
 };
 
-````
+```
 </TypeScriptExample>
 
 **Client connects:**
@@ -98,7 +98,7 @@ export default {
 const ws = new WebSocket('wss://your-worker.com');
 ws.onmessage = (event) => console.log(event.data);
 ws.send('Hello!'); // Receives: "Echo: Hello!"
-````
+```
 
 ## Expose WebSocket service via preview URL
 
@@ -133,7 +133,7 @@ export default {
 }
 };
 
-````
+```
 </TypeScriptExample>
 
 **Client connects to preview URL:**
@@ -147,7 +147,7 @@ const { url } = await response.json();
 const ws = new WebSocket(url);
 ws.onmessage = (event) => console.log(event.data);
 ws.send('Hello!'); // Receives: "Echo: Hello!"
-````
+```
 
 ## Connect from Worker to get real-time data
 
@@ -202,7 +202,7 @@ export default {
 }
 };
 
-````
+```
 </TypeScriptExample>
 
 This pattern is useful when you need streaming data from sandbox services but want to return HTTP responses to clients.
@@ -217,7 +217,7 @@ Verify request has WebSocket headers:
 ```ts
 console.log(request.headers.get('Upgrade'));    // 'websocket'
 console.log(request.headers.get('Connection')); // 'Upgrade'
-````
+```
 
 </TypeScriptExample>
 

@@ -1,0 +1,37 @@
+---
+title: "WAF Release - 2026-02-10"
+description: Cloudflare WAF managed rulesets 2026-02-10 release
+date: 2026-02-10
+---
+
+import { RuleID } from "~/components";
+
+This week’s release changes the rule action from BLOCK to Disabled for Anomaly:Header:User-Agent - Fake Google Bot. 
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+    <tbody>
+	<tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="ce11be543594412bb4bb92516aa0bef8" />
+      </td>
+      <td>N/A</td>
+      <td>Anomaly:Header:User-Agent - Fake Google Bot</td>
+      <td>Enabled</td>
+      <td>Disabled</td>
+      <td>We are changing the action for this rule from BLOCK to Disabled</td>
+  </tr>
+
+  </tbody>
+</table>

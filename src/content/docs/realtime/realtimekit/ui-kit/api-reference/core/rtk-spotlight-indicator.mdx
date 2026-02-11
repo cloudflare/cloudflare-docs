@@ -1,0 +1,38 @@
+---
+pcx_content_type: navigation
+title: rtk-spotlight-indicator
+description: API reference for rtk-spotlight-indicator component (Web Components (HTML) Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-spotlight-indicator></rtk-spotlight-indicator>
+```
+
+### With Properties
+
+```html
+<rtk-spotlight-indicator
+ size="md">
+</rtk-spotlight-indicator>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-spotlight-indicator");
+
+  el.meeting= meeting
+</script>
+```

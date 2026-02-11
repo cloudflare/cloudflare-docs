@@ -93,49 +93,23 @@ export class MyAgent extends Agent<Env, never> {
 
 Users return to `/dashboard` on success or `/auth-error?error=<message>` on failure.
 
-### Custom handler for popup windows
+### Close popup window
 
-If you opened OAuth in a popup, use a custom handler to close it automatically. The handler receives an `MCPClientOAuthResult` object and must check `authSuccess` to handle both success and error cases:
+If you opened OAuth in a popup, close it automatically when complete:
 
 <TypeScriptExample>
 
 ```ts title="src/index.ts"
 import { Agent } from "agents";
-import type { MCPClientOAuthResult } from "agents/mcp";
 
 export class MyAgent extends Agent<Env, never> {
 	onStart() {
 		this.mcp.configureOAuthCallback({
-			customHandler: (result: MCPClientOAuthResult) => {
-				if (result.authSuccess) {
-					// Success - close the popup
-					return new Response("<script>window.close();</script>", {
-						headers: { "content-type": "text/html" },
-					});
-				}
-				// Error - show message briefly, then close
-				const errorJson = JSON.stringify(
-					result.authError ?? "Unknown error",
-				);
-				return new Response(
-					`<!DOCTYPE html>
-<html>
-<head><title>Authentication Failed</title></head>
-<body style="font-family:system-ui,sans-serif;max-width:400px;margin:80px auto;padding:0 20px;text-align:center;">
-  <h2 style="color:#c00;">Authentication Failed</h2>
-  <p id="err" style="color:#666;"></p>
-  <p style="color:#999;font-size:0.85em;">This window will close automatically...</p>
-  <script>
-    document.getElementById("err").textContent = ${errorJson};
-    setTimeout(() => window.close(), 3000);
-  </script>
-</body>
-</html>`,
-					{
-						headers: { "content-type": "text/html" },
-						status: 400,
-					},
-				);
+			customHandler: () => {
+				// Close the popup after OAuth completes
+				return new Response("<script>window.close();</script>", {
+					headers: { "content-type": "text/html" },
+				});
 			},
 		});
 	}
@@ -144,13 +118,7 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
-:::note[Important]
-
-Always check `result.authSuccess` in your custom handler. The handler is called for both successful and failed authentication attempts. Without this check, authentication errors will be ignored and users will not know why the connection failed.
-
-:::
-
-Your main application can detect the popup closing and refresh the connection status.
+Your main application can detect the popup closing and refresh the connection status. If OAuth fails, the connection state becomes `"failed"` and the error message is stored in `server.error` for display in your UI.
 
 ## Monitor connection status
 
@@ -162,6 +130,7 @@ Use the `useAgent` hook for real-time updates via WebSocket:
 
 ```tsx title="src/App.tsx"
 import { useAgent } from "agents/react";
+import { useState } from "react";
 import type { MCPServersState } from "agents";
 
 function App() {
@@ -190,6 +159,9 @@ function App() {
 						<button onClick={() => window.open(server.auth_url, "_blank")}>
 							Authorize
 						</button>
+					)}
+					{server.state === "failed" && server.error && (
+						<p className="error">{server.error}</p>
 					)}
 				</div>
 			))}
@@ -244,12 +216,13 @@ Connection states flow: `authenticating` (needs OAuth) → `connecting` (complet
 
 ## Handle failures
 
-When OAuth fails, the connection state becomes `"failed"` and the `error` field contains the error message. Display the error to your users and allow them to retry:
+When OAuth fails, the connection state becomes `"failed"` and the error message is stored in the `server.error` field. Display this error in your UI and allow users to retry:
 
 <TypeScriptExample>
 
 ```tsx title="src/App.tsx"
 import { useAgent } from "agents/react";
+import { useState } from "react";
 import type { MCPServersState } from "agents";
 
 function App() {
@@ -293,7 +266,7 @@ function App() {
 					<strong>{server.name}</strong>: {server.state}
 					{server.state === "failed" && (
 						<div>
-							{server.error && <p style={{ color: "red" }}>Error: {server.error}</p>}
+							{server.error && <p className="error">{server.error}</p>}
 							<button
 								onClick={() => handleRetry(id, server.server_url, server.name)}
 							>
@@ -317,17 +290,16 @@ Common failure reasons:
 - **Permission denied**: User lacks required permissions
 - **Expired session**: OAuth session timed out
 
-Failed connections remain in state until removed with `removeMcpServer(serverId)`.
+Failed connections remain in state until removed with `removeMcpServer(serverId)`. The error message is automatically escaped to prevent XSS attacks, so it is safe to display directly in your UI.
 
 ## Complete example
 
-This example demonstrates a complete OAuth integration with Cloudflare Observability. Users connect, authorize in a popup window, and the connection becomes available.
+This example demonstrates a complete OAuth integration with Cloudflare Observability. Users connect, authorize in a popup window, and the connection becomes available. Errors are automatically stored in the connection state for display in your UI.
 
 <TypeScriptExample>
 
 ```ts title="src/index.ts"
 import { Agent, routeAgentRequest } from "agents";
-import type { MCPClientOAuthResult } from "agents/mcp";
 
 type Env = {
 	MyAgent: DurableObjectNamespace<MyAgent>;
@@ -336,35 +308,11 @@ type Env = {
 export class MyAgent extends Agent<Env, never> {
 	onStart() {
 		this.mcp.configureOAuthCallback({
-			customHandler: (result: MCPClientOAuthResult) => {
-				if (result.authSuccess) {
-					return new Response("<script>window.close();</script>", {
-						headers: { "content-type": "text/html" },
-					});
-				}
-				// Error - show message briefly, then close
-				const errorJson = JSON.stringify(
-					result.authError ?? "Unknown error",
-				);
-				return new Response(
-					`<!DOCTYPE html>
-<html>
-<head><title>Authentication Failed</title></head>
-<body style="font-family:system-ui,sans-serif;max-width:400px;margin:80px auto;padding:0 20px;text-align:center;">
-  <h2 style="color:#c00;">Authentication Failed</h2>
-  <p id="err" style="color:#666;"></p>
-  <p style="color:#999;font-size:0.85em;">This window will close automatically...</p>
-  <script>
-    document.getElementById("err").textContent = ${errorJson};
-    setTimeout(() => window.close(), 3000);
-  </script>
-</body>
-</html>`,
-					{
-						headers: { "content-type": "text/html" },
-						status: 400,
-					},
-				);
+			customHandler: () => {
+				// Close popup after OAuth completes (success or failure)
+				return new Response("<script>window.close();</script>", {
+					headers: { "content-type": "text/html" },
+				});
 			},
 		});
 	}

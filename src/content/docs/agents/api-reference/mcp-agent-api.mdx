@@ -55,7 +55,7 @@ You can use the APIs below in order to do so.
 | `state`                         | Current state object (persisted)                   |
 | `initialState`                  | Default state when instance starts                 |
 | `setState(state)`               | Update and persist state                           |
-| `onStateUpdate(state)`          | Called when state changes                          |
+| `onStateChanged(state)`          | Called when state changes                          |
 | `sql`                           | Execute SQL queries on embedded database           |
 | `server`                        | The `McpServer` instance for registering tools     |
 | `props`                         | User identity and tokens from OAuth authentication |
@@ -171,7 +171,7 @@ The `McpAgent` class provides full access to the [Agent state APIs](/agents/api-
 - [`state`](/agents/api-reference/store-and-sync-state/) — Current persisted state
 - [`initialState`](/agents/api-reference/store-and-sync-state/#set-the-initial-state-for-an-agent) — Default state when instance starts
 - [`setState`](/agents/api-reference/store-and-sync-state/) — Update and persist state
-- [`onStateUpdate`](/agents/api-reference/store-and-sync-state/#synchronizing-state) — React to state changes
+- [`onStateChanged`](/agents/api-reference/store-and-sync-state/#synchronizing-state) — React to state changes
 - [`sql`](/agents/api-reference/agents-api/#sql-api) — Execute SQL queries on embedded database
 
 :::note[State resets after the session ends]
@@ -225,7 +225,7 @@ export class MyMCP extends McpAgent<Env, State, {}> {
 		);
 	}
 
-	onStateUpdate(state: State) {
+	onStateChanged(state: State) {
 		console.log({ stateUpdate: state });
 	}
 }

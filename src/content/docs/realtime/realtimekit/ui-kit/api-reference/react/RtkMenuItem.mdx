@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: RtkMenuItem
+description: API reference for RtkMenuItem component (React Library)
+---
+A menu item component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `menuVariant` | `'primary' \| 'secondary'` | ✅ | - | Variant |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMenuItem } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkMenuItem />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMenuItem } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkMenuItem
+      menuVariant={'primary' | 'secondary'}
+      size="md"
+    />
+  );
+}
+```
+

@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: rtk-fullscreen-toggle
+description: API reference for rtk-fullscreen-toggle component (Web Components (HTML) Library)
+---
+A button which toggles full screen mode for any
+ existing `rtk-meeting` component in the DOM.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `targetElement` | `HTMLElement` | ✅ | - | Target Element to fullscreen |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-fullscreen-toggle></rtk-fullscreen-toggle>
+```
+
+### With Properties
+
+```html
+<rtk-fullscreen-toggle
+ size="md"
+ variant"button">
+</rtk-fullscreen-toggle>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-fullscreen-toggle");
+
+</script>
+```

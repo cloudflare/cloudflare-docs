@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: rtk-mute-all-confirmation
+description: API reference for rtk-mute-all-confirmation component (Web Components (HTML) Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-mute-all-confirmation></rtk-mute-all-confirmation>
+```
+
+### With Properties
+
+```html
+<rtk-mute-all-confirmation>
+</rtk-mute-all-confirmation>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-mute-all-confirmation");
+
+  el.meeting= meeting
+</script>
+```

@@ -1,0 +1,44 @@
+---
+pcx_content_type: navigation
+title: RtkTranscripts
+description: API reference for RtkTranscripts component (React Library)
+---
+A component which handles transcripts.
+ You can configure which transcripts you want to see and which ones you want to hear.
+ There are also certain limits which you can set as well.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkTranscripts } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkTranscripts />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkTranscripts } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkTranscripts
+      meeting={meeting}
+    />
+  );
+}
+```
+

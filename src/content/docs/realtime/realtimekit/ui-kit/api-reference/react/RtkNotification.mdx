@@ -1,0 +1,47 @@
+---
+pcx_content_type: navigation
+title: RtkNotification
+description: API reference for RtkNotification component (React Library)
+---
+A component which shows a notification.
+ You need to remove the element after you receive the
+ `rtkNotificationDismiss` event.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `notification` | `Notification` | ✅ | - | Message |
+| `paused` | `boolean` | ✅ | - | Stops timeout when true |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkNotification } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkNotification />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkNotification } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkNotification
+      notification={notification}
+      paused={true}
+      size="md"
+    />
+  );
+}
+```
+
