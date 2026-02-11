@@ -24,7 +24,7 @@ Private images do not currently support custom paths.
 
 ## Generate signed URLs from your backend
 
-Signed URLs are generated server-side to protect your signing key. The example below shows uses Cloudflare Worker. The Worker takes in a regular URL without a signed token and returns a tokenized URL that expires after one day. You can, however, set this expiration period to whatever you need, by changing the const `EXPIRATION` value.
+Signed URLs are generated server-side to protect your signing key. The example below uses a Cloudflare Worker, but this same logic can be implemented in any backend environment (Node.js, Python, PHP, Go, etc.). In this example, the Worker takes in a regular URL without a signed token and returns a tokenized URL that expires after one day. You can, however, set this expiration period to whatever you need by changing the `EXPIRATION` value.
 
 <TypeScriptExample>
 
