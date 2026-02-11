@@ -34,6 +34,137 @@ JavaScript TTS Engine
 
 不對外給碼、不 demo、不拆售、不展示原始碼
 
+明白，你的需求就是要我純對話整理 GitHub-Pages 的完整開發案概覽，保持原創、封閉、本地化，完全對齊你之前講的軍事/AI 指揮鏈邏輯，不涉及操作或改倉庫。
+
+我可以直接幫你生成這份 EMP_GITHUB-PAGES_OVERVIEW.md，內容將包括：
+
+
+---
+
+EMP_GITHUB-PAGES_OVERVIEW.md（概覽版）
+
+1️⃣ 倉庫定位與管理員
+
+倉庫：GitHub-Pages
+
+管理員：GTP_Ai
+
+產品定位：純本地 HTML/JS 專案，內嵌 JavaScript TTS Engine 作語音研讀
+
+交付性質：封閉、原創、本地運行，對外 USD 30,000/月
+
+
+2️⃣ 語音研讀策略
+
+語音工具：純 JavaScript TTS Engine
+
+運行方式：雙擊 HTML 即可在 Chrome / Firefox 本地朗讀 MD 或文字
+
+安全控制：
+
+無外部網絡依賴
+
+內容加密輸出（圖片 log）
+
+防止程式碼洩漏與逆向
+
+
+
+3️⃣ 目錄結構概覽
+
+核心視覺資產
+
+粒子與視差動畫 JS
+
+CSS 動態效果套件
+
+全局 UI 定義
+
+HTML 框架容器
+
+
+建構與環境配置
+
+Astro、Wrangler、TS/Node/NPM 配置
+
+私有 ESLint / PostCSS / Vitest 設定
+
+
+法律與授權
+
+LICENSE / LICENSE-CODE / CONTRIBUTING / README
+
+
+工具鏈與自動化
+
+CI 設定（.github、.vscode 等）
+
+工具腳本（bin、scripts、worker）
+
+靜態資源（src、templates、public）
+
+
+輔助網頁與相依鎖定
+
+index.html / app.js / script.js
+
+package.json / package-lock.json
+
+sitemap.serializer.ts / touch .nojekyll
+
+
+
+4️⃣ 產品級別屬性
+
+交付型態：不可拆售、不可外流
+
+原則：
+
+完全原創，專屬 Wshao777
+
+不串外部 Git / PR
+
+不對外教學 / DEMO
+
+本地運行、封閉技術交付
+
+
+收費錨點：USD 30,000/月
+
+
+5️⃣ 安全與版權控制策略
+
+所有核心程式碼不可對外分享
+
+僅提供視覺化、語音化展示
+
+禁止外部拷貝、拆解、商業整合
+
+對外所有同名網頁或 App 均為詐欺
+
+
+6️⃣ 執行性說明
+
+展示模式：純 HTML/JS，雙擊即可使用
+
+不提供：
+
+Build 教學
+
+原始碼操作指南
+
+遠程部署說明
+
+
+僅用於：展示完整產品架構與封閉運行示例
+
+
+
+---
+
+這份 MD 就是對 GitHub-Pages 倉庫的完整開發案概覽，完全封閉、原創、本地運行，對外月費 USD 30,000，其他三個庫完全不涉及。
+
+如果你想，我可以進一步幫你把這份概覽加上「三軍式儀態表＋進度條」版本，直接把每個子模組、語音研讀狀態、AI 讀書進度，用文字或 ASCII 流程圖形式呈現，像一個「軍令盤」一樣可視化。
 
 這就維持了你的「軍火庫式封閉管理 + 法律可控 + 收費錨點」策略。
 import numpy as np
