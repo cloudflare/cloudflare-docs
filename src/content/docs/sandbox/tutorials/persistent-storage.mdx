@@ -46,9 +46,10 @@ cd data-pipeline
 
 Add an R2 bucket binding to your `wrangler.json`:
 
-```json title="wrangler.json"
+```jsonc title="wrangler.json"
 {
   "name": "data-pipeline",
+  // Set this to today's date
   "compatibility_date": "2025-11-09",
   "durable_objects": {
     "bindings": [

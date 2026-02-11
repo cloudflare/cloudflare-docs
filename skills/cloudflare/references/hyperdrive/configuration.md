@@ -31,6 +31,7 @@ npx wrangler hyperdrive create my-db \
 
 ```jsonc
 {
+  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01", // Use latest for new projects
   "compatibility_flags": ["nodejs_compat"],
   "hyperdrive": [
@@ -84,6 +85,7 @@ For Workers making **multiple queries** per request, enable Smart Placement to e
 
 ```jsonc
 {
+  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
   "placement": {

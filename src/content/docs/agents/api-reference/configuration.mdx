@@ -45,7 +45,7 @@ The `wrangler.jsonc` file configures your Cloudflare Worker and its bindings. He
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "my-agent-app",
 	"main": "src/server.ts",
-	"compatibility_date": "2025-01-01",
+	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 
 	// Static assets (optional)
@@ -628,7 +628,7 @@ Define environments in the Wrangler configuration file:
 	"main": "src/server.ts",
 
 	// Base configuration (shared)
-	"compatibility_date": "2025-01-01",
+	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"durable_objects": {
 		"bindings": [{ "name": "MyAgent", "class_name": "MyAgent" }],

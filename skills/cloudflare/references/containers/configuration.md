@@ -6,6 +6,7 @@
 {
   "name": "my-worker",
   "main": "src/index.ts",
+  // Set compatibility_date to today's date
   "compatibility_date": "2026-01-10",
   "containers": [
     {
@@ -168,6 +169,7 @@ Custom `envVars` from Container class are merged with these. Custom vars overrid
 ```toml
 name = "my-worker"
 main = "src/index.ts"
+# Set compatibility_date to today's date
 compatibility_date = "2026-01-10"
 
 [[containers]]

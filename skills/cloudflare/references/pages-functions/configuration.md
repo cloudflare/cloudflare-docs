@@ -36,6 +36,7 @@ export const onRequest: PagesFunction<Env> = async (ctx) => { /* ... */ };
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "my-pages-app",
   "pages_build_output_dir": "./dist",
+  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
   

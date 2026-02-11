@@ -14,7 +14,9 @@ The compatibility date and flags are how you, as a developer, opt into these run
 
 ## Setting compatibility date
 
-When you start your project, you should always set `compatibility_date` to the current date. You should occasionally update the `compatibility_date` field. When updating, you should refer to the [compatibility flags](/workers/configuration/compatibility-flags) page to find out what has changed, and you should be careful to test your Worker to see if the changes affect you, updating your code as necessary. The new compatibility date takes effect when you next run the [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) command.
+When you start your project, you should always set `compatibility_date` to the current date. Keeping your compatibility date set to the latest date ensures you have access to the most recent features, bug fixes, and performance improvements in the Workers runtime.
+
+You should occasionally update the `compatibility_date` field. When updating, you should refer to the [compatibility flags](/workers/configuration/compatibility-flags) page to find out what has changed, and you should be careful to test your Worker to see if the changes affect you, updating your code as necessary. The new compatibility date takes effect when you next run the [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) command.
 
 There is no need to update your `compatibility_date` if you do not want to. The Workers runtime will support old compatibility dates forever. If, for some reason, Cloudflare finds it is necessary to make a change that will break live Workers, Cloudflare will actively contact affected developers. That said, Cloudflare aims to avoid this if at all possible.
 
@@ -31,8 +33,8 @@ The compatibility date can be set in a Worker's [Wrangler configuration file](/w
 
 ```jsonc
 {
-	// Opt into backwards-incompatible changes through April 5, 2022.
-	"compatibility_date": "2022-04-05"
+	// Always set compatibility_date to the current date when starting a new project
+	"compatibility_date": "$today"
 }
 ```
 
@@ -48,4 +50,4 @@ The compatibility date can be updated in the Workers settings on the [Cloudflare
 
 The compatibility date can be set when uploading a Worker using the [Workers Script API](/api/resources/workers/subresources/scripts/methods/update/) or [Workers Versions API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/) in the request body's `metadata` field.
 
-If a compatibility date is not specified on upload via the API, it defaults to the oldest compatibility date, before any flags took effect (2021-11-02). When creating new Workers, it is highly recommended to set the compatibility date to the current date when uploading via the API.
+If a compatibility date is not specified on upload via the API, it defaults to the oldest compatibility date, before any flags took effect (`2021-11-02`). When creating new Workers, always set the compatibility date to the current date when uploading via the API to ensure you have access to the latest runtime features and improvements.

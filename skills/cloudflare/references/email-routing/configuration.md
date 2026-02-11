@@ -9,6 +9,7 @@
 {
   "name": "email-worker",
   "main": "src/index.ts",
+  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01",
   "send_email": [{ "name": "EMAIL" }]
 }

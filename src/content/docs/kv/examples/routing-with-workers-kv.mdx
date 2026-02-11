@@ -115,11 +115,12 @@ export default {
 ```
 </TabItem>
 <TabItem label="wrangler.jsonc">
-```json
+```jsonc
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
+	// Set this to today's date
 	"compatibility_date": "2025-03-03",
 	"observability": {
 		"enabled": true

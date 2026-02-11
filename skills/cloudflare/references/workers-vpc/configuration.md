@@ -12,6 +12,7 @@ TCP Sockets are available by default in Workers runtime. No special configuratio
 {
   "name": "private-network-worker",
   "main": "src/index.ts",
+  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01"
 }
 ```
@@ -138,7 +139,7 @@ See [Hyperdrive reference](../hyperdrive/) for complete setup.
 
 ## Compatibility
 
-TCP Sockets available in all modern Workers. Use current date: `"compatibility_date": "2025-01-01"`. No special flags required.
+TCP Sockets available in all modern Workers. Set `compatibility_date` to today's date. No special flags required.
 
 ## Related Configuration
 

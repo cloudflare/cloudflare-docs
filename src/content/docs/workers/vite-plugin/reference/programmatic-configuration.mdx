@@ -38,6 +38,7 @@ export default defineConfig({
 	plugins: [
 		cloudflare({
 			config: {
+				// Set this to today's date
 				compatibility_date: "2025-01-01",
 				vars: {
 					API_URL: "https://api.example.com",
@@ -114,6 +115,7 @@ export default defineConfig({
 			config: {
 				name: "entry-worker",
 				main: "./src/entry.ts",
+				// Set this to today's date
 				compatibility_date: "2025-01-01",
 				services: [{ binding: "API", service: "api-worker" }],
 			},
@@ -122,6 +124,7 @@ export default defineConfig({
 					config: {
 						name: "api-worker",
 						main: "./src/api.ts",
+						// Set this to today's date
 						compatibility_date: "2025-01-01",
 					},
 				},

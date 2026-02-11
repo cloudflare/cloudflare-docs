@@ -29,7 +29,9 @@ resource "cloudflare_dns_record" "mx" {
 ```hcl
 resource "cloudflare_workers_script" "api" {
   account_id = var.account_id; name = "api-worker"; content = file("worker.js")
-  module = true; compatibility_date = "2025-01-01"
+  module = true
+  # Set compatibility_date to today's date
+  compatibility_date = "2025-01-01"
   kv_namespace_binding { name = "KV"; namespace_id = cloudflare_workers_kv_namespace.cache.id }
   r2_bucket_binding { name = "BUCKET"; bucket_name = cloudflare_r2_bucket.assets.name }
   d1_database_binding { name = "DB"; database_id = cloudflare_d1_database.app.id }
@@ -44,6 +46,7 @@ resource "cloudflare_worker" "api" { account_id = var.account_id; name = "api-wo
 resource "cloudflare_worker_version" "api_v1" {
   account_id = var.account_id; worker_name = cloudflare_worker.api.name
   content = file("worker.js"); content_sha256 = filesha256("worker.js")
+  # Set compatibility_date to today's date
   compatibility_date = "2025-01-01"
   bindings {
     kv_namespace { name = "KV"; namespace_id = cloudflare_workers_kv_namespace.cache.id }
@@ -111,6 +114,7 @@ resource "cloudflare_pages_project" "site" {
   account_id = var.account_id; name = "site"; production_branch = "main"
   deployment_configs {
     production {
+      # Set compatibility_date to today's date
       compatibility_date = "2025-01-01"
       environment_variables = { NODE_ENV = "production" }
       kv_namespaces = { KV = cloudflare_workers_kv_namespace.cache.id }

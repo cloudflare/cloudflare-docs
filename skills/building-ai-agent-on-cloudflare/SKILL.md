@@ -168,6 +168,7 @@ Clients connect via: `wss://my-agent.workers.dev/agents/MyAgent/session-id`
 ```toml
 name = "my-agent"
 main = "src/index.ts"
+# Set compatibility_date to today's date
 compatibility_date = "2024-12-01"
 
 [ai]

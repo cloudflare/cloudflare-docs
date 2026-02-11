@@ -155,7 +155,7 @@ Once every file in the manifest has been uploaded, a status code of 201 will be 
 
 ## Create/Deploy New Version
 
-[Script](/api/resources/workers/subresources/scripts/methods/update/), [Version](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/), and [Workers for Platform script](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) upload endpoints require specifying a metadata part in the form data. Here, we can provide the completion token from the previous (upload assets) step.
+[Script](/api/resources/workers/subresources/scripts/methods/update/), [Version](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/), and [Workers for Platform script](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) upload endpoints require specifying a metadata part in the form data. Here, we can provide the completion token from the previous (upload assets) step. Always set `compatibility_date` to the current date to get the latest features and improvements. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/) for more information.
 
 ```bash title="Example Worker Metadata Specifying Completion Token"
 {
@@ -163,7 +163,7 @@ Once every file in the manifest has been uploaded, a status code of 201 will be 
   "assets": {
     "jwt": "<completion_token>"
   },
-  "compatibility_date": "2021-09-14"
+  "compatibility_date": "2025-09-15"
 }
 ```
 
@@ -173,7 +173,7 @@ If this is a Worker which already has assets, and you wish to just re-use the ex
 {
   "main_module": "main.js",
   "keep_assets": true,
-  "compatibility_date": "2021-09-14"
+  "compatibility_date": "2025-09-15"
 }
 ```
 
@@ -188,7 +188,7 @@ Asset [routing configuration](/workers/wrangler/configuration/#assets) can be pr
       "html_handling": "auto-trailing-slash"
     }
   },
-  "compatibility_date": "2021-09-14"
+  "compatibility_date": "2025-09-15"
 }
 ```
 
@@ -208,7 +208,7 @@ Optionally, an assets binding can be provided if you wish to fetch and serve ass
     }
     ...
   ]
-  "compatibility_date": "2021-09-14"
+  "compatibility_date": "2025-09-15"
 }
 ```
 

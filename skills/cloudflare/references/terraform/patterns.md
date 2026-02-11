@@ -64,6 +64,7 @@ resource "cloudflare_d1_database" "app" { account_id = var.account_id; name = "$
 
 resource "cloudflare_worker_script" "app" {
   account_id = var.account_id; name = local.worker_name; content = file("worker.js"); module = true
+  # Set compatibility_date to today's date
   compatibility_date = "2025-01-01"
   kv_namespace_binding { name = "KV"; namespace_id = cloudflare_workers_kv_namespace.app.id }
   r2_bucket_binding { name = "BUCKET"; bucket_name = cloudflare_r2_bucket.app.name }

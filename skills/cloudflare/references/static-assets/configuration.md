@@ -7,6 +7,7 @@ Minimal configuration requires only `assets.directory`:
 ```jsonc
 {
   "name": "my-worker",
+  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01",  // Use current date for new projects
   "assets": {
     "directory": "./dist"
@@ -20,6 +21,7 @@ Minimal configuration requires only `assets.directory`:
 {
   "name": "my-worker",
   "main": "src/index.ts",
+  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01",
   "assets": {
     "directory": "./dist",

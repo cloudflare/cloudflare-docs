@@ -9,6 +9,7 @@ Expert guidance for deploying and configuring static assets with Cloudflare Work
 {
   "name": "my-app",
   "main": "src/index.ts",
+  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01",
   "assets": {
     "directory": "./dist"

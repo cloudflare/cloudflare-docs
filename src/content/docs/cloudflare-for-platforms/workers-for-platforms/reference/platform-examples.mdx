@@ -108,14 +108,14 @@ await deployUserWorker(
 
 Use [bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) to give each user Worker its own resources like a KV store or database. Use [tags](/cloudflare-for-platforms/workers-for-platforms/configuration/tags/) to organize Workers by customer ID, project ID, or plan type for bulk operations.
 
-The following example shows how to deploy a Worker with its own KV namespace and tags attached:
+The following example shows how to deploy a Worker with its own KV namespace and tags attached. Always set `compatibility_date` to the current date to get the latest features and improvements:
 
 <Tabs syncKey="deployMethod"> <TabItem label="REST API">
 
 ```bash
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE_NAME/scripts/$SCRIPT_NAME" \
   -H "Authorization: Bearer $API_TOKEN" \
-  -F 'metadata={"main_module": "worker.mjs", "bindings": [{"type": "kv_namespace", "name": "MY_KV", "namespace_id": "your-kv-namespace-id"}], "tags": ["customer-123", "production", "pro-plan"], "compatibility_date": "2024-01-01"};type=application/json' \
+  -F 'metadata={"main_module": "worker.mjs", "bindings": [{"type": "kv_namespace", "name": "MY_KV", "namespace_id": "your-kv-namespace-id"}], "tags": ["customer-123", "production", "pro-plan"], "compatibility_date": "2025-09-15"};type=application/json' \
   -F 'worker.mjs=@worker.mjs;type=application/javascript+module'
 ```
 
@@ -148,7 +148,7 @@ async function deployWorkerWithBindingsAndTags(
 				account_id: accountId,
 				metadata: {
 					main_module: `${scriptName}.mjs`,
-					compatibility_date: "2024-01-01",
+					compatibility_date: "2025-09-15",
 					bindings: [
 						{
 							type: "kv_namespace",

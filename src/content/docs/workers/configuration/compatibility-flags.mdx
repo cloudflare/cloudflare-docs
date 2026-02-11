@@ -20,14 +20,14 @@ You may provide a list of `compatibility_flags`, which enable or disable specifi
 
 Compatibility flags can be set in a Worker's [Wrangler configuration file](/workers/wrangler/configuration/).
 
-This example enables the specific flag `formdata_parser_supports_files`, which is described [below](/workers/configuration/compatibility-flags/#formdata-parsing-supports-file). As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but, by specifying it in `compatibility_flags`, we can enable it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
+This example enables the specific flag `formdata_parser_supports_files`, which is described [below](/workers/configuration/compatibility-flags/#formdata-parsing-supports-file). You should always set your `compatibility_date` to the current date. `compatibility_flags` can be used to enable upcoming features not yet included in your compatibility date, or to disable changes that became the default in the past.
 
 <WranglerConfig>
 
 ```jsonc
 {
-	// Opt into backwards-incompatible changes through September 14, 2021.
-	"compatibility_date": "2021-09-14",
+	// Always set compatibility_date to the current date
+	"compatibility_date": "$today",
 	// Also opt into an upcoming fix to the FormData API.
 	"compatibility_flags": [
 		"formdata_parser_supports_files"

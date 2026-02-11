@@ -24,6 +24,7 @@ new Miniflare({
 
 ```js
 new Miniflare({
+  // Set compatibility_date to today's date
   compatibilityDate: "2026-01-01", // Use recent date for latest features
   compatibilityFlags: [
     "nodejs_compat",        // Node.js APIs (process, Buffer, etc)
@@ -33,7 +34,7 @@ new Miniflare({
 });
 ```
 
-**Critical:** Use `compatibilityDate: "2026-01-01"` or latest to match production runtime. Old dates limit available APIs.
+**Critical:** Set `compatibilityDate` to today's date to match production runtime. Old dates limit available APIs.
 
 ## HTTP Server & Request.cf
 
@@ -158,6 +159,7 @@ Miniflare doesn't auto-read `wrangler.toml`:
 # wrangler.toml
 name = "my-worker"
 main = "src/index.ts"
+# Set compatibility_date to today's date
 compatibility_date = "2026-01-01"
 [[kv_namespaces]]
 binding = "KV"
@@ -167,6 +169,7 @@ binding = "KV"
 // Miniflare equivalent
 new Miniflare({
   scriptPath: "src/index.ts",
+  // Set compatibility_date to today's date
   compatibilityDate: "2026-01-01",
   kvNamespaces: ["KV"],
 });

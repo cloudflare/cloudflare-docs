@@ -14,7 +14,7 @@ If you're using the [Workers Script Upload API](/api/resources/workers/subresour
 
 ## Sample `metadata`
 
-```json
+```jsonc
 {
 	"main_module": "main.js",
 	"bindings": [
@@ -24,7 +24,8 @@ If you're using the [Workers Script Upload API](/api/resources/workers/subresour
 			"text": "Hello, world!"
 		}
 	],
-	"compatibility_date": "2021-09-14"
+	// Always set this to the current date
+	"compatibility_date": "2025-09-15"
 }
 ```
 
@@ -63,7 +64,7 @@ At a minimum, the `main_module` key is required to upload a Worker.
   - `mode` field only supports `smart` for automatic placement.
 
 - `compatibility_date` <Type text="string" /> <MetaInfo text="optional" />
-  - [Compatibility Date](/workers/configuration/compatibility-dates/#setting-compatibility-date) indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker. Highly recommended to set a `compatibility_date`, otherwise if on upload via the API, it defaults to the oldest compatibility date before any flags took effect (2021-11-02).
+  - [Compatibility Date](/workers/configuration/compatibility-dates/#setting-compatibility-date) indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker. Always set `compatibility_date` to the current date to get the latest features, bug fixes, and performance improvements. If not specified, it defaults to the oldest compatibility date before any flags took effect (`2021-11-02`).
 
 - `compatibility_flags` array\[string] optional
   - [Compatibility Flags](/workers/configuration/compatibility-flags/#setting-compatibility-flags) that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a `compatibility_date`.

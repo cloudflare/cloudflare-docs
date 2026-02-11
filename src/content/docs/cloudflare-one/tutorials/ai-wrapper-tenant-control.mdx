@@ -85,7 +85,8 @@ In order to build the Worker, you will need to choose if you want to build it lo
    ```toml
    name = "ai-agent-wrapper"
    main = "src/index.js"
-   compatibility_date = "2023-10-30"
+   # Set this to today's date
+   compatibility_date = "2025-09-15"
 
    [vars]
    # Add any environment variables here
@@ -367,7 +368,7 @@ Edit the Wrangler configuration file and add the following information to ensure
 ```diff lang="toml"
 name = "ai-agent-wrapper"
 main = "src/index.js"
-compatibility_date = "2023-10-30"
+compatibility_date = "2025-09-15"
 workers_dev = false
 
 +# Replace with your custom domain

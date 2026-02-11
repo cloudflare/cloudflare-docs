@@ -159,7 +159,7 @@ The `main` key is optional for assets-only Workers.
   - The path to the entrypoint of your Worker that will be executed. For example: `./src/index.ts`.
 
 - `compatibility_date` <Type text="string" /> <MetaInfo text="required" />
-  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/).
+  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. You should always set this to the current date when starting a new project, and update it periodically to get the latest features, bug fixes, and performance improvements. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/).
 
 - `account_id` <Type text="string" /> <MetaInfo text="optional" />
   - This is the ID of the account associated with your zone. You might have more than one account, so make sure to use the ID of the account associated with the zone/route you provide, if you provide one. It can also be specified through the `CLOUDFLARE_ACCOUNT_ID` environment variable.

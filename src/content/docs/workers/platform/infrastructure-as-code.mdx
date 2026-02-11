@@ -307,7 +307,8 @@ Here's an example combining multiple binding types:
 resource "cloudflare_worker_version" "my_worker_version" {
   account_id = var.account_id
   worker_id = cloudflare_worker.my_worker.id
-  compatibility_date = "2025-08-06"
+  # Set this to today's date
+  compatibility_date = "2025-09-15"
   main_module = "worker.js"
 
   modules = [{
@@ -409,12 +410,13 @@ worker_id=$(curl "https://api.cloudflare.com/client/v4/accounts/$account_id/work
 echo "\nWorker ID: $worker_id\n"
 
 # Upload the Worker's first version
+# Always set compatibility_date to the current date
 version_id=$(curl "https://api.cloudflare.com/client/v4/accounts/$account_id/workers/workers/$worker_id/versions" \
   -X POST \
   -H "Authorization: Bearer $api_token" \
   -H "Content-Type: application/json" \
   -d '{
-    "compatibility_date": "2025-08-06",
+    "compatibility_date": "2025-09-15",
     "main_module": "'$worker_name'.mjs",
     "modules": [
       {
@@ -493,12 +495,13 @@ worker_id=$(curl "https://api.cloudflare.com/client/v4/accounts/$account_id/work
 echo "\nWorker ID: $worker_id\n"
 
 # Upload the Worker's first version
+# Always set compatibility_date to the current date
 version_id=$(curl "https://api.cloudflare.com/client/v4/accounts/$account_id/workers/workers/$worker_id/versions" \
   -X POST \
   -H "Authorization: Bearer $api_token" \
   -H "Content-Type: application/json" \
   -d '{
-    "compatibility_date": "2025-08-06",
+    "compatibility_date": "2025-09-15",
     "compatibility_flags": [
       "python_workers"
     ],

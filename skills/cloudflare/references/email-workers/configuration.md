@@ -6,6 +6,7 @@
 {
   "name": "email-worker",
   "main": "src/index.ts",
+  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-27",
   "send_email": [
     { "name": "EMAIL" },                                    // Unrestricted
