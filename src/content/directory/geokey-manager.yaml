@@ -1,9 +1,0 @@
-name: Geo Key Manager
-
-entry:
-  title: Geo Key Manager
-  group: Application security
-  url: /ssl/edge-certificates/geokey-manager/
-
-meta:
-  description: Control SSL/TLS key storage for compliance and security

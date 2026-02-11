@@ -3,7 +3,7 @@ import ReactSelect, { type Option } from "../ReactSelect";
 import { useEffect, useState } from "react";
 
 interface Props {
-	products: CollectionEntry<"directory">[];
+	products: CollectionEntry<"products">[];
 	groups: string[];
 }
 
@@ -14,7 +14,7 @@ export default function ProductSelect({ products, groups }: Props) {
 		.sort((a, b) => a.id.localeCompare(b.id))
 		.map((product) => ({
 			value: product.id,
-			label: product.data.entry.title,
+			label: product.data.product.title,
 		}));
 
 	const groupOptions = groups.map((group) => {

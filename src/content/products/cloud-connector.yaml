@@ -1,0 +1,11 @@
+name: Cloud Connector
+
+product:
+  title: Cloud Connector
+  group: Application performance
+  url: /rules/cloud-connector/
+  show: false
+
+meta:
+  title: Cloudflare Cloud Connector docs
+  author: "@cloudflare"

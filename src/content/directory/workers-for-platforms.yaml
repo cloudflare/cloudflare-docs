@@ -1,9 +1,0 @@
-name: Workers for Platforms
-
-entry:
-  title: Workers for Platforms
-  group: Developer platform
-  url: /cloudflare-for-platforms/workers-for-platforms/
-
-meta:
-  description: Deploy custom code for your users or let them directly deploy code to your platform

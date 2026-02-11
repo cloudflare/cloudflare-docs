@@ -16,7 +16,7 @@ type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 export type SidebarEntry = Link | Group;
 type Badge = Link["badge"];
 
-const directory = await getCollection("directory");
+const products = await getCollection("products");
 const sidebars = new Map<string, Group>();
 
 export async function getSidebar(context: AstroGlobal) {
@@ -93,8 +93,8 @@ export async function generateSidebar(group: Group) {
 		group.entries[0].label = "Overview";
 	}
 
-	const product = directory.find((p) => p.id === group.label);
-	if (product && product.data.entry.group === "Developer platform") {
+	const product = products.find((p) => p.id === group.label);
+	if (product && product.data.product.group === "Developer platform") {
 		const links = [
 			["llms.txt", "/llms.txt"],
 			["prompt.txt", "/workers/prompt.txt"],
@@ -366,12 +366,12 @@ export const lookupProductTitle = async (product: string, module: string) => {
 
 		return `${entry?.data?.title} (Learning Paths)`;
 	} else if (product === "1.1.1.1") {
-		const entry = await getEntry("directory", "1111");
+		const entry = await getEntry("products", "1111");
 
 		return entry?.data?.product?.title;
 	}
 
-	const entry = await getEntry("directory", product);
+	const entry = await getEntry("products", product);
 
 	return entry?.data?.product?.title ?? "Unknown";
 };
