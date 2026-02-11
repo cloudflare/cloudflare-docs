@@ -78,25 +78,28 @@ You need the following to query endpoint health check data:
 
 ### Query parameters
 
-The query accepts the following parameters in the `filter` object:
+The following parameters are some of the most common ones in the `filter` object:
 
 | Parameter | Description |
-| --------- | ----------- |
+| :---- | :---- |
 | `date_geq` | Start date for the query in `YYYY-MM-DD` format (for example, `2026-01-01`). When used with a date-based truncation dimension, returns results from this date onward. You can also use a full ISO 8601 timestamp (for example, `2026-01-01T00:00:00Z`). |
 | `date_leq` | _(Optional)_ End date for the query. Uses the same format as `date_geq`. |
 | `datetime_geq` | _(Optional)_ Start timestamp in ISO 8601 format (for example, `2026-01-01T00:00:00Z`). Use instead of `date_geq` for time-based truncation dimensions. |
 | `datetime_leq` | _(Optional)_ End timestamp in ISO 8601 format. |
 | `limit` | Maximum number of result groups to return. |
 
+You can also filter on any dimension listed in the Available dimensions (#available-dimensions) table. Append an operator suffix to the dimension name to create a filter — for example, `endpoint_in` to filter by a list of endpoints, or `checkType_neq` to exclude a specific check type. Using a dimension name without a suffix filters for equality. For the full list of supported operators, refer to [Filtering](/analytics/graphql-api/features/filtering/).
+
 ### Available dimensions
 
 You can query the following dimensions in the `dimensions` field:
 
 | Dimension | Description |
-| --------- | ----------- |
+| :---- | :---- |
 | `checkId` | The unique ID of the configured health check. |
 | `checkType` | The type of health check (for example, `icmp`). |
 | `endpoint` | The IP address of the endpoint being checked. |
+| `name` | The name associated with the check (optional). |
 | `date` | Event timestamp truncated to the day. |
 | `datetime` | Full event timestamp. |
 | `datetimeMinute` | Event timestamp truncated to the minute. |
@@ -108,10 +111,11 @@ You can query the following dimensions in the `dimensions` field:
 ### Available metrics
 
 | Metric | Description |
-| ------ | ----------- |
+| :---- | :---- |
 | `count` | Total number of health check events in the group. |
 | `sum.total` | Total number of health check probes sent. |
 | `sum.failures` | Number of failed health check probes. |
+| `avg.lossPercentage` | Average calculated loss percentage (0-100). |
 
 ### API call
 
