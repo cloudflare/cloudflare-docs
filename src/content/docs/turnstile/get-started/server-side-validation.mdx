@@ -11,20 +11,30 @@ Learn how to securely validate Turnstile tokens on your server using the Sitever
 
 :::caution[Mandatory server-side validation]
 
-You must call Siteverify API to complete your Turnstile configuration. The client-side widget alone does not provide protection.
+You must call the Siteverify API to complete your Turnstile configuration. The client-side widget alone does not provide protection because tokens can be forged by attackers, expire after 5 minutes, and are single-use.
 
-You must validate tokens on your server because tokens can be forged by attackers, expire after 5 minutes (300 seconds), and are single-use and cannot be validated twice.
-
-Client-side verification alone leaves major security vulnerabilities.
 :::
 
-## Process
+## How it works
 
-1. Client generates token: Visitor completes Turnstile challenge on your webpage.
-2. Token sent to server: Form submission includes the Turnstile token.
-3. Server validates token: Your server calls Cloudflare's Siteverify API.
-4. Cloudflare responds: Returns `success` or `failure` and additional data.
-5. Server takes action: Allow or reject the original request based on validation.
+After a visitor completes a Turnstile challenge, the widget generates a single-use token. Your server must send this token to Cloudflare's Siteverify API to confirm the visitor is legitimate before processing the request. The following diagram shows the full flow, including both success and failure paths.
+
+```mermaid
+sequenceDiagram
+accTitle: Turnstile server-side validation flow
+accDescr: Shows the sequence of steps for validating a Turnstile token, including success and failure paths.
+    participant Visitor
+    participant Your Server
+    participant Siteverify API
+    Visitor->>Your Server: Submit form with Turnstile token
+    Your Server->>Siteverify API: POST token + secret key
+    Siteverify API-->>Your Server: JSON response
+    alt success is true
+        Your Server-->>Visitor: Allow request (200)
+    else success is false
+        Your Server-->>Visitor: Reject request (400/403)
+    end
+```
 
 ## Siteverify API overview
 
@@ -36,7 +46,7 @@ POST https://challenges.cloudflare.com/turnstile/v0/siteverify
 
 The API accepts both `application/x-www-form-urlencoded` and `application/json` requests, but always returns JSON responses.
 
-#### Required parameters
+#### Request parameters
 
 | Parameter         | Required | Description                                            |
 | ----------------- | -------- | ------------------------------------------------------ |
@@ -47,14 +57,26 @@ The API accepts both `application/x-www-form-urlencoded` and `application/json` 
 
 #### Token characteristics
 
-- Maximum length: 2048 characters
-- Validity period: 300 seconds (5 minutes) from generation
-- Single use: Each token can only be validated once
-- Automatic expiry: Tokens automatically expire and cannot be reused
+- **Maximum length**: 2048 characters
+- **Validity period**: 300 seconds (5 minutes) from generation
+- **Single use**: Each token can only be validated once
 
-The validation token issued by Turnstile is valid for five minutes. If a user submits the form after this period, the token is considered expired. In this scenario, the server-side verification API will return a failure, and the `error-codes` field in the response will include `timeout-or-duplicate`.
+If a visitor submits the form after the token expires, the Siteverify API returns a failure with the `timeout-or-duplicate` error code. To recover, refresh the Turnstile widget to generate a new token using the `turnstile.reset` function.
 
-To ensure a successful validation, the visitor must initiate the request and submit the token to your backend within the five-minute window. Otherwise, the Turnstile widget needs to be refreshed to generate a new token. This can be done using the `turnstile.reset` function.
+### Quick test with curl
+
+You can verify your integration by calling the Siteverify API directly from a terminal:
+
+```bash
+curl -X POST "https://challenges.cloudflare.com/turnstile/v0/siteverify" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "secret": "1x0000000000000000000000000000000AA",
+    "response": "XXXX.DUMMY.TOKEN.XXXX"
+  }'
+```
+
+This uses a [test secret key](/turnstile/troubleshooting/testing/) and dummy token, so it always returns `"success": true`. Replace these with your production credentials and a real client token for actual validation.
 
 ---
 
@@ -183,24 +205,23 @@ function validateTurnstile($token, $secret, $remoteip = null) {
 // Usage
 $secret_key = 'your-secret-key';
 $token = $_POST['cf-turnstile-response'] ?? '';
-$remoteip = $\_SERVER['HTTP_CF_CONNECTING_IP'] ??
-$\_SERVER['HTTP_X_FORWARDED_FOR'] ??
-$\_SERVER['REMOTE_ADDR'];
+$remoteip = $_SERVER['HTTP_CF_CONNECTING_IP'] ??
+    $_SERVER['HTTP_X_FORWARDED_FOR'] ??
+    $_SERVER['REMOTE_ADDR'];
 
 $validation = validateTurnstile($token, $secret_key, $remoteip);
 
 if ($validation['success']) {
-// Valid token - process form
-echo "Form submission successful!";
-// Process your form data here
+    // Valid token - process form
+    echo "Form submission successful!";
+    // Process your form data here
 } else {
-// Invalid token - show error
-echo "Verification failed. Please try again.";
-error_log('Turnstile validation failed: ' . implode(', ', $validation['error-codes']));
+    // Invalid token - show error
+    echo "Verification failed. Please try again.";
+    error_log('Turnstile validation failed: ' . implode(', ', $validation['error-codes']));
 }
 ?>
-
-````
+```
 </TabItem>
 <TabItem label="Python" icon="seti:python">
 ```python
@@ -250,7 +271,7 @@ def submit_form():
             'message': 'Verification failed',
             'errors': validation['error-codes']
         }), 400
-````
+```
 
 </TabItem>
 <TabItem label="Java" icon="seti:java">
@@ -323,7 +344,7 @@ HttpServletRequest request) {
 
 }
 
-````
+```
 </TabItem>
 <TabItem label="C#" icon="seti:c-sharp">
 ```csharp
@@ -394,7 +415,7 @@ public async Task<IActionResult> SubmitForm([FromForm] string cfTurnstileRespons
         return BadRequest($"Verification failed: {string.Join(", ", validation.ErrorCodes)}");
     }
 }
-````
+```
 
 </TabItem>
 </Tabs>
@@ -403,9 +424,7 @@ public async Task<IActionResult> SubmitForm([FromForm] string cfTurnstileRespons
 
 ## Advanced validation techniques
 
-```js title="Idempotency keys for retry operation"
-const crypto = require("crypto");
-
+```js title="Idempotency keys for retry protection"
 async function validateWithRetry(token, remoteip, maxRetries = 3) {
 	const idempotencyKey = crypto.randomUUID();
 
@@ -427,23 +446,19 @@ async function validateWithRetry(token, remoteip, maxRetries = 3) {
 
 			const result = await response.json();
 
-			if (response.ok) {
-				return result;
-			}
-
-			// If this is the last attempt, return the error
+			// Siteverify always returns HTTP 200.
+			// Check the success field, not the HTTP status.
+			return result;
+		} catch (error) {
+			// Retry on network errors only
 			if (attempt === maxRetries) {
-				return result;
+				return { success: false, "error-codes": ["internal-error"] };
 			}
 
 			// Wait before retrying (exponential backoff)
 			await new Promise((resolve) =>
 				setTimeout(resolve, Math.pow(2, attempt) * 1000),
 			);
-		} catch (error) {
-			if (attempt === maxRetries) {
-				return { success: false, "error-codes": ["internal-error"] };
-			}
 		}
 	}
 }
@@ -552,17 +567,37 @@ if (result.valid) {
 
 ### Response fields
 
-| Field                              | Description                                                                                           |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `success`                          | Boolean indicating if validation was successful                                                       |
-| `challenge_ts`                     | ISO timestamp when the challenge was solved                                                           |
-| `hostname`                         | Hostname where the challenge was served                                                               |
-| `error-codes`                      | Array of error codes (if validation failed)                                                           |
-| `action`                           | Custom action identifier from client-side                                                             |
-| `cdata`                            | Custom data payload from client-side                                                                  |
-| `messages`                         | Array of informational messages (may be empty)                                                        |
-| `metadata.ephemeral_id`            | Device fingerprint ID (Enterprise only)                                                               |
-| `metadata.result_with_testing_key` | Boolean, `true` when the response was generated using a [test secret key](/turnstile/troubleshooting/testing/) |
+| Field | Type | Always present | Description |
+| --- | --- | --- | --- |
+| `success` | `boolean` | Yes | `true` if the token is valid, `false` otherwise. This is the primary field your server should check. |
+| `challenge_ts` | `string` | On success | ISO 8601 timestamp (for example, `2022-02-28T15:14:30.096Z`) of when the challenge was solved. |
+| `hostname` | `string` | On success | The hostname of the site where the challenge was served. You can verify this matches your expected domain. |
+| `error-codes` | `string[]` | Yes | Array of [error codes](#error-codes-reference). Empty on success. |
+| `action` | `string` | On success | The custom action name passed via the `data-action` attribute on the client widget. Only present if set. |
+| `cdata` | `string` | On success | The custom data payload passed via the `data-cdata` attribute on the client widget. Only present if set. |
+| `messages` | `string[]` | On failure | Array of informational messages. Typically empty, but may contain details for `bad-request` errors. |
+| `metadata.ephemeral_id` | `string` | Enterprise only | Device fingerprint identifier. Only returned for Enterprise widgets with [ephemeral IDs](/turnstile/concepts/ephemeral-id/) turned on. |
+| `metadata.result_with_testing_key` | `boolean` | Test keys only | `true` when the response was generated using a [test secret key](/turnstile/troubleshooting/testing/). Not present with production keys. |
+
+### TypeScript interface
+
+Use the following interface to type Siteverify responses in your application:
+
+```ts title="TurnstileResponse"
+interface TurnstileResponse {
+  success: boolean;
+  "error-codes": string[];
+  challenge_ts?: string;
+  hostname?: string;
+  action?: string;
+  cdata?: string;
+  messages?: string[];
+  metadata?: {
+    ephemeral_id?: string;
+    result_with_testing_key?: boolean;
+  };
+}
+```
 
 ### Error codes reference
 
@@ -578,9 +613,11 @@ if (result.valid) {
 
 ---
 
-## Implementation
+## Full implementation example
 
-```js title="Example implementation"
+The following class combines input validation, timeout handling, idempotency, and hostname/action verification into a single reusable validator.
+
+```js title="TurnstileValidator class"
 class TurnstileValidator {
 	constructor(secretKey, timeout = 10000) {
 		this.secretKey = secretKey;
