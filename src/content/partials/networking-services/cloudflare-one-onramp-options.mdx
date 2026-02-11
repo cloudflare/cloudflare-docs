@@ -7,8 +7,6 @@ params:
   - onRampsURL
 ---
 
-import { Details } from "~/components";
-
 Cloudflare One provides multiple connectivity options for your users, devices, and network infrastructure. Each option serves different use cases, from protecting individual devices to connecting entire data centers.
 
 This page helps you understand which connectivity options to use based on your requirements, and how to combine multiple options in a single deployment.
@@ -44,8 +42,6 @@ The following table provides a high-level comparison of all connectivity options
 
 ## Cloudflare Tunnel
 
-<Details header="Cloudflare Tunnel details">
-
 Cloudflare Tunnel provides a secure way to connect your resources to Cloudflare without a publicly routable IP address. The `cloudflared` daemon creates outbound-only connections to Cloudflare's global network over port 7844 (TCP/UDP) using HTTP/2 or QUIC. This allows you to expose web servers, SSH servers, remote desktops, and other services without opening inbound ports on your firewall.
 
 Use Cloudflare Tunnel when you need to expose private web applications, protect origin servers by hiding their IP addresses, or deploy cloud-native ingress for Kubernetes services.
@@ -58,13 +54,9 @@ For HTTP traffic, use the `CF-Connecting-IP` header to retrieve the client IP. F
 
 For detailed configuration, refer to the [Cloudflare Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
 
-</Details>
-
 ---
 
 ## WARP client
-
-<Details header="WARP client details">
 
 The Cloudflare WARP client is a device agent that securely connects end-user devices to Cloudflare's global network. WARP encrypts traffic from the device using MASQUE (with post-quantum cryptography) or WireGuard and routes it through Cloudflare, where Gateway policies filter and inspect the traffic.
 
@@ -76,13 +68,9 @@ WARP client is on-ramp only — it establishes outbound connections to Cloudflar
 
 For detailed configuration, refer to the [WARP client documentation](/cloudflare-one/team-and-resources/devices/warp/).
 
-</Details>
-
 ---
 
 ## WARP Connector (beta)
-
-<Details header="WARP Connector details">
 
 WARP Connector is a software client that enables mesh networking for services, containers, and virtual machines (VMs). It acts as a Layer 3 router for a subnet, on-ramping and off-ramping traffic through Cloudflare while preserving source IP addresses end-to-end.
 
@@ -104,13 +92,9 @@ Plan your deployment accordingly and consider Magic WAN Connector or IPsec tunne
 
 For detailed configuration, refer to the [WARP Connector documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
 
-</Details>
-
 ---
 
 ## DNS locations
-
-<Details header="DNS locations details">
 
 DNS locations allow you to filter DNS traffic from networks without deploying the WARP client. By configuring your network's DNS resolver to point to Cloudflare Gateway, Gateway applies DNS policies to all queries from that location.
 
@@ -130,13 +114,9 @@ For identity-based DNS policies without the WARP client, configure [DNS over HTT
 
 For detailed configuration, refer to the [DNS locations documentation](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/).
 
-</Details>
-
 ---
 
 ## Proxy endpoints
-
-<Details header="Proxy endpoints details">
 
 Proxy endpoints allow you to apply Gateway HTTP policies without installing a client on devices. By configuring a Proxy Auto-Configuration (PAC) file at the browser level, you route web traffic through Gateway for filtering and policy enforcement.
 
@@ -153,13 +133,9 @@ Proxy endpoints only filter HTTP/HTTPS traffic routed through the PAC file. They
 
 For detailed configuration, refer to the [Proxy endpoints documentation](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/).
 
-</Details>
-
 ---
 
 ## Clientless Web Isolation
-
-<Details header="Clientless Web Isolation details">
 
 Clientless Web Isolation allows users to securely access web applications through a remote browser without installing the WARP client. Users navigate to a prefixed URL (`https://<team-name>.cloudflareaccess.com/browser/<URL>`), authenticate through Cloudflare Access, and Cloudflare renders the web content in an isolated browser, streaming only [safe  draw commands](https://blog.cloudflare.com/cloudflare-and-remote-browser-isolation/) to the user's device while enforcing isolation policies.
 
@@ -171,13 +147,9 @@ Clientless Web Isolation requires the Browser Isolation add-on and user authenti
 
 For detailed configuration, refer to the [Clientless Web Isolation documentation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/).
 
-</Details>
-
 ---
 
 ## GRE tunnels
-
-<Details header="GRE tunnels details">
 
 Generic Routing Encapsulation (GRE) tunnels provide lightweight, stateless network connectivity between your infrastructure and Cloudflare. GRE tunnels are used with Magic WAN and Magic Transit to connect sites, data centers, and cloud environments using existing routers and firewalls.
 
@@ -189,13 +161,9 @@ GRE does not encrypt traffic (use IPsec if encryption is required). Requires a s
 
 For detailed configuration, refer to the <a href={props.greIpsecURL}>GRE and IPsec tunnels documentation</a>.
 
-</Details>
-
 ---
 
 ## IPsec tunnels
-
-<Details header="IPsec tunnels details">
 
 IPsec tunnels provide encrypted, stateful network connectivity between your infrastructure and Cloudflare. IPsec tunnels are used with Magic WAN and Magic Transit for secure site-to-site connectivity, using IKEv2 for tunnel negotiation and AES-GCM or AES-CBC for encryption.
 
@@ -215,13 +183,9 @@ For detailed configuration, refer to the <a href={props.greIpsecURL}>GRE and IPs
 IPsec and GRE tunnels require a Magic WAN subscription.
 :::
 
-</Details>
-
 ---
 
 ## Magic WAN Connector
-
-<Details header="Magic WAN Connector details">
 
 Magic WAN Connector is a plug-and-play SD-WAN appliance that automates connectivity to Cloudflare's network. It establishes IPsec tunnels automatically and provides traffic steering and shaping. You can deploy it as a hardware appliance (Dell VEP1460) or virtual appliance (VMware ESXi, Proxmox).
 
@@ -233,13 +197,9 @@ Magic WAN Connector requires a Magic WAN subscription and dedicated hardware or 
 
 For detailed configuration, refer to the <a href={props.connectorURL}>Magic WAN Connector documentation</a>.
 
-</Details>
-
 ---
 
 ## Cloudflare Network Interconnect (CNI)
-
-<Details header="CNI details">
 
 Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly to Cloudflare through private, dedicated connections that bypass the public Internet. CNI provides predictable latency, consistent throughput, and reduced exposure to attacks.
 
@@ -265,13 +225,9 @@ Evaluate whether Cloudflare Tunnel is necessary if CNI already provides private 
 
 For detailed configuration, refer to the <a href={props.cniURL}>Cloudflare Network Interconnect documentation</a>.
 
-</Details>
-
 ---
 
 ## Magic Cloud Networking
-
-<Details header="Magic Cloud Networking details">
 
 Magic Cloud Networking is an automation layer that simplifies connecting cloud environments to Magic WAN. Rather than manually configuring IPsec tunnels, Magic Cloud Networking automatically discovers your cloud resources and creates the necessary VPN tunnels and routes on both sides (cloud provider and Magic WAN).
 
@@ -308,8 +264,6 @@ Magic Cloud Networking requires a Magic WAN subscription and Magic Cloud Network
 - **Tunnel creation time**: Cloud provider VPN gateways can take 15-45 minutes to provision. Plan for this delay when onboarding new VPCs.
 
 For detailed configuration, refer to the [Magic Cloud Networking documentation](/magic-cloud-networking/).
-
-</Details>
 
 ---
 
