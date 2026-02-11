@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Tabs, TabItem } from "~/components"
 
 Use dummy sitekeys and secret keys to test your Turnstile implementation without triggering real challenges that would interfere with automated testing suites.
 
@@ -71,6 +71,23 @@ Replace your production sitekey with a test sitekey.
 
 Replace your production secret key with a test secret key.
 
+<Tabs syncKey="workersExamples">
+<TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+// Environment-based configuration
+const SECRET_KEY: string =
+  process.env.NODE_ENV === "production"
+    ? process.env.TURNSTILE_SECRET_KEY!
+    : "1x0000000000000000000000000000000AA";
+
+// Use in validation
+const validation = await validateTurnstile(token, SECRET_KEY);
+```
+
+</TabItem>
+<TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 // Environment-based configuration
 const SECRET_KEY = process.env.NODE_ENV === 'production' 
@@ -80,6 +97,9 @@ const SECRET_KEY = process.env.NODE_ENV === 'production'
 // Use in validation
 const validation = await validateTurnstile(token, SECRET_KEY);
 ```
+
+</TabItem>
+</Tabs>
 
 ### Environment configuration
 

@@ -83,6 +83,104 @@ This uses a [test secret key](/turnstile/troubleshooting/testing/) and dummy tok
 ## Basic validation examples
 
 <Tabs syncKey="workersExamples">
+<TabItem label="TypeScript" icon="seti:typescript">
+
+#### JSON
+
+```ts
+import type { TurnstileResponse } from "./types";
+
+const SITEVERIFY_URL =
+	"https://challenges.cloudflare.com/turnstile/v0/siteverify";
+
+async function validateTurnstile(
+	token: string,
+	secretKey: string,
+	remoteip?: string,
+): Promise<TurnstileResponse> {
+	try {
+		const response = await fetch(SITEVERIFY_URL, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				secret: secretKey,
+				response: token,
+				...(remoteip && { remoteip }),
+			}),
+		});
+
+		return (await response.json()) as TurnstileResponse;
+	} catch (error) {
+		console.error("Turnstile validation error:", error);
+		return { success: false, "error-codes": ["internal-error"] };
+	}
+}
+```
+
+#### Form Data
+
+```ts
+import type { TurnstileResponse } from "./types";
+
+const SITEVERIFY_URL =
+	"https://challenges.cloudflare.com/turnstile/v0/siteverify";
+
+async function validateTurnstile(
+	token: string,
+	secretKey: string,
+	remoteip?: string,
+): Promise<TurnstileResponse> {
+	const formData = new FormData();
+	formData.append("secret", secretKey);
+	formData.append("response", token);
+	if (remoteip) {
+		formData.append("remoteip", remoteip);
+	}
+
+	try {
+		const response = await fetch(SITEVERIFY_URL, {
+			method: "POST",
+			body: formData,
+		});
+
+		return (await response.json()) as TurnstileResponse;
+	} catch (error) {
+		console.error("Turnstile validation error:", error);
+		return { success: false, "error-codes": ["internal-error"] };
+	}
+}
+
+// Usage in a request handler
+async function handleFormSubmission(request: Request): Promise<Response> {
+	const body = await request.formData();
+	const token = body.get("cf-turnstile-response");
+
+	if (typeof token !== "string") {
+		return new Response("Missing Turnstile token", { status: 400 });
+	}
+
+	const ip =
+		request.headers.get("CF-Connecting-IP") ??
+		request.headers.get("X-Forwarded-For") ??
+		undefined;
+
+	const validation = await validateTurnstile(
+		token,
+		process.env.TURNSTILE_SECRET_KEY!,
+		ip,
+	);
+
+	if (validation.success) {
+		console.log("Valid submission from:", validation.hostname);
+		return new Response("OK", { status: 200 });
+	}
+
+	console.log("Invalid token:", validation["error-codes"]);
+	return new Response("Invalid verification", { status: 400 });
+}
+```
+
+</TabItem>
 <TabItem label="JavaScript" icon="seti:javascript">
 
 #### JSON
@@ -424,6 +522,137 @@ public async Task<IActionResult> SubmitForm([FromForm] string cfTurnstileRespons
 
 ## Advanced validation techniques
 
+<Tabs syncKey="workersExamples">
+<TabItem label="TypeScript" icon="seti:typescript">
+
+```ts title="Idempotency keys for retry protection"
+import type { TurnstileResponse } from "./types";
+
+const SITEVERIFY_URL =
+	"https://challenges.cloudflare.com/turnstile/v0/siteverify";
+
+async function validateWithRetry(
+	token: string,
+	secretKey: string,
+	remoteip?: string,
+	maxRetries = 3,
+): Promise<TurnstileResponse> {
+	const idempotencyKey = crypto.randomUUID();
+
+	for (let attempt = 1; attempt <= maxRetries; attempt++) {
+		try {
+			const formData = new FormData();
+			formData.append("secret", secretKey);
+			formData.append("response", token);
+			formData.append("idempotency_key", idempotencyKey);
+			if (remoteip) {
+				formData.append("remoteip", remoteip);
+			}
+
+			const response = await fetch(SITEVERIFY_URL, {
+				method: "POST",
+				body: formData,
+			});
+
+			// Siteverify always returns HTTP 200.
+			// Check the success field, not the HTTP status.
+			return (await response.json()) as TurnstileResponse;
+		} catch (error) {
+			if (attempt === maxRetries) {
+				return { success: false, "error-codes": ["internal-error"] };
+			}
+
+			// Exponential backoff before retrying on network errors
+			await new Promise((resolve) =>
+				setTimeout(resolve, Math.pow(2, attempt) * 1000),
+			);
+		}
+	}
+
+	// Unreachable, but satisfies the return type
+	return { success: false, "error-codes": ["internal-error"] };
+}
+```
+
+```ts title="Enhanced validation with custom checks"
+import type { TurnstileResponse } from "./types";
+
+interface ValidationOptions {
+	expectedAction?: string;
+	expectedHostname?: string;
+}
+
+type ValidationResult =
+	| { valid: true; data: TurnstileResponse; tokenAgeMinutes: number }
+	| { valid: false; reason: string; details?: Record<string, unknown> };
+
+async function validateTurnstileEnhanced(
+	token: string,
+	secretKey: string,
+	remoteip: string | undefined,
+	options: ValidationOptions = {},
+): Promise<ValidationResult> {
+	const validation = await validateTurnstile(token, secretKey, remoteip);
+
+	if (!validation.success) {
+		return {
+			valid: false,
+			reason: "turnstile_failed",
+			details: { errors: validation["error-codes"] },
+		};
+	}
+
+	if (options.expectedAction && validation.action !== options.expectedAction) {
+		return {
+			valid: false,
+			reason: "action_mismatch",
+			details: {
+				expected: options.expectedAction,
+				received: validation.action,
+			},
+		};
+	}
+
+	if (
+		options.expectedHostname &&
+		validation.hostname !== options.expectedHostname
+	) {
+		return {
+			valid: false,
+			reason: "hostname_mismatch",
+			details: {
+				expected: options.expectedHostname,
+				received: validation.hostname,
+			},
+		};
+	}
+
+	const challengeTime = new Date(validation.challenge_ts!);
+	const tokenAgeMinutes = (Date.now() - challengeTime.getTime()) / 60_000;
+
+	if (tokenAgeMinutes > 4) {
+		console.warn(`Token is ${tokenAgeMinutes.toFixed(1)} minutes old`);
+	}
+
+	return { valid: true, data: validation, tokenAgeMinutes };
+}
+
+// Usage
+const result = await validateTurnstileEnhanced(token, secretKey, remoteip, {
+	expectedAction: "login",
+	expectedHostname: "example.com",
+});
+
+if (result.valid) {
+	console.log("Validation successful:", result.data);
+} else {
+	console.log("Validation failed:", result.reason, result.details);
+}
+```
+
+</TabItem>
+<TabItem label="JavaScript" icon="seti:javascript">
+
 ```js title="Idempotency keys for retry protection"
 async function validateWithRetry(token, remoteip, maxRetries = 3) {
 	const idempotencyKey = crypto.randomUUID();
@@ -534,6 +763,9 @@ if (result.valid) {
 }
 ```
 
+</TabItem>
+</Tabs>
+
 ---
 
 ## API response format
@@ -616,6 +848,139 @@ interface TurnstileResponse {
 ## Full implementation example
 
 The following class combines input validation, timeout handling, idempotency, and hostname/action verification into a single reusable validator.
+
+<Tabs syncKey="workersExamples">
+<TabItem label="TypeScript" icon="seti:typescript">
+
+```ts title="TurnstileValidator class"
+interface TurnstileResponse {
+	success: boolean;
+	"error-codes": string[];
+	challenge_ts?: string;
+	hostname?: string;
+	action?: string;
+	cdata?: string;
+	messages?: string[];
+	metadata?: {
+		ephemeral_id?: string;
+		result_with_testing_key?: boolean;
+	};
+}
+
+interface ValidateOptions {
+	idempotencyKey?: string;
+	expectedAction?: string;
+	expectedHostname?: string;
+}
+
+type ValidateResult =
+	| TurnstileResponse
+	| { success: false; error: string; expected?: string; received?: string };
+
+const SITEVERIFY_URL =
+	"https://challenges.cloudflare.com/turnstile/v0/siteverify";
+const MAX_TOKEN_LENGTH = 2048;
+
+class TurnstileValidator {
+	private readonly secretKey: string;
+	private readonly timeoutMs: number;
+
+	constructor(secretKey: string, timeoutMs = 10_000) {
+		this.secretKey = secretKey;
+		this.timeoutMs = timeoutMs;
+	}
+
+	async validate(
+		token: string,
+		remoteip?: string,
+		options: ValidateOptions = {},
+	): Promise<ValidateResult> {
+		if (!token || typeof token !== "string") {
+			return { success: false, error: "Invalid token format" };
+		}
+
+		if (token.length > MAX_TOKEN_LENGTH) {
+			return { success: false, error: "Token exceeds maximum length" };
+		}
+
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), this.timeoutMs);
+
+		try {
+			const formData = new FormData();
+			formData.append("secret", this.secretKey);
+			formData.append("response", token);
+
+			if (remoteip) {
+				formData.append("remoteip", remoteip);
+			}
+			if (options.idempotencyKey) {
+				formData.append("idempotency_key", options.idempotencyKey);
+			}
+
+			const response = await fetch(SITEVERIFY_URL, {
+				method: "POST",
+				body: formData,
+				signal: controller.signal,
+			});
+
+			const result = (await response.json()) as TurnstileResponse;
+
+			if (result.success) {
+				if (
+					options.expectedAction &&
+					result.action !== options.expectedAction
+				) {
+					return {
+						success: false,
+						error: "Action mismatch",
+						expected: options.expectedAction,
+						received: result.action,
+					};
+				}
+				if (
+					options.expectedHostname &&
+					result.hostname !== options.expectedHostname
+				) {
+					return {
+						success: false,
+						error: "Hostname mismatch",
+						expected: options.expectedHostname,
+						received: result.hostname,
+					};
+				}
+			}
+
+			return result;
+		} catch (error) {
+			if (error instanceof DOMException && error.name === "AbortError") {
+				return { success: false, error: "Validation timeout" };
+			}
+			console.error("Turnstile validation error:", error);
+			return { success: false, error: "Internal error" };
+		} finally {
+			clearTimeout(timeoutId);
+		}
+	}
+}
+
+// Usage
+const validator = new TurnstileValidator(process.env.TURNSTILE_SECRET_KEY!);
+
+const result = await validator.validate(token, remoteip, {
+	expectedAction: "login",
+	expectedHostname: "example.com",
+});
+
+if (result.success) {
+	// Process the request
+} else {
+	console.log("Validation failed:", result);
+}
+```
+
+</TabItem>
+<TabItem label="JavaScript" icon="seti:javascript">
 
 ```js title="TurnstileValidator class"
 class TurnstileValidator {
@@ -718,6 +1083,9 @@ if (result.success) {
 	console.log("Validation failed:", result.error);
 }
 ```
+
+</TabItem>
+</Tabs>
 
 ---
 
