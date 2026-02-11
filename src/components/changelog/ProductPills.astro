@@ -8,7 +8,7 @@ import { Badge } from "@astrojs/starlight/components";
 type Props = z.infer<typeof props>;
 
 const props = z.object({
-	products: z.array(reference("products")),
+	products: z.array(reference("directory")),
 });
 
 const { products } = await props.parseAsync(Astro.props);

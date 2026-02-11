@@ -12,7 +12,7 @@ import ProductPills from "~/components/changelog/ProductPills.astro";
 
 const props = z
 	.object({
-		product: reference("products"),
+		product: reference("directory"),
 	})
 	.or(
 		z.object({
