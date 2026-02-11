@@ -1,0 +1,38 @@
+---
+pcx_content_type: navigation
+title: rtk-text-message-view
+description: API reference for rtk-text-message-view component (Web Components (HTML) Library)
+---
+A component which renders a text message from chat.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `isMarkdown` | `boolean` | ✅ | - | Renders text as markdown (default = true) |
+| `text` | `string` | ✅ | - | Text message |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-text-message-view></rtk-text-message-view>
+```
+
+### With Properties
+
+```html
+<rtk-text-message-view
+ text="example">
+</rtk-text-message-view>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-text-message-view");
+
+  el.isMarkdown= true;
+</script>
+```

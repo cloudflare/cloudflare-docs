@@ -1,0 +1,13 @@
+name: Cloudflare One
+
+entry:
+  title: Cloudflare One
+  url: /cloudflare-one/
+  group: Cloudflare One
+  wrap: true
+  preview_tryout: true
+
+meta:
+  title: Cloudflare One docs
+  description: Replace legacy security perimeters with Cloudflare's network to protect your organization
+  author: "@cloudflare"

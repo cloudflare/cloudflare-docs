@@ -27,7 +27,11 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-The Agents SDK enables you to build and deploy AI-powered agents that can autonomously perform tasks, communicate with clients in real time, call AI models, persist state, schedule tasks, run asynchronous workflows, browse the web, query data from your database, support human-in-the-loop interactions, and [a lot more](/agents/api-reference/).
+Agents are systems that use AI models to make decisions and execute tasks autonomously. They integrate with external APIs, execute custom functions, and maintain access to your data sources to handle complex workflows.
+
+Think of agents as digital assistants with persistent context, they remember previous interactions, maintain consistent behavior patterns, and have access to specific tools and capabilities for their designated roles.
+
+Built on Cloudflare's infrastructure, agents are stateful classes that run on Durable Objects. They handle HTTP requests, WebSocket connections, task scheduling, AI model integration and more.
 
 ### Ship your first Agent
 
@@ -49,7 +53,7 @@ npm install
 
 Create a `.dev.vars` file:
 
-```env
+```txt
 OPENAI_API_KEY=your_openai_api_key
 ```
 
@@ -65,9 +69,9 @@ npm start
 npm run deploy
 ```
 
-Head to the guide on [building a chat agent](/agents/getting-started/build-a-chat-agent) to learn how the starter project is built and how to use it as a foundation for your own agents.
+Head to the guide on [building a chat agent](/agents/getting-started/build-a-chat-agent/) to learn how the starter project is built and how to use it as a foundation for your own agents.
 
-If you're already building on [Workers](/workers/), you can install the `agents` package directly into an existing project:
+If you are already building on [Workers](/workers/), you can install the `agents` package directly into an existing project:
 
 ```sh
 npm i agents
@@ -148,7 +152,7 @@ Observe and control your AI applications with caching, rate limiting, request re
 
 <RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
 
-Build full-stack AI applications with Vectorize, Cloudflare’s vector database. Adding Vectorize enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context and memory to an LLM.
+Build full-stack AI applications with Vectorize, Cloudflare's vector database. Adding Vectorize enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context and memory to an LLM.
 
 </RelatedProduct>
 

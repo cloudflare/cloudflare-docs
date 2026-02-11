@@ -1,0 +1,13 @@
+name: Magic Network Monitoring
+
+entry:
+  title: Magic Network Monitoring
+  url: /magic-network-monitoring/
+  wrap: true
+  group: Network security
+  additional_groups: [Analytics]
+
+meta:
+  title: Cloudflare Magic Network Monitoring docs
+  description: Visibility into your network and cloud traffic by analyzing network flow data
+  author: "@cloudflare"

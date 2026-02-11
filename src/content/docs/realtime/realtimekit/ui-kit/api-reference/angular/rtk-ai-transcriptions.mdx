@@ -1,0 +1,32 @@
+---
+pcx_content_type: navigation
+title: rtk-ai-transcriptions
+description: API reference for rtk-ai-transcriptions component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `initialTranscriptions` | `Transcript[]` | ✅ | - | Initial transcriptions |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-ai-transcriptions></rtk-ai-transcriptions>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-ai-transcriptions
+ [initialTranscriptions]="[]"
+ [meeting]="meeting">
+</rtk-ai-transcriptions>
+```
+

@@ -1,0 +1,10 @@
+name: Workers Analytics Engine
+
+entry:
+  title: Workers Analytics Engine
+  url: /analytics/analytics-engine/
+  group: Developer platform
+  additional_groups: [Analytics]
+
+meta:
+  description: Unlimited-cardinality analytics at scale via an API to write data from Workers and a SQL API to query that data

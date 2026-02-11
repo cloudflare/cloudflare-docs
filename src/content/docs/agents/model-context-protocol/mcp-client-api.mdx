@@ -258,8 +258,6 @@ Configure how OAuth completion is handled. By default, successful authentication
 <TypeScriptExample>
 
 ```ts
-import type { MCPClientOAuthResult } from "agents/mcp";
-
 export class MyAgent extends Agent {
 	onStart() {
 		this.mcp.configureOAuthCallback({
@@ -269,26 +267,12 @@ export class MyAgent extends Agent {
 			// Redirect on error with error message in query string
 			errorRedirect: "https://myapp.com/error",
 
-			// Or use a custom handler for complete control
-			customHandler: (result: MCPClientOAuthResult) => {
-				// result.authSuccess - boolean indicating if auth succeeded
-				// result.authError - string with error message (if failed)
-				// result.serverId - ID of the MCP server
-
-				if (result.authSuccess) {
-					// Close popup window after successful auth
-					return new Response("<script>window.close();</script>", {
-						headers: { "content-type": "text/html" },
-					});
-				}
-				// Handle error - must check authSuccess to avoid ignoring failures
-				return new Response(
-					`Auth failed: ${result.authError ?? "Unknown error"}`,
-					{
-						status: 400,
-						headers: { "content-type": "text/plain" },
-					},
-				);
+			// Or use a custom handler
+			customHandler: () => {
+				// Close popup window after auth completes
+				return new Response("<script>window.close();</script>", {
+					headers: { "content-type": "text/html" },
+				});
 			},
 		});
 	}
@@ -296,12 +280,6 @@ export class MyAgent extends Agent {
 ```
 
 </TypeScriptExample>
-
-:::note[Important]
-
-When using `customHandler`, always check `result.authSuccess` to handle both success and failure cases. The handler is called for all OAuth callback requests, including failures.
-
-:::
 
 ## Using MCP capabilities
 
@@ -453,7 +431,7 @@ function Dashboard() {
 			<h2>Connected Servers</h2>
 			{Object.entries(servers).map(([id, server]) => (
 				<div key={id}>
-					{server.name}: {server.connectionState}
+					{server.name}: {server.state}
 				</div>
 			))}
 
@@ -559,7 +537,7 @@ type MCPServersState = {
 				| "failed";
 			capabilities: ServerCapabilities | null;
 			instructions: string | null;
-			error?: string; // Present when state is "failed"
+			error: string | null;
 		}
 	>;
 	tools: Array<Tool & { serverId: string }>;
@@ -576,7 +554,9 @@ The `state` field indicates the connection lifecycle:
 - `connected` — Transport connection established
 - `discovering` — Discovering server capabilities (tools, resources, prompts)
 - `ready` — Fully connected and operational
-- `failed` — Connection failed (check the `error` field for details)
+- `failed` — Connection failed (see `error` field for details)
+
+The `error` field contains an error message when `state` is `"failed"`. Error messages from external OAuth providers are automatically escaped to prevent XSS attacks, making them safe to display directly in your UI.
 
 ### `configureOAuthCallback()`
 
@@ -586,7 +566,7 @@ Configure OAuth callback behavior for MCP servers requiring authentication. This
 this.mcp.configureOAuthCallback(options: {
   successRedirect?: string;
   errorRedirect?: string;
-  customHandler?: (result: MCPClientOAuthResult) => Response | Promise<Response>;
+  customHandler?: () => Response | Promise<Response>;
 }): void
 ```
 
@@ -595,25 +575,16 @@ this.mcp.configureOAuthCallback(options: {
 - `options` (object, required) — OAuth callback configuration:
   - `successRedirect` (string, optional) — URL to redirect to after successful authentication
   - `errorRedirect` (string, optional) — URL to redirect to after failed authentication. Error message is appended as `?error=<message>` query parameter
-  - `customHandler` (function, optional) — Custom handler for complete control over the callback response. Receives an `MCPClientOAuthResult` object and must return a Response
-
-#### MCPClientOAuthResult type
-
-The `customHandler` receives an object with the following properties:
-
-```ts
-type MCPClientOAuthResult = {
-	serverId: string; // ID of the MCP server
-	authSuccess: boolean; // true if authentication succeeded
-	authError?: string; // Error message if authentication failed
-};
-```
+  - `customHandler` (function, optional) — Custom handler for complete control over the callback response. Must return a Response
 
 #### Default behavior
 
 When no configuration is provided:
+
 - **Success**: Redirects to your application origin
 - **Failure**: Displays an HTML error page with the error message
+
+If OAuth fails, the connection state becomes `"failed"` and the error message is stored in the `server.error` field for display in your UI.
 
 #### Usage
 
@@ -622,8 +593,6 @@ Configure in `onStart()` before any OAuth flows begin:
 <TypeScriptExample>
 
 ```ts
-import type { MCPClientOAuthResult } from "agents/mcp";
-
 export class MyAgent extends Agent {
 	onStart() {
 		// Option 1: Simple redirects
@@ -634,19 +603,10 @@ export class MyAgent extends Agent {
 
 		// Option 2: Custom handler (e.g., for popup windows)
 		this.mcp.configureOAuthCallback({
-			customHandler: (result: MCPClientOAuthResult) => {
-				if (result.authSuccess) {
-					return new Response("<script>window.close();</script>", {
-						headers: { "content-type": "text/html" },
-					});
-				}
-				return new Response(
-					`Auth failed: ${result.authError ?? "Unknown error"}`,
-					{
-						status: 400,
-						headers: { "content-type": "text/plain" },
-					},
-				);
+			customHandler: () => {
+				return new Response("<script>window.close();</script>", {
+					headers: { "content-type": "text/html" },
+				});
 			},
 		});
 	}
@@ -654,12 +614,6 @@ export class MyAgent extends Agent {
 ```
 
 </TypeScriptExample>
-
-:::caution
-
-Always check `result.authSuccess` in your `customHandler`. The handler is called for both successful and failed authentication. Ignoring this check will cause authentication errors to be silently swallowed.
-
-:::
 
 ## Advanced: MCPClientManager
 

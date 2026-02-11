@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: RtkNetworkIndicator
+description: API reference for RtkNetworkIndicator component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `isScreenShare` | `boolean` | ✅ | - | Is for screenshare |
+| `meeting` | `Meeting` | ✅ | - | Meeting |
+| `participant` | `Peer` | ✅ | - | Participant or Self |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkNetworkIndicator } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkNetworkIndicator />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkNetworkIndicator } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkNetworkIndicator
+      isScreenShare={true}
+      meeting={meeting}
+      participant={participant}
+    />
+  );
+}
+```
+

@@ -1,0 +1,11 @@
+name: Redirect Rules
+
+entry:
+  title: Redirect Rules
+  group: Application performance
+  url: /rules/url-forwarding/
+  show: false
+
+meta:
+  title: Cloudflare Redirect Rules docs
+  author: "@cloudflare"

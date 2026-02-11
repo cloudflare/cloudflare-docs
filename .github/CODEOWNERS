@@ -150,7 +150,10 @@ package.json @cloudflare/content-engineering
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workflows/ @elithrar @celso @mia303 @jonesphillip @cloudflare/pcx-technical-writing
 /src/content/partials/workflows/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
-/src/content/docs/sandbox/ @elithrar @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @cloudflare/ai-agents @cloudflare/dev-plat-leads
+/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @cloudflare/ai-agents
+/src/content/docs/pipelines/ @Marcinthecloud @cmackenzie1 @oliy @garvit-gupta @sejoker @jonesphillip @elithrar @cloudflare/pcx-technical-writing
+/src/content/docs/r2-sql/  @Marcinthecloud @netgusto @sesteves @sejoker @laplab @jonesphillip @elithrar @jonathanc-n @cloudflare/pcx-technical-writing
+/src/content/docs/r2/data-catalog/ @Marcinthecloud @sejoker @jonesphillip @elithrar @laplab @vovacf201 @nagraham @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 

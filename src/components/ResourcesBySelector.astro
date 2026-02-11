@@ -20,7 +20,7 @@ type ResourcesData = DocsData | VideosData | LearningPathsData;
 const props = z.object({
 	tags: z.string().array().optional(),
 	types: z.string().array(),
-	products: reference("products").array().optional(),
+	products: reference("directory").array().optional(),
 	directory: z.string().optional(),
 	filterables: z.custom<ResourcesData>().array().optional(),
 	columns: z.union([z.literal(1), z.literal(2), z.literal(3)]).default(2),
@@ -55,11 +55,11 @@ const filteredResources = [...docs, ...videos, ...learningPaths].filter(
 			(tags ? data.tags?.some((v: string) => tags.includes(v)) : true) &&
 			(products
 				? data.products?.some((v) =>
-						products.some((p) => p.id === (typeof v === "object" ? v.id : v))
+						products.some((p) => p.id === (typeof v === "object" ? v.id : v)),
 					)
 				: true)
 		);
-	}
+	},
 );
 
 // Enhance resources with resolved product titles
@@ -67,7 +67,7 @@ const resources = await Promise.all(
 	filteredResources.map(async (resource) => {
 		if (resource.collection === "docs") {
 			const currentSection = resource.id.split("/")[0].replaceAll(".", "");
-			const currentProduct = await getEntry("products", currentSection);
+			const currentProduct = await getEntry("directory", currentSection);
 			if (currentProduct) {
 				resource.data.products.push(currentProduct);
 			}
@@ -77,7 +77,7 @@ const resources = await Promise.all(
 		const productTitles = productEntries.map((p) => {
 			if (p === undefined) {
 				throw new Error(
-					`Product value was not found. Check the filenames defined at https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/products to make sure they match what's defined in your frontmatter.products field.`
+					`Directory entry was not found. Check the filenames defined at https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/directory to make sure they match what's defined in your frontmatter.products field.`,
 				);
 			}
 			return p.data.name as string;
@@ -90,7 +90,7 @@ const resources = await Promise.all(
 				productTitles,
 			},
 		};
-	})
+	}),
 );
 
 // Check for duplicate IDs
@@ -107,13 +107,13 @@ for (const resource of resources) {
 
 if (duplicateIds.length > 0) {
 	throw new Error(
-		`[ResourcesBySelector] Found duplicate resource IDs: ${duplicateIds.join(", ")}`
+		`[ResourcesBySelector] Found duplicate resource IDs: ${duplicateIds.join(", ")}`,
 	);
 }
 
 if (resources.length === 0) {
 	throw new Error(
-		`[ResourcesBySelector] Couldn't find resources related to your filtered options`
+		`[ResourcesBySelector] Couldn't find resources related to your filtered options`,
 	);
 }
 
@@ -139,7 +139,7 @@ const facets = resources.reduce(
 
 		return acc;
 	},
-	{} as Record<string, string[]>
+	{} as Record<string, string[]>,
 );
 ---
 

@@ -30,16 +30,16 @@ const shouldChatbotDeprioritize =
 	frontmatter.sidebar.hidden ||
 	frontmatter.chatbot_deprioritize;
 
-// if not a top-level page, add metadata values from src/content/products/ entries
+// if not a top-level page, add metadata values from src/content/directory/ entries
 if (currentSection) {
-	// if entry for product, grab and proceed
-	let product = await getEntry("products", currentSection);
+	// if entry for directory, grab and proceed
+	let product = await getEntry("directory", currentSection);
 	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
 	if (currentSection === "changelog") {
 		const products = frontmatter.products;
 		if (products && products.length > 0) {
 			const primaryProduct = products[0];
-			product = await getEntry("products", primaryProduct.id);
+			product = await getEntry("directory", primaryProduct.id);
 		}
 	}
 
@@ -72,21 +72,21 @@ if (currentSection) {
 			content: title,
 		});
 
-		if (product.data.product.title) {
+		if (product.data.entry.title) {
 			["pcx_product", "algolia_product_filter"].map((name) => {
 				metaTags.push({
 					name,
-					content: product.data.product.title,
+					content: product.data.entry.title,
 				});
 			});
 		}
 
-		if (product.data.product.group) {
+		if (product.data.entry.group) {
 			head.push({
 				tag: "meta",
 				attrs: {
 					name: "pcx_content_group",
-					content: product.data.product.group,
+					content: product.data.entry.group,
 				},
 			});
 		}

@@ -62,7 +62,7 @@ flowchart TD
 | `onError(connection, error)`                  | When a WebSocket error occurs                                                                                                                                                          |
 | `onClose(connection, code, reason, wasClean)` | When a WebSocket connection closes                                                                                                                                                     |
 | `onEmail(email)`                              | When an email is routed to the instance                                                                                                                                                |
-| `onStateUpdate(state, source)`                | When state changes (from server or client)                                                                                                                                             |
+| `onStateChanged(state, source)`                | When state changes (from server or client)                                                                                                                                             |
 
 ## Core properties
 
@@ -77,7 +77,7 @@ flowchart TD
 
 | Feature              | Methods                                                               | Documentation                                                       |
 | -------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| **State**            | `setState()`, `onStateUpdate()`, `initialState`                       | [Store and sync state](/agents/api-reference/store-and-sync-state/) |
+| **State**            | `setState()`, `onStateChanged()`, `initialState`                       | [Store and sync state](/agents/api-reference/store-and-sync-state/) |
 | **Callable methods** | `@callable()` decorator                                               | [Callable methods](/agents/api-reference/callable-methods/)         |
 | **Scheduling**       | `schedule()`, `scheduleEvery()`, `getSchedules()`, `cancelSchedule()` | [Schedule tasks](/agents/api-reference/schedule-tasks/)             |
 | **Queue**            | `queue()`, `dequeue()`, `dequeueAll()`, `getQueue()`                  | [Queue tasks](/agents/api-reference/queue-tasks/)                   |
