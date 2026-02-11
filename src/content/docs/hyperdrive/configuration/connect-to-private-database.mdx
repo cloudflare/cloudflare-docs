@@ -241,3 +241,4 @@ If you successfully receive the list of tables from your database when you acces
 If you encounter issues when setting up your Hyperdrive configuration with tunnels to a private database, consider these common solutions, in addition to [general troubleshooting steps](/hyperdrive/observability/troubleshooting/) for Hyperdrive:
 
 - Ensure your database is configured to use TLS (SSL). Hyperdrive requires TLS (SSL) to connect.
+- If you receive a HTTP 403 error when connecting Hyperdrive to your Tunnel public hostname, ensure no WAF rules are blocking traffic to the hostname. WAF rules still apply to tunnel backed public hostnames, and can block traffic coming from Hyperdrive resulting in a 403 during the Hyperdrive wizard.
