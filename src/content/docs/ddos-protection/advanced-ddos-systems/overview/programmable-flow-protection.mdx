@@ -311,7 +311,7 @@ If compilation and verification succeeds, Cloudflare will store the source code 
 
 Be sure to use the `@` before specifying the path to the source code file. The `Authorization` header is populated by creating a Cloudflare API token of type `Account.DDoS Protection`.
 
-```bash title="Request"
+```bash wrap title="Request"
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: text/x-csrc" \
@@ -410,7 +410,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flo
 	product="ddos-protection"
 />
 
-### View all rules
+### List all rules
 
 To view rules and their associated rule IDs, use the following `GET` endpoint.
 
