@@ -543,7 +543,8 @@ if (result.valid) {
 ```json title="Example"
 {
   "success": false,
-  "error-codes": ["invalid-input-response"]
+  "error-codes": ["invalid-input-response"],
+  "messages": []
 }
 ```
 </TabItem>
@@ -551,15 +552,17 @@ if (result.valid) {
 
 ### Response fields
 
-| Field                   | Description                                     |
-| ----------------------- | ----------------------------------------------- |
-| `success`               | Boolean indicating if validation was successful |
-| `challenge_ts`          | ISO timestamp when the challenge was solved     |
-| `hostname`              | Hostname where the challenge was served         |
-| `error-codes`           | Array of error codes (if validation failed)     |
-| `action`                | Custom action identifier from client-side       |
-| `cdata`                 | Custom data payload from client-side            |
-| `metadata.ephemeral_id` | Device fingerprint ID (Enterprise only)         |
+| Field                              | Description                                                                                           |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `success`                          | Boolean indicating if validation was successful                                                       |
+| `challenge_ts`                     | ISO timestamp when the challenge was solved                                                           |
+| `hostname`                         | Hostname where the challenge was served                                                               |
+| `error-codes`                      | Array of error codes (if validation failed)                                                           |
+| `action`                           | Custom action identifier from client-side                                                             |
+| `cdata`                            | Custom data payload from client-side                                                                  |
+| `messages`                         | Array of informational messages (may be empty)                                                        |
+| `metadata.ephemeral_id`            | Device fingerprint ID (Enterprise only)                                                               |
+| `metadata.result_with_testing_key` | Boolean, `true` when the response was generated using a [test secret key](/turnstile/troubleshooting/testing/) |
 
 ### Error codes reference
 

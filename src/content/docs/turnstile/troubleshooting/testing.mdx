@@ -123,27 +123,39 @@ Production secret keys will reject the dummy token. You must also use a dummy se
 {
   "success": true,
   "challenge_ts": "2022-02-28T15:14:30.096Z",
-  "hostname": "localhost",
+  "hostname": "example.com",
   "error-codes": [],
-  "action": "test",
-  "cdata": "test-data"
+  "metadata": {
+    "result_with_testing_key": true
+  }
 }
 ```
 
 ```json title="Failure response"
 {
   "success": false,
-  "error-codes": ["invalid-input-response"]
+  "error-codes": ["invalid-input-response"],
+  "messages": [],
+  "metadata": {
+    "result_with_testing_key": true
+  }
 }
-
 ```
 
 ```json title="Token already redeemed"
 {
   "success": false,
-  "error-codes": ["timeout-or-duplicate"]
+  "error-codes": ["timeout-or-duplicate"],
+  "messages": [],
+  "metadata": {
+    "result_with_testing_key": true
+  }
 }
 ```
+
+:::note
+Responses from test secret keys always include `metadata.result_with_testing_key` set to `true`. This field is not present when using production secret keys. Your application should not rely on this field for any logic beyond debugging.
+:::
 
 ---
 
