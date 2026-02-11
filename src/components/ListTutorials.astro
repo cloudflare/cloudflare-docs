@@ -10,11 +10,11 @@ type DocsEntry = CollectionEntry<"docs">;
 const tutorials: Array<DocsEntry> = [];
 
 const currentSection = Astro.params.slug?.split("/")[0];
-const currentProduct = await getEntry("products", currentSection!);
+const currentProduct = await getEntry("directory", currentSection!);
 
 if (!currentProduct) {
 	throw new Error(
-		`[ListTutorials] Unable to find product YAML for ${currentSection}.`
+		`[ListTutorials] Unable to find directory entry YAML for ${currentSection}.`,
 	);
 }
 

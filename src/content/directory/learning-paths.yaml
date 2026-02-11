@@ -1,0 +1,12 @@
+name: Learning Paths
+
+entry:
+  title: Learning Paths
+  url: /learning-paths/
+  group: Docs collections
+  wrap: true
+
+meta:
+  title: Cloudflare Learning Paths
+  description: Guided modules and projects to help you get started with Cloudflare
+  author: "@cloudflare"

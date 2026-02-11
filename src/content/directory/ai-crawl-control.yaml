@@ -1,0 +1,11 @@
+name: AI Crawl Control
+entry:
+  title: AI Crawl Control
+  url: /ai-crawl-control/
+  group: Core platform
+  additional_groups: [AI]
+  tags: [AI]
+meta:
+  title: Cloudflare AI Crawl Control docs
+  description: Analyze and control third-party AI crawlers in your website
+  author: "@cloudflare"

@@ -8,10 +8,10 @@ export const changelogSchema = ({ image }: SchemaContext) =>
 		date: z.coerce.date(),
 		scheduled: z.boolean().default(false),
 		products: z
-			.array(reference("products"))
+			.array(reference("directory"))
 			.default([])
 			.describe(
-				"An array of products to associate this changelog entry with. You may omit the product named after the folder this entry is in.",
+				"An array of directory entries to associate this changelog entry with. You may omit the entry named after the folder this entry is in.",
 			),
 		preview_image: image().optional(),
 		hidden: z

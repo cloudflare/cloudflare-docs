@@ -1,0 +1,9 @@
+meta:
+  title: Cloudflare Docs
+  description: Browse the latest product docs including how-to guides, tutorials, API reference, and sample code.
+  author: "@cloudflare"
+
+entry:
+  title: Home page
+  url: /
+  show: false

@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import { z } from "astro:schema";
 import { getEntry, type CollectionEntry } from "astro:content";
-import { groups } from "~/util/products";
+import { groups } from "~/util/directory";
 
 import RSSButton from "~/components/RSSButton.astro";
 import ProductSelect from "~/components/changelog/ProductSelect";
@@ -23,7 +23,7 @@ async function uniqueProducts(notes: Array<CollectionEntry<"changelog">>) {
 
 	return Promise.all(
 		unique.map(async (product) => {
-			return getEntry("products", product)!;
+			return getEntry("directory", product)!;
 		}),
 	);
 }
