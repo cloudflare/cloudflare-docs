@@ -2,8 +2,6 @@
 {}
 ---
 
-# Connectivity options
-
 Cloudflare One provides multiple connectivity options for your users, devices, and network infrastructure. Each option serves different use cases, from protecting individual devices to connecting entire data centers.
 
 This page helps you understand which connectivity options to use based on your requirements, and how to combine multiple options in a single deployment.
@@ -12,7 +10,7 @@ This page helps you understand which connectivity options to use based on your r
 
 Before exploring individual connectivity options, understand the concept of on-ramps and off-ramps:
 
-- **On-ramps** send traffic into Cloudflare's network. For example, a user's device with the WARP client installed on-ramps their traffic to Cloudflare for inspection and policy enforcement.  
+- **On-ramps** send traffic into Cloudflare's network. For example, a user's device with the WARP client installed on-ramps their traffic to Cloudflare for inspection and policy enforcement.
 - **Off-ramps** send traffic from Cloudflare's network to your infrastructure. For example, Cloudflare Tunnel off-ramps traffic to your private applications without exposing them to the public Internet.
 
 Some connectivity options support both directions (bidirectional), while others only support one direction.
@@ -89,16 +87,16 @@ DNS locations allow you to filter DNS traffic from networks without deploying th
 
 DNS locations support multiple endpoint types:
 
-* **IPv4/IPv6**: Standard DNS resolution using Cloudflare's resolver IPs  
-* **DNS over HTTPS (DoH)**: Encrypted DNS queries over HTTPS  
-* **DNS over TLS (DoT)**: Encrypted DNS queries over TLS 
+* **IPv4/IPv6**: Standard DNS resolution using Cloudflare's resolver IPs
+* **DNS over HTTPS (DoH)**: Encrypted DNS queries over HTTPS
+* **DNS over TLS (DoT)**: Encrypted DNS queries over TLS
 
 Use DNS locations when you need to filter DNS traffic for an entire office or network, per device  without installing agents on devices, or integrate with existing network infrastructure.
 
-:::note\[Important to know\]  
+:::note\[Important to know\]
 DNS locations filter DNS traffic only. To filter HTTP traffic, use the WARP client or proxy endpoints.
 
-For identity-based DNS policies without the WARP client, configure \[DNS over HTTPS with user tokens\](/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/\#filter-doh-requests-by-user). To resolve internal domain names or route queries to private DNS servers, use \[resolver policies\](/cloudflare-one/traffic-policies/resolver-policies/) (Enterprise).  
+For identity-based DNS policies without the WARP client, configure \[DNS over HTTPS with user tokens\](/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/\#filter-doh-requests-by-user). To resolve internal domain names or route queries to private DNS servers, use \[resolver policies\](/cloudflare-one/traffic-policies/resolver-policies/) (Enterprise).
 :::
 
 For detailed configuration, refer to the [DNS locations documentation](http://www.developers.cloudflare.com/cloudflare-one/networks/resolvers-and-proxies/dns/locations/).
@@ -111,13 +109,13 @@ Proxy endpoints allow you to apply Gateway HTTP policies without installing a cl
 
 Cloudflare supports two types of proxy endpoints:
 
-* **Authorization endpoints**: Use Cloudflare Access for identity-based authentication  
+* **Authorization endpoints**: Use Cloudflare Access for identity-based authentication
 * **Source IP endpoints**: Authorize traffic based on originating IP address (Enterprise only)
 
 Use proxy endpoints when you need to filter web traffic without device agents, integrate with existing proxy infrastructure, or deploy Gateway alongside other security tools.
 
-:::note\[Important to know\]  
-Proxy endpoints only filter HTTP/HTTPS traffic routed through the PAC file. They do not support UDP traffic, HTTP/3, non-browser applications, or Browser Isolation.  
+:::note\[Important to know\]
+Proxy endpoints only filter HTTP/HTTPS traffic routed through the PAC file. They do not support UDP traffic, HTTP/3, non-browser applications, or Browser Isolation.
 :::
 
 For detailed configuration, refer to the [Proxy endpoints documentation](http://www.developers.cloudflare.com/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/\)).
@@ -130,8 +128,8 @@ Clientless Web Isolation allows users to securely access web applications throug
 
 Use Clientless Web Isolation when you need to provide secure web access for unmanaged devices (contractors, BYOD), enable access to sensitive applications without requiring endpoint software, or on-ramp users who cannot install the WARP client.
 
-:::note\[Important to know\]  
-Clientless Web Isolation requires the Browser Isolation add-on and user authentication through Cloudflare Access. Gateway HTTP and DNS policies apply to isolated traffic.  
+:::note\[Important to know\]
+Clientless Web Isolation requires the Browser Isolation add-on and user authentication through Cloudflare Access. Gateway HTTP and DNS policies apply to isolated traffic.
 :::
 
 For detailed configuration, refer to the [Clientless Web Isolation documentation](http://www.developers.cloudflare.com/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/).
@@ -212,9 +210,9 @@ MCN is not a separate tunnel type — it orchestrates your cloud provider's nati
 
 ### Use cases
 
-- Connect AWS, Azure, or GCP VPCs to Magic WAN with minimal configuration  
-- Automate tunnel and route creation instead of manual IPsec setup  
-- Connect multiple VPCs through a hub architecture (AWS Transit Gateway)  
+- Connect AWS, Azure, or GCP VPCs to Magic WAN with minimal configuration
+- Automate tunnel and route creation instead of manual IPsec setup
+- Connect multiple VPCs through a hub architecture (AWS Transit Gateway)
 - Simplify multi-cloud networking across different providers
 
 ### On-ramp types
@@ -226,16 +224,16 @@ MCN is not a separate tunnel type — it orchestrates your cloud provider's nati
 
 ### Supported cloud providers
 
-- AWS (single VPC and hubs)  
-- Azure (single VPC)  
+- AWS (single VPC and hubs)
+- Azure (single VPC)
 - GCP (single VPC)
 
 :::note\[Key consideration\] Magic Cloud Networking requires a Magic WAN subscription and Magic Cloud Networking entitlement. Contact your account team to enable MCN. :::
 
 ### Deployment notes
 
-- **Azure VNet sizing**: MCN creates a GatewaySubnet (`/27`) within your VNet for the Azure VPN Gateway. Ensure your VNet has sufficient address space. A `/20` or larger VNet is recommended to avoid address exhaustion.  
-- **Cloud provider costs**: MCN uses your cloud provider's native VPN services. Standard VPN gateway and data transfer costs from your cloud provider apply in addition to Magic WAN costs.  
+- **Azure VNet sizing**: MCN creates a GatewaySubnet (`/27`) within your VNet for the Azure VPN Gateway. Ensure your VNet has sufficient address space. A `/20` or larger VNet is recommended to avoid address exhaustion.
+- **Cloud provider costs**: MCN uses your cloud provider's native VPN services. Standard VPN gateway and data transfer costs from your cloud provider apply in addition to Magic WAN costs.
 - **Tunnel creation time**: Cloud provider VPN gateways can take 15-45 minutes to provision. Plan for this delay when onboarding new VPCs.
 
 For detailed configuration, refer to the [Magic Cloud Networking documentation](http:///magic-wan/configuration/magic-cloud-networking/).
@@ -309,8 +307,8 @@ Not all connectivity options work together in the same account. Review the follo
 
 When using multiple connectivity options, follow these guidelines to avoid routing conflicts:
 
-- **Avoid overlapping CIDR ranges**: Do not configure the same IP range for multiple tunnel types. If an overlap exists, Cloudflare Tunnel takes priority over Magic WAN routes.  
-- **No automatic failover**: Cloudflare does not automatically fail over traffic between different connectivity options. Plan your routing to handle failures within each tunnel type.  
+- **Avoid overlapping CIDR ranges**: Do not configure the same IP range for multiple tunnel types. If an overlap exists, Cloudflare Tunnel takes priority over Magic WAN routes.
+- **No automatic failover**: Cloudflare does not automatically fail over traffic between different connectivity options. Plan your routing to handle failures within each tunnel type.
 - **Virtual Networks**: Use [Virtual Networks](http:///cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/virtual-networks/) to handle overlapping private IP ranges from different environments (for example, multiple cloud VPCs using `10.0.0.0/8`).
 
 ### MTU planning
@@ -339,8 +337,8 @@ Different connectivity options handle source IP addresses differently:
 
 Source IP preservation is required for:
 
-- VoIP and SIP protocols that embed IP addresses in signaling  
-- Audit logging that requires client IP visibility  
+- VoIP and SIP protocols that embed IP addresses in signaling
+- Audit logging that requires client IP visibility
 - Applications that make authorization decisions based on source IP
 
 ### Traffic direction capabilities
@@ -368,15 +366,15 @@ This pattern serves organizations with a distributed workforce and multiple phys
 
 **Components:**
 
-- **WARP client** for remote employees, providing secure access from any location  
-- **IPsec tunnels** (via Magic WAN) for branch offices with existing network infrastructure  
+- **WARP client** for remote employees, providing secure access from any location
+- **IPsec tunnels** (via Magic WAN) for branch offices with existing network infrastructure
 - **Cloudflare Tunnel** for specific internal applications that need clientless browser access
 
 **Traffic flow:**
 
-1. Remote employees connect through WARP, which on-ramps their traffic to Cloudflare.  
-2. Gateway policies inspect and filter traffic based on user identity and device posture.  
-3. Traffic destined for branch office resources routes through IPsec tunnels to Magic WAN-connected sites.  
+1. Remote employees connect through WARP, which on-ramps their traffic to Cloudflare.
+2. Gateway policies inspect and filter traffic based on user identity and device posture.
+3. Traffic destined for branch office resources routes through IPsec tunnels to Magic WAN-connected sites.
 4. Traffic destined for specific applications routes through Cloudflare Tunnel to origin servers.
 
 ### Cloud-first organization
@@ -385,14 +383,14 @@ This pattern serves organizations with primarily cloud-based infrastructure and 
 
 **Components:**
 
-- **Magic Cloud Networking** for cloud VPCs (AWS, GCP, Azure), automating IPsec tunnel creation to Magic WAN  
-- **Cloudflare Tunnel** for Kubernetes services and containerized applications  
+- **Magic Cloud Networking** for cloud VPCs (AWS, GCP, Azure), automating IPsec tunnel creation to Magic WAN
+- **Cloudflare Tunnel** for Kubernetes services and containerized applications
 - **WARP client** for employee devices
 
 **Traffic flow:**
 
-1. Magic Cloud Networking automatically creates IPsec tunnels between cloud VPCs and Magic WAN.  
-2. Cloudflare Tunnel provides ingress for external-facing applications.  
+1. Magic Cloud Networking automatically creates IPsec tunnels between cloud VPCs and Magic WAN.
+2. Cloudflare Tunnel provides ingress for external-facing applications.
 3. Employees access cloud resources through the WARP client.
 
 **Alternative:** For organizations not using Magic WAN, WARP Connector can provide bidirectional connectivity for cloud VPCs. Note that accounts on Legacy routing mode cannot use WARP Connector and Magic WAN together.
@@ -403,32 +401,32 @@ This pattern serves organizations with strict compliance requirements that prohi
 
 **Components:**
 
-- **Cloudflare Network Interconnect (CNI)** for primary connectivity from data centers  
-- **IPsec tunnels** as backup connectivity in case of CNI issues  
+- **Cloudflare Network Interconnect (CNI)** for primary connectivity from data centers
+- **IPsec tunnels** as backup connectivity in case of CNI issues
 - **WARP client** for remote employees
 
 **Traffic flow:**
 
-1. Data center traffic routes through CNI, never touching the public Internet.  
-2. IPsec tunnels provide backup connectivity if CNI experiences issues.  
-3. Remote employees connect through WARP over the public Internet (encrypted).  
+1. Data center traffic routes through CNI, never touching the public Internet.
+2. IPsec tunnels provide backup connectivity if CNI experiences issues.
+3. Remote employees connect through WARP over the public Internet (encrypted).
 4. Gateway policies enforce compliance rules on all traffic regardless of connectivity method.
 
 ---
 
 ## Related resources
 
-- [SASE reference architecture](http:///reference-architecture/architectures/sase/) \- Guide to deploying Cloudflare One  
-- [Cloudflare Tunnel](http:///cloudflare-one/networks/connectors/cloudflare-tunnel/)  
-- [WARP client](http:///cloudflare-one/team-and-resources/devices/warp/)  
-- [WARP Connector](http:///cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)  
-- [Magic WAN](http:///magic-wan/)  
-- [WAN Connectors on-ramps](http:///cloudflare-one/networks/connectors/wan-tunnels/on-ramps/) \- Full list of supported on-ramps  
-- [Magic Cloud Networking](http:///magic-wan/configuration/magic-cloud-networking/) \- Automate cloud VPC connectivity  
-- [Magic Transit](http:///magic-transit/)  
-- [Magic WAN Connector](http:///cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/)  
-- [Cloudflare Network Interconnect](http:///network-interconnect/)  
-- [Virtual Networks](http:///cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/virtual-networks/)  
-- [DNS locations](http://www.developers.cloudflare.com/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) \- Filter DNS traffic without device agents  
-- [Proxy endpoints](http://www.developers.cloudflare.com/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) \- Filter web traffic using PAC files  
+- [SASE reference architecture](http:///reference-architecture/architectures/sase/) \- Guide to deploying Cloudflare One
+- [Cloudflare Tunnel](http:///cloudflare-one/networks/connectors/cloudflare-tunnel/)
+- [WARP client](http:///cloudflare-one/team-and-resources/devices/warp/)
+- [WARP Connector](http:///cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)
+- [Magic WAN](http:///magic-wan/)
+- [WAN Connectors on-ramps](http:///cloudflare-one/networks/connectors/wan-tunnels/on-ramps/) \- Full list of supported on-ramps
+- [Magic Cloud Networking](http:///magic-wan/configuration/magic-cloud-networking/) \- Automate cloud VPC connectivity
+- [Magic Transit](http:///magic-transit/)
+- [Magic WAN Connector](http:///cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/)
+- [Cloudflare Network Interconnect](http:///network-interconnect/)
+- [Virtual Networks](http:///cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/virtual-networks/)
+- [DNS locations](http://www.developers.cloudflare.com/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) \- Filter DNS traffic without device agents
+- [Proxy endpoints](http://www.developers.cloudflare.com/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) \- Filter web traffic using PAC files
 - [Clientless Web Isolation](http://www.developers.cloudflare.com/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) \- Secure web access without device agents
