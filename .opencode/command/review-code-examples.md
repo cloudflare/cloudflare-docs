@@ -3,9 +3,9 @@ description: Review code examples in documentation
 model: anthropic/claude-opus-4-5
 ---
 
-Use the code-review skill to review code snippets in documentation files. Focus on code within `<TypeScriptExample>`, `<WranglerConfig>`, `<Tabs>`, and fenced code blocks.
+Load the code-review skill before doing anything. Follow its review process and reference files exactly.
 
-Follow the skill's review process: fetch latest types and schema, categorize each code block, validate with tools, and check against the rules in the skill's references.
+Review every code snippet in the target files: fenced code blocks, `<TypeScriptExample>`, `<WranglerConfig>`, `<Tabs>`, and `<APIRequest>` components. Do not skip any.
 
 When editing code, follow these rules:
 
