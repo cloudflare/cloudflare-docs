@@ -63,12 +63,16 @@ In this tutorial, you will use [Express.js](https://expressjs.com/), a popular w
 
 <PackageManagers type="add" pkg="express @types/express" />
 
-Express.js on Cloudflare Workers requires the `nodejs_compat` [compatibility flag](/workers/configuration/compatibility-flags/). This flag enables Node.js APIs and allows Express to run on the Workers runtime. Add the following to your `wrangler.toml` file:
+Express.js on Cloudflare Workers requires the `nodejs_compat` [compatibility flag](/workers/configuration/compatibility-flags/). This flag enables Node.js APIs and allows Express to run on the Workers runtime. Add the following to your Wrangler configuration file:
 
 <WranglerConfig>
 
-```toml
-compatibility_flags = ["nodejs_compat"]
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_compat"
+	]
+}
 ```
 
 </WranglerConfig>
@@ -108,15 +112,20 @@ To access your new D1 Database in your Worker, add the following snippet to your
 ✔ For local dev, do you want to connect to the remote resource instead of a local resource? … no
 ```
 
-The binding will be added to your wrangler configuration file.
+The binding will be added to your Wrangler configuration file.
 
 <WranglerConfig>
 
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "members-db"
-database_id = "<unique-ID-for-your-database>"
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "members-db",
+			"database_id": "<unique-ID-for-your-database>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -8,10 +8,11 @@ import { TabItem, Tabs } from "~/components";
 
 To enable Markdown for Agents for your zone in the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account (you need a Pro or Business plan.)
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account (you need a Pro or Business plan).
 2. Select the zone you want to configure.
 3. Look for **Quick Actions**.
 4. Toggle the **Markdown for Agents** button to enable.
+<<<<<<< HEAD:src/content/partials/fundamentals/markdown-for-agents.mdx
 
 </TabItem> <TabItem label="SSL for SaaS">
 
@@ -22,10 +23,12 @@ If you're a [SSL for SaaS](https://www.cloudflare.com/en-gb/application-services
 3. Go to **Rules** > **Overview** and click on **Create rule** > **Configuration Rules**.
 4. Select **All incoming requests** and add the **Markdow for Agents** setting.
 5. Deploy.
+=======
+>>>>>>> dd0572f9ffd861db5747624b4e835be848efdbb4:src/content/partials/agents/markdown-for-agents.mdx
 
 </TabItem> <TabItem label="API">
 
-To enable Markdown for Agents for your zone using APIs, send a `PATCH` to `/api/v4/zones/{zone_tag}/settings/content_converter` with the payload `{"value": "on"}` to the Cloudflare API.
+To enable Markdown for Agents for your zone using APIs, send a `PATCH` to `/client/v4/zones/{zone_tag}/settings/content_converter` with the payload `{"value": "on"}` to the Cloudflare API.
 
 You will need to create an API token with the Zone Settings edit permissions enabled.
 

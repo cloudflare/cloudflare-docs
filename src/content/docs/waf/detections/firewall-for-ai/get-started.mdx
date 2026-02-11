@@ -55,18 +55,7 @@ Once you have [onboarded your domain](/fundamentals/manage-domains/add-site/) to
 
 Save the relevant endpoint receiving LLM-related traffic to [Endpoint Management](/api-shield/management-and-monitoring/endpoint-management/) once it has been discovered, or add the endpoint manually.
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Security** > **API Shield**.
-3. Go to the **Discovery** tab.
-4. Find the endpoint receiving requests with LLM prompts in the list and select **Save** next to the endpoint.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -79,26 +68,37 @@ Save the relevant endpoint receiving LLM-related traffic to [Endpoint Management
 
 </Steps>
 
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+2. Go to **Security** > **API Shield**.
+3. Go to the **Discovery** tab.
+4. Find the endpoint receiving requests with LLM prompts in the list and select **Save** next to the endpoint.
+
+</Steps>
+
 </TabItem> </Tabs>
 
 If you did not find the endpoint in the **Discovery** tab, you can add it manually:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
-1. Go to the **Endpoint Management** tab.
+1. Go to the **Endpoints** tab.
 2. Select **Add endpoints** > **Manually add**.
 3. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
 4. Select **Add endpoints**.
 
 </Steps>
 
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+</TabItem> <TabItem label="Old dashboard">
 
 <Steps>
 
-1. Go to the **Endpoints** tab.
+1. Go to the **Endpoint Management** tab.
 2. Select **Add endpoints** > **Manually add**.
 3. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
 4. Select **Add endpoints**.
@@ -119,24 +119,24 @@ You must [label endpoints](/api-shield/management-and-monitoring/endpoint-labels
 
 Add the `cf-llm` label to the endpoint you added:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
 <Render
-	file="labels-add-old-nav"
+	file="labels-add"
 	product="api-shield"
 	params={{ labelName: "cf-llm" }}
 />
 
 </Steps>
 
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+</TabItem> <TabItem label="Old dashboard">
 
 <Steps>
 
 <Render
-	file="labels-add"
+	file="labels-add-old-nav"
 	product="api-shield"
 	params={{ labelName: "cf-llm" }}
 />

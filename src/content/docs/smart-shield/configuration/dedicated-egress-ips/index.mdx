@@ -7,7 +7,7 @@ sidebar:
     label: Dedicated Egress IPs
 ---
 
-import { GlossaryTooltip, DirectoryListing } from "~/components";
+import { GlossaryTooltip, DirectoryListing, Render } from "~/components";
 
 Enterprise customers can leverage dedicated egress[^1] IPs for layer 7 [WAF](/waf/) and <GlossaryTooltip term="content delivery network (CDN)">CDN</GlossaryTooltip> services, as well as [Spectrum](/spectrum/). The egress IPs are reserved exclusively for your account so that you can increase your origin security by only allowing traffic from a small list of IP addresses.
 
@@ -31,7 +31,7 @@ You can assign Dedicated CDN Egress IPs to single or multiple Cloudflare zones, 
 
 Dedicated CDN Egress IPs are included within [BGP advertisement over CNI](/network-interconnect/).
 
-Each dedicated egress pool can consist of either IPs from a [BYOIP prefix](/byoip/) or Cloudflare-leased IPs. A single dedicated egress pool cannot contain both BYOIPs and leased IPs.
+<Render file="dcei-pool-requirements" product="smart-shield" />
 
 ## Resources
 

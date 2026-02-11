@@ -142,9 +142,11 @@ if (
 </div>
 
 <style>
-	:global(footer) {
+	:global(footer:not(.DocSearch-Footer)) {
 		flex-direction: column-reverse !important;
+	}
 
+	:global(footer) {
 		.meta {
 			margin-top: 0 !important;
 		}

@@ -1,9 +1,9 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: how-to
 title: Picture in Picture
 sidebar:
   label: Picture in Picture
-  order: 2
+  order: 3
 ---
 
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
@@ -12,50 +12,34 @@ import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnipp
 Picture-in-Picture API allows you to render `meeting.participants.active` participant's video as a floating tile outside of the current webpage's context.
 
 :::note
-Supported in Chrome/Edge/Chromium-based browsers only.
+Supported in Chrome, Edge, and Chromium-based browsers only.
 :::
 
-### Check Support
+<RTKSDKSelector />
 
-Picture-in-Picture API might not be supported for your browser. It is important to always check for support.
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter", "mobile-react-native"]}>
+
+Picture-in-Picture is not available on this platform.
+
+</RTKCodeSnippet>
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+## Check support
+
+Picture-in-Picture API might not be supported in your browser. Always check for support before using the API.
 
 ```js
 const isSupported = meeting.participants.pip.isSupported();
 ```
 
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-react">
-
-```jsx
-const isSupported = meeting.participants.pip.isSupported();
-```
-
-</RTKCodeSnippet>
-
-### Enable Picture-in-Picture
-
-<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+## Enable Picture-in-Picture
 
 ```js
 await meeting.participants.pip.enable();
 ```
 
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-react">
-
-```jsx
-await meeting.participants.pip.enable();
-```
-
-</RTKCodeSnippet>
-
-### Disable Picture-in-Picture
-
-<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+## Disable Picture-in-Picture
 
 ```js
 await meeting.participants.pip.disable();
@@ -64,6 +48,22 @@ await meeting.participants.pip.disable();
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
+
+## Check support
+
+Picture-in-Picture API might not be supported in your browser. Always check for support before using the API.
+
+```jsx
+const isSupported = meeting.participants.pip.isSupported();
+```
+
+## Enable Picture-in-Picture
+
+```jsx
+await meeting.participants.pip.enable();
+```
+
+## Disable Picture-in-Picture
 
 ```jsx
 await meeting.participants.pip.disable();

@@ -36,15 +36,22 @@ npm i zod-to-json-schema
 3. Activate the nodejs compatibility flag and add your Browser Rendering binding to your new Wrangler configuration:
 
 <WranglerConfig>
-```toml
-compatibility_flags = [ "nodejs_compat" ]
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_compat"
+	]
+}
 ```
 </WranglerConfig>
 
 <WranglerConfig>
-```toml
-[browser]
-binding = "MY_BROWSER"
+```jsonc
+{
+	"browser": {
+		"binding": "MY_BROWSER"
+	}
+}
 ```
 </WranglerConfig>
 

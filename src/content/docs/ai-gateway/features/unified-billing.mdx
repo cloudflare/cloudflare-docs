@@ -9,7 +9,7 @@ head: []
 description: Use the Cloudflare billing to pay for and authenticate your inference requests.
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, TabItem, Tabs } from "~/components";
 
 Unified Billing allows users to connect to various AI providers (such as OpenAI, Anthropic, and Google AI Studio) and receive a single Cloudflare bill. To use Unified Billing, you must purchase and load credits into your Cloudflare account in the Cloudflare dashboard, which you can then spend with AI Gateway.
 
@@ -71,6 +71,62 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/comp
 ### Spend limits
 
 Set spend limits to prevent unexpected charges on your loaded credits. You can define daily, weekly, or monthly limits. When a limit is reached, the AI Gateway automatically stops processing requests until the period resets or you increase the limit.
+
+### Zero Data Retention (ZDR)
+
+Zero Data Retention (ZDR) routes Unified Billing traffic through provider endpoints that do not retain prompts or responses. Enable it with the gateway-level `zdr` setting, which maps to ZDR-capable upstream provider configurations. This setting only applies to Unified Billing requests that use Cloudflare-managed credentials. It does not apply to BYOK or other AI Gateway requests.
+
+ZDR does not control AI Gateway logging. To disable request/response logging in AI Gateway, update the logging settings separately in [Logging](/ai-gateway/observability/logging/).
+
+ZDR is currently supported for:
+
+- [OpenAI](/ai-gateway/usage/providers/openai/)
+- [Anthropic](/ai-gateway/usage/providers/anthropic/)
+
+If ZDR is enabled for a provider that does not support it, AI Gateway falls back to the standard (non-ZDR) Unified Billing configuration.
+
+#### Default configuration
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To set ZDR as the default for Unified Billing in the dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **AI** > **AI Gateway**.
+3. Select your gateway.
+4. Go to **Settings** and toggle **Zero Data Retention (ZDR)**.
+
+</TabItem> <TabItem label="API">
+
+To set ZDR as the default for Unified Billing using the API:
+
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+   - `AI Gateway - Read`
+   - `AI Gateway - Edit`
+2. Get your [Account ID](/fundamentals/account/find-account-and-zone-ids/).
+3. Send a [`PUT` request](/api/resources/ai_gateway/methods/update/) to update the gateway and include `zdr: true` or `zdr: false` in the request body.
+
+</TabItem> </Tabs>
+
+#### Per-request override (`cf-aig-zdr`)
+
+Use the `cf-aig-zdr` header to override the gateway default for a single Unified Billing request. Set it to `true` to force ZDR, or `false` to disable ZDR for the request.
+
+```bash title="Unified Billing request with ZDR"
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header 'cf-aig-authorization: Bearer {CLOUDFLARE_TOKEN}' \
+  --header 'Content-Type: application/json' \
+  --header 'cf-aig-zdr: true' \
+  --data '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain Zero Data Retention."
+      }
+    ]
+  }'
+```
 
 ### Supported providers
 

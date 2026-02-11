@@ -91,10 +91,16 @@ The associated namespace can be combined with a `--preview` flag to interact wit
 
 <WranglerConfig>
 
-```toml
-kv_namespaces = [
-  {binding = "TODOS", id = "<YOUR_ID>", preview_id = "<YOUR_PREVIEW_ID>"}
-]
+```jsonc
+{
+	"kv_namespaces": [
+		{
+			"binding": "TODOS",
+			"id": "<YOUR_ID>",
+			"preview_id": "<YOUR_PREVIEW_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

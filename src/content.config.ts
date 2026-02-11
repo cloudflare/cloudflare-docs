@@ -5,6 +5,9 @@ import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
 
 import { glob, file } from "astro/loaders";
 
+import { productAvailabilityCollectionConfig } from "./content/collections/product-availability";
+import { granularControlApplicationsCollectionConfig } from "./content/collections/granular-control-applications";
+
 import {
 	appsSchema,
 	changelogSchema,
@@ -116,4 +119,8 @@ export const collections = {
 		loader: dataLoader("stream"),
 		schema: streamSchema,
 	}),
+	"product-availability": defineCollection(productAvailabilityCollectionConfig),
+	"granular-control-applications": defineCollection(
+		granularControlApplicationsCollectionConfig,
+	),
 };
