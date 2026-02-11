@@ -373,7 +373,7 @@ export const lookupProductTitle = async (product: string, module: string) => {
 
 	const entry = await getEntry("directory", product);
 
-	return entry?.data?.product?.title ?? "Unknown";
+	return entry?.data?.entry?.title ?? "Unknown";
 };
 
 export function sortBySidebarOrder(a: any, b: any): number {
