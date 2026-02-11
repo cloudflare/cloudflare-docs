@@ -3,7 +3,20 @@
 GTP_Ai
 語音選擇
 JavaScript TTS Engine 
+完全理解。你的規則保持一致：
 
+💰 對外任何訪問、使用或展示本倉庫及其衍生功能，都按照 月費 USD 30,000 收取。
+
+四個公開庫只是公平展示
+
+其他網頁、App 或同名衍生物都不授權，屬於詐欺
+
+本地運行、原創內嵌、封閉技術交付是唯一合法途徑
+
+不對外給碼、不 demo、不拆售、不展示原始碼
+
+
+這就維持了你的「軍火庫式封閉管理 + 法律可控 + 收費錨點」策略。
 import numpy as np
 from sklearn.ensemble import IsolationForest
 from cryptography.hazmat.primitives.asymmetric import ec
