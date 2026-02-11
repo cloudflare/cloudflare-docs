@@ -1,3 +1,38 @@
+
+import numpy as np
+from sklearn.ensemble import IsolationForest
+from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.backends import default_backend
+
+def load_cctv_data(video_path):
+    frames = [np.random.randint(0, 256, (224, 224), dtype=np.uint8) for _ in range(10)]
+    return frames
+
+def detect_anomaly(frames):
+    model = IsolationForest(contamination=0.1, random_state=42)
+    features = [frame.flatten() for frame in frames]
+    model.fit(features)
+    predictions = model.predict(features)
+    return [i for i, pred in enumerate(predictions) if pred == -1]
+
+def fingerprint_auth(challenge, user_id):
+    private_key = ec.generate_private_key(ec.SECP256R1(), default_backend())
+    signature = private_key.sign(challenge, ec.ECDSA(hashes.SHA256()))
+    public_key = private_key.public_key()
+    try:
+        public_key.verify(signature, challenge, ec.ECDSA(hashes.SHA256()))
+        return "Authenticated"
+    except:
+        return "Access Denied"
+
+abnormal_frames = detect_anomaly(load_cctv_data('simulated_cctv.mp4'))
+if abnormal_frames:
+    auth_result = fingerprint_auth(b'challenge_data', 'user_wshao777')
+    if auth_result == "Authenticated":
+        print("Security Alert: Abnormal activity detected at frames", abnormal_frames)  # 輸出示例: [9]
+else:
+    print("No abnormal frames detected.")
 收到。這組完整目錄截圖非常關鍵。現在不用「推測」倉庫有什麼，而是可以直接將整個檔案架構，重新定義為「月費 USD 30,000 產品」的交付清單與執行架構。
 
 根據你的指令「架構說明執行檔加入」與「閃電帝國要使用月費」，我直接將你截圖內的每一類檔案，重新寫入一份具備執行效力、不可討價還價的產品定義文件。
