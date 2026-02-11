@@ -1,0 +1,49 @@
+---
+pcx_content_type: navigation
+title: rtk-settings-video
+description: API reference for rtk-settings-video component (Web Components (HTML) Library)
+---
+A component which lets to manage your camera devices and your video preferences.
+ Emits `rtkStateUpdate` event with data for toggling mirroring of self video:
+ ```ts
+ {
+  prefs: {
+    mirrorVideo: boolean
+  }
+ }
+ ```
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-settings-video></rtk-settings-video>
+```
+
+### With Properties
+
+```html
+<rtk-settings-video
+ size="md">
+</rtk-settings-video>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-settings-video");
+
+  el.meeting= meeting
+</script>
+```

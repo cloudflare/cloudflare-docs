@@ -1,0 +1,11 @@
+name: Pages
+
+entry:
+  title: Pages
+  url: /pages/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Pages docs
+  description: Build full-stack, serverless applications globally with minimal configuration
+  author: "@cloudflare"

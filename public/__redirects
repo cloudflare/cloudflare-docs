@@ -142,6 +142,9 @@
 /agents/api-reference/sdk/ /agents/api-reference/ 301
 /agents/guides/build-mcp-server/ /agents/guides/remote-mcp-server/ 301
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
+/agents/model-context-protocol/mcp-agent-api/ /agents/api-reference/mcp-agent-api/ 301
+/agents/model-context-protocol/mcp-client-api/ /agents/api-reference/mcp-client-api/ 301
+/agents/model-context-protocol/mcp-handler-api/ /agents/api-reference/mcp-handler-api/ 301
 /agents/api-reference/calling-agents/ /agents/api-reference/routing/ 301
 
 # ai

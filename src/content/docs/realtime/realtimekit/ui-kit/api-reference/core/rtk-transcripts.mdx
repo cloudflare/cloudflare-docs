@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: rtk-transcripts
+description: API reference for rtk-transcripts component (Web Components (HTML) Library)
+---
+A component which handles transcripts.
+ You can configure which transcripts you want to see and which ones you want to hear.
+ There are also certain limits which you can set as well.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-transcripts></rtk-transcripts>
+```
+
+### With Properties
+
+```html
+<rtk-transcripts>
+</rtk-transcripts>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-transcripts");
+
+  el.meeting= meeting
+</script>
+```

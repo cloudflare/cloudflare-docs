@@ -1,0 +1,38 @@
+---
+pcx_content_type: navigation
+title: rtk-participants-viewer-list
+description: API reference for rtk-participants-viewer-list component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `hideHeader` | `boolean` | ✅ | - | Hide Viewer Count Header |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `search` | `string` | ✅ | - | Search |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-participants-viewer-list></rtk-participants-viewer-list>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-participants-viewer-list
+ [hideHeader]="true"
+ [meeting]="meeting"
+ search="example">
+</rtk-participants-viewer-list>
+```
+

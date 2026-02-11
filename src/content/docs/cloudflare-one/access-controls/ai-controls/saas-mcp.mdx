@@ -14,6 +14,7 @@ import {
 	Tabs,
 	TabItem,
 	APIRequest,
+	DashButton
 } from "~/components";
 
 You can secure [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) by using Cloudflare Access as an OAuth Single Sign-On (SSO) provider.
@@ -22,21 +23,51 @@ This guide walks through how to deploy a remote <GlossaryTooltip term="MCP serve
 
 ## Prerequisites
 
-- Add an [identity provider](/cloudflare-one/integrations/identity-providers/) to Cloudflare Zero Trust
-- Install [npm](https://docs.npmjs.com/getting-started)
-- Install [Node.js](https://nodejs.org/en/)
+- Create a [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
+- Configure [One-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/) or connect a third-party [identity provider](/cloudflare-one/integrations/identity-providers/).
 
 ## 1. Deploy an example MCP server
 
-To deploy our [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access) on Workers:
+To deploy our [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access) to your Cloudflare account:
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1. Select the following button to launch the quickstart flow:
+
+	[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access)
+
+2. Select the account that contains your Zero Trust organization.
+3. On the **Create an application** page, configure the following fields:
+
+	- **Git account**: Select an existing account or connect a new GitHub or GitLab account.
+	- **Create private Git repository**: Choose whether the project repository should be public or private.
+	- **Project name**: `mcp-server-cf-access`
+	- **Select KV namespace**: _Create new_
+	- **Name your KV namespace**: `OAUTH_KV`
+
+	We will configure `ACCESS_CLIENT_ID` and the other secret values in a later step.
+
+4. Select **Create and deploy**.
+
+The MCP server will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev`. A new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository.
+</TabItem>
+<TabItem label = "CLI">
+
+You can use the [Wrangler CLI](/workers/wrangler) to create the MCP server on your local machine and deploy it to Cloudflare.
+
+:::note[Prerequisites]
+- Install [npm](https://docs.npmjs.com/getting-started)
+- Install [Node.js](https://nodejs.org/en/)
+:::
 
 1.  Open a terminal and clone our example project:
 
-        ```sh
-        npm create cloudflare@latest -- mcp-server-cf-access --template=cloudflare/ai/demos/remote-mcp-cf-access
-        ```
+		```sh
+		npm create cloudflare@latest -- mcp-server-cf-access --template=cloudflare/ai/demos/remote-mcp-cf-access
+		```
 
-        When asked if you want to deploy to Cloudflare, select **No**.
+		When asked if you want to deploy to Cloudflare, select **No**.
 
 2.  Go to the project directory:
 
@@ -81,6 +112,8 @@ To deploy our [example MCP server](https://github.com/cloudflare/ai/tree/main/de
     ```
 
 The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev`.
+</TabItem>
+</Tabs>
 
 ## 2. Create an Access for SaaS app
 
@@ -144,6 +177,34 @@ Your MCP server needs to perform an OAuth 2.0 authorization flow to get an `acce
 
 To add OAuth endpoints and credentials to our [example MCP server](#1-deploy-an-example-mcp-server):
 
+<Tabs>
+<TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select the `mcp-server-cf-access` Worker.
+3. Go to **Settings**.
+4. Under **Variables and Secrets**, update each secret with the corresponding value from your SaaS app:
+
+    | Workers secret             | SaaS app field         |
+    | -------------------------- | ---------------------- |
+    | `ACCESS_CLIENT_ID`         | Client ID              |
+    | `ACCESS_CLIENT_SECRET`     | Client secret          |
+    | `ACCESS_TOKEN_URL`         | Token endpoint         |
+    | `ACCESS_AUTHORIZATION_URL` | Authorization endpoint |
+    | `ACCESS_JWKS_URL`          | Key endpoint           |
+
+5. For `COOKIE_ENCRYPTION_KEY`, you can use the following command to generate a random string:
+
+		```sh
+		openssl rand -hex 32
+		```
+
+	Enter the output of this command into `COOKIE_ENCRYPTION_KEY`.
+
+</TabItem>
+<TabItem label="CLI">
 1.  Create the following [Workers secrets](/workers/configuration/secrets/):
 
     ```sh
@@ -164,19 +225,19 @@ To add OAuth endpoints and credentials to our [example MCP server](#1-deploy-an-
     | `ACCESS_AUTHORIZATION_URL` | Authorization endpoint |
     | `ACCESS_JWKS_URL`          | Key endpoint           |
 
-3.  Configure a cookie encryption key:
+3.  Generate a random string for the cookie encryption key:
 
-        a. Generate a random string:
+		```sh
+		openssl rand -hex 32
+		```
 
-        	```sh
-        	openssl rand -hex 32
-        	```
+		Store the output of this command in a Workers secret:
 
-        b. Store the string in a Workers secret:
-
-        	```sh
-        	wrangler secret put COOKIE_ENCRYPTION_KEY
-        	```
+		```sh
+		wrangler secret put COOKIE_ENCRYPTION_KEY
+		```
+</TabItem>
+</Tabs>
 
 ## 4. Test the connection
 

@@ -64,7 +64,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				description: title,
 				hidden: false,
 				date: releaseDate,
-				products: [{ id: "zero-trust-warp", collection: "products" }],
+				products: [{ id: "zero-trust-warp", collection: "directory" }],
 				scheduled: false,
 			},
 			rendered: {
@@ -89,7 +89,7 @@ export async function getChangelogs({
 		entries.map(async (e) => {
 			const slug = e.id.split("/").slice(1).join("/");
 			const folder = e.id.split("/")[0];
-			const product = { collection: "products", id: folder } as const;
+			const product = { collection: "directory", id: folder } as const;
 
 			const isValidProduct = await getEntry(product);
 

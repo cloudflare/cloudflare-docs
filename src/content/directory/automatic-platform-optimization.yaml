@@ -1,0 +1,12 @@
+name: Automatic Platform Optimization
+
+entry:
+  title: Automatic Platform Optimization
+  url: /automatic-platform-optimization/
+  wrap: true
+  group: Application performance
+
+meta:
+  title: Cloudflare Automatic Platform Optimization docs
+  description: Improve WordPress site performance by serving it from Cloudflare's global network
+  author: "@cloudflare"

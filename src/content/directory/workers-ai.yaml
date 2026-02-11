@@ -1,0 +1,13 @@
+name: Workers AI
+
+entry:
+  title: Workers AI
+  url: /workers-ai/
+  group: Developer platform
+  additional_groups: [AI]
+  tags: [AI]
+
+meta:
+  title: Cloudflare Workers AI docs
+  description: Run AI models in Workers, Pages, or via API
+  author: "@cloudflare"

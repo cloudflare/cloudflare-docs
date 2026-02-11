@@ -10,7 +10,7 @@ description: Facilitate Worker-to-Worker communication via RPC.
 
 ---
 
-import { DirectoryListing, Render, WranglerConfig } from "~/components"
+import { DirectoryListing, Render, TypeScriptExample, WranglerConfig } from "~/components"
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings) allow one Worker to call into another, without going through a publicly-accessible URL.
 
@@ -105,6 +105,40 @@ export default class extends WorkerEntrypoint {
   }
 }
 ```
+
+### Fetching static assets
+
+If your Worker has a [static assets binding](/workers/static-assets/binding/), you can call `this.env.ASSETS.fetch()` from within an RPC method. Since RPC methods do not receive a `request` parameter, construct a `Request` or URL with any hostname — the hostname is ignored by the assets binding, only the pathname matters:
+
+<TypeScriptExample>
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class ImageWorker extends WorkerEntrypoint {
+  async getImage(path: string): Promise<Response> {
+    return this.env.ASSETS.fetch(
+      new Request(`https://assets.local${path}`)
+    );
+  }
+}
+```
+
+</TypeScriptExample>
+
+The caller can then invoke this method via RPC:
+
+<TypeScriptExample>
+
+```ts
+const response = await env.IMAGE_SERVICE.getImage("/images/logo.png");
+```
+
+</TypeScriptExample>
+
+:::note
+When fetching assets via the binding, the hostname (for example, `assets.local`) is not meaningful — any valid hostname will work. Only the URL pathname is used to match assets. The convention `assets.local` is used for clarity.
+:::
 
 ## Named entrypoints
 

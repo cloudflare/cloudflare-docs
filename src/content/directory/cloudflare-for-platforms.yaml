@@ -1,0 +1,12 @@
+name: Cloudflare for Platforms
+
+entry:
+  title: Cloudflare for Platforms
+  url: /cloudflare-for-platforms/
+  wrap: true
+  group: Developer platform
+
+meta:
+  title: Cloudflare for Platforms docs
+  description: Build your own multi-tenant platform using Cloudflare as infrastructure
+  author: "@cloudflare"

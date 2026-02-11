@@ -1,0 +1,12 @@
+name: Magic Cloud Networking
+
+entry:
+  title: Magic Cloud Networking
+  url: /magic-cloud-networking/
+  group: Cloudflare One
+  additional_groups: [Network security]
+
+meta:
+  title: Cloudflare Magic Cloud Networking docs
+  description: Automate resource discovery and simplify managing your public cloud infrastructure
+  author: "@cloudflare"

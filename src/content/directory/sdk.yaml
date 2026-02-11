@@ -1,0 +1,13 @@
+name: SDK
+
+entry:
+  title: SDK
+  url: /sdk/
+  group: Core platform
+  additional_groups: [Developer platform]
+  show: false
+
+meta:
+  title: Cloudflare SDK
+  description: Language software development kits (SDKs) to interact with the Cloudflare API in language-specific syntax
+  author: "@cloudflare"

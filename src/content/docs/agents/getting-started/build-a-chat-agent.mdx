@@ -1,9 +1,255 @@
 ---
-pcx_content_type: navigation
 title: Build a Chat Agent
-external_link: https://github.com/cloudflare/agents-starter
+pcx_content_type: tutorial
 sidebar:
   order: 4
 head: []
-description: A starter template for building AI-powered chat agents using Cloudflare's Agent platform, powered by the Agents SDK. This project provides a foundation for creating interactive chat experiences with AI, complete with a modern UI and tool integration capabilities.
+description: Build a streaming AI chat agent with tool integration using Cloudflare Workers and the Agents framework.
 ---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+A complete guide to building a streaming AI chat agent with tool integration using Cloudflare Workers and the Agents framework.
+
+> **Complete example**: Refer to the full implementation in the [agents-starter repository](https://github.com/cloudflare/agents-starter) on GitHub.
+
+## Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Cloudflare account
+- OpenAI API key
+
+## Step 1: Set up the project
+
+```bash
+npm create cloudflare@latest chat-agent -- --template=cloudflare/agents-starter
+
+cd chat-agent
+
+npm install
+```
+
+## Step 2: Configure your environment
+
+You have two options for setting up your OpenAI API key:
+
+**Option A: Using `.dev.vars` (recommended for development)**
+
+Create a `.dev.vars` file in your project root:
+
+```txt
+OPENAI_API_KEY=your-key-here
+```
+
+**Option B: Using Cloudflare secrets (recommended for production)**
+
+For production deployments, use Cloudflare secrets instead of putting API keys in configuration files:
+
+```bash
+wrangler secret put OPENAI_API_KEY
+```
+
+## Step 3: Test the agent locally
+
+```bash
+npm start
+```
+
+The server will be available at `http://localhost:5174`. Open your browser and start chatting.
+
+## Understanding the code
+
+### Project structure
+
+```txt
+chat-agent/
+├── src/
+│   ├── server.ts      # Main agent implementation
+│   ├── tools.ts       # Tool definitions
+│   ├── app.tsx        # React frontend
+│   └── ...
+├── wrangler.jsonc     # Cloudflare configuration
+└── package.json
+```
+
+### Key components
+
+#### Chat Agent (`src/server.ts`)
+
+The main agent class that handles chat interactions:
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+
+export class Chat extends AIChatAgent<Env> {
+	async onChatMessage(onFinish, options) {
+		// Handles incoming messages and manages streaming responses
+		// Processes tool calls and generates AI responses
+	}
+}
+```
+
+</TypeScriptExample>
+
+#### Tools (`src/tools.ts`)
+
+Define what actions your agent can perform:
+
+<TypeScriptExample>
+
+```ts
+import { tool } from "ai";
+import { z } from "zod";
+
+// Automatic execution (no confirmation needed)
+const getLocalTime = tool({
+	description: "get the local time for a specified location",
+	parameters: z.object({ location: z.string() }),
+	execute: async ({ location }) => {
+		return "10am";
+	},
+});
+
+// Requires confirmation (no execute function)
+const getWeatherInformation = tool({
+	description: "show the weather in a given city to the user",
+	parameters: z.object({ city: z.string() }),
+	// Omitting execute function makes this tool require human confirmation
+});
+```
+
+</TypeScriptExample>
+
+## Customization
+
+### Adding custom tools
+
+**Simple Tool (Automatic Execution)**
+
+<TypeScriptExample>
+
+```ts
+// In src/tools.ts
+const getWeather = tool({
+	description: "Get current weather for a location",
+	parameters: z.object({
+		location: z.string().describe("The city name"),
+	}),
+	execute: async ({ location }) => {
+		// Call weather API
+		return `The weather in ${location} is sunny and 72°F`;
+	},
+});
+
+// Add to exports
+export const tools = {
+	// ... existing tools
+	getWeather,
+};
+```
+
+</TypeScriptExample>
+
+**Confirmation-Required Tool**
+
+<TypeScriptExample>
+
+```ts
+// In src/tools.ts
+const sensitiveAction = tool({
+	description: "Perform a sensitive action",
+	parameters: z.object({
+		action: z.string().describe("The action to perform"),
+		reason: z.string().describe("Reason for the action"),
+	}),
+	// Omitting execute function makes this tool require human confirmation
+});
+
+// Add to exports
+export const tools = {
+	// ... existing tools
+	sensitiveAction,
+};
+
+// Add execution function
+export const executions = {
+	// ... existing executions
+	sensitiveAction: async ({ action, reason }) => {
+		return `Action "${action}" completed successfully. Reason: ${reason}`;
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Customizing the system prompt
+
+Edit the system prompt in `src/server.ts`:
+
+```ts
+system: `You are a helpful assistant specializing in software development.
+You can help with coding questions, debugging, and best practices.
+Always provide clear, actionable advice.
+
+${unstable_getSchedulePrompt({ date: new Date() })}
+
+If the user asks to schedule a task, use the schedule tool to schedule the task.
+`,
+```
+
+## Deploy to Cloudflare Workers
+
+```bash
+npm run deploy
+```
+
+Your agent will be available at `https://your-project-name.your-subdomain.workers.dev`.
+
+### Environment variables in production
+
+For production deployment, set your OpenAI API key as a secret:
+
+```bash
+wrangler secret put OPENAI_API_KEY
+```
+
+## Features
+
+- **Streaming Responses**: Real-time AI responses with typing indicators.
+- **Tool Integration**: Execute actions with or without user confirmation.
+- **Task Scheduling**: Schedule tasks to run at specific times.
+- **Modern UI**: Dark/light mode, responsive design.
+- **Debug Mode**: View detailed message processing.
+- **Type Safety**: Full TypeScript support.
+
+## Troubleshooting
+
+### Common issues
+
+**"OPENAI_API_KEY is not set"**
+
+- Make sure you have set the API key in `.dev.vars` for local development.
+- For production, use `wrangler secret put OPENAI_API_KEY`.
+
+**"npm run dev" not found**
+
+- Use `npm start` instead (the script is named `start`).
+
+**Server not accessible**
+
+- Check that the server is running on port 5174 (not 8787).
+- Look for the correct URL in the terminal output.
+
+**Tool execution errors**
+
+- Make sure tools are properly exported in the `tools` object.
+- Check that confirmation-required tools have execution functions in `executions`.
+
+### Development tips
+
+- Use the browser developer tools to view detailed error messages.
+- Check the terminal output for server logs.
+- The debug mode in the UI shows detailed message processing.

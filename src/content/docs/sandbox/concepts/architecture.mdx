@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import { WranglerConfig } from "~/components";
+
 Sandbox SDK lets you execute untrusted code safely from your Workers. It combines three Cloudflare technologies to provide secure, stateful, and isolated execution:
 
 - **Workers** - Your application logic that calls the Sandbox SDK
@@ -83,6 +85,38 @@ Executes code in isolation with full Linux capabilities.
 - **VM-based isolation** - Each sandbox runs in its own VM
 - **Full environment** - Ubuntu Linux with Python, Node.js, Git, etc.
 
+## Communication transports
+
+The SDK supports two transport protocols for communication between the Durable Object and container:
+
+### HTTP transport (default)
+
+Each SDK method makes a separate HTTP request to the container API. Simple, reliable, and works for most use cases.
+
+```typescript
+// Default behavior - uses HTTP
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+await sandbox.exec("python script.py");
+```
+
+### WebSocket transport
+
+Multiplexes all SDK calls over a single persistent WebSocket connection. Avoids [subrequest limits](/workers/platform/limits/#subrequests) when making many concurrent operations.
+
+Enable WebSocket transport by setting the `SANDBOX_TRANSPORT` variable in your Worker's configuration:
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"SANDBOX_TRANSPORT": "websocket"
+	},
+}
+```
+</WranglerConfig>
+
+The transport layer is transparent to your application code - all SDK methods work identically regardless of transport. See [Transport modes](/sandbox/configuration/transport/) for details on when to use each transport and configuration examples.
+
 ## Request flow
 
 When you execute a command:
@@ -91,10 +125,21 @@ When you execute a command:
 await sandbox.exec("python script.py");
 ```
 
+**HTTP transport flow**:
+
 1. **Client SDK** validates parameters and sends HTTP request to Durable Object
-2. **Durable Object** authenticates and routes to container runtime
+2. **Durable Object** authenticates and forwards HTTP request to container
 3. **Container Runtime** validates inputs, executes command, captures output
 4. **Response flows back** through all layers with proper error transformation
+
+**WebSocket transport flow**:
+
+1. **Client SDK** validates parameters and sends request over persistent WebSocket connection
+2. **Durable Object** maintains WebSocket connection, multiplexes concurrent requests
+3. **Container Runtime** adapts WebSocket messages to HTTP-style request/response
+4. **Response flows back** over same WebSocket connection with proper error transformation
+
+The WebSocket connection is established on first SDK call and reused for all subsequent operations, reducing overhead for high-frequency operations.
 
 ## Related resources
 

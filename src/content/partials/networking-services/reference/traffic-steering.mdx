@@ -16,6 +16,7 @@ params:
   - setupBgpPeering
   - legacyHCs
   - tunnelHCsPage
+  - sourceIPsURL?
 ---
 
 import { AnchorHeading, Aside, Markdown, Render } from "~/components";
@@ -95,7 +96,7 @@ In the following example, `TUNNEL_2_IAD` is likely to receive twice as much traf
 | `10.10.10.100/24` | `TUNNEL_3_ATL` | `100` | `192` |
 | `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` | `255` |
 
-Aside from priority, scoping static routes to specific geographic regions will also impact how traffic is steered. Refer to [Scoping routes to specific regions](#scoping-routes-to-specific-regions) for more details.
+Aside from priority, scoping static routes to specific geographic regions also impacts how traffic is steered. Refer to [Scoping routes to specific regions](#scoping-routes-to-specific-regions) for more details.
 
 ### Set priority for BGP routes
 
@@ -215,6 +216,61 @@ In the {props.productName} dashboard, routing mode appears where you manage Magi
 - **Routing mode: Unified** — your account is on the unified data plane and supports the new routing features.
 - **Routing mode: Legacy** — your account uses the previous data plane and does not support all unified routing features.
 
+### Why use Unified Routing
+
+Unified Routing is the future of the dedicated virtual network overlay that powers Magic Transit and Cloudflare One network connectivity.
+
+{ props.magicWord === "Magic Transit" && (
+	<>
+		<Markdown
+		text={`
+For Magic Transit customers, the primary reason to consider Unified Routing is to evaluate [BGP for IPsec/GRE tunnels](#release-status), which depends on Unified Routing.
+		`}
+		inline={false}
+		/>
+	</>
+)}
+
+{ props.magicWord !== "Magic Transit" && (
+	<>
+		<Markdown
+		text={`
+For Cloudflare One customers, there are several reasons to consider moving to Unified Routing, as it is a prerequisite for several new capabilities:
+
+- [Automatic Return Routing](#automatic-return-routing-beta)
+- [BGP over IPsec/GRE](#release-status)
+- [Cloudflare Source IPs](${props.sourceIPsURL}) using private IP space with customizable IPv4 range
+- Customizable Cloudflare One Client IPv4 ranges
+- IPv6 support
+- Improved performance between Cloudflare One Client and IPsec/GRE/CNI
+- Support for WARP Connector client and IPsec/GRE/CNI connectivity in the same account.
+		`}
+		inline={false}
+		/>
+	</>
+)}
+
+### Beta limitations
+
+The following limitations apply to accounts using Unified Routing mode. This list will get shorter as Cloudflare adds support for additional features.
+
+| Current beta limitations | Details |
+| --- | --- |
+| Performance | Typically around 150 Mbps for each onramp |
+| Network analytics | Not yet fully supported |
+| Basic packet captures | Captures exclude Automatic Return Routing or BGP-over-tunnels traffic |
+| Full packet captures | Not yet supported |
+| Advanced Magic Firewall features: GeoIP/Country rules, IP Lists, ASN Lists, Threat Intel Lists, IDS, Rate Limiting, SIP, Managed Rulesets | Not yet supported |
+| Gateway filtering rules | Not supported on traffic where both the onramp and offramp is IPsec/GRE/CNI |
+| Load Balancer | Not supported to IPsec/GRE/CNI destinations |
+
+### Enroll in the Unified Routing beta
+
+Unified Routing is currently in closed beta. To sign up:
+
+- **Existing Magic WAN or Magic Transit customers**: Cloudflare recommends you evaluate the new functionality with your use case in a non-production account. Contact your account team to enable Unified Routing.
+- **New customers**: Contact your account team to enable Unified Routing in a proof-of-concept for your use case.
+
 ## Scoping routes to specific regions
 
 If you have multiple connectivity paths to a network segment and want to apply different route prioritization based on where traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user.
@@ -238,7 +294,7 @@ The following table exemplifies how to use geographic scoping for routes:
 | `10.10.10.100/24` | `TUNNEL_5_ATL` | `100` | `WNAM` |
 | `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` | `ENAM` |
 
-When there are multiple routes to the same prefix with equal priority, and those routes are assigned to different geographic regions (like WNAM and ENAM), traffic entering the network in a specific region — for example, WNAM — will egress through the route associated with that same region.
+When there are multiple routes to the same prefix with equal priority, and those routes are assigned to different geographic regions (like WNAM and ENAM), traffic entering the network in a specific region — for example, WNAM — egresses through the route associated with that same region.
 
 { props.magicWord === "Magic Transit" && (
   <>
@@ -271,7 +327,7 @@ Configure scoping for your traffic in the **Region code** section when adding or
     inline={false}
   />
 
-		<AnchorHeading title="Map routes prefixes bigger than onboarded prefixes" depth={3} />
+		<AnchorHeading title="Map route prefixes bigger than onboarded prefixes" depth={3} />
 		<Markdown
     text={`
 		If you have multiple onboarded \`/24\` subnets that belong to a larger contiguous block, you can configure a summary static route for the corresponding supernet (like a \`/23\` or a \`/22\`) instead of adding each \`/24\` individually. This eliminates the need to configure each \`/24\` route, as all traffic will be routed through the same GRE tunnels.
@@ -395,12 +451,12 @@ Because ECMP is probabilistic, the algorithm routes roughly the same number of f
 
 For example, consider a scenario with many very low-bandwidth TCP connections and one very high-bandwidth TCP connection. Packets for the high-bandwidth connection have the same hash and thus use the same tunnel. As a result, that tunnel utilizes greater bandwidth than the others.
 
-:::note[Note]
+:::note
 {props.productName} supports a weight field that you can apply to a route so that a specified percentage of traffic uses a certain tunnel rather than other equal-cost tunnels. Refer to [Route prioritization](#route-prioritization) for more information.
 
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
 
-Note that because ECMP balances flows probabilistically, the use of weights is only approximate.
+Because ECMP balances flows probabilistically, the use of weights is only approximate.
 
 For more on {props.productName} tunnel weights, contact your Cloudflare customer service manager.
 :::
@@ -425,7 +481,7 @@ The following table outlines the current availability and recommended use cases 
 | Feature | Release stage | Recommended use | Prerequisites |
 | --- | --- | --- | --- |
 | **BGP over CNI** | Open Beta | Production | Cloudflare Network Interconnect (CNI) v2 |
-| **BGP over Anycast IPsec/GRE** | Closed Beta | Lab / Testing only | Unified Routing (contact your account team) |
+| **BGP over Anycast IPsec/GRE** | Closed Beta | Lab / Testing only | [Unified Routing (beta)](#unified-routing-mode-beta) - contact your account team to enroll |
 
 ### BGP architecture
 
@@ -436,7 +492,7 @@ Magic Networking makes a one-pass, per-packet routing decision at the Cloudflare
 Your BGP session over IPsec, GRE, or CNI is established with the Cloudflare data center closest to your BGP peer device. Routes learned here must propagate to Cloudflare's global edge to govern how traffic is routed across the entire network.
 
 - **Convergence time**: Global route convergence typically completes within 20 seconds.
-- **Visibility**: You can monitor learned routes and their propagation status via the Cloudflare dashboard or API.
+- **Visibility**: You can monitor learned routes and their propagation status through the Cloudflare dashboard or API.
 
 #### Centralized route propagation
 
@@ -454,7 +510,7 @@ Cloudflare's data plane is designed for high availability. If the edge location 
 - **Stale path retention**: Because the FIB is frozen during this mode, forwarding decisions remain active even if the underlying BGP session with your router flaps or resets.
 - **Continuous health monitoring**: While BGP updates are frozen, tunnel health checks remain active. These are sent from all Cloudflare data centers, allowing the edge at any ingress node to detect if a physical connection to your router has failed. If a health check fails, the ingress node at the edge will deprioritize that specific path, preventing traffic from being sent into a black hole despite the frozen routing state.
 - **Update freeze**: During this state, the global control plane is frozen. New BGP updates received from your router will be held locally at the edge and will not propagate globally until connectivity to the centralized relay is restored.
-{ props.magicWord === "Magic Transit" && (<Markdown text={`- **Magic Transit edge announcement**: During this frozen state, your BYOIP prefix(es) will continue to be announced at Cloudflare's global edge. You can manually change this announcement status via the API or dashboard.`} inline={false} />)}
+{ props.magicWord === "Magic Transit" && (<Markdown text={`- **Magic Transit edge announcement**: During this frozen state, your BYOIP prefix(es) will continue to be announced at Cloudflare's global edge. You can manually change this announcement status through the API or dashboard.`} inline={false} />)}
 
 :::caution[Traffic persistence during BGP resets]
 In Edge Resiliency Mode, Cloudflare prioritizes forwarding continuity. If your on-premises router resets or the BGP session flaps, the edge will continue to forward traffic toward your peer device based on the last known valid routing state — provided that the underlying tunnel health checks remain successful.
@@ -474,13 +530,13 @@ Once connectivity between the Cloudflare edge and the centralized relay is resto
 
 {props.productName} BGP peering is with the {props.virtualNetworkName} (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the on-ramp <a href={props.setupBgpPeering}>Advertised prefix list</a>.
 
-If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
+If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). It is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
 
 ### BGP route distribution and convergence
 
 Cloudflare redistributes routes received from your device into the Magic routing table, which both {props.productName} and Magic Transit use.
 
-All routes in the Magic routing table are advertised to BGP peers. Each BGP peer will receive each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
+All routes in the Magic routing table are advertised to BGP peers. Each BGP peer receives each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
 
 BGP peering sessions can advertise reachable prefixes to a peer and withdraw previously advertised prefixes. This propagation takes no more than a few minutes.
 
@@ -490,19 +546,19 @@ Cloudflare uses the following timers, which are not configurable:
 
 | Setting | Description |
 | ----- | ----- |
-| **Hold timer** | 240 seconds for CNI and 90 seconds for GRE and IPsec tunnels<br /> (_To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session._) |
+| **Hold timer** | 240 seconds for CNI and 90 seconds for GRE and IPsec tunnels<br /> (_To establish a session, Cloudflare compares its hold timer and the peer's hold timer, and uses the smaller of the two values to establish the BGP session._) |
 | **Keepalive timer** | One third of the hold timer. |
 | **Graceful restart** | 120 seconds (currently, only supported on CNI) |
 
-- **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold timer and that received from the peer in the open message.
+- **Hold timer**: Specifies the maximum amount of time that a BGP peer waits to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare uses the smaller of this default hold timer and that received from the peer in the open message.
 - **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the hold timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
-- **Graceful restart timer**: Tracks how long a router will wait for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
+- **Graceful restart timer**: Tracks how long a router waits for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
 
 ### BGP capabilities and limitations
 
 BGP multipath is supported. If BGP learns the same prefix on two different interconnects, Cloudflare distributes traffic destined for that prefix across each interconnect according to the usual ECMP behavior.
 
-BGP Graceful Restart is supported in a passive (helper/aware) mode. Cloudflare will maintain forwarding state for a restarting neighbor.
+BGP Graceful Restart is supported in a passive (helper/aware) mode. Cloudflare maintains forwarding state for a restarting neighbor.
 
 BGP support currently has the following limitations:
 

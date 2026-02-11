@@ -1,0 +1,12 @@
+name: WARP Client
+
+entry:
+  title: WARP Client
+  url: /warp-client/
+  group: Consumer services
+  additional_groups: [Network security, Privacy]
+
+meta:
+  title: Cloudflare WARP client docs
+  description: Allows individuals or organizations to have a faster, more secure connection to the Internet
+  author: "@cloudflare"
