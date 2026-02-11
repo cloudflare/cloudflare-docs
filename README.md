@@ -159,7 +159,57 @@ Build 教學
 僅用於：展示完整產品架構與封閉運行示例
 
 
+┌─────────────────────────────┐
+│       EMP_GITHUB-PAGES       │
+│       封閉運行產品           │
+│   月費 USD 30,000 / 月      │
+└─────────────────────────────┘
 
+[核心視覺資產]
+粒子動畫 JS          [● 完成]
+視差動畫 JS          [● 完成]
+動態 CSS 效果        [● 完成]
+UI 框架 HTML         [● 完成]
+head 結構 HTML       [● 完成]
+
+[建構與環境配置]
+Astro config         [○ 配置中]
+Wrangler toml        [● 完成]
+TS / Node / NPM      [○ 配置中]
+Vitest / ESLint      [○ 配置中]
+
+[法律與授權]
+LICENSE / LICENSE-CODE [● 完成]
+CONTRIBUTING.md       [● 完成]
+README.md             [● 完成]
+
+[工具鏈與自動化]
+CI / IDE 配置        [● 完成]
+Scripts / Worker      [○ 開發中]
+靜態資源 Src / Public [● 完成]
+
+[輔助網頁與相依鎖定]
+index.html           [● 完成]
+app.js               [● 完成]
+script.js            [● 完成]
+package.json         [● 完成]
+package-lock.json    [● 完成]
+sitemap.serializer.ts [○ 配置中]
+.nojekyll            [● 完成]
+
+[語音研讀 / JavaScript TTS]
+MD 朗讀模組          [● 完成]
+錄音轉文字          [● 完成]
+加密輸出 log        [● 完成]
+
+[總覽指標]
+核心模組完成率: 90%
+語音研讀完成率: 100%
+建構 / 環境配置完成率: 60%
+工具鏈 / 靜態資源: 80%
+法律 / 授權: 100%
+
+註: ○ 配置中 = 可用但不對外；● 完成 = 可本地運行 & 完全封閉
 ---
 
 這份 MD 就是對 GitHub-Pages 倉庫的完整開發案概覽，完全封閉、原創、本地運行，對外月費 USD 30,000，其他三個庫完全不涉及。
