@@ -88,7 +88,7 @@ The following parameters are some of the most common ones in the `filter` object
 | `datetime_leq` | _(Optional)_ End timestamp in ISO 8601 format. |
 | `limit` | Maximum number of result groups to return. |
 
-You can also filter on any dimension listed in the Available dimensions (#available-dimensions) table. Append an operator suffix to the dimension name to create a filter — for example, `endpoint_in` to filter by a list of endpoints, or `checkType_neq` to exclude a specific check type. Using a dimension name without a suffix filters for equality. For the full list of supported operators, refer to [Filtering](/analytics/graphql-api/features/filtering/).
+You can also filter on any dimension listed in the [Available dimensions](#available-dimensions) table. Append an operator suffix to the dimension name to create a filter — for example, `endpoint_in` to filter by a list of endpoints, or `checkType_neq` to exclude a specific check type. Using a dimension name without a suffix filters for equality. For the full list of supported operators, refer to [Filtering](/analytics/graphql-api/features/filtering/).
 
 ### Available dimensions
 
@@ -225,7 +225,7 @@ You can set up alerts to be notified when the state of your endpoint's health is
 1. Make a `GET` request to get a list of IDs for all of the endpoint health checks configured:
 
 <CURL
-  url="https://api.cloudflare.com/client/v4/accounts/<account id>/diagnostics/endpoint-healthcheck"
+  url="https://api.cloudflare.com/client/v4/accounts/account_id/diagnostics/endpoint-healthcheck"
   method="GET"
 />
 
@@ -235,7 +235,8 @@ You can set up alerts to be notified when the state of your endpoint's health is
         {
             "id": "<HEALTH_CHECK_ID>",
             "check_type": "icmp",
-            "endpoint": "8.31.160.1"
+            "endpoint": "8.31.160.1",
+            "name": "Datacenter 1 - primary"
         }
     ],
     "success": true,
