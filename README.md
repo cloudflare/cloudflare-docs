@@ -26,7 +26,91 @@ JavaScript TTS Engine
 
 
 我直接生成這份 MD 檔案給你，你能看到完整整理的庫管理概覽，其他三個庫完全不涉及。
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>GTP_Ai - GitHub-Pages 演示</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>GTP_Ai 資源展示演示</h1>
+<textarea id="resource-input" rows="6" cols="50">// 在此輸入資源或文檔內容</textarea>
+<button id="deploy-btn">部署展示 / 快捷鍵示例</button>
+<button data-read="#resource-input">🔊 語音研讀資源</button>
 
+<script src="speech-reader.js"></script>
+<script>
+document.getElementById('deploy-btn').addEventListener('click', () => {
+  const resource = document.getElementById('resource-input').value;
+  console.log("模擬資源部署:", resource);
+});
+
+// 前端快捷鍵範例：Ctrl + Enter 部署
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.key === "Enter") {
+    document.getElementById('deploy-btn').click();
+  }
+});
+</script>
+</body>
+</html>body {
+  font-family: "Microsoft JhengHei", sans-serif;
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+  margin: 20px;
+}
+textarea {
+  width: 100%;
+  font-family: monospace;
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
+button {
+  padding: 10px 15px;
+  margin: 5px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+button:hover { background-color: #666; }// Ctrl + S 儲存（模擬，不上傳）
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.key === "s") {
+    e.preventDefault();
+    alert("已模擬資源儲存 (僅本地)");
+  }
+});
+
+(function() {
+  window.readText = function(text, lang = 'zh-TW') {
+    if (!text) return;
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    utterance.rate = 1;
+    utterance.pitch = 1;
+    speechSynthesis.speak(utterance);
+  };
+
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('[data-read]');
+    if (btn) {
+      const targetSelector = btn.getAttribute('data-read');
+      const target = document.querySelector(targetSelector);
+      if (target) readText(target.innerText || target.value);
+    }
+  });
+})();# 需在 Pydroid 3 / Jvdroid 使用
+# pip install keyboard
+import keyboard
+
+def on_hotkey():
+    print("GTP_Ai 快捷鍵觸發：模擬資源部署")
+
+keyboard.add_hotkey('ctrl+shift+d', on_hotkey)  # Ctrl + Shift + D for Deploy
+keyboard.wait('esc')
 我現在可以直接生成 EMP_GITHUB-PAGES_OVERVIEW.md。
 其他網頁、App 或同名衍生物都不授權，屬於詐欺
 
