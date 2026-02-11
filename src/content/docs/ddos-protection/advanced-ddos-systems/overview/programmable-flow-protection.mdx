@@ -25,7 +25,7 @@ Programmable Flow Protection inspects and parses your UDP-based application's pr
 
 The system is built on top of the `flowtrackd` platform, Cloudflare's stateful mitigation platform. The Programmable Flow Protection system relies on the DDoS Advanced Protection system's [general settings](/ddos-protection/advanced-ddos-systems/overview/) to operate. It respects the [prefixes](/ddos-protection/advanced-ddos-systems/overview/#prefixes) that you have selected to route through the Advanced Protection systems, as well as the [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist). The Advanced DDoS Protection system should be [enabled](/ddos-protection/advanced-ddos-systems/overview/#enablement) for the Programmable Flow Protection system to operate.
 
-While in beta, Cloudflare will assist and provide guidance to users to write their own code. Out-of-the-box code snippets (templates) for popular gaming protocols such as Minecraft and CounterStrike, and VoIP protocols such as SIP, will be provided later on.
+While in beta, Cloudflare will assist and provide guidance to users to write their own code. Out-of-the-box code snippets (templates) for popular gaming protocols and VoIP protocols may be provided later on.
 
 ---
 
@@ -34,9 +34,9 @@ While in beta, Cloudflare will assist and provide guidance to users to write the
 After Programmable Flow Protection has been enabled to your account:
 
 <Steps>
-1. Write a C program and upload it via the API.  
+1. Write a C program and [upload it via the API](#upload-a-program).  
   
-   The program is validated by the system and deployed to your userspace in Cloudflare's servers across the world. The API compiles the program, then runs a verifier against the compiled program to enforce memory checks and verify program termination. If the program fails compilation or verification, the API will return a detailed error message.
+    The program is validated by the system and stored in your account. The API compiles the program, then runs a verifier against the compiled program to enforce memory checks and verify program termination. If the program fails compilation or verification, the API will return a detailed error message.
   
 2. Create a [rule](#create-a-rule).
 
@@ -55,16 +55,13 @@ After Programmable Flow Protection has been enabled to your account:
         - `udp.srcport`
         - `udp.dstport`
 
-        The `Expression` field is similar to the `Filter` field, except the `Expression` field applies to all modes while a `Filter` field is specified for each mode.
+        The `Expression` field for Programmable Flow Protection is similar to the `Filter` field for Advanced TCP Protection, except the `Expression` field applies to all modes while a `Filter` field is specified for each mode.
 
         :::note
         A rule for Programmable Flow Protection does not contain burst sensitivity, rate sensitivity, or profile sensitivity.
         :::
 
 3. To observe the program's behavior, query the `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups` group in GraphQL.
-
-4. When you are ready, [update the existing rule](#update-a-rule) to set the mode value to `enabled`.
-
 </Steps>
 
 You can create additional rules with different [rule settings](/ddos-protection/advanced-ddos-systems/concepts/#rule-settings) [scoped](/ddos-protection/advanced-ddos-systems/concepts/#scope) to various regions and Cloudflare locations to change the [mode](/ddos-protection/advanced-ddos-systems/concepts/#mode) (Mitigation or Monitoring) to accommodate for your traffic patterns and business use cases.
@@ -139,7 +136,7 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
 
    You must fill in the variables by calling the helper function `parse_packet_data`, which Cloudflare has provided in a header file included in step 2.
 
-   The `parse_packet_data` function performs the memory checks required to pass the program verifier. The `parse_packet_data` function returns `0` on success. If it is successful, the input parameters are correctly populated. The `parse_packet_data` function returns `1` on failure. If `parse_packet_data` fails, Cloudflare must return `CF_EBPF_DROP` to drop the packet in order to pass the verifier.
+   The `parse_packet_data` function performs the memory checks required to pass the program verifier. The `parse_packet_data` function returns `0` on success. If it is successful, the input parameters are correctly populated. The `parse_packet_data` function returns `1` on failure. If `parse_packet_data` fails, The program must return `CF_EBPF_DROP` to drop the packet in order to pass the verifier.
 
    ```c
    if (parse_packet_data(ctx, &p, &headers) != 0) {
@@ -181,7 +178,7 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
    Programmable Flow Protection will only give UDP packets to a BPF program.
    :::
 
-   In the example snippet below, the program will drops any packets where the IPv6 header exists or where the UDP destination port is 66.
+   In the example snippet below, the program will drop any packet where the IPv6 header exists or where the UDP destination port is 66.
 
    ```c
    struct ipv6hdr *ipv6_hdr;
@@ -209,8 +206,6 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
    ```
 
 </Steps>
-
----
 
 ### Write a complex program
 
@@ -242,7 +237,7 @@ cf_ebpf_main(void *state)
     if (parse_packet_data(ctx, &p, &headers) != 0) {
         return CF_EBPF_DROP;
     }
-     struct ipv6hdr *ipv6_hdr;
+    struct ipv6hdr *ipv6_hdr;
     struct udphdr *udp_hdr;
     ipv6_hdr = (struct ipv6hdr *)headers.ipv6;
     if (ipv6_hdr != NULL) {
@@ -428,7 +423,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmabl
 
 To update an existing rule, use the following `PATCH` endpoint.
 
-You can modify the mode and scope of an existing rule. The example below modifies an existing rule to make it run in `disabled` mode.
+You can modify the mode, scope, and expression of an existing rule. The example below modifies an existing rule to make it run in `disabled` mode.
 
 ```bash wrap title="Request"
 curl --request PATCH \
@@ -487,16 +482,15 @@ The Packet Comment annotation may contain:
 
 - Program return value: `<value>`.  
   `CF_EBPF_PASS` correlates to `0` and `CF_EBPF_DROP` correlates to `1`.  
-  The verifier, which runs when you upload a program to the API, will enforce that the program returns only known value types.
 - Ignored, if it is not UDP.
 
 ---
 
 ## Safe program and rule deployment best practices
 
-You will want to safely deploy and test programs without impacting existing production traffic. An initial deployment approach could be to set a global scoped rule to `disabled` or set a colo or region level scoped rule to `monitoring` with a filter expression only acting on some subset of IP traffic.
+You will want to safely deploy and test programs without impacting existing production traffic. An initial deployment approach could be to set a global scoped rule to `disabled` and set a colo or region level scoped rule to `monitoring` with a filter expression only acting on some subset of IP traffic.
 
-Each Cloudflare region or colo will apply the most granular rule. So, the colos or regions specified in the `monitoring` rule will execute the developer program in `monitoring` mode, while every other Cloudflare location will not execute the program at all. The `monitoring` rule would only work on traffic that matches the filter expression.
+Each Cloudflare region or colo will apply the most granular rule. So, in the scenario described above, the colos or regions specified in the `monitoring` rule will execute the developer program in `monitoring` mode, while every other Cloudflare location will not execute the program at all. The `monitoring` rule would only execute on traffic that matches the filter expression.
 
 Then, after verifying the correct behavior with Network Analytics, you can update and expand the `monitoring` rule's scope and filter expression. Eventually, you can delete the `disabled` and `monitoring` rules and apply a global `enabled` rule.
 
