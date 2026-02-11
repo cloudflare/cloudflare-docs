@@ -54,14 +54,15 @@ When your template is onboarded, a graphical user interface flow will be availab
 Send an email to `domain-connect@cloudflare.com`, including the following information:
 
 1. List of template(s) you want to onboard, with their corresponding GitHub hyperlinks.
-2. A logo to be displayed as part of the Domain Connect flow. Preferably in `SVG` format.
-3. The default [proxy status](/dns/proxy-status/) you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s). Proxying other record types is not supported.
+2. Fully qualified domain name(s) of the `syncPubKeyDomain` TXT record(s).
+3. A logo to be displayed as part of the Domain Connect flow. Preferably in `SVG` format.
+4. The default [proxy status](/dns/proxy-status/) you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s). Proxying other record types is not supported.
 
    :::note
 
    Proxy status is applied per template. If needed, organize the records in different templates to specify a different default proxy status per template. Once the records have been created, the domain owner can always change the proxy status for `A`, `AAAA`, and `CNAME` records later.
    :::
-4. (Optional) A Cloudflare [account ID](/fundamentals/account/find-account-and-zone-ids/) for you to test the flow.
+5. (Optional) A Cloudflare [account ID](/fundamentals/account/find-account-and-zone-ids/) for you to test the flow.
 
    If you have a [DNS provider discovery](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#dns-provider-discovery) automation in place and will not list new DNS providers manually, Cloudflare can initially restrict your template to be exposed to the specified account only. Once you confirm everything is working as expected, Cloudflare will publish your template on the discovery endpoint, to be picked up by your automation.
 
@@ -137,5 +138,9 @@ Send an email to `domain-connect@cloudflare.com` with the following information:
    - Describe what you expected the template to do.
 
 2. A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) attachment containing the problematic update.
+
+### Validation errors
+
+The most common issue after template onboarding is a validation error. These tend to be caused by `syncPubKeyDomain` TXT records, that are easiest to fix by republishing signature using [tooling from the Domain Connect project](https://exampleservice.domainconnect.org/sig). Additionally signature validation can be tested with [public key debug tool](https://github.com/kerolasa/dc-debug-pubkey).
 
 [^1]: A domain that can be queried for `TXT` records containing a public key to verify your digital signature.
