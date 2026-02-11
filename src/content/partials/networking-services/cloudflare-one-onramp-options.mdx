@@ -1,5 +1,10 @@
 ---
-{}
+params:
+  - unifiedRoutingURL
+  - greIpsecURL
+  - connectorURL
+  - cniURL
+  - onRampsURL
 ---
 
 import { Details } from "~/components";
@@ -88,7 +93,7 @@ For VPN replacement and Zero Trust Network Access (ZTNA) use cases, Cloudflare T
 Deploy WARP Connector supplementally when you need bidirectional connectivity for specific use cases like Active Directory Group Policy updates, SCCM, SIP traffic, VoIP traffic, or DevOps pipelines.
 
 :::caution[Magic WAN compatibility]
-Accounts on Legacy routing mode do not support WARP Connector when Magic WAN is enabled. Your account must be on Cloudflare One Unified Routing for both to work together.
+Accounts on Legacy routing mode do not support WARP Connector when Magic WAN is enabled. Your account must be on <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a> for both to work together.
 :::
 
 :::note[Important to know]
@@ -182,7 +187,7 @@ Use GRE tunnels when you need to connect branch offices or data centers with min
 GRE does not encrypt traffic (use IPsec if encryption is required). Requires a static public IP and careful MTU planning (1476 bytes MTU, MSS clamping at 1436 bytes or lower).
 :::
 
-For detailed configuration, refer to the [GRE and IPsec tunnels documentation](/cloudflare-one/networks/connectors/wan-tunnels/reference/gre-ipsec-tunnels/).
+For detailed configuration, refer to the <a href={props.greIpsecURL}>GRE and IPsec tunnels documentation</a>.
 
 </Details>
 
@@ -204,7 +209,7 @@ When traffic from Magic WAN egresses to the public Internet through Gateway, sou
 
 For cloud environments (AWS, Azure, GCP), use [Magic Cloud Networking](#magic-cloud-networking) to automate IPsec tunnel creation instead of configuring tunnels manually.
 
-For detailed configuration, refer to the [GRE and IPsec tunnels documentation](/cloudflare-one/networks/connectors/wan-tunnels/reference/gre-ipsec-tunnels/).
+For detailed configuration, refer to the <a href={props.greIpsecURL}>GRE and IPsec tunnels documentation</a>.
 
 :::note[Key consideration]
 IPsec and GRE tunnels require a Magic WAN subscription.
@@ -226,7 +231,7 @@ Use Magic WAN Connector for zero-touch branch office deployments, to replace edg
 Magic WAN Connector requires a Magic WAN subscription and dedicated hardware or VM (cannot run alongside other software on the same host).
 :::
 
-For detailed configuration, refer to the [Magic WAN Connector documentation](/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/).
+For detailed configuration, refer to the <a href={props.connectorURL}>Magic WAN Connector documentation</a>.
 
 </Details>
 
@@ -258,7 +263,7 @@ CNI requires an Enterprise plan and is available only in locations where Cloudfl
 Evaluate whether Cloudflare Tunnel is necessary if CNI already provides private connectivity to your infrastructure.
 :::
 
-For detailed configuration, refer to the [Cloudflare Network Interconnect documentation](/cloudflare-one/networks/connectors/wan-tunnels/network-interconnect/).
+For detailed configuration, refer to the <a href={props.cniURL}>Cloudflare Network Interconnect documentation</a>.
 
 </Details>
 
@@ -363,7 +368,7 @@ Not all connectivity options work together in the same account. Review the follo
 
 | Combination | Compatible | Notes |
 | :---- | :---- | :---- |
-| WARP Connector + Magic WAN | Conditional | Requires Cloudflare One Unified Routing. Accounts on Legacy routing mode cannot use both. |
+| WARP Connector + Magic WAN | Conditional | Requires <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a>. Accounts on Legacy routing mode cannot use both. |
 | WARP client + Magic WAN | Yes | WARP users can access Magic WAN-connected sites. |
 | Cloudflare Tunnel + Magic WAN | Yes | Avoid overlapping IP routes. Cloudflare Tunnel takes priority if the same CIDR is configured for both. |
 | GRE + IPsec | Yes | Use for redundancy or migration scenarios. |
@@ -489,10 +494,10 @@ This pattern serves organizations with strict compliance requirements that prohi
 - [WARP client](/cloudflare-one/team-and-resources/devices/warp/)
 - [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)
 - [Magic WAN](/magic-wan/)
-- [WAN Connectors on-ramps](/cloudflare-one/networks/connectors/wan-tunnels/on-ramps/) - Full list of supported on-ramps
+- <a href={props.onRampsURL}>WAN Connectors on-ramps</a> - Full list of supported on-ramps
 - [Magic Cloud Networking](/magic-wan/configuration/magic-cloud-networking/) - Automate cloud VPC connectivity
 - [Magic Transit](/magic-transit/)
-- [Magic WAN Connector](/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/)
+- <a href={props.connectorURL}>Magic WAN Connector</a>
 - [Cloudflare Network Interconnect](/network-interconnect/)
 - [Virtual Networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/virtual-networks/)
 - [DNS locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) - Filter DNS traffic without device agents

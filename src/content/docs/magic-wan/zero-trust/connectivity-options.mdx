@@ -7,4 +7,14 @@ sidebar:
 
 import { Render } from "~/components";
 
-<Render file="cloudflare-one-onramp-options" product="networking-services" />
+<Render
+  file="cloudflare-one-onramp-options"
+  product="networking-services"
+  params={{
+    unifiedRoutingURL: "/magic-wan/reference/traffic-steering/#unified-routing-mode-beta",
+    greIpsecURL: "/magic-wan/reference/gre-ipsec-tunnels/",
+    connectorURL: "/magic-wan/configuration/connector/",
+    cniURL: "/magic-wan/network-interconnect/",
+    onRampsURL: "/magic-wan/on-ramps/"
+  }}
+/>
