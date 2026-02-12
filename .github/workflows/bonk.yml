@@ -25,6 +25,15 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "package.json"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Run Bonk
         uses: ask-bonk/ask-bonk/github@main
         env:
