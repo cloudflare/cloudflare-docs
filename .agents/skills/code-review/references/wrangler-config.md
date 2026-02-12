@@ -4,17 +4,7 @@
 
 The authoritative schema is bundled with the `wrangler` npm package as `config-schema.json`. It is a JSON Schema (draft-07) document defining the full `RawConfig` type.
 
-**Always fetch the latest published schema** — the repo you are working in may have an older wrangler version pinned. To retrieve the latest:
-
-```bash
-# Fetch the latest schema to a temp directory
-mkdir -p /tmp/wrangler-latest && \
-  npm pack wrangler --pack-destination /tmp/wrangler-latest && \
-  tar -xzf /tmp/wrangler-latest/wrangler-*.tgz -C /tmp/wrangler-latest
-# Schema is now at /tmp/wrangler-latest/package/config-schema.json
-```
-
-If that fails, fall back to reading `./node_modules/wrangler/config-schema.json` from the current project — but note the version may be outdated.
+Read `node_modules/wrangler/config-schema.json` directly. Do **not** run `npm pack` or install packages — use whatever version is in the repo's `node_modules`.
 
 Do not guess field names or structures — look them up in the schema.
 

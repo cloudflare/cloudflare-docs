@@ -2,29 +2,13 @@
 
 ## How to Retrieve Current Types
 
-Prefer generated types over baked-in knowledge. Types change with compatibility dates and new bindings. The repo you are working in may have an older `@cloudflare/workers-types` version — **always validate against the latest published types**.
+Prefer generated types over baked-in knowledge. Types change with compatibility dates and new bindings.
 
-### Primary: fetch latest `@cloudflare/workers-types`
-
-```bash
-# Fetch the latest type definitions to a temp directory
-mkdir -p /tmp/workers-types-latest && \
-  npm pack @cloudflare/workers-types --pack-destination /tmp/workers-types-latest && \
-  tar -xzf /tmp/workers-types-latest/cloudflare-workers-types-*.tgz -C /tmp/workers-types-latest
-# Types are now at /tmp/workers-types-latest/package/index.d.ts
-```
-
-Search this file for the specific type, class, or interface under review. Do not guess type names — look them up.
-
-### Alternative: `wrangler types`
-
-If working in a project with a wrangler config, `npx wrangler types` generates a `.d.ts` file with a typed `Env` interface derived from the config. This is useful for binding types but reflects the locally installed wrangler version.
-
-### Fallback: local `node_modules`
-
-Read `node_modules/@cloudflare/workers-types/index.d.ts` if the above approaches are unavailable. Note the installed version and flag if it appears significantly outdated.
+Read `node_modules/@cloudflare/workers-types/index.d.ts` directly. Do **not** run `npm pack` or install packages — use whatever version is in the repo's `node_modules`.
 
 The package provides date-versioned entrypoints (e.g., `2023-07-01/`) and `latest/`. Check the project's `tsconfig.json` to determine which entrypoint is in use.
+
+Search this file for the specific type, class, or interface under review. Do not guess type names — look them up.
 
 ## What to Validate
 
