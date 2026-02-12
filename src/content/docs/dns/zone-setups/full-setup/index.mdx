@@ -34,7 +34,7 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 <Render file="dnssec-enabled-migration" product="dns" />
 
-## Add site to Cloudflare
+## 1. Add your domain to Cloudflare
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -59,7 +59,7 @@ If Cloudflare is unable to identify your domain as a registered domain, make sur
 
 Cloudflare requires your `apex domain` to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat). Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 
-## Review DNS records
+## 2. Review your DNS records
 
 When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a primary setup (full), Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
@@ -74,7 +74,7 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 
 <Render file="dns-nxdomain-warning" product="dns" />
 
-## Update your nameservers
+## 3. Change your nameservers
 
 <Render file="nameserver-preamble" product="dns" />
 
@@ -163,7 +163,7 @@ If you see unexpected results, refer to our [troubleshooting suggestions](/dns/z
 
 :::
 
-## Re-enable DNSSEC
+## 4. Re-enable DNSSEC
 
 When you updated your nameservers, you should have also disabled DNSSEC at your registrar.
 
