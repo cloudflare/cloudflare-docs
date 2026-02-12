@@ -240,41 +240,6 @@ async function updateCache(env: Env, data: unknown): Promise<void> {
 
 For more information, refer to [Context](/workers/runtime-apis/context/).
 
-### Set cache headers explicitly
-
-Workers responses served through Cloudflare can be cached by default depending on the content type and response headers. If your Worker returns dynamic or sensitive data, set `Cache-Control` headers explicitly to prevent accidental caching.
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const user = await getAuthenticatedUser(request, env);
-
-		// ✅ Good: explicitly prevent caching of user-specific data
-		return Response.json(user, {
-			headers: {
-				"Cache-Control": "no-store",
-			},
-		});
-	},
-} satisfies ExportedHandler<Env>;
-
-// For static or rarely-changing public data, cache aggressively:
-// headers: { "Cache-Control": "public, max-age=3600" }
-
-async function getAuthenticatedUser(
-	request: Request,
-	env: Env,
-): Promise<object> {
-	return { id: "user-123", name: "Example User" };
-}
-```
-
-</TypeScriptExample>
-
-For more information, refer to [How the cache works](/workers/reference/how-the-cache-works/).
-
 ## Architecture
 
 ### Use bindings for Cloudflare services, not REST APIs
