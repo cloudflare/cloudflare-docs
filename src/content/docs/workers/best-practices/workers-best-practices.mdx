@@ -1,29 +1,30 @@
 ---
 title: Workers Best Practices
 pcx_content_type: concept
+description: Code patterns and configuration guidance for building fast, reliable, observable, and secure Workers.
 sidebar:
   order: 1
 ---
 
 import { WranglerConfig, TypeScriptExample } from "~/components";
 
-Every Worker runs in a lightweight V8 isolate with its own memory, CPU limits, and request lifecycle. These best practices help you write Workers that are fast, reliable, observable, and secure. Each recommendation includes code showing the correct pattern.
+Best practices for Workers based on production patterns, Cloudflare's own internal usage, and common issues seen across the developer community.
 
 ## Configuration
 
 ### Keep your compatibility date current
 
-The `compatibility_date` in your Wrangler configuration controls which runtime features and bug fixes are available to your Worker. Setting it to today's date on new projects ensures you get the latest behavior. Periodically updating it on existing projects gives you access to new APIs and fixes without changing your code.
-
-If you omit `compatibility_date` when uploading via the API, it defaults to `2021-11-02` — missing years of improvements.
+The [`compatibility_date`](/workers/configuration/compatibility-dates/) controls which runtime features and bug fixes are available to your Worker. Setting it to today's date on new projects ensures you get the latest behavior. Periodically updating it on existing projects gives you access to new APIs and fixes without changing your code.
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-main = "src/index.ts"
-# ✅ Good: use $today for new projects, update periodically for existing ones
-compatibility_date = "$today"
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+}
 ```
 
 </WranglerConfig>
@@ -32,18 +33,17 @@ For more information, refer to [Compatibility dates](/workers/configuration/comp
 
 ### Enable nodejs_compat
 
-The `nodejs_compat` compatibility flag gives your Worker access to Node.js built-in modules like `node:crypto`, `node:buffer`, `node:stream`, and others. Many libraries depend on these modules, and enabling this flag avoids cryptic import errors at runtime.
-
-Requires `compatibility_date` of `2024-09-23` or later for the full v2 behavior with polyfills and globals.
+The [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag gives your Worker access to Node.js built-in modules like `node:crypto`, `node:buffer`, `node:stream`, and others. Many libraries depend on these modules, and enabling this flag avoids cryptic import errors at runtime. Requires `compatibility_date` of `2024-09-23` or later.
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-main = "src/index.ts"
-compatibility_date = "$today"
-# ✅ Good: enable Node.js compatibility
-compatibility_flags = ["nodejs_compat"]
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+}
 ```
 
 </WranglerConfig>
@@ -52,7 +52,7 @@ For more information, refer to [Node.js compatibility](/workers/runtime-apis/nod
 
 ### Generate binding types with wrangler types
 
-Do not hand-write your `Env` interface. Run `wrangler types` to generate a type definition file that matches your actual Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
+Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/#types) to generate a type definition file that matches your actual Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
 
 Re-run `wrangler types` whenever you add or rename a binding.
 
@@ -81,21 +81,25 @@ For more information, refer to [wrangler types](/workers/wrangler/commands/#type
 
 ### Store secrets with wrangler secret, not in source
 
-Secrets (API keys, tokens, database credentials) must never appear in your Wrangler configuration or source code. Use `wrangler secret put` to store them securely, and access them through `env` at runtime. Use a `.dev.vars` file for local development — it is automatically excluded from version control.
+Secrets (API keys, tokens, database credentials) must never appear in your Wrangler configuration or source code. Use [`wrangler secret put`](/workers/configuration/secrets/) to store them securely, and access them through `env` at runtime. Use a `.dev.vars` file for local development. It is automatically excluded from version control.
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-main = "src/index.ts"
-compatibility_date = "$today"
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
 
-# ✅ Good: non-secret configuration lives in version control
-[vars]
-API_BASE_URL = "https://api.example.com"
+	// ✅ Good: non-secret configuration lives in version control
+	"vars": {
+		"API_BASE_URL": "https://api.example.com",
+	},
 
-# 🔴 Bad: never put secrets here
-# API_KEY = "sk-live-abc123..."
+	// 🔴 Bad: never put secrets here
+	// "API_KEY": "sk-live-abc123..."
+}
 ```
 
 </WranglerConfig>
@@ -110,32 +114,85 @@ wrangler secret put API_KEY
 
 For more information, refer to [Secrets](/workers/configuration/secrets/).
 
-### Use wrangler.jsonc for non-secret configuration
+### Configure environments deliberately
 
-Keep environment variables, bindings, routes, and other non-secret configuration in your `wrangler.jsonc` (or `wrangler.toml`) file and commit it to version control. This makes deployments reproducible and auditable. Only use `wrangler secret` for actual secret values.
+[Wrangler environments](/workers/wrangler/environments/) let you deploy the same code to separate Workers for production, staging, and development. Each environment creates a distinct Worker named `{name}-{env}` (for example, `my-api-production` and `my-api-staging`).
+
+Treat the root configuration as your base (shared settings), and override per environment. The root Worker (without an environment suffix) is a separate deployment. If you do not intend to use it, do not deploy without specifying an environment.
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-main = "src/index.ts"
-compatibility_date = "$today"
-compatibility_flags = ["nodejs_compat"]
+```jsonc
+{
+	"name": "my-api",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
 
-[vars]
-ENVIRONMENT = "production"
-LOG_LEVEL = "info"
+	// Shared bindings go in the root config
+	"kv_namespaces": [{ "binding": "CACHE", "id": "dev-kv-id" }],
 
-[[kv_namespaces]]
-binding = "CACHE"
-id = "abc123"
-
-[[r2_buckets]]
-binding = "UPLOADS"
-bucket_name = "user-uploads"
+	"env": {
+		// Production environment: deploys as "my-api-production"
+		"production": {
+			"kv_namespaces": [{ "binding": "CACHE", "id": "prod-kv-id" }],
+			"routes": [
+				{ "pattern": "api.example.com/*", "zone_name": "example.com" },
+			],
+		},
+		// Staging environment: deploys as "my-api-staging"
+		"staging": {
+			"kv_namespaces": [{ "binding": "CACHE", "id": "staging-kv-id" }],
+			"routes": [
+				{ "pattern": "api-staging.example.com/*", "zone_name": "example.com" },
+			],
+		},
+	},
+}
 ```
 
 </WranglerConfig>
+
+```bash
+# Deploy to a specific environment
+wrangler deploy --env production
+wrangler deploy --env staging
+```
+
+For more information, refer to [Environments](/workers/wrangler/environments/).
+
+### Set up custom domains or routes correctly
+
+Workers support two routing mechanisms, and they serve different purposes:
+
+- **[Custom domains](/workers/configuration/routing/custom-domains/)**: The Worker **is** the origin. Cloudflare creates DNS records and SSL certificates automatically. Use this when your Worker handles all traffic for a hostname.
+- **[Routes](/workers/configuration/routing/routes/)**: The Worker runs **in front of** an existing origin server. You must have a proxied (orange-clouded) DNS record for the hostname before adding a route.
+
+The most common mistake with routes is missing the DNS record. Without a proxied DNS record, requests to the hostname return `ERR_NAME_NOT_RESOLVED` and never reach your Worker. If you do not have a real origin, add a proxied `AAAA` record pointing to `100::` as a placeholder.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+
+	// Option 1: Custom domain — Worker is the origin, DNS is managed automatically
+	"routes": [{ "pattern": "api.example.com", "custom_domain": true }],
+
+	// Option 2: Route — Worker runs in front of an existing origin
+	// Requires a proxied DNS record for shop.example.com
+	// "routes": [
+	// 	{ "pattern": "shop.example.com/*", "zone_name": "example.com" }
+	// ]
+}
+```
+
+</WranglerConfig>
+
+For more information, refer to [Routing](/workers/configuration/routing/).
 
 ## Request and response handling
 
@@ -164,27 +221,39 @@ export default {
 
 </TypeScriptExample>
 
-When you need to transform data as it passes through, use a `TransformStream`:
+When you need to concatenate multiple responses (for example, fetching data from several upstream APIs), pipe each body sequentially into a single writable stream. This avoids buffering any of the responses in memory.
 
-<TypeScriptExample filename="src/transform.ts">
+<TypeScriptExample filename="src/concat.ts">
 
 ```ts
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		const response = await fetch("https://api.example.com/data");
+		const urls = [
+			"https://api.example.com/part-1",
+			"https://api.example.com/part-2",
+			"https://api.example.com/part-3",
+		];
 
-		// ✅ Good: transform data as a stream without buffering the whole body
-		const { readable, writable } = new TransformStream({
-			transform(chunk, controller) {
-				// Process each chunk as it arrives
-				controller.enqueue(chunk);
-			},
+		const { readable, writable } = new TransformStream();
+
+		// ✅ Good: pipe each response body sequentially without buffering
+		const pipeline = (async () => {
+			for (const url of urls) {
+				const response = await fetch(url);
+				if (response.body) {
+					// pipeTo with preventClose keeps the writable open for the next response
+					await response.body.pipeTo(writable, {
+						preventClose: true,
+					});
+				}
+			}
+			await writable.close();
+		})();
+
+		// Return the readable side immediately — data streams as it arrives
+		return new Response(readable, {
+			headers: { "Content-Type": "application/octet-stream" },
 		});
-
-		// pipeTo() runs concurrently — not awaited so the response streams immediately.
-		// Errors on the pipe will close the readable side, surfacing to the client.
-		response.body?.pipeTo(writable);
-		return new Response(readable, response);
 	},
 } satisfies ExportedHandler<Env>;
 ```
@@ -195,7 +264,7 @@ For more information, refer to [Streams](/workers/runtime-apis/streams/).
 
 ### Use waitUntil for work after the response
 
-`ctx.waitUntil()` lets you perform work after the response is sent to the client — analytics, cache writes, non-critical logging, or webhook notifications. This keeps your response fast while still completing background tasks.
+[`ctx.waitUntil()`](/workers/runtime-apis/context/) lets you perform work after the response is sent to the client, such as analytics, cache writes, non-critical logging, or webhook notifications. This keeps your response fast while still completing background tasks.
 
 There are two common pitfalls: destructuring `ctx` (which loses the `this` binding and throws "Illegal invocation"), and exceeding the 30-second time limit after the response is sent.
 
@@ -244,7 +313,7 @@ For more information, refer to [Context](/workers/runtime-apis/context/).
 
 ### Use bindings for Cloudflare services, not REST APIs
 
-Cloudflare services like R2, KV, D1, Queues, and Workflows are available as [bindings](/workers/runtime-apis/bindings/) — direct, in-process references that require no network hop, no authentication, and no extra latency. Using the REST API from within a Worker wastes time and adds unnecessary complexity.
+Cloudflare services like R2, KV, D1, Queues, and Workflows are available as [bindings](/workers/runtime-apis/bindings/). Bindings are direct, in-process references that require no network hop, no authentication, and no extra latency. Using the REST API from within a Worker wastes time and adds unnecessary complexity.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -353,30 +422,181 @@ export default {
 
 </TypeScriptExample>
 
+### Use Hyperdrive for external database connections
+
+Connecting directly to a remote database (PostgreSQL, MySQL) from a Worker adds hundreds of milliseconds of latency per request due to TCP handshake, TLS negotiation, and connection setup on every invocation. [Hyperdrive](/hyperdrive/) eliminates this by maintaining a regional connection pool close to your database and caching query results where possible.
+
+Create a new `Client` on each request. Hyperdrive manages the underlying pool, so client creation is fast. Requires `nodejs_compat` for database driver support.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+
+	"hyperdrive": [{ "binding": "HYPERDRIVE", "id": "<YOUR_HYPERDRIVE_ID>" }],
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Client } from "pg";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		// ✅ Good: create a new client per request — Hyperdrive pools the underlying connection
+		const client = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
+		});
+
+		try {
+			await client.connect();
+			const result = await client.query("SELECT id, name FROM users LIMIT 10");
+			return Response.json(result.rows);
+		} catch (e) {
+			console.error(
+				JSON.stringify({ message: "database query failed", error: String(e) }),
+			);
+			return Response.json({ error: "Database error" }, { status: 500 });
+		}
+	},
+} satisfies ExportedHandler<Env>;
+
+// 🔴 Bad: connecting directly to a remote database without Hyperdrive
+// Every request pays the full TCP + TLS + auth cost (often 300-500ms)
+```
+
+</TypeScriptExample>
+
+For more information, refer to [Hyperdrive](/hyperdrive/).
+
+### Use Durable Objects for WebSockets
+
+Plain Workers can upgrade HTTP connections to WebSockets, but they lack persistent state and hibernation. If the isolate is evicted, the connection is lost because there is no persistent actor to hold it. For reliable, long-lived WebSocket connections, use [Durable Objects](/durable-objects/) with the [Hibernation API](/durable-objects/best-practices/websockets/). Durable Objects keep WebSocket connections open even while the object is evicted from memory, and automatically wake up when a message arrives.
+
+Use `this.ctx.acceptWebSocket()` instead of `ws.accept()` to enable hibernation. Use `setWebSocketAutoResponse` for ping/pong heartbeats that do not wake the object.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+// Parent Worker: upgrades HTTP to WebSocket and routes to a Durable Object
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		if (request.headers.get("Upgrade") !== "websocket") {
+			return new Response("Expected WebSocket", { status: 426 });
+		}
+
+		const stub = env.CHAT_ROOM.getByName("default-room");
+		return stub.fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
+
+// Durable Object: manages WebSocket connections with hibernation
+export class ChatRoom extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		// Auto ping/pong without waking the object
+		this.ctx.setWebSocketAutoResponse(
+			new WebSocketRequestResponsePair("ping", "pong"),
+		);
+	}
+
+	async fetch(request: Request): Promise<Response> {
+		const pair = new WebSocketPair();
+		const [client, server] = Object.values(pair);
+
+		// ✅ Good: acceptWebSocket enables hibernation
+		this.ctx.acceptWebSocket(server);
+
+		return new Response(null, { status: 101, webSocket: client });
+	}
+
+	// Called when a message arrives — the object wakes from hibernation if needed
+	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+		for (const conn of this.ctx.getWebSockets()) {
+			conn.send(typeof message === "string" ? message : "binary");
+		}
+	}
+
+	async webSocketClose(
+		ws: WebSocket,
+		code: number,
+		reason: string,
+		wasClean: boolean,
+	) {
+		ws.close(code, reason);
+	}
+}
+```
+
+</TypeScriptExample>
+
+For more information, refer to [Durable Objects WebSocket best practices](/durable-objects/best-practices/websockets/).
+
+### Use Workers Static Assets for new projects
+
+[Workers Static Assets](/workers/static-assets/) is the recommended way to deploy static sites, single-page applications, and full-stack apps on Cloudflare. If you are starting a new project, use Workers instead of Pages. Pages continues to work, but new features and optimizations are focused on Workers.
+
+For a purely static site, point `assets.directory` at your build output. No Worker script is needed. For a full-stack app, add a `main` entry point and an `ASSETS` binding to serve static files alongside your API.
+
+<WranglerConfig>
+
+```jsonc
+{
+	// Static site — no Worker script needed
+	"name": "my-static-site",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+
+	"assets": {
+		"directory": "./dist",
+	},
+}
+```
+
+</WranglerConfig>
+
+For more information, refer to [Workers Static Assets](/workers/static-assets/).
+
 ## Observability
 
 ### Enable Workers Logs and Traces
 
-Logs and traces make your Worker observable in production. Enable them in your Wrangler configuration and use `head_sampling_rate` to control volume and manage costs. A sampling rate of `1` captures everything; lower it for high-traffic Workers.
+Production Workers without observability are a black box. Enable logs and traces before you deploy to production. When an intermittent error appears, you need data already being collected to diagnose it.
 
-Use structured JSON logging with `console.log` — log objects, not strings — so logs are searchable and filterable.
+Enable them in your Wrangler configuration and use `head_sampling_rate` to control volume and manage costs. A sampling rate of `1` captures everything; lower it for high-traffic Workers.
+
+Use structured JSON logging with `console.log` so logs are searchable and filterable. Use `console.error` for errors and `console.warn` for warnings. These appear at the correct severity level in the Workers Observability dashboard.
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-main = "src/index.ts"
-compatibility_date = "$today"
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
 
-[observability]
-enabled = true
-
-[observability.logs]
-# Capture 100% of logs — lower this for high-traffic Workers
-head_sampling_rate = 1
-
-[observability.traces]
-head_sampling_rate = 0.01  # Sample 1% of traces
+	"observability": {
+		"enabled": true,
+		"logs": {
+			// Capture 100% of logs — lower this for high-traffic Workers
+			"head_sampling_rate": 1,
+		},
+		"traces": {
+			"enabled": true,
+			"head_sampling_rate": 0.01, // Sample 1% of traces
+		},
+	},
+}
 ```
 
 </WranglerConfig>
@@ -388,23 +608,34 @@ export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
 
-		// ✅ Good: structured JSON logs are searchable and filterable
-		console.log(
-			JSON.stringify({
-				message: "incoming request",
-				method: request.method,
-				path: url.pathname,
-				cf: {
-					country: request.cf?.country,
-					colo: request.cf?.colo,
-				},
-			}),
-		);
+		try {
+			// ✅ Good: structured JSON — searchable and filterable in the dashboard
+			console.log(
+				JSON.stringify({
+					message: "incoming request",
+					method: request.method,
+					path: url.pathname,
+				}),
+			);
+
+			const result = await env.MY_KV.get(url.pathname);
+			return new Response(result ?? "Not found", {
+				status: result ? 200 : 404,
+			});
+		} catch (e) {
+			// ✅ Good: console.error appears as "error" severity in Workers Observability
+			console.error(
+				JSON.stringify({
+					message: "request failed",
+					error: e instanceof Error ? e.message : String(e),
+					path: url.pathname,
+				}),
+			);
+			return Response.json({ error: "Internal server error" }, { status: 500 });
+		}
 
 		// 🔴 Bad: unstructured string logs are hard to query
 		// console.log("Got a request to " + url.pathname);
-
-		return new Response("OK");
 	},
 } satisfies ExportedHandler<Env>;
 ```
@@ -415,19 +646,21 @@ For more information, refer to [Workers Logs](/workers/observability/logs/worker
 
 ### Use Tail Workers for durable logging
 
-`console.log` is best-effort — if a Worker crashes or is evicted, in-flight logs can be lost. For logs that must not be dropped (audit trails, billing events, compliance), use a [Tail Worker](/workers/observability/logs/tail-workers/). Tail Workers receive log events asynchronously and can forward them to any destination.
+`console.log` is best-effort. If a Worker crashes or is evicted, in-flight logs can be lost. For logs that must not be dropped (audit trails, billing events, compliance), use a [Tail Worker](/workers/observability/logs/tail-workers/). Tail Workers receive log events asynchronously and can forward them to any destination.
 
 <WranglerConfig>
 
-```toml
-# Main Worker configuration
-name = "my-worker"
-main = "src/index.ts"
-compatibility_date = "$today"
+```jsonc
+{
+	// Main Worker configuration
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
 
-# ✅ Good: attach a Tail Worker for durable log delivery
-[[tail_consumers]]
-service = "my-log-consumer"
+	// ✅ Good: attach a Tail Worker for durable log delivery
+	"tail_consumers": [{ "service": "my-log-consumer" }],
+}
 ```
 
 </WranglerConfig>
@@ -464,7 +697,7 @@ export default {
 
 Workers reuse isolates across requests. A variable set during one request is still present during the next. This causes cross-request data leaks, stale state, and "Cannot perform I/O on behalf of a different request" errors.
 
-Pass state through function arguments or store it on `env` bindings — never in module-level variables.
+Pass state through function arguments or store it on `env` bindings. Never in module-level variables.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -501,22 +734,17 @@ For more information, refer to [Workers errors](/workers/observability/errors/#c
 
 ### Keep startup fast
 
-Top-level code in your Worker runs on every cold start and counts against [CPU time limits](/workers/platform/limits/). Avoid heavy computation, large synchronous operations, or eager initialization of resources in module scope. Defer expensive setup to the first request using lazy initialization.
+Top-level code runs on every cold start and counts against [CPU time limits](/workers/platform/limits/). Defer expensive setup to the first request using lazy initialization.
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-// 🔴 Bad: expensive work at the top level runs on every cold start
-// const config = JSON.parse(readFileSync("large-config.json"));
-// const decoder = new TextDecoder();
-// const precomputed = buildLargeIndex();
-
 // ✅ Good: lazy initialization — runs once on first use, not on cold start
-let _client: ApiClient | null = null;
+let _client: Client | null = null;
 
-function getClient(env: Env): ApiClient {
+function getClient(env: Env): Client {
 	if (!_client) {
-		_client = new ApiClient(env.API_BASE_URL);
+		_client = new Client(env.API_BASE_URL);
 	}
 	return _client;
 }
@@ -524,23 +752,10 @@ function getClient(env: Env): ApiClient {
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const client = getClient(env);
-		const result = await client.getData();
+		const result = await client.query();
 		return Response.json(result);
 	},
 } satisfies ExportedHandler<Env>;
-
-class ApiClient {
-	private baseUrl: string;
-
-	constructor(baseUrl: string) {
-		this.baseUrl = baseUrl;
-	}
-
-	async getData(): Promise<object> {
-		const response = await fetch(`${this.baseUrl}/data`);
-		return response.json<object>();
-	}
-}
 ```
 
 </TypeScriptExample>
@@ -584,52 +799,11 @@ export default {
 
 </TypeScriptExample>
 
-### Handle nullable binding returns
-
-KV `.get()`, R2 `.get()`, and D1 `.first()` all return `null` when the key or row does not exist. Always check for `null` before using the result. Do not use non-null assertions (`!`) to silence TypeScript — handle the missing case explicitly.
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
-		const key = url.searchParams.get("key") ?? "";
-
-		// 🔴 Bad: assuming the value exists
-		// const value = (await env.MY_KV.get(key))!;
-
-		// ✅ Good: handle null explicitly
-		const value = await env.MY_KV.get(key);
-
-		if (value === null) {
-			return new Response("Not found", { status: 404 });
-		}
-
-		return new Response(value);
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</TypeScriptExample>
-
-### Prefer Workers-compatible libraries
-
-Many Node.js libraries rely on APIs not available in Workers: persistent TCP connections, file system access, or global mutable state. These fail at runtime even if they compile fine. When choosing libraries, prefer ones built for edge runtimes or that use standard `fetch()`.
-
-Common patterns to avoid:
-
-- SDKs that maintain persistent connection pools (most traditional database drivers)
-- Libraries that rely on `fs`, `net`, or `child_process`
-- HTTP clients that store cookies or state globally across requests
-
-Use Cloudflare-specific adapters when they exist (for example, Prisma with D1, Drizzle with D1, or `pg` with Hyperdrive).
-
 ## Security
 
 ### Use Web Crypto for secure token generation
 
-The Workers runtime provides the [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) for cryptographic operations. Use `crypto.randomUUID()` for unique identifiers and `crypto.getRandomValues()` for random bytes. Never use `Math.random()` for anything security-sensitive — it is not cryptographically secure.
+The Workers runtime provides the [Web Crypto API](/workers/runtime-apis/web-crypto/) for cryptographic operations. Use `crypto.randomUUID()` for unique identifiers and `crypto.getRandomValues()` for random bytes. Never use `Math.random()` for anything security-sensitive. It is not cryptographically secure.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -656,7 +830,7 @@ export default {
 
 </TypeScriptExample>
 
-When comparing secret values (API keys, tokens, HMAC signatures), use `crypto.subtle.timingSafeEqual()` to prevent timing side-channel attacks. Do not short-circuit on length mismatch — encode both values to a fixed-size hash first.
+When comparing secret values (API keys, tokens, HMAC signatures), use `crypto.subtle.timingSafeEqual()` to prevent timing side-channel attacks. Do not short-circuit on length mismatch. Encode both values to a fixed-size hash first.
 
 <TypeScriptExample filename="src/verify.ts">
 
@@ -730,7 +904,7 @@ async function handleRequest(request: Request, env: Env): Promise<object> {
 
 ### Test with @cloudflare/vitest-pool-workers
 
-The [`@cloudflare/vitest-pool-workers`](/workers/testing/vitest-integration/) package runs your tests inside the Workers runtime, giving you access to real bindings (KV, R2, D1, Durable Objects) during tests. This catches issues that Node.js-based tests miss — like unsupported APIs or missing compatibility flags.
+The [`@cloudflare/vitest-pool-workers`](/workers/testing/vitest-integration/) package runs your tests inside the Workers runtime, giving you access to real bindings (KV, R2, D1, Durable Objects) during tests. This catches issues that Node.js-based tests miss, like unsupported APIs or missing compatibility flags.
 
 One known pitfall: the Vitest pool automatically injects `nodejs_compat`, so tests pass even if your Wrangler configuration does not have the flag. Always confirm your `wrangler.jsonc` includes `nodejs_compat` if your code depends on Node.js built-in modules.
 
@@ -761,7 +935,7 @@ For more information, refer to [Testing with Vitest](/workers/testing/vitest-int
 
 ## Related resources
 
-- [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/) — best practices for building stateful, coordinated applications with Durable Objects.
-- [Rules of Workflows](/workflows/build/rules-of-workflows/) — best practices for building durable, multi-step Workflows.
-- [Platform limits](/workers/platform/limits/) — CPU time, memory, subrequest, and other limits that apply to Workers.
-- [Workers errors](/workers/observability/errors/) — error codes and debugging guidance for common runtime failures.
+- [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/): best practices for stateful, coordinated applications.
+- [Rules of Workflows](/workflows/build/rules-of-workflows/): best practices for durable, multi-step Workflows.
+- [Platform limits](/workers/platform/limits/): CPU time, memory, subrequest, and other limits.
+- [Workers errors](/workers/observability/errors/): error codes and debugging guidance.
