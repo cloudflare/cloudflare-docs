@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: rtk-polls-toggle
+description: API reference for rtk-polls-toggle component (Angular Library)
+---
+A button which toggles visibility of polls.
+ You need to pass the `meeting` object to it to see the unread polls count badge.
+ When clicked it emits a `rtkStateUpdate` event with the data:
+ ```ts
+ { activeSidebar: boolean; sidebar: 'polls' }
+ ```
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-polls-toggle></rtk-polls-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-polls-toggle
+ [meeting]="meeting"
+ size="md"
+ variant="button">
+</rtk-polls-toggle>
+```
+

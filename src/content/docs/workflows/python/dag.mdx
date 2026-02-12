@@ -3,7 +3,6 @@ title: DAG Workflows
 pcx_content_type: concept
 sidebar:
   order: 4
-
 ---
 
 The Python Workflows SDK supports DAG workflows in a declarative way, using the `step.do` decorator with the `depends` parameter to define dependencies (other steps that must complete before this step can run).
@@ -19,7 +18,7 @@ class PythonWorkflowStarter(WorkflowEntrypoint):
             except TypeError as e:
                 print(f"Successfully caught {type(e).__name__}: {e}")
 
-        step.sleep('demo sleep', '10 seconds')
+        await step.sleep('demo sleep', '10 seconds')
 
         @step.do('dependency1')
         async def dep_1():

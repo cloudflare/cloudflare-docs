@@ -11,18 +11,18 @@ import { Render, WranglerConfig, DashButton } from "~/components";
 
 ## Account plan limits
 
-| Feature                                                                          | Workers Free | Workers Paid |
-| -------------------------------------------------------------------------------- | ------------ | ------------ |
-| [Subrequests](#subrequests)                                                      | 50/request   | 1000/request |
-| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6            |
-| [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker   |
-| [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB         |
-| [Worker size](#worker-size)                                                      | 3 MB         | 10 MB        |
-| [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second     |
-| [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500          |
-| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250          |
-| Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000      |
-| Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB       |
+| Feature                                                                          | Workers Free | Workers Paid   |
+| -------------------------------------------------------------------------------- | ------------ | -------------- |
+| [Subrequests](#subrequests)                                                      | 50/request   | 10,000/request |
+| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6              |
+| [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker     |
+| [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB           |
+| [Worker size](#worker-size)                                                      | 3 MB         | 10 MB          |
+| [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second       |
+| [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500            |
+| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250            |
+| Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000        |
+| Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB         |
 
 <sup>1</sup> If you are running into limits, your project may be a good fit for
 [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
@@ -187,9 +187,12 @@ If you make a subrequest from your Worker to a target Worker that runs on a [Cus
 
 ### How many subrequests can I make?
 
-You can make 50 subrequests per request on Workers Free, and 1,000 subrequests per request on Workers Paid. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
+You can make 50 subrequests per invocation on Workers Free, and 10,000 subrequests per invocation on Workers Paid by default. Workers Paid
+users can increase this limit up to 10 Million. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
 
-For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of the [usage model](/workers/platform/pricing/#workers) configured for the Worker.
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per invocation on free plans, and will match your configured subrequest limit on paid plans (default of 10,000).
+
+You can change your subrequest limit per Worker using the [`limits` configuration](/workers/wrangler/configuration/#limits) in your Wrangler configuration file.
 
 ### How long can a subrequest take?
 

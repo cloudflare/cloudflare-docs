@@ -1,0 +1,13 @@
+name: API documentation
+
+entry:
+  title: API documentation
+  url: /api/
+  group: Core platform
+  additional_groups: [Docs collections]
+
+meta:
+  title: Cloudflare API docs
+  description:
+    Cloudflare's API tokens allow you to make calls to our API to alter different settings
+  author: "@cloudflare"

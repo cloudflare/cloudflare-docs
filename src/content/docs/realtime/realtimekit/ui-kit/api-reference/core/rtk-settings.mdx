@@ -1,0 +1,42 @@
+---
+pcx_content_type: navigation
+title: rtk-settings
+description: API reference for rtk-settings component (Web Components (HTML) Library)
+---
+A settings component to see and change your audio/video devices
+ as well as see your connection quality.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-settings></rtk-settings>
+```
+
+### With Properties
+
+```html
+<rtk-settings
+ size="md">
+</rtk-settings>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-settings");
+
+  el.meeting= meeting
+</script>
+```

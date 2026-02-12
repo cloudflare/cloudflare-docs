@@ -127,7 +127,7 @@ NetBIOS over TCP/IP (NetBT) is a legacy feature in Windows primarily used for na
 
 | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>  | All plans                                                     |
+| <ul><li> Traffic and DNS mode</li><li> Traffic only mode </li></ul>                      | All plans                                                     |
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
@@ -201,10 +201,10 @@ The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will 
 ### `override_doh_endpoint`
 
 :::note
-Only supported in Gateway with DoH mode.[^1]
+Only supported in DNS only mode.[^1]
 :::
 
-[^1]: Gateway with WARP is supported in client version 2025.2.664.0 and below. In version 2025.4.589.1 and above, this parameter does not apply to Gateway with WARP because all DoH traffic goes inside of the WARP tunnel.
+[^1]: Traffic and DNS mode is supported in client version 2025.2.664.0 and below. In version 2025.4.589.1 and above, this parameter does not apply to Traffic and DNS mode because all DoH traffic goes inside of the WARP tunnel.
 
 Overrides the [IP address](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#doh-ip) used by the WARP client to resolve DNS queries via DNS over HTTPS (DoH). If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
 
@@ -236,17 +236,17 @@ Allows you to choose the operational mode of the client.
 
 **Value:**
 
-- `warp` — (default) [Gateway with WARP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default).
-- `1dot1` — [Gateway with DoH](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh).
-- `proxy` — [Proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode). Use the `proxy_port` parameter to specify the localhost SOCKS proxy port (between `0`-`66535`). For example,
+- `warp` — (default) [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-and-dns-mode-default).
+- `1dot1` — [DNS only mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#dns-only-mode).
+- `proxy` — [Local proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#local-proxy-mode). Use the `proxy_port` parameter to specify the localhost SOCKS proxy port (between `0`-`66535`). For example,
   ```xml
   <key>service_mode</key>
   <string>proxy</string>
   <key>proxy_port</key>
   <integer>44444</integer>
   ```
-- `postureonly` — [Device Information Only](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#device-information-only).
-- `tunnelonly` - [Secure Web Gateway without DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering).
+- `postureonly` — [Posture only mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#posture-only-mode).
+- `tunnelonly` - [Traffic only mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-only-mode).
 
 ### `support_url`
 

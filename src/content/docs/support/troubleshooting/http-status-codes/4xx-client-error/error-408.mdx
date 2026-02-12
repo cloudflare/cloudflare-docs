@@ -16,4 +16,6 @@ This error typically occurs when a client fails to send a complete request withi
 
 ### Cloudflare-specific information
 
-Cloudflare does not generate `408` errors but may proxy them from the origin server. If a `408` error occurs on a Cloudflare-powered site, it is essential to review the origin server's timeout settings and ensure that the server is not overloaded. Additionally, verify that the client's Internet connection is stable and that the request is being sent promptly.
+If a `408` error occurs on a Cloudflare-powered site, it is most often being proxied from the origin. In these cases, it is essential to review the origin server's timeout settings and ensure that the server is not overloaded. Additionally, verify that the client's Internet connection is stable and that the request is being sent promptly.
+
+Cloudflare may return a `408` error response if public client requests to our network exceed certain internally-defined timeouts. These timeouts are configured as a protective measure and cannot be changed.

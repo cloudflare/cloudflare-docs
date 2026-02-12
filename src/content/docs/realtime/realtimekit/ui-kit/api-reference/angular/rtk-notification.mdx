@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-notification
+description: API reference for rtk-notification component (Angular Library)
+---
+A component which shows a notification.
+ You need to remove the element after you receive the
+ `rtkNotificationDismiss` event.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `notification` | `Notification` | ✅ | - | Message |
+| `paused` | `boolean` | ✅ | - | Stops timeout when true |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-notification></rtk-notification>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-notification
+ [notification]="notification"
+ [paused]="true"
+ size="md">
+</rtk-notification>
+```
+

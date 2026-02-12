@@ -1,0 +1,12 @@
+name: Digital Experience Monitoring
+
+entry:
+  title: Digital Experience Monitoring
+  group: Cloudflare One
+  additional_groups: [Analytics]
+  url: /cloudflare-one/insights/dex/
+
+  wrap: true
+
+meta:
+  description: Monitor device, network, and application health across your Zero Trust organization

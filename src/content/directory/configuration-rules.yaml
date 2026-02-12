@@ -1,0 +1,11 @@
+name: Configuration Rules
+
+entry:
+  title: Configuration Rules
+  group: Application performance
+  url: /rules/configuration-rules/
+  show: false
+
+meta:
+  title: Cloudflare Configuration Rules docs
+  author: "@cloudflare"

@@ -1,0 +1,13 @@
+name: AI Gateway
+
+entry:
+  title: AI Gateway
+  url: /ai-gateway/
+  group: Developer platform
+  additional_groups: [AI]
+  tags: [AI]
+
+meta:
+  title: Cloudflare AI Gateway docs
+  description: Observe and control your AI applications
+  author: "@cloudflare"

@@ -1,0 +1,11 @@
+name: Email Routing
+
+entry:
+  title: Email Routing
+  url: /email-routing/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Email Routing docs
+  description:  Create and manage email addresses and route to your preferred inbox
+  author: "@cloudflare"

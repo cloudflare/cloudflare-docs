@@ -4,17 +4,14 @@ pcx_content_type: concept
 wid: cloud-connector
 sidebar:
   order: 9
-  group:
-    badge:
-      text: Beta
 head:
   - tag: title
-    content: Cloud Connector (beta)
+    content: Cloud Connector
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { FeatureTable, ProductAvailabilityText, Render } from "~/components";
 
-Cloud Connector (beta) allows you to route matching incoming traffic from your website to a public cloud provider that you define: [Cloudflare R2](/r2/) object storage or an external provider such as AWS, Google Cloud, and Azure. With Cloud Connector you can make Cloudflare the control center for your web traffic, including traffic served from public cloud providers, without having to configure additional rules.
+Cloud Connector <ProductAvailabilityText product="cloud-connector" /> allows you to route matching incoming traffic from your website to a public cloud provider that you define: [Cloudflare R2](/r2/) object storage or an external provider such as AWS, Google Cloud, and Azure. With Cloud Connector you can make Cloudflare the control center for your web traffic, including traffic served from public cloud providers, without having to configure additional rules.
 
 <Render
 	file="rules-requirements"

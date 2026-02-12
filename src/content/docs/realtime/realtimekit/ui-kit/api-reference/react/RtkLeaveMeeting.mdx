@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: RtkLeaveMeeting
+description: API reference for RtkLeaveMeeting component (React Library)
+---
+A component which allows you to leave a meeting or
+ end meeting for all, if you have the permission.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkLeaveMeeting } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkLeaveMeeting />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkLeaveMeeting } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkLeaveMeeting
+      meeting={meeting}
+    />
+  );
+}
+```
+

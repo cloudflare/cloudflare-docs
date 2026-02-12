@@ -1,0 +1,12 @@
+name: Browser Rendering
+
+entry:
+  title: Browser Rendering
+  url: /browser-rendering/
+  group: Developer platform
+  additional_groups: [AI]
+
+meta:
+  title: Cloudflare Browser Rendering docs
+  description: Control and interact with headless browser instances programmatically
+  author: "@cloudflare"

@@ -1,0 +1,34 @@
+---
+pcx_content_type: navigation
+title: rtk-overlay-modal
+description: API reference for rtk-overlay-modal component (Angular Library)
+---
+A confirmation modal.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-overlay-modal></rtk-overlay-modal>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-overlay-modal
+ [meeting]="meeting">
+</rtk-overlay-modal>
+```
+

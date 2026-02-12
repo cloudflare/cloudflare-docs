@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: rtk-controlbar-button
+description: API reference for rtk-controlbar-button component (Angular Library)
+---
+A skeleton component used for composing custom controlbar buttons.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `brandIcon` | `boolean` | ✅ | - | Whether icon requires brand color |
+| `disabled` | `boolean` | ✅ | - | Whether button is disabled |
+| `icon` | `string` | ✅ | - | Icon |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `isLoading` | `boolean` | ✅ | - | Loading state Ignores current icon and shows a spinner if true |
+| `label` | `string` | ✅ | - | Label of button |
+| `showWarning` | `boolean` | ✅ | - | Whether to show warning icon |
+| `size` | `Size` | ✅ | - | Size |
+| `variant` | `ControlBarVariant1` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-controlbar-button></rtk-controlbar-button>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-controlbar-button
+ [brandIcon]="true"
+ [disabled]="true"
+ icon="example">
+</rtk-controlbar-button>
+```
+

@@ -11,7 +11,7 @@ Managed rules, a feature of Cloudflare WAF (Web Application Firewall), identifie
 
 :::caution
 
-- This page contains documentation about the previous implementation of WAF Managed Rules. For more information on the new version, refer to [WAF Managed Rules](/waf/managed-rules/).
+- This page contains documentation about the previous implementation of WAF Managed Rules. For more information on the new version, refer to [Managed Rules](/waf/managed-rules/).
 - All customers with access to the previous version of WAF managed rules can [upgrade to the new version](/waf/reference/legacy/old-waf-managed-rules/upgrade/).
 - The new WAF Managed Rules provide the [Cloudflare Free Managed Ruleset](/waf/managed-rules/) to all customers, including customers on a Free plan. Refer to the [announcement blog post](https://blog.cloudflare.com/waf-for-everyone/) for details.
   :::
@@ -114,11 +114,9 @@ Sampled logs displays rule ID `981176` when a request is blocked by OWASP. Also,
 - Managed rules parse JSON responses to identify vulnerabilities targeted at APIs. JSON payload parsing is limited to 128 KB.
 
 - Managed rules mitigate padding techniques. Cloudflare recommends the following:
-
   1. Turn on rule with ID `100048`. This rule protects against padding type attacks, but it is not deployed by default because there is a high probability of causing false positives in customer environments. It is, however, important that customers tune their managed rules configuration.
 
   2. Create a WAF custom rule using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) depending on the need to check headers and/or body to block larger payloads (> 128 KB). Use the following fields for this purpose:
-
      - [`http.request.body.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.body.truncated/)
      - [`http.request.headers.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.headers.truncated/)
 

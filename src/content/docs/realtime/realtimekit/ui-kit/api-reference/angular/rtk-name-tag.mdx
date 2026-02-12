@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-name-tag
+description: API reference for rtk-name-tag component (Angular Library)
+---
+A component which shows a participant's name.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `isScreenShare` | `boolean` | ✅ | - | Whether it is used in a screen share view |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participant` | `Peer` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `RtkNameTagVariant` | ✅ | - | Name tag variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-name-tag></rtk-name-tag>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-name-tag
+ [isScreenShare]="true"
+ [meeting]="meeting"
+ [participant]="participant">
+</rtk-name-tag>
+```
+

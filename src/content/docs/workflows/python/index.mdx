@@ -46,7 +46,8 @@ class PythonWorkflowStarter(WorkflowEntrypoint):
             # does stuff
             print('executing step2')
 
-        await await_step(step_1,step_2)
+        await step_1()
+        await step_2()
 
 async def on_fetch(request, env):
     await env.MY_WORKFLOW.create()
@@ -66,7 +67,7 @@ You must add both `python_workflows` and `python_workers` compatibility flags to
 		"experimental",
 		"python_workflows"
 	],
-	"compatibility_date": "2024-03-29",
+	"compatibility_date": "$today",
 	"workflows": [
 		{
 			"name": "workflows-demo",
