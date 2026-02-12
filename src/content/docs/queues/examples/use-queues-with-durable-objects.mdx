@@ -64,31 +64,33 @@ The following Worker script:
 2. Passes request data to the Durable Object.
 3. Publishes to a queue from within the Durable Object.
 
-The `constructor()` in the Durable Object makes your `Environment` available (in scope) on `this.env` to the [`fetch()` handler](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) in the Durable Object.
+Extending the `DurableObject` base class makes your `Env` available on `this.env` and the Durable Object state available on `this.ctx` within the [`fetch()` handler](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) in the Durable Object.
 
 ```ts
+import { DurableObject } from "cloudflare:workers";
+
 interface Env {
   YOUR_QUEUE: Queue;
-  YOUR_DO_CLASS: DurableObjectNamespace;
+  YOUR_DO_CLASS: DurableObjectNamespace<YourDurableObject>;
 }
 
 export default {
-  async fetch(req, env): Promise<Response> {
+  async fetch(req, env, ctx): Promise<Response> {
     // Assume each Durable Object is mapped to a userId in a query parameter
     // In a production application, this will be a userId defined by your application
     // that you validate (and/or authenticate) first.
-    let url = new URL(req.url)
-    let userIdParam = url.searchParams.get("userId")
+    const url = new URL(req.url);
+    const userIdParam = url.searchParams.get("userId");
 
     if (userIdParam) {
       // Get a stub that allows you to call that Durable Object
-      let durableObjectStub = env.YOUR_DO_CLASS.getByName(userIdParam);
+      const durableObjectStub = env.YOUR_DO_CLASS.getByName(userIdParam);
 
       // Pass the request to that Durable Object and await the response
       // This invokes the constructor once on your Durable Object class (defined further down)
       // on the first initialization, and the fetch method on each request.
       // We pass the original Request to the Durable Object's fetch method
-      let response = await durableObjectStub.fetch(req);
+      const response = await durableObjectStub.fetch(req);
 
       // This would return "wrote to queue", but you could return any response.
       return response;
@@ -97,17 +99,16 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 
-export class YourDurableObject implements DurableObject {
-  constructor(private state: DurableObjectState, private env: Env) {}
-
+export class YourDurableObject extends DurableObject<Env> {
   async fetch(req: Request): Promise<Response> {
     // Error handling elided for brevity.
     // Publish to your queue
     await this.env.YOUR_QUEUE.send({
-      id: this.state.id.toString() // Write the ID of the Durable Object to your queue
+      id: this.ctx.id.toString(), // Write the ID of the Durable Object to your queue
       // Write any other properties to your queue
     });
 
-    return new Response("wrote to queue")
+    return new Response("wrote to queue");
   }
+}
 ```

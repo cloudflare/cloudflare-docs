@@ -11,21 +11,21 @@ import { Render, WranglerConfig, DashButton } from "~/components";
 
 ## Account plan limits
 
-| Feature                                                                          | Workers Free | Workers Paid  |
-| -------------------------------------------------------------------------------- | ------------ | ------------- |
-| [Requests](#daily-requests)                                                      | 100,000/day  | No limit      |
-| [CPU time](#cpu-time)                                                            | 10 ms        | 5 min         |
-| [Memory](#memory)                                                                | 128 MB       | 128 MB        |
-| [Subrequests](#subrequests)                                                      | 50/request   | 1,000/request |
-| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6             |
-| [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker    |
-| [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB          |
-| [Worker size](#worker-size)                                                      | 3 MB         | 10 MB         |
-| [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second      |
-| [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500           |
-| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250           |
-| Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000       |
-| Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB        |
+| Feature                                                                          | Workers Free | Workers Paid   |
+| -------------------------------------------------------------------------------- | ------------ | -------------- |
+| [Requests](#daily-requests)                                                      | 100,000/day  | No limit       |
+| [CPU time](#cpu-time)                                                            | 10 ms        | 5 min          |
+| [Memory](#memory)                                                                | 128 MB       | 128 MB         |
+| [Subrequests](#subrequests)                                                      | 50/request   | 10,000/request |
+| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6              |
+| [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker     |
+| [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB           |
+| [Worker size](#worker-size)                                                      | 3 MB         | 10 MB          |
+| [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second       |
+| [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500            |
+| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250            |
+| Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000        |
+| Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB         |
 
 <sup>1</sup> If you reach this limit, consider using [Workers for
 Platforms](/cloudflare-for-platforms/workers-for-platforms/).
@@ -181,12 +181,12 @@ You can configure the fail mode by toggling the corresponding [route](/workers/c
 
 A subrequest is any request a Worker makes using the [Fetch API](/workers/runtime-apis/fetch/) or to Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
 
-| Limit                            | Workers Free | Workers Paid |
-| -------------------------------- | ------------ | ------------ |
-| Subrequests per request          | 50           | 1,000        |
-| Subrequests to internal services | 1,000        | 1,000        |
+| Limit                            | Workers Free | Workers Paid           |
+| -------------------------------- | ------------ | ---------------------- |
+| Subrequests per invocation       | 50           | 10,000 (up to 10M)    |
+| Subrequests to internal services | 1,000        | Matches configured limit (default 10,000) |
 
-Each subrequest in a redirect chain counts against this limit. The total number of subrequests may exceed the number of `fetch()` calls in your code.
+Each subrequest in a redirect chain counts against this limit. The total number of subrequests may exceed the number of `fetch()` calls in your code. You can change the subrequest limit per Worker using the [`limits` configuration](/workers/wrangler/configuration/#limits) in your Wrangler configuration file.
 
 There is no set time limit on individual subrequests. As long as the client remains connected, the Worker can continue making subrequests. When the client disconnects, all tasks are canceled. Use [`event.waitUntil()`](/workers/runtime-apis/handlers/fetch/) to delay cancellation for up to 30 seconds.
 

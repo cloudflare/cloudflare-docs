@@ -1,0 +1,35 @@
+---
+pcx_content_type: navigation
+title: rtk-livestream-toggle
+description: API reference for rtk-livestream-toggle component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-livestream-toggle></rtk-livestream-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-livestream-toggle
+ [meeting]="meeting"
+ size="md"
+ variant="button">
+</rtk-livestream-toggle>
+```
+

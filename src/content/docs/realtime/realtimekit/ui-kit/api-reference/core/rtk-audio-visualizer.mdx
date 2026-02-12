@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: rtk-audio-visualizer
+description: API reference for rtk-audio-visualizer component (Web Components (HTML) Library)
+---
+An audio visualizer component which visualizes a participants audio.
+ Commonly used inside `rtk-name-tag`.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `hideMuted` | `boolean` | ✅ | - | Hide the visualizer if audio is muted |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `isScreenShare` | `boolean` | ✅ | - | Audio visualizer for screensharing, it will use screenShareTracks.audio instead of audioTrack |
+| `participant` | `Peer` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `AudioVisualizerVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-audio-visualizer></rtk-audio-visualizer>
+```
+
+### With Properties
+
+```html
+<rtk-audio-visualizer>
+</rtk-audio-visualizer>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-audio-visualizer");
+
+  el.hideMuted= true;
+  el.isScreenShare= true;
+  el.participant= participant
+</script>
+```

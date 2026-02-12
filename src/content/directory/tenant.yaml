@@ -1,0 +1,12 @@
+name: Tenant
+
+entry:
+  title: Tenant
+  url: /tenant/
+  group: Core platform
+  additional_groups: [Developer platform]
+
+meta:
+  title: Cloudflare Tenant docs
+  description: Provision and manage Cloudflare accounts and services for your team or customers
+  author: "@cloudflare"

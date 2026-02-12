@@ -1,0 +1,12 @@
+name: D1
+
+entry:
+  title: D1
+  url: /d1/
+  group: Developer platform
+  additional_groups: [Storage]
+
+meta:
+  title: Cloudflare D1 docs
+  description: Create managed, serverless databases with SQL semantics
+  author: "@cloudflare"

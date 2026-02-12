@@ -1,0 +1,44 @@
+---
+pcx_content_type: navigation
+title: RtkParticipantsStageQueue
+description: API reference for RtkParticipantsStageQueue component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkParticipantsStageQueue } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkParticipantsStageQueue />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkParticipantsStageQueue } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkParticipantsStageQueue
+      meeting={meeting}
+      size="md"
+      view={participantsviewmode}
+    />
+  );
+}
+```
+

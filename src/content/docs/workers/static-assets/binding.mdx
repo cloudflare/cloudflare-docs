@@ -157,7 +157,11 @@ In the example above, assets would be available through `env.ASSETS`.
 
 **Example**
 
-Your dynamic code can make new, or forward incoming requests to your project's static assets using the assets binding. For example, `env.ASSETS.fetch(request)`, `env.ASSETS.fetch(new URL('https://assets.local/my-file'))` or `env.ASSETS.fetch('https://assets.local/my-file')`.
+Your dynamic code can make new, or forward incoming requests to your project's static assets using the assets binding. For example, `env.ASSETS.fetch(request)`, `env.ASSETS.fetch(new URL('https://assets.local/my-file'))` or `env.ASSETS.fetch('https://assets.local/my-file')`. The hostname used in the URL (for example, `assets.local`) is not meaningful — any valid hostname will work. Only the URL pathname is used to match assets.
+
+:::note
+If you need to fetch assets from within an [RPC method](/workers/runtime-apis/rpc/#fetching-static-assets) (where there is no incoming `request`), construct a URL using any hostname — for example, `this.env.ASSETS.fetch(new Request('https://assets.local/path/to/asset'))`.
+:::
 
 Take the following example that configures a Worker script to return a response under all requests headed for `/api/`. Otherwise, the Worker script will pass the incoming request through to the asset binding. In this case, because a Worker script is only invoked when the requested route has not matched any static assets, this will always evaluate [`not_found_handling`](/workers/static-assets/#routing-behavior) behavior.
 

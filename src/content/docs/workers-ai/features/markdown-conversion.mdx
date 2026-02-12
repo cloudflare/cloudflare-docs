@@ -206,3 +206,8 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown/su
 ## Pricing
 
 `toMarkdown` is free for most format conversions. In some cases, like image conversion, it can use Workers AI models for object detection and summarization, which may incur additional costs if it exceeds the Workers AI free allocation limits. See the [pricing page](/workers-ai/platform/pricing/) for more details.
+
+## Other Markdown conversion features
+
+- Browser Rendering [/markdown](https://developers.cloudflare.com/browser-rendering/rest-api/markdown-endpoint/) REST API supports markdown conversion if you need to render a dynamic page or application in a real browser before converting it.
+- [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) allows real-time document conversion for Cloudflare zones using content negotiation headers.

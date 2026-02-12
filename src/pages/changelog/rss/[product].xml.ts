@@ -10,15 +10,15 @@ import type {
 } from "astro";
 
 export const getStaticPaths = (async () => {
-	const products = await getCollection("products");
+	const directory = await getCollection("directory");
 
-	return products.map((product) => {
+	return directory.map((entry) => {
 		return {
 			params: {
-				product: product.id,
+				product: entry.id,
 			},
 			props: {
-				product,
+				product: entry,
 			},
 		};
 	});

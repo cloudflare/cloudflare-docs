@@ -482,6 +482,17 @@ Refer to [Access Durable Objects storage](/durable-objects/best-practices/access
 
 Use `blockConcurrencyWhile()` in the constructor to run migrations and initialize state before any requests are processed. This ensures your schema is ready and prevents race conditions during initialization.
 
+:::note
+`PRAGMA user_version` is not supported by Durable Objects SQLite storage. You must use an alternative approach to track your schema version.
+:::
+
+For production applications, use a migration library that handles version tracking and execution automatically:
+
+- [`durable-utils`](https://github.com/lambrospetrou/durable-utils#sqlite-schema-migrations) — provides a `SQLSchemaMigrations` class that tracks executed migrations both in memory and in storage.
+- [`@cloudflare/actors` storage utilities](https://github.com/cloudflare/actors/blob/main/packages/storage/src/sql-schema-migrations.ts) — a reference implementation of the same pattern used by the Cloudflare Actors framework.
+
+If you prefer not to use a library, you can track schema versions manually using a `_sql_schema_migrations` table. The following example demonstrates this approach:
+
 <TypeScriptExample filename="index.ts">
 ```ts
 import { DurableObject } from "cloudflare:workers";
@@ -501,11 +512,21 @@ export class ChatRoom extends DurableObject<Env> {
 	}
 
 	private async migrate() {
-		// Check current schema version
+		// Create the migrations tracking table if it does not exist
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS _sql_schema_migrations (
+				id INTEGER PRIMARY KEY,
+				applied_at TEXT NOT NULL DEFAULT (datetime('now'))
+			);
+		`);
+
+		// Determine the current schema version
 		const version =
 			this.ctx.storage.sql
-				.exec<{ version: number }>("PRAGMA user_version")
-				.one()?.version ?? 0;
+				.exec<{ version: number }>(
+					"SELECT COALESCE(MAX(id), 0) as version FROM _sql_schema_migrations",
+				)
+				.one().version;
 
 		if (version < 1) {
 			this.ctx.storage.sql.exec(`
@@ -516,7 +537,7 @@ export class ChatRoom extends DurableObject<Env> {
 					created_at INTEGER NOT NULL
 				);
 				CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at);
-				PRAGMA user_version = 1;
+				INSERT INTO _sql_schema_migrations (id) VALUES (1);
 			`);
 		}
 
@@ -524,7 +545,7 @@ export class ChatRoom extends DurableObject<Env> {
 			// Future migration: add a new column
 			this.ctx.storage.sql.exec(`
 				ALTER TABLE messages ADD COLUMN edited_at INTEGER;
-				PRAGMA user_version = 2;
+				INSERT INTO _sql_schema_migrations (id) VALUES (2);
 			`);
 		}
 	}

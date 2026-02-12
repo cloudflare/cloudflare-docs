@@ -1,0 +1,38 @@
+---
+pcx_content_type: navigation
+title: rtk-more-toggle
+description: API reference for rtk-more-toggle component (Angular Library)
+---
+A button which toggles visibility of a more menu.
+ When clicked it emits a `rtkStateUpdate` event with the data:
+ ```ts
+ { activeMoreMenu: boolean; }
+ ```
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-more-toggle></rtk-more-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-more-toggle
+ size="md">
+</rtk-more-toggle>
+```
+

@@ -20,11 +20,14 @@ const result = await sandbox.exec(command: string, options?: ExecOptions): Promi
 ```
 
 **Parameters**:
+
 - `command` - The command to execute (can include arguments)
 - `options` (optional):
   - `stream` - Enable streaming callbacks (default: `false`)
   - `onOutput` - Callback for real-time output: `(stream: 'stdout' | 'stderr', data: string) => void`
   - `timeout` - Maximum execution time in milliseconds
+  - `env` - Environment variables for this command: `Record<string, string | undefined>`
+  - `cwd` - Working directory for this command
   - `stdin` - Data to pass to the command's standard input (enables arbitrary input without shell injection risks)
 
 **Returns**: `Promise<ExecuteResponse>` with `success`, `stdout`, `stderr`, `exitCode`
@@ -43,6 +46,15 @@ if (result.success) {
 await sandbox.exec('npm install', {
   stream: true,
   onOutput: (stream, data) => console.log(`[${stream}] ${data}`)
+});
+
+// With environment variables (undefined values are skipped)
+await sandbox.exec('node app.js', {
+  env: {
+    NODE_ENV: 'production',
+    PORT: '3000',
+    DEBUG_MODE: undefined // Skipped, uses container default or unset
+  }
 });
 
 // Pass input via stdin (no shell injection risks)
@@ -68,6 +80,7 @@ const stream = await sandbox.execStream(command: string, options?: ExecOptions):
 ```
 
 **Parameters**:
+
 - `command` - The command to execute
 - `options` - Same as `exec()` (including `stdin` support)
 
@@ -115,13 +128,19 @@ const process = await sandbox.startProcess(command: string, options?: ProcessOpt
 ```
 
 **Parameters**:
+
 - `command` - The command to start as a background process
 - `options` (optional):
   - `cwd` - Working directory
-  - `env` - Environment variables
+  - `env` - Environment variables: `Record<string, string | undefined>`
   - `stdin` - Data to pass to the command's standard input
+  - `timeout` - Maximum execution time in milliseconds
+  - `processId` - Custom process ID
+  - `encoding` - Output encoding (default: `'utf8'`)
+  - `autoCleanup` - Whether to clean up process on sandbox sleep
 
 **Returns**: `Promise<Process>` object with:
+
 - `id` - Unique process identifier
 - `pid` - System process ID
 - `command` - The command being executed
@@ -178,6 +197,7 @@ await sandbox.killProcess(processId: string, signal?: string): Promise<void>
 ```
 
 **Parameters**:
+
 - `processId` - The process ID (from `startProcess()` or `listProcesses()`)
 - `signal` - Signal to send (default: `"SIGTERM"`)
 
@@ -218,6 +238,7 @@ const stream = await sandbox.streamProcessLogs(processId: string): Promise<Reada
 ```
 
 **Parameters**:
+
 - `processId` - The process ID
 
 **Returns**: `Promise<ReadableStream>` emitting `LogEvent` objects
@@ -246,6 +267,7 @@ const logs = await sandbox.getProcessLogs(processId: string): Promise<string>
 ```
 
 **Parameters**:
+
 - `processId` - The process ID
 
 **Returns**: `Promise<string>` with all accumulated output
@@ -341,6 +363,7 @@ await process.waitForPort(port: number, options?: WaitForPortOptions): Promise<v
 ```
 
 **Parameters**:
+
 - `port` - The port number to check
 - `options` (optional):
   - `mode` - Check mode: `'http'` (default) or `'tcp'`
@@ -394,10 +417,12 @@ const result = await process.waitForLog(pattern: string | RegExp, timeout?: numb
 ```
 
 **Parameters**:
+
 - `pattern` - String or RegExp to match in stdout/stderr
 - `timeout` - Maximum wait time in milliseconds (optional)
 
 **Returns**: `Promise<WaitForLogResult>` with:
+
 - `line` - The matching line of output
 - `matches` - Array of capture groups (for RegExp patterns)
 
@@ -431,9 +456,11 @@ const result = await process.waitForExit(timeout?: number): Promise<WaitForExitR
 ```
 
 **Parameters**:
+
 - `timeout` - Maximum wait time in milliseconds (optional)
 
 **Returns**: `Promise<WaitForExitResult>` with:
+
 - `exitCode` - The process exit code
 
 <TypeScriptExample>

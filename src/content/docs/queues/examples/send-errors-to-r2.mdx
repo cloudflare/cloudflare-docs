@@ -49,35 +49,44 @@ The following Worker will catch JavaScript errors and send them to a queue. The 
 </WranglerConfig>
 
 ```ts
-type Environment = {
-	readonly ERROR_QUEUE: Queue<Error>;
+interface ErrorMessage {
+	message: string;
+	stack?: string;
+}
+
+interface Env {
+	readonly ERROR_QUEUE: Queue<ErrorMessage>;
 	readonly ERROR_BUCKET: R2Bucket;
-};
+}
 
 export default {
-  async fetch(req, env): Promise<Response> {
+  async fetch(req, env, ctx): Promise<Response> {
     try {
       return doRequest(req);
-    } catch (error) {
+    } catch (e) {
+      const error: ErrorMessage = {
+        message: e instanceof Error ? e.message : String(e),
+        stack: e instanceof Error ? e.stack : undefined,
+      };
       await env.ERROR_QUEUE.send(error);
       return new Response(error.message, { status: 500 });
     }
   },
-  async queue(batch, env): Promise<void> {
-    let file = '';
+  async queue(batch, env, ctx): Promise<void> {
+    let file = "";
     for (const message of batch.messages) {
       const error = message.body;
-      file += error.stack || error.message || String(error);
-      file += '\r\n';
+      file += error.stack ?? error.message;
+      file += "\r\n";
     }
     await env.ERROR_BUCKET.put(`errors/${Date.now()}.log`, file);
   },
-} satisfies ExportedHandler<Environment, Error>;
+} satisfies ExportedHandler<Env, ErrorMessage>;
 
-function doRequest(request: Request): Promise<Response> {
+function doRequest(request: Request): Response {
   if (Math.random() > 0.5) {
-    return new Response('Success!');
+    return new Response("Success!");
   }
-  throw new Error('Failed!');
+  throw new Error("Failed!");
 }
 ```

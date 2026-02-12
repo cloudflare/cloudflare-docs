@@ -1,0 +1,40 @@
+---
+pcx_content_type: navigation
+title: RtkSpinner
+description: API reference for RtkSpinner component (React Library)
+---
+A component which shows an animating spinner.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `size` | `Size1` | ✅ | - | Size |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSpinner } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkSpinner />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSpinner } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkSpinner
+      size="md"
+    />
+  );
+}
+```
+

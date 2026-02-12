@@ -9,114 +9,140 @@ sidebar:
 
 import { Details, Render, PackageManagers, LinkCard } from "~/components";
 
-## Deploy your first MCP server
-
 This guide will show you how to deploy your own remote MCP server on Cloudflare using [Streamable HTTP transport](/agents/model-context-protocol/transport/), the current MCP specification standard. You have two options:
 
 - **Without authentication** — anyone can connect and use the server (no login required).
 - **With [authentication and authorization](/agents/guides/remote-mcp-server/#add-authentication)** — users sign in before accessing tools, and you can control which tools an agent can call based on the user's permissions.
 
+## Deploy your first MCP server
+
 You can start by deploying a [public MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) without authentication, then add user authentication and scoped authorization later. If you already know your server will require authentication, you can skip ahead to the [next section](/agents/guides/remote-mcp-server/#add-authentication).
 
-The button below will guide you through everything you need to do to deploy this [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) to your Cloudflare account:
+### Via the dashboard
+
+The button below will guide you through everything you need to do to deploy an [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) to your Cloudflare account:
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless)
 
-Once deployed, this server will be live at your workers.dev subdomain (e.g. remote-mcp-server-authless.your-account.workers.dev/mcp). You can connect to it immediately using the [AI Playground](https://playground.ai.cloudflare.com/) (a remote MCP client), [MCP inspector](https://github.com/modelcontextprotocol/inspector) or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-remote-mcp-server-to-claude-and-other-mcp-clients-via-a-local-proxy). Then, once you're ready, you can customize the MCP server and add your own [tools](/agents/model-context-protocol/tools/).
+Once deployed, this server will be live at your `workers.dev` subdomain (for example, `remote-mcp-server-authless.your-account.workers.dev/mcp`). You can connect to it immediately using the [AI Playground](https://playground.ai.cloudflare.com/) (a remote MCP client), [MCP inspector](https://github.com/modelcontextprotocol/inspector) or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-remote-mcp-server-to-claude-and-other-mcp-clients-via-a-local-proxy).
 
-If you're using the "Deploy to Cloudflare" button, a new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can then clone this repository, [develop locally](/agents/guides/remote-mcp-server/#local-development), and start writing code and building.
+A new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can clone this repository, [develop locally](/agents/guides/remote-mcp-server/#local-development), and start customizing the MCP server with your own [tools](/agents/model-context-protocol/tools/).
 
-### Set up and deploy your MCP server via CLI
+### Via the CLI
 
-Alternatively, you can use the command line as shown below to create a new MCP Server on your local machine.
+You can use the [Wrangler CLI](/workers/wrangler) to create a new MCP Server on your local machine and deploy it to Cloudflare.
 
-<PackageManagers
-	type="create"
-	pkg="cloudflare@latest"
-	args={"my-mcp-server --template=cloudflare/ai/demos/remote-mcp-authless"}
-/>
+1. Open a terminal and run the following command:
 
-Now, you have the MCP server setup, with dependencies installed. Move into that project folder:
+	<PackageManagers
+		type="create"
+		pkg="cloudflare@latest"
+		args={"remote-mcp-server-authless --template=cloudflare/ai/demos/remote-mcp-authless"}
+	/>
 
-```sh
-cd my-mcp-server
-```
+	Now, you have the MCP server setup, with dependencies installed.
 
-#### Local development
+2. Move into the project folder:
 
-In the directory of your new project, run the following command to start the development server:
+	```sh
+	cd remote-mcp-server-authless
+	```
 
-```sh
-npm start
-```
+3. In the directory of your new project, run the following command to start the development server:
 
-Your MCP server is now running on `http://localhost:8788/mcp`.
+	```sh
+	npm start
+	```
 
-In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
+	```sh output
+	⎔ Starting local server...
+	[wrangler:info] Ready on http://localhost:8788
+	```
 
-```sh
-npx @modelcontextprotocol/inspector@latest
-```
+	Your MCP server is now running on `http://localhost:8788/mcp`.
 
-Open the MCP inspector in your web browser:
+4. To test the server locally:
+	1. In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
 
-```sh
-open http://localhost:5173
-```
+		```sh
+		npx @modelcontextprotocol/inspector@latest
+		```
 
-In the inspector, enter the URL of your MCP server, `http://localhost:8788/mcp`, and click **Connect**. You should see the "List Tools" button, which will list the tools that your MCP server exposes.
+	2. Open the MCP inspector in your web browser:
 
-![MCP inspector — authenticated](~/assets/images/agents/mcp-inspector-authenticated.png)
+		```sh
+		open http://localhost:5173
+		```
 
-#### Deploy your MCP server
+	3. In the MCP inspector, enter the URL of your MCP server: `http://localhost:8788/mcp`, and select **Connect**. Select **List Tools** to show the tools that your MCP server exposes.
 
-You can deploy your MCP server to Cloudflare using the following [Wrangler CLI command](/workers/wrangler) within the example project:
+5. You can now deploy your MCP server to Cloudflare. From your project directory, run:
 
-```sh
-npx wrangler@latest deploy
-```
+	```sh
+	npx wrangler@latest deploy
+	```
 
-If you have already [connected a git repository](/workers/ci-cd/builds/) to the Worker with your MCP server, you can deploy your MCP server by pushing a change or merging a pull request to the main branch of the repository.
+	If you have already [connected a git repository](/workers/ci-cd/builds/) to the Worker with your MCP server, you can deploy your MCP server by pushing a change or merging a pull request to the main branch of the repository.
 
-After deploying, take the URL of your deployed MCP server, and enter it in the MCP inspector running on `http://localhost:5173`. You now have a remote MCP server, deployed to Cloudflare, that MCP clients can connect to.
+	The MCP server will be deployed to your `*.workers.dev` subdomain at `remote-mcp-server-authless.your-account.workers.dev/mcp`.
 
-### Connect your Remote MCP server to Claude and other MCP Clients via a local proxy
 
-Now that your MCP server is running, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop or other MCP clients to it — even though these tools aren't yet _remote_ MCP clients, and don't support remote transport or authorization on the client side. This lets you test what an interaction with your MCP server will be like with a real MCP client.
+6. To test the remote MCP server, take the URL of your deployed MCP server (`https://remote-mcp-server-authless.your-account.workers.dev/mcp`) and enter it in the MCP inspector running on `http://localhost:5173`.
 
-Update your Claude Desktop configuration to point to the URL of your MCP server. You can use either the `localhost:8788/mcp` URL, or the URL of your deployed MCP server:
+You now have a remote MCP server that MCP clients can connect to.
 
-```json
-{
-	"mcpServers": {
-		"math": {
-			"command": "npx",
-			"args": [
-				"mcp-remote",
-				"https://your-worker-name.your-account.workers.dev/mcp"
-			]
+## Connect from an MCP client via a local proxy
+
+Now that your remote MCP server is running, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop or other MCP clients to it — even if your MCP client does not support remote transport or authorization on the client side. This lets you test what an interaction with your remote MCP server will be like with a real MCP client.
+
+For example, to connect from Claude Desktop:
+
+1. Update your Claude Desktop configuration to point to the URL of your MCP server:
+
+	```json
+	{
+		"mcpServers": {
+			"math": {
+				"command": "npx",
+				"args": [
+					"mcp-remote",
+					"https://remote-mcp-server-authless.your-account.workers.dev/mcp"
+				]
+			}
 		}
 	}
-}
-```
+	```
 
-Restart Claude Desktop after updating your config file to load the MCP Server. Once this is done, Claude will be able to make calls to your remote MCP server. You can test this by asking Claude to use one of your tools. For example: "Could you use the math tool to add 23 and 19?". Claude should invoke the tool and show the result generated by the MCP server.
+2. Restart Claude Desktop to load the MCP Server. Once this is done, Claude will be able to make calls to your remote MCP server.
 
-Learn more about other ways of using remote MCP servers with MCP clients here in [this section](/agents/guides/test-remote-mcp-server).
+3. To test, ask Claude to use one of your tools. For example:
+	```txt
+	Could you use the math tool to add 23 and 19?
+	```
+
+	Claude should invoke the tool and show the result generated by the remote MCP server.
+
+To learn how to use remote MCP servers with other MCP clients, refer to [Test a Remote MCP Server](/agents/guides/test-remote-mcp-server).
 
 ## Add Authentication
 
-Now that you’ve deployed a public MCP server, let’s walk through how to enable user authentication using OAuth.
+The public MCP server example you deployed earlier allows any client to connect and invoke tools without logging in. To add user authentication to your MCP server, you can integrate Cloudflare Access or a third-party service as the OAuth provider. Your MCP server handles secure login flows and issues access tokens that MCP clients can use to make authenticated tool calls. Users sign in with the OAuth provider and grant their AI agent permission to interact with the tools exposed by your MCP server, using scoped permissions.
 
-The public server example you deployed earlier allows any client to connect and invoke tools without logging in. To add authentication, you’ll update your MCP server to act as an OAuth provider, handling secure login flows and issuing access tokens that MCP clients can use to make authenticated tool calls.
+### Cloudflare Access OAuth
 
-This is especially useful if users already need to log in to use your service. Once authentication is enabled, users can sign in with their existing account and grant their AI agent permission to interact with the tools exposed by your MCP server, using scoped permissions.
+You can configure your MCP server to require user authentication through Cloudflare Access.  Cloudflare Access acts as an identity aggregator and verifies user emails, signals from your existing [identity providers](/cloudflare-one/integrations/identity-providers/) (such as GitHub or Google), and other attributes such as IP address or device certificates.  When users connect to the MCP server, they will be prompted to log in to the configured identity provider and are only granted access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
 
-In this example, we use GitHub as an OAuth provider, but you can connect your MCP server with any [OAuth provider](/agents/model-context-protocol/authorization/#2-third-party-oauth-provider) that supports the OAuth 2.0 specification, including Google, Slack, [Stytch](/agents/model-context-protocol/authorization/#stytch), [Auth0](/agents/model-context-protocol/authorization/#stytch), [WorkOS](/agents/model-context-protocol/authorization/#stytch), and more.
+For a step-by-step deployment guide, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/access-controls/ai-controls/saas-mcp/).
 
-### Step 1 — Create a new MCP server
+### Third-party OAuth
 
-Run the following command to create a new MCP server:
+You can connect your MCP server with any [OAuth provider](/agents/model-context-protocol/authorization/#2-third-party-oauth-provider) that supports the OAuth 2.0 specification, including GitHub, Google, Slack, [Stytch](/agents/model-context-protocol/authorization/#stytch), [Auth0](/agents/model-context-protocol/authorization/#stytch), [WorkOS](/agents/model-context-protocol/authorization/#stytch), and more.
+
+The following example demonstrates how to use GitHub as an OAuth provider.
+
+#### Step 1 — Create a new MCP server
+
+Run the following command to create a new MCP server with GitHub OAuth:
 
 <PackageManagers
 	type="create"
@@ -149,68 +175,66 @@ export default new OAuthProvider({
 
 This will ensure that your users are redirected to GitHub to authenticate. To get this working though, you need to create OAuth client apps in the steps below.
 
-### Step 2 — Create an OAuth App
+#### Step 2 — Create an OAuth App
 
 You'll need to create two [GitHub OAuth Apps](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app) to use GitHub as an authentication provider for your MCP server — one for local development, and one for production.
 
-#### First create a new OAuth App for local development
+#### Step 2.1 — Create a new OAuth App for local development
 
-Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
+1. Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
 
-- **Application name**: `My MCP Server (local)`
-- **Homepage URL**: `http://localhost:8788`
-- **Authorization callback URL**: `http://localhost:8788/callback`
+	- **Application name**: `My MCP Server (local)`
+	- **Homepage URL**: `http://localhost:8788`
+	- **Authorization callback URL**: `http://localhost:8788/callback`
 
-For the OAuth app you just created, add the client ID of the OAuth app as `GITHUB_CLIENT_ID` and generate a client secret, adding it as `GITHUB_CLIENT_SECRET` to a `.dev.vars` file in the root of your project, which [will be used to set secrets in local development](/workers/configuration/secrets/).
+2. For the OAuth app you just created, add the client ID of the OAuth app as `GITHUB_CLIENT_ID` and generate a client secret, adding it as `GITHUB_CLIENT_SECRET` to a `.dev.vars` file in the root of your project, which [will be used to set secrets in local development](/workers/configuration/secrets/).
 
-```sh
-touch .dev.vars
-echo 'GITHUB_CLIENT_ID="your-client-id"' >> .dev.vars
-echo 'GITHUB_CLIENT_SECRET="your-client-secret"' >> .dev.vars
-cat .dev.vars
-```
+	```sh
+	touch .dev.vars
+	echo 'GITHUB_CLIENT_ID="your-client-id"' >> .dev.vars
+	echo 'GITHUB_CLIENT_SECRET="your-client-secret"' >> .dev.vars
+	cat .dev.vars
+	```
 
-#### Next, run your MCP server locally
+3. Run the following command to start the development server:
 
-Run the following command to start the development server:
+	```sh
+	npm start
+	```
 
-```sh
-npm start
-```
+	Your MCP server is now running on `http://localhost:8788/mcp`.
 
-Your MCP server is now running on `http://localhost:8788/mcp`.
+4. In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
 
-In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
+	```sh
+	npx @modelcontextprotocol/inspector@latest
+	```
 
-```sh
-npx @modelcontextprotocol/inspector@latest
-```
+5. Open the MCP inspector in your web browser:
 
-Open the MCP inspector in your web browser:
+	```sh
+	open http://localhost:5173
+	```
 
-```sh
-open http://localhost:5173
-```
+6. In the inspector, enter the URL of your MCP server, `http://localhost:8788/mcp`
 
-In the inspector, enter the URL of your MCP server, `http://localhost:8788/mcp`
+7. In the main panel on the right, click the **OAuth Settings** button and then click **Quick OAuth Flow**.
 
-In the main panel on the right, click the **OAuth Settings** button and then click **Quick OAuth Flow**.
+	You should be redirected to a GitHub login or authorization page. After authorizing the MCP Client (the inspector) access to your GitHub account, you will be redirected back to the inspector.
 
-You should be redirected to a GitHub login or authorization page. After authorizing the MCP Client (the inspector) access to your GitHub account, you will be redirected back to the inspector.
+8. Click **Connect** in the sidebar and you should see the "List Tools" button, which will list the tools that your MCP server exposes.
 
-Click **Connect** in the sidebar and you should see the "List Tools" button, which will list the tools that your MCP server exposes.
+#### Step 2.2 — Create a new OAuth App for production
 
-#### Second — create a new OAuth App for production
+You'll need to repeat [Step 2.1](#step-21--create-a-new-oauth-app-for-local-development) to create a new OAuth App for production.
 
-You'll need to repeat these steps to create a new OAuth App for production.
-
-Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
+1. Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
 
 - **Application name**: `My MCP Server (production)`
 - **Homepage URL**: Enter the workers.dev URL of your deployed MCP server (ex: `worker-name.account-name.workers.dev`)
 - **Authorization callback URL**: Enter the `/callback` path of the workers.dev URL of your deployed MCP server (ex: `worker-name.account-name.workers.dev/callback`)
 
-For the OAuth app you just created, add the client ID and client secret, using Wrangler CLI:
+2. For the OAuth app you just created, add the client ID and client secret, using Wrangler CLI:
 
 ```sh
 npx wrangler secret put GITHUB_CLIENT_ID
@@ -220,46 +244,42 @@ npx wrangler secret put GITHUB_CLIENT_ID
 npx wrangler secret put GITHUB_CLIENT_SECRET
 ```
 
-```
-npx wrangler secret put COOKIE_ENCRYPTION_KEY # add any random string here e.g. openssl rand -hex 32
-```
+	```
+	npx wrangler secret put COOKIE_ENCRYPTION_KEY # add any random string here e.g. openssl rand -hex 32
+	```
 
-:::caution
-When you create the first secret, Wrangler will ask if you want to create a new Worker. Submit "Y" to create a new Worker and save the secret.
-:::
+	:::caution
+	When you create the first secret, Wrangler will ask if you want to create a new Worker. Submit "Y" to create a new Worker and save the secret.
+	:::
 
-#### Set up a KV namespace
+3. Set up a KV namespace
 
-- Create the KV namespace:
+		a. Create the KV namespace:
 
-```bash
-npx wrangler kv namespace create "OAUTH_KV"
-```
+		```bash
+		npx wrangler kv namespace create "OAUTH_KV"
+		```
 
-- Update the `wrangler.jsonc` file with the resulting KV ID:
+		b. Update the `wrangler.jsonc` file with the resulting KV ID:
 
-```json
-{
-	"kvNamespaces": [
+		```json
 		{
-			"binding": "OAUTH_KV",
-			"id": "<YOUR_KV_NAMESPACE_ID>"
+			"kvNamespaces": [
+				{
+					"binding": "OAUTH_KV",
+					"id": "<YOUR_KV_NAMESPACE_ID>"
+				}
+			]
 		}
-	]
-}
-```
+		```
 
-#### Deploy your server
+4. Deploy the MCP server to your Cloudflare `workers.dev` domain:
 
-Deploy the MCP server to your Cloudflare `workers.dev` domain:
+	```bash
+	npm run deploy
+	```
 
-```bash
-npm run deploy
-```
-
-#### Finally, connect to your MCP server
-
-Now that you've added the ID and secret of your production OAuth app, you should now be able to connect to your MCP server running at `worker-name.account-name.workers.dev/mcp` using the [AI Playground](https://playground.ai.cloudflare.com/), MCP inspector or ([other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients)), and authenticate with GitHub.
+5. Connect to your server running at `worker-name.account-name.workers.dev/mcp` using the [AI Playground](https://playground.ai.cloudflare.com/), MCP inspector or ([other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients)), and authenticate with GitHub.
 
 ## Next steps
 

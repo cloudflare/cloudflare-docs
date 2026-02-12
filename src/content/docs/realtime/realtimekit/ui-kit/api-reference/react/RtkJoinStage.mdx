@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: RtkJoinStage
+description: API reference for RtkJoinStage component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `dataConfig` | `ModalDataConfig` | ✅ | - | Content Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkJoinStage } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkJoinStage />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkJoinStage } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkJoinStage
+      dataConfig={modaldataconfig}
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

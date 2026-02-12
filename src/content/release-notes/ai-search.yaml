@@ -3,10 +3,22 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-02-09"
+    title: Crawler user agent renamed
+    description: |-
+      The AI Search crawler user agent has been renamed from `Cloudflare-AutoRAG` to `Cloudflare-AI-Search`. You can continue using the previous user agent name, `Cloudflare-AutoRAG`, in your `robots.txt`. The Bot Detection ID, `122933950` for WAF rules remains unchanged.
+  - publish_date: "2026-02-09"
+    title: Specify a single sitemap for website crawling
+    description: |-
+      You can now specify a single sitemap URL in **Parser options** to limit which pages are crawled. By default, AI Search crawls all sitemaps listed in your `robots.txt` from top to bottom.
+  - publish_date: "2026-02-09"
+    title: Sync individual files
+    description: |-
+      You can now trigger a sync for a specific file from the dashboard. Go to **Overview** > **Indexed Items** and select the sync icon next to the file you want to reindex.
   - publish_date: "2026-01-22"
     title: New file type support
     description: |-
-      AI Search now supports EMACS Lisp (`.el`) files and the `.htm` extension for HTML documents. 
+      AI Search now supports EMACS Lisp (`.el`) files and the `.htm` extension for HTML documents.
   - publish_date: "2026-01-19"
     title: Path filtering for website and R2 data sources
     description: |-

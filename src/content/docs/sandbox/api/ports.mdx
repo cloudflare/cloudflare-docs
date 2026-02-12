@@ -29,7 +29,7 @@ const response = await sandbox.exposePort(port: number, options: ExposePortOptio
 - `options`:
   - `hostname` - Your Worker's domain name (e.g., `'example.com'`). Required to construct preview URLs with wildcard subdomains like `https://8080-sandbox-abc123token.example.com`. Cannot be a `.workers.dev` domain as it doesn't support wildcard DNS patterns.
   - `name` - Friendly name for the port (optional)
-  - `token` - Custom token for the preview URL (optional). Must be 1-16 characters containing only lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (_). If not provided, a random 16-character token is generated automatically.
+  - `token` - Custom token for the preview URL (optional). Must be 1-16 characters containing only lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (\_). If not provided, a random 16-character token is generated automatically.
 
 **Returns**: `Promise<ExposePortResponse>` with `port`, `url` (preview URL), `name`
 
@@ -55,8 +55,8 @@ console.log('Stable URL:', stable.url);
 
 // With custom token for stable URLs across deployments
 await sandbox.startProcess('node api.js');
-const api = await sandbox.exposePort(3000, { 
-  hostname, 
+const api = await sandbox.exposePort(3000, {
+  hostname,
   name: 'api',
   token: 'prod-api-v1'  // URL stays same across restarts
 });
@@ -66,8 +66,8 @@ console.log('Stable API URL:', api.url);
 
 // Multiple services with custom tokens
 await sandbox.startProcess('npm run dev');
-const frontend = await sandbox.exposePort(5173, { 
-  hostname, 
+const frontend = await sandbox.exposePort(5173, {
+  hostname,
   name: 'frontend',
   token: 'dev-ui'
 });

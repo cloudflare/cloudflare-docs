@@ -1,0 +1,174 @@
+---
+title: Browser terminals
+pcx_content_type: how-to
+sidebar:
+  order: 9
+description: Connect browser-based terminals to sandbox shells using xterm.js or raw WebSockets.
+---
+
+import { TypeScriptExample, PackageManagers } from "~/components";
+
+This guide shows you how to connect a browser-based terminal to a sandbox shell. You can use the `SandboxAddon` with xterm.js, or connect directly over WebSockets.
+
+## Prerequisites
+
+You need an existing Cloudflare Worker with a sandbox binding. Refer to [Getting started](/sandbox/get-started/) if you do not have one.
+
+Install the terminal dependencies in your frontend project:
+
+<PackageManagers
+	type="install"
+	pkg="@xterm/xterm @xterm/addon-fit @cloudflare/sandbox"
+/>
+
+If you are not using xterm.js, you only need `@cloudflare/sandbox` for types.
+
+## Handle WebSocket upgrades in the Worker
+
+Add a route that proxies WebSocket connections to the sandbox terminal. The example below supports both the default session and named sessions via a query parameter:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+
+    if (url.pathname === '/ws/terminal' && request.headers.get('Upgrade') === 'websocket') {
+      const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+      const sessionId = url.searchParams.get('session');
+
+      if (sessionId) {
+        const session = await sandbox.getSession(sessionId);
+        return await session.terminal(request);
+      }
+
+      return await sandbox.terminal(request, { cols: 80, rows: 24 });
+    }
+
+    return new Response('Not found', { status: 404 });
+  }
+};
+```
+
+</TypeScriptExample>
+
+## Connect with xterm.js and SandboxAddon
+
+Create the terminal in your browser code and attach the `SandboxAddon`. The addon manages the WebSocket connection, automatic reconnection, and resize forwarding.
+
+<TypeScriptExample>
+
+```ts
+import { Terminal } from '@xterm/xterm';
+import { FitAddon } from '@xterm/addon-fit';
+import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+import '@xterm/xterm/css/xterm.css';
+
+const terminal = new Terminal({ cursorBlink: true });
+const fitAddon = new FitAddon();
+terminal.loadAddon(fitAddon);
+
+const addon = new SandboxAddon({
+  getWebSocketUrl: ({ sandboxId, sessionId, origin }) => {
+    const params = new URLSearchParams({ id: sandboxId });
+    if (sessionId) params.set('session', sessionId);
+    return `${origin}/ws/terminal?${params}`;
+  },
+  onStateChange: (state, error) => {
+    console.log(`Terminal ${state}`, error ?? '');
+  }
+});
+
+terminal.loadAddon(addon);
+terminal.open(document.getElementById('terminal'));
+fitAddon.fit();
+
+// Connect to the default session
+addon.connect({ sandboxId: 'my-sandbox' });
+
+// Or connect to a specific session
+// addon.connect({ sandboxId: 'my-sandbox', sessionId: 'development' });
+
+window.addEventListener('resize', () => fitAddon.fit());
+```
+
+</TypeScriptExample>
+
+For the full addon API, refer to the [Terminal API reference](/sandbox/api/terminal/).
+
+## Connect without xterm.js
+
+If you are building a custom terminal UI or running in an environment without xterm.js, connect directly over WebSockets. The protocol uses binary frames for terminal data and JSON text frames for control messages.
+
+<TypeScriptExample>
+
+```ts
+const ws = new WebSocket('wss://example.com/ws/terminal?id=my-sandbox');
+ws.binaryType = 'arraybuffer';
+
+const decoder = new TextDecoder();
+const encoder = new TextEncoder();
+
+ws.addEventListener('message', (event) => {
+  if (event.data instanceof ArrayBuffer) {
+    // Terminal output (binary) — includes ANSI escape sequences
+    const text = decoder.decode(event.data);
+    appendToDisplay(text);
+    return;
+  }
+
+  // Control message (JSON text)
+  const msg = JSON.parse(event.data);
+
+  switch (msg.type) {
+    case 'ready':
+      // Terminal is accepting input — send initial resize
+      ws.send(JSON.stringify({ type: 'resize', cols: 80, rows: 24 }));
+      break;
+
+    case 'exit':
+      console.log(`Shell exited: code ${msg.code}`);
+      break;
+
+    case 'error':
+      console.error('Terminal error:', msg.message);
+      break;
+  }
+});
+
+// Send keystrokes as binary
+function sendInput(text: string): void {
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(encoder.encode(text));
+  }
+}
+```
+
+</TypeScriptExample>
+
+Key protocol details:
+
+- Set `binaryType` to `arraybuffer` before connecting.
+- Buffered output from a previous connection arrives as binary frames before the `ready` message.
+- Send keystrokes as binary (UTF-8). Send control messages (`resize`) as JSON text.
+- The PTY stays alive when a client disconnects. Reconnecting replays buffered output.
+
+For the full protocol specification, refer to the [WebSocket protocol section](/sandbox/api/terminal/#websocket-protocol) in the API reference.
+
+## Best practices
+
+- **Always use FitAddon** — Without it, terminal dimensions do not match the container and text wraps incorrectly.
+- **Handle resize events** — Call `fitAddon.fit()` on window resize so the terminal and PTY stay in sync.
+- **Clean up on unmount** — Call `addon.disconnect()` when removing the terminal from the page.
+- **Use sessions for isolation** — If users need separate shell environments, create sessions with different working directories and environment variables.
+
+## Related resources
+
+- [Terminal API reference](/sandbox/api/terminal/) — Method signatures, addon API, and WebSocket protocol
+- [Terminal connections](/sandbox/concepts/terminal/) — How terminal connections work
+- [Session management](/sandbox/concepts/sessions/) — How sessions work

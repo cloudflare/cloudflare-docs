@@ -23,7 +23,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 - Routes' priorities and weights
 - Regional scoping of traffic to reduce latency
 - BGP peering (beta)
-{ props.magicWord !== "Magic Transit" && (<Markdown text={`- Automatic Return Routing (ARR)`} inline={false} />)}
+{ props.magicWord !== "Magic Transit" && (<Markdown text={`- [Automatic Return Routing (ARR)](${props.trafficSteeringPage}#automatic-return-routing-beta)`} inline={false} />)}
 
 { props.magicWord === "Magic Transit" && (
   <>
@@ -408,7 +408,7 @@ Example:
 
 BGP peering is available when using the following on-ramps:
 - [CNI with Dataplane v2](/network-interconnect/).
-- <a href={props.tunnelEndpoints}>IPsec and GRE tunnels (beta)</a>.
+- <a href={props.tunnelEndpoints}>IPsec and GRE tunnels (beta)</a>. Requires <a href={props.unifiedRoutingModeURL}>Unified Routing (beta)</a>.
 
 ### Choose an ASN for BGP peering
 

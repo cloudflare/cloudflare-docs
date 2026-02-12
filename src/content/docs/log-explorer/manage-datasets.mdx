@@ -9,14 +9,18 @@ import { TabItem, Tabs, Render, DashButton } from "~/components";
 
 Log Explorer allows you to enable or disable which datasets are available to query in Log Search.
 
+:::note
+Canceling a Log Explorer subscription stops renewal, but it does not automatically stop log ingestion during the current billing cycle. To completely turn off Log Explorer, refer to [How do I turn off Log Explorer?](/log-explorer/faq/#how-do-i-turn-off-log-explorer).
+:::
+
 ## Supported datasets
 
 Log Explorer currently supports the following datasets:
 
 ### Zone level
 
-- [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/)	(`http_requests`)
-- [Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/)	(`firewall_events`)
+- [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) (`http_requests`)
+- [Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/) (`firewall_events`)
 - [DNS Logs](/logs/logpush/logpush-job/datasets/zone/dns_logs/) (`dns_logs`)
 - [NEL Reports](/logs/logpush/logpush-job/datasets/zone/nel_reports/) (`nel_reports`)
 - [Page Shield Events](/logs/logpush/logpush-job/datasets/zone/page_shield_events/) (`page_shield_events`)
@@ -25,22 +29,22 @@ Log Explorer currently supports the following datasets:
 
 ### Account level
 
-- [Access requests](/logs/logpush/logpush-job/datasets/account/access_requests/)	(`access_requests`)
-- [CASB findings](/logs/logpush/logpush-job/datasets/account/casb_findings/)	(`casb_findings`)
+- [Access requests](/logs/logpush/logpush-job/datasets/account/access_requests/) (`access_requests`)
+- [CASB findings](/logs/logpush/logpush-job/datasets/account/casb_findings/) (`casb_findings`)
 - [Device posture results](/logs/logpush/logpush-job/datasets/account/device_posture_results/) (`device_posture_results`)
-- [Gateway DNS](/logs/logpush/logpush-job/datasets/account/gateway_dns/)	(`gateway_dns`)
-- [Gateway HTTP](/logs/logpush/logpush-job/datasets/account/gateway_http/)	(`gateway_http`)
-- [Gateway Network](/logs/logpush/logpush-job/datasets/account/gateway_network/)	(`gateway_network`)
-- [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/)	(`zero_trust_network_sessions`)
+- [Gateway DNS](/logs/logpush/logpush-job/datasets/account/gateway_dns/) (`gateway_dns`)
+- [Gateway HTTP](/logs/logpush/logpush-job/datasets/account/gateway_http/) (`gateway_http`)
+- [Gateway Network](/logs/logpush/logpush-job/datasets/account/gateway_network/) (`gateway_network`)
+- [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) (`zero_trust_network_sessions`)
 - [Audit Logs](/logs/logpush/logpush-job/datasets/account/audit_logs/) (`audit_logs`)
 - [Audit_logs_v2](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/) (`audit_logs_v2`)
 - [Browser Isolation User Actions](/logs/logpush/logpush-job/datasets/account/biso_user_actions/) (`biso_user_actions`)
 - [DNS firewall logs](/logs/logpush/logpush-job/datasets/account/dns_firewall_logs/) (`dns_firewall_logs`)
 - [Email security alerts](/logs/logpush/logpush-job/datasets/account/email_security_alerts/) (`email_security_alerts`)
-- [Magic IDS Detections](/logs/logpush/logpush-job/datasets/account/magic_ids_detections/) (`magic_ids_detections`) 
+- [Magic IDS Detections](/logs/logpush/logpush-job/datasets/account/magic_ids_detections/) (`magic_ids_detections`)
 - [Network Analytics](/logs/logpush/logpush-job/datasets/account/network_analytics_logs/) (`network_analytics_logs`)
 - [Sinkhole HTTP Logs](/logs/logpush/logpush-job/datasets/account/sinkhole_http_logs/) (`sinkhole_http_logs`)
-- [IP Sec Logs](/logs/logpush/logpush-job/datasets/account/ipsec_logs/) (`ipsec_logs`) 
+- [IP Sec Logs](/logs/logpush/logpush-job/datasets/account/ipsec_logs/) (`ipsec_logs`)
 
 ## Enable Log Explorer
 
@@ -50,7 +54,7 @@ In order for Log Explorer to begin storing logs, you need to enable the desired 
 
    <DashButton url="/?to=/:account/log-explorer/manage-sources" />
 
-2. Select **Add dataset** to select the datasets you want to query. 
+2. Select **Add dataset** to select the datasets you want to query.
 3. Choose a dataset and then a zone. Then, select **Add**. You can always return to this page to enable more datasets or manage your existing ones.
 
 :::note
@@ -71,18 +75,18 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets
 
 ```json output
 {
-  "result": {
-    "dataset": "http_requests",
-    "object_type": "zone",
-    "object_id": "<ZONE ID>",
-    "created_at": "2025-06-03T14:33:16Z",
-    "updated_at": "2025-06-03T14:33:16Z",
-    "dataset_id": "01973635f7e273a1964a02f4d4502499",
-    "enabled": true
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"dataset": "http_requests",
+		"object_type": "zone",
+		"object_id": "<ZONE ID>",
+		"created_at": "2025-06-03T14:33:16Z",
+		"updated_at": "2025-06-03T14:33:16Z",
+		"dataset_id": "01973635f7e273a1964a02f4d4502499",
+		"enabled": true
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

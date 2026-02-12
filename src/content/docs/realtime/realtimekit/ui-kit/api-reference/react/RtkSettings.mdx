@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: RtkSettings
+description: API reference for RtkSettings component (React Library)
+---
+A settings component to see and change your audio/video devices
+ as well as see your connection quality.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSettings } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkSettings />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSettings } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkSettings
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

@@ -1,0 +1,31 @@
+---
+title: AI Crawl Control with Transform Rules
+pcx_content_type: concept
+sidebar:
+  order: 5
+description: Add licensing headers to crawler responses using Transform Rules.
+---
+
+import { Example } from "~/components";
+
+Use [Response Header Transform Rules](/rules/transform/response-header-modification/) to add `Link` headers to crawler responses — even when those crawlers are blocked. This lets you communicate terms of use or [RSL](https://rslstandard.org/) license information.
+
+## Example: Add licensing terms to blocked responses
+
+<Example>
+
+**Expression:**
+
+```txt
+(cf.bot_management.verified_bot and http.response.code eq 403)
+```
+
+**Header modification:**
+
+- **Operation:** Set static
+- **Header name:** `Link`
+- **Value:** `<https://example.com/ai-licensing-terms>; rel="license"; type="text/html"`
+
+</Example>
+
+For more details, refer to [Response Header Transform Rules](/rules/transform/response-header-modification/).

@@ -62,7 +62,7 @@ flowchart TD
 | `onError(connection, error)`                  | When a WebSocket error occurs                                                                                                                                                          |
 | `onClose(connection, code, reason, wasClean)` | When a WebSocket connection closes                                                                                                                                                     |
 | `onEmail(email)`                              | When an email is routed to the instance                                                                                                                                                |
-| `onStateUpdate(state, source)`                | When state changes (from server or client)                                                                                                                                             |
+| `onStateChanged(state, source)`                | When state changes (from server or client)                                                                                                                                             |
 
 ## Core properties
 
@@ -77,7 +77,7 @@ flowchart TD
 
 | Feature              | Methods                                                               | Documentation                                                       |
 | -------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| **State**            | `setState()`, `onStateUpdate()`, `initialState`                       | [Store and sync state](/agents/api-reference/store-and-sync-state/) |
+| **State**            | `setState()`, `onStateChanged()`, `initialState`                       | [Store and sync state](/agents/api-reference/store-and-sync-state/) |
 | **Callable methods** | `@callable()` decorator                                               | [Callable methods](/agents/api-reference/callable-methods/)         |
 | **Scheduling**       | `schedule()`, `scheduleEvery()`, `getSchedules()`, `cancelSchedule()` | [Schedule tasks](/agents/api-reference/schedule-tasks/)             |
 | **Queue**            | `queue()`, `dequeue()`, `dequeueAll()`, `getQueue()`                  | [Queue tasks](/agents/api-reference/queue-tasks/)                   |
@@ -85,7 +85,7 @@ flowchart TD
 | **HTTP/SSE**         | `onRequest()`                                                         | [HTTP and SSE](/agents/api-reference/http-sse/)                     |
 | **Email**            | `onEmail()`, `replyToEmail()`                                         | [Email routing](/agents/api-reference/email/)                       |
 | **Workflows**        | `runWorkflow()`, `waitForApproval()`                                  | [Run Workflows](/agents/api-reference/run-workflows/)               |
-| **MCP Client**       | `addMcpServer()`, `removeMcpServer()`, `getMcpServers()`              | [MCP Client API](/agents/model-context-protocol/mcp-client-api/)    |
+| **MCP Client**       | `addMcpServer()`, `removeMcpServer()`, `getMcpServers()`              | [MCP Client API](/agents/api-reference/mcp-client-api/ )    |
 | **AI Models**        | Workers AI, OpenAI, Anthropic bindings                                | [Using AI models](/agents/api-reference/using-ai-models/)           |
 | **Context**          | `getCurrentAgent()`                                                   | [getCurrentAgent()](/agents/api-reference/get-current-agent/)       |
 | **Observability**    | `observability.emit()`                                                | [Observability](/agents/api-reference/observability/)               |

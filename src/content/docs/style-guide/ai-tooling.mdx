@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: AI Tooling
+title: AI tooling
 sidebar:
   order: 4
 ---
@@ -62,3 +62,31 @@ To install them:
 ```sh
 $ npx skills add https://developers.cloudflare.com
 ```
+
+## AI resources for documentation contributors
+
+The `cloudflare-docs` repository includes an [`AGENTS.md`](https://github.com/cloudflare/cloudflare-docs/blob/production/AGENTS.md) file that helps AI agents understand the structure, tooling, and conventions of the repository so they can make correct, buildable changes.
+
+AGENTS.md is a simple, open format for guiding coding agents — refer to the [AGENTS.md](https://agents.md/) website for more information.
+
+The documentation repository also includes specific configuration for the following AI tools:
+
+- [OpenCode](https://opencode.ai/)
+- [Windsurf](https://windsurf.com/)
+
+We provide scripts to set up other AI tools (currently Claude Code, Cursor, and GitHub Copilot) via [`rulesync`](https://github.com/dyoshikawa/rulesync), a tool for synchronizing AI tool configurations.
+
+If you are a documentation contributor and you would like to use Claude Code, Cursor, or GitHub Copilot, use one of the following scripts:
+
+```bash
+# Configure Claude Code
+npm run ai-setup:claudecode
+
+# Configure Cursor
+npm run ai-setup:cursor
+
+# Configure GitHub Copilot
+npm run ai-setup:copilot
+```
+
+Each script will import AI tool components (commands and subagents) from the OpenCode configuration committed to the repository and generate back specific configuration files in the expected locations for your selected AI tool.
