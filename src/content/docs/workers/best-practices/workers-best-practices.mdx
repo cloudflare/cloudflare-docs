@@ -646,52 +646,7 @@ export default {
 
 For more information, refer to [Workers Logs](/workers/observability/logs/workers-logs/) and [Traces](/workers/observability/traces/).
 
-### Use Tail Workers for durable logging
-
-`console.log` is best-effort. If a Worker crashes or is evicted, in-flight logs can be lost. For logs that must not be dropped (audit trails, billing events, compliance), use a [Tail Worker](/workers/observability/logs/tail-workers/). Tail Workers receive log events asynchronously and can forward them to any destination.
-
-<WranglerConfig>
-
-```jsonc
-{
-	// Main Worker configuration
-	"name": "my-worker",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-	"compatibility_flags": ["nodejs_compat"],
-
-	// ✅ Good: attach a Tail Worker for durable log delivery
-	"tail_consumers": [{ "service": "my-log-consumer" }],
-}
-```
-
-</WranglerConfig>
-
-<TypeScriptExample filename="src/log-consumer.ts">
-
-```ts
-// Tail Worker: receives log events from the main Worker
-export default {
-	async tail(events: TraceItem[]): Promise<void> {
-		for (const event of events) {
-			// Forward to your logging service, R2 bucket, or Queue
-			await fetch("https://logs.example.com/ingest", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					scriptName: event.scriptName,
-					outcome: event.outcome,
-					logs: event.logs,
-					exceptions: event.exceptions,
-					timestamp: event.eventTimestamp,
-				}),
-			});
-		}
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</TypeScriptExample>
+For more information on all available observability tools, refer to [Workers Observability](/workers/observability/).
 
 ## Code patterns
 
