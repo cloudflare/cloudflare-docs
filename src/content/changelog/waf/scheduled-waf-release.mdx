@@ -1,13 +1,11 @@
 ---
-title: WAF Release - Scheduled changes for 2026-01-19
-description: WAF managed ruleset changes scheduled for 2026-01-19
-date: 2026-01-15
+title: WAF Release - Scheduled changes for 2026-02-16
+description: WAF managed ruleset changes scheduled for 2026-02-16
+date: 2026-02-10
 scheduled: true
 ---
 
 import { RuleID } from "~/components";
-
-The planned release has been postponed to ensure a smooth deployment.
 
 <table style="width: 100%">
   <thead>
@@ -22,48 +20,26 @@ The planned release has been postponed to ensure a smooth deployment.
     </tr>
   </thead>
   <tbody>
-  <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-19</td>
+    <tr>
+      <td>2026-02-10</td>
+      <td>2026-02-16</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="a291bd530fa346d18cc1ce5a68d90c8f" />
+        <RuleID id="a219dd28a0694faea0f942d4b0089874" />
       </td>
-      <td>SQLi - Comment - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - Comment" (ID: <RuleID id="42c424998d2a42c9808ab49c6d8d8fe4" />)</td>
-   </tr>
-   <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-19</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="da289f9e692e4f5397d915fbfaa045cf" />
-      </td>
-      <td>SQLi - Comparison - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - Comparison" (ID: <RuleID id="8166da327a614849bfa29317e7907480" />)</td>
+      <td>Zimbra - Local File Inclusion - CVE:CVE-2025-68645</td>
+      <td>This is a new detection. </td>
    </tr>
     <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-26</td>
+      <td>2026-02-10</td>
+      <td>2026-02-16</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="7a47683eacce4abd870ab2c630698ff3" />
+        <RuleID id="b10164cf42ab47b7ab274b9573b09f52" />
       </td>
-      <td>XWiki - Remote Code Execution - CVE:CVE-2025-24893 2</td>
-      <td>This is a new detection. The rule has been renamed to "Wiki - Remote Code Execution - CVE-2025-24893 2", previously known as "XWiki - Remote Code Execution - CVE-2025-24893 – Beta".</td>
-   </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-26</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="ad5c52f6ca334ef4a844e5e5da8ba7e6" />
-      </td>
-      <td>Django SQLI - CVE:CVE-2025-64459</td>
+      <td>Vite - WASM Import Path Traversal - CVE:CVE-2025-31125</td>
       <td>This is a new detection.</td>
    </tr> 
   </tbody>

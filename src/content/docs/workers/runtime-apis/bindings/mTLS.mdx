@@ -35,10 +35,15 @@ Then, update your Worker project's Wrangler file to create an mTLS certificate b
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-mtls_certificates = [
-  { binding = "MY_CERT", certificate_id = "<CERTIFICATE_ID>" }
-]
+```jsonc
+{
+	"mtls_certificates": [
+		{
+			"binding": "MY_CERT",
+			"certificate_id": "<CERTIFICATE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

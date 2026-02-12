@@ -161,7 +161,7 @@ Use this selector to filter based on the country where the query arrived to Gate
 <Render
 	file="gateway/value"
 	product="cloudflare-one"
-	params={{ one: "hostnames", two: "Host" }}
+	params={{ selector: "Host", selectordescription: "hostname", operator: "matches regex", valueOne: ".*whispersystems.org", valueTwo: ".*signal.org" }}
 />
 
 ## Logical operators

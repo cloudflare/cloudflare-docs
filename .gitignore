@@ -32,3 +32,11 @@ pnpm-debug.log*
 .idea
 
 tools/relevant_changed_files.txt
+
+# Configuration of AI tools we don't directly support in this repo (generated via rulesync)
+.rulesync/
+.claude/
+CLAUDE.md
+.cursor/
+.github/prompts/
+.github/agents/

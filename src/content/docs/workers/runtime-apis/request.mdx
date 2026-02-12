@@ -427,6 +427,28 @@ Using any other type of `ReadableStream` as the body of a request will result in
 
 ***
 
+## Differences
+
+The Workers implementation of the `Request` interface includes several extensions to the web standard `Request` API. These differences are intentional and provide additional functionality specific to the Workers runtime.
+
+:::note[TypeScript users]
+Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/#types)) define a `Request` type that includes Workers-specific properties like `cf`. This type is not directly compatible with the standard `Request` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions or create a new `Request` object.
+:::
+
+### The `cf` property
+
+Workers adds a `cf` property to the `Request` object that contains Cloudflare-specific metadata about the incoming request. This property is not part of the web standard, and is only available in the Workers runtime. Refer to [`IncomingRequestCfProperties`](#incomingrequestcfproperties) for details.
+
+### The `headers` property
+
+The `headers` property returns a Workers-specific [`Headers`](/workers/runtime-apis/headers/) object that includes additional methods like `getAll()` for `Set-Cookie` headers. Refer to the [Headers documentation](/workers/runtime-apis/headers/#differences) for details on how the Workers `Headers` implementation differs from the web standard.
+
+### Immutability
+
+Incoming `Request` objects passed to the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) are immutable. To modify properties of an incoming request, you must create a new `Request` object.
+
+---
+
 ## Related resources
 
 * [Examples: Modify request property](/workers/examples/modify-request-property/)

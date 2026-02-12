@@ -1,0 +1,33 @@
+---
+pcx_content_type: navigation
+title: rtk-meeting-title
+description: API reference for rtk-meeting-title component (Angular Library)
+---
+Displays the title of the meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-meeting-title></rtk-meeting-title>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-meeting-title
+ [meeting]="meeting">
+</rtk-meeting-title>
+```
+

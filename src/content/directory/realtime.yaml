@@ -1,0 +1,12 @@
+name: Realtime
+
+entry:
+  title: Realtime
+  url: /realtime/
+  group: Developer platform
+  additional_groups: [Media]
+
+meta:
+  title: Cloudflare Realtime docs
+  description: RealtimeKit, SFU and TURN
+  author: "@cloudflare"

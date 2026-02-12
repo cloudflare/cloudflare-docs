@@ -1,0 +1,25 @@
+---
+title: Worker templates
+pcx_content_type: reference
+sidebar:
+  order: 3
+description: Cloudflare Worker templates for AI Crawl Control integrations.
+---
+
+Use [AI Crawl Control analytics](/ai-crawl-control/features/analyze-ai-traffic/) to identify which crawlers are accessing your site, then deploy Worker templates to customize how you handle that traffic.
+
+## x402 Payment-Gated Proxy
+
+The x402-proxy template implements payment-gated access using the [x402 protocol](https://www.x402.org/) — an open payment standard built around HTTP 402 (Payment Required). Use it to monetize crawler access, paywall specific routes, or charge bots while letting humans through free.
+
+For setup instructions and Bot Management integration examples, see the [template on GitHub](https://github.com/cloudflare/templates/tree/main/x402-proxy-template).
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/x402-proxy-template)
+
+## Related
+
+- [Bot reference](/ai-crawl-control/reference/bots/) — Detection IDs and user agents for common crawlers
+- [Cloudflare Workers](/workers/) — Build and deploy serverless applications
+- [Workers templates](https://github.com/cloudflare/templates) — More templates on GitHub
+- [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/what-is-pay-per-crawl/) — Native Cloudflare integration for monetizing crawler access
+- [x402 with Agents](/agents/x402/) — Use x402 in Cloudflare Agents

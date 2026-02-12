@@ -8,9 +8,12 @@ For example, if Worker B implements the public method `add(a, b)`:
 
 <WranglerConfig>
 
-```toml
-name = "worker_b"
-main = "./src/workerB.js"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker_b",
+	"main": "./src/workerB.js"
+}
 ```
 
 </WranglerConfig>
@@ -56,12 +59,18 @@ Worker A can declare a [binding](/workers/runtime-apis/bindings) to Worker B:
 
 <WranglerConfig>
 
-```toml
-name = "worker_a"
-main = "./src/workerA.js"
-services = [
-  { binding = "WORKER_B", service = "worker_b" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker_a",
+	"main": "./src/workerA.js",
+	"services": [
+		{
+			"binding": "WORKER_B",
+			"service": "worker_b"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

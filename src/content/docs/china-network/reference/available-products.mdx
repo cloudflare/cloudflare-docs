@@ -18,11 +18,11 @@ The following products and features are available on the Cloudflare China Networ
 | [Managed rules](/waf/managed-rules/)                                       | Pre-configured OWASP rulesets and Cloudflare managed rulesets.                                                                                           |
 | [Custom rules](/waf/custom-rules/)                                         | Custom WAF rules. Supports uploaded content scanning and managed challenges.                                                                             |
 | [Rate limiting rules](/waf/rate-limiting-rules/)                           | Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached.                              |
-| [Content scanning](/waf/detections/malicious-uploads)                      | Attempts to detect content objects, such as uploaded files, and scans them for malicious signatures like malware                 						            |
+| [Content scanning](/waf/detections/malicious-uploads/)                     | Attempts to detect content objects, such as uploaded files, and scans them for malicious signatures like malware.                                        |
 | [Page Shield](/page-shield/)                                               | Simplifies external script management by tracking loaded resources like scripts and providing alerts when it detects new resources or malicious scripts. |
 | [Bot Management](/bots/)[^1]                                               | Provides bot identification and protection for a domain. Only supports certain Machine Learning (ML) models.                                             |
 | [Argo Smart Routing](/argo-smart-routing/)                                 | Layer 7 (application layer) traffic smart-routed more efficiently to origin.                                                                             |
-| [Rules](/rules/)                                                           | Make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests.                           |
+| [Rules](/rules/)[^2]                                                       | Make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests.                           |
 | [Load Balancing](/load-balancing/additional-options/load-balancing-china/) | Maximize application performance and availability.                                                                                                       |
 
 ## Developer Services
@@ -31,21 +31,25 @@ The following products and features are available on the Cloudflare China Networ
 | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Workers](/workers/)                                                      | A serverless execution environment running on the Cloudflare global network.                                                                       |
 | [Workers KV](/kv/)                                                        | Configuration data, service routing metadata, personalization (A/B testing).                                                                       |
-| [R2](/r2/)[^2]                                                            | Object storage for all your data.                                                                                                                  |                                                                   |
+| [R2](/r2/)[^3]                                                            | Object storage for all your data.                                                                                                                  |
 | [Assets](/workers/static-assets/)                                         | Upload static assets (HTML, CSS, images and other files) as part of your Worker — Cloudflare will handle caching and serving them to web browsers. |
 | [Environment variables](/workers/configuration/environment-variables/)    | Attach text strings or JSON values to your Worker.                                                                                                 |
-| [Images](/images/transform-images/bindings/)[^3]                          | Store, transform, optimize, and deliver images at scale.                                                                                           |
+| [Images](/images/transform-images/bindings/)[^4]                          | Store, transform, optimize, and deliver images at scale.                                                                                           |
 | [mTLS](/workers/runtime-apis/bindings/mtls/)                              | Securely connect to backend servers over [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).                        |
 | [Rate Limiting](/workers/runtime-apis/bindings/rate-limit/)               | Define rate limits and write code around them in your Worker.                                                                                      |
 | [Secrets](/workers/configuration/secrets/)                                | Attach encrypted text values to your Worker.                                                                                                       |
 | [Service bindings](/workers/runtime-apis/bindings/service-bindings/)      | Service bindings allow one Worker to call into another, without going through a publicly-accessible URL.                                           |
 | [Tail Workers](/workers/observability/logs/tail-workers/)                 | Receives information about the execution of other Workers.                                                                                         |
 | [Version metadata](/workers/runtime-apis/bindings/version-metadata/)      | Access metadata associated with a version from inside the Workers runtime.                                                                         |
-| [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) | Deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, managing infrastructure.             |                                                                           |
+| [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) | Deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, managing infrastructure.             |
 
 [^1]: [Turnstile](/turnstile/) is not available within Mainland China.
-[^2]: R2 buckets cannot be created within Mainland China and [custom domains](/r2/buckets/public-buckets/#add-your-domain-to-cloudflare) are not supported within Mainland China. However, R2 can be extended into Mainland China through [Global Acceleration](/china-network/concepts/global-acceleration/).
-[^3]: Image Resizing works [within Workers](/images/transform-images/transform-via-workers/), but may not be available [through URL format](/images/transform-images/transform-via-url/).
+
+[^2]: [Origin Rules](/rules/origin-rules/) require that China Network is enabled on both the original zone (the one visitors are accessing) and the target zone. Otherwise, visitors will receive a [1016 error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1016/) along with an [HTTP 530 status code](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-530/).
+
+[^3]: R2 buckets cannot be created within Mainland China and [custom domains](/r2/buckets/public-buckets/#add-your-domain-to-cloudflare) are not supported within Mainland China. However, R2 can be extended into Mainland China through [Global Acceleration](/china-network/concepts/global-acceleration/).
+
+[^4]: Image Resizing works [within Workers](/images/transform-images/transform-via-workers/), but may not be available [through URL format](/images/transform-images/transform-via-url/).
 
 ## Network Services
 

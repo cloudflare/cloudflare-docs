@@ -1,0 +1,13 @@
+name: R2 Data Catalog
+
+entry:
+  title: R2 Data Catalog
+  url: /r2/data-catalog/
+  group: Developer platform
+  additional_groups: [Storage]
+  tags: [Storage]
+
+meta:
+  title: Cloudflare R2 Data Catalog docs
+  description: Create, manage, and query Iceberg tables stored in R2
+  author: "@cloudflare"

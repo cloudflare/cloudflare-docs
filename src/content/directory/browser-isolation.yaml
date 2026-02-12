@@ -1,0 +1,10 @@
+name: Browser Isolation
+
+entry:
+  title: Browser Isolation
+  group: Cloudflare One
+  url: /cloudflare-one/remote-browser-isolation/
+
+meta:
+  description: Execute active webpage content in a secure, isolated browser
+  author: "@cloudflare"

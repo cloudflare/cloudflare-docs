@@ -3,11 +3,11 @@ params:
   - bidirectionalHealthChecksUrl
 ---
 
-This tutorial explains how to set up strongSwan along with Magic WAN. You will learn how to configure strongSwan, configure an IPsec tunnel and create a Policy Based Routing.
+This tutorial explains how to set up strongSwan along with Magic WAN. You will learn how to configure strongSwan, configure an IPsec tunnel, and create Policy-Based Routing (PBR).
 
-## 1. Health checks configuration
+## 1. Configure health checks
 
-Start by configuring the <a href={props.bidirectionalHealthChecksUrl}>bidirectional health checks</a> target for Magic WAN. For this particular tutorial, we are using `172.64.240.252` as the target IP address, and `type` as the request.
+Configure the <a href={props.bidirectionalHealthChecksUrl}>bidirectional health checks</a> target for Magic WAN. For this tutorial, use `172.64.240.252` as the target IP address, and `type` as the request.
 
 This can be set up [with the API](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). For example:
 
@@ -27,15 +27,15 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{
 }'
 ```
 
-## 2. Configure StrongSwan
+## 2. Configure strongSwan
 
-1. Start by [installing StrongSwan](https://docs.strongswan.org/docs/5.9/install/install.html). For example, open the console and run:
+1. [Install strongSwan](https://docs.strongswan.org/docs/5.9/install/install.html). For example, open the console and run:
 
 ```sh
 sudo apt-get install strongswan -y
 ```
 
-2. After StrongSwan finishes installing, go to `/etc/strongswan.conf` to edit the configuration file and add the following settings:
+2. Open `/etc/strongswan.conf` and add the following settings:
 
 ```txt
 charon {
@@ -51,9 +51,9 @@ charon {
 include strongswan.d/*.conf
 ```
 
-## 3. Configure IPsec file
+## 3. Configure the IPsec file
 
-1. Go to `/etc/ipsec.conf` and add the following settings:
+1. Open `/etc/ipsec.conf` and add the following settings:
 
 ```txt
 # ipsec.conf - strongSwan IPsec configuration file
@@ -94,7 +94,7 @@ conn cloudflare-ipsec
     leftupdown=/etc/strongswan.d/ipsec-vti.sh
 ```
 
-2. Now, you need to create a virtual tunnel interface (VTI) with the IP we configured earlier as the target for Cloudflare's health checks (`172.64.240.252`) to route IPsec packets. Go to `/etc/strongswan.d/`.
+2. Create a virtual tunnel interface (VTI) with the IP configured as the target for Cloudflare's health checks (`172.64.240.252`) to route IPsec packets. Open `/etc/strongswan.d/`.
 
 3. Create a script called `ipsec-vti.sh` and add the following:
 
@@ -127,15 +127,15 @@ esac
 echo "executed"
 ```
 
-## 4. Add Policy Based Routing (PBR)
+## 4. Add policy-based routing
 
-Although the IPsec tunnel is working as is, we need to create Policy Based Routing (PBR) to redirect returning traffic via the IPsec tunnel. Without it, the ICMP replies to the health probes sent by Cloudflare will be returned via the Internet, instead of the same IPsec tunnel. This is required to avoid any potential issues.
+Create Policy-Based Routing (PBR) to redirect returning traffic through the IPsec tunnel. Without it, the ICMP replies to the health probes sent by Cloudflare will be returned through the Internet, instead of the same IPsec tunnel.
 
-To accomplish this, the tutorial uses [iproute2](https://en.wikipedia.org/wiki/Iproute2) to route IP packets from `172.63.240.252` to the tunnel interface.
+This tutorial uses [iproute2](https://en.wikipedia.org/wiki/Iproute2) to route IP packets from `172.64.240.252` to the tunnel interface.
 
-1. Go to `/etc/iproute2/`.
+1. Open `/etc/iproute2/`.
 
-2. Edit the `rt_tables` file to add a routing table number and name. In this example, we used `viatunicmp` as the name and `200` as the number for the routing table.
+2. Edit the `rt_tables` file to add a routing table number and name. In this example, use `viatunicmp` as the name and `200` as the number for the routing table.
 
 ```txt
 #
@@ -152,19 +152,19 @@ To accomplish this, the tutorial uses [iproute2](https://en.wikipedia.org/wiki/I
 #1  inr.ruhep
 ```
 
-3. Open the console and add a rule to match the routing table just created. This rule instructs the system to use routing table `viatunicmp` if the packet's source address is `172.64.240.252`:
+3. Add a rule to match the routing table. This rule instructs the system to use routing table `viatunicmp` if the packet's source address is `172.64.240.252`:
 
 ```sh
 ip rule add from 172.64.240.252 lookup viatunicmp
 ```
 
-4. Add a route to the newly created routing table `viatunicmp`. This is the default route via the interface `vti0` in the `viatunicmp` table.
+4. Add a route to the `viatunicmp` routing table. This is the default route through the interface `vti0` in the `viatunicmp` table.
 
 ```sh
 ip route add default dev vti0 table viatunicmp
 ```
 
-5. Now, you can `start` IPsec. You can also `stop`, `restart` and show the `status` for the IPsec connection:
+5. Start IPsec. You can also `stop`, `restart`, and show the `status` for the IPsec connection:
 
 ```bash
 ipsec start
@@ -179,17 +179,17 @@ cloudflare-ipsec{4}:   0.0.0.0/0 === 0.0.0.0/0
 
 ## 5. Check connection status
 
-After you finish configuring StrongSwan with Magic WAN, you can use tcpdump to investigate the status of health checks originated from Cloudflare.
+Use tcpdump to investigate the status of health checks originated from Cloudflare.
 
 ```sh
 sudo tcpdump -i <OUTGOING_INTERFACE> esp and host <TUNNEL_CLOUDFLARE_ENDPOINT_IP>
 ```
 
-In this example, the outgoing Internet interface shows that the IPsec encrypted packets (ESP) from Cloudflare's health check probes (both the request and response) are going through the IPsec tunnel we configured.
+In this example, the outgoing Internet interface shows that the IPsec encrypted packets (ESP) from Cloudflare's health check probes (both the request and response) are going through the IPsec tunnel.
 
-![tcpdump shows the IPsec encrypted packets from Cloudflare's health probbes](~/assets/images/magic-wan/third-party/strongswan/ipsec.png)
+![tcpdump shows the IPsec encrypted packets from Cloudflare's health probes](~/assets/images/magic-wan/third-party/strongswan/ipsec.png)
 
-You can also run tcpdump on `vti0` to check the decrypted packets.
+Run tcpdump on `vti0` to check the decrypted packets.
 
 ```sh
 sudo tcpdump -i vti0 host 172.64.240.252

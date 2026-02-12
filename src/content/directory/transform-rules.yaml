@@ -1,0 +1,11 @@
+name: Transform Rules
+
+entry:
+  title: Transform Rules
+  group: Application performance
+  url: /rules/transform/
+  show: false
+
+meta:
+  title: Cloudflare Transform Rules docs
+  author: "@cloudflare"

@@ -1,0 +1,12 @@
+name: R2
+
+entry:
+  title: R2
+  url: /r2/
+  group: Developer platform
+  additional_groups: [Storage]
+
+meta:
+  title: Cloudflare R2 docs
+  description: Store large amounts of unstructured data without egress fees
+  author: "@cloudflare"

@@ -1,0 +1,40 @@
+---
+pcx_content_type: navigation
+title: rtk-mute-all-button
+description: API reference for rtk-mute-all-button component (Web Components (HTML) Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-mute-all-button></rtk-mute-all-button>
+```
+
+### With Properties
+
+```html
+<rtk-mute-all-button
+ size="md"
+ variant"button">
+</rtk-mute-all-button>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-mute-all-button");
+
+  el.meeting= meeting
+</script>
+```

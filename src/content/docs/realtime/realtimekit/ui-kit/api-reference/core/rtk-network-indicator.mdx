@@ -1,0 +1,40 @@
+---
+pcx_content_type: navigation
+title: rtk-network-indicator
+description: API reference for rtk-network-indicator component (Web Components (HTML) Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `isScreenShare` | `boolean` | ✅ | - | Is for screenshare |
+| `meeting` | `Meeting` | ✅ | - | Meeting |
+| `participant` | `Peer` | ✅ | - | Participant or Self |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-network-indicator></rtk-network-indicator>
+```
+
+### With Properties
+
+```html
+<rtk-network-indicator>
+</rtk-network-indicator>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-network-indicator");
+
+  el.isScreenShare= true;
+  el.meeting= meeting
+  el.participant= participant
+</script>
+```

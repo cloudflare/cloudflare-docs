@@ -28,10 +28,10 @@ Targets like `*.cloudflare.com` or other Cloudflare-owned destinations are only 
 
 Before starting a penetration test on your [zones](/fundamentals/concepts/accounts-and-zones/#zones), set the following application security configurations for each zone you will run the test on:
 
-1. [Deploy the Cloudflare Managed Ruleset](/waf/managed-rules/deploy-zone-dashboard/#deploy-a-managed-ruleset) and
-   [enable all rules](/waf/managed-rules/deploy-zone-dashboard/#configure-field-values-for-all-the-rules) in the ruleset by setting **Ruleset status** to **Enabled**.
+1. [Deploy the Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/#deploy-in-the-dashboard) and
+   [enable all rules](/waf/managed-rules/reference/cloudflare-managed-ruleset/#ruleset-level-configuration) in the ruleset by setting **Ruleset status** to **Enabled**.
 
-2. [Deploy the Cloudflare OWASP Core Ruleset](/waf/managed-rules/deploy-zone-dashboard/#deploy-a-managed-ruleset) and set the following [ruleset configuration](/waf/managed-rules/deploy-zone-dashboard/#configure-field-values-for-all-the-rules):
+2. [Deploy the Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard/#deploy-in-the-dashboard) and set the following [ruleset configuration](/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard/#ruleset-level-configuration):
    - **Paranoia Level**: _PL4_
    - **Score threshold**: _High - 25 and higher_
 

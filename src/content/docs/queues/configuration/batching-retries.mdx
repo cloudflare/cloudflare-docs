@@ -66,14 +66,14 @@ To explicitly acknowledge a message as delivered, call the `ack()` method on the
 <TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 export default {
-	async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+	async queue(batch, env, ctx): Promise<void> {
 		for (const msg of batch.messages) {
 			// TODO: do something with the message
 			// Explicitly acknowledge the message as delivered
 			msg.ack();
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">
@@ -96,13 +96,13 @@ You can also call `retry()` to explicitly force a message to be redelivered in a
 <TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 export default {
-	async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+	async queue(batch, env, ctx): Promise<void> {
 		for (const msg of batch.messages) {
 			// TODO: do something with the message that fails
 			msg.retry();
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">
@@ -210,14 +210,14 @@ To delay an individual message within a batch:
 <TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 export default {
-	async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+	async queue(batch, env, ctx): Promise<void> {
 		for (const msg of batch.messages) {
 			// Mark for retry and delay a singular message
 			// by 3600 seconds (1 hour)
 			msg.retry({ delaySeconds: 3600 });
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">
@@ -240,12 +240,12 @@ To delay a batch of messages:
 <TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 export default {
-	async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+	async queue(batch, env, ctx): Promise<void> {
 		// Mark for retry and delay a batch of messages
 		// by 600 seconds (10 minutes)
 		batch.retryAll({ delaySeconds: 600 });
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">
@@ -279,15 +279,24 @@ Delays can also be configured in the [Wrangler configuration file](/workers/wran
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[queues.producers]]
-  binding = "<BINDING_NAME>"
-  queue = "<QUEUE-NAME>"
-  delivery_delay = 60 # delay every message delivery by 1 minute
-
-[[queues.consumers]]
-  queue = "my-queue"
-  retry_delay = 300 # delay any retried message by 5 minutes before re-attempting delivery
+```jsonc
+{
+	"queues": {
+		"producers": [
+			{
+				"binding": "<BINDING_NAME>",
+				"queue": "<QUEUE-NAME>",
+				"delivery_delay": 60 // delay every message delivery by 1 minute
+			}
+		],
+		"consumers": [
+			{
+				"queue": "my-queue",
+				"retry_delay": 300 // delay any retried message by 5 minutes before re-attempting delivery
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -315,12 +324,12 @@ For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/
 <Tabs syncKey="workersExamples">
 <TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
-const calculateExponentialBackoff = (
+function calculateExponentialBackoff(
 	attempts: number,
 	baseDelaySeconds: number,
-) => {
+): number {
 	return baseDelaySeconds ** attempts;
-};
+}
 ```
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">
@@ -339,10 +348,9 @@ In your consumer, you then pass the value of `msg.attempts` and your desired del
 const BASE_DELAY_SECONDS = 30;
 
 export default {
-	async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+	async queue(batch, env, ctx): Promise<void> {
 		for (const msg of batch.messages) {
-			// Mark for retry and delay a singular message
-			// by 3600 seconds (1 hour)
+			// Mark for retry with exponential backoff
 			msg.retry({
 				delaySeconds: calculateExponentialBackoff(
 					msg.attempts,
@@ -351,7 +359,7 @@ export default {
 			});
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">

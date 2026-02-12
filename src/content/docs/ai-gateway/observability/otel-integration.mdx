@@ -1,0 +1,111 @@
+---
+title: OpenTelemetry
+pcx_content_type: configuration
+sidebar:
+  order: 5
+---
+
+AI Gateway supports exporting traces to OpenTelemetry-compatible backends, enabling you to monitor and analyze AI request performance alongside your existing observability infrastructure.
+
+## Overview
+
+The OpenTelemetry (OTEL) integration automatically exports trace spans for AI requests processed through your gateway. These spans include detailed information about:
+
+- Request model and provider
+- Token usage (input and output)
+- Request prompts and completions
+- Cost estimates
+- Custom metadata
+
+This integration follows the [OpenTelemetry specification](https://opentelemetry.io/docs/specs/otel/) for distributed tracing and uses the OTLP (OpenTelemetry Protocol) JSON format.
+
+## Configuration
+
+To enable OpenTelemetry tracing for your gateway, configure one or more OTEL exporters in your gateway settings. Each exporter requires:
+
+- **URL**: The endpoint URL of your OTEL collector (must accept OTLP/JSON format)
+- **Authorization** (optional): A reference to a secret containing your authorization header value
+- **Headers** (optional): Additional custom headers to include in export requests
+
+### Configuration via Dashboard
+
+1. Navigate to your AI Gateway in the Cloudflare dashboard
+2. Go to **Settings** tab
+3. Add an OTEL exporter with your collector endpoint URL
+4. If authentication is required, configure a secret for the authorization header
+
+## Exported Span Attributes
+
+AI Gateway exports spans with the following attributes following the [Semantic Conventions for Gen AI](https://opentelemetry.io/docs/specs/semconv/gen-ai/):
+
+### Standard Attributes
+
+| Attribute                    | Type   | Description                                     |
+| ---------------------------- | ------ | ----------------------------------------------- |
+| `gen_ai.request.model`       | string | The AI model used for the request               |
+| `gen_ai.model.provider`      | string | The AI provider (e.g., `openai`, `anthropic`)   |
+| `gen_ai.usage.input_tokens`  | int    | Number of input tokens consumed                 |
+| `gen_ai.usage.output_tokens` | int    | Number of output tokens generated               |
+| `gen_ai.prompt_json`         | string | JSON-encoded prompt/messages sent to the model  |
+| `gen_ai.completion_json`     | string | JSON-encoded completion/response from the model |
+| `gen_ai.usage.cost`          | double | Estimated cost of the request                   |
+
+### Custom Metadata
+
+Any custom metadata added to your requests via the `cf-aig-metadata` header will also be included as span attributes. This allows you to correlate traces with user IDs, team names, or other business context.
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header 'Authorization: Bearer {api_token}' \
+  --header 'Content-Type: application/json' \
+  --header 'cf-aig-metadata: {"user_id": "user123", "team": "engineering"}' \
+  --data '{
+    "model": "gpt-4o",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+The above request will include `user_id` and `team` as additional span attributes in the exported trace.
+
+:::note
+
+Custom metadata attributes that start with `gen_ai.` are reserved for standard GenAI semantic conventions and will not be added as custom attributes.
+
+:::
+
+## Trace Context Propagation
+
+AI Gateway supports trace context propagation, allowing you to link AI Gateway spans with your application's traces. You can provide trace context using custom headers:
+
+- `cf-aig-otel-trace-id` (optional): A 32-character hex string to use as the trace ID
+- `cf-aig-otel-parent-span-id` (optional): A 16-character hex string to use as the parent span ID
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header 'cf-aig-otel-trace-id: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6' \
+  --header 'cf-aig-otel-parent-span-id: a1b2c3d4e5f6g7h8' \
+  --header 'Authorization: Bearer {api_token}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "gpt-4o",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+When these headers are provided, the AI Gateway span will use them to link with your existing trace. If not provided, AI Gateway will generate a new trace ID automatically.
+
+## Common OTEL Backends
+
+AI Gateway's OTEL integration works with any OpenTelemetry-compatible backend that accepts OTLP/JSON format, including:
+
+- [Honeycomb](https://www.honeycomb.io/)
+- [Braintrust](https://www.braintrust.dev/docs/integrations/sdk-integrations/opentelemetry)
+- [Langfuse](https://langfuse.com/integrations/native/opentelemetry)
+
+:::note
+
+We do not support OTLP protobuf format, so providers that use it (e.g., Datadog) will not work with AI Gateway's OTEL integration.
+
+:::
+
+Refer to your observability platform's documentation for the correct OTLP endpoint URL and authentication requirements.

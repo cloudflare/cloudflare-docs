@@ -49,11 +49,7 @@ git push -u origin main
 
 ### Create a Pages project
 
-<Render
-	file="framework-guides/learn-more"
-	product="pages"
-	params={{ name: "Angular" }}
-/>
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <PagesBuildPreset framework="angular" />
 
@@ -64,7 +60,7 @@ Change the `Build directory` to `dist/cloudflare/browser`
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-4. After completing configuration, select the **Save and Deploy**.
+7. After completing configuration, select the **Save and Deploy**.
 
 Review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 

@@ -1,6 +1,6 @@
 ---
 order: 6
-title: "🕸 Web Standards"
+title: Web Standards
 ---
 
 - [Web Standards Reference](/workers/runtime-apis/web-standards)

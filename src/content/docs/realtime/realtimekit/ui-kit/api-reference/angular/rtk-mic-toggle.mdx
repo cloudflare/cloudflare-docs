@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: rtk-mic-toggle
+description: API reference for rtk-mic-toggle component (Angular Library)
+---
+A button which toggles your microphone.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-mic-toggle></rtk-mic-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-mic-toggle
+ [meeting]="meeting"
+ size="md"
+ variant="button">
+</rtk-mic-toggle>
+```
+

@@ -8,7 +8,7 @@ import { Render, Markdown, GlossaryTooltip, Details, AnchorHeading } from "~/com
 { props.product === "durable-objects" && <><AnchorHeading title="Compute billing" depth={2}/></> }
 { props.product === "workers" && <><AnchorHeading title="Compute billing" depth={3}/></> }
 
-Durable Objects are billed for duration while the Durable Object is active and running in memory. Requests to a Durable Object keep it active or creates the object if it was inactive, not in memory.
+Durable Objects are billed for compute duration (wall-clock time) while the Durable Object is actively running or is idle in memory but unable to [hibernate](/durable-objects/concepts/durable-object-lifecycle/). Durable Objects that are idle and eligible for hibernation are not billed for duration, even before the runtime has hibernated them. Requests to a Durable Object keep it active or create the object if it was inactive.
 
 |                      | Free plan         | Paid plan                                                                                                                               |
 | -------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -32,7 +32,7 @@ await durableObjectStub.cat(); // billed as a request
 
 <sup>3</sup> Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/best-practices/websockets/) will not incur additional wall-clock time, and so they will not be charged.
 
-<sup>4</sup> Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. It is recommended to use the WebSocket Hibernation API to avoid incurring duration charges once all event handlers finish running. For a complete explanation, refer to [When does a Durable Object incur duration charges?](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
+<sup>4</sup> Duration is billed in wall-clock time as long as the Object is active and not eligible for hibernation, but is shared across all requests active on an Object at once. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. It is recommended to use the WebSocket Hibernation API to avoid incurring duration charges once all event handlers finish running. For a complete explanation, refer to [When does a Durable Object incur duration charges?](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
 <sup>5</sup> Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
 

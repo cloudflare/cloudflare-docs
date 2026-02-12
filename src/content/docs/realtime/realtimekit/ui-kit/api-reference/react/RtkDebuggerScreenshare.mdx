@@ -1,0 +1,42 @@
+---
+pcx_content_type: navigation
+title: RtkDebuggerScreenshare
+description: API reference for RtkDebuggerScreenshare component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | States object |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkDebuggerScreenshare } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkDebuggerScreenshare />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkDebuggerScreenshare } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkDebuggerScreenshare
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

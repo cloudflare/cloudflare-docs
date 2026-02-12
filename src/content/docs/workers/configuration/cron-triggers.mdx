@@ -93,13 +93,20 @@ Refer to the example below for a Cron Triggers configuration:
 
 <WranglerConfig>
 
-```toml
-[triggers]
-# Schedule cron triggers:
-# - At every 3rd minute
-# - At 15:00 (UTC) on first day of the month
-# - At 23:59 (UTC) on the last weekday of the month
-crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
+```jsonc
+{
+	"triggers": {
+		// Schedule cron triggers:
+		// - At every 3rd minute
+		// - At 15:00 (UTC) on first day of the month
+		// - At 23:59 (UTC) on the last weekday of the month
+		"crons": [
+			"*/3 * * * *",
+			"0 15 1 * *",
+			"59 23 LW * *"
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -108,9 +115,18 @@ You also can set a different Cron Trigger for each [environment](/workers/wrangl
 
 <WranglerConfig>
 
-```toml
-[env.dev.triggers]
-crons = ["0 * * * *"]
+```jsonc
+{
+	"env": {
+		"dev": {
+			"triggers": {
+				"crons": [
+					"0 * * * *"
+				]
+			}
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -238,10 +254,13 @@ When deploying a Worker with Wrangler any previous Cron Triggers are replaced wi
 
 <WranglerConfig>
 
-```toml
-[triggers]
-# Remove all cron triggers:
-crons = [ ]
+```jsonc
+{
+	"triggers": {
+		// Remove all cron triggers:
+		"crons": []
+	}
+}
 ```
 
 </WranglerConfig>

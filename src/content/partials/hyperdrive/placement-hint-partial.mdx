@@ -1,0 +1,19 @@
+---
+{}
+---
+
+:::note[Reduce latency with Placement]
+
+If your Worker makes **multiple sequential queries** per request, use [Placement](/workers/configuration/placement/) to run your Worker close to your database. Each query adds round-trip latency: 20-30ms from a distant region, or 1-3ms when placed nearby. Multiple queries compound this difference.
+
+If your Worker makes only one query per request, placement does not improve end-to-end latency. The total round-trip time is the same whether it happens near the user or near the database.
+
+```jsonc title="wrangler.jsonc"
+{
+	"placement": {
+		"region": "aws:us-east-1", // Match your database region, for example "gcp:us-east4" or "azure:eastus"
+	},
+}
+```
+
+:::

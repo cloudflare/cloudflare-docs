@@ -1,5 +1,10 @@
 ---
-inputParameters: selector;;selectorName
+params:
+  - selector
+  - selectordescription
+  - operator
+  - valueOne
+  - valueTwo
 ---
 
 import { Markdown } from "~/components";
@@ -8,12 +13,12 @@ In the **Value** field, you can input a single value when using an equality comp
 
 ### Regular expressions
 
-Gateway uses Rust to evaluate regular expressions. The Rust implementation is slightly different than regex libraries used elsewhere. For more information, refer to our guide for [Wildcards](/cloudflare-one/access-controls/policies/app-paths/#wildcards). To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).
+Regular expressions are evaluated using Rust. The Rust implementation is slightly different than regex libraries used elsewhere. For more information, refer to our guide for [Wildcards](/cloudflare-one/access-controls/policies/app-paths/#wildcards). To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).
 
-If you want to match multiple values, you can use the pipe symbol (`|`) as an OR operator. In Gateway, you do not need to use an escape character (`\`) before the pipe symbol. For example, the following policy blocks requests to two {props.one} if either appears in a request header:
+If you want to match multiple values, you can use the pipe symbol (`|`) as an OR operator. You do not need to use an escape character (`\`) before the pipe symbol. For example, the following expression evaluates to true when the {props.selectordescription} matches either <code>{props.valueOne}</code> or <code>{props.valueTwo}</code>:
 
-| Selector    | Operator      | Value                                  | Action |
-| ----------- | ------------- | -------------------------------------- | ------ |
-| {props.two} | matches regex | `.\*whispersystems.org\|.\*signal.org` | Block  |
+| Selector    | Operator        | Value          |
+| ----------- | --------------- | -------------- |
+| {props.selector} | {props.operator} | <code>{props.valueOne}&#124;{props.valueTwo}</code> |
 
 In addition to regular expressions, you can use [logical operators](#logical-operators) to match multiple values.

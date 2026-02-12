@@ -1,0 +1,14 @@
+name: Client IP Geolocation
+
+entry:
+  title: Cloudflare Client IP Geolocation
+  url: /client-ip-geolocation/
+  show: false
+
+meta:
+  title: Cloudflare Client IP Geolocation docs
+  description:
+    Cloudflare Client IP Geolocation helps you understand where in the
+    world a given client is located, even if their true client IP address is
+    obscured by our proxy systems.
+  author: "@cloudflare"

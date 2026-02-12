@@ -1,12 +1,16 @@
 ---
 pcx_content_type: concept
 title: Dates and times
-
 ---
 
 ## Product content
 
 To account for internationalization and inclusivity of all locales, use the ISO-8601 (YYYY-MM-DD hh:mm:ss) standard when writing dates and times as much as possible.
+
+In general, documentation should strive to represent universal truth, not 
+something time-bound. This is why semgrep may flag uses of explicit dates 
+or month names or years because often become out-of-date and not be 
+revised later.
 
 ## Blogs
 
@@ -14,7 +18,7 @@ Since our readership is international, keep date formats international.
 
 When mentioning dates in text, spell them out:
 
-* On Tuesday, May 19, attackers targeted the company's servers.
-* On February 11th, 2010, the company went public.
+- On Tuesday, May 19, attackers targeted the company's servers.
+- On February 11th, 2010, the company went public.
 
 For graphs, charts, and other visual assets use the ISO-8601 (YYYY-MM-DD hh:mm:ss) standard.
