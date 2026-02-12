@@ -198,9 +198,11 @@ For more information, refer to [Routing](/workers/configuration/routing/).
 
 ### Stream request and response bodies
 
-Workers have a [128 MB memory limit](/workers/platform/limits/). Buffering an entire request or response body with `await response.text()` or `await request.arrayBuffer()` will exceed that limit on large payloads, causing your Worker to crash.
+Regardless of memory limits, streaming large requests and responses is a best practice in any language. It reduces peak memory usage and improves time-to-first-byte. Workers have a [128 MB memory limit](/workers/platform/limits/), so buffering an entire body with `await response.text()` or `await request.arrayBuffer()` will crash your Worker on large payloads.
 
-Stream data through your Worker instead. Use `TransformStream` to pipe data from a source to a destination without holding it all in memory.
+For request bodies you do consume entirely (JSON payloads, file uploads), enforce a maximum size before reading. This prevents clients from sending data you do not want to process.
+
+Stream data through your Worker using `TransformStream` to pipe from a source to a destination without holding it all in memory.
 
 <TypeScriptExample filename="src/index.ts">
 
