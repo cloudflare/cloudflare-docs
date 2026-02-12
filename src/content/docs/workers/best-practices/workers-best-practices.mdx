@@ -81,7 +81,7 @@ For more information, refer to [wrangler types](/workers/wrangler/commands/#type
 
 ### Store secrets with wrangler secret, not in source
 
-Secrets (API keys, tokens, database credentials) must never appear in your Wrangler configuration or source code. Use [`wrangler secret put`](/workers/configuration/secrets/) to store them securely, and access them through `env` at runtime. Use a `.dev.vars` file for local development. It is automatically excluded from version control.
+Secrets (API keys, tokens, database credentials) must never appear in your Wrangler configuration or source code. Use [`wrangler secret put`](/workers/configuration/secrets/) to store them securely, and access them through `env` at runtime. For local development, use a `.env` file (and make sure it is in your `.gitignore`). For more information, refer to [Environment variables](/workers/configuration/environment-variables/).
 
 <WranglerConfig>
 
@@ -108,7 +108,7 @@ Secrets (API keys, tokens, database credentials) must never appear in your Wrang
 # Store secrets securely
 wrangler secret put API_KEY
 
-# For local development, use .dev.vars (gitignored)
+# For local development, use .env (make sure it is in .gitignore)
 # API_KEY=sk-test-abc123
 ```
 
@@ -689,37 +689,19 @@ async function handleRequest(userId: string | null, env: Env): Promise<object> {
 
 For more information, refer to [Workers errors](/workers/observability/errors/#cannot-perform-io-on-behalf-of-a-different-request).
 
-### Keep startup fast
-
-Top-level code runs on every cold start and counts against [CPU time limits](/workers/platform/limits/). Defer expensive setup to the first request using lazy initialization.
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-// ✅ Good: lazy initialization — runs once on first use, not on cold start
-let _client: Client | null = null;
-
-function getClient(env: Env): Client {
-	if (!_client) {
-		_client = new Client(env.API_BASE_URL);
-	}
-	return _client;
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const client = getClient(env);
-		const result = await client.query();
-		return Response.json(result);
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</TypeScriptExample>
-
 ### Always await or waitUntil your Promises
 
 A `Promise` that is not `await`ed, `return`ed, or passed to `ctx.waitUntil()` is a floating promise. Floating promises cause silent bugs: dropped results, swallowed errors, and unfinished work. The Workers runtime may terminate your isolate before a floating promise completes.
+
+Enable the `no-floating-promises` lint rule to catch these at development time. If you use ESLint, enable [`@typescript-eslint/no-floating-promises`](https://typescript-eslint.io/rules/no-floating-promises/). If you use oxlint, enable [`typescript/no-floating-promises`](https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-floating-promises.html).
+
+```bash
+# ESLint (typescript-eslint)
+npx eslint --rule '{"@typescript-eslint/no-floating-promises": "error"}' src/
+
+# oxlint
+npx oxlint --deny typescript/no-floating-promises src/
+```
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -761,6 +743,8 @@ export default {
 ### Use Web Crypto for secure token generation
 
 The Workers runtime provides the [Web Crypto API](/workers/runtime-apis/web-crypto/) for cryptographic operations. Use `crypto.randomUUID()` for unique identifiers and `crypto.getRandomValues()` for random bytes. Never use `Math.random()` for anything security-sensitive. It is not cryptographically secure.
+
+Node.js [`node:crypto`](/workers/runtime-apis/nodejs/crypto/) is also fully supported when `nodejs_compat` is enabled, so you can use whichever API you or your libraries prefer.
 
 <TypeScriptExample filename="src/index.ts">
 
