@@ -565,7 +565,12 @@ export default {
 } satisfies ExportedHandler<Env>;
 
 class ApiClient {
-	constructor(private baseUrl: string) {}
+	private baseUrl: string;
+
+	constructor(baseUrl: string) {
+		this.baseUrl = baseUrl;
+	}
+
 	async getData(): Promise<object> {
 		const response = await fetch(`${this.baseUrl}/data`);
 		return response.json<object>();
