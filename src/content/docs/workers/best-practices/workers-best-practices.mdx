@@ -349,38 +349,42 @@ export default {
 
 ### Use Queues and Workflows for async and background work
 
-Long-running, retriable, or non-urgent tasks should not block a request. Use [Queues](/queues/) to decouple producers from consumers with guaranteed delivery and automatic retries. Use [Workflows](/workflows/) for multi-step, durable processes that survive failures.
+Long-running, retriable, or non-urgent tasks should not block a request. Use [Queues](/queues/) and [Workflows](/workflows/) to move work out of the critical path. They serve different purposes:
+
+**Use Queues when** you need to decouple a producer from a consumer. Queues are a message broker: one Worker sends a message, another Worker processes it later. They are the right choice for fan-out (one event triggers many consumers), buffering and batching (aggregate messages before writing to a downstream service), and simple single-step background jobs (send an email, fire a webhook, write a log). Queues provide at-least-once delivery with configurable retries per message.
+
+**Use Workflows when** the background work has multiple steps that depend on each other. Workflows are a durable execution engine: each step's return value is persisted, and if a step fails, only that step is retried — not the entire job. They are the right choice for multi-step processes (charge a card, then create a shipment, then send a confirmation), long-running tasks that need to pause and resume (wait hours or days for an external event or human approval via `step.waitForEvent()`), and complex conditional logic where later steps depend on earlier results. Workflows can run for hours, days, or weeks.
+
+**Use both together** when a high-throughput entry point feeds into complex processing. For example, a Queue can buffer incoming orders, and the consumer can create a Workflow instance for each order that requires multi-step fulfillment.
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		const order = await request.json<{ id: string }>();
+		const order = await request.json<{ id: string; type: string }>();
 
-		// ✅ Good: accept the request immediately, process asynchronously
-		await env.ORDER_QUEUE.send({
-			orderId: order.id,
-			action: "process-payment",
-		});
+		if (order.type === "simple") {
+			// ✅ Queue: single-step background job — send a message for async processing
+			await env.ORDER_QUEUE.send({
+				orderId: order.id,
+				action: "send-confirmation-email",
+			});
+		} else {
+			// ✅ Workflow: multi-step durable process — payment, fulfillment, notification
+			const instance = await env.FULFILLMENT_WORKFLOW.create({
+				params: { orderId: order.id },
+			});
+		}
 
-		// ✅ Good: kick off a durable, multi-step workflow for complex processing
-		const instance = await env.FULFILLMENT_WORKFLOW.create({
-			params: { orderId: order.id },
-		});
-
-		return Response.json(
-			{
-				status: "accepted",
-				workflowId: instance.id,
-			},
-			{ status: 202 },
-		);
+		return Response.json({ status: "accepted" }, { status: 202 });
 	},
 } satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
+
+For more information, refer to [Queues](/queues/) and [Workflows](/workflows/).
 
 ### Use service bindings for Worker-to-Worker communication
 
