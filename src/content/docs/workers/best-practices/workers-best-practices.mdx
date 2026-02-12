@@ -315,7 +315,7 @@ For more information, refer to [Context](/workers/runtime-apis/context/).
 
 ### Use bindings for Cloudflare services, not REST APIs
 
-Cloudflare services like R2, KV, D1, Queues, and Workflows are available as [bindings](/workers/runtime-apis/bindings/). Bindings are direct, in-process references that require no network hop, no authentication, and no extra latency. Using the REST API from within a Worker wastes time and adds unnecessary complexity.
+Some Cloudflare services like R2, KV, D1, Queues, and Workflows are available as [bindings](/workers/runtime-apis/bindings/). Bindings are direct, in-process references that require no network hop, no authentication, and no extra latency. Using the REST API from within a Worker wastes time and adds unnecessary complexity.
 
 <TypeScriptExample filename="src/index.ts">
 
