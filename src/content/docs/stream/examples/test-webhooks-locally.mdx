@@ -1,7 +1,5 @@
 ---
 summary: Test Cloudflare Stream webhook notifications locally using a Cloudflare Worker and Cloudflare Tunnel.
-tags:
-  - Webhooks
 pcx_content_type: example
 title: Test webhooks locally
 sidebar:
@@ -19,7 +17,7 @@ This example shows how to:
 
 :::note
 
-Third-party tunneling tools such as [ngrok](https://ngrok.com) are often blocked by Cloudflare's security features. Use Cloudflare Tunnel instead.
+Cloudflare cannot send webhooks to `localhost` or local IP addresses. A publicly accessible URL is required. For testing purposes, use a [Quick Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) as an alternative that does not require administrator access or DNS control to receive webhooks in a local environment. For production purposes, use [Cloudflare Tunnel](/pages/how-to/preview-with-cloudflare-tunnel/) or a publicly-accessible endpoint to receive webhooks.
 
 :::
 
@@ -148,7 +146,7 @@ npx wrangler dev
 
 ## 3. Expose the dev server with Cloudflare Tunnel
 
-In a **separate terminal**, start a [quick tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to expose your local server:
+In a separate terminal, start a [quick tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to expose your local server:
 
 ```sh
 npx cloudflared tunnel --url http://localhost:8787

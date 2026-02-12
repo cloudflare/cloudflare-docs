@@ -174,7 +174,7 @@ If the signatures match, you can trust that Cloudflare sent the webhook.
 
 * Webhooks will only be sent after video processing is complete, and the body will indicate whether the video processing succeeded or failed.
 * Only one webhook subscription is allowed per-account.
-* Cloudflare cannot send webhooks to `localhost` or local IP addresses. A publicly accessible URL is required. To test webhooks during local development, use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to expose your local server. Third-party tunneling tools (such as ngrok) are often blocked by Cloudflare's security features. Refer to [Test webhooks locally](/stream/examples/test-webhooks-locally/) for a complete walkthrough.
+* Cloudflare cannot send webhooks to `localhost` or local IP addresses. A publicly accessible URL is required. For testing purposes, use a [Quick Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) as an alternative that does not require administrator access or DNS control to receive webhooks in a local environment. For production purposes, use [Cloudflare Tunnel](/pages/how-to/preview-with-cloudflare-tunnel/) or a publicly-accessible endpoint to receive webhooks.
 
 ## Examples
 
