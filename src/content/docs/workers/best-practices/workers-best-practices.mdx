@@ -426,7 +426,7 @@ export default {
 
 ### Use Hyperdrive for external database connections
 
-Connecting directly to a remote database (PostgreSQL, MySQL) from a Worker adds hundreds of milliseconds of latency per request due to TCP handshake, TLS negotiation, and connection setup on every invocation. [Hyperdrive](/hyperdrive/) eliminates this by maintaining a regional connection pool close to your database and caching query results where possible.
+Always use [Hyperdrive](/hyperdrive/) when connecting to a remote PostgreSQL or MySQL database from a Worker. Hyperdrive maintains a regional connection pool close to your database, eliminating the per-request cost of TCP handshake, TLS negotiation, and connection setup. It also caches query results where possible.
 
 Create a new `Client` on each request. Hyperdrive manages the underlying pool, so client creation is fast. Requires `nodejs_compat` for database driver support.
 
