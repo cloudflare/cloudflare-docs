@@ -217,12 +217,6 @@ Use CNI when you need to meet security requirements that prohibit public Interne
 CNI requires an Enterprise plan and is available only in locations where Cloudflare has interconnect facilities.
 :::
 
-:::caution[Using CNI with Cloudflare Tunnel]
-`cloudflared` establishes connections to multiple Cloudflare regions for redundancy. If your CNI connection only advertises routes to one Cloudflare region, Cloudflare Tunnel may operate in a degraded state with reduced redundancy.
-
-Evaluate whether Cloudflare Tunnel is necessary if CNI already provides private connectivity to your infrastructure.
-:::
-
 For detailed configuration, refer to the <a href={props.cniURL}>Cloudflare Network Interconnect documentation</a>.
 
 ---
@@ -269,7 +263,7 @@ For detailed configuration, refer to the [Magic Cloud Networking documentation](
 
 ## Choose the right connectivity option
 
-Use the following guidance to select the appropriate connectivity option for your use case.
+Use the following guidance to select the appropriate connectivity option for your use case. These are not exhaustive recommendations.
 
 | Requirement | Recommended option |
 | ---- | ---- |
