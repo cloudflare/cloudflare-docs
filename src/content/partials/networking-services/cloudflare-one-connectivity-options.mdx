@@ -25,7 +25,7 @@ Some connectivity options support both directions (bidirectional), while others 
 The following table provides a high-level comparison of all connectivity options available to Cloudflare One customers.
 
 | Connectivity option | Protocol | Direction | Typical deployment model | Use when |
-| :---- | :---- | :---- | :---- | :---- |
+| ---- | ---- | ---- | ---- | ---- |
 | [Cloudflare Tunnel](#cloudflare-tunnel) | HTTP/2, QUIC | Off-ramp only | Software daemon (`cloudflared`) on server | Exposing private applications without a public IP |
 | [WARP client](#warp-client) | MASQUE (default), WireGuard | On-ramp only | Client software on end-user devices | Securing remote workforce devices |
 | [WARP Connector](#warp-connector) | MASQUE, WireGuard | Bidirectional | Software client on Linux host | Connecting sites with IoT or VoIP devices |
@@ -42,7 +42,7 @@ The following table provides a high-level comparison of all connectivity options
 
 ## Cloudflare Tunnel
 
-Cloudflare Tunnel provides a secure way to connect your resources to Cloudflare without a publicly routable IP address. The `cloudflared` daemon creates outbound-only connections to Cloudflare's global network over port 7844 (TCP/UDP) using HTTP/2 or QUIC. This allows you to expose web servers, SSH servers, remote desktops, and other services without opening inbound ports on your firewall.
+Cloudflare Tunnel provides a secure way to connect your resources to Cloudflare without a publicly routable IP address. The `cloudflared` daemon creates outbound-only connections to Cloudflare's global network over port `7844` (TCP/UDP) using HTTP/2 or QUIC. This allows you to expose web servers, SSH servers, remote desktops, and other services without opening inbound ports on your firewall.
 
 Use Cloudflare Tunnel when you need to expose private web applications, protect origin servers by hiding their IP addresses, or deploy cloud-native ingress for Kubernetes services.
 
@@ -104,12 +104,12 @@ DNS locations support multiple endpoint types:
 * **DNS over HTTPS (DoH)**: Encrypted DNS queries over HTTPS
 * **DNS over TLS (DoT)**: Encrypted DNS queries over TLS
 
-Use DNS locations when you need to filter DNS traffic for an entire office or network, per device  without installing agents on devices, or integrate with existing network infrastructure.
+Use DNS locations when you need to filter DNS traffic for an entire office or network, per device without installing agents on devices, or integrate with existing network infrastructure.
 
 :::note[Important to know]
 DNS locations filter DNS traffic only. To filter HTTP traffic, use the WARP client or proxy endpoints.
 
-For identity-based DNS policies without the WARP client, configure [DNS over HTTPS with user tokens](/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/#filter-doh-requests-by-user). To resolve internal domain names or route queries to private DNS servers, use [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) (Enterprise).
+For identity-based DNS policies without the WARP client, configure [DNS over HTTPS with user tokens](/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/#filter-doh-requests-by-user). To resolve internal domain names or route queries to private DNS servers, use [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) (Enterprise only).
 :::
 
 For detailed configuration, refer to the [DNS locations documentation](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/).
@@ -137,7 +137,7 @@ For detailed configuration, refer to the [Proxy endpoints documentation](/cloudf
 
 ## Clientless Web Isolation
 
-Clientless Web Isolation allows users to securely access web applications through a remote browser without installing the WARP client. Users navigate to a prefixed URL (`https://<team-name>.cloudflareaccess.com/browser/<URL>`), authenticate through Cloudflare Access, and Cloudflare renders the web content in an isolated browser, streaming only [safe  draw commands](https://blog.cloudflare.com/cloudflare-and-remote-browser-isolation/) to the user's device while enforcing isolation policies.
+Clientless Web Isolation allows users to securely access web applications through a remote browser without installing the WARP client. Users navigate to a prefixed URL (`https://<team-name>.cloudflareaccess.com/browser/<URL>`), authenticate through Cloudflare Access, and Cloudflare renders the web content in an isolated browser, streaming only [safe draw commands](https://blog.cloudflare.com/cloudflare-and-remote-browser-isolation/) to the user's device while enforcing isolation policies.
 
 Use Clientless Web Isolation when you need to provide secure web access for unmanaged devices (contractors, BYOD), enable access to sensitive applications without requiring endpoint software, or on-ramp users who cannot install the WARP client.
 
@@ -156,7 +156,7 @@ Generic Routing Encapsulation (GRE) tunnels provide lightweight, stateless netwo
 Use GRE tunnels when you need to connect branch offices or data centers with minimal configuration overhead, integrate with Magic Transit for DDoS protection, or deploy redundant tunnels alongside IPsec.
 
 :::note[Important to know]
-GRE does not encrypt traffic (use IPsec if encryption is required). Requires a static public IP and careful MTU planning (1476 bytes MTU, MSS clamping at 1436 bytes or lower).
+GRE does not encrypt traffic — use IPsec if encryption is required. GRE requires a static public IP and careful MTU planning (1,476 bytes MTU, MSS clamping at 1,436 bytes or lower).
 :::
 
 For detailed configuration, refer to the <a href={props.greIpsecURL}>GRE and IPsec tunnels documentation</a>.
@@ -170,7 +170,7 @@ IPsec tunnels provide encrypted, stateful network connectivity between your infr
 Use IPsec tunnels when you need to encrypt traffic over the public Internet, meet compliance requirements for encrypted connections, or replace expensive MPLS links.
 
 :::note[Important to know]
-Requires a static public IP and supports IKEv2 only (not IKEv1). If behind NAT, initiate IKE on port 4500.
+Requires a static public IP and supports IKEv2 only (not IKEv1). If behind NAT, initiate IKE on port `4500`.
 
 When traffic from Magic WAN egresses to the public Internet through Gateway, source IP addresses are translated to Cloudflare dedicated egress IP addresses.
 :::
@@ -208,7 +208,7 @@ Use CNI when you need to meet security requirements that prohibit public Interne
 ### Connection types
 
 | Type | Description | Ideal for |
-| :---- | :---- | :---- |
+| ---- | ---- | ---- |
 | **Direct Interconnect** | Physical fiber cross-connect in a shared data center | Customers colocated with Cloudflare who require maximum control and performance |
 | **Partner Interconnect** | Virtual connection through connectivity partners (Megaport, Equinix Fabric, PacketFabric) | Customers not colocated with Cloudflare or who prefer managed connectivity |
 | **Cloud Interconnect** | Private connection from cloud providers (AWS, GCP, Azure) | Customers with workloads in public clouds requiring private connectivity |
@@ -243,7 +243,7 @@ Magic Cloud Networking is not a separate tunnel type — it orchestrates your cl
 ### On-ramp types
 
 | Type | Description | Use when |
-| :---- | :---- | :---- |
+| ---- | ---- | ---- |
 | **Single VPC** | Connects one VPC directly to Magic WAN via VPN tunnel | You have a single VPC to connect |
 | **Hub** | Connects multiple VPCs through a cloud hub (for example, AWS Transit Gateway) | You need to connect multiple VPCs with inter-VPC communication |
 
@@ -272,9 +272,9 @@ For detailed configuration, refer to the [Magic Cloud Networking documentation](
 Use the following guidance to select the appropriate connectivity option for your use case.
 
 | Requirement | Recommended option |
-| :---- | :---- |
+| ---- | ---- |
 | Expose a private web application without a public IP | [Cloudflare Tunnel](#cloudflare-tunnel) |
-| Secure end user devices | [WARP client](#warp-client) |
+| Secure end-user devices | [WARP client](#warp-client) |
 | Replace traditional VPN for remote access | [Cloudflare Tunnel](#cloudflare-tunnel) (primary) + [WARP Connector](#warp-connector) (for bidirectional needs) |
 | Connect a site with IoT devices or VoIP systems | [WARP Connector](#warp-connector) |
 | Connect a branch office using existing routers | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) |
@@ -289,7 +289,7 @@ Use the following guidance to select the appropriate connectivity option for you
 The team driving your connectivity project influences which option provides the smoothest adoption path. In this table you can find a few examples of what that might look like:
 
 | Primary team | Recommended starting point | Rationale |
-| :---- | :---- | :---- |
+| ---- | ---- | ---- |
 | Security / InfoSec | [Cloudflare Tunnel](#cloudflare-tunnel) + [WARP client](#warp-client) | Minimal network infrastructure changes required. Security controls are managed within the Cloudflare One dashboard. |
 | Network Operations | [Magic WAN](#ipsec-tunnels) (IPsec/GRE) or [Magic WAN Connector](#magic-wan-connector) | Familiar routing and tunnel configuration. Integrates with existing network equipment and workflows. |
 | DevOps / Platform Engineering | [WARP Connector](#warp-connector) or [Cloudflare Tunnel](#cloudflare-tunnel) | Software-defined deployment. Scriptable via API. No hardware dependencies. |
@@ -300,7 +300,7 @@ The team driving your connectivity project influences which option provides the 
 WARP Connector and Magic WAN Connector both provide site-level connectivity, but serve different deployment scenarios.
 
 | Aspect | WARP Connector | Magic WAN Connector |
-| :---- | :---- | :---- |
+| ---- | ---- | ---- |
 | **Protocol** | MASQUE / WireGuard | IPsec |
 | **Deployment model** | Software on Linux host (can run alongside other workloads) | Dedicated hardware appliance or virtual machine |
 | **Best for** | Cloud VPCs, development environments, sites without dedicated network hardware, smaller deployments | Enterprise branch offices, data centers, sites requiring high throughput (1 Gbps+) |
@@ -321,7 +321,7 @@ Most enterprise deployments use multiple connectivity options together. This sec
 Not all connectivity options work together in the same account. Review the following compatibility information before designing your deployment.
 
 | Combination | Compatible | Notes |
-| :---- | :---- | :---- |
+| ---- | ---- | ---- |
 | WARP Connector + Magic WAN | Conditional | Requires <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a>. Accounts on Legacy routing mode cannot use both. |
 | WARP client + Magic WAN | Yes | WARP users can access Magic WAN-connected sites. |
 | Cloudflare Tunnel + Magic WAN | Yes | Avoid overlapping IP routes. Cloudflare Tunnel takes priority if the same CIDR is configured for both. |
@@ -343,11 +343,11 @@ When using multiple connectivity options, follow these guidelines to avoid routi
 When layering tunnels or using multiple encapsulation methods, account for overhead to prevent fragmentation:
 
 | Scenario | Effective MTU | MSS clamping |
-| :---- | :---- | :---- |
-| GRE tunnel | 1476 bytes | 1436 bytes or lower |
-| IPsec tunnel | 1400-1436 bytes (varies by encryption) | 1360-1396 bytes |
-| WARP behind Magic WAN (double encapsulation) | ~1300 bytes | Configure based on testing |
-| WARP Connector to WARP client | ~1280 bytes | Configure based on testing. Traffic is encapsulated twice: by WARP Connector and again by Cloudflare before delivery to the WARP client. |
+| ---- | ---- | ---- |
+| GRE tunnel | 1,476 bytes | 1,436 bytes or lower |
+| IPsec tunnel | 1,400-1,436 bytes (varies by encryption) | 1,360-1,396 bytes |
+| WARP behind Magic WAN (double encapsulation) | ~1,300 bytes | Configure based on testing |
+| WARP Connector to WARP client | ~1,280 bytes | Configure based on testing. Traffic is encapsulated twice: by WARP Connector and again by Cloudflare before delivery to the WARP client. |
 
 Configure MSS clamping on your edge devices to ensure TCP traffic does not require fragmentation.
 
@@ -356,7 +356,7 @@ Configure MSS clamping on your edge devices to ensure TCP traffic does not requi
 Different connectivity options handle source IP addresses differently:
 
 | Connectivity option | Source IP behavior |
-| :---- | :---- |
+| ---- | ---- |
 | Cloudflare Tunnel | Origin sees the `cloudflared` process IP. Use `CF-Connecting-IP` header for HTTP traffic. |
 | WARP Connector | Preserves original source IP end-to-end. |
 | GRE and IPsec tunnels | Preserves original source IP within the tunnel. |
@@ -371,7 +371,7 @@ Source IP preservation is required for:
 ### Traffic direction capabilities
 
 | Connectivity option | Client-initiated traffic | Server-initiated traffic |
-| :---- | :---- | :---- |
+| ---- | ---- | ---- |
 | Cloudflare Tunnel | Yes | No |
 | WARP client | Yes | No (device cannot receive unsolicited inbound) |
 | WARP Connector | Yes | Yes |
