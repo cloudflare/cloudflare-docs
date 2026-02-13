@@ -60,12 +60,14 @@ If you need different DLP policies for different use cases (for example, per-ten
 
 ## Integration with Cloudflare DLP
 
-AI Gateway DLP uses the same detection profiles and policies as Cloudflare's enterprise DLP solution. This means:
+AI Gateway DLP uses the same [detection profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) as Cloudflare's Zero Trust DLP solution. Profiles are shared account-level objects, so you can reuse existing predefined or custom profiles across both [Gateway HTTP policies](/cloudflare-one/data-loss-prevention/dlp-policies/) and AI Gateway DLP policies.
 
-- **Unified management** - Configure DLP policies once and apply them across web traffic, email, SaaS applications, and AI interactions
-- **Consistent detection** - The same sensitive data patterns are detected across all channels
-- **Centralized reporting** - All DLP events appear in the same dashboard and logs
-- **Shared profiles** - Reuse existing DLP detection profiles for AI traffic
+Key differences from Zero Trust Gateway DLP:
+
+- **No Gateway proxy or TLS decryption required** - AI Gateway inspects traffic directly as an AI proxy, so you do not need to set up [Gateway HTTP filtering](/cloudflare-one/traffic-policies/initial-setup/http/) or [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+- **Separate policy management** - DLP policies for AI Gateway are configured per gateway in the AI Gateway dashboard, not in Zero Trust traffic policies.
+- **Separate logs** - DLP events for AI Gateway appear in [AI Gateway logs](/ai-gateway/observability/logging/), not in Zero Trust HTTP request logs.
+- **Shared profiles** - DLP detection profiles (predefined and custom) are shared across both products. Changes to a profile apply everywhere it is used.
 
 For more information about Cloudflare's DLP capabilities, refer to the [Data Loss Prevention documentation](/cloudflare-one/data-loss-prevention/).
 

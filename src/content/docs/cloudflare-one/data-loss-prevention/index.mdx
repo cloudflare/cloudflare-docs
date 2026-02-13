@@ -28,6 +28,12 @@ DLP requires [Gateway HTTP filtering](/cloudflare-one/traffic-policies/initial-s
 
 To get started, refer to [Scan HTTP traffic with DLP](/cloudflare-one/data-loss-prevention/dlp-policies/).
 
+## AI traffic
+
+Data Loss Prevention integrates with [Cloudflare AI Gateway](/ai-gateway/) to scan AI prompts and responses for sensitive data. When DLP is enabled on an AI Gateway, it inspects the text content of requests sent to AI providers and responses returned from AI models, without requiring Gateway HTTP filtering or TLS decryption.
+
+To get started, refer to [Set up DLP for AI Gateway](/ai-gateway/features/dlp/set-up-dlp/).
+
 ## Data at rest
 
 Data Loss Prevention complements [Cloudflare CASB](/cloudflare-one/integrations/cloud-and-saas/) to detect sensitive data stored in your SaaS applications. Unlike data in transit scans which read files sent through Cloudflare Gateway, CASB retrieves files directly via the API. Therefore, Gateway and WARP settings (such as [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies and [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) configurations) will not affect data at rest scans.
