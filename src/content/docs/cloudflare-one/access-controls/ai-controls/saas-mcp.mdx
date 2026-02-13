@@ -223,11 +223,11 @@ To add OAuth endpoints and credentials to our [example MCP server](#1-deploy-an-
 1.  Create the following [Workers secrets](/workers/configuration/secrets/):
 
     ```sh
-    wrangler secret put ACCESS_CLIENT_ID
-    wrangler secret put ACCESS_CLIENT_SECRET
-    wrangler secret put ACCESS_TOKEN_URL
-    wrangler secret put ACCESS_AUTHORIZATION_URL
-    wrangler secret put ACCESS_JWKS_URL
+    npx wrangler secret put ACCESS_CLIENT_ID
+    npx wrangler secret put ACCESS_CLIENT_SECRET
+    npx wrangler secret put ACCESS_TOKEN_URL
+    npx wrangler secret put ACCESS_AUTHORIZATION_URL
+    npx wrangler secret put ACCESS_JWKS_URL
     ```
 
 2.  When prompted to enter a secret value, paste the corresponding values obtained from the [Access for SaaS app](#2-create-an-access-for-saas-app).
@@ -253,7 +253,7 @@ To add OAuth endpoints and credentials to our [example MCP server](#1-deploy-an-
 		Store the output of this command in a Workers secret:
 
 		```sh
-		wrangler secret put COOKIE_ENCRYPTION_KEY
+		npx wrangler secret put COOKIE_ENCRYPTION_KEY
 		```
 </TabItem>
 </Tabs>
