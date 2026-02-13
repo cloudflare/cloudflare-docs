@@ -7,6 +7,8 @@ sidebar:
 description: Test Cloudflare Stream webhook notifications locally using a Cloudflare Worker and Cloudflare Tunnel.
 ---
 
+import { APIRequest } from "~/components";
+
 Cloudflare Stream cannot send [webhook notifications](/stream/manage-video-library/using-webhooks/) to `localhost` or local IP addresses. To test webhooks during local development, you need a publicly accessible URL that forwards requests to your local machine.
 
 This example shows how to:
@@ -164,14 +166,15 @@ Copy this URL. It changes every time you restart the tunnel.
 
 Use the Stream API to set the tunnel URL as your webhook notification URL:
 
-```bash
-curl -X PUT \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/webhook \
-  --data '{"notificationUrl":"https://example-words-here.trycloudflare.com"}'
-```
+<APIRequest
+  path="/accounts/{account_id}/stream/webhook"
+  method="PUT"
+  json={{
+    notificationUrl: "https://example-words-here.trycloudflare.com",
+  }}
+/>
 
-Replace `<API_TOKEN>` and `<ACCOUNT_ID>` with your values. Replace the `notificationUrl` with the URL from step 3.
+Replace the `notificationUrl` with the URL from step 3.
 
 ## 5. Trigger a test event
 
@@ -187,12 +190,13 @@ npx wrangler deploy
 
 Then update the webhook subscription to point to your deployed Worker URL:
 
-```bash
-curl -X PUT \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/webhook \
-  --data '{"notificationUrl":"https://your-worker.your-subdomain.workers.dev"}'
-```
+<APIRequest
+  path="/accounts/{account_id}/stream/webhook"
+  method="PUT"
+  json={{
+    notificationUrl: "https://your-worker.your-subdomain.workers.dev",
+  }}
+/>
 
 :::caution
 
