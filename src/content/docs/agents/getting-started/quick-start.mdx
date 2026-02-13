@@ -279,7 +279,19 @@ agent.stub.increment();
 
 ### `SyntaxError: Invalid or unexpected token` with `@callable()`
 
-If your dev server fails with a `SyntaxError: Invalid or unexpected token` error, set `"target": "ES2021"` in your `tsconfig.json`.
+If your dev server fails with `SyntaxError: Invalid or unexpected token`, set `"target": "ES2021"` in your `tsconfig.json`. This ensures that Vite's esbuild transpiler downlevels TC39 decorators instead of passing them through as native syntax.
+
+```json
+{
+	"compilerOptions": {
+		"target": "ES2021"
+	}
+}
+```
+
+:::caution
+Do not set `"experimentalDecorators": true` in your `tsconfig.json`. The Agents SDK uses [TC39 standard decorators](https://github.com/tc39/proposal-decorators), not TypeScript legacy decorators. Enabling `experimentalDecorators` applies an incompatible transform that silently breaks `@callable()` at runtime.
+:::
 
 ## Next steps
 

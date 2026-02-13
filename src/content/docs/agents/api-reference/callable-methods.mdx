@@ -58,10 +58,6 @@ sequenceDiagram
 
 The `@callable()` decorator is specifically for WebSocket-based RPC from external clients. When calling from within the same Worker or another agent, use standard [Durable Object RPC](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) directly.
 
-:::note
-If you get a `SyntaxError: Invalid or unexpected token` when starting your dev server, set `"target": "ES2021"` in your `tsconfig.json`.
-:::
-
 ## Basic usage
 
 ### Defining callable methods
@@ -341,7 +337,7 @@ function App() {
 		name: "default",
 	});
 
-	async function handleGreet(result: string) {
+	async function handleGreet() {
 		// TypeScript knows the method signature
 		const result = await agent.stub.greet("World");
 		// ^? string
@@ -709,6 +705,24 @@ for (const [name, meta] of methods) {
 ```
 
 </TypeScriptExample>
+
+## Troubleshooting
+
+### `SyntaxError: Invalid or unexpected token`
+
+If your dev server fails with `SyntaxError: Invalid or unexpected token` when using `@callable()`, set `"target": "ES2021"` in your `tsconfig.json`. This ensures that Vite's esbuild transpiler downlevels TC39 decorators instead of passing them through as native syntax.
+
+```json
+{
+	"compilerOptions": {
+		"target": "ES2021"
+	}
+}
+```
+
+:::caution
+Do not set `"experimentalDecorators": true` in your `tsconfig.json`. The Agents SDK uses [TC39 standard decorators](https://github.com/tc39/proposal-decorators), not TypeScript legacy decorators. Enabling `experimentalDecorators` applies an incompatible transform that silently breaks `@callable()` at runtime.
+:::
 
 ## Next steps
 
