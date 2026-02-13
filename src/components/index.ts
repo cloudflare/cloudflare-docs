@@ -17,6 +17,7 @@ export { default as CopyPageButton } from "./CopyPageButton.tsx";
 export { default as CURL } from "./CURL.astro";
 export { default as DashButton } from "./DashButton.astro";
 export { default as Description } from "./Description.astro";
+export { default as DiagramTabs } from "./DiagramTabs.astro";
 export { default as Details } from "./Details.astro";
 export { default as DirectoryListing } from "./DirectoryListing.astro";
 export { default as Example } from "./Example.astro";

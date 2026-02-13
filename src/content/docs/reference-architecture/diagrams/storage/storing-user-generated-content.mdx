@@ -9,6 +9,8 @@ reviewed: 2025-03-31
 description: Store user-generated content in R2 for fast, secure, and cost-effective architecture.
 ---
 
+import { DiagramTabs } from "~/components";
+
 ## Introduction
 
 User generated content (UGC) is an essential aspect of modern applications. This includes users uploading profile photos, documents, and videos, as well as AI models generating images, summaries, or structured data. Therefore, applications require a reliable, scalable, and cost-effective solution for storing and accessing this content.
@@ -32,7 +34,25 @@ This approach avoids routing large files through the application backend or Work
 
 And because R2 is natively integrated with Cloudflare's global network, files stored in R2 are accessible with low latency from anywhere in the world—and **without any egress fees**, even as your application scales.
 
+<DiagramTabs mermaid={`sequenceDiagram
+    participant User as User/Browser
+    participant Frontend as Frontend App
+    participant Worker as API Worker
+    participant R2 as Cloudflare R2
+    participant Post as Post Processing (Optional)
+    User->>Frontend: 1. Initiate upload (file details)
+    Frontend->>Worker: 2. Request signed URL
+    Worker->>Worker: Validate user & permissions
+    Worker->>R2: 3. Generate presigned PUT URL
+    R2-->>Worker: Signed URL
+    Worker-->>Frontend: 4. Return signed URL
+    Frontend->>R2: 5. Upload file directly
+    R2-->>Frontend: Upload complete
+    R2-->>Post: R2 Event Notifications`}>
+
 ![Use Case 1: Secure User Uploads to R2 via Signed URLs](~/assets/images/reference-architecture/storing-user-generated-content/uploads-to-r2-via-signed-urls.svg "Use Case 1: Secure User Uploads to R2 via Signed URLs")
+
+</DiagramTabs>
 
 **How it Works**
 
