@@ -1,0 +1,246 @@
+---
+pcx_content_type: how-to
+title: Bindings for Workers
+sidebar:
+  order: 1
+---
+
+import { WranglerConfig, InlineBadge } from "~/components";
+
+# Bindings for Workers <InlineBadge preset="beta" />
+
+A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Media Transformations](/stream/transform-videos/), [R2 buckets](/r2/buckets/), or [KV namespaces](/kv/concepts/kv-namespaces/).
+
+You can bind the Media Transformations API to your Worker to transform, resize, and extract content from videos without requiring them to be accessible through a URL.
+
+For example, when you allow Workers to interact with Media Transformations, you can:
+
+- Transform a video stored in R2, then store the output directly back in R2 without serving it to the browser.
+- Extract thumbnail frames from user-uploaded videos during the upload process.
+- Generate spritesheets for video hover previews.
+- Extract audio tracks from video files.
+
+Bindings can be configured in the Cloudflare dashboard for your Worker or in the Wrangler configuration file in your project directory.
+
+## Setup
+
+The Media binding is enabled on a per-Worker basis.
+
+You can define variables in the Wrangler configuration file of your Worker project directory. These variables are bound to external resources at runtime, and you can then interact with them through this variable.
+
+To bind Media Transformations to your Worker, add the following to the end of your Wrangler configuration file:
+
+<WranglerConfig>
+
+```toml
+[media]
+binding = "MEDIA" # available in your Worker on env.MEDIA
+```
+
+</WranglerConfig>
+
+Within your Worker code, you can interact with this binding by using `env.MEDIA.input()` to build an object that can manipulate the video (passed as a `ReadableStream`).
+
+## Methods
+
+### `.input()`
+
+- Entry point for the Media binding.
+- Accepts a `ReadableStream<Uint8Array>` containing the video bytes.
+- Returns a `MediaTransformer` for chaining transformation operations.
+
+### `.transform()`
+
+- Defines how the video should be resized and fitted.
+- Accepts the following parameters:
+  - `width`: Target width in pixels (10-2000).
+  - `height`: Target height in pixels (10-2000).
+  - `fit`: How to resize the video to fit the specified dimensions.
+    - `contain`: Scales the video to fit entirely within the output dimensions while respecting aspect ratio.
+    - `cover`: Scales the video to entirely cover the output dimensions with a center-weighted crop.
+    - `scale-down`: Same as `contain`, but only scales down. Does not upscale.
+- Refer to [Transform videos options](/stream/transform-videos/#options) for more details.
+- Returns a `MediaTransformationGenerator`.
+
+### `.output()`
+
+- Configures the output format and extraction parameters.
+- Accepts the following parameters:
+  - `mode`: The type of output to generate.
+    - `video`: Outputs an H.264/AAC optimized MP4 file.
+    - `frame`: Outputs a still image (JPEG or PNG).
+    - `spritesheet`: Outputs a JPEG containing multiple frames.
+    - `audio`: Outputs an AAC encoded M4A file.
+  - `time`: Start timestamp for extraction (for example, `"2s"`, `"1m"`). Default: `"0s"`.
+  - `duration`: Duration of the output for `video`, `audio`, or `spritesheet` modes (for example, `"5s"`).
+  - `imageCount`: Number of frames to include in a spritesheet.
+  - `format`: Output format for `frame` mode (`jpg`, `png`) or `audio` mode (`m4a`).
+  - `audio`: Boolean to include or exclude audio in `video` mode. Default: `true`.
+- Returns a `MediaTransformationResult`.
+
+### Result methods
+
+After calling `.output()`, you receive a `MediaTransformationResult` with the following methods:
+
+- `.response()`: Returns the transformed media as an HTTP `Response` object, ready to return to the client or store in cache.
+- `.media()`: Returns the transformed media as a `ReadableStream<Uint8Array>`.
+- `.contentType()`: Returns the MIME type string of the output (for example, `video/mp4`, `image/jpeg`, `audio/mp4`).
+
+## Examples
+
+### Generate an optimized video clip
+
+Resize a video and extract a 5-second clip:
+
+```ts
+export default {
+	async fetch(request, env) {
+		const video = await env.R2_BUCKET.get("input.mp4");
+
+		const result = env.MEDIA.input(video.body)
+			.transform({ width: 480, height: 270 })
+			.output({ mode: "video", time: "0s", duration: "5s" });
+
+		return result.response();
+	},
+};
+```
+
+### Extract a still frame
+
+Extract a single frame as a JPEG thumbnail:
+
+```ts
+export default {
+	async fetch(request, env) {
+		const video = await env.R2_BUCKET.get("input.mp4");
+
+		const result = env.MEDIA.input(video.body)
+			.transform({ width: 640, height: 360 })
+			.output({ mode: "frame", time: "2s", format: "jpg" });
+
+		return result.response();
+	},
+};
+```
+
+### Generate a spritesheet
+
+Generate a spritesheet with 10 frames for video preview hover effects:
+
+```ts
+export default {
+	async fetch(request, env) {
+		const video = await env.R2_BUCKET.get("input.mp4");
+
+		const result = env.MEDIA.input(video.body)
+			.transform({ width: 160, height: 90 })
+			.output({ mode: "spritesheet", time: "0s", imageCount: 10 });
+
+		return result.response();
+	},
+};
+```
+
+### Extract audio
+
+Extract the audio track from a video as an M4A file:
+
+```ts
+export default {
+	async fetch(request, env) {
+		const video = await env.R2_BUCKET.get("input.mp4");
+
+		const result = env.MEDIA.input(video.body)
+			.transform({})
+			.output({ mode: "audio", time: "0s", duration: "30s" });
+
+		return result.response();
+	},
+};
+```
+
+### Store transformed output in R2
+
+Transform a video and store the result directly in R2:
+
+```ts
+export default {
+	async fetch(request, env) {
+		const video = await env.R2_BUCKET.get("input.mp4");
+
+		const result = env.MEDIA.input(video.body)
+			.transform({ width: 480, height: 270, fit: "contain" })
+			.output({ mode: "video", time: "0s", duration: "10s", audio: false });
+
+		// Store the transformed video directly in R2
+		await env.R2_BUCKET.put("output-480p.mp4", result.media(), {
+			httpMetadata: { contentType: result.contentType() },
+		});
+
+		return new Response("Video transformed and stored", { status: 200 });
+	},
+};
+```
+
+## Error handling
+
+Transformation errors throw a `MediaError`, which extends the standard `Error` interface with additional information:
+
+- `code`: A numeric error code.
+- `message`: A description of the error.
+- `stack`: Optional stack trace.
+
+Use a try-catch block to handle transformation errors:
+
+```ts
+export default {
+	async fetch(request, env) {
+		const video = await env.R2_BUCKET.get("input.mp4");
+
+		try {
+			const result = env.MEDIA.input(video.body)
+				.transform({ width: 480, height: 270 })
+				.output({ mode: "video", time: "0s", duration: "5s" });
+
+			return result.response();
+		} catch (e) {
+			if (e instanceof Error && "code" in e) {
+				// Handle MediaError
+				return new Response(`Transformation failed: ${e.message}`, {
+					status: 500,
+				});
+			}
+			throw e;
+		}
+	},
+};
+```
+
+## Caching
+
+Responses from the Media binding are not automatically cached. Workers lets you interact directly with the [Cache API](/workers/runtime-apis/cache/) to customize cache behavior. You can implement logic in your script to store transformations in Cloudflare's cache.
+
+## Local development
+
+The Media Transformations API can be used in local development through [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. Using the Media binding in local development will not incur usage charges.
+
+To test in local development, run:
+
+```sh
+npx wrangler dev
+```
+
+:::note[Placeholder: Local development limitations]
+
+The specific features supported in offline/local mode for Media bindings need to be confirmed. This section will be updated with details on which transformation options are available locally versus requiring remote mode.
+
+:::
+
+To test the full-fidelity remote version of Media Transformations, use the `--remote` flag:
+
+```sh
+npx wrangler dev --remote
+```
+
+When testing with the [Workers Vitest integration](/workers/testing/vitest-integration/), the offline version is used by default to avoid hitting the Cloudflare API in tests.
