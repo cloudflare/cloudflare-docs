@@ -21,7 +21,15 @@ Therefore, it is recommended that you **use the [Cloudflare CDN](/cache/)**, whi
 - You remove an additional hop between vendor data centers, thus reducing latency for your users.
 - You perform DDoS filtering in the first point of contact from the Internet, which is a recommended best practice.
 
-Note that, if you are using a third-party CDN in front of Cloudflare and Cloudflare mitigates a DDoS attack, you will still pay your first-hop CDN provider for the attack traffic that they processed before it was mitigated by Cloudflare.
+:::caution[L3/4 DDoS mitigation accuracy]
+Using a third-party WAF or CDN service in front of Cloudflare can negatively impact the accuracy of L3/4 DDoS mitigation. 
+
+When traffic is proxied through another vendor, the vendor's IP addresses are available to Cloudflare's network-layer protection systems rather than the true client IP addresses. This lack of visibility into the original source can lead to less effective automated mitigation and potential false positives.
+:::
+
+If you require specific architectures involving third-party vendors, refer to our [Deployment architectures for Magic Transit](/reference-architecture/architectures/magic-transit/#deployment-architectures-for-magic-transit) for detailed guidance on maintaining security posture in complex environments.
+
+If you are using a third-party CDN in front of Cloudflare and Cloudflare mitigates a DDoS attack, you will still pay your first-hop CDN provider for the attack traffic that they processed before it was mitigated by Cloudflare.
 
 ### Recommended DDoS configuration adjustments
 

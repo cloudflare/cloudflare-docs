@@ -1,0 +1,44 @@
+---
+title: "WAF Release - 2025-11-21"
+description: Cloudflare WAF managed rulesets 2025-11-21 release
+date: 2025-11-21
+---
+
+import { RuleID } from "~/components";
+
+This week’s release introduces a critical detection for CVE-2025-61757, a vulnerability in the Oracle Identity Manager REST WebServices component.
+
+**Key Findings**
+
+This flaw allows unauthenticated attackers with network access over HTTP to fully compromise the Identity Manager, potentially leading to a complete takeover.
+
+**Impact**
+
+Oracle Identity Manager (CVE-2025-61757): Exploitation could allow an unauthenticated remote attacker to bypass security checks by sending specially crafted requests to the application's message processor. This enables the creation of arbitrary employee accounts, which can be leveraged to modify system configurations and achieve full system compromise.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="fa584616fe2241608cb8bd1339fdbe7e" />
+			</td>
+			<td>N/A</td>
+			<td>Oracle Identity Manager - Pre-Auth RCE - CVE:CVE-2025-61757</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>

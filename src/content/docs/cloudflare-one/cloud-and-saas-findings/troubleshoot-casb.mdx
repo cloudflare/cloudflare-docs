@@ -1,0 +1,80 @@
+---
+title: Troubleshoot CASB
+pcx_content_type: troubleshooting
+sidebar:
+  order: 4
+---
+
+Use this guide to troubleshoot common issues with Cloud Access Security Broker (CASB).
+
+This guide covers troubleshooting steps for the Microsoft 365, Google Workspace, and GitHub integrations. For other integrations, refer to the integration's documentation.
+
+## Integration fails to connect or returns an error
+
+Integration connection problems are the most common issue during CASB setup. If you receive an error such as "There was an error creating the integration" or are redirected back to the dashboard without the integration appearing, follow these steps.
+
+### Check permissions in the third-party application
+
+Ensure the account you are using to authorize the integration has the necessary administrative privileges in the third-party application (for example, **Global Administrator** for Microsoft 365, **Super Admin** for Google Workspace, or **Organization Owner** for GitHub). Insufficient permissions are the leading cause of setup failures.
+
+### Clear previous installations
+
+If the SaaS application was previously integrated with a different Cloudflare account, you must manually revoke the old Cloudflare application from within the SaaS provider's admin console.
+
+- **For Microsoft 365**: Go to **Microsoft 365 admin center** > **Enterprise applications** and delete the existing Cloudflare One application.
+- **For Google Workspace**: Go to **Google Admin Console** > **Security** > **Access and data control** > **API controls** and remove the Cloudflare app from third-party app access.
+- **For GitHub**: Go to your organization's **Settings** > **Third-party access** and revoke the Cloudflare CASB application.
+
+After cleaning up the old app, wait a few minutes and then try the integration process again from the Cloudflare One dashboard.
+
+### Verify OAuth permissions
+
+During setup, CASB will ask you to approve a set of permissions. The permissions requested are required for the CASB service to scan for misconfigurations and, if you choose, to take remediation actions. While some permissions may seem broad (for example, `write` access), they are necessary for actions like quarantining a file or modifying sharing settings. Refer to the specific integration guide for a detailed list of required permissions.
+
+## Findings are stale or not updating after remediation
+
+A common point of confusion is when a resolved issue (for example, when a file is made private, or when a user is suspended) continues to appear as an active finding in the CASB dashboard.
+
+### Understand scan frequency
+
+CASB integrations do not provide real-time updates. Scans are performed periodically to discover new findings and validate the status of existing ones. The initial scan can take several hours, and subsequent scans run approximately every 24-48 hours.
+
+### Force a re-scan
+
+To trigger a new scan:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Cloud & SaaS**.
+2. Find your integration and select **Configure**.
+3. Go to **CASB**.
+4. Turn off **Findings scanning**.
+5. After a few minutes, turn on **Findings scanning** again.
+
+This action will queue a fresh scan of your integration. Allow several hours for your findings to reflect the new results.
+
+## Remediation action fails in the dashboard
+
+If you attempt to use a one-click remediation action (such as "Make private") on a finding, it may result in a **Failed** status, often with a timeout error.
+
+### Verify permissions
+
+The remediation failure may be due to the permissions for the Cloudflare app being changed or revoked in the SaaS application after the initial setup. Re-validate the integration to ensure all required permissions are still granted.
+
+### Remediate manually
+
+As a workaround, remediate the finding directly within the SaaS application (for example, change the file's sharing settings in Google Drive). CASB will clear the finding from the dashboard after the next successful scan.
+
+## CASB is generating false positives
+
+CASB may incorrectly flag items, such as flagging internally-shared files as public or archived Google Workspace users as inactive.
+
+### Review finding details
+
+Carefully examine the evidence provided in the finding. An object's status in the SaaS platform may not be accurate.
+
+### Report the issue
+
+If you confirm the finding is a false positive, report the behavior to Cloudflare Support. Provide the finding ID and as much detail as possible. This helps the Support team refine the detection logic for all customers.
+
+### Suppress the finding
+
+While Cloudflare investigates the issue, you can use the **Suppress** action on the finding to remove it from your active list and reduce noise.

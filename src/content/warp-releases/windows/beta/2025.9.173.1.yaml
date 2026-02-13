@@ -2,7 +2,7 @@ releaseNotes: |-
   This release contains minor fixes, improvements, and new features including Path Maximum Transmission Unit Discovery (PMTUD). With PMTUD enabled, the client will dynamically adjust packet sizing to optimize connection performance. There is also a new connection status message in the GUI to inform users that the local network connection may be unstable. This will make it easier to debug connectivity issues.
 
   **Changes and improvements**
-  - Improvements for [Windows multi-user](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-multiuser/) to maintain the [global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-warp-override) state when switching between users.
+  - Improvements for [Windows multi-user](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-multiuser/) to maintain the [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) state when switching between users.
   - The GUI now displays the health of the tunnel and DNS connections by showing a connection status message when the network may be unstable. This will make it easier to debug connectivity issues.
   - Deleting registrations no longer returns an error when succeeding.
   - Path Maximum Transmission Unit Discovery (PMTUD) is now used to discover the effective MTU of the connection. This allows the client to improve connection performance optimized for the current network.

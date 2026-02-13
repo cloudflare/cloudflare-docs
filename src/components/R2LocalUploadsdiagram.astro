@@ -1,0 +1,1115 @@
+---
+interface Props {
+	mode?: 'without' | 'with' | 'comparison';
+	autoPlay?: boolean;
+	loop?: boolean;
+}
+
+const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
+---
+
+<r2-local-uploads-diagram data-mode={mode} data-autoplay={autoPlay} data-loop={loop}>
+	<div class="diagram-wrapper">
+		{mode === 'comparison' && (
+			<div class="toggle-container">
+				<span class="toggle-label" id="local-uploads-label">Local uploads</span>
+				<label class="toggle-switch" aria-labelledby="local-uploads-label">
+					<input type="checkbox" class="toggle-input" aria-labelledby="local-uploads-label" />
+					<span class="toggle-slider"></span>
+				</label>
+			</div>
+		)}
+		<div class="diagram-container">
+			<!-- Client node -->
+			<div class="flow-node" data-step="1">
+				<div class="node-card">
+					<div class="node-badge">
+						<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+							<rect x="3" y="4" width="18" height="12" rx="2"/>
+							<path d="M7 20h10M12 16v4"/>
+						</svg>
+					</div>
+					<div class="node-info">
+						<span class="node-name">Client</span>
+						<span class="node-location">Eastern North America</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Connector: Client to Gateway -->
+			<div class="connector" data-step="1" data-connector="1-2"></div>
+
+			<!-- WITHOUT local uploads: Gateway in EDGE block -->
+			<div class="region-box without-local-uploads" data-step="2">
+				<span class="group-label">Edge</span>
+				<span class="group-location">Eastern North America</span>
+				<div class="group-content edge-single">
+					<div class="bucket-component gateway-node-without">
+						<div class="component-icon gateway">
+							<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+								<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+								<path d="M2 17l10 5 10-5"/>
+								<path d="M2 12l10 5 10-5"/>
+							</svg>
+						</div>
+						<span class="component-name">R2 Gateway Worker</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- WITHOUT local uploads: Split connector area -->
+			<div class="split-area without-local-uploads" data-connector="2-bucket">
+				<svg class="split-svg" viewBox="0 0 320 100" preserveAspectRatio="none">
+					<!-- Stem from node above -->
+					<line class="split-line stem data-path" x1="160" y1="0" x2="160" y2="20" stroke="currentColor" stroke-width="2"/>
+					<!-- Horizontal bar - left half (metadata) -->
+					<line class="split-line horizontal-left metadata-path" x1="85" y1="20" x2="160" y2="20" stroke="currentColor" stroke-width="2"/>
+					<!-- Horizontal bar - right half (object data) -->
+					<line class="split-line horizontal-right data-path" x1="160" y1="20" x2="235" y2="20" stroke="currentColor" stroke-width="2"/>
+					<!-- Left branch (metadata) -->
+					<line class="split-line left-branch-top metadata-path" x1="85" y1="20" x2="85" y2="50" stroke="currentColor" stroke-width="2"/>
+					<!-- Right branch (object data) -->
+					<line class="split-line right-branch-top data-path" x1="235" y1="20" x2="235" y2="50" stroke="currentColor" stroke-width="2"/>
+					<!-- Labels positioned on the lines -->
+					<text x="85" y="67" text-anchor="middle" class="svg-label">Object metadata</text>
+					<text x="235" y="67" text-anchor="middle" class="svg-label">Object data</text>
+					<!-- Continue lines to bucket -->
+					<line class="split-line left-branch-bottom metadata-path" x1="85" y1="72" x2="85" y2="100" stroke="currentColor" stroke-width="2"/>
+					<line class="split-line right-branch-bottom data-path" x1="235" y1="72" x2="235" y2="100" stroke="currentColor" stroke-width="2"/>
+				</svg>
+			</div>
+
+			<!-- WITH local uploads: Region box containing Gateway + Local Storage -->
+			<div class="region-box with-local-uploads hidden" data-step="2">
+				<span class="group-label">Edge</span>
+				<span class="group-location">Eastern North America</span>
+				<div class="group-content region-content">
+					<!-- R2 Gateway Worker -->
+					<div class="bucket-component gateway-node-local">
+						<div class="component-icon gateway">
+							<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+								<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+								<path d="M2 17l10 5 10-5"/>
+								<path d="M2 12l10 5 10-5"/>
+							</svg>
+						</div>
+						<span class="component-name">R2 Gateway Worker</span>
+					</div>
+					<!-- Connector line -->
+					<div class="region-line" data-connector="gateway-to-local"></div>
+					<!-- Local Object Data Infra -->
+					<div class="bucket-component local-storage-node">
+						<div class="component-icon storage">
+							<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+								<ellipse cx="12" cy="6" rx="8" ry="3"/>
+								<path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/>
+								<path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"/>
+							</svg>
+						</div>
+						<span class="component-name">Object Data Infra</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- WITH local uploads: Two lines down to bucket -->
+			<div class="local-split-columns with-local-uploads hidden" data-connector="local-split">
+				<div class="split-col left-col">
+					<div class="v-connector meta-line"></div>
+					<div class="split-label-row">
+						<span class="split-col-label">Object metadata</span>
+					</div>
+					<div class="v-connector meta-line short"></div>
+				</div>
+				<div class="split-col right-col">
+					<div class="v-connector replication-line"></div>
+					<div class="split-label-row">
+						<svg class="progress-ring" viewBox="0 0 20 20">
+							<circle class="progress-ring-bg" cx="10" cy="10" r="8" />
+							<circle class="progress-ring-fill" cx="10" cy="10" r="8" />
+						</svg>
+						<span class="split-col-label replication">Object data</span>
+					</div>
+					<div class="v-connector replication-line short"></div>
+				</div>
+			</div>
+
+			<!-- Bucket group -->
+			<div class="flow-node" data-step="3">
+				<div class="bucket-group">
+					<span class="group-label">Your bucket</span>
+					<span class="group-location">Eastern Europe</span>
+					<div class="group-content">
+						<div class="bucket-component" data-component="metadata">
+							<div class="component-icon">
+								<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+									<circle cx="12" cy="12" r="10"/>
+									<path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+								</svg>
+							</div>
+							<span class="component-name">Metadata Service</span>
+						</div>
+						<div class="bucket-component" data-component="object-data">
+							<div class="component-icon">
+								<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+									<ellipse cx="12" cy="6" rx="8" ry="3"/>
+									<path d="M4 6v4c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/>
+									<path d="M4 10v4c0 1.66 3.58 3 8 3s8-1.34 8-3v-4"/>
+								</svg>
+							</div>
+							<span class="component-name">Object Data Infra</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Status indicator -->
+		<div class="status-indicator">
+			<svg class="status-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+				<circle cx="12" cy="12" r="10" class="status-circle" />
+				<path d="M8 12l3 3 5-5" class="status-checkmark" />
+			</svg>
+			<span class="status-text">Data is uploaded and accessible</span>
+		</div>
+	</div>
+</r2-local-uploads-diagram>
+
+<style>
+	r2-local-uploads-diagram {
+		display: block;
+		width: 100%;
+		margin: 1.5rem 0;
+	}
+
+	.diagram-wrapper {
+		position: relative;
+	}
+
+	.toggle-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.625rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.toggle-label {
+		font-size: 0.8125rem;
+		font-weight: 500;
+		color: rgb(64 64 64);
+	}
+
+	:root[data-theme="dark"] .toggle-label {
+		color: rgb(212 212 212);
+	}
+
+	.toggle-switch {
+		position: relative;
+		display: inline-block;
+		width: 36px;
+		height: 20px;
+		cursor: pointer;
+	}
+
+	.toggle-input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+
+	.toggle-slider {
+		position: absolute;
+		inset: 0;
+		background-color: rgb(212 212 212);
+		border-radius: 20px;
+		transition: background-color 0.2s ease;
+	}
+
+	:root[data-theme="dark"] .toggle-slider {
+		background-color: rgb(64 64 64);
+	}
+
+	.toggle-slider::before {
+		position: absolute;
+		content: "";
+		height: 16px;
+		width: 16px;
+		left: 2px;
+		bottom: 2px;
+		background-color: white;
+		border-radius: 50%;
+		transition: transform 0.2s ease;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	}
+
+	.toggle-input:checked + .toggle-slider {
+		background-color: rgb(249 115 22);
+	}
+
+	.toggle-input:checked + .toggle-slider::before {
+		transform: translateX(16px);
+	}
+
+	.diagram-container {
+		position: relative;
+		margin: 0 auto;
+		width: 320px;
+		max-width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0;
+	}
+
+	.flow-node {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		margin: 0 !important;
+		margin-top: -1px !important;
+		padding: 0 !important;
+		width: 100%;
+	}
+
+
+
+	/* Vertical connector line between nodes */
+	.connector {
+		width: 2px;
+		height: 20px;
+		background-color: rgb(212 212 212);
+		margin: 0 !important;
+		margin-bottom: -1px !important;
+		padding: 0 !important;
+		transition: background-color 0.3s ease;
+		flex-shrink: 0;
+	}
+
+	:root[data-theme="dark"] .connector {
+		background-color: rgb(64 64 64);
+	}
+
+	/* Active state for connector */
+	.connector.active {
+		background-color: rgb(249 115 22) !important;
+	}
+
+	.node-card {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		background: white;
+		border-radius: 0.5rem;
+		padding: 0.625rem 0.875rem;
+		border: 1px solid rgb(229 229 229);
+		width: 220px;
+		margin: 0 !important;
+		transition: border-color 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .node-card {
+		background: rgb(23 23 23);
+		border-color: rgb(64 64 64);
+	}
+
+	/* Active state for node card */
+	.flow-node.active .node-card {
+		border-color: rgb(249 115 22);
+		box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+	}
+
+	.flow-node.active .node-badge {
+		color: rgb(249 115 22) !important;
+	}
+
+	.node-card.highlight {
+		border-color: rgb(249 115 22);
+		background: rgb(255 251 247);
+	}
+
+	:root[data-theme="dark"] .node-card.highlight {
+		background: rgb(30 25 20);
+		border-color: rgb(249 115 22);
+	}
+
+	.node-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.5rem;
+		height: 1.5rem;
+		flex-shrink: 0;
+		color: rgb(115 115 115);
+		transition: color 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .node-badge {
+		color: rgb(163 163 163);
+	}
+
+	.node-badge.gateway,
+	.node-badge.storage {
+		color: rgb(249 115 22);
+	}
+
+	.node-badge svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.node-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.node-name {
+		font-size: 0.8125rem;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-weight: 500;
+		color: rgb(23 23 23);
+	}
+
+	:root[data-theme="dark"] .node-name {
+		color: rgb(245 245 245);
+	}
+
+	.node-location {
+		font-size: 0.6875rem;
+		color: rgb(115 115 115);
+	}
+
+	:root[data-theme="dark"] .node-location {
+		color: rgb(163 163 163);
+	}
+
+	.node-note {
+		font-size: 0.625rem;
+		font-weight: 500;
+		color: rgb(249 115 22);
+		margin-top: 0.125rem;
+	}
+
+	/* Split area with SVG */
+	.split-area {
+		position: relative;
+		width: 100%;
+		height: 100px;
+		margin: 0 !important;
+		margin-bottom: -1px !important;
+		padding: 0 !important;
+	}
+
+	.split-svg {
+		width: 100%;
+		height: 100%;
+		color: rgb(212 212 212);
+		display: block;
+		overflow: visible;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	:root[data-theme="dark"] .split-svg {
+		color: rgb(64 64 64);
+	}
+
+	/* Active state for split lines - metadata lights up when metadata-active class is added */
+	.split-area.metadata-active .split-line.metadata-path {
+		stroke: rgb(249 115 22) !important;
+	}
+
+	/* Object data path animates slowly over 3 seconds when data-animating class is added */
+	@keyframes line-fill {
+		0% {
+			stroke: rgb(212 212 212);
+		}
+		30% {
+			stroke: rgb(212 212 212);
+		}
+		100% {
+			stroke: rgb(249 115 22);
+		}
+	}
+
+	@keyframes line-fill-dark {
+		0% {
+			stroke: rgb(64 64 64);
+		}
+		30% {
+			stroke: rgb(64 64 64);
+		}
+		100% {
+			stroke: rgb(249 115 22);
+		}
+	}
+
+	.split-area.data-animating .split-line.data-path {
+		animation: line-fill 3s linear forwards !important;
+	}
+
+	:root[data-theme="dark"] .split-area.data-animating .split-line.data-path {
+		animation: line-fill-dark 3s linear forwards !important;
+	}
+
+	.split-svg .svg-label {
+		font-size: 9px;
+		font-family: ui-sans-serif, system-ui, sans-serif;
+		fill: rgb(115 115 115);
+	}
+
+	:root[data-theme="dark"] .split-svg .svg-label {
+		fill: rgb(163 163 163);
+	}
+
+	.split-svg .svg-label.replication {
+		fill: rgb(139 92 246);
+	}
+
+	/* Bucket group */
+	.bucket-group {
+		position: relative;
+		background: rgb(250 250 250);
+		border: 1px dashed rgb(212 212 212);
+		border-radius: 0.75rem;
+		padding: 0.75rem;
+		padding-top: 2rem;
+		width: 100%;
+		margin-top: -1px !important;
+		transition: border-color 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .bucket-group {
+		background: rgb(18 18 18);
+		border-color: rgb(64 64 64);
+	}
+
+	.bucket-group.active {
+		border-color: rgb(249 115 22) !important;
+	}
+
+	.group-label {
+		position: absolute;
+		top: 0.5rem;
+		left: 0.75rem;
+		font-size: 0.6875rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: rgb(64 64 64);
+	}
+
+	:root[data-theme="dark"] .group-label {
+		color: rgb(212 212 212);
+	}
+
+	.group-location {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.75rem;
+		font-size: 0.625rem;
+		color: rgb(115 115 115);
+	}
+
+	:root[data-theme="dark"] .group-location {
+		color: rgb(163 163 163);
+	}
+
+	.group-content {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-auto-rows: 1fr;
+		gap: 0.5rem;
+	}
+
+	.bucket-component {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.375rem;
+		background: white;
+		border: 1px solid rgb(229 229 229);
+		border-radius: 0.5rem;
+		padding: 0.5rem;
+		margin: 0 !important;
+		box-sizing: border-box;
+		transition: border-color 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .bucket-component {
+		background: rgb(23 23 23);
+		border-color: rgb(64 64 64);
+	}
+
+	/* Active state for bucket components */
+	.bucket-component.active {
+		border-color: rgb(249 115 22);
+		box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+	}
+
+	.bucket-component.active .component-icon {
+		color: rgb(249 115 22) !important;
+	}
+
+	.component-icon {
+		width: 1.25rem;
+		height: 1.25rem;
+		color: rgb(115 115 115);
+		transition: color 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .component-icon {
+		color: rgb(163 163 163);
+	}
+
+	.component-icon svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.component-name {
+		font-size: 0.625rem;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-weight: 500;
+		color: rgb(23 23 23);
+		text-align: center;
+	}
+
+	:root[data-theme="dark"] .component-name {
+		color: rgb(245 245 245);
+	}
+
+	/* Region box - same styling as bucket-group */
+	.region-box {
+		position: relative;
+		background: rgb(250 250 250);
+		border: 1px dashed rgb(212 212 212);
+		border-radius: 0.75rem;
+		padding: 0.75rem;
+		padding-top: 2rem;
+		width: 100%;
+		transition: border-color 0.3s ease;
+		margin-top: -1px !important;
+	}
+
+	:root[data-theme="dark"] .region-box {
+		background: rgb(18 18 18);
+		border-color: rgb(64 64 64);
+	}
+
+	.region-box.active {
+		border-color: rgb(249 115 22) !important;
+	}
+
+	/* Region content uses flex instead of grid for the arrow layout */
+	.region-content {
+		display: flex !important;
+		align-items: stretch;
+		justify-content: center;
+		gap: 0;
+	}
+
+	/* Make components in region box same width as bucket components */
+	.region-box .bucket-component {
+		flex: 1;
+		min-width: 0;
+	}
+
+	/* Single component in edge block (without local uploads) */
+	.edge-single {
+		display: flex;
+		justify-content: center;
+	}
+
+	.edge-single .bucket-component {
+		flex: none;
+		min-width: 120px;
+		max-width: 150px;
+	}
+
+	/* Line between gateway and local storage */
+	.region-line {
+		width: 16px;
+		height: 2px;
+		background-color: rgb(212 212 212);
+		flex-shrink: 0;
+		align-self: center;
+		margin: 0 -1px;
+		transition: background-color 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .region-line {
+		background-color: rgb(64 64 64);
+	}
+
+	.region-line.active {
+		background-color: rgb(249 115 22) !important;
+	}
+
+	/* Component icon colors for gateway/storage - only orange when active */
+	.bucket-component.active .component-icon.gateway,
+	.bucket-component.active .component-icon.storage {
+		color: rgb(249 115 22);
+	}
+
+
+
+	/* Note text under component name */
+	.component-note {
+		font-size: 0.5rem;
+		font-weight: 500;
+		color: rgb(249 115 22);
+		margin-top: 0.125rem;
+	}
+
+	/* Local uploads split columns */
+	.local-split-columns {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		width: 100%;
+		margin: 0 !important;
+		margin-top: -1px !important;
+		margin-bottom: -1px !important;
+	}
+
+	.split-col {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	.v-connector {
+		width: 2px;
+		height: 33.5px;
+		background-color: rgb(212 212 212);
+		transition: background-color 0.3s ease;
+		flex-shrink: 0;
+		margin: 0 !important;
+	}
+
+	.v-connector.short {
+		height: 47.5px;
+		flex-shrink: 0;
+		margin: 0 !important;
+	}
+
+	:root[data-theme="dark"] .v-connector {
+		background-color: rgb(64 64 64);
+	}
+
+	.v-connector.replication-line {
+		background: repeating-linear-gradient(
+			to bottom,
+			rgb(139 92 246) 0,
+			rgb(139 92 246) 4px,
+			transparent 4px,
+			transparent 8px
+		);
+	}
+
+	.local-split-columns.active .v-connector.meta-line,
+	.v-connector.meta-line.active {
+		background-color: rgb(249 115 22) !important;
+	}
+
+	/* Purple replication line animation - flows downward */
+	@keyframes flow-down {
+		from {
+			background-position: 0 0;
+		}
+		to {
+			background-position: 0 16px;
+		}
+	}
+
+	.v-connector.replication-line.animating {
+		background: repeating-linear-gradient(
+			to bottom,
+			rgb(167 139 250) 0,
+			rgb(167 139 250) 4px,
+			transparent 4px,
+			transparent 8px
+		);
+		animation: flow-down 0.3s linear infinite;
+		box-shadow: 0 0 6px rgba(139, 92, 246, 0.5);
+	}
+
+	.split-col-label {
+		font-size: 0.5625rem;
+		color: rgb(115 115 115);
+		padding: 0;
+		margin: 0;
+		line-height: 1;
+	}
+
+	:root[data-theme="dark"] .split-col-label {
+		color: rgb(163 163 163);
+	}
+
+	.split-col-label.replication {
+		color: rgb(139 92 246);
+	}
+
+	/* Label row for split columns - ensures alignment */
+	.split-label-row {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 3px;
+		margin: 5px 0;
+	}
+
+	/* Circular progress ring */
+	.progress-ring {
+		width: 10px;
+		height: 10px;
+		transform: rotate(-90deg);
+		flex-shrink: 0;
+	}
+
+	.progress-ring-bg {
+		fill: none;
+		stroke: rgba(139, 92, 246, 0.2);
+		stroke-width: 2;
+	}
+
+	.progress-ring-fill {
+		fill: none;
+		stroke: rgb(139 92 246);
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-dasharray: 50.26; /* 2 * PI * 8 */
+		stroke-dashoffset: 50.26;
+	}
+
+	/* Animate the progress ring when active */
+	.progress-ring.animating .progress-ring-fill {
+		animation: fill-progress 2.5s ease-out forwards;
+	}
+
+	@keyframes fill-progress {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+
+	.hidden {
+		display: none !important;
+	}
+
+	/* Status indicator */
+	.status-indicator {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		margin-top: 1rem;
+		opacity: 0.3;
+		transition: opacity 0.3s ease;
+	}
+
+	.status-indicator.active {
+		opacity: 1;
+	}
+
+	.status-check {
+		width: 20px;
+		height: 20px;
+		flex-shrink: 0;
+	}
+
+	.status-circle {
+		stroke: rgb(212 212 212);
+		transition: stroke 0.3s ease;
+	}
+
+	.status-checkmark {
+		stroke: rgb(212 212 212);
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		transition: stroke 0.3s ease;
+	}
+
+	.status-indicator.active .status-circle {
+		stroke: rgb(34 197 94);
+	}
+
+	.status-indicator.active .status-checkmark {
+		stroke: rgb(34 197 94);
+	}
+
+	:root[data-theme="dark"] .status-circle,
+	:root[data-theme="dark"] .status-checkmark {
+		stroke: rgb(64 64 64);
+	}
+
+	:root[data-theme="dark"] .status-indicator.active .status-circle,
+	:root[data-theme="dark"] .status-indicator.active .status-checkmark {
+		stroke: rgb(34 197 94);
+	}
+
+	.status-text {
+		font-size: 0.75rem;
+		font-weight: 500;
+		color: rgb(115 115 115);
+		transition: color 0.3s ease;
+	}
+
+	.status-indicator.active .status-text {
+		color: rgb(34 197 94);
+	}
+
+	:root[data-theme="dark"] .status-text {
+		color: rgb(163 163 163);
+	}
+
+	:root[data-theme="dark"] .status-indicator.active .status-text {
+		color: rgb(34 197 94);
+	}
+</style>
+
+<script>
+	class R2LocalUploadsDiagram extends HTMLElement {
+		private currentStep = 0;
+		private isPlaying = false;
+		private loop = false;
+		private localUploadsEnabled = false;
+		private stepTimeout: number | null = null;
+		private playTimeout: number | null = null;
+
+		connectedCallback() {
+			this.loop = this.dataset.loop === 'true';
+			
+			const toggleInput = this.querySelector('.toggle-input') as HTMLInputElement;
+			if (toggleInput) {
+				toggleInput.addEventListener('change', () => {
+					this.localUploadsEnabled = toggleInput.checked;
+					this.setMode(toggleInput.checked ? 'with' : 'without');
+					this.resetAnimation();
+					if (this.dataset.autoplay === 'true') {
+						this.playTimeout = setTimeout(() => this.play(), 500) as unknown as number;
+					}
+				});
+			}
+
+			if (this.dataset.autoplay === 'true') {
+				this.playTimeout = setTimeout(() => this.play(), 500) as unknown as number;
+			}
+		}
+
+		private setMode(mode: 'without' | 'with') {
+			const withoutElements = this.querySelectorAll('.without-local-uploads');
+			const withElements = this.querySelectorAll('.with-local-uploads');
+
+			if (mode === 'without') {
+				withoutElements.forEach(el => el.classList.remove('hidden'));
+				withElements.forEach(el => el.classList.add('hidden'));
+			} else {
+				withoutElements.forEach(el => el.classList.add('hidden'));
+				withElements.forEach(el => el.classList.remove('hidden'));
+			}
+		}
+
+		private resetAnimation() {
+			this.currentStep = 0;
+			this.isPlaying = false;
+			
+			// Clear any pending timeouts
+			if (this.stepTimeout !== null) {
+				clearTimeout(this.stepTimeout);
+				this.stepTimeout = null;
+			}
+			if (this.playTimeout !== null) {
+				clearTimeout(this.playTimeout);
+				this.playTimeout = null;
+			}
+			
+			// Remove all active and animating states
+			this.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+			this.querySelectorAll('.animating').forEach(el => el.classList.remove('animating'));
+			this.querySelectorAll('.data-animating').forEach(el => el.classList.remove('data-animating'));
+			this.querySelectorAll('.metadata-active').forEach(el => el.classList.remove('metadata-active'));
+		}
+
+		private play() {
+			this.isPlaying = true;
+			this.currentStep = 0;
+			this.advanceStep();
+		}
+
+		private advanceStep() {
+			if (!this.isPlaying) return;
+
+			this.currentStep++;
+
+			const maxSteps = this.localUploadsEnabled ? 9 : 7;
+
+			if (this.currentStep > maxSteps) {
+				if (this.loop) {
+					// Reset and restart
+					this.resetAnimation();
+					this.playTimeout = setTimeout(() => this.play(), 1000) as unknown as number;
+				} else {
+					this.isPlaying = false;
+				}
+				return;
+			}
+
+			this.updateDiagram();
+			
+			// Duration for each step
+			let duration = 1200;
+			if (!this.localUploadsEnabled && this.currentStep === 4) {
+				duration = 3000; // Wait longer on split lines step (object data animates)
+			} else if (!this.localUploadsEnabled && this.currentStep === 7) {
+				duration = 2500; // Linger on final step with status indicator
+			} else if (this.localUploadsEnabled && this.currentStep === 8) {
+				duration = 2500; // Wait for progress ring to complete
+			} else if (this.localUploadsEnabled && this.currentStep === 9) {
+				duration = 2500; // Linger on final step with status indicator
+			}
+			this.stepTimeout = setTimeout(() => this.advanceStep(), duration) as unknown as number;
+		}
+
+		private updateDiagram() {
+			// Remove all active states first
+			this.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+
+			if (this.localUploadsEnabled) {
+				this.updateWithLocalUploads();
+			} else {
+				this.updateWithoutLocalUploads();
+			}
+		}
+
+		private updateWithoutLocalUploads() {
+			// Step 1: Client node lights up
+			if (this.currentStep >= 1) {
+				const clientNode = this.querySelector('[data-step="1"].flow-node');
+				clientNode?.classList.add('active');
+			}
+
+			// Step 2: Connector from client to EDGE lights up
+			if (this.currentStep >= 2) {
+				const connector1 = this.querySelector('[data-connector="1-2"]');
+				connector1?.classList.add('active');
+			}
+
+			// Step 3: EDGE box border + R2 Gateway Worker lights up
+			if (this.currentStep >= 3) {
+				const edgeBox = this.querySelector('.region-box.without-local-uploads');
+				const gatewayNode = this.querySelector('.gateway-node-without');
+				edgeBox?.classList.add('active');
+				gatewayNode?.classList.add('active');
+			}
+
+			// Step 4: Object data line starts animating
+			if (this.currentStep >= 4) {
+				const splitArea = this.querySelector('.split-area');
+				splitArea?.classList.add('data-animating');
+			}
+
+			// Step 5: Object Data Infra lights up
+			if (this.currentStep >= 5) {
+				const objectDataComponent = this.querySelector('[data-component="object-data"]');
+				objectDataComponent?.classList.add('active');
+			}
+
+			// Step 6: Object metadata line lights up
+			if (this.currentStep >= 6) {
+				const splitArea = this.querySelector('.split-area');
+				splitArea?.classList.add('metadata-active');
+			}
+
+			// Step 7: Metadata Service + YOUR BUCKET border + status indicator
+			if (this.currentStep >= 7) {
+				const bucketGroup = this.querySelector('.bucket-group');
+				const metadataComponent = this.querySelector('[data-component="metadata"]');
+				const statusIndicator = this.querySelector('.status-indicator');
+				bucketGroup?.classList.add('active');
+				metadataComponent?.classList.add('active');
+				statusIndicator?.classList.add('active');
+			}
+		}
+
+		private updateWithLocalUploads() {
+			// Step 1: Client lights up
+			if (this.currentStep >= 1) {
+				const clientNode = this.querySelector('[data-step="1"].flow-node');
+				clientNode?.classList.add('active');
+			}
+
+			// Step 2: Connector (client -> edge) lights up
+			if (this.currentStep >= 2) {
+				const connector1 = this.querySelector('[data-connector="1-2"]');
+				connector1?.classList.add('active');
+			}
+
+			// Step 3: EDGE box + R2 Gateway Worker lights up
+			if (this.currentStep >= 3) {
+				const edgeBox = this.querySelector('.region-box.with-local-uploads');
+				const gatewayNode = this.querySelector('.gateway-node-local');
+				edgeBox?.classList.add('active');
+				gatewayNode?.classList.add('active');
+			}
+
+			// Step 4: Line from Gateway to Object Data Infra (edge)
+			if (this.currentStep >= 4) {
+				const regionLine = this.querySelector('.region-line');
+				regionLine?.classList.add('active');
+			}
+
+			// Step 5: Object Data Infra (edge) lights up
+			if (this.currentStep >= 5) {
+				const localStorageNode = this.querySelector('.local-storage-node');
+				localStorageNode?.classList.add('active');
+			}
+
+			// Step 6: Line from Gateway to Metadata Service
+			if (this.currentStep >= 6) {
+				const metadataLines = this.querySelectorAll('.left-col .v-connector.meta-line');
+				metadataLines.forEach(el => el.classList.add('active'));
+			}
+
+			// Step 7: Metadata Service + YOUR BUCKET border + status indicator lights up
+			if (this.currentStep >= 7) {
+				const bucketGroup = this.querySelector('.bucket-group');
+				const metadataComponent = this.querySelector('[data-component="metadata"]');
+				const statusIndicator = this.querySelector('.status-indicator');
+				bucketGroup?.classList.add('active');
+				metadataComponent?.classList.add('active');
+				statusIndicator?.classList.add('active');
+			}
+
+			// Step 8: Purple replication line animates downward + progress ring fills
+			if (this.currentStep >= 8) {
+				const replicationLines = this.querySelectorAll('.right-col .v-connector.replication-line');
+				const progressRing = this.querySelector('.progress-ring');
+				// Force animation restart by removing class, triggering reflow, then adding class
+				replicationLines.forEach(el => {
+					el.classList.remove('animating');
+					void (el as HTMLElement).offsetWidth; // Trigger reflow
+					el.classList.add('animating');
+				});
+				if (progressRing) {
+					progressRing.classList.remove('animating');
+					void (progressRing as HTMLElement).offsetWidth; // Trigger reflow
+					progressRing.classList.add('animating');
+				}
+			}
+
+			// Step 9: Object Data Infra (bucket) lights up
+			if (this.currentStep >= 9) {
+				const objectDataComponent = this.querySelector('[data-component="object-data"]');
+				objectDataComponent?.classList.add('active');
+			}
+		}
+	}
+
+	customElements.define('r2-local-uploads-diagram', R2LocalUploadsDiagram);
+</script>

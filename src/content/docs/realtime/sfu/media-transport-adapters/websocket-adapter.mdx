@@ -13,7 +13,7 @@ import { Render, Tabs, TabItem } from "~/components";
 WebSocket adapter is in beta. The API may change.
 :::
 
-Stream audio between WebRTC tracks and WebSocket endpoints. Supports ingesting audio from WebSocket sources and sending WebRTC audio to WebSocket consumers.
+Stream audio and video between WebRTC tracks and WebSocket endpoints. Supports ingesting audio from WebSocket sources and sending WebRTC audio and video to WebSocket consumers. Video egress is supported as JPEG at approximately 1 FPS.
 
 ## What you can build
 
@@ -21,6 +21,8 @@ Stream audio between WebRTC tracks and WebSocket endpoints. Supports ingesting a
 - Custom audio processing pipelines
 - Legacy system bridges
 - Server-side audio generation and consumption
+- Video snapshotting and thumbnails
+- Computer vision ingestion (low FPS)
 
 ## How it works
 
@@ -52,26 +54,28 @@ graph LR
 </TabItem>
 <TabItem label="Stream (WebRTC → WebSocket)">
 
-### Stream WebRTC audio to external systems
+### Stream WebRTC audio and video to external systems
 
-Stream audio from existing WebRTC tracks to external systems via WebSocket for processing or storage.
+Stream audio and video from existing WebRTC tracks to external systems via WebSocket for processing or storage.
 
 ```mermaid
 graph LR
     A[WebRTC Source] -->|WebRTC| B[Realtime SFU Session]
     B -->|Adapter| C[WebSocket Endpoint]
-    C -->|Audio Data| D[External System]
+    C -->|Media Data| D[External System]
 ```
 
 **Use cases:**
 - Real-time speech-to-text transcription
 - Audio recording and archival
 - Live audio processing pipelines
+- Video snapshotting and thumbnails
+- Computer vision ingestion (low FPS)
 
 **Key characteristics:**
 - Requires existing session ID with track
-- Sends individual audio frames as they are produced
-- Each frame includes timestamp and sequence number
+- Audio: Sends individual PCM frames as they are produced; each includes timestamp and sequence number
+- Video: Sends individual JPEG frames at approximately 1 FPS; each includes timestamp (sequence number may be unset)
 
 </TabItem>
 </Tabs>
@@ -157,11 +161,11 @@ POST /v1/apps/{appId}/adapters/websocket/new
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `location` | string | **Required**. Must be `"remote"` for streaming audio out |
+| `location` | string | **Required**. Must be `"remote"` for streaming media out |
 | `sessionId` | string | **Required**. Existing session ID containing the track |
 | `trackName` | string | **Required**. Name of the existing track to stream |
-| `endpoint` | string | **Required**. WebSocket URL to send audio to |
-| `outputCodec` | string | **Required**. Codec for outgoing audio. Currently only `"pcm"` |
+| `endpoint` | string | **Required**. WebSocket URL to send media to |
+| `outputCodec` | string | **Required**. Codec for outgoing media. Use `"pcm"` for audio, `"jpeg"` for video (egress only) |
 
 #### Response
 
@@ -180,7 +184,8 @@ POST /v1/apps/{appId}/adapters/websocket/new
 
 :::note[Important]
 - Requires an existing session with the specified track.
-- Frames are sent individually with timestamp and sequence number.
+- Audio frames are sent individually with timestamp and sequence number.
+- Video frames are sent individually as JPEG at approximately 1 FPS with timestamp; sequence number may be unset.
 - Each frame is a separate WebSocket message.
 - No mode parameter; frames are sent as produced.
 :::
@@ -206,7 +211,7 @@ POST /v1/apps/{appId}/adapters/websocket/close
 }
 ```
 
-## Audio format
+## Media formats
 
 ### WebRTC tracks
 
@@ -216,26 +221,37 @@ POST /v1/apps/{appId}/adapters/websocket/close
 
 ### WebSocket binary format
 
-Audio uses Protocol Buffers and PCM payloads:
+Media uses Protocol Buffers. Audio uses PCM payloads; video uses JPEG payloads:
 
 - 16-bit signed little-endian PCM
 - 48 kHz sample rate
 - Stereo (left/right interleaved)
+- Video: JPEG image payload (one frame per message)
 
 ```protobuf
 message Packet {
     uint32 sequenceNumber = 1;  // Used in Stream mode only
     uint32 timestamp = 2;       // Used in Stream mode only
-    bytes payload = 5;          // Audio data
+    bytes payload = 5;          // Media data
 }
 ```
 
 **Ingest mode (buffer)**: Only the `payload` field is used, containing chunks of audio data.
 
-**Stream mode**: All fields are populated:
-- `sequenceNumber`: Incremental packet counter
-- `timestamp`: Timestamp for synchronization  
-- `payload`: Individual audio frame data
+**Stream mode (egress)**:
+- For audio frames:
+  - `sequenceNumber`: Incremental packet counter
+  - `timestamp`: Timestamp for synchronization
+  - `payload`: Individual PCM audio frame data
+- For video frames (JPEG):
+  - `timestamp`: Timestamp for synchronization
+  - `payload`: JPEG image data (one frame per message)
+  - Note: `sequenceNumber` may be unset for video frames
+
+### Video (JPEG)
+
+- Supported WebRTC input codecs: H264, H265, VP8, VP9
+- Output over WebSocket: JPEG images at approximately 1 FPS
 
 ## Connection protocol
 
@@ -243,7 +259,7 @@ Connects to your WebSocket endpoint:
 
 1. WebSocket upgrade handshake
 2. Secure connection for `wss://` URLs
-3. Audio streaming begins
+3. Media streaming begins
 
 ### Message format
 
@@ -254,18 +270,24 @@ Connects to your WebSocket endpoint:
 - Send audio in small, frequent chunks rather than large batches
 
 #### Stream mode (egress)  
-- **Binary messages**: Individual audio frames with metadata
-- Each frame includes:
+- **Binary messages**: Individual frames with metadata (audio or video)
+- Audio frames include:
   - Timestamp information
   - Sequence number
   - PCM audio frame data
+- Video frames include:
+  - Timestamp information
+  - JPEG image data
+  - Note: Sequence number may be unset for video frames
 - Frames are sent individually as they arrive from the WebRTC track
+- Video frames are emitted at approximately 1 FPS
 
 ### Connection lifecycle
 
 1. Connects to the WebSocket endpoint
 2. Audio streaming begins
-3. Connection closes when closed or on error
+3. Video streaming begins (if configured)
+4. Connection closes when closed or on error
 
 ## Pricing
 
@@ -297,9 +319,10 @@ Usage counts towards your Cloudflare Realtime free tier of 1,000 GB.
 
 ## Limitations
 
-- **WebSocket payloads**: PCM only (16-bit, 48 kHz, stereo)
+- **WebSocket payloads**: PCM (audio) for ingest and stream; JPEG (video) for stream
 - **Beta status**: API may change in future releases
-- **Audio only**: Video streaming not yet supported
+- **Video support**: Egress only (JPEG)
+- **Video frame rate**: Approximately 1 FPS (beta; not configurable)
 - **Unidirectional flow**: Each instance handles one direction
 
 ## Error handling
@@ -310,9 +333,10 @@ Usage counts towards your Cloudflare Realtime free tier of 1,000 GB.
 | `404` | Session or track not found |
 | `503` | Adapter not found (for close operations) |
 
-## Reference implementation
+## Reference implementations
 
-See [Cloudflare Realtime Examples](https://github.com/cloudflare/realtime-examples/tree/main/ai-tts-stt).
+- Audio (PCM over WebSocket): [Cloudflare Realtime Examples – ai-tts-stt](https://github.com/cloudflare/realtime-examples/tree/main/ai-tts-stt)
+- Video (JPEG egress): [Cloudflare Realtime Examples – video-to-jpeg](https://github.com/cloudflare/realtime-examples/tree/main/video-to-jpeg)
 
 ## Migration from custom bridges
 

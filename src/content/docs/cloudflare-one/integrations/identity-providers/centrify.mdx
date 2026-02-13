@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Centrify
 ---
 
+import { Render } from "~/components";
+
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the number one cause of breaches: privileged access abuse.
 
 ## Set up Centrify as an OIDC provider
@@ -39,7 +41,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) under **Settings** > **Team name**.
+    <Render file="find-team-name" product="cloudflare-one" />
 
     ![Centrify Trust Identity Provider Configuration with team domain and callback](~/assets/images/cloudflare-one/identity/centrify/centrify-6.png)
 

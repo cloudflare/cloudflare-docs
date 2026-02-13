@@ -30,7 +30,6 @@ If you are using a regular expression, it is recommended that you test it with a
 
 If you have [SSL/TLS certificates](/ssl/) managed by Cloudflare, every time a certificate is issued or renewed, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) must happen. When a certificate is in `pending_validation` state and there are valid DCV tokens in place, some Cloudflare security features such as [custom rules](/waf/custom-rules/) and [Managed Rules](/waf/managed-rules/) will be automatically disabled on specific DCV paths (for example, `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`).
 
-
 ### Why have I been blocked?
 
 Cloudflare may block requests when it detects activity that could be unsafe. Common reasons include:
@@ -53,7 +52,7 @@ If you are the site owner:
 - Allowlist trusted IPs or fine-tune WAF/bot rules to reduce false positives.
 
 :::note
-ISP-level blocks are distinct from Cloudflare or site-owner security restrictions. For details, refer to [Potential ISP blocking](/support/troubleshooting/general-troubleshooting/potential-isp-blocking/).
+ISP-level blocks are distinct from Cloudflare or site-owner security restrictions. For details, refer to [Potential ISP blocking of Cloudflare IP addresses](/support/troubleshooting/general-troubleshooting/potential-isp-blocking/).
 :::
 
 ## Bots

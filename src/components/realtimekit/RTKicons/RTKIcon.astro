@@ -1,0 +1,13 @@
+---
+import { z } from "astro:schema";
+import Icon from "./RTKIcon";
+
+const props = z.object({
+	name: z.string(),
+	className: z.string().optional(),
+});
+
+const { name, className } = props.parse(Astro.props);
+---
+
+<Icon client:load name={name} className={className} />

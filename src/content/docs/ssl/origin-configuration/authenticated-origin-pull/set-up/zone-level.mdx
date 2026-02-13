@@ -29,7 +29,7 @@ First, upload a certificate to your origin.
 
 To use a Cloudflare certificate (which uses a specific CA), [download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin. This certificate is **not** the same as the [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca/) and will not appear on your Dashboard.
 
-To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/resources/origin_tls_client_auth/methods/create/). Then, upload the certificate to your origin.
+To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/create/). Then, upload the certificate to your origin.
 
 :::caution
 
@@ -58,7 +58,7 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 <Render file="aop-enforce-validation" product="ssl" />
 
-## 5. (Optional) Set up alerts for zone-level Authenticated Origin Pulls certificates
+## 5. (Optional) Set up expiration alerts
 
 You can configure alerts to receive notifications before your AOP certificates expire.
 
@@ -72,7 +72,3 @@ You can configure alerts to receive notifications before your AOP certificates e
 ## Further options
 
 Refer to [Manage certificates](/ssl/origin-configuration/authenticated-origin-pull/set-up/manage-certificates/) for further options.
-
-:::note
-If you have more than one custom certificate, Cloudflare serves the certificate you uploaded first. Follow [these steps](/ssl/origin-configuration/authenticated-origin-pull/set-up/manage-certificates/#zone-level) if you need to replace the certificate.
-:::

@@ -102,7 +102,7 @@ Objects that include `Function` or `Symbol` types, and objects with circular ref
 {/* prettier-ignore */}
 - <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
-  - `timestamp` - a JavaScript `Date` object or seconds from the Unix epoch to sleep the Workflow instance until.
+  - `timestamp` - a JavaScript `Date` object or milliseconds from the Unix epoch to sleep the Workflow instance until.
 
 :::note
 
@@ -114,7 +114,7 @@ More information about the limits imposed on Workflow can be found in the [Workf
 
 - <code>step.waitForEvent(name: string, options: ): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
-  - `options` - an object with properties for `type`, which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
+  - `options` - an object with properties for `type` (up to 100 characters [^1]), which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
 
 <TypeScriptExample>
 
@@ -122,7 +122,7 @@ More information about the limits imposed on Workflow can be found in the [Workf
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// Other steps in your Workflow
-		let event = await step.waitForEvent<IncomingStripeWebhook>(
+		let stripeEvent = await step.waitForEvent<IncomingStripeWebhook>(
 			"receive invoice paid webhook from Stripe",
 			{ type: "stripe-webhook", timeout: "1 hour" },
 		);
@@ -156,8 +156,8 @@ Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-
 
 {/* prettier-ignore */}
 - <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />
-  - Throws an error that forces the current Workflow instance to fail and not be retried.
-  - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
+  - When thrown inside [`step.do()`](/workflows/build/workers-api/#step), this error stops step retries, propagating the error to the top level (the [run](/workflows/build/workers-api/#run) function). Any error not handled at this top level will cause the Workflow instance to fail.
+  - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows steps are retried.
 
 ## Call Workflows from Workers
 
@@ -169,19 +169,23 @@ For example, to bind to a Workflow called `workflows-starter` and to make it ava
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-#:schema node_modules/wrangler/config-schema.json
-name = "workflows-starter"
-main = "src/index.ts"
-compatibility_date = "2024-10-22"
-
-[[workflows]]
-# name of your workflow
-name = "workflows-starter"
-# binding name env.MY_WORKFLOW
-binding = "MY_WORKFLOW"
-# this is class that extends the Workflow class in src/index.ts
-class_name = "MyWorkflow"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "workflows-starter",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"workflows": [
+		{
+			// name of your workflow
+			"name": "workflows-starter",
+			// binding name env.MY_WORKFLOW
+			"binding": "MY_WORKFLOW",
+			// this is class that extends the Workflow class in src/index.ts
+			"class_name": "MyWorkflow"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -200,22 +204,26 @@ For example, if your Workflow is defined in a Worker script named `billing-worke
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-#:schema node_modules/wrangler/config-schema.json
-name = "web-api-worker"
-main = "src/index.ts"
-compatibility_date = "2024-10-22"
-
-[[workflows]]
-# name of your workflow
-name = "billing-workflow"
-# binding name env.MY_WORKFLOW
-binding = "MY_WORKFLOW"
-# this is class that extends the Workflow class in src/index.ts
-class_name = "MyWorkflow"
-# the script name where the Workflow is defined.
-# required if the Workflow is defined in another script.
-script_name = "billing-worker"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "web-api-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"workflows": [
+		{
+			// name of your workflow
+			"name": "billing-workflow",
+			// binding name env.MY_WORKFLOW
+			"binding": "MY_WORKFLOW",
+			// this is class that extends the Workflow class in src/index.ts
+			"class_name": "MyWorkflow",
+			// the script name where the Workflow is defined.
+			// required if the Workflow is defined in another script.
+			"script_name": "billing-worker"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -266,7 +274,7 @@ return Response.json({
 
 Returns a `WorkflowInstance`.
 
-Throws an error if the provided ID is already used by an existing instance that has not yet passed its [retention limit](/workflows/reference/limits/). To re-run a workflow with the same ID, you can [`restart`](/workflows/build/trigger-workflows/#restart-a-workflow) the existing instance. 
+Throws an error if the provided ID is already used by an existing instance that has not yet passed its [retention limit](/workflows/reference/limits/). To re-run a workflow with the same ID, you can [`restart`](/workflows/build/trigger-workflows/#restart-a-workflow) the existing instance.
 
 <Render file="workflows-type-parameters" product="workflows" />
 
@@ -334,8 +342,8 @@ Unlike [`create`](/workflows/build/workers-api/#create), this operation is idemp
 
 Get a specific Workflow instance by ID.
 
-- <code>get(id: string): Promise&lt;WorkflowInstance&gt;</code>
-  - `id` - the ID of the Workflow instance.
+- <code>get(id: string): Promise&lt;WorkflowInstance&gt;</code>- `id` - the ID
+  of the Workflow instance.
 
 Returns a `WorkflowInstance`. Throws an exception if the instance ID does not exist.
 
@@ -415,6 +423,10 @@ Return the status of a running Workflow instance.
 
 - <code>status(): Promise&lt;InstanceStatus&gt;</code>
 
+:::caution
+The following methods are not yet supported in local development.
+:::
+
 ### pause
 
 Pause a running Workflow instance.
@@ -444,7 +456,7 @@ Terminate a Workflow instance.
 [Send an event](/workflows/build/events-and-parameters/) to a running Workflow instance.
 
 - <code>sendEvent(): Promise&lt;void&gt;</code>
-  - `options` - the event `type` and `payload` to send to the Workflow instance. The `type` must match the `type` in the corresponding `waitForEvent` call in your Workflow.
+  - `options` - the event `type` (up to 100 characters [^1]) and `payload` to send to the Workflow instance. The `type` must match the `type` in the corresponding `waitForEvent` call in your Workflow.
 
 Return `void` on success; throws an exception if the Workflow is not running or is an errored state.
 
@@ -493,8 +505,11 @@ type InstanceStatus = {
 		| "waiting" // instance is hibernating and waiting for sleep or event to finish
 		| "waitingForPause" // instance is finishing the current work to pause
 		| "unknown";
-	error?: string;
-	output?: object;
+	error?: { 
+		name: string,
+		message: string 
+	};
+	output?: unknown;
 };
 ```
 

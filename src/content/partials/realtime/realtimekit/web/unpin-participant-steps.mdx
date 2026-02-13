@@ -1,0 +1,67 @@
+---
+{}
+---
+
+import { Steps } from "~/components";
+
+<Steps>
+
+1. Check that the local participant has permission to unpin participants.
+
+   ```ts
+   const canUnpinParticipant = meeting.self.permissions.pinParticipant === true;
+   if (!canUnpinParticipant) {
+   	// Disable the control in your UI.
+   }
+   ```
+
+2. Call `unpin()` on the target participant.
+
+   If the local participant does not have the required permission, `unpin()` throws a `ClientError` with code `1201`.
+
+   ```ts
+   try {
+   	await participant.unpin();
+   } catch (err: any) {
+   	if (err?.code === 1201) {
+   		// The local participant does not have permission to unpin participants.
+   		return;
+   	}
+   	throw err;
+   }
+   ```
+
+3. Handle the result by listening for updates.
+
+   After the call succeeds:
+   - The target participant's `isPinned` becomes `false`.
+   - The participant is removed from `meeting.participants.pinned`.
+   - The SDK emits an `unpinned` event.
+
+   **Option A**: Listen on the participant object
+
+   ```ts
+   participant.on("unpinned", (updatedParticipant) => {
+   	// updatedParticipant.isPinned is false
+   	// Update your UI.
+   });
+   ```
+
+   **Option B**: Listen on the `joined` map
+
+   ```ts
+   meeting.participants.joined.on("unpinned", (updatedParticipant) => {
+   	// updatedParticipant.isPinned is false
+   	// Update your UI.
+   });
+   ```
+
+4. On the target unpinned participant's side, `meeting.self.isPinned` becomes `false` and `meeting.self` emits `unpinned`:
+
+   ```ts
+   meeting.self.on("unpinned", (selfParticipant) => {
+   	// Update the local UI to indicate the participant is no longer pinned.
+   });
+   ```
+
+</Steps>

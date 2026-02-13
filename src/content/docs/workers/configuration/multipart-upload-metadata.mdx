@@ -43,11 +43,9 @@ At a minimum, the `main_module` key is required to upload a Worker.
 :::
 
 - `main_module` <Type text="string" /> <MetaInfo text="required" />
-
   - The part name that contains the module entry point of the Worker that will be executed. For example, `main.js`.
 
 - `assets` <Type text="object" /> <MetaInfo text="optional" />
-
   - [Asset](/workers/static-assets/) configuration for a Worker.
   - `config` <Type text="object" /> <MetaInfo text="optional" />
     - [html_handling](/workers/static-assets/routing/advanced/html-handling/) determines the redirects and rewrites of requests for HTML content.
@@ -55,24 +53,19 @@ At a minimum, the `main_module` key is required to upload a Worker.
   - `jwt` field provides a token authorizing assets to be attached to a Worker.
 
 - `keep_assets` <Type text="boolean" /> <MetaInfo text="optional" />
-
   - Specifies whether assets should be retained from a previously uploaded Worker version; used in lieu of providing a completion token.
 
 - `bindings` array\[object] optional
-
   - [Bindings](#bindings) to expose in the Worker.
 
 - `placement` <Type text="object" /> <MetaInfo text="optional" />
-
-  - [Smart placement](/workers/configuration/smart-placement/) object for the Worker.
+  - [Smart placement](/workers/configuration/placement/) object for the Worker.
   - `mode` field only supports `smart` for automatic placement.
 
 - `compatibility_date` <Type text="string" /> <MetaInfo text="optional" />
-
   - [Compatibility Date](/workers/configuration/compatibility-dates/#setting-compatibility-date) indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker. Highly recommended to set a `compatibility_date`, otherwise if on upload via the API, it defaults to the oldest compatibility date before any flags took effect (2021-11-02).
 
 - `compatibility_flags` array\[string] optional
-
   - [Compatibility Flags](/workers/configuration/compatibility-flags/#setting-compatibility-flags) that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a `compatibility_date`.
 
 ## Additional attributes: [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/)
@@ -85,19 +78,15 @@ These attributes are **not available** for version uploads.
 :::
 
 - `migrations` array\[object] optional
-
   - [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to apply.
 
 - `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
-
   - Whether [Logpush](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/#logpush) is turned on for the Worker.
 
 - `tail_consumers` array\[object] optional
-
   - [Tail Workers](/workers/observability/logs/tail-workers/) that will consume logs from the attached Worker.
 
 - `tags` array\[string] optional
-
   - List of strings to use as tags for this Worker.
 
 ## Additional attributes: [Version Upload API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/)
@@ -110,7 +99,6 @@ These attributes are **not available** for immediately deployed uploads.
 :::
 
 - `annotations` <Type text="object" /> <MetaInfo text="optional" />
-
   - Annotations object specific to the Worker version.
   - `workers/message` specifies a custom message for the version.
   - `workers/tag` specifies a custom identifier for the version.

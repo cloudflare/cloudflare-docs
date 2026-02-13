@@ -8,6 +8,7 @@ sidebar:
 import {
 	GlossaryDefinition,
 	GlossaryTooltip,
+	GranularControlApplicationsList,
 	Details,
 	Render,
 } from "~/components";
@@ -57,7 +58,7 @@ Gateway sorts applications into the following app type groups:
 | Shopping                                       | Online shopping applications                                                                                                |
 | Social Networking                              | Social networking applications                                                                                              |
 | Sports                                         | Sports streaming and news applications                                                                                      |
-| Travel                                         | Video streaming applications                                                                                                |
+| Travel                                         | Travel related applications                                                                                                |
 | Video Streaming & Editing                      | Applications used for streaming and editing video                                                                           |
 | [Do Not Inspect](#do-not-inspect-applications) | Applications incompatible with the TLS certificate required by the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) |
 
@@ -79,7 +80,7 @@ To ensure effective application behavior, Gateway only uses support hostnames in
 
 When you use the [_Application_ selector](/cloudflare-one/traffic-policies/http-policies/#granular-controls) in an HTTP policy with the _is_ operator, you can choose specific actions and operations to match application traffic. Supported applications and operations include:
 
-<Render file="gateway/granular-applications" product="cloudflare-one" />
+<GranularControlApplicationsList />
 
 For more information, refer to [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/granular-controls/).
 
@@ -120,7 +121,7 @@ To turn on the Microsoft 365 integration:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings** > **Policy settings**.
 2. In **Bypass decryption of Microsoft 365 traffic**, select **Create policy**.
-3. To verify the policy was created, select **View policy**. Alternatively, go to **Gateway** > **Firewall policies** > **HTTP**. A policy named Microsoft 365 Auto Generated will be enabled in your list.
+3. To verify the policy was created, select **View policy**. Alternatively, go to **Traffic policies** > **HTTP policies**. A policy named Microsoft 365 Auto Generated will be enabled in your list.
 
 All future Microsoft 365 traffic will bypass Gateway logging and filtering. To disable this behavior, turn off or delete the policy.
 

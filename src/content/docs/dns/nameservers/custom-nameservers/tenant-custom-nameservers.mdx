@@ -53,24 +53,15 @@ For this configuration to be possible, a few conditions apply:
 
 If you are an account owner and your account is part of a tenant that has custom nameservers, do the following:
 
-1. Use a [PUT command](/api/resources/zones/subresources/custom_nameservers/methods/update/) and specify `ns_type` and `ns_set`.
+1. Use the endpoint [Update DNS Settings for a Zone](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) and configure the `nameservers` object accordingly.
 
-<APIRequest
-	path="/zones/{zone_id}/custom_ns"
-	method="PUT"
-	json={{
-		enabled: true,
-		ns_type: "tenant",
-		ns_set: "<SET>",
-	}}
-/>
+   ```txt
+     "nameservers": {
+       "type": "custom.tenant"
+     }
+   ```
 
-:::note
-
-If the parameter `ns_type` is omitted, the default type `account` will be assigned.
-
-If the parameter `ns_set` is omitted, the default set `1` will be assigned.
-:::
+	 <Render file="ns-set-omission-callout" product="dns" />
 
 2. If you are **not** using [Cloudflare Registrar](/registrar/), update the nameservers at your registrar to use the TCNS names. If you are using [Cloudflare Registrar](/registrar/), no further action is needed.
 
@@ -86,9 +77,9 @@ To make these TCNS the default namerservers for all new zones added to your acco
 
 ### Disable tenant custom nameservers on a zone
 
-To remove TCNS and their associated DNS records from a zone, use a [PUT command](/api/resources/zones/subresources/custom_nameservers/methods/update/).
+- If you are using [Cloudflare Registrar](/registrar/), use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) to set the `type` parameter in the `nameservers` object to a different value. Then, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the nameservers you chose to use.
 
-If you are **not** using [Cloudflare Registrar](/registrar/), also remove the TCNS at your domain’s registrar.
+- If you are not using Cloudflare Registrar, use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) to choose a different nameserver type, and also remove the TCNS at your domain's registrar.
 
 ## For tenant owners
 

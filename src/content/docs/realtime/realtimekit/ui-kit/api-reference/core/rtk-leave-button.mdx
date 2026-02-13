@@ -1,0 +1,40 @@
+---
+pcx_content_type: navigation
+title: rtk-leave-button
+description: API reference for rtk-leave-button component (Web Components (HTML) Library)
+---
+A button which toggles visilibility of the leave confirmation dialog.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-leave-button></rtk-leave-button>
+```
+
+### With Properties
+
+```html
+<rtk-leave-button
+ size="md"
+ variant"button">
+</rtk-leave-button>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-leave-button");
+
+</script>
+```

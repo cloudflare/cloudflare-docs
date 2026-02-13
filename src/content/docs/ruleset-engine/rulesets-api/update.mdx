@@ -1,19 +1,13 @@
 ---
 pcx_content_type: reference
-
-title: Update and deploy rulesets
+title: Update or deploy a ruleset
 sidebar:
   order: 6
 ---
 
 import { APIRequest } from "~/components";
 
-You can use the API to update:
-
-- The basic properties of a ruleset (currently only the description)
-- The list of rules in a ruleset
-
-Use one of the following API endpoints:
+Use one of the following API endpoints to update a ruleset:
 
 - [Update an account ruleset](/api/resources/rulesets/methods/update/)<br/>
   `PUT /accounts/{account_id}/rulesets/{ruleset_id}`
@@ -23,6 +17,13 @@ Use one of the following API endpoints:
   `PUT /zones/{zone_id}/rulesets/{ruleset_id}`
 - [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/)<br/>
   `PUT /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint`
+
+When updating a ruleset, you can update:
+
+- The basic properties of a ruleset (currently only the description)
+- The list of rules in a ruleset
+
+To deploy a ruleset, add a rule with `"action": "execute"` to the list of rules of an [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset). Refer to [Deploy a ruleset](#example---deploy-a-ruleset) for an example.
 
 :::note
 You cannot update the name of the ruleset or its type. Do not include these fields in the `data` field of your `PUT` request.

@@ -1,5 +1,5 @@
 ---
-title: PhishNet 365
+title: PhishNet Microsoft 365
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -9,7 +9,7 @@ import { GlossaryTooltip } from "~/components";
 
 PhishNet is an add-in button that helps users to submit directly to Email security <GlossaryTooltip term="phishing">phish</GlossaryTooltip> samples missed by Email security's detection.
 
-To set up PhishNet M365:
+To set up PhishNet Microsoft 365:
 
 1. Get the customized manifest URL from [Cloudflare One](https://one.dash.cloudflare.com/?to=/:account/email-security/settings/email-policy/phish-submission?tab=phish-submission).
 2. Log in to the [Microsoft admin panel](https://admin.microsoft.com/).
@@ -17,24 +17,3 @@ To set up PhishNet M365:
 4. Select **Upload custom apps**.
 5. Choose **Provide link to manifest file** and paste the URL you copied from the Cloudflare One dashboard.
 6. Verify and complete the wizard.
-
-## PhishNet for Google Workspace
-
-To set up PhishNet with Google Workspace you need admin access to your Google Workspace account.
-
-### Set up PhishNet for Google Workspace
-
-1. Log in to [Google Workspace Marketplace apps](https://workspace.google.com/marketplace/app/cloudflare_phishnet/11369379045) using this direct link and an administrator account.
-2. Select **Admin install** to install Cloudflare PhishNet. Read the warning, and select **Continue**.
-3. You will be redirected to the **Allow data access** page, where you can choose to install Cloudflare PhishNet for **Everyone at your organization**, or **Certain groups or organizational units**. If you choose the latter option, you will have to select the users in the next step.
-4. After choosing the groups you want to install PhishNet for, agree with Google's terms of service, and select **Finish**.
-5. Cloudflare PhishNet has been installed. Select **DONE**.
-
-You have now successfully installed Cloudflare PhishNet.
-
-### Submit phish with PhishNet
-
-1. In your Gmail web client, open the message you would like to flag as either spam or phish.
-2. Select the PhishNet logo on the side panel.
-3. Under **Select Submission Type**, select **Spam** or **Phish**.
-4. Select **Submit Report**.

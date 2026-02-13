@@ -8,7 +8,7 @@ head:
     content: Get Started — Regional Services
 ---
 
-import { Details, APIRequest, DashButton } from "~/components";
+import { Details, APIRequest, DashButton, Render } from "~/components";
 
 :::note
 
@@ -48,25 +48,25 @@ These are some examples of API requests.
 <Details header="List all the available regions">
 
 <APIRequest
-  path="/accounts/{account_id}/addressing/regional_hostnames/regions"
-  method="GET"
+	path="/accounts/{account_id}/addressing/regional_hostnames/regions"
+	method="GET"
 />
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": [
-  {
-   "key": "ca",
-   "label": "Canada"
-  },
-  {
-   "key": "eu",
-   "label": "Europe"
-  }
- ],
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": [
+		{
+			"key": "ca",
+			"label": "Canada"
+		},
+		{
+			"key": "eu",
+			"label": "Europe"
+		}
+	],
+	"messages": []
 }
 ```
 
@@ -75,24 +75,24 @@ These are some examples of API requests.
 <Details header="Create a new regional hostname entry">
 
 <APIRequest
-  path="/zones/{zone_id}/addressing/regional_hostnames"
-  method="POST"
-  json={{
-    hostname: "ca.regional.ipam.rocks",
-    region_key: "ca"
-  }}
+	path="/zones/{zone_id}/addressing/regional_hostnames"
+	method="POST"
+	json={{
+		hostname: "ca.regional.ipam.rocks",
+		region_key: "ca",
+	}}
 />
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": {
-  "hostname": "ca.regional.ipam.rocks",
-  "region_key": "ca",
-  "created_on": "2023-01-13T23:59:45.276558Z"
- },
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": {
+		"hostname": "ca.regional.ipam.rocks",
+		"region_key": "ca",
+		"created_on": "2023-01-13T23:59:45.276558Z"
+	},
+	"messages": []
 }
 ```
 
@@ -101,22 +101,22 @@ These are some examples of API requests.
 <Details header="List all regional hostnames for a zone or get a specific one">
 
 <APIRequest
-  path="/zones/{zone_id}/addressing/regional_hostnames"
-  method="GET"
+	path="/zones/{zone_id}/addressing/regional_hostnames"
+	method="GET"
 />
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": [
-  {
-   "hostname": "ca.regional.ipam.rocks",
-   "region_key": "ca",
-   "created_on": "2023-01-14T00:47:57.060267Z"
-  }
- ],
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": [
+		{
+			"hostname": "ca.regional.ipam.rocks",
+			"region_key": "ca",
+			"created_on": "2023-01-14T00:47:57.060267Z"
+		}
+	],
+	"messages": []
 }
 ```
 
@@ -125,20 +125,20 @@ These are some examples of API requests.
 <Details header="List all regional hostnames for a specific zone">
 
 <APIRequest
-  path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
-  method="GET"
+	path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
+	method="GET"
 />
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": {
-  "hostname": "ca.regional.ipam.rocks",
-  "region_key": "ca",
-  "created_on": "2023-01-13T23:59:45.276558Z"
- },
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": {
+		"hostname": "ca.regional.ipam.rocks",
+		"region_key": "ca",
+		"created_on": "2023-01-13T23:59:45.276558Z"
+	},
+	"messages": []
 }
 ```
 
@@ -147,23 +147,23 @@ These are some examples of API requests.
 <Details header="Patch the region for a specific hostname">
 
 <APIRequest
-  path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
-  method="PATCH"
-  json={{
-    region_key: "eu"
-  }}
+	path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
+	method="PATCH"
+	json={{
+		region_key: "eu",
+	}}
 />
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": {
-  "hostname": "ca.regional.ipam.rocks",
-  "region_key": "eu",
-  "created_on": "2023-01-13T23:59:45.276558Z"
- },
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": {
+		"hostname": "ca.regional.ipam.rocks",
+		"region_key": "eu",
+		"created_on": "2023-01-13T23:59:45.276558Z"
+	},
+	"messages": []
 }
 ```
 
@@ -172,20 +172,24 @@ These are some examples of API requests.
 <Details header="Delete the region configuration">
 
 <APIRequest
-  path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
-  method="DELETE"
+	path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
+	method="DELETE"
 />
 
 ```json title="Response"
 {
- "success": true,
- "errors": [],
- "result": null,
- "messages": []
+	"success": true,
+	"errors": [],
+	"result": null,
+	"messages": []
 }
 ```
 
 </Details>
+
+## Verify regional map for Zero Trust
+
+<Render file="verify-regional-map" product="data-localization" />
 
 ## Terraform support
 

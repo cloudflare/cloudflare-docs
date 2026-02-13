@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: PingOne
 ---
 
+import { Render } from "~/components";
+
 The PingOne cloud platform from PingIdentity provides SSO identity management. Cloudflare Access supports PingOne as an OIDC identity provider.
 
 ## Set up PingOne as an OIDC provider
@@ -23,7 +25,7 @@ The PingOne cloud platform from PingIdentity provides SSO identity management. C
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+   <Render file="find-team-name" product="cloudflare-one" />
 
 10. Select **Save**.
 

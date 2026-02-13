@@ -20,7 +20,7 @@ Cloudflare's AI Playground is a great way to quickly try out a new MCP Server.
 
 You can test the DEX MCP server in less than one minute by visiting the AI Playground's website.
 
-1. Copy the URL for the DEX MCP server: `https://dex.mcp.cloudflare.com/sse`.
+1. Copy the URL for the DEX MCP server: `https://dex.mcp.cloudflare.com/mcp`.
 2. Open [playground.ai.cloudflare.com](https://playground.ai.cloudflare.com) in a browser.
 3. Find the section in the left sidebar titled **MCP Servers**.
 4. Paste the URL for the DEX MCP server into the URL input box and select **Connect**.
@@ -53,7 +53,7 @@ You need a Claude Pro account (or higher subscription) to configure an MCP serve
    	"mcpServers": {
    		"cloudflare-dex-analysis": {
    			"command": "npx",
-   			"args": ["mcp-remote", "https://dex.mcp.cloudflare.com/sse"]
+   			"args": ["mcp-remote", "https://dex.mcp.cloudflare.com/mcp"]
    		}
    	}
    }
@@ -89,7 +89,7 @@ You will need to use a CLI of your choice and npm or homebrew to install and acc
    	"mcpServers": {
    		"cloudflare-dex-analysis": {
    			"command": "npx",
-   			"args": ["mcp-remote", "https://dex.mcp.cloudflare.com/sse"]
+   			"args": ["mcp-remote", "https://dex.mcp.cloudflare.com/mcp"]
    		}
    	}
    }
@@ -111,7 +111,7 @@ You need a ChatGPT Pro or Business account to configure an MCP server. ChatGPT F
 2. Open the ChatGPT desktop app, and log in or set up an account.
 3. Open the **Settings** menu and select **Connectors**.
 4. Select the option to create a new Connector.
-5. Provide a **Name** (like `DEX MCP`), **Description** (optional), and **MCP Server URL** for the Connector. The DEX MCP Server URL is: `https://dex.mcp.cloudflare.com/sse`.
+5. Provide a **Name** (like `DEX MCP`), **Description** (optional), and **MCP Server URL** for the Connector. The DEX MCP Server URL is: `https://dex.mcp.cloudflare.com/mcp`.
 6. Create the new Connector.
 7. Before you ask ChatGPT a question about DEX, select the **+** (plus) button next to the ChatGPT prompt box.
 8. Select **Use Connectors** > **Add Sources**, then select the DEX MCP as a source.

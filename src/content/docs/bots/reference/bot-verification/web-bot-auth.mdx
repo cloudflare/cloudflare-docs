@@ -62,14 +62,15 @@ This directory should follow the definition from the active IETF draft [draft-me
    - `Content-Type`: This header must have the value `application/http-message-signatures-directory+json`.
    - `Signature`: Construct a [`Signature` header](https://www.rfc-editor.org/rfc/rfc9421#name-the-signature-http-field) over your chosen components.
    - `Signature-Input`: Construct a [`Signature-Input` header](https://www.rfc-editor.org/rfc/rfc9421#name-the-signature-input-http-fi) over your chosen components. The header must meet the following requirements.
-     | Required component parameter | Requirement                                                                                                                 |
-     | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-     | `tag`                        | This should be equal to `http-message-signatures-directory`.                                                                |
-     | `keyid`                      | JWK thumbprint of the corresponding key in your directory.                                                                  |
-     | `created`                    | This should be equal to a `Unix` timestamp associated with when the message was sent by your application.                   |
-     | `expires`                    | This should be equal to a `Unix` timestamp associated with when Cloudflare should no longer attempt to verify the message.  |
+     | Required component / parameter | Requirement                                                                                                                                                                                       |
+     | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+     | `tag`                          | This should be equal to `http-message-signatures-directory`.                                                                                                                                      |
+     | `keyid`                        | JWK thumbprint of the corresponding key in your directory.                                                                                                                                        |
+     | `created`                      | This should be equal to a `Unix` timestamp associated with when the message was sent by your application.                                                                                         |
+     | `expires`                      | This should be equal to a `Unix` timestamp associated with when Cloudflare should no longer attempt to verify the message.                                                                        |
+     | `@authority`                   | This should be equal to the value of the Host header sent by the request. You should set the [`req` component parameter](https://datatracker.ietf.org/doc/html/rfc9421#content-request-response). |
 
-   The following example shows the annotated request and response with required headers against `https://example.com`.
+   The following example shows the annotated request and response with required headers against `https://example.com`. The value of `Signature` here is purely for illustrative purposes, and not the actual generated signature.
    ```txt
    GET /.well-known/http-message-signatures-directory HTTP/1.1
    Host: example.com
@@ -78,7 +79,7 @@ This directory should follow the definition from the active IETF draft [draft-me
    HTTP/1.1 200 OK
    Content-Type: application/http-message-signatures-directory+json
    Signature: sig1=:TD5arhV1ved6xtx63cUIFCMONT248cpDeVUAljLgkdozbjMNpJGr/WAx4PzHj+WeG0xMHQF1BOdFLDsfjdjvBA==:
-   Signature-Input: sig1=("@authority");alg="ed25519";keyid="poqkLGiymh_W0uP6PZFw-dvez3QJT5SolqXBCW38r0U";nonce="ZO3/XMEZjrvSnLtAP9M7jK0WGQf3J+pbmQRUpKDhF9/jsNCWqUh2sq+TH4WTX3/GpNoSZUa8eNWMKqxWp2/c2g==";tag="http-message-signatures-directory";created=1750105829;expires=1750105839
+   Signature-Input: sig1=("@authority";req);alg="ed25519";keyid="poqkLGiymh_W0uP6PZFw-dvez3QJT5SolqXBCW38r0U";nonce="ZO3/XMEZjrvSnLtAP9M7jK0WGQf3J+pbmQRUpKDhF9/jsNCWqUh2sq+TH4WTX3/GpNoSZUa8eNWMKqxWp2/c2g==";tag="http-message-signatures-directory";created=1750105829;expires=1750105839
    Cache-Control: max-age=86400
    {
      "keys": [{

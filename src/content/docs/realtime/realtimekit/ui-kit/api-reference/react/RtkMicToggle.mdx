@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: RtkMicToggle
+description: API reference for RtkMicToggle component (React Library)
+---
+A button which toggles your microphone.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMicToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkMicToggle />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMicToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkMicToggle
+      meeting={meeting}
+      size="md"
+      variant="button"
+    />
+  );
+}
+```
+

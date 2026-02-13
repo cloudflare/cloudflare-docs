@@ -1,10 +1,10 @@
 ---
 id: bc015b676c351fa8d8c366d7066713d5
 url: life-of-a-request-1
-title: Life of a Request - The First Hop - Into the Smart Network
+title: "Life of a Request: The First Hop - Into the Smart Network"
 description: Imagine your request is a letter you are trying to send to a friend across the country. Instead of going through the slow, traditional postal service, Cloudflare acts as a hyper-efficient courier company with a fleet of delivery hubs all over the world. 
 products:
   - fundamentals
 pcx_content_type: video
 thumbnail:
-  timestamp: 1s
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/lor-1-the-first-hop.png

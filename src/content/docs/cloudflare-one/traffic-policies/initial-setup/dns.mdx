@@ -39,14 +39,14 @@ To filter DNS requests from an individual device such as a laptop or phone:
 
 To filter DNS requests from a location such as an office or data center:
 
-1. [Add the location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) to your Cloudflare One settings.
+1. [Add the location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) to your Cloudflare One settings.
 2. On your router, browser, or OS, forward DNS queries to the address shown in the location setup UI.
 
 :::note
 
 Gateway identifies locations differently depending on the DNS query protocol:
 
-- **IPv4 queries** match to the source IP address. Under **Gateway** > **DNS locations**, ensure that the **Source IPv4 Address** parameter is correct for the location you want to apply policies to.
+- **IPv4 queries** match to the source IP address. Under **Networks** > **Resolvers & Proxies** > **DNS locations**, ensure that the **Source IPv4 Address** parameter is correct for the location you want to apply policies to.
 - **IPv6, DOT, or DOH queries** match to the unique DNS forwarding address assigned to the DNS location. Ensure that your DNS resolver is configured for the location you want to apply policies to.
   :::
 

@@ -7,6 +7,7 @@ import Details from "./Details.astro";
 import { marked } from "marked";
 import { commands, getCommand } from "~/util/wrangler";
 import { parse } from "node-html-parser";
+import { Badge } from "@astrojs/starlight/components";
 
 const props = z.object({
 	command: z.string(),
@@ -19,15 +20,14 @@ let { command, headingLevel, description } = props.parse(Astro.props);
 const definition = getCommand(command);
 
 description ??= definition.metadata.description;
+// will be appended after the main description, if present
+const epilogue = definition.metadata.epilogue;
 
-// some commands are present but marked as "hidden" and shouldn't be shown
-let hidden = false;
+// CED-192 - some commands are experimental and need to be marked as such
+const experimental = definition.metadata.status === "experimental";
 
+// CED-191 some commands are present but marked as "hidden" and shouldn't be shown
 if (definition.metadata.hidden) {
-	hidden = true;
-}
-
-if (hidden) {
 	throw new Error(
 		`[WranglerCommand] "${command}" is marked as hidden. If you want to publish, fix upstream in workers-sdk repo.`
 	);
@@ -47,7 +47,10 @@ const positionalSet = new Set(definition.positionalArgs);
 
 // Extract ExtraFlagDetails from slot
 const slotContent = await Astro.slots.render("default");
-const extraFlagDetailsMap = new Map<string, { content: string; mode: "append" | "replace" }>();
+const extraFlagDetailsMap = new Map<
+	string,
+	{ content: string; mode: "append" | "replace" }
+>();
 
 if (slotContent) {
 	const html = parse(slotContent);
@@ -60,7 +63,7 @@ if (slotContent) {
 		if (key) {
 			extraFlagDetailsMap.set(key, {
 				content: element.innerHTML.trim(),
-				mode: mode as "append" | "replace"
+				mode: mode as "append" | "replace",
 			});
 		}
 	}
@@ -69,7 +72,18 @@ if (slotContent) {
 
 <AnchorHeading depth={headingLevel} title={`\`${command}\``} />
 
+<!-- CED-192 - Label experimental commands with a badge-->
+{
+	experimental && (
+		<>
+			<br />
+			<Badge text="Experimental" variant="caution" />
+		</>
+	)
+}
 <Fragment set:html={marked.parse(description)} />
+
+{epilogue && <Fragment set:html={marked.parse(epilogue)} />}
 
 <PackageManagers
 	pkg="wrangler"

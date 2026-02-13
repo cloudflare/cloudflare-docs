@@ -1,0 +1,11 @@
+name: Magic Transit
+
+entry:
+  title: Magic Transit
+  url: /magic-transit/
+  group: Network security
+
+meta:
+  title: Cloudflare Magic Transit docs
+  description: Network functions at Cloudflare scale for on-premise, cloud-hosted, and hybrid networks
+  author: "@cloudflare"

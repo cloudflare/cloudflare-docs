@@ -1,0 +1,24 @@
+---
+title: Deployment models
+pcx_content_type: overview
+sidebar:
+  order: 4
+---
+
+Email security offers multiple deployment models:
+
+- API for Microsoft 365 users.
+- BCC for Google Workspace users.
+- MX/Inline for all email providers.
+
+When you choose the [API deployment](/cloudflare-one/email-security/setup/post-delivery-deployment/api/), Email security can both scan and take actions on emails after they have reached a user's inbox.
+
+If you are a Google Workspace user, you can enable Email security via [BCC setup](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/gmail-bcc-setup/). Email security scans a copy of your email after it lands in your inbox.
+
+![Google Workspace BCC deployment diagram](~/assets/email-security/Gmail_Deployment_BCC.png)
+
+With MX/Inline, Email security scans your email before they land in your inbox, giving you the highest level of protection. 
+
+![Microsoft 365 and Google Workspace MX/Inline](~/assets/email-security/Email_security_Deployment_Inline.png)
+
+Refer to [Before you begin](/cloudflare-one/email-security/setup/) for a comprehensive comparison of each deployment method, and [Understanding Email Security Deployments](/reference-architecture/architectures/email-security-deployments/) to learn about each deployment method.

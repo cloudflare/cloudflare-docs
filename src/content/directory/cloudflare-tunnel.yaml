@@ -1,0 +1,9 @@
+name: Cloudflare Tunnel
+
+entry:
+  title: Cloudflare Tunnel
+  group: Cloudflare One
+  url: /cloudflare-one/networks/connectors/cloudflare-tunnel/
+
+meta:
+  description: Securely connect resources to Cloudflare without a publicly routable IP address

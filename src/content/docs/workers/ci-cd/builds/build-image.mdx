@@ -88,3 +88,26 @@ Workers Builds are run in the following environment:
 | --------------------- | ------------ |
 | **Build Environment** | Ubuntu 24.04 |
 | **Architecture**      | x86_64       |
+
+
+## Build Image Policy
+
+### Preinstalled Software Updates
+
+Preinstalled software (languages and tools) will be updated before reaching end-of-life (EOL). These updates apply only if you have not [overridden the default version](/workers/ci-cd/builds/build-image/#overriding-default-versions).
+
+- **Minor version updates**: May be updated to the latest available minor version without notice. For tools that do not follow semantic versioning (e.g., Bun or Hugo), updates that may contain breaking changes will receive 3 months’ notice.
+- **Major version updates**: Updated to the next stable long-term support (LTS) version with 3 months’ notice.
+
+**How you'll be notified (for changes requiring notice):**
+- [Cloudflare Changelog](https://developers.cloudflare.com/changelog/)
+- Dashboard notifications for projects that will receive the update
+- Email notifications to project owners
+
+To maintain a specific version and avoid automatic updates, [override the default version](/workers/ci-cd/builds/build-image/#overriding-default-versions).
+
+### Best Practices
+
+To avoid unexpected build failures:
+- **Monitor announcements** via the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/), dashboard notifications, and email
+- **Pin specific versions** of critical preinstalled software by [overriding default versions](/workers/ci-cd/builds/build-image/#overriding-default-versions)

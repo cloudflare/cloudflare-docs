@@ -1,0 +1,178 @@
+---
+title: "Agents SDK v0.3.7: Workflows integration, synchronous state, and scheduleEvery()"
+description: The Agents SDK v0.3.7 introduces first-class Cloudflare Workflows integration, synchronous setState() with validation hooks, fixed-interval scheduling with scheduleEvery(), and callable system improvements.
+products:
+  - agents
+  - workflows
+date: 2026-02-03
+---
+
+import { TypeScriptExample } from "~/components";
+
+The latest release of the [Agents SDK](https://github.com/cloudflare/agents) brings first-class support for [Cloudflare Workflows](/workflows/), synchronous state management, and new scheduling capabilities.
+
+## Cloudflare Workflows integration
+
+Agents excel at real-time communication and state management. Workflows excel at durable execution. Together, they enable powerful patterns where Agents handle WebSocket connections while Workflows handle long-running tasks, retries, and human-in-the-loop flows.
+
+Use the new `AgentWorkflow` class to define workflows with typed access to your Agent:
+
+<TypeScriptExample>
+
+```ts
+import { AgentWorkflow } from "agents/workflows";
+import type { AgentWorkflowEvent, AgentWorkflowStep } from "agents/workflows";
+
+export class ProcessingWorkflow extends AgentWorkflow<MyAgent, TaskParams> {
+	async run(event: AgentWorkflowEvent<TaskParams>, step: AgentWorkflowStep) {
+		// Call Agent methods via RPC
+		await this.agent.updateStatus(event.payload.taskId, "processing");
+
+		// Non-durable: progress reporting to clients
+		await this.reportProgress({ step: "process", percent: 0.5 });
+		this.broadcastToClients({ type: "update", taskId: event.payload.taskId });
+
+		// Durable via step: idempotent, won't repeat on retry
+		await step.mergeAgentState({ taskProgress: 0.5 });
+
+		const result = await step.do("process", async () => {
+			return processData(event.payload.data);
+		});
+
+		await step.reportComplete(result);
+		return result;
+	}
+}
+```
+
+</TypeScriptExample>
+
+Start workflows from your Agent with `runWorkflow()` and handle lifecycle events:
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent {
+	async startTask(taskId: string, data: string) {
+		const instanceId = await this.runWorkflow("PROCESSING_WORKFLOW", {
+			taskId,
+			data,
+		});
+		return { instanceId };
+	}
+
+	async onWorkflowProgress(
+		workflowName: string,
+		instanceId: string,
+		progress: unknown,
+	) {
+		this.broadcast(JSON.stringify({ type: "progress", progress }));
+	}
+
+	async onWorkflowComplete(
+		workflowName: string,
+		instanceId: string,
+		result?: unknown,
+	) {
+		console.log(`Workflow ${instanceId} completed`);
+	}
+
+	async onWorkflowError(
+		workflowName: string,
+		instanceId: string,
+		error: unknown,
+	) {
+		console.error(`Workflow ${instanceId} failed:`, error);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Key workflow methods on your Agent:
+
+- `runWorkflow(workflowName, params, options?)` — Start a workflow with optional metadata
+- `getWorkflow(workflowId)` / `getWorkflows(criteria?)` — Query workflows with cursor-based pagination
+- `approveWorkflow(workflowId)` / `rejectWorkflow(workflowId)` — Human-in-the-loop approval flows
+- `pauseWorkflow()`, `resumeWorkflow()`, `terminateWorkflow()` — Workflow control
+
+## Synchronous setState()
+
+State updates are now synchronous with a new `validateStateChange()` validation hook:
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent<Env, State> {
+	validateStateChange(oldState: State, newState: State): State | false {
+		// Return false to reject the change
+		if (newState.count < 0) return false;
+		// Return modified state to transform
+		return { ...newState, lastUpdated: Date.now() };
+	}
+}
+```
+
+</TypeScriptExample>
+
+## scheduleEvery() for recurring tasks
+
+The new `scheduleEvery()` method enables fixed-interval recurring tasks with built-in overlap prevention:
+
+<TypeScriptExample>
+
+```ts
+// Run every 5 minutes
+await this.scheduleEvery("syncData", 5 * 60 * 1000, { source: "api" });
+```
+
+</TypeScriptExample>
+
+## Callable system improvements
+
+- **Client-side RPC timeout** — Set timeouts on callable method invocations
+- **`StreamingResponse.error(message)`** — Graceful stream error signaling
+- **`getCallableMethods()`** — Introspection API for discovering callable methods
+- **Connection close handling** — Pending calls are automatically rejected on disconnect
+
+<TypeScriptExample>
+
+```ts
+await agent.call("method", [args], {
+	timeout: 5000,
+	stream: { onChunk, onDone, onError },
+});
+```
+
+</TypeScriptExample>
+
+## Email and routing enhancements
+
+**Secure email reply routing** — Email replies are now secured with HMAC-SHA256 signed headers, preventing unauthorized routing of emails to agent instances.
+
+**Routing improvements:**
+
+- `basePath` option to bypass default URL construction for custom routing
+- Server-sent identity — Agents send `name` and `agent` type on connect
+- New `onIdentity` and `onIdentityChange` callbacks on the client
+
+<TypeScriptExample>
+
+```ts
+const agent = useAgent({
+	basePath: "user",
+	onIdentity: (name, agentType) => console.log(`Connected to ${name}`),
+});
+```
+
+</TypeScriptExample>
+
+### Upgrade
+
+To update to the latest version:
+
+```sh
+npm i agents@latest
+```
+
+For the complete Workflows API reference and patterns, see [Run Workflows](/agents/api-reference/run-workflows/).

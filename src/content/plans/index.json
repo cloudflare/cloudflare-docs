@@ -1661,7 +1661,7 @@
 				"retention": {
 					"title": "Retention",
 					"free": "7",
-					"pro": "31",
+					"pro": "7",
 					"biz": "31",
 					"ent": "90"
 				},
@@ -1899,8 +1899,16 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
-				"z_custom_rulesets": {
-					"title": "Custom rulesets",
+				"x_custom_rulesets_zone": {
+					"title": "Number of custom rulesets (zone)",
+					"link": "/waf/account/custom-rulesets/",
+					"free": "1",
+					"pro": "2",
+					"biz": "5",
+					"ent": "10"
+				},
+				"z_custom_rulesets_account": {
+					"title": "Account-level custom rulesets",
 					"link": "/waf/account/custom-rulesets/",
 					"summary": "Enterprise with add-on",
 					"free": "No",
@@ -2158,7 +2166,7 @@
 				"hostname_management": {
 					"title": "Hostname management",
 					"link": "/turnstile/concepts/hostname-management/",
-					"free": "15 hostnames per widget",
+					"free": "10 hostnames per widget",
 					"ent": "Maximum of 200 hostnames per widget"
 				},
 				"anyhostname": {
@@ -2427,20 +2435,6 @@
 					"pro": "Paid add-on",
 					"biz": "Paid add-on",
 					"ent": "Paid add-on"
-				}
-			}
-		},
-		"mirage": {
-			"title": "Mirage (deprecated)",
-			"link": "/speed/optimization/images/mirage/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Pro and above",
-					"free": "No",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
 				}
 			}
 		},

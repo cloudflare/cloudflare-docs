@@ -4,6 +4,8 @@ title: OneLogin (SAML)
 description: Integrate OneLogin as a SAML identity provider for Cloudflare One.
 ---
 
+import { Render } from "~/components";
+
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML identity provider.
 
 ## Set up OneLogin as a SAML provider
@@ -28,7 +30,7 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
    https://<your-team-name>.cloudflareaccess.com
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+   <Render file="find-team-name" product="cloudflare-one" />
 
 8. Select the **Parameters** tab, select **Add Parameter** and enter your values for **Cloudflare Access Field**.
 

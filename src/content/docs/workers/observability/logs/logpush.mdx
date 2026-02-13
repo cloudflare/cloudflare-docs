@@ -46,8 +46,9 @@ To create a Logpush job in the Cloudflare dashboard:
    <DashButton url="/?to=/:account/logs" />
 
 2. Select **Create a Logpush job**.
-3. Select **Workers trace events** as the data set > **Next**.
-4. If needed, customize your data fields. Otherwise, select **Next**.
+3. Select a destination and configure it, if needed.
+4. Select **Workers trace events** as the data set > **Next**.
+5. If needed, customize your data fields. Otherwise, select **Next**.
 
 6. Follow the instructions on the dashboard to verify ownership of your data's destination and complete job creation.
 
@@ -83,16 +84,20 @@ Enable logging on your Worker by adding a new property, `logpush = true`, to you
 
 <WranglerConfig>
 
-```toml
-# Top-level configuration
-
-name = "my-worker"
-main = "src/index.js"
-compatibility_date = "2022-07-12"
-
-workers_dev = false
-logpush = true
-route = { pattern = "example.org/*", zone_name = "example.org" }
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	// Top-level configuration
+	"name": "my-worker",
+	"main": "src/index.js",
+	"compatibility_date": "$today",
+	"workers_dev": false,
+	"logpush": true,
+	"route": {
+		"pattern": "example.org/*",
+		"zone_name": "example.org"
+	}
+}
 ```
 
 </WranglerConfig>

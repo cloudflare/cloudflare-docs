@@ -11,6 +11,8 @@ Ansible is a software tool that enables at scale management of infrastructure. A
 
 Ansible works alongside Terraform to streamline the Cloudflare Tunnel setup process. In this guide, you will use Terraform to deploy an SSH server on Google Cloud and create a [locally-managed tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/create-local-tunnel/) that makes the server available over the Internet. Terraform will automatically run an Ansible playbook that installs and configures `cloudflared` on the server.
 
+<Render file="tunnel/connectivity-prechecks-note" product="cloudflare-one" />
+
 ## Prerequisites
 
 To complete the steps in this guide, you will need:

@@ -3,6 +3,26 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-02-12"
+    title: Add content type dimension to AI Bots
+    description: |-
+      * Added new `content_type` dimension and filter to the AI Bots API:
+        * [`/ai/bots/summary/{dimension}`](/api/resources/radar/subresources/ai/subresources/bots/methods/summary_v2/)
+        * [`/ai/bots/timeseries_groups/{dimension}`](/api/resources/radar/subresources/ai/subresources/bots/methods/timeseries_groups/)
+      * Added new **Content Type Distribution** chart to the [AI Insights page](https://radar.cloudflare.com/ai-insights#content-type).
+      * Added content type chart to individual [bot information pages](https://radar.cloudflare.com/bots/directory) for AI crawlers.
+  - publish_date: "2025-12-16"
+    title: New client type dimension in Web Crawlers and Mixed Purpose entry
+    description: |-
+      * Added new Mixed Purpose entry to the `crawl_purpose` dimension of the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API, which as of this release includes Googlebot and Bingbot.
+      * Added new dimension `client_type` to the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API.
+        * Added new **HTML page requests by client type graph** to the [AI Insights page](https://radar.cloudflare.com/ai-insights#html-page-requests-by-client-type).
+  - publish_date: "2025-11-24"
+
+    title: Add HTTP origins insights
+    description: |-
+      * Added new [`Origins`](/api/resources/radar/subresources/origins/) API.
+      * Extended [`Annotations`](/api/resources/radar/subresources/annotations/) and [`Traffic Anomalies`](/api/resources/radar/subresources/traffic_anomalies/) APIs to support origin outages and anomalies.
   - publish_date: "2025-10-27"
     title: Add TLD insights
     description: |-

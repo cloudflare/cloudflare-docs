@@ -1,0 +1,13 @@
+name: Sandbox SDK
+
+entry:
+  title: Sandbox SDK
+  url: /sandbox/
+  group: Developer platform
+  additional_groups: [AI]
+  tags: [AI]
+
+meta:
+  title: Cloudflare Sandbox SDK docs
+  description: Build secure, isolated code execution environments
+  author: "@cloudflare"

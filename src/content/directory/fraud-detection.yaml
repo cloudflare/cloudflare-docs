@@ -1,0 +1,13 @@
+name: Fraud Detection
+
+entry:
+  title: Fraud Detection
+  group: Application security
+  url: /bots/additional-configurations/sequence-rules/
+
+meta:
+
+  title: Cloudflare Fraud Detection docs
+  description: Sequence rules use cookies to track the order and timing of requests
+  author: "@cloudflare"
+  

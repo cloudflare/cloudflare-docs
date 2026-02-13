@@ -7,9 +7,9 @@ products:
 date: 2025-03-18
 ---
 
-import { Badge, MetaInfo, Render, TypeScriptExample } from "~/components"
-import { Image } from 'astro:assets';
-import npmAgentsAnimated from "~/assets/images/agents/npm-i-agents.apng"
+import { Badge, MetaInfo, Render, TypeScriptExample } from "~/components";
+import { Image } from "astro:assets";
+import npmAgentsAnimated from "~/assets/images/agents/npm-i-agents.apng";
 
 <Image src={npmAgentsAnimated} alt="npm i agents" width="1000" height="541" />
 
@@ -54,13 +54,13 @@ We've also fixed a number of bugs with state synchronization and the React hooks
 ```ts
 // via https://github.com/cloudflare/agents/tree/main/examples/cross-domain
 export default {
-  async fetch(request: Request, env: Env) {
-    return (
-      // Set { cors: true } to enable CORS headers.
-      (await routeAgentRequest(request, env, { cors: true })) ||
-      new Response("Not found", { status: 404 })
-    );
-  },
+	async fetch(request: Request, env: Env) {
+		return (
+			// Set { cors: true } to enable CORS headers.
+			(await routeAgentRequest(request, env, { cors: true })) ||
+			new Response("Not found", { status: 404 })
+		);
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -77,31 +77,32 @@ We've added a new [`@unstable_callable()`](/agents/api-reference/agents-api/) de
 import { unstable_callable, Agent, type StreamingResponse } from "agents";
 import type { Env } from "../server";
 
- export class Rpc extends Agent<Env> {
-   // Use the decorator to define a callable method
-   @unstable_callable({
-     description: "rpc test",
-   })
-   async getHistory() {
-     return this.sql`SELECT * FROM history ORDER BY created_at DESC LIMIT 10`;
-   }
+export class Rpc extends Agent<Env> {
+	// Use the decorator to define a callable method
+	@unstable_callable({
+		description: "rpc test",
+	})
+	async getHistory() {
+		return this.sql`SELECT * FROM history ORDER BY created_at DESC LIMIT 10`;
+	}
 }
 ```
+
 ```tsx
 // client.tsx
 const { call } = useAgent({ agent: "rpc" });
 
 const fetchUserHistory = async () => {
-    try {
-        setLoading(true);
-        // Call methods directly on the Agent!
-        const result = await call("getHistory");
-        addToast(`RPC result: ${result}`, "success");
-    } catch (error) {
-        addToast(`Error: ${error}`, "error");
-    } finally {
-        setLoading(false);
-    }
+	try {
+		setLoading(true);
+		// Call methods directly on the Agent!
+		const result = await call("getHistory");
+		addToast(`RPC result: ${result}`, "success");
+	} catch (error) {
+		addToast(`Error: ${error}`, "error");
+	} finally {
+		setLoading(false);
+	}
 };
 ```
 
@@ -128,7 +129,7 @@ We've heard your feedback on the Agents SDK documentation, and we're shipping mo
 
 - Expanded [API reference documentation](/agents/api-reference/), covering the methods and properties exposed by the Agents SDK, as well as more usage examples.
 - More [Client API](/agents/api-reference/agents-api/#client-api) documentation that documents `useAgent`, `useAgentChat` and the new `@unstable_callable` RPC decorator exposed by the SDK.
-- New documentation on how to [call agents](/agents/api-reference/calling-agents/) and (optionally) authenticate clients before they connect to your Agents.
+- New documentation on how to [route requests to agents](/agents/api-reference/routing/) and (optionally) authenticate clients before they connect to your Agents.
 
 Note that the Agents SDK is continually growing: the type definitions included in the SDK will always include the latest APIs exposed by the `agents` package.
 

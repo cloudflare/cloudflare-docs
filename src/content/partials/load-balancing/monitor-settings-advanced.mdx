@@ -13,7 +13,7 @@
   - Make sure that the value is relatively static and within the first 10 KB of the HTML page.
 - **Simulate Zone**:
   - It is recommended to use the same zone in which the Load Balancer exists.
-  - Changes the egress zone settings of a health monitor request to ensure compatibility with features like [authenticated origin pulls](/ssl/origin-configuration/authenticated-origin-pull/), [Argo Smart Routing](/argo-smart-routing/), and [Aegis](/aegis/).
+  - Changes the egress zone settings of a health monitor request to ensure compatibility with features like [authenticated origin pulls](/ssl/origin-configuration/authenticated-origin-pull/), [Argo Smart Routing](/argo-smart-routing/), and [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/).
 - **Follow Redirects**:
   - Instead of reporting a `301` or `302` code as unhealthy, the health monitor request follows redirects to the final endpoint.
 - **Configure Request Header(s)**:

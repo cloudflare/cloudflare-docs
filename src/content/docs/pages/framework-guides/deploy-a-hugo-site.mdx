@@ -94,13 +94,11 @@ Inside of `hello-world.md`, add some initial content to create your post. Remove
 
 ## Deploy with Cloudflare Pages
 
-<Render
-	file="framework-guides/learn-more"
-	product="pages"
-	params={{ name: "Hugo" }}
-/>
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <PagesBuildPreset framework="hugo" />
+
+While `public` is the default build directory for Hugo sites, this setting can be configured with the [`publishDir` setting](https://gohugo.io/configuration/all/#publishdir).
 
 :::note[Base URL configuration]
 

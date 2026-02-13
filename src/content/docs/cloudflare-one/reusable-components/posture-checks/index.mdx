@@ -67,7 +67,7 @@ For example, if you establish an SSH session based on a successful posture check
 
 ### Expiration
 
-By default, the posture result on Cloudflare remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/update/). We recommend setting the expiration to be longer than the [polling frequency](#polling-frequency).
+By default, the posture result on Cloudflare remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/update/). Cloudflare recommends setting the expiration to be at least double the [polling frequency](#polling-frequency). For example, if the posture check polling frequency is set to one hour, its expiration time should be set to two hours or greater.
 
 ### Polling frequency
 
