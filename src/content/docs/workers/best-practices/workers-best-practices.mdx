@@ -207,14 +207,18 @@ Stream data through your Worker using `TransformStream` to pipe from a source to
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
+// 🔴 Bad: buffers the entire response body in memory
+const badHandler = {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const response = await fetch("https://api.example.com/large-dataset");
+		const text = await response.text();
+		return new Response(text);
+	},
+} satisfies ExportedHandler<Env>;
+
+// ✅ Good: stream the response body through without buffering
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		// 🔴 Bad: buffers the entire response body in memory
-		// const response = await fetch("https://api.example.com/large-dataset");
-		// const text = await response.text();
-		// return new Response(text);
-
-		// ✅ Good: stream the response body through without buffering
 		const response = await fetch("https://api.example.com/large-dataset");
 		return new Response(response.body, response);
 	},
@@ -273,6 +277,20 @@ There are two common pitfalls: destructuring `ctx` (which loses the `this` bindi
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
+// 🔴 Bad: destructuring ctx loses the `this` binding
+const badHandler = {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const { waitUntil } = ctx; // "Illegal invocation" at runtime
+		waitUntil(fetch("https://analytics.example.com/events"));
+		return new Response("OK");
+	},
+} satisfies ExportedHandler<Env>;
+
+// ✅ Good: send the response immediately, do background work after
 export default {
 	async fetch(
 		request: Request,
@@ -281,19 +299,12 @@ export default {
 	): Promise<Response> {
 		const data = await processRequest(request);
 
-		// ✅ Good: send the response immediately, do background work after
 		ctx.waitUntil(logToAnalytics(env, data));
 		ctx.waitUntil(updateCache(env, data));
 
 		return Response.json(data);
 	},
 } satisfies ExportedHandler<Env>;
-
-// 🔴 Bad: destructuring ctx loses the `this` binding
-// async fetch(request, env, ctx) {
-//   const { waitUntil } = ctx; // "Illegal invocation" at runtime
-//   waitUntil(somePromise);
-// }
 
 async function logToAnalytics(env: Env, data: unknown): Promise<void> {
 	await fetch("https://analytics.example.com/events", {
@@ -320,15 +331,20 @@ Some Cloudflare services like R2, KV, D1, Queues, and Workflows are available as
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
+// 🔴 Bad: calling the REST API from a Worker
+const badHandler = {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const response = await fetch(
+			"https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/r2/buckets/BUCKET_NAME/objects/my-file",
+			{ headers: { Authorization: `Bearer ${env.CF_API_TOKEN}` } },
+		);
+		return new Response(response.body);
+	},
+} satisfies ExportedHandler<Env>;
+
+// ✅ Good: use the binding directly — no network hop, no auth needed
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		// 🔴 Bad: calling the REST API from a Worker
-		// const response = await fetch(
-		//   "https://api.cloudflare.com/client/v4/accounts/.../r2/buckets/.../objects/my-file",
-		//   { headers: { Authorization: `Bearer ${env.CF_API_TOKEN}` } }
-		// );
-
-		// ✅ Good: use the binding directly — no network hop, no auth needed
 		const object = await env.MY_BUCKET.get("my-file");
 
 		if (!object) {
@@ -476,6 +492,16 @@ export default {
 
 // 🔴 Bad: connecting directly to a remote database without Hyperdrive
 // Every request pays the full TCP + TLS + auth cost (often 300-500ms)
+const badHandler = {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const client = new Client({
+			connectionString: "postgres://user:pass@db.example.com:5432/mydb",
+		});
+		await client.connect();
+		const result = await client.query("SELECT id, name FROM users LIMIT 10");
+		return Response.json(result.rows);
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -639,9 +665,15 @@ export default {
 			);
 			return Response.json({ error: "Internal server error" }, { status: 500 });
 		}
+	},
+} satisfies ExportedHandler<Env>;
 
-		// 🔴 Bad: unstructured string logs are hard to query
-		// console.log("Got a request to " + url.pathname);
+// 🔴 Bad: unstructured string logs are hard to query
+const badHandler = {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		console.log("Got a request to " + url.pathname);
+		return new Response("OK");
 	},
 } satisfies ExportedHandler<Env>;
 ```
@@ -664,19 +696,28 @@ Pass state through function arguments or store it on `env` bindings. Never in mo
 
 ```ts
 // 🔴 Bad: global mutable state leaks between requests
-// let currentUser: string | null = null;
-// let requestHeaders: Headers | null = null;
+let currentUser: string | null = null;
 
+const badHandler = {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		// Storing request-scoped data globally means the next request sees stale data
+		currentUser = request.headers.get("X-User-Id");
+		const result = await handleRequest(currentUser, env);
+		return Response.json(result);
+	},
+} satisfies ExportedHandler<Env>;
+
+// ✅ Good: pass request-scoped data through function arguments
 export default {
 	async fetch(
 		request: Request,
 		env: Env,
 		ctx: ExecutionContext,
 	): Promise<Response> {
-		// 🔴 Bad: storing request-scoped data globally
-		// currentUser = request.headers.get("X-User-Id");
-
-		// ✅ Good: pass request-scoped data through function arguments
 		const userId = request.headers.get("X-User-Id");
 		const result = await handleRequest(userId, env);
 
@@ -719,7 +760,10 @@ export default {
 		const data = await request.json();
 
 		// 🔴 Bad: floating promise — result is dropped, errors are swallowed
-		// fetch("https://api.example.com/webhook", { method: "POST", body: JSON.stringify(data) });
+		fetch("https://api.example.com/webhook", {
+			method: "POST",
+			body: JSON.stringify(data),
+		});
 
 		// ✅ Good: await if you need the result before responding
 		const response = await fetch("https://api.example.com/process", {
@@ -756,7 +800,7 @@ Node.js [`node:crypto`](/workers/runtime-apis/nodejs/crypto/) is also fully supp
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		// 🔴 Bad: Math.random() is predictable and not suitable for security
-		// const token = Math.random().toString(36).substring(2);
+		const badToken = Math.random().toString(36).substring(2);
 
 		// ✅ Good: cryptographically secure random UUID
 		const sessionId = crypto.randomUUID();
@@ -794,9 +838,11 @@ async function verifyToken(
 	]);
 
 	return crypto.subtle.timingSafeEqual(providedHash, expectedHash);
+}
 
-	// 🔴 Bad: direct string comparison leaks timing information
-	// return provided === expected;
+// 🔴 Bad: direct string comparison leaks timing information
+function verifyTokenInsecure(provided: string, expected: string): boolean {
+	return provided === expected;
 }
 ```
 
@@ -809,16 +855,26 @@ async function verifyToken(
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
+// 🔴 Bad: hides errors by falling through to origin
+const badHandler = {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		ctx.passThroughOnException();
+		const result = await handleRequest(request, env);
+		return Response.json(result);
+	},
+} satisfies ExportedHandler<Env>;
+
+// ✅ Good: explicit error handling with structured responses
 export default {
 	async fetch(
 		request: Request,
 		env: Env,
 		ctx: ExecutionContext,
 	): Promise<Response> {
-		// 🔴 Bad: hides errors by falling through to origin
-		// ctx.passThroughOnException();
-
-		// ✅ Good: explicit error handling with structured responses
 		try {
 			const result = await handleRequest(request, env);
 			return Response.json(result);
