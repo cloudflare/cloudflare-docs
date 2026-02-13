@@ -37,7 +37,7 @@
                 },
                 "language": {
                     "type": "string",
-                    "description": "The language of the audio being transcribed or translated, specified as an ISO 639-1 two-letter code. For example: `en` (English), `es` (Spanish), `fr` (French). See the [Whisper language documentation](https://whisper-api.com/docs/languages/) for the full list of supported languages. If not specified, the model will auto-detect the language."
+                    "description": "The language of the audio being transcribed or translated."
                 },
                 "vad_filter": {
                     "type": "boolean",
