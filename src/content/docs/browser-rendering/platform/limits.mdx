@@ -33,6 +33,15 @@ To increase this limit, go to the **Compute (Workers) > Workers plans** page in 
 By default, a browser will time out if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the [`keep_alive` option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
 :::
 
+### `/crawl` endpoint limits
+
+The [REST API `/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/) has additional limits for Workers Free plan users:
+
+| Feature                                | Limit           |
+| -------------------------------------- | --------------- |
+| Crawl jobs per day | 5 per day |
+| Maximum pages per crawl | 100 pages |
+
 ## Workers Paid
 
 :::note[Higher limit requests]
