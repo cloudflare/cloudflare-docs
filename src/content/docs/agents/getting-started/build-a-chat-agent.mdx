@@ -34,9 +34,9 @@ npm install
 
 You have two options for setting up your OpenAI API key:
 
-**Option A: Using `.dev.vars` (recommended for development)**
+**Option A: Using `.env` (recommended for development)**
 
-Create a `.dev.vars` file in your project root:
+Create a `.env` file in your project root (and make sure it is in your `.gitignore`):
 
 ```txt
 OPENAI_API_KEY=your-key-here
@@ -50,13 +50,19 @@ For production deployments, use Cloudflare secrets instead of putting API keys i
 wrangler secret put OPENAI_API_KEY
 ```
 
+You can also upload all secrets from your `.env` file to production at once:
+
+```bash
+wrangler secret bulk .env
+```
+
 ## Step 3: Test the agent locally
 
 ```bash
 npm start
 ```
 
-The server will be available at `http://localhost:5174`. Open your browser and start chatting.
+Open your browser and start chatting. Check the terminal output for the correct URL.
 
 ## Understanding the code
 
@@ -82,10 +88,14 @@ The main agent class that handles chat interactions:
 <TypeScriptExample>
 
 ```ts
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { streamText, type StreamTextOnFinishCallback, type ToolSet } from "ai";
 
 export class Chat extends AIChatAgent<Env> {
-	async onChatMessage(onFinish, options) {
+	async onChatMessage(
+		onFinish: StreamTextOnFinishCallback<ToolSet>,
+		options?: { abortSignal?: AbortSignal },
+	) {
 		// Handles incoming messages and manages streaming responses
 		// Processes tool calls and generates AI responses
 	}
@@ -102,12 +112,12 @@ Define what actions your agent can perform:
 
 ```ts
 import { tool } from "ai";
-import { z } from "zod";
+import { z } from "zod/v3";
 
 // Automatic execution (no confirmation needed)
 const getLocalTime = tool({
 	description: "get the local time for a specified location",
-	parameters: z.object({ location: z.string() }),
+	inputSchema: z.object({ location: z.string() }),
 	execute: async ({ location }) => {
 		return "10am";
 	},
@@ -116,7 +126,7 @@ const getLocalTime = tool({
 // Requires confirmation (no execute function)
 const getWeatherInformation = tool({
 	description: "show the weather in a given city to the user",
-	parameters: z.object({ city: z.string() }),
+	inputSchema: z.object({ city: z.string() }),
 	// Omitting execute function makes this tool require human confirmation
 });
 ```
@@ -133,9 +143,11 @@ const getWeatherInformation = tool({
 
 ```ts
 // In src/tools.ts
+import { z } from "zod/v3";
+
 const getWeather = tool({
 	description: "Get current weather for a location",
-	parameters: z.object({
+	inputSchema: z.object({
 		location: z.string().describe("The city name"),
 	}),
 	execute: async ({ location }) => {
@@ -161,7 +173,7 @@ export const tools = {
 // In src/tools.ts
 const sensitiveAction = tool({
 	description: "Perform a sensitive action",
-	parameters: z.object({
+	inputSchema: z.object({
 		action: z.string().describe("The action to perform"),
 		reason: z.string().describe("Reason for the action"),
 	}),
@@ -187,14 +199,17 @@ export const executions = {
 
 ### Customizing the system prompt
 
-Edit the system prompt in `src/server.ts`:
+Edit the system prompt in `src/server.ts`. You can use the `getSchedulePrompt` helper from `agents/schedule` to include scheduling context:
 
 ```ts
+import { getSchedulePrompt } from "agents/schedule";
+
+// Inside your onChatMessage method:
 system: `You are a helpful assistant specializing in software development.
 You can help with coding questions, debugging, and best practices.
 Always provide clear, actionable advice.
 
-${unstable_getSchedulePrompt({ date: new Date() })}
+${getSchedulePrompt({ date: new Date() })}
 
 If the user asks to schedule a task, use the schedule tool to schedule the task.
 `,
@@ -216,6 +231,12 @@ For production deployment, set your OpenAI API key as a secret:
 wrangler secret put OPENAI_API_KEY
 ```
 
+You can also upload all secrets from your `.env` file at once:
+
+```bash
+wrangler secret bulk .env
+```
+
 ## Features
 
 - **Streaming Responses**: Real-time AI responses with typing indicators.
@@ -231,17 +252,12 @@ wrangler secret put OPENAI_API_KEY
 
 **"OPENAI_API_KEY is not set"**
 
-- Make sure you have set the API key in `.dev.vars` for local development.
-- For production, use `wrangler secret put OPENAI_API_KEY`.
-
-**"npm run dev" not found**
-
-- Use `npm start` instead (the script is named `start`).
+- Make sure you have set the API key in a `.env` file in your project root for local development.
+- For production, use `wrangler secret put OPENAI_API_KEY` or `wrangler secret bulk .env`.
 
 **Server not accessible**
 
-- Check that the server is running on port 5174 (not 8787).
-- Look for the correct URL in the terminal output.
+- Look for the correct URL in the terminal output when you run `npm start` or `npm run dev`.
 
 **Tool execution errors**
 

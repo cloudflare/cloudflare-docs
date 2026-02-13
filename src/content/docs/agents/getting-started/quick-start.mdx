@@ -89,7 +89,7 @@ export default {
 			new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -102,7 +102,7 @@ Update `wrangler.jsonc` to register the agent:
 {
 	"name": "my-agent",
 	"main": "src/server.ts",
-	"compatibility_date": "2025-01-01",
+	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"durable_objects": {
 		"bindings": [
@@ -179,12 +179,12 @@ flowchart LR
 
 ### Key concepts
 
-| Concept              | What it means                                                                               |
-| -------------------- | ------------------------------------------------------------------------------------------- |
+| Concept              | What it means                                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------------------------- |
 | **Agent instance**   | Each unique name gets its own agent. `CounterAgent:user-123` is separate from `CounterAgent:user-456` |
-| **Persistent state** | State survives restarts, deploys, and hibernation. It is stored in SQLite                   |
-| **Real-time sync**   | All clients connected to the same agent receive state updates instantly                     |
-| **Hibernation**      | When no clients are connected, the agent hibernates (no cost). It wakes on the next request |
+| **Persistent state** | State survives restarts, deploys, and hibernation. It is stored in SQLite                             |
+| **Real-time sync**   | All clients connected to the same agent receive state updates instantly                               |
+| **Hibernation**      | When no clients are connected, the agent hibernates (no cost). It wakes on the next request           |
 
 ## Connect from vanilla JavaScript
 
@@ -283,13 +283,13 @@ Now that you have a working agent, explore these topics:
 
 ### Common patterns
 
-| Learn how to             | Refer to                                                     |
-| ------------------------ | ------------------------------------------------------------ |
-| Add AI/LLM capabilities  | [Using AI models](/agents/api-reference/using-ai-models/)    |
-| Expose tools via MCP     | [MCP servers](/agents/api-reference/mcp-agent-api/) |
-| Run background tasks     | [Schedule tasks](/agents/api-reference/schedule-tasks/)      |
-| Handle emails            | [Email routing](/agents/api-reference/email/)                |
-| Use Cloudflare Workflows | [Run Workflows](/agents/api-reference/run-workflows/)        |
+| Learn how to             | Refer to                                                  |
+| ------------------------ | --------------------------------------------------------- |
+| Add AI/LLM capabilities  | [Using AI models](/agents/api-reference/using-ai-models/) |
+| Expose tools via MCP     | [MCP servers](/agents/api-reference/mcp-agent-api/)       |
+| Run background tasks     | [Schedule tasks](/agents/api-reference/schedule-tasks/)   |
+| Handle emails            | [Email routing](/agents/api-reference/email/)             |
+| Use Cloudflare Workflows | [Run Workflows](/agents/api-reference/run-workflows/)     |
 
 ### Explore more
 
