@@ -223,7 +223,7 @@ Re-run `wrangler types` whenever you add or rename a binding.
 npx wrangler types
 ```
 
-This creates a type definition file with all your bindings typed, including your agent Durable Object namespaces.
+This creates a type definition file with all your bindings typed, including your agent Durable Object namespaces. The `Agent` class defaults to using the generated `Env` type, so you do not need to pass it as a type parameter — `extends Agent` is sufficient unless you need to pass a second type parameter for state (for example, `Agent<Env, CounterState>`).
 
 Refer to [Configuration](/agents/api-reference/configuration/#generating-types) for more details on type generation.
 
@@ -289,14 +289,14 @@ Add more agents by extending the configuration:
 // src/agents/chat.ts
 import { Agent } from "agents";
 
-export class Chat extends Agent<Env> {
+export class Chat extends Agent {
 	// ...
 }
 
 // src/agents/scheduler.ts
 import { Agent } from "agents";
 
-export class Scheduler extends Agent<Env> {
+export class Scheduler extends Agent {
 	// ...
 }
 ```
