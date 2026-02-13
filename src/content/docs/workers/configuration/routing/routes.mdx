@@ -62,16 +62,20 @@ To configure a route using your [Wrangler configuration file](/workers/wrangler/
 
 <WranglerConfig>
 
-```toml
-[[routes]]
-pattern = "subdomain.example.com/*"
-zone_name = "example.com"
-
-# or
-
-[[routes]]
-pattern = "subdomain.example.com/*"
-zone_id = "<YOUR_ZONE_ID>"
+```jsonc
+{
+	"routes": [
+		{
+			"pattern": "subdomain.example.com/*",
+			"zone_name": "example.com"
+		},
+		// or
+		{
+			"pattern": "subdomain.example.com/*",
+			"zone_id": "<YOUR_ZONE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -92,14 +96,19 @@ To add multiple routes:
 
 <WranglerConfig>
 
-```toml
-[[routes]]
-pattern = "subdomain.example.com/*"
-zone_name = "example.com"
-
-[[routes]]
-pattern = "subdomain-two.example.com/example"
-zone_id = "<YOUR_ZONE_ID>"
+```jsonc
+{
+	"routes": [
+		{
+			"pattern": "subdomain.example.com/*",
+			"zone_name": "example.com"
+		},
+		{
+			"pattern": "subdomain-two.example.com/example",
+			"zone_id": "<YOUR_ZONE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

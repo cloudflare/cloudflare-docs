@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: RtkImageViewer
+description: API reference for RtkImageViewer component (React Library)
+---
+A component which shows an image sent via chat.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `image` | `ImageMessage` | ✅ | - | Image message |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkImageViewer } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkImageViewer />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkImageViewer } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkImageViewer
+      image={imagemessage}
+      size="md"
+    />
+  );
+}
+```
+

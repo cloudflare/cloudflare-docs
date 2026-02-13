@@ -142,6 +142,10 @@
 /agents/api-reference/sdk/ /agents/api-reference/ 301
 /agents/guides/build-mcp-server/ /agents/guides/remote-mcp-server/ 301
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
+/agents/model-context-protocol/mcp-agent-api/ /agents/api-reference/mcp-agent-api/ 301
+/agents/model-context-protocol/mcp-client-api/ /agents/api-reference/mcp-client-api/ 301
+/agents/model-context-protocol/mcp-handler-api/ /agents/api-reference/mcp-handler-api/ 301
+/agents/api-reference/calling-agents/ /agents/api-reference/routing/ 301
 
 # ai
 /ai/ /use-cases/ai/ 301
@@ -345,7 +349,7 @@
 /realtime/realtimekit/get-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/realtimekit/core/ai/ /realtime/realtimekit/ai/ 302
 /realtime/realtimekit/core/remote-participant/ /realtime/realtimekit/core/remote-participants/ 302
-/realtime/realtimekit/ui-kit/meeting-lifecycle/ realtime/realtimekit/ui-kit/state-management/ 302
+/realtime/realtimekit/ui-kit/meeting-lifecycle/ /realtime/realtimekit/ui-kit/state-management/ 302
 /realtime/realtimekit/core/video-background/ /realtime/realtimekit/core/video-effects/ 302
 /realtime/realtimekit/voice-meetings/ /realtime/realtimekit/audio-calls/ 302
 /realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/core/manage-participants-in-a-session/ 302
@@ -499,7 +503,9 @@
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/manage-dns-records/how-to/create-root-domain/ /dns/manage-dns-records/how-to/create-zone-apex/ 301
 /dns/manage-dns-records/reference/proxied-dns-records/ /dns/proxy-status/ 301
+/dns/manage-dns-records/troubleshooting/acme-challenge-txt-record/ /dns/manage-dns-records/troubleshooting/unexpected-dns-records/#acme_challenge-txt-records 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
+/dns/troubleshooting/faq/ /dns/faq/ 301
 /dns/zone-setups/partial-setup/convert-partial-to-full/ /dns/zone-setups/conversions/convert-partial-to-full/ 301
 /dns/zone-setups/partial-setup/convert-partial-to-secondary/ /dns/zone-setups/conversions/convert-partial-to-secondary/ 301
 /dns/zone-setups/reference/nameserver-assignment/ /dns/nameservers/nameserver-options/#assignment-method 301
@@ -789,16 +795,17 @@
 /fundamentals/account/account-security/login-and-account-issues/ /fundamentals/user-profiles/change-password-or-email/ 301
 /fundamentals/account/delete-account/ /fundamentals/user-profiles/delete-account/ 301
 /fundamentals/account/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/ 301
-/changelog/fundamentals/terraform/2025-02-03-terraform-v5-provider/ /changelog/terraform/2025-02-03-terraform-v5-provider/ 301
-/changelog/fundamentals/2025-03-21-resource-force-replacement-bug/ /changelog/terraform/2025-03-21-resource-force-replacement-bug/ 301
-/changelog/fundamentals/2025-03-21-sensitive-values-redacted/ /changelog/terraform/2025-03-21-sensitive-values-redacted/ 301
-/changelog/fundamentals/2025-05-06-terraform-v5.4.0-provider/ /changelog/terraform/2025-05-06-terraform-v5.4.0-provider/ 301
-/changelog/fundamentals/2025-05-19-terraform-v5.5.0-provider/ /changelog/terraform/2025-05-19-terraform-v5.5.0-provider/ 301
-/changelog/fundamentals/2025-06-17-terraform-v5.6.0-provider/ /changelog/terraform/2025-06-17-terraform-v5.6.0-provider/ 301
-/changelog/fundamentals/2025-07-11-terraform-v5.7.0-provider/ /changelog/terraform/2025-07-11-terraform-v5.7.0-provider/ 301
-/changelog/fundamentals/2025-08-01-terraform-v5.8.2-provider/ /changelog/terraform/2025-08-01-terraform-v5.8.2-provider/ 301
-/changelog/fundamentals/2025-08-15-terraform-v5.8.4-provider/ /changelog/terraform/2025-08-15-terraform-v5.8.4-provider/ 301
-/changelog/fundamentals/2025-08-29-terrform-v5.9-provider/ /changelog/terraform/2025-08-29-terrform-v5.9-provider/ 301
+/changelog/fundamentals/terraform/2025-02-03-terraform-v5-provider/ /changelog/2025-02-03-terraform-v5-provider/ 301
+/changelog/fundamentals/2025-03-21-resource-force-replacement-bug/ /changelog/2025-03-21-resource-force-replacement-bug/ 301
+/changelog/fundamentals/2025-03-21-sensitive-values-redacted/ /changelog/2025-03-21-sensitive-values-redacted/ 301
+/changelog/fundamentals/2025-05-06-terraform-v5.4.0-provider/ /changelog/2025-05-06-terraform-v540-provider/ 301
+/changelog/fundamentals/2025-05-19-terraform-v5.5.0-provider/ /changelog/2025-05-19-terraform-v550-provider/ 301
+/changelog/fundamentals/2025-06-17-terraform-v5.6.0-provider/ /changelog/2025-06-17-terraform-v560-provider/ 301
+/changelog/fundamentals/2025-07-11-terraform-v5.7.0-provider/ /changelog/2025-07-11-terraform-v570-provider/ 301
+/changelog/fundamentals/2025-08-01-terraform-v5.8.2-provider/ /changelog/2025-08-01-terraform-v582-provider/ 301
+/changelog/fundamentals/2025-08-15-terraform-v5.8.4-provider/ /changelog/2025-08-15-terraform-v584-provider/ 301
+/changelog/fundamentals/2025-08-29-terrform-v5.9-provider/ /changelog/2025-08-29-terrform-v59-provider/ 301
+/changelog/2025-01-20-terraform-v5160-provider/ /changelog/2026-01-20-terraform-v5160-provider/ 301
 
 # google tag
 /google-tag-first-party-mode/ /google-tag-gateway/ 301
@@ -1891,7 +1898,8 @@
 /workers/configuration/deploy-button/ /workers/platform/deploy-buttons/ 301
 /workers/platform/deployments/ /workers/configuration/versions-and-deployments/ 301
 /workers/platform/environment-variables/ /workers/configuration/environment-variables/ 301
-/workers/platform/smart-placement/ /workers/configuration/smart-placement/ 301
+/workers/platform/smart-placement/ /workers/configuration/placement/ 301
+/workers/configuration/smart-placement/ /workers/configuration/placement/ 301
 /workers/runtime-apis/email-event/ /email-routing/email-workers/runtime-api/ 301
 /workers/runtime-apis/scheduled-event/ /workers/runtime-apis/handlers/scheduled/ 301
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
@@ -2007,6 +2015,7 @@
 # Features section
 /workers-ai/markdown-conversion/ /workers-ai/features/markdown-conversion/ 301
 # workflows
+/workflows/get-started/cli-quick-start/ /workflows/get-started/guide/ 301
 /workflows/reference/storage-options/ /workers/platform/storage-options/ 301
 /workflows/tutorials/ /workflows/examples 301
 # workers KV
@@ -2253,6 +2262,7 @@
 /magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /warp-client/teams/ /cloudflare-one/connections/connect-devices/warp/ 301
+/cloudflare-one/integrations/identity-providers/azuread/ /cloudflare-one/integrations/identity-providers/entra-id/ 301
 
 # Cloudflare One nav revamp (statics)
 /cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
@@ -2411,7 +2421,7 @@
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/datasets/* /cloudflare-one/policies/data-loss-prevention/detection-entries/:splat 301
-/cloudflare-one/email-security/reclassifications/* /cloudflare-one/email-security/submissions/ :splat 301
+/cloudflare-one/email-security/reclassifications/* /cloudflare-one/email-security/submissions/:splat 301
 
 
 # Cloudflare One nav revamp (dynamics)

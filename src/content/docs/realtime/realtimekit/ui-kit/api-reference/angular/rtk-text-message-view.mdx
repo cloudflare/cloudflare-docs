@@ -1,0 +1,33 @@
+---
+pcx_content_type: navigation
+title: rtk-text-message-view
+description: API reference for rtk-text-message-view component (Angular Library)
+---
+A component which renders a text message from chat.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `isMarkdown` | `boolean` | ✅ | - | Renders text as markdown (default = true) |
+| `text` | `string` | ✅ | - | Text message |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-text-message-view></rtk-text-message-view>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-text-message-view
+ [isMarkdown]="true"
+ text="example">
+</rtk-text-message-view>
+```
+

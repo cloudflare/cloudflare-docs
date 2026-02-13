@@ -12,13 +12,19 @@ sidebar:
 
 import { Render, GlossaryTooltip } from "~/components";
 
-An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) onto a single HTTP endpoint. Key benefits include:
+An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) onto a single HTTP endpoint.
 
-- **Streamlined access to multiple MCP servers**: MCP server portals support both unauthenticated MCP servers (such as the [Cloudflare Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize)) as well as MCP servers secured using any [third-party or custom OAuth provider](/agents/model-context-protocol/authorization/). Users log in to the portal URL through Cloudflare Access and are prompted to authenticate separately to each server that requires OAuth.
+![MCP clients connect through an MCP portal to access internal MCP servers and SaaS MCP servers.](~/assets/images/cloudflare-one/applications/mcp-portal.png)
+
+Key benefits include:
+
+- **Streamlined access to multiple MCP servers**: MCP server portals support both unauthenticated MCP servers and MCP servers secured using OAuth (for example, via [Access for SaaS](/cloudflare-one/access-controls/ai-controls/saas-mcp/) or a [third-party OAuth provider](/agents/model-context-protocol/authorization/)). Users log in to the portal URL through Cloudflare Access and are prompted to authenticate separately to each server that requires OAuth.
 
 - **Customized tools per portal**: Admins can tailor an MCP portal to a particular use case by choosing the specific tools and prompt templates that they want to make available to users through the portal. This allows users to access a curated set of tools and prompts — the less external context exposed to the AI model, the better the AI responses tend to be.
 
 - **Observability**: Once the user's AI agent is connected to the portal, Cloudflare Access logs the individual requests made using the tools in the portal.
+
+This guide explains how to add MCP servers to Cloudflare Access, create an MCP portal with customized tools and policies, and connect users to the portal using an MCP client.
 
 ## Prerequisites
 
@@ -37,7 +43,7 @@ To add an MCP server:
 3. Select **Add an MCP server**.
 4. Enter any name for the server.
 5. (Optional) Enter a custom string for the **Server ID**.
-6. In **HTTP URL**, enter the full URL of your MCP server. For example, if you want to add the [Cloudflare Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize), enter `https://docs.mcp.cloudflare.com/sse`.
+6. In **HTTP URL**, enter the full URL of your MCP server. For example, if you want to add the [Cloudflare Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize), enter `https://docs.mcp.cloudflare.com/mcp`.
 7. Add [Access policies](/cloudflare-one/access-controls/policies/) to show or hide the server in an [MCP server portal](#create-a-portal). The MCP server link will only appear in the portal for users who match an Allow policy. Users who do not pass an Allow policy will not see this server through any portals.
 
    :::caution

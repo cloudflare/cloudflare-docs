@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: RtkLivestreamIndicator
+description: API reference for RtkLivestreamIndicator component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkLivestreamIndicator } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkLivestreamIndicator />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkLivestreamIndicator } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkLivestreamIndicator
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

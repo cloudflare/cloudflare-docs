@@ -24,17 +24,7 @@ WAF content scanning is available to customers on an Enterprise plan with a paid
 
 ## 1. Turn on the detection
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings**.
-3. Under **Incoming traffic detections**, turn on **Malicious uploads**.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -44,6 +34,16 @@ WAF content scanning is available to customers on an Enterprise plan with a paid
 
 2. (Optional) Filter by **Detection tools**.
 3. Turn on **Malicious uploads detection**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings**.
+3. Under **Incoming traffic detections**, turn on **Malicious uploads**.
 
 </Steps>
 
@@ -131,25 +131,7 @@ For additional examples, refer to [Example rules](/waf/detections/malicious-uplo
 
 To check uploaded content in a way that is not covered by the default configuration, add a [custom scan expression](/waf/detections/malicious-uploads/#custom-scan-expressions).
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings**.
-3. Under **Incoming traffic detections**, select **Malicious uploads**.
-4. Select **Add content object location**.
-5. In **Content location**, enter your custom scan expression. For example:
-
-   ```txt
-   lookup_json_string(http.request.body.raw, "file")
-   ```
-
-6. Select **Save**.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -160,6 +142,24 @@ To check uploaded content in a way that is not covered by the default configurat
 2. (Optional) Filter by **Detection tools**.
 3. Under **Malicious uploads detection** > **Configurations**, select the edit icon.
 4. Select **Add content location**.
+5. In **Content location**, enter your custom scan expression. For example:
+
+   ```txt
+   lookup_json_string(http.request.body.raw, "file")
+   ```
+
+6. Select **Save**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings**.
+3. Under **Incoming traffic detections**, select **Malicious uploads**.
+4. Select **Add content object location**.
 5. In **Content location**, enter your custom scan expression. For example:
 
    ```txt

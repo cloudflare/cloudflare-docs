@@ -1,0 +1,12 @@
+name: Cloudflare for SaaS
+
+entry:
+  title: Cloudflare for SaaS
+  group: Application performance
+  additional_groups: [Application security]
+  url: /cloudflare-for-platforms/cloudflare-for-saas/
+
+  preview_tryout: true
+
+meta:
+  description: Extend Cloudflare's security and performance to your customers

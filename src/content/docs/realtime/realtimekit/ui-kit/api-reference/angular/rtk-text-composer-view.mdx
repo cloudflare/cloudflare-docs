@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: rtk-text-composer-view
+description: API reference for rtk-text-composer-view component (Angular Library)
+---
+A component which renders a text composer
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `disabled` | `boolean` | ✅ | - | Disable the text input (default = false) |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `keyDownHandler` | `(e: KeyboardEvent)` | ✅ | - | Keydown event handler function |
+| `maxLength` | `number` | ✅ | - | Max length for text input |
+| `placeholder` | `string` | ✅ | - | Placeholder text |
+| `rateLimitBreached` | `boolean` | ✅ | - | Boolean to indicate if rate limit is breached |
+| `setText` | `(text: string, focus?: boolean)` | ❌ | - | Sets value of the text input |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `value` | `string` | ✅ | - | Default value for text input |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-text-composer-view></rtk-text-composer-view>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-text-composer-view
+ [disabled]="true"
+ [keyDownHandler]="(e: keyboardevent)"
+ maxLength="42">
+</rtk-text-composer-view>
+```
+

@@ -192,3 +192,7 @@ entries:
   - term: proxy write timeout
     general_definition: |-
       a proxy write timeout is the maximum amount of time a proxy server allows for sending data to the client before terminating the connection.
+
+  - term: proxy read timeout config
+    general_definition: |-
+      Enterprise customers can increase the a proxy read timeout using a [cache rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) or the [edit zone setting API endpoint](/api/resources/zones/subresources/rate_plans/methods/get/).

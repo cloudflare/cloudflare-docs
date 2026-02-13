@@ -47,17 +47,7 @@ Currently, Cloudflare Sensitive Data Detection does not support [matched payload
 Requires an Enterprise plan with a paid add-on.
 :::
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Sensitive data**.
-3. Turn on **Cloudflare Sensitive Data Detection** to deploy the ruleset.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -67,6 +57,16 @@ Requires an Enterprise plan with a paid add-on.
 
 2. (Optional) Filter by **Web application exploits**.
 3. Turn on **Sensitive data detection** to deploy the ruleset.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Sensitive data**.
+3. Turn on **Cloudflare Sensitive Data Detection** to deploy the ruleset.
 
 </Steps>
 
@@ -90,23 +90,7 @@ You can configure (or override) the following Cloudflare Sensitive Data Detectio
 
 Once you have [deployed the Cloudflare Sensitive Data Detection ruleset](#deploy-in-the-dashboard), do the following to configure it in the dashboard:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
-2. Go to **Security** > **Sensitive Data**.
-
-3. Next to **Cloudflare Sensitive Data Detection**, select the three dots > **Edit**.
-
-4. Select **Edit scope** and decide if you want to apply the managed ruleset to all incoming requests or to a subset. If you select **Custom filter expression**, define the filter expression that will determine which requests the Cloudflare Sensitive Data Detection ruleset will apply to.
-
-5. Select **Next**, and then select **Save**.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -119,6 +103,22 @@ Once you have [deployed the Cloudflare Sensitive Data Detection ruleset](#deploy
    Decide if you want to apply the managed ruleset to all incoming requests (global scope) or to a subset.
 
 4. If you selected **Custom filter expression**, define the filter expression that will determine which requests the Cloudflare Sensitive Data Detection ruleset will apply to.
+
+5. Select **Next**, and then select **Save**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **Security** > **Sensitive Data**.
+
+3. Next to **Cloudflare Sensitive Data Detection**, select the three dots > **Edit**.
+
+4. Select **Edit scope** and decide if you want to apply the managed ruleset to all incoming requests or to a subset. If you select **Custom filter expression**, define the filter expression that will determine which requests the Cloudflare Sensitive Data Detection ruleset will apply to.
 
 5. Select **Next**, and then select **Save**.
 
@@ -138,9 +138,9 @@ Setting the rule status for specific tags affects all current and future rules w
 
 Once you have [deployed the Cloudflare Sensitive Data Detection ruleset](#deploy-in-the-dashboard), do the following to configure rules with specific tags in the dashboard:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
-<Render file="managed-rules-browse-zone-sdd" product="waf" />
+<Render file="managed-rules-browse-zone-sdd-new-nav" product="waf" />
 
 <Render
 	file="managed-ruleset-configure-rules-by-tag"
@@ -150,9 +150,9 @@ Once you have [deployed the Cloudflare Sensitive Data Detection ruleset](#deploy
 	}}
 />
 
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+</TabItem> <TabItem label="Old dashboard">
 
-<Render file="managed-rules-browse-zone-sdd-new-nav" product="waf" />
+<Render file="managed-rules-browse-zone-sdd" product="waf" />
 
 <Render
 	file="managed-ruleset-configure-rules-by-tag"
@@ -172,9 +172,9 @@ You can configure (or override) the following setting in the dashboard for the s
 
 Once you have [deployed the Cloudflare Sensitive Data Detection ruleset](#deploy-in-the-dashboard), do the following to configure individual ruleset rules in the dashboard:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
-<Render file="managed-rules-browse-zone-sdd" product="waf" />
+<Render file="managed-rules-browse-zone-sdd-new-nav" product="waf" />
 
 <Render
 	file="managed-ruleset-configure-individual-rules"
@@ -184,9 +184,9 @@ Once you have [deployed the Cloudflare Sensitive Data Detection ruleset](#deploy
 	}}
 />
 
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+</TabItem> <TabItem label="Old dashboard">
 
-<Render file="managed-rules-browse-zone-sdd-new-nav" product="waf" />
+<Render file="managed-rules-browse-zone-sdd" product="waf" />
 
 <Render
 	file="managed-ruleset-configure-individual-rules"

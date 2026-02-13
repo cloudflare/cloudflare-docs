@@ -88,29 +88,41 @@ For example, using database drivers:
 <Tabs>
 <TabItem label="PostgreSQL">
 ```ts title="index.ts"
-const client = postgres(env.HYPERDRIVE.connectionString);
-// ...
-const clientNoCache = postgres(env.HYPERDRIVE_CACHE_DISABLED.connectionString);
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Create clients inside your handler — not in global scope
+		const client = postgres(env.HYPERDRIVE.connectionString);
+		// ...
+		const clientNoCache = postgres(env.HYPERDRIVE_CACHE_DISABLED.connectionString);
+		// ...
+	},
+} satisfies ExportedHandler<Env>;
 ```
 </TabItem>
 
 <TabItem label="MySQL">
 ```ts title="index.ts"
-const connection = createConnection({
-		host: env.HYPERDRIVE.host,
-		user: env.HYPERDRIVE.user,
-		password: env.HYPERDRIVE.password,
-		database: env.HYPERDRIVE.database,
-		port: env.HYPERDRIVE.port
-});
-// ...
-const connectionNoCache = createConnection({
-		host: env.HYPERDRIVE_CACHE_DISABLED.host,
-		user: env.HYPERDRIVE_CACHE_DISABLED.user,
-		password: env.HYPERDRIVE_CACHE_DISABLED.password,
-		database: env.HYPERDRIVE_CACHE_DISABLED.database,
-		port: env.HYPERDRIVE_CACHE_DISABLED.port
-});
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Create connections inside your handler — not in global scope
+		const connection = await createConnection({
+			host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			database: env.HYPERDRIVE.database,
+			port: env.HYPERDRIVE.port,
+		});
+		// ...
+		const connectionNoCache = await createConnection({
+			host: env.HYPERDRIVE_CACHE_DISABLED.host,
+			user: env.HYPERDRIVE_CACHE_DISABLED.user,
+			password: env.HYPERDRIVE_CACHE_DISABLED.password,
+			database: env.HYPERDRIVE_CACHE_DISABLED.database,
+			port: env.HYPERDRIVE_CACHE_DISABLED.port,
+		});
+		// ...
+	},
+} satisfies ExportedHandler<Env>;
 ```
   </TabItem>
 </Tabs>

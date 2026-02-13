@@ -1,26 +1,42 @@
 ---
 productName: AI Crawl Control
 entries:
-  - term: robots.txt
+  - term: AI crawler
     general_definition: |-
-      A text file which lists pages in your website that are off-limits for bots. Well-behaved bots respect this file, but some bots may violate it. You can enforce `robots.txt` with Cloudflare WAF custom rules.
+      A bot which scrapes content from websites in support of an AI model, including by scraping content for indexing, retrieval augmented generation, or training.
+
+  - term: category
+    general_definition: |-
+      A classification describing a crawler's stated purpose: "AI Crawler", "AI Search", "AI Assistant", or "Search Engine". One category per crawler.
+
+  - term: Content Signals
+    general_definition: |-
+      An emerging IETF standard for expressing AI content preferences via HTTP headers or metadata. Aims to replace non-standard vendor signals. Refer to contentsignals.org.
+
+  - term: crawl
+    general_definition: |-
+      A single HTTP request from a bot to access a page on your site.
+
+  - term: crawler
+    general_definition: |-
+      A specific bot operated by a company to access web content. One operator (like OpenAI) may run multiple crawlers (GPTBot, ChatGPT-User).
+
+  - term: In-band pricing
+    general_definition: |-
+      Pricing transmitted in HTTP response headers alongside content. In Pay Per Crawl, the origin sets prices via the `crawler-price` header.
 
   - term: Merchant of Record
     general_definition: |-
       The entity who facilitates "buying and selling". For pay per crawl, Cloudflare is the merchant of record.
 
-  - term: AI crawler
-    general_definition: |-
-      A bot which scrapes content from websites in support of an AI model, including by scraping content for indexing, retrieval augmented generation, or training.
-
-  - term: In-band pricing
-    general_definition: |-
-      A pricing model where pricing information is transmitted within the same communication channel as the content itself. In Pay Per Crawl, in-band pricing means the price is included in the HTTP response headers (`crawler-price`) alongside the actual content, rather than being retrieved from a separate system or API call. When custom pricing is enabled, Cloudflare sets the `cf-pay-per-crawl` header to `pricing=in-band`, indicating that the origin server or Worker can dynamically set prices by including a `crawler-price` header in the response.
-
-  - term: Operator
+  - term: operator
     general_definition: |-
       The company or organization that owns and operates an AI crawler. Examples include OpenAI, Microsoft, Google, ByteDance, Anthropic, and Meta. In AI Crawl Control, crawlers are grouped by their operators.
 
-  - term: Referrals
+  - term: Referrer
     general_definition: |-
-      Traffic referred to your website by AI services, identified by the referrer URL and whether it is owned by an AI operator.
+      The site a user was on before visiting your domain, tracked via the HTTP Referer header. In AI Crawl Control, referrer data shows traffic arriving from AI platforms like ChatGPT or Perplexity.
+
+  - term: robots.txt
+    general_definition: |-
+      A text file at the root of a website that instructs crawlers which pages they should or should not access. Compliance is voluntary. AI Crawl Control helps monitor which crawlers violate your robots.txt rules.

@@ -1,0 +1,129 @@
+---
+pcx_content_type: faq
+title: FAQ
+description: Find answers to common questions about Cloudflare's authoritative DNS.
+sidebar:
+  order: 21
+---
+
+import { Render, DashButton } from "~/components";
+
+The sections below cover frequently asked questions about Cloudflare authoritative DNS. For DNS Firewall, refer to [DNS Firewall FAQ](/dns/dns-firewall/faq/).
+
+---
+
+## Cloudflare offerings
+
+### Is Cloudflare a free DNS (domain nameserver) provider?
+
+Yes. Cloudflare offers [free DNS services](https://www.cloudflare.com/dns) to customers on all plans. Note that:
+
+- You do not need to change your hosting provider to use Cloudflare.
+- You do not need to move away from your registrar. The only change you make with your registrar is to point the authoritative nameservers to the Cloudflare nameservers.
+
+### Does Cloudflare charge for or limit DNS queries?
+
+Cloudflare never limits or caps DNS queries, but the pricing depends on your plan level.
+
+For customers on Free, Pro, or Business plans, Cloudflare does not charge for DNS queries. For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote.
+
+### Does Cloudflare offer domain masking?
+
+No. Cloudflare does not offer domain masking or DNS redirect services (your hosting provider might). However, we do offer URL forwarding through [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
+
+### Can subdomains be added directly to Cloudflare?
+
+Yes. Enterprise customers can add subdomains directly to Cloudflare via [subdomain support](/dns/zone-setups/subdomain-setup/).
+
+### Does Cloudflare support EDNS0 (extension mechanisms for DNS)?
+
+Yes, EDNS0 is a building block for modern DNS implementations and is enabled for all Cloudflare customers. EDNS0 adds support for signaling if the DNS Resolver (recursive DNS provider) supports larger message sizes and DNSSEC.
+
+EDNS0 is the first approved set of mechanisms for [DNS extensions](http://en.wikipedia.org/wiki/Extension_mechanisms_for_DNS), originally published as [RFC 2671](https://www.rfc-editor.org/rfc/rfc2671.html).
+
+---
+
+## Nameservers
+
+### Where can I find my Cloudflare nameservers?
+
+On the **DNS Records** page, locate the **Cloudflare Nameservers** card.
+
+<DashButton url="/?to=/:account/:zone/dns/records" />
+
+Also, the IP address associated with a specific Cloudflare nameserver can be retrieved via a dig command or a third-party DNS lookup tool hosted online such as [whatsmydns.net](https://www.whatsmydns.net/):
+
+```sh
+dig kate.ns.cloudflare.com
+```
+
+```sh output
+kate.ns.cloudflare.com.    68675    IN    A    173.245.58.124.
+```
+
+### Where do I change my nameservers to point to Cloudflare?
+
+Make the change at your registrar, which is where you registered your domain. This may or may not be your hosting provider - refer to [Update nameservers](/dns/nameservers/update-nameservers/) for further context.
+
+If you do not know who your registrar is for the domain, a WHOIS search can help. You can use [ICANN Lookup](https://lookup.icann.org/), for example.
+
+:::caution
+
+Some country code TLDs may not be supported by ICANN Lookup. If that is the case, use a different WHOIS search tool.
+:::
+
+Once you identify your registrar, follow their instructions.
+
+<Render file="ns-update-providers" product="dns" />
+
+### Why have I received an email: (mydomain) stopped using Cloudflare's nameservers?
+
+For domains where Cloudflare hosts the DNS, Cloudflare continuously checks whether the domain uses Cloudflare's nameservers for DNS resolution. If Cloudflare's nameservers are not used, the [domain status](/dns/zone-setups/reference/domain-status/) is updated from **Active** to **Moved** and an email is sent to the customer.
+
+This is important because, if a domain is in a **Moved** state for a [long enough period of time](/dns/zone-setups/reference/domain-status/), it will be deleted from Cloudflare.
+
+<Render file="recover-deleted-domain" product="dns" />
+
+---
+
+## DNS records
+
+### Does Cloudflare limit the number of DNS records a domain can have?
+
+Yes. All customers have a limit on the number of DNS records they can create.
+
+- Free: 200
+- Pro: 3,500
+- Business: 3,500
+- Enterprise: 3,500
+
+Free zones created before 2024-09-01 00:00:00 UTC have an increased limit of 1,000.
+
+:::note[For more DNS records]
+If you are an Enterprise customer and require more DNS records, contact your account team. Cloudflare can support millions of DNS records on a single zone.
+:::
+
+### How long does it take for a DNS change I made to push out?
+
+By default, any changes or additions you make to your Cloudflare zone file will take effect globally within 5 minutes, usually much less.
+
+Depending on the Time-to-Live (TTL) set on the previous [DNS record](/dns/manage-dns-records/how-to/create-dns-records/), old data may still remain cached until the TTL expires. Proxied records expire after 5 minutes ("Automatic"), but the TTL for unproxied records can be customized.
+
+If changes to records with large TTLs are anticipated, it may make sense to reduce the TTL ahead of time so that the change takes effect as quickly as possible.
+
+### Why can't I make ANY queries to Cloudflare DNS servers?
+
+`ANY` queries are special and often misunderstood. They are usually used to get all record types available on a DNS name, but what they return is just any type in the cache of recursive resolvers. This can cause confusion when they are used for debugging.
+
+Because of Cloudflare's many advanced DNS features like CNAME flattening, it can be complex and even impossible to give correct answers to `ANY` queries. For example, when DNS records dynamically come and go or are stored remotely, it can be taxing or even impossible to get all the results at the same time.
+
+Refer to [Deprecating the DNS ANY meta-query type](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) for details. The decision to block `ANY` does not affect DNS Firewall customers.
+
+
+### How do I add ANAME records on Cloudflare?
+
+<Render file="aname-alias-callout" product="dns" />
+
+### Why are Cloudflare's A or AAAA records / IP addresses for my domain's DNS responses appearing?
+
+For DNS records proxied to Cloudflare, Cloudflare's IP addresses are returned in DNS queries instead of your original server IP address. This allows Cloudflare to optimize, cache, and protect all requests for your website.

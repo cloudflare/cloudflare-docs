@@ -77,14 +77,14 @@ When providing your own `StepConfig`, you can configure:
 For example, to limit a step to 10 retries and have it apply an exponential delay (starting at 10 seconds) between each attempt, you would pass the following configuration as an optional object to `step.do`:
 
 ```ts
-let someState = step.do("call an API", {
+let someState = await step.do("call an API", {
   retries: {
     limit: 10, // The total number of attempts
     delay: "10 seconds", // Delay between each retry
     backoff: "exponential" // Any of "constant" | "linear" | "exponential";
   },
   timeout: "30 minutes",
-}, async () => { /* Step code goes here /* }
+}, async () => { /* Step code goes here */ })
 ```
 
 ## Force a Workflow instance to fail
@@ -132,7 +132,7 @@ try {
 		// work not to be retried
         throw new NonRetryableError('oh no');
     });
-} catch(e as Error) {
+} catch (e) {
     console.log(`Step failed: ${e.message}`);
     await step.do('clean-up-task', async () => {
       // Clean up code here

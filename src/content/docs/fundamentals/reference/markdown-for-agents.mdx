@@ -1,0 +1,115 @@
+---
+title: Markdown for Agents
+pcx_content_type: navigation
+sidebar:
+  badge:
+    text: Beta
+  group:
+    hideIndex: false
+---
+
+import {
+	Render,
+	TypeScriptExample,
+} from "~/components";
+
+## What is Markdown for Agents
+
+Markdown has quickly become the lingua franca for agents and AI systems as a whole. The format’s explicit structure makes it ideal for AI processing, ultimately resulting in better results while minimizing token waste.
+
+Cloudflare's network supports real-time content conversion at the source, for enabled zones using [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Content_negotiation) headers. When AI systems request pages from any website that uses Cloudflare and has Markdown for Agents enabled, they can express the preference for `text/markdown` in the request and our network will automatically and efficiently convert the HTML to Markdown, when possible, on the fly.
+
+Read the [announcement](https://blog.cloudflare.com/markdown-for-agents/) in our blog for more information.
+
+## How to use
+
+To fetch the Markdown version of any page from a zone with Markdown for Agents enabled, the client needs to add the `Accept` negotiation header with `text/markdown` as one of the options. Cloudflare will detect this, fetch the original HTML version from the origin, and convert it to Markdown before serving it to the client.
+
+Here's a curl example with the `Accept` negotiation header requesting this page from our developer documentation:
+
+```bash
+curl https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/ \
+  -H "Accept: text/markdown"
+```
+
+Or if you’re building an AI Agent using Workers, you can use TypeScript:
+
+<TypeScriptExample>
+
+```ts
+const r = await fetch(
+	`https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/`,
+	{
+		headers: {
+			Accept: "text/markdown",
+		},
+	},
+);
+const tokenCount = r.headers.get("x-markdown-tokens");
+const markdown = await r.text();
+```
+
+</TypeScriptExample>
+
+The response to this request is now formatting in markdown:
+
+```http
+HTTP/2 200
+date: Wed, 11 Feb 2026 11:44:48 GMT
+content-type: text/markdown; charset=utf-8
+content-length: 2899
+vary: accept
+x-markdown-tokens: 725
+content-signal: ai-train=yes, search=yes, ai-input=yes
+
+---
+title: Markdown for Agents · Cloudflare Agents docs
+---
+
+## What is Markdown for Agents
+
+Markdown has quickly become the lingua franca for agents and AI systems
+as a whole. The format’s explicit structure makes it ideal for AI processing,
+ultimately resulting in better results while minimizing token waste.
+...
+```
+
+### x-markdown-tokens
+
+Note that we include an `x-markdown-tokens` header with the converted response that indicates the estimated number of tokens in the markdown document. You can use this value in your flow, for example to calculate the size of a context window or to decide on your chunking strategy.
+
+### Content Signals Policy
+
+[Content Signals](https://contentsignals.org/) is a framework that allows anyone to express their preferences for how their content can be used after it has been accessed.
+
+By default Markdown for Agents converted responses include the `Content-Signal: ai-train=yes, search=yes, ai-input=yes` header signaling that the content can be used for AI Training, Search results and AI Input, which includes agentic use. Markdown for Agents will provide options to define custom Content Signal policies in the future.
+
+## How to enable
+
+<Render file="markdown-for-agents" product="fundamentals" />
+
+## Availability and Pricing
+
+Markdown for Agents is available to Pro, Business and Enterprise plans, and SSL for SaaS customers at no cost.
+
+## Try it with Cloudflare
+
+We have enabled this feature in our [Developer Documentation](https://developers.cloudflare.com/) and our [Blog](https://blog.cloudflare.com/), inviting all AI crawlers and agents to consume our content using markdown instead of HTML.
+
+```bash
+curl https://blog.cloudflare.com/markdown-for-agents/ \
+  -H "Accept: text/markdown"
+```
+
+## Limitations
+
+- We only convert from HTML, other types of documents may be included in the future.
+- We don't support compressed responses from the origin.
+- Markdown for Agents is a zone level setting. If you need different settings for different sub-domains of a zone, you need to decouple them to separate zones.
+
+## Other Markdown conversion APIs
+
+If you’re building AI systems that require arbitrary document conversion from outside Cloudflare or Markdown for Agents is not available from the content source, we provide other ways to convert documents to Markdown for your applications:
+
+- Workers AI [AI.toMarkdown()](https://developers.cloudflare.com/workers-ai/features/markdown-conversion/) supports multiple document types and summarization.
+- Browser Rendering [/markdown](https://developers.cloudflare.com/browser-rendering/rest-api/markdown-endpoint/) REST API supports markdown conversion if you need to render a dynamic page or application in a real browser before converting it.

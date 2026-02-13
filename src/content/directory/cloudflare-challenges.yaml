@@ -1,0 +1,13 @@
+name: Challenges
+
+entry:
+  title: Challenges
+  group: Application security
+  url: /cloudflare-challenges/
+  preview_tryout: true
+
+
+meta:
+  title: Cloudflare challenges docs
+  description: Verify visitors are not bots with lightweight challenges
+  author: "@cloudflare"

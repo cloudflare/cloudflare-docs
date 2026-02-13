@@ -42,7 +42,8 @@ Refer to the [API documentation](/api/resources/diagnostics/subresources/endpoin
   method="POST"
   json={{
     "check_type": "icmp",
-    "endpoint": "8.31.160.1"
+    "endpoint": "8.31.160.1",
+    "name": "Datacenter 1 - primary"
   }}
 />
 
@@ -51,7 +52,8 @@ Refer to the [API documentation](/api/resources/diagnostics/subresources/endpoin
     "result": {
         "id": "<HEALTH_CHECK_ID>",
         "check_type": "icmp",
-        "endpoint": "8.31.160.1"
+        "endpoint": "8.31.160.1",
+        "name": "Datacenter 1 - primary"
     },
     "success": true,
     "errors": [],
@@ -59,55 +61,9 @@ Refer to the [API documentation](/api/resources/diagnostics/subresources/endpoin
 }
 ```
 
-## Query GraphQL endpoint health checks
+## Query endpoint health checks with GraphQL
 
-You can also use GraphQL to query endpoints within your network. This shows whether an IP within your network is reachable, and also set alerts in case there is a problem.
-
-You can query the following categories:
-
-- `checkId`: The ID of the check associated with the health check.
-- `checkType`: The type of check associated with the health check.
-- `date`: The health check event timestamp truncated to the day.
-- `datetime`: The health check event timestamp.
-- `datetimeFifteenMinutes`: The health check event timestamp truncated to multiples of 15 minutes.
-- `datetimeFiveMinutes`: The health check event timestamp truncated to multiples of five minutes.
-- `datetimeHalfOfHour`: The health check event timestamp truncated to multiples of 30 minutes.
-- `datetimeHour`: The health check event timestamp truncated to the hour.
-- `datetimeMinute`: The health check event timestamp truncated to the minute.
-- `endpoint`: The endpoint of the check associated with the health check.
-
-Refer to the example to learn how to create a query to check your endpoint's health:
-
-```graphql
-query Viewer {
-    viewer {
-        accounts(filter: { accountTag: "YOUR_ACCOUNT_TAG" }) {
-            magicEndpointHealthCheckAdaptiveGroups(
-                filter: { date_geq: "2025-05-10" }
-                limit: 10
-            ) {
-                count
-                dimensions {
-                    checkId
-                    checkType
-                    date
-                    datetime
-                    datetimeFifteenMinutes
-                    datetimeFiveMinutes
-                    datetimeHalfOfHour
-                    datetimeHour
-                    datetimeMinute
-                    endpoint
-                }
-                sum {
-                    failures
-                    total
-                }
-            }
-        }
-    }
-}
-```
+<Render file="graphql/query-magic-transit-endpoint-health-checks" product="networking-services" />
 
 ## Configure alerts for endpoint health checks
 
@@ -116,7 +72,7 @@ You can set up alerts to be notified when the state of your endpoint's health is
 1. Make a `GET` request to get a list of IDs for all of the endpoint health checks configured:
 
 <CURL
-  url="https://api.cloudflare.com/client/v4/accounts/<account id>/diagnostics/endpoint-healthcheck"
+  url="https://api.cloudflare.com/client/v4/accounts/account_id/diagnostics/endpoint-healthcheck"
   method="GET"
 />
 
@@ -126,7 +82,8 @@ You can set up alerts to be notified when the state of your endpoint's health is
         {
             "id": "<HEALTH_CHECK_ID>",
             "check_type": "icmp",
-            "endpoint": "8.31.160.1"
+            "endpoint": "8.31.160.1",
+            "name": "Datacenter 1 - primary"
         }
     ],
     "success": true,

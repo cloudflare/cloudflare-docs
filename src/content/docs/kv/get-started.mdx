@@ -190,10 +190,15 @@ To bind your KV namespace to your Worker:
 
 	<WranglerConfig>
 
-	```toml
-	[[kv_namespaces]]
-	binding = "USERS_NOTIFICATION_CONFIG"
-	id = "<BINDING_ID>"
+	```jsonc
+	{
+		"kv_namespaces": [
+			{
+				"binding": "USERS_NOTIFICATION_CONFIG",
+				"id": "<BINDING_ID>"
+			}
+		]
+	}
 	```
 
 	</WranglerConfig>
