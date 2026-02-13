@@ -80,13 +80,16 @@ You can use the [Wrangler CLI](/workers/wrangler) to create a new MCP Server on 
 		npx @modelcontextprotocol/inspector@latest
 		```
 
-	2. Open the MCP inspector in your web browser:
+		```sh output
+		🚀 MCP Inspector is up and running at:
+			http://localhost:5173/?MCP_PROXY_AUTH_TOKEN=46ab..cd3
 
-		```sh
-		open http://localhost:5173
+		🌐 Opening browser...
 		```
 
-	3. In the MCP inspector, enter the URL of your MCP server: `http://localhost:8788/mcp`, and select **Connect**. Select **List Tools** to show the tools that your MCP server exposes.
+		The MCP inspector will launch in your web browser. You can also launch it manually by opening a browser and going to `https://localhost:<PORT>`. Check the command output for the local port where MCP Inspector is running. In this example, the MCP server is served on port `5173`.
+
+	3. In the MCP inspector, enter the URL of your MCP server (`http://localhost:8788/mcp`), and select **Connect**. Select **List Tools** to show the tools that your MCP server exposes.
 
 5. You can now deploy your MCP server to Cloudflare. From your project directory, run:
 
