@@ -3,6 +3,7 @@ title: Add to existing project
 pcx_content_type: how-to
 sidebar:
   order: 2
+description: Add agents with persistent state and real-time sync to an existing Cloudflare Workers project.
 ---
 
 import {
@@ -12,7 +13,7 @@ import {
 	LinkCard,
 } from "~/components";
 
-This guide shows how to add agents to an existing Cloudflare Workers project. If you are starting fresh, refer to [Building a chat agent](/agents/getting-started/build-a-chat-agent/) instead.
+This guide shows how to add agents to an existing Cloudflare Workers project. If you are starting a new project, refer to [Quick start](/agents/getting-started/quick-start/) instead.
 
 ## Prerequisites
 
@@ -286,12 +287,16 @@ Add more agents by extending the configuration:
 
 ```ts
 // src/agents/chat.ts
-export class Chat extends Agent {
+import { Agent } from "agents";
+
+export class Chat extends Agent<Env> {
 	// ...
 }
 
 // src/agents/scheduler.ts
-export class Scheduler extends Agent {
+import { Agent } from "agents";
+
+export class Scheduler extends Agent<Env> {
 	// ...
 }
 ```

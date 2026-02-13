@@ -7,7 +7,7 @@ head: []
 description: Build a streaming AI chat agent with tool integration using Cloudflare Workers and the Agents framework.
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
 
 A complete guide to building a streaming AI chat agent with tool integration using Cloudflare Workers and the Agents framework.
 
@@ -56,7 +56,7 @@ You can also upload all secrets from your `.env` file to production at once:
 wrangler secret bulk .env
 ```
 
-## Step 3: Test the agent locally
+## Step 3: Run the dev server
 
 ```bash
 npm start
@@ -217,25 +217,13 @@ If the user asks to schedule a task, use the schedule tool to schedule the task.
 
 ## Deploy to Cloudflare Workers
 
+Before deploying, make sure your production secrets are set (refer to Step 2, Option B).
+
 ```bash
 npm run deploy
 ```
 
 Your agent will be available at `https://your-project-name.your-subdomain.workers.dev`.
-
-### Environment variables in production
-
-For production deployment, set your OpenAI API key as a secret:
-
-```bash
-wrangler secret put OPENAI_API_KEY
-```
-
-You can also upload all secrets from your `.env` file at once:
-
-```bash
-wrangler secret bulk .env
-```
 
 ## Features
 
@@ -269,3 +257,29 @@ wrangler secret bulk .env
 - Use the browser developer tools to view detailed error messages.
 - Check the terminal output for server logs.
 - The debug mode in the UI shows detailed message processing.
+
+## Next steps
+
+<LinkCard
+	title="Testing your agents"
+	href="/agents/getting-started/testing-your-agent/"
+	description="Write and run tests for your agent with Vitest."
+/>
+
+<LinkCard
+	title="Schedule tasks"
+	href="/agents/api-reference/schedule-tasks/"
+	description="Run tasks on a delay, schedule, or cron."
+/>
+
+<LinkCard
+	title="State management"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Deep dive into setState(), initialState, and onStateChanged()."
+/>
+
+<LinkCard
+	title="MCP servers"
+	href="/agents/api-reference/mcp-agent-api/"
+	description="Expose your agent's tools via the Model Context Protocol."
+/>

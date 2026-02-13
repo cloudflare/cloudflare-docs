@@ -1,11 +1,17 @@
 ---
 title: Testing your Agents
-pcx_content_type: get-started
+pcx_content_type: how-to
 sidebar:
   order: 3
+description: Write and run tests for your Cloudflare Agents using Vitest and the Workers test pool.
 ---
 
-import { Render, PackageManagers, WranglerConfig } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	LinkCard,
+} from "~/components";
 
 Because Agents run on Cloudflare Workers and Durable Objects, they can be tested using the same tools and techniques as Workers and Durable Objects.
 
@@ -99,13 +105,13 @@ describe("make a request to my Agent", () => {
 		const ctx = createExecutionContext();
 		const response = await worker.fetch(request, env, ctx);
 		await waitOnExecutionContext(ctx);
-		expect(await response.text()).toMatchObject({ hello: "from your agent" });
+		expect(await response.json()).toMatchObject({ hello: "from your agent" });
 	});
 
 	it("also responds with state", async () => {
 		const request = new Request("http://example.com/agent/my-agent/agent-123");
 		const response = await SELF.fetch(request);
-		expect(await response.text()).toMatchObject({ hello: "from your agent" });
+		expect(await response.json()).toMatchObject({ hello: "from your agent" });
 	});
 });
 ```
@@ -149,4 +155,24 @@ Your worker has access to the following bindings:
 
 This spins up a local development server that runs the same runtime as Cloudflare Workers, and allows you to iterate on your Agent's code and test it locally without deploying it.
 
-Visit the [`wrangler dev`](https://developers.cloudflare.com/workers/wrangler/commands/#dev) docs to review the CLI flags and configuration options.
+Visit the [`wrangler dev`](/workers/wrangler/commands/#dev) docs to review the CLI flags and configuration options.
+
+## Next steps
+
+<LinkCard
+	title="Build a chat agent"
+	href="/agents/getting-started/build-a-chat-agent/"
+	description="Build a streaming AI chat agent with tool integration."
+/>
+
+<LinkCard
+	title="Vitest integration"
+	href="/workers/testing/vitest-integration/write-your-first-test/"
+	description="Learn more about writing tests for Workers and Durable Objects."
+/>
+
+<LinkCard
+	title="Local development"
+	href="/workers/testing/local-development/"
+	description="Run and debug your agents locally with Wrangler."
+/>
