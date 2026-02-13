@@ -45,13 +45,7 @@ on how to automatically delete logs.
 
 [DLP](/ai-gateway/features/dlp/) for AI Gateway uses shared [Cloudflare Zero Trust DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/). The following limits apply to DLP profiles and detection entries at the account level:
 
-| Feature                                                                              | Limit          |
-| ------------------------------------------------------------------------------------ | -------------- |
-| [Custom detection entries](/cloudflare-one/account-limits/#data-loss-prevention-dlp) | 25 per account |
-| Exact Data Match cells per spreadsheet                                               | 100,000        |
-| Custom Wordlist keywords per spreadsheet                                             | 200            |
-| Custom Wordlist keywords per account                                                 | 1,000          |
-| Dataset cells per account                                                            | 1,000,000      |
+<Render file="data-loss-prevention/dlp-limits-table" product="cloudflare-one" />
 
 DLP profiles are shared Zero Trust objects that are not coupled to individual gateways. You can apply the same DLP profiles across multiple gateways without additional profile limits. There is no separate limit on the number of DLP policies per gateway.
 

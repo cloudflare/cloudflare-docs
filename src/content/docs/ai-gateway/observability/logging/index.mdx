@@ -51,13 +51,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 
 When [Data Loss Prevention (DLP)](/ai-gateway/features/dlp/) policies are enabled on a gateway, log entries for requests that trigger a DLP policy match include additional fields:
 
-| Field                | Description                                                           |
-| -------------------- | --------------------------------------------------------------------- |
-| DLP Action           | The action taken by the DLP policy: `FLAG` or `BLOCK`                 |
-| DLP Policies Matched | The IDs of the DLP policies that matched                              |
-| DLP Profiles Matched | The IDs of the DLP profiles that triggered within each matched policy |
-| DLP Entries Matched  | The specific detection entry IDs that matched within each profile     |
-| DLP Check            | Whether the match occurred in the `REQUEST`, `RESPONSE`, or both      |
+<Render file="dlp-log-fields" product="ai-gateway" />
 
 These fields are available both in the dashboard log viewer and through the [Logs API](/api/resources/ai_gateway/subresources/logs/methods/list/). You can filter logs by **DLP Action** in the dashboard to view only flagged or blocked requests. For more details on DLP monitoring, refer to [Monitor DLP events](/ai-gateway/features/dlp/set-up-dlp/#monitor-dlp-events).
 
