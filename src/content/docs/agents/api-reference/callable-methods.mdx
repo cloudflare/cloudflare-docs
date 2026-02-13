@@ -49,14 +49,18 @@ sequenceDiagram
 
 ### When to use `@callable()`
 
-| Scenario                             | Use                           |
-| ------------------------------------ | ----------------------------- |
-| Browser/mobile calling agent         | `@callable()`                 |
-| External service calling agent       | `@callable()`                 |
+| Scenario                             | Use                                       |
+| ------------------------------------ | ----------------------------------------- |
+| Browser/mobile calling agent         | `@callable()`                             |
+| External service calling agent       | `@callable()`                             |
 | Worker calling agent (same codebase) | Durable Object RPC (no decorator needed)  |
 | Agent calling another agent          | Durable Object RPC via `getAgentByName()` |
 
 The `@callable()` decorator is specifically for WebSocket-based RPC from external clients. When calling from within the same Worker or another agent, use standard [Durable Object RPC](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) directly.
+
+:::note
+If you get a `SyntaxError: Invalid or unexpected token` when starting your dev server, set `"target": "ES2021"` in your `tsconfig.json`.
+:::
 
 ## Basic usage
 
@@ -572,10 +576,10 @@ class OrchestratorAgent extends Agent {
 
 ### Why the distinction?
 
-| RPC Type                | Transport | Use Case                          |
-| ----------------------- | --------- | --------------------------------- |
-| `@callable`             | WebSocket | External clients (browsers, apps) |
-| Durable Object RPC      | Internal  | Worker to Agent, Agent to Agent   |
+| RPC Type           | Transport | Use Case                          |
+| ------------------ | --------- | --------------------------------- |
+| `@callable`        | WebSocket | External clients (browsers, apps) |
+| Durable Object RPC | Internal  | Worker to Agent, Agent to Agent   |
 
 Durable Object RPC is more efficient for internal calls since it does not go through WebSocket serialization. The `@callable` decorator adds the necessary WebSocket RPC handling for external clients.
 
