@@ -7,28 +7,32 @@ sidebar:
 
 import { WranglerConfig, InlineBadge } from "~/components";
 
-# Bindings for Workers <InlineBadge preset="beta" />
+# Media Transformations Bindings for Workers <InlineBadge preset="beta" />
 
 A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Media Transformations](/stream/transform-videos/), [R2 buckets](/r2/buckets/), or [KV namespaces](/kv/concepts/kv-namespaces/).
 
 You can bind the Media Transformations API to your Worker to transform, resize, and extract content from videos without requiring them to be accessible through a URL.
 
-For example, when you allow Workers to interact with Media Transformations, you can:
+For example, when you use Media Transformations within Workers, you can:
 
-- Transform a video stored in R2, then store the output directly back in R2 without serving it to the browser.
-- Extract thumbnail frames from user-uploaded videos during the upload process.
-- Generate spritesheets for video hover previews.
-- Extract audio tracks from video files.
-
-Bindings can be configured in the Cloudflare dashboard for your Worker or in the Wrangler configuration file in your project directory.
+- Transform a video stored in a private R2 bucket or other protected source
+- Optimize videos and store the output directly back in R2 without serving it to the browser
+- Extract still frames and spritesheets for videos and use them for classification or description with [Workers AI](/workers-ai/)
+- Extract audio tracks from video files for dynamic transcription using Workers AI
 
 ## Setup
 
 The Media binding is enabled on a per-Worker basis.
 
-You can define variables in the Wrangler configuration file of your Worker project directory. These variables are bound to external resources at runtime, and you can then interact with them through this variable.
+[Bindings](/workers/runtime-apis/bindings/) can be configured in the Cloudflare dashboard for your Worker or in the Wrangler configuration file in your project directory.
 
 To bind Media Transformations to your Worker, add the following to the end of your Wrangler configuration file:
+
+:::note[Placeholder: JSONC]
+
+provide in TOML and JSONC
+
+:::
 
 <WranglerConfig>
 
@@ -42,6 +46,15 @@ binding = "MEDIA" # available in your Worker on env.MEDIA
 Within your Worker code, you can interact with this binding by using `env.MEDIA.input()` to build an object that can manipulate the video (passed as a `ReadableStream`).
 
 ## Methods
+
+:::note[Placeholder: vs Images]
+
+note similarities with Images binding, note that Media Transformations has a strict order
+
+the return types on intermediate methods are unimportant, users can't interact with those
+objects directly, should find a way to remove these
+
+:::
 
 ### `.input()`
 
@@ -90,6 +103,12 @@ After calling `.output()`, you receive a `MediaTransformationResult` with the fo
 
 ### Generate an optimized video clip
 
+:::note[Placeholder: Awaits?]
+
+The response() method (or whole thing) may need to be awaited
+
+:::
+
 Resize a video and extract a 5-second clip:
 
 ```ts
@@ -118,24 +137,6 @@ export default {
 		const result = env.MEDIA.input(video.body)
 			.transform({ width: 640, height: 360 })
 			.output({ mode: "frame", time: "2s", format: "jpg" });
-
-		return result.response();
-	},
-};
-```
-
-### Generate a spritesheet
-
-Generate a spritesheet with 10 frames for video preview hover effects:
-
-```ts
-export default {
-	async fetch(request, env) {
-		const video = await env.R2_BUCKET.get("input.mp4");
-
-		const result = env.MEDIA.input(video.body)
-			.transform({ width: 160, height: 90 })
-			.output({ mode: "spritesheet", time: "0s", imageCount: 10 });
 
 		return result.response();
 	},
@@ -219,11 +220,11 @@ export default {
 
 ## Caching
 
-Responses from the Media binding are not automatically cached. Workers lets you interact directly with the [Cache API](/workers/runtime-apis/cache/) to customize cache behavior. You can implement logic in your script to store transformations in Cloudflare's cache.
+Unlike transformations via URL, responses from the Media binding are _not_ automatically cached. Workers lets you interact directly with the [Cache API](/workers/runtime-apis/cache/) to customize cache behavior. You can implement logic in your script to store transformations in Cloudflare's cache or R2 storage.
 
 ## Local development
 
-The Media Transformations API can be used in local development through [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. Using the Media binding in local development will not incur usage charges.
+The Media Transformations API is available in local development through [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. However, transformations operations will be performed using a remote resource and are subject to usage charges beyond the included free-tier.
 
 To test in local development, run:
 
