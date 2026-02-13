@@ -191,7 +191,7 @@ Preview URLs are publicly accessible by default, but require a valid access toke
 **Built-in security**:
 
 - **Token-based access** - Each exposed port gets a unique token in the URL (for example, `https://8080-sandbox-abc123token456.yourdomain.com`)
-- **HTTPS in production** - All traffic is encrypted with automatic TLS
+- **HTTPS in production** - All traffic is encrypted with TLS. Certificates are provisioned automatically for first-level wildcards (`*.yourdomain.com`). If your worker runs on a subdomain, see the [TLS note in Production Deployment](/sandbox/guides/production-deployment/).
 - **Unpredictable URLs** - Auto-generated tokens are randomly generated and difficult to guess
 - **Token collision prevention** - Custom tokens are validated to ensure uniqueness within each sandbox
 
