@@ -73,7 +73,14 @@ End the changelog with a link to relevant documentation:
 
 ## Reference examples
 
-Read 2-3 existing entries in the target product's changelog folder before writing to match style and depth. If the target folder has fewer than 2 entries, also read from `src/content/changelog/workers/` as a reference.
+Review these existing changelogs for style and format guidance:
+
+- `src/content/changelog/workers/` - Workers changelogs with code examples
+- `src/content/changelog/kv/` - KV changelogs
+- `src/content/changelog/hyperdrive/` - Hyperdrive changelogs
+- `src/content/changelog/containers/` - Container changelogs
+
+Read 2-3 entries from the target product's changelog folder before writing to match style and depth. If the target folder has fewer than 2 entries, read from the folders listed above as a reference.
 
 ## Editing existing entries
 
