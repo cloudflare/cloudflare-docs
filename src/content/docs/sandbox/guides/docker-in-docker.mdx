@@ -15,7 +15,7 @@ This guide shows you how to run Docker inside a Sandbox, enabling you to build a
 Use Docker-in-Docker when you need to:
 
 - **Develop containerized applications** - Run `docker build` to create images from Dockerfiles
-- **Run docker as part of CI/CD** - Respond to code changes and build and push images using Cloudflare Containers
+- **Run Docker as part of CI/CD** - Respond to code changes and build and push images using Cloudflare Containers
 - **Run arbitrary container images** - Start containers from an end-user provided image
 
 ## Create a Docker-enabled image
@@ -34,8 +34,8 @@ COPY --from=docker.io/cloudflare/sandbox:0.7.4-musl /bin/bash /bin/bash
 COPY --from=docker.io/cloudflare/sandbox:0.7.4-musl /usr/lib/libreadline.so.8 /usr/lib/libreadline.so.8
 COPY --from=docker.io/cloudflare/sandbox:0.7.4-musl /usr/lib/libreadline.so.8.2 /usr/lib/libreadline.so.8.2
 
-# # Create startup script that starts dockerd with
-# # iptables disabled, waits for readiness, then keeps running
+# Create startup script that starts dockerd with
+# iptables disabled, waits for readiness, then keeps running
 RUN printf '#!/bin/sh\n\
   set -eu\n\
   dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false &\n\
