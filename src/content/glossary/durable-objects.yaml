@@ -30,7 +30,7 @@ entries:
 
   - term: "Storage Backend"
     general_definition: |-
-      By default, a Durable Object class can use Storage API that leverages a key-value storage backend. New Durable Object classes can opt-in to using a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend).
+      By default, a Durable Object class can use Storage API that leverages a key-value storage backend. New Durable Object classes can opt-in to using a [SQLite storage backend](/durable-objects/how-to/access-storage/#sqlite-storage-backend).
 
   - term: "Storage API"
     general_definition: |-

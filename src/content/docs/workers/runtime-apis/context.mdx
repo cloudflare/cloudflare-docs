@@ -35,13 +35,10 @@ For example, imagine that you are configuring a Worker called "frontend-worker",
 			"entrypoint": "DocServiceApi",
 			"props": {
 				"clientId": "frontend-worker",
-				"permissions": [
-					"read",
-					"write"
-				]
-			}
-		}
-	]
+				"permissions": ["read", "write"],
+			},
+		},
+	],
 }
 ```
 
@@ -66,13 +63,10 @@ The Workers platform is designed to ensure that `ctx.props` can only be set by s
 			"entrypoint": "DocumentApi",
 			"props": {
 				"docId": "e366592caec1d88dff724f74136b58b5",
-				"permissions": [
-					"read",
-					"write"
-				]
-			}
-		}
-	]
+				"permissions": ["read", "write"],
+			},
+		},
+	],
 }
 ```
 
@@ -91,7 +85,7 @@ To use `ctx.exports`, you must use [the `enable_ctx_exports` compatibility flag]
 `ctx.exports` provides automatically-configured "loopback" bindings for all of your top-level exports.
 
 - For each top-level export that `extends WorkerEntrypoint` (or simply implements a fetch handler), `ctx.exports` automatically contains a [Service Binding](/workers/runtime-apis/bindings/service-bindings).
-- For each top-level export that `extends DurableObject` (and which has been configured with storage via a [migration](/durable-objects/reference/durable-objects-migrations/)), `ctx.exports` automatically contains a [Durable Object namespace binding](/durable-objects/api/namespace/).
+- For each top-level export that `extends DurableObject` (and which has been configured with storage via a [migration](/durable-objects/how-to/configure-migrations/)), `ctx.exports` automatically contains a [Durable Object namespace binding](/durable-objects/api/namespace/).
 
 For example:
 

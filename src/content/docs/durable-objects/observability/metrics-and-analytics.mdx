@@ -3,12 +3,18 @@ title: Metrics and analytics
 pcx_content_type: concept
 sidebar:
   order: 6
-
 ---
 
-import { GlossaryTooltip, DashButton, Steps, WranglerConfig, Render } from "~/components";
+import {
+	GlossaryTooltip,
+	DashButton,
+	Steps,
+	WranglerConfig,
+	Render,
+} from "~/components";
 
-<GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> expose analytics for Durable Object namespace-level and request-level metrics.
+<GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> expose
+analytics for Durable Object namespace-level and request-level metrics.
 
 The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically via GraphQL](#query-via-the-graphql-api) or HTTP client.
 
@@ -52,9 +58,8 @@ To start using Durable Object logging:
 2. Deploy the latest version of the Worker with the updated binding.
 3. Go to the **Durable Objects** page.
 
-   <DashButton url="/?to=/:account/workers/durable-objects" />
-4. Select an existing Durable Object namespace.
-5. Select the **Logs** tab.
+<DashButton url="/?to=/:account/workers/durable-objects" />
+4. Select an existing Durable Object namespace. 5. Select the **Logs** tab.
 
 </Steps>
 
@@ -68,19 +73,19 @@ Durable Object metrics are powered by GraphQL.
 
 The datasets that include Durable Object metrics include:
 
-* `durableObjectsInvocationsAdaptiveGroups`
-* `durableObjectsPeriodicGroups`
-* `durableObjectsStorageGroups`
-* `durableObjectsSubrequestsAdaptiveGroups`
+- `durableObjectsInvocationsAdaptiveGroups`
+- `durableObjectsPeriodicGroups`
+- `durableObjectsStorageGroups`
+- `durableObjectsSubrequestsAdaptiveGroups`
 
 Use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspection/) to get information on the fields exposed by each datasets.
 
 ### WebSocket metrics
 
-Durable Objects using [WebSockets](/durable-objects/best-practices/websockets/) will see request metrics across several GraphQL datasets because WebSockets have different types of requests.
+Durable Objects using [WebSockets](/durable-objects/how-to/use-websockets/) will see request metrics across several GraphQL datasets because WebSockets have different types of requests.
 
-* Metrics for a WebSocket connection itself is represented in `durableObjectsInvocationsAdaptiveGroups` once the connection closes. Since WebSocket connections are long-lived, connections often do not terminate until the Durable Object terminates.
-* Metrics for incoming and outgoing WebSocket messages on a WebSocket connection are available in `durableObjectsPeriodicGroups`. If a WebSocket connection uses [WebSocket Hibernation](/durable-objects/best-practices/websockets/#websocket-hibernation-api), incoming WebSocket messages are instead represented in `durableObjectsInvocationsAdaptiveGroups`.
+- Metrics for a WebSocket connection itself is represented in `durableObjectsInvocationsAdaptiveGroups` once the connection closes. Since WebSocket connections are long-lived, connections often do not terminate until the Durable Object terminates.
+- Metrics for incoming and outgoing WebSocket messages on a WebSocket connection are available in `durableObjectsPeriodicGroups`. If a WebSocket connection uses [WebSocket Hibernation](/durable-objects/how-to/use-websockets/#websocket-hibernation-api), incoming WebSocket messages are instead represented in `durableObjectsInvocationsAdaptiveGroups`.
 
 ## Example GraphQL query for Durable Objects
 

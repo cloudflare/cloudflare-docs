@@ -117,7 +117,7 @@ New Location: {request.js_object.cf.city}"""
 
 </TabItem> </Tabs>
 
-Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
+Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/how-to/configure-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 
@@ -130,18 +130,16 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 		"bindings": [
 			{
 				"name": "LOCATION",
-				"class_name": "Location"
-			}
-		]
+				"class_name": "Location",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"Location"
-			]
-		}
-	]
+			"new_sqlite_classes": ["Location"],
+		},
+	],
 }
 ```
 

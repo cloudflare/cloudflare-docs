@@ -11,15 +11,15 @@ The new [@cloudflare/actors](https://www.npmjs.com/package/@cloudflare/actors) l
 
 The `@cloudflare/actors` library is a new SDK for Durable Objects and provides a powerful set of abstractions for building real-time, interactive, and multiplayer applications on top of Durable Objects. With beta usage and feedback, `@cloudflare/actors` will become the recommended way to build on Durable Objects and draws upon Cloudflare's experience building products/features on Durable Objects.
 
-The name "actors" originates from the [actor programming model](/durable-objects/concepts/what-are-durable-objects/#actor-programming-model), which closely ties to how Durable Objects are modelled.
+The name "actors" originates from the [actor programming model](/durable-objects/concepts/how-durable-objects-work/#actor-programming-model), which closely ties to how Durable Objects are modelled.
 
 The `@cloudflare/actors` library includes:
 
-* Storage helpers for querying embeddeded, per-object SQLite storage
-* Storage helpers for managing SQL schema migrations
-* Alarm helpers for scheduling multiple alarms provided a date, delay in seconds, or cron expression
-* `Actor` class for using Durable Objects with a defined pattern
-* Durable Objects [Workers API](https://developers.cloudflare.com/durable-objects/api/base/) is always available for your application as needed
+- Storage helpers for querying embeddeded, per-object SQLite storage
+- Storage helpers for managing SQL schema migrations
+- Alarm helpers for scheduling multiple alarms provided a date, delay in seconds, or cron expression
+- `Actor` class for using Durable Objects with a defined pattern
+- Durable Objects [Workers API](https://developers.cloudflare.com/durable-objects/api/base/) is always available for your application as needed
 
 Storage and alarm helper methods can be combined with [any Javascript class](https://github.com/cloudflare/actors?tab=readme-ov-file#storage--alarms-with-durableobject-class) that defines your Durable Object, i.e, ones that extend `DurableObject` including the `Actor` class.
 

@@ -510,7 +510,7 @@ For more information, refer to [Hyperdrive](/hyperdrive/).
 
 ### Use Durable Objects for WebSockets
 
-Plain Workers can upgrade HTTP connections to WebSockets, but they lack persistent state and hibernation. If the isolate is evicted, the connection is lost because there is no persistent actor to hold it. For reliable, long-lived WebSocket connections, use [Durable Objects](/durable-objects/) with the [Hibernation API](/durable-objects/best-practices/websockets/). Durable Objects keep WebSocket connections open even while the object is evicted from memory, and automatically wake up when a message arrives.
+Plain Workers can upgrade HTTP connections to WebSockets, but they lack persistent state and hibernation. If the isolate is evicted, the connection is lost because there is no persistent actor to hold it. For reliable, long-lived WebSocket connections, use [Durable Objects](/durable-objects/) with the [Hibernation API](/durable-objects/how-to/use-websockets/). Durable Objects keep WebSocket connections open even while the object is evicted from memory, and automatically wake up when a message arrives.
 
 Use `this.ctx.acceptWebSocket()` instead of `ws.accept()` to enable hibernation. Use `setWebSocketAutoResponse` for ping/pong heartbeats that do not wake the object.
 
@@ -571,7 +571,7 @@ export class ChatRoom extends DurableObject {
 
 </TypeScriptExample>
 
-For more information, refer to [Durable Objects WebSocket best practices](/durable-objects/best-practices/websockets/).
+For more information, refer to [Durable Objects WebSocket best practices](/durable-objects/how-to/use-websockets/).
 
 ### Use Workers Static Assets for new projects
 
@@ -936,7 +936,7 @@ For more information, refer to [Testing with Vitest](/workers/testing/vitest-int
 
 ## Related resources
 
-- [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/): best practices for stateful, coordinated applications.
+- [Rules of Durable Objects](/durable-objects/concepts/rules-of-durable-objects/): best practices for stateful, coordinated applications.
 - [Rules of Workflows](/workflows/build/rules-of-workflows/): best practices for durable, multi-step Workflows.
 - [Platform limits](/workers/platform/limits/): CPU time, memory, subrequest, and other limits.
 - [Workers errors](/workers/observability/errors/): error codes and debugging guidance.

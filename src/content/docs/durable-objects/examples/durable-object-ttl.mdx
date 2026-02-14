@@ -121,7 +121,7 @@ class Default(WorkerEntrypoint):
 
 </TabItem> </Tabs>
 
-To test and deploy this example, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
+To test and deploy this example, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/how-to/configure-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 
@@ -134,18 +134,16 @@ To test and deploy this example, configure your Wrangler file to include a Durab
 		"bindings": [
 			{
 				"name": "MY_DURABLE_OBJECT",
-				"class_name": "MyDurableObject"
-			}
-		]
+				"class_name": "MyDurableObject",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"MyDurableObject"
-			]
-		}
-	]
+			"new_sqlite_classes": ["MyDurableObject"],
+		},
+	],
 }
 ```
 

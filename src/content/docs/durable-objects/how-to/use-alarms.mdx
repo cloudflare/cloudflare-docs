@@ -1,0 +1,374 @@
+---
+title: Use alarms
+pcx_content_type: how-to
+sidebar:
+  order: 5
+---
+
+import { GlossaryTooltip, Tabs, TabItem, WranglerConfig } from "~/components";
+
+<GlossaryTooltip term="alarm">Alarms</GlossaryTooltip> let you schedule a
+Durable Object to wake up at a specific time and run its `alarm()` handler. Each
+Durable Object can have one alarm set at a time, but you can build complex
+scheduling on top of that single alarm.
+
+For method signatures and parameter details, refer to the [Alarms API reference](/durable-objects/api/alarms/).
+
+## Schedule an alarm
+
+Call `setAlarm()` with a timestamp to schedule the alarm, then implement an `alarm()` handler to run when it fires.
+
+<Tabs>
+
+<TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { DurableObject } from "cloudflare:workers";
+
+export default {
+	async fetch(request, env) {
+		return await env.ALARM_EXAMPLE.getByName("foo").fetch(request);
+	},
+};
+
+const SECONDS = 1000;
+
+export class AlarmExample extends DurableObject {
+	constructor(ctx, env) {
+		super(ctx, env);
+		this.storage = ctx.storage;
+	}
+
+	async fetch(request) {
+		// Only set an alarm if one is not already scheduled
+		let currentAlarm = await this.storage.getAlarm();
+		if (currentAlarm == null) {
+			this.storage.setAlarm(Date.now() + 10 * SECONDS);
+		}
+		return new Response("Alarm set");
+	}
+
+	async alarm() {
+		// Runs when the alarm fires.
+		// Perform work, call APIs, or set the next alarm here.
+	}
+}
+```
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+import time
+
+from workers import DurableObject, Response, WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return await self.env.ALARM_EXAMPLE.getByName("foo").fetch(request)
+
+SECONDS = 1000
+
+class AlarmExample(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+        self.storage = ctx.storage
+
+    async def fetch(self, request):
+        # Only set an alarm if one is not already scheduled
+        current_alarm = await self.storage.getAlarm()
+        if current_alarm is None:
+            self.storage.setAlarm(int(time.time() * 1000) + 10 * SECONDS)
+        return Response("Alarm set")
+
+    async def alarm(self):
+        # Runs when the alarm fires.
+        # Perform work, call APIs, or set the next alarm here.
+        pass
+```
+
+</TabItem>
+
+</Tabs>
+
+:::caution[Do not call setAlarm unconditionally in the constructor]
+If the Durable Object wakes up after being inactive, the constructor runs before the pending `alarm()` handler. Calling `setAlarm()` in the constructor without checking `getAlarm()` first can overwrite the pending alarm.
+:::
+
+Configure your Wrangler file with a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/how-to/configure-migrations/):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "alarm-example",
+	"main": "src/index.ts",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "ALARM_EXAMPLE",
+				"class_name": "AlarmExample",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["AlarmExample"],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+## Batch requests with alarms
+
+Alarms are useful for batching work. Instead of processing each incoming request individually, you can buffer requests in storage and process them together when the alarm fires.
+
+The pattern works as follows:
+
+1. On each request, write data to storage and set an alarm if one is not already pending.
+2. When the alarm fires, read all buffered data, send it to an upstream service, and clear storage.
+
+<Tabs>
+
+<TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { DurableObject } from "cloudflare:workers";
+
+export default {
+	async fetch(request, env) {
+		return await env.BATCHER.getByName("foo").fetch(request);
+	},
+};
+
+export class Batcher extends DurableObject {
+	constructor(ctx, env) {
+		super(ctx, env);
+		this.storage = ctx.storage;
+		this.ctx.blockConcurrencyWhile(async () => {
+			let vals = await this.storage.list({ reverse: true, limit: 1 });
+			this.count = vals.size == 0 ? 0 : parseInt(vals.keys().next().value);
+		});
+	}
+
+	async fetch(request) {
+		this.count++;
+
+		// If there is no alarm currently set, set one for 10 seconds from now.
+		// All requests in the next 10 seconds become part of this batch.
+		let currentAlarm = await this.storage.getAlarm();
+		if (currentAlarm == null) {
+			this.storage.setAlarm(Date.now() + 1000 * 10);
+		}
+
+		// Buffer the request body in storage.
+		await this.storage.put(this.count, await request.text());
+		return new Response(JSON.stringify({ queued: this.count }), {
+			headers: {
+				"content-type": "application/json;charset=UTF-8",
+			},
+		});
+	}
+
+	async alarm() {
+		let vals = await this.storage.list();
+		await fetch("https://example.com/some-upstream-service", {
+			method: "POST",
+			body: JSON.stringify(Array.from(vals.values())),
+		});
+		await this.storage.deleteAll();
+		this.count = 0;
+	}
+}
+```
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject, Response, WorkerEntrypoint, fetch
+import time
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        stub = self.env.BATCHER.getByName("foo")
+        return await stub.fetch(request)
+
+class Batcher(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+        self.storage = ctx.storage
+
+        @self.ctx.blockConcurrencyWhile
+        async def initialize():
+            vals = await self.storage.list(reverse=True, limit=1)
+            self.count = 0
+            if len(vals) > 0:
+                self.count = int(vals.keys().next().value)
+
+    async def fetch(self, request):
+        self.count += 1
+
+        # If there is no alarm currently set, set one for 10 seconds from now.
+        # All requests in the next 10 seconds become part of this batch.
+        current_alarm = await self.storage.getAlarm()
+        if current_alarm is None:
+            self.storage.setAlarm(int(time.time() * 1000) + 1000 * 10)
+
+        # Buffer the request body in storage.
+        await self.storage.put(self.count, await request.text())
+        return Response.json({"queued": self.count})
+
+    async def alarm(self):
+        vals = await self.storage.list()
+        await fetch(
+            "https://example.com/some-upstream-service",
+            method="POST",
+            body=list(vals.values())
+        )
+        await self.storage.deleteAll()
+        self.count = 0
+```
+
+</TabItem>
+
+</Tabs>
+
+If an unexpected error terminates the Durable Object, the runtime re-instantiates it on another machine. After a short delay, the `alarm()` handler runs from the beginning.
+
+## Schedule multiple events
+
+Although each Durable Object supports only one alarm at a time, you can manage many scheduled and recurring events by storing event metadata and pointing the single alarm at the earliest due event.
+
+```js
+import { DurableObject } from "cloudflare:workers";
+
+export class Scheduler extends DurableObject {
+	// Schedule a one-time or recurring event.
+	async scheduleEvent(id, runAt, repeatMs = null) {
+		await this.ctx.storage.put(`event:${id}`, { id, runAt, repeatMs });
+
+		// Move the alarm earlier if this event fires sooner.
+		const currentAlarm = await this.ctx.storage.getAlarm();
+		if (!currentAlarm || runAt < currentAlarm) {
+			await this.ctx.storage.setAlarm(runAt);
+		}
+	}
+
+	async alarm() {
+		const now = Date.now();
+		const events = await this.ctx.storage.list({ prefix: "event:" });
+		let nextAlarm = null;
+
+		for (const [key, event] of events) {
+			if (event.runAt <= now) {
+				await this.processEvent(event);
+
+				if (event.repeatMs) {
+					// Reschedule recurring events.
+					event.runAt = now + event.repeatMs;
+					await this.ctx.storage.put(key, event);
+				} else {
+					await this.ctx.storage.delete(key);
+				}
+			}
+
+			// Track the soonest future event.
+			if (event.runAt > now && (!nextAlarm || event.runAt < nextAlarm)) {
+				nextAlarm = event.runAt;
+			}
+		}
+
+		if (nextAlarm) {
+			await this.ctx.storage.setAlarm(nextAlarm);
+		}
+	}
+
+	async processEvent(event) {
+		// Your event handling logic here.
+	}
+}
+```
+
+This pattern supports both one-time and recurring events. The `alarm()` handler processes every event whose `runAt` time has passed, reschedules recurring events, and sets the next alarm for the earliest remaining event.
+
+## Handle retries
+
+Alarms have guaranteed at-least-once execution. If the `alarm()` handler throws an uncaught exception, the runtime retries it with exponential backoff starting at 2 seconds, for up to 6 retries.
+
+The `alarm()` handler receives an optional `alarmInfo` parameter with retry metadata:
+
+<Tabs>
+
+<TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export class MyDurableObject extends DurableObject {
+	async alarm(alarmInfo) {
+		if (alarmInfo?.isRetry) {
+			console.log(`Retry attempt ${alarmInfo.retryCount}`);
+		}
+
+		// Make alarm handlers idempotent: check whether the work
+		// has already been completed before doing it again.
+		const alreadyProcessed = await this.ctx.storage.get("batch:processed");
+		if (alreadyProcessed) {
+			return;
+		}
+
+		await this.doBatchWork();
+		await this.ctx.storage.put("batch:processed", true);
+	}
+}
+```
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+class MyDurableObject(DurableObject):
+    async def alarm(self, alarm_info=None):
+        if alarm_info and alarm_info.get("isRetry"):
+            print(f"Retry attempt {alarm_info.get('retryCount')}")
+
+        # Make alarm handlers idempotent: check whether the work
+        # has already been completed before doing it again.
+        already_processed = await self.ctx.storage.get("batch:processed")
+        if already_processed:
+            return
+
+        await self.do_batch_work()
+        await self.ctx.storage.put("batch:processed", True)
+```
+
+</TabItem>
+
+</Tabs>
+
+Because retries are limited to 6 attempts, catch exceptions inside your `alarm()` handler and schedule a new alarm if you need indefinite retries. Otherwise, a prolonged downstream outage can exhaust all retry attempts and the alarm will stop firing.
+
+```js
+async alarm() {
+	try {
+		await this.doWork();
+	} catch (e) {
+		// Schedule a new alarm so work is retried even if
+		// the built-in retries are exhausted.
+		await this.ctx.storage.setAlarm(Date.now() + 30_000);
+		throw e;
+	}
+}
+```
+
+## Related resources
+
+- [Alarms API reference](/durable-objects/api/alarms/) — method signatures, parameters, and behavior details.
+- [Pricing](/durable-objects/platform/pricing/) — how alarm invocations are billed.
+- [Storage API](/durable-objects/api/sqlite-storage-api/) — the full storage API available within Durable Objects.

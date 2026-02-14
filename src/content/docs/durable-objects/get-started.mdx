@@ -12,7 +12,7 @@ import {
 	PackageManagers,
 	WranglerConfig,
 	TypeScriptExample,
-	DashButton
+	DashButton,
 } from "~/components";
 
 This guide will instruct you through:
@@ -22,7 +22,7 @@ This guide will instruct you through:
 - Instantiating and communicating with a Durable Object from another Worker.
 - Deploying a Durable Object and a Worker that communicates with a Durable Object.
 
-If you wish to learn more about Durable Objects, refer to [What are Durable Objects?](/durable-objects/concepts/what-are-durable-objects/).
+If you wish to learn more about Durable Objects, refer to [What are Durable Objects?](/durable-objects/concepts/how-durable-objects-work/).
 
 ## Quick start
 
@@ -138,7 +138,7 @@ class MyDurableObject(DurableObject):
 
 </Tabs>
 
-Workers communicate with a Durable Object using [remote-procedure call](/workers/runtime-apis/rpc/#_top). Public methods on a Durable Object class are exposed as [RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) to be called by another Worker.
+Workers communicate with a Durable Object using [remote-procedure call](/workers/runtime-apis/rpc/#_top). Public methods on a Durable Object class are exposed as [RPC methods](/durable-objects/how-to/invoke-methods/) to be called by another Worker.
 
 Your file should now look like:
 
@@ -161,7 +161,7 @@ export class MyDurableObject extends DurableObject<Env> {
 
 }
 
-```
+````
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -176,7 +176,7 @@ class MyDurableObject(DurableObject):
         ).one()
 
         return result.greeting
-```
+````
 
 </TabItem>
 
@@ -197,7 +197,7 @@ Durable Objects do not receive requests directly from the Internet. Durable Obje
 This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Objects.
 :::
 
-A Worker is used to [access Durable Objects](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/).
+A Worker is used to [access Durable Objects](/durable-objects/how-to/invoke-methods/).
 
 To communicate with a Durable Object, the Worker's fetch handler should look like the following:
 
@@ -216,7 +216,7 @@ export default {
 
 } satisfies ExportedHandler<Env>;
 
-```
+````
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -231,7 +231,7 @@ class Default(WorkerEntrypoint):
         stub = self.env.MY_DURABLE_OBJECT.getByName(url.path)
         greeting = await stub.say_hello()
         return Response(greeting)
-```
+````
 
 </TabItem>
 
@@ -245,7 +245,7 @@ In the code above, you have:
 4. Called a Durable Object by invoking a RPC method, `sayHello()`, on the Durable Object, which returns a `Hello, World!` string greeting.
 5. Received an HTTP response back to the client by constructing a HTTP Response with `return new Response()`.
 
-Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) to learn more about communicating with a Durable Object.
+Refer to [Access a Durable Object from a Worker](/durable-objects/how-to/invoke-methods/) to learn more about communicating with a Durable Object.
 
 ## 4. Configure Durable Object bindings
 
@@ -259,10 +259,10 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices
 		"bindings": [
 			{
 				"name": "MY_DURABLE_OBJECT",
-				"class_name": "MyDurableObject"
-			}
-		]
-	}
+				"class_name": "MyDurableObject",
+			},
+		],
+	},
 }
 ```
 
@@ -272,7 +272,7 @@ The `bindings` section contains the following fields:
 
 - `name` - Required. The binding name to use within your Worker.
 - `class_name` - Required. The class name you wish to bind to.
-- `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
+- `script_name` - Optional. Defaults to the current [environment's](/durable-objects/how-to/use-environments/) Worker code.
 
 ## 5. Configure Durable Object class with SQLite storage backend
 
@@ -289,17 +289,18 @@ The Durable Object migration to create a new Durable Object class with SQLite st
 	"migrations": [
 		{
 			"tag": "v1", // Should be unique for each entry
-			"new_sqlite_classes": [ // Array of new classes
-				"MyDurableObject"
-			]
-		}
-	]
+			"new_sqlite_classes": [
+				// Array of new classes
+				"MyDurableObject",
+			],
+		},
+	],
 }
 ```
 
 </WranglerConfig>
 
-Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to learn more about the migration process.
+Refer to [Durable Objects migrations](/durable-objects/how-to/configure-migrations/) to learn more about the migration process.
 
 ## 6. Develop a Durable Object Worker locally
 
@@ -359,7 +360,7 @@ const stub = env.MY_DURABLE_OBJECT.getByName(new URL(request.url).pathname);
 
 } satisfies ExportedHandler<Env>;
 
-```
+````
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -382,7 +383,7 @@ class Default(WorkerEntrypoint):
         stub = self.env.MY_DURABLE_OBJECT.getByName(url.path)
         greeting = await stub.say_hello()
         return Response(greeting)
-```
+````
 
 </TabItem>
 
@@ -396,6 +397,6 @@ By finishing this tutorial, you have:
 
 ## Related resources
 
-- [Create Durable Object stubs](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/)
-- [Access Durable Objects Storage](/durable-objects/best-practices/access-durable-objects-storage/)
+- [Create Durable Object stubs](/durable-objects/how-to/invoke-methods/)
+- [Access Durable Objects Storage](/durable-objects/how-to/access-storage/)
 - [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare) - Helpful tools for mocking and testing your Durable Objects.

@@ -1,8 +1,8 @@
 ---
-title: Data location
-pcx_content_type: concept
+title: Configure data location
+pcx_content_type: how-to
 sidebar:
-  order: 8
+  order: 7
 ---
 
 import { GlossaryTooltip } from "~/components";
@@ -55,9 +55,9 @@ Note that it is also possible to specify a jurisdiction by creating an individua
 
 ### Supported locations
 
-| Parameter | Location                     |
-| --------- | ---------------------------- |
-| eu        | The European Union           |
+| Parameter | Location                       |
+| --------- | ------------------------------ |
+| eu        | The European Union             |
 | fedramp   | FedRAMP-compliant data centers |
 
 ## Provide a location hint
@@ -99,9 +99,13 @@ Hints are a best effort and not a guarantee. Unlike with jurisdictions, Durable 
 | afr       | Africa <sup>2</sup>        |
 | me        | Middle East <sup>2</sup>   |
 
-<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the future.
+<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the
+future.
 
-<sup>2</sup> Durable Objects currently do not spawn in this location. Instead, the Durable Object will spawn in a nearby location which does support Durable Objects. For example, Durable Objects hinted to South America spawn in Eastern North America instead.
+<sup>2</sup> Durable Objects currently do not spawn in this location. Instead,
+the Durable Object will spawn in a nearby location which does support Durable
+Objects. For example, Durable Objects hinted to South America spawn in Eastern
+North America instead.
 
 ## Additional resources
 

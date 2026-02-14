@@ -26,7 +26,7 @@ Your maximum throughput is directly related to the duration of your queries.
 
 A database that receives too many concurrent requests will first attempt to queue them. If the queue becomes full, the database will return an ["overloaded" error](/d1/observability/debug-d1/#error-list).
 
-Each individual D1 database is backed by a single [Durable Object](/durable-objects/concepts/what-are-durable-objects/). When using [D1 read replication](https://developers.cloudflare.com/d1/best-practices/read-replication/#primary-database-instance-vs-read-replicas) each replica instance is a different Durable Object and the guidelines apply to each replica instance independently.
+Each individual D1 database is backed by a single [Durable Object](/durable-objects/concepts/how-durable-objects-work/). When using [D1 read replication](https://developers.cloudflare.com/d1/best-practices/read-replication/#primary-database-instance-vs-read-replicas) each replica instance is a different Durable Object and the guidelines apply to each replica instance independently.
 
 #### Query performance
 

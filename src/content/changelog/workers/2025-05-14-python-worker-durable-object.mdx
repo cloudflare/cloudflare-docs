@@ -13,7 +13,7 @@ You can now create [Durable Objects](/durable-objects/) using
 [Python Workers](/workers/languages/python/). A Durable Object is a special kind of
 Cloudflare Worker which uniquely combines compute with storage, enabling stateful
 long-running applications which run close to your users. For more info see
-[here](/durable-objects/concepts/what-are-durable-objects/).
+[here](/durable-objects/concepts/how-durable-objects-work/).
 
 You can define a Durable Object in Python in a similar way to JavaScript:
 
@@ -50,10 +50,10 @@ Define the Durable Object in your Wrangler configuration file:
 		"bindings": [
 			{
 				"name": "MY_DURABLE_OBJECT",
-				"class_name": "MyDurableObject"
-			}
-		]
-	}
+				"class_name": "MyDurableObject",
+			},
+		],
+	},
 }
 ```
 
@@ -68,11 +68,12 @@ Then define the storage backend for your Durable Object:
 	"migrations": [
 		{
 			"tag": "v1", // Should be unique for each entry
-			"new_sqlite_classes": [ // Array of new classes
-				"MyDurableObject"
-			]
-		}
-	]
+			"new_sqlite_classes": [
+				// Array of new classes
+				"MyDurableObject",
+			],
+		},
+	],
 }
 ```
 

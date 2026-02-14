@@ -213,7 +213,7 @@ class Counter(DurableObject):
 
 </TabItem> </Tabs>
 
-Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
+Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/how-to/configure-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 
@@ -226,18 +226,16 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 		"bindings": [
 			{
 				"name": "COUNTERS",
-				"class_name": "Counter"
-			}
-		]
+				"class_name": "Counter",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"Counter"
-			]
-		}
-	]
+			"new_sqlite_classes": ["Counter"],
+		},
+	],
 }
 ```
 

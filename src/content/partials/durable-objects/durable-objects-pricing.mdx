@@ -3,12 +3,18 @@ params:
   - product
 ---
 
-import { Render, Markdown, GlossaryTooltip, Details, AnchorHeading } from "~/components";
+import {
+	Render,
+	Markdown,
+	GlossaryTooltip,
+	Details,
+	AnchorHeading,
+} from "~/components";
 
 { props.product === "durable-objects" && <><AnchorHeading title="Compute billing" depth={2}/></> }
 { props.product === "workers" && <><AnchorHeading title="Compute billing" depth={3}/></> }
 
-Durable Objects are billed for compute duration (wall-clock time) while the Durable Object is actively running or is idle in memory but unable to [hibernate](/durable-objects/concepts/durable-object-lifecycle/). Durable Objects that are idle and eligible for hibernation are not billed for duration, even before the runtime has hibernated them. Requests to a Durable Object keep it active or create the object if it was inactive.
+Durable Objects are billed for compute duration (wall-clock time) while the Durable Object is actively running or is idle in memory but unable to [hibernate](/durable-objects/concepts/how-durable-objects-work/). Durable Objects that are idle and eligible for hibernation are not billed for duration, even before the runtime has hibernated them. Requests to a Durable Object keep it active or create the object if it was inactive.
 
 |                      | Free plan         | Paid plan                                                                                                                               |
 | -------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -17,7 +23,11 @@ Durable Objects are billed for compute duration (wall-clock time) while the Dura
 
 <Details header="Footnotes" open={true}>
 
-<sup>1</sup> Each [RPC session](/workers/runtime-apis/rpc/lifecycle/) is billed as one request to your Durable Object. Every [RPC method call](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) on a [Durable Objects stub](/durable-objects/) is its own RPC session and therefore a single billed request.
+<sup>1</sup> Each [RPC session](/workers/runtime-apis/rpc/lifecycle/) is billed
+as one request to your Durable Object. Every [RPC method
+call](/durable-objects/how-to/invoke-methods/) on a [Durable Objects
+stub](/durable-objects/) is its own RPC session and therefore a single billed
+request.
 
 RPC method calls can return objects (stubs) extending [`RpcTarget`](/workers/runtime-apis/rpc/lifecycle/#lifetimes-memory-and-resource-management) and invoke calls on those stubs. Subsequent calls on the returned stub are part of the same RPC session and are not billed as separate requests. For example:
 
@@ -28,13 +38,34 @@ await foo.baz(); // treated as part of the same RPC session created by calling b
 await durableObjectStub.cat(); // billed as a request
 ```
 
-<sup>2</sup> A request is needed to create a WebSocket connection. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2). For compute requests billing-only, a 20:1 ratio is applied to incoming WebSocket messages to factor in smaller messages for real-time communication. For example, 100 WebSocket incoming messages would be charged as 5 requests for billing purposes. The 20:1 ratio does not affect Durable Object metrics and analytics, which reflect actual usage.
+<sup>2</sup> A request is needed to create a WebSocket connection. There is no
+charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol
+pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2). For compute
+requests billing-only, a 20:1 ratio is applied to incoming WebSocket messages to
+factor in smaller messages for real-time communication. For example, 100
+WebSocket incoming messages would be charged as 5 requests for billing purposes.
+The 20:1 ratio does not affect Durable Object metrics and analytics, which
+reflect actual usage.
 
-<sup>3</sup> Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/best-practices/websockets/) will not incur additional wall-clock time, and so they will not be charged.
+<sup>3</sup> Application level auto-response messages handled by
+[`state.setWebSocketAutoResponse()`](/durable-objects/how-to/use-websockets/)
+will not incur additional wall-clock time, and so they will not be charged.
 
-<sup>4</sup> Duration is billed in wall-clock time as long as the Object is active and not eligible for hibernation, but is shared across all requests active on an Object at once. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. It is recommended to use the WebSocket Hibernation API to avoid incurring duration charges once all event handlers finish running. For a complete explanation, refer to [When does a Durable Object incur duration charges?](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
+<sup>4</sup> Duration is billed in wall-clock time as long as the Object is
+active and not eligible for hibernation, but is shared across all requests
+active on an Object at once. Calling `accept()` on a WebSocket in an Object will
+incur duration charges for the entire time the WebSocket is connected. It is
+recommended to use the WebSocket Hibernation API to avoid incurring duration
+charges once all event handlers finish running. For a complete explanation,
+refer to [When does a Durable Object incur duration
+charges?](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
-<sup>5</sup> Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
+<sup>5</sup> Duration billing charges for the 128 MB of memory your Durable
+Object is allocated, regardless of actual usage. If your account creates many
+instances of a single Durable Object class, Durable Objects may run in the same
+isolate on the same physical machine and share the 128 MB of memory. These
+Durable Objects are still billed as if they are allocated a full 128 MB of
+memory.
 
 </Details>
 
@@ -43,8 +74,8 @@ await durableObjectStub.cat(); // billed as a request
 
 The [Durable Objects Storage API](/durable-objects/api/sqlite-storage-api/) is only accessible from within Durable Objects. Pricing depends on the storage backend of your Durable Objects.
 
-- **SQLite-backed Durable Objects (recommended)**: [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) is recommended for all new Durable Object classes. Workers Free plan can only create and access SQLite-backed Durable Objects.
-- **Key-value backed Durable Objects**: [Key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage) is only available on the Workers Paid plan.
+- **SQLite-backed Durable Objects (recommended)**: [SQLite storage backend](/durable-objects/how-to/access-storage/#create-sqlite-backed-durable-object-class) is recommended for all new Durable Object classes. Workers Free plan can only create and access SQLite-backed Durable Objects.
+- **Key-value backed Durable Objects**: [Key-value storage backend](/durable-objects/how-to/configure-migrations/#create-durable-object-class-with-key-value-storage) is only available on the Workers Paid plan.
 
 { props.product === "durable-objects" && <><AnchorHeading title="SQLite storage backend" depth={3}/></> }
 { props.product === "workers" && <><AnchorHeading title="SQLite storage backend" depth={4}/></> }
@@ -59,15 +90,21 @@ The [Durable Objects Storage API](/durable-objects/api/sqlite-storage-api/) is o
 
 <Details header="Footnotes" open={true}>
 
-<sup>1</sup> Rows read and rows written included limits and rates match [D1 pricing](/d1/platform/pricing/), Cloudflare's serverless SQL database.
+<sup>1</sup> Rows read and rows written included limits and rates match [D1
+pricing](/d1/platform/pricing/), Cloudflare's serverless SQL database.
 
-<sup>2</sup> Key-value methods like `get()`, `put()`, `delete()`, or `list()` store and query data in a hidden SQLite table and are billed as rows read and rows written.
+<sup>2</sup> Key-value methods like `get()`, `put()`, `delete()`, or `list()`
+store and query data in a hidden SQLite table and are billed as rows read and
+rows written.
 
 <sup>3</sup> Each `setAlarm()` is billed as a single row written.
 
 <sup>4</sup> Deletes are counted as rows written.
 
-<sup>5</sup> Durable Objects will be billed for stored data until the [data is removed](/durable-objects/best-practices/access-durable-objects-storage/#remove-a-durable-objects-storage). Once the data is removed, the object will be cleaned up automatically by the system.
+<sup>5</sup> Durable Objects will be billed for stored data until the [data is
+removed](/durable-objects/how-to/access-storage/#remove-a-durable-objects-storage).
+Once the data is removed, the object will be cleaned up automatically by the
+system.
 
 </Details>
 
@@ -83,16 +120,24 @@ The [Durable Objects Storage API](/durable-objects/api/sqlite-storage-api/) is o
 
 <Details header="Footnotes" open={true}>
 
-<sup>1</sup> A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.
+<sup>1</sup> A request unit is defined as 4 KB of data read or written. A
+request that writes or reads more than 4 KB will consume multiple units, for
+example, a 9 KB write will consume 3 write request units.
 
-<sup>2</sup> List operations are billed by read request units, based on the amount of data examined. For example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that does not return anything is billed for 1 read request unit.
+<sup>2</sup> List operations are billed by read request units, based on the
+amount of data examined. For example, a list request that returns a combined 80
+KB of keys and values will be billed 20 read request units. A list request that
+does not return anything is billed for 1 read request unit.
 
 <sup>3</sup> Each `setAlarm` is billed as a single write request unit.
 
-<sup>4</sup> Delete requests are unmetered. For example, deleting a 100 KB value will be charged one delete request.
+<sup>4</sup> Delete requests are unmetered. For example, deleting a 100 KB value
+will be charged one delete request.
 
-<sup>5</sup> Durable Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
+<sup>5</sup> Durable Objects will be billed for stored data until the data is
+removed. Once the data is removed, the object will be cleaned up automatically
+by the system.
 
-Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/sqlite-storage-api/) are billed the same as if they were a normal, individual request for each key.
+Requests that hit the [Durable Objects in-memory cache](/durable-objects/concepts/how-durable-objects-work/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/sqlite-storage-api/) are billed the same as if they were a normal, individual request for each key.
 
 </Details>

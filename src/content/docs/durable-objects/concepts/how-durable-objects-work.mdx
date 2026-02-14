@@ -1,0 +1,191 @@
+---
+title: How Durable Objects work
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import { GlossaryTooltip, Render } from "~/components";
+
+## Overview
+
+<Render file="what-are-durable-objects" product="durable-objects" />
+
+Durable Objects are built on top of the [Workers](/workers/) runtime. They support the same code (JavaScript and WASM) and similar memory and CPU limits. Each Durable Object is [implicitly created on first access](/durable-objects/api/namespace/#get) — your application does not need to manage their creation or destruction.
+
+Each Durable Object has its own [durable, transactional, and strongly consistent storage](/durable-objects/api/sqlite-storage-api/) (up to 10 GB[^1]), persisted across requests and accessible only within that object. There is no hard limit on how many Durable Objects can be created for each namespace, and they scale elastically as your application creates millions of objects.
+
+## Addressing and identity
+
+Every Durable Object belongs to a [namespace](/durable-objects/api/namespace/), which corresponds to a JavaScript class that implements the object's logic. To interact with a specific Durable Object, your Worker follows this sequence:
+
+1. **Namespace** — The namespace binding (for example, `env.MY_DURABLE_OBJECT`) gives your Worker access to the Durable Object class.
+2. **ID** — You obtain a [Durable Object ID](/durable-objects/api/id/) from the namespace, either randomly generated or derived from a user-provided name. The ID is globally unique and determines which object instance handles a request.
+3. **Stub** — You get a [Durable Object Stub](/durable-objects/api/stub/) from the ID. The stub acts as a local reference to the remote object.
+4. **Invocation** — You call a method on the stub. Only at this point does the runtime route a request to the Durable Object instance.
+
+```js
+// 1. Access the namespace binding
+// 2. Get a stub by name (derives an ID internally)
+const stub = env.MY_DURABLE_OBJECT.getByName("foo");
+// 3. Invoke a method — now the request is sent to the remote Durable Object
+const response = await stub.sayHello();
+```
+
+Creating a stub does not send a request to the Durable Object or instantiate it. The Durable Object's lifecycle begins only when a method is invoked on the stub.
+
+## Lifecycle
+
+A Durable Object can be in one of the following states at any moment:
+
+| State                                 | Description                                                                                                                                                                                                    |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Active, in-memory**                 | The Durable Object runs in memory and handles incoming requests.                                                                                                                                               |
+| **Idle, in-memory non-hibernateable** | The Durable Object waits for the next incoming request or event but does not satisfy the criteria for hibernation.                                                                                             |
+| **Idle, in-memory hibernateable**     | The Durable Object waits for the next incoming request or event and satisfies the criteria for hibernation. The runtime decides when to hibernate it — currently after 10 seconds of inactivity in this state. |
+| **Hibernated**                        | The Durable Object is removed from memory. Hibernated WebSocket connections stay connected.                                                                                                                    |
+| **Inactive**                          | The Durable Object is completely removed from the host process and may need to cold start. This is the initial state of all Durable Objects.                                                                   |
+
+![Lifecycle of a Durable Object](~/assets/images/durable-objects/lifecycle-of-a-do.png)
+
+### State transitions
+
+When a Durable Object is not running, the first incoming request or event (such as an alarm) executes the `constructor()` of the Durable Object class, then runs the corresponding function invoked. At this point the Durable Object enters the **active, in-memory** state.
+
+Once all incoming requests or events have been processed, the Durable Object remains idle in memory for a few seconds. Whether it enters a hibernateable or non-hibernateable idle state depends on the following conditions. Hibernation can only occur if **all** of these are true:
+
+- No `setTimeout`/`setInterval` scheduled callbacks are set.
+- No in-progress awaited `fetch()` exists.
+- No WebSocket Standard API is used.
+- No request or event is still being processed.
+
+After 10 seconds of no incoming request or event with all conditions satisfied, the Durable Object transitions to the **hibernated** state.
+
+:::caution
+When hibernated, in-memory state is discarded. Persist all important information to the Durable Object's storage before the object goes idle.
+:::
+
+If any condition is not met, the Durable Object remains in the **idle, in-memory, non-hibernateable** state. After 70–140 seconds of inactivity in this state, the Durable Object is evicted from memory entirely and transitions to **inactive**.
+
+Objects in the **hibernated** state keep their WebSocket clients connected. The runtime decides if and when to transition the object to **inactive** (for example, to move the object to a different host), which restarts the lifecycle.
+
+:::note[Duration charges]
+A Durable Object incurs charges only when it is **actively running in-memory** or **idle in-memory and non-hibernateable** (the green rectangles in the diagram).
+:::
+
+### Shutdown behavior
+
+Durable Objects shut down and restart periodically. This can happen because of:
+
+- New Worker [deployments](/workers/configuration/versions-and-deployments/) with code updates
+- Lack of requests following the state transitions documented above
+- Updates to the Workers runtime
+- Runtime decisions on where to host objects
+
+When a Durable Object shuts down, the instance is automatically restarted and new requests are routed to the new instance. In-flight requests are handled as follows:
+
+- **HTTP requests** — Allowed to finish for up to 30 seconds. If a request attempts to access storage during this grace period, it is stopped immediately to maintain the Durable Object's global uniqueness property.
+- **WebSocket connections** — Terminated automatically so the new instance can take over as soon as possible.
+- **Other invocations (email, cron)** — Treated similarly to HTTP requests.
+
+When your Durable Object code is updated, your Worker and Durable Objects are released globally in an eventually consistent manner. This can create a situation where a request reaches a new version of your Worker in one location and calls a Durable Object still running a previous version elsewhere. Refer to [Code updates](/durable-objects/platform/known-issues/#code-updates) for more information.
+
+### Working without shutdown hooks
+
+<Render file="working-without-shutdown-hooks" product="durable-objects" />
+
+## In-memory state
+
+Each <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip> has one active instance at any particular time. All requests sent to that Durable Object are handled by that same instance. This means variables on the object maintain state as long as the Durable Object is not evicted from memory.
+
+A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/sqlite-storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same instance, it is then possible to return initialized values without making further calls to persistent storage.
+
+```js
+import { DurableObject } from "cloudflare:workers";
+
+export class Counter extends DurableObject {
+	constructor(ctx, env) {
+		super(ctx, env);
+		// `blockConcurrencyWhile()` ensures no requests are delivered until
+		// initialization completes.
+		this.ctx.blockConcurrencyWhile(async () => {
+			let stored = await this.ctx.storage.get("value");
+			// After initialization, future reads do not need to access storage.
+			this.value = stored || 0;
+		});
+	}
+
+	// Handle HTTP requests from clients.
+	async fetch(request) {
+		// use this.value rather than storage
+	}
+}
+```
+
+A given instance of a Durable Object may share global memory with other instances defined in the same Worker code. In the example above, using a global variable `value` instead of the instance variable `this.value` would be incorrect — two different instances of `Counter` each have their own separate memory for `this.value`, but might share memory for a global variable. Avoid global variables for this reason.
+
+:::note[Built-in caching]
+The Durable Object's storage has a built-in in-memory cache. If you use `get()` to retrieve a value that was read or written recently, the result is returned instantly from cache. Instead of writing initialization code like above, you could call `get("value")` whenever you need it and rely on the built-in cache. Refer to the [Build a counter example](/durable-objects/examples/build-a-counter/) to learn more about this approach.
+
+However, in applications with more complex state, explicitly storing state in your object may be easier than making Storage API calls on every access.
+:::
+
+In-memory state is reset when the Durable Object hibernates after being idle. Persist any in-memory data to durable storage if that data will be needed when the Durable Object receives another request.
+
+Useful cases for in-memory state include:
+
+- Batching and aggregating information before persisting it to storage
+- Immediately rejecting or handling incoming requests that meet certain criteria
+- Caching values loaded from storage to avoid repeated reads
+
+## Storage
+
+Each Durable Object has its own private, colocated storage that is transactional and strongly consistent. Storage is attached to the specific Durable Object instance and cannot be accessed by other objects.
+
+There are two storage APIs:
+
+- [SQL API](/durable-objects/api/sqlite-storage-api/) — SQLite-based, available when using the [SQLite storage backend](/durable-objects/how-to/configure-migrations/#enable-sqlite-storage-backend-on-new-durable-object-class-migration). This is the recommended storage backend for new projects.
+- [Key-value (KV) API](/durable-objects/api/legacy-kv-storage-api/) — Available with both storage backends, but the only option with the legacy storage backend.
+
+When using the SQLite storage backend, you have access to both APIs. For more details on storage options, refer to [Storage](/durable-objects/reference/storage/).
+
+## Actor programming model
+
+Durable Objects implement the [Actor programming model](https://en.wikipedia.org/wiki/Actor_model). Popular examples of the Actor model include [Erlang](https://www.erlang.org/), [Elixir](https://elixir-lang.org/), [Akka](https://akka.io/), and [Microsoft Orleans for .NET](https://learn.microsoft.com/en-us/dotnet/orleans/overview).
+
+The Actor model simplifies distributed systems by abstracting communication between actors using RPC calls or message passing. It avoids concurrency pitfalls from shared memory — such as race conditions when multiple processes access the same data — by giving each actor its own single-threaded execution context.
+
+Each Durable Object instance acts as an actor:
+
+- **Receives messages** — incoming HTTP or [RPC](/workers/runtime-apis/rpc/) requests
+- **Executes logic** — in its own single-threaded context, using attached durable storage or in-memory state
+- **Sends messages** — outgoing HTTP or RPC requests and responses, including to other Durable Object instances
+
+Each Durable Object has specific [capacity limits](/durable-objects/platform/limits/#how-much-work-can-a-single-durable-object-do) that should influence your application's architecture. Refer to the [control plane / data plane pattern](/reference-architecture/diagrams/storage/durable-object-control-data-plane-pattern/) for guidance on designing applications that take full advantage of the platform.
+
+For more details on how safety and correctness are achieved, refer to ["Durable Objects: Easy, Fast, Correct — Choose three"](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
+
+## Location
+
+Durable Objects are automatically provisioned close to where they are first requested. You can [optionally provide a location hint](/durable-objects/how-to/configure-data-location/#provide-a-location-hint) to influence where each instance should be located. Durable Objects are not yet available in every Cloudflare data center — refer to [where.durableobjects.live](https://where.durableobjects.live/) for live locations.
+
+## Durable Objects in Cloudflare
+
+Many Cloudflare products use Durable Objects internally. The following blog posts showcase real-world applications and use cases that may serve as architectural inspiration:
+
+- [Durable Objects aren't just durable, they're fast: a 10x speedup for Cloudflare Queues](https://blog.cloudflare.com/how-we-built-cloudflare-queues/)
+- [Behind the scenes with Stream Live, Cloudflare's live streaming service](https://blog.cloudflare.com/behind-the-scenes-with-stream-live-cloudflares-live-streaming-service/)
+- [DO it again: how we used Durable Objects to add WebSockets support and authentication to AI Gateway](https://blog.cloudflare.com/do-it-again/)
+- [Workers Builds: integrated CI/CD built on the Workers platform](https://blog.cloudflare.com/workers-builds-integrated-ci-cd-built-on-the-workers-platform/)
+- [Build durable applications on Cloudflare Workers: you write the Workflows, we take care of the rest](https://blog.cloudflare.com/building-workflows-durable-execution-on-workers/)
+- [Building D1: a Global Database](https://blog.cloudflare.com/building-d1-a-global-database/)
+- [Billions and billions (of logs): scaling AI Gateway with the Cloudflare Developer Platform](https://blog.cloudflare.com/billions-and-billions-of-logs-scaling-ai-gateway-with-the-cloudflare/)
+- [Indexing millions of HTTP requests using Durable Objects](https://blog.cloudflare.com/r2-rayid-retrieval/)
+
+The following posts cover technical implementation details:
+
+- [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+- [Zero-latency SQLite storage in every Durable Object](https://blog.cloudflare.com/sqlite-in-durable-objects/)
+- [Workers Durable Objects Beta: A New Approach to Stateful Serverless](https://blog.cloudflare.com/introducing-workers-durable-objects/)
+
+[^1]: Storage per Durable Object with SQLite is currently 1 GB. This will be raised to 10 GB for general availability.

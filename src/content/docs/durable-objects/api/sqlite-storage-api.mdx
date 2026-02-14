@@ -1,11 +1,20 @@
 ---
 title: SQLite-backed Durable Object Storage
-pcx_content_type: concept
+pcx_content_type: reference
 sidebar:
   order: 6
 ---
 
-import { Render, Type, MetaInfo, GlossaryTooltip, TypeScriptExample, Details, Tabs, TabItem } from "~/components";
+import {
+	Render,
+	Type,
+	MetaInfo,
+	GlossaryTooltip,
+	TypeScriptExample,
+	Details,
+	Tabs,
+	TabItem,
+} from "~/components";
 
 :::note
 This page documents the storage API for the newer SQLite-backed Durable Objects.
@@ -43,7 +52,7 @@ export class Counter extends DurableObject {
 
 }
 
-```
+````
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -60,7 +69,7 @@ class Counter(DurableObject):
     value += 1
     await self.ctx.storage.put('value', value)
     return value
-```
+````
 
 </TabItem>
 
@@ -82,12 +91,12 @@ For example, using `sql.exec()` a user can create a table and insert rows.
 import { DurableObject } from "cloudflare:workers";
 
 export class MyDurableObject extends DurableObject {
-  sql: SqlStorage;
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
-    this.sql = ctx.storage.sql;
+	sql: SqlStorage;
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.sql = ctx.storage.sql;
 
-    this.sql.exec(`
+		this.sql.exec(`
       CREATE TABLE IF NOT EXISTS artist(
         artistid    INTEGER PRIMARY KEY,
         artistname  TEXT
@@ -97,7 +106,7 @@ export class MyDurableObject extends DurableObject {
         (456, 'Bob'),
         (789, 'Charlie');
     `);
-  }
+	}
 }
 ```
 
@@ -129,15 +138,22 @@ class MyDurableObject(DurableObject):
 
 </Tabs>
 
-- SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) and will return an error if called on Durable Object classes with a KV-storage backend.
-- When writing data, every row update of an index counts as an additional row. However, indexes may be beneficial for read-heavy use cases. Refer to [Index for SQLite Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#index-for-sqlite-durable-objects).
+- SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQLite storage backend](/durable-objects/how-to/access-storage/#create-sqlite-backed-durable-object-class) and will return an error if called on Durable Object classes with a KV-storage backend.
+- When writing data, every row update of an index counts as an additional row. However, indexes may be beneficial for read-heavy use cases. Refer to [Index for SQLite Durable Objects](/durable-objects/how-to/access-storage/#index-for-sqlite-durable-objects).
 - Writing data to [SQLite virtual tables](https://www.sqlite.org/vtab.html) also counts towards rows written.
 
-<Render file="d1-do-supported-sqlite-extensions" product="d1" params={{ product: "Durable Objects support" }}/>
+<Render
+	file="d1-do-supported-sqlite-extensions"
+	product="d1"
+	params={{ product: "Durable Objects support" }}
+/>
 
 ### `exec`
 
-<code>exec(query: <Type text="string" />, ...bindings: <Type text="any[]" />)</code>: <Type text="SqlStorageCursor" />
+<code>
+	exec(query: <Type text="string" />, ...bindings: <Type text="any[]" />)
+</code>
+: <Type text="SqlStorageCursor" />
 
 #### Parameters
 
@@ -172,9 +188,9 @@ let cursor = this.sql.exec("SELECT * FROM artist ORDER BY artistname ASC;");
 let rawResult = cursor.raw().next();
 
 if (!rawResult.done) {
-  console.log(rawResult.value); // prints [ 123, 'Alice' ]
+	console.log(rawResult.value); // prints [ 123, 'Alice' ]
 } else {
-  // query returned zero results
+	// query returned zero results
 }
 
 console.log(cursor.toArray()); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
@@ -249,7 +265,7 @@ size = ctx.storage.sql.databaseSize
 
 ## PITR (Point In Time Recovery) API
 
-For [SQLite-backed Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class), the following point-in-time-recovery (PITR) API methods are available to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days. These methods apply to the entire SQLite database contents, including both the object's stored SQL data and stored key-value data using the key-value `put()` API. The PITR API is not supported in local development because a durable log of data changes is not stored locally.
+For [SQLite-backed Durable Objects](/durable-objects/how-to/access-storage/#create-sqlite-backed-durable-object-class), the following point-in-time-recovery (PITR) API methods are available to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days. These methods apply to the entire SQLite database contents, including both the object's stored SQL data and stored key-value data using the key-value `put()` API. The PITR API is not supported in local development because a durable log of data changes is not stored locally.
 
 The PITR API represents points in time using 'bookmarks'. A bookmark is a mostly alphanumeric string like `0000007b-0000b26e-00001538-0c3e87bb37b3db5cc52eedb93cd3b96b`. Bookmarks are designed to be lexically comparable: a bookmark representing an earlier point in time compares less than one representing a later point, using regular string comparison.
 
@@ -261,13 +277,19 @@ The PITR API represents points in time using 'bookmarks'. A bookmark is a mostly
 
 ### `getBookmarkForTime`
 
-<code>ctx.storage.getBookmarkForTime(timestamp: <Type text="number | Date" />)</code>: <Type text="Promise<string>" />
+<code>
+	ctx.storage.getBookmarkForTime(timestamp: <Type text="number | Date" />)
+</code>
+: <Type text="Promise<string>" />
 
 - Returns a bookmark representing approximately the given point in time, which must be within the last 30 days. If the timestamp is represented as a number, it is converted to a date as if using `new Date(timestamp)`.
 
 ### `onNextSessionRestoreBookmark`
 
-<code>ctx.storage.onNextSessionRestoreBookmark(bookmark: <Type text="string" />)</code>: <Type text="Promise<string>" />
+<code>
+	ctx.storage.onNextSessionRestoreBookmark(bookmark: <Type text="string" />)
+</code>
+: <Type text="Promise<string>" />
 
 - Configures the Durable Object so that the next time it restarts, it should restore its storage to exactly match what the storage contained at the given bookmark. After calling this, the application should typically invoke `ctx.abort()` to restart the Durable Object, thus completing the point-in-time recovery.
 
@@ -278,7 +300,7 @@ This method returns a special bookmark representing the point in time immediatel
 <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-const DAY_MS = 24*60*60*1000;
+const DAY_MS = 24 * 60 * 60 * 1000;
 // restore to 2 days ago
 let bookmark = ctx.storage.getBookmarkForTime(Date.now() - 2 * DAYS_MS);
 ctx.storage.onNextSessionRestoreBookmark(bookmark);
@@ -325,6 +347,6 @@ ctx.storage.onNextSessionRestoreBookmark(bookmark)
 
 ## Related resources
 
-- [Durable Objects: Easy, Fast, Correct  Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+- [Durable Objects: Easy, Fast, Correct Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
 - [Zero-latency SQLite storage in every Durable Object blog](https://blog.cloudflare.com/sqlite-in-durable-objects/)
-- [WebSockets API](/durable-objects/best-practices/websockets/)
+- [WebSockets API](/durable-objects/how-to/use-websockets/)

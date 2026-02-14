@@ -1,11 +1,20 @@
 ---
 title: KV-backed Durable Object Storage (Legacy)
-pcx_content_type: concept
+pcx_content_type: reference
 sidebar:
   order: 7
 ---
 
-import { Render, Type, MetaInfo, GlossaryTooltip, TypeScriptExample, Details, Tabs, TabItem } from "~/components";
+import {
+	Render,
+	Type,
+	MetaInfo,
+	GlossaryTooltip,
+	TypeScriptExample,
+	Details,
+	Tabs,
+	TabItem,
+} from "~/components";
 
 :::note
 This page documents the storage API for legacy KV-backed Durable Objects.
@@ -32,14 +41,15 @@ export class Counter extends DurableObject {
     super(ctx, env);
   }
 
-  async increment(): Promise<number> {
-    let value: number = (await this.ctx.storage.get("value")) || 0;
-    value += 1;
-    await this.ctx.storage.put("value", value);
-    return value;
-  }
+async increment(): Promise<number> {
+let value: number = (await this.ctx.storage.get("value")) || 0;
+value += 1;
+await this.ctx.storage.put("value", value);
+return value;
 }
-```
+}
+
+````
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -56,7 +66,7 @@ class Counter(DurableObject):
     value += 1
     await self.ctx.storage.put("value", value)
     return value
-```
+````
 
 </TabItem>
 
@@ -80,6 +90,6 @@ KV-backed Durable Objects provide KV API methods which are asynchronous.
 
 ## Related resources
 
-- [Durable Objects: Easy, Fast, Correct  Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+- [Durable Objects: Easy, Fast, Correct Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
 - [Zero-latency SQLite storage in every Durable Object blog](https://blog.cloudflare.com/sqlite-in-durable-objects/)
-- [WebSockets API](/durable-objects/best-practices/websockets/)
+- [WebSockets API](/durable-objects/how-to/use-websockets/)

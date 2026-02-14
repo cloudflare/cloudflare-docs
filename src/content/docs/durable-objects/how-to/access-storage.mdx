@@ -1,8 +1,8 @@
 ---
-title: Access Durable Objects Storage
-pcx_content_type: concept
+title: Access storage
+pcx_content_type: how-to
 sidebar:
-  order: 3
+  order: 1
 ---
 
 import { Render, GlossaryTooltip, WranglerConfig } from "~/components";
@@ -14,7 +14,7 @@ storage. Durable Objects
 <GlossaryTooltip term="Storage API">Storage API</GlossaryTooltip> provides
 access to a Durable Object's attached storage.
 
-A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object is not evicted from memory. Inactive Durable Objects with no incoming request traffic can be evicted. There are normal operations like [code deployments](/workers/configuration/versions-and-deployments/) that trigger Durable Objects to restart and lose their in-memory state. For these reasons, you should use Storage API to persist state durably on disk that needs to survive eviction or restart of Durable Objects.
+A Durable Object's [in-memory state](/durable-objects/concepts/how-durable-objects-work/) is preserved as long as the Durable Object is not evicted from memory. Inactive Durable Objects with no incoming request traffic can be evicted. There are normal operations like [code deployments](/workers/configuration/versions-and-deployments/) that trigger Durable Objects to restart and lose their in-memory state. For these reasons, you should use Storage API to persist state durably on disk that needs to survive eviction or restart of Durable Objects.
 
 ## Access storage
 
@@ -37,11 +37,12 @@ Use `new_sqlite_classes` on the migration in your Worker's Wrangler file:
 	"migrations": [
 		{
 			"tag": "v1", // Should be unique for each entry
-			"new_sqlite_classes": [ // Array of new classes
-				"MyDurableObject"
-			]
-		}
-	]
+			"new_sqlite_classes": [
+				// Array of new classes
+				"MyDurableObject",
+			],
+		},
+	],
 }
 ```
 

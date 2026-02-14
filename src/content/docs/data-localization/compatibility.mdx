@@ -25,7 +25,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | HTTP/3 (with QUIC)                         | ⚫️             | ✘                 | ⚫️                        |
 | Image Resizing                             | ✅              | ✅ [^6]           | 🚧 [^1]                    |
 | Load Balancing                             | ✅              | ✅                | 🚧 [^1]                    |
-| Network Error Logging (NEL)                | ⚫️              | ⚫️                 | ✘                         |
+| Network Error Logging (NEL)                | ⚫️             | ⚫️               | ✘                          |
 | Onion Routing                              | ✘               | ✘                 | ✘                          |
 | Orange-to-Orange (O2O)                     | ✘               | ✘                 | ✘                          |
 | Stream Delivery                            | ✅              | ✅                | ✅                         |
@@ -67,12 +67,12 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Cloudflare D1                  | ⚫️             | ⚫️               | 🚧 [^40]                   |
 | Durable Objects                | ⚫️             | ✅ [^7]           | 🚧 [^1]                    |
 | Email Routing                  | ⚫️             | ⚫️               | ✅                         |
-| Firewall for AI                | ✘              | ✘                | ✘                          |
-| Remote MCP Server              | ✅ [^44]        | ✅ [^45]           | 🚧 [^1]                   |
+| Firewall for AI                | ✘               | ✘                 | ✘                          |
+| Remote MCP Server              | ✅ [^44]        | ✅ [^45]          | 🚧 [^1]                    |
 | R2                             | ✅ [^27]        | ✅ [^8]           | ✅ [^28]                   |
 | Smart Placement                | ⚫️             | ✘                 | ✘                          |
 | Stream                         | ⚫️             | ✘                 | 🚧 [^1]                    |
-| Vectorize                      | ⚫️             | ✘                 | ✘                    			 |
+| Vectorize                      | ⚫️             | ✘                 | ✘                          |
 | Workers (deployed on a Zone)   | ✅              | ✅                | 🚧 [^41]                   |
 | Workers AI                     | ⚫️             | ✘                 | ✅                         |
 | Workers KV                     | ⚫️             | ✘                 | ✅ [^34]                   |
@@ -127,7 +127,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^6]: Only when using a Custom Domain set to a region, either through Workers or [Transform Rules](/images/transform-images/serve-images-custom-paths/) within the same zone.
 
-[^7]: [Jurisdiction restrictions for Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
+[^7]: [Jurisdiction restrictions for Durable Objects](/durable-objects/how-to/configure-data-location/#restrict-durable-objects-to-a-jurisdiction).
 
 [^8]: Only when using a [Custom Domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain) set to a region and using [jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).
 

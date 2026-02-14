@@ -1,6 +1,6 @@
 ---
 title: Durable Object Namespace
-pcx_content_type: concept
+pcx_content_type: reference
 sidebar:
   order: 2
 ---
@@ -120,7 +120,7 @@ After this first use, the location of the Durable Object will be cached around t
 
 #### Parameters
 
-- An optional object with the key `jurisdiction` and value of a [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
+- An optional object with the key `jurisdiction` and value of a [jurisdiction](/durable-objects/how-to/configure-data-location/#restrict-durable-objects-to-a-jurisdiction) string.
 
 #### Return values
 
@@ -154,7 +154,7 @@ const stub = env.MY_DURABLE_OBJECT.get(id);
 #### Parameters
 
 - A required [`DurableObjectId`](/durable-objects/api/id)
-- An optional object with the key `locationHint` and value of a [locationHint](/durable-objects/reference/data-location/#provide-a-location-hint) string.
+- An optional object with the key `locationHint` and value of a [locationHint](/durable-objects/how-to/configure-data-location/#provide-a-location-hint) string.
 
 #### Return values
 
@@ -181,7 +181,7 @@ const barStub = env.MY_DURABLE_OBJECT.getByName("bar");
 
 ### `jurisdiction`
 
-`jurisdiction` creates a subnamespace from a namespace where all Durable Object IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
+`jurisdiction` creates a subnamespace from a namespace where all Durable Object IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](/durable-objects/how-to/configure-data-location/#restrict-durable-objects-to-a-jurisdiction).
 
 ```js
 const subnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
@@ -190,7 +190,7 @@ const euStub = subnamespace.getByName("foo");
 
 #### Parameters
 
-- A required [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) string.
+- A required [jurisdiction](/durable-objects/how-to/configure-data-location/#restrict-durable-objects-to-a-jurisdiction) string.
 
 #### Return values
 

@@ -165,7 +165,7 @@ entries:
       - Fixed a bug which caused `Date.now()` to return skewed results if called before the first I/O of the first request after a Worker first started up. The value returned would be offset backwards by the amount of CPU time spent starting the Worker (compiling and running global scope), making it seem like the first I/O (e.g. first fetch()) was slower than it really was. This skew had nothing to do with Spectre mitigations; it was simply a longstanding bug.
   - publish_date: "2024-06-24"
     description: |-
-      - [Exceptions](/durable-objects/best-practices/error-handling) thrown from Durable Object internal operations and tunneled to the caller may now be populated with a `.retryable: true` property if the exception was likely due to a transient failure, or populated with an `.overloaded: true` property if the exception was due to [overload](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded).
+      - [Exceptions](/durable-objects/how-to/handle-errors/) thrown from Durable Object internal operations and tunneled to the caller may now be populated with a `.retryable: true` property if the exception was likely due to a transient failure, or populated with an `.overloaded: true` property if the exception was due to [overload](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded).
   - publish_date: "2024-06-20"
     description: |-
       - We now prompt for extra confirmation if attempting to rollback to a version of a Worker using the [Deployments API](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) where the value of a secret is different than the currently deployed version. A `?force=true` query parameter can be specified to proceed with the rollback.
@@ -291,7 +291,7 @@ entries:
       - Added the [`strict_compression_checks`](/workers/configuration/compatibility-flags/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
   - publish_date: "2023-05-26"
     description: |-
-      - A new [Hibernatable WebSockets API](/durable-objects/best-practices/websockets/)
+      - A new [Hibernatable WebSockets API](/durable-objects/how-to/use-websockets/)
       (beta) has been added to [Durable Objects](/durable-objects/). The Hibernatable
       WebSockets API allows a Durable Object that is not currently running an event
       handler (for example, processing a WebSocket message or alarm) to be removed from

@@ -1,11 +1,9 @@
 ---
-summary: Write tests for Durable Objects using the Workers Vitest integration.
-pcx_content_type: example
-title: Testing Durable Objects
+title: Test Durable Objects
+pcx_content_type: how-to
 sidebar:
-  order: 3
+  order: 9
 description: Write tests for Durable Objects using the Workers Vitest integration.
-reviewed: 2023-08-08
 ---
 
 import { WranglerConfig, TypeScriptExample, Tabs, TabItem } from "~/components";
@@ -17,21 +15,15 @@ Use the [`@cloudflare/vitest-pool-workers`](https://www.npmjs.com/package/@cloud
 Install Vitest and the Workers Vitest integration as dev dependencies:
 
 <Tabs>
-<TabItem label="npm">
-```sh
-npm i -D vitest@~3.2.0 @cloudflare/vitest-pool-workers
-```
-</TabItem>
-<TabItem label="pnpm">
-```sh
-pnpm add -D vitest@~3.2.0 @cloudflare/vitest-pool-workers
-```
-</TabItem>
-<TabItem label="yarn">
-```sh
-yarn add -D vitest@~3.2.0 @cloudflare/vitest-pool-workers
-```
-</TabItem>
+	<TabItem label="npm">
+		```sh npm i -D vitest@~3.2.0 @cloudflare/vitest-pool-workers ```
+	</TabItem>
+	<TabItem label="pnpm">
+		```sh pnpm add -D vitest@~3.2.0 @cloudflare/vitest-pool-workers ```
+	</TabItem>
+	<TabItem label="yarn">
+		```sh yarn add -D vitest@~3.2.0 @cloudflare/vitest-pool-workers ```
+	</TabItem>
 </Tabs>
 
 ## Example Durable Object
@@ -50,38 +42,39 @@ export class Counter extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
 
-		ctx.blockConcurrencyWhile(async () => {
-			this.ctx.storage.sql.exec(`
-				CREATE TABLE IF NOT EXISTS counters (
-					name TEXT PRIMARY KEY,
-					value INTEGER NOT NULL DEFAULT 0
-				)
-			`);
-		});
-	}
+    	ctx.blockConcurrencyWhile(async () => {
+    		this.ctx.storage.sql.exec(`
+    			CREATE TABLE IF NOT EXISTS counters (
+    				name TEXT PRIMARY KEY,
+    				value INTEGER NOT NULL DEFAULT 0
+    			)
+    		`);
+    	});
+    }
 
-	async increment(name: string = "default"): Promise<number> {
-		this.ctx.storage.sql.exec(
-			`INSERT INTO counters (name, value) VALUES (?, 1)
-			 ON CONFLICT(name) DO UPDATE SET value = value + 1`,
-			name
-		);
-		const result = this.ctx.storage.sql
-			.exec<{ value: number }>("SELECT value FROM counters WHERE name = ?", name)
-			.one();
-		return result.value;
-	}
+    async increment(name: string = "default"): Promise<number> {
+    	this.ctx.storage.sql.exec(
+    		`INSERT INTO counters (name, value) VALUES (?, 1)
+    		 ON CONFLICT(name) DO UPDATE SET value = value + 1`,
+    		name
+    	);
+    	const result = this.ctx.storage.sql
+    		.exec<{ value: number }>("SELECT value FROM counters WHERE name = ?", name)
+    		.one();
+    	return result.value;
+    }
 
-	async getCount(name: string = "default"): Promise<number> {
-		const result = this.ctx.storage.sql
-			.exec<{ value: number }>("SELECT value FROM counters WHERE name = ?", name)
-			.toArray();
-		return result[0]?.value ?? 0;
-	}
+    async getCount(name: string = "default"): Promise<number> {
+    	const result = this.ctx.storage.sql
+    		.exec<{ value: number }>("SELECT value FROM counters WHERE name = ?", name)
+    		.toArray();
+    	return result[0]?.value ?? 0;
+    }
 
-	async reset(name: string = "default"): Promise<void> {
-		this.ctx.storage.sql.exec("DELETE FROM counters WHERE name = ?", name);
-	}
+    async reset(name: string = "default"): Promise<void> {
+    	this.ctx.storage.sql.exec("DELETE FROM counters WHERE name = ?", name);
+    }
+
 }
 
 export default {
@@ -89,19 +82,21 @@ export default {
 		const url = new URL(request.url);
 		const counterId = url.searchParams.get("id") ?? "default";
 
-		const id = env.COUNTER.idFromName(counterId);
-		const stub = env.COUNTER.get(id);
+    	const id = env.COUNTER.idFromName(counterId);
+    	const stub = env.COUNTER.get(id);
 
-		if (request.method === "POST") {
-			const count = await stub.increment();
-			return Response.json({ count });
-		}
+    	if (request.method === "POST") {
+    		const count = await stub.increment();
+    		return Response.json({ count });
+    	}
 
-		const count = await stub.getCount();
-		return Response.json({ count });
-	},
+    	const count = await stub.getCount();
+    	return Response.json({ count });
+    },
+
 };
-```
+
+````
 </TypeScriptExample>
 
 ## Configure Vitest
@@ -120,7 +115,7 @@ export default defineWorkersConfig({
 		},
 	},
 });
-```
+````
 
 Make sure your Wrangler configuration includes the Durable Object binding and SQLite migration:
 
@@ -151,9 +146,9 @@ Create a `test/tsconfig.json` to configure TypeScript for your tests:
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"moduleResolution": "bundler",
-		"types": ["@cloudflare/vitest-pool-workers"]
+		"types": ["@cloudflare/vitest-pool-workers"],
 	},
-	"include": ["./**/*.ts", "../src/worker-configuration.d.ts"]
+	"include": ["./**/*.ts", "../src/worker-configuration.d.ts"],
 }
 ```
 
@@ -177,64 +172,66 @@ import { env } from "cloudflare:test";
 import { describe, it, expect, beforeEach } from "vitest";
 
 describe("Counter Durable Object", () => {
-	// Each test gets isolated storage automatically
-	it("should increment the counter", async () => {
-		const id = env.COUNTER.idFromName("test-counter");
-		const stub = env.COUNTER.get(id);
+// Each test gets isolated storage automatically
+it("should increment the counter", async () => {
+const id = env.COUNTER.idFromName("test-counter");
+const stub = env.COUNTER.get(id);
 
-		// Call RPC methods directly on the stub
-		const count1 = await stub.increment();
-		expect(count1).toBe(1);
+    	// Call RPC methods directly on the stub
+    	const count1 = await stub.increment();
+    	expect(count1).toBe(1);
 
-		const count2 = await stub.increment();
-		expect(count2).toBe(2);
+    	const count2 = await stub.increment();
+    	expect(count2).toBe(2);
 
-		const count3 = await stub.increment();
-		expect(count3).toBe(3);
-	});
+    	const count3 = await stub.increment();
+    	expect(count3).toBe(3);
+    });
 
-	it("should track separate counters independently", async () => {
-		const id = env.COUNTER.idFromName("test-counter");
-		const stub = env.COUNTER.get(id);
+    it("should track separate counters independently", async () => {
+    	const id = env.COUNTER.idFromName("test-counter");
+    	const stub = env.COUNTER.get(id);
 
-		await stub.increment("counter-a");
-		await stub.increment("counter-a");
-		await stub.increment("counter-b");
+    	await stub.increment("counter-a");
+    	await stub.increment("counter-a");
+    	await stub.increment("counter-b");
 
-		expect(await stub.getCount("counter-a")).toBe(2);
-		expect(await stub.getCount("counter-b")).toBe(1);
-		expect(await stub.getCount("counter-c")).toBe(0);
-	});
+    	expect(await stub.getCount("counter-a")).toBe(2);
+    	expect(await stub.getCount("counter-b")).toBe(1);
+    	expect(await stub.getCount("counter-c")).toBe(0);
+    });
 
-	it("should reset a counter", async () => {
-		const id = env.COUNTER.idFromName("test-counter");
-		const stub = env.COUNTER.get(id);
+    it("should reset a counter", async () => {
+    	const id = env.COUNTER.idFromName("test-counter");
+    	const stub = env.COUNTER.get(id);
 
-		await stub.increment("my-counter");
-		await stub.increment("my-counter");
-		expect(await stub.getCount("my-counter")).toBe(2);
+    	await stub.increment("my-counter");
+    	await stub.increment("my-counter");
+    	expect(await stub.getCount("my-counter")).toBe(2);
 
-		await stub.reset("my-counter");
-		expect(await stub.getCount("my-counter")).toBe(0);
-	});
+    	await stub.reset("my-counter");
+    	expect(await stub.getCount("my-counter")).toBe(0);
+    });
 
-	it("should isolate different Durable Object instances", async () => {
-		const id1 = env.COUNTER.idFromName("counter-1");
-		const id2 = env.COUNTER.idFromName("counter-2");
+    it("should isolate different Durable Object instances", async () => {
+    	const id1 = env.COUNTER.idFromName("counter-1");
+    	const id2 = env.COUNTER.idFromName("counter-2");
 
-		const stub1 = env.COUNTER.get(id1);
-		const stub2 = env.COUNTER.get(id2);
+    	const stub1 = env.COUNTER.get(id1);
+    	const stub2 = env.COUNTER.get(id2);
 
-		await stub1.increment();
-		await stub1.increment();
-		await stub2.increment();
+    	await stub1.increment();
+    	await stub1.increment();
+    	await stub2.increment();
 
-		// Each Durable Object instance has its own storage
-		expect(await stub1.getCount()).toBe(2);
-		expect(await stub2.getCount()).toBe(1);
-	});
+    	// Each Durable Object instance has its own storage
+    	expect(await stub1.getCount()).toBe(2);
+    	expect(await stub2.getCount()).toBe(1);
+    });
+
 });
-```
+
+````
 </TypeScriptExample>
 
 ### Integration tests with SELF
@@ -283,7 +280,8 @@ describe("Counter Worker integration", () => {
 		expect(dataB.count).toBe(1);
 	});
 });
-```
+````
+
 </TypeScriptExample>
 
 ### Direct access to Durable Object internals
@@ -301,46 +299,48 @@ import { describe, it, expect } from "vitest";
 import { Counter } from "../src";
 
 describe("Direct Durable Object access", () => {
-	it("can access instance internals and storage", async () => {
-		const id = env.COUNTER.idFromName("direct-test");
-		const stub = env.COUNTER.get(id);
+it("can access instance internals and storage", async () => {
+const id = env.COUNTER.idFromName("direct-test");
+const stub = env.COUNTER.get(id);
 
-		// First, interact normally via RPC
-		await stub.increment();
-		await stub.increment();
+    	// First, interact normally via RPC
+    	await stub.increment();
+    	await stub.increment();
 
-		// Then use runInDurableObject to inspect internals
-		await runInDurableObject(stub, async (instance: Counter, state) => {
-			// Access the exact same class instance
-			expect(instance).toBeInstanceOf(Counter);
+    	// Then use runInDurableObject to inspect internals
+    	await runInDurableObject(stub, async (instance: Counter, state) => {
+    		// Access the exact same class instance
+    		expect(instance).toBeInstanceOf(Counter);
 
-			// Access storage directly for verification
-			const result = state.storage.sql
-				.exec<{ value: number }>(
-					"SELECT value FROM counters WHERE name = ?",
-					"default"
-				)
-				.one();
-			expect(result.value).toBe(2);
-		});
-	});
+    		// Access storage directly for verification
+    		const result = state.storage.sql
+    			.exec<{ value: number }>(
+    				"SELECT value FROM counters WHERE name = ?",
+    				"default"
+    			)
+    			.one();
+    		expect(result.value).toBe(2);
+    	});
+    });
 
-	it("can list all Durable Object IDs in a namespace", async () => {
-		// Create some Durable Objects
-		const id1 = env.COUNTER.idFromName("list-test-1");
-		const id2 = env.COUNTER.idFromName("list-test-2");
+    it("can list all Durable Object IDs in a namespace", async () => {
+    	// Create some Durable Objects
+    	const id1 = env.COUNTER.idFromName("list-test-1");
+    	const id2 = env.COUNTER.idFromName("list-test-2");
 
-		await env.COUNTER.get(id1).increment();
-		await env.COUNTER.get(id2).increment();
+    	await env.COUNTER.get(id1).increment();
+    	await env.COUNTER.get(id2).increment();
 
-		// List all IDs in the namespace
-		const ids = await listDurableObjectIds(env.COUNTER);
-		expect(ids.length).toBe(2);
-		expect(ids.some((id) => id.equals(id1))).toBe(true);
-		expect(ids.some((id) => id.equals(id2))).toBe(true);
-	});
+    	// List all IDs in the namespace
+    	const ids = await listDurableObjectIds(env.COUNTER);
+    	expect(ids.length).toBe(2);
+    	expect(ids.some((id) => id.equals(id1))).toBe(true);
+    	expect(ids.some((id) => id.equals(id2))).toBe(true);
+    });
+
 });
-```
+
+````
 </TypeScriptExample>
 
 ### Test isolation
@@ -373,7 +373,8 @@ describe("Test isolation", () => {
 		expect(await stub.getCount()).toBe(0);
 	});
 });
-```
+````
+
 </TypeScriptExample>
 
 ### Testing SQLite storage
@@ -386,33 +387,35 @@ import { env, runInDurableObject } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 
 describe("SQLite in Durable Objects", () => {
-	it("can query and verify SQLite storage", async () => {
-		const id = env.COUNTER.idFromName("sqlite-test");
-		const stub = env.COUNTER.get(id);
+it("can query and verify SQLite storage", async () => {
+const id = env.COUNTER.idFromName("sqlite-test");
+const stub = env.COUNTER.get(id);
 
-		// Increment the counter a few times via RPC
-		await stub.increment("page-views");
-		await stub.increment("page-views");
-		await stub.increment("api-calls");
+    	// Increment the counter a few times via RPC
+    	await stub.increment("page-views");
+    	await stub.increment("page-views");
+    	await stub.increment("api-calls");
 
-		// Verify the data directly in SQLite
-		await runInDurableObject(stub, async (instance, state) => {
-			// Query the database directly
-			const rows = state.storage.sql
-				.exec<{ name: string; value: number }>("SELECT name, value FROM counters ORDER BY name")
-				.toArray();
+    	// Verify the data directly in SQLite
+    	await runInDurableObject(stub, async (instance, state) => {
+    		// Query the database directly
+    		const rows = state.storage.sql
+    			.exec<{ name: string; value: number }>("SELECT name, value FROM counters ORDER BY name")
+    			.toArray();
 
-			expect(rows).toEqual([
-				{ name: "api-calls", value: 1 },
-				{ name: "page-views", value: 2 },
-			]);
+    		expect(rows).toEqual([
+    			{ name: "api-calls", value: 1 },
+    			{ name: "page-views", value: 2 },
+    		]);
 
-			// Check database size is non-zero
-			expect(state.storage.sql.databaseSize).toBeGreaterThan(0);
-		});
-	});
+    		// Check database size is non-zero
+    		expect(state.storage.sql.databaseSize).toBeGreaterThan(0);
+    	});
+    });
+
 });
-```
+
+````
 </TypeScriptExample>
 
 ### Testing alarms
@@ -457,7 +460,8 @@ describe("Durable Object alarms", () => {
 		expect(alarmRanAgain).toBe(false);
 	});
 });
-```
+````
+
 </TypeScriptExample>
 
 To test alarms, add an `alarm()` method to your Durable Object:
@@ -469,17 +473,19 @@ import { DurableObject } from "cloudflare:workers";
 export class Counter extends DurableObject {
 	// ... other methods ...
 
-	async alarm() {
-		// This method is called when the alarm fires
-		// Reset all counters
-		this.ctx.storage.sql.exec("DELETE FROM counters");
-	}
+    async alarm() {
+    	// This method is called when the alarm fires
+    	// Reset all counters
+    	this.ctx.storage.sql.exec("DELETE FROM counters");
+    }
 
-	async scheduleReset(afterMs: number) {
-		await this.ctx.storage.setAlarm(Date.now() + afterMs);
-	}
+    async scheduleReset(afterMs: number) {
+    	await this.ctx.storage.setAlarm(Date.now() + afterMs);
+    }
+
 }
-```
+
+````
 </TypeScriptExample>
 
 ## Running tests
@@ -488,7 +494,7 @@ Run your tests with:
 
 ```sh
 npx vitest
-```
+````
 
 Or add a script to your `package.json`:
 

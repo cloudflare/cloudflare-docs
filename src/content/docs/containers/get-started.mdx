@@ -113,25 +113,23 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the
 		{
 			"max_instances": 10,
 			"class_name": "MyContainer",
-			"image": "./Dockerfile"
-		}
+			"image": "./Dockerfile",
+		},
 	],
 	"durable_objects": {
 		"bindings": [
 			{
 				"name": "MY_CONTAINER",
-				"class_name": "MyContainer"
-			}
-		]
+				"class_name": "MyContainer",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"MyContainer"
-			]
-		}
-	]
+			"new_sqlite_classes": ["MyContainer"],
+		},
+	],
 }
 ```
 
@@ -143,7 +141,7 @@ Important points about this config:
 - `class_name` must be a [Durable Object class name](/durable-objects/api/base/).
 - `max_instances` declares the maximum number of simultaneously running container instances
   that will run.
-- The Durable Object must use [`new_sqlite_classes`](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) not `new_classes`.
+- The Durable Object must use [`new_sqlite_classes`](/durable-objects/how-to/access-storage/#create-sqlite-backed-durable-object-class) not `new_classes`.
 
 ### The Container Image
 

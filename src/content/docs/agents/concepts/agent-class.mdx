@@ -34,7 +34,7 @@ The Workers runtime always calls the constructor to handle things internally. Th
 
 ### RPC
 
-By writing a Durable Object class which inherits from the built-in type `DurableObject`, public methods are exposed as RPC methods, which developers can call using a [DurableObjectStub from a Worker](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#invoking-methods-on-a-durable-object).
+By writing a Durable Object class which inherits from the built-in type `DurableObject`, public methods are exposed as RPC methods, which developers can call using a [DurableObjectStub from a Worker](/durable-objects/how-to/invoke-methods/#invoking-methods-on-a-durable-object).
 
 ```ts
 // This instance could've been active, hibernated,
@@ -48,11 +48,11 @@ await stub.bar();
 
 ### `fetch()`
 
-Durable Objects can take a `Request` from a Worker and send a `Response` back. This can only be done through the [`fetch`](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#invoking-the-fetch-handler) method (which the developer must implement).
+Durable Objects can take a `Request` from a Worker and send a `Response` back. This can only be done through the [`fetch`](/durable-objects/how-to/invoke-methods/#invoking-the-fetch-handler) method (which the developer must implement).
 
 ### WebSockets
 
-Durable Objects include first-class support for [WebSockets](/durable-objects/best-practices/websockets/). A Durable Object can accept a WebSocket it receives from a `Request` in `fetch` and forget about it. The base class provides methods that developers can implement that are called as callbacks. They effectively replace the need for event listeners.
+Durable Objects include first-class support for [WebSockets](/durable-objects/how-to/use-websockets/). A Durable Object can accept a WebSocket it receives from a `Request` in `fetch` and forget about it. The base class provides methods that developers can implement that are called as callbacks. They effectively replace the need for event listeners.
 
 The base class provides `webSocketMessage(ws, message)`, `webSocketClose(ws, code, reason, wasClean)` and `webSocketError(ws , error)` ([API](/workers/runtime-apis/websockets)).
 

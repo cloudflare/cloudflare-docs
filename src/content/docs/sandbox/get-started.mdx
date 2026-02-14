@@ -195,7 +195,7 @@ Your `wrangler.jsonc` connects three pieces together:
 
 - **containers** - Defines the [container image, instance type, and resource limits](/workers/wrangler/configuration/#containers) for your sandbox environment. If you expect to have multiple sandbox instances, you can increase `max_instances`.
 - **durable_objects** - You need not be familiar with [Durable Objects](/durable-objects) to use Sandbox SDK, but if you'd like, you can [learn more about Cloudflare Containers and Durable Objects](/containers/get-started/#each-container-is-backed-by-its-own-durable-object). This configuration creates a [binding](/workers/runtime-apis/bindings#what-is-a-binding) that makes the `Sandbox` Durable Object accessible in your Worker code.
-- **migrations** - Registers the `Sandbox` class, implemented by the Sandbox SDK, with [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage) (required once)
+- **migrations** - Registers the `Sandbox` class, implemented by the Sandbox SDK, with [SQLite storage backend](/durable-objects/how-to/access-storage/) (required once)
 
 For detailed configuration options including environment variables, secrets, and custom images, see the [Wrangler configuration reference](/sandbox/configuration/wrangler/).
 

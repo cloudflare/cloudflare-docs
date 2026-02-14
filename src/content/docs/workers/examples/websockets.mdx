@@ -1,5 +1,4 @@
 ---
-
 summary: Use the WebSockets API to communicate in real time with your Cloudflare Workers.
 tags:
   - WebSockets
@@ -27,7 +26,7 @@ WebSockets utilize an event-based system for receiving and sending messages, muc
 
 :::note
 
-If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination. Durable Objects provide a single-point-of-coordination for Cloudflare Workers, and are often used in parallel with WebSockets to persist state over multiple clients and connections. In this case, refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects' extended [WebSockets API](/durable-objects/best-practices/websockets/).
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination. Durable Objects provide a single-point-of-coordination for Cloudflare Workers, and are often used in parallel with WebSockets to persist state over multiple clients and connections. In this case, refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects' extended [WebSockets API](/durable-objects/how-to/use-websockets/).
 
 :::
 
@@ -56,12 +55,13 @@ When an incoming WebSocket request reaches the Workers function, it will contain
 
 ```js
 async function handleRequest(request) {
-  const upgradeHeader = request.headers.get('Upgrade');
-  if (!upgradeHeader || upgradeHeader !== 'websocket') {
-    return new Response('Expected Upgrade: websocket', { status: 426 });
-  }
+	const upgradeHeader = request.headers.get("Upgrade");
+	if (!upgradeHeader || upgradeHeader !== "websocket") {
+		return new Response("Expected Upgrade: websocket", { status: 426 });
+	}
 }
 ```
+
 </TabItem> <TabItem label="Rust" icon="seti:rust">
 
 ```rs
@@ -82,24 +82,23 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Res
 </TabItem> </Tabs>
 After you have appropriately checked for the `Upgrade` header, you can create a new instance of `WebSocketPair`, which contains server and client WebSockets. One of these WebSockets should be handled by the Workers function and the other should be returned as part of a `Response` with the [`101` status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/101), indicating the request is switching protocols:
 
-
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 async function handleRequest(request) {
-  const upgradeHeader = request.headers.get('Upgrade');
-  if (!upgradeHeader || upgradeHeader !== 'websocket') {
-    return new Response('Expected Upgrade: websocket', { status: 426 });
-  }
+	const upgradeHeader = request.headers.get("Upgrade");
+	if (!upgradeHeader || upgradeHeader !== "websocket") {
+		return new Response("Expected Upgrade: websocket", { status: 426 });
+	}
 
-  const webSocketPair = new WebSocketPair();
-  const client = webSocketPair[0],
-    server = webSocketPair[1];
+	const webSocketPair = new WebSocketPair();
+	const client = webSocketPair[0],
+		server = webSocketPair[1];
 
-  return new Response(null, {
-    status: 101,
-    webSocket: client,
-  });
+	return new Response(null, {
+		status: 101,
+		webSocket: client,
+	});
 }
 ```
 
@@ -134,25 +133,24 @@ The `WebSocketPair` constructor returns an Object, with the `0` and `1` keys eac
 
 In order to begin communicating with the `client` WebSocket in your Worker, call `accept` on the `server` WebSocket. This will tell the Workers runtime that it should listen for WebSocket data and keep the connection open with your `client` WebSocket:
 
-
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 async function handleRequest(request) {
-  const upgradeHeader = request.headers.get('Upgrade');
-  if (!upgradeHeader || upgradeHeader !== 'websocket') {
-    return new Response('Expected Upgrade: websocket', { status: 426 });
-  }
+	const upgradeHeader = request.headers.get("Upgrade");
+	if (!upgradeHeader || upgradeHeader !== "websocket") {
+		return new Response("Expected Upgrade: websocket", { status: 426 });
+	}
 
-  const webSocketPair = new WebSocketPair();
-  const [client, server] = Object.values(webSocketPair);
+	const webSocketPair = new WebSocketPair();
+	const [client, server] = Object.values(webSocketPair);
 
-  server.accept();
+	server.accept();
 
-  return new Response(null, {
-    status: 101,
-    webSocket: client,
-  });
+	return new Response(null, {
+		status: 101,
+		webSocket: client,
+	});
 }
 ```
 
@@ -189,23 +187,23 @@ WebSockets emit a number of [Events](/workers/runtime-apis/websockets/#events) t
 
 ```js
 async function handleRequest(request) {
-  const upgradeHeader = request.headers.get('Upgrade');
-  if (!upgradeHeader || upgradeHeader !== 'websocket') {
-    return new Response('Expected Upgrade: websocket', { status: 426 });
-  }
+	const upgradeHeader = request.headers.get("Upgrade");
+	if (!upgradeHeader || upgradeHeader !== "websocket") {
+		return new Response("Expected Upgrade: websocket", { status: 426 });
+	}
 
-  const webSocketPair = new WebSocketPair();
-  const [client, server] = Object.values(webSocketPair);
+	const webSocketPair = new WebSocketPair();
+	const [client, server] = Object.values(webSocketPair);
 
-  server.accept();
-  server.addEventListener('message', event => {
-    console.log(event.data);
-  });
+	server.accept();
+	server.addEventListener("message", (event) => {
+		console.log(event.data);
+	});
 
-  return new Response(null, {
-    status: 101,
-    webSocket: client,
-  });
+	return new Response(null, {
+		status: 101,
+		webSocket: client,
+	});
 }
 ```
 
@@ -247,28 +245,28 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Res
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono'
-import { upgradeWebSocket } from 'hono/cloudflare-workers'
+import { Hono } from "hono";
+import { upgradeWebSocket } from "hono/cloudflare-workers";
 
-const app = new Hono()
+const app = new Hono();
 
 app.get(
-  '*',
-  upgradeWebSocket((c) => {
-    return {
-      onMessage(event, ws) {
-        console.log('Received message from client:', event.data)
-        ws.send(`Echo: ${event.data}`)
-      },
-      onClose: () => {
-        console.log('WebSocket closed:', event)
-      },
-      onError: () => {
-        console.error('WebSocket error:', event)
-      },
-    }
-  })
-)
+	"*",
+	upgradeWebSocket((c) => {
+		return {
+			onMessage(event, ws) {
+				console.log("Received message from client:", event.data);
+				ws.send(`Echo: ${event.data}`);
+			},
+			onClose: () => {
+				console.log("WebSocket closed:", event);
+			},
+			onError: () => {
+				console.error("WebSocket error:", event);
+			},
+		};
+	}),
+);
 
 export default app;
 ```

@@ -1,8 +1,8 @@
 ---
 title: Use WebSockets
-pcx_content_type: concept
+pcx_content_type: how-to
 sidebar:
-  order: 5
+  order: 3
 ---
 
 import {
@@ -55,7 +55,7 @@ When a Durable Object receives no events (such as alarms or messages) for a shor
 
 To restore state after hibernation, use [`serializeAttachment`](#websocketserializeattachment) and [`deserializeAttachment`](#websocketdeserializeattachment) to persist data with each WebSocket connection.
 
-Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
+Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/how-durable-objects-work/) for more information.
 
 ### Hibernation example
 
@@ -197,7 +197,7 @@ self.ctx = state
 </TabItem>
 </Tabs>
 
-Configure your Wrangler file with a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/):
+Configure your Wrangler file with a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/how-to/configure-migrations/):
 
 <WranglerConfig>
 ```jsonc
@@ -668,7 +668,7 @@ self.currently_connected_websockets = 0
 </TabItem>
 </Tabs>
 
-Configure your Wrangler file with a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/):
+Configure your Wrangler file with a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/how-to/configure-migrations/):
 
 <WranglerConfig>
 ```jsonc

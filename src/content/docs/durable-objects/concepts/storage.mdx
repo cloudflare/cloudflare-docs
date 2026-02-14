@@ -1,0 +1,73 @@
+---
+title: Storage
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+import { GlossaryTooltip } from "~/components";
+
+Each <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip> has a private, embedded SQLite database. Storage is colocated with compute on the same machine, which means reads and writes have zero network latency. The <GlossaryTooltip term="Storage API">Storage API</GlossaryTooltip> exposes this database through SQL queries, a key-value interface, and point-in-time recovery.
+
+Storage is only accessible from within the Durable Object instance that owns it. No other Durable Object, Worker, or external client can read or write another object's storage directly. This isolation is fundamental to the Durable Objects programming model — each object encapsulates both its compute and its state.
+
+## Storage model
+
+Every Durable Object has its own dedicated SQLite database. Unlike traditional architectures that separate application servers from databases, Durable Objects run storage on the same machine as the code that accesses it. This colocation eliminates the network round-trip that typically dominates database access latency.
+
+Storage is transactional and strongly consistent. All reads reflect the most recent write, and concurrent requests to the same object are serialized. There is no eventual consistency or stale-read window.
+
+Each object supports up to 10 GB of storage[^1]. Storage persists across restarts and [hibernation](/durable-objects/concepts/how-durable-objects-work/) — unlike in-memory state, data written through the Storage API survives eviction.
+
+[^1]: Accounts on the Workers Free plan are limited to 5 GB total Durable Objects storage. Refer to [Limits](/durable-objects/platform/limits/) for the full set of storage constraints.
+
+## SQLite and key-value backends
+
+Durable Object classes use one of two <GlossaryTooltip term="Storage Backend">storage backends</GlossaryTooltip>: SQLite or key-value (KV). The backend is chosen when you first deploy a Durable Object class via a [migration](/durable-objects/how-to/configure-migrations/) in your Wrangler configuration file.
+
+**SQLite** is the recommended backend for new classes. It provides:
+
+- SQL queries through the `ctx.storage.sql` interface
+- Indexes for efficient reads
+- Synchronous execution with no `await` required for reads or writes
+- Point-in-time recovery (PITR)
+- A synchronous key-value API (the same methods as the legacy KV API, but without requiring `await`)
+
+**Key-value (KV)** is the legacy backend. It provides an asynchronous key-value API only, with no SQL support. Existing deployed classes that use the KV backend cannot currently be migrated to SQLite.
+
+SQLite-backed classes have access to both the SQL interface and the key-value interface. KV-backed classes have access to only the key-value interface.
+
+## Transactional guarantees
+
+Durable Objects enforce strong transactional guarantees through three mechanisms: write coalescing, <GlossaryTooltip term="input gate">input gates</GlossaryTooltip>, and <GlossaryTooltip term="output gate">output gates</GlossaryTooltip>.
+
+### Write coalescing
+
+Multiple SQL statements executed without an intervening `await` are automatically batched into a single implicit transaction. This means a sequence of `INSERT`, `UPDATE`, or `DELETE` calls within synchronous code either all succeed or all fail — there is no intermediate state visible to other requests.
+
+### Input gates
+
+While a storage operation is in progress, the Durable Objects runtime defers delivery of new incoming events (such as HTTP requests or WebSocket messages). This prevents a new request from observing storage in a partially-updated state.
+
+### Output gates
+
+When a storage write is in progress, outgoing network messages (such as `fetch` responses) are held until the write completes. If the write fails, the outgoing messages are discarded and replaced with errors, and the Durable Object restarts. This prevents the object from confirming an action to the outside world before that action is durably persisted.
+
+Together, these mechanisms allow application code to remain simple and sequential while still providing the safety of fully serializable transactions. For a detailed explanation, refer to the blog post [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
+
+## Point-in-time recovery
+
+SQLite-backed Durable Objects support point-in-time recovery (PITR). PITR uses <GlossaryTooltip term="bookmark">bookmarks</GlossaryTooltip> — opaque, lexically comparable strings that represent a specific state of the database at a moment in time.
+
+With PITR, a Durable Object's embedded SQLite database can be restored to any point in the past 30 days. The restoration applies to the entire database contents, including both SQL data and any data stored through the key-value API.
+
+PITR is not available for the legacy KV storage backend, and is not supported in local development. For the full API, refer to [PITR API](/durable-objects/api/sqlite-storage-api/#pitr-point-in-time-recovery-api).
+
+## Related resources
+
+- [Access storage](/durable-objects/how-to/access-storage/) — practical guidance for reading and writing storage
+- [SQLite Storage API reference](/durable-objects/api/sqlite-storage-api/) — full API documentation for SQL, key-value, and PITR methods
+- [Legacy KV Storage API reference](/durable-objects/api/legacy-kv-storage-api/) — API documentation for the legacy key-value backend
+- [Limits](/durable-objects/platform/limits/) — storage size limits and SQL constraints
+- [Zero-latency SQLite storage in every Durable Object](https://blog.cloudflare.com/sqlite-in-durable-objects/) — blog post on the SQLite storage architecture
+- [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) — blog post on transactional guarantees

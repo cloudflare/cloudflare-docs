@@ -1,5 +1,4 @@
 ---
-
 summary: Build a WebSocket server using Durable Objects and Workers.
 tags:
   - WebSockets
@@ -11,9 +10,15 @@ description: Build a WebSocket server using Durable Objects and Workers.
 reviewed: 2024-02-28
 ---
 
-import { TabItem, Tabs, GlossaryTooltip, WranglerConfig, TypeScriptExample } from "~/components";
+import {
+	TabItem,
+	Tabs,
+	GlossaryTooltip,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
 
-This example shows how to build a WebSocket server using <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> and Workers. The example exposes an endpoint to create a new WebSocket connection. This WebSocket connection echos any message while including the total number of WebSocket connections currently established. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/best-practices/websockets/).
+This example shows how to build a WebSocket server using <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> and Workers. The example exposes an endpoint to create a new WebSocket connection. This WebSocket connection echos any message while including the total number of WebSocket connections currently established. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/how-to/use-websockets/).
 
 :::caution
 
@@ -29,16 +34,16 @@ import { DurableObject } from 'cloudflare:workers';
 
 // Worker
 export default {
-    async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-        if (request.url.endsWith('/websocket')) {
-            // Expect to receive a WebSocket Upgrade request.
-            // If there is one, accept the request and return a WebSocket Response.
-            const upgradeHeader = request.headers.get('Upgrade');
-            if (!upgradeHeader || upgradeHeader !== 'websocket') {
-                return new Response('Worker expected Upgrade: websocket', {
-                    status: 426,
-                });
-            }
+async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+if (request.url.endsWith('/websocket')) {
+// Expect to receive a WebSocket Upgrade request.
+// If there is one, accept the request and return a WebSocket Response.
+const upgradeHeader = request.headers.get('Upgrade');
+if (!upgradeHeader || upgradeHeader !== 'websocket') {
+return new Response('Worker expected Upgrade: websocket', {
+status: 426,
+});
+}
 
             if (request.method !== 'GET') {
                 return new Response('Worker expected GET method', {
@@ -56,21 +61,22 @@ export default {
 
         return new Response(
             `Supported endpoints:
+
 /websocket: Expects a WebSocket upgrade request`,
-            {
-                status: 200,
-                headers: {
-                    'Content-Type': 'text/plain',
-                },
-            }
-        );
-    },
+{
+status: 200,
+headers: {
+'Content-Type': 'text/plain',
+},
+}
+);
+},
 };
 
 // Durable Object
 export class WebSocketServer extends DurableObject {
-    // Keeps track of all WebSocket connections
-    sessions: Map<WebSocket, { [key: string]: string }>;
+// Keeps track of all WebSocket connections
+sessions: Map<WebSocket, { [key: string]: string }>;
 
     constructor(ctx: DurableObjectState, env: Env) {
         super(ctx, env);
@@ -132,8 +138,10 @@ export class WebSocketServer extends DurableObject {
         this.sessions.delete(ws);
         ws.close(1000, 'Durable Object is closing WebSocket');
     }
+
 }
-```
+
+````
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -237,13 +245,13 @@ class WebSocketServer(DurableObject):
 		session = self.sessions.pop(session_id, None)
 		if session:
 			session.ws.close(1000, 'Durable Object is closing WebSocket')
-```
+````
 
 </TabItem>
 
 </Tabs>
 
-Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
+Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/how-to/configure-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
 <WranglerConfig>
 
@@ -256,18 +264,16 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 		"bindings": [
 			{
 				"name": "WEBSOCKET_SERVER",
-				"class_name": "WebSocketServer"
-			}
-		]
+				"class_name": "WebSocketServer",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"WebSocketServer"
-			]
-		}
-	]
+			"new_sqlite_classes": ["WebSocketServer"],
+		},
+	],
 }
 ```
 

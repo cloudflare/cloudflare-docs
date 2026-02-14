@@ -1,0 +1,62 @@
+---
+title: Communication
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { GlossaryTooltip } from "~/components";
+
+Workers and Durable Objects communicate through <GlossaryTooltip term="stub">stubs</GlossaryTooltip> — lightweight references that represent a remote Durable Object instance. This page explains the communication model and the tradeoffs between each approach.
+
+## Worker-to-Durable Object communication
+
+A Worker obtains a stub from a [Durable Object namespace binding](/durable-objects/api/namespace/) and then calls methods on that stub. Creating a stub does not instantiate the Durable Object. The Durable Object is only activated when you invoke a method on the stub for the first time.
+
+There are two ways to communicate with a Durable Object through a stub:
+
+- **RPC (recommended)** — Call public methods defined on the Durable Object class directly. RPC provides typed method signatures, structured error propagation, and a programming model that feels like calling a local function. Refer to [Workers RPC](/workers/runtime-apis/rpc/) for details on serialization and lifecycle.
+- **Fetch handler** — Send HTTP `Request` objects and receive `Response` objects through the Durable Object `fetch()` handler. This approach is useful for legacy projects or when you need to proxy raw HTTP requests into the Durable Object.
+
+RPC calls follow [E-order semantics](/durable-objects/api/stub/): multiple calls to the same stub are delivered in the order you make them. This guarantee simplifies distributed coordination because you do not need to manage request ordering yourself.
+
+## Durable Object-to-Durable Object communication
+
+A Durable Object can obtain stubs to other Durable Objects through its `env` bindings, the same way a Worker does. This makes it possible to build parent-child patterns where one Durable Object coordinates work across many others.
+
+For example, a room manager Durable Object can distribute incoming messages to per-user Durable Objects, each handling its own state independently. Because each child processes requests on its own single-threaded context, these calls execute in parallel across the Cloudflare network.
+
+The same two communication methods — RPC and fetch — are available for Durable Object-to-Durable Object calls.
+
+## WebSockets
+
+[WebSockets](/workers/runtime-apis/websockets/) provide persistent, bidirectional connections between clients and a Durable Object. A single Durable Object instance can manage thousands of concurrent WebSocket connections, which makes Durable Objects well suited for use cases like chat rooms, multiplayer games, and live dashboards.
+
+Two WebSocket APIs are available:
+
+- **Hibernation API (recommended)** — Extends the standard WebSocket API so the Durable Object can be removed from memory while connections remain open. Clients stay connected, but the Durable Object does not incur [duration charges](/durable-objects/platform/pricing/) while hibernated.
+- **Standard WebSocket API** — Uses the familiar `addEventListener` pattern. The Durable Object must stay in memory for the lifetime of every connection.
+
+### Why hibernation matters
+
+Without hibernation, a Durable Object holding open WebSocket connections stays in memory indefinitely — even if no messages are being exchanged. Hibernation breaks this coupling. When a Durable Object has no pending work and all its connections use the Hibernation API, the runtime evicts it from memory.
+
+When a message arrives on a hibernated connection, the Durable Object wakes up and its constructor runs again. In-memory state from before hibernation is lost. To preserve per-connection state across hibernation cycles, use [`serializeAttachment`](/durable-objects/how-to/use-websockets/#websocketserializeattachment) to store small values on individual WebSocket connections, or write to the [Storage API](/durable-objects/api/sqlite-storage-api/) for larger or shared state.
+
+Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/how-durable-objects-work/) for the full state transition diagram, including the conditions that must be true for hibernation to occur.
+
+## RPC details
+
+RPC calls are asynchronous. Every call returns a `Promise`, even if the remote method is synchronous.
+
+Arguments and return values are serialized using the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), with extensions for types like `ReadableStream` and RPC stubs. If the remote method throws, the exception propagates to the caller. Stack traces are not included in propagated exceptions for security reasons.
+
+Always `await` RPC calls or otherwise handle the returned `Promise`. Dropping a promise without awaiting it can leave the Durable Object in an unexpected state and will surface as an error in your Worker logs.
+
+For the full specification — including supported types, lifecycle semantics, and error handling — refer to [Workers RPC](/workers/runtime-apis/rpc/).
+
+## Related resources
+
+- [Invoke methods](/durable-objects/how-to/invoke-methods/) — step-by-step guide for calling Durable Object methods via RPC and fetch.
+- [Use WebSockets](/durable-objects/how-to/use-websockets/) — step-by-step guide for setting up WebSocket connections with hibernation.
+- [Workers RPC](/workers/runtime-apis/rpc/) — full reference for the RPC protocol, serialization, and error handling.

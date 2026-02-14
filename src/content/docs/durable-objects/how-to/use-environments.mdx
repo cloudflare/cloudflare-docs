@@ -1,9 +1,8 @@
 ---
-title: Environments
-pcx_content_type: concept
+title: Use environments
+pcx_content_type: how-to
 sidebar:
-  order: 9
-
+  order: 8
 ---
 
 import { WranglerConfig, DashButton } from "~/components";
@@ -28,20 +27,18 @@ Durable Object bindings are not inherited. For example, you can define an enviro
 				"bindings": [
 					{
 						"name": "EXAMPLE_CLASS",
-						"class_name": "DurableObjectExample"
-					}
-				]
-			}
-		}
-	}
+						"class_name": "DurableObjectExample",
+					},
+				],
+			},
+		},
+	},
 }
 ```
 
 </WranglerConfig>
 
 Because Wrangler appends the [environment name](/workers/wrangler/environments/) to the top-level name when publishing, for a Worker named `worker-name` the above example is equivalent to:
-
-
 
 <WranglerConfig>
 
@@ -54,12 +51,12 @@ Because Wrangler appends the [environment name](/workers/wrangler/environments/)
 					{
 						"name": "EXAMPLE_CLASS",
 						"class_name": "DurableObjectExample",
-						"script_name": "worker-name-staging"
-					}
-				]
-			}
-		}
-	}
+						"script_name": "worker-name-staging",
+					},
+				],
+			},
+		},
+	},
 }
 ```
 
@@ -68,8 +65,6 @@ Because Wrangler appends the [environment name](/workers/wrangler/environments/)
 `"EXAMPLE_CLASS"` in the staging environment is bound to a different Worker code name compared to the top-level `"EXAMPLE_CLASS"` binding, and will therefore access different Durable Objects with different persistent storage.
 
 If you want an environment-specific binding that accesses the same Objects as the top-level binding, specify the top-level Worker code name explicitly using `script_name`:
-
-
 
 <WranglerConfig>
 
@@ -82,12 +77,12 @@ If you want an environment-specific binding that accesses the same Objects as th
 					{
 						"name": "EXAMPLE_CLASS",
 						"class_name": "DurableObjectExample",
-						"script_name": "worker-name"
-					}
-				]
-			}
-		}
-	}
+						"script_name": "worker-name",
+					},
+				],
+			},
+		},
+	},
 }
 ```
 
@@ -97,7 +92,7 @@ If you want an environment-specific binding that accesses the same Objects as th
 
 You can define a Durable Object migration for each environment, as well as at the top level. Migrations at at the environment-level override migrations at the top level.
 
-For more information, refer to [Migration Wrangler Configuration](/durable-objects/reference/durable-objects-migrations/#migration-wrangler-configuration).
+For more information, refer to [Migration Wrangler Configuration](/durable-objects/how-to/configure-migrations/#migration-wrangler-configuration).
 
 ## Local development
 
@@ -116,6 +111,7 @@ To start remote development:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
+
 2. Select an existing Worker.
 3. Select the **Edit code** icon located on the upper-right of the screen.
 

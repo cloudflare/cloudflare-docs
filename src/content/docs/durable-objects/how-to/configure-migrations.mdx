@@ -1,8 +1,8 @@
 ---
-pcx_content_type: concept
-title: Durable Objects migrations
+title: Configure migrations
+pcx_content_type: how-to
 sidebar:
-  order: 2
+  order: 6
 ---
 
 import {
@@ -385,7 +385,7 @@ You can transfer stored Durable Objects from `DurableObjectExample` to `Transfer
   - If a migration is only specified at the top-level, but not at the environment-level, the environment will inherit the top-level migration.
   - Migrations at at the environment-level override migrations at the top level.
 
-- All migrations are applied at deployment. Each migration can only be applied once per [environment](/durable-objects/reference/environments/).
+- All migrations are applied at deployment. Each migration can only be applied once per [environment](/durable-objects/how-to/use-environments/).
 
 - Each migration in the list can have multiple directives, and multiple migrations can be specified as your project grows in complexity.
 
@@ -398,7 +398,7 @@ You can transfer stored Durable Objects from `DurableObjectExample` to `Transfer
 - After a Rename or Transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data.
 
 - After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Workers bound to the updated Durable Object class must update their Durable Object binding configuration in the `wrangler` configuration file for their next deployment.
-:::
+  :::
 
 :::note
 Note that `.toml` files do not allow line breaks in inline tables (the `{key = "value"}` syntax), but line breaks in the surrounding inline array are acceptable.
