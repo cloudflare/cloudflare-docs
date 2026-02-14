@@ -48,6 +48,25 @@ You must allowlist the IP addresses from this pool in your infrastructure before
   }}
 />
 
+## Check DCEI status for a zone
+
+<APIRequest
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="GET"
+/>
+
+## Turn off DCEI for a zone
+
+<APIRequest
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="PATCH"
+  json={{
+		  "id": "aegis",
+			"value": {
+				"enabled": false
+				}
+/>
+
 ## Check your IPs
 
 <Render
