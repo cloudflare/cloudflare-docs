@@ -16,11 +16,13 @@ Key guidance includes:
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-main = "src/index.ts"
-compatibility_date = "$today"
-compatibility_flags = ["nodejs_compat"]
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+}
 ```
 
 </WranglerConfig>
