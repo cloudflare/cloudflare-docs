@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, TypeScriptExample } from "~/components";
 
 ## Overview
 
@@ -24,13 +24,17 @@ Every Durable Object belongs to a [namespace](/durable-objects/api/namespace/), 
 3. **Stub** — You get a [Durable Object Stub](/durable-objects/api/stub/) from the ID. The stub acts as a local reference to the remote object.
 4. **Invocation** — You call a method on the stub. Only at this point does the runtime route a request to the Durable Object instance.
 
-```js
+<TypeScriptExample>
+
+```ts
 // 1. Access the namespace binding
 // 2. Get a stub by name (derives an ID internally)
 const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 // 3. Invoke a method — now the request is sent to the remote Durable Object
 const response = await stub.sayHello();
 ```
+
+</TypeScriptExample>
 
 Creating a stub does not send a request to the Durable Object or instantiate it. The Durable Object's lifecycle begins only when a method is invoked on the stub.
 
@@ -100,27 +104,33 @@ Each <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip> has
 
 A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/sqlite-storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same instance, it is then possible to return initialized values without making further calls to persistent storage.
 
-```js
+<TypeScriptExample>
+
+```ts
 import { DurableObject } from "cloudflare:workers";
 
 export class Counter extends DurableObject {
-	constructor(ctx, env) {
+	value: number = 0;
+
+	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
-		// `blockConcurrencyWhile()` ensures no requests are delivered until
+		// blockConcurrencyWhile ensures no requests are delivered until
 		// initialization completes.
 		this.ctx.blockConcurrencyWhile(async () => {
-			let stored = await this.ctx.storage.get("value");
+			const stored = await this.ctx.storage.get<number>("value");
 			// After initialization, future reads do not need to access storage.
-			this.value = stored || 0;
+			this.value = stored ?? 0;
 		});
 	}
 
-	// Handle HTTP requests from clients.
-	async fetch(request) {
-		// use this.value rather than storage
+	async getCount(): Promise<number> {
+		// Use the in-memory value rather than reading from storage.
+		return this.value;
 	}
 }
 ```
+
+</TypeScriptExample>
 
 A given instance of a Durable Object may share global memory with other instances defined in the same Worker code. In the example above, using a global variable `value` instead of the instance variable `this.value` would be incorrect — two different instances of `Counter` each have their own separate memory for `this.value`, but might share memory for a global variable. Avoid global variables for this reason.
 
@@ -147,7 +157,7 @@ There are two storage APIs:
 - [SQL API](/durable-objects/api/sqlite-storage-api/) — SQLite-based, available when using the [SQLite storage backend](/durable-objects/how-to/configure-migrations/#enable-sqlite-storage-backend-on-new-durable-object-class-migration). This is the recommended storage backend for new projects.
 - [Key-value (KV) API](/durable-objects/api/legacy-kv-storage-api/) — Available with both storage backends, but the only option with the legacy storage backend.
 
-When using the SQLite storage backend, you have access to both APIs. For more details on storage options, refer to [Storage](/durable-objects/reference/storage/).
+When using the SQLite storage backend, you have access to both APIs. For more details on storage options, refer to [Storage](/durable-objects/concepts/storage/).
 
 ## Actor programming model
 
