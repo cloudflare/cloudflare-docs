@@ -365,7 +365,7 @@ export default {
 
 ### Use Queues and Workflows for async and background work
 
-Long-running, retriable, or non-urgent tasks should not block a request. Use [Queues](/queues/) and [Workflows](/workflows/) to move work out of the critical path. They serve different purposes:
+Long-running, retryable, or non-urgent tasks should not block a request. Use [Queues](/queues/) and [Workflows](/workflows/) to move work out of the critical path. They serve different purposes:
 
 **Use Queues when** you need to decouple a producer from a consumer. Queues are a message broker: one Worker sends a message, another Worker processes it later. They are the right choice for fan-out (one event triggers many consumers), buffering and batching (aggregate messages before writing to a downstream service), and simple single-step background jobs (send an email, fire a webhook, write a log). Queues provide at-least-once delivery with configurable retries per message.
 

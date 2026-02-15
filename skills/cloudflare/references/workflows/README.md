@@ -16,7 +16,7 @@ Durable multi-step applications with automatic retries, state persistence, and l
 
 **Workflow**: Class extending `WorkflowEntrypoint` with `run` method
 **Instance**: Single execution with unique ID & independent state
-**Steps**: Independently retriable units via `step.do()` - API calls, DB queries, AI invocations
+**Steps**: Independently retryable units via `step.do()` - API calls, DB queries, AI invocations
 **State**: Persisted from step returns; step name = cache key
 
 ## Quick Start
