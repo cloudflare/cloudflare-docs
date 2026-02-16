@@ -15,7 +15,7 @@ import { DirectoryListing, Render } from "~/components";
 
 If a user notifies that “the connection is not working” or “performance is slow,” DEX allows you to:
 
-- Use [device monitoring](/cloudflare-one/insights/dex/monitoring/) to check device health and endpoint connectivity.
+- Use [device monitoring](/cloudflare-one/insights/dex/device-monitoring/) to check device health and endpoint connectivity.
 - Test network health and application responsiveness with [synthetic tests](/cloudflare-one/insights/dex/tests/).
 - Identify whether problems originate from the device (such as [issues with the WARP client](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/)), the network, or Cloudflare.
 
@@ -27,7 +27,7 @@ Use DEX to troubleshoot other Cloudflare One features:
 - Verify that a website routed through [Gateway](/cloudflare-one/traffic-policies/) is reachable from user devices.
 - Confirm that users can successfully reach internal resources after configuring a [Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
 
-You can export various DEX and WARP log data sets to R2, a cloud bucket, or a SIEM via [Logpush](/cloudflare-one/insights/logs/logpush/) to create customized logging and analytics experiences.    
+You can export various DEX and WARP log data sets to R2, a cloud bucket, or a SIEM via [Logpush](/cloudflare-one/insights/logs/logpush/) to create customized logging and analytics experiences.
 
 ### Get started
 
@@ -36,7 +36,7 @@ To start using DEX for device, network, and application monitoring:
 1. [Create a Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
 2. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/) and sign in to register your device to the organization.
 3. Create [tests](/cloudflare-one/insights/dex/tests/) to verify device connectivity to applications and networks.
-4. [Monitor](/cloudflare-one/insights/dex/monitoring/) device and network health across your fleet using real-time and historical metrics.
+4. [Monitor](/cloudflare-one/insights/dex/device-monitoring/) device and network health across your fleet using real-time and historical metrics.
 5. Run [remote captures](/cloudflare-one/insights/dex/remote-captures/) to collect diagnostic logs and packet captures from user devices.
 6. Set up [notifications](/cloudflare-one/insights/dex/notifications/) to get alerts when degraded connectivity or application performance is detected.
 
