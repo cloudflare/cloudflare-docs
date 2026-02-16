@@ -23,7 +23,7 @@ import { Render } from "~/components";
 
 <a href={props.gatewayURL}>Cloudflare Gateway</a>, our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, network, HTTP, and egress traffic.
 
-You can apply network and HTTP Gateway policies alongside <a href="/magic-firewall/">Magic Firewall</a> policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network through Magic WAN. Additionally, you can configure Gateway to [resolve DNS queries](#dns-filtering) from Magic WAN.
+You can apply network and HTTP Gateway policies alongside <a href="/magic-firewall/">Magic Firewall</a> policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network through Cloudflare WAN (formerly Magic WAN). Additionally, you can configure Gateway to [resolve DNS queries](#dns-filtering) from Cloudflare WAN.
 
 ## HTTPS filtering
 
@@ -35,11 +35,11 @@ You can use the <a href={props.warpURL}>WARP client</a> to <a href={props.cfAuto
 
 ### Exempting traffic from inspection
 
-If you cannot or do not want to install the certificate, you can create <a href={props.doNotInspectURL}>Do Not Inspect</a> policies to exempt incompatible Magic WAN traffic from inspection or to disable TLS decryption entirely.
+If you cannot or do not want to install the certificate, you can create <a href={props.doNotInspectURL}>Do Not Inspect</a> policies to exempt incompatible Cloudflare WAN traffic from inspection or to disable TLS decryption entirely.
 
-Because Gateway cannot discern Magic WAN traffic, you must use <a href={props.warpChecksURL}>WARP client checks</a> or the IP addresses associated with Magic WAN to match traffic with Gateway policies.
+Because Gateway cannot discern Cloudflare WAN traffic, you must use <a href={props.warpChecksURL}>WARP client checks</a> or the IP addresses associated with Cloudflare WAN to match traffic with Gateway policies.
 
-For example, if your organization onboards devices to Magic WAN using WARP, you can exempt devices not running WARP using <a href={props.osVersionChecks}>OS version checks</a>:
+For example, if your organization onboards devices to Cloudflare WAN using WARP, you can exempt devices not running WARP using <a href={props.osVersionChecks}>OS version checks</a>:
 
 | Selector                     | Operator | Value                | Logic | Action         |
 | ---------------------------- | -------- | -------------------- | ----- | -------------- |
@@ -49,7 +49,7 @@ For example, if your organization onboards devices to Magic WAN using WARP, you 
 | Passed Device Posture Checks | not in   | iOS (OS version)     | Or    | Do Not Inspect |
 | Passed Device Posture Checks | not in   | Android (OS version) |       | Do Not Inspect |
 
-If your organization onboards users to Magic WAN using an <a href={props.mwanOnrampsURL}>on-ramp other than WARP</a>, you can exempt devices from inspection using the IP addresses for your Magic IPsec tunnels:
+If your organization onboards users to Cloudflare WAN using an <a href={props.mwanOnrampsURL}>on-ramp other than WARP</a>, you can exempt devices from inspection using the IP addresses for your IPsec tunnels:
 
 | Selector  | Operator | Value            | Action         |
 | --------- | -------- | ---------------- | -------------- |
@@ -57,17 +57,17 @@ If your organization onboards users to Magic WAN using an <a href={props.mwanOnr
 
 ## DNS filtering
 
-You can configure the DNS resolver for your Magic WAN networks to the shared IP addresses for the Gateway DNS resolver. The Gateway DNS resolver IPs are `172.64.36.1` and `172.64.36.2`.
+You can configure the DNS resolver for your Cloudflare WAN networks to the shared IP addresses for the Gateway DNS resolver. The Gateway DNS resolver IPs are `172.64.36.1` and `172.64.36.2`.
 
-When you resolve DNS queries from Magic WAN through Gateway, Gateway will log the queries with the private source IP. You can use the private source IP to create <a href={props.gatewayResolverPoliciesURL}>resolver policies</a> for queries intended for <a href={props.gatewayInternalDnsURL}>internal DNS records</a>.
+When you resolve DNS queries from Cloudflare WAN through Gateway, Gateway will log the queries with the private source IP. You can use the private source IP to create <a href={props.gatewayResolverPoliciesURL}>resolver policies</a> for queries intended for <a href={props.gatewayInternalDnsURL}>internal DNS records</a>.
 
-The following diagram illustrates how DNS queries from Magic WAN and WARP Connector flow through Gateway to your internal DNS:
+The following diagram illustrates how DNS queries from Cloudflare WAN and WARP Connector flow through Gateway to your internal DNS:
 
 <pre class="mermaid">
 	{`
 flowchart LR
 accTitle: DNS query flow
-accDescr: Shows how DNS queries from Magic WAN and WARP Connector flow through Gateway to internal DNS.
+accDescr: Shows how DNS queries from Cloudflare WAN and WARP Connector flow through Gateway to internal DNS.
  subgraph subGraph0["Data center"]
     direction TB
         InternalDNS(["Internal DNS"])
@@ -77,30 +77,30 @@ accDescr: Shows how DNS queries from Magic WAN and WARP Connector flow through G
     ResolverPolicies -- Retain and use</br>Source Internal IP --> InternalDNS
     CloudflareGatewayDNSResolver -- <br> --> ResolverPolicies
     WarpConnector["WARP Connector"] -- DHCP/DNS resolver --> IPSecTunnel["IPsec tunnel"]
-    MagicWAN[$Magic WAN] -- DHCP/DNS resolver --> IPSecTunnel
+    CloudflareWAN[$Cloudflare WAN] -- DHCP/DNS resolver --> IPSecTunnel
     IPSecTunnel -- Shared IP endpoints --> CloudflareGatewayDNSResolver
     ResolverPolicies@{ shape: proc}
     WarpConnector@{ shape: in-out}
-    MagicWAN@{ shape: in-out}
+    CloudflareWAN@{ shape: in-out}
 	`}
 </pre>
 
 ## Outbound Internet traffic
 
-By default, the following traffic routed through Magic WAN tunnels and destined to public IP addresses is proxied/filtered through Cloudflare Gateway:
+By default, the following traffic routed through Cloudflare WAN tunnels and destined to public IP addresses is proxied/filtered through Cloudflare Gateway:
 
 - TCP, UDP, and ICMP traffic sourced from [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IPs or WARP devices.
 - TCP and UDP traffic sourced from [BYOIP](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/) and destined to a well-known port (`0`-`1023`).
 
-By default, traffic destined to public IPs will be routed over the public Internet. If you want to configure specific public IP ranges to be routed through your Magic WAN tunnels instead of over the public Internet after filtering, contact your account team.
+By default, traffic destined to public IPs will be routed over the public Internet. If you want to configure specific public IP ranges to be routed through your Cloudflare WAN tunnels instead of over the public Internet after filtering, contact your account team.
 
 This traffic will egress from Cloudflare according to the <a href={props.egressPoliciesURL}>egress policies</a> you define in Cloudflare Gateway. By default, it will egress from a shared Cloudflare public IP range.
 
 ## Private traffic
 
-By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and destined to routes behind <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel</a> will be proxied/filtered through Cloudflare Gateway.
+By default, TCP, UDP, and ICMP traffic routed through Cloudflare WAN tunnels and destined to routes behind <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel</a> will be proxied/filtered through Cloudflare Gateway.
 
-Contact your account team to enable Gateway filtering for traffic destined to routes behind Magic WAN tunnels.
+Contact your account team to enable Gateway filtering for traffic destined to routes behind Cloudflare WAN tunnels.
 
 ### Default filtering criteria
 
@@ -134,7 +134,7 @@ Source ports are fixed to `1024`-`65535` and cannot be overridden.
 
 ## Test Gateway integration
 
-To check if Gateway is working properly with your Magic WAN connection, open a browser from a host behind your customer premise equipment, and browse to `https://ifconfig.me`.
+To check if Gateway is working properly with your Cloudflare WAN connection, open a browser from a host behind your customer premise equipment, and browse to `https://ifconfig.me`.
 
 If you are still testing Gateway and Cloudflare is not your default route, configure a policy-based route on your router to send traffic to Cloudflare Gateway first.
 
@@ -143,7 +143,7 @@ Confirm there is an entry for the test in <a href={props.gatewayLogsURL}>HTTP Ga
 Verify the following details:
 - **Destination IP**: Should be the public IP address of `ifconfig.me`.
 - **Source IP**: Should be the private (WAN) address of the host with the browser.
-- **Outbound connection**: Should be sourced from a Magic WAN IP address, not any public IP address that Cloudflare might be advertising on your behalf.
+- **Outbound connection**: Should be sourced from a Cloudflare WAN IP address, not any public IP address that Cloudflare might be advertising on your behalf.
 
 This applies when using [Magic Transit With Egress Option](/reference-architecture/architectures/magic-transit/#magic-transit-with-egress-option-enabled) as well.
 

@@ -1,25 +1,25 @@
 ---
 pcx_content_type: how-to
-title: Set up Private Network Load Balancing with Magic WAN
+title: Set up Private Network Load Balancing with Cloudflare WAN
 sidebar:
   order: 3
 
 ---
 
-Consider the following steps to learn how to configure Private Network Load Balancing solution, using [Magic WAN](/magic-wan/) as the on-ramp and off-ramp to securely connect to your private or internal services.
+Consider the following steps to learn how to configure Private Network Load Balancing solution, using [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN) as the on-ramp and off-ramp to securely connect to your private or internal services.
 
-One of the pre-requisites to using Private Network Load Balancing (PNLB) with Magic WAN is having Magic WAN set up in your account and having completed onboarding. You can connect with a Magic WAN Connector, or your own hardware via an IPsec or GRE tunnel. Check out the [Magic WAN documentation](/magic-wan/get-started/) for more details or to get started.
+One of the pre-requisites to using Private Network Load Balancing (PNLB) with Cloudflare WAN is having Cloudflare WAN set up in your account and having completed onboarding. You can connect with a Cloudflare One Appliance, or your own hardware via an IPsec or GRE tunnel. Check out the [Cloudflare WAN documentation](/cloudflare-wan/get-started/) for more details or to get started.
 
 ## 1. Create Load Balancer Pools
 
 Load Balancer Pools are logical groupings of endpoints — typically organized by physical datacenter or geographic region. The endpoints in the pool are the destinations where traffic is ultimately routed.
 
 :::note
-Endpoints accessed via Magic WAN  must be accessible in and assigned to the default VNET.
+Endpoints accessed via Cloudflare WAN must be accessible in and assigned to the default VNET.
 :::
 
 :::caution
-The IP destination addresses must also be routable in your Magic WAN configuration. Please contact your Cloudflare account team to confirm that the addresses are available in your configuration.
+The IP destination addresses must also be routable in your Cloudflare WAN configuration. Please contact your Cloudflare account team to confirm that the addresses are available in your configuration.
 :::
 
 Pools can be created using either the Cloudflare dashboard or the API. Refer to the [Create a pool](/load-balancing/pools/create-pool/#create-a-pool) documentation section for more information.
@@ -37,7 +37,7 @@ Pools can be created using either the Cloudflare dashboard or the API. Refer to 
 After selecting an IP address and completing the setup, you will be redirected to the Load Balancing dashboard. You can locate your load balancer using the search bar or by filtering for **Private** load balancers. Be sure to note the assigned IP address, as it will be required in the following steps.
 
 :::note
-Traffic from your load balancer will appear to originate from one of Cloudflare's IP addresses. These IP addresses must be whitelisted to ensure proper traffic flow. Ensure your routing is properly configured to return traffic to your Magic WAN tunnels and not the public Internet. Private Load Balancers created with a Cloudflare private IP address will receive a default address in the CGNAT range `100.112.0.0`. This IP address is configurable. Refer to [Cloudflare source IP range](/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/configure-cloudflare-source-ips/) to learn more.
+Traffic from your load balancer will appear to originate from one of Cloudflare's IP addresses. These IP addresses must be whitelisted to ensure proper traffic flow. Ensure your routing is properly configured to return traffic to your Cloudflare WAN tunnels and not the public Internet. Private Load Balancers created with a Cloudflare private IP address will receive a default address in the CGNAT range `100.112.0.0`. This IP address is configurable. Refer to [Cloudflare source IP range](/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/configure-cloudflare-source-ips/) to learn more.
 :::
 
 ## 3. FQDN override (optional)

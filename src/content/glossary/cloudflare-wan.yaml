@@ -35,7 +35,7 @@ entries:
 
   - term: Internet key exchange (IKE)
     general_definition: |-
-      the protocol Cloudflare uses to create the IPsec tunnel between Magic WAN and the customer's device.
+      the protocol Cloudflare uses to create the IPsec tunnel between Cloudflare WAN and the customer's device.
     associated_products:
       - Magic Transit
 

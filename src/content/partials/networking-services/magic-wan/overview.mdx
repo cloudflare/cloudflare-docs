@@ -27,7 +27,7 @@ import { CardGrid, Description, Feature, GlossaryTooltip, LinkTitleCard, Plan, R
 
 With {props.productName}, you can securely connect any traffic source - data centers, offices, devices, cloud resources - to Cloudflare's network and configure routing policies to direct traffic where it needs to go, all within one SaaS solution.
 
-{props.productName} supports a variety of <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip> including any device that supports <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels.{props.magicWord === "Magic WAN" && <> To make it easier to onboard your cloud resources, you can use <a href={props.cloudNetworkingUrl}>Magic Cloud Networking</a>, which automates creating on-ramps from your cloud networks.</>}
+{props.productName} supports a variety of <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip> including any device that supports <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels.{props.magicWord === "Cloudflare WAN" && <> To make it easier to onboard your cloud resources, you can use <a href={props.cloudNetworkingUrl}>Multi-Cloud Networking</a>, which automates creating on-ramps from your cloud networks.</>}
 
 Refer to <a href={props.onRampsUrl}>On-ramps</a> for a full list of supported on-ramps.
 
@@ -61,7 +61,7 @@ Learn how to <a href={props.getStartedUrl}>get started</a>.
 	{props.connectorName}, start here to learn how to set up {props.productName} manually.
 </Feature>
 
-{props.magicWord === "Magic WAN" && (
+{props.magicWord === "Cloudflare WAN" && (
 	<>
 	<Feature
 	header="Automatic cloud on-ramps"
@@ -91,7 +91,7 @@ Use BGP (Border Gateway Protocol) peering between your networks and Cloudflare t
 
 ## Related products
 
-{props.magicWord === "Magic WAN" && (
+{props.magicWord === "Cloudflare WAN" && (
 	<>
 		<RelatedProduct
 		header="Cloudflare Zero Trust"
@@ -115,10 +115,10 @@ Use BGP (Border Gateway Protocol) peering between your networks and Cloudflare t
 	with advanced, and scalable protection.
 </RelatedProduct>
 
-{props.magicWord === "Magic WAN" && (
+{props.magicWord === "Cloudflare WAN" && (
 	<>
 	<RelatedProduct
-	header="Magic Cloud Networking"
+	header="Multi-Cloud Networking"
 	href="/magic-cloud-networking/"
 	product="magic-cloud-networking"
 >

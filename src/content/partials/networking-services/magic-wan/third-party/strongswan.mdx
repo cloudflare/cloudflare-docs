@@ -3,11 +3,11 @@ params:
   - bidirectionalHealthChecksUrl
 ---
 
-This tutorial explains how to set up strongSwan along with Magic WAN. You will learn how to configure strongSwan, configure an IPsec tunnel, and create Policy-Based Routing (PBR).
+This tutorial explains how to set up strongSwan along with Cloudflare WAN (formerly Magic WAN). You will learn how to configure strongSwan, configure an IPsec tunnel, and create Policy-Based Routing (PBR).
 
 ## 1. Configure health checks
 
-Configure the <a href={props.bidirectionalHealthChecksUrl}>bidirectional health checks</a> target for Magic WAN. For this tutorial, use `172.64.240.252` as the target IP address, and `type` as the request.
+Configure the <a href={props.bidirectionalHealthChecksUrl}>bidirectional health checks</a> target for Cloudflare WAN. For this tutorial, use `172.64.240.252` as the target IP address, and `type` as the request.
 
 This can be set up [with the API](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). For example:
 

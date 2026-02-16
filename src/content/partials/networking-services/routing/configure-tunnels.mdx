@@ -102,7 +102,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 )
 }
 
-{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{/* Dashboard steps for Cloudflare WAN and Magic Transit (standalone dashboards) */}
 { props.magicWord !== "WAN Tunnels" && (
 	<>
 	<Markdown
@@ -460,11 +460,11 @@ To check for tunnel health, Cloudflare sends a <a href={props.tunnelHealthChecks
 
 {/*
 	Conditional logic explanation:
-	- Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Magic WAN"
-	- Magic WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
+	- Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Cloudflare WAN"
+	- Cloudflare WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
 	This avoids saying "Magic Transit defaults to...Magic Transit" on the Magic Transit page.
 */}
-Cloudflare defaults to {props.magicWord === "Magic Transit" ? "unidirectional" : "bidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic Transit (direct server return)" : props.productName}, and {props.magicWord === "Magic Transit" ? "bidirectional" : "unidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic WAN" : "Magic Transit (direct server return)"}. However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
+Cloudflare defaults to {props.magicWord === "Magic Transit" ? "unidirectional" : "bidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic Transit (direct server return)" : props.productName}, and {props.magicWord === "Magic Transit" ? "bidirectional" : "unidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Cloudflare WAN" : "Magic Transit (direct server return)"}. However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
 
 { props.magicWord === "Magic Transit" && (
   <>

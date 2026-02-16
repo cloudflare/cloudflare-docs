@@ -36,7 +36,7 @@ Private hostname routing only works for applications connected with `cloudflared
 | [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/)                        | ✅            | 2025.7.0 |
 | [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/)              | ❌             | |
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌             | |
-| [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                                             | ❌             | |
+| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                                             | ❌             | |
 
 ## Connect a private hostname
 
@@ -64,10 +64,10 @@ Configuration steps vary depending on your [device on-ramp](#device-connectivity
 
 </Details>
 
-<Details header="Magic WAN">
+<Details header="Cloudflare WAN">
 
-1. Ensure that the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above [route through Magic WAN](/magic-wan/configuration/manually/how-to/configure-routes/) to Cloudflare.
-2. [Point the DNS resolver](/magic-wan/zero-trust/cloudflare-gateway/#dns-filtering) for your Magic WAN network to Cloudflare Gateway.
+1. Ensure that the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above [route through Cloudflare WAN](/cloudflare-wan/configuration/manually/how-to/configure-routes/) to Cloudflare.
+2. [Point the DNS resolver](/cloudflare-wan/zero-trust/cloudflare-gateway/#dns-filtering) for your Cloudflare WAN network to Cloudflare Gateway.
 
 </Details>
 

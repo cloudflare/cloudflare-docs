@@ -3,7 +3,7 @@ params:
   - configureTunnelEndpointsUrl
 ---
 
-This document is intended to provide Arista VeloCloud customers with the steps to provision non SD-WAN destinations through Edge for connectivity with Cloudflare Magic WAN.
+This document is intended to provide Arista VeloCloud customers with the steps to provision non SD-WAN destinations through Edge for connectivity with Cloudflare WAN (formerly Magic WAN).
 
 ## VeloCloud Edge Nodes profile configuration
 
@@ -49,7 +49,7 @@ Configure interface GE3 with the following settings:
 
 #### IPv6 settings
 
-IPv6 is currently not supported with Magic WAN. Uncheck the **Enabled** checkbox.
+IPv6 is currently not supported with Cloudflare WAN. Uncheck the **Enabled** checkbox.
 
 **Router Advertisement Host Settings**
 
@@ -89,7 +89,7 @@ Select **Save** to apply changes for Interface **GE3**.
 
 #### IPv6 Settings
 
-IPv6 is currently not supported with Magic WAN. Uncheck the **Enabled** checkbox.
+IPv6 is currently not supported with Cloudflare WAN. Uncheck the **Enabled** checkbox.
 
 **Router Advertisement Host Settings**
 
@@ -216,19 +216,19 @@ Note the indicator next to **GE3**. The steps in the Profile section disabled **
 6. In the **Action** column, select the **+** button, and configure the following options:
    1. **Public WAN Link**: Choose the Public WAN Link (refer to User-Defined WAN Link)
    2. **Local Identification Type**: *FQDN*
-   3. **Local Identification**: Enter the FQDN specified when configuring Magic WAN IPsec Tunnels through the Custom FQDN IKE ID API endpoint.
-   4. **PSK**: Enter the Pre-Shared Key. Ensure you use the same PSK for both Magic WAN IPsec Tunnels.
+   3. **Local Identification**: Enter the FQDN specified when configuring Cloudflare WAN IPsec tunnels through the Custom FQDN IKE ID API endpoint.
+   4. **PSK**: Enter the Pre-Shared Key. Ensure you use the same PSK for both Cloudflare WAN IPsec tunnels.
    5. **Destination Primary Public IP**: Pre-populated from the Network Service defined earlier.
    6. **Destination Secondary Public IP**: Pre-populated from the Network Service defined earlier.
 7. Select **Save** to finish defining the IPsec tunnel settings.
 8. Scroll down to the bottom of the Edge configuration page, and select **Save Changes** to finalize the Edge device configuration.
 
-## VeloCloud to Magic WAN Routing
+## VeloCloud to Cloudflare WAN routing
 
 Configure the **Site Subnets** to facilitate:
 
-* Routing traffic from one Magic WAN site to other Magic WAN sites.
-* Ensure Magic WAN IPsec tunnel health checks perform optimally.
+* Routing traffic from one Cloudflare WAN site to other Cloudflare WAN sites.
+* Ensure Cloudflare WAN IPsec tunnel health checks perform optimally.
 
 1. Go to **Configure** > **Network Services**.
 2. Expand the **Non SD-WAN Destinations through Edge** section.
@@ -238,14 +238,14 @@ Configure the **Site Subnets** to facilitate:
 
 Configure a minimum of three IPsec tunnels. This example demonstrates two routes for tunnel health checks and two routes for traffic destined for remote sites:
 
-- Magic WAN IPsec Tunnel Health Checks
+- Cloudflare WAN IPsec tunnel health checks
 - Primary VPN Gateway:
-  - To the respective Magic WAN IPv4 interface address associated with the primary Cloudflare anycast tunnel endpoint IP address
+  - To the respective Cloudflare WAN IPv4 interface address associated with the primary Cloudflare anycast tunnel endpoint IP address
   - Routed through the Primary VPN Gateway.
 - Secondary VPN Gateway:
-  - To the respective Magic WAN IPv4 interface address associated with the secondary Cloudflare anycast tunnel endpoint IP address
+  - To the respective Cloudflare WAN IPv4 interface address associated with the secondary Cloudflare anycast tunnel endpoint IP address
   - Routed through the Secondary VPN Gateway.
-- Remote Magic WAN Site(s): CIDR blocks to route through Cloudflare Magic WAN
+- Remote Cloudflare WAN site(s): CIDR blocks to route through Cloudflare WAN
   - The LAN interface for vc-edge-03 is:
     - 172.16.34.254/24 (subnet address: 172.16.34.0/24).
     - This does not need to be specified under Site Subnets as it is local.
@@ -268,9 +268,9 @@ Configure a minimum of three IPsec tunnels. This example demonstrates two routes
 
 3. Select **Save** to commit changes to the Site Subnets.
 
-## Magic WAN and Cloudflare Gateway
+## Cloudflare WAN and Cloudflare Gateway
 
-Cloudflare Magic WAN and Secure Web Gateway (Cloudflare Gateway) are tightly integrated. Arista VeloCloud customers can easily route traffic through Magic WAN to Cloudflare Gateway. All Internet egress traffic is subject to Cloudflare Gateway policies.
+Cloudflare WAN and Secure Web Gateway (Cloudflare Gateway) are tightly integrated. Arista VeloCloud customers can easily route traffic through Cloudflare WAN to Cloudflare Gateway. All Internet egress traffic is subject to Cloudflare Gateway policies.
 
 Arista VeloCloud's Business Policies allow for intelligent routing of traffic destined for the Internet with only a few selections.
 

@@ -4,7 +4,7 @@ params:
   - configureStaticRoutesUrl
 ---
 
-This tutorial describes how to configure the Yamaha RTX840 and RTX1300 series router to connect to Cloudflare Magic WAN via IPsec tunnels.
+This tutorial describes how to configure the Yamaha RTX840 and RTX1300 series router to connect to Cloudflare WAN (formerly Magic WAN) via IPsec tunnels.
 
 ## Testing environment
 
@@ -13,13 +13,13 @@ These configurations were tested on the Yamaha RTX840 and RTX1300 series with th
 - **RTX840 series**: 23.02.02
 - **RTX1300 series**: 23.00.17
 
-## Magic WAN configuration
+## Cloudflare WAN configuration
 
 You need to add IPsec tunnels and static routes to your Cloudflare account via the Cloudflare dashboard.
 
 Before proceeding, ensure that you have the anycast IPs associated with your account. Check with your Cloudflare account team if you do not yet have them.
 
-### Magic IPsec tunnels
+### IPsec tunnels
 
 1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
 	- **Tunnel name**: Enter your tunnel name. In this example, it is `RTX840-vpn01`.
@@ -36,7 +36,7 @@ Before proceeding, ensure that you have the anycast IPs associated with your acc
 2. After you create your tunnel, the Cloudflare dashboard will load a list of tunnels set up for your account. Select the IPsec tunnel you have just created, and check the following setting:
 	- **FQDN ID**: Copy this ID and save it. You will need it when configuring the IPsec tunnel on your RTX router.
 
-### Magic static routes
+### Static routes
 
 Static routes are required for any networks that will be reached via the IPsec tunnel. In our example, there is one network: `172.16.2.0/24`.
 

@@ -10,7 +10,7 @@ products:
     dlp,
     email-security-cf1,
     gateway,
-    magic-wan,
+    cloudflare-wan,
   ]
 sidebar:
   order: 1
@@ -88,7 +88,7 @@ One simple method for securing access to SaaS applications, is to only allow acc
 Organizations that already use IP allow lists to secure access to SaaS applications can easily migrate to Cloudflare using [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/). User traffic egresses from Cloudflare to the Internet and onto the SaaS application, sourced from a set of IP addresses unique to the organization. This approach supports various ways in which users access Cloudflare before gaining access to the SaaS application:
 
 - **Hybrid employees:** Connecting to Cloudflare using our Zero Trust client, [WARP](/cloudflare-one/team-and-resources/devices/warp/).
-- **Office-based users:** Connecting to a local network which routes Internet bound traffic to Cloudflare through GRE or IPsec [Magic WAN tunnels](/magic-wan/).
+- **Office-based users:** Connecting to a local network which routes Internet bound traffic to Cloudflare through GRE or IPsec [Cloudflare WAN tunnels](/cloudflare-wan/) (formerly Magic WAN).
 - **Contractors and external users:** Accessing SaaS applications through a [remote browser](/learning-paths/clientless-access/alternative-onramps/clientless-rbi/) hosted in a Cloudflare data center.
 
 Organizations add the new dedicated egress IPs to the existing SaaS IP allow lists for the Cloudflare sourced traffic to be allowed into the SaaS application. This way, organizations can maintain legacy connectivity methods in parallel with Cloudflare and migrate users gradually. Once all users are migrated to access with Cloudflare, the SaaS IP allow lists can be updated by removing the IPs corresponding to legacy infrastructure.
@@ -138,7 +138,7 @@ To mitigate these risks, controls should be implemented for both data in transit
 
 #### Data in transit
 
-As mentioned before, all traffic can be forced through Cloudflare using the device agent, Magic WAN (MWAN) tunnels, or the remote browser. This allows [secure web gateway](/cloudflare-one/traffic-policies/) policies to manage and protect data as it is uploaded or downloaded from SaaS applications. Common use cases include:
+As mentioned before, all traffic can be forced through Cloudflare using the device agent, Cloudflare WAN (CWAN) tunnels, or the remote browser. This allows [secure web gateway](/cloudflare-one/traffic-policies/) policies to manage and protect data as it is uploaded or downloaded from SaaS applications. Common use cases include:
 
 - Restricting the ability to download [all](/cloudflare-one/traffic-policies/http-policies/common-policies/#block-google-drive-downloads) or a [subset of files](/cloudflare-one/traffic-policies/http-policies/common-policies/#block-file-types) from managed SaaS applications to specific groups of users within the organization.
 - Using [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/#_top) profiles to limit the download of data containing sensitive information from managed SaaS applications.
