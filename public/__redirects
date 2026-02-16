@@ -992,6 +992,7 @@
 /learning-paths/get-started-free/other-features/product-lines/ /directory/ 301
 
 # load-balancing
+/load-balancing/private-network/magic-wan/ /load-balancing/private-network/cloudflare-wan/ 301
 /load-balancing/about/ /load-balancing/ 301
 /load-balancing/create-load-balancer-ui/ /load-balancing/load-balancers/create-load-balancer/ 301
 /load-balancing/how-to/create-pool/ /load-balancing/pools/create-pool/ 301
