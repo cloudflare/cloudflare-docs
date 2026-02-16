@@ -69,7 +69,7 @@ export default {
 		const server = createServer();
 		return createMcpHandler(server)(request, env, ctx);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>

@@ -179,7 +179,7 @@ export default {
 			new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 Refer to [Routing](/agents/api-reference/routing/) for custom paths, CORS, and instance naming patterns.
