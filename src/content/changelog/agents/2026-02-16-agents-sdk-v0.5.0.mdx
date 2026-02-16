@@ -1,0 +1,87 @@
+---
+title: "Agents SDK v0.5.0: Retry utilities, @cloudflare/ai-chat v0.1.0, and synchronous queue/schedule getters"
+description: The Agents SDK v0.5.0 adds built-in retry utilities with exponential backoff, the first stable release of @cloudflare/ai-chat with major bug fixes and new features, synchronous queue and schedule getter methods, and several developer experience improvements.
+products:
+  - agents
+  - workers
+date: 2026-02-16
+---
+
+import { TypeScriptExample } from "~/components";
+
+The latest release of the [Agents SDK](https://github.com/cloudflare/agents) adds built-in retry utilities, the first stable release of `@cloudflare/ai-chat`, synchronous queue and schedule getters, and several bug fixes.
+
+## Retry utilities
+
+A new `this.retry()` method lets you retry any async operation with exponential backoff and jitter. You can pass an optional `shouldRetry` predicate to bail early on non-retryable errors.
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	async onRequest(request: Request) {
+		const result = await this.retry(() => fetch("https://example.com/api"), {
+			maxRetries: 3,
+			shouldRetry: (error) => error.status !== 404,
+		});
+		return result;
+	}
+}
+```
+
+</TypeScriptExample>
+
+Retry options are also available per-task on `queue()`, `schedule()`, `scheduleEvery()`, and `addMcpServer()`:
+
+<TypeScriptExample>
+
+```ts
+// Per-task retry configuration, persisted in SQLite alongside the task
+await this.schedule("sendReport", Date.now() + 60_000, {
+	retry: { maxRetries: 5 },
+});
+
+// Class-level retry defaults
+class MyAgent extends Agent {
+	static options = {
+		retry: { maxRetries: 3 },
+	};
+}
+```
+
+</TypeScriptExample>
+
+Retry options are validated eagerly at enqueue/schedule time, and invalid values throw immediately. Internal retries have also been added for workflow operations (`terminateWorkflow`, `pauseWorkflow`, and others) with Durable Object-aware error detection.
+
+## @cloudflare/ai-chat v0.1.0
+
+The first stable release of `@cloudflare/ai-chat` ships alongside this release with a major refactor of `AIChatAgent`, including a new `ResumableStream` class, WebSocket `ChatTransport`, and simplified SSE parsing.
+
+Key new features:
+
+- **`maxPersistedMessages`** — Cap SQLite message storage with automatic oldest-message deletion.
+- **`body` option on `useAgentChat`** — Send custom data with every request (static or dynamic).
+- **Incremental persistence** — Hash-based cache to skip redundant SQL writes.
+- **Row size guard** — Automatic two-pass compaction when messages approach the SQLite 2 MB limit.
+- **`autoContinueAfterToolResult` defaults to `true`** — Client-side tool results and tool approvals now automatically trigger a server continuation, matching server-executed tool behavior. Set `autoContinueAfterToolResult: false` in `useAgentChat` to restore the previous behavior.
+
+Notable bug fixes include: `setMessages` functional updater sending empty arrays, `CF_AGENT_MESSAGE_UPDATED` not broadcasting for streaming messages, stream resumption race conditions, `clearAll()` not clearing in-memory chunk buffers, and `reasoning-delta` silently dropping data when `reasoning-start` was missed during stream resumption.
+
+## Synchronous queue and schedule getters
+
+`getQueue()`, `getQueues()`, `getSchedule()`, `dequeue()`, `dequeueAll()`, and `dequeueAllByCallback()` were unnecessarily `async` despite only performing synchronous SQL operations. They now return values directly instead of wrapping them in Promises. This is backward compatible — existing code using `await` on these methods will continue to work.
+
+## Other improvements
+
+- **Fix React hooks exhaustive-deps warning** — `useAgent` no longer triggers the React exhaustive-deps lint warning by correctly referencing `cacheInvalidatedAt` inside the `useMemo` body.
+- **Fix TypeScript "excessively deep" error** — A depth counter on `CanSerialize` and `IsSerializableParam` types bails out to `true` after 10 levels of recursion, preventing the "Type instantiation is excessively deep" error with deeply nested types like AI SDK `CoreMessage[]`.
+- **POST SSE keepalive** — The POST SSE handler now sends `event: ping` every 30 seconds to keep the connection alive, matching the existing GET SSE handler behavior. This prevents POST response streams from being silently dropped by proxies during long-running tool calls.
+- **Widened peer dependency ranges** — Peer dependency ranges across packages have been widened to prevent cascading major bumps during 0.x minor releases. `@cloudflare/ai-chat` and `@cloudflare/codemode` are now marked as optional peer dependencies.
+
+### Upgrade
+
+To update to the latest version:
+
+```sh
+npm i agents@latest @cloudflare/ai-chat@latest
+```
