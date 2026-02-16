@@ -326,7 +326,7 @@ It returns an object with:
 
 #### `unstable_convertConfigBindingsToStartWorkerBindings`
 
-The `unstable_readConfig` utility returns an `Unstable_Config` object which includes the definition of the bindings included in the configuration file. These bindings definitions
+The `unstable_readConfig` utility returns a `Promise` resolving to an `Unstable_Config` object which includes the definition of the bindings included in the configuration file. These bindings definitions
 are however not directly compatible with `startRemoteProxySession`. It can be quite convenient to however read the binding declarations with `unstable_readConfig` and then
 pass them to `startRemoteProxySession`, so for this wrangler exposes `unstable_convertConfigBindingsToStartWorkerBindings` which is a simple utility to convert
 the bindings in an `Unstable_Config` object into a structure that can be passed to `startRemoteProxySession`.
