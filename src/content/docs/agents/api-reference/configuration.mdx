@@ -339,12 +339,12 @@ Add a script for easy regeneration:
 
 ## Environment variables and secrets
 
-### Local development (`.dev.vars`)
+### Local development (`.env`)
 
-Create a `.dev.vars` file for local secrets (add to `.gitignore`):
+Create a `.env` file for local secrets (add to `.gitignore`):
 
 ```sh
-# .dev.vars
+# .env
 OPENAI_API_KEY=sk-...
 GITHUB_WEBHOOK_SECRET=whsec_...
 DATABASE_URL=postgres://...
@@ -825,10 +825,10 @@ npx wrangler types env.d.ts --include-runtime false
 
 ### Secrets not loading locally
 
-Check that `.dev.vars` exists and contains the variable:
+Check that `.env` exists and contains the variable:
 
 ```sh
-cat .dev.vars
+cat .env
 # Should show: MY_SECRET=value
 ```
 
