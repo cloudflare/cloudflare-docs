@@ -286,7 +286,7 @@ await this.saveMessages(messages);
 
 ### Lifecycle hooks
 
-`AIChatAgent` wraps `onConnect` and `onClose` to manage stream resumption and message loading. If you override these methods, you must call `super`:
+Override `onConnect` and `onClose` to add custom logic. Stream resumption and message sync are handled for you:
 
 <TypeScriptExample>
 
@@ -295,16 +295,12 @@ export class ChatAgent extends AIChatAgent {
 	async onConnect(connection, ctx) {
 		// Your custom logic (e.g., logging, auth checks)
 		console.log("Client connected:", connection.id);
-
-		// Required — sets up stream resumption and message sync
-		await super.onConnect(connection, ctx);
+		// Stream resumption and message sync are handled automatically
 	}
 
 	async onClose(connection, code, reason, wasClean) {
 		console.log("Client disconnected:", connection.id);
-
-		// Required — cleans up connection tracking
-		await super.onClose(connection, code, reason, wasClean);
+		// Connection cleanup is handled automatically
 	}
 }
 ```
@@ -1033,14 +1029,14 @@ The chat protocol uses typed JSON messages over WebSocket:
 
 The following APIs are deprecated and will emit a console warning when used. They will be removed in a future release.
 
-| Deprecated | Replacement | Notes |
-| --- | --- | --- |
-| `addToolResult({ toolCallId, result })` | `addToolOutput({ toolCallId, output })` | Renamed for consistency with AI SDK terminology |
-| `createToolsFromClientSchemas()` | Client tools are now registered automatically | No manual schema conversion needed |
-| `extractClientToolSchemas()` | Client tools are now registered automatically | Schemas are sent with tool results |
-| `detectToolsRequiringConfirmation()` | Use `needsApproval` on the tool definition | Approval is now per-tool, not a global filter |
-| `tools` option on `useAgentChat` | Define tools in `onChatMessage` on the server | All tool definitions belong on the server |
-| `toolsRequiringConfirmation` option | Use `needsApproval` on individual tools | Per-tool approval replaces global list |
+| Deprecated                              | Replacement                                   | Notes                                           |
+| --------------------------------------- | --------------------------------------------- | ----------------------------------------------- |
+| `addToolResult({ toolCallId, result })` | `addToolOutput({ toolCallId, output })`       | Renamed for consistency with AI SDK terminology |
+| `createToolsFromClientSchemas()`        | Client tools are now registered automatically | No manual schema conversion needed              |
+| `extractClientToolSchemas()`            | Client tools are now registered automatically | Schemas are sent with tool results              |
+| `detectToolsRequiringConfirmation()`    | Use `needsApproval` on the tool definition    | Approval is now per-tool, not a global filter   |
+| `tools` option on `useAgentChat`        | Define tools in `onChatMessage` on the server | All tool definitions belong on the server       |
+| `toolsRequiringConfirmation` option     | Use `needsApproval` on individual tools       | Per-tool approval replaces global list          |
 
 If you are upgrading from an earlier version, replace deprecated calls with their replacements. The deprecated APIs still work but will be removed in a future major version.
 
