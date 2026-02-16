@@ -250,6 +250,21 @@ Common causes:
 - Node.js using `https.createServer()` instead of `http.createServer()`
 - A framework started with an HTTPS flag (for example, `--experimental-https` in Next.js)
 - A framework redirecting HTTP to HTTPS (configure it to trust the proxy -- for example, `app.set('trust proxy', 1)` in Express)
+- Auth middleware or framework middleware producing HTTPS redirect URLs. `proxyToSandbox()` sets `X-Forwarded-Proto: https` on requests to your container. Frameworks like Next.js read this header and construct internal URLs with `https://`. If your middleware redirects using these URLs, the `Location` header may contain an absolute `https://` URL. The container binding follows redirects by default and rejects the `https://` scheme. To fix, use relative paths in redirects, or set your auth library's base URL to the container's internal HTTP address (for example, `NEXTAUTH_URL=http://localhost:3001`).
+
+#### Next.js
+
+Next.js reads the `X-Forwarded-Proto` header and uses it to construct internal URLs. When running `next dev` behind a Sandbox preview URL:
+
+- Middleware receives `request.url` with `https://` protocol
+- Auth libraries (NextAuth, Auth.js, Clerk) may construct redirect URLs using this protocol
+- Server Actions that call `redirect()` trigger an internal self-fetch using the HTTPS protocol
+
+To fix:
+
+- Set your auth library's base URL to the container's internal address: `NEXTAUTH_URL=http://localhost:3001` or `AUTH_URL=http://localhost:3001`
+- If using Server Actions with redirects, set `__NEXT_PRIVATE_ORIGIN=http://localhost:3001` as an environment variable in the container
+- Use relative paths in middleware redirects instead of constructing URLs from `request.url`
 
 ### Production Errors
 
