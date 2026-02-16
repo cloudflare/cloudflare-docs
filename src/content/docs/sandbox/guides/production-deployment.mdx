@@ -22,7 +22,7 @@ If your worker runs on a subdomain (for example, `sandbox.yourdomain.com`), prev
 You have three options:
 
 - **Deploy on the apex domain** (`yourdomain.com`) so preview URLs stay at the first level (`*.yourdomain.com`), which Universal SSL covers automatically. This is the simplest option.
-- **Use [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)** ($10/month) to provision a certificate for `*.sandbox.yourdomain.com` through the Cloudflare dashboard.
+- **Use [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)** to provision a certificate for `*.sandbox.yourdomain.com` through the Cloudflare dashboard.
 - **Upload a custom certificate** from a provider like [Let's Encrypt](https://letsencrypt.org/) (free). Generate a wildcard certificate for `*.sandbox.yourdomain.com` using the DNS-01 challenge, then upload it via the Cloudflare dashboard under **SSL/TLS** > **Edge Certificates** > **[Custom Certificates](/ssl/edge-certificates/custom-certificates/)**. You will need to renew it before expiry.
   :::
 
@@ -75,7 +75,7 @@ If your Worker runs on a subdomain (for example, `sandbox.yourdomain.com`), crea
 This routes all sub-subdomains of `sandbox.yourdomain.com` through Cloudflare's proxy. Preview URLs will look like `https://8080-sandbox-id-token.sandbox.yourdomain.com`.
 
 :::caution[TLS certificate required]
-You also need a TLS certificate covering `*.sandbox.yourdomain.com`. Universal SSL does not cover second-level wildcards. Refer to the [TLS caution at the top of this page](#subdomain-depth-matters-for-tls), or use [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) ($10/month) to order one through the dashboard.
+You also need a TLS certificate covering `*.sandbox.yourdomain.com`. Universal SSL does not cover second-level wildcards. Refer to the [TLS caution at the top of this page](#subdomain-depth-matters-for-tls), or use [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to order one through the dashboard.
 :::
 
 </TabItem>
@@ -152,7 +152,7 @@ const sandbox = getSandbox(env.Sandbox, "test-sandbox");
 await sandbox.startProcess("python -m http.server 8080");
 const exposed = await sandbox.exposePort(8080, { hostname });
 
-console.log(exposed.exposedAt);
+console.log(exposed.url);
 // https://8080-test-sandbox.yourdomain.com
 ```
 
@@ -164,7 +164,7 @@ Visit the URL in your browser to confirm your service is accessible.
 - **SSL/TLS errors**: Wait a few minutes for certificate provisioning. Verify the DNS record is proxied and SSL/TLS mode is set to "Full" or "Full (strict)" in your dashboard. If your worker is on a subdomain (for example, `sandbox.yourdomain.com`), Universal SSL will not cover the second-level wildcard `*.sandbox.yourdomain.com` -- see the [TLS caution](#subdomain-depth-matters-for-tls) at the top of this page for options.
 - **Preview URL not resolving**: Confirm the wildcard DNS record exists and is proxied. Wait 30-60 seconds for DNS propagation.
 - **Port not accessible**: Ensure your service binds to `0.0.0.0` (not `localhost`) and that `proxyToSandbox()` is called first in your Worker's fetch handler.
-- **"Connecting to a container using HTTPS is not currently supported"**: Your service inside the sandbox is using HTTPS (for example, Node.js `https.createServer()` or a framework with `--https` enabled). Configure it to serve plain HTTP instead. Cloudflare terminates TLS at the edge, so the browser connects over HTTPS, but the internal connection to your container uses HTTP. This is the same model as running behind any reverse proxy. If your framework checks the protocol and redirects HTTP to HTTPS, configure it to trust the proxy (for example, `app.set('trust proxy', 1)` in Express).
+- **Container HTTPS error**: Your service inside the sandbox is using HTTPS (for example, Node.js `https.createServer()` or a framework with `--https` enabled). Configure it to serve plain HTTP instead. Cloudflare terminates TLS at the edge, so the browser connects over HTTPS, but the internal connection to your container uses HTTP. This is the same model as running behind any reverse proxy. If your framework checks the protocol and redirects HTTP to HTTPS, configure it to trust the proxy (for example, `app.set('trust proxy', 1)` in Express).
 - **Error 1016 (Origin DNS error)**: Cloudflare cannot resolve the origin for the requested hostname. Verify your wildcard DNS record exists and is proxied (orange cloud). If your Worker runs on a subdomain like `sandbox.yourdomain.com`, the DNS record name must be `*.sandbox`, not `*`. Wait 30-60 seconds for propagation after creating the record.
 - **Error 522 (Connection timed out)**: Cloudflare timed out reaching the origin. This often happens temporarily after creating or changing DNS records and routes. Wait 60 seconds and retry. If it persists, verify `proxyToSandbox()` is called first in your Worker's fetch handler -- if it is not handling the request, Cloudflare tries to reach the `192.0.2.0` origin, which times out.
 

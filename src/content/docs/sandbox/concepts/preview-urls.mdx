@@ -196,7 +196,7 @@ Preview URLs are publicly accessible by default, but require a valid access toke
 **Built-in security**:
 
 - **Token-based access** - Each exposed port gets a unique token in the URL (for example, `https://8080-sandbox-abc123token456.yourdomain.com`)
-- **HTTPS in production** - All traffic between the browser and Cloudflare is encrypted with TLS. If your Worker runs on the apex domain, Cloudflare's Universal SSL covers `*.yourdomain.com` automatically. If your Worker runs on a subdomain (for example, `sandbox.yourdomain.com`), you need a certificate covering `*.sandbox.yourdomain.com` -- Universal SSL does not cover second-level wildcards. Refer to [Production Deployment](/sandbox/guides/production-deployment/) for options including Advanced Certificate Manager ($10/month).
+- **HTTPS in production** - All traffic between the browser and Cloudflare is encrypted with TLS. If your Worker runs on the apex domain, Cloudflare's Universal SSL covers `*.yourdomain.com` automatically. If your Worker runs on a subdomain (for example, `sandbox.yourdomain.com`), you need a certificate covering `*.sandbox.yourdomain.com` -- Universal SSL does not cover second-level wildcards. Refer to [Production Deployment](/sandbox/guides/production-deployment/) for options including [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/).
 - **Unpredictable URLs** - Auto-generated tokens are randomly generated and difficult to guess
 - **Token collision prevention** - Custom tokens are validated to ensure uniqueness within each sandbox
 
@@ -243,9 +243,7 @@ app.run((host = "127.0.0.1"), (port = 3000));
 
 ### Container HTTPS Error
 
-If you see: `Connecting to a container using HTTPS is not currently supported; use HTTP instead`
-
-Your service inside the sandbox is serving HTTPS. Configure it to serve HTTP instead. Cloudflare handles TLS between the browser and the edge -- the connection from the Durable Object to your container is internal and already secure.
+If you receive an error when connecting to your container, your service inside the sandbox may be serving HTTPS. Configure it to serve HTTP instead. Cloudflare handles TLS between the browser and the edge -- the connection from the Durable Object to your container is internal and already secure.
 
 Common causes:
 
