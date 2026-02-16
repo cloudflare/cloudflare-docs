@@ -1,13 +1,13 @@
 id: tCRt6h
-name: Magic Firewall
+name: Cloudflare Network Firewall
 
 entry:
-  title: Magic Firewall
-  url: /magic-firewall/
+  title: Cloudflare Network Firewall
+  url: /cloudflare-network-firewall/
   group: Cloudflare One
   additional_groups: [Network security]
 
 meta:
-  title: Cloudflare Magic Firewall docs
+  title: Cloudflare Network Firewall docs
   description: Protect your enterprise network with advanced firewall-as-a-service protection
   author: "@cloudflare"
