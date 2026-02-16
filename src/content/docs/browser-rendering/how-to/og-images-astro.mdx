@@ -1,6 +1,14 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: tutorial
 title: Generate OG images for Astro sites
+products:
+  - Browser Rendering
+  - R2
+  - Workers
+languages:
+  - TypeScript
+difficulty: Intermediate
+updated: 2026-01-29
 sidebar:
   order: 2
 ---
@@ -9,18 +17,18 @@ import { WranglerConfig } from "~/components";
 
 Open Graph (OG) images are the preview images that appear when you share a link on social media. Instead of manually creating these images for every blog post, you can use Cloudflare Browser Rendering to automatically generate branded social preview images from an Astro template.
 
-In this guide, you will:
+In this tutorial, you will:
 
 1. Create an Astro page that renders your OG image design.
 2. Use Browser Rendering to screenshot that page as a PNG.
 3. Serve the generated images to social media crawlers.
 
-This guide covers two approaches:
+This tutorial covers two approaches:
 
-| Approach | Best for | Trade-offs |
-|----------|----------|------------|
-| On-demand (Worker + R2) | Large sites, frequent updates | ~2s cold start on first request |
-| Build-time (Static) | Small sites, infrequent updates | Longer build times as site grows |
+| Approach                | Best for                        | Trade-offs                       |
+| ----------------------- | ------------------------------- | -------------------------------- |
+| On-demand (Worker + R2) | Large sites, frequent updates   | ~2s cold start on first request  |
+| Build-time (Static)     | Small sites, infrequent updates | Longer build times as site grows |
 
 ## Prerequisites
 
@@ -44,48 +52,48 @@ const author = Astro.url.searchParams.get("author");
 ---
 
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        width: 1200px;
-        height: 630px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        padding: 60px;
-        font-family: system-ui, sans-serif;
-        background: linear-gradient(135deg, #f38020 0%, #f9a825 100%);
-        color: white;
-      }
-      .title {
-        font-size: 64px;
-        font-weight: bold;
-        line-height: 1.1;
-        margin-bottom: 24px;
-      }
-      .author {
-        font-size: 24px;
-        opacity: 0.9;
-      }
-      .logo {
-        position: absolute;
-        top: 60px;
-        left: 60px;
-        height: 40px;
-      }
-    </style>
-  </head>
-  <body>
-    <img class="logo" src="/cloudflare-logo-white.svg" alt="Cloudflare" />
-    <h1 class="title">{title}</h1>
-    {author && <p class="author">By {author}</p>}
-  </body>
+	<head>
+		<meta charset="utf-8" />
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				width: 1200px;
+				height: 630px;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				padding: 60px;
+				font-family: system-ui, sans-serif;
+				background: linear-gradient(135deg, #f38020 0%, #f9a825 100%);
+				color: white;
+			}
+			.title {
+				font-size: 64px;
+				font-weight: bold;
+				line-height: 1.1;
+				margin-bottom: 24px;
+			}
+			.author {
+				font-size: 24px;
+				opacity: 0.9;
+			}
+			.logo {
+				position: absolute;
+				top: 60px;
+				left: 60px;
+				height: 40px;
+			}
+		</style>
+	</head>
+	<body>
+		<img class="logo" src="/cloudflare-logo-white.svg" alt="Cloudflare" />
+		<h1 class="title">{title}</h1>
+		{author && <p class="author">By {author}</p>}
+	</body>
 </html>
 ```
 
@@ -98,6 +106,7 @@ Test locally by visiting `http://localhost:4321/_internal/og?title=My%20Blog%20P
 This approach generates images on first request and caches them in R2.
 
 Create a Worker that:
+
 1. Receives requests for OG images
 2. Checks R2 for a cached version
 3. If not cached, uses Browser Rendering to screenshot the template
@@ -109,62 +118,62 @@ Create `og-worker/src/index.ts`:
 import puppeteer from "@cloudflare/puppeteer";
 
 interface Env {
-  BROWSER: Fetcher;
-  OG_IMAGES: R2Bucket;
+	BROWSER: Fetcher;
+	OG_IMAGES: R2Bucket;
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-    const slug = url.searchParams.get("slug");
-    const title = url.searchParams.get("title");
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const slug = url.searchParams.get("slug");
+		const title = url.searchParams.get("title");
 
-    if (!slug || !title) {
-      return new Response("Missing slug or title parameter", { status: 400 });
-    }
+		if (!slug || !title) {
+			return new Response("Missing slug or title parameter", { status: 400 });
+		}
 
-    // Check R2 cache first
-    const cacheKey = `og/${slug}.png`;
-    const cached = await env.OG_IMAGES.get(cacheKey);
+		// Check R2 cache first
+		const cacheKey = `og/${slug}.png`;
+		const cached = await env.OG_IMAGES.get(cacheKey);
 
-    if (cached) {
-      return new Response(cached.body, {
-        headers: {
-          "Content-Type": "image/png",
-          "Cache-Control": "public, max-age=86400",
-        },
-      });
-    }
+		if (cached) {
+			return new Response(cached.body, {
+				headers: {
+					"Content-Type": "image/png",
+					"Cache-Control": "public, max-age=86400",
+				},
+			});
+		}
 
-    // Generate image using Browser Rendering
-    const browser = await puppeteer.launch(env.BROWSER);
-    const page = await browser.newPage();
+		// Generate image using Browser Rendering
+		const browser = await puppeteer.launch(env.BROWSER);
+		const page = await browser.newPage();
 
-    await page.setViewport({ width: 1200, height: 630 });
+		await page.setViewport({ width: 1200, height: 630 });
 
-    // Navigate to your OG template, forwarding the title as a query param
-    const templateParams = new URLSearchParams({ title });
-    const author = url.searchParams.get("author");
-    if (author) templateParams.set("author", author);
+		// Navigate to your OG template, forwarding the title as a query param
+		const templateParams = new URLSearchParams({ title });
+		const author = url.searchParams.get("author");
+		if (author) templateParams.set("author", author);
 
-    const templateUrl = `https://your-blog.pages.dev/_internal/og?${templateParams}`;
-    await page.goto(templateUrl, { waitUntil: "networkidle0" });
+		const templateUrl = `https://your-blog.pages.dev/_internal/og?${templateParams}`;
+		await page.goto(templateUrl, { waitUntil: "networkidle0" });
 
-    const screenshot = await page.screenshot({ type: "png" });
-    await browser.close();
+		const screenshot = await page.screenshot({ type: "png" });
+		await browser.close();
 
-    // Cache in R2
-    await env.OG_IMAGES.put(cacheKey, screenshot, {
-      httpMetadata: { contentType: "image/png" },
-    });
+		// Cache in R2
+		await env.OG_IMAGES.put(cacheKey, screenshot, {
+			httpMetadata: { contentType: "image/png" },
+		});
 
-    return new Response(screenshot, {
-      headers: {
-        "Content-Type": "image/png",
-        "Cache-Control": "public, max-age=86400",
-      },
-    });
-  },
+		return new Response(screenshot, {
+			headers: {
+				"Content-Type": "image/png",
+				"Cache-Control": "public, max-age=86400",
+			},
+		});
+	},
 };
 ```
 
@@ -184,6 +193,7 @@ browser = { binding = "BROWSER" }
 binding = "OG_IMAGES"
 bucket_name = "og-images"
 ```
+
 </WranglerConfig>
 
 Deploy the Worker:
@@ -204,38 +214,38 @@ import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 
 interface Post {
-  slug: string;
-  title: string;
-  author?: string;
+	slug: string;
+	title: string;
+	author?: string;
 }
 
 async function generateOGImages() {
-  // Replace this with your own data-fetching logic
-  const posts: Post[] = await getPosts();
+	// Replace this with your own data-fetching logic
+	const posts: Post[] = await getPosts();
 
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.setViewport({ width: 1200, height: 630 });
+	const browser = await puppeteer.launch();
+	const page = await browser.newPage();
+	await page.setViewport({ width: 1200, height: 630 });
 
-  await mkdir("dist/og", { recursive: true });
+	await mkdir("dist/og", { recursive: true });
 
-  for (const post of posts) {
-    const params = new URLSearchParams({
-      title: post.title,
-      author: post.author || "",
-    });
+	for (const post of posts) {
+		const params = new URLSearchParams({
+			title: post.title,
+			author: post.author || "",
+		});
 
-    await page.goto(`http://localhost:4321/_internal/og?${params}`, {
-      waitUntil: "networkidle0",
-    });
+		await page.goto(`http://localhost:4321/_internal/og?${params}`, {
+			waitUntil: "networkidle0",
+		});
 
-    const screenshot = await page.screenshot({ type: "png" });
-    await writeFile(join("dist/og", `${post.slug}.png`), screenshot);
+		const screenshot = await page.screenshot({ type: "png" });
+		await writeFile(join("dist/og", `${post.slug}.png`), screenshot);
 
-    console.log(`Generated OG image for: ${post.slug}`);
-  }
+		console.log(`Generated OG image for: ${post.slug}`);
+	}
 
-  await browser.close();
+	await browser.close();
 }
 
 generateOGImages();
@@ -245,9 +255,9 @@ Add to your build script in `package.json`:
 
 ```json
 {
-  "scripts": {
-    "build": "astro build && tsx scripts/generate-og-images.ts"
-  }
+	"scripts": {
+		"build": "astro build && tsx scripts/generate-og-images.ts"
+	}
 }
 ```
 
@@ -271,17 +281,17 @@ const ogImageUrl = `https://og.your-domain.workers.dev/?${ogParams}`;
 ---
 
 <html>
-  <head>
-    <meta property="og:title" content={title} />
-    <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content={ogImageUrl} />
-  </head>
-  <body>
-    <slot />
-  </body>
+	<head>
+		<meta property="og:title" content={title} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:image" content={ogImageUrl} />
+	</head>
+	<body>
+		<slot />
+	</body>
 </html>
 ```
 
@@ -304,7 +314,7 @@ const image = Astro.url.searchParams.get("image");
 ---
 
 <body style={image ? `background-image: url(${image})` : undefined}>
-  <!-- content -->
+	<!-- content -->
 </body>
 ```
 
@@ -312,15 +322,15 @@ const image = Astro.url.searchParams.get("image");
 
 ```astro
 <head>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    body {
-      font-family: "Inter", sans-serif;
-    }
-  </style>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap"
+		rel="stylesheet"
+	/>
+	<style>
+		body {
+			font-family: "Inter", sans-serif;
+		}
+	</style>
 </head>
 ```
 
@@ -333,8 +343,10 @@ If your Astro site uses Tailwind, you can use it in your OG template:
 import "../styles/global.css";
 ---
 
-<body class="w-[1200px] h-[630px] bg-gradient-to-br from-orange-500 to-amber-500 p-16 flex flex-col justify-end text-white">
-  <h1 class="text-6xl font-bold leading-tight mb-6">{title}</h1>
+<body
+	class="flex h-[630px] w-[1200px] flex-col justify-end bg-gradient-to-br from-orange-500 to-amber-500 p-16 text-white"
+>
+	<h1 class="mb-6 text-6xl leading-tight font-bold">{title}</h1>
 </body>
 ```
 
