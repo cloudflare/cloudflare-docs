@@ -277,7 +277,7 @@ For more information, refer to [Streams](/workers/runtime-apis/streams/).
 
 [`ctx.waitUntil()`](/workers/runtime-apis/context/) lets you perform work after the response is sent to the client, such as analytics, cache writes, non-critical logging, or webhook notifications. This keeps your response fast while still completing background tasks.
 
-There are two common pitfalls: destructuring `ctx` (which loses the `this` binding and throws "Illegal invocation"), and exceeding the 30-second waitUntil time limit after the response is sent.
+There are two common pitfalls: destructuring `ctx` (which loses the `this` binding and throws "Illegal invocation"), and exceeding the 30-second `waitUntil` time limit after the response is sent.
 
 <TypeScriptExample filename="src/index.ts">
 
