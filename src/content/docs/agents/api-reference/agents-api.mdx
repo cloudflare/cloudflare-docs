@@ -143,7 +143,7 @@ For AI chat applications, extend `AIChatAgent` instead of `Agent`:
 ```ts
 import { AIChatAgent } from "agents/ai-chat-agent";
 
-class ChatAgent extends AIChatAgent<Env> {
+class ChatAgent extends AIChatAgent {
 	async onChatMessage(onFinish) {
 		// this.messages contains the conversation history
 		// Return a streaming response
