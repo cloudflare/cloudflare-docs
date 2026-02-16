@@ -21,7 +21,7 @@ Before creating a site, ensure you have set up at least one on-ramp. Then, follo
 
 ## Add a site
 
-{ props.magicWord === "WAN Tunnels" ? (
+{ props.magicWord === "CF1 Cloudflare WAN" ? (
 	<>
 	<Markdown
 		text={`
@@ -82,7 +82,7 @@ Your site is now set up. If you have other sites you need to set up, repeat the 
 	params={{
 		instructions: "",
 		magicWord: props.magicWord,
-		networkOverviewPageName: props.magicWord === "WAN Tunnels" ? "Network visibility" : "Network overview (beta)",
+		networkOverviewPageName: props.magicWord === "CF1 Cloudflare WAN" ? "Network visibility" : "Network overview (beta)",
 		magicTunnelHcsURL: props.magicTunnelHcsURL,
 		setGeoCoordinatesURL: "#set-geographic-coordinates"
 		}}
@@ -94,7 +94,7 @@ Your site is now set up. If you have other sites you need to set up, repeat the 
 
 ### Add or remove on-ramps
 
-{ props.magicWord === "WAN Tunnels" ? (
+{ props.magicWord === "CF1 Cloudflare WAN" ? (
 	<>
 	<Markdown
 		text={`
@@ -137,7 +137,7 @@ Your site is now set up. If you have other sites you need to set up, repeat the 
 
 If you add geographic coordinates to your site, it will appear in the Network map. To set up or edit geographic coordinates to an existing site:
 
-{ props.magicWord === "WAN Tunnels" ? (
+{ props.magicWord === "CF1 Cloudflare WAN" ? (
 	<>
 	<Markdown
 		text={`

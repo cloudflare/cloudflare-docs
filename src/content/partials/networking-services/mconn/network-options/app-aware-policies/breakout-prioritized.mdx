@@ -95,7 +95,7 @@ You need to configure {props.featureName} applications for each of your existing
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -128,7 +128,7 @@ You need to configure {props.featureName} applications for each of your existing
 text={`
 3. Select the Cloudflare One Appliance you want to configure > **Edit**.
 4. Select **Traffic Steering**.
-5. In **${props.featureName}**, select **${props.dashName === "WAN Tunnels" ? "Create" : "Assign application traffic"}**.
+5. In **${props.featureName}**, select **${props.dashName === "CF1 Cloudflare WAN" ? "Create" : "Assign application traffic"}**.
 6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
 `}
 inline={false}
@@ -224,7 +224,7 @@ The traffic for the application you chose ${props.whatHappensApp}.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -329,7 +329,7 @@ To pin applications to a WAN port:
 		inline={false}
 		/>
 
-		{ props.dashName === "WAN Tunnels" ? (
+		{ props.dashName === "CF1 Cloudflare WAN" ? (
 			<>
 				<Markdown
 			text={`

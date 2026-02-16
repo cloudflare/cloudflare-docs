@@ -15,7 +15,7 @@ Use these options to gather information at the start of your troubleshooting wor
 
 <Markdown
 	text={`
-		${props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels" ? "- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)" : ""}
+		${props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN" ? "- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)" : ""}
 		- Analyze network traffic over time in [Network Analytics](#network-analytics)
 		- Perform more detailed troubleshooting with:
 		  - [Traceroutes](#traceroutes)
@@ -24,14 +24,14 @@ Use these options to gather information at the start of your troubleshooting wor
 	inline={false}
 />
 
-{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
 		<AnchorHeading title="Network overview (beta)" depth={2} slug="network-overview-beta" />
 		<Markdown
 		text={`
 		Network overview (beta) shows the connectivity status and traffic analytics for all Cloudflare WAN sites. Use it when you receive an alert, start troubleshooting, or perform routine monitoring.
 
-		For details, refer to [${props.magicWord === "WAN Tunnels" ? "Network health" : "Network overview (beta)"}](${props.siteAnalyticsURL}).
+		For details, refer to [${props.magicWord === "CF1 Cloudflare WAN" ? "Network health" : "Network overview (beta)"}](${props.siteAnalyticsURL}).
 		`}
 		inline={false}
 		/>

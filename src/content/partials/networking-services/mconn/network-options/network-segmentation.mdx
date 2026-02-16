@@ -48,7 +48,7 @@ The following guide assumes you have already created a site and configured your 
 
 Follow these steps to create a new LAN policy to segment your network. Only the fields marked **required** are mandatory.
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -199,7 +199,7 @@ The new policy will ensure that traffic between the specified LANs flows locally
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -311,7 +311,7 @@ Example:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`

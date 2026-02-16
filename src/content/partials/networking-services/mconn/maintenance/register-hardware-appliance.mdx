@@ -7,8 +7,8 @@ import { DashButton } from "~/components";
 
 To set up and use the hardware version of Cloudflare One Appliance (formerly Magic WAN Connector), you first need to register it with your account. This is not applicable to Virtual Cloudflare One Appliance.
 
-{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
-{ props.dashName === "WAN Tunnels" && (
+{/* Dashboard steps for CF1 Cloudflare WAN (Cloudflare One dashboard) */}
+{ props.dashName === "CF1 Cloudflare WAN" && (
 	<>
 	<ol>
 		<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
@@ -19,7 +19,7 @@ To set up and use the hardware version of Cloudflare One Appliance (formerly Mag
 }
 
 {/* Dashboard steps for Cloudflare WAN (standalone dashboard) */}
-{ props.dashName !== "WAN Tunnels" && (
+{ props.dashName !== "CF1 Cloudflare WAN" && (
 	<>
 	<ol>
 		<li>Go to the <strong>Connectors</strong> page.

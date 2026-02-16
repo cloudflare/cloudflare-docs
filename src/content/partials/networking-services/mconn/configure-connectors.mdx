@@ -342,8 +342,8 @@ You need to create a profile for your appliance before connecting it to the Inte
 
 To create a profile:
 
-{/* WAN Tunnels section */}
-{ props.dashName === "WAN Tunnels" && (
+{/* CF1 Cloudflare WAN section */}
+{ props.dashName === "CF1 Cloudflare WAN" && (
 	<>
 		<ol>
 			<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
@@ -354,7 +354,7 @@ To create a profile:
 }
 
 {/* Cloudflare WAN section */}
-{ props.dashName !== "WAN Tunnels" && (
+{ props.dashName !== "CF1 Cloudflare WAN" && (
 	<>
 		<ol>
 			<li>Go to the <strong>Connectors</strong> page.
@@ -575,8 +575,8 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 When you are ready to connect your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to the Cloudflare network:
 
-{/* Instructions for WAN Tunnels */}
-{ props.dashName === "WAN Tunnels" ? (
+{/* Instructions for CF1 Cloudflare WAN */}
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -858,12 +858,12 @@ inline={false}
 
 To check the IPsec tunnels and static routes created by your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Connectors**.
-		2. In **WAN Tunnels** you can inspect the IPsec tunnels created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
+		2. In **Cloudflare WAN** you can inspect the IPsec tunnels created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
 		3. In **Routes** you can inspect the static routes created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
 
 	`}

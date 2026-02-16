@@ -96,7 +96,7 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 ### GRE tunnels as off-ramp
 
-{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
     <Render file="cloudflare-wan/mtu-mss/mss-clamping-gre" product="networking-services" />
   </>
@@ -112,7 +112,7 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 ### IPsec tunnels
 
-{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
     <Render file="cloudflare-wan/mtu-mss/mss-clamping-ipsec" product="networking-services" />
   </>

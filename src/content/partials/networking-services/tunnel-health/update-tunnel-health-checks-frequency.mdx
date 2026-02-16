@@ -18,7 +18,7 @@ import {
 
 By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, Cloudflare Network Interconnect (CNI), or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from {props.productName}.
 
-{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
 		<p>For Cloudflare One Appliance (formerly Magic WAN Connector), Cloudflare sends health checks to IPsec tunnel endpoints.</p>
   </>
@@ -29,14 +29,14 @@ You can configure the health check frequency through the dashboard or [the API](
 
 Available options are `low`, `mid`, and `high`.
 
-{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
 		<p>To configure health checks frequency in Cloudflare One Appliance, refer to <a href="#configure-connector">Configure Connector</a></p>
   </>
   )
 }
 
-{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
 		<AnchorHeading depth={2} title="Manual configuration" />
   </>
@@ -68,7 +68,7 @@ The following example adjusts tunnel health check frequency to `low`. Note that 
 
 </TabItem> </Tabs>
 
-{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
 
   <>
 		<AnchorHeading depth={2} title="Configure Connector" />
