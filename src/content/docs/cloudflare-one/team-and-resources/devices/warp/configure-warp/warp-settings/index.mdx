@@ -128,7 +128,7 @@ The IP assigned to a WARP device is permanent until the device unregisters from 
 
 </Details>
 
-Allows traffic on-ramped using [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Cloudflare WAN](/cloudflare-one/networks/connectors/wan-tunnels/) to route to WARP devices enrolled in your Zero Trust organization.
+Allows traffic on-ramped using [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) to route to WARP devices enrolled in your Zero Trust organization.
 
 Each WARP device is assigned a virtual IP address in the <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP</GlossaryTooltip> space (`100.96.0.0/12`) or a [custom device IP range](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/). With this setting `Enabled`, users on your private network will be able to connect to these device IPs and access [TCP, UDP, and/or ICMP-based services](/cloudflare-one/traffic-policies/proxy/) on your WARP devices. You can create [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to control which users and devices can access the device IPs.
 
