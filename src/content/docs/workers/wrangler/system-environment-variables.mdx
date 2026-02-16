@@ -124,6 +124,11 @@ Other entry types include:
 - `pages-deploy` - Written by `wrangler pages deploy` with Pages deployment details
 - `command-failed` - Written when a command fails, including error code and message
 
+- `WRANGLER_CACHE_DIR` <Type text="string" /> <MetaInfo text="optional" />
+  - Custom directory for Wrangler's cache files. When set, this overrides the default cache location (`node_modules/.cache/wrangler`). Useful for environments that do not use a traditional `node_modules` directory, such as Yarn PnP.
+
+- `MINIFLARE_CACHE_DIR` <Type text="string" /> <MetaInfo text="optional" />
+  - Custom directory for Miniflare's `cf.json` cache file, used during local development with `wrangler dev`. When set, this overrides the default cache location (`node_modules/.mf`). Useful for environments that do not use a traditional `node_modules` directory, such as Yarn PnP.
 ## Example `.env` file
 
 The following is an example `.env` file:
