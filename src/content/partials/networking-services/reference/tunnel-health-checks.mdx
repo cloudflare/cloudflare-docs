@@ -19,8 +19,7 @@ A tunnel health check probe comes from Cloudflare to the tunnel origin, then ret
 	file="tunnel-health/health-checks-compatible-cmb-eu"
 	product="networking-services"
 	params={{
-		productName:
-			props.magicWord === "Magic Transit" ? "Magic Transit" : "Magic WAN",
+		productName: props.magicWord === "Magic Transit" ? "Magic Transit" : "Cloudflare WAN"
 	}}
 />
 
@@ -112,12 +111,12 @@ To avoid control plane policies enforced by the origin network, you can set tunn
 
 ### Summary table with tunnel health check probe types
 
-|      Attribute      |     Type      |        Unidirectional health checks        |                  Bidirectional health checks                  |
-| :-----------------: | :-----------: | :----------------------------------------: | :-----------------------------------------------------------: |
-|   Source Address    | Request Style |   Cloudflare Address (Publicly Routable)   |       Cloudflare Interface Address (Privately Routable)       |
-| Destination Address | Request Style | Origin Tunnel Endpoint (Publicly Routable) | Origin Interface Address (Privately Routable) / Custom Target |
-|   Source Address    |  Reply Style  | Origin Tunnel Endpoint (Publicly Routable) | Origin Interface Address (Privately Routable) / Custom Target |
-| Destination Address |  Reply Style  |   Cloudflare Address (Publicly Routable)   |       Cloudflare Interface Address (Privately Routable)       |
+| Attribute 					| Type 					| Unidirectional health checks | Bidirectional health checks |
+| :---: 							| :---: 				| :---: 											 | :---: 											 |
+| Source Address 			| Request Style | Cloudflare Address (Publicly Routable) | Cloudflare Interface Address (Privately Routable) |
+| Destination Address | Request Style | Origin Tunnel Endpoint (Publicly Routable) |Origin Interface Address (Privately Routable) / Custom Target |
+| Source Address 			| Reply Style		| Origin Tunnel Endpoint (Publicly Routable) | Origin Interface Address (Privately Routable) / Custom Target |
+| Destination Address | Reply Style 	| Cloudflare Address (Publicly Routable) | Cloudflare Interface Address (Privately Routable) |
 
 ### Graphics summarizing health check types
 
@@ -221,17 +220,17 @@ accDescr: Shows the flow of a unidirectional echo reply health check from Cloudf
 	file="icmp-mfirewall"
 	product="networking-services"
 	params={{
-		mFirewallName: "Magic Firewall rules",
-		mFirewallURL:
-			"/cloudflare-network-firewall/about/ruleset-logic/#cloudflare-network-firewall-rules-and-magic-transit-endpoint-health-checks",
+		mFirewallName: "Cloudflare Network Firewall rules",
+		mFirewallURL: "/cloudflare-network-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks"
 	}}
-/>
+	/>
 
 Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which Cloudflare sends these probes varies based on tunnel and location. You can tune this rate on a per-tunnel basis by modifying the `health_check` rate with the <a href={props.changeHealthCheckRate}>API or the dashboard</a>. You can set the rate as _low_, _mid_, or _high_, with _mid_ being the default.
 
 The actual rate formula considers the number of servers in a Cloudflare data center or the number of servers with the customer namespace provisioned on them for dynamically provisioned namespaces. The rate is dynamic and depends on the size of Cloudflare's network.
 
 When a probe attempt fails for a <a href={props.probeHealth}>healthy tunnel</a>, each server detecting the failure quickly probes up to two more times to obtain an accurate result. Cloudflare does the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, your network will receive several hundred health check packets per second. Each Cloudflare data center sends only one health check packet as part of a probe, representing a relatively trivial amount of traffic.
+
 
 ## Health state and prioritization
 

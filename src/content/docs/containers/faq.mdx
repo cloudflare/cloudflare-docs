@@ -143,6 +143,35 @@ this.ctx.container.start({
 
 See [the Env Vars and Secrets Example](/containers/examples/env-vars-and-secrets/) for details.
 
+## Can I run Docker inside a container (Docker-in-Docker)?
+
+Yes. Use the `docker:dind-rootless` base image since Containers run without root privileges.
+
+You must disable iptables when starting the Docker daemon because Containers do not support iptables manipulation:
+
+```dockerfile title="Dockerfile"
+FROM docker:dind-rootless
+
+# Start dockerd with iptables disabled, then run your app
+ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false & exec /path/to/your-app"]
+```
+
+If your application needs to wait for dockerd to become ready before using Docker, use an entrypoint script instead of the inline command above:
+
+```sh title="entrypoint.sh"
+#!/bin/sh
+set -eu
+
+# Wait for dockerd to be ready
+until docker version >/dev/null 2>&1; do
+  sleep 0.2
+done
+
+exec /path/to/your-app
+```
+
+For a complete working example, see the [Docker-in-Docker Containers example](https://github.com/th0m/containers-dind).
+
 ## How do I allow or disallow egress from my container?
 
 When booting a Container, you can specify `enableInternet`, which will toggle

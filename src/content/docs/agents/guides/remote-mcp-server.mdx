@@ -40,6 +40,12 @@ You can use the [Wrangler CLI](/workers/wrangler) to create a new MCP Server on 
 		args={"remote-mcp-server-authless --template=cloudflare/ai/demos/remote-mcp-authless"}
 	/>
 
+	During setup, select the following options:
+		- For _Do you want to add an AGENTS.md file to help AI coding tools understand
+	Cloudflare APIs?_, choose `No`.
+		- For _Do you want to use git for version control?_, choose `No`.
+		- For _Do you want to deploy your application?_, choose `No` (we will be testing the server before deploying).
+
 	Now, you have the MCP server setup, with dependencies installed.
 
 2. Move into the project folder:
@@ -59,22 +65,29 @@ You can use the [Wrangler CLI](/workers/wrangler) to create a new MCP Server on 
 	[wrangler:info] Ready on http://localhost:8788
 	```
 
-	Your MCP server is now running on `http://localhost:8788/mcp`.
+	Check the command output for the local port. In this example, the MCP server runs on port `8788`, and the MCP endpoint URL is `http://localhost:8788/mcp`.
+	:::note
+	You cannot interact with the MCP server by opening the `/mcp` URL directly in a web browser. The `/mcp` endpoint expects an MCP client to send MCP protocol messages, which a browser does not do by default. In the next step, we will demonstrate how to connect to the server using an MCP client.
+	:::
 
 4. To test the server locally:
+
 	1. In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
 
 		```sh
 		npx @modelcontextprotocol/inspector@latest
 		```
 
-	2. Open the MCP inspector in your web browser:
+		```sh output
+		🚀 MCP Inspector is up and running at:
+			http://localhost:5173/?MCP_PROXY_AUTH_TOKEN=46ab..cd3
 
-		```sh
-		open http://localhost:5173
+		🌐 Opening browser...
 		```
 
-	3. In the MCP inspector, enter the URL of your MCP server: `http://localhost:8788/mcp`, and select **Connect**. Select **List Tools** to show the tools that your MCP server exposes.
+		The MCP inspector will launch in your web browser. You can also launch it manually by opening a browser and going to `https://localhost:<PORT>`. Check the command output for the local port where MCP Inspector is running. In this example, the MCP server is served on port `5173`.
+
+	3. In the MCP inspector, enter the URL of your MCP server (`http://localhost:8788/mcp`), and select **Connect**. Select **List Tools** to show the tools that your MCP server exposes.
 
 5. You can now deploy your MCP server to Cloudflare. From your project directory, run:
 
@@ -84,8 +97,7 @@ You can use the [Wrangler CLI](/workers/wrangler) to create a new MCP Server on 
 
 	If you have already [connected a git repository](/workers/ci-cd/builds/) to the Worker with your MCP server, you can deploy your MCP server by pushing a change or merging a pull request to the main branch of the repository.
 
-	The MCP server will be deployed to your `*.workers.dev` subdomain at `remote-mcp-server-authless.your-account.workers.dev/mcp`.
-
+	The MCP server will be deployed to your `*.workers.dev` subdomain at `https://remote-mcp-server-authless.your-account.workers.dev/mcp`.
 
 6. To test the remote MCP server, take the URL of your deployed MCP server (`https://remote-mcp-server-authless.your-account.workers.dev/mcp`) and enter it in the MCP inspector running on `http://localhost:5173`.
 

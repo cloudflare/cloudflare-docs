@@ -3,6 +3,12 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2026-02-13"
+    title: GLM-4.7-Flash, @cloudflare/tanstack-ai, and workers-ai-provider v3.1.1
+    description: |-
+      - [`@cf/zai-org/glm-4.7-flash`](/workers-ai/models/glm-4.7-flash/) is now available on Workers AI! A fast and efficient multilingual text generation model optimized for multi-turn tool calling across 100+ languages. Read [changelog](/changelog/2026-02-13-glm-4.7-flash-workers-ai/) to get started.
+      - New [`@cloudflare/tanstack-ai`](https://www.npmjs.com/package/@cloudflare/tanstack-ai) package for using Workers AI and AI Gateway with TanStack AI.
+      - [`workers-ai-provider v3.1.1`](https://www.npmjs.com/package/workers-ai-provider) adds transcription, text-to-speech, and reranking capabilities.
   - publish_date: "2026-01-28"
     title: Black Forest Labs FLUX.2 [klein] 9B now available
     description: |-

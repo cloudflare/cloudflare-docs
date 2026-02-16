@@ -63,14 +63,14 @@ flowchart TD
     MATCH --> IDNS(["Internal DNS"])
     MATCH --> C1111b(["1.1.1.1"])
     MATCH --> CUST(["Custom resolver"])
-    CUST --> PNS(["Private network services<br>(Cloudflare Tunnel, Magic WAN, WARP Connector)"])
+    CUST --> PNS(["Private network services<br>(Cloudflare Tunnel, Cloudflare WAN, WARP Connector)"])
 ```
 #### Terms mentioned
 ####  On-ramps (how traffic gets onto Cloudflare)
 - <GlossaryTooltip term = "on-ramp">On-ramp</GlossaryTooltip>: Learn more about [On-ramps](/learning-paths/secure-internet-traffic/connect-devices-networks/choose-on-ramp/).
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)
-- [Magic WAN](/magic-wan/)
+- [Cloudflare WAN](/cloudflare-wan/)
 
 #### Routing features (how queries are handled)
 - [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/)

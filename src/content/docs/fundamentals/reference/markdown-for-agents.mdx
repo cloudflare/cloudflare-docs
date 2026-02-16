@@ -103,6 +103,16 @@ curl https://blog.cloudflare.com/markdown-for-agents/ \
 
 ## Limitations
 
+:::note
+
+Markdown for Agents will not return a converted Markdown response when:
+
+- The origin response does not include a `content-length` header.
+- The origin response `content-length` exceeds 1 MB (1,048,576 bytes).
+
+In these cases, the original HTML response is returned instead.
+:::
+
 - We only convert from HTML, other types of documents may be included in the future.
 - We don't support compressed responses from the origin.
 - Markdown for Agents is a zone level setting. If you need different settings for different sub-domains of a zone, you need to decouple them to separate zones.

@@ -26,7 +26,7 @@ import { Render, Details } from "~/components";
 
 </Details>
 
-A device IP identifies and routes traffic to a specific WARP device in your Zero Trust organization. When a user registers the WARP client, Cloudflare assigns a virtual IPv4 and IPv6 address to the [device registration](/cloudflare-one/team-and-resources/devices/device-registration/). The WARP client uses these IP addresses to create a [virtual network interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) on the device, which allows your private network to reach the device via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Magic WAN](/cloudflare-one/networks/connectors/wan-tunnels/) on-ramps.
+A device IP identifies and routes traffic to a specific WARP device in your Zero Trust organization. When a user registers the WARP client, Cloudflare assigns a virtual IPv4 and IPv6 address to the [device registration](/cloudflare-one/team-and-resources/devices/device-registration/). The WARP client uses these IP addresses to create a [virtual network interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) on the device, which allows your private network to reach the device via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Cloudflare WAN](/cloudflare-one/networks/connectors/wan-tunnels/) on-ramps.
 
 You can verify device IPs and, if needed, reconfigure address pools to avoid overlapping IPs with existing internal resources.
 
@@ -48,7 +48,7 @@ Create a custom IP subnet when the [default IPv4 range](#default-device-ips) con
 To define a custom IPv4 subnet for device IPs:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
-2. Under **WARP IP subnets**, select **Add new IP subnet**.
+2. Under **Device IP subnets**, select **Add new IP subnet**.
 3. Enter any name for the subnet.
 4. In **CIDR**, enter a valid IPv4 CIDR block from the supported private ranges:
 	- `10.0.0.0/8`
@@ -71,27 +71,27 @@ Assign [custom IP subnets](#create-an-ip-subnet) to ensure devices are provision
 
 ### Prerequisites
 
-- [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) is enabled in your [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/).
+- [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) is enabled in your [general device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/).
 
-### Create an IP assignment
+### Create an IP profile
 
 To assign IP subnets to your devices:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
-2. Under **Device IP assignment**, select **Add new IP assignment**.
+2. Under **Device IP profiles**, select **Add new IP profile**.
 3. Enter a name for this group of devices (for example, `IT department`).
 4. Create rules to define the users or devices that will receive these IPs. Learn more about the available [Selectors](#selectors), [Operators](#comparison-operators), and [Values](#value).
 5. Choose an existing IPv4 subnet from the dropdown menu, or [create a new subnet](#create-an-ipv4-subnet).
 6. Select **Assign IP address**.
-7. (Optional) In the **Device IP assignment** table, change the [order of precedence](#order-of-precedence) of IP assignments.
+7. (Optional) In the **Device IP profiles** table, change the [order of precedence](#order-of-precedence) of IP profiles.
 
 Devices that match your rules are assigned a random IP from this address space upon registration. Only newly registered devices will receive a new IP; existing devices will not see any impact to connectivity. To assign a new IP to an existing device, you must [delete its registration](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration) and then [re-enroll the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
 
-Organizations are currently [limited](/cloudflare-one/account-limits/#warp) to 30 custom device IP assignments per account.
+Organizations are currently [limited](/cloudflare-one/account-limits/#warp) to 30 custom device IP profiles per account.
 
 ### Selectors
 
-You can configure IP assignments to match against the following selectors or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) by logging in to an identity provider (IdP).
+You can configure IP profiles to match against the following selectors or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) by logging in to an identity provider (IdP).
 
 #### User email
 
@@ -105,7 +105,7 @@ Apply a device profile based on the user's email.
 
 #### User group emails
 
-Apply a device profile based on an [IdP group](/cloudflare-one/traffic-policies/identity-selectors/#idp-groups-in-gateway) email address of which the user is configured as a member in the IdP.
+Apply a device IP profile based on an [IdP group](/cloudflare-one/traffic-policies/identity-selectors/#idp-groups-in-gateway) email address of which the user is configured as a member in the IdP.
 
 <Render
 	file="gateway/selectors/user-group-email"
@@ -115,7 +115,7 @@ Apply a device profile based on an [IdP group](/cloudflare-one/traffic-policies/
 
 #### User group IDs
 
-Apply a device profile based on an [IdP group](/cloudflare-one/traffic-policies/identity-selectors/#idp-groups-in-gateway) ID of which the user is configured as a member in the IdP.
+Apply a device IP profile based on an [IdP group](/cloudflare-one/traffic-policies/identity-selectors/#idp-groups-in-gateway) ID of which the user is configured as a member in the IdP.
 
 <Render
 	file="gateway/selectors/user-group-ids"
@@ -125,7 +125,7 @@ Apply a device profile based on an [IdP group](/cloudflare-one/traffic-policies/
 
 #### User group names
 
-Apply a device profile based on an [IdP group](/cloudflare-one/traffic-policies/identity-selectors/#idp-groups-in-gateway) name of which the user is configured as a member in the IdP.
+Apply a device IP profile based on an [IdP group](/cloudflare-one/traffic-policies/identity-selectors/#idp-groups-in-gateway) name of which the user is configured as a member in the IdP.
 
 <Render
 	file="gateway/selectors/user-group-names"
@@ -143,13 +143,13 @@ Apply a device profile based on an [IdP group](/cloudflare-one/traffic-policies/
 
 #### SAML attributes
 
-Apply a device profile based on an attribute name and value from a [SAML IdP](/cloudflare-one/traffic-policies/identity-selectors/#generic-saml-idp).
+Apply a device IP profile based on an attribute name and value from a [SAML IdP](/cloudflare-one/traffic-policies/identity-selectors/#generic-saml-idp).
 
 <Render file="gateway/selectors/saml-attributes" product="cloudflare-one" />
 
 ### Comparison operators
 
-Comparison operators determine how device profiles match a selector.
+Comparison operators determine how device IP profiles match a selector.
 
 | Operator | Meaning                                    |
 | -------- | ------------------------------------------ |
@@ -177,7 +177,7 @@ To evaluate multiple conditions in an expression, select a logical operator:
 
 ### Order of precedence
 
-WARP checks the IP assignments from top to bottom as they appear in the Cloudflare One dashboard (lowest precedence number is checked first). WARP follows the first match principle — once a device matches an IP assignment, WARP stops evaluating and no subsequent IP assignments can override the decision. You can rearrange the IP assignments in the Cloudflare One dashboard according to your desired order of precedence.
+WARP checks the IP profiles from top to bottom as they appear in the Cloudflare One dashboard (lowest precedence number is checked first). WARP follows the first match principle — once a device matches an IP profile, WARP stops evaluating and no subsequent IP profiles can override the decision. You can rearrange the IP profiles in the Cloudflare One dashboard according to your desired order of precedence.
 
 ## Verify device IPs
 
@@ -205,7 +205,7 @@ Monitor the consumption of your IPv4 subnets to ensure you have enough addresses
 Use the Cloudflare One dashboard to view a high-level overview of assigned and available IPs:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Device profiles**.
-2. Locate the **WARP IP subnets** table.
+2. Locate the **Device IP subnets** table.
 3. The **IPs assigned** column displays the total number of IPs currently assigned to active device registrations versus the total capacity of the CIDR block.
 
 If your subnet is approaching capacity, you can [expand your subnet](#edit-an-ip-subnet) to increase the number of available IPs. Alternatively, you can free up IPs by [deleting existing device registrations](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration), particularly revoked registrations that may be consuming IP space despite the device no longer being in use.
@@ -331,11 +331,11 @@ To get a list of all device registrations in a subnet (including revoked registr
 Cloudflare does not support editing an existing IPv4 subnet definition. To assign a different IPv4 subnet to your devices:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
-2. Under **Device IP assignment**, find the device group associated with the old subnet and select **Edit**.
-3. Select **Create new IP subnet range** to define a new subnet.
+2. Under **Device IP profiles**, find the device group associated with the old subnet and select **Edit**.
+3. Select **Create new subnet IP range** to define a new subnet.
 4. Select **Save**.
 
-The new subnet will appear in the **WARP IP subnets** table. You can now delete the old subnet. Devices will only get an IP from the new subnet when they [re-register](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration); existing registrations will retain their [current IP](#verify-device-ips).
+The new subnet will appear in the **Device IP subnets** table. You can now delete the old subnet. Devices will only get an IP from the new subnet when they [re-register](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration); existing registrations will retain their [current IP](#verify-device-ips).
 
 
 

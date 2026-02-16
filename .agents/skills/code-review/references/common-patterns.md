@@ -6,13 +6,13 @@ Do not memorize patterns. Retrieve current examples from Cloudflare docs and ver
 
 When reviewing a pattern you are unsure about, fetch the current reference:
 
-| Topic                 | Where to look                                                                                                                   |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Handler signatures    | Latest `@cloudflare/workers-types` (see `references/workers-types.md`) — search for `ExportedHandler`, `WorkerEntrypoint`, etc. |
-| Binding APIs          | Same types file — search for the binding type name (e.g., `KVNamespace`, `R2Bucket`)                                            |
-| Wrangler config shape | Latest wrangler config schema (see `references/wrangler-config.md`)                                                             |
-| Platform base classes | Search for imports from `"cloudflare:workers"` in the type definitions                                                          |
-| Cloudflare docs       | `https://developers.cloudflare.com/workers/` for guides, examples, and API reference                                            |
+| Topic                 | Where to look                                                                                                |
+| --------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Handler signatures    | `node_modules/@cloudflare/workers-types/index.d.ts` — search for `ExportedHandler`, `WorkerEntrypoint`, etc. |
+| Binding APIs          | Same types file — search for the binding type name (e.g., `KVNamespace`, `R2Bucket`)                         |
+| Wrangler config shape | `node_modules/wrangler/config-schema.json`                                                                   |
+| Platform base classes | Search for imports from `"cloudflare:workers"` in the type definitions                                       |
+| Cloudflare docs       | Use the `cloudflare-docs` search tool, or read files directly in `src/content/docs/`                         |
 
 ## Binding Access
 

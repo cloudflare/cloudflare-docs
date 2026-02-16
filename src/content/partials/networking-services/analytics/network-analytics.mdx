@@ -3,26 +3,24 @@ params:
   - magicWord
 ---
 
-import { GlossaryTooltip, Markdown, DashButton } from "~/components";
+import { GlossaryTooltip, Markdown, DashButton } from "~/components"
 
 { props.magicWord === "Magic Transit" && (
-
-<>
-	<Markdown
-		text="[Network Analytics](/analytics/network-analytics/) provides real-time insights into Magic Transit traffic that enters and leaves Cloudflare's network through GRE or IPsec tunnels."
-		inline={false}
-	/>
-</>
+  <>
+    <Markdown
+      text="[Network Analytics](/analytics/network-analytics/) provides real-time insights into Magic Transit traffic that enters and leaves Cloudflare's network through GRE or IPsec tunnels."
+      inline={false}
+    />
+  </>
 )}
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
-
-<>
-	<Markdown
-		text="You can access real-time and historical network data in Network Analytics. Explore Magic WAN traffic (in packets or bytes) over time in a time series, and filter the data by different [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) characteristics."
-		inline={false}
-	/>
-</>
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+  <>
+    <Markdown
+      text="You can access real-time and historical network data in Network Analytics. Explore Cloudflare WAN traffic (in packets or bytes) over time in a time series, and filter the data by different [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) characteristics."
+      inline={false}
+    />
+  </>
 )}
 
 Data is aggregated into time intervals that vary based on the selected zoom level. For example, a daily view shows 24-hour averages, which can flatten short-term traffic spikes. As a result, longer time intervals display lower peak bandwidth values compared to more granular views like five-minute intervals.
@@ -32,32 +30,30 @@ For details, refer to the [Network Analytics](/analytics/network-analytics/) doc
 ## Network traffic data filters
 
 { props.magicWord === "Magic Transit" && (
-
-<>
-	<Markdown
-		text={`
-	With Magic Transit, you can account for traffic flows that enter Cloudflare's network, are blocked by DDoS rules or Cloudflare Network Firewall, and leave Cloudflare's network. This insight lets you track the total packets and bytes that traverse Cloudflare's network and are ultimately destined for your network. It also provides increased insight into traffic flows that are unaccounted for.
-	`}
-		inline={false}
-	/>
-</>
-) }
-
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
-
   <>
 	<Markdown
 	text={`
-	With Magic WAN, you have increased insight into traffic flows across Cloudflare One products, including:
+	With Magic Transit, you can account for traffic flows that enter Cloudflare's network, are blocked by DDoS rules or Cloudflare Network Firewall, and leave Cloudflare's network. This insight lets you track the total packets and bytes that traverse Cloudflare's network and are ultimately destined for your network. It also provides increased insight into traffic flows that are unaccounted for.
+	`}
+	inline={false}
+	/>
+  </>
+  )
+}
 
-    - Traffic entering Cloudflare's network via WARP
-    - Traffic leaving Cloudflare's network via WARP
-    - Traffic leaving Cloudflare's network via Cloudflare Tunnel (\`cloudflared\`)
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+  <>
+	<Markdown
+	text={`
+	With Cloudflare WAN, you have increased insight into traffic flows across Cloudflare One products, including:
 
-    `}
-    inline={false}
-    />
+	- Traffic entering Cloudflare's network via WARP
+	- Traffic leaving Cloudflare's network via WARP
+	- Traffic leaving Cloudflare's network via Cloudflare Tunnel (\`cloudflared\`)
 
+	`}
+	inline={false}
+	/>
   </>
   )
 }
@@ -93,21 +89,19 @@ For instructions, refer to [Access Magic Tunnel traffic analytics](#access-magic
 ## Feature notes
 
 { props.magicWord === "Magic Transit" && (
-
-<>
+  <>
 	<Markdown
 		text="- For Magic Transit, `Non-Tunnel traffic` often represents traffic from the public Internet or traffic via [CNIs](/network-interconnect/)."
 		inline={false}
 	/>
-</>
+  </>
 )}
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
-
-<>
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+  <>
 	<Markdown
 		text={`
-		- For Magic WAN, \`Non-Tunnel traffic\` refers to traffic outside GRE or IPsec tunnels. This can include traffic from:
+		- For Cloudflare WAN, \`Non-Tunnel traffic\` refers to traffic outside GRE or IPsec tunnels. This can include traffic from:
 		  - [WARP](/cloudflare-one/team-and-resources/devices/warp/)
 		  - [CNIs](/network-interconnect/)
 		  - Traffic destined for the public Internet via [Gateway](/cloudflare-one/traffic-policies/)
@@ -115,7 +109,7 @@ For instructions, refer to [Access Magic Tunnel traffic analytics](#access-magic
 		`}
 		inline={false}
 	/>
-</>
+  </>
 )}
 
 The label `Non-Tunnel traffic` is a placeholder, and Cloudflare will apply more specific labels to this category of traffic in the future.

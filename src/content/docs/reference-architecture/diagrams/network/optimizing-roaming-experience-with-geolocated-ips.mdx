@@ -1,7 +1,7 @@
 ---
 title: Optimizing device roaming experience with geolocated IPs
 pcx_content_type: reference-architecture-diagram
-products: [gateway, magic-wan]
+products: [gateway, cloudflare-wan]
 sidebar:
   order: 1
   label: Device roaming with geolocated IPs
@@ -44,13 +44,13 @@ This diagram is intended for network engineers, IT architects, and decision-make
 3. **Connectivity options**.
 
    Cloudflare supports multiple connection methods to integrate with the regional breakout architecture:
-   - [**GRE tunnels**](/magic-wan/reference/gre-ipsec-tunnels/) for ease of use.
-   - [**IPsec tunnels**](/magic-wan/reference/gre-ipsec-tunnels/) for encrypted communication.
-   - [**Cloudflare Network Interconnect (CNI)**](/magic-wan/network-interconnect/) for direct, high-performance connections.
+   - [**GRE tunnels**](/cloudflare-wan/reference/gre-ipsec-tunnels/) for ease of use.
+   - [**IPsec tunnels**](/cloudflare-wan/reference/gre-ipsec-tunnels/) for encrypted communication.
+   - [**Cloudflare Network Interconnect (CNI)**](/cloudflare-wan/network-interconnect/) for direct, high-performance connections.
 
-4. **Localized Internet breakout using [Magic WAN](/magic-wan/) and [Gateway](/cloudflare-one/traffic-policies/)**.
+4. **Localized Internet breakout using [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN) and [Gateway](/cloudflare-one/traffic-policies/)**.
 
-   With Magic WAN and using [dedicated egress](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) with our [secure web gateway](/cloudflare-one/traffic-policies/), Cloudflare enables Internet traffic to exit with source IPs registered in the desired country. This ensures end-users benefit from geolocalized content and services, such as access to region-specific platforms, tailored to their location.
+   With Cloudflare WAN and using [dedicated egress](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) with our [secure web gateway](/cloudflare-one/traffic-policies/), Cloudflare enables Internet traffic to exit with source IPs registered in the desired country. This ensures end-users benefit from geolocalized content and services, such as access to region-specific platforms, tailored to their location.
 
 5. **Advanced security and filtering options**.
 
@@ -62,5 +62,5 @@ This diagram is intended for network engineers, IT architects, and decision-make
 # Related Resources
 
 - [Gateway](/cloudflare-one/traffic-policies/)
-- [Magic WAN](/magic-wan/)
+- [Cloudflare WAN](/cloudflare-wan/)
 - [Cloudflare servers don't own IPs anymore](https://blog.cloudflare.com/cloudflare-servers-dont-own-ips-anymore/)

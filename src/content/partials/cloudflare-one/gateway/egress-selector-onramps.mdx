@@ -10,8 +10,8 @@ import { Render, Details, GlossaryTooltip } from "~/components";
 | [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/)                        | ✅            |
 | [Browser Isolation](/cloudflare-one/remote-browser-isolation/)                                      | ✅            |
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ✅            |
-| [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                              | 🚧[^1]        |
+| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                              | 🚧[^1]        |
 
-[^1]: Not compatible with [ECMP routing](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing). For hostname-based routing to work, DNS queries and the resulting network traffic must reach Cloudflare over the same Magic WAN tunnel. <br/>
+[^1]: Not compatible with [ECMP routing](/cloudflare-wan/reference/traffic-steering/#equal-cost-multi-path-routing). For hostname-based routing to work, DNS queries and the resulting network traffic must reach Cloudflare over the same Cloudflare WAN tunnel. <br/>
 
 <Render file="gateway/egress-selector-warp-version" product="cloudflare-one" />

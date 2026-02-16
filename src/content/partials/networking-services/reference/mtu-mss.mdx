@@ -5,10 +5,10 @@ params:
 ---
 
 import { AnchorHeading, Render } from "~/components";
-import { Image } from "astro:assets";
-import dsr from "~/assets/images/magic-transit/mtu-mss/dsr.png";
-import tunnel from "~/assets/images/magic-transit/mtu-mss/tcp-mss.png";
-import mss_ipsec from "~/assets/images/magic-transit/mtu-mss/ipsec-mss.png";
+import { Image } from 'astro:assets';
+import dsr from "~/assets/images/magic-transit/mtu-mss/dsr.png"
+import tunnel from "~/assets/images/magic-transit/mtu-mss/tcp-mss.png"
+import mss_ipsec from "~/assets/images/magic-transit/mtu-mss/ipsec-mss.png"
 
 {props.productName} has operation requirements that you need to understand to ensure your network functions as intended. Pay particular attention to the maximum transmission unit (MTU) and maximum segment size (MSS) values. Incorrect configuration of these values can cause performance loss or prevent data [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) delivery.
 
@@ -77,117 +77,51 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 :::
 
 { props.magicWord === "Magic Transit" && (
-
-<>
-	<AnchorHeading
-		title="MSS with Magic Transit and Direct Server Return"
-		depth={2}
-	/>
-	<p>
-		Asymmetric{" "}
-		<a
-			href="https://www.cloudflare.com/learning/network-layer/what-is-routing/"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			routing
-		</a>{" "}
-		is a common scenario especially with Magic Transit. Ingress traffic from the
-		Internet enters the Cloudflare network, then traverses a GRE tunnel (MTU of
-		1,476 bytes), and egress traffic from the datacenter is sent through Direct
-		Server Return (DSR) over the Internet (MTU of 1,500 bytes).
-	</p>
-	<p>
-		In an asymmetric scenario, you need to reduce the MSS value of packets sent
-		by Magic Transit users to the Internet to reduce the size of packets sent
-		from the Internet towards their network. To accomplish this, you must
-		configure either the customer's end-hosts or an MSS clamp on an intermediary
-		device on the egress path of traffic leaving their network. The following
-		chart details how MSS values affect payload sizes on both routing paths.
-	</p>
-	<Image
-		src={dsr}
-		alt="A diagram showing how MSS works with Magic Transit and Direct Server Return."
-	/>
-	<p>
-		<em>
-			Key takeaway from the preceding chart: MSS clamping affects TCP packet
-			payload sizes flowing in the opposite direction versus where the clamp is
-			applied.
-		</em>
-	</p>
-	<AnchorHeading
-		title="Tunnel-in-tunnel scenario with Magic Transit"
-		depth={2}
-	/>
-	<p>
-		MSS clamping only affects TCP traffic. If, for example, you have a web
-		server on your Magic Transit prefix, then the MSS clamp takes effect on the
-		TCP data from Direct Server Return (DSR) traffic. However, you need to take
-		a different approach for any tunnels inside of your Magic Transit tunnel
-		(tunnel-in-tunnel scenario).
-	</p>
-	<Image
-		src={tunnel}
-		alt="A diagram showing where the MSS clamp goes with TCP traffic."
-	/>
-	<p>
-		For example, if you have a Magic Transit GRE tunnel set up, and then another
-		IPsec or GRE tunnel running from third-party devices on your premises, MSS
-		clamp has no impact on the outer packets of the encapsulated traffic. This
-		is because MSS clamping affects only TCP traffic, and IPsec/GRE encapsulated
-		traffic is IP. For this scenario, you need to lower the MTU of the internal
-		tunnel interface further, both for your ingress and egress traffic.
-	</p>
-	<Image
-		src={mss_ipsec}
-		alt="A diagram showing where the MSS clamp goes with an IPsec tunnel inside a GRE tunnel."
-	/>
-</>
-) }
+  <>
+    <AnchorHeading title="MSS with Magic Transit and Direct Server Return" depth={2} />
+		<p>Asymmetric <a href="https://www.cloudflare.com/learning/network-layer/what-is-routing/" target="_blank" rel="noopener noreferrer">routing</a> is a common scenario especially with Magic Transit. Ingress traffic from the Internet enters the Cloudflare network, then traverses a GRE tunnel (MTU of 1,476 bytes), and egress traffic from the datacenter is sent through Direct Server Return (DSR) over the Internet (MTU of 1,500 bytes).</p>
+		<p>In an asymmetric scenario, you need to reduce the MSS value of packets sent by Magic Transit users to the Internet to reduce the size of packets sent from the Internet towards their network. To accomplish this, you must configure either the customer's end-hosts or an MSS clamp on an intermediary device on the egress path of traffic leaving their network. The following chart details how MSS values affect payload sizes on both routing paths.</p>
+		<Image src={dsr} alt="A diagram showing how MSS works with Magic Transit and Direct Server Return." />
+		<p><em>Key takeaway from the preceding chart: MSS clamping affects TCP packet payload sizes flowing in the opposite direction versus where the clamp is applied.</em></p>
+		<AnchorHeading title="Tunnel-in-tunnel scenario with Magic Transit" depth={2} />
+		<p>MSS clamping only affects TCP traffic. If, for example, you have a web server on your Magic Transit prefix, then the MSS clamp takes effect on the TCP data from Direct Server Return (DSR) traffic. However, you need to take a different approach for any tunnels inside of your Magic Transit tunnel (tunnel-in-tunnel scenario).</p>
+		<Image src={tunnel} alt="A diagram showing where the MSS clamp goes with TCP traffic." />
+		<p>For example, if you have a Magic Transit GRE tunnel set up, and then another IPsec or GRE tunnel running from third-party devices on your premises, MSS clamp has no impact on the outer packets of the encapsulated traffic. This is because MSS clamping affects only TCP traffic, and IPsec/GRE encapsulated traffic is IP. For this scenario, you need to lower the MTU of the internal tunnel interface further, both for your ingress and egress traffic.</p>
+		<Image src={mss_ipsec} alt="A diagram showing where the MSS clamp goes with an IPsec tunnel inside a GRE tunnel." />
+  </>
+  )
+}
 
 ## MSS clamping recommendations
 
 ### GRE tunnels as off-ramp
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
-
-<>
-	<Render
-		file="magic-wan/mtu-mss/mss-clamping-gre"
-		product="networking-services"
-	/>
-</>
-) }
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+  <>
+    <Render file="cloudflare-wan/mtu-mss/mss-clamping-gre" product="networking-services" />
+  </>
+  )
+}
 
 { props.magicWord === "Magic Transit" && (
-
-<>
-	<Render
-		file="magic-transit/mtu-mss/mss-clamping-gre"
-		product="networking-services"
-	/>
-</>
-) }
+  <>
+    <Render file="magic-transit/mtu-mss/mss-clamping-gre" product="networking-services" />
+  </>
+  )
+}
 
 ### IPsec tunnels
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
-
-<>
-	<Render
-		file="magic-wan/mtu-mss/mss-clamping-ipsec"
-		product="networking-services"
-	/>
-</>
-) }
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "WAN Tunnels") && (
+  <>
+    <Render file="cloudflare-wan/mtu-mss/mss-clamping-ipsec" product="networking-services" />
+  </>
+  )
+}
 
 { props.magicWord === "Magic Transit" && (
-
-<>
-	<Render
-		file="magic-transit/mtu-mss/mss-clamping-ipsec"
-		product="networking-services"
-	/>
-</>
-) }
+  <>
+    <Render file="magic-transit/mtu-mss/mss-clamping-ipsec" product="networking-services" />
+  </>
+  )
+}

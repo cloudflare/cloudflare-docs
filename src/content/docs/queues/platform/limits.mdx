@@ -27,13 +27,13 @@ The following limits apply to both Workers Paid and Workers Free plans with the 
 | Consumer duration (wall clock time) 														| 15 minutes <sup>5</sup>                                       |
 | [Consumer CPU time](/workers/platform/limits/#cpu-time)| [Configurable to 5 minutes](/queues/platform/limits/#increasing-queue-consumer-worker-cpu-limits) 							|
 | `visibilityTimeout` (pull-based queues)       									| 12 hours                                                      |
-| `delaySeconds` (when sending or retrying)     									| 12 hours                                                      |
+| `delaySeconds` (when sending or retrying)     									| 24 hours                                                      |
 
 <sup>1</sup> 1 KB is measured as 1000 bytes. Messages can include up to \~100 bytes of internal metadata that counts towards total message limits.
 
 <sup>2</sup> Exceeding the maximum message throughput will cause the `send()` and `sendBatch()` methods to throw an exception with a `Too Many Requests` error until your producer falls below the limit.
 
-<sup>3</sup> Messages in a queue that reach the maximum message retention are deleted from the queue. Queues does not delete messages in the same queue that have not reached this limit. 
+<sup>3</sup> Messages in a queue that reach the maximum message retention are deleted from the queue. Queues does not delete messages in the same queue that have not reached this limit.
 
 <sup>4</sup> Individual queues that reach this limit will receive a `Storage Limit Exceeded` error when calling `send()` or `sendBatch()` on the queue.
 

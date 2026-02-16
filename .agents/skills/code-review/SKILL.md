@@ -5,19 +5,17 @@ description: Reviews Workers and Cloudflare Developer Platform code for type cor
 
 Your knowledge of Cloudflare Workers APIs, types, and wrangler configuration may be outdated. **Prefer retrieval over pre-training** for any Workers code review task.
 
-## Retrieval Sources
+## Reference Sources
 
-Fetch the **latest** versions before reviewing. The current repo may have outdated dependencies — always validate against what is currently published, not what is locally installed.
+Use the repo's local copies — do **not** run `npm pack` or install packages to fetch types.
 
-| Source                 | How to retrieve                                         | Use for                                                |
-| ---------------------- | ------------------------------------------------------- | ------------------------------------------------------ |
-| Wrangler config schema | See `references/wrangler-config.md` for retrieval steps | Config fields, binding shapes, allowed values          |
-| Workers types          | See `references/workers-types.md` for retrieval steps   | API usage, handler signatures, binding types           |
-| Cloudflare docs        | `https://developers.cloudflare.com/workers/`            | API reference, compatibility dates/flags, binding docs |
+| Source                 | Where to find it                                                 | Use for                                                |
+| ---------------------- | ---------------------------------------------------------------- | ------------------------------------------------------ |
+| Wrangler config schema | `node_modules/wrangler/config-schema.json`                       | Config fields, binding shapes, allowed values          |
+| Workers types          | `node_modules/@cloudflare/workers-types/index.d.ts`              | API usage, handler signatures, binding types           |
+| Cloudflare docs search | Use the `cloudflare-docs` search tool or read files in this repo | API reference, compatibility dates/flags, binding docs |
 
-## FIRST: Fetch Latest References
-
-Retrieve the latest wrangler schema and workers types before reviewing. See the reference files for specific retrieval commands. If the current repo's `node_modules` has an older version, **prefer the latest published version** — documentation should reflect the current state of the platform, not a pinned dependency.
+Read these files directly when you need to verify a type, config field, or API signature. The reference guides in `references/` describe what to validate — not how to fetch packages.
 
 ## Review Process
 

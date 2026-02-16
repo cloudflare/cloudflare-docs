@@ -49,10 +49,10 @@ sequenceDiagram
 
 ### When to use `@callable()`
 
-| Scenario                             | Use                           |
-| ------------------------------------ | ----------------------------- |
-| Browser/mobile calling agent         | `@callable()`                 |
-| External service calling agent       | `@callable()`                 |
+| Scenario                             | Use                                       |
+| ------------------------------------ | ----------------------------------------- |
+| Browser/mobile calling agent         | `@callable()`                             |
+| External service calling agent       | `@callable()`                             |
 | Worker calling agent (same codebase) | Durable Object RPC (no decorator needed)  |
 | Agent calling another agent          | Durable Object RPC via `getAgentByName()` |
 
@@ -337,7 +337,7 @@ function App() {
 		name: "default",
 	});
 
-	async function handleGreet(result: string) {
+	async function handleGreet() {
 		// TypeScript knows the method signature
 		const result = await agent.stub.greet("World");
 		// ^? string
@@ -572,10 +572,10 @@ class OrchestratorAgent extends Agent {
 
 ### Why the distinction?
 
-| RPC Type                | Transport | Use Case                          |
-| ----------------------- | --------- | --------------------------------- |
-| `@callable`             | WebSocket | External clients (browsers, apps) |
-| Durable Object RPC      | Internal  | Worker to Agent, Agent to Agent   |
+| RPC Type           | Transport | Use Case                          |
+| ------------------ | --------- | --------------------------------- |
+| `@callable`        | WebSocket | External clients (browsers, apps) |
+| Durable Object RPC | Internal  | Worker to Agent, Agent to Agent   |
 
 Durable Object RPC is more efficient for internal calls since it does not go through WebSocket serialization. The `@callable` decorator adds the necessary WebSocket RPC handling for external clients.
 
@@ -705,6 +705,24 @@ for (const [name, meta] of methods) {
 ```
 
 </TypeScriptExample>
+
+## Troubleshooting
+
+### `SyntaxError: Invalid or unexpected token`
+
+If your dev server fails with `SyntaxError: Invalid or unexpected token` when using `@callable()`, set `"target": "ES2021"` in your `tsconfig.json`. This ensures that Vite's esbuild transpiler downlevels TC39 decorators instead of passing them through as native syntax.
+
+```json
+{
+	"compilerOptions": {
+		"target": "ES2021"
+	}
+}
+```
+
+:::caution
+Do not set `"experimentalDecorators": true` in your `tsconfig.json`. The Agents SDK uses [TC39 standard decorators](https://github.com/tc39/proposal-decorators), not TypeScript legacy decorators. Enabling `experimentalDecorators` applies an incompatible transform that silently breaks `@callable()` at runtime.
+:::
 
 ## Next steps
 

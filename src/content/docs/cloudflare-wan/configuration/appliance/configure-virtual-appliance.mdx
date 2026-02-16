@@ -1,0 +1,42 @@
+---
+pcx_content_type: how-to
+title: Configure Virtual Appliance
+description: Learn how to configure Cloudflare One Virtual Appliance on VMWare ESXi or Proxmox Virtual Environment
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+<Render file="mconn/configure-connectors"
+	product="networking-services"
+	params={{
+	magicWord: "virtual",
+	productName: "Cloudflare One Appliance",
+	productNameVirtual: "Cloudflare One Virtual Appliance",
+	maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
+	dashName: "Cloudflare WAN",
+	wan: "needs to correspond to the virtual network interface on the Virtual Appliance instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
+	lan: "needs to correspond to the virtual LAN interface on the Virtual Appliance instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
+	noConnectorShows: "For a Virtual Appliance to appear you need to: <br /><ul><li><strong>VMWare:</strong> Have already obtained your OVA package and license keys if you are installing on VMWare.</li><li><strong>Proxmox:</strong> Have already obtained your Virtual Appliance Script and license keys if you are installing on Proxmox.</li></ul>\nFor details, refer to [Configure a virtual machine](#configure-a-virtual-machine) and select the appropriate tab.\n",
+	networkSegmentationURL: "/cloudflare-wan/configuration/appliance/network-options/network-segmentation/",
+	dhcpServerURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-server/",
+  dhcpRelayURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-relay/",
+  reserveIpAddressesURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-static-address-reservation/",
+	shippedLanguage: "Cloudflare One Virtual Appliance is deactivated after you install it",
+	hardSoftConn: "You need to install two Virtual Appliances before you can set up a site in high availability.",
+	hcConfigsURL: "/cloudflare-wan/configuration/appliance/reference/#high-availability-configurations",
+	ipsecTunnelsRefURL: "/cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels",
+	trafficSteeringURL: "/cloudflare-wan/reference/traffic-steering/",
+	vlanIdURL: "/cloudflare-wan/configuration/appliance/reference/#vlan-id",
+	healthCheckFrequencyURL: "/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/",
+	routedSubnetsURL: "/cloudflare-wan/configuration/appliance/network-options/routed-subnets/",
+	interruptWindowURL: "/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window/",
+	tunnelHealthChecksURL: "/cloudflare-wan/reference/tunnel-health-checks/",
+	wanSettingsURL: "/cloudflare-wan/configuration/appliance/reference/#wan-settings",
+	sitesURL: "/cloudflare-wan/configuration/common-settings/sites/",
+	networkOptionsURL: "/cloudflare-wan/configuration/appliance/network-options/",
+  maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
+  referenceInformationURL: "/cloudflare-wan/configuration/appliance/reference/",
+  troubleshootingURL: "/cloudflare-wan/configuration/appliance/troubleshooting/"
+	}} />
