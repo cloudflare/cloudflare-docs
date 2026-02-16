@@ -14,6 +14,8 @@ Refer to this page for details about how Cloudflare orchestrates VPN connectivit
 
 ![Diagram showing how Cloudflare creates on-ramps to AWS](~/assets/images/multi-cloud-networking/reference/aws.png)
 
+*Note: Labels in this image may reflect a previous product name.*
+
 When using Cloudflare One Multi-Cloud Networking (formerly Magic Cloud Networking) (beta) to automatically create on-ramps to your AWS account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
 
 - Cloudflare will create a new customer-managed prefix list named **Cloudflare WAN and Cloudflare Edge** populated with your [Cloudflare WAN Address Space](/multi-cloud-networking/cloud-on-ramps/#cloudflare-wan-address-space) prefixes and the IPv4 address ranges for Cloudflare's global network servers (the latter prefixes are necessary if you use any Cloudflare L7 processing features). You must create rules in your Network Security Groups (NSGs) allowing traffic to/from this prefix list in order to have connectivity with Cloudflare WAN (formerly Magic WAN). (The prefix list will contain around 15 to 25 entries, which each count against the rules-per-security-group quota for NSGs in your AWS account.)
@@ -25,6 +27,8 @@ When using Cloudflare One Multi-Cloud Networking (formerly Magic Cloud Networkin
 
 ![Diagram showing how Cloudflare creates on-ramps to Azure](~/assets/images/multi-cloud-networking/reference/azure.png)
 
+*Note: Labels in this image may reflect a previous product name.*
+
 When using Multi-Cloud Networking (beta) to automatically create on-ramps to your Azure account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
 
 - Cloudflare will create a Virtual Network Gateway in your Virtual Network (VNet). Virtual Network Gateways in Azure require a subnet named `GatewaySubnet`. Cloudflare will create a `GatewaySubnet` if one does not already exist in your VNet. If there is not enough unused address space left in your VNet to create a `/27` subnet for the `GatewaySubnet`, or if a `GatewaySubnet` exists but does not have enough address space left for a Virtual Network Gateway, on-ramp creation will fail.
@@ -35,6 +39,8 @@ When using Multi-Cloud Networking (beta) to automatically create on-ramps to you
 ### GCP
 
 ![Diagram showing how Cloudflare creates on-ramps to GCP](~/assets/images/multi-cloud-networking/reference/gcp.png)
+
+*Note: Labels in this image may reflect a previous product name.*
 
 When using Multi-Cloud Networking (beta) to automatically create on-ramps to your Google Cloud Platform (GCP) account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
 
