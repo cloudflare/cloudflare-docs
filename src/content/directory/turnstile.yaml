@@ -1,0 +1,12 @@
+name: Turnstile
+
+entry:
+  title: Turnstile
+  url: /turnstile/
+  group: Application security
+  additional_groups: [Developer platform]
+
+meta:
+  title: Cloudflare Turnstile docs
+  description: Turnstile is Cloudflare's smart CAPTCHA alternative
+  author: "@cloudflare"

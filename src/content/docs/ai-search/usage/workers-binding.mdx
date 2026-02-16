@@ -24,9 +24,12 @@ To use your AI Search with Workers or Pages, create an AI binding either in the 
 
 <WranglerConfig>
 
-```toml
-[ai]
-binding = "AI" # i.e. available in your Worker on env.AI
+```jsonc
+{
+	"ai": {
+		"binding": "AI" // i.e. available in your Worker on env.AI
+	}
+}
 ```
 
 </WranglerConfig>

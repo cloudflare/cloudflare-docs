@@ -5,6 +5,7 @@
 
 # homepage
 /docs/ /directory/ 301
+/support/ai/ / 301
 /api /api/ 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
@@ -13,6 +14,7 @@
 /sitemap.xml /sitemap-index.xml 301
 /deprecations/ /fundamentals/api/reference/deprecations/ 301
 /learning-paths/ /resources/ 301
+/markdown.zip /llms-full.txt 301
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
@@ -115,7 +117,7 @@
 /aegis/about/ips-allocation/ /smart-shield/configuration/dedicated-egress-ips/how-it-works/egress-ips/#ips-allocation 301
 /aegis/about/connection-forwarding/ /smart-shield/configuration/dedicated-egress-ips/how-it-works/connection-forwarding/ 301
 /aegis/about/reuse-and-coalescing/ /smart-shield/concepts/connection-reuse/ 301
-/aegis/setup/ /smart-shield/configuration/dedicated-egress-ips/ 301
+/aegis/setup/ /smart-shield/configuration/dedicated-egress-ips/setup/ 301
 /aegis/configuration-options/ /smart-shield/configuration/dedicated-egress-ips/other-products/ 301
 /aegis/configuration-options/network-firewall/ /smart-shield/configuration/dedicated-egress-ips/ 301
 /aegis/configuration-options/access-cni/ /smart-shield/configuration/dedicated-egress-ips/other-products/#access-and-cni 301
@@ -140,6 +142,10 @@
 /agents/api-reference/sdk/ /agents/api-reference/ 301
 /agents/guides/build-mcp-server/ /agents/guides/remote-mcp-server/ 301
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
+/agents/model-context-protocol/mcp-agent-api/ /agents/api-reference/mcp-agent-api/ 301
+/agents/model-context-protocol/mcp-client-api/ /agents/api-reference/mcp-client-api/ 301
+/agents/model-context-protocol/mcp-handler-api/ /agents/api-reference/mcp-handler-api/ 301
+/agents/api-reference/calling-agents/ /agents/api-reference/routing/ 301
 
 # ai
 /ai/ /use-cases/ai/ 301
@@ -219,6 +225,9 @@
 /api-shield/frequently-asked-questions/ /api-shield/ 301
 /autorag/usage/recipes/ /ai-search/how-to/ 301
 /autorag/configuration/metadata-filtering/ /ai-search/configuration/metadata/ 301
+/ai-search/tutorial/ /ai-search/how-to/ 301
+/ai-search/tutorial/brower-rendering-autorag-tutorial/ /ai-search/how-to/brower-rendering-autorag-tutorial/ 301
+/ai-search/autorag-api/ /api/resources/ai_search/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301
@@ -338,7 +347,12 @@
 /realtime/pricing/ /realtime/sfu/pricing/ 302
 /realtime/changelog/ /realtime/sfu/changelog/ 302
 /realtime/realtimekit/get-started/ /realtime/realtimekit/quickstart/ 302
-/realtime/realtimekit/ui-kit/meeting-lifecycle/ realtime/realtimekit/ui-kit/state-management/ 302
+/realtime/realtimekit/core/ai/ /realtime/realtimekit/ai/ 302
+/realtime/realtimekit/core/remote-participant/ /realtime/realtimekit/core/remote-participants/ 302
+/realtime/realtimekit/ui-kit/meeting-lifecycle/ /realtime/realtimekit/ui-kit/state-management/ 302
+/realtime/realtimekit/core/video-background/ /realtime/realtimekit/core/video-effects/ 302
+/realtime/realtimekit/voice-meetings/ /realtime/realtimekit/audio-calls/ 302
+/realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/core/manage-participants-in-a-session/ 302
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
@@ -489,7 +503,9 @@
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/manage-dns-records/how-to/create-root-domain/ /dns/manage-dns-records/how-to/create-zone-apex/ 301
 /dns/manage-dns-records/reference/proxied-dns-records/ /dns/proxy-status/ 301
+/dns/manage-dns-records/troubleshooting/acme-challenge-txt-record/ /dns/manage-dns-records/troubleshooting/unexpected-dns-records/#acme_challenge-txt-records 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
+/dns/troubleshooting/faq/ /dns/faq/ 301
 /dns/zone-setups/partial-setup/convert-partial-to-full/ /dns/zone-setups/conversions/convert-partial-to-full/ 301
 /dns/zone-setups/partial-setup/convert-partial-to-secondary/ /dns/zone-setups/conversions/convert-partial-to-secondary/ 301
 /dns/zone-setups/reference/nameserver-assignment/ /dns/nameservers/nameserver-options/#assignment-method 301
@@ -779,16 +795,17 @@
 /fundamentals/account/account-security/login-and-account-issues/ /fundamentals/user-profiles/change-password-or-email/ 301
 /fundamentals/account/delete-account/ /fundamentals/user-profiles/delete-account/ 301
 /fundamentals/account/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/ 301
-/changelog/fundamentals/terraform/2025-02-03-terraform-v5-provider/ /changelog/terraform/2025-02-03-terraform-v5-provider/ 301
-/changelog/fundamentals/2025-03-21-resource-force-replacement-bug/ /changelog/terraform/2025-03-21-resource-force-replacement-bug/ 301
-/changelog/fundamentals/2025-03-21-sensitive-values-redacted/ /changelog/terraform/2025-03-21-sensitive-values-redacted/ 301
-/changelog/fundamentals/2025-05-06-terraform-v5.4.0-provider/ /changelog/terraform/2025-05-06-terraform-v5.4.0-provider/ 301
-/changelog/fundamentals/2025-05-19-terraform-v5.5.0-provider/ /changelog/terraform/2025-05-19-terraform-v5.5.0-provider/ 301
-/changelog/fundamentals/2025-06-17-terraform-v5.6.0-provider/ /changelog/terraform/2025-06-17-terraform-v5.6.0-provider/ 301
-/changelog/fundamentals/2025-07-11-terraform-v5.7.0-provider/ /changelog/terraform/2025-07-11-terraform-v5.7.0-provider/ 301
-/changelog/fundamentals/2025-08-01-terraform-v5.8.2-provider/ /changelog/terraform/2025-08-01-terraform-v5.8.2-provider/ 301
-/changelog/fundamentals/2025-08-15-terraform-v5.8.4-provider/ /changelog/terraform/2025-08-15-terraform-v5.8.4-provider/ 301
-/changelog/fundamentals/2025-08-29-terrform-v5.9-provider/ /changelog/terraform/2025-08-29-terrform-v5.9-provider/ 301
+/changelog/fundamentals/terraform/2025-02-03-terraform-v5-provider/ /changelog/2025-02-03-terraform-v5-provider/ 301
+/changelog/fundamentals/2025-03-21-resource-force-replacement-bug/ /changelog/2025-03-21-resource-force-replacement-bug/ 301
+/changelog/fundamentals/2025-03-21-sensitive-values-redacted/ /changelog/2025-03-21-sensitive-values-redacted/ 301
+/changelog/fundamentals/2025-05-06-terraform-v5.4.0-provider/ /changelog/2025-05-06-terraform-v540-provider/ 301
+/changelog/fundamentals/2025-05-19-terraform-v5.5.0-provider/ /changelog/2025-05-19-terraform-v550-provider/ 301
+/changelog/fundamentals/2025-06-17-terraform-v5.6.0-provider/ /changelog/2025-06-17-terraform-v560-provider/ 301
+/changelog/fundamentals/2025-07-11-terraform-v5.7.0-provider/ /changelog/2025-07-11-terraform-v570-provider/ 301
+/changelog/fundamentals/2025-08-01-terraform-v5.8.2-provider/ /changelog/2025-08-01-terraform-v582-provider/ 301
+/changelog/fundamentals/2025-08-15-terraform-v5.8.4-provider/ /changelog/2025-08-15-terraform-v584-provider/ 301
+/changelog/fundamentals/2025-08-29-terrform-v5.9-provider/ /changelog/2025-08-29-terrform-v59-provider/ 301
+/changelog/2025-01-20-terraform-v5160-provider/ /changelog/2026-01-20-terraform-v5160-provider/ 301
 
 # google tag
 /google-tag-first-party-mode/ /google-tag-gateway/ 301
@@ -879,6 +896,33 @@
 /learning-paths/replace-vpn/ /learning-paths/replace-vpn/concepts/ 301
 /learning-paths/secure-internet-traffic/ /learning-paths/secure-internet-traffic/concepts/ 301
 /learning-paths/secure-o365-email/ /learning-paths/secure-o365-email/concepts/ 301
+/learning-paths/secure-o365-email/concepts/ /learning-paths/secure-your-email/concepts/ 301
+/learning-paths/secure-o365-email/get-started/deployment-models/ /learning-paths/secure-your-email/get-started/deployment-models/ 301
+/learning-paths/secure-o365-email/concepts/prevent-phishing-attack/ /learning-paths/secure-your-email/concepts/prevent-phishing-attack/ 301
+/learning-paths/secure-o365-email/concepts/protect-from-phishing-attacks/ /learning-paths/secure-your-email/concepts/protect-from-phishing-attacks/ 301
+/learning-paths/secure-o365-email/concepts/what-is-cloudflare/ /learning-paths/secure-your-email/concepts/what-is-cloudflare/ 301
+/learning-paths/secure-o365-email/concepts/what-is-email-security/ /learning-paths/secure-your-email/concepts/what-is-email-security/ 301
+/learning-paths/secure-o365-email/concepts/what-is-phishing-attack/ /learning-paths/secure-your-email/concepts/what-is-phishing-attack/ 301
+/learning-paths/secure-o365-email/configure-email-security/active-directory-sync/ /learning-paths/secure-your-email/configure-email-security/active-directory-sync/ 301
+/learning-paths/secure-o365-email/configure-email-security/audit-logs/ /learning-paths/secure-your-email/configure-email-security/audit-logs/ 301
+/learning-paths/secure-o365-email/configure-email-security/create-allow-policies/ /learning-paths/secure-your-email/configure-email-security/create-allow-policies/ 301
+/learning-paths/secure-o365-email/configure-email-security/impersonation-registry/ /learning-paths/secure-your-email/configure-email-security/impersonation-registry/ 301
+/learning-paths/secure-o365-email/configure-email-security/ /learning-paths/secure-your-email/configure-email-security/	301
+/learning-paths/secure-o365-email/configure-email-security/report-phish/ /learning-paths/secure-your-email/configure-email-security/report-phish/ 301
+/learning-paths/secure-o365-email/configure-email-security/set-additional-detections/ /learning-paths/secure-your-email/configure-email-security/set-additional-detections/ 301
+/learning-paths/secure-o365-email/enable-auto-moves/configure-auto-moves/ /learning-paths/secure-your-email/enable-auto-moves/configure-auto-moves/ 301
+/learning-paths/secure-o365-email/enable-auto-moves/email-dispositions/ /learning-paths/secure-your-email/enable-auto-moves/email-dispositions/ 301
+/learning-paths/secure-o365-email/enable-auto-moves/ /learning-paths/secure-your-email/enable-auto-moves/	301
+/learning-paths/secure-o365-email/get-started/create-email-security-account/ /learning-paths/secure-your-email/get-started/create-email-security-account/ 301
+/learning-paths/secure-o365-email/get-started/ /learning-paths/secure-your-email/get-started/ 301
+/learning-paths/secure-o365-email/get-started/prerequisites/ /learning-paths/secure-your-email/get-started/prerequisites/ 301
+/learning-paths/secure-o365-email/get-started/recommended-deployment-model/ /learning-paths/secure-your-email/get-started/recommended-deployment-model/ 301
+/learning-paths/secure-o365-email/get-started/setup-ms-graph-api/ /learning-paths/secure-your-email/get-started/setup-ms-graph-api/ 301
+/learning-paths/secure-o365-email/monitor-your-inbox/ /learning-paths/secure-your-email/monitor-your-inbox/	301
+/learning-paths/secure-o365-email/monitor-your-inbox/monitor-detections/ /learning-paths/secure-your-email/monitor-your-inbox/monitor-detections/ 301
+/learning-paths/secure-o365-email/monitor-your-inbox/phish-submissions/ /learning-paths/secure-your-email/monitor-your-inbox/phish-submissions/ 301
+/learning-paths/secure-o365-email/monitor-your-inbox/phishguard/ /learning-paths/secure-your-email/monitor-your-inbox/phishguard/ 301
+/reference-architecture/implementation-guides/zero-trust/secure-m365-email/ /reference-architecture/implementation-guides/zero-trust/secure-your-email/ 301
 /learning-paths/workers/ /learning-paths/workers/concepts/ 301
 /learning-paths/clientless-access/ /learning-paths/clientless-access/concepts/ 301
 /learning-paths/application-security/default-traffic-security/security-level/ /learning-paths/application-security/default-traffic-security/browser-integrity/ 301
@@ -1013,6 +1057,8 @@
 /magic-network-monitoring/rules/recommended-rule-configuration/ /magic-network-monitoring/rules/static-threshold/ 301
 /magic-network-monitoring/rules/sflow-ddos-alerts/ /rules/configure-rule-notifications/ 301
 /magic-network-monitoring/notifications/ /rules/rule-notifications/ 301
+/magic-firewall/how-to/create-rate-limiting-rules/ /magic-firewall/how-to/create-rate-limiting-policies/ 301
+
 # magic-transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
@@ -1377,6 +1423,7 @@
 /style-guide/components/checkbox/ /style-guide/formatting/structure/lists/ 301
 /style-guide/components/code/ /style-guide/formatting/code-block-guidelines/ 301
 /style-guide/components/compatibility-flag/ /style-guide/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/flex/ /style-guide/how-we-docs/image-maintenance/ 301
 /style-guide/components/footnotes/ /style-guide/formatting/footnotes/ 301
 /style-guide/components/last-reviewed/ /style-guide/frontmatter/custom-properties/#reviewed 301
 /style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/diagrams/#mermaid-diagrams 301
@@ -1541,6 +1588,7 @@
 /r2/examples/cloudflare-access/ /r2/tutorials/cloudflare-access/ 301
 /r2/examples/upload-logs-event-notifications/ /r2/tutorials/upload-logs-event-notifications/ 301
 /r2/examples/demo-worker/ /r2/api/workers/workers-api-usage/ 301
+/r2/objects/multipart-objects/ /r2/objects/upload-objects/ 301
 /r2/sql/platform/troubleshooting/ /r2-sql/troubleshooting/ 301
 
 # r2 sql
@@ -1851,7 +1899,8 @@
 /workers/configuration/deploy-button/ /workers/platform/deploy-buttons/ 301
 /workers/platform/deployments/ /workers/configuration/versions-and-deployments/ 301
 /workers/platform/environment-variables/ /workers/configuration/environment-variables/ 301
-/workers/platform/smart-placement/ /workers/configuration/smart-placement/ 301
+/workers/platform/smart-placement/ /workers/configuration/placement/ 301
+/workers/configuration/smart-placement/ /workers/configuration/placement/ 301
 /workers/runtime-apis/email-event/ /email-routing/email-workers/runtime-api/ 301
 /workers/runtime-apis/scheduled-event/ /workers/runtime-apis/handlers/scheduled/ 301
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
@@ -1967,6 +2016,7 @@
 # Features section
 /workers-ai/markdown-conversion/ /workers-ai/features/markdown-conversion/ 301
 # workflows
+/workflows/get-started/cli-quick-start/ /workflows/get-started/guide/ 301
 /workflows/reference/storage-options/ /workers/platform/storage-options/ 301
 /workflows/tutorials/ /workflows/examples 301
 # workers KV
@@ -2213,6 +2263,7 @@
 /magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /warp-client/teams/ /cloudflare-one/connections/connect-devices/warp/ 301
+/cloudflare-one/integrations/identity-providers/azuread/ /cloudflare-one/integrations/identity-providers/entra-id/ 301
 
 # Cloudflare One nav revamp (statics)
 /cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
@@ -2230,6 +2281,8 @@
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/ 301
 /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
+/cloudflare-one/traffic-policies/packet-filtering/add-rules/ /cloudflare-one/traffic-policies/packet-filtering/add-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-rules/ /cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-policies/ 301
 /cloudflare-one/connections/connect-networks/locations/configuring-a-location/ /cloudflare-one/team-and-resources/devices/agentless/dns/locations/ 301
 /cloudflare-one/identity/authorization-cookie/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
@@ -2369,7 +2422,7 @@
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/datasets/* /cloudflare-one/policies/data-loss-prevention/detection-entries/:splat 301
-/cloudflare-one/email-security/reclassifications/* /cloudflare-one/email-security/submissions/ :splat 301
+/cloudflare-one/email-security/reclassifications/* /cloudflare-one/email-security/submissions/:splat 301
 
 
 # Cloudflare One nav revamp (dynamics)

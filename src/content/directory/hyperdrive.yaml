@@ -1,0 +1,12 @@
+name: Hyperdrive
+
+entry:
+  title: Hyperdrive
+  url: /hyperdrive/
+  group: Developer platform
+  additional_groups: [Storage]
+
+meta:
+  title: Cloudflare Hyperdrive docs
+  description: Accelerate database queries to make databases fast globally
+  author: "@cloudflare"

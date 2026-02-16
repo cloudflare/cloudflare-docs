@@ -102,7 +102,7 @@ Objects that include `Function` or `Symbol` types, and objects with circular ref
 {/* prettier-ignore */}
 - <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
-  - `timestamp` - a JavaScript `Date` object or seconds from the Unix epoch to sleep the Workflow instance until.
+  - `timestamp` - a JavaScript `Date` object or milliseconds from the Unix epoch to sleep the Workflow instance until.
 
 :::note
 
@@ -122,7 +122,7 @@ More information about the limits imposed on Workflow can be found in the [Workf
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// Other steps in your Workflow
-		let event = await step.waitForEvent<IncomingStripeWebhook>(
+		let stripeEvent = await step.waitForEvent<IncomingStripeWebhook>(
 			"receive invoice paid webhook from Stripe",
 			{ type: "stripe-webhook", timeout: "1 hour" },
 		);
@@ -169,19 +169,23 @@ For example, to bind to a Workflow called `workflows-starter` and to make it ava
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-#:schema node_modules/wrangler/config-schema.json
-name = "workflows-starter"
-main = "src/index.ts"
-compatibility_date = "2024-10-22"
-
-[[workflows]]
-# name of your workflow
-name = "workflows-starter"
-# binding name env.MY_WORKFLOW
-binding = "MY_WORKFLOW"
-# this is class that extends the Workflow class in src/index.ts
-class_name = "MyWorkflow"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "workflows-starter",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"workflows": [
+		{
+			// name of your workflow
+			"name": "workflows-starter",
+			// binding name env.MY_WORKFLOW
+			"binding": "MY_WORKFLOW",
+			// this is class that extends the Workflow class in src/index.ts
+			"class_name": "MyWorkflow"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -200,22 +204,26 @@ For example, if your Workflow is defined in a Worker script named `billing-worke
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-#:schema node_modules/wrangler/config-schema.json
-name = "web-api-worker"
-main = "src/index.ts"
-compatibility_date = "2024-10-22"
-
-[[workflows]]
-# name of your workflow
-name = "billing-workflow"
-# binding name env.MY_WORKFLOW
-binding = "MY_WORKFLOW"
-# this is class that extends the Workflow class in src/index.ts
-class_name = "MyWorkflow"
-# the script name where the Workflow is defined.
-# required if the Workflow is defined in another script.
-script_name = "billing-worker"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "web-api-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"workflows": [
+		{
+			// name of your workflow
+			"name": "billing-workflow",
+			// binding name env.MY_WORKFLOW
+			"binding": "MY_WORKFLOW",
+			// this is class that extends the Workflow class in src/index.ts
+			"class_name": "MyWorkflow",
+			// the script name where the Workflow is defined.
+			// required if the Workflow is defined in another script.
+			"script_name": "billing-worker"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -414,6 +422,10 @@ Return the id of a Workflow.
 Return the status of a running Workflow instance.
 
 - <code>status(): Promise&lt;InstanceStatus&gt;</code>
+
+:::caution
+The following methods are not yet supported in local development.
+:::
 
 ### pause
 

@@ -29,14 +29,18 @@ In the following example, the binding is called `TODO`. In the `kv_namespaces` p
 
 <WranglerConfig>
 
-```toml
-name = "worker"
-
-# ...
-
-kv_namespaces = [
-  { binding = "TODO", id = "06779da6940b431db6e566b4846d64db" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker",
+	// ...
+	"kv_namespaces": [
+		{
+			"binding": "TODO",
+			"id": "06779da6940b431db6e566b4846d64db"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -64,14 +68,18 @@ To have `wrangler dev` connect to your Workers KV namespace running on Cloudflar
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "worker"
-
-# ...
-
-kv_namespaces = [
-  { binding = "TODO", id = "06779da6940b431db6e566b4846d64db" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker",
+	// ...
+	"kv_namespaces": [
+		{
+			"binding": "TODO",
+			"id": "06779da6940b431db6e566b4846d64db"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

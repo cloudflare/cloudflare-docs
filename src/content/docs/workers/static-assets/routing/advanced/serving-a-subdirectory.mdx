@@ -30,13 +30,16 @@ With a [Wrangler configuration file](/workers/wrangler/configuration/) like so:
 
 <WranglerConfig>
 
-```toml
-name = "assets-on-a-path-example"
-main = "src/index.js"
-route = "example.com/blog/*"
-
-[assets]
-directory = "dist"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "assets-on-a-path-example",
+	"main": "src/index.js",
+	"route": "example.com/blog/*",
+	"assets": {
+		"directory": "dist"
+	}
+}
 ```
 
 </WranglerConfig>

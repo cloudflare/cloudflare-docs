@@ -1,0 +1,34 @@
+---
+pcx_content_type: navigation
+title: rtk-clock
+description: API reference for rtk-clock component (Angular Library)
+---
+Shows the time elapsed in a meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-clock></rtk-clock>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-clock
+ [meeting]="meeting"
+ size="md">
+</rtk-clock>
+```
+

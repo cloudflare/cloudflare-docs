@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: rtk-recording-indicator
+description: API reference for rtk-recording-indicator component (Web Components (HTML) Library)
+---
+A component which indicates the recording status of a meeting.
+ It will not render anything if no recording is taking place.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-recording-indicator></rtk-recording-indicator>
+```
+
+### With Properties
+
+```html
+<rtk-recording-indicator
+ size="md">
+</rtk-recording-indicator>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-recording-indicator");
+
+  el.meeting= meeting
+</script>
+```

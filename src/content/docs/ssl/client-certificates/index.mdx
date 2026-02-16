@@ -24,12 +24,17 @@ For a broader overview, refer to the [mTLS at Cloudflare learning path](/learnin
 
 Client certificates issued from a given CA are installed on client devices that should be granted access. Then, for any host that has [mTLS enabled](/ssl/client-certificates/enable-mtls/), Cloudflare - acting as the server in this case - requires a certificate from the client trying to access the hostname.
 
-Cloudflare then validates the client certificate against CAs set at account level. This means that these certificates can be used for validation across multiple zones/domains (`example.com`), as long as the zones are under the same Cloudflare account and mTLS has been enabled for the requested hosts (`host.example.com`).
+If a certificate is presented, Cloudflare validates the client certificate against CAs set at account level. This means that these certificates can be used for validation across multiple zones/domains (`example.com`), as long as the zones are under the same Cloudflare account and mTLS has been enabled for the requested hosts (`host.example.com`).
 
 The account-level CAs can be:
 
 - The Cloudflare-managed CA: This is the default option. Certificates and hostname associations are listed on your [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
-- [BYOCA](/ssl/client-certificates/byo-ca/) certificates: This is an API-only option, available on Enterprise accounts. Certificates and hostname associations are **not** listed on your [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
+- [BYOCA](/ssl/client-certificates/byo-ca/) certificates: This is an API-only option, available on Enterprise accounts. Certificates and hostname associations are **not** listed on your dashboard.
+
+Cloudflare then stores the validation result in a field called [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/):
+
+- **Success**: `cf.tls_client_auth.cert_verified` is `true`, and you can find client certificate details in [specific mTLS fields](/ruleset-engine/rules-language/fields/reference/?search-term=cf.tls_client_auth).
+- **Failure**: `cf.tls_client_auth.cert_verified` is `false`.
 
 ---
 
@@ -54,3 +59,9 @@ flowchart LR
         accDescr: Diagram showing two different implementations that can be considered for mTLS with Cloudflare Workers.
         A[Client] <--App security mTLS--> B((Cloudflare))<--mTLS worker binding--> C[(External service)]
 ```
+
+---
+
+## Further resources
+
+<DirectoryListing />

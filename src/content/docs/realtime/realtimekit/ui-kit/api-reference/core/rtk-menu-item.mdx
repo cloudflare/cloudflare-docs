@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-menu-item
+description: API reference for rtk-menu-item component (Web Components (HTML) Library)
+---
+A menu item component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `menuVariant` | `'primary' \| 'secondary'` | ✅ | - | Variant |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-menu-item></rtk-menu-item>
+```
+
+### With Properties
+
+```html
+<rtk-menu-item
+ size="md">
+</rtk-menu-item>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-menu-item");
+
+</script>
+```

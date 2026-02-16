@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: RtkLivestreamToggle
+description: API reference for RtkLivestreamToggle component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkLivestreamToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkLivestreamToggle />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkLivestreamToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkLivestreamToggle
+      meeting={meeting}
+      size="md"
+      variant="button"
+    />
+  );
+}
+```
+

@@ -70,10 +70,15 @@ Use your R2 bucket inside your Worker project by modifying the [Wrangler configu
 
 <WranglerConfig>
 
-```toml
-[[r2_buckets]]
-binding = 'MY_BUCKET'
-bucket_name = '<YOUR_BUCKET_NAME>'
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "<YOUR_BUCKET_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

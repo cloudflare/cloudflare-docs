@@ -1,0 +1,38 @@
+---
+pcx_content_type: navigation
+title: rtk-breakout-room-participants
+description: API reference for rtk-breakout-room-participants component (Angular Library)
+---
+A component which lists all participants, with ability to
+ run privileged actions on each participant according to your permissions.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participantIds` | `string[]` | ✅ | - | Participant ids |
+| `selectedParticipantIds` | `string[]` | ✅ | - | selected participants |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-breakout-room-participants></rtk-breakout-room-participants>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-breakout-room-participants
+ [meeting]="meeting"
+ participantIds="example"
+ selectedParticipantIds="example">
+</rtk-breakout-room-participants>
+```
+

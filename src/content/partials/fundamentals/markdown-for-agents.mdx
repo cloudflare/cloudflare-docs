@@ -1,0 +1,86 @@
+---
+{}
+---
+
+import { TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To enable Markdown for Agents for your zone in the dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account (you need a Pro or Business plan).
+2. Select the zone you want to configure.
+3. Look for **Quick Actions**.
+4. Toggle the **Markdown for Agents** button to enable.
+
+</TabItem> <TabItem label="API">
+
+To enable Markdown for Agents for your zone using APIs, send a `PATCH` to `/client/v4/zones/{zone_tag}/settings/content_converter` with the payload `{"value": "on"}` to the Cloudflare API.
+
+You will need to create an API token with the Zone Settings edit permissions enabled.
+
+Example:
+
+```bash title="Enable Markdown for Agents"
+curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_tag}/settings/content_converter' \
+  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer {api_token}" --data-raw '{"value": "on"}'
+```
+
+</TabItem> <TabItem label="Custom Hostnames">
+
+If you are using [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) and want to enable Markdown for Agents for your [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/), you have two options:
+
+### Enable for all custom hostnames
+
+To enable Markdown for Agents for all custom hostnames on your SaaS zone:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select your SaaS zone.
+3. Look for **Quick Actions**.
+4. Toggle the **Markdown for Agents** button to enable.
+
+### Enable for specific custom hostnames
+
+Enabling Markdown for Agents for specific custom hostnames requires an [advanced subscription](/cloudflare-for-platforms/cloudflare-for-saas/plans/) with access to [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/).
+
+#### Step 1: Set custom metadata on the custom hostname
+
+When creating or updating a custom hostname via API, add `content_converter` to the `custom_metadata` object:
+
+```bash
+curl --request PATCH \
+  --url "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id}" \
+  --header "Authorization: Bearer {api_token}" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "custom_metadata": {
+      "content_converter": "enabled"
+    }
+  }'
+```
+
+#### Step 2: Create a Configuration Rule
+
+Create a Configuration Rule on your SaaS zone that matches custom hostnames with the metadata and enables content conversion:
+
+```bash
+curl --request PUT \
+  --url "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_config_settings/entrypoint" \
+  --header "Authorization: Bearer {api_token}" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "rules": [{
+      "expression": "lookup_json_string(cf.hostname.metadata, \"content_converter\") eq \"enabled\"",
+      "action": "set_config",
+      "action_parameters": {
+        "content_converter": true
+      },
+      "description": "Enable content converter for opted-in custom hostnames"
+    }]
+  }'
+```
+
+This will enable the feature on custom hostnames that have the `content_converter` custom metadata tag set.
+
+</TabItem> </Tabs>

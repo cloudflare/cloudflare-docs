@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import type { IconifyIconBuildResult } from "@iconify/utils";
 import { setSearchParams } from "~/util/url";
 
-export type ProductData = CollectionEntry<"products"> & {
+export type ProductData = CollectionEntry<"directory"> & {
 	icon?: IconifyIconBuildResult;
 	groups: string[];
 };
@@ -127,7 +127,7 @@ const DirectoryCatalog = ({ products }: { products: ProductData[] }) => {
 					return (
 						<a
 							key={product.data.name}
-							href={product.data.product.url}
+							href={product.data.entry.url}
 							className="block self-stretch rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
 						>
 							<div className="flex items-start">

@@ -1,0 +1,19 @@
+---
+title: Validate your generated types with `wrangler types --check`
+description: A new flag for `wrangler types` lets you verify your generated types are up to date without modifying any files.
+products:
+  - workers
+date: 2026-01-12
+---
+
+Wrangler now supports a `--check` flag for the `wrangler types` command. This flag validates that your generated types are up to date without writing any changes to disk.
+
+This is useful in CI/CD pipelines where you want to ensure that developers have regenerated their types after making changes to their Wrangler configuration. If the types are out of date, the command will exit with a non-zero status code.
+
+```sh
+npx wrangler types --check
+```
+
+If your types are up to date, the command will succeed silently. If they are out of date, you'll see an error message indicating which files need to be regenerated.
+
+For more information, see the [Wrangler types documentation](/workers/wrangler/commands/#types).

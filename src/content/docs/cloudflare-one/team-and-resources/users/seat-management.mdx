@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { Render } from "~/components";
+
 Cloudflare One subscriptions consist of seats that active users in your account consume. Active users are added to Cloudflare One through any [authentication event](#authentication-events).
 
 The amount of seats available in your Cloudflare One account depends on the amount of users you purchase. If you want to increase the number of seats available, you will have to purchase more users. Learn more about adding and removing seats from your account in the [Cloudflare One FAQ](/cloudflare-one/faq/getting-started-faq/#how-do-i-change-my-subscription-plan).
@@ -18,6 +20,12 @@ If either one of these events occurs, that user's identity is added as an Active
 A user who authenticates will hold their seat until you [remove the user](#remove-a-user) from your account. By default, inactive users will not be [automatically removed](#enable-seat-expiration) from your account. You can remove a single user or all users at any time, and those users will immediately stop counting against the seat count defined in your subscription.
 
 If you notice a number of accounts greater than the number of your users, you may need to configure an Access [bypass policy](/cloudflare-one/access-controls/policies/#bypass). Alternatively, you can use Access [service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) to allow access to applications without consuming seats.
+
+## Seat management and device registrations
+
+[Removing a user](/cloudflare-one/team-and-resources/users/seat-management/#remove-a-user) determines whether that user consumes a billable seat, but does not [prevent users from accessing resources](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access) behind Cloudflare Access.
+
+Removing a user will delete all device registrations associated with the user. For more information about managing device registrations, refer to [Device registration](/cloudflare-one/team-and-resources/devices/device-registration/).
 
 ## Manage users
 
@@ -36,26 +44,11 @@ To revoke a user from your Zero Trust Organization:
 3. Select **Action** > **Revoke**.
 4. Select **Revoke sessions**.
 
-Revoked users can still log in if your policies allow them.
+Revoked users can still log in if your policies allow them. To prevent a user from authenticating, you must remove them from your [device enrollment policies](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) or from your Identity Provider (IdP).
 
 ### Remove a user
 
-Removing a user from your Zero Trust Organization will free up the seat the user consumed. The user will still appear in your list of users.
-
-To remove a user from your Zero Trust Organization:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Users**.
-2. Select the checkbox next to a user with an **Active** status in the **Seat usage** column.
-3. Select **Action** > **Remove users**.
-4. Select **Remove**.
-
-The user will now show as **Inactive** and will no longer occupy a seat. If a user is removed but authenticates later, they will consume a seat again.
-
-To automate the removal of users who have not logged in or triggered a device enrollment in a specific amount of time, turn on [seat expiration](#enable-seat-expiration) or utilize [SCIM](/cloudflare-one/team-and-resources/users/scim/) to remove users when they are deactivated in your identity provider.
-
-:::note[User record persistence]
-You cannot delete or archive a user record. You can [remove a user](#remove-a-user) from a seat, but their user record will remain in your Zero Trust Organization. Inactive users do not count towards billing.
-:::
+<Render file="users/remove-user-from-seat" product="cloudflare-one" />
 
 ### Enable seat expiration
 

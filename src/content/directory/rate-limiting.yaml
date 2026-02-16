@@ -1,0 +1,10 @@
+name: Rate limiting
+
+entry:
+  title: Rate limiting
+  group: Application security
+  url: /waf/rate-limiting-rules/
+  preview_tryout: true
+
+meta:
+  description: Control the rate of incoming requests matching an expression

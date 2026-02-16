@@ -29,37 +29,45 @@ When you use the WARP client together with `cloudflared` Tunnels or third-party 
 
 ```mermaid
 flowchart TD
-    A["WARP user requests resource"] --> B["WARP client proxies all DNS traffic"]
-    B -- WARP checks if domain is listed in Local Domain Fallback policies --> C["Local Domain Fallback"]
+    %% Accessibility
+    accTitle: How the WARP client handles DNS requests
+    accDescr: Flowchart describing how the WARP client routes DNS queries when using Local Domain Fallback, Split Tunnels, and Gateway resolver policies.
+
+    A(["WARP user requests resource"]) --> B["WARP client proxies all DNS traffic"]
+    B --> LDFCHK{"WARP checks if domain is listed in Local Domain Fallback policies"}
 
     %% Left branch (LDF exists)
-    C -- Domain exists in Local Domain Fallback policies --> ST["Split Tunnel processing"]
+    LDFCHK -- Domain exists in Local Domain Fallback policies --> C["Local Domain Fallback"]
+    C --> ST["Split Tunnel processing"]
 
-    ST -- Resolver IP included in WARP Tunnel per Split Tunnel configuration --> QW["Query sent via WARP Tunnel to be resolved"]
-    ST -- Resolver IP not included in WARP Tunnel per Split Tunnel configuration --> QO["Query sent to resolver IP outside WARP Tunnel"]
+    ST --> STCHK{"Resolver IP included in WARP Tunnel per Split Tunnel configuration"}
+    STCHK -- Resolver IP included in WARP Tunnel per Split Tunnel configuration --> QW["Query sent via WARP Tunnel to be resolved"]
+    STCHK -- Resolver IP not included in WARP Tunnel per Split Tunnel configuration --> QO(["Query sent to resolver IP outside WARP Tunnel"])
 
     %% Gateway evaluation after query via WARP
-    QW -- Allowed by Gateway --> OR["Evaluated by Cloudflare on-ramp routes"]
-    QW -- Blocked by Gateway Network or HTTP Policy --> BLK["Traffic blocked by Cloudflare"]
+    QW --> GWALLOW{"Allowed by Gateway"}
+    GWALLOW -- Allowed by Gateway --> OR["Evaluated by Cloudflare on-ramp routes"]
+    GWALLOW -- Blocked by Gateway Network or HTTP Policy --> BLK(["Traffic blocked by Cloudflare"])
 
-    OR -- Onramp routes do not include resolver IP --> GP["Gateway proxies query to resolver IP via normal WARP egress route"]
-    OR -- Onramp routes include resolver IP --> ADV["Cloudflare onramps advertise route that includes Resolver IP"]
-    ADV --> PR["Private resolver returns IP address to WARP client"]
+    OR --> ORCHK{"Onramp routes include resolver IP"}
+    ORCHK -- Onramp routes do not include resolver IP --> GP(["Gateway proxies query to resolver IP via normal WARP egress route"])
+    ORCHK -- Onramp routes include resolver IP --> ADV["Cloudflare onramps advertise route that includes Resolver IP"]
+    ADV --> PR(["Private resolver returns IP address to WARP client"])
 
     %% Right branch (no LDF match)
-    C -- Domain does not exist in Local Domain Fallback policies --> GWR["Gateway checks Resolver Policies (Enterprise only)"]
+    LDFCHK -- Domain does not exist in Local Domain Fallback policies --> GWR{"Gateway checks Resolver Policies (Enterprise only)"}
 
-    GWR -- Resolver policy is not matched --> C1111a["1.1.1.1"]
+    GWR -- Resolver policy is not matched --> C1111a(["1.1.1.1"])
 
-    GWR -- Resolver policy is matched --> MATCH((Resolver policy directs query to one of the following))
-    MATCH --> IDNS["Internal DNS"]
-    MATCH --> C1111b["1.1.1.1"]
-    MATCH --> CUST["Custom resolver"]
-    CUST --> PNS["Private network services<br>(Cloudflare Tunnel, Magic WAN, WARP Connector)"]
+    GWR -- Resolver policy is matched --> MATCH(("Resolver policy directs query to one of the following"))
+    MATCH --> IDNS(["Internal DNS"])
+    MATCH --> C1111b(["1.1.1.1"])
+    MATCH --> CUST(["Custom resolver"])
+    CUST --> PNS(["Private network services<br>(Cloudflare Tunnel, Magic WAN, WARP Connector)"])
 ```
 #### Terms mentioned
 ####  On-ramps (how traffic gets onto Cloudflare)
-- <GlossaryTooltip term = "on-ramp">On-ramp</GlossaryTooltip>
+- <GlossaryTooltip term = "on-ramp">On-ramp</GlossaryTooltip>: Learn more about [On-ramps](/learning-paths/secure-internet-traffic/connect-devices-networks/choose-on-ramp/).
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)
 - [Magic WAN](/magic-wan/)

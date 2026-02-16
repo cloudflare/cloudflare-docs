@@ -6,17 +6,17 @@ import { Tabs, TabItem, DashButton } from "~/components";
 
 To view policy violation information:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-- In the Cloudflare dashboard, go to **Security** > **Page Shield** > **Policies**.
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 1. In the Cloudflare dashboard, go to the **Security rules** page.
 
    <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
 2. (Optional) Filter by **Content security rules**.
+
+</TabItem> <TabItem label="Old dashboard">
+
+- In the Cloudflare dashboard, go to **Security** > **Page Shield** > **Policies**.
 
 </TabItem> </Tabs>
 

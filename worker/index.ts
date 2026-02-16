@@ -12,16 +12,6 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		if (request.url.endsWith("/markdown.zip")) {
-			const res = await this.env.VENDORED_MARKDOWN.get("markdown.zip");
-
-			return new Response(res?.body, {
-				headers: {
-					"Content-Type": "application/zip",
-				},
-			});
-		}
-
 		if (request.url.endsWith("/llms-full.txt")) {
 			const { pathname } = new URL(request.url);
 			const res = await this.env.VENDORED_MARKDOWN.get(pathname.slice(1));
@@ -33,10 +23,7 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
-		if (
-			request.url.endsWith("/index.md") ||
-			request.headers.get("accept")?.includes("text/markdown")
-		) {
+		if (request.url.endsWith("/index.md")) {
 			const htmlUrl = request.url.replace("index.md", "");
 			const res = await this.env.ASSETS.fetch(htmlUrl, request);
 

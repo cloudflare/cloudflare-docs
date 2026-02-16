@@ -1,0 +1,12 @@
+name: Google tag gateway for advertisers
+
+entry:
+  title: Google tag gateway for advertisers
+  url: /google-tag-gateway/
+  group: Application performance
+  additional_groups: [Privacy]
+
+meta:
+  title: Google tag gateway for advertisers docs
+  description: Add a layer of data security and privacy controls when using Google Tag Manager
+  author: "@cloudflare"

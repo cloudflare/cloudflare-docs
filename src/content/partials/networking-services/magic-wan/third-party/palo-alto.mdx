@@ -91,7 +91,7 @@ When you create IPsec tunnels with the option **Add pre-shared key later**, the 
 
 1. Select **Edit** to edit the properties of each tunnel.
 2. Select **Generate a new pre-shared key** > **Update and generate pre-shared key**.
-   ![Generatre a new pre-shared key for each of your IPsec tunnels](~/assets/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/04_magic_ipsec_tun_01_gen_psk.png)
+   ![Generate a new pre-shared key for each of your IPsec tunnels](~/assets/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/04_magic_ipsec_tun_01_gen_psk.png)
 3. Copy the pre-shared key value for each of your IPsec tunnels, and save these values somewhere safe. Then, select **Done**.
    ![Take note of your pre-shared key, and keep it in a safe place](~/assets/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/05_magic_ipsec_tun_01_show_psk.png)
 
@@ -133,7 +133,7 @@ While [Tags are optional](https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-ad
 | `Untrust_L3_Zone`    | Red    |
 | `Cloudflare_L3_Zone` | Orange |
 
-Use the Palo Alto Networks Next-Generation Firewall command-Line to set the tags:
+Use the Palo Alto Networks Next-Generation Firewall command line to set the tags:
 
 ```bash
 set tag Trust_L3_Zone color color2
@@ -185,7 +185,7 @@ Any objects without a netmask specified are `/32`.
 | `VLAN0100_10-1-100-0--24`       | IP Netmask | `10.1.100.0/24`    | `Trust_L3_Zone`      |
 | `VLAN0100_L3_10-1-100-254--24`  | IP Netmask | `10.1.10.254/24`   | `Trust_L3_Zone`      |
 
-Use the Palo Alto Networks Next-Generation Firewall command-Line to set the objects:
+Use the Palo Alto Networks Next-Generation Firewall command line to set the objects:
 
 ```bash
 set address CF_Health_Check_Anycast_01 ip-netmask 172.64.240.253
@@ -270,7 +270,7 @@ The **Address Group** object used in this configuration provides a single object
 | `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_14` | `Cloudflare_L3_Zone` |
 | `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_15` | `Cloudflare_L3_Zone` |
 
-Use the Palo Alto Networks Next-Generation Firewall command-Line to set the address group object:
+Use the Palo Alto Networks Next-Generation Firewall command line to set the address group object:
 
 ```bash
 set address-group Cloudflare_IPv4_Static_Grp static [ Cloudflare_IPv4_01 Cloudflare_IPv4_02 Cloudflare_IPv4_03 Cloudflare_IPv4_04 Cloudflare_IPv4_05 Cloudflare_IPv4_06 Cloudflare_IPv4_07 Cloudflare_IPv4_08 Cloudflare_IPv4_09 Cloudflare_IPv4_10 Cloudflare_IPv4_11 Cloudflare_IPv4_12 Cloudflare_IPv4_13 Cloudflare_IPv4_14 Cloudflare_IPv4_15 ]
@@ -379,7 +379,7 @@ set network interface ethernet ethernet1/2 layer3 adjust-tcp-mss ipv4-mss-adjust
 
 ### Tunnel interfaces
 
-Establishing IPsec Tunnels to Cloudflare Magic WAN requires two tunnel interfaces - one to each of the two Cloudflare anycast IP addresses. You also have to ensure that `Allow_Ping` is bound to both tunnel adapters in **Advanced** > **Managementt Profile**.
+Establishing IPsec Tunnels to Cloudflare Magic WAN requires two tunnel interfaces - one to each of the two Cloudflare anycast IP addresses. You also have to ensure that `Allow_Ping` is bound to both tunnel adapters in **Advanced** > **Management Profile**.
 
 Review the images below for more information.
 
@@ -1129,7 +1129,7 @@ set rulebase security rules Cloudflare_Tunnel_Bidirect_HC log-end yes
 ```
 
 :::note
-Logging is enabled on the rule to permit heath checks. While the amount of bandwidth consumed by health checks is negligible, the flows generate a significant number of log entries. You may want to disable logging on this rule once in production, and only enable it if any troubleshooting becomes necessary.
+Logging is enabled on the rule to permit health checks. While the amount of bandwidth consumed by health checks is negligible, the flows generate a significant number of log entries. You may want to disable logging on this rule once in production, and only enable it if any troubleshooting becomes necessary.
 :::
 
 #### Policy-based forwarding - tunnel health checks

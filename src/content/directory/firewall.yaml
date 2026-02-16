@@ -1,0 +1,15 @@
+name: Firewall Rules
+
+entry:
+  title: Firewall Rules (deprecated)
+  url: /firewall/
+  wrap: true
+  group: Application security
+  show: false
+
+meta:
+  title: Cloudflare Firewall Rules (deprecated) docs
+  description: Create rules that examine incoming HTTP traffic against a set of
+    powerful filters to block, challenge, log, or allow matching requests.
+    Firewall Rules have been replaced with WAF custom rules.
+  author: "@cloudflare"

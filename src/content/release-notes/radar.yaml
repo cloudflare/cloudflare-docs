@@ -3,6 +3,14 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-02-12"
+    title: Add content type dimension to AI Bots
+    description: |-
+      * Added new `content_type` dimension and filter to the AI Bots API:
+        * [`/ai/bots/summary/{dimension}`](/api/resources/radar/subresources/ai/subresources/bots/methods/summary_v2/)
+        * [`/ai/bots/timeseries_groups/{dimension}`](/api/resources/radar/subresources/ai/subresources/bots/methods/timeseries_groups/)
+      * Added new **Content Type Distribution** chart to the [AI Insights page](https://radar.cloudflare.com/ai-insights#content-type).
+      * Added content type chart to individual [bot information pages](https://radar.cloudflare.com/bots/directory) for AI crawlers.
   - publish_date: "2025-12-16"
     title: New client type dimension in Web Crawlers and Mixed Purpose entry
     description: |-

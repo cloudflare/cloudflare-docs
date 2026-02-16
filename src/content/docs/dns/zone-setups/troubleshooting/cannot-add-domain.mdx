@@ -11,7 +11,7 @@ If you encounter issues [adding a domain](/fundamentals/manage-domains/add-site/
 
 ## Disable DNSSEC
 
-Cloudflare cannot provide authoritative DNS resolution for a domain — a [full setup domain](/dns/zone-setups/full-setup/) — when **DNSSEC** is enabled at your domain registrar.
+Cloudflare cannot provide authoritative DNS resolution for a domain — a [domain on a primary setup (full)](/dns/zone-setups/full-setup/) — when **DNSSEC** is enabled at your domain registrar.
 
 If you do not disable **DNSSEC** before changing your nameservers, you might experience the following issues:
 
@@ -96,7 +96,7 @@ Enterprise customers can use the [zone hold](/fundamentals/account/account-secur
 If you get the following error when adding your domain, it means that a zone hold is active:
 
 ```
-The zone name provided is subject to a hold which disallows the creation of this zone. 
+The zone name provided is subject to a hold which disallows the creation of this zone.
 Please contact the owner of the Cloudflare account that manages this domain to have this hold removed.
 ```
 

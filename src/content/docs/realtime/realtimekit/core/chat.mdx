@@ -6,20 +6,21 @@ sidebar:
   order: 12
 ---
 
-import { Tabs, TabItem } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 This guide explains how to send and receive chat messages in a meeting using Cloudflare RealtimeKit.
 
+<RTKSDKSelector />
 ## Introduction
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 There are three types of messages that can be sent in chat:
 
-- **Text messages**
-- **Images**
-- **Files**
-
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+- Text messages
+- Images
+- Files
 
 The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
 
@@ -33,43 +34,15 @@ The `meeting.chat.messages` array contains all the messages that have been sent 
 console.log("All chat messages:", meeting.chat.messages);
 ```
 
-### Message Type
+</RTKCodeSnippet>
 
-The `Message` type is defined as follows:
+<RTKCodeSnippet id="web-react">
 
-```typescript
-interface BaseMessage<T extends MessageType> {
-	type: T;
-	userId: string;
-	displayName: string;
-	time: Date;
-	id: string;
-	isEdited?: boolean;
-	read?: boolean;
-	pluginId?: string;
-	pinned?: boolean;
-	targetUserIds?: string[];
-}
+There are three types of messages that can be sent in chat:
 
-interface TextMessage extends BaseMessage<MessageType.text> {
-	message: string;
-}
-
-interface ImageMessage extends BaseMessage<MessageType.image> {
-	link: string;
-}
-
-interface FileMessage extends BaseMessage<MessageType.file> {
-	name: string;
-	size: number;
-	link: string;
-}
-
-type Message = TextMessage | ImageMessage | FileMessage;
-```
-
-</TabItem>
-<TabItem label="React">
+- Text messages
+- Images
+- Files
 
 The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
 
@@ -83,7 +56,99 @@ The `meeting.chat.messages` array contains all the messages that have been sent 
 meeting.chat.messages;
 ```
 
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+There are three types of messages that can be sent in chat:
+
+- Text messages
+- Images
+- Files
+
+The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
+
+```
+meeting.chat
+```
+
+The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `com.cloudflare.realtimekit.chat.ChatMessage`.
+
+```
+meeting.chat.messages
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+There are three types of messages that can be sent in chat:
+
+- Text messages
+- Images
+- Files
+
+The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
+
+```
+meeting.chat
+```
+
+The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `RealtimeKit.ChatMessage`.
+
+```
+meeting.chat.messages
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+There are three types of messages that can be sent in chat:
+
+- Text messages
+- Images
+- Files
+
+The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
+
+```
+meeting.chat;
+```
+
+The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `ChatMessage`.
+
+```
+meeting.chat.messages;
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+There are three types of messages that can be sent in chat:
+
+- Text messages
+- Images
+- Files
+
+The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
+
+```jsx
+meeting.chat;
+```
+
+The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `Message`.
+
+```jsx
+meeting.chat.messages;
+```
+
+</RTKCodeSnippet>
+
 ### Message Type
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `Message` type is defined as follows:
 
@@ -118,22 +183,46 @@ interface FileMessage extends BaseMessage<MessageType.file> {
 type Message = TextMessage | ImageMessage | FileMessage;
 ```
 
-</TabItem>
-<TabItem label="Android">
+</RTKCodeSnippet>
 
-The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
+<RTKCodeSnippet id="web-react">
 
+The `Message` type is defined as follows:
+
+```typescript
+interface BaseMessage<T extends MessageType> {
+	type: T;
+	userId: string;
+	displayName: string;
+	time: Date;
+	id: string;
+	isEdited?: boolean;
+	read?: boolean;
+	pluginId?: string;
+	pinned?: boolean;
+	targetUserIds?: string[];
+}
+
+interface TextMessage extends BaseMessage<MessageType.text> {
+	message: string;
+}
+
+interface ImageMessage extends BaseMessage<MessageType.image> {
+	link: string;
+}
+
+interface FileMessage extends BaseMessage<MessageType.file> {
+	name: string;
+	size: number;
+	link: string;
+}
+
+type Message = TextMessage | ImageMessage | FileMessage;
 ```
-meeting.chat
-```
 
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `com.cloudflare.realtimekit.chat.ChatMessage`.
+</RTKCodeSnippet>
 
-```
-meeting.chat.messages
-```
-
-### Message type
+<RTKCodeSnippet id="mobile-android">
 
 The `ChatMessage` class is defined as follows:
 
@@ -166,22 +255,9 @@ class FileMessage(
 ): ChatMessage(...)
 ```
 
-</TabItem>
-<TabItem label="iOS">
+</RTKCodeSnippet>
 
-The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
-
-```
-meeting.chat
-```
-
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `RealtimeKit.ChatMessage`.
-
-```
-meeting.chat.messages
-```
-
-### Message type
+<RTKCodeSnippet id="mobile-ios">
 
 The `ChatMessage` class is defined as follows:
 
@@ -218,22 +294,9 @@ public final class FileMessage: ChatMessage {
 }
 ```
 
-</TabItem>
-<TabItem label="Flutter">
+</RTKCodeSnippet>
 
-The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
-
-```
-meeting.chat;
-```
-
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `ChatMessage`.
-
-```
-meeting.chat.messages;
-```
-
-### Message type
+<RTKCodeSnippet id="mobile-flutter">
 
 The `ChatMessage` class is defined as follows:
 
@@ -264,22 +327,9 @@ class FileMessage extends ChatMessage {
 }
 ```
 
-</TabItem>
-<TabItem label="React Native">
+</RTKCodeSnippet>
 
-The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
-
-```jsx
-meeting.chat;
-```
-
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `Message`.
-
-```jsx
-meeting.chat.messages;
-```
-
-### Message type
+<RTKCodeSnippet id="mobile-react-native">
 
 The `Message` type is defined as follows:
 
@@ -314,17 +364,15 @@ interface FileMessage extends BaseMessage<MessageType.file> {
 type Message = TextMessage | ImageMessage | FileMessage;
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Sending a Chat Message
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+### Send a Text Message
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 There is a method in `meeting.chat` to send a message of each type.
-
-### Send a Text Message
 
 To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
 
@@ -333,7 +381,76 @@ const message = "Is this the real life?";
 await meeting.chat.sendTextMessage(message);
 ```
 
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+There is a method in `meeting.chat` to send a message of each type.
+
+To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
+
+```jsx
+const message = "Is this the real life?";
+await meeting.chat.sendTextMessage(message);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+There is a method in `meeting.chat` to send a message of each type.
+
+To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
+
+```kotlin
+val message = "Is this the real life?"
+meeting.chat.sendTextMessage(message)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+There is a method in `meeting.chat` to send a message of each type.
+
+To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
+
+```swift
+var message = "Is this the real life?"
+meeting.chat.sendTextMessage(message)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+There is a method in `meeting.chat` to send a message of each type.
+
+To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
+
+```dart
+final message = "Is this the real life?";
+meeting.chat.sendTextMessage(message);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+There is a method in `meeting.chat` to send a message of each type.
+
+To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
+
+```jsx
+const message = "Is this the real life?";
+await meeting.chat.sendTextMessage(message);
+```
+
+</RTKCodeSnippet>
+
 ### Send an Image
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type `File`, and sends it to the participants in the meeting.
 
@@ -350,60 +467,9 @@ async function onSendImage() {
 }
 ```
 
-### Send a File
+</RTKCodeSnippet>
 
-Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
-
-```html
-<label for="file">Select file:</label>
-<input type="file" id="file" name="file" />
-<button onclick="onSendFile()">Send File</button>
-```
-
-```js
-async function onSendFile() {
-	const file = document.getElementById("file");
-	await meeting.chat.sendFileMessage(file.files[0]);
-}
-```
-
-### Send Any Message Type
-
-There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
-
-```typescript
-async function sendMessage(
-	message:
-		| { type: "text"; message: string }
-		| { type: "image"; image: File }
-		| { type: "file"; file: File },
-) {
-	// ...
-}
-```
-
-Here is how you would use the `sendMessage()` method to send a text message:
-
-```js
-const message = "Is this just fantasy?";
-await meeting.chat.sendMessage({ type: "text", message });
-```
-
-</TabItem>
-<TabItem label="React">
-
-There is a method in `meeting.chat` to send a message of each type.
-
-### Send a Text Message
-
-To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
-
-```jsx
-const message = "Is this the real life?";
-await meeting.chat.sendTextMessage(message);
-```
-
-### Send an Image
+<RTKCodeSnippet id="web-react">
 
 You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type `File`, and sends it to the participants in the meeting.
 
@@ -436,7 +502,91 @@ function ChatComponent() {
 }
 ```
 
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+You can send an image with the help of `meeting.chat.sendImageMessage()` and sends it to the participants in the meeting.
+
+```kotlin
+meeting.chat.sendImageMessage(imageUri) { err ->
+  // Handle error if any
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+You can send an image with the help of `meeting.chat.sendImageMessage()` and sends it to the participants in the meeting.
+
+```swift
+meeting.chat.sendImageMessage(imageURL: url) { err in
+  // Handle error if any
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+You can send an image with the help of `meeting.chat.sendImageMessage()` which sends it to the participants in the meeting. It takes a string filePath as argument.
+
+```dart
+final filePath = "file_path_of_image";
+meeting.chat.sendImageMessage(filePath, (error) {
+  // Handle error if any
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type File, and sends it to the participants in the meeting.
+
+```jsx
+import DocumentPicker from "@react-native-documents/picker";
+
+async function onSendImage() {
+	// Get the image uri and create an object with the following fields
+	const res = await DocumentPicker.pickSingle({
+		type: [DocumentPicker.types.images],
+	});
+	const image = {
+		uri: res.uri,
+		name: res.name,
+		size: res.size,
+		type: res.type,
+	};
+	await meeting.chat.sendImageMessage(image);
+}
+```
+
+</RTKCodeSnippet>
+
 ### Send a File
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
+
+```html
+<label for="file">Select file:</label>
+<input type="file" id="file" name="file" />
+<button onclick="onSendFile()">Send File</button>
+```
+
+```js
+async function onSendFile() {
+	const file = document.getElementById("file");
+	await meeting.chat.sendFileMessage(file.files[0]);
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
 
@@ -463,53 +613,9 @@ function ChatComponent() {
 }
 ```
 
-### Send Any Message Type
+</RTKCodeSnippet>
 
-There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
-
-```typescript
-async function sendMessage(
-	message:
-		| { type: "text"; message: string }
-		| { type: "image"; image: File }
-		| { type: "file"; file: File },
-) {
-	// ...
-}
-```
-
-Here is how you would use the `sendMessage()` method to send a text message:
-
-```jsx
-const message = "Is this just fantasy?";
-await meeting.chat.sendMessage({ type: "text", message });
-```
-
-</TabItem>
-<TabItem label="Android">
-
-There is a method in `meeting.chat` to send a message of each type.
-
-### Send a text message
-
-To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
-
-```kotlin
-val message = "Is this the real life?"
-meeting.chat.sendTextMessage(message)
-```
-
-### Send an image
-
-You can send an image with the help of `meeting.chat.sendImageMessage()` and sends it to the participants in the meeting.
-
-```kotlin
-meeting.chat.sendImageMessage(imageUri) { err ->
-  // Handle error if any
-}
-```
-
-### Send a file
+<RTKCodeSnippet id="mobile-android">
 
 Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
 
@@ -519,31 +625,9 @@ meeting.chat.sendFileMessage(fileUri) { err ->
 }
 ```
 
-</TabItem>
-<TabItem label="iOS">
+</RTKCodeSnippet>
 
-There is a method in `meeting.chat` to send a message of each type.
-
-### Send a text message
-
-To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
-
-```swift
-var message = "Is this the real life?"
-meeting.chat.sendTextMessage(message)
-```
-
-### Send an image
-
-You can send an image with the help of `meeting.chat.sendImageMessage()` and sends it to the participants in the meeting.
-
-```swift
-meeting.chat.sendImageMessage(imageURL: url) { err in
-  // Handle error if any
-}
-```
-
-### Send a file
+<RTKCodeSnippet id="mobile-ios">
 
 Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
 
@@ -553,32 +637,9 @@ meeting.chat.sendFileMessage(fileURL: url) { err in
 }
 ```
 
-</TabItem>
-<TabItem label="Flutter">
+</RTKCodeSnippet>
 
-There is a method in `meeting.chat` to send a message of each type.
-
-### Send a text message
-
-To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
-
-```dart
-final message = "Is this the real life?";
-meeting.chat.sendTextMessage(message);
-```
-
-### Send an image
-
-You can send an image with the help of `meeting.chat.sendImageMessage()` which sends it to the participants in the meeting. It takes a string filePath as argument.
-
-```dart
-final filePath = "file_path_of_image";
-meeting.chat.sendImageMessage(filePath, (error) {
-  // Handle error if any
-});
-```
-
-### Send a file
+<RTKCodeSnippet id="mobile-flutter">
 
 You can send a file with the help of `meeting.chat.sendFileMessage()` which sends it to the participants in the meeting. It takes a string filePath as argument.
 
@@ -589,43 +650,9 @@ meeting.chat.sendFileMessage(filePath, (error) {
 });
 ```
 
-</TabItem>
-<TabItem label="React Native">
+</RTKCodeSnippet>
 
-There is a method in `meeting.chat` to send a message of each type.
-
-### Send a text message
-
-To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
-
-```jsx
-const message = "Is this the real life?";
-await meeting.chat.sendTextMessage(message);
-```
-
-### Send an image
-
-You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type File, and sends it to the participants in the meeting.
-
-```jsx
-import DocumentPicker from "@react-native-documents/picker";
-
-async function onSendImage() {
-	// Get the image uri and create an object with the following fields
-	const res = await DocumentPicker.pickSingle({
-		type: [DocumentPicker.types.images],
-	});
-	const image = {
-		uri: res.uri,
-		name: res.name,
-		size: res.size,
-		type: res.type,
-	};
-	await meeting.chat.sendImageMessage(image);
-}
-```
-
-### Send a file
+<RTKCodeSnippet id="mobile-react-native">
 
 Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
 
@@ -647,7 +674,35 @@ async function onSendFile() {
 }
 ```
 
-### Send any message type
+</RTKCodeSnippet>
+
+### Send Any Message Type
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
+
+```typescript
+async function sendMessage(
+	message:
+		| { type: "text"; message: string }
+		| { type: "image"; image: File }
+		| { type: "file"; file: File },
+) {
+	// ...
+}
+```
+
+Here is how you would use the `sendMessage()` method to send a text message:
+
+```js
+const message = "Is this just fantasy?";
+await meeting.chat.sendMessage({ type: "text", message });
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
 
@@ -669,13 +724,35 @@ const message = "Is this just fantasy?";
 await meeting.chat.sendMessage({ type: "text", message });
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
+
+```typescript
+async function sendMessage(
+	message:
+		| { type: "text"; message: string }
+		| { type: "image"; image: File }
+		| { type: "file"; file: File },
+) {
+	// ...
+}
+```
+
+Here is how you would use the `sendMessage()` method to send a text message:
+
+```jsx
+const message = "Is this just fantasy?";
+await meeting.chat.sendMessage({ type: "text", message });
+```
+
+</RTKCodeSnippet>
 
 ## Receiving Chat Messages
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.
 
@@ -698,8 +775,9 @@ meeting.chat.on("chatUpdate", () => {
 });
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.
 
@@ -731,8 +809,9 @@ meeting.chat.on("chatUpdate", () => {
 });
 ```
 
-</TabItem>
-<TabItem label="Android">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
 
 To be able to receive chat messages you need to implement a method `onChatUpdates()` method from callback `RtkChatEventListener`. You can subscribe to this events by calling `meeting.addChatEventListener(rtkChatEventListener)`.
 
@@ -758,8 +837,9 @@ The `onNewChatMessage()` method will be called whenever a new chat message is sh
 
 The `onMessageRateLimitReset()` method will be called when the rate limit for sending messages of self is reset and you can send messages again. The default rate limit is 180 messages within 60 seconds.
 
-</TabItem>
-<TabItem label="iOS">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
 
 To be able to receive chat messages you need to implement a method `onChatUpdates()` method from callback `RtkChatEventListener`. You can subscribe to this events by calling `meeting.addChatEventListener(rtkChatEventListener)`.
 
@@ -785,8 +865,9 @@ The `onNewChatMessage()` method will be called whenever a new chat message is sh
 
 The `onMessageRateLimitReset()` method will be called when the rate limit for sending messages of self is reset and you can send messages again. The default rate limit is 180 messages within 60 seconds.
 
-</TabItem>
-<TabItem label="Flutter">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
 
 To be able to receive chat messages you need to implement a method `onChatUpdates()` method from callback `RtkChatEventListener`. You can subscribe to this events by calling `meeting.addChatEventListener(rtkChatEventListener)`.
 
@@ -830,8 +911,9 @@ In this context, `messages` refers to a list of all the chat messages in the mee
 
 Whenever a chat message is received, the `meeting.chat.messages` list is automatically updated.
 
-</TabItem>
-<TabItem label="React Native">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
 
 The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.
 
@@ -854,17 +936,15 @@ meeting.chat.on("chatUpdate", () => {
 });
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Editing Chat Messages
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+### Edit a Text Message
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 There is a method in `meeting.chat` to edit a message of each type.
-
-### Edit a Text Message
 
 To edit a text message, use the `meeting.chat.editTextMessage()` method. This accepts a `messageId` (type `string`) and a `message` (type `string`).
 
@@ -876,7 +956,42 @@ const newMessage = "Is this the real life?";
 await meeting.chat.editTextMessage(messageId, newMessage);
 ```
 
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+There is a method in `meeting.chat` to edit a message of each type.
+
+To edit a text message, use the `meeting.chat.editTextMessage()` method. This accepts a `messageId` (type `string`) and a `message` (type `string`).
+
+```jsx
+const message = meeting.chat.messages[0];
+const messageId = message?.id;
+const newMessage = "Is this the real life?";
+
+await meeting.chat.editTextMessage(messageId, newMessage);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+There is a method in `meeting.chat` to edit a message of each type.
+
+To edit a text message, use the `meeting.chat.editTextMessage()` method. This accepts a `messageId` (type `string`) and a `message` (type `string`).
+
+```jsx
+const message = meeting.chat.messages[0];
+const messageId = message?.id;
+const newMessage = "Is this the real life?";
+await meeting.chat.editTextMessage(messageId, newMessage);
+```
+
+</RTKCodeSnippet>
+
 ### Edit an Image
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type `File`.
 
@@ -894,66 +1009,9 @@ async function onEditImage() {
 }
 ```
 
-### Edit a File
+</RTKCodeSnippet>
 
-Editing a file is similar to editing an image. To edit a file, use `meeting.chat.editFileMessage()`.
-
-```html
-<label for="file">Edit file:</label>
-<input type="file" id="file" name="file" />
-<button onclick="onEditFile()">Edit File</button>
-```
-
-```js
-async function onEditFile() {
-	const messageId = "...";
-	const file = document.getElementById("file");
-	await meeting.chat.editFileMessage(messageId, file.files[0]);
-}
-```
-
-### Edit Any Message Type
-
-There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
-
-```typescript
-async function editMessage(
-	messageId: string,
-	message:
-		| { type: "text"; message: string }
-		| { type: "image"; image: File }
-		| { type: "file"; file: File },
-) {
-	// ...
-}
-```
-
-Here is how you would use the `editMessage()` method to edit a text message:
-
-```js
-const messageId = "...";
-const message = "Is this just fantasy?";
-await meeting.chat.editMessage(messageId, { type: "text", message });
-```
-
-</TabItem>
-<TabItem label="React">
-
-There is a method in `meeting.chat` to edit a message of each type.
-
-### Edit a Text Message
-
-To edit a text message, use the `meeting.chat.editTextMessage()` method. This accepts a `messageId` (type `string`) and a `message` (type `string`).
-
-```jsx
-const message = meeting.chat.messages[0];
-const messageId = message?.id;
-const newMessage = "Is this the real life?";
-
-await meeting.chat.editTextMessage(messageId, newMessage);
-```
-
-### Edit an Image
+<RTKCodeSnippet id="web-react">
 
 You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type `File`.
 
@@ -987,7 +1045,56 @@ function ChatComponent() {
 }
 ```
 
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type File.
+
+```jsx
+import DocumentPicker from "@react-native-documents/picker";
+
+async function onEditImage() {
+	const messageId = "...";
+	// Get the image uri and create an object with the following fields
+	const res = await DocumentPicker.pickSingle({
+		type: [DocumentPicker.types.images],
+	});
+	const image = {
+		uri: res.uri,
+		name: res.name,
+		size: res.size,
+		type: res.type,
+	};
+	await meeting.chat.editImageMessage(messageId, image);
+}
+```
+
+</RTKCodeSnippet>
+
 ### Edit a File
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+Editing a file is similar to editing an image. To edit a file, use `meeting.chat.editFileMessage()`.
+
+```html
+<label for="file">Edit file:</label>
+<input type="file" id="file" name="file" />
+<button onclick="onEditFile()">Edit File</button>
+```
+
+```js
+async function onEditFile() {
+	const messageId = "...";
+	const file = document.getElementById("file");
+	await meeting.chat.editFileMessage(messageId, file.files[0]);
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 Editing a file is similar to editing an image. To edit a file, use `meeting.chat.editFileMessage()`.
 
@@ -1015,70 +1122,9 @@ function ChatComponent() {
 }
 ```
 
-### Edit Any Message Type
+</RTKCodeSnippet>
 
-There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
-
-```typescript
-async function editMessage(
-	messageId: string,
-	message:
-		| { type: "text"; message: string }
-		| { type: "image"; image: File }
-		| { type: "file"; file: File },
-) {
-	// ...
-}
-```
-
-Here is how you would use the `editMessage()` method to edit a text message:
-
-```jsx
-const messageId = "...";
-const message = "Is this just fantasy?";
-await meeting.chat.editMessage(messageId, { type: "text", message });
-```
-
-</TabItem>
-<TabItem label="React Native">
-
-There is a method in `meeting.chat` to edit a message of each type.
-
-### Edit a text message
-
-To edit a text message, use the `meeting.chat.editTextMessage()` method. This accepts a `messageId` (type `string`) and a `message` (type `string`).
-
-```jsx
-const message = meeting.chat.messages[0];
-const messageId = message?.id;
-const newMessage = "Is this the real life?";
-await meeting.chat.editTextMessage(messageId, newMessage);
-```
-
-### Edit an image
-
-You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type File.
-
-```jsx
-import DocumentPicker from "@react-native-documents/picker";
-
-async function onEditImage() {
-	const messageId = "...";
-	// Get the image uri and create an object with the following fields
-	const res = await DocumentPicker.pickSingle({
-		type: [DocumentPicker.types.images],
-	});
-	const image = {
-		uri: res.uri,
-		name: res.name,
-		size: res.size,
-		type: res.type,
-	};
-	await meeting.chat.editImageMessage(messageId, image);
-}
-```
-
-### Edit a file
+<RTKCodeSnippet id="mobile-react-native">
 
 Editing a file is similar to editing an image. To edit a file, use `meeting.chat.editFileMessage()`.
 
@@ -1101,7 +1147,37 @@ async function onEditFile() {
 }
 ```
 
-### Edit any message type
+</RTKCodeSnippet>
+
+### Edit Any Message Type
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
+
+```typescript
+async function editMessage(
+	messageId: string,
+	message:
+		| { type: "text"; message: string }
+		| { type: "image"; image: File }
+		| { type: "file"; file: File },
+) {
+	// ...
+}
+```
+
+Here is how you would use the `editMessage()` method to edit a text message:
+
+```js
+const messageId = "...";
+const message = "Is this just fantasy?";
+await meeting.chat.editMessage(messageId, { type: "text", message });
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
 
@@ -1125,17 +1201,41 @@ const message = "Is this just fantasy?";
 await meeting.chat.editMessage(messageId, { type: "text", message });
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
+
+```typescript
+async function editMessage(
+	messageId: string,
+	message:
+		| { type: "text"; message: string }
+		| { type: "image"; image: File }
+		| { type: "file"; file: File },
+) {
+	// ...
+}
+```
+
+Here is how you would use the `editMessage()` method to edit a text message:
+
+```jsx
+const messageId = "...";
+const message = "Is this just fantasy?";
+await meeting.chat.editMessage(messageId, { type: "text", message });
+```
+
+</RTKCodeSnippet>
 
 ## Other Chat Functions
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+### Get Messages by a User
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `meeting.chat` object exposes certain other methods for convenience when working with chat.
-
-### Get Messages by a User
 
 You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
 
@@ -1147,17 +1247,79 @@ const { userId } = meeting.participants.joined
 
 const messages = meeting.chat.getMessagesByUser(userId);
 ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+The `meeting.chat` object exposes certain other methods for convenience when working with chat.
+
+You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
+
+```jsx
+// Find the userId of the user with name "Freddie".
+const { userId } = meeting.participants.joined
+	.toArray()
+	.find((p) => p.name === "Freddie");
+
+const messages = meeting.chat.getMessagesByUser(userId);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+The `meeting.chat` object exposes certain other methods for convenience when working with chat.
+
+You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
+
+```jsx
+// Find the userId of the user with name "Freddie".
+const { userId } = meeting.participants.joined
+	.toArray()
+	.find((p) => p.name === "Freddie");
+
+const messages = meeting.chat.getMessagesByUser(userId);
+```
+
+</RTKCodeSnippet>
 
 ### Get Messages of a Particular Type
 
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
 You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
 
 ```js
 const imageMessages = meeting.chat.getMessagesByType("image");
 ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
+
+```jsx
+const imageMessages = meeting.chat.getMessagesByType("image");
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
+
+```jsx
+const imageMessages = meeting.chat.getMessagesByType("image");
+```
+
+</RTKCodeSnippet>
 
 ### Pinning a Chat Message
 
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
 You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
 
 To pin a message:
@@ -1197,9 +1359,101 @@ meeting.chat.on("unpinMessage", ({ message }) => {
 	console.log("A message was unpinned", JSON.stringify(message));
 });
 ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
+
+To pin a message:
+
+```jsx
+// Pin the first message in the chat (could be text, image, or file).
+const { id } = meeting.chat.messages[0];
+await meeting.chat.pin(id);
+```
+
+Once you pin a message, it will be added to `meeting.chat.pinned`.
+
+```jsx
+const { id } = meeting.chat.messages[0];
+await meeting.chat.pin(id);
+
+console.log(meeting.chat.pinned);
+console.log(meeting.chat.pinned.length > 0); // Should be true
+```
+
+You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
+
+```jsx
+// Unpin the first pinned message.
+const { id } = meeting.chat.pinned[0];
+await meeting.chat.unpin(id);
+```
+
+You can listen for events to know when a message is pinned or unpinned.
+
+```jsx
+meeting.chat.on("pinMessage", ({ message }) => {
+	console.log("A message was pinned", JSON.stringify(message));
+});
+
+meeting.chat.on("unpinMessage", ({ message }) => {
+	console.log("A message was unpinned", JSON.stringify(message));
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
+
+To pin a message:
+
+```jsx
+// Pin the first message in the chat (could be text, image, or file).
+const { id } = meeting.chat.messages[0];
+await meeting.chat.pin(id);
+```
+
+Once you pin a message, it will be added to `meeting.chat.pinned`.
+
+```jsx
+const { id } = meeting.chat.messages[0];
+await meeting.chat.pin(id);
+
+console.log(meeting.chat.pinned);
+console.log(meeting.chat.pinned.length > 0); // Should be true
+```
+
+You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
+
+```jsx
+// Unpin the first pinned message.
+const { id } = meeting.chat.pinned[0];
+await meeting.chat.unpin(id);
+```
+
+You can listen for events to know when a message is pinned or unpinned.
+
+```jsx
+meeting.chat.on("pinMessage", ({ message }) => {
+	console.log("A message was pinned", JSON.stringify(message));
+});
+
+meeting.chat.on("unpinMessage", ({ message }) => {
+	console.log("A message was unpinned", JSON.stringify(message));
+});
+```
+
+</RTKCodeSnippet>
 
 ### Deleting a Chat Message
 
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
 The `meeting.chat` namespace exposes a method called `deleteMessage()`. It takes a parameter `messageId` of type `string`.
 
 ```js
@@ -1207,75 +1461,9 @@ const messageId = "...";
 await meeting.chat.deleteMessage(messageId);
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
 
-The `meeting.chat` object exposes certain other methods for convenience when working with chat.
-
-### Get Messages by a User
-
-You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
-
-```jsx
-// Find the userId of the user with name "Freddie".
-const { userId } = meeting.participants.joined
-	.toArray()
-	.find((p) => p.name === "Freddie");
-
-const messages = meeting.chat.getMessagesByUser(userId);
-```
-
-### Get Messages of a Particular Type
-
-You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
-
-```jsx
-const imageMessages = meeting.chat.getMessagesByType("image");
-```
-
-### Pinning a Chat Message
-
-You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
-
-To pin a message:
-
-```jsx
-// Pin the first message in the chat (could be text, image, or file).
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
-```
-
-Once you pin a message, it will be added to `meeting.chat.pinned`.
-
-```jsx
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
-
-console.log(meeting.chat.pinned);
-console.log(meeting.chat.pinned.length > 0); // Should be true
-```
-
-You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
-
-```jsx
-// Unpin the first pinned message.
-const { id } = meeting.chat.pinned[0];
-await meeting.chat.unpin(id);
-```
-
-You can listen for events to know when a message is pinned or unpinned.
-
-```jsx
-meeting.chat.on("pinMessage", ({ message }) => {
-	console.log("A message was pinned", JSON.stringify(message));
-});
-
-meeting.chat.on("unpinMessage", ({ message }) => {
-	console.log("A message was unpinned", JSON.stringify(message));
-});
-```
-
-### Deleting a Chat Message
+<RTKCodeSnippet id="web-react">
 
 The `meeting.chat` namespace exposes a method called `deleteMessage()`. It takes a parameter `messageId` of type `string`.
 
@@ -1284,75 +1472,9 @@ const messageId = "...";
 await meeting.chat.deleteMessage(messageId);
 ```
 
-</TabItem>
-<TabItem label="React Native">
+</RTKCodeSnippet>
 
-The `meeting.chat` object exposes certain other methods for convenience when working with chat.
-
-### Get messages by a user
-
-You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
-
-```jsx
-// Find the userId of the user with name "Freddie".
-const { userId } = meeting.participants.joined
-	.toArray()
-	.find((p) => p.name === "Freddie");
-
-const messages = meeting.chat.getMessagesByUser(userId);
-```
-
-### Get messages of a particular type
-
-You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
-
-```jsx
-const imageMessages = meeting.chat.getMessagesByType("image");
-```
-
-### Pinning a chat message
-
-You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
-
-To pin a message:
-
-```jsx
-// Pin the first message in the chat (could be text, image, or file).
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
-```
-
-Once you pin a message, it will be added to `meeting.chat.pinned`.
-
-```jsx
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
-
-console.log(meeting.chat.pinned);
-console.log(meeting.chat.pinned.length > 0); // Should be true
-```
-
-You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
-
-```jsx
-// Unpin the first pinned message.
-const { id } = meeting.chat.pinned[0];
-await meeting.chat.unpin(id);
-```
-
-You can listen for events to know when a message is pinned or unpinned.
-
-```jsx
-meeting.chat.on("pinMessage", ({ message }) => {
-	console.log("A message was pinned", JSON.stringify(message));
-});
-
-meeting.chat.on("unpinMessage", ({ message }) => {
-	console.log("A message was unpinned", JSON.stringify(message));
-});
-```
-
-### Deleting a chat message
+<RTKCodeSnippet id="mobile-react-native">
 
 The `meeting.chat` namespace exposes a method called `deleteMessage()`. It takes a parameter `messageId` of type `string`.
 
@@ -1361,8 +1483,7 @@ const messageId = "...";
 await meeting.chat.deleteMessage(messageId);
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Export chat messages
 

@@ -84,18 +84,27 @@ The example below sets up two environments, `staging` and `production`, with dif
 
 <WranglerConfig>
 
-```toml
-name = "my-worker-dev"
-
-# top level environment
-[vars]
-API_HOST = "api.example.com"
-
-[env.staging.vars]
-API_HOST = "staging.example.com"
-
-[env.production.vars]
-API_HOST = "production.example.com"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker-dev",
+	// top level environment
+	"vars": {
+		"API_HOST": "api.example.com"
+	},
+	"env": {
+		"staging": {
+			"vars": {
+				"API_HOST": "staging.example.com"
+			}
+		},
+		"production": {
+			"vars": {
+				"API_HOST": "production.example.com"
+			}
+		}
+	}
+}
 ```
 
 </WranglerConfig>

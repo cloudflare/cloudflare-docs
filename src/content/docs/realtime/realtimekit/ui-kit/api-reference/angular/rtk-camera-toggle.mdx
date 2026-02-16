@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: rtk-camera-toggle
+description: API reference for rtk-camera-toggle component (Angular Library)
+---
+A button which toggles your camera.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-camera-toggle></rtk-camera-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-camera-toggle
+ [meeting]="meeting"
+ size="md"
+ variant="button">
+</rtk-camera-toggle>
+```
+
