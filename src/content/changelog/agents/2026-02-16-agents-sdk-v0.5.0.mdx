@@ -79,7 +79,6 @@ Notable bug fixes:
 
 ## Other improvements
 
-- **Fix React hooks exhaustive-deps warning** — `useAgent` no longer triggers the React exhaustive-deps lint warning by correctly referencing `cacheInvalidatedAt` inside the `useMemo` body.
 - **Fix TypeScript "excessively deep" error** — A depth counter on `CanSerialize` and `IsSerializableParam` types bails out to `true` after 10 levels of recursion, preventing the "Type instantiation is excessively deep" error with deeply nested types like AI SDK `CoreMessage[]`.
 - **POST SSE keepalive** — The POST SSE handler now sends `event: ping` every 30 seconds to keep the connection alive, matching the existing GET SSE handler behavior. This prevents POST response streams from being silently dropped by proxies during long-running tool calls.
 - **Widened peer dependency ranges** — Peer dependency ranges across packages have been widened to prevent cascading major bumps during 0.x minor releases. `@cloudflare/ai-chat` and `@cloudflare/codemode` are now marked as optional peer dependencies.
