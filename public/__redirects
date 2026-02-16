@@ -1126,6 +1126,16 @@
 /magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/ /cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
 /magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ /cloudflare-wan/reference/how-cloudflare-calculates-tunnel-health-alerts/ 301
 /magic-wan/configuration/magic-cloud-networking/ /cloudflare-wan/configuration/multi-cloud-networking/ 301
+# wan-tunnels slug renames (old path + old slug → new path + new slug)
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/enable-magic-roles/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/enable-roles/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/configure-magic-tunnel-health-alerts/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ /cloudflare-one/networks/connectors/cloudflare-wan/reference/how-cloudflare-calculates-tunnel-health-alerts/ 301
+# wan-tunnels connector → appliance slug renames
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/activate-connector/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/activate-appliance/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/deactivate-connector/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/deactivate-appliance/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/remove-connectors/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/remove-appliances/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/configure-virtual-connector/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-virtual-appliance/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/configure-hardware-connector/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/ 301
 # magic-wan connector → appliance slug renames
 /magic-wan/configuration/connector/maintenance/activate-connector/ /cloudflare-wan/configuration/appliance/maintenance/activate-appliance/ 301
 /magic-wan/configuration/connector/maintenance/deactivate-connector/ /cloudflare-wan/configuration/appliance/maintenance/deactivate-appliance/ 301
@@ -2545,3 +2555,8 @@
 # Cloudflare WAN (formerly Magic WAN)
 /cloudflare-wan/configuration/connector/* /cloudflare-wan/configuration/appliance/:splat 301
 /magic-wan/* /cloudflare-wan/:splat 301
+
+# WAN Tunnels → Cloudflare WAN (within Cloudflare One)
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/:splat 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliance/configure-hardware-connector/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
+/cloudflare-one/networks/connectors/wan-tunnels/* /cloudflare-one/networks/connectors/cloudflare-wan/:splat 301
