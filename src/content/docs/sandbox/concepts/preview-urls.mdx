@@ -50,20 +50,22 @@ URLs with auto-generated tokens change when you unexpose and re-expose a port.
 For production deployments or shared URLs, specify a custom token to maintain consistency across container restarts:
 
 ```typescript
-const stable = await sandbox.exposePort(8000, { 
-  hostname, 
-  token: 'api-v1' 
+const stable = await sandbox.exposePort(8000, {
+	hostname,
+	token: "api-v1",
 });
 // https://8000-sandbox-id-api-v1.yourdomain.com
 // Same URL every time ✓
 ```
 
 **Token requirements:**
+
 - 1-16 characters long
-- Lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (_) only
+- Lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (\_) only
 - Must be unique within each sandbox
 
 **Use cases for custom tokens:**
+
 - Production APIs with stable endpoints
 - Sharing demo URLs with external users
 - Documentation with consistent examples
@@ -77,7 +79,7 @@ Preview URLs extract the sandbox ID from the hostname to route requests. Since h
 
 ```typescript
 // Problem scenario
-const sandbox = getSandbox(env.Sandbox, 'MyProject-123');
+const sandbox = getSandbox(env.Sandbox, "MyProject-123");
 // Durable Object ID: "MyProject-123"
 await sandbox.exposePort(8080, { hostname });
 // Preview URL: 8080-myproject-123-token123.yourdomain.com
@@ -87,8 +89,8 @@ await sandbox.exposePort(8080, { hostname });
 **The solution**: Use `normalizeId: true` to lowercase IDs when creating sandboxes:
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, 'MyProject-123', {
-  normalizeId: true
+const sandbox = getSandbox(env.Sandbox, "MyProject-123", {
+	normalizeId: true,
 });
 // Durable Object ID: "myproject-123" (lowercased)
 // Preview URL: 8080-myproject-123-token123.yourdomain.com
@@ -120,7 +122,9 @@ export default {
 };
 ```
 
-Requests flow: Browser → Your Worker → Durable Object (sandbox) → Your Service.
+**Request flow**: Browser &rarr; HTTPS &rarr; Cloudflare edge (TLS termination) &rarr; Worker &rarr; Durable Object &rarr; HTTP &rarr; Container
+
+Cloudflare terminates TLS at the edge. Your service inside the container receives plain HTTP requests over an internal connection -- no TLS is needed because the transport between the Durable Object and the container VM is already secure. Your service should bind on HTTP, not HTTPS.
 
 ## Multiple Ports
 
@@ -155,6 +159,7 @@ const admin = await sandbox.exposePort(3001, { hostname, name: "admin" });
 - Custom protocols (must wrap in HTTP)
 - Ports outside range 1024-65535
 - Port 3000 (used internally by the SDK)
+- HTTPS servers inside the container (the internal connection uses HTTP -- Cloudflare handles TLS at the edge, so your service should serve plain HTTP on the exposed port)
 
 ## WebSocket Support
 
@@ -191,7 +196,7 @@ Preview URLs are publicly accessible by default, but require a valid access toke
 **Built-in security**:
 
 - **Token-based access** - Each exposed port gets a unique token in the URL (for example, `https://8080-sandbox-abc123token456.yourdomain.com`)
-- **HTTPS in production** - All traffic is encrypted with TLS. Certificates are provisioned automatically for first-level wildcards (`*.yourdomain.com`). If your worker runs on a subdomain, see the [TLS note in Production Deployment](/sandbox/guides/production-deployment/).
+- **HTTPS in production** - All traffic between the browser and Cloudflare is encrypted with TLS. If your Worker runs on the apex domain, Cloudflare's Universal SSL covers `*.yourdomain.com` automatically. If your Worker runs on a subdomain (for example, `sandbox.yourdomain.com`), you need a certificate covering `*.sandbox.yourdomain.com` -- Universal SSL does not cover second-level wildcards. Refer to [Production Deployment](/sandbox/guides/production-deployment/) for options including Advanced Certificate Manager ($10/month).
 - **Unpredictable URLs** - Auto-generated tokens are randomly generated and difficult to guess
 - **Token collision prevention** - Custom tokens are validated to ensure uniqueness within each sandbox
 
@@ -235,6 +240,18 @@ app.run((host = "0.0.0.0"), (port = 3000));
 // Bad (localhost only):
 app.run((host = "127.0.0.1"), (port = 3000));
 ```
+
+### Container HTTPS Error
+
+If you see: `Connecting to a container using HTTPS is not currently supported; use HTTP instead`
+
+Your service inside the sandbox is serving HTTPS. Configure it to serve HTTP instead. Cloudflare handles TLS between the browser and the edge -- the connection from the Durable Object to your container is internal and already secure.
+
+Common causes:
+
+- Node.js using `https.createServer()` instead of `http.createServer()`
+- A framework started with an HTTPS flag (for example, `--experimental-https` in Next.js)
+- A framework redirecting HTTP to HTTPS (configure it to trust the proxy -- for example, `app.set('trust proxy', 1)` in Express)
 
 ### Production Errors
 
