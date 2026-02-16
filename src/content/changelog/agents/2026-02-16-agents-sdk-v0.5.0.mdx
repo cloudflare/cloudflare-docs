@@ -65,7 +65,13 @@ Key new features:
 - **Row size guard** — Automatic two-pass compaction when messages approach the SQLite 2 MB limit.
 - **`autoContinueAfterToolResult` defaults to `true`** — Client-side tool results and tool approvals now automatically trigger a server continuation, matching server-executed tool behavior. Set `autoContinueAfterToolResult: false` in `useAgentChat` to restore the previous behavior.
 
-Notable bug fixes include: `setMessages` functional updater sending empty arrays, `CF_AGENT_MESSAGE_UPDATED` not broadcasting for streaming messages, stream resumption race conditions, `clearAll()` not clearing in-memory chunk buffers, and `reasoning-delta` silently dropping data when `reasoning-start` was missed during stream resumption.
+Notable bug fixes:
+
+- `setMessages` functional updater sending empty arrays
+- `CF_AGENT_MESSAGE_UPDATED` not broadcasting for streaming messages
+- Stream resumption race conditions
+- `clearAll()` not clearing in-memory chunk buffers
+- `reasoning-delta` silently dropping data when `reasoning-start` was missed during stream resumption
 
 ## Synchronous queue and schedule getters
 
