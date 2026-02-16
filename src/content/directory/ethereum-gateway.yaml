@@ -1,0 +1,12 @@
+id: AqHqJG
+name: ethereum-gateway
+
+entry:
+  title: Ethereum Gateway
+  url: /web3/ethereum-gateway/
+  show: false
+
+meta:
+  title: Cloudflare Ethereum Gateway docs
+  description: Cloudflare's Ethereum Gateway gives you read and write access to the Ethereum network without installing any software on your computer.
+  author: "@cloudflare"
