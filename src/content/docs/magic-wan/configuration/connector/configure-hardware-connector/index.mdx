@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Configure hardware Connector
+title: Configure hardware Appliance
 sidebar:
   order: 3
-  label: Configure hardware Connector
+  label: Configure hardware Appliance
 ---
 
 import { Render } from "~/components";
@@ -12,31 +12,31 @@ import { Render } from "~/components";
 	product="networking-services"
 	params={{
 	magicWord: "hardware",
-	productName: "Magic WAN Connector",
-	maintenanceURL: "/magic-wan/configuration/connector/maintenance/",
-	dashName: "Magic WAN",
-	sfpURL: "/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/",
-	wan: "refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector. <br/> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. For details on hardware support, refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/).",
-	lan: "refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector. <br/> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. For details on hardware support, refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/).",
-	noConnectorShows: "You need to have bought a Connector already for it to appear here. Refer to [Prerequisites](#prerequisites) if no Connector appears in this list.",
-	networkSegmentationURL: "/magic-wan/configuration/connector/network-options/network-segmentation/",
-	dhcpServerURL: "/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/",
-  dhcpRelayURL: "/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/",
-  reserveIpAddressesURL: "/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/",
-	shippedLanguage: "The Magic WAN Connector is shipped to you deactivated",
-	hardSoftConn: "You need to deploy two Connectors in your premises before you can set up a site in high availability.",
-	hcConfigsURL: "/magic-wan/configuration/connector/reference/#high-availability-configurations",
-	ipsecTunnelsRefURL: "/magic-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels",
-	trafficSteeringURL: "/magic-wan/reference/traffic-steering/",
-	vlanIdURL: "/magic-wan/configuration/connector/reference/#vlan-id",
-	healthCheckFrequencyURL: "/magic-wan/configuration/common-settings/update-tunnel-health-checks-frequency/",
-	routedSubnetsURL: "/magic-wan/configuration/connector/network-options/routed-subnets/",
-	interruptWindowURL: "/magic-wan/configuration/connector/maintenance/interrupt-service-window/",
-	tunnelHealthChecksURL: "/magic-wan/reference/tunnel-health-checks/",
-	wanSettingsURL: "/magic-wan/configuration/connector/reference/#wan-settings",
-	sitesURL: "/magic-wan/configuration/common-settings/sites/",
-	networkOptionsURL: "/magic-wan/configuration/connector/network-options/",
-  maintenanceURL: "/magic-wan/configuration/connector/maintenance/",
-  referenceInformationURL: "/magic-wan/configuration/connector/reference/",
-  troubleshootingURL: "/magic-wan/configuration/connector/troubleshooting/"
+	productName: "Cloudflare One Appliance",
+	maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
+	dashName: "Cloudflare WAN",
+	sfpURL: "/cloudflare-wan/configuration/appliance/configure-hardware-appliance/sfp-port-information/",
+	wan: "refers to the physical Cloudflare One Appliance Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Appliance. <br/> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. For details on hardware support, refer to [SFP+ port information](/cloudflare-wan/configuration/appliance/configure-hardware-appliance/sfp-port-information/).",
+	lan: "refers to the physical Cloudflare One Appliance Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Appliance. <br/> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. For details on hardware support, refer to [SFP+ port information](/cloudflare-wan/configuration/appliance/configure-hardware-appliance/sfp-port-information/).",
+	noConnectorShows: "You need to have bought an Appliance already for it to appear here. Refer to [Prerequisites](#prerequisites) if no Appliance appears in this list.",
+	networkSegmentationURL: "/cloudflare-wan/configuration/appliance/network-options/network-segmentation/",
+	dhcpServerURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-server/",
+  dhcpRelayURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-relay/",
+  reserveIpAddressesURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-static-address-reservation/",
+	shippedLanguage: "The Cloudflare One Appliance is shipped to you deactivated",
+	hardSoftConn: "You need to deploy two Appliances in your premises before you can set up a site in high availability.",
+	hcConfigsURL: "/cloudflare-wan/configuration/appliance/reference/#high-availability-configurations",
+	ipsecTunnelsRefURL: "/cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels",
+	trafficSteeringURL: "/cloudflare-wan/reference/traffic-steering/",
+	vlanIdURL: "/cloudflare-wan/configuration/appliance/reference/#vlan-id",
+	healthCheckFrequencyURL: "/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/",
+	routedSubnetsURL: "/cloudflare-wan/configuration/appliance/network-options/routed-subnets/",
+	interruptWindowURL: "/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window/",
+	tunnelHealthChecksURL: "/cloudflare-wan/reference/tunnel-health-checks/",
+	wanSettingsURL: "/cloudflare-wan/configuration/appliance/reference/#wan-settings",
+	sitesURL: "/cloudflare-wan/configuration/common-settings/sites/",
+	networkOptionsURL: "/cloudflare-wan/configuration/appliance/network-options/",
+  maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
+  referenceInformationURL: "/cloudflare-wan/configuration/appliance/reference/",
+  troubleshootingURL: "/cloudflare-wan/configuration/appliance/troubleshooting/"
 	}} />

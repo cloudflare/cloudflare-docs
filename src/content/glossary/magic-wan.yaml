@@ -1,5 +1,5 @@
 ---
-productName: Magic WAN
+productName: Cloudflare WAN
 entries:
   - term: anycast
     general_definition: |-
