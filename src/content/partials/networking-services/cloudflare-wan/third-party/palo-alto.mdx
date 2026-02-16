@@ -404,6 +404,8 @@ MTU is set to `1450`. This value may need to be adjusted for optimal performance
 ![Set up tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/02_tunnel_1_page2.png)
 ![Set up tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/03_tunnel_1_page3.png)
 
+_Note: Labels in these images may reflect previous product names._
+
 ##### tunnel.2 - `Cloudflare_L3_Zone`
 
 | Name             | Option             | Value                                             |
@@ -419,9 +421,13 @@ MTU is set to `1450`. This value may need to be adjusted for optimal performance
 ![Set up tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/05_tunnel_2_page2.png)
 ![Set up tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/06_tunnel_2_page3.png)
 
+_Note: Labels in these images may reflect previous product names._
+
 After setting up your Tunnel interfaces, they should show up on the overview page:
 
 ![Tunnel Interfaces - Overview](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/07_tunnel_interfaces_overview.png)
+
+_Note: Labels in this image may reflect previous product names._
 
 #### Set up via command line
 
@@ -985,6 +991,8 @@ The environment used for this tutorial assumes two Cloudflare WAN protected netw
 
 ![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.1)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/03_virtual_router_static_vlan0010_tun01.png)
 
+_Note: Labels in this image may reflect previous product names._
+
 ##### VLAN0010 (`10.1.10.0/24`) via tunnel.2
 
 | Name                       | Option      | Value                              |
@@ -998,6 +1006,8 @@ The environment used for this tutorial assumes two Cloudflare WAN protected netw
 |                            | BFD Profile | _Disable BFD_                      |
 
 ![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.2)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/04_virtual_router_static_vlan0010_tun02.png)
+
+_Note: Labels in this image may reflect previous product names._
 
 ##### VLAN0020 (`10.1.20.0/24`) via tunnel.1
 
@@ -1013,6 +1023,8 @@ The environment used for this tutorial assumes two Cloudflare WAN protected netw
 
 ![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/05_virtual_router_static_vlan0020_tun01.png)
 
+_Note: Labels in this image may reflect previous product names._
+
 ##### VLAN0020 (`10.1.20.0/24`) via tunnel.2
 
 | Name                       | Option      | Value                              |
@@ -1026,6 +1038,8 @@ The environment used for this tutorial assumes two Cloudflare WAN protected netw
 |                            | BFD Profile | _Disable BFD_                      |
 
 ![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/06_virtual_router_static_vlan0020_tun02.png)
+
+_Note: Labels in this image may reflect previous product names._
 
 You can also configure these settings via command line:
 
@@ -1164,6 +1178,8 @@ Ensure have the following:
 ![Bidirectional Health Checks via tunnel.1 - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/03_pbf_hc_01_dest-app-service.png)
 ![Bidirectional Health Checks via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/04_pbf_hc_01_forwarding.png)
 
+_Note: Labels in these images may reflect previous product names._
+
 ##### Set up via dashboard tunnel.2
 
 | Name                                    | Option              | Value                              |
@@ -1183,6 +1199,8 @@ Ensure have the following:
 ![Bidirectional Health Checks via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/06_pbf_hc_02_source.png)
 ![Bidirectional Health Checks via tunnel.2 - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/07_pbf_hc_02_dest-app-service.png)
 ![Bidirectional Health Checks via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/08_pbf_hc_02_forwarding.png)
+
+_Note: Labels in these images may reflect previous product names._
 
 ##### Set up via command line tunnel.1
 
@@ -1294,6 +1312,8 @@ Rules must be defined to facilitate traffic from the trust network to the Cloudf
 ![Trust to Cloudflare WAN - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/11_trust_to_mwan_service-url.png)
 ![Trust to Cloudflare WAN - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/12_trust_to_mwan_action.png)
 
+_Note: Labels in these images may reflect previous product names._
+
 ##### Trust to Cloudflare WAN command line
 
 ```bash
@@ -1332,6 +1352,8 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type univer
 ![Cloudflare WAN to Trust - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/16_mwan_to_trust_apps.png)
 ![Cloudflare WAN to Trust - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/17_mwan_to_trust_service-url.png)
 ![Cloudflare WAN to Trust - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/18_mwan_to_trust_action.png)
+
+_Note: Labels in these images may reflect previous product names._
 
 ##### Cloudflare WAN to Trust command line
 
@@ -1380,6 +1402,8 @@ Security rules match traffic flows based on source and destination zone. Policy-
 ![PBF: Trust to Cloudflare WAN via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
 ![PBF: Trust to Cloudflare WAN via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
 
+_Note: Labels in these images may reflect previous product names._
+
 #### Command line policy-based forwarding - Cloudflare WAN production traffic via tunnel.1
 
 ```bash
@@ -1414,6 +1438,8 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_01 negate-destination no
 ![PBF: Trust to Cloudflare WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
 ![PBF: Trust to Cloudflare WAN via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
 ![PBF: Trust to Cloudflare WAN via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
+
+_Note: Labels in these images may reflect previous product names._
 
 #### Command line policy-based forwarding - tunnel.2
 
@@ -1478,6 +1504,8 @@ Also, traffic from Trust to the Internet would typically be defined as `Trust_L3
 ![Trust to Cloudflare WAN Egress - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/05_trust_mwan_egress_service-url.png)
 ![Trust to Cloudflare WAN Egress - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/06_trust_mwan_egress_actions.png)
 
+_Note: Labels in these images may reflect previous product names._
+
 #### Command line
 
 ```bash
@@ -1514,6 +1542,8 @@ set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow negate-destinatio
 ![PBF: Trust to Cloudflare WAN via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/09_pbf_trust_mwan_egress_tun01_dest.png)
 ![PBF: Trust to Cloudflare WAN via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/10_pbf_trust_mwan_egress_tun01_forward.png)
 
+_Note: Labels in these images may reflect previous product names._
+
 #### Command line
 
 ```bash
@@ -1549,6 +1579,8 @@ set rulebase pbf rules PBF_MWAN_Egress_01 negate-destination yes
 ![PBF: Trust to Cloudflare WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)
 ![PBF: Trust to Cloudflare WAN via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/13_pbf_trust_mwan_egress_tun02_dest.png)
 ![PBF: Trust to Cloudflare WAN via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/14_pbf_trust_mwan_egress_tun02_forward.png)
+
+_Note: Labels in these images may reflect previous product names._
 
 #### Command line
 
