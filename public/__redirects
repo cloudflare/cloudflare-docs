@@ -37,7 +37,6 @@
 /load-balancing/changelog/index.xml /changelog/rss/load-balancing.xml 301
 /logs/changelog/index.xml /changelog/rss/logs.xml 301
 /magic-cloud-networking/changelog/index.xml /changelog/rss/multi-cloud-networking.xml 301
-/multi-cloud-networking/changelog/index.xml /changelog/rss/multi-cloud-networking.xml 301
 /magic-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
 /cloudflare-network-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
 /magic-network-monitoring/changelog/index.xml /changelog/rss/magic-network-monitoring.xml 301
