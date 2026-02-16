@@ -1287,12 +1287,12 @@ Rules must be defined to facilitate traffic from the trust network to the Cloudf
 |                                       | Schedule            | _None_                                                        |
 |                                       | QoS Marking         | _None_                                                        |
 
-![Trust to Magic WAN - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/07_trust_to_mwan_general.png)
-![Trust to Magic WAN - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/08_trust_to_mwan_source.png)
-![Trust to Magic WAN - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/09_trust_to_mwan_dest.png)
-![Trust to Magic WAN - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/10_trust_to_mwan_apps.png)
-![Trust to Magic WAN - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/11_trust_to_mwan_service-url.png)
-![Trust to Magic WAN - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/12_trust_to_mwan_action.png)
+![Trust to Cloudflare WAN - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/07_trust_to_mwan_general.png)
+![Trust to Cloudflare WAN - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/08_trust_to_mwan_source.png)
+![Trust to Cloudflare WAN - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/09_trust_to_mwan_dest.png)
+![Trust to Cloudflare WAN - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/10_trust_to_mwan_apps.png)
+![Trust to Cloudflare WAN - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/11_trust_to_mwan_service-url.png)
+![Trust to Cloudflare WAN - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/12_trust_to_mwan_action.png)
 
 ##### Trust to Cloudflare WAN command line
 
@@ -1326,12 +1326,12 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type univer
 |                                       | Schedule            | _None_                                                        |
 |                                       | QoS Marking         | _None_                                                        |
 
-![Magic WAN to Trust - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/13_mwan_to_trust_general.png)
-![Magic WAN to Trust - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/14_mwan_to_trust_source.png)
-![Magic WAN to Trust - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/15_mwan_to_trust_dest.png)
-![Magic WAN to Trust - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/16_mwan_to_trust_apps.png)
-![Magic WAN to Trust - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/17_mwan_to_trust_service-url.png)
-![Magic WAN to Trust - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/18_mwan_to_trust_action.png)
+![Cloudflare WAN to Trust - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/13_mwan_to_trust_general.png)
+![Cloudflare WAN to Trust - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/14_mwan_to_trust_source.png)
+![Cloudflare WAN to Trust - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/15_mwan_to_trust_dest.png)
+![Cloudflare WAN to Trust - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/16_mwan_to_trust_apps.png)
+![Cloudflare WAN to Trust - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/17_mwan_to_trust_service-url.png)
+![Cloudflare WAN to Trust - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/18_mwan_to_trust_action.png)
 
 ##### Cloudflare WAN to Trust command line
 
@@ -1375,10 +1375,10 @@ Security rules match traffic flows based on source and destination zone. Policy-
 |                                         | Next hop            | _IP Address_                                                  |
 |                                         |                     | _CF_MWAN_IPsec_VTI_01_Remote_                            |
 
-![PBF: Trust to Magic WAN via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
-![PBF: Trust to Magic WAN via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
-![PBF: Trust to Magic WAN via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
-![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
 
 #### Command line policy-based forwarding - Cloudflare WAN production traffic via tunnel.1
 
@@ -1410,10 +1410,10 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_01 negate-destination no
 |                                         | Next hop            | _IP Address_                                                  |
 |                                         |                     | _CF_MWAN_IPsec_VTI_02_Remote_                            |
 
-![PBF: Trust to Magic WAN via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/13_pbf_mwan_sites_tun02_general.png)
-![PBF: Trust to Magic WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
-![PBF: Trust to Magic WAN via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
-![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/13_pbf_mwan_sites_tun02_general.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
 
 #### Command line policy-based forwarding - tunnel.2
 
@@ -1471,12 +1471,12 @@ Also, traffic from Trust to the Internet would typically be defined as `Trust_L3
 |                                      | Schedule            | _None_                                                                         |
 |                                      | QoS Marking         | _None_                                                                         |
 
-![Trust to MWAN Egress - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/01_trust_mwan_egress_general.png)
-![Trust to MWAN Egress - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
-![Trust to MWAN Egress - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/03__trust_mwan_egress_destination.png)
-![Trust to MWAN Egress - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/04_trust_mwan_egress_apps.png)
-![Trust to MWAN Egress - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/05_trust_mwan_egress_service-url.png)
-![Trust to MWAN Egress - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/06_trust_mwan_egress_actions.png)
+![Trust to Cloudflare WAN Egress - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/01_trust_mwan_egress_general.png)
+![Trust to Cloudflare WAN Egress - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
+![Trust to Cloudflare WAN Egress - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/03__trust_mwan_egress_destination.png)
+![Trust to Cloudflare WAN Egress - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/04_trust_mwan_egress_apps.png)
+![Trust to Cloudflare WAN Egress - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/05_trust_mwan_egress_service-url.png)
+![Trust to Cloudflare WAN Egress - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/06_trust_mwan_egress_actions.png)
 
 #### Command line
 
@@ -1509,10 +1509,10 @@ set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow negate-destinatio
 |                                         | Next Hop            | _IP Address_                                                                   |
 |                                         |                     | _CF_MWAN_IPsec_VTI_01_Remote_                                             |
 
-![PBF: Trust to Magic WAN Egress via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/07_pbf_trust_mwan_egress_tun01_general.png)
-![PBF: Trust to Magic WAN via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
-![PBF: Trust to Magic WAN via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/09_pbf_trust_mwan_egress_tun01_dest.png)
-![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/10_pbf_trust_mwan_egress_tun01_forward.png)
+![PBF: Trust to Cloudflare WAN Egress via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/07_pbf_trust_mwan_egress_tun01_general.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/09_pbf_trust_mwan_egress_tun01_dest.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/10_pbf_trust_mwan_egress_tun01_forward.png)
 
 #### Command line
 
@@ -1545,10 +1545,10 @@ set rulebase pbf rules PBF_MWAN_Egress_01 negate-destination yes
 |                                         | Next Hop            | _IP Address_                                                                   |
 |                                         |                     | _CF_MWAN_IPsec_VTI_02_Remote_                                             |
 
-![PBF: Trust to Magic WAN Egress via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/11_pbf_trust_mwan_egress_tun02_general.png)
-![PBF: Trust to Magic WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)
-![PBF: Trust to Magic WAN via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/13_pbf_trust_mwan_egress_tun02_dest.png)
-![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/14_pbf_trust_mwan_egress_tun02_forward.png)
+![PBF: Trust to Cloudflare WAN Egress via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/11_pbf_trust_mwan_egress_tun02_general.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/13_pbf_trust_mwan_egress_tun02_dest.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/14_pbf_trust_mwan_egress_tun02_forward.png)
 
 #### Command line
 

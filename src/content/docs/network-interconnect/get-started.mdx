@@ -9,7 +9,7 @@ sidebar:
 import { Render } from "~/components"
 
 :::note[BGP architecture and resiliency]
-CNI supports BGP peering with the Magic routing table. For detailed information about BGP architecture, Edge Resiliency Mode, and route propagation behavior, refer to the BGP reference documentation in [Magic Transit](/magic-transit/reference/traffic-steering/#bgp-information) or [Cloudflare WAN](/cloudflare-wan/reference/traffic-steering/#bgp-information) depending on your use case.
+CNI supports BGP peering with the Cloudflare Virtual Network routing table. For detailed information about BGP architecture, Edge Resiliency Mode, and route propagation behavior, refer to the BGP reference documentation in [Magic Transit](/magic-transit/reference/traffic-steering/#bgp-information) or [Cloudflare WAN](/cloudflare-wan/reference/traffic-steering/#bgp-information) depending on your use case.
 :::
 
 ## Prerequisites
@@ -152,7 +152,7 @@ You can now select **View interconnects** for a list of all interconnects on you
 
 After you have configured your Google Cloud Interconnect, you will need to add routes to use the interconnect:
 
-- To create routes in the Magic routing table to direct traffic towards GCP:
+- To create routes in the Cloudflare Virtual Network routing table to direct traffic towards GCP:
 		- Add [static routes](/cloudflare-wan/configuration/manually/how-to/configure-routes/#configure-static-routes) to your Cloudflare WAN routing table with [legacy bidirectional tunnel health checks](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#legacy-bidirectional-health-checks) to detect failures and steer traffic to alternative paths.
 		- Note that routes advertised by BGP from GCP Cloud Router will be ignored.
 - To create routes in GCP routing table to direct traffic towards Cloudflare, you must use the GCP Cloud Router:
