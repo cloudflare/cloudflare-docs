@@ -37,7 +37,8 @@
 /load-balancing/changelog/index.xml /changelog/rss/load-balancing.xml 301
 /logs/changelog/index.xml /changelog/rss/logs.xml 301
 /magic-cloud-networking/changelog/index.xml /changelog/rss/magic-cloud-networking.xml 301
-/magic-firewall/changelog/index.xml /changelog/rss/magic-firewall.xml 301
+/magic-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
+/cloudflare-network-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
 /magic-network-monitoring/changelog/index.xml /changelog/rss/magic-network-monitoring.xml 301
 /magic-transit/changelog/index.xml /changelog/rss/magic-transit.xml 301
 /magic-wan/changelog/index.xml /changelog/rss/magic-wan.xml 301
@@ -1048,19 +1049,28 @@
 /logs/get-started/permissions/ /logs/logpush/permissions/ 301
 /logs/get-started/ /logs/logpush/ 301
 
-# magic-firewall
-/magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
-/magic-firewall/how-to/collect-pcaps/ /magic-firewall/packet-captures/collect-pcaps/ 301
+# magic-firewall (renamed to cloudflare-network-firewall)
+/magic-firewall/reference/examples/ /cloudflare-network-firewall/how-to/add-policies/ 301
+/magic-firewall/how-to/collect-pcaps/ /cloudflare-network-firewall/packet-captures/collect-pcaps/ 301
+/magic-firewall/how-to/add-rules/ /cloudflare-network-firewall/how-to/add-policies/ 301
+# URL slug renames
+/magic-firewall/how-to/enable-magic-roles/ /cloudflare-network-firewall/how-to/enable-roles/ 301
+/magic-firewall/reference/magic-firewall-fields/ /cloudflare-network-firewall/reference/network-firewall-fields/ 301
+/magic-firewall/reference/magic-firewall-functions/ /cloudflare-network-firewall/reference/network-firewall-functions/ 301
+# CF1 changelog page
+/cloudflare-one/changelog/magic-firewall/ /cloudflare-one/changelog/cloudflare-network-firewall/ 301
+# CF1 packet filtering overview rename
+/cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
 # magic-network-monitoring
 /magic-network-monitoring/routers/ /magic-network-monitoring/routers/supported-routers/ 301
 /magic-network-monitoring/tutorials/ /magic-network-monitoring/tutorials/graphql-analytics/ 301
 /magic-network-monitoring/rules/recommended-rule-configuration/ /magic-network-monitoring/rules/static-threshold/ 301
 /magic-network-monitoring/rules/sflow-ddos-alerts/ /rules/configure-rule-notifications/ 301
 /magic-network-monitoring/notifications/ /rules/rule-notifications/ 301
-/magic-firewall/how-to/create-rate-limiting-rules/ /magic-firewall/how-to/create-rate-limiting-policies/ 301
+/magic-firewall/how-to/create-rate-limiting-rules/ /cloudflare-network-firewall/how-to/create-rate-limiting-policies/ 301
 
 # magic-transit
-/magic-transit/magic-firewall/ /magic-firewall/ 301
+/magic-transit/magic-firewall/ /cloudflare-network-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-routes/ 301
 /magic-transit/set-up/requirements/ /magic-transit/get-started/ 301
@@ -1290,7 +1300,7 @@
 /ruleset-engine/rules-language/fields/http-request-header/ /ruleset-engine/rules-language/fields/reference/ 301
 /ruleset-engine/rules-language/fields/http-request-body/ /ruleset-engine/rules-language/fields/reference/ 301
 /ruleset-engine/rules-language/fields/http-request-response/ /ruleset-engine/rules-language/fields/reference/ 301
-/ruleset-engine/rules-language/fields/magic-firewall/ /magic-firewall/reference/magic-firewall-fields/ 301
+/ruleset-engine/rules-language/fields/magic-firewall/ /cloudflare-network-firewall/reference/network-firewall-fields/ 301
 # security center
 /security-center/indicator-feeds/getting-started/ /security-center/indicator-feeds/ 301
 /security-center/indicator-feeds/get-started/ /security-center/indicator-feeds/ 301
@@ -2516,3 +2526,6 @@
 
 # Calls
 /calls/* /realtime/:splat 301
+
+# Magic Firewall renamed to Cloudflare Network Firewall
+/magic-firewall/* /cloudflare-network-firewall/:splat 301

@@ -21,9 +21,11 @@ params:
 
 import { Render } from "~/components";
 
-<a href={props.gatewayURL}>Cloudflare Gateway</a>, our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, network, HTTP, and egress traffic.
+<a href={props.gatewayURL}>Cloudflare Gateway</a>, our comprehensive Secure Web
+Gateway, allows you to set up policies to inspect DNS, network, HTTP, and egress
+traffic.
 
-You can apply network and HTTP Gateway policies alongside <a href="/magic-firewall/">Magic Firewall</a> policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network through Magic WAN. Additionally, you can configure Gateway to [resolve DNS queries](#dns-filtering) from Magic WAN.
+You can apply network and HTTP Gateway policies alongside <a href="/cloudflare-network-firewall/">Cloudflare Network Firewall</a> policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network through Magic WAN. Additionally, you can configure Gateway to [resolve DNS queries](#dns-filtering) from Magic WAN.
 
 ## HTTPS filtering
 
@@ -128,9 +130,9 @@ Source ports are fixed to `1024`-`65535` and cannot be overridden.
 	params={{
 		greIpsecURL: props.greIpsecURL,
 		warpURL: props.warpURL,
-		tracerouteURL: props.tracerouteURL
-		}}
-	/>
+		tracerouteURL: props.tracerouteURL,
+	}}
+/>
 
 ## Test Gateway integration
 
@@ -141,6 +143,7 @@ If you are still testing Gateway and Cloudflare is not your default route, confi
 Confirm there is an entry for the test in <a href={props.gatewayLogsURL}>HTTP Gateway Activity Logs</a>.
 
 Verify the following details:
+
 - **Destination IP**: Should be the public IP address of `ifconfig.me`.
 - **Source IP**: Should be the private (WAN) address of the host with the browser.
 - **Outbound connection**: Should be sourced from a Magic WAN IP address, not any public IP address that Cloudflare might be advertising on your behalf.

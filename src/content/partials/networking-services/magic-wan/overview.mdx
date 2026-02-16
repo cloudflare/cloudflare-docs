@@ -13,17 +13,25 @@ params:
   - bgpRoutesUrl
 ---
 
-
-import { CardGrid, Description, Feature, GlossaryTooltip, LinkTitleCard, Plan, RelatedProduct, Stream } from "~/components";
+import {
+	CardGrid,
+	Description,
+	Feature,
+	GlossaryTooltip,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+	Stream,
+} from "~/components";
 
 <Description>
-	Improve security and performance for your entire corporate network,
-	reducing cost and operational complexity.
+	Improve security and performance for your entire corporate network, reducing
+	cost and operational complexity.
 </Description>
 
 <Plan type="enterprise" />
 
-{props.productName} provides secure, performant connectivity and [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) for your entire corporate network, reducing cost and operational complexity. [Magic Firewall](/magic-firewall/) integrates smoothly with {props.productName}, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
+{props.productName} provides secure, performant connectivity and [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) for your entire corporate network, reducing cost and operational complexity. [Cloudflare Network Firewall](/cloudflare-network-firewall/) integrates smoothly with {props.productName}, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
 
 With {props.productName}, you can securely connect any traffic source - data centers, offices, devices, cloud resources - to Cloudflare's network and configure routing policies to direct traffic where it needs to go, all within one SaaS solution.
 
@@ -57,19 +65,25 @@ Learn how to <a href={props.getStartedUrl}>get started</a>.
 	href={props.thirdPartyUrl}
 	cta="Use a third-party device"
 >
-	{props.productName} is compatible with a host of third-party devices. If you do not have
-	{props.connectorName}, start here to learn how to set up {props.productName} manually.
+	{props.productName} is compatible with a host of third-party devices. If you
+	do not have
+	{props.connectorName}, start here to learn how to set up {props.productName}{" "}
+	manually.
 </Feature>
 
 {props.magicWord === "Magic WAN" && (
-	<>
-	<Feature
-	header="Automatic cloud on-ramps"
-	href={props.cloudNetworkingUrl}
-	cta="Automate your cloud on-ramps"
+
+<>
+<Feature
+header="Automatic cloud on-ramps"
+href={props.cloudNetworkingUrl}
+cta="Automate your cloud on-ramps"
+
 >
-	Automate resource discovery, and reduce management burden when connecting to
-	your public cloud.
+
+    Automate resource discovery, and reduce management burden when connecting to
+    your public cloud.
+
 </Feature>
 	</>
 	)
@@ -80,11 +94,14 @@ Learn how to <a href={props.getStartedUrl}>get started</a>.
 	href={props.zeroTrustUrl}
 	cta="Integrate with other Zero Trust products"
 >
-	Learn how you can use {props.productName} with other Cloudflare Zero Trust products.
+	Learn how you can use {props.productName} with other Cloudflare Zero Trust
+	products.
 </Feature>
 
 <Feature header="BGP peering (beta)" href={props.bgpRoutesUrl}>
-Use BGP (Border Gateway Protocol) peering between your networks and Cloudflare to automate adding or removing networks and subnets, and take advantage of failure detection and session recovery features.
+	Use BGP (Border Gateway Protocol) peering between your networks and Cloudflare
+	to automate adding or removing networks and subnets, and take advantage of
+	failure detection and session recovery features.
 </Feature>
 
 ---
@@ -92,38 +109,42 @@ Use BGP (Border Gateway Protocol) peering between your networks and Cloudflare t
 ## Related products
 
 {props.magicWord === "Magic WAN" && (
-	<>
-		<RelatedProduct
+
+<>
+	<RelatedProduct
 		header="Cloudflare Zero Trust"
 		href="/cloudflare-one/"
 		product="cloudflare-one"
-		>
+	>
 		Cloudflare Zero Trust replaces legacy security perimeters with our global
 		edge, making the Internet faster and safer for teams around the world.
-		</RelatedProduct>
-	</>
-	)
-}
+	</RelatedProduct>
+</>
+) }
 
 <RelatedProduct
-	header="Magic Firewall"
-	href="/magic-firewall/"
-	product="magic-firewall"
+	header="Cloudflare Network Firewall"
+	href="/cloudflare-network-firewall/"
+	product="cloudflare-network-firewall"
 >
-	Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the
-	Cloudflare global network to protect office networks and cloud infrastructure
-	with advanced, and scalable protection.
+	Cloudflare Network Firewall is a firewall-as-a-service (FWaaS) delivered from
+	the Cloudflare global network to protect office networks and cloud
+	infrastructure with advanced, and scalable protection.
 </RelatedProduct>
 
 {props.magicWord === "Magic WAN" && (
-	<>
-	<RelatedProduct
-	header="Magic Cloud Networking"
-	href="/magic-cloud-networking/"
-	product="magic-cloud-networking"
+
+<>
+<RelatedProduct
+header="Magic Cloud Networking"
+href="/magic-cloud-networking/"
+product="magic-cloud-networking"
+
 >
-	Simplify and automate cloud resource discovery, and reduce your management
-	burden when connecting to your public cloud.
+
+    Simplify and automate cloud resource discovery, and reduce your management
+    burden when connecting to your public cloud.
+
 </RelatedProduct>
 	</>
 	)

@@ -11,7 +11,7 @@ products:
     workers,
     turnstile,
     magic-wan,
-    magic-firewall,
+    cloudflare-network-firewall,
     magic-transit,
     api-shield,
     bots,
@@ -146,7 +146,7 @@ The reason the Cloudflare network exists is to provide services to customers to 
    3. [Cloudflare network security products](#cloudflare-network-security-products)
       1. [Magic Transit](#magic-transit)
       2. [Magic WAN](#magic-wan)
-      3. [Magic Firewall](#magic-firewall)
+      3. [Cloudflare Network Firewall](#cloudflare-network-firewall)
       4. [Magic Network Monitoring](#magic-network-monitoring)
       5. [Spectrum](#spectrum)
 3. [Protecting private resources](#protecting-private-resources)
@@ -190,7 +190,7 @@ Cloudflare can protect at multiple layers of the OSI model, and in this document
 - Layer 3, referred to as the “network layer,” is responsible for facilitating data transfer between two different networks. The network layer breaks up segments from the transport layer into smaller units, called packets, on the sender’s device and reassembles these packets on the receiving device. The network layer is where routing takes place — finding the best physical path for the data to reach its destination.
 - Layer 4, referred to as the “transport layer,” is responsible for end-to-end communication between the two devices. This includes taking data from the session layer and breaking it up into chunks called “segments” before sending it to layer 3.
 
-Cloudflare security products that can be used for L3 and L4 security include Cloudflare’s network services offerings, including [Magic Transit](/magic-transit/), [Magic Firewall](/magic-firewall/), [Magic WAN](/magic-wan/), [Magic Network Monitoring](/magic-network-monitoring/), and [Spectrum](/spectrum/).
+Cloudflare security products that can be used for L3 and L4 security include Cloudflare’s network services offerings, including [Magic Transit](/magic-transit/), [Cloudflare Network Firewall](/cloudflare-network-firewall/), [Magic WAN](/magic-wan/), [Magic Network Monitoring](/magic-network-monitoring/), and [Spectrum](/spectrum/).
 
 - Layer 7, referred to as the “application layer,” is the top layer of the data processing that occurs just below the surface or behind the scenes of the software applications that users interact with. HTTP and API requests/responses are layer 7 events.
 
@@ -469,9 +469,9 @@ All network assets, whether on-premises or in private or public-hosted cloud env
 
 With [Magic WAN](/magic-wan/), customers can securely connect any traffic source — data centers, offices, devices, cloud properties — to Cloudflare’s network and configure routing policies to get the bits where they need to go. Magic WAN supports a variety of on-ramps, including anycast GRE and IPsec tunnels, Cloudflare Network Interconnect, Cloudflare Tunnel, WARP, and a variety of network on-ramp partners. Magic WAN can help end reliance on traditional SD-WAN appliances and securely connect users, offices, data centers, and hybrid cloud over the Cloudflare global network without relying on vendor-specific hardware or software.
 
-##### Magic Firewall
+##### Cloudflare Network Firewall
 
-[Magic Firewall](/magic-firewall/) is Cloudflare’s firewall-as-a-service solution delivered from Cloudflare’s global network and is integrated with Magic Transit and Magic WAN. It allows for enforcing consistent network security policies across customers’ entire WAN, including headquarters, branch offices, and virtual private clouds. Customers can deploy granular rules that globally filter on protocol, port, IP addresses, packet length, and bit field match.
+[Cloudflare Network Firewall](/cloudflare-network-firewall/) is Cloudflare’s firewall-as-a-service solution delivered from Cloudflare’s global network and is integrated with Magic Transit and Magic WAN. It allows for enforcing consistent network security policies across customers’ entire WAN, including headquarters, branch offices, and virtual private clouds. Customers can deploy granular rules that globally filter on protocol, port, IP addresses, packet length, and bit field match.
 
 ##### Magic Network Monitoring
 
@@ -493,7 +493,7 @@ The following are typical attributes of private resources:
 
 As mentioned, traditional access to private resources required physical access to the network by being in the office connected via Ethernet. As remote access needs increased, companies installed on-premises VPN servers that allowed users and devices to "dial in" to these private networks. Many applications have left these private networks and instead migrated to SaaS applications or are hosted in public cloud infrastructure. This traditional approach has become unmanageable and costly, with a variety of technologies providing network connectivity and access control.
 
-Another important thing to note is that many of the services used for securing and providing connectivity for public resources can also be used for private resources. The most obvious here is Magic WAN and Magic Firewall. Customers also use our WAF in front of privately hosted applications that are only accessible through private networks. The idea is that even if access to an application is only from trusted private connections, it is still possible for an attacker to compromise what seems to be a trusted device; therefore, application injection attacks and other vulnerabilities can be exploited by devices with existing trusted network access. This is exactly in line with the idea of a Zero Trust security program. Read more about the approaches to Zero Trust using a SASE platform in our [SASE reference architecture](/reference-architecture/architectures/sase/).
+Another important thing to note is that many of the services used for securing and providing connectivity for public resources can also be used for private resources. The most obvious here is Magic WAN and Cloudflare Network Firewall. Customers also use our WAF in front of privately hosted applications that are only accessible through private networks. The idea is that even if access to an application is only from trusted private connections, it is still possible for an attacker to compromise what seems to be a trusted device; therefore, application injection attacks and other vulnerabilities can be exploited by devices with existing trusted network access. This is exactly in line with the idea of a Zero Trust security program. Read more about the approaches to Zero Trust using a SASE platform in our [SASE reference architecture](/reference-architecture/architectures/sase/).
 
 As we describe the following Cloudflare services, you will learn how the Cloudflare network and our methods of connecting it to your own private networks provides greater security, flexibility, and a more centralized control plane for access to private resources. The following diagram illustrates the sort of environment that represents a typical customer's private infrastructure.
 

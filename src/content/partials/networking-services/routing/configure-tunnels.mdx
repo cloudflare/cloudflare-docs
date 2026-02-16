@@ -20,7 +20,18 @@ params:
   - troubleshootIpsecURL
 ---
 
-import { AnchorHeading, APIRequest, CURL, DashButton, Details, GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
+import {
+	AnchorHeading,
+	APIRequest,
+	CURL,
+	DashButton,
+	Details,
+	GlossaryTooltip,
+	Markdown,
+	Render,
+	TabItem,
+	Tabs,
+} from "~/components";
 
 Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Shortly after your onboarding kickoff call, Cloudflare will assign two Cloudflare endpoint addresses that you can use as the tunnel destinations on your network location's routers/endpoints.
 
@@ -43,20 +54,20 @@ Make sure the interface address prefixes are always within the allowed Cloudflar
 You can use GRE or IPsec tunnels to onboard your traffic to {props.productName}, and set them up through the Cloudflare dashboard or the API. If you use the API, you need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
 
 { props.magicWord === "Magic Transit" && (
-  <>
-		<Render file="routing/anycast-warning" product="networking-services" />
-	</>
-)
-}
+
+<>
+	<Render file="routing/anycast-warning" product="networking-services" />
+</>
+) }
 
 #### Choose between GRE and IPsec
 
-| Feature | GRE | IPsec |
-|---------|-----|-------|
-| Encryption | No | Yes |
-| Authentication | No | Pre-shared key (PSK) |
-| Setup complexity | Simpler | Requires PSK exchange |
-| Best for | Trusted networks, CNI connections | Internet-facing connections requiring encryption |
+| Feature          | GRE                               | IPsec                                            |
+| ---------------- | --------------------------------- | ------------------------------------------------ |
+| Encryption       | No                                | Yes                                              |
+| Authentication   | No                                | Pre-shared key (PSK)                             |
+| Setup complexity | Simpler                           | Requires PSK exchange                            |
+| Best for         | Trusted networks, CNI connections | Internet-facing connections requiring encryption |
 
 Refer to <a href={props.tunnelsAndEncapsulationPagePath}>Tunnels and encapsulation</a> to learn more about the technical requirements for both tunnel types.
 
@@ -81,47 +92,49 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 	product="networking-services"
 	params={{
 		mFirewallName: "Magic Firewall rules",
-		mFirewallURL: "/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks"
+		mFirewallURL:
+			"/cloudflare-network-firewall/about/ruleset-logic/#cloudflare-network-firewall-rules-and-magic-transit-endpoint-health-checks",
 	}}
-	/>
+/>
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 {/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
 { props.magicWord === "WAN Tunnels" && (
-	<>
-	<Markdown
-	text={`
+<>
+<Markdown
+text={`
 	1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
 	2. Go to **Connectors** > **WAN Tunnels**, and select **Create**.
 	3. On the **Add Tunnel** page, choose either a **GRE tunnel** or **IPsec tunnel**.
 	`}
-	inline={false}
-	/>
-	</>
+inline={false}
+/>
+</>
 )
 }
 
 {/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
 { props.magicWord !== "WAN Tunnels" && (
-	<>
-	<Markdown
-	text={`
+<>
+<Markdown
+text={`
 	1. Go to **Connectors** page.
 		`}
-	inline={false}
-	/>
+inline={false}
+/>
 
-	<DashButton url="/?to=/:account/magic-networks/connections" />
+    <DashButton url="/?to=/:account/magic-networks/connections" />
 
-	<Markdown
-	text={`
-	2. From the **IPsec/GRE tunnels** tab, select **Create a tunnel**.
-	3. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
-	`}
-	inline={false}
-	/>
-	</>
+    <Markdown
+    text={`
+    2. From the **IPsec/GRE tunnels** tab, select **Create a tunnel**.
+    3. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
+    `}
+    inline={false}
+    />
+    </>
+
 )
 }
 
@@ -140,22 +153,31 @@ Expand the section below for your tunnel type to complete the configuration:
 10. _(Optional)_ Configure health check settings. Expand the following to learn more about each option:
 
     <Render
-      file="routing/tunnel-health-check-options"
-      product="networking-services"
-      params={{
-        tunnelHealthDash: props.tunnelHealthDash,
-        tunnelHealthChecksPage: props.tunnelHealthChecksPage,
-        updateHCFrequencyPage: props.updateHCFrequencyPage,
-        biVsUniHealthCheck: props.biVsUniHealthCheck,
-        productName: props.productName
-      }}
+    	file="routing/tunnel-health-check-options"
+    	product="networking-services"
+    	params={{
+    		tunnelHealthDash: props.tunnelHealthDash,
+    		tunnelHealthChecksPage: props.tunnelHealthChecksPage,
+    		updateHCFrequencyPage: props.updateHCFrequencyPage,
+    		biVsUniHealthCheck: props.biVsUniHealthCheck,
+    		productName: props.productName,
+    	}}
     />
 
 11. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
-{ props.magicWord !== "Magic Transit" && (<Markdown text={`12. (_Optional_) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "13" : "12"}. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "14" : "13"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "15" : "14"}. (_Optional_) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. <br /> BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
+    { props.magicWord !== "Magic Transit" && (<Markdown text={`12. (_Optional_) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
+    <Markdown
+    	text={`${props.magicWord !== "Magic Transit" ? "13" : "12"}. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.`}
+    	inline={false}
+    />
+    <Markdown
+    	text={`${props.magicWord !== "Magic Transit" ? "14" : "13"}. After adding your tunnel information, select **Add tunnels**.`}
+    	inline={false}
+    />
+    <Markdown
+    	text={`${props.magicWord !== "Magic Transit" ? "15" : "14"}. (_Optional_) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. <br /> BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`}
+    	inline={false}
+    />
 
 </Details>
 
@@ -166,24 +188,23 @@ Expand the section below for your tunnel type to complete the configuration:
 8. In **Cloudflare endpoint**, enter the anycast address you received from your account team.{ props.magicWord === "Magic Transit" && (<> Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information.</>)}
 9. _(Optional)_ Configure health check settings. Expand the following to learn more about each option:
 
-    <Render
-      file="routing/tunnel-health-check-options"
-      product="networking-services"
-      params={{
-        tunnelHealthDash: props.tunnelHealthDash,
-        tunnelHealthChecksPage: props.tunnelHealthChecksPage,
-        updateHCFrequencyPage: props.updateHCFrequencyPage,
-        biVsUniHealthCheck: props.biVsUniHealthCheck,
-        productName: props.productName
-      }}
-    />
+   <Render
+   	file="routing/tunnel-health-check-options"
+   	product="networking-services"
+   	params={{
+   		tunnelHealthDash: props.tunnelHealthDash,
+   		tunnelHealthChecksPage: props.tunnelHealthChecksPage,
+   		updateHCFrequencyPage: props.updateHCFrequencyPage,
+   		biVsUniHealthCheck: props.biVsUniHealthCheck,
+   		productName: props.productName,
+   	}}
+   />
 
-    :::note
-    IPsec tunnels will not function without a pre-shared key (PSK).
-    :::
+   :::note
+   IPsec tunnels will not function without a pre-shared key (PSK).
+   :::
 
 10. If you do not have a pre-shared key yet:
-
     1. Select **Add pre-shared key later**.
     2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels**.
     3. Select **Add tunnels**.
@@ -191,17 +212,25 @@ Expand the section below for your tunnel type to complete the configuration:
     5. Choose **Generate a new pre-shared key** > **Update and generate a pre-shared key**. Save the key to a safe place, and select **Done**.
 
 11. If you already have a pre-shared key:
-
     1. Select **Use my own pre-shared key**.
     2. Paste your key in **Your pre-shared key**.
     3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
     4. Select **Add tunnels**.
 
 12. _(Optional)_ Enable **Replay protection** if you have devices that do not support disabling it. Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information.
-{ props.magicWord !== "Magic Transit" && (<Markdown text={`13. (_Optional_) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "14" : "13"}. To add multiple tunnels, select **Add IPsec tunnel** for each new tunnel.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "15" : "14"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "16" : "15"}. (_Optional_) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. <br /> BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
+    { props.magicWord !== "Magic Transit" && (<Markdown text={`13. (_Optional_) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
+    <Markdown
+    	text={`${props.magicWord !== "Magic Transit" ? "14" : "13"}. To add multiple tunnels, select **Add IPsec tunnel** for each new tunnel.`}
+    	inline={false}
+    />
+    <Markdown
+    	text={`${props.magicWord !== "Magic Transit" ? "15" : "14"}. After adding your tunnel information, select **Add tunnels**.`}
+    	inline={false}
+    />
+    <Markdown
+    	text={`${props.magicWord !== "Magic Transit" ? "16" : "15"}. (_Optional_) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. <br /> BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`}
+    	inline={false}
+    />
 
 </Details>
 
@@ -214,51 +243,51 @@ Expand the section below for your tunnel type to complete the configuration:
 Create a `POST` request [using the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/create/) to create a GRE tunnel.
 
 <APIRequest
-  path="/accounts/{account_id}/magic/gre_tunnels"
-  method="POST"
-  json={{
-		"name": "<TUNNEL_NAME>",
-		"description": "<TUNNEL_DESCRIPTION>",
-		"interface_address": "<INTERFACE_ADDRESS>",
-		"cloudflare_gre_endpoint": "<CLOUDFLARE_ENDPOINT>",
-		"customer_gre_endpoint": "<CUSTOMER_ENDPOINT>"
-  }}
+	path="/accounts/{account_id}/magic/gre_tunnels"
+	method="POST"
+	json={{
+		name: "<TUNNEL_NAME>",
+		description: "<TUNNEL_DESCRIPTION>",
+		interface_address: "<INTERFACE_ADDRESS>",
+		cloudflare_gre_endpoint: "<CLOUDFLARE_ENDPOINT>",
+		customer_gre_endpoint: "<CUSTOMER_ENDPOINT>",
+	}}
 />
 
 ```json output
 {
-  "errors": [
-    {
-      "code": 1000,
-      "message": "message"
-    }
-  ],
-  "messages": [
-    {
-      "code": 1000,
-      "message": "message"
-    }
-  ],
-  "result": {
-    "gre_tunnels": [
-      {
-        "cloudflare_gre_endpoint": "<IP_ADDRESS>",
-        "customer_gre_endpoint": "<IP_ADDRESS>",
-        "interface_address": "<INTERFACE_CIDR>",
-        "name": "<TUNNEL_NAME>",
-        "description": "<TUNNEL_DESCRIPTION>",
-        "health_check": {
-          "direction": "unidirectional",
-          "enabled": true,
-          "rate": "low",
-          "type": "reply"
-        },
-        "mtu": 0,
-        "ttl": 0
-      }
-    ]
-  },
-  "success": true
+	"errors": [
+		{
+			"code": 1000,
+			"message": "message"
+		}
+	],
+	"messages": [
+		{
+			"code": 1000,
+			"message": "message"
+		}
+	],
+	"result": {
+		"gre_tunnels": [
+			{
+				"cloudflare_gre_endpoint": "<IP_ADDRESS>",
+				"customer_gre_endpoint": "<IP_ADDRESS>",
+				"interface_address": "<INTERFACE_CIDR>",
+				"name": "<TUNNEL_NAME>",
+				"description": "<TUNNEL_DESCRIPTION>",
+				"health_check": {
+					"direction": "unidirectional",
+					"enabled": true,
+					"rate": "low",
+					"type": "reply"
+				},
+				"mtu": 0,
+				"ttl": 0
+			}
+		]
+	},
+	"success": true
 }
 ```
 
@@ -268,128 +297,128 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 
 1. Create a `POST` request [using the API](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/create/) to create an IPsec tunnel.
 
-	Note that in the example, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic.
+   Note that in the example, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic.
 
-	<APIRequest
-		path="/accounts/{account_id}/magic/ipsec_tunnels"
-		method="POST"
-		json={{
-			"name": "<TUNNEL_NAME>",
-			"description": "<TUNNEL_DESCRIPTION>",
-			"interface_address": "<INTERFACE_ADDRESS>",
-			"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-			"customer_endpoint": "<CUSTOMER_ENDPOINT>"
-		}}
-	/>
+   <APIRequest
+   	path="/accounts/{account_id}/magic/ipsec_tunnels"
+   	method="POST"
+   	json={{
+   		name: "<TUNNEL_NAME>",
+   		description: "<TUNNEL_DESCRIPTION>",
+   		interface_address: "<INTERFACE_ADDRESS>",
+   		cloudflare_endpoint: "<CLOUDFLARE_ENDPOINT>",
+   		customer_endpoint: "<CUSTOMER_ENDPOINT>",
+   	}}
+   />
 
-	```json output
-	{
-		"errors": [
-			{
-				"code": 1000,
-				"message": "message"
-			}
-		],
-		"messages": [
-			{
-				"code": 1000,
-				"message": "message"
-			}
-		],
-		"result": {
-			"ipsec_tunnels": [
-				{
-					"id": "<IPSEC_TUNNEL_ID>",
-					"interface_address": "<INTERFACE_CIDR>",
-					"name": "<TUNNEL_NAME>",
-					"cloudflare_endpoint": "<IP_ADDRESS>",
-					"customer_endpoint": "<IP_ADDRESS>",
-					"description": "<TUNNEL_DESCRIPTION>",
-					"health_check": {
-						"direction": "unidirectional",
-						"enabled": true,
-						"rate": "low",
-						"type": "reply"
-					},
-					"psk_metadata": {},
-					"replay_protection": false
-				}
-			]
-		},
-		"success": true
-	}
-	```
+   ```json output
+   {
+   	"errors": [
+   		{
+   			"code": 1000,
+   			"message": "message"
+   		}
+   	],
+   	"messages": [
+   		{
+   			"code": 1000,
+   			"message": "message"
+   		}
+   	],
+   	"result": {
+   		"ipsec_tunnels": [
+   			{
+   				"id": "<IPSEC_TUNNEL_ID>",
+   				"interface_address": "<INTERFACE_CIDR>",
+   				"name": "<TUNNEL_NAME>",
+   				"cloudflare_endpoint": "<IP_ADDRESS>",
+   				"customer_endpoint": "<IP_ADDRESS>",
+   				"description": "<TUNNEL_DESCRIPTION>",
+   				"health_check": {
+   					"direction": "unidirectional",
+   					"enabled": true,
+   					"rate": "low",
+   					"type": "reply"
+   				},
+   				"psk_metadata": {},
+   				"replay_protection": false
+   			}
+   		]
+   	},
+   	"success": true
+   }
+   ```
 
-	Take note of the tunnel `id` value. We will use it to generate a pre-shared key (PSK).
+   Take note of the tunnel `id` value. We will use it to generate a pre-shared key (PSK).
 
 2. Create a `POST` [request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/psk_generate/) to generate a PSK. Use the tunnel `id` value you received from the previous command.
 
-	<APIRequest
-		path="/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}/psk_generate"
-		method="POST"
-	/>
+   <APIRequest
+   	path="/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}/psk_generate"
+   	method="POST"
+   />
 
-	```json output
-	{
-		"result": {
-			"ipsec_id": "<IPSEC_ID>",
-			"ipsec_tunnel_id": "<IPSEC_TUNNEL_ID>",
-			"psk": "<PSK_CODE>",
-			"psk_metadata": {
-				"last_generated_on": "2025-03-13T14:28:47.054317925Z"
-			}
-		},
-		"success": true,
-		"errors": [],
-		"messages": []
-	}
-	```
+   ```json output
+   {
+   	"result": {
+   		"ipsec_id": "<IPSEC_ID>",
+   		"ipsec_tunnel_id": "<IPSEC_TUNNEL_ID>",
+   		"psk": "<PSK_CODE>",
+   		"psk_metadata": {
+   			"last_generated_on": "2025-03-13T14:28:47.054317925Z"
+   		}
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
+   }
+   ```
 
-	Take note of your `psk` value.
+   Take note of your `psk` value.
 
 3. Create a `PUT` [request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/) to update your IPsec tunnel with the PSK.
 
-	<CURL
-		url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
-		method="PUT"
-		json={{
-			"psk": "<PSK_VALUE>"
-		}}
-	/>
+   <CURL
+   	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
+   	method="PUT"
+   	json={{
+   		psk: "<PSK_VALUE>",
+   	}}
+   />
 
 ```json output
 {
-  "result": {
-    "modified": true,
-    "modified_ipsec_tunnel": {
-      "id": "<IPSEC_ID>",
-      "interface_address": "<IPSEC_CIDR>",
-      "created_on": "2025-03-13T14:28:21.139535Z",
-      "modified_on": "2025-03-13T14:33:26.09683Z",
-      "name": "<TUNNEL_NAME>",
-      "cloudflare_endpoint": "<IP_ADDRESS>",
-      "customer_endpoint": "<IP_ADDRESS>",
-      "remote_identities": {
-        "hex_id": "",
-        "fqdn_id": "",
-        "user_id": ""
-      },
-      "psk_metadata": {
-        "last_generated_on": "2025-03-13T14:28:47.054318Z"
-      },
-      "description": "<TUNNEL_DESCRIPTION>",
-      "health_check": {
-        "enabled": true,
-        "target": "",
-        "type": "reply",
-        "rate": "mid",
-        "direction": "unidirectional"
-      }
-    }
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"modified": true,
+		"modified_ipsec_tunnel": {
+			"id": "<IPSEC_ID>",
+			"interface_address": "<IPSEC_CIDR>",
+			"created_on": "2025-03-13T14:28:21.139535Z",
+			"modified_on": "2025-03-13T14:33:26.09683Z",
+			"name": "<TUNNEL_NAME>",
+			"cloudflare_endpoint": "<IP_ADDRESS>",
+			"customer_endpoint": "<IP_ADDRESS>",
+			"remote_identities": {
+				"hex_id": "",
+				"fqdn_id": "",
+				"user_id": ""
+			},
+			"psk_metadata": {
+				"last_generated_on": "2025-03-13T14:28:47.054318Z"
+			},
+			"description": "<TUNNEL_DESCRIPTION>",
+			"health_check": {
+				"enabled": true,
+				"target": "",
+				"type": "reply",
+				"rate": "mid",
+				"direction": "unidirectional"
+			}
+		}
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -407,46 +436,45 @@ You can change this setting via the API with `"bidirectional"` or `"unidirection
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
 	method="PUT"
 	json={{
-		"health_check":
-			{
-				"direction": "bidirectional"
-			}
+		health_check: {
+			direction: "bidirectional",
+		},
 	}}
 />
 
 ```json output
 {
-  "result": {
-    "modified": true,
-    "modified_ipsec_tunnel": {
-      "id": "<IPSEC_ID>",
-      "interface_address": "<IPSEC_CIDR>",
-      "created_on": "2025-03-13T14:28:21.139535Z",
-      "modified_on": "2025-03-13T14:33:26.09683Z",
-      "name": "<TUNNEL_NAME>",
-      "cloudflare_endpoint": "<IP_ADDRESS>",
-      "customer_endpoint": "<IP_ADDRESS>",
-      "remote_identities": {
-        "hex_id": "",
-        "fqdn_id": "",
-        "user_id": ""
-      },
-      "psk_metadata": {
-        "last_generated_on": "2025-03-13T14:28:47.054318Z"
-      },
-      "description": "<TUNNEL_DESCRIPTION>",
-      "health_check": {
-        "enabled": true,
-        "target": "",
-        "type": "reply",
-        "rate": "mid",
-        "direction": "bidirectional"
-      }
-    }
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"modified": true,
+		"modified_ipsec_tunnel": {
+			"id": "<IPSEC_ID>",
+			"interface_address": "<IPSEC_CIDR>",
+			"created_on": "2025-03-13T14:28:21.139535Z",
+			"modified_on": "2025-03-13T14:33:26.09683Z",
+			"name": "<TUNNEL_NAME>",
+			"cloudflare_endpoint": "<IP_ADDRESS>",
+			"customer_endpoint": "<IP_ADDRESS>",
+			"remote_identities": {
+				"hex_id": "",
+				"fqdn_id": "",
+				"user_id": ""
+			},
+			"psk_metadata": {
+				"last_generated_on": "2025-03-13T14:28:47.054318Z"
+			},
+			"description": "<TUNNEL_DESCRIPTION>",
+			"health_check": {
+				"enabled": true,
+				"target": "",
+				"type": "reply",
+				"rate": "mid",
+				"direction": "bidirectional"
+			}
+		}
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -458,20 +486,23 @@ You can change this setting via the API with `"bidirectional"` or `"unidirection
 
 To check for tunnel health, Cloudflare sends a <a href={props.tunnelHealthChecksPage}>health check probe</a> consisting of ICMP (Internet Control Message Protocol) reply [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) to your network. Cloudflare needs to receive these probes to know if your tunnel is healthy.
 
-{/*
-	Conditional logic explanation:
-	- Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Magic WAN"
-	- Magic WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
-	This avoids saying "Magic Transit defaults to...Magic Transit" on the Magic Transit page.
-*/}
+{/_
+Conditional logic explanation: - Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Magic WAN" - Magic WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
+This avoids saying "Magic Transit defaults to...Magic Transit" on the Magic Transit page.
+_/}
 Cloudflare defaults to {props.magicWord === "Magic Transit" ? "unidirectional" : "bidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic Transit (direct server return)" : props.productName}, and {props.magicWord === "Magic Transit" ? "bidirectional" : "unidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic WAN" : "Magic Transit (direct server return)"}. However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
 
 { props.magicWord === "Magic Transit" && (
-  <>
-	<p>If you are a Magic Transit customer with egress traffic, refer to <a href="/magic-transit/reference/egress/">Magic Transit egress traffic</a> for more information on the technical aspects you need to consider to create a successful connection to Cloudflare.</p>
-  </>
-  )
-}
+
+<>
+	<p>
+		If you are a Magic Transit customer with egress traffic, refer to{" "}
+		<a href="/magic-transit/reference/egress/">Magic Transit egress traffic</a>{" "}
+		for more information on the technical aspects you need to consider to create
+		a successful connection to Cloudflare.
+	</p>
+</>
+) }
 
 ### Legacy bidirectional health checks
 
@@ -490,7 +521,11 @@ Now that you have set up your tunnel endpoints, you need to configure routes to 
 Refer to <a href={props.configureRoutesURL}>Configure routes</a> for detailed instructions on both options.
 
 { props.magicWord !== "Magic Transit" && (
-  <p>After configuring your routes, you need to <a href={props.sitesURL}>set up a site</a>.</p>
+
+<p>
+	After configuring your routes, you need to{" "}
+	<a href={props.sitesURL}>set up a site</a>.
+</p>
 )}
 
 ## Troubleshooting

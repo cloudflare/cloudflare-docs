@@ -170,10 +170,10 @@ product:magic-cloud-networking:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/magic-cloud-networking/**
-product:magic-firewall:
+product:cloudflare-network-firewall:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-firewall/**
+          - src/content/docs/cloudflare-network-firewall/**
 product:magic-network-monitoring:
   - changed-files:
       - any-glob-to-any-file:

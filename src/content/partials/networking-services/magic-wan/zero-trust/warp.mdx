@@ -22,7 +22,7 @@ If you do want to use WARP on a device behind Magic WAN and connect to its WARP 
 
 import { GlossaryTooltip, Render } from "~/components";
 
-Use <a href={props.warpURL}>WARP</a> as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <a href={props.greIpsecURL}>GRE, IPsec</a>, or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and <a href="/magic-firewall/">Magic Firewall</a> and enforce policies at Cloudflare's global network.
+Use <a href={props.warpURL}>WARP</a> as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <a href={props.greIpsecURL}>GRE, IPsec</a>, or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and <a href="/cloudflare-network-firewall/">Cloudflare Network Firewall</a> and enforce policies at Cloudflare's global network.
 
 ## Prerequisites
 
@@ -73,9 +73,9 @@ You must log out and log back in with at least one WARP device to ensure the con
 	params={{
 		greIpsecURL: props.greIpsecURL,
 		warpURL: props.warpURL,
-		tracerouteURL: props.tracerouteURL
-		}}
-	/>
+		tracerouteURL: props.tracerouteURL,
+	}}
+/>
 
 ## Double encapsulation
 
@@ -91,7 +91,8 @@ To learn which IP addresses and UDP ports you should exclude to accomplish this,
 	file="mconn/network-options/app-aware-policies/warp-traffic"
 	product="networking-services"
 	params={{
-		warpFirewallURL: "/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/"
+		warpFirewallURL:
+			"/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/",
 	}}
 />
 

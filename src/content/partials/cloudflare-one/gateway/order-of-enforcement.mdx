@@ -45,7 +45,7 @@ flowchart TB
     http1 -- Do Not Inspect --> internet
     http1 -- Inspect --> http2
     http2 --> http3
-    http0 --> magic["Magic Firewall (Enterprise users only)"]
+    http0 --> magic["Cloudflare Network Firewall (Enterprise users only)"]
     magic --> egress1
     egress1 --> tcp["Check for origin availability (TCP SYN)"]
     tcp --> network1
