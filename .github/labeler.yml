@@ -166,10 +166,10 @@ product:logs:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/logs/**
-product:magic-cloud-networking:
+product:multi-cloud-networking:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-cloud-networking/**
+          - src/content/docs/multi-cloud-networking/**
 product:cloudflare-network-firewall:
   - changed-files:
       - any-glob-to-any-file:
