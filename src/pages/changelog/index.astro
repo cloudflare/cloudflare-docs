@@ -38,6 +38,19 @@ notes = notes.flatMap((note) => {
 	return note;
 });
 
+function shouldTruncate(body: string): boolean {
+	const CHARS_PER_VISUAL_LINE = 80;
+	const LINES_PER_IMAGE = 10;
+	const THRESHOLD = 45;
+
+	const visualLines = body
+		.split("\n")
+		.reduce((sum, line) => sum + Math.max(1, Math.ceil(line.length / CHARS_PER_VISUAL_LINE)), 0);
+	const images = (body.match(/!\[.*?\]\(|<Image\s/g) ?? []).length;
+
+	return visualLines + images * LINES_PER_IMAGE > THRESHOLD;
+}
+
 const props = {
 	frontmatter: {
 		title: "Changelogs",
@@ -66,6 +79,8 @@ const props = {
 				.sort();
 
 			const { Content } = await render(entry);
+
+			const isTruncated = shouldTruncate(entry.body ?? "");
 
 			return (
 				<div
@@ -98,10 +113,22 @@ const props = {
 									</h3>
 									<ProductPills products={entry.data.products} />
 								</div>
+							<div class:list={["changelog-content", { "is-truncated": isTruncated }]}>
 								<Content />
-							</li>
-						</ol>
-					</Steps>
+							</div>
+							{isTruncated && (
+								<div class="changelog-read-more-wrapper">
+									<a
+										href={`/changelog/${entry.id}/`}
+										class="changelog-read-more"
+									>
+										Continue reading
+									</a>
+								</div>
+							)}
+						</li>
+					</ol>
+				</Steps>
 				</div>
 			);
 		})
@@ -193,6 +220,55 @@ const props = {
 		#footer-links {
 			justify-content: center;
 		}
+	}
+
+	.changelog-content {
+		--changelog-max-height: 800px;
+		position: relative;
+	}
+
+	.changelog-content.is-truncated {
+		max-height: var(--changelog-max-height);
+		overflow: hidden;
+	}
+
+	.changelog-content.is-truncated::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 100px;
+		background: linear-gradient(to bottom, transparent, var(--sl-color-bg));
+		pointer-events: none;
+	}
+
+	.changelog-read-more-wrapper {
+		display: flex;
+		justify-content: center;
+		margin-top: 0.75rem;
+	}
+
+	.changelog-read-more {
+		display: inline-flex;
+		padding: 0.375rem 0.875rem;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.01em;
+		color: var(--orange-accent-200);
+		text-decoration: none;
+		border: 1.5px solid var(--orange-accent-200);
+		border-radius: 9999px;
+		transition:
+			background-color 0.15s ease,
+			color 0.15s ease,
+			transform 0.15s ease;
+	}
+
+	.changelog-read-more:hover {
+		background-color: var(--orange-accent-200);
+		color: #fff;
+		transform: translateY(-1px);
 	}
 
 	.sl-steps {
