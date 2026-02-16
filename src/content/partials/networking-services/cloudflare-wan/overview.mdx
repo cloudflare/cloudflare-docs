@@ -31,7 +31,7 @@ import {
 
 <Plan type="enterprise" />
 
-{props.productName} (formerly Magic WAN) provides secure, performant connectivity and [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) for your entire corporate network, reducing cost and operational complexity. [Magic Firewall](/magic-firewall/) integrates smoothly with {props.productName}, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
+{props.productName} (formerly Magic WAN) provides secure, performant connectivity and [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) for your entire corporate network, reducing cost and operational complexity. [Cloudflare Network Firewall](/cloudflare-network-firewall/) integrates smoothly with {props.productName}, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
 
 With {props.productName}, you can securely connect any traffic source - data centers, offices, devices, cloud resources - to Cloudflare's network and configure routing policies to direct traffic where it needs to go, all within one SaaS solution.
 
@@ -72,6 +72,7 @@ Learn how to <a href={props.getStartedUrl}>get started</a>.
 </Feature>
 
 {props.magicWord === "Cloudflare WAN" && (
+
 <>
 <Feature
 header="Automatic cloud on-ramps"
@@ -108,18 +109,18 @@ cta="Automate your cloud on-ramps"
 ## Related products
 
 {props.magicWord === "Cloudflare WAN" && (
+
 <>
-<RelatedProduct
+	<RelatedProduct
 		header="Cloudflare Zero Trust"
 		href="/cloudflare-one/"
 		product="cloudflare-one"
-		>
-Cloudflare Zero Trust replaces legacy security perimeters with our global
-edge, making the Internet faster and safer for teams around the world.
-</RelatedProduct>
+	>
+		Cloudflare Zero Trust replaces legacy security perimeters with our global
+		edge, making the Internet faster and safer for teams around the world.
+	</RelatedProduct>
 </>
-)
-}
+) }
 
 <RelatedProduct
 	header="Cloudflare Network Firewall"
@@ -132,6 +133,7 @@ edge, making the Internet faster and safer for teams around the world.
 </RelatedProduct>
 
 {props.magicWord === "Cloudflare WAN" && (
+
 <>
 <RelatedProduct
 header="Multi-Cloud Networking"
