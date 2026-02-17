@@ -30,7 +30,7 @@ In a Python Worker, this handler is placed in a `Default` class that extends the
 
 ## The `Request` Interface
 
-The `request` parameter passed to your `fetch` handler is a JavaScript Request object, exposed via the [foreign function interface (FFI)](/workers/languages/python/ffi),
+The `request` parameter passed to your `fetch` handler is a JavaScript Request object, exposed via the [foreign function interface (FFI)](/workers/languages/python/javascript-interop/),
 allowing you to access it directly from your Python code.
 
 Let's try editing the worker to accept a POST request. We know from the
@@ -85,13 +85,11 @@ For example, let us try setting and using an environment variable in a Python Wo
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "hello-python-worker",
 	"main": "src/entry.py",
-	"compatibility_flags": [
-		"python_workers"
-	],
+	"compatibility_flags": ["python_workers"],
 	"compatibility_date": "$today",
 	"vars": {
-		"API_HOST": "example.com"
-	}
+		"API_HOST": "example.com",
+	},
 }
 ```
 
@@ -171,4 +169,4 @@ uv lock --upgrade-package workers-py
 - Learn details about local development, deployment, and [how Python Workers work](/workers/languages/python/how-python-workers-work).
 - Explore the [package](/workers/languages/python/packages) docs for instructions on how to use packages with Python Workers.
 - Understand which parts of the [Python Standard Library](/workers/languages/python/stdlib) are supported in Python Workers.
-- Learn about Python Workers' [foreign function interface (FFI)](/workers/languages/python/ffi), and how to use it to work with [bindings](/workers/runtime-apis/bindings) and [Runtime APIs](/workers/runtime-apis/).
+- Learn about Python Workers' [JavaScript interop](/workers/languages/python/javascript-interop/), and how to use it to work with [bindings](/workers/runtime-apis/bindings/) and [Runtime APIs](/workers/runtime-apis/).

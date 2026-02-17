@@ -1910,6 +1910,7 @@
 /workers/platform/languages/ /workers/languages/ 301
 /workers/learning/languages/ /workers/languages/ 301
 /workers/reference/languages/ /workers/languages/ 301
+/workers/languages/python/ffi/ /workers/languages/python/javascript-interop/ 301
 /workers/platform/protocols/ /workers/reference/protocols/ 301
 /workers/learning/protocols/ /workers/reference/protocols/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
