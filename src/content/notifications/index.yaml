@@ -220,21 +220,21 @@ entries:
       * Description (optional): A custom description for the notification.
       * Notification Email (can be multiple emails): The email address of the recipient for the notification.
 
-  - name: Magic Network Monitoring - Auto Advertisement
+  - name: Network Flow - Auto Advertisement
     audience: "[Magic Transit on-demand](/magic-transit/on-demand/) customers who use Flow-Based Monitoring and want alerts when Magic Transit is automatically enabled."
     availability: Purchase of Magic Transit.
     associatedProducts: Magic Transit
     nextSteps: No action is needed. You can go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/magic-transit) to review the health and status of your tunnels.
     otherFilters: None.
 
-  - name: Magic Network Monitoring - DDoS Attack
+  - name: Network Flow - DDoS Attack
     audience: "[BYOIP](/byoip/) and [Spectrum](/spectrum/) customers with [Network Analytics](/analytics/network-analytics/) who want to receive a notification when Cloudflare has mitigated attacks that generate an average of at least 12,000 packets per second over a five-second period, with a duration of one minute or more."
     availability: Purchase of Magic Transit and/or BYOIP.
     associatedProducts: Magic Transit
     nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
     otherFilters: None.
 
-  - name: Magic Network Monitoring - Volumetric Attack
+  - name: Network Flow - Volumetric Attack
     audience: "[Magic Transit on-demand](/magic-transit/on-demand/) customers who are using Flow-Based Monitoring to detect attacks when Magic Transit is disabled."
     availability: Purchase of Magic Transit.
     associatedProducts: Magic Transit

@@ -147,7 +147,7 @@ The reason the Cloudflare network exists is to provide services to customers to 
         1. [Magic Transit](#magic-transit)
         2. [Cloudflare WAN](#cloudflare-wan)
         3. [Cloudflare Network Firewall](#cloudflare-network-firewall)
-        4. [Magic Network Monitoring](#magic-network-monitoring)
+        4. [Network Flow](#network-flow)
         5. [Spectrum](#spectrum)
 3.  [Protecting private resources](#protecting-private-resources)
     1. [Securing connectivity to private resources](#securing-connectivity-to-private-resources)
@@ -190,7 +190,7 @@ Cloudflare can protect at multiple layers of the OSI model, and in this document
 - Layer 3, referred to as the “network layer,” is responsible for facilitating data transfer between two different networks. The network layer breaks up segments from the transport layer into smaller units, called packets, on the sender’s device and reassembles these packets on the receiving device. The network layer is where routing takes place — finding the best physical path for the data to reach its destination.
 - Layer 4, referred to as the “transport layer,” is responsible for end-to-end communication between the two devices. This includes taking data from the session layer and breaking it up into chunks called “segments” before sending it to layer 3.
 
-Cloudflare security products that can be used for L3 and L4 security include Cloudflare's network services offerings, including [Magic Transit](/magic-transit/), [Cloudflare Network Firewall](/cloudflare-network-firewall/), [Cloudflare WAN](/cloudflare-wan/), [Magic Network Monitoring](/magic-network-monitoring/), and [Spectrum](/spectrum/).
+Cloudflare security products that can be used for L3 and L4 security include Cloudflare's network services offerings, including [Magic Transit](/magic-transit/), [Cloudflare Network Firewall](/cloudflare-network-firewall/), [Cloudflare WAN](/cloudflare-wan/), [Network Flow](/network-flow/) (formerly Magic Network Monitoring), and [Spectrum](/spectrum/).
 
 - Layer 7, referred to as the “application layer,” is the top layer of the data processing that occurs just below the surface or behind the scenes of the software applications that users interact with. HTTP and API requests/responses are layer 7 events.
 
@@ -473,9 +473,9 @@ With [Cloudflare WAN](/cloudflare-wan/), customers can securely connect any traf
 
 [Cloudflare Network Firewall](/cloudflare-network-firewall/) is Cloudflare's firewall-as-a-service solution delivered from Cloudflare's global network and is integrated with Magic Transit and Cloudflare WAN. It allows for enforcing consistent network security policies across customers' entire WAN, including headquarters, branch offices, and virtual private clouds. Customers can deploy granular rules that globally filter on protocol, port, IP addresses, packet length, and bit field match.
 
-##### Magic Network Monitoring
+##### Network Flow
 
-[Magic Network Monitoring](/magic-network-monitoring/) is a cloud network flow monitoring solution that gives customers end-to-end network traffic visibility, DDoS attack type identification, and volumetric traffic alerts. When a DDoS attack is detected, an alert can be received via email, webhook, or PagerDuty.
+[Network Flow](/network-flow/) (formerly Magic Network Monitoring) is a cloud network flow monitoring solution that gives customers end-to-end network traffic visibility, DDoS attack type identification, and volumetric traffic alerts. When a DDoS attack is detected, an alert can be received via email, webhook, or PagerDuty.
 
 ##### Spectrum
 
