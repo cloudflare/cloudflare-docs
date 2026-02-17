@@ -74,7 +74,7 @@ async function generateSignedUrl(url) {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const url = new URL(event.request.url);
+		const url = new URL(request.url);
 		const imageDeliveryURL = new URL(
 			url.pathname
 				.slice(1)

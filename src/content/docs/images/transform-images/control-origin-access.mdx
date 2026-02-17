@@ -42,7 +42,7 @@ export default {
 		const requestURL = new URL(request.url);
 		// Append the request path such as "/assets/image1.jpg" to the hiddenImageOrigin.
 		// You could also process the path to add or remove directories, modify filenames, etc.
-		const imageURL = hiddenImageOrigin + requestURL.path;
+		const imageURL = hiddenImageOrigin + requestURL.pathname;
 		// This will fetch image from the given URL, but to the website's visitors this
 		// will appear as a response to the original request. Visitor’s browser will
 		// not see this URL.
@@ -61,13 +61,12 @@ export default {
   const imageURL = … // detail omitted in this example, see the previous example
 
   const requestURL = new URL(request.url)
-  const resizingOptions = {
-    width: requestURL.searchParams.get("width"),
-  }
+  const width = parseInt(requestURL.searchParams.get("width"), 10);
+  const resizingOptions = { width }
   // If someone tries to manipulate your image URLs to reveal higher-resolution images,
   // you can catch that and refuse to serve the request (or enforce a smaller size, etc.)
   if (resizingOptions.width > 1000) {
-    throw Error("We don’t allow viewing images larger than 1000 pixels wide")
+    return new Response("We don't allow viewing images larger than 1000 pixels wide", { status: 400 })
   }
   return fetch(imageURL, {cf:{image:resizingOptions}})
 },};
@@ -85,7 +84,7 @@ export default {
 
 		// The regex selects the first path component after the "images"
 		// prefix, and the rest of the path (e.g. "/images/first/rest")
-		const match = requestURL.path.match(/images\/([^/]+)\/(.+)/);
+		const match = requestURL.pathname.match(/images\/([^/]+)\/(.+)/);
 
 		// You can require the first path component to be one of the
 		// predefined sizes only, and set actual dimensions accordingly.
@@ -121,14 +120,14 @@ Cloudflare image transformations cache resized images to aid performance. Images
 const signedHeaders = generatedSignedHeaders();
 
 fetch(private_url, {
-  headers: signedHeaders
-  cf: {
-    image: {
-      format: "auto",
-      "origin-auth": "share-publicly"
-     }
-  }
-})
+	headers: signedHeaders,
+	cf: {
+		image: {
+			format: "auto",
+			"origin-auth": "share-publicly",
+		},
+	},
+});
 ```
 
 When using this code, the following headers are passed through to the origin, and allow your request to be successful:

@@ -7,8 +7,7 @@ sidebar:
 reviewed: 2025-04-03
 ---
 
-import { WranglerConfig, Render } from "~/components"
-
+import { WranglerConfig, Render } from "~/components";
 
 In this guide, you will build an app that accepts image uploads, overlays the image with a visual watermark, then stores the transformed image in your R2 bucket.
 
@@ -24,21 +23,19 @@ You will learn how to connect Developer Platform services to your Worker through
 
 Before you begin, you will need to do the following:
 
-* Add an [Images Paid](/images/pricing/#images-paid) subscription to your account. This allows you to bind the Images API to your Worker.
-* Create an [R2 bucket](/r2/get-started/#2-create-a-bucket), where the transformed images will be uploaded.
-* Create a new Worker project.
+- Add an [Images Paid](/images/pricing/#images-paid) subscription to your account. This allows you to bind the Images API to your Worker.
+- Create an [R2 bucket](/r2/get-started/#2-create-a-bucket), where the transformed images will be uploaded.
+- Create a new Worker project.
 
 If you are new, review how to [create your first Worker](/workers/get-started/guide/).
-
 
 ## 1: Set up your Worker project
 
 To start, you will need to set up your project to use the following resources on the Developer Platform:
 
-* [Images](/images/transform-images/bindings/) to transform, resize, and encode images directly from your Worker.
-* [R2](/r2/api/workers/workers-api-usage/) to connect the bucket for storing transformed images.
-* [Assets](/workers/static-assets/binding/) to access a static image that will be used as the visual watermark.
-
+- [Images](/images/transform-images/bindings/) to transform, resize, and encode images directly from your Worker.
+- [R2](/r2/api/workers/workers-api-usage/) to connect the bucket for storing transformed images.
+- [Assets](/workers/static-assets/binding/) to access a static image that will be used as the visual watermark.
 
 ### Add the bindings to your Wrangler configuration
 
@@ -76,7 +73,6 @@ The assets directory of your project lets you upload static assets as part of yo
 
 After you configure your Wrangler file, upload the overlay image to the specified directory. In our example app, the directory `./assets` contains the overlay image.
 
-
 ## 2: Build your frontend
 
 You will need to build the interface for the app that lets users upload images.
@@ -104,14 +100,14 @@ const html = `
 `;
 
 export default {
-  async fetch(request, env) {
-    if (request.method === "GET") {
-      return new Response(html, {headers:{'Content-Type':'text/html'},})
-    }
-    if (request.method ==="POST") {
-      // This is called when the user submits the form
-    }
-  }
+	async fetch(request, env) {
+		if (request.method === "GET") {
+			return new Response(html, { headers: { "Content-Type": "text/html" } });
+		}
+		if (request.method === "POST") {
+			// This is called when the user submits the form
+		}
+	},
 };
 ```
 
@@ -125,26 +121,26 @@ To do this, parse the data from the `form` as an array buffer:
 
 ```js
 export default {
-  async fetch(request, env) {
-    if (request.method === "GET") {
-      return new Response(html, {headers:{'Content-Type':'text/html'},})
-    }
-    if (request.method === "POST") {
-      try {
-        // Parse form data
-        const formData = await request.formData();
-        const file = formData.get("image");
-        if (!file || typeof file.arrayBuffer !== "function") {
-          return new Response("No image file provided", { status: 400 });
-        }
+	async fetch(request, env) {
+		if (request.method === "GET") {
+			return new Response(html, { headers: { "Content-Type": "text/html" } });
+		}
+		if (request.method === "POST") {
+			try {
+				// Parse form data
+				const formData = await request.formData();
+				const file = formData.get("image");
+				if (!file || typeof file.arrayBuffer !== "function") {
+					return new Response("No image file provided", { status: 400 });
+				}
 
-        // Read uploaded image as array buffer
-        const fileBuffer = await file.arrayBuffer();
-      } catch (err) {
-        console.log(err.message)
-      }
-    }
-  }
+				// Read uploaded image as array buffer
+				const fileBuffer = await file.arrayBuffer();
+			} catch (err) {
+				console.log(err.message);
+			}
+		}
+	},
 };
 ```
 
@@ -163,40 +159,38 @@ For every uploaded image, you want to perform the following actions:
 To fetch the overlay image from the assets directory, create a function `assetUrl` then use `env.ASSETS` to retrieve the `watermark.png` image:
 
 ```js
-var __defProp = Object.defineProperty;
-var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-
 function assetUrl(request, path) {
 	const url = new URL(request.url);
 	url.pathname = path;
 	return url;
 }
-__name(assetUrl, "assetUrl");
 
 export default {
-  async fetch(request, env) {
-    if (request.method === "GET") {
-      return new Response(html, {headers:{'Content-Type':'text/html'},})
-    }
-    if (request.method === "POST") {
-      try {
-        // Parse form data
-        const formData = await request.formData();
-        const file = formData.get("image");
-        if (!file || typeof file.arrayBuffer !== "function") {
-          return new Response("No image file provided", { status: 400 });
-        }
+	async fetch(request, env) {
+		if (request.method === "GET") {
+			return new Response(html, { headers: { "Content-Type": "text/html" } });
+		}
+		if (request.method === "POST") {
+			try {
+				// Parse form data
+				const formData = await request.formData();
+				const file = formData.get("image");
+				if (!file || typeof file.arrayBuffer !== "function") {
+					return new Response("No image file provided", { status: 400 });
+				}
 
-        // Read uploaded image as array buffer
-        const fileBuffer = await file.arrayBuffer();
+				// Read uploaded image as array buffer
+				const fileBuffer = await file.arrayBuffer();
 
-	      // Fetch image as watermark
-        let watermarkStream = (await env.ASSETS.fetch(assetUrl(request, "watermark.png"))).body;
-      } catch (err) {
-        console.log(err.message)
-      }
-    }
-  }
+				// Fetch image as watermark
+				let watermarkStream = (
+					await env.ASSETS.fetch(assetUrl(request, "watermark.png"))
+				).body;
+			} catch (err) {
+				console.log(err.message);
+			}
+		}
+	},
 };
 ```
 
@@ -207,53 +201,53 @@ You can interact with the Images binding through `env.IMAGES`.
 This is where you will put all of the optimization operations you want to perform on the image. Here, you will use the `.draw()` function to apply a visual watermark over the uploaded image, then use `.output()` to encode the image as AVIF:
 
 ```js
-var __defProp = Object.defineProperty;
-var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-
 function assetUrl(request, path) {
 	const url = new URL(request.url);
 	url.pathname = path;
 	return url;
 }
-__name(assetUrl, "assetUrl");
 
 export default {
-  async fetch(request, env) {
-    if (request.method === "GET") {
-      return new Response(html, {headers:{'Content-Type':'text/html'},})
-    }
-    if (request.method === "POST") {
-      try {
-        // Parse form data
-        const formData = await request.formData();
-        const file = formData.get("image");
-        if (!file || typeof file.arrayBuffer !== "function") {
-          return new Response("No image file provided", { status: 400 });
-        }
+	async fetch(request, env) {
+		if (request.method === "GET") {
+			return new Response(html, { headers: { "Content-Type": "text/html" } });
+		}
+		if (request.method === "POST") {
+			try {
+				// Parse form data
+				const formData = await request.formData();
+				const file = formData.get("image");
+				if (!file || typeof file.arrayBuffer !== "function") {
+					return new Response("No image file provided", { status: 400 });
+				}
 
-        // Read uploaded image as array buffer
-        const fileBuffer = await file.arrayBuffer();
+				// Read uploaded image as array buffer
+				const fileBuffer = await file.arrayBuffer();
 
-	      // Fetch image as watermark
-        let watermarkStream = (await env.ASSETS.fetch(assetUrl(request, "watermark.png"))).body;
+				// Fetch image as watermark
+				let watermarkStream = (
+					await env.ASSETS.fetch(assetUrl(request, "watermark.png"))
+				).body;
 
-        // Apply watermark and convert to AVIF
-        const imageResponse = (
-          await env.IMAGES.input(fileBuffer)
-              // Draw the watermark on top of the image
-              .draw(
-                env.IMAGES.input(watermarkStream)
-                  .transform({ width: 100, height: 100 }),
-                { bottom: 10, right: 10, opacity: 0.75 }
-              )
-              // Output the final image as AVIF
-              .output({ format: "image/avif" })
-          ).response();
-      } catch (err) {
-        console.log(err.message)
-      }
-    }
-  }
+				// Apply watermark and convert to AVIF
+				const imageResponse = (
+					await env.IMAGES.input(fileBuffer)
+						// Draw the watermark on top of the image
+						.draw(
+							env.IMAGES.input(watermarkStream).transform({
+								width: 100,
+								height: 100,
+							}),
+							{ bottom: 10, right: 10, opacity: 0.75 },
+						)
+						// Output the final image as AVIF
+						.output({ format: "image/avif" })
+				).response();
+			} catch (err) {
+				console.log(err.message);
+			}
+		}
+	},
 };
 ```
 
@@ -266,61 +260,63 @@ By creating a `fileName` variable, you can specify the name of the transformed i
 Here is the full code for the example:
 
 ```js
-var __defProp = Object.defineProperty;
-var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-
 function assetUrl(request, path) {
 	const url = new URL(request.url);
 	url.pathname = path;
 	return url;
 }
-__name(assetUrl, "assetUrl");
 
 export default {
-  async fetch(request, env) {
-    if (request.method === "GET") {
-      return new Response(html, {headers:{'Content-Type':'text/html'},})
-    }
-    if (request.method === "POST") {
-      try {
-        // Parse form data
-        const formData = await request.formData();
-        const file = formData.get("image");
-        if (!file || typeof file.arrayBuffer !== "function") {
-          return new Response("No image file provided", { status: 400 });
-        }
+	async fetch(request, env) {
+		if (request.method === "GET") {
+			return new Response(html, { headers: { "Content-Type": "text/html" } });
+		}
+		if (request.method === "POST") {
+			try {
+				// Parse form data
+				const formData = await request.formData();
+				const file = formData.get("image");
+				if (!file || typeof file.arrayBuffer !== "function") {
+					return new Response("No image file provided", { status: 400 });
+				}
 
-        // Read uploaded image as array buffer
-        const fileBuffer = await file.arrayBuffer();
+				// Read uploaded image as array buffer
+				const fileBuffer = await file.arrayBuffer();
 
-	      // Fetch image as watermark
-        let watermarkStream = (await env.ASSETS.fetch(assetUrl(request, "watermark.png"))).body;
+				// Fetch image as watermark
+				let watermarkStream = (
+					await env.ASSETS.fetch(assetUrl(request, "watermark.png"))
+				).body;
 
-        // Apply watermark and convert to AVIF
-        const imageResponse = (
-          await env.IMAGES.input(fileBuffer)
-              // Draw the watermark on top of the image
-              .draw(
-                env.IMAGES.input(watermarkStream)
-                  .transform({ width: 100, height: 100 }),
-                { bottom: 10, right: 10, opacity: 0.75 }
-              )
-              // Output the final image as AVIF
-              .output({ format: "image/avif" })
-          ).response();
+				// Apply watermark and convert to AVIF
+				const imageResponse = (
+					await env.IMAGES.input(fileBuffer)
+						// Draw the watermark on top of the image
+						.draw(
+							env.IMAGES.input(watermarkStream).transform({
+								width: 100,
+								height: 100,
+							}),
+							{ bottom: 10, right: 10, opacity: 0.75 },
+						)
+						// Output the final image as AVIF
+						.output({ format: "image/avif" })
+				).response();
 
-          // Add timestamp to file name
-          const fileName = `image-${Date.now()}.avif`;
+				// Add timestamp to file name
+				const fileName = `image-${Date.now()}.avif`;
 
-          // Upload to R2
-          await env.R2.put(fileName, imageResponse.body)
+				// Upload to R2
+				await env.R2.put(fileName, imageResponse.body);
 
-          return new Response(`Image uploaded successfully as ${fileName}`, { status: 200 });
-      } catch (err) {
-        console.log(err.message)
-      }
-    }
-  }
+				return new Response(`Image uploaded successfully as ${fileName}`, {
+					status: 200,
+				});
+			} catch (err) {
+				console.log(err.message);
+			}
+		}
+	},
 };
 ```
 
