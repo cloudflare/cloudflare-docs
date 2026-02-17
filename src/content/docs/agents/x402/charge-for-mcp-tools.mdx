@@ -8,12 +8,6 @@ description: Charge per tool call in an MCP server using paidTool.
 
 The Agents SDK provides `paidTool`, a drop-in replacement for `tool` that adds x402 payment requirements. Clients pay per tool call, and you can mix free and paid tools in the same server.
 
-## Prerequisites
-
-- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
-- An MCP server project
-- A wallet address to receive payments
-
 ## Setup
 
 Wrap your `McpServer` with `withX402` and use `paidTool` for tools you want to charge for:
