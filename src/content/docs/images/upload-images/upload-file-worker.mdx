@@ -4,9 +4,13 @@ title: Upload via a Worker
 description: Learn how to upload images to Cloudflare using Workers. This guide provides code examples for uploading both standard and AI-generated images efficiently.
 ---
 
+import { TypeScriptExample } from "~/components";
+
 You can use a Worker to upload your image to Cloudflare Images.
 
 Refer to the example below or refer to the [Workers documentation](/workers/) for more information.
+
+<TypeScriptExample>
 
 ```ts
 const API_URL =
@@ -28,9 +32,13 @@ const response = await fetch(API_URL, {
 });
 ```
 
+</TypeScriptExample>
+
 ## Upload from AI generated images
 
 You can use an AI Worker to generate an image and then upload that image to store it in Cloudflare Images. For more information about using Workers AI to generate an image, refer to the [SDXL-Lightning Model](/workers-ai/models/stable-diffusion-xl-lightning).
+
+<TypeScriptExample>
 
 ```ts
 const API_URL =
@@ -53,3 +61,5 @@ const response = await fetch(API_URL, {
 	body: formData,
 });
 ```
+
+</TypeScriptExample>

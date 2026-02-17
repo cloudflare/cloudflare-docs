@@ -8,6 +8,10 @@ description: Draw a watermark from KV on an image from R2
 reviewed: 2025-04-03
 ---
 
+import { TypeScriptExample } from "~/components";
+
+<TypeScriptExample>
+
 ```ts
 interface Env {
 	BUCKET: R2Bucket;
@@ -46,3 +50,5 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
