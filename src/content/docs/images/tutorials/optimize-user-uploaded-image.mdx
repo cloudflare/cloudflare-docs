@@ -7,7 +7,7 @@ sidebar:
 reviewed: 2025-04-03
 ---
 
-import { WranglerConfig, Render } from "~/components";
+import { WranglerConfig, Render, TypeScriptExample } from "~/components";
 
 In this guide, you will build an app that accepts image uploads, overlays the image with a visual watermark, then stores the transformed image in your R2 bucket.
 
@@ -81,7 +81,9 @@ In this example, the frontend is rendered directly from the Worker script.
 
 To do this, make a new `html` variable, which contains a `form` element for accepting uploads. In `fetch`, construct a new `Response` with a `Content-Type: text/html` header to serve your static HTML site to the client:
 
-```js
+<TypeScriptExample>
+
+```ts
 const html = `
 <!DOCTYPE html>
         <html>
@@ -99,8 +101,14 @@ const html = `
         </html>
 `;
 
+interface Env {
+	IMAGES: ImagesBinding;
+	R2: R2Bucket;
+	ASSETS: Fetcher;
+}
+
 export default {
-	async fetch(request, env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		if (request.method === "GET") {
 			return new Response(html, { headers: { "Content-Type": "text/html" } });
 		}
@@ -108,8 +116,10 @@ export default {
 			// This is called when the user submits the form
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 ## 3: Read the uploaded image
 
@@ -119,9 +129,11 @@ Because the `form` lets users upload directly from their disk, you cannot use `f
 
 To do this, parse the uploaded file from the `form` and get its stream:
 
-```js
+<TypeScriptExample>
+
+```ts
 export default {
-	async fetch(request, env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		if (request.method === "GET") {
 			return new Response(html, { headers: { "Content-Type": "text/html" } });
 		}
@@ -137,12 +149,14 @@ export default {
 				// Get uploaded image as a readable stream
 				const fileStream = file.stream();
 			} catch (err) {
-				console.log(err.message);
+				console.log((err as Error).message);
 			}
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 <Render file="request-dot-clone-warning" product="workers" />
 
@@ -158,15 +172,17 @@ For every uploaded image, you want to perform the following actions:
 
 To fetch the overlay image from the assets directory, create a function `assetUrl` then use `env.ASSETS` to retrieve the `watermark.png` image:
 
-```js
-function assetUrl(request, path) {
+<TypeScriptExample>
+
+```ts
+function assetUrl(request: Request, path: string): URL {
 	const url = new URL(request.url);
 	url.pathname = path;
 	return url;
 }
 
 export default {
-	async fetch(request, env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		if (request.method === "GET") {
 			return new Response(html, { headers: { "Content-Type": "text/html" } });
 		}
@@ -183,16 +199,19 @@ export default {
 				const fileStream = file.stream();
 
 				// Fetch image as watermark
-				let watermarkStream = (
-					await env.ASSETS.fetch(assetUrl(request, "watermark.png"))
-				).body;
+				const watermarkResponse = await env.ASSETS.fetch(
+					assetUrl(request, "watermark.png"),
+				);
+				const watermarkStream = watermarkResponse.body;
 			} catch (err) {
-				console.log(err.message);
+				console.log((err as Error).message);
 			}
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 ### Watermark and transcode the image
 
@@ -200,15 +219,17 @@ You can interact with the Images binding through `env.IMAGES`.
 
 This is where you will put all of the optimization operations you want to perform on the image. Here, you will use the `.draw()` function to apply a visual watermark over the uploaded image, then use `.output()` to encode the image as AVIF:
 
-```js
-function assetUrl(request, path) {
+<TypeScriptExample>
+
+```ts
+function assetUrl(request: Request, path: string): URL {
 	const url = new URL(request.url);
 	url.pathname = path;
 	return url;
 }
 
 export default {
-	async fetch(request, env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		if (request.method === "GET") {
 			return new Response(html, { headers: { "Content-Type": "text/html" } });
 		}
@@ -225,9 +246,13 @@ export default {
 				const fileStream = file.stream();
 
 				// Fetch image as watermark
-				let watermarkStream = (
-					await env.ASSETS.fetch(assetUrl(request, "watermark.png"))
-				).body;
+				const watermarkResponse = await env.ASSETS.fetch(
+					assetUrl(request, "watermark.png"),
+				);
+				const watermarkStream = watermarkResponse.body;
+				if (!watermarkStream) {
+					return new Response("Failed to fetch watermark", { status: 500 });
+				}
 
 				// Apply watermark and convert to AVIF
 				const imageResponse = (
@@ -244,12 +269,14 @@ export default {
 						.output({ format: "image/avif" })
 				).response();
 			} catch (err) {
-				console.log(err.message);
+				console.log((err as Error).message);
 			}
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 ## 5: Upload to R2
 
@@ -259,15 +286,40 @@ By creating a `fileName` variable, you can specify the name of the transformed i
 
 Here is the full code for the example:
 
-```js
-function assetUrl(request, path) {
+<TypeScriptExample>
+
+```ts
+interface Env {
+	IMAGES: ImagesBinding;
+	R2: R2Bucket;
+	ASSETS: Fetcher;
+}
+
+const html = `
+<!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="UTF-8">
+            <title>Upload Image</title>
+          </head>
+          <body>
+            <h1>Upload an image</h1>
+            <form method="POST" enctype="multipart/form-data">
+              <input type="file" name="image" accept="image/*" required />
+              <button type="submit">Upload</button>
+            </form>
+          </body>
+        </html>
+`;
+
+function assetUrl(request: Request, path: string): URL {
 	const url = new URL(request.url);
 	url.pathname = path;
 	return url;
 }
 
 export default {
-	async fetch(request, env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		if (request.method === "GET") {
 			return new Response(html, { headers: { "Content-Type": "text/html" } });
 		}
@@ -284,9 +336,13 @@ export default {
 				const fileStream = file.stream();
 
 				// Fetch image as watermark
-				let watermarkStream = (
-					await env.ASSETS.fetch(assetUrl(request, "watermark.png"))
-				).body;
+				const watermarkResponse = await env.ASSETS.fetch(
+					assetUrl(request, "watermark.png"),
+				);
+				const watermarkStream = watermarkResponse.body;
+				if (!watermarkStream) {
+					return new Response("Failed to fetch watermark", { status: 500 });
+				}
 
 				// Apply watermark and convert to AVIF
 				const imageResponse = (
@@ -313,12 +369,16 @@ export default {
 					status: 200,
 				});
 			} catch (err) {
-				console.log(err.message);
+				console.log((err as Error).message);
+				return new Response("Internal error", { status: 500 });
 			}
 		}
+		return new Response("Method not allowed", { status: 405 });
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 ## Next steps
 
