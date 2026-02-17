@@ -8,6 +8,8 @@ When you [add a domain to Cloudflare](/fundamentals/manage-domains/add-site/), C
 
 This endpoint is managed and served by Cloudflare. It cannot be modified or customized. The endpoint is not used by every Cloudflare product, but you may find some products use the endpoint in its URL.
 
+Requests made to the `/cdn-cgi/*` endpoints do not count towards billable usage. 
+
 A few examples include (but are not limited to):
 
 * [Identify the Cloudflare data center serving your request](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#identify-the-cloudflare-data-center-serving-your-request), which is helpful for troubleshooting (`https://<YOUR_DOMAIN>/cdn-cgi/trace`).
