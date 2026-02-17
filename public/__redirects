@@ -1070,6 +1070,7 @@
 /magic-network-monitoring/rules/sflow-ddos-alerts/ /rules/configure-rule-notifications/ 301
 /magic-network-monitoring/notifications/ /rules/rule-notifications/ 301
 /magic-network-monitoring/magic-network-monitoring-free/ /network-flow/network-flow-free/ 301
+/magic-transit/magic-network-monitoring/ /magic-transit/network-flow/ 301
 /magic-firewall/how-to/create-rate-limiting-rules/ /cloudflare-network-firewall/how-to/create-rate-limiting-policies/ 301
 
 # magic-transit
