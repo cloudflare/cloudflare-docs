@@ -6,17 +6,7 @@ sidebar:
 description: Use withX402Client to pay for resources from a Cloudflare Agent.
 ---
 
-The Agents SDK includes `withX402Client`, which wraps an MCP client to handle x402 payments automatically or with human approval.
-
-## Prerequisites
-
-- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
-- An Agent project
-- A wallet with USDC (test on `base-sepolia`, production on `base`)
-
-## Setup
-
-Wrap your MCP client connection with `withX402Client`:
+The Agents SDK includes an MCP client that can pay for x402-protected tools. Use it from your Agents or any MCP client connection.
 
 ```ts
 import { Agent } from "agents";
@@ -24,9 +14,9 @@ import { withX402Client } from "agents/x402";
 import { privateKeyToAccount } from "viem/accounts";
 
 export class MyAgent extends Agent {
-	x402Client!: ReturnType<typeof withX402Client>;
+	// Your Agent definitions...
 
-	async onStart() {
+	onStart() {
 		const { id } = await this.mcp.connect(`${env.WORKER_URL}/mcp`);
 		const account = privateKeyToAccount(this.env.MY_PRIVATE_KEY);
 
@@ -36,8 +26,14 @@ export class MyAgent extends Agent {
 		});
 	}
 
-	async callTool(toolName: string, toolArgs: unknown) {
-		return await this.x402Client.callTool(null, {
+	onPaymentRequired(paymentRequirements): Promise<boolean> {
+		// Your human-in-the-loop confirmation flow...
+	}
+
+	async onToolCall(toolName: string, toolArgs: unknown) {
+		// The first parameter is the confirmation callback.
+		// Set to `null` for the agent to pay automatically.
+		return await this.x402Client.callTool(this.onPaymentRequired, {
 			name: toolName,
 			arguments: toolArgs,
 		});
@@ -45,38 +41,7 @@ export class MyAgent extends Agent {
 }
 ```
 
-## Payment confirmation
-
-### Auto-pay
-
-Pass `null` as the first argument to `callTool`. The agent pays without prompting:
-
-```ts
-const result = await this.x402Client.callTool(null, {
-	name: "expensive-tool",
-	arguments: { data: "..." },
-});
-```
-
-### Human-in-the-loop
-
-Pass a callback that receives payment requirements and returns whether to proceed:
-
-```ts
-async callToolWithApproval(toolName: string, toolArgs: unknown) {
-  return await this.x402Client.callTool(
-    this.onPaymentRequired.bind(this),
-    { name: toolName, arguments: toolArgs }
-  );
-}
-
-async onPaymentRequired(requirements: PaymentRequirements): Promise<boolean> {
-  console.log(`Tool costs ${requirements.amount} ${requirements.asset}`);
-  return await this.askUserForApproval(requirements);
-}
-```
-
-The `PaymentRequirements` object contains `resource`, `amount`, `asset`, `network`, and `recipient`.
+For a complete working example, see [x402-mcp on GitHub](https://github.com/cloudflare/agents/tree/main/examples/x402-mcp).
 
 ## Environment setup
 
@@ -90,11 +55,7 @@ MY_PRIVATE_KEY="0x..."
 npx wrangler secret put MY_PRIVATE_KEY
 ```
 
-## Testing
-
-Use `base-sepolia` and get test USDC from the [Circle faucet](https://faucet.circle.com/).
-
-For a complete working example, see [x402-mcp on GitHub](https://github.com/cloudflare/agents/tree/main/examples/x402-mcp).
+Use `base-sepolia` for testing. Get test USDC from the [Circle faucet](https://faucet.circle.com/).
 
 ## Related
 
