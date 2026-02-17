@@ -36,6 +36,41 @@ When a browser visits a preview URL like `https://8080-my-sandbox-abc123.yourdom
 4. **`proxyToSandbox()`**: Your Worker calls `proxyToSandbox()`, which extracts the sandbox ID and port from the hostname, rewrites the URL to `http://localhost:{port}`, and forwards the request to the correct Durable Object. It sets `X-Forwarded-Proto: https` so your application can detect the original protocol.
 5. **Container**: The Durable Object forwards the request to the service inside your container over an internal connection (HTTP -- TLS is not needed because the transport is already secure within Cloudflare's network). If your service responds with an HTTP redirect, the container binding follows it automatically. If the redirect `Location` header contains an `https://` URL, the request fails. To prevent this, ensure your application produces HTTP or relative redirect URLs, or pass `redirect: "manual"` in your Worker to handle redirects yourself.
 
+```mermaid
+sequenceDiagram
+    participant Browser
+    participant DNS
+    participant Edge as Cloudflare Edge (TLS)
+    participant Route as Worker Route
+    participant Worker as Worker (proxyToSandbox)
+    participant DO as Durable Object
+    participant Container as Container (HTTP)
+
+    Browser->>DNS: Resolve 8080-my-sandbox-abc123.yourdomain.com
+    DNS-->>Browser: *.yourdomain.com → Cloudflare proxy IP
+
+    Browser->>Edge: HTTPS request
+    Edge->>Edge: Terminate TLS using domain certificate
+    Edge-->>Browser: Secure HTTPS connection established
+
+    Edge->>Route: Forward request
+    Route->>Route: Match *.yourdomain.com/*
+    Route->>Worker: Dispatch to Worker
+
+    Worker->>Worker: Extract sandbox ID & port from hostname
+    Worker->>Worker: Rewrite URL to http://localhost:{port}
+    Worker->>Worker: Set X-Forwarded-Proto: https
+    Worker->>DO: Forward request to Durable Object
+
+    DO->>Container: HTTP request (internal, already secure)
+    Container-->>DO: HTTP response
+    DO-->>Worker: Response
+    Worker-->>Edge: Response
+    Edge-->>Browser: HTTPS response
+
+    Note over DO,Container: If container responds with 302 Location: https://...<br/>the binding follows the redirect and fails.<br/>Use redirect: "manual" to debug.
+```
+
 Each step can fail independently: DNS can resolve but TLS can fail (certificate does not cover the hostname), or TLS can succeed but the route does not match (request reaches the wrong Worker or no Worker at all).
 
 ## Prerequisites
