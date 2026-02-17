@@ -1,0 +1,35 @@
+---
+pcx_content_type: navigation
+title: rtk-plugin-main
+description: API reference for rtk-plugin-main component (Angular Library)
+---
+A component which loads a plugin.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting |
+| `plugin` | `RTKPlugin` | ✅ | - | Plugin |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-plugin-main></rtk-plugin-main>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-plugin-main
+ [meeting]="meeting"
+ [plugin]="rtkplugin">
+</rtk-plugin-main>
+```
+

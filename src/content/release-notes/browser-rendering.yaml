@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-02-03"
+    title: "@cloudflare/puppeteer v1.0.6 released"
+    description: |-
+      * Released version 1.0.6 of [`@cloudflare/puppeteer`](https://github.com/cloudflare/puppeteer/releases/tag/v1.0.6), which includes a fix for rendering large text PDFs.
   - publish_date: "2026-01-21"
     title: "@cloudflare/puppeteer v1.0.5 released"
     description: |-

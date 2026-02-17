@@ -5,10 +5,18 @@ head: []
 description: Write structured queries to investigate and visualize your telemetry data.
 sidebar:
   order: 4
-
 ---
 
-import { TabItem, Tabs, Render, WranglerConfig, YouTube, Markdown, DashButton, Steps } from "~/components"
+import {
+	TabItem,
+	Tabs,
+	Render,
+	WranglerConfig,
+	YouTube,
+	Markdown,
+	DashButton,
+	Steps,
+} from "~/components";
 
 The Query Builder helps you write structured queries to investigate and visualize your telemetry data. The Query Builder searches the Workers Observability dataset, which currently includes all logs stored by [Workers Logs](/workers/observability/logs/workers-logs/).
 
@@ -43,7 +51,7 @@ The Query Builder is available to all developers and requires no enablement. Que
    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select your Worker.
-3. Select **Observability** in the left-hand navigation panel, and then the **Investigate** tab.
+3. Select **Observability** in the left-hand navigation panel, and then the **Overview** tab.
 4. Select a **Visualization**.
 5. Optional: Add fields to Filter, Group By, Order By, and Limit. For more information, see what [composes a query](/workers/observability/query-builder/#query-composition).
 6. Optional: Select the appropriate time range.
@@ -55,31 +63,31 @@ The Query Builder is available to all developers and requires no enablement. Que
 
 The Query Builder supports many visualization operators, including:
 
-| Function                   | Arguments | Description |
-| ---                        | --- | --- |
-| **Count**                  | n/a           | The total number of rows matching the query conditions        |
-| **Count Distinct**         | any field     | The number of occurrences of the unique values in the dataset |
-| **Min**                    | numeric field | The smallest value for the field in the dataset               |
-| **Max**                    | numeric field | The largest value for the field in the dataset                |
-| **Sum**                    | numeric field | The total of all of the values for the field in the dataset   |
-| **Average**                | numeric field | The average of the field in the dataset                       |
-| **Standard Deviation**     | numeric field | The standard deviation of the field in the dataset            |
-| **Variance**               | numeric field | The variance of the field in the dataset                      |
-| **P001**                   | numeric field | The value of the field below which 0.1% of the data falls     |
-| **P01**                    | numeric field | The value of the field below with 1% of the data falls        |
-| **P05**                    | numeric field | The value of the field below with 5% of the data falls        |
-| **P10**                    | numeric field | The value of the field below with 10% of the data falls       |
-| **P25**                    | numeric field | The value of the field below with 25% of the data falls       |
-| **Median (P50)**           | numeric field | The value of the field below with 50% of the data falls       |
-| **P75**                    | numeric field | The value of the field below with 75% of the data falls       |
-| **P90**                    | numeric field | The value of the field below with 90% of the data falls       |
-| **P95**                    | numeric field | The value of the field below with 95% of the data falls       |
-| **P99**                    | numeric field | The value of the field below with 99% of the data falls       |
-| **P999**                   | numeric field | The value of the field below with 99.9% of the data falls     |
+| Function               | Arguments     | Description                                                   |
+| ---------------------- | ------------- | ------------------------------------------------------------- |
+| **Count**              | n/a           | The total number of rows matching the query conditions        |
+| **Count Distinct**     | any field     | The number of occurrences of the unique values in the dataset |
+| **Min**                | numeric field | The smallest value for the field in the dataset               |
+| **Max**                | numeric field | The largest value for the field in the dataset                |
+| **Sum**                | numeric field | The total of all of the values for the field in the dataset   |
+| **Average**            | numeric field | The average of the field in the dataset                       |
+| **Standard Deviation** | numeric field | The standard deviation of the field in the dataset            |
+| **Variance**           | numeric field | The variance of the field in the dataset                      |
+| **P001**               | numeric field | The value of the field below which 0.1% of the data falls     |
+| **P01**                | numeric field | The value of the field below with 1% of the data falls        |
+| **P05**                | numeric field | The value of the field below with 5% of the data falls        |
+| **P10**                | numeric field | The value of the field below with 10% of the data falls       |
+| **P25**                | numeric field | The value of the field below with 25% of the data falls       |
+| **Median (P50)**       | numeric field | The value of the field below with 50% of the data falls       |
+| **P75**                | numeric field | The value of the field below with 75% of the data falls       |
+| **P90**                | numeric field | The value of the field below with 90% of the data falls       |
+| **P95**                | numeric field | The value of the field below with 95% of the data falls       |
+| **P99**                | numeric field | The value of the field below with 99% of the data falls       |
+| **P999**               | numeric field | The value of the field below with 99.9% of the data falls     |
 
 You can add multiple visualizations in a single query. Each visualization renders a graph. A single summary table is also returned, which shows the raw query results.
 
-![Example of showing the Query Builder with multiple visualization](~/assets/images/workers-observability/query-builder-visualization.png)
+![Example of showing the Query Builder with multiple visualization](~/assets/images/workers-observability/wobs_QB_visualization_122.png)
 
 All methods are aggregate functions. Most methods operate on a specific field in the log event. `Count` is an exception, and is an aggregate function that returns the number of log events matching the filter conditions.
 
@@ -93,17 +101,17 @@ The operator is a logical condition that evaluates to true or false. See the tab
 | Data Type | Valid Conditions (Operators) |
 | --- | --- |
 | Numeric | Equals, Does not equal, Greater, Greater or equals, Less, Less or equals, Exists, Does not exist |
-| String  | Equals, Does not equal, Includes, Does not include, Regex, Exists, Does not exist, Starts with   |
+| String | Equals, Does not equal, Includes, Does not include, Regex, Exists, Does not exist, Starts with |
 
 The value for a numeric field is an integer. The value for a string field is any string.
 
 To add a filter:
 
 <Steps>
-1. Select **+** in the **Filter** section.
-2. Select **Select key...** and input a key name. For example, `$workers.cpuTimeMs`.
-3. Select the operator and change it to the operator best suited. For example, `Greater than`.
-4. Select **Select value...** and input a value. For example, `100`.
+	1. Select **+** in the **Filter** section. 2. Select **Select key...** and
+	input a key name. For example, `$workers.cpuTimeMs`. 3. Select the operator
+	and change it to the operator best suited. For example, `Greater than`. 4.
+	Select **Select value...** and input a value. For example, `100`.
 </Steps>
 
 When you run the query with the filter specified above, only log events where `$workers.cpuTimeMs > 100` will be returned.
@@ -138,19 +146,19 @@ There are three views for queries: Visualizations, Invocations, and Events.
 
 The **Visualizations** tab shows graphs and a summary table for the query.
 
-![Visualization Overview](~/assets/images/workers-observability/query-builder-visualization.png)
+![Visualization Overview](~/assets/images/workers-observability/wobs_visualizations_tab_122.png)
 
 ### Invocations tab
 
 The **Invocations** tab shows all logs, grouped by by the invocation, and ordered by timestamp. Only invocations matching the query criteria are returned.
 
-![Invocations Overview](~/assets/images/workers-observability/query-builder-invocations-overview.png)
+![Invocations Overview](~/assets/images/workers-observability/wobs_invocation_logs_full_list_122.png)
 
 ### Events tab
 
 The **Events** tab shows all logs, ordered by timestamp. Only events matching the query criteria are returned. The Events tab can be customized to add additional fields in the view.
 
-![Overview](~/assets/images/workers-observability/query-builder-events-overview.png)
+![Overview](~/assets/images/workers-observability/wobs_events_dropdown_122.png)
 
 ## Save queries
 
@@ -183,16 +191,16 @@ the raw event count. We can add a filter for `$workers.event.response.status` th
 Then, we group by `$workers.event.request.path` and `$workers.event.response.status` to identify the number of requests that were
 affected by this behavior.
 
-![Constructing a query](~/assets/images/workers-observability/query-builder-ex1-query.png)
+![Constructing a query](~/assets/images/workers-observability/wobs_QB_visualization_122.png)
 
-The results show that the `/actuator/env` path has been experiencing 500s. Now, we can apply a filter for this path and investigate.
+The results show that the `/agents/chat/default` path has been experiencing 404s and 500s. Now, we can apply a filter for this path and investigate.
 
-![Adding an additional field to the query](~/assets/images/workers-observability/query-builder-ex1-query-with-filter.png)
+![Adding an additional field to the query](~/assets/images/workers-observability/wobs_QB_visualization_filter_122.png)
 
 Now, we can investigate by selecting the **Invocations** tab. We can see that there were two logged invocations of this error.
 
-![Examining the Invocations tab in the Query Builder](~/assets/images/workers-observability/query-builder-ex1-invocations.png)
+![Examining the Invocations tab in the Query Builder](~/assets/images/workers-observability/wobs_invocation_logs_full_list_122.png)
 
 We can expand a single invocation to view the relevant logs, and continue to debug.
 
-![Viewing the logs for a single Invocation](~/assets/images/workers-observability/query-builder-ex1-invocation-logs.png)
+![Viewing the logs for a single Invocation](~/assets/images/workers-observability/wobs_invocation_logs_122.png)

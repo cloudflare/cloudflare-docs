@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { WranglerConfig, TypeScriptExample } from "~/components";
+import { WranglerConfig, TypeScriptExample, Render } from "~/components";
 
 Durable Objects provide a powerful primitive for building stateful, coordinated applications. Each Durable Object is a single-threaded, globally-unique instance with its own persistent storage. Understanding how to design around these properties is essential for building effective applications.
 
@@ -140,6 +140,7 @@ export default {
 	},
 };
 ```
+
 </TypeScriptExample>
 
 :::note
@@ -182,8 +183,31 @@ export default {
 		return new Response("Sent");
 	},
 };
+
 ```
 </TypeScriptExample>
+
+### Message throughput limits
+
+A single Durable Object can handle approximately **500-1,000 requests per second** for simple operations. This limit varies based on the work performed per request:
+
+| Operation type | Throughput |
+|----------------|------------|
+| Simple pass-through (minimal parsing) | ~1,000 req/sec |
+| Moderate processing (JSON parsing, validation) | ~500-750 req/sec |
+| Complex operations (transformation, storage writes) | ~200-500 req/sec |
+
+When modeling your "atom," factor in the expected request rate. If your use case exceeds these limits, shard your workload across multiple Durable Objects.
+
+For example, consider a real-time game with 50,000 concurrent players sending 10 updates per second. This generates 500,000 requests per second total. You would need 500-1,000 game session Durable Objects—not one global coordinator.
+
+Calculate your sharding requirements:
+
+```
+
+Required DOs = (Total requests/second) / (Requests per DO capacity)
+
+```
 
 ### Use deterministic IDs for predictable routing
 
@@ -221,6 +245,7 @@ export default {
 	},
 };
 ```
+
 </TypeScriptExample>
 
 Creating a stub does not instantiate or wake up the Durable Object. The Durable Object is only activated when you call a method on the stub.
@@ -254,6 +279,7 @@ export default {
 		return Response.json({ gameId: id.toString() });
 	},
 };
+
 ```
 </TypeScriptExample>
 
@@ -333,9 +359,11 @@ export class GameMatch extends DurableObject<Env> {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 With this pattern:
+
 - Listing matches only queries the parent (children stay hibernated)
 - Different matches process player actions in parallel
 - Each match has its own SQLite database for player data
@@ -363,14 +391,13 @@ export default {
 		const region = url.searchParams.get("region") ?? "wnam"; // Western North America
 
 		// Provide a location hint for where this Durable Object should be created
-		const id = env.GAME_SESSION.idFromName(gameId, {
-			locationHint: region,
-		});
-		const stub = env.GAME_SESSION.get(id);
+		const id = env.GAME_SESSION.idFromName(gameId);
+		const stub = env.GAME_SESSION.get(id, { locationHint: region });
 
 		return new Response("Connected to game session");
 	},
 };
+
 ```
 </TypeScriptExample>
 
@@ -392,6 +419,7 @@ Configure your Durable Object class to use SQLite storage in your Wrangler confi
   ]
 }
 ```
+
 </WranglerConfig>
 
 Then use the SQL API in your Durable Object:
@@ -444,6 +472,7 @@ export class ChatRoom extends DurableObject<Env> {
 		return cursor.toArray();
 	}
 }
+
 ```
 </TypeScriptExample>
 
@@ -452,6 +481,17 @@ Refer to [Access Durable Objects storage](/durable-objects/best-practices/access
 ### Initialize storage and run migrations in the constructor
 
 Use `blockConcurrencyWhile()` in the constructor to run migrations and initialize state before any requests are processed. This ensures your schema is ready and prevents race conditions during initialization.
+
+:::note
+`PRAGMA user_version` is not supported by Durable Objects SQLite storage. You must use an alternative approach to track your schema version.
+:::
+
+For production applications, use a migration library that handles version tracking and execution automatically:
+
+- [`durable-utils`](https://github.com/lambrospetrou/durable-utils#sqlite-schema-migrations) — provides a `SQLSchemaMigrations` class that tracks executed migrations both in memory and in storage.
+- [`@cloudflare/actors` storage utilities](https://github.com/cloudflare/actors/blob/main/packages/storage/src/sql-schema-migrations.ts) — a reference implementation of the same pattern used by the Cloudflare Actors framework.
+
+If you prefer not to use a library, you can track schema versions manually using a `_sql_schema_migrations` table. The following example demonstrates this approach:
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -472,11 +512,21 @@ export class ChatRoom extends DurableObject<Env> {
 	}
 
 	private async migrate() {
-		// Check current schema version
+		// Create the migrations tracking table if it does not exist
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS _sql_schema_migrations (
+				id INTEGER PRIMARY KEY,
+				applied_at TEXT NOT NULL DEFAULT (datetime('now'))
+			);
+		`);
+
+		// Determine the current schema version
 		const version =
 			this.ctx.storage.sql
-				.exec<{ version: number }>("PRAGMA user_version")
-				.one()?.version ?? 0;
+				.exec<{ version: number }>(
+					"SELECT COALESCE(MAX(id), 0) as version FROM _sql_schema_migrations",
+				)
+				.one().version;
 
 		if (version < 1) {
 			this.ctx.storage.sql.exec(`
@@ -487,7 +537,7 @@ export class ChatRoom extends DurableObject<Env> {
 					created_at INTEGER NOT NULL
 				);
 				CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at);
-				PRAGMA user_version = 1;
+				INSERT INTO _sql_schema_migrations (id) VALUES (1);
 			`);
 		}
 
@@ -495,23 +545,24 @@ export class ChatRoom extends DurableObject<Env> {
 			// Future migration: add a new column
 			this.ctx.storage.sql.exec(`
 				ALTER TABLE messages ADD COLUMN edited_at INTEGER;
-				PRAGMA user_version = 2;
+				INSERT INTO _sql_schema_migrations (id) VALUES (2);
 			`);
 		}
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ### Understand the difference between in-memory state and persistent storage
 
 Durable Objects provide multiple state management layers, each with different characteristics:
 
-| Type | Speed | Persistence | Use Case |
-|------|-------|-------------|----------|
-| In-memory (class properties) | Fastest | Lost on eviction or crash | Caching, active connections |
-| SQLite storage | Fast | Durable across restarts | Primary data storage |
-| External (R2, D1) | Variable | Durable, cross-DO accessible | Large files, shared data |
+| Type                         | Speed    | Persistence                  | Use Case                    |
+| ---------------------------- | -------- | ---------------------------- | --------------------------- |
+| In-memory (class properties) | Fastest  | Lost on eviction or crash    | Caching, active connections |
+| SQLite storage               | Fast     | Durable across restarts      | Primary data storage        |
+| External (R2, D1)            | Variable | Durable, cross-DO accessible | Large files, shared data    |
 
 In-memory state is **not preserved** if the Durable Object is evicted from memory due to inactivity, or if it crashes from an uncaught exception. Always persist important state to SQLite storage.
 
@@ -562,6 +613,7 @@ export class ChatRoom extends DurableObject<Env> {
 		this.messageCache = null; // Invalidate cache
 	}
 }
+
 ```
 </TypeScriptExample>
 
@@ -620,6 +672,7 @@ export class ChatRoom extends DurableObject<Env> {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ### Understand how input and output gates work
@@ -674,6 +727,7 @@ export class ChatRoom extends DurableObject<Env> {
 		return "Message sent";
 	}
 }
+
 ```
 </TypeScriptExample>
 
@@ -720,6 +774,7 @@ export class Account extends DurableObject<Env> {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 For more details, see [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) and the [glossary](/durable-objects/reference/glossary/).
@@ -750,6 +805,7 @@ export class Processor extends DurableObject<Env> {
 		}
 	}
 }
+
 ```
 </TypeScriptExample>
 
@@ -810,9 +866,10 @@ export class ChatRoom extends DurableObject<Env> {
 	}
 }
 ```
+
 </TypeScriptExample>
 
-Because `blockConcurrencyWhile()` blocks *all* concurrency unconditionally, it significantly reduces throughput. If each call takes ~5ms, that individual Durable Object is limited to approximately 200 requests/second. Reserve it for initialization and migrations, not regular request handling. For normal operations, rely on input/output gates and write coalescing instead.
+Because `blockConcurrencyWhile()` blocks _all_ concurrency unconditionally, it significantly reduces throughput. If each call takes ~5ms, that individual Durable Object is limited to approximately 200 requests/second. Reserve it for initialization and migrations, not regular request handling. For normal operations, rely on input/output gates and write coalescing instead.
 
 For atomic read-modify-write operations during request handling, prefer [`transaction()`](/durable-objects/api/sqlite-storage-api/#transaction) over `blockConcurrencyWhile()`. Transactions provide atomicity for storage operations without blocking unrelated concurrent requests.
 
@@ -901,6 +958,7 @@ export default {
 		return Response.json(messages);
 	},
 };
+
 ```
 </TypeScriptExample>
 
@@ -968,6 +1026,7 @@ export default {
 	},
 };
 ```
+
 </TypeScriptExample>
 
 ### Always `await` RPC calls
@@ -1009,6 +1068,7 @@ export default {
 		return Response.json({ messageId });
 	},
 };
+
 ```
 </TypeScriptExample>
 
@@ -1063,6 +1123,7 @@ export class ChatRoom extends DurableObject<Env> {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 When calling Durable Objects from a Worker, errors may include `.retryable` and `.overloaded` properties indicating whether the operation can be retried. For transient failures, implement exponential backoff to avoid overwhelming the system.
@@ -1134,6 +1195,7 @@ export class ChatRoom extends DurableObject<Env> {
 		console.error("WebSocket error:", error);
 	}
 }
+
 ```
 </TypeScriptExample>
 
@@ -1228,6 +1290,7 @@ export class ChatRoom extends DurableObject<Env> {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ## Scheduling and lifecycle
@@ -1260,7 +1323,7 @@ export class GameMatch extends DurableObject<Env> {
 	}
 
 	// Called when the alarm fires
-	async alarm() {
+	async alarm(alarmInfo?: AlarmInvocationInfo) {
 		const isActive = await this.ctx.storage.get<boolean>("gameActive");
 
 		if (!isActive) {
@@ -1272,7 +1335,17 @@ export class GameMatch extends DurableObject<Env> {
 		await this.ctx.storage.put("gameEnded", Date.now());
 
 		// Calculate final scores, notify players, etc.
-		await this.calculateFinalScores();
+		try {
+			await this.calculateFinalScores();
+		} catch (err) {
+			// If we're almost out of retries but still have work to do, schedule a new alarm
+			// rather than letting our retries run out to ensure we keep getting invoked.
+			if (alarmInfo && alarmInfo.retryCount >= 5) {
+				await this.ctx.storage.setAlarm(Date.now() + 30 * 1000);
+				return;
+			}
+			throw err;
+		}
 
 		// Schedule the next alarm only if there's more work to do
 		// In this case, schedule cleanup in 24 hours
@@ -1283,6 +1356,7 @@ export class GameMatch extends DurableObject<Env> {
 		// Game ending logic
 	}
 }
+
 ```
 </TypeScriptExample>
 
@@ -1331,6 +1405,7 @@ export class Subscription extends DurableObject<Env> {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ### Clean up storage with `deleteAll()`
@@ -1357,8 +1432,15 @@ export class ChatRoom extends DurableObject<Env> {
 		// A subsequent request will find no data
 	}
 }
+
 ```
 </TypeScriptExample>
+
+### Design for unexpected shutdowns
+
+Durable Objects may shut down at any time due to deployments, inactivity, or runtime decisions. Rather than relying on shutdown hooks (which are not provided), design your application to write state incrementally.
+
+<Render file="working-without-shutdown-hooks" product="durable-objects" />
 
 ## Anti-patterns to avoid
 
@@ -1405,6 +1487,7 @@ export default {
 	},
 };
 ```
+
 </TypeScriptExample>
 
 This pattern does not scale. As traffic increases, the single Durable Object becomes a chokepoint. Instead, identify natural coordination boundaries in your application (per user, per room, per document) and create separate Durable Objects for each.
@@ -1455,6 +1538,7 @@ describe("ChatRoom", () => {
 		expect(alarmRan).toBe(false); // No alarm was scheduled
 	});
 });
+
 ```
 </TypeScriptExample>
 
@@ -1490,3 +1574,8 @@ For schema changes, run migrations in the constructor using `blockConcurrencyWhi
 </WranglerConfig>
 
 Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) for more details on class migrations, and [Testing with Durable Objects](/durable-objects/examples/testing-with-durable-objects/) for comprehensive testing patterns including SQLite queries and alarm testing.
+
+## Related resources
+
+- [Workers Best Practices](/workers/best-practices/workers-best-practices/): code patterns for request handling, observability, and security that apply to the Workers calling your Durable Objects.
+- [Rules of Workflows](/workflows/build/rules-of-workflows/): best practices for durable, multi-step Workflows — useful when combining Workflows with Durable Objects for long-running orchestration.

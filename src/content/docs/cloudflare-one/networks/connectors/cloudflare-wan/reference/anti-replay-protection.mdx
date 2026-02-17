@@ -1,0 +1,24 @@
+---
+pcx_content_type: concept
+title: Anti-replay protection
+description: If you use Cloudflare WAN and anycast IPsec tunnels, you will need to
+  disable anti-replay protection. Review the information here to learn more.
+sidebar:
+  order: 1
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="reference/anti-replay-protection"
+	product="networking-services"
+	params={{
+		productName: "Cloudflare WAN",
+		productPath:
+			"/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels",
+	}}
+/>
+
+## Troubleshooting
+
+If you're experiencing tunnel instability or packet drops related to anti-replay protection, refer to [Troubleshoot tunnel health](/cloudflare-one/networks/connectors/cloudflare-wan/troubleshooting/tunnel-health/#ipsec-tunnel-instability-or-packet-drops).

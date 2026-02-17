@@ -4,18 +4,17 @@ title: Cloudflare's own MCP servers
 tags:
   - MCP
 sidebar:
-  order: 100
-
+  order: 8
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Cloudflare runs a catalog of managed remote MCP Servers which you can connect to using OAuth on clients like [Claude](https://modelcontextprotocol.io/quickstart/user), [Windsurf](https://docs.windsurf.com/windsurf/cascade/mcp), our own [AI Playground](https://playground.ai.cloudflare.com/) or any [SDK that supports MCP](https://github.com/cloudflare/agents/tree/main/packages/agents/src/mcp).
 
 These MCP servers allow your MCP Client to read configurations from your account, process information, make suggestions based on data, and even make those suggested changes for you. All of these actions can happen across Cloudflare's many services including application development, security and performance. They support both the `streamble-http` transport via `/mcp` and the `sse` transport (deprecated) via `/sse`.
 
-| Server Name                                                    | Description                                                                                     | Server URL                                     |
-| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| Server Name                                                                                                             | Description                                                                                     | Server URL                                     |
+| ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | [Documentation server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize)               | Get up to date reference information on Cloudflare                                              | `https://docs.mcp.cloudflare.com/mcp`          |
 | [Workers Bindings server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/workers-bindings)          | Build Workers applications with storage, AI, and compute primitives                             | `https://bindings.mcp.cloudflare.com/mcp`      |
 | [Workers Builds server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/workers-builds)              | Get insights and manage your Cloudflare Workers Builds                                          | `https://builds.mcp.cloudflare.com/mcp`        |
@@ -31,7 +30,6 @@ These MCP servers allow your MCP Client to read configurations from your account
 | [Digital Experience Monitoring server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/dex-analysis) | Get quick insight on critical applications for your organization                                | `https://dex.mcp.cloudflare.com/mcp`           |
 | [Cloudflare One CASB server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/cloudflare-one-casb)    | Quickly identify any security misconfigurations for SaaS applications to safeguard users & data | `https://casb.mcp.cloudflare.com/mcp`          |
 | [GraphQL server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/graphql/)                           | Get analytics data using Cloudflare's GraphQL API                                               | `https://graphql.mcp.cloudflare.com/mcp`       |
-| [Agents SDK Documentation server](https://github.com/cloudflare/agents/tree/main/site/agents)                           | Token-efficient search of the Cloudflare Agents SDK documentation                               | `https://agents.cloudflare.com/mcp`        |
+| [Agents SDK Documentation server](https://github.com/cloudflare/agents/tree/main/site/agents)                           | Token-efficient search of the Cloudflare Agents SDK documentation                               | `https://agents.cloudflare.com/mcp`            |
 
 Check our [GitHub page](https://github.com/cloudflare/mcp-server-cloudflare) to know how to use Cloudflare's remote MCP servers with different MCP clients.
-

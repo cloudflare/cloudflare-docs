@@ -55,10 +55,10 @@ function timingSafeEqual(a, b) {
 	const aBytes = encoder.encode(a);
 	const bBytes = encoder.encode(b);
 
+	// Do not return early when lengths differ — that leaks the secret's
+	// length through timing.  Compare against self and negate instead.
 	if (aBytes.byteLength !== bBytes.byteLength) {
-		// Strings must be the same length in order to compare
-		// with crypto.subtle.timingSafeEqual
-		return false;
+		return !crypto.subtle.timingSafeEqual(aBytes, aBytes);
 	}
 
 	return crypto.subtle.timingSafeEqual(aBytes, bBytes);
@@ -169,10 +169,10 @@ function timingSafeEqual(a: string, b: string) {
 	const aBytes = encoder.encode(a);
 	const bBytes = encoder.encode(b);
 
+	// Do not return early when lengths differ — that leaks the secret's
+	// length through timing.  Compare against self and negate instead.
 	if (aBytes.byteLength !== bBytes.byteLength) {
-		// Strings must be the same length in order to compare
-		// with crypto.subtle.timingSafeEqual
-		return false;
+		return !crypto.subtle.timingSafeEqual(aBytes, aBytes);
 	}
 
 	return crypto.subtle.timingSafeEqual(aBytes, bBytes);

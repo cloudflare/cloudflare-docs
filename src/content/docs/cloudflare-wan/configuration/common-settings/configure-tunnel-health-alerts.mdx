@@ -1,0 +1,22 @@
+---
+pcx_content_type: how-to
+title: Configure Tunnel Health Alerts
+description: Use the API to set up and configure Tunnel Health Alerts
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="tunnel-health/magic-tunnel-health-alerts"
+	product="networking-services"
+	params={{
+		magicWord: "Cloudflare WAN",
+		productName: "Cloudflare WAN",
+		magicTunnelHealthCheckCalculation:
+			"/cloudflare-wan/reference/how-cloudflare-calculates-tunnel-health-alerts/",
+		networkAnalyticsPath: "/cloudflare-wan/analytics/network-analytics/",
+		healthChecks: "/cloudflare-wan/reference/tunnel-health-checks/",
+	}}
+/>

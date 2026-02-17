@@ -5,7 +5,13 @@ sidebar:
   order: 5
 ---
 
-import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
+import {
+	Details,
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	LinkCard,
+} from "~/components";
 
 ## Deploy your first Slack Agent
 
@@ -95,13 +101,13 @@ npm install agents openai
 
 ## 3. Set up your environment variables
 
-1. Create a `.dev.vars` file in your project root for local development secrets:
+1. Create a `.env` file in your project root for local development secrets:
 
 ```sh
-touch .dev.vars
+touch .env
 ```
 
-2. Add your credentials to `.dev.vars`:
+2. Add your credentials to `.env`:
 
 ```sh
 SLACK_CLIENT_ID="your-slack-client-id"
@@ -123,7 +129,7 @@ The `OPENAI_BASE_URL` is optional but recommended. Using [Cloudflare AI Gateway]
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "my-slack-agent",
 	"main": "src/index.ts",
-	"compatibility_date": "2024-01-01",
+	"compatibility_date": "$today",
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
@@ -160,97 +166,97 @@ import { SlackAgent } from "./slack";
 import { OpenAI } from "openai";
 
 const openai = new OpenAI({
-  apiKey: env.OPENAI_API_KEY,
-  baseURL: env.OPENAI_BASE_URL
+	apiKey: env.OPENAI_API_KEY,
+	baseURL: env.OPENAI_BASE_URL,
 });
 
 type SlackMsg = {
-  user?: string;
-  text?: string;
-  ts: string;
-  thread_ts?: string;
-  subtype?: string;
-  bot_id?: string;
+	user?: string;
+	text?: string;
+	ts: string;
+	thread_ts?: string;
+	subtype?: string;
+	bot_id?: string;
 };
 
 function normalizeForLLM(msgs: SlackMsg[], selfUserId: string) {
-  return msgs.map((m) => {
-    const role = m.user && m.user !== selfUserId ? "user" : "assistant";
-    const text = (m.text ?? "").replace(/<@([A-Z0-9]+)>/g, "@$1");
-    return { role, content: text };
-  });
+	return msgs.map((m) => {
+		const role = m.user && m.user !== selfUserId ? "user" : "assistant";
+		const text = (m.text ?? "").replace(/<@([A-Z0-9]+)>/g, "@$1");
+		return { role, content: text };
+	});
 }
 
 export class MyAgent extends SlackAgent {
-  async generateAIReply(conversation: SlackMsg[]) {
-    const selfId = await this.ensureAppUserId();
-    const messages = normalizeForLLM(conversation, selfId);
+	async generateAIReply(conversation: SlackMsg[]) {
+		const selfId = await this.ensureAppUserId();
+		const messages = normalizeForLLM(conversation, selfId);
 
-    const system = `You are a helpful AI assistant in Slack.
+		const system = `You are a helpful AI assistant in Slack.
 Be brief, specific, and actionable. If you're unsure, ask a single clarifying question.`;
 
-    const input = [{ role: "system", content: system }, ...messages];
+		const input = [{ role: "system", content: system }, ...messages];
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: input
-    });
+		const response = await openai.chat.completions.create({
+			model: "gpt-4o-mini",
+			messages: input,
+		});
 
-    const msg = response.choices[0].message.content;
-    if (!msg) throw new Error("No message from AI");
+		const msg = response.choices[0].message.content;
+		if (!msg) throw new Error("No message from AI");
 
-    return msg;
-  }
+		return msg;
+	}
 
-  async onSlackEvent(event: { type: string } & Record<string, unknown>) {
-    // Ignore bot messages and subtypes (edits, joins, etc.)
-    if (event.bot_id || event.subtype) return;
+	async onSlackEvent(event: { type: string } & Record<string, unknown>) {
+		// Ignore bot messages and subtypes (edits, joins, etc.)
+		if (event.bot_id || event.subtype) return;
 
-    // Handle direct messages
-    if (event.type === "message") {
-      const e = event as unknown as SlackMsg & { channel: string };
-      const isDM = (e.channel || "").startsWith("D");
-      const mentioned = (e.text || "").includes(
-        `<@${await this.ensureAppUserId()}>`
-      );
+		// Handle direct messages
+		if (event.type === "message") {
+			const e = event as unknown as SlackMsg & { channel: string };
+			const isDM = (e.channel || "").startsWith("D");
+			const mentioned = (e.text || "").includes(
+				`<@${await this.ensureAppUserId()}>`,
+			);
 
-      if (!isDM && !mentioned) return;
+			if (!isDM && !mentioned) return;
 
-      const conversation = await this.fetchConversation(e.channel);
-      const content = await this.generateAIReply(conversation);
-      await this.sendMessage(content, { channel: e.channel });
-      return;
-    }
+			const conversation = await this.fetchConversation(e.channel);
+			const content = await this.generateAIReply(conversation);
+			await this.sendMessage(content, { channel: e.channel });
+			return;
+		}
 
-    // Handle @mentions in channels
-    if (event.type === "app_mention") {
-      const e = event as unknown as SlackMsg & {
-        channel: string;
-        text?: string;
-      };
-      const thread = await this.fetchThread(e.channel, e.thread_ts || e.ts);
-      const content = await this.generateAIReply(thread);
-      await this.sendMessage(content, {
-        channel: e.channel,
-        thread_ts: e.thread_ts || e.ts
-      });
-      return;
-    }
-  }
+		// Handle @mentions in channels
+		if (event.type === "app_mention") {
+			const e = event as unknown as SlackMsg & {
+				channel: string;
+				text?: string;
+			};
+			const thread = await this.fetchThread(e.channel, e.thread_ts || e.ts);
+			const content = await this.generateAIReply(thread);
+			await this.sendMessage(content, {
+				channel: e.channel,
+				thread_ts: e.thread_ts || e.ts,
+			});
+			return;
+		}
+	}
 }
 
 export default MyAgent.listen({
-  clientId: env.SLACK_CLIENT_ID,
-  clientSecret: env.SLACK_CLIENT_SECRET,
-  slackSigningSecret: env.SLACK_SIGNING_SECRET,
-  scopes: [
-    "chat:write",
-    "chat:write.public",
-    "channels:history",
-    "app_mentions:read",
-    "im:write",
-    "im:history"
-  ]
+	clientId: env.SLACK_CLIENT_ID,
+	clientSecret: env.SLACK_CLIENT_SECRET,
+	slackSigningSecret: env.SLACK_SIGNING_SECRET,
+	scopes: [
+		"chat:write",
+		"chat:write.public",
+		"channels:history",
+		"app_mentions:read",
+		"im:write",
+		"im:history",
+	],
 });
 ```
 
@@ -447,7 +453,7 @@ export class MyAgent extends SlackAgent {
 ## Next steps
 
 - Add [Slack Interactive Components](https://api.slack.com/interactivity) (buttons, modals)
-- Connect your Agent to an [MCP server](/agents/model-context-protocol/mcp-client-api/)
+- Connect your Agent to an [MCP server](/agents/api-reference/mcp-client-api/)
 - Add rate limiting to prevent abuse
 - Implement conversation state management
 - Use [Workers Analytics Engine](/analytics/analytics-engine/) to track usage
@@ -455,7 +461,26 @@ export class MyAgent extends SlackAgent {
 
 ## Related resources
 
-- [Agents Framework documentation](/agents/)
-- [Durable Objects documentation](/durable-objects/)
-- [Slack API documentation](https://api.slack.com/)
-- [OpenAI API documentation](https://platform.openai.com/docs/)
+<LinkCard
+	title="Agents documentation"
+	href="/agents/"
+	description="Complete Agents framework documentation."
+/>
+
+<LinkCard
+	title="Durable Objects"
+	href="/durable-objects/"
+	description="Learn about the underlying stateful infrastructure."
+/>
+
+<LinkCard
+	title="Slack API"
+	href="https://api.slack.com/"
+	description="Official Slack API documentation."
+/>
+
+<LinkCard
+	title="OpenAI API"
+	href="https://platform.openai.com/docs/"
+	description="Official OpenAI API documentation."
+/>

@@ -16,7 +16,7 @@ type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 export type SidebarEntry = Link | Group;
 type Badge = Link["badge"];
 
-const products = await getCollection("products");
+const directory = await getCollection("directory");
 const sidebars = new Map<string, Group>();
 
 export async function getSidebar(context: AstroGlobal) {
@@ -93,8 +93,8 @@ export async function generateSidebar(group: Group) {
 		group.entries[0].label = "Overview";
 	}
 
-	const product = products.find((p) => p.id === group.label);
-	if (product && product.data.product.group === "Developer platform") {
+	const product = directory.find((p) => p.id === group.label);
+	if (product && product.data.entry.group === "Developer platform") {
 		const links = [
 			["llms.txt", "/llms.txt"],
 			["prompt.txt", "/workers/prompt.txt"],
@@ -214,6 +214,11 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	if (frontmatter.sidebar.group?.badge) {
 		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
+	} else if (frontmatter.wid) {
+		const availabilityBadge = await productAvailabilityBadge(frontmatter.wid);
+		if (availabilityBadge) {
+			group.badge = availabilityBadge;
+		}
 	}
 
 	if (frontmatter.hideChildren) {
@@ -290,6 +295,11 @@ async function handleLink(link: Link): Promise<Link> {
 
 	if (link.badge) {
 		link.badge = inferBadgeVariant(link.badge);
+	} else if (frontmatter.wid) {
+		const availabilityBadge = await productAvailabilityBadge(frontmatter.wid);
+		if (availabilityBadge) {
+			link.badge = availabilityBadge;
+		}
 	}
 
 	if (frontmatter.external_link && !frontmatter.sidebar.group?.hideIndex) {
@@ -307,6 +317,23 @@ async function handleLink(link: Link): Promise<Link> {
 	}
 
 	return link;
+}
+
+async function productAvailabilityBadge(
+	wid: string,
+): Promise<Badge | undefined> {
+	try {
+		const availabilityEntry = await getEntry("product-availability", wid);
+		if (
+			availabilityEntry &&
+			availabilityEntry.data.availability?.toLowerCase() === "beta"
+		) {
+			return { text: "Beta", variant: "caution" };
+		}
+	} catch (_error) {
+		// If the entry doesn't exist in the collection, return undefined
+	}
+	return undefined;
 }
 
 function inferBadgeVariant(badge: Badge) {
@@ -339,14 +366,14 @@ export const lookupProductTitle = async (product: string, module: string) => {
 
 		return `${entry?.data?.title} (Learning Paths)`;
 	} else if (product === "1.1.1.1") {
-		const entry = await getEntry("products", "1111");
+		const entry = await getEntry("directory", "1111");
 
-		return entry?.data?.product?.title;
+		return entry?.data?.entry?.title;
 	}
 
-	const entry = await getEntry("products", product);
+	const entry = await getEntry("directory", product);
 
-	return entry?.data?.product?.title ?? "Unknown";
+	return entry?.data?.entry?.title ?? "Unknown";
 };
 
 export function sortBySidebarOrder(a: any, b: any): number {

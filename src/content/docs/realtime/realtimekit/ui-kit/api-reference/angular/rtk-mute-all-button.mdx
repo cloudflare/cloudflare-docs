@@ -1,0 +1,35 @@
+---
+pcx_content_type: navigation
+title: rtk-mute-all-button
+description: API reference for rtk-mute-all-button component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-mute-all-button></rtk-mute-all-button>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-mute-all-button
+ [meeting]="meeting"
+ size="md"
+ variant="button">
+</rtk-mute-all-button>
+```
+

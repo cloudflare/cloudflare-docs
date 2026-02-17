@@ -5,10 +5,10 @@ params:
 
 import { DashButton } from "~/components";
 
-To set up and use the hardware version of Magic WAN Connector, you first need to register it with your account. This is not applicable to Virtual Magic WAN Connector.
+To set up and use the hardware version of Cloudflare One Appliance (formerly Magic WAN Connector), you first need to register it with your account. This is not applicable to Virtual Cloudflare One Appliance.
 
-{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
-{ props.dashName === "WAN Tunnels" && (
+{/* Dashboard steps for CF1 Cloudflare WAN (Cloudflare One dashboard) */}
+{ props.dashName === "CF1 Cloudflare WAN" && (
 	<>
 	<ol>
 		<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
@@ -18,8 +18,8 @@ To set up and use the hardware version of Magic WAN Connector, you first need to
 )
 }
 
-{/* Dashboard steps for Magic WAN (standalone dashboard) */}
-{ props.dashName !== "WAN Tunnels" && (
+{/* Dashboard steps for Cloudflare WAN (standalone dashboard) */}
+{ props.dashName !== "CF1 Cloudflare WAN" && (
 	<>
 	<ol>
 		<li>Go to the <strong>Connectors</strong> page.
@@ -31,8 +31,8 @@ To set up and use the hardware version of Magic WAN Connector, you first need to
 	</>
 )
 }
-3. In **Appliance details** > **Serial number**, insert the serial number for your device. You can optionally add notes about the Magic WAN Connector you are adding to the dashboard.
-4. (Optional) Select **Add** under **Serial number** to add multiple Magic WAN Connectors at once to your account.
+3. In **Appliance details** > **Serial number**, insert the serial number for your device. You can optionally add notes about the Cloudflare One Appliance you are adding to the dashboard.
+4. (Optional) Select **Add** under **Serial number** to add multiple Cloudflare One Appliances at once to your account.
 5. Select **Register appliance**.
 
 Your device is now registered with your account.

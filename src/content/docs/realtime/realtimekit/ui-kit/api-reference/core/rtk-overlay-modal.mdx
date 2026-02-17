@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-overlay-modal
+description: API reference for rtk-overlay-modal component (Web Components (HTML) Library)
+---
+A confirmation modal.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-overlay-modal></rtk-overlay-modal>
+```
+
+### With Properties
+
+```html
+<rtk-overlay-modal>
+</rtk-overlay-modal>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-overlay-modal");
+
+  el.meeting= meeting
+</script>
+```

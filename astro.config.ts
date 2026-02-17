@@ -22,6 +22,8 @@ import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
 import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
 import { createSitemapLastmodSerializer } from "./sitemap.serializer.ts";
 
+import skills from "astro-skills";
+
 async function autogenSections() {
 	const sections = (
 		await readdir("./src/content/docs/", {
@@ -198,6 +200,7 @@ export default defineConfig({
 			serialize: createSitemapLastmodSerializer(),
 		}),
 		react(),
+		skills(),
 	],
 	vite: {
 		resolve: {

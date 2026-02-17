@@ -34,7 +34,8 @@ export default {
 		env: Env,
 		ctx: ExecutionContext,
 	): Promise<Response> {
-		// Create a new client instance for each request.
+		// Create a new client instance for each request. Hyperdrive maintains the
+		// underlying database connection pool, so creating a new client is fast.
 		const client = new Client({
 			connectionString: env.HYPERDRIVE.connectionString,
 		});
@@ -42,7 +43,6 @@ export default {
 		try {
 			// Connect to the database
 			await client.connect();
-			console.log("Connected to PostgreSQL database");
 
 			// Perform a simple query
 			const result = await client.query("SELECT * FROM pg_tables");
@@ -54,7 +54,7 @@ export default {
 		} catch (error: any) {
 			console.error("Database error:", error.message);
 
-			new Response("Internal error occurred", { status: 500 });
+			return new Response("Internal error occurred", { status: 500 });
 		}
 	},
 };

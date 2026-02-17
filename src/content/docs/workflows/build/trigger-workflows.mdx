@@ -41,7 +41,7 @@ To bind to a Workflow from your Workers code, you need to define a [binding](/wo
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "workflows-tutorial",
 	"main": "src/index.ts",
-	"compatibility_date": "2024-10-22",
+	"compatibility_date": "$today",
 	"workflows": [
 		{
 			// The name of the Workflow
@@ -146,6 +146,10 @@ await instance.resume(); // Returns Promise<void>
 ```
 
 Calling `resume` on an instance that is not currently paused will have no effect.
+
+:::caution
+If you have reached the maximum concurrent instances for your Workflow, resuming an instance may not restart it immediately. The instance will be queued until a concurrency slot becomes available.
+:::
 
 ### Stop a Workflow
 

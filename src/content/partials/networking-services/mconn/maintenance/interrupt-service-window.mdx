@@ -5,14 +5,14 @@ params:
 
 import { DashButton, Markdown } from '~/components';
 
-The Interrupt window defines when Magic WAN Connector can update its systems. When Magic WAN Connector is updating, this may result in an interruption to existing connections. Set up a time window that minimizes disruption to your sites.
+The Interrupt window defines when Cloudflare One Appliance (formerly Magic WAN Connector) can update its systems. When Cloudflare One Appliance is updating, this may result in an interruption to existing connections. Set up a time window that minimizes disruption to your sites.
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks** > **Connectors**.
-		2. In **Appliances** > **Appliances**, select the Magic WAN Connector for which you want to set up the update window > **Edit**.
+		2. In **Appliances** > **Appliances**, select the Cloudflare One Appliance for which you want to set up the update window > **Edit**.
 	`}
 	inline={false}
 	/>
@@ -31,14 +31,14 @@ The Interrupt window defines when Magic WAN Connector can update its systems. Wh
 		<Markdown
 	text={`
 		2. Go to the **Appliances** tab > **Appliances**.
-		3. Find the Magic WAN Connector you want to set up the update window for > **Edit**.
+		3. Find the Cloudflare One Appliance you want to set up the update window for > **Edit**.
 	`}
 	inline={false}
 	/>
 	</>
 )
 }
-3. In **Interrupt window**, select the most appropriate time for the Magic WAN Connector to update its systems:
-   - **Timezone**: Select the time zone for the Magic WAN Connector to update.
-   - **Start time**: Choose an hour for the Magic WAN Connector to start updating. Cloudflare recommends you choose an hour when there is minimal activity in your network, to avoid potential disruptions.
-   - **Duration**: Duration indicates the time window during which the Magic WAN Connector is scheduled to update. For example, if you configure your Magic WAN Connector to update at `22:00` and specify a **Duration** of `4 hours`, the Magic WAN Connector will attempt to update within the four-hour period following `22:00`.
+3. In **Interrupt window**, select the most appropriate time for the Cloudflare One Appliance to update its systems:
+   - **Timezone**: Select the time zone for the Cloudflare One Appliance to update.
+   - **Start time**: Choose an hour for the Cloudflare One Appliance to start updating. Cloudflare recommends you choose an hour when there is minimal activity in your network, to avoid potential disruptions.
+   - **Duration**: Duration indicates the time window during which the Cloudflare One Appliance is scheduled to update. For example, if you configure your Cloudflare One Appliance to update at `22:00` and specify a **Duration** of `4 hours`, the Cloudflare One Appliance will attempt to update within the four-hour period following `22:00`.

@@ -52,6 +52,7 @@ export { default as ProductFeatures } from "./ProductFeatures.astro";
 export { default as ProductAvailabilityText } from "./ProductAvailabilityText.astro";
 export { default as PublicStats } from "./PublicStats.astro";
 export { default as RelatedProduct } from "./RelatedProduct.astro";
+export { default as R2LocalUploadsDiagram } from "./R2LocalUploadsdiagram.astro";
 export { default as Render } from "./Render.astro";
 export { default as ResourcesBySelector } from "./ResourcesBySelector.astro";
 export { default as RSSButton } from "./RSSButton.astro";
