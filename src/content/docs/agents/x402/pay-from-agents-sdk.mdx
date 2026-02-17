@@ -1,0 +1,103 @@
+---
+title: Pay from Agents SDK
+pcx_content_type: how-to
+sidebar:
+  order: 3
+description: Use withX402Client to pay for resources from a Cloudflare Agent.
+---
+
+The Agents SDK includes `withX402Client`, which wraps an MCP client to handle x402 payments automatically or with human approval.
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- An Agent project
+- A wallet with USDC (test on `base-sepolia`, production on `base`)
+
+## Setup
+
+Wrap your MCP client connection with `withX402Client`:
+
+```ts
+import { Agent } from "agents";
+import { withX402Client } from "agents/x402";
+import { privateKeyToAccount } from "viem/accounts";
+
+export class MyAgent extends Agent {
+	x402Client!: ReturnType<typeof withX402Client>;
+
+	async onStart() {
+		const { id } = await this.mcp.connect(`${env.WORKER_URL}/mcp`);
+		const account = privateKeyToAccount(this.env.MY_PRIVATE_KEY);
+
+		this.x402Client = withX402Client(this.mcp.mcpConnections[id].client, {
+			network: "base-sepolia",
+			account,
+		});
+	}
+
+	async callTool(toolName: string, toolArgs: unknown) {
+		return await this.x402Client.callTool(null, {
+			name: toolName,
+			arguments: toolArgs,
+		});
+	}
+}
+```
+
+## Payment confirmation
+
+### Auto-pay
+
+Pass `null` as the first argument to `callTool`. The agent pays without prompting:
+
+```ts
+const result = await this.x402Client.callTool(null, {
+	name: "expensive-tool",
+	arguments: { data: "..." },
+});
+```
+
+### Human-in-the-loop
+
+Pass a callback that receives payment requirements and returns whether to proceed:
+
+```ts
+async callToolWithApproval(toolName: string, toolArgs: unknown) {
+  return await this.x402Client.callTool(
+    this.onPaymentRequired.bind(this),
+    { name: toolName, arguments: toolArgs }
+  );
+}
+
+async onPaymentRequired(requirements: PaymentRequirements): Promise<boolean> {
+  console.log(`Tool costs ${requirements.amount} ${requirements.asset}`);
+  return await this.askUserForApproval(requirements);
+}
+```
+
+The `PaymentRequirements` object contains `resource`, `amount`, `asset`, `network`, and `recipient`.
+
+## Environment setup
+
+Store your private key securely:
+
+```sh
+# Local development (.dev.vars)
+MY_PRIVATE_KEY="0x..."
+
+# Production
+npx wrangler secret put MY_PRIVATE_KEY
+```
+
+## Testing
+
+Use `base-sepolia` and get test USDC from the [Circle faucet](https://faucet.circle.com/).
+
+For a complete working example, see [x402-mcp on GitHub](https://github.com/cloudflare/agents/tree/main/examples/x402-mcp).
+
+## Related
+
+- [Charge for MCP tools](/agents/x402/charge-for-mcp-tools/) — Build servers that charge for tools
+- [Pay from coding tools](/agents/x402/pay-with-tool-plugins/) — Add payments to OpenCode or Claude Code
+- [Human-in-the-loop guide](/agents/guides/human-in-the-loop/) — Implement approval workflows
