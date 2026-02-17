@@ -67,11 +67,11 @@ Key new features:
 
 Notable bug fixes:
 
-- `setMessages` functional updater sending empty arrays
-- `CF_AGENT_MESSAGE_UPDATED` not broadcasting for streaming messages
-- Stream resumption race conditions
-- `clearAll()` not clearing in-memory chunk buffers
-- `reasoning-delta` silently dropping data when `reasoning-start` was missed during stream resumption
+- Resolved an issue where `setMessages` functional updater sent empty arrays
+- Resolved an issue where `CF_AGENT_MESSAGE_UPDATED` did not broadcast for streaming messages
+- Resolved stream resumption race conditions
+- Resolved an issue where `clearAll()` did not clear in-memory chunk buffers
+- Resolved an issue where `reasoning-delta` silently dropped data when `reasoning-start` was missed during stream resumption
 
 ## Synchronous queue and schedule getters
 
