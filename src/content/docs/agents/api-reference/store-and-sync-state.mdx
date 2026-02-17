@@ -183,7 +183,7 @@ export class MinimalAgent extends Agent {
 Use `setState()` to update state. This:
 
 1. Saves to SQLite (persistent)
-2. Broadcasts to all connected clients
+2. Broadcasts to all connected clients (excluding connections where [`shouldSendProtocolMessages`](/agents/api-reference/protocol-messages/) returned `false`)
 3. Triggers `onStateChanged()` (after broadcast; best-effort)
 
 <TypeScriptExample>
@@ -458,7 +458,7 @@ You can access the SQL API within any method on an Agent via `this.sql`. The SQL
 <TypeScriptExample>
 
 ```ts
-export class MyAgent extends Agent<Env> {
+export class MyAgent extends Agent {
 	async onRequest(request: Request) {
 		let userId = new URL(request.url).searchParams.get("userId");
 
@@ -483,7 +483,7 @@ type User = {
 	email: string;
 };
 
-export class MyAgent extends Agent<Env> {
+export class MyAgent extends Agent {
 	async onRequest(request: Request) {
 		let userId = new URL(request.url).searchParams.get("userId");
 		// Supply the type parameter to the query when calling this.sql
@@ -646,7 +646,7 @@ For example, you can use an Agent's built-in SQL database to pull history, query
 <TypeScriptExample>
 
 ```ts
-export class ReasoningAgent extends Agent<Env> {
+export class ReasoningAgent extends Agent {
 	async callReasoningModel(prompt: Prompt) {
 		let result = this
 			.sql<History>`SELECT * FROM history WHERE user = ${prompt.userId} ORDER BY timestamp DESC LIMIT 1000`;

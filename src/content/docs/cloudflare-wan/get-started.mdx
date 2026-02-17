@@ -1,0 +1,23 @@
+---
+title: Get started
+pcx_content_type: navigation
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="cloudflare-wan/get-started"
+	product="networking-services"
+	params={{
+		productNameManual: "Cloudflare WAN",
+		productNameConnector: "Cloudflare One Appliance",
+		configureConnectorUrl: "/cloudflare-wan/configuration/appliance/",
+		configureMwanManually: "/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
+		greReferenceURL: "/cloudflare-wan/reference/gre-ipsec-tunnels/",
+		ipsecReferenceUrl: "/cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels",
+		ipsecReferenceConfigParams: "/cloudflare-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
+		mtuReferenceURL: "/cloudflare-wan/reference/mtu-mss/"
+	}}
+/>

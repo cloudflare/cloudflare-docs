@@ -36,11 +36,12 @@
 /fundamentals/changelog/index.xml /changelog/rss/fundamentals.xml 301
 /load-balancing/changelog/index.xml /changelog/rss/load-balancing.xml 301
 /logs/changelog/index.xml /changelog/rss/logs.xml 301
-/magic-cloud-networking/changelog/index.xml /changelog/rss/magic-cloud-networking.xml 301
-/magic-firewall/changelog/index.xml /changelog/rss/magic-firewall.xml 301
+/magic-cloud-networking/changelog/index.xml /changelog/rss/multi-cloud-networking.xml 301
+/magic-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
+/cloudflare-network-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
 /magic-network-monitoring/changelog/index.xml /changelog/rss/magic-network-monitoring.xml 301
 /magic-transit/changelog/index.xml /changelog/rss/magic-transit.xml 301
-/magic-wan/changelog/index.xml /changelog/rss/magic-wan.xml 301
+/magic-wan/changelog/index.xml /changelog/rss/cloudflare-wan.xml 301
 /network-interconnect/changelog/index.xml /changelog/rss/network-interconnect.xml 301
 /rules/changelog/index.xml /changelog/rss/rules.xml 301
 /ssl/changelog/index.xml /changelog/rss/ssl.xml 301
@@ -992,6 +993,7 @@
 /learning-paths/get-started-free/other-features/product-lines/ /directory/ 301
 
 # load-balancing
+/load-balancing/private-network/magic-wan/ /load-balancing/private-network/cloudflare-wan/ 301
 /load-balancing/about/ /load-balancing/ 301
 /load-balancing/create-load-balancer-ui/ /load-balancing/load-balancers/create-load-balancer/ 301
 /load-balancing/how-to/create-pool/ /load-balancing/pools/create-pool/ 301
@@ -1011,7 +1013,7 @@
 /support/traffic/load-balancing/load-balancing-faqs/ /load-balancing/troubleshooting/load-balancing-faq/ 301
 /load-balancing/local-traffic-management/ /load-balancing/private-network/ 301
 /load-balancing/local-traffic-management/ltm-tunnels-setup/ /load-balancing/private-network/warp-to-tunnel/ 301
-/load-balancing/local-traffic-management/ltm-magic-wan/ /load-balancing/private-network/magic-wan/ 301
+/load-balancing/local-traffic-management/ltm-magic-wan/ /load-balancing/private-network/cloudflare-wan/ 301
 /load-balancing/private-network/tunnels-setup/ /load-balancing/private-network/warp-to-tunnel/ 301
 /load-balancing/private-network/warp/ /load-balancing/private-network/warp-to-tunnel/ 301
 
@@ -1048,19 +1050,28 @@
 /logs/get-started/permissions/ /logs/logpush/permissions/ 301
 /logs/get-started/ /logs/logpush/ 301
 
-# magic-firewall
-/magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
-/magic-firewall/how-to/collect-pcaps/ /magic-firewall/packet-captures/collect-pcaps/ 301
+# magic-firewall (renamed to cloudflare-network-firewall)
+/magic-firewall/reference/examples/ /cloudflare-network-firewall/how-to/add-policies/ 301
+/magic-firewall/how-to/collect-pcaps/ /cloudflare-network-firewall/packet-captures/collect-pcaps/ 301
+/magic-firewall/how-to/add-rules/ /cloudflare-network-firewall/how-to/add-policies/ 301
+# URL slug renames
+/magic-firewall/how-to/enable-magic-roles/ /cloudflare-network-firewall/how-to/enable-roles/ 301
+/magic-firewall/reference/magic-firewall-fields/ /cloudflare-network-firewall/reference/network-firewall-fields/ 301
+/magic-firewall/reference/magic-firewall-functions/ /cloudflare-network-firewall/reference/network-firewall-functions/ 301
+# CF1 changelog page
+/cloudflare-one/changelog/magic-firewall/ /cloudflare-one/changelog/cloudflare-network-firewall/ 301
+# CF1 packet filtering overview rename
+/cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
 # magic-network-monitoring
 /magic-network-monitoring/routers/ /magic-network-monitoring/routers/supported-routers/ 301
 /magic-network-monitoring/tutorials/ /magic-network-monitoring/tutorials/graphql-analytics/ 301
 /magic-network-monitoring/rules/recommended-rule-configuration/ /magic-network-monitoring/rules/static-threshold/ 301
 /magic-network-monitoring/rules/sflow-ddos-alerts/ /rules/configure-rule-notifications/ 301
 /magic-network-monitoring/notifications/ /rules/rule-notifications/ 301
-/magic-firewall/how-to/create-rate-limiting-rules/ /magic-firewall/how-to/create-rate-limiting-policies/ 301
+/magic-firewall/how-to/create-rate-limiting-rules/ /cloudflare-network-firewall/how-to/create-rate-limiting-policies/ 301
 
 # magic-transit
-/magic-transit/magic-firewall/ /magic-firewall/ 301
+/magic-transit/magic-firewall/ /cloudflare-network-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-routes/ 301
 /magic-transit/set-up/requirements/ /magic-transit/get-started/ 301
@@ -1084,32 +1095,53 @@
 /magic-transit/reference/tunnels/ /magic-transit/reference/gre-ipsec-tunnels/ 301
 /magic-transit/reference/magic-tunnels/ /magic-transit/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/301 301
 
-# magic-wan
-/magic-wan/tutorials/ipsec/ /magic-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels 301
-/magic-wan/how-to/configure-tunnels/ /magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
-/magic-wan/about/ /magic-wan/get-started/ 301
-/magic-wan/about/traffic-steering/ /magic-wan/reference/traffic-steering/ 301
-/magic-wan/how-to/ipsec/ /magic-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels 301
-/magic-wan/partners/aruba-edgeconnect/ /magic-wan/configuration/manually/third-party/aruba-edgeconnect/ 301
-/magic-wan/tutorials/viptela/ /magic-wan/configuration/manually/third-party/viptela/ 301
-/magic-wan/tutorials/pfsense/ /magic-wan/configuration/manually/third-party/pfsense/ 301
-/magic-wan/tutorials/sophos-firewall/ /magic-wan/configuration/manually/third-party/sophos-firewall/ 301
-/magic-wan/how-to/run-tunnel-health-checks/ /magic-wan/configuration/common-settings/update-tunnel-health-checks-frequency/ 301
-/magic-wan/get-started/configure-tunnels/ /magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
-/magic-wan/configuration/connector/configure-connector/ /magic-wan/configuration/connector/configure-hardware-connector/ 301
-/magic-wan/configuration/connector/device-information/ /magic-wan/configuration/connector/reference/ 301
-/magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/ 301
-/magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/ 301
-/magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
-/magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
-/magic-wan/prerequisites/ /magic-wan/get-started/ 301
-/magic-wan/configuration/manually/how-to/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-routes/ 301
-/magic-wan/configuration/manually/how-to/bgp-peering/ /magic-wan/configuration/manually/how-to/configure-routes/ 301
-/magic-wan/configuration/manually/how-to/configure-tunnels/ /magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
-/magic-wan/configuration/common-settings/tunnel-health-checks/ /magic-wan/configuration/common-settings/update-tunnel-health-checks-frequency/ 301
-/magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/ 301
-/magic-wan/reference/tunnels/ /magic-wan/reference/gre-ipsec-tunnels/ 301
-/magic-wan/reference/magic-tunnels/ /magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ 301
+# magic-wan → cloudflare-wan
+/magic-wan/tutorials/ipsec/ /cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels 301
+/magic-wan/how-to/configure-tunnels/ /cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
+/magic-wan/about/ /cloudflare-wan/get-started/ 301
+/magic-wan/about/traffic-steering/ /cloudflare-wan/reference/traffic-steering/ 301
+/magic-wan/how-to/ipsec/ /cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels 301
+/magic-wan/partners/aruba-edgeconnect/ /cloudflare-wan/configuration/manually/third-party/aruba-edgeconnect/ 301
+/magic-wan/tutorials/viptela/ /cloudflare-wan/configuration/manually/third-party/viptela/ 301
+/magic-wan/tutorials/pfsense/ /cloudflare-wan/configuration/manually/third-party/pfsense/ 301
+/magic-wan/tutorials/sophos-firewall/ /cloudflare-wan/configuration/manually/third-party/sophos-firewall/ 301
+/magic-wan/how-to/run-tunnel-health-checks/ /cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/ 301
+/magic-wan/get-started/configure-tunnels/ /cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
+/magic-wan/configuration/connector/configure-connector/ /cloudflare-wan/configuration/appliance/configure-hardware-appliance/ 301
+/magic-wan/configuration/connector/device-information/ /cloudflare-wan/configuration/appliance/reference/ 301
+/magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
+/magic-wan/configuration/manually/how-to/enable-magic-roles/ /cloudflare-wan/configuration/common-settings/enable-roles/ 301
+/magic-wan/configuration/manually/how-to/view-analytics/ /cloudflare-wan/analytics/ 301
+/magic-wan/configuration/common-settings/view-analytics/ /cloudflare-wan/analytics/ 301
+/magic-wan/prerequisites/ /cloudflare-wan/get-started/ 301
+/magic-wan/configuration/manually/how-to/configure-static-routes/ /cloudflare-wan/configuration/manually/how-to/configure-routes/ 301
+/magic-wan/configuration/manually/how-to/bgp-peering/ /cloudflare-wan/configuration/manually/how-to/configure-routes/ 301
+/magic-wan/configuration/manually/how-to/configure-tunnels/ /cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
+/magic-wan/configuration/common-settings/tunnel-health-checks/ /cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/ 301
+/magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ /cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
+/magic-wan/reference/tunnels/ /cloudflare-wan/reference/gre-ipsec-tunnels/ 301
+/magic-wan/reference/magic-tunnels/ /cloudflare-wan/reference/how-cloudflare-calculates-tunnel-health-alerts/ 301
+# magic-wan slug renames (old path + old slug → new path + new slug)
+/magic-wan/configuration/common-settings/enable-magic-roles/ /cloudflare-wan/configuration/common-settings/enable-roles/ 301
+/magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/ /cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
+/magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ /cloudflare-wan/reference/how-cloudflare-calculates-tunnel-health-alerts/ 301
+/magic-wan/configuration/magic-cloud-networking/ /cloudflare-wan/configuration/multi-cloud-networking/ 301
+# wan-tunnels slug renames (old path + old slug → new path + new slug)
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/enable-magic-roles/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/enable-roles/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/configure-magic-tunnel-health-alerts/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ /cloudflare-one/networks/connectors/cloudflare-wan/reference/how-cloudflare-calculates-tunnel-health-alerts/ 301
+# wan-tunnels connector → appliance slug renames
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/activate-connector/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/activate-appliance/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/deactivate-connector/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/deactivate-appliance/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/remove-connectors/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/remove-appliances/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/configure-virtual-connector/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-virtual-appliance/ 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/configure-hardware-connector/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/ 301
+# magic-wan connector → appliance slug renames
+/magic-wan/configuration/connector/maintenance/activate-connector/ /cloudflare-wan/configuration/appliance/maintenance/activate-appliance/ 301
+/magic-wan/configuration/connector/maintenance/deactivate-connector/ /cloudflare-wan/configuration/appliance/maintenance/deactivate-appliance/ 301
+/magic-wan/configuration/connector/maintenance/remove-connectors/ /cloudflare-wan/configuration/appliance/maintenance/remove-appliances/ 301
+/magic-wan/configuration/connector/configure-virtual-connector/ /cloudflare-wan/configuration/appliance/configure-virtual-appliance/ 301
+/magic-wan/configuration/connector/configure-hardware-connector/ /cloudflare-wan/configuration/appliance/configure-hardware-appliance/ 301
 
 # network
 /network/response-buffering/ /network/ 301
@@ -1290,7 +1322,7 @@
 /ruleset-engine/rules-language/fields/http-request-header/ /ruleset-engine/rules-language/fields/reference/ 301
 /ruleset-engine/rules-language/fields/http-request-body/ /ruleset-engine/rules-language/fields/reference/ 301
 /ruleset-engine/rules-language/fields/http-request-response/ /ruleset-engine/rules-language/fields/reference/ 301
-/ruleset-engine/rules-language/fields/magic-firewall/ /magic-firewall/reference/magic-firewall-fields/ 301
+/ruleset-engine/rules-language/fields/magic-firewall/ /cloudflare-network-firewall/reference/network-firewall-fields/ 301
 # security center
 /security-center/indicator-feeds/getting-started/ /security-center/indicator-feeds/ 301
 /security-center/indicator-feeds/get-started/ /security-center/indicator-feeds/ 301
@@ -2247,7 +2279,7 @@
 /cloudflare-one/insights/email-monitoring/ /cloudflare-one/email-security/email-monitoring/ 301
 /cloudflare-one/tutorials/block-football/ /cloudflare-one/policies/gateway/http-policies/common-policies/#block-sites 301
 /cloudflare-one/tutorials/warp-to-tunnel/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/ 301
-/magic-wan/tutorials/secure-web-gateway/ /magic-wan/zero-trust/cloudflare-gateway/ 301
+/magic-wan/tutorials/secure-web-gateway/ /cloudflare-wan/zero-trust/cloudflare-gateway/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
 /cloudflare-one/tutorials/zsh-env-var/ /cloudflare-one/tutorials/cli/ 301
 /cloudflare-one/identity/login-page/ /cloudflare-one/reusable-components/custom-pages/access-login-page/ 301
@@ -2260,7 +2292,7 @@
 /cloudflare-one/tutorials/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
-/magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
+/magic-wan/tutorials/warp/ /cloudflare-wan/zero-trust/warp/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /warp-client/teams/ /cloudflare-one/connections/connect-devices/warp/ 301
 /cloudflare-one/integrations/identity-providers/azuread/ /cloudflare-one/integrations/identity-providers/entra-id/ 301
@@ -2479,11 +2511,11 @@
 # CNI cloudflare Network Interconnect
 /network-interconnect/partners/* /network-interconnect/classic-cni/set-up/partners/:splat 301
 
-# Magic WAN
-/magic-wan/how-to/* /magic-wan/configuration/manually/how-to/:splat 301
-/magic-wan/third-party/* /magic-wan/configuration/manually/third-party/:splat 301
-/magic-wan/connector/* /magic-wan/configuration/connector/:splat 301
-/magic-wan/configuration/connector/dhcp/* /magic-wan/configuration/connector/network-options/dhcp/:splat 301
+# Magic WAN → Cloudflare WAN
+/magic-wan/how-to/* /cloudflare-wan/configuration/manually/how-to/:splat 301
+/magic-wan/third-party/* /cloudflare-wan/configuration/manually/third-party/:splat 301
+/magic-wan/connector/* /cloudflare-wan/configuration/appliance/:splat 301
+/magic-wan/configuration/connector/dhcp/* /cloudflare-wan/configuration/appliance/network-options/dhcp/:splat 301
 
 # Rules
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
@@ -2516,3 +2548,18 @@
 
 # Calls
 /calls/* /realtime/:splat 301
+
+# Magic Firewall renamed to Cloudflare Network Firewall
+/magic-firewall/* /cloudflare-network-firewall/:splat 301
+
+# Cloudflare WAN (formerly Magic WAN)
+/cloudflare-wan/configuration/connector/* /cloudflare-wan/configuration/appliance/:splat 301
+/magic-wan/* /cloudflare-wan/:splat 301
+
+# WAN Tunnels → Cloudflare WAN (within Cloudflare One)
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/:splat 301
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliance/configure-hardware-connector/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
+/cloudflare-one/networks/connectors/wan-tunnels/* /cloudflare-one/networks/connectors/cloudflare-wan/:splat 301
+
+# Multi-Cloud Networking (formerly Magic Cloud Networking)
+/magic-cloud-networking/* /multi-cloud-networking/:splat 301

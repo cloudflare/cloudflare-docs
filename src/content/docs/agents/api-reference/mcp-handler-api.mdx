@@ -165,7 +165,7 @@ export default {
 		const server = createServer();
 		return createMcpHandler(server)(request, env, ctx);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -238,7 +238,7 @@ export default {
 		// Route the MCP request to the agent
 		return await agent.onMcpRequest(request);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -292,7 +292,7 @@ export default {
 		// This will fail on second request with MCP SDK 1.26.0+
 		return createMcpHandler(server)(request, env, ctx);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -327,7 +327,7 @@ export default {
 		const server = createServer();
 		return createMcpHandler(server)(request, env, ctx);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -361,7 +361,7 @@ export default {
 		server.connect(transport);
 		return transport.handleRequest(request);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>

@@ -87,6 +87,7 @@ flowchart TD
 | **Workflows**        | `runWorkflow()`, `waitForApproval()`                                  | [Run Workflows](/agents/api-reference/run-workflows/)               |
 | **MCP Client**       | `addMcpServer()`, `removeMcpServer()`, `getMcpServers()`              | [MCP Client API](/agents/api-reference/mcp-client-api/ )    |
 | **AI Models**        | Workers AI, OpenAI, Anthropic bindings                                | [Using AI models](/agents/api-reference/using-ai-models/)           |
+| **Protocol messages** | `shouldSendProtocolMessages()`, `isConnectionProtocolEnabled()`      | [Protocol messages](/agents/api-reference/protocol-messages/)       |
 | **Context**          | `getCurrentAgent()`                                                   | [getCurrentAgent()](/agents/api-reference/get-current-agent/)       |
 | **Observability**    | `observability.emit()`                                                | [Observability](/agents/api-reference/observability/)               |
 
@@ -143,7 +144,7 @@ For AI chat applications, extend `AIChatAgent` instead of `Agent`:
 ```ts
 import { AIChatAgent } from "agents/ai-chat-agent";
 
-class ChatAgent extends AIChatAgent<Env> {
+class ChatAgent extends AIChatAgent {
 	async onChatMessage(onFinish) {
 		// this.messages contains the conversation history
 		// Return a streaming response
@@ -179,7 +180,7 @@ export default {
 			new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 Refer to [Routing](/agents/api-reference/routing/) for custom paths, CORS, and instance naming patterns.

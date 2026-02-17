@@ -173,9 +173,12 @@ package.json @cloudflare/content-engineering
 
 /src/content/docs/magic-transit/ @marciocloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/magic-firewall/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-network-firewall/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/magic-network-monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/magic-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/magic-cloud-networking/ @marciocloudflare @cloudflare/pcx-technical-writing
+/src/content/docs/multi-cloud-networking/ @marciocloudflare @cloudflare/pcx-technical-writing
 
 # Migration guides
 

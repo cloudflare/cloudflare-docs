@@ -1,255 +1,359 @@
 ---
-title: Build a Chat Agent
+title: Build a chat agent
 pcx_content_type: tutorial
 sidebar:
   order: 4
 head: []
-description: Build a streaming AI chat agent with tool integration using Cloudflare Workers and the Agents framework.
+description: Build a streaming AI chat agent with tools using Workers AI — no API keys required.
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
 
-A complete guide to building a streaming AI chat agent with tool integration using Cloudflare Workers and the Agents framework.
+Build a chat agent that streams AI responses, calls server-side tools, executes client-side tools in the browser, and asks for user approval before sensitive actions.
 
-> **Complete example**: Refer to the full implementation in the [agents-starter repository](https://github.com/cloudflare/agents-starter) on GitHub.
+**What you will build:** A chat agent powered by Workers AI with three tool types — automatic, client-side, and approval-gated.
 
-## Prerequisites
+**Time:** ~15 minutes
+
+**Prerequisites:**
 
 - Node.js 18+
-- npm or yarn
-- Cloudflare account
-- OpenAI API key
+- A Cloudflare account (free tier works)
 
-## Step 1: Set up the project
+## 1. Create the project
 
-```bash
-npm create cloudflare@latest chat-agent -- --template=cloudflare/agents-starter
+```sh
+npm create cloudflare@latest chat-agent
+```
 
+Select **"Hello World" Worker** when prompted. Then install the dependencies:
+
+```sh
 cd chat-agent
-
-npm install
+npm install agents @cloudflare/ai-chat ai workers-ai-provider zod
 ```
 
-## Step 2: Configure your environment
+## 2. Configure Wrangler
 
-You have two options for setting up your OpenAI API key:
+Replace your `wrangler.jsonc` with:
 
-**Option A: Using `.dev.vars` (recommended for development)**
+<WranglerConfig>
 
-Create a `.dev.vars` file in your project root:
-
-```txt
-OPENAI_API_KEY=your-key-here
+```jsonc
+{
+	"name": "chat-agent",
+	"main": "src/server.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"ai": { "binding": "AI" },
+	"durable_objects": {
+		"bindings": [{ "name": "ChatAgent", "class_name": "ChatAgent" }],
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["ChatAgent"] }],
+}
 ```
 
-**Option B: Using Cloudflare secrets (recommended for production)**
+</WranglerConfig>
 
-For production deployments, use Cloudflare secrets instead of putting API keys in configuration files:
+Key settings:
 
-```bash
-wrangler secret put OPENAI_API_KEY
-```
+- `ai` binds Workers AI — no API key needed
+- `durable_objects` registers your chat agent class
+- `new_sqlite_classes` enables SQLite storage for message persistence
 
-## Step 3: Test the agent locally
+## 3. Write the server
 
-```bash
-npm start
-```
-
-The server will be available at `http://localhost:5174`. Open your browser and start chatting.
-
-## Understanding the code
-
-### Project structure
-
-```txt
-chat-agent/
-├── src/
-│   ├── server.ts      # Main agent implementation
-│   ├── tools.ts       # Tool definitions
-│   ├── app.tsx        # React frontend
-│   └── ...
-├── wrangler.jsonc     # Cloudflare configuration
-└── package.json
-```
-
-### Key components
-
-#### Chat Agent (`src/server.ts`)
-
-The main agent class that handles chat interactions:
+Create `src/server.ts`. This is where your agent lives:
 
 <TypeScriptExample>
 
 ```ts
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { routeAgentRequest } from "agents";
+import { createWorkersAI } from "workers-ai-provider";
+import {
+	streamText,
+	convertToModelMessages,
+	pruneMessages,
+	tool,
+	stepCountIs,
+} from "ai";
+import { z } from "zod";
 
-export class Chat extends AIChatAgent<Env> {
-	async onChatMessage(onFinish, options) {
-		// Handles incoming messages and manages streaming responses
-		// Processes tool calls and generates AI responses
+export class ChatAgent extends AIChatAgent {
+	async onChatMessage() {
+		const workersai = createWorkersAI({ binding: this.env.AI });
+
+		const result = streamText({
+			model: workersai("@cf/meta/llama-4-scout-17b-16e-instruct"),
+			system:
+				"You are a helpful assistant. You can check the weather, " +
+				"get the user's timezone, and run calculations.",
+			messages: pruneMessages({
+				messages: await convertToModelMessages(this.messages),
+				toolCalls: "before-last-2-messages",
+			}),
+			tools: {
+				// Server-side tool: runs automatically on the server
+				getWeather: tool({
+					description: "Get the current weather for a city",
+					inputSchema: z.object({
+						city: z.string().describe("City name"),
+					}),
+					execute: async ({ city }) => {
+						// Replace with a real weather API in production
+						const conditions = ["sunny", "cloudy", "rainy"];
+						const temp = Math.floor(Math.random() * 30) + 5;
+						return {
+							city,
+							temperature: temp,
+							condition:
+								conditions[Math.floor(Math.random() * conditions.length)],
+						};
+					},
+				}),
+
+				// Client-side tool: no execute function — the browser handles it
+				getUserTimezone: tool({
+					description: "Get the user's timezone from their browser",
+					inputSchema: z.object({}),
+				}),
+
+				// Approval tool: requires user confirmation before executing
+				calculate: tool({
+					description: "Perform a calculation",
+					inputSchema: z.object({
+						expression: z.string().describe("Math expression to evaluate"),
+						amount: z
+							.number()
+							.optional()
+							.describe("Dollar amount involved, if any"),
+					}),
+					needsApproval: async ({ amount }) => (amount ?? 0) > 100,
+					execute: async ({ expression }) => {
+						try {
+							const result = new Function(`return ${expression}`)();
+							return { expression, result: Number(result) };
+						} catch {
+							return { expression, error: "Invalid expression" };
+						}
+					},
+				}),
+			},
+			stopWhen: stepCountIs(5),
+		});
+
+		return result.toUIMessageStreamResponse();
 	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		return (
+			(await routeAgentRequest(request, env)) ||
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### What each tool type does
+
+| Tool             | `execute`? | `needsApproval`? | Behavior                                             |
+| ---------------- | ---------- | ----------------- | ---------------------------------------------------- |
+| `getWeather`     | Yes        | No                | Runs on the server automatically                     |
+| `getUserTimezone`| No         | No                | Sent to the client; browser provides the result      |
+| `calculate`      | Yes        | Yes (over $100)   | Pauses for user approval, then runs on server        |
+
+## 4. Write the client
+
+Create `src/client.tsx`:
+
+<TypeScriptExample>
+
+```ts
+import { useAgent } from "agents/react";
+import { useAgentChat } from "@cloudflare/ai-chat/react";
+
+function Chat() {
+	const agent = useAgent({ agent: "ChatAgent" });
+
+	const { messages, sendMessage, clearHistory, addToolApprovalResponse, status } =
+		useAgentChat({
+			agent,
+			// Handle client-side tools (tools with no server execute function)
+			onToolCall: async ({ toolCall, addToolOutput }) => {
+				if (toolCall.toolName === "getUserTimezone") {
+					addToolOutput({
+						toolCallId: toolCall.toolCallId,
+						output: {
+							timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+							localTime: new Date().toLocaleTimeString(),
+						},
+					});
+				}
+			},
+		});
+
+	return (
+		<div>
+			<div>
+				{messages.map((msg) => (
+					<div key={msg.id}>
+						<strong>{msg.role}:</strong>
+						{msg.parts.map((part, i) => {
+							if (part.type === "text") {
+								return <span key={i}>{part.text}</span>;
+							}
+
+							// Render approval UI for tools that need confirmation
+							if (
+								part.type === "tool" &&
+								part.state === "approval-required"
+							) {
+								return (
+									<div key={part.toolCallId}>
+										<p>
+											Approve <strong>{part.toolName}</strong>?
+										</p>
+										<pre>{JSON.stringify(part.input, null, 2)}</pre>
+										<button
+											onClick={() =>
+												addToolApprovalResponse({
+													id: part.toolCallId,
+													approved: true,
+												})
+											}
+										>
+											Approve
+										</button>
+										<button
+											onClick={() =>
+												addToolApprovalResponse({
+													id: part.toolCallId,
+													approved: false,
+												})
+											}
+										>
+											Reject
+										</button>
+									</div>
+								);
+							}
+
+							// Show completed tool results
+							if (
+								part.type === "tool" &&
+								part.state === "output-available"
+							) {
+								return (
+									<details key={part.toolCallId}>
+										<summary>{part.toolName} result</summary>
+										<pre>{JSON.stringify(part.output, null, 2)}</pre>
+									</details>
+								);
+							}
+
+							return null;
+						})}
+					</div>
+				))}
+			</div>
+
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					const input = e.currentTarget.elements.namedItem(
+						"message",
+					) as HTMLInputElement;
+					sendMessage({ text: input.value });
+					input.value = "";
+				}}
+			>
+				<input name="message" placeholder="Try: What's the weather in Paris?" />
+				<button type="submit" disabled={status === "streaming"}>
+					Send
+				</button>
+			</form>
+
+			<button onClick={clearHistory}>Clear history</button>
+		</div>
+	);
+}
+
+export default function App() {
+	return <Chat />;
 }
 ```
 
 </TypeScriptExample>
 
-#### Tools (`src/tools.ts`)
+### Key client concepts
 
-Define what actions your agent can perform:
+- **`useAgent`** connects to your `ChatAgent` over WebSocket
+- **`useAgentChat`** manages the chat lifecycle (messages, streaming, tools)
+- **`onToolCall`** handles client-side tools — when the LLM calls `getUserTimezone`, the browser provides the result and the conversation auto-continues
+- **`addToolApprovalResponse`** approves or rejects tools that have `needsApproval`
+- Messages, streaming, and resumption are all handled automatically
 
-<TypeScriptExample>
+## 5. Run locally
 
-```ts
-import { tool } from "ai";
-import { z } from "zod";
+Generate types and start the dev server:
 
-// Automatic execution (no confirmation needed)
-const getLocalTime = tool({
-	description: "get the local time for a specified location",
-	parameters: z.object({ location: z.string() }),
-	execute: async ({ location }) => {
-		return "10am";
-	},
-});
-
-// Requires confirmation (no execute function)
-const getWeatherInformation = tool({
-	description: "show the weather in a given city to the user",
-	parameters: z.object({ city: z.string() }),
-	// Omitting execute function makes this tool require human confirmation
-});
+```sh
+npx wrangler types
+npm run dev
 ```
 
-</TypeScriptExample>
+Try these prompts:
 
-## Customization
+- **"What is the weather in Tokyo?"** — calls the server-side `getWeather` tool
+- **"What timezone am I in?"** — calls the client-side `getUserTimezone` tool (the browser provides the answer)
+- **"Calculate 200 * 3 (amount: $600)"** — triggers the approval UI before executing
 
-### Adding custom tools
+## 6. Deploy
 
-**Simple Tool (Automatic Execution)**
-
-<TypeScriptExample>
-
-```ts
-// In src/tools.ts
-const getWeather = tool({
-	description: "Get current weather for a location",
-	parameters: z.object({
-		location: z.string().describe("The city name"),
-	}),
-	execute: async ({ location }) => {
-		// Call weather API
-		return `The weather in ${location} is sunny and 72°F`;
-	},
-});
-
-// Add to exports
-export const tools = {
-	// ... existing tools
-	getWeather,
-};
+```sh
+npx wrangler deploy
 ```
 
-</TypeScriptExample>
+Your agent is now live on Cloudflare's global network. Messages persist in SQLite, streams resume on disconnect, and the agent hibernates when idle to save resources.
 
-**Confirmation-Required Tool**
+## What you built
 
-<TypeScriptExample>
+Your chat agent has:
 
-```ts
-// In src/tools.ts
-const sensitiveAction = tool({
-	description: "Perform a sensitive action",
-	parameters: z.object({
-		action: z.string().describe("The action to perform"),
-		reason: z.string().describe("Reason for the action"),
-	}),
-	// Omitting execute function makes this tool require human confirmation
-});
+- **Streaming AI responses** via Workers AI (no API keys)
+- **Message persistence** in SQLite — conversations survive restarts
+- **Server-side tools** that execute automatically
+- **Client-side tools** that run in the browser and feed results back to the LLM
+- **Human-in-the-loop approval** for sensitive operations
+- **Resumable streaming** — if a client disconnects mid-stream, it picks up where it left off
 
-// Add to exports
-export const tools = {
-	// ... existing tools
-	sensitiveAction,
-};
+## Next steps
 
-// Add execution function
-export const executions = {
-	// ... existing executions
-	sensitiveAction: async ({ action, reason }) => {
-		return `Action "${action}" completed successfully. Reason: ${reason}`;
-	},
-};
-```
+<LinkCard
+	title="Chat agents API reference"
+	href="/agents/api-reference/chat-agents/"
+	description="Full reference for AIChatAgent and useAgentChat — providers, storage, advanced patterns."
+/>
 
-</TypeScriptExample>
+<LinkCard
+	title="Store and sync state"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Add real-time state beyond chat messages."
+/>
 
-### Customizing the system prompt
+<LinkCard
+	title="Callable methods"
+	href="/agents/api-reference/callable-methods/"
+	description="Expose agent methods as typed RPC for your client."
+/>
 
-Edit the system prompt in `src/server.ts`:
-
-```ts
-system: `You are a helpful assistant specializing in software development.
-You can help with coding questions, debugging, and best practices.
-Always provide clear, actionable advice.
-
-${unstable_getSchedulePrompt({ date: new Date() })}
-
-If the user asks to schedule a task, use the schedule tool to schedule the task.
-`,
-```
-
-## Deploy to Cloudflare Workers
-
-```bash
-npm run deploy
-```
-
-Your agent will be available at `https://your-project-name.your-subdomain.workers.dev`.
-
-### Environment variables in production
-
-For production deployment, set your OpenAI API key as a secret:
-
-```bash
-wrangler secret put OPENAI_API_KEY
-```
-
-## Features
-
-- **Streaming Responses**: Real-time AI responses with typing indicators.
-- **Tool Integration**: Execute actions with or without user confirmation.
-- **Task Scheduling**: Schedule tasks to run at specific times.
-- **Modern UI**: Dark/light mode, responsive design.
-- **Debug Mode**: View detailed message processing.
-- **Type Safety**: Full TypeScript support.
-
-## Troubleshooting
-
-### Common issues
-
-**"OPENAI_API_KEY is not set"**
-
-- Make sure you have set the API key in `.dev.vars` for local development.
-- For production, use `wrangler secret put OPENAI_API_KEY`.
-
-**"npm run dev" not found**
-
-- Use `npm start` instead (the script is named `start`).
-
-**Server not accessible**
-
-- Check that the server is running on port 5174 (not 8787).
-- Look for the correct URL in the terminal output.
-
-**Tool execution errors**
-
-- Make sure tools are properly exported in the `tools` object.
-- Check that confirmation-required tools have execution functions in `executions`.
-
-### Development tips
-
-- Use the browser developer tools to view detailed error messages.
-- Check the terminal output for server logs.
-- The debug mode in the UI shows detailed message processing.
+<LinkCard
+	title="Human-in-the-loop"
+	href="/agents/concepts/human-in-the-loop/"
+	description="Deeper patterns for approval flows and manual intervention."
+/>

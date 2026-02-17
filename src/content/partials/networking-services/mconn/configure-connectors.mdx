@@ -43,7 +43,7 @@ import {
 	DashButton,
 } from "~/components";
 
-{/* Virtual Connector */}
+{/* Virtual Appliance */}
 { props.magicWord === "virtual" && (
 	<>
 		<p>{props.productNameVirtual} is a virtual device alternative to the hardware based {props.productName}. These two versions of {props.productName} are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
@@ -57,7 +57,7 @@ In this page you will find instructions on how to configure {props.productName}.
 
 { props.magicWord === "hardware" && (
   <>
-		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">Magic WAN</a> before you can purchase and use {props.productName}. {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
+		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">Cloudflare WAN</a> before you can purchase and use {props.productName}. {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
 
 		<p>You also need to purchase {props.productName} before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for {props.productName}.</p>
 
@@ -65,17 +65,17 @@ In this page you will find instructions on how to configure {props.productName}.
   )
 }
 
-{/* Virtual Connector */}
+{/* Virtual Appliance */}
 { props.magicWord === "virtual" && (
   <>
 		<Markdown
 		text={`
-		Before you can install ${props.productNameVirtual}, you need an Enterprise account with Magic WAN. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with ${props.productNameVirtual}. This includes:
+		Before you can install ${props.productNameVirtual}, you need an Enterprise account with Cloudflare WAN. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with ${props.productNameVirtual}. This includes:
     - Intel x86 CPU architecture
     - ESXi hypervisor 7.0U1 or higher
-    - 4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
-    - 8 GB of RAM per virtual connector
-    - 8 GB of disk per virtual connector
+    - 4 virtual CPUs per virtual appliance (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
+    - 8 GB of RAM per virtual appliance
+    - 8 GB of disk per virtual appliance
     - One vSwitch port group or VLAN with access to the Internet (for example, through a WAN)
     - One or more vSwitch port group or VLAN that will be the internal LAN
 
@@ -145,7 +145,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
   )
 }
 
-{/* Virtual Connector */}
+{/* Virtual Appliance */}
 { props.magicWord === "virtual" && (
   <>
     <p>{props.productNameVirtual} uses a DHCP connection at first boot to download your settings and go through the activation process. However, if you need to use a static IP in your {props.productNameVirtual}, and this is a fresh install:</p>
@@ -179,7 +179,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
   )
 }
 
-{/* Virtual Connector */}
+{/* Virtual Appliance */}
 { props.magicWord === "virtual" && (
   <>
 		<AnchorHeading title="Configure a virtual machine" depth={2} />
@@ -285,7 +285,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 		1. In the terminal prompt of your Proxmox server, load the script provided by your account team. For example: \`bash YOUR_SCRIPT\`. You need elevated privileges to run the script.
 		2. You will be prompted to create a new ${props.productNameVirtual}. Select **yes** to proceed.
-		3. Set up your Virtual Connector name.
+		3. Set up your Virtual Appliance name.
 		4. Enter your license key.
 				`}
 		inline={false}
@@ -325,7 +325,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 { props.magicWord === "hardware" && (
   <>
-		<AnchorHeading title="Register your Connector" depth={3} />
+		<AnchorHeading title="Register your Appliance" depth={3} />
 		<Render
 			file="mconn/maintenance/register-hardware-appliance"
 			product="networking-services"
@@ -342,8 +342,8 @@ You need to create a profile for your appliance before connecting it to the Inte
 
 To create a profile:
 
-{/* WAN Tunnels section */}
-{ props.dashName === "WAN Tunnels" && (
+{/* CF1 Cloudflare WAN section */}
+{ props.dashName === "CF1 Cloudflare WAN" && (
 	<>
 		<ol>
 			<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
@@ -353,8 +353,8 @@ To create a profile:
 )
 }
 
-{/* Magic WAN section */}
-{ props.dashName !== "WAN Tunnels" && (
+{/* Cloudflare WAN section */}
+{ props.dashName !== "CF1 Cloudflare WAN" && (
 	<>
 		<ol>
 			<li>Go to the <strong>Connectors</strong> page.
@@ -490,7 +490,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 		<pre class="mermaid">
 		{`flowchart LR
-		accTitle: Connector as WAN router
+		accTitle: Appliance as WAN router
 		accDescr: ${props.productName} set up as a DHCP server, and connecting to the Internet.
     a(${props.productName})--> b(Internet) --> c(Cloudflare)
 
@@ -509,8 +509,8 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 		<pre class="mermaid">
 		{`flowchart LR
-		accTitle: Connector behind site router
-		accDescr: ${props.productName} connects to the router in the site, and only some of the LANs connect to Connector.
+		accTitle: Appliance behind site router
+		accDescr: ${props.productName} connects to the router in the site, and only some of the LANs connect to Appliance.
     a(${props.productName})--> b((Site's router)) --> c(Internet) --> i(Cloudflare)
 
     subgraph Customer site
@@ -524,7 +524,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
     class a,i orange`}
 		</pre>
 
-		<p><em>{props.productName} connects to the router in the site, and only some of the LANs connect to Connector.</em></p>
+		<p><em>{props.productName} connects to the router in the site, and only some of the LANs connect to Appliance.</em></p>
 
 		<p>Refer to <a href="/reference-architecture/diagrams/sase/magic-wan-connector-deployment/">{props.productName} deployment options</a> for a high-level explanation of the deployment options that make sense to most environments, as well as a few advanced use cases.</p>
 
@@ -575,8 +575,8 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 When you are ready to connect your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to the Cloudflare network:
 
-{/* Instructions for WAN Tunnels */}
-{ props.dashName === "WAN Tunnels" ? (
+{/* Instructions for CF1 Cloudflare WAN */}
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -592,7 +592,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 	</>
 ) : (
 	<>
-		{/* Instructions for Magic WAN */}
+		{/* Instructions for Cloudflare WAN */}
 		<Markdown
 	text={`
 		1. Go to the **Connectors** page.`}
@@ -617,13 +617,13 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 { props.magicWord === "virtual" && (
   <>
-		<AnchorHeading title="Boot your Virtual Connector" depth={2} />
+		<AnchorHeading title="Boot your Virtual Appliance" depth={2} />
 
-		<AnchorHeading title="Default password to access Virtual Connector" depth={3} />
+		<AnchorHeading title="Default password to access Virtual Appliance" depth={3} />
 
 		<Markdown
 		text={`
-		Your Virtual Connector's default password is the last seven characters of your license key, all uppercase, plus an <code>!</code> (exclamation mark).
+		Your Virtual Appliance's default password is the last seven characters of your license key, all uppercase, plus an <code>!</code> (exclamation mark).
 
 		For example, if your license key is <code>mconn-abcdefghijklmnopqrstuvwxyz</code>, your default password will be <code>TUVWXYZ!</code>.
 		`}
@@ -785,7 +785,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		text={`
 		1. Log into your ${props.productName} device. You will be prompted to change your password if you attempt to log in with the default password.
 		2. From the menu, go to **Bootstrap** with the arrow keys and select it with the Enter key.
-		3. Select the jack (physical port) you want to configure for the initialization of the connector.
+		3. Select the jack (physical port) you want to configure for the initialization of the appliance.
 		4. Enter the VLAN tag (if applicable) of the network. Leave it blank if untagged.
 		5. Select the <code>static</code> option as your network type.
 		`}
@@ -796,7 +796,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 		<Markdown
 		text={`
-		6. Enter the IP address you would like the connector to have in CIDR form (for example, <code>10.0.0.2/24</code>).
+		6. Enter the IP address you would like the appliance to have in CIDR form (for example, <code>10.0.0.2/24</code>).
 		7. Enter the IP address of the Internet gateway (this must be in the same subnet as the previous IP address you entered and must not be the same address).
 		8. Select **Save** and confirm that you want to use the new settings.
 		9. The ${props.productName} will download the rest of the settings from Cloudflare. The last heartbeat of the ${props.productName} should update once it has made contact with Cloudflare.
@@ -848,7 +848,7 @@ inline={false}
 12. In **Virtual static address**, enter the IP that the LAN south of the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } device will forward traffic to. For example, `192.168.10.3/24`.
 13. Select **Save**.
 14. From the **High availability probing link** drop-down menu, select the port that should be used to monitor the node's health. Cloudflare recommends you choose a reliable interface as the HA probing link. The primary and secondary node's probing link should be connected over a switch, and cannot be a direct connection.
-15. {props.magicWord === "hardware" && (<>Follow the instructions in <a href="#set-up-your-magic-wan-connector">Set up your Magic WAN Connector</a> and <a href="#activate-appliance">Activate appliance</a> to finish setting up your Connectors.</>)} {props.magicWord === "virtual" && (<>Follow the instructions in <a href="#activate-appliance">Activate appliance</a> to finish setting up your Connectors.</>)}
+15. {props.magicWord === "hardware" && (<>Follow the instructions in <a href="#set-up-your-cloudflare-one-appliance">Set up your Cloudflare One Appliance</a> and <a href="#activate-appliance">Activate appliance</a> to finish setting up your Appliances.</>)} {props.magicWord === "virtual" && (<>Follow the instructions in <a href="#activate-appliance">Activate appliance</a> to finish setting up your Appliances.</>)}
 
 ---
 
@@ -858,12 +858,12 @@ inline={false}
 
 To check the IPsec tunnels and static routes created by your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Connectors**.
-		2. In **WAN Tunnels** you can inspect the IPsec tunnels created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
+		2. In **Cloudflare WAN** you can inspect the IPsec tunnels created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
 		3. In **Routes** you can inspect the static routes created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
 
 	`}

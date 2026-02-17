@@ -89,7 +89,7 @@ export default {
 			new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -102,7 +102,7 @@ Update `wrangler.jsonc` to register the agent:
 {
 	"name": "my-agent",
 	"main": "src/server.ts",
-	"compatibility_date": "2025-01-01",
+	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"durable_objects": {
 		"bindings": [

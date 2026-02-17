@@ -10,8 +10,8 @@ products:
     email-security-cf1,
     workers,
     turnstile,
-    magic-wan,
-    magic-firewall,
+    cloudflare-wan,
+    cloudflare-network-firewall,
     magic-transit,
     api-shield,
     bots,
@@ -115,49 +115,49 @@ In summary, Cloudflare not only has built the right technology to secure our net
 
 The reason the Cloudflare network exists is to provide services to customers to protect their own assets, such as users, applications, and data. The following section details what these services are, their basic architecture, and how they are used by customers. Note that this section does not go into extensive detail on each service. Instead, please refer to our [Architecture Center](https://cloudflare.com/architecture) or [product documentation](/directory/) to understand more about a specific product, service, or solution. The goal in this document is to provide information about the overall set of security services available and the general use cases they are designed for. As such, we provide a table of contents so you can jump to a section of interest.
 
-1. [Securing public and private resources](#securing-public-and-private-resources)
-2. [Protecting public resources](#protecting-public-resources)
-   1. [Common attacks and protection](#common-attacks-and-protection)
-      1. [DDoS attacks](#ddos-attacks)
-      2. [Zero-day attacks](#zero-day-attacks)
-      3. [Unauthorized access](#unauthorized-access)
-      4. [Client-side attacks](#client-side-attacks)
-      5. [Data exfiltration](#data-exfiltration)
-      6. [Credential stuffing](#credential-stuffing)
-      7. [Brute force attacks](#brute-force-attacks)
-      8. [Credit card skimming](#credit-card-skimming)
-      9. [Inventory hoarding](#inventory-hoarding)
-      10. [Fuzzing (vulnerability scanning)](#fuzzing-vulnerability-scanning)
-      11. [Cross-Site Scripting (XSS) attacks](#cross-site-scripting-xss-attacks)
-      12. [Remote Code Execution (RCE) attacks](#remote-code-execution-rce-attacks)
-      13. [SQL injection (SQLi) attacks](#sql-injection-sqli-attacks)
-      14. [Malware](#malware)
-   2. [Cloudflare application security products](#cloudflare-application-security-products)
-      1. [Security Analytics](#security-analytics)
-      2. [Web Application Firewall (WAF)](#web-application-firewall-waf)
-      3. [Rate limiting](#rate-limiting)
-      4. [L7 DDoS](#l7-ddos)
-      5. [API Shield](#api-shield)
-      6. [Bot Management](#bot-management)
-      7. [Page Shield](#page-shield)
-      8. [SSL/TLS](#ssltls)
-      9. [Security Center](#security-center)
-      10. [Cloudflare for SaaS](#cloudflare-for-saas)
-   3. [Cloudflare network security products](#cloudflare-network-security-products)
-      1. [Magic Transit](#magic-transit)
-      2. [Magic WAN](#magic-wan)
-      3. [Magic Firewall](#magic-firewall)
-      4. [Magic Network Monitoring](#magic-network-monitoring)
-      5. [Spectrum](#spectrum)
-3. [Protecting private resources](#protecting-private-resources)
-   1. [Securing connectivity to private resources](#securing-connectivity-to-private-resources)
-   2. [User connectivity](#user-connectivity)
-   3. [Integrating identity systems](#integrating-identity-systems)
-   4. [Access control](#access-control)
-   5. [Protecting data](#protecting-data)
-   6. [Securing Internet access](#securing-internet-access)
-4. [Observability](#observability)
-5. [Developer platform](#developer-platform)
+1.  [Securing public and private resources](#securing-public-and-private-resources)
+2.  [Protecting public resources](#protecting-public-resources)
+    1.  [Common attacks and protection](#common-attacks-and-protection)
+        1. [DDoS attacks](#ddos-attacks)
+        2. [Zero-day attacks](#zero-day-attacks)
+        3. [Unauthorized access](#unauthorized-access)
+        4. [Client-side attacks](#client-side-attacks)
+        5. [Data exfiltration](#data-exfiltration)
+        6. [Credential stuffing](#credential-stuffing)
+        7. [Brute force attacks](#brute-force-attacks)
+        8. [Credit card skimming](#credit-card-skimming)
+        9. [Inventory hoarding](#inventory-hoarding)
+        10. [Fuzzing (vulnerability scanning)](#fuzzing-vulnerability-scanning)
+        11. [Cross-Site Scripting (XSS) attacks](#cross-site-scripting-xss-attacks)
+        12. [Remote Code Execution (RCE) attacks](#remote-code-execution-rce-attacks)
+        13. [SQL injection (SQLi) attacks](#sql-injection-sqli-attacks)
+        14. [Malware](#malware)
+    2.  [Cloudflare application security products](#cloudflare-application-security-products)
+        1. [Security Analytics](#security-analytics)
+        2. [Web Application Firewall (WAF)](#web-application-firewall-waf)
+        3. [Rate limiting](#rate-limiting)
+        4. [L7 DDoS](#l7-ddos)
+        5. [API Shield](#api-shield)
+        6. [Bot Management](#bot-management)
+        7. [Page Shield](#page-shield)
+        8. [SSL/TLS](#ssltls)
+        9. [Security Center](#security-center)
+        10. [Cloudflare for SaaS](#cloudflare-for-saas)
+    3.  [Cloudflare network security products](#cloudflare-network-security-products)
+        1. [Magic Transit](#magic-transit)
+        2. [Cloudflare WAN](#cloudflare-wan)
+        3. [Cloudflare Network Firewall](#cloudflare-network-firewall)
+        4. [Magic Network Monitoring](#magic-network-monitoring)
+        5. [Spectrum](#spectrum)
+3.  [Protecting private resources](#protecting-private-resources)
+    1. [Securing connectivity to private resources](#securing-connectivity-to-private-resources)
+    2. [User connectivity](#user-connectivity)
+    3. [Integrating identity systems](#integrating-identity-systems)
+    4. [Access control](#access-control)
+    5. [Protecting data](#protecting-data)
+    6. [Securing Internet access](#securing-internet-access)
+4.  [Observability](#observability)
+5.  [Developer platform](#developer-platform)
 
 In general, what customers need to effectively combat and protect against the growing breadth and complexity of threats is a unified security solution that provides visibility, analytics, detection, and mitigation in an operationally consistent and efficient manner. Cloudflare addresses these needs in several ways:
 
@@ -190,7 +190,7 @@ Cloudflare can protect at multiple layers of the OSI model, and in this document
 - Layer 3, referred to as the “network layer,” is responsible for facilitating data transfer between two different networks. The network layer breaks up segments from the transport layer into smaller units, called packets, on the sender’s device and reassembles these packets on the receiving device. The network layer is where routing takes place — finding the best physical path for the data to reach its destination.
 - Layer 4, referred to as the “transport layer,” is responsible for end-to-end communication between the two devices. This includes taking data from the session layer and breaking it up into chunks called “segments” before sending it to layer 3.
 
-Cloudflare security products that can be used for L3 and L4 security include Cloudflare’s network services offerings, including [Magic Transit](/magic-transit/), [Magic Firewall](/magic-firewall/), [Magic WAN](/magic-wan/), [Magic Network Monitoring](/magic-network-monitoring/), and [Spectrum](/spectrum/).
+Cloudflare security products that can be used for L3 and L4 security include Cloudflare's network services offerings, including [Magic Transit](/magic-transit/), [Cloudflare Network Firewall](/cloudflare-network-firewall/), [Cloudflare WAN](/cloudflare-wan/), [Magic Network Monitoring](/magic-network-monitoring/), and [Spectrum](/spectrum/).
 
 - Layer 7, referred to as the “application layer,” is the top layer of the data processing that occurs just below the surface or behind the scenes of the software applications that users interact with. HTTP and API requests/responses are layer 7 events.
 
@@ -465,13 +465,13 @@ All network assets, whether on-premises or in private or public-hosted cloud env
 
 ![Magic Transit can secure your private network links.](~/assets/images/reference-architecture/security/security-ref-arch-16.svg)
 
-##### Magic WAN
+##### Cloudflare WAN
 
-With [Magic WAN](/magic-wan/), customers can securely connect any traffic source — data centers, offices, devices, cloud properties — to Cloudflare’s network and configure routing policies to get the bits where they need to go. Magic WAN supports a variety of on-ramps, including anycast GRE and IPsec tunnels, Cloudflare Network Interconnect, Cloudflare Tunnel, WARP, and a variety of network on-ramp partners. Magic WAN can help end reliance on traditional SD-WAN appliances and securely connect users, offices, data centers, and hybrid cloud over the Cloudflare global network without relying on vendor-specific hardware or software.
+With [Cloudflare WAN](/cloudflare-wan/), customers can securely connect any traffic source — data centers, offices, devices, cloud properties — to Cloudflare’s network and configure routing policies to get the bits where they need to go. Cloudflare WAN supports a variety of on-ramps, including anycast GRE and IPsec tunnels, Cloudflare Network Interconnect, Cloudflare Tunnel, WARP, and a variety of network on-ramp partners. Cloudflare WAN can help end reliance on traditional SD-WAN appliances and securely connect users, offices, data centers, and hybrid cloud over the Cloudflare global network without relying on vendor-specific hardware or software.
 
-##### Magic Firewall
+##### Cloudflare Network Firewall
 
-[Magic Firewall](/magic-firewall/) is Cloudflare’s firewall-as-a-service solution delivered from Cloudflare’s global network and is integrated with Magic Transit and Magic WAN. It allows for enforcing consistent network security policies across customers’ entire WAN, including headquarters, branch offices, and virtual private clouds. Customers can deploy granular rules that globally filter on protocol, port, IP addresses, packet length, and bit field match.
+[Cloudflare Network Firewall](/cloudflare-network-firewall/) is Cloudflare's firewall-as-a-service solution delivered from Cloudflare's global network and is integrated with Magic Transit and Cloudflare WAN. It allows for enforcing consistent network security policies across customers' entire WAN, including headquarters, branch offices, and virtual private clouds. Customers can deploy granular rules that globally filter on protocol, port, IP addresses, packet length, and bit field match.
 
 ##### Magic Network Monitoring
 
@@ -493,7 +493,7 @@ The following are typical attributes of private resources:
 
 As mentioned, traditional access to private resources required physical access to the network by being in the office connected via Ethernet. As remote access needs increased, companies installed on-premises VPN servers that allowed users and devices to "dial in" to these private networks. Many applications have left these private networks and instead migrated to SaaS applications or are hosted in public cloud infrastructure. This traditional approach has become unmanageable and costly, with a variety of technologies providing network connectivity and access control.
 
-Another important thing to note is that many of the services used for securing and providing connectivity for public resources can also be used for private resources. The most obvious here is Magic WAN and Magic Firewall. Customers also use our WAF in front of privately hosted applications that are only accessible through private networks. The idea is that even if access to an application is only from trusted private connections, it is still possible for an attacker to compromise what seems to be a trusted device; therefore, application injection attacks and other vulnerabilities can be exploited by devices with existing trusted network access. This is exactly in line with the idea of a Zero Trust security program. Read more about the approaches to Zero Trust using a SASE platform in our [SASE reference architecture](/reference-architecture/architectures/sase/).
+Another important thing to note is that many of the services used for securing and providing connectivity for public resources can also be used for private resources. The most obvious here is Cloudflare WAN and Cloudflare Network Firewall. Customers also use our WAF in front of privately hosted applications that are only accessible through private networks. The idea is that even if access to an application is only from trusted private connections, it is still possible for an attacker to compromise what seems to be a trusted device; therefore, application injection attacks and other vulnerabilities can be exploited by devices with existing trusted network access. This is exactly in line with the idea of a Zero Trust security program. Read more about the approaches to Zero Trust using a SASE platform in our [SASE reference architecture](/reference-architecture/architectures/sase/).
 
 As we describe the following Cloudflare services, you will learn how the Cloudflare network and our methods of connecting it to your own private networks provides greater security, flexibility, and a more centralized control plane for access to private resources. The following diagram illustrates the sort of environment that represents a typical customer's private infrastructure.
 
@@ -522,14 +522,14 @@ Because all network traffic routes through Cloudflare, security controls are def
 
 Existing private infrastructure can be complex. Cloudflare provides a variety of methods by which businesses can connect their networks and user devices into this new enterprise network. We often call these methods "on-ramps," which describes how traffic for a specific network or device is routed into Cloudflare. The following table outlines these different methods.
 
-| Method                                                                                                        | Description                                                                                                                                                  | Common Use                                                                                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Magic WAN](/magic-wan/)                                                                                      | IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                                   | Connecting existing network routers to Cloudflare. Allowing all traffic into and out of the network to go through Cloudflare.                                               |
-| [Magic WAN Connector](/magic-wan/configuration/connector/)                                                    | Appliance-based IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                   | Uses the same technology as Magic WAN; however, instead of using existing networking devices, a dedicated appliance or virtual machine is used — the Magic WAN Connector.   |
-| [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/)                                         | Software agent deployed on servers or alongside services like Kubernetes for creating a tunnel for incoming connections to private applications or networks. | IT admins or application owners can easily install this tunnel software to expose their application to the Cloudflare network.                                              |
-| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)           | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks.                          | Similar to cloudflared, but supports East to West traffic and is often used in place of Magic WAN when there is no ability to create an IPsec tunnel from existing devices. |
-| [WARP Desktop Agent](/cloudflare-one/team-and-resources/devices/warp/)                                        | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks.                                        | Connecting end user devices like phones and laptops to be part of the Cloudflare network.                                                                                   |
-| [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) | Direct connection between your physical networks and Cloudflare.                                                                                             | When your applications live in the same data centers we operate in, we can connect those networks directly to Cloudflare.                                                   |
+| Method                                                                                                        | Description                                                                                                                                                  | Common Use                                                                                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Cloudflare WAN](/cloudflare-wan/)                                                                            | IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                                   | Connecting existing network routers to Cloudflare. Allowing all traffic into and out of the network to go through Cloudflare.                                                       |
+| [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/)                                          | Appliance-based IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                   | Uses the same technology as Cloudflare WAN; however, instead of using existing networking devices, a dedicated appliance or virtual machine is used — the Cloudflare One Appliance. |
+| [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/)                                         | Software agent deployed on servers or alongside services like Kubernetes for creating a tunnel for incoming connections to private applications or networks. | IT admins or application owners can easily install this tunnel software to expose their application to the Cloudflare network.                                                      |
+| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)           | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks.                          | Similar to cloudflared, but supports East to West traffic and is often used in place of Cloudflare WAN when there is no ability to create an IPsec tunnel from existing devices.    |
+| [WARP Desktop Agent](/cloudflare-one/team-and-resources/devices/warp/)                                        | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks.                                        | Connecting end user devices like phones and laptops to be part of the Cloudflare network.                                                                                           |
+| [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) | Direct connection between your physical networks and Cloudflare.                                                                                             | When your applications live in the same data centers we operate in, we can connect those networks directly to Cloudflare.                                                           |
 
 For more details on how these methods work, please refer to our [SASE reference architecture](/reference-architecture/architectures/sase/).
 

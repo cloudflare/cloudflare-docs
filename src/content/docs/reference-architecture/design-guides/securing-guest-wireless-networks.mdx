@@ -1,7 +1,7 @@
 ---
 title: Securing guest wireless networks
 pcx_content_type: design-guide
-products: [gateway, magic-wan]
+products: [gateway, cloudflare-wan]
 tags:
   - IPv6
 sidebar:
@@ -174,15 +174,15 @@ For these reasons you should also consider applying security in layers and add n
 
 ![Figure 4: This diagram shows how to connect guest networks to Cloudflare and the high level traffic flow to reach Internet resources.](~/assets/images/reference-architecture/securing-guest-wireless-networks/figure4.svg "Figure 4: This diagram shows how to connect guest networks to Cloudflare and the high level traffic flow to reach Internet resources.")
 
-To provide network level filtering, Cloudflare must be in the traffic path for more than just the DNS request. This is achieved by routing Internet-bound traffic over an [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) tunnel to Cloudflare. Cloudflare's [Magic WAN](/magic-wan/) service allows third-party devices to establish IPsec or GRE tunnels to the Cloudflare network. It is also possible to just deploy our [Magic WAN Connector](/magic-wan/configuration/connector/), a pre-configured lightweight network appliance that automatically creates the tunnel back to Cloudflare and can be managed remotely. Once traffic reaches Cloudflare multiple security controls can be overlaid such as:
+To provide network level filtering, Cloudflare must be in the traffic path for more than just the DNS request. This is achieved by routing Internet-bound traffic over an [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) tunnel to Cloudflare. Cloudflare's [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN) service allows third-party devices to establish IPsec or GRE tunnels to the Cloudflare network. It is also possible to just deploy our [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/), a pre-configured lightweight network appliance that automatically creates the tunnel back to Cloudflare and can be managed remotely. Once traffic reaches Cloudflare multiple security controls can be overlaid such as:
 
-- Cloud based network firewall ([Magic Firewall](/magic-firewall/))
+- Cloud based network firewall ([Cloudflare Network Firewall](/cloudflare-network-firewall/))
 - Secure web gateway ([Gateway](/cloudflare-one/traffic-policies/))
 
 Below is the high level traffic flow that correlates to the above diagram:
 
 1. Internet destined traffic will be routed to cloudflare from connected guest networks, this can be easily done with a policy based route. In most guest Wi-Fi setups devices will only be expected to generate internet bound traffic so in most cases a Policy based route referencing ANY as the destination will be sufficient. Ex Source 192.168.53.0/24 to Destination ANY next hop Cloudflare IPsec tunnel.
-2. Once traffic reaches the cloudflare edge it will first be inspected by magic firewall. Magic Firewall can be used to create network and transport layer blocks which would allow admins to restrict access to certain destination IP's or ports, a common policy could be blocking all DNS traffic not directed towards cloudflare DNS resolvers. Custom lists can be used to import existing lists customers may already have. [IDS](/magic-firewall/about/ids/) can be enabled to monitor if any guest users are attempting to launch known exploits from your Guest network. Managed threat [lists](/waf/tools/lists/managed-lists/#managed-ip-lists) allow you to use cloudflare's auto updated threat intel to block known threats like known malware repositories or botnets.
+2. Once traffic reaches the cloudflare edge it will first be inspected by Cloudflare Network Firewall. Cloudflare Network Firewall can be used to create network and transport layer blocks which would allow admins to restrict access to certain destination IP's or ports, a common policy could be blocking all DNS traffic not directed towards cloudflare DNS resolvers. Custom lists can be used to import existing lists customers may already have. [IDS](/cloudflare-network-firewall/about/ids/) can be enabled to monitor if any guest users are attempting to launch known exploits from your Guest network. Managed threat [lists](/waf/tools/lists/managed-lists/#managed-ip-lists) allow you to use cloudflare's auto updated threat intel to block known threats like known malware repositories or botnets.
 3. Traffic is then forwarded to Cloudflare gateway. At gateway network based policies can be created using the same Content categories and Security risks mentioned earlier within DNS based policies, the benefit is when these filters are applied at the network level, even if a user bypasses DNS these policies can still be applied providing multi tiered enforcement. It would be recommended to mirror DNS based rules in accordance with your organization's acceptable use policy. Cloudflare Gateway also acts as a secure outbound proxy and as such can SNAT private address to Internet routable public addresses, by default rfc 1918 addresses will automatically be SNAT to Shared Cloudflare egress ip's. This removes the need for managing PAT directly from your edge device and also provides a layer of privacy as traffic will source from Cloudflare owned ip's when browsing Internet sites. Dedicated Egress ip's unique to your account can also be provided and egress ip selection controlled via policy.
 4. Traffic is now routed to the final Internet destination, return traffic will be routed back through Cloudflare edge and returned to the corresponding IPsec tunnel.
 
@@ -195,5 +195,5 @@ If you are interested in learning more about Gateway, or other aspects of the Cl
 ## Related Resources
 
 - [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/)
-- [Magic WAN Connector deployment options · Cloudflare Reference Architecture docs](/reference-architecture/diagrams/sase/magic-wan-connector-deployment/)
+- [Cloudflare One Appliance deployment options · Cloudflare Reference Architecture docs](/reference-architecture/diagrams/sase/magic-wan-connector-deployment/)
 - [DNS policies \- Cloudflare Zero Trust](/cloudflare-one/traffic-policies/dns-policies/)

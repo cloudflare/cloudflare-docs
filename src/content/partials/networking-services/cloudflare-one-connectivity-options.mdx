@@ -34,9 +34,9 @@ The following table provides a high-level comparison of all connectivity options
 | [Clientless Web Isolation](#clientless-web-isolation) | HTTP/HTTPS | On-ramp only | Prefixed URL with Access authentication | Secure web access for unmanaged devices |
 | [GRE tunnels](#gre-tunnels) | GRE | Bidirectional | Network tunnel from router or firewall | Connecting sites with existing network hardware |
 | [IPsec tunnels](#ipsec-tunnels) | IPsec | Bidirectional | Network tunnel from router or firewall | Encrypted site connectivity over the Internet |
-| [Magic WAN Connector](#magic-wan-connector) | IPsec | Bidirectional | Hardware or virtual appliance | Zero-touch branch office deployments |
+| [Cloudflare One Appliance](#cloudflare-one-appliance) | IPsec | Bidirectional | Hardware or virtual appliance | Zero-touch branch office deployments |
 | [Cloudflare Network Interconnect](#cloudflare-network-interconnect-cni) | Direct, Partner, Cloud | Bidirectional | Physical or virtual cross-connect | Bypassing the public Internet entirely |
-| [Magic Cloud Networking](#magic-cloud-networking) | IPsec (automated) | Bidirectional | Cloud provider VPN integration | Connecting cloud VPCs with automated tunnel setup |
+| [Multi-Cloud Networking](#multi-cloud-networking) | IPsec (automated) | Bidirectional | Cloud provider VPN integration | Connecting cloud VPCs with automated tunnel setup |
 
 ---
 
@@ -80,14 +80,14 @@ For VPN replacement and Zero Trust Network Access (ZTNA) use cases, Cloudflare T
 
 Deploy WARP Connector supplementally when you need bidirectional connectivity for specific use cases like Active Directory Group Policy updates, SCCM, SIP traffic, VoIP traffic, or DevOps pipelines.
 
-:::caution[Magic WAN compatibility]
-Accounts on Legacy routing mode do not support WARP Connector when Magic WAN is enabled. Your account must be on <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a> for both to work together.
+:::caution[Cloudflare WAN compatibility]
+Accounts on Legacy routing mode do not support WARP Connector when Cloudflare WAN (formerly Magic WAN) is enabled. Your account must be on <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a> for both to work together.
 :::
 
 :::note[Important to know]
 WARP Connector does not currently support high availability or redundancy configurations. A single WARP Connector instance represents a single point of failure for that subnet.
 
-Plan your deployment accordingly and consider Magic WAN Connector or IPsec tunnels if high availability is a requirement.
+Plan your deployment accordingly and consider Cloudflare One Appliance or IPsec tunnels if high availability is a requirement.
 :::
 
 For detailed configuration, refer to the [WARP Connector documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
@@ -151,7 +151,7 @@ For detailed configuration, refer to the [Clientless Web Isolation documentation
 
 ## GRE tunnels
 
-Generic Routing Encapsulation (GRE) tunnels provide lightweight, stateless network connectivity between your infrastructure and Cloudflare. GRE tunnels are used with Magic WAN and Magic Transit to connect sites, data centers, and cloud environments using existing routers and firewalls.
+Generic Routing Encapsulation (GRE) tunnels provide lightweight, stateless network connectivity between your infrastructure and Cloudflare. GRE tunnels are used with Cloudflare WAN (formerly Magic WAN) and Magic Transit to connect sites, data centers, and cloud environments using existing routers and firewalls.
 
 Use GRE tunnels when you need to connect branch offices or data centers with minimal configuration overhead, integrate with Magic Transit for DDoS protection, or deploy redundant tunnels alongside IPsec.
 
@@ -165,37 +165,37 @@ For detailed configuration, refer to the <a href={props.greIpsecURL}>GRE and IPs
 
 ## IPsec tunnels
 
-IPsec tunnels provide encrypted, stateful network connectivity between your infrastructure and Cloudflare. IPsec tunnels are used with Magic WAN and Magic Transit for secure site-to-site connectivity, using IKEv2 for tunnel negotiation and AES-GCM or AES-CBC for encryption.
+IPsec tunnels provide encrypted, stateful network connectivity between your infrastructure and Cloudflare. IPsec tunnels are used with Cloudflare WAN and Magic Transit for secure site-to-site connectivity, using IKEv2 for tunnel negotiation and AES-GCM or AES-CBC for encryption.
 
 Use IPsec tunnels when you need to encrypt traffic over the public Internet, meet compliance requirements for encrypted connections, or replace expensive MPLS links.
 
 :::note[Important to know]
 Requires a static public IP and supports IKEv2 only (not IKEv1). If behind NAT, initiate IKE on port `4500`.
 
-When traffic from Magic WAN egresses to the public Internet through Gateway, source IP addresses are translated to Cloudflare dedicated egress IP addresses.
+When traffic from Cloudflare WAN egresses to the public Internet through Gateway, source IP addresses are translated to Cloudflare dedicated egress IP addresses.
 :::
 
-For cloud environments (AWS, Azure, GCP), use [Magic Cloud Networking](#magic-cloud-networking) to automate IPsec tunnel creation instead of configuring tunnels manually.
+For cloud environments (AWS, Azure, GCP), use [Multi-Cloud Networking](#multi-cloud-networking) to automate IPsec tunnel creation instead of configuring tunnels manually.
 
 For detailed configuration, refer to the <a href={props.greIpsecURL}>GRE and IPsec tunnels documentation</a>.
 
 :::note[Key consideration]
-IPsec and GRE tunnels require a Magic WAN subscription.
+IPsec and GRE tunnels require a Cloudflare WAN subscription.
 :::
 
 ---
 
-## Magic WAN Connector
+## Cloudflare One Appliance
 
-Magic WAN Connector is a plug-and-play SD-WAN appliance that automates connectivity to Cloudflare's network. It establishes IPsec tunnels automatically and provides traffic steering and shaping. You can deploy it as a hardware appliance (Dell VEP1460) or virtual appliance (VMware ESXi, Proxmox).
+Cloudflare One Appliance (formerly Magic WAN Connector) is a plug-and-play SD-WAN appliance that automates connectivity to Cloudflare's network. It establishes IPsec tunnels automatically and provides traffic steering and shaping. You can deploy it as a hardware appliance (Dell VEP1460) or virtual appliance (VMware ESXi, Proxmox).
 
-Use Magic WAN Connector for zero-touch branch office deployments, to replace edge routers, achieve high throughput (1 Gbps or higher), or manage multiple sites through a centralized dashboard.
+Use Cloudflare One Appliance for zero-touch branch office deployments, to replace edge routers, achieve high throughput (1 Gbps or higher), or manage multiple sites through a centralized dashboard.
 
 :::note[Key consideration]
-Magic WAN Connector requires a Magic WAN subscription and dedicated hardware or VM (cannot run alongside other software on the same host).
+Cloudflare One Appliance requires a Cloudflare WAN subscription and dedicated hardware or VM (cannot run alongside other software on the same host).
 :::
 
-For detailed configuration, refer to the <a href={props.connectorURL}>Magic WAN Connector documentation</a>.
+For detailed configuration, refer to the <a href={props.connectorURL}>Cloudflare One Appliance documentation</a>.
 
 ---
 
@@ -221,15 +221,15 @@ For detailed configuration, refer to the <a href={props.cniURL}>Cloudflare Netwo
 
 ---
 
-## Magic Cloud Networking
+## Multi-Cloud Networking
 
-Magic Cloud Networking is an automation layer that simplifies connecting cloud environments to Magic WAN. Rather than manually configuring IPsec tunnels, Magic Cloud Networking automatically discovers your cloud resources and creates the necessary VPN tunnels and routes on both sides (cloud provider and Magic WAN).
+Multi-Cloud Networking (formerly Magic Cloud Networking) is an automation layer that simplifies connecting cloud environments to Cloudflare WAN. Rather than manually configuring IPsec tunnels, Multi-Cloud Networking automatically discovers your cloud resources and creates the necessary VPN tunnels and routes on both sides (cloud provider and Cloudflare WAN).
 
-Magic Cloud Networking is not a separate tunnel type — it orchestrates your cloud provider's native VPN functionality (AWS VPN Gateway, Azure VPN, GCP Cloud VPN) to establish IPsec connectivity to Magic WAN.
+Multi-Cloud Networking is not a separate tunnel type — it orchestrates your cloud provider's native VPN functionality (AWS VPN Gateway, Azure VPN, GCP Cloud VPN) to establish IPsec connectivity to Cloudflare WAN.
 
 ### Use cases
 
-- Connect AWS, Azure, or GCP VPCs to Magic WAN with minimal configuration
+- Connect AWS, Azure, or GCP VPCs to Cloudflare WAN with minimal configuration
 - Automate tunnel and route creation instead of manual IPsec setup
 - Connect multiple VPCs through a hub architecture (AWS Transit Gateway)
 - Simplify multi-cloud networking across different providers
@@ -238,7 +238,7 @@ Magic Cloud Networking is not a separate tunnel type — it orchestrates your cl
 
 | Type | Description | Use when |
 | ---- | ---- | ---- |
-| **Single VPC** | Connects one VPC directly to Magic WAN via VPN tunnel | You have a single VPC to connect |
+| **Single VPC** | Connects one VPC directly to Cloudflare WAN via VPN tunnel | You have a single VPC to connect |
 | **Hub** | Connects multiple VPCs through a cloud hub (for example, AWS Transit Gateway) | You need to connect multiple VPCs with inter-VPC communication |
 
 ### Supported cloud providers
@@ -248,16 +248,16 @@ Magic Cloud Networking is not a separate tunnel type — it orchestrates your cl
 - GCP (single VPC)
 
 :::note[Key consideration]
-Magic Cloud Networking requires a Magic WAN subscription and Magic Cloud Networking entitlement. Contact your account team to enable Magic Cloud Networking.
+Multi-Cloud Networking requires a Cloudflare WAN subscription and Multi-Cloud Networking entitlement. Contact your account team to enable Multi-Cloud Networking.
 :::
 
 ### Deployment notes
 
-- **Azure VNet sizing**: Magic Cloud Networking creates a GatewaySubnet (`/27`) within your VNet for the Azure VPN Gateway. Ensure your VNet has sufficient address space. A `/20` or larger VNet is recommended to avoid address exhaustion.
-- **Cloud provider costs**: Magic Cloud Networking uses your cloud provider's native VPN services. Standard VPN gateway and data transfer costs from your cloud provider apply in addition to Magic WAN costs.
+- **Azure VNet sizing**: Multi-Cloud Networking creates a GatewaySubnet (`/27`) within your VNet for the Azure VPN Gateway. Ensure your VNet has sufficient address space. A `/20` or larger VNet is recommended to avoid address exhaustion.
+- **Cloud provider costs**: Multi-Cloud Networking uses your cloud provider's native VPN services. Standard VPN gateway and data transfer costs from your cloud provider apply in addition to Cloudflare WAN costs.
 - **Tunnel creation time**: Cloud provider VPN gateways can take 15-45 minutes to provision. Plan for this delay when onboarding new VPCs.
 
-For detailed configuration, refer to the [Magic Cloud Networking documentation](/magic-cloud-networking/).
+For detailed configuration, refer to the [Multi-Cloud Networking documentation](/multi-cloud-networking/).
 
 ---
 
@@ -273,10 +273,10 @@ Use the following guidance to select the appropriate connectivity option for you
 | Connect a site with IoT devices or VoIP systems | [WARP Connector](#warp-connector) |
 | Connect a branch office using existing routers | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) |
 | Encrypt traffic over the public Internet | [IPsec tunnels](#ipsec-tunnels) |
-| Zero-touch branch office deployment | [Magic WAN Connector](#magic-wan-connector) |
-| Connect cloud VPCs (AWS, Azure, GCP) with minimal configuration | [Magic Cloud Networking](#magic-cloud-networking) |
+| Zero-touch branch office deployment | [Cloudflare One Appliance](#cloudflare-one-appliance) |
+| Connect cloud VPCs (AWS, Azure, GCP) with minimal configuration | [Multi-Cloud Networking](#multi-cloud-networking) |
 | Bypass the public Internet entirely | [Cloudflare Network Interconnect](#cloudflare-network-interconnect-cni) |
-| High-throughput enterprise connectivity | [Magic WAN Connector](#magic-wan-connector) or [CNI](#cloudflare-network-interconnect-cni) |
+| High-throughput enterprise connectivity | [Cloudflare One Appliance](#cloudflare-one-appliance) or [CNI](#cloudflare-network-interconnect-cni) |
 
 ### Recommendations by team
 
@@ -285,24 +285,24 @@ The team driving your connectivity project influences which option provides the 
 | Primary team | Recommended starting point | Rationale |
 | ---- | ---- | ---- |
 | Security / InfoSec | [Cloudflare Tunnel](#cloudflare-tunnel) + [WARP client](#warp-client) | Minimal network infrastructure changes required. Security controls are managed within the Cloudflare One dashboard. |
-| Network Operations | [Magic WAN](#ipsec-tunnels) (IPsec/GRE) or [Magic WAN Connector](#magic-wan-connector) | Familiar routing and tunnel configuration. Integrates with existing network equipment and workflows. |
+| Network Operations | [Cloudflare WAN](#ipsec-tunnels) (IPsec/GRE) or [Cloudflare One Appliance](#cloudflare-one-appliance) | Familiar routing and tunnel configuration. Integrates with existing network equipment and workflows. |
 | DevOps / Platform Engineering | [WARP Connector](#warp-connector) or [Cloudflare Tunnel](#cloudflare-tunnel) | Software-defined deployment. Scriptable via API. No hardware dependencies. |
-| Facilities / Branch IT | [Magic WAN Connector](#magic-wan-connector) | Zero-touch deployment with centralized management. No on-site networking expertise required. |
+| Facilities / Branch IT | [Cloudflare One Appliance](#cloudflare-one-appliance) | Zero-touch deployment with centralized management. No on-site networking expertise required. |
 
-### WARP Connector and Magic WAN Connector comparison
+### WARP Connector and Cloudflare One Appliance comparison
 
-WARP Connector and Magic WAN Connector both provide site-level connectivity, but serve different deployment scenarios.
+WARP Connector and Cloudflare One Appliance both provide site-level connectivity, but serve different deployment scenarios.
 
-| Aspect | WARP Connector | Magic WAN Connector |
+| Aspect | WARP Connector | Cloudflare One Appliance |
 | ---- | ---- | ---- |
 | **Protocol** | MASQUE / WireGuard | IPsec |
 | **Deployment model** | Software on Linux host (can run alongside other workloads) | Dedicated hardware appliance or virtual machine |
 | **Best for** | Cloud VPCs, development environments, sites without dedicated network hardware, smaller deployments | Enterprise branch offices, data centers, sites requiring high throughput (1 Gbps+) |
 | **Platform support** | Linux only (x86_64). Currently in beta. | Hardware appliance (Dell VEP1460) or virtual (VMware ESXi, Proxmox) |
 | **High availability** | Not currently supported | Supported through multiple connectors per site |
-| **Management** | Configured as a device in the WARP client settings | Centralized through the Magic WAN dashboard with zero-touch provisioning |
+| **Management** | Configured as a device in the WARP client settings | Centralized through the Cloudflare WAN dashboard with zero-touch provisioning |
 
-Use WARP Connector when you need lightweight, software-only connectivity for cloud workloads or sites without dedicated network hardware. Use Magic WAN Connector when you need enterprise-grade throughput, high availability, or integration with existing network infrastructure.
+Use WARP Connector when you need lightweight, software-only connectivity for cloud workloads or sites without dedicated network hardware. Use Cloudflare One Appliance when you need enterprise-grade throughput, high availability, or integration with existing network infrastructure.
 
 ---
 
@@ -316,9 +316,9 @@ Not all connectivity options work together in the same account. Review the follo
 
 | Combination | Compatible | Notes |
 | ---- | ---- | ---- |
-| WARP Connector + Magic WAN | Conditional | Requires <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a>. Accounts on Legacy routing mode cannot use both. |
-| WARP client + Magic WAN | Yes | WARP users can access Magic WAN-connected sites. |
-| Cloudflare Tunnel + Magic WAN | Yes | Avoid overlapping IP routes. Cloudflare Tunnel takes priority if the same CIDR is configured for both. |
+| WARP Connector + Cloudflare WAN | Conditional | Requires <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a>. Accounts on Legacy routing mode cannot use both. |
+| WARP client + Cloudflare WAN | Yes | WARP users can access Cloudflare WAN-connected sites. |
+| Cloudflare Tunnel + Cloudflare WAN | Yes | Avoid overlapping IP routes. Cloudflare Tunnel takes priority if the same CIDR is configured for both. |
 | GRE + IPsec | Yes | Use for redundancy or migration scenarios. |
 | CNI + GRE or IPsec | Yes | Use Internet tunnels as backup for CNI. |
 | WARP client + Cloudflare Tunnel + WARP Connector | Yes | Common pattern for remote access to private applications. All three work together. |
@@ -328,7 +328,7 @@ Not all connectivity options work together in the same account. Review the follo
 
 When using multiple connectivity options, follow these guidelines to avoid routing conflicts:
 
-- **Avoid overlapping CIDR ranges**: Do not configure the same IP range for multiple tunnel types. If an overlap exists, Cloudflare Tunnel takes priority over Magic WAN routes.
+- **Avoid overlapping CIDR ranges**: Do not configure the same IP range for multiple tunnel types. If an overlap exists, Cloudflare Tunnel takes priority over Cloudflare WAN routes.
 - **No automatic failover**: Cloudflare does not automatically fail over traffic between different connectivity options. Plan your routing to handle failures within each tunnel type.
 - **Virtual Networks**: Use [Virtual Networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) to handle overlapping private IP ranges from different environments (for example, multiple cloud VPCs using `10.0.0.0/8`).
 
@@ -340,7 +340,7 @@ When layering tunnels or using multiple encapsulation methods, account for overh
 | ---- | ---- | ---- |
 | GRE tunnel | 1,476 bytes | 1,436 bytes or lower |
 | IPsec tunnel | 1,400-1,436 bytes (varies by encryption) | 1,360-1,396 bytes |
-| WARP behind Magic WAN (double encapsulation) | ~1,300 bytes | Configure based on testing |
+| WARP behind Cloudflare WAN (double encapsulation) | ~1,300 bytes | Configure based on testing |
 | WARP Connector to WARP client | ~1,280 bytes | Configure based on testing. Traffic is encapsulated twice: by WARP Connector and again by Cloudflare before delivery to the WARP client. |
 
 Configure MSS clamping on your edge devices to ensure TCP traffic does not require fragmentation.
@@ -354,7 +354,7 @@ Different connectivity options handle source IP addresses differently:
 | Cloudflare Tunnel | Origin sees the `cloudflared` process IP. Use `CF-Connecting-IP` header for HTTP traffic. |
 | WARP Connector | Preserves original source IP end-to-end. |
 | GRE and IPsec tunnels | Preserves original source IP within the tunnel. |
-| Magic WAN Connector | Preserves original source IP within the tunnel. |
+| Cloudflare One Appliance | Preserves original source IP within the tunnel. |
 
 Source IP preservation is required for:
 
@@ -370,10 +370,10 @@ Source IP preservation is required for:
 | WARP client | Yes | No (device cannot receive unsolicited inbound) |
 | WARP Connector | Yes | Yes |
 | GRE and IPsec tunnels | Yes | Yes |
-| Magic WAN Connector | Yes | Yes |
+| Cloudflare One Appliance | Yes | Yes |
 | CNI | Yes | Yes |
 
-If your application requires server-initiated connections (for example, VoIP callbacks, database replication), use WARP Connector, Magic WAN, or CNI instead of Cloudflare Tunnel.
+If your application requires server-initiated connections (for example, VoIP callbacks, database replication), use WARP Connector, Cloudflare WAN, or CNI instead of Cloudflare Tunnel.
 
 ---
 
@@ -388,14 +388,14 @@ This pattern serves organizations with a distributed workforce and multiple phys
 **Components:**
 
 - **WARP client** for remote employees, providing secure access from any location
-- **IPsec tunnels** (via Magic WAN) for branch offices with existing network infrastructure
+- **IPsec tunnels** (via Cloudflare WAN) for branch offices with existing network infrastructure
 - **Cloudflare Tunnel** for specific internal applications that need clientless browser access
 
 **Traffic flow:**
 
 1. Remote employees connect through WARP, which on-ramps their traffic to Cloudflare.
 2. Gateway policies inspect and filter traffic based on user identity and device posture.
-3. Traffic destined for branch office resources routes through IPsec tunnels to Magic WAN-connected sites.
+3. Traffic destined for branch office resources routes through IPsec tunnels to Cloudflare WAN-connected sites.
 4. Traffic destined for specific applications routes through Cloudflare Tunnel to origin servers.
 
 ### Cloud-first organization
@@ -404,17 +404,17 @@ This pattern serves organizations with primarily cloud-based infrastructure and 
 
 **Components:**
 
-- **Magic Cloud Networking** for cloud VPCs (AWS, GCP, Azure), automating IPsec tunnel creation to Magic WAN
+- **Multi-Cloud Networking** for cloud VPCs (AWS, GCP, Azure), automating IPsec tunnel creation to Cloudflare WAN
 - **Cloudflare Tunnel** for Kubernetes services and containerized applications
 - **WARP client** for employee devices
 
 **Traffic flow:**
 
-1. Magic Cloud Networking automatically creates IPsec tunnels between cloud VPCs and Magic WAN.
+1. Multi-Cloud Networking automatically creates IPsec tunnels between cloud VPCs and Cloudflare WAN.
 2. Cloudflare Tunnel provides ingress for external-facing applications.
 3. Employees access cloud resources through the WARP client.
 
-**Alternative:** For organizations not using Magic WAN, WARP Connector can provide bidirectional connectivity for cloud VPCs. Note that accounts on Legacy routing mode cannot use WARP Connector and Magic WAN together.
+**Alternative:** For organizations not using Cloudflare WAN, WARP Connector can provide bidirectional connectivity for cloud VPCs. Note that accounts on Legacy routing mode cannot use WARP Connector and Cloudflare WAN together.
 
 ### Highly regulated enterprise
 
@@ -441,11 +441,11 @@ This pattern serves organizations with strict compliance requirements that prohi
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [WARP client](/cloudflare-one/team-and-resources/devices/warp/)
 - [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)
-- [Magic WAN](/magic-wan/)
+- [Cloudflare WAN](/cloudflare-wan/)
 - <a href={props.onRampsURL}>WAN Connectors on-ramps</a> - Full list of supported on-ramps
-- [Magic Cloud Networking](/magic-cloud-networking/) - Automate cloud VPC connectivity
+- [Multi-Cloud Networking](/multi-cloud-networking/) - Automate cloud VPC connectivity
 - [Magic Transit](/magic-transit/)
-- <a href={props.connectorURL}>Magic WAN Connector</a>
+- <a href={props.connectorURL}>Cloudflare One Appliance</a>
 - [Cloudflare Network Interconnect](/network-interconnect/)
 - [Virtual Networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/)
 - [DNS locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) - Filter DNS traffic without device agents

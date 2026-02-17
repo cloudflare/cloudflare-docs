@@ -24,7 +24,7 @@ If you are experiencing tunnel health issues, check these items first:
 3. **MTU settings**: Verify MTU is set correctly (typically `1476` for GRE, `1400-1450` for IPsec).
 4. **IPsec parameters**: Confirm your cryptographic parameters match <a href={props.tunnelsConfigLink}>Cloudflare's supported configuration</a>.
 5. **Health check direction**: {props.productName} defaults to <Markdown text={props.healthCheckDefault} />.
-6. **Magic Firewall rules (Less common)**: Ensure ICMP traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips/) is allowed.
+6. **Cloudflare Network Firewall rules (Less common)**: Ensure ICMP traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips/) is allowed.
 
 ---
 
@@ -82,7 +82,7 @@ For instructions on monitoring tunnel status, refer to <a href={props.checkHealt
 
 | Direction | Behavior | Default for |
 | :---- | :---- | :--- |
-| **Bidirectional** | Probe and response both traverse the tunnel | Magic WAN |
+| **Bidirectional** | Probe and response both traverse the tunnel | Cloudflare WAN (formerly Magic WAN) |
 | **Unidirectional** | Probe traverses tunnel; response returns via Internet | Magic Transit (direct server return)
  |
 
@@ -128,17 +128,17 @@ If your firewall drops ICMP request packets as well, verify that your firewall p
 
 ---
 
-### Health check failures with Magic Firewall
+### Health check failures with Cloudflare Network Firewall
 
 #### Symptoms
 
-- Tunnels were healthy before enabling Magic Firewall
-- After adding Magic Firewall rules, health checks fail
+- Tunnels were healthy before enabling Cloudflare Network Firewall
+- After adding Cloudflare Network Firewall rules, health checks fail
 - Blocking ICMP traffic causes immediate health check failures
 
 #### Cause
 
-Magic Firewall processes all traffic, including Cloudflare's health check probes. If you create a rule that blocks ICMP traffic, you also block the health check packets that Cloudflare sends to monitor tunnel status.
+Cloudflare Network Firewall processes all traffic, including Cloudflare's health check probes. If you create a rule that blocks ICMP traffic, you also block the health check packets that Cloudflare sends to monitor tunnel status.
 
 #### Solution
 
@@ -158,7 +158,7 @@ Add an allow rule for ICMP traffic from Cloudflare IP addresses *before* any blo
 
 3. Position this rule *before* any rules that block ICMP traffic.
 
-For more information, refer to [Magic Firewall rules and endpoint health checks](/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks).
+For more information, refer to [Cloudflare Network Firewall rules and endpoint health checks](/cloudflare-network-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks).
 
 ---
 

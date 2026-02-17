@@ -11,7 +11,7 @@ entries:
     general_definition: |-
       policy-based routing (PBR) is a technique used to make routing decisions based on policies set by your administrador.
     associated_products:
-      - Magic WAN
+      - Cloudflare WAN
 
   - term: prefix
     general_definition: |-
@@ -19,5 +19,5 @@ entries:
 
       Using an analogy, the prefix is like a street address. If an IP is in the same street, it belongs to the same network of devices.
     associated_products:
-      - Magic WAN
+      - Cloudflare WAN
       - Magic Network Monitoring

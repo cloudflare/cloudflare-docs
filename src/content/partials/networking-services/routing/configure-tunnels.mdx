@@ -80,20 +80,20 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 	file="icmp-mfirewall"
 	product="networking-services"
 	params={{
-		mFirewallName: "Magic Firewall rules",
-		mFirewallURL: "/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks"
+		mFirewallName: "Cloudflare Network Firewall rules",
+		mFirewallURL: "/cloudflare-network-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks"
 	}}
 	/>
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
-{ props.magicWord === "WAN Tunnels" && (
+{/* Dashboard steps for CF1 Cloudflare WAN (Cloudflare One dashboard) */}
+{ props.magicWord === "CF1 Cloudflare WAN" && (
 	<>
 	<Markdown
 	text={`
 	1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
-	2. Go to **Connectors** > **WAN Tunnels**, and select **Create**.
+	2. Go to **Connectors** > **Cloudflare WAN**, and select **Create**.
 	3. On the **Add Tunnel** page, choose either a **GRE tunnel** or **IPsec tunnel**.
 	`}
 	inline={false}
@@ -102,8 +102,8 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 )
 }
 
-{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
-{ props.magicWord !== "WAN Tunnels" && (
+{/* Dashboard steps for Cloudflare WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "CF1 Cloudflare WAN" && (
 	<>
 	<Markdown
 	text={`
@@ -460,11 +460,11 @@ To check for tunnel health, Cloudflare sends a <a href={props.tunnelHealthChecks
 
 {/*
 	Conditional logic explanation:
-	- Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Magic WAN"
-	- Magic WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
+	- Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Cloudflare WAN"
+	- Cloudflare WAN/CF1 Cloudflare WAN pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
 	This avoids saying "Magic Transit defaults to...Magic Transit" on the Magic Transit page.
 */}
-Cloudflare defaults to {props.magicWord === "Magic Transit" ? "unidirectional" : "bidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic Transit (direct server return)" : props.productName}, and {props.magicWord === "Magic Transit" ? "bidirectional" : "unidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic WAN" : "Magic Transit (direct server return)"}. However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
+Cloudflare defaults to {props.magicWord === "Magic Transit" ? "unidirectional" : "bidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic Transit (direct server return)" : props.productName}, and {props.magicWord === "Magic Transit" ? "bidirectional" : "unidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Cloudflare WAN" : "Magic Transit (direct server return)"}. However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
 
 { props.magicWord === "Magic Transit" && (
   <>
