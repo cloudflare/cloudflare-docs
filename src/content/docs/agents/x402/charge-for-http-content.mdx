@@ -69,6 +69,37 @@ npx wrangler deploy
 
 For full configuration options and Bot Management examples, see the [template README](https://github.com/cloudflare/templates/tree/main/x402-proxy-template).
 
+## Custom Worker endpoints
+
+For more control, add x402 middleware directly to your Worker using Hono:
+
+```ts
+import { Hono } from "hono";
+import { paymentMiddleware } from "x402-hono";
+
+const app = new Hono<{ Bindings: Env }>();
+
+app.use(
+	paymentMiddleware(
+		process.env.SERVER_ADDRESS as `0x${string}`,
+		{
+			"/premium": {
+				price: "$0.10",
+				network: "base-sepolia",
+				config: { description: "Premium content" },
+			},
+		},
+		{ url: "https://x402.org/facilitator" },
+	),
+);
+
+app.get("/premium", (c) => c.json({ message: "Thanks for paying!" }));
+
+export default app;
+```
+
+See the [x402 Workers example](https://github.com/cloudflare/agents/tree/main/examples/x402) for a complete implementation.
+
 ## Related
 
 - [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/) — Native Cloudflare monetization without custom code
