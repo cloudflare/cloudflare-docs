@@ -61,18 +61,24 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 
 11. (Optional) Configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application.
 
-12. <Render file="access/access-block-page" product="cloudflare-one" />
+12. (Optional) Turn on **Enable clientless access in App Launcher** to allow users who match the Access policies to access this private destination through the App Launcher without the Cloudflare One client. When enabled, the application tile in the App Launcher opens the application in [Clientless Browser Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/), which routes traffic through a remote browser. This is useful for users on unmanaged devices or contractors who cannot install the device client.
 
-13. Select **Next**.
+	:::note
+	This setting requires Clientless Browser Isolation with policies that allow users of this application.
+	:::
 
-14. <Render
+13. <Render file="access/access-block-page" product="cloudflare-one" />
+
+14. Select **Next**.
+
+15. <Render
     	file="access/self-hosted-app/advanced-settings"
     	product="cloudflare-one"
     />
 
         These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
 
-15. Select **Save**.
+16. Select **Save**.
 
 Users can now connect to your private application after authenticating with Cloudflare Access.
 
