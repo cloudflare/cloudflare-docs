@@ -174,10 +174,10 @@ product:cloudflare-network-firewall:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/cloudflare-network-firewall/**
-product:magic-network-monitoring:
+product:network-flow:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-network-monitoring/**
+          - src/content/docs/network-flow/**
 product:magic-transit:
   - changed-files:
       - any-glob-to-any-file:

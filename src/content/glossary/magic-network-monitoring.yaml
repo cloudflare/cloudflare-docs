@@ -1,5 +1,5 @@
 ---
-productName: Magic Network Monitoring
+productName: Network Flow
 entries:
   - term: flow data
     general_definition: |-
@@ -11,7 +11,7 @@ entries:
 
   - term: sampling
     general_definition: |-
-      in the context of Magic Network Monitoring, sampling is the process of taking samples of packets for a specific period to identify potential attacks.
+      in the context of Network Flow, sampling is the process of taking samples of packets for a specific period to identify potential attacks.
 
   - term: sFlow
     general_definition: |-

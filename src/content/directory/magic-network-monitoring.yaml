@@ -1,14 +1,14 @@
 id: EuzrMp
-name: Magic Network Monitoring
+name: Network Flow
 
 entry:
-  title: Magic Network Monitoring
-  url: /magic-network-monitoring/
+  title: Network Flow
+  url: /network-flow/
   wrap: true
   group: Network security
   additional_groups: [Analytics]
 
 meta:
-  title: Cloudflare Magic Network Monitoring docs
+  title: Cloudflare Network Flow docs
   description: Visibility into your network and cloud traffic by analyzing network flow data
   author: "@cloudflare"
