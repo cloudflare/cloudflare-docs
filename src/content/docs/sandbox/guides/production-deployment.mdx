@@ -6,7 +6,7 @@ sidebar:
 description: Set up custom domains for preview URLs in production.
 ---
 
-import { Tabs, TabItem, WranglerConfig } from "~/components";
+import { WranglerConfig } from "~/components";
 
 :::note[Only required for preview URLs]
 Custom domain setup is ONLY needed if you use `exposePort()` to expose services from sandboxes. If your application does not expose ports, you can deploy to `.workers.dev` without this configuration.
@@ -85,8 +85,7 @@ Each step can fail independently: DNS can resolve but TLS can fail (certificate 
 
 In the Cloudflare dashboard, go to your domain and create an A record. The record name depends on whether your Worker runs on the apex domain or a subdomain.
 
-<Tabs>
-<TabItem label="Apex domain">
+#### Apex domain
 
 If your Worker runs on the apex domain (`yourdomain.com`), create a wildcard record for `*`:
 
@@ -97,8 +96,7 @@ If your Worker runs on the apex domain (`yourdomain.com`), create a wildcard rec
 
 This routes all subdomains through Cloudflare's proxy. The IP address `192.0.2.0` is a documentation address (RFC 5737) that Cloudflare recognizes when proxied. Preview URLs will look like `https://8080-sandbox-id-token.yourdomain.com`.
 
-</TabItem>
-<TabItem label="Subdomain">
+#### Subdomain
 
 If your Worker runs on a subdomain (for example, `sandbox.yourdomain.com`), create a wildcard record for `*.sandbox`:
 
@@ -113,15 +111,11 @@ This routes all sub-subdomains of `sandbox.yourdomain.com` through Cloudflare's 
 You also need a TLS certificate covering `*.sandbox.yourdomain.com`. Universal SSL does not cover second-level wildcards. Refer to the [TLS caution at the top of this page](#subdomain-depth-matters-for-tls), or use [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to order one through the dashboard.
 :::
 
-</TabItem>
-</Tabs>
-
 ### Configure Worker Routes
 
 Add a wildcard route to your Wrangler configuration. The route pattern must match the domain or subdomain your Worker runs on.
 
-<Tabs>
-<TabItem label="Apex domain">
+#### Apex domain
 
 <WranglerConfig>
 ```jsonc
@@ -142,8 +136,7 @@ Add a wildcard route to your Wrangler configuration. The route pattern must matc
 
 Replace `yourdomain.com` with your actual domain.
 
-</TabItem>
-<TabItem label="Subdomain">
+#### Subdomain
 
 <WranglerConfig>
 ```jsonc
@@ -163,9 +156,6 @@ Replace `yourdomain.com` with your actual domain.
 </WranglerConfig>
 
 Replace `sandbox.yourdomain.com` with your actual subdomain and `yourdomain.com` with your zone name.
-
-</TabItem>
-</Tabs>
 
 ### Deploy
 
