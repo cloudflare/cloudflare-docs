@@ -719,6 +719,10 @@ this.mcp.onServerStateChanged(() => {
 
 </TypeScriptExample>
 
+:::note
+MCP server list broadcasts (`cf_agent_mcp_servers`) are automatically filtered to exclude connections where [`shouldSendProtocolMessages`](/agents/api-reference/protocol-messages/) returned `false`.
+:::
+
 ### Lifecycle methods
 
 #### `this.mcp.registerServer()`

@@ -183,7 +183,7 @@ export class MinimalAgent extends Agent {
 Use `setState()` to update state. This:
 
 1. Saves to SQLite (persistent)
-2. Broadcasts to all connected clients
+2. Broadcasts to all connected clients (excluding connections where [`shouldSendProtocolMessages`](/agents/api-reference/protocol-messages/) returned `false`)
 3. Triggers `onStateChanged()` (after broadcast; best-effort)
 
 <TypeScriptExample>
