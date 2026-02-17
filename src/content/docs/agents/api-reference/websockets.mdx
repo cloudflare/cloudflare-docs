@@ -247,6 +247,10 @@ export class FileAgent extends Agent {
 
 </TypeScriptExample>
 
+:::note
+Agents automatically send JSON text frames (identity, state, MCP servers) to every connection. If your client only handles binary data and cannot process these frames, use [`shouldSendProtocolMessages`](/agents/api-reference/protocol-messages/) to suppress them.
+:::
+
 ## Error and close handling
 
 Handle connection errors and disconnections:
