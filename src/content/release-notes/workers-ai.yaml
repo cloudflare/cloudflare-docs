@@ -3,6 +3,16 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2026-02-17"
+    title: Chat Completions API support for gpt-oss models and tool calling improvements
+    description: |-
+      - [`@cf/openai/gpt-oss-120b`](/workers-ai/models/gpt-oss-120b/) and [`@cf/openai/gpt-oss-20b`](/workers-ai/models/gpt-oss-20b/) now support Chat Completions API format. Use `/v1/chat/completions` with a `messages` array, or use `/ai/run` which dynamically detects your input format and accepts Chat Completions (`messages`), legacy Completions (`prompt`), or Responses API (`input`).
+      - **[Bug fix]** Fixed a bug in the schema for multiple text generation models where the `content` field in message objects only accepted string values. The field now properly accepts both string content and array content (structured content parts for multi-modal inputs). This fix applies to all affected chat models including GPT-OSS models, Llama 3.x, Mistral, Qwen, and others.
+      - **[Bug fix]** Tool call round-trips now work correctly. The binding no longer rejects `tool_call_id` values that it generated itself, fixing issues with multi-turn tool calling conversations.
+      - **[Bug fix]** Assistant messages with `content: null` and `tool_calls` are now accepted in both the Workers AI binding and REST API (`/v1/chat/completions`), fixing tool call round-trip failures.
+      - **[Bug fix]** Streaming responses now correctly report `finish_reason` only on the usage chunk, matching OpenAI's streaming behavior and preventing duplicate finish events.
+      - **[Bug fix]** `/v1/chat/completions` now preserves original tool call IDs from models instead of regenerating them. Previously, the endpoint was generating new IDs which broke multi-turn tool calling because AI SDK clients could not match tool results to their original calls.
+      - **[Bug fix]** `/v1/chat/completions` now correctly reports `finish_reason: "tool_calls"` in the final usage chunk when tools are used. Previously, it was hardcoding `finish_reason: "stop"` which caused AI SDK clients to think the conversation was complete instead of executing tool calls.
   - publish_date: "2026-02-13"
     title: GLM-4.7-Flash, @cloudflare/tanstack-ai, and workers-ai-provider v3.1.1
     description: |-
