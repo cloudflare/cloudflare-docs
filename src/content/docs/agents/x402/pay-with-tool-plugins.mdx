@@ -59,6 +59,10 @@ export const X402PaymentPlugin: Plugin = async () => ({
 					throw new Error("X402_PRIVATE_KEY environment variable is not set.");
 				}
 
+				// Your human-in-the-loop confirmation flow...
+				// const approved = await confirmPayment(args.url, estimatedCost);
+				// if (!approved) throw new Error("Payment declined by user");
+
 				const account = privateKeyToAccount(privateKey as `0x${string}`);
 				const client = new x402Client();
 				registerExactEvmScheme(client, { signer: account });
@@ -131,6 +135,10 @@ if (!privateKey) {
 }
 
 try {
+	// Your human-in-the-loop confirmation flow...
+	// const approved = await confirmPayment(url);
+	// if (!approved) process.exit(0);
+
 	const account = privateKeyToAccount(privateKey);
 	const client = new x402Client();
 	registerExactEvmScheme(client, { signer: account });
