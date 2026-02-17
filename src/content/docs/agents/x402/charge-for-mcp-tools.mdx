@@ -21,7 +21,8 @@ import { z } from "zod";
 const X402_CONFIG: X402Config = {
 	network: "base",
 	recipient: env.MCP_ADDRESS,
-	facilitator: { url: "https://x402.org/facilitator" },
+	facilitator: { url: "https://x402.org/facilitator" }, // Payment facilitator URL
+	// To learn more about facilitators: https://x402.gitbook.io/x402/core-concepts/facilitator
 };
 
 export class PaidMCP extends McpAgent<Env> {
