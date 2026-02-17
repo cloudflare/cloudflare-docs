@@ -13,11 +13,11 @@ When a WebSocket client connects to an Agent, the framework automatically sends 
 
 On every new connection, the Agent sends three protocol messages:
 
-| Message type              | Content                                    |
-| ------------------------- | ------------------------------------------ |
-| `cf_agent_identity`       | Agent name and class                       |
-| `cf_agent_state`          | Current agent state                        |
-| `cf_agent_mcp_servers`    | Connected MCP server list                  |
+| Message type           | Content                   |
+| ---------------------- | ------------------------- |
+| `cf_agent_identity`    | Agent name and class      |
+| `cf_agent_state`       | Current agent state       |
+| `cf_agent_mcp_servers` | Connected MCP server list |
 
 State and MCP messages are also broadcast to all connections whenever they change.
 
@@ -103,16 +103,18 @@ export class MyAgent extends Agent<Env, State> {
 
 ## What is and is not suppressed
 
-| Action                                              | Works? |
-| --------------------------------------------------- | ------ |
-| Receive `cf_agent_identity` on connect              | **No** |
-| Receive `cf_agent_state` on connect and broadcasts  | **No** |
+The following table shows what still works when protocol messages are suppressed for a connection:
+
+| Action                                                   | Works? |
+| -------------------------------------------------------- | ------ |
+| Receive `cf_agent_identity` on connect                   | **No** |
+| Receive `cf_agent_state` on connect and broadcasts       | **No** |
 | Receive `cf_agent_mcp_servers` on connect and broadcasts | **No** |
-| Send and receive regular WebSocket messages          | Yes    |
-| Call `@callable()` RPC methods                       | Yes    |
-| Receive `this.broadcast()` messages                  | Yes    |
-| Send binary data                                     | Yes    |
-| Mutate agent state via RPC                           | Yes    |
+| Send and receive regular WebSocket messages              | Yes    |
+| Call `@callable()` RPC methods                           | Yes    |
+| Receive `this.broadcast()` messages                      | Yes    |
+| Send binary data                                         | Yes    |
+| Mutate agent state via RPC                               | Yes    |
 
 ## Combining with readonly
 
@@ -144,7 +146,8 @@ export class SensorHub extends Agent<Env, SensorState> {
 	async reportReading(sensorId: string, value: number) {
 		// This RPC still works for readonly+no-protocol connections
 		// because it writes to SQL, not agent state
-		this.sql`INSERT INTO readings (sensor_id, value, ts) VALUES (${sensorId}, ${value}, ${Date.now()})`;
+		this
+			.sql`INSERT INTO readings (sensor_id, value, ts) VALUES (${sensorId}, ${value}, ${Date.now()})`;
 	}
 }
 ```
@@ -159,10 +162,10 @@ Both flags are stored in the connection's WebSocket attachment and hidden from `
 
 An overridable hook that determines if a connection should receive protocol messages when it connects.
 
-| Parameter    | Type                | Description                          |
-| ------------ | ------------------- | ------------------------------------ |
-| `connection` | `Connection`        | The connecting client                |
-| `ctx`        | `ConnectionContext`  | Contains the upgrade request         |
+| Parameter    | Type                | Description                           |
+| ------------ | ------------------- | ------------------------------------- |
+| `connection` | `Connection`        | The connecting client                 |
+| `ctx`        | `ConnectionContext` | Contains the upgrade request          |
 | **Returns**  | `boolean`           | `false` to suppress protocol messages |
 
 Default: returns `true` (all connections receive protocol messages).
@@ -173,9 +176,9 @@ This hook is evaluated once on connect. The result is persisted in the connectio
 
 Check if a connection currently has protocol messages enabled.
 
-| Parameter    | Type         | Description             |
-| ------------ | ------------ | ----------------------- |
-| `connection` | `Connection` | The connection to check |
+| Parameter    | Type         | Description                             |
+| ------------ | ------------ | --------------------------------------- |
+| `connection` | `Connection` | The connection to check                 |
 | **Returns**  | `boolean`    | `true` if protocol messages are enabled |
 
 Safe to call at any time, including after the agent wakes from hibernation.
