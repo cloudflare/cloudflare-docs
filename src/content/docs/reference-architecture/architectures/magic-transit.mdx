@@ -143,7 +143,7 @@ Figure 7 illustrates an example of deploying Magic Transit and Cloudflare WAN se
 
 ![Figure 7: Magic Transit + Cloudflare WAN Provide Network-as-a-Service for the Entire Enterprise](~/assets/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-7.png "Figure 7: Magic Transit + Cloudflare WAN Provide Network-as-a-Service for the Entire Enterprise")
 
-*Note: Labels in this image may reflect previous product names.*
+_Note: Labels in this image may reflect a previous product name._
 
 - In the example, GRE tunnels are used to connect the customer's various sites over the Cloudflare global anycast network. The Cloudflare anycast IP address for the Magic Transit service instance is 192.0.2.1, while the one for the Cloudflare WAN service instance is 192.0.2.2. The Magic Transit service is enabled with the Egress option.
 
@@ -157,7 +157,7 @@ Cloudflare Network Firewall is deployed and configured as part of Magic Transit.
 
 ![Figure 8: Cloudflare Network Firewall Blocks Unwanted and Malicious Traffic at the Internet Edge](~/assets/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-8.png "Figure 8: Cloudflare Network Firewall Blocks Unwanted and Malicious Traffic at the Internet Edge")
 
-*Note: Labels in this image may reflect a previous product name.*
+_Note: Labels in this image may reflect a previous product name._
 
 In Cloudflare Network Firewall rules, administrators can match and filter network traffic not only based on the typical 5-tuple (source/destination IP, source/destination port, protocol) information carried in the IP packet header but also other packet information such as IP packet length, IP header length, TTL, etc. In addition, geographical information such as the name of the Cloudflare data center/colo, the region, and the country the data centers are located in can also be used in configuring Network Firewall rules (geo-blocking).
 

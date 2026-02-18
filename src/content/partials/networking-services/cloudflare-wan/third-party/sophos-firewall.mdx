@@ -64,13 +64,13 @@ The next step involves configuring a site-to-site IPsec VPN connection on your S
 
 ![Configure an IPsec tunnel.](~/assets/images/cloudflare-wan/third-party/sophos-firewall/2-ipsec-tunnel.png)
 
-_Note: Labels in this image may reflect previous product names._
+_Note: Labels in this image may reflect a previous product name._
 
 After setting up your IPsec tunnel, it will show up on the IPsec connections list with an **Active** status.
 
 ![The IPsec tunnel should show up on the IPsec connections list.](~/assets/images/cloudflare-wan/third-party/sophos-firewall/2b-ipsec-tunnel.png)
 
-_Note: Labels in this image may reflect previous product names._
+_Note: Labels in this image may reflect a previous product name._
 
 ### 3. Assign the XFRM interface address
 
@@ -82,7 +82,7 @@ You must use an interface address from the `/31` subnet required to <a href={pro
 
 ![Configure a XFRM interface.](~/assets/images/cloudflare-wan/third-party/sophos-firewall/3-xfrm-interface.png)
 
-_Note: Labels in this image may reflect previous product names._
+_Note: Labels in this image may reflect a previous product name._
 
 ### 4. Add a firewall rule
 
@@ -154,7 +154,7 @@ Go to **Configure** > **Routing** > **Static routes** to add an XFRM interface-b
 
 ![Go to static routes to add an XFRM interface-based route](~/assets/images/cloudflare-wan/third-party/sophos-firewall/static-route.png)
 
-_Note: Labels in this image may reflect previous product names._
+_Note: Labels in this image may reflect a previous product name._
 
 #### SD-WAN route
 
@@ -162,7 +162,7 @@ _Note: Labels in this image may reflect previous product names._
 
 ![Go to Gateways to add an XFRM interface-based route](~/assets/images/cloudflare-wan/third-party/sophos-firewall/1-sd-wan-gateway.png)
 
-_Note: Labels in this image may reflect previous product names._
+_Note: Labels in this image may reflect a previous product name._
 
 2. In **Configure** > **Routing** > **SD-WAN routes**, select **Add** to add the desired networks and services in the route to redirect traffic to Cloudflare. Enter a descriptive name for your connection, and the IP addresses you set up for your IPsec tunnels in **Incoming interface** and **Source networks**. Do not forget to choose the correct **Primary gateway** option.
 
@@ -252,13 +252,13 @@ When the tunnel is working, its **Status** will be green.
 
 ![If the tunnel is working, it will show up with a green status.](~/assets/images/cloudflare-wan/third-party/sophos-firewall/2b-ipsec-tunnel.png)
 
-_Note: Labels in this image may reflect previous product names._
+_Note: Labels in this image may reflect a previous product name._
 
 The corresponding XFRM interface will also show a **Connected** status.
 
 ![The XFRM interface will also show a connected status.](~/assets/images/cloudflare-wan/third-party/sophos-firewall/1-sd-wan-gateway.png)
 
-_Note: Labels in this image may reflect previous product names._
+_Note: Labels in this image may reflect a previous product name._
 
 ### GRE
 

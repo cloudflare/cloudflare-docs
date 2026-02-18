@@ -338,6 +338,8 @@ Note the following traffic flows:
 
 ![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, WARP Connector and cloudflared.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
 
+_Note: Labels in this image may reflect a previous product name._
+
 <sub>
 	*Note: All of the endpoints connected via the WARP Connector or device agent
 	are automatically assigned IP addresses from the 100.96.0.0/12 address range,
@@ -354,6 +356,8 @@ Once the networks, applications, and user devices are connected to Cloudflare �
 Now this is what a SASE architecture looks like where corporate network traffic from everywhere is forwarded to and processed by Cloudflare. In this architecture, it is possible to make a network connection from any remote location, office location or data center and connect to applications and services living in SaaS infrastructure, cloud-hosted infrastructure or an organization's own on-premise data centers.
 
 ![Traffic from all networks, North and South, as well as East and West, is now flowing through and secured by Cloudflare.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-15.svg)
+
+_Note: Labels in this image may reflect a previous product name._
 
 ### Forwarding device traffic
 
@@ -463,6 +467,8 @@ Once traffic from all user devices is forwarded to the Cloudflare network, it is
 
 ![With all devices and networks connected, any traffic destined for company applications and services all flows through Cloudflare, where policies are applied to determine access.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-17.svg)
 
+_Note: Labels in this image may reflect a previous product name._
+
 ### Verifying users and devices
 
 At this point in implementing SASE architecture, organizations have the ability to route and secure traffic beginning from the point a request is made from a browser on a user's device, all the way through Cloudflare's network to either a company-hosted private application/service or to the public Internet.
@@ -530,6 +536,8 @@ Organizations can also opt to integrate email security directly with their email
 The steps above provide a complete view of evolving to SASE architecture using Cloudflare One. As the diagram below shows, secure access to all private applications, services, and networks — as well as ensuring the security of users' general Internet access — is now applied to all users in the organization, internal or external.
 
 ![A fully deployed SASE solution with Cloudflare protects every aspect of your business. Ensuring all access to applications is secured and all threats from the Internet mitigated.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-21.svg)
+
+_Note: Labels in this image may reflect a previous product name._
 
 For ease of use, the entire Cloudflare One platform can be configured via [API](/api/); and with Cloudflare's [Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs), organizations can manage the Cloudflare global network using the same tools they use to automate the rest of their infrastructure. This allows IT teams to fully manage their Cloudflare One infrastructure, including all the policies detailed in the next section, using code. There are also (as of Oct 2023) more than 500 [GitHub](https://github.com/cloudflare) repositories, many of which allow IT teams to use and build tools to manage their Cloudflare deployment.
 

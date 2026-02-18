@@ -37,7 +37,7 @@ There are 2 branch offices each with distinct subnets.
 
 ![Table of branch subnet information](~/assets/images/cloudflare-wan/third-party/aruba-edge-connect/branch-subnets.png)
 
-_Note: Labels in this image may reflect previous product names._
+_Note: Labels in this image may reflect a previous product name._
 
 The following example shows the **east_branch** deployment on the Orchestrator.
 
@@ -62,7 +62,7 @@ The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminat
 
 ![IPsec tunnel values for east and west branches](~/assets/images/cloudflare-wan/third-party/aruba-edge-connect/central-west-branch-ipsec.png)
 
-_Note: Labels in this image may reflect previous product names._
+_Note: Labels in this image may reflect a previous product name._
 
 The following example shows the **central_branch** deployment on the Orchestrator.
 
@@ -105,7 +105,7 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Business Intent Overlay screen with breakout and CF overlays](~/assets/images/cloudflare-wan/third-party/aruba-edge-connect/biz-intent-overlay.png)
 
-*Note: Labels in this image may reflect a previous product name.*
+_Note: Labels in this image may reflect a previous product name._
 
 </Details>
 
@@ -127,7 +127,7 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Business Intent Overlay screen with breakout and CF overlays for IPsec](~/assets/images/cloudflare-wan/third-party/aruba-edge-connect/biz-intent-overlay-ipsec.png)
 
-*Note: Labels in this image may reflect a previous product name.*
+_Note: Labels in this image may reflect a previous product name._
 
 </Details>
 
@@ -137,7 +137,7 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products](~/assets/images/cloudflare-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram.png)
 
-*Note: Labels in this image may reflect a previous product name.*
+_Note: Labels in this image may reflect a previous product name._
 
 1. Create a tunnel on the EdgeConnect using Cloudflare's assigned public anycast IP and the service used in the overlay policy in the [previous step](#2-configure-overlay-policies).
 2. Create a Virtual Tunnel Interface (VTI) using the private IP pair shared with CF GRE tunnel endpoint and the passthrough tunnel to match the newly created tunnel alias (**CF_GRE_east** in our example).
@@ -156,7 +156,7 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products for IPsec tunnels](~/assets/images/cloudflare-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram-ipsec.png)
 
-*Note: Labels in this image may reflect a previous product name.*
+_Note: Labels in this image may reflect a previous product name._
 
 For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/create/).
 
