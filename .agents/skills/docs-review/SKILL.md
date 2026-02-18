@@ -11,7 +11,7 @@ Review documentation changes for correctness, style, and structure. Use AGENTS.m
 | -------------------------------------------------- | ------------------------------------------------------------- |
 | "review", "suggest changes", "provide suggestions" | Post **suggestions only** via `gh` CLI — do not push commits  |
 | "only make suggestions", "do not make changes"     | Post **suggestions only** — never edit files or push          |
-| "fix", "address this", "update"                    | Edit files directly and commit                                |
+| "fix", "address this", "update"                    | Always edit files directly and commit changes                             |
 | "review and fix"                                   | Fix low-severity issues directly; suggest high-impact changes |
 
 Default to **suggestions** unless the instruction clearly asks for direct edits.
