@@ -37,7 +37,7 @@ The first decision for a Cloudflare One Appliance deployment is its location in 
   - CPE cannot be replaced (yet) because it is part of an active managed service.
   - CPE cannot be replaced because it is a firewall that the organization wants to keep in place for other reasons (technical or contractual).
 
-![Figure 1: Connector location options: (a) replacing CPE, (b) north of CPE , (c) south of CPE.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure01.svg "Figure 1. Connector location options: (a) replacing CPE, (b) north of CPE , (c) south of CPE")
+![Figure 1: Connector location options: (a) replacing CPE, (b) north of CPE , (c) south of CPE.](~/assets/images/reference-architecture/cloudflare-one-appliance-deployment/figure01.svg "Figure 1. Connector location options: (a) replacing CPE, (b) north of CPE , (c) south of CPE")
 
 _Note: Labels in this image may reflect previous product names._
 
@@ -49,7 +49,7 @@ In Wide Area Network (WAN) environments, where remote offices, data centers, and
 
 Cloudflare One Appliance can use two or more WAN ports for uplinks, and therefore it can connect to multiple different ISPs for circuit resiliency. One option for a basic level of HA is to use a single Cloudflare One Appliance with two uplinks, while traffic can be load-balanced between them (Figure 2 below). This approach could be used for non-critical branches, small offices, and other similar types of locations, or as an intermediate step towards a full HA deployment.
 
-![Figure 2. Uplink high-availability deployment.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure02.svg "Figure 2. Uplink high-availability deployment.")
+![Figure 2. Uplink high-availability deployment.](~/assets/images/reference-architecture/cloudflare-one-appliance-deployment/figure02.svg "Figure 2. Uplink high-availability deployment.")
 
 ### Full HA
 
@@ -57,7 +57,7 @@ In this type of setup, a redundant device is configured to take over in case of 
 
 Figure 3 below illustrates the deployment topology where Cloudflare One Appliance supports full HA. Using an election process, one device becomes active and the other becomes passive. To achieve this, the two Connectors must connect to a LAN switch on the same Layer 2 domain (like a VLAN) for heartbeat messages to be sent between them. Active/passive means that the active Connector is the only device that propagates traffic at any point in time.
 
-![Figure 3. Full HA with dual Connectors and dual uplinks.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure03.svg "Figure 3. Full HA with dual Connectors and dual uplinks.")
+![Figure 3. Full HA with dual Connectors and dual uplinks.](~/assets/images/reference-architecture/cloudflare-one-appliance-deployment/figure03.svg "Figure 3. Full HA with dual Connectors and dual uplinks.")
 
 Each Cloudflare One Appliance connects to the same two ISPs using dual uplinks, and automatically creates one IPsec tunnel per WAN port. This requires each ISP to support multiple ports on their on-site Network Termination Unit (or their CPE, if there is one present). In this HA deployment there are four tunnels in total, two per Connector, while traffic can be load-balanced between the two tunnels on the active device. When either the active Connector, or its IPsec tunnels go down, the other Connector takes over and propagates traffic, holding the active role until it fails (preemption is not used to avoid unnecessary failover delays).
 
@@ -72,7 +72,7 @@ The main use case for this type of deployment is based on the fact that many org
 - MPLS service is still in contract, but it is planned to be replaced by Internet connectivity everywhere when the term ends
 - Self-hosted applications might require low latency with agreed SLAs, so a hybrid MPLS/Internet architecture might be required
 
-![Figure 4. Hybrid MPLS/Internet use case.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure04.svg "Figure 4. Hybrid MPLS/Internet use case.")
+![Figure 4. Hybrid MPLS/Internet use case.](~/assets/images/reference-architecture/cloudflare-one-appliance-deployment/figure04.svg "Figure 4. Hybrid MPLS/Internet use case.")
 
 This type of hybrid architecture requires the MPLS Customer Edge router (CE) or some other L3 device in the LAN to route traffic via different interfaces depending on the destination. Traffic flows in this scenario as follows:
 
@@ -86,7 +86,7 @@ All traffic towards internal locations and self-hosted applications follows the 
 
 In some deployments, customers might want to protect only specific protocols using Cloudflare security services such as our [secure web gateway](/cloudflare-one/traffic-policies/), while the rest of the traffic routes through the existing edge device (router or firewall). Figure 5 illustrates such a use case.
 
-![Figure 5. 'Split Tunneling' use case.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure05.svg "Figure 5. 'Split Tunneling' use case.")
+![Figure 5. 'Split Tunneling' use case.](~/assets/images/reference-architecture/cloudflare-one-appliance-deployment/figure05.svg "Figure 5. 'Split Tunneling' use case.")
 
 In this example, the organization wants Cloudflare to protect all Internet web traffic (HTTP/HTTPS), while the rest of the traffic flows out via the existing firewall. The latter could be traffic towards existing VPNs, or non-web traffic exiting the site, but protected by the on-premises firewall. This method could take advantage of local device policy-based routing (PBR) capabilities, for example:
 
@@ -101,7 +101,7 @@ As long as PBR capability exists locally, and the ISP provides at least two publ
 
 Another advanced group of use cases that Cloudflare One Appliance can support is local segmentation, and protection of specific local networks. To achieve that, and depending on an organization's current architecture, line of business, security policies, and compliance requirements, Cloudflare One Appliance can be installed in any location south of the site edge device to provide more granular network security, as illustrated in figure 6 and described in the following paragraphs.
 
-![Figure 6. Segmentation-related use cases.](~/assets/images/reference-architecture/magic-wan-connector-deployment/figure06.svg "Figure 6. Segmentation-related use cases.")
+![Figure 6. Segmentation-related use cases.](~/assets/images/reference-architecture/cloudflare-one-appliance-deployment/figure06.svg "Figure 6. Segmentation-related use cases.")
 
 In this example, the Cloudflare One Appliance will create an IPsec tunnel to Cloudflare through the on premises firewall and local Internet connection. Subnet A and B are both connected to the Cloudflare One Appliance, but have no direct connection with each other. This will enable a couple of use cases:
 
