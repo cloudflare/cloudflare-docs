@@ -25,8 +25,9 @@ Cloudflare Dashboard SSO is available for free to all plans.
 ## Prerequisites
 
 1. You must control your email domain and be able to add a TXT record to verify this.
+
    - Public email providers such as `@gmail.com` are not allowed.
-   - Every user with that email domain must be an employee in your organization. For example, university domains such as `@harvard.edu` are not allowed because they include student emails.
+   - Academic domains (such as `.edu`, `.ac.uk`, `.edu.au`) require manual approval from Cloudflare before activation. Refer to [Register your domain with Cloudflare for SSO](#2-register-your-domain-with-cloudflare-for-sso) for details.
 
 2. You must be a super administrator and be able to access the Cloudflare API.
 
@@ -58,7 +59,7 @@ You must create an [Account API token](/fundamentals/api/get-started/create-toke
 3. Enter your email domain and select **Create** to move to the verification step.
 
 :::note
-Some top level domains, such as `.edu`, are prohibited from being used as SSO domains.
+Academic top-level domains, such as `.edu`, `.ac.uk`, and `.edu.au`, require manual approval from Cloudflare before they can be enabled. You can create and verify a connector for these domains, but you will need to [contact Cloudflare support](https://support.cloudflare.com/) to request activation approval.
 :::
 
 </TabItem>
