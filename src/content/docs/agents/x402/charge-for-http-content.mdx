@@ -54,7 +54,7 @@ With [Bot Management](/bots/), the proxy can charge crawlers while keeping the s
 }
 ```
 
-Requests with a bot score below `bot_score_threshold` see the paywall. Use `except_detection_ids` to allowlist specific crawlers by [detection ID](/ai-crawl-control/reference/bots/).
+Requests with a bot score below `bot_score_threshold` are directed to the paywall. Use `except_detection_ids` to allowlist specific crawlers by [detection ID](/ai-crawl-control/reference/bots/).
 
 ## Deploy
 
@@ -67,7 +67,7 @@ npm install
 npx wrangler deploy
 ```
 
-For full configuration options and Bot Management examples, see the [template README](https://github.com/cloudflare/templates/tree/main/x402-proxy-template).
+For full configuration options and Bot Management examples, refer to the [template README](https://github.com/cloudflare/templates/tree/main/x402-proxy-template).
 
 ## Custom Worker endpoints
 
@@ -98,7 +98,7 @@ app.get("/premium", (c) => c.json({ message: "Thanks for paying!" }));
 export default app;
 ```
 
-See the [x402 Workers example](https://github.com/cloudflare/agents/tree/main/examples/x402) for a complete implementation.
+Refer to the [x402 Workers example](https://github.com/cloudflare/agents/tree/main/examples/x402) for a complete implementation.
 
 ## Related
 
