@@ -10,7 +10,7 @@ Workers Builds can automatically create pull requests in your repository to conf
 
 ## Configuration PR
 
-When you connect a repository that does not have a Wrangler configuration file, Workers Builds runs `wrangler deploy` which triggers [automatic project configuration](/workers/framework-guides/autoconfig/). Instead of failing, it creates a pull request with the necessary configuration for your detected framework.
+When you connect a repository that does not have a Wrangler configuration file, Workers Builds runs `wrangler deploy` which triggers [automatic project configuration](/workers/framework-guides/automatic-configuration/). Instead of failing, it creates a pull request with the necessary configuration for your detected framework.
 
 :::note
 A configuration PR is only created when your deploy command is `npx wrangler deploy`. If you have a custom deploy command, autoconfig will still run and configure your project, but no PR will be created.
