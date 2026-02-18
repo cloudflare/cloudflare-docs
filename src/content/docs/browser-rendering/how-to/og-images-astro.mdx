@@ -23,24 +23,17 @@ In this tutorial, you will:
 2. Use Browser Rendering to screenshot that page as a PNG.
 3. Serve the generated images to social media crawlers.
 
-This tutorial covers two approaches:
-
-| Approach                | Best for                        | Trade-offs                       |
-| ----------------------- | ------------------------------- | -------------------------------- |
-| On-demand (Worker + R2) | Large sites, frequent updates   | ~2s cold start on first request  |
-| Build-time (Static)     | Small sites, infrequent updates | Longer build times as site grows |
-
 ## Prerequisites
 
 - A Cloudflare account with [Browser Rendering enabled](/browser-rendering/get-started/)
-- An Astro site deployed on [Cloudflare Pages](/pages/)
+- An Astro site deployed on [Cloudflare Workers](/workers/framework-guides/web-apps/astro/)
 - Basic familiarity with Astro and Cloudflare Workers
 
 ## 1. Create the OG image template
 
-Create a hidden Astro route that renders your OG image design. This page serves as the source of truth for your image layout.
+Create a Astro route that renders your OG image design. This page serves as the source of truth for your image layout.
 
-Create `src/pages/_internal/og.astro`:
+Create `src/pages/social-card.astro`:
 
 ```astro
 ---
@@ -97,121 +90,32 @@ const author = Astro.url.searchParams.get("author");
 </html>
 ```
 
-Test locally by visiting `http://localhost:4321/_internal/og?title=My%20Blog%20Post&author=Omar`.
+Test locally by visiting `http://localhost:4321/social-card?title=My%20Blog%20Post&author=Omar`.
 
-## 2. Set up Browser Rendering
-
-### Option A: Generate on demand with a Worker
-
-This approach generates images on first request and caches them in R2.
-
-Create a Worker that:
-
-1. Receives requests for OG images
-2. Checks R2 for a cached version
-3. If not cached, uses Browser Rendering to screenshot the template
-4. Saves the result to R2 and returns it
-
-Create `og-worker/src/index.ts`:
-
-```ts
-import puppeteer from "@cloudflare/puppeteer";
-
-interface Env {
-	BROWSER: Fetcher;
-	OG_IMAGES: R2Bucket;
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
-		const slug = url.searchParams.get("slug");
-		const title = url.searchParams.get("title");
-
-		if (!slug || !title) {
-			return new Response("Missing slug or title parameter", { status: 400 });
-		}
-
-		// Check R2 cache first
-		const cacheKey = `og/${slug}.png`;
-		const cached = await env.OG_IMAGES.get(cacheKey);
-
-		if (cached) {
-			return new Response(cached.body, {
-				headers: {
-					"Content-Type": "image/png",
-					"Cache-Control": "public, max-age=86400",
-				},
-			});
-		}
-
-		// Generate image using Browser Rendering
-		const browser = await puppeteer.launch(env.BROWSER);
-		const page = await browser.newPage();
-
-		await page.setViewport({ width: 1200, height: 630 });
-
-		// Navigate to your OG template, forwarding the title as a query param
-		const templateParams = new URLSearchParams({ title });
-		const author = url.searchParams.get("author");
-		if (author) templateParams.set("author", author);
-
-		const templateUrl = `https://your-blog.pages.dev/_internal/og?${templateParams}`;
-		await page.goto(templateUrl, { waitUntil: "networkidle0" });
-
-		const screenshot = await page.screenshot({ type: "png" });
-		await browser.close();
-
-		// Cache in R2
-		await env.OG_IMAGES.put(cacheKey, screenshot, {
-			httpMetadata: { contentType: "image/png" },
-		});
-
-		return new Response(screenshot, {
-			headers: {
-				"Content-Type": "image/png",
-				"Cache-Control": "public, max-age=86400",
-			},
-		});
-	},
-};
-```
-
-Configure the Wrangler configuration file:
-
-<WranglerConfig>
-
-```toml title="wrangler.toml"
-name = "og-image-generator"
-main = "src/index.ts"
-compatibility_date = "2025-01-01"
-compatibility_flags = ["nodejs_compat"]
-
-browser = { binding = "BROWSER" }
-
-[[r2_buckets]]
-binding = "OG_IMAGES"
-bucket_name = "og-images"
-```
-
-</WranglerConfig>
-
-Deploy the Worker:
+Before proceeding, deploy your site to ensure the `/social-card` route is live:
 
 ```sh
+# For Cloudflare Workers
 npx wrangler deploy
 ```
 
-### Option B: Generate at build time
+Update the `BASE_URL` in the script below to match your deployed site URL.
 
-Generate all OG images during the Astro build process. This script runs locally (or in your CI environment) using Puppeteer, not inside a Worker.
+## 2. Generate OG images at build time
 
-Create `scripts/generate-og-images.ts`:
+Generate all OG images during the Astro build process using the Cloudflare Browser Rendering REST API.
+
+Create `scripts/generate-social-cards.ts`:
 
 ```ts
-import puppeteer from "puppeteer";
-import { mkdir, writeFile } from "fs/promises";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
+
+// Configuration
+const BASE_URL = "https://your-site.pages.dev"; // Your deployed site URL
+const CF_API = "https://api.cloudflare.com/client/v4/accounts";
+const OUTPUT_DIR = "public/social-cards"; // Output directory for generated images
+const POSTS_DIR = "src/data/posts"; // Directory containing your markdown posts (adjust to match your project)
 
 interface Post {
 	slug: string;
@@ -219,44 +123,160 @@ interface Post {
 	author?: string;
 }
 
-async function generateOGImages() {
-	// Replace this with your own data-fetching logic
-	const posts: Post[] = await getPosts();
+/** Extract a frontmatter field value from raw markdown content. */
+function getFrontmatterField(content: string, field: string): string | null {
+	const match = content.match(new RegExp(`^${field}:\\s*"?([^"\\n]+)"?`, "m"));
+	return match ? match[1].trim() : null;
+}
 
-	const browser = await puppeteer.launch();
-	const page = await browser.newPage();
-	await page.setViewport({ width: 1200, height: 630 });
+/** Read all post files and return { slug, title, author }[]. */
+function readPosts(): Post[] {
+	if (!existsSync(POSTS_DIR)) return [];
+	const files = readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md"));
+	return files.map((file) => {
+		const raw = readFileSync(join(POSTS_DIR, file), "utf-8");
+		const slug = getFrontmatterField(raw, "slug") ?? file.replace(/\.md$/, "");
+		const title = getFrontmatterField(raw, "title") ?? slug;
+		const author = getFrontmatterField(raw, "author") ?? undefined;
+		return { slug, title, author };
+	});
+}
 
-	await mkdir("dist/og", { recursive: true });
+/**
+ * Capture a screenshot using Cloudflare Browser Rendering REST API
+ */
+async function captureScreenshot(
+	accountId: string,
+	apiToken: string,
+	pageUrl: string
+): Promise<ArrayBuffer> {
+	const endpoint = `${CF_API}/${accountId}/browser-rendering/screenshot`;
 
-	for (const post of posts) {
+	const res = await fetch(endpoint, {
+		method: "POST",
+		headers: {
+			Authorization: `Bearer ${apiToken}`,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			url: pageUrl,
+			viewport: { width: 1200, height: 630 }, // Standard OG image size
+			gotoOptions: { waitUntil: "networkidle0" }, // Wait for page to fully load
+		}),
+	});
+
+	if (!res.ok) {
+		const text = await res.text();
+		throw new Error(`Screenshot API returned ${res.status}: ${text}`);
+	}
+
+	return res.arrayBuffer();
+}
+
+async function main() {
+	// Read credentials from environment variables
+	const accountId = process.env.CF_ACCOUNT_ID;
+	const apiToken = process.env.CF_API_TOKEN;
+
+	if (!accountId || !apiToken) {
+		console.error("Error: CF_ACCOUNT_ID and CF_API_TOKEN required");
+		process.exit(1);
+	}
+
+	// Check if --force flag is passed to regenerate all images
+	const force = process.argv.includes("--force");
+
+	// Read posts from markdown files
+	const posts = readPosts();
+
+	if (posts.length === 0) {
+		console.log("No posts found. Check your POSTS_DIR path.");
+		process.exit(0);
+	}
+
+	console.log(`Found ${posts.length} posts to process\n`);
+
+	// Ensure output directory exists
+	mkdirSync(OUTPUT_DIR, { recursive: true });
+
+	let generated = 0;
+	let skipped = 0;
+
+	// Generate social card for each post
+	for (let i = 0; i < posts.length; i++) {
+		const post = posts[i];
+		const outPath = join(OUTPUT_DIR, `${post.slug}.png`);
+		const label = `[${i + 1}/${posts.length}]`;
+
+		// Skip if file exists and --force flag not set
+		if (!force && existsSync(outPath)) {
+			console.log(`${label} ${post.slug}.png — skipped (exists)`);
+			skipped++;
+			continue;
+		}
+
+		// Build URL with query parameters for the OG template
 		const params = new URLSearchParams({
 			title: post.title,
 			author: post.author || "",
 		});
+		const url = `${BASE_URL}/social-card?${params}`;
 
-		await page.goto(`http://localhost:4321/_internal/og?${params}`, {
-			waitUntil: "networkidle0",
-		});
+		try {
+			// Capture screenshot and save to file
+			const png = await captureScreenshot(accountId, apiToken, url);
+			writeFileSync(outPath, Buffer.from(png));
+			console.log(`${label} ${post.slug}.png — done`);
+			generated++;
+		} catch (err) {
+			console.error(`${label} ${post.slug}.png — failed:`, err);
+		}
 
-		const screenshot = await page.screenshot({ type: "png" });
-		await writeFile(join("dist/og", `${post.slug}.png`), screenshot);
-
-		console.log(`Generated OG image for: ${post.slug}`);
+		// Rate limiting: small delay between requests
+		if (i < posts.length - 1) {
+			await new Promise((resolve) => setTimeout(resolve, 200));
+		}
 	}
 
-	await browser.close();
+	console.log(`\nDone. Generated: ${generated}, Skipped: ${skipped}`);
 }
 
-generateOGImages();
+main();
 ```
 
-Add to your build script in `package.json`:
+Set your Cloudflare credentials as environment variables:
+
+```sh
+export CF_ACCOUNT_ID=your_account_id
+export CF_API_TOKEN=your_api_token
+```
+
+:::note
+
+Browser Rendering has [rate limits](/browser-rendering/limits/) that vary by plan:
+- **Free plan**: 6 requests per minute
+- **Paid plan**: 180 requests per minute
+
+The script includes a 200ms delay between requests to help stay within these limits. For large sites on the free plan, you may need to run the script in batches.
+
+:::
+
+Run the script to generate images:
+
+```sh
+# Generate new images only
+bun scripts/generate-social-cards.ts
+
+# Regenerate all images
+bun scripts/generate-social-cards.ts --force
+```
+
+Optionally, add to your build script in `package.json`:
 
 ```json
 {
 	"scripts": {
-		"build": "astro build && tsx scripts/generate-og-images.ts"
+		"build": "bun scripts/generate-social-cards.ts && astro build"
 	}
 }
 ```
@@ -269,15 +289,7 @@ Update your blog post layout to reference the generated images:
 ---
 // src/layouts/BlogPost.astro
 const { title, slug, author } = Astro.props;
-const siteUrl = Astro.site || "https://your-blog.pages.dev";
-
-// Option A: Worker URL
-const ogParams = new URLSearchParams({ slug, title });
-if (author) ogParams.set("author", author);
-const ogImageUrl = `https://og.your-domain.workers.dev/?${ogParams}`;
-
-// Option B: Static path
-// const ogImageUrl = new URL(`/og/${slug}.png`, siteUrl).href;
+const ogImageUrl = `/social-cards/${slug}.png`;
 ---
 
 <html>
@@ -296,6 +308,13 @@ const ogImageUrl = `https://og.your-domain.workers.dev/?${ogParams}`;
 ```
 
 ## 4. Test your OG images
+
+Before testing, make sure to deploy your site with the newly generated social card images:
+
+```sh
+# For Cloudflare Workers
+npx wrangler deploy
+```
 
 Use these tools to verify your OG images render correctly:
 
@@ -352,25 +371,17 @@ import "../styles/global.css";
 
 ## Performance considerations
 
-### Cold start optimization
-
-Browser Rendering has a ~2 second cold start. To minimize impact:
-
-- Use R2 caching (Option A) to serve repeat requests instantly
-- Pre-warm the Worker by generating images for new posts immediately after publish
-
 ### Image optimization
 
 Consider running generated images through Cloudflare Images or Image Resizing for additional optimization:
 
 ```ts
-// In your Worker
-const optimizedUrl = `https://your-domain.com/cdn-cgi/image/width=1200,format=auto/${cacheKey}`;
+const optimizedUrl = `https://your-domain.com/cdn-cgi/image/width=1200,format=auto/social-cards/${slug}.png`;
 ```
 
 ## Next steps
 
-Your Astro site now automatically generates OG images using Browser Rendering. When you share a link on social media, crawlers will fetch the generated image from your Worker (Option A) or from the static path (Option B).
+Your Astro site now automatically generates OG images using Browser Rendering. When you share a link on social media, crawlers will fetch the generated image from the static path.
 
 From here, you can:
 
