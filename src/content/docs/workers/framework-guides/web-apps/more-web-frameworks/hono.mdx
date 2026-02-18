@@ -32,7 +32,11 @@ import {
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/templates/tree/main/vite-react-template)
 
 :::tip[Already have a Hono project?]
-You can deploy an existing Hono project to Cloudflare Workers with a single command. Run `npx wrangler deploy` in your project directory and Wrangler will automatically configure your project. Refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/) for details.
+You can deploy an existing Hono project to Cloudflare Workers with a single command:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Wrangler will automatically configure your project. Refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/) for details.
 :::
 
 ## What is Hono?

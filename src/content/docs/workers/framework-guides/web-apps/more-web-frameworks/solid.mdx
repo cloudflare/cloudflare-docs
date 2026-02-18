@@ -20,7 +20,11 @@ Support for SolidStart projects on Cloudflare Workers is currently in beta.
 :::
 
 :::tip[Already have a Solid Start project?]
-You can deploy an existing Solid Start project to Cloudflare Workers with a single command. Run `npx wrangler deploy` in your project directory and Wrangler will automatically configure your project. Refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/) for details.
+You can deploy an existing Solid Start project to Cloudflare Workers with a single command:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Wrangler will automatically configure your project. Refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/) for details.
 :::
 
 In this guide, you will create a new [Solid](https://www.solidjs.com/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).

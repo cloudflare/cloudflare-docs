@@ -16,7 +16,11 @@ import {
 In this guide, you will create a new [Nuxt](https://nuxt.com/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 
 :::tip[Already have a Nuxt project?]
-You can deploy an existing Nuxt project to Cloudflare Workers with a single command. Run `npx wrangler deploy` in your project directory and Wrangler will automatically configure your project. Refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/) for details.
+You can deploy an existing Nuxt project to Cloudflare Workers with a single command:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Wrangler will automatically configure your project. Refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/) for details.
 :::
 
 ## 1. Set up a new project
