@@ -13,7 +13,7 @@ The following provide answers to the most common questions associated with Cloud
 
 ## If I have multiple Cloudflare certificates, which one is used?
 
-Cloudflare certificates are prioritized by a combination of hostname specificity, zone specificity, and certificate type.
+Cloudflare certificates are prioritized by a combination of hostname specificity, zone specificity, and certificate type.
 
 For more details, refer to [Certificate and hostname priority](/ssl/reference/certificate-and-hostname-priority/).
 
@@ -34,17 +34,17 @@ This behavior occurs when all of the following conditions are true:
 
 ## Will having Cloudflare's SSL help with SEO?
 
-Yes, Google announced that they use [HTTPS as a ranking signal for SEO](https://googleonlinesecurity.blogspot.co.uk/2014/08/https-as-ranking-signal_6.html).
+Yes, Google announced that they use [HTTPS as a ranking signal for SEO](https://googleonlinesecurity.blogspot.co.uk/2014/08/https-as-ranking-signal_6.html).
 
-For further SEO tweaks, refer to our article on [improving SEO Rankings with Cloudflare](/fundamentals/performance/improve-seo/).
+For further SEO tweaks, refer to our article on [improving SEO Rankings with Cloudflare](/fundamentals/performance/improve-seo/).
 
 ***
 
 ## How long does it take for Cloudflare's SSL to activate?
 
-If Cloudflare is your [authoritative DNS provider](/dns/zone-setups/full-setup), Universal SSL certificates typically issue within 15 minutes of domain activation at Cloudflare and do not require further customer action after domain activation.
+If Cloudflare is your [authoritative DNS provider](/dns/zone-setups/full-setup), Universal SSL certificates typically issue within 15 minutes of domain activation at Cloudflare and do not require further customer action after domain activation.
 
-Alternatively, if you use [Cloudflare services via `CNAME` records](/dns/zone-setups/partial-setup) set at your authoritative DNS provider, provisioning your Universal SSL certificate requires manual addition of [DNS verification records](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup) at your authoritative DNS provider. [Advanced SSL certificates](/ssl/edge-certificates/advanced-certificate-manager/) also typically issue within 15 minutes.
+Alternatively, if you use [Cloudflare services via `CNAME` records](/dns/zone-setups/partial-setup) set at your authoritative DNS provider, provisioning your Universal SSL certificate requires manual addition of [DNS verification records](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup) at your authoritative DNS provider. [Advanced SSL certificates](/ssl/edge-certificates/advanced-certificate-manager/) also typically issue within 15 minutes.
 
 If the Certificate Authority requires a manual review of brand, phishing, or TLD requirements, a Universal SSL certificate can take longer than 24 hours to issue.
 
@@ -100,19 +100,19 @@ No. Cloudflare SSL/TLS certificates are not shared across domains nor across cus
 
 ## Why do I see a Cloudflare certificate when an SSL certificate is installed at my website?
 
-Cloudflare must decrypt traffic in order to cache and filter malicious traffic. Cloudflare either re-encrypts traffic or sends plain text traffic to the origin web server depending on your domain's [encryption mode](/ssl/origin-configuration/ssl-modes/).
+Cloudflare must decrypt traffic in order to cache and filter malicious traffic. Cloudflare either re-encrypts traffic or sends plain text traffic to the origin web server depending on your domain's [encryption mode](/ssl/origin-configuration/ssl-modes/).
 
 ***
 
 ## I want Cloudflare to use an SSL certificate that I purchased elsewhere.
 
-Domains on Business and Enterprise plans can upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates).
+Domains on Business and Enterprise plans can upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates).
 
 ***
 
 ## Does enabling Cloudflare affect PayPal's TLS 1.2 requirement?
 
-No. Since Cloudflare does not proxy connections made directly to `paypal.com`, enabling Cloudflare for your domain does not affect how TLS connections are made.
+No. Since Cloudflare does not proxy connections made directly to `paypal.com`, enabling Cloudflare for your domain does not affect how TLS connections are made.
 
 However, note that PayPal IPN (Instant Payment Notification) might not support [TLS version 1.3](/ssl/edge-certificates/additional-options/tls-13/) if you have it enabled on your zone.
 If you are encountering issues with PayPal IPN when the traffic is proxied by Cloudflare, try setting the [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2`.
@@ -121,7 +121,7 @@ If you are encountering issues with PayPal IPN when the traffic is proxied by Cl
 
 ## Does Cloudflare support TLS client authentication?
 
-Yes. For more details, refer to our documentation on [Mutual TLS authentication](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/).
+Yes. For more details, refer to our documentation on [Mutual TLS authentication](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/).
 
 ***
 
