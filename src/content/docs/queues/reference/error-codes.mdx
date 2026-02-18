@@ -46,28 +46,28 @@ For the [Cloudflare API via HTTP](/api/resources/queues/subresources/messages/),
 
 ### Client side errors
 
-| Error Code | HTTP Status              | Details                                                                    | Recommended actions                                                                 |
-| ---------- | ------------------------ | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| 10104      | QueueNotFound            | Queue does not exist                                                       | Check for existence of `queue_id` in [List Queues endpoint](/api/resources/queues/) |
-| 10105      | FeatureFlagNotSet        | Feature flag not set                                                       | Ensure that feature flag is set past `February 17, 2026` compatibility date         |
-| 10106      | Unauthorized             | Unauthorized request (API Gateway)                                         | ??                                                                                  |
-| 10107      | QueueIDMalformed         | Malformed queue ID in the URL for API Gateway requests                     | ??                                                                                  |
-| 10201      | ClientDisconnected       | Client disconnected during request processing                              | ??                                                                                  |
-| 10202      | BatchDelayInvalid        | Invalid batch delay                                                        | Ensure that `batch_delay` is within 1 and 86400 seconds                             |
-| 10203      | MessageMetadataInvalid   | Invalid message metadata (includes invalid content type and invalid delay) | ??                                                                                  |
-| 10204      | MessageSizeOutOfBounds   | Message size out of bounds                                                 | Ensure that message size is within 0 and 128 KB                                     |
-| 10205      | BatchSizeOutOfBounds     | Batch size out of bounds                                                   | Ensure that batch size is within 0 and 256 KB                                       |
-| 10206      | BatchCountOutOfBounds    | Batch count out of bounds                                                  | Ensure that batch count is within 0 and 100 messages                                |
-| 10207      | JSONRequestBodyInvalid   | API Gateway request JSON body does not match expected schema               | Ensure that JSON body matches the expected schema                                   |
-| 10208      | JSONRequestBodyMalformed | API Gateway request body is not valid JSON                                 | Ensure that request body is valid JSON                                              |
+| Error Code | HTTP Status              | Details                                                                    | Recommended actions                                                                                   |
+| ---------- | ------------------------ | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --- |
+| 10104      | QueueNotFound            | Queue does not exist                                                       | Check for existence of `queue_id` in [List Queues endpoint](/api/resources/queues/)                   |
+| 10105      | FeatureFlagNotSet        | Feature flag not set                                                       | Ensure that feature flag is set past `February 17, 2026` compatibility date                           |
+| 10106      | Unauthorized             | Unauthorized request                                                       | ??                                                                                                    |
+| 10107      | QueueIDMalformed         | Malformed queue ID in the request URL                                      | Ensure `queue_id` matches response for that queue from [List Queues endpoint](/api/resources/queues/) |     |
+| 10201      | ClientDisconnected       | Client disconnected during request processing                              | ??                                                                                                    |
+| 10202      | BatchDelayInvalid        | Invalid batch delay                                                        | Ensure that `batch_delay` is within 1 and 86400 seconds                                               |
+| 10203      | MessageMetadataInvalid   | Invalid message metadata (includes invalid content type and invalid delay) | ??                                                                                                    |
+| 10204      | MessageSizeOutOfBounds   | Message size out of bounds                                                 | Ensure that message size is within 0 and 128 KB                                                       |
+| 10205      | BatchSizeOutOfBounds     | Batch size out of bounds                                                   | Ensure that batch size is within 0 and 256 KB                                                         |
+| 10206      | BatchCountOutOfBounds    | Batch count out of bounds                                                  | Ensure that batch count is within 0 and 100 messages                                                  |
+| 10207      | JSONRequestBodyInvalid   | API Gateway request JSON body does not match expected schema               | Ensure that JSON body matches the expected schema                                                     |
+| 10208      | JSONRequestBodyMalformed | API Gateway request body is not valid JSON                                 | REST API request body is not valid. Look at error message for additional details.                     |
 
 ### 429 type errors
 
 | Error Code | HTTP Status               | Details                      | Recommended actions                                                                                |
-| ---------- | ------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------- | --- |
+| ---------- | ------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------- |
 | 10250      | QueueOverloaded           | Queue is overloaded          | ??                                                                                                 |
 | 10251      | QueueStorageLimitExceeded | Queue storage limit exceeded | [Purge queue](/queues/configuration/pause-purge/#purge-queue) or wait for queue to process backlog |
-| 10252      | QueueDisabled             | Queue disabled               | [Unpause queue](/queues/configuration/pause-purge/#pause-delivery)                                 |     |
+| 10252      | QueueDisabled             | Queue disabled               | [Unpause queue](/queues/configuration/pause-purge/#pause-delivery)                                 |
 | 10253      | FreeTierLimitExceeded     | Free tier limit exceeded     | Upgrade to Workers Paid                                                                            |
 
 ### 500 type errors
