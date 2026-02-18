@@ -81,7 +81,7 @@ After configuring the Cloud VPN gateway VPN and the tunnels as mentioned above, 
 3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
 
 :::note
-Do not forget to create a route in the corresponding GCP VPC covering for the healthcheck configuration of the tunnel. The route subnet should match the interface address CIDR block of the Cloudflare WAN tunnel (`169.254.244.2` in the example above).
+Do not forget to create a route in the corresponding GCP VPC covering for the healthcheck configuration of the tunnel. The route subnet should match the interface address CIDR block of the IPsec tunnel (`169.254.244.2` in the example above).
 
 Refer to the **Static Routes** section for more detail on how to create a VPC route leading to your newly created tunnel.
 :::
