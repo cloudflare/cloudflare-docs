@@ -7,14 +7,24 @@ Review documentation changes for correctness, style, and structure. Use AGENTS.m
 
 ## When to Suggest vs. When to Edit
 
-| Instruction                                        | Action                                                        |
-| -------------------------------------------------- | ------------------------------------------------------------- |
-| "review", "suggest changes", "provide suggestions" | Post **suggestions only** via `gh` CLI — do not push commits  |
-| "only make suggestions", "do not make changes"     | Post **suggestions only** — never edit files or push          |
-| "fix", "address this", "update"                    | Always edit files directly and commit changes                             |
-| "review and fix"                                   | Fix low-severity issues directly; suggest high-impact changes |
+### Decision logic
 
-Default to **suggestions** unless the instruction clearly asks for direct edits.
+1. **Explicit instruction wins.** If the user says "suggest", "only make suggestions", or "do not make changes" — post suggestions via `gh` CLI, never push commits. If they say "fix", "address this", or "update" — edit files directly and commit.
+2. **Different actor = suggest.** If the person invoking the review is not the PR author (and no explicit fix instruction was given), post suggestions so the author retains control.
+3. **Same actor or ambiguous = fix by default.** When the invoker is the PR author (or it is unclear), default to **editing files directly**. MDX syntax errors, broken code, invalid frontmatter, wrong component usage, and other obvious errors should always be fixed, not suggested.
+
+### Quick reference
+
+| Instruction                                        | Action                                                                |
+| -------------------------------------------------- | --------------------------------------------------------------------- |
+| "review", "suggest changes", "provide suggestions" | Post **suggestions only** via `gh` CLI — do not push commits          |
+| "only make suggestions", "do not make changes"     | Post **suggestions only** — never edit files or push                  |
+| "fix", "address this", "update"                    | Always edit files directly and commit changes                         |
+| "review and fix"                                   | Fix low-severity issues directly; suggest high-impact changes         |
+| Invoked by someone other than PR author            | Post suggestions unless explicitly told to fix                        |
+| Invoked by PR author (or unclear)                  | Fix directly — especially MDX syntax, code errors, and build breakers |
+
+When in doubt, **fix obvious errors** (build breakers, MDX syntax, wrong imports, broken code) and **suggest subjective changes** (wording, restructuring, style preferences).
 
 ## Posting GitHub Suggestions
 
@@ -149,6 +159,7 @@ See `references/content-rules.md` for the full checklist. Quick reference:
 | Style guide              | Active voice, no contractions, "select" not "click", bold for UI elements                            |
 | Workers code             | Must use `TypeScriptExample` component, not bare `js`/`ts` fences                                    |
 | Config blocks            | Must use `WranglerConfig` component with TOML input                                                  |
+| Code correctness         | For type checking, API usage, and binding patterns, load the `code-review` skill                     |
 | Accuracy                 | Claims must be substantiated — link to sources of truth, do not explain inline what other docs cover |
 
 ### 3. Assess What to Flag

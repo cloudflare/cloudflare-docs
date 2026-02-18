@@ -53,25 +53,26 @@ Checklist for reviewing MDX documentation changes. Each rule includes what to ch
 | Two trailing spaces for line break | Use `<br/>`                                              |
 | Passive voice                      | Rewrite in active voice                                  |
 
-## Code Examples
+## Code Examples — Component Usage
 
-| Check                                     | Fix                                              |
-| ----------------------------------------- | ------------------------------------------------ |
-| Workers JS/TS in bare code fence          | Use `TypeScriptExample` component                |
-| Wrangler config in bare code fence        | Use `WranglerConfig` component with TOML input   |
-| Hardcoded compatibility date              | Use `$today` in `WranglerConfig`                 |
-| Package install without `PackageManagers` | Use `PackageManagers` component                  |
-| `js` fence for Workers code               | Convert to TypeScript first                      |
-| Missing error handling in examples        | Add minimal null checks and fetch error handling |
-| `any` type in examples                    | Use proper types                                 |
-| Hardcoded secrets or API keys             | Use `env` bindings                               |
+These checks are docs-specific (which component to use). For deeper code correctness (types, API usage, binding access, error handling, security), load the `code-review` skill.
+
+| Check                                     | Fix                                            |
+| ----------------------------------------- | ---------------------------------------------- |
+| Workers JS/TS in bare code fence          | Use `TypeScriptExample` component              |
+| Wrangler config in bare code fence        | Use `WranglerConfig` component with TOML input |
+| Hardcoded compatibility date              | Use `$today` in `WranglerConfig`               |
+| Package install without `PackageManagers` | Use `PackageManagers` component                |
+| `js` fence for Workers code               | Convert to TypeScript first                    |
 
 ## Content Accuracy
 
-| Check                                                  | Action                                                                                                                               |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Unverified API behavior claim                          | Look up in types (`node_modules/@cloudflare/workers-types/index.d.ts`) or config schema (`node_modules/wrangler/config-schema.json`) |
-| Inline explanation of something with its own docs page | Replace with link to canonical page                                                                                                  |
-| Recommendation without rationale                       | Add brief "why" or link to supporting docs                                                                                           |
-| Outdated API pattern                                   | Check latest types and update                                                                                                        |
-| Nested tabs (tabs inside tabs)                         | Restructure into separate headings                                                                                                   |
+| Check                                                  | Action                                            |
+| ------------------------------------------------------ | ------------------------------------------------- |
+| Unverified API behavior claim                          | Verify against types or config schema (see below) |
+| Inline explanation of something with its own docs page | Replace with link to canonical page               |
+| Recommendation without rationale                       | Add brief "why" or link to supporting docs        |
+| Outdated API pattern                                   | Check latest types and update                     |
+| Nested tabs (tabs inside tabs)                         | Restructure into separate headings                |
+
+To verify API behavior, types, or config fields, use the same sources as the `code-review` skill: `node_modules/@cloudflare/workers-types/index.d.ts` for APIs and `node_modules/wrangler/config-schema.json` for config. Read these files directly — do not rely on pre-training.
