@@ -31,7 +31,7 @@ You can deploy an existing Next.js project to Cloudflare Workers with a single c
 
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-Wrangler will automatically run `@opennextjs/cloudflare migrate` to configure your project. Refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/) for details.
+Wrangler will automatically run `@opennextjs/cloudflare migrate` to configure your project. If your account has [R2](/r2/) enabled, caching will be automatically configured for improved performance. Refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/) for details.
 :::
 
 ## What is Next.js?

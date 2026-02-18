@@ -31,7 +31,7 @@ Automatic configuration supports the following frameworks:
 
 | Framework                                                                    | Adapter/Tool                   | Notes                                               |
 | ---------------------------------------------------------------------------- | ------------------------------ | --------------------------------------------------- |
-| [Next.js](/workers/framework-guides/web-apps/nextjs/)                        | `@opennextjs/cloudflare`       | Runs `@opennextjs/cloudflare migrate` automatically |
+| [Next.js](/workers/framework-guides/web-apps/nextjs/)                        | `@opennextjs/cloudflare`       | Runs `@opennextjs/cloudflare migrate` automatically. [R2 caching](#nextjs-caching) is configured if available. |
 | [Astro](/workers/framework-guides/web-apps/astro/)                           | `@astrojs/cloudflare`          | Runs `astro add cloudflare` automatically           |
 | [SvelteKit](/workers/framework-guides/web-apps/sveltekit/)                   | `@sveltejs/adapter-cloudflare` | Runs `sv add sveltekit-adapter` automatically       |
 | [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)         | Built-in Cloudflare preset     |                                                     |
@@ -159,6 +159,15 @@ For more details, refer to [Automatic pull requests](/workers/ci-cd/builds/autom
 If you do not want automatic configuration to run, ensure you have a valid Wrangler configuration file (`wrangler.toml`, `wrangler.json`, or `wrangler.jsonc`) in your project before running `wrangler deploy`.
 
 You can also manually configure your project by following the framework-specific guides in the [Framework guides](/workers/framework-guides/).
+
+## Next.js caching
+
+For Next.js projects, automatic configuration will set up [R2](/r2/) for caching if your Cloudflare account has R2 enabled. R2 caching improves performance for [Incremental Static Regeneration (ISR)](https://opennext.js.org/cloudflare/caching) and other Next.js caching features.
+
+- **If R2 is enabled on your account**: Automatic configuration creates an R2 bucket and configures caching automatically.
+- **If R2 is not enabled**: Your project will be configured without caching. You can [enable R2](/r2/get-started/) later and manually configure caching by following the [OpenNext caching documentation](https://opennext.js.org/cloudflare/caching).
+
+To check if R2 is enabled or to enable it, go to **Storage & Databases** > **R2** in the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
 ## Troubleshooting
 
