@@ -16,8 +16,8 @@ import { privateKeyToAccount } from "viem/accounts";
 export class MyAgent extends Agent {
 	// Your Agent definitions...
 
-	onStart() {
-		const { id } = await this.mcp.connect(`${env.WORKER_URL}/mcp`);
+	async onStart() {
+		const { id } = await this.mcp.connect(`${this.env.WORKER_URL}/mcp`);
 		const account = privateKeyToAccount(this.env.MY_PRIVATE_KEY);
 
 		this.x402Client = withX402Client(this.mcp.mcpConnections[id].client, {

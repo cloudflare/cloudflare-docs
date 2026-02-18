@@ -81,7 +81,7 @@ const app = new Hono<{ Bindings: Env }>();
 
 app.use(
 	paymentMiddleware(
-		process.env.SERVER_ADDRESS as `0x${string}`,
+		"0xYourWalletAddress" as `0x${string}`,
 		{
 			"/premium": {
 				price: "$0.10",
