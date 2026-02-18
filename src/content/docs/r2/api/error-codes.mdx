@@ -58,7 +58,7 @@ For the **S3-compatible API**, errors are returned as XML in the response body:
 |------------|------|-------------|---------|-----------------|
 | 10007 | NoSuchKey | 404 | The specified object key does not exist. For the [Workers API](/r2/api/workers/workers-api-reference/), `get()` and `head()` return `null` instead of throwing. | Verify the object key is correct and the object has not been deleted. |
 | 10020 | InvalidObjectName | 400 | Object key contains invalid characters or is too long. | Use valid UTF-8 characters. Maximum key length is 1024 bytes. |
-| 100100 | EntityTooLarge | 400 | Object exceeds maximum size (5 GiB for single upload, 5 TiB for multipart). | Use [multipart upload](/r2/objects/multipart-objects/) for objects larger than 5 GiB. Maximum object size is 5 TiB. |
+| 100100 | EntityTooLarge | 400 | Object exceeds maximum size (5 GiB for single upload, 5 TiB for multipart). | Use [multipart upload](/r2/objects/upload-objects/#multipart-upload) for objects larger than 5 GiB. Maximum object size is 5 TiB. |
 | 10012 | MetadataTooLarge | 400 | Custom metadata exceeds the 8,192 byte limit. | Reduce custom metadata size. Maximum is 8,192 bytes total for all custom metadata. |
 | 10069 | ObjectLockedByBucketPolicy | 403 | Object is protected by a bucket lock rule and cannot be modified or deleted. | Wait for the retention period to expire. Refer to [bucket locks](/r2/buckets/bucket-locks/). |
 

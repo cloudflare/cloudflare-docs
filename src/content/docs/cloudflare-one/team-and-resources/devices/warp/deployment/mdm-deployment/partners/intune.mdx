@@ -380,7 +380,7 @@ Sharing this certificate with Intune automates the installation of this certific
 4. Select **Search the App Store** and search for the [Cloudflare One Agent](/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios). After you have found the Cloudflare One Agent, select it and select **Select** to continue.
 
 	:::caution[Add the right app]
-	
+
 	Make sure to add the [Cloudflare One Agent](/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios) application. Do not add the 1.1.1.1 app.
 
 	:::
@@ -417,7 +417,7 @@ By completing this step, you deliver the WARP client to targeted iOS devices, ei
 	:::tip[Successfuly complete your registration]
 
 	You should set the [`auto_connect`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#auto_connect) parameter to `1` to ensure the WARP client auto-connects to Cloudflare. If you set this parameter to `0` or exclude it, the client will not auto-connect, and registration will not complete successfully.
-	
+
 	If you do not include this parameter, registration will not be complete without manual intervention by the user. Manual intervention requires opening the WARP application and attempting to connect.
 
 	:::
@@ -440,8 +440,8 @@ Per-app VPN is supported on Cloudflare One Agent version `1.8` or greater for iO
 
 Before proceeding with per-app VPN configuration, you must make sure [Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) is disabled in Zero Trust. To disable Auto connect:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Device profiles**.
-2. Under **Profiles**, select your device profile and select **Edit**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Device profiles** > **General profiles**.
+2. Select your device profile and select **Edit**.
 3. Turn off **Auto Connect**.
 
 To configure per-app VPN:

@@ -48,6 +48,7 @@ Alternatively, Images Stored and Images Delivered apply only to images that are 
 ### Images Transformed
 
 A unique transformation is a request to transform an original image based on a set of [supported parameters](/images/transform-images/transform-via-url/#options). This metric is used only when optimizing images that are stored outside of Images.
+When using the [Images binding](/images/transform-images/bindings/) in Workers, every call to the binding counts as a transformation, regardless of whether the image or parameters are unique.
 
 For example, if you transform `thumbnail.jpg` as 100x100, then this counts as one unique transformation. If you transform the same `thumbnail.jpg` as 200x200, then this counts as a separate unique transformation.
 

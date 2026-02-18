@@ -9,6 +9,46 @@ import { TypeScriptExample, LinkCard } from "~/components";
 
 Agents support WebSocket connections for real-time, bi-directional communication. This page covers server-side WebSocket handling. For client-side connection, refer to the [Client SDK](/agents/api-reference/client-sdk/).
 
+## Lifecycle hooks
+
+Agents have several lifecycle hooks that fire at different points:
+
+| Hook                                          | When called                                               |
+| --------------------------------------------- | --------------------------------------------------------- |
+| `onStart(props?)`                             | Once when the agent first starts (before any connections) |
+| `onRequest(request)`                          | When an HTTP request is received (non-WebSocket)          |
+| `onConnect(connection, ctx)`                  | When a new WebSocket connection is established            |
+| `onMessage(connection, message)`              | When a WebSocket message is received                      |
+| `onClose(connection, code, reason, wasClean)` | When a WebSocket connection closes                        |
+| `onError(connection, error)`                  | When a WebSocket error occurs                             |
+
+### `onStart`
+
+`onStart()` is called once when the agent first starts, before any connections are established:
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent {
+	async onStart() {
+		// Initialize resources
+		console.log(`Agent ${this.name} starting...`);
+
+		// Load data from storage
+		const savedData = this.sql`SELECT * FROM cache`;
+		for (const row of savedData) {
+			// Rebuild in-memory state from persistent storage
+		}
+	}
+
+	onConnect(connection: Connection) {
+		// By the time connections arrive, onStart has completed
+	}
+}
+```
+
+</TypeScriptExample>
+
 ## Handling connections
 
 Define `onConnect` and `onMessage` methods on your Agent to accept WebSocket connections:
@@ -122,6 +162,64 @@ export class ChatAgent extends Agent {
 
 </TypeScriptExample>
 
+### Excluding connections
+
+Pass an array of connection IDs to exclude from the broadcast:
+
+<TypeScriptExample>
+
+```ts
+// Broadcast to everyone except the sender
+this.broadcast(
+	JSON.stringify({ type: "user-typing", userId: "123" }),
+	[connection.id], // Do not send to the originator
+);
+```
+
+</TypeScriptExample>
+
+## Connection tags
+
+Tag connections for easy filtering. Override `getConnectionTags()` to assign tags when a connection is established:
+
+<TypeScriptExample>
+
+```ts
+export class ChatAgent extends Agent {
+	getConnectionTags(
+		connection: Connection,
+		ctx: ConnectionContext,
+	): string[] {
+		const url = new URL(ctx.request.url);
+		const role = url.searchParams.get("role");
+
+		const tags: string[] = [];
+		if (role === "admin") tags.push("admin");
+		if (role === "moderator") tags.push("moderator");
+
+		return tags; // Up to 9 tags, max 256 chars each
+	}
+
+	// Later, broadcast only to admins
+	notifyAdmins(message: string) {
+		for (const conn of this.getConnections("admin")) {
+			conn.send(message);
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Connection management methods
+
+| Method              | Signature                                 | Description                            |
+| ------------------- | ----------------------------------------- | -------------------------------------- |
+| `getConnections`    | `(tag?: string) => Iterable<Connection>`  | Get all connections, optionally by tag |
+| `getConnection`     | `(id: string) => Connection \| undefined` | Get connection by ID                   |
+| `getConnectionTags` | `(connection, ctx) => string[]`           | Override to tag connections             |
+| `broadcast`         | `(message, without?: string[]) => void`   | Send to all connections                |
+
 ## Handling binary data
 
 Messages can be strings or binary (`ArrayBuffer` / `ArrayBufferView`):
@@ -148,6 +246,10 @@ export class FileAgent extends Agent {
 ```
 
 </TypeScriptExample>
+
+:::note
+Agents automatically send JSON text frames (identity, state, MCP servers) to every connection. If your client only handles binary data and cannot process these frames, use [`shouldSendProtocolMessages`](/agents/api-reference/protocol-messages/) to suppress them.
+:::
 
 ## Error and close handling
 
@@ -190,6 +292,205 @@ export class ChatAgent extends Agent {
 | `string`          | Text message (typically JSON)   |
 | `ArrayBuffer`     | Binary data                     |
 | `ArrayBufferView` | Typed array view of binary data |
+
+## Hibernation
+
+Agents support hibernation — they can sleep when inactive and wake when needed. This saves resources while maintaining WebSocket connections.
+
+### Enabling hibernation
+
+Hibernation is enabled by default. To disable:
+
+<TypeScriptExample>
+
+```ts
+export class AlwaysOnAgent extends Agent {
+	static options = { hibernate: false };
+}
+```
+
+</TypeScriptExample>
+
+### How hibernation works
+
+1. Agent is active, handling connections
+2. After a period of inactivity with no messages, the agent hibernates (sleeps)
+3. WebSocket connections remain open (handled by Cloudflare)
+4. When a message arrives, the agent wakes up
+5. `onMessage` is called as normal
+
+### What persists across hibernation
+
+| Persists                   | Does not persist    |
+| -------------------------- | ------------------- |
+| `this.state` (agent state) | In-memory variables |
+| `connection.state`         | Timers/intervals    |
+| SQLite data (`this.sql`)   | Promises in flight  |
+| Connection metadata        | Local caches        |
+
+Store important data in `this.state` or SQLite, not in class properties:
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent<Env, { counter: number }> {
+	initialState = { counter: 0 };
+
+	// Do not do this - lost on hibernation
+	private localCounter = 0;
+
+	onMessage(connection: Connection, message: WSMessage) {
+		// Persists across hibernation
+		this.setState({ counter: this.state.counter + 1 });
+
+		// Lost after hibernation
+		this.localCounter++;
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Common patterns
+
+### Presence tracking
+
+Track who is online using per-connection state. Connection state is automatically cleaned up when users disconnect:
+
+<TypeScriptExample>
+
+```ts
+type UserState = {
+	name: string;
+	joinedAt: number;
+	lastSeen: number;
+};
+
+export class PresenceAgent extends Agent {
+	onConnect(connection: Connection<UserState>, ctx: ConnectionContext) {
+		const url = new URL(ctx.request.url);
+		const name = url.searchParams.get("name") || "Anonymous";
+
+		connection.setState({
+			name,
+			joinedAt: Date.now(),
+			lastSeen: Date.now(),
+		});
+
+		// Send current presence to new user
+		connection.send(
+			JSON.stringify({
+				type: "presence",
+				users: this.getPresence(),
+			}),
+		);
+
+		// Notify others that someone joined
+		this.broadcastPresence();
+	}
+
+	onClose(connection: Connection) {
+		// No manual cleanup needed - connection state is automatically gone
+		this.broadcastPresence();
+	}
+
+	onMessage(connection: Connection<UserState>, message: WSMessage) {
+		if (message === "ping") {
+			connection.setState((prev) => ({
+				...prev!,
+				lastSeen: Date.now(),
+			}));
+			connection.send("pong");
+		}
+	}
+
+	private getPresence() {
+		const users: Record<string, { name: string; lastSeen: number }> = {};
+		for (const conn of this.getConnections<UserState>()) {
+			if (conn.state) {
+				users[conn.id] = {
+					name: conn.state.name,
+					lastSeen: conn.state.lastSeen,
+				};
+			}
+		}
+		return users;
+	}
+
+	private broadcastPresence() {
+		this.broadcast(
+			JSON.stringify({
+				type: "presence",
+				users: this.getPresence(),
+			}),
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Chat room with broadcast
+
+<TypeScriptExample>
+
+```ts
+type Message = {
+	type: "message" | "join" | "leave";
+	user: string;
+	text?: string;
+	timestamp: number;
+};
+
+export class ChatRoom extends Agent {
+	onConnect(connection: Connection, ctx: ConnectionContext) {
+		const url = new URL(ctx.request.url);
+		const username = url.searchParams.get("username") || "Anonymous";
+
+		connection.setState({ username });
+
+		// Notify others
+		this.broadcast(
+			JSON.stringify({
+				type: "join",
+				user: username,
+				timestamp: Date.now(),
+			} satisfies Message),
+			[connection.id], // Do not send to the joining user
+		);
+	}
+
+	onMessage(connection: Connection, message: WSMessage) {
+		if (typeof message !== "string") return;
+
+		const { username } = connection.state as { username: string };
+
+		this.broadcast(
+			JSON.stringify({
+				type: "message",
+				user: username,
+				text: message,
+				timestamp: Date.now(),
+			} satisfies Message),
+		);
+	}
+
+	onClose(connection: Connection) {
+		const { username } = (connection.state as { username: string }) || {};
+		if (username) {
+			this.broadcast(
+				JSON.stringify({
+					type: "leave",
+					user: username,
+					timestamp: Date.now(),
+				} satisfies Message),
+			);
+		}
+	}
+}
+```
+
+</TypeScriptExample>
 
 ## Connecting from clients
 

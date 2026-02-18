@@ -1,0 +1,107 @@
+#! /bin/env node
+
+import { readFileSync, writeFileSync, readdirSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Character set from the formula
+const charset = "abcdefghijkmnopqrstuvwxyzACDEFGHJKLMNPQRTUVWXY34679";
+
+// Generate a random 6-character ID
+function generateId(existingIds) {
+	let id = "";
+	let attempts = 0;
+	const maxAttempts = 1000;
+
+	do {
+		id = "";
+		for (let i = 0; i < 6; i++) {
+			const randomIndex = Math.floor(Math.random() * charset.length);
+			id += charset[randomIndex];
+		}
+		attempts++;
+		if (attempts > maxAttempts) {
+			throw new Error(
+				`Failed to generate unique ID after ${maxAttempts} attempts`,
+			);
+		}
+	} while (existingIds.has(id));
+
+	return id;
+}
+
+// Process all .yaml files in the directory
+const dir = join(__dirname, "../src/content/directory");
+const files = readdirSync(dir).filter((f) => f.endsWith(".yaml"));
+
+console.log(`Found ${files.length} .yaml files\n`);
+
+// Track all existing IDs
+const existingIds = new Map(); // id -> filename
+const errors = [];
+let addedCount = 0;
+
+// First pass: collect existing IDs and check for issues
+for (const file of files) {
+	const filePath = join(dir, file);
+	const content = readFileSync(filePath, "utf-8");
+	const lines = content.split("\n");
+
+	// Check if file has an id on the first line
+	if (lines[0].startsWith("id: ")) {
+		const id = lines[0].substring(4).trim();
+
+		// Check for duplicate IDs
+		if (existingIds.has(id)) {
+			errors.push(
+				`❌ ${file} - duplicate id "${id}" (also in ${existingIds.get(id)})`,
+			);
+		} else {
+			existingIds.set(id, file);
+			console.log(`✓ ${file} - has id: ${id}`);
+		}
+	}
+}
+
+// Second pass: add IDs to files that don't have them
+for (const file of files) {
+	const filePath = join(dir, file);
+	const content = readFileSync(filePath, "utf-8");
+
+	// Check if file already has an id on the first line
+	if (content.startsWith("id: ")) {
+		continue;
+	}
+
+	// Generate a unique ID
+	const id = generateId(existingIds);
+	existingIds.set(id, file);
+
+	// Add the id as the first line
+	const newContent = `id: ${id}\n${content}`;
+
+	writeFileSync(filePath, newContent, "utf-8");
+	console.log(`✓ ${file} - added id: ${id}`);
+	addedCount++;
+}
+
+// Report results
+console.log(`\n${"=".repeat(50)}`);
+console.log(`Summary:`);
+console.log(`  Total files: ${files.length}`);
+console.log(`  Files with existing IDs: ${existingIds.size - addedCount}`);
+console.log(`  Files with added IDs: ${addedCount}`);
+console.log(`  Unique IDs: ${existingIds.size}`);
+
+if (errors.length > 0) {
+	console.log(`\n${"=".repeat(50)}`);
+	console.log(`Errors found:`);
+	errors.forEach((error) => console.log(error));
+	process.exit(1);
+} else {
+	console.log(`  Errors: 0`);
+	console.log(`\n✅ All IDs are unique and properly placed!`);
+}

@@ -59,7 +59,7 @@ An MCP server to connect to (or use the public example in this tutorial).
         	HelloAgent: DurableObjectNamespace<HelloAgent>;
         };
 
-        export class HelloAgent extends Agent<Env, never> {
+        export class HelloAgent extends Agent {
         	async onRequest(request: Request): Promise<Response> {
         		return new Response("Hello, Agent!", { status: 200 });
         	}
@@ -87,7 +87,7 @@ An MCP server to connect to (or use the public example in this tutorial).
         <TypeScriptExample>
 
         ```ts title="src/index.ts"
-        export class HelloAgent extends Agent<Env, never> {
+        export class HelloAgent extends Agent {
         	async onRequest(request: Request): Promise<Response> {
         		const url = new URL(request.url);
 
@@ -166,7 +166,7 @@ The `addMcpServer()` method connects to an MCP server. If the server requires OA
     <TypeScriptExample>
 
     ```ts title="src/index.ts"
-    export class HelloAgent extends Agent<Env, never> {
+    export class HelloAgent extends Agent {
     	async onRequest(request: Request): Promise<Response> {
     		const url = new URL(request.url);
 
@@ -238,6 +238,6 @@ Connections persist in the Agent's [SQL storage](/agents/api-reference/store-and
 
 <LinkCard
 	title="MCP Client API"
-	href="/agents/model-context-protocol/mcp-client-api/"
+	href="/agents/api-reference/mcp-client-api/"
 	description="Complete API documentation for MCP clients."
 />

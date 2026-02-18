@@ -29,7 +29,7 @@ interface Env {
 	BROWSER: Fetcher;
 }
 
-export class MyAgent extends Agent<Env> {
+export class MyAgent extends Agent {
 	async browse(browserInstance: Fetcher, urls: string[]) {
 		let responses = [];
 		for (const url of urls) {
@@ -116,7 +116,7 @@ interface Env {
 	BROWSERBASE_API_KEY: string;
 }
 
-export class MyAgent extends Agent<Env> {
+export class MyAgent extends Agent {
 	constructor(env: Env) {
 		super(env);
 	}

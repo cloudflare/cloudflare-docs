@@ -14,6 +14,7 @@ jobs:
   bonk:
     if: github.event.sender.type != 'Bot'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       id-token: write
       contents: write
@@ -24,6 +25,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "package.json"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run Bonk
         uses: ask-bonk/ask-bonk/github@main

@@ -1,0 +1,10 @@
+id: 4amdYC
+name: CASB
+
+entry:
+  title: CASB
+  group: Cloudflare One
+  url: /cloudflare-one/integrations/cloud-and-saas/
+
+meta:
+  description: Scan SaaS applications and cloud environments for data security issues

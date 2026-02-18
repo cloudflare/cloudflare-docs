@@ -4,15 +4,15 @@
 
 import { GlossaryTooltip } from "~/components"
 
-Configure your router to export <GlossaryTooltip term="sFlow">sFlow</GlossaryTooltip> data to Cloudflare's network for analysis in Magic Network Monitoring. sFlow is a network monitoring protocol that samples network traffic to provide visibility into your network's performance and traffic patterns.
+Configure your router to export <GlossaryTooltip term="sFlow">sFlow</GlossaryTooltip> data to Cloudflare's network for analysis in Network Flow (formerly Magic Network Monitoring). sFlow is a network monitoring protocol that samples network traffic to provide visibility into your network's performance and traffic patterns.
 
 ## Before you begin
 
 Before configuring sFlow, verify the following:
 
-- Your router supports sFlow export capabilities. Refer to [Supported routers](/magic-network-monitoring/routers/supported-routers/) for a list of compatible routers.
+- Your router supports sFlow export capabilities. Refer to [Supported routers](/network-flow/routers/supported-routers/) for a list of compatible routers.
 - You have administrative access to your router's configuration interface.
-- You have [registered your router with Cloudflare](/magic-network-monitoring/get-started/#2-register-your-router-with-cloudflare) and noted the default sampling rate you configured during registration.
+- You have [registered your router with Cloudflare](/network-flow/get-started/#2-register-your-router-with-cloudflare) and noted the default sampling rate you configured during registration.
 
 ## 1. Access your router configuration
 
@@ -32,7 +32,7 @@ These settings direct your router to send sFlow data to Cloudflare's network for
 
 Set your router's <GlossaryTooltip term="sampling">sampling</GlossaryTooltip> rate to match the value you entered when registering your router with Cloudflare. The sampling rate determines how frequently your router samples network traffic to generate sFlow data.
 
-Refer to [Recommended sampling rate](/magic-network-monitoring/routers/recommended-sampling-rate/) for guidance on selecting an appropriate sampling rate based on your network's traffic volume.
+Refer to [Recommended sampling rate](/network-flow/routers/recommended-sampling-rate/) for guidance on selecting an appropriate sampling rate based on your network's traffic volume.
 
 ## 4. Save and apply configuration
 

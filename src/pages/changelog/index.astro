@@ -9,7 +9,7 @@ import ProductPills from "~/components/changelog/ProductPills.astro";
 import { Steps } from "~/components";
 import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelog";
-import { productsByGroup } from "~/util/products";
+import { directoryByGroup } from "~/util/directory";
 
 import { render } from "astro:content";
 
@@ -58,7 +58,7 @@ const props = {
 
 			const productIds = entry.data.products.map((product) => product.id);
 
-			const productGroups = productsByGroup
+			const productGroups = directoryByGroup
 				.filter((group) =>
 					group[1]?.find((product) => productIds.includes(product.id)),
 				)

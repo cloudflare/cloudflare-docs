@@ -35,7 +35,7 @@ Workflows cannot be deployed to Workers for Platforms namespaces, as Workflows d
 | Retention limit for completed Workflow instance state                                         | 3 days                                                                                      | 30 days [^2]                                                                                              |
 | Maximum length of a Workflow name [^4]                                                        | 64 characters                                                                               | 64 characters                                                                                             |
 | Maximum length of a Workflow instance ID [^4]                                                 | 100 characters                                                                              | 100 characters                                                                                            |
-| Maximum number of subrequests per Workflow instance                                           | 50/request                                                                                  | 1000/request                                                                                              |
+| Maximum number of subrequests per Workflow instance                                           | 50/request                                                                                  | 10,000/request (default) / configurable up to 10 million                                                  |
 
 [^2]: Workflow instance state and logs will be retained for 3 days on the Workers Free plan and for 30 days on the Workers Paid plan.
 
@@ -107,6 +107,14 @@ While a given Workflow instance is waiting for 30 days, it will transition to th
 
 Workflows are Worker scripts, and share the same [per invocation CPU limits](/workers/platform/limits/#worker-limits) as any Workers do. Note that CPU time is active processing time: not time spent waiting on network requests, storage calls, or other general I/O, which don't count towards your CPU time or Workflows compute consumption.
 
+If your Workflow exceeds its CPU time limit, it will throw the following error:
+
+```txt
+Error: Worker exceeded CPU time limit.
+```
+
+This will appear as `exceededCpu` in [`wrangler tail`](/workers/wrangler/commands/#tail) outcomes and as `exceededResources` in [Workers metrics](/workers/observability/metrics-and-analytics/#invocation-statuses).
+
 By default, the maximum CPU time per Workflow invocation is set to 30 seconds, but can be increased for all invocations associated with a Workflow definition by setting `limits.cpu_ms` in your Wrangler configuration:
 
 <WranglerConfig>
@@ -124,3 +132,35 @@ By default, the maximum CPU time per Workflow invocation is set to 30 seconds, b
 </WranglerConfig>
 
 To learn more about CPU time and limits, [review the Workers documentation](/workers/platform/limits/#cpu-time).
+
+### Increasing Workflow subrequest limits
+
+A subrequest is any request that a Workflow makes to either Internet resources using the [Fetch API](/workers/runtime-apis/fetch/) or requests to other Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/). Because Workflows are long-running and often make many calls to external services or Cloudflare APIs, they can exceed the default subrequest limit.
+
+If your Workflow exceeds its subrequest limit, it will throw the following error:
+
+```txt
+Error: Too many subrequests.
+```
+
+This will appear as `exceededResources` in [Workers metrics](/workers/observability/metrics-and-analytics/#invocation-statuses) and as `exception` in [`wrangler tail`](/workers/wrangler/commands/#tail) outcomes.
+
+By default, the maximum number of subrequests per Workflow instance is 10,000 on Workers Paid plans, but this can be increased up to 10 million by setting `limits.subrequests` in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	// ...rest of your configuration...
+	"limits": {
+		"subrequests": 10000000, // 10 million (maximum)
+	},
+	// ...rest of your configuration...
+}
+```
+
+</WranglerConfig>
+
+Workers on the free plan remain limited to 50 external subrequests and 1,000 subrequests to Cloudflare services per invocation.
+
+To learn more about subrequest limits, [review the Workers documentation](/workers/platform/limits/#subrequests).

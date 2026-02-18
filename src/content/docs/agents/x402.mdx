@@ -25,7 +25,7 @@ import { privateKeyToAccount } from "viem/accounts";
 // The code below creates an Agent that can fetch the protected route and automatically pay.
 // The agent's account must not be empty! You can get test credits
 // for base-sepolia here: https://faucet.circle.com/
-export class PayAgent extends Agent<Env> {
+export class PayAgent extends Agent {
 	fetchWithPay!: ReturnType<typeof wrapFetchWithPayment>;
 
 	onStart() {
@@ -103,7 +103,7 @@ const X402_CONFIG: X402Config = {
 	// To learn more about facilitators https://x402.gitbook.io/x402/core-concepts/facilitator
 };
 
-export class PaidMCP extends McpAgent<Env> {
+export class PaidMCP extends McpAgent {
 	server = withX402(
 		new McpServer({ name: "PaidMCP", version: "1.0.0" }),
 		X402_CONFIG,

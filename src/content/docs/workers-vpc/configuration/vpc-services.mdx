@@ -56,6 +56,15 @@ The port provided in the `fetch()` operation is ignored — the port specified i
 
 :::
 
+### Supported TLS certificates
+
+When using the `https` scheme, the tunnel verifies the TLS certificate presented by your origin service. Workers VPC trusts the following certificate types:
+
+- **Publicly trusted certificates** — Certificates issued by well-known public certificate authorities (for example, Let's Encrypt, DigiCert).
+- **[Cloudflare Origin CA certificates](/ssl/origin-configuration/origin-ca/)** — Free certificates issued by Cloudflare that encrypt traffic between Cloudflare and your origin. Origin CA certificates are not trusted by browsers, but are trusted by Workers VPC when connecting to your private services.
+
+If your origin service presents a certificate that is not issued by a publicly trusted CA or by Cloudflare Origin CA, the TLS handshake will fail and `fetch()` will throw an exception.
+
 ## Configuration example
 
 The following is an example of a VPC Service for a service using custom HTTP and HTTPS ports, and both IPv4 and IPv6 addresses. These configurations represent the expected contract of the [REST API for creating a VPC Service](/api/resources/connectivity/subresources/directory/subresources/services/), a type of service within the broader connectivity directory.

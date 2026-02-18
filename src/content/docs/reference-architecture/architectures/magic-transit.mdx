@@ -129,35 +129,35 @@ Magic Transit protects services hosted on-premise and in the cloud. This use cas
 
 Note that with the Magic Transit Egress option, the customer can bypass each cloud provider's BYOIP services, its associated fees, and the configuration and operations complexity, by sending egress traffic (i.e. server return or server-to-Internet traffic from the protected prefix) through the Cloudflare global network via the Magic Transit tunnels.
 
-### Magic Transit and Magic WAN
+### Magic Transit and Cloudflare WAN
 
-In addition to protecting and routing traffic for external-facing services of an enterprise (i.e. north-south Internet-routable traffic) with the Cloudflare Magic Transit service, customers can protect east-west "intra-enterprise" internal traffic (e.g. RFC 1918 private addresses), interconnecting all the sites of an enterprise, using [Cloudflare Magic WAN](/magic-wan/).
+In addition to protecting and routing traffic for external-facing services of an enterprise (i.e. north-south Internet-routable traffic) with the Cloudflare Magic Transit service, customers can protect east-west "intra-enterprise" internal traffic (e.g. RFC 1918 private addresses), interconnecting all the sites of an enterprise, using [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN).
 
-Magic WAN replaces legacy WAN architectures with the Cloudflare network, providing global connectivity, cloud-based security, performance, and control through one simple user interface.
+Cloudflare WAN replaces legacy WAN architectures with the Cloudflare network, providing global connectivity, cloud-based security, performance, and control through one simple user interface.
 
-The Cloudflare Magic Transit and Magic WAN services combined provide a holistic, secure, reliable, and performant global network-as-a-service solution for an entire enterprise, protecting and accelerating north-south as well as east-west traffic.
+The Cloudflare Magic Transit and Cloudflare WAN services combined provide a holistic, secure, reliable, and performant global network-as-a-service solution for an entire enterprise, protecting and accelerating north-south as well as east-west traffic.
 
-Both services can either be deployed in the same service instance, or, for customers who prefer to keep the administration and traffic flow of external, Internet-facing networks and internal corporate networks completely separate, different service instances can be deployed for Magic Transit and Magic WAN.
+Both services can either be deployed in the same service instance, or, for customers who prefer to keep the administration and traffic flow of external, Internet-facing networks and internal corporate networks completely separate, different service instances can be deployed for Magic Transit and Cloudflare WAN.
 
-Figure 7 illustrates an example of deploying Magic Transit and Magic WAN services in separate service instances.
+Figure 7 illustrates an example of deploying Magic Transit and Cloudflare WAN services in separate service instances.
 
-![Figure 7: Magic Transit + Magic WAN Provide Network-as-a-Service for the Entire Enterprise](~/assets/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-7.png "Figure 7: Magic Transit + Magic WAN Provide Network-as-a-Service for the Entire Enterprise")
+![Figure 7: Magic Transit + Cloudflare WAN Provide Network-as-a-Service for the Entire Enterprise](~/assets/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-7.png "Figure 7: Magic Transit + Cloudflare WAN Provide Network-as-a-Service for the Entire Enterprise")
 
-- In the example, GRE tunnels are used to connect the customer's various sites over the Cloudflare global anycast network. The Cloudflare anycast IP address for the Magic Transit service instance is 192.0.2.1, while the one for the Magic WAN service instance is 192.0.2.2. The Magic Transit service is enabled with the Egress option.
+- In the example, GRE tunnels are used to connect the customer's various sites over the Cloudflare global anycast network. The Cloudflare anycast IP address for the Magic Transit service instance is 192.0.2.1, while the one for the Cloudflare WAN service instance is 192.0.2.2. The Magic Transit service is enabled with the Egress option.
 
-- The Magic Transit service protects and routes external-facing front-end client-server traffic. The Magic WAN service protects and routes enterprise internal traffic such as that of internal applications, back-end database sync, and branch-to-DC and branch-to-branch traffic.
+- The Magic Transit service protects and routes external-facing front-end client-server traffic. The Cloudflare WAN service protects and routes enterprise internal traffic such as that of internal applications, back-end database sync, and branch-to-DC and branch-to-branch traffic.
 
-### Magic Firewall: Control and Filter Unwanted Traffic Before It Reaches the Enterprise Network
+### Cloudflare Network Firewall: Control and Filter Unwanted Traffic Before It Reaches the Enterprise Network
 
-While Magic Transit protects customers’ services from DDoS attacks, many network administrators want to be able to control and block other unwanted or potentially malicious traffic. [Cloudflare Magic Firewall](/magic-firewall/) enforces consistent network security policies across the entire customer WAN, including headquarters, branch offices, and virtual private clouds, and allows customers to deploy fine-grained filtering rules globally in seconds — all from a common dashboard.
+While Magic Transit protects customers' services from DDoS attacks, many network administrators want to be able to control and block other unwanted or potentially malicious traffic. [Cloudflare Network Firewall](/cloudflare-network-firewall/) enforces consistent network security policies across the entire customer WAN, including headquarters, branch offices, and virtual private clouds, and allows customers to deploy fine-grained filtering rules globally in seconds — all from a common dashboard.
 
-Magic Firewall is deployed and configured as part of Magic Transit. All ingress traffic flowing through Cloudflare edge data centers, whose destination prefixes are protected by Magic Transit, can be filtered by Magic Firewall.
+Cloudflare Network Firewall is deployed and configured as part of Magic Transit. All ingress traffic flowing through Cloudflare edge data centers, whose destination prefixes are protected by Magic Transit, can be filtered by Cloudflare Network Firewall.
 
-![Figure 8: Magic Firewall Blocks Unwanted and Malicious Traffic at the Internet Edge](~/assets/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-8.png "Figure 8: Magic Firewall Blocks Unwanted and Malicious Traffic at the Internet Edge")
+![Figure 8: Cloudflare Network Firewall Blocks Unwanted and Malicious Traffic at the Internet Edge](~/assets/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-8.png "Figure 8: Cloudflare Network Firewall Blocks Unwanted and Malicious Traffic at the Internet Edge")
 
-In Magic Firewall rules, administrators can match and filter network traffic not only based on the typical 5-tuple (source/destination IP, source/destination port, protocol) information carried in the IP packet header but also other packet information such as IP packet length, IP header length, TTL, etc. In addition, geographical information such as the name of the Cloudflare data center/colo, the region, and the country the data centers are located in can also be used in configuring Magic Firewall rules (geo-blocking).
+In Cloudflare Network Firewall rules, administrators can match and filter network traffic not only based on the typical 5-tuple (source/destination IP, source/destination port, protocol) information carried in the IP packet header but also other packet information such as IP packet length, IP header length, TTL, etc. In addition, geographical information such as the name of the Cloudflare data center/colo, the region, and the country the data centers are located in can also be used in configuring Network Firewall rules (geo-blocking).
 
-For further details on Magic Firewall and its configuration, please refer to this [blog post](https://blog.cloudflare.com/introducing-magic-firewall/) and our [developer docs](/magic-firewall/).
+For further details on Cloudflare Network Firewall and its configuration, please refer to this [blog post](https://blog.cloudflare.com/introducing-magic-firewall/) and our [developer docs](/cloudflare-network-firewall/).
 
 ## A Note on Always-On and On-Demand Deployments
 
@@ -183,6 +183,6 @@ Cloudflare offers comprehensive network services to connect and protect on-premi
 
 - Magic Transit comes with a built-in network firewall that helps customers phase out on-premise firewalls and deploy network security as-a-service that scales.
 
-- In addition to protecting and routing traffic for external-facing services of an enterprise (i.e. north-south Internet-routable traffic), customers can connect and protect east-west “intra-enterprise” internal traffic using Cloudflare Magic WAN.
+- In addition to protecting and routing traffic for external-facing services of an enterprise (i.e. north-south Internet-routable traffic), customers can connect and protect east-west “intra-enterprise” internal traffic using Cloudflare WAN.
 
-If you would like to learn more about Magic Transit, Magic WAN, or Magic Firewall, please [reach out](https://www.cloudflare.com/magic-transit/) to us for a demo.
+If you would like to learn more about Magic Transit, Cloudflare WAN, or Cloudflare Network Firewall, please [reach out](https://www.cloudflare.com/magic-transit/) to us for a demo.

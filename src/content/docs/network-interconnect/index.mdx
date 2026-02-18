@@ -37,7 +37,7 @@ Choose the connection type for your infrastructure and operational needs.
 ## Dataplane
 
 Cloudflare's data centers may support one or more interconnect dataplanes. The dataplane is the type of equipment that terminates your direct connection:
-- **Dataplane v1**: A peering connection to a Cloudflare edge data center that supports Generic Routing Encapsulation (GRE) tunnels for connecting with the Magic Networking overlay, with optional GRE-less delivery for Magic Transit Direct Server Return.
+- **Dataplane v1**: A peering connection to a Cloudflare edge data center that supports Generic Routing Encapsulation (GRE) tunnels for connecting with the Cloudflare Virtual Network, with optional GRE-less delivery for Magic Transit Direct Server Return.
 - **Dataplane v2**: Is based on the Customer Connectivity Router (CCR), which is specifically designed for customer connectivity. It provides simplified routing without GRE tunneling and supports a 1,500-byte Maximum Transmission Unit (MTU) bidirectionally.
 
 When you review the [available locations](/network-interconnect/static/cni-locations-21-jan-2026.pdf) (PDF), you can see which dataplane version(s) are available.
@@ -60,7 +60,7 @@ Refer to [Service Expectations](/network-interconnect/get-started/#service-expec
 Magic Transit is a network security and performance solution that offers Distributed Denial of Service (DDoS) protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
 </RelatedProduct>
 
-<RelatedProduct header="Magic WAN" href="/magic-wan/" product="magic-wan">
+<RelatedProduct header="Cloudflare WAN" href="/cloudflare-wan/" product="cloudflare-wan">
 Improve security and performance for your entire corporate network, reducing cost and operation complexity.
 </RelatedProduct>
 

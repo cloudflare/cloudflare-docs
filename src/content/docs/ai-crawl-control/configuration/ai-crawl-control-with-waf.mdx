@@ -64,6 +64,22 @@ This example only serves to highlight the order of precedence between WAF and AI
 Practically, it may be beneficial to allow well-behaved search engine bots to access your content to ensure your content is indexed.
 :::
 
+### Troubleshoot allowed bots
+
+If you have set certain AI crawlers to **Allow** in AI Crawl Control, but they are still being blocked, check for upstream WAF custom rules that may be blocking them. Since the AI Crawl Control rule only includes blocked bots, allowed bots may still be affected by other security rules that execute before the AI Crawl Control rule.
+
+These upstream rules will affect traffic but may not be visible in AI Crawl Control analytics. Review your WAF custom rules to identify and modify any rules that may be blocking AI crawlers you intend to allow.
+
+### Troubleshoot blocked bots
+
+If you have set certain AI crawlers to **Block** in AI Crawl Control, but they are still accessing your content, check for upstream rules that may be bypassing the AI Crawl Control rule. Since the AI Crawl Control rule is added at the end of existing WAF custom rules, the following types of rules may allow bots to bypass the block:
+
+- **Skip rules** that bypass WAF custom rules
+- **Redirect rules** that change the request path
+- **Transform rules** that modify the request
+
+To ensure blocked bots are properly blocked, move the AI Crawl Control rule to the top of your WAF custom rules, so it executes before other rules.
+
 ### Conflict in AI crawler blocking logic
 
 You may have both of the following features enabled:

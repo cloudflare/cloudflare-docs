@@ -38,19 +38,19 @@ Cloudflare Browser Isolation runs a headless, Chromium-based browser for your us
 
 ## Network on-ramps
 
-The primary ways to source multi-device or network traffic to Cloudflare Gateway are via Magic WAN using GRE or IPsec tunnels, the [WARP Connector](#warp-connector) as a software-defined all-ports traffic proxy, or via upstream DNS for a whole network using [DNS filtering locations](#dns-filtering-locations).
+The primary ways to source multi-device or network traffic to Cloudflare Gateway are via Cloudflare WAN (formerly Magic WAN) using GRE or IPsec tunnels, the [WARP Connector](#warp-connector) as a software-defined all-ports traffic proxy, or via upstream DNS for a whole network using [DNS filtering locations](#dns-filtering-locations).
 
-### Magic WAN
+### Cloudflare WAN
 
 :::note
 Only available on Enterprise plans.
 :::
 
-[Magic WAN](/magic-wan/) is Cloudflare's offering most analogous to a traditional SD-WAN. Magic WAN is typically deployed via an IPsec or GRE tunnel terminating on customer devices (such as firewalls or routers), or via our Magic WAN Connector hardware device. You can also be deploy Magic WAN using [Cloudflare Network Interconnect](/network-interconnect/) (CNI) at private peering locations or some public cloud instances (where compatible).
+[Cloudflare WAN](/cloudflare-wan/) is Cloudflare's offering most analogous to a traditional SD-WAN. Cloudflare WAN is typically deployed via an IPsec or GRE tunnel terminating on customer devices (such as firewalls or routers), or via our Cloudflare One Appliance hardware device. You can also deploy Cloudflare WAN using [Cloudflare Network Interconnect](/network-interconnect/) (CNI) at private peering locations or some public cloud instances (where compatible).
 
-Magic WAN on-ramps traffic via your connections and can send all network and HTTP traffic through Cloudflare Gateway for inspection.
+Cloudflare WAN on-ramps traffic via your connections and can send all network and HTTP traffic through Cloudflare Gateway for inspection.
 
-For more information on how Magic WAN integrates with Zero Trust, refer to [Zero Trust integration](/magic-wan/zero-trust/).
+For more information on how Cloudflare WAN integrates with Zero Trust, refer to [Zero Trust integration](/cloudflare-wan/zero-trust/).
 
 ### WARP Connector <Badge text="Beta" variant="caution" size="small" />
 
@@ -68,6 +68,6 @@ The fastest way to start filtering DNS queries from a location is by changing th
 
 For more information on setting up DNS locations, refer to [Add locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/).
 
-|                                | Magic WAN             | WARP Connector        | DNS Locations |
-| ------------------------------ | --------------------- | --------------------- | ------------- |
-| Gateway policy types supported | Network, HTTP, Egress | Network, HTTP, Egress | DNS, Resolver |
+|                                | Cloudflare WAN        | WARP Connector        | DNS Locations |
+| ------------------------------ | ----------------------- | --------------------- | ------------- |
+| Gateway policy types supported | Network, HTTP, Egress   | Network, HTTP, Egress | DNS, Resolver |

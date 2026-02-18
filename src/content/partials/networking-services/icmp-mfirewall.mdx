@@ -2,11 +2,10 @@
 params:
   - mFirewallName
   - mFirewallURL
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 :::caution
-Magic Firewall rules apply to Internet Control Message Protocol (ICMP) traffic. If you enable Magic Firewall, ensure your rules allow ICMP traffic sourced from Cloudflare public IPs. Otherwise, <GlossaryTooltip term="tunnel health-check">health checks</GlossaryTooltip> will fail. Refer to <a href={props.mFirewallURL}>{props.mFirewallName}</a> for more information.
+Cloudflare Network Firewall rules apply to Internet Control Message Protocol (ICMP) traffic. If you enable Cloudflare Network Firewall, ensure your rules allow ICMP traffic sourced from Cloudflare public IPs. Otherwise, <GlossaryTooltip term="tunnel health-check">health checks</GlossaryTooltip> will fail. Refer to <a href={props.mFirewallURL}>{props.mFirewallName}</a> for more information.
 :::

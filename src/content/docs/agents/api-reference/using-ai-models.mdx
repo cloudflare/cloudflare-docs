@@ -49,7 +49,7 @@ Instead of buffering the entire response, or risking the client disconnecting, y
 import { Agent } from "agents";
 import { OpenAI } from "openai";
 
-export class MyAgent extends Agent<Env> {
+export class MyAgent extends Agent {
 	async onConnect(connection: Connection, ctx: ConnectionContext) {
 		//
 	}
@@ -110,7 +110,7 @@ interface Env {
 	AI: Ai;
 }
 
-export class MyAgent extends Agent<Env> {
+export class MyAgent extends Agent {
 	async onRequest(request: Request) {
 		const response = await env.AI.run(
 			"@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
@@ -163,7 +163,7 @@ interface Env {
 	AI: Ai;
 }
 
-export class MyAgent extends Agent<Env> {
+export class MyAgent extends Agent {
 	async onRequest(request: Request) {
 		const response = await env.AI.run(
 			"@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
@@ -217,7 +217,7 @@ import { Agent } from "agents";
 import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 
-export class MyAgent extends Agent<Env> {
+export class MyAgent extends Agent {
 	async onRequest(request: Request): Promise<Response> {
 		const { text } = await generateText({
 			model: openai("o3-mini"),
@@ -243,7 +243,7 @@ Agents can stream responses back over HTTP using Server Sent Events (SSE) from w
 import { Agent } from "agents";
 import { OpenAI } from "openai";
 
-export class MyAgent extends Agent<Env> {
+export class MyAgent extends Agent {
 	async onRequest(request: Request): Promise<Response> {
 		const openai = new OpenAI({
 			apiKey: this.env.GEMINI_API_KEY,

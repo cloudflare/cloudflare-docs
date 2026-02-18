@@ -44,7 +44,7 @@ export default {
 			resolver: createAddressBasedEmailResolver("EmailAgent"),
 		});
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -161,7 +161,7 @@ export default {
 			},
 		});
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -350,7 +350,7 @@ When your agent sends emails and expects replies, use secure reply routing to pr
    			},
    		});
    	},
-   };
+   } satisfies ExportedHandler<Env>;
    ```
 
    </TypeScriptExample>

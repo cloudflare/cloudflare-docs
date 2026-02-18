@@ -10,8 +10,8 @@ products:
     dex,
     browser-isolation,
     dlp,
-    magic-wan,
-    magic-firewall,
+    cloudflare-wan,
+    cloudflare-network-firewall,
     magic-transit,
   ]
 sidebar:
@@ -275,7 +275,7 @@ For bidirectional, or meshed connectivity, organizations should use the WARP Con
 
 The [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) is a lightweight solution for site-to-site, bidirectional, and mesh networking connectivity that does not require changes to underlying network routing infrastructure. WARP Connector software is installed on a Linux server within an organization's network, which then becomes a gateway for other local networks that need to on-ramp traffic to Cloudflare.
 
-This provides a lightweight solution to support services such as Microsoft's System Center Configuration Manager (SCCM), Active Directory server updates, VOIP and SIP traffic, and developer workflows with complex CI/CD pipeline interaction. It can either be run supplementally to `cloudflared` and Magic WAN, or can be a standalone remote access and site-to-site connector to the Cloudflare network.
+This provides a lightweight solution to support services such as Microsoft's System Center Configuration Manager (SCCM), Active Directory server updates, VOIP and SIP traffic, and developer workflows with complex CI/CD pipeline interaction. It can either be run supplementally to `cloudflared` and Cloudflare WAN (formerly Magic WAN), or can be a standalone remote access and site-to-site connector to the Cloudflare network.
 
 The WARP Connector can proxy both user-to-network and network-to-network connectivity, or can be used to establish an overlay network of Carrier Grade NAT ([CGNAT](https://en.wikipedia.org/wiki/Carrier-grade_NAT)) addressed endpoints to provide secure, direct connectivity to established resources using CGNAT IP ranges. This helps address overlapping network IP range challenges, point-solution access problems, or the process of shifting network design without impacting a greater underlying system.
 
@@ -285,9 +285,9 @@ Cloudflare Tunnel via `cloudflared` is the primary method for connecting users t
 
 #### Using network equipment
 
-Where it is not optimal or possible to install software agents, networks can also be connected to Cloudflare using existing network equipment, such as routers and network firewalls. To do this, organizations create IPsec or GRE tunnels that connect to Cloudflare's cloud-native [Magic WAN](https://www.cloudflare.com/network-services/products/magic-wan/) service. With Magic WAN, existing network hardware can connect and route traffic from their respective network locations to Cloudflare through a) secure, IPsec-based tunnels over the Internet or, b) across [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) (CNI) — private, direct connections that link existing network locations to the nearest Cloudflare data center.
+Where it is not optimal or possible to install software agents, networks can also be connected to Cloudflare using existing network equipment, such as routers and network firewalls. To do this, organizations create IPsec or GRE tunnels that connect to Cloudflare's cloud-native [Cloudflare WAN](https://www.cloudflare.com/network-services/products/magic-wan/) service. With Cloudflare WAN, existing network hardware can connect and route traffic from their respective network locations to Cloudflare through a) secure, IPsec-based tunnels over the Internet or, b) across [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) (CNI) — private, direct connections that link existing network locations to the nearest Cloudflare data center.
 
-Cloudflare's WAN service uses a "light-branch, heavy-cloud" architecture that represents the evolution of software-defined WAN (SD-WAN) connectivity. With Magic WAN, as depicted in the network architecture diagram below, the Cloudflare global network functions as a centrally-managed connectivity hub that securely and efficiently routes traffic between all existing network locations:
+Cloudflare's WAN service uses a "light-branch, heavy-cloud" architecture that represents the evolution of software-defined WAN (SD-WAN) connectivity. With Cloudflare WAN, as depicted in the network architecture diagram below, the Cloudflare global network functions as a centrally-managed connectivity hub that securely and efficiently routes traffic between all existing network locations:
 
 ![Cloudflare's Connectivity Cloud securely links a variety of network locations to the Internet through products such as Firewall, ZTNA, CASB and Load Balancer.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-12.svg)
 
@@ -297,31 +297,31 @@ With [anycast IPsec](https://blog.cloudflare.com/anycast-ipsec/) or anycast GRE 
 
 ![In an example scenario, IPsec traffic from an office network's router would be sent to the closest Cloudflare data center.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-13.svg)
 
-To further network resiliency, Magic WAN also supports Equal Cost Multi-Path (ECMP) routing between the Cloudflare network and an organization's network location(s). With ECMP, traffic can be load-balanced across multiple anycast IP tunnels, which helps increase throughput and maximize network reliability. In the event of network path failure of one or more tunnels, traffic can be automatically failed over to the remaining healthy tunnels.
+To further network resiliency, Cloudflare WAN also supports Equal Cost Multi-Path (ECMP) routing between the Cloudflare network and an organization's network location(s). With ECMP, traffic can be load-balanced across multiple anycast IP tunnels, which helps increase throughput and maximize network reliability. In the event of network path failure of one or more tunnels, traffic can be automatically failed over to the remaining healthy tunnels.
 
-The simplest and easiest way to on-ramp existing network locations to the Magic WAN service is to deploy Cloudflare Magic WAN Connector, a lightweight appliance you can install in corporate network locations to automatically connect, steer, and shape any IP traffic through secure IPsec tunnels. When the WAN Connector is installed into a network, it will automatically establish communication with the Cloudflare network, download and provision relevant configurations, establish resilient IPsec tunnels, and route connected site network traffic to Cloudflare.
+The simplest and easiest way to on-ramp existing network locations to the Cloudflare WAN service is to deploy Cloudflare One Appliance, a lightweight appliance you can install in corporate network locations to automatically connect, steer, and shape any IP traffic through secure IPsec tunnels. When the WAN Connector is installed into a network, it will automatically establish communication with the Cloudflare network, download and provision relevant configurations, establish resilient IPsec tunnels, and route connected site network traffic to Cloudflare.
 
-The WAN Connector can be deployed as either a hardware or virtual appliance, making it versatile for a variety of user network environments — on-premises, virtual, or public cloud. Management, configuration, observability, and software updates for WAN Connectors is centrally managed from Cloudflare via either the dashboard or the Cloudflare API. As of 2023, the WAN Connector is currently best-suited for connecting small and medium-sized networks to Cloudflare (e.g. small offices and retail stores).
+The WAN Connector can be deployed as either a hardware or virtual appliance, making it versatile for a variety of user network environments — on-premises, virtual, or public cloud. Management, configuration, observability, and software updates for WAN Connectors is centrally managed from Cloudflare via either the dashboard or the Cloudflare API. As of 2023, the WAN Connector is currently best-suited for connecting small and medium-sized networks to Cloudflare (for example, small offices and retail stores).
 
-In situations where deploying the WAN Connector is not feasible or desirable, organizations can securely connect their site networks to Cloudflare by configuring IPsec tunnels from their existing IPsec-capable network devices, including WAN or SD-WAN routers, firewalls, and cloud VPN gateways. Please refer to the Cloudflare [documentation](/magic-wan/configuration/manually/third-party/) for up-to-date examples of validated IPsec devices.
+In situations where deploying the Cloudflare One Appliance is not feasible or desirable, organizations can securely connect their site networks to Cloudflare by configuring IPsec tunnels from their existing IPsec-capable network devices, including WAN or SD-WAN routers, firewalls, and cloud VPN gateways. Please refer to the Cloudflare [documentation](/cloudflare-wan/configuration/manually/third-party/) for up-to-date examples of validated IPsec devices.
 
-There may also be situations where network-layer encryption is not necessary — for example, when a site's WAN-bound traffic is already encrypted at the application layer (via TLS), or when an IPsec network device offers very limited throughput performance as it encrypts and decrypts IPsec traffic. Under these circumstances, organizations can connect to the Cloudflare network using [GRE tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/).
+There may also be situations where network-layer encryption is not necessary — for example, when a site's WAN-bound traffic is already encrypted at the application layer (via TLS), or when an IPsec network device offers very limited throughput performance as it encrypts and decrypts IPsec traffic. Under these circumstances, organizations can connect to the Cloudflare network using [GRE tunnels](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/).
 
 Organizations may also connect their network locations directly to the Cloudflare network via [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) (CNI). Cloudflare [supports a variety of options](/network-interconnect/) to connect your network to Cloudflare:
 
-- Direct CNI for Magic WAN and Magic Transit
+- Direct CNI for Cloudflare WAN and Magic Transit
 - Classic CNI for Magic Transit
-- Cloud CNI for Magic WAN and Magic Transit
+- Cloud CNI for Cloudflare WAN and Magic Transit
 - Peering via either an internet exchange, or a private network interconnect (PNI).
 
 The following table summarizes the different methods of connecting networks to Cloudflare:
 
 | **Use case**                                                                                                                                           | **Recommended**                             | **Alternative solution**                                                                                      |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Remote users connecting to applications on private networks in a Zero Trust model (e.g. most VPN replacement scenarios)                                | **Cloudflare Tunnel (with `cloudflared`)**  | **Magic WAN** Alternative option if `cloudflared` not suitable for environment                                |
-| Site-to-site connectivity between branches, headquarters, and data centers                                                                             | **Magic WAN**                               | **Cloudflare Tunnel (with WARP Connector)** Alternative option if routing changes cannot be made at perimeter |
-| Egress traffic from physical sites or cloud environments to cloud security inspection (e.g. most common SWG and branch firewall replacement scenarios) | **Magic WAN**                               | **N/A**                                                                                                       |
-| Service-initiated communication with remote users (e.g. AD or SCCM updates, DevOps workflows, VOIP)                                                    | **Cloudflare Tunnel (with WARP Connector)** | **Magic WAN** Alternative option if inbound source IP fidelity not required                                   |
+| Remote users connecting to applications on private networks in a Zero Trust model (e.g. most VPN replacement scenarios)                                | **Cloudflare Tunnel (with `cloudflared`)**  | **Cloudflare WAN** Alternative option if `cloudflared` not suitable for environment                           |
+| Site-to-site connectivity between branches, headquarters, and data centers                                                                             | **Cloudflare WAN**                          | **Cloudflare Tunnel (with WARP Connector)** Alternative option if routing changes cannot be made at perimeter |
+| Egress traffic from physical sites or cloud environments to cloud security inspection (e.g. most common SWG and branch firewall replacement scenarios) | **Cloudflare WAN**                          | **N/A**                                                                                                       |
+| Service-initiated communication with remote users (e.g. AD or SCCM updates, DevOps workflows, VOIP)                                                    | **Cloudflare Tunnel (with WARP Connector)** | **Cloudflare WAN** Alternative option if inbound source IP fidelity not required                              |
 | Mesh networking and peer-to-peer connectivity                                                                                                          | **Cloudflare Tunnel (with WARP Connector)** | **N/A**                                                                                                       |
 
 Each of these methods of connecting and routing traffic can be deployed concurrently from any location. The following diagram highlights how different connectivity methods can be used in a single architecture.
@@ -331,8 +331,8 @@ Note the following traffic flows:
 - All traffic connected via a WARP Connector or device agent can communicate with each other over the mesh network
   - Developers working from home can communicate with the production and staging servers in the cloud
   - The employee in the retail location, as well as the developer at home, can receive VOIP calls on their laptop
-- A HPC Cluster in AWS represents a proprietary solution in which no third-party software agents can be installed; as a result, it uses an IPsec connection to Magic WAN
-- In the retail location, the Magic WAN Connector routes all traffic to Cloudflare via an IPsec tunnel
+- A HPC Cluster in AWS represents a proprietary solution in which no third-party software agents can be installed; as a result, it uses an IPsec connection to Cloudflare WAN
+- In the retail location, the Cloudflare One Appliance routes all traffic to Cloudflare via an IPsec tunnel
   - An employee's laptop running the device agent creates its own secure connection to Cloudflare that is routed over the IPsec tunnel
 - The application owner of the reporting system maintains a connection to Cloudflare using `cloudflared` and doesn't require any networking help to expose their application to employees
 
@@ -341,9 +341,10 @@ Note the following traffic flows:
 <sub>
 	*Note: All of the endpoints connected via the WARP Connector or device agent
 	are automatically assigned IP addresses from the 100.96.0.0/12 address range,
-	while endpoints connected to Magic WAN retain their assigned RFC1918 private
-	IP addresses. `cloudflared` can be deployed in any of the locations by an
-	application owner to provide hostname-based connectivity to the application.*
+	while endpoints connected to Cloudflare WAN retain their assigned RFC1918
+	private IP addresses. `cloudflared` can be deployed in any of the locations by
+	an application owner to provide hostname-based connectivity to the
+	application.*
 </sub>
 
 Once the networks, applications, and user devices are connected to Cloudflare — regardless of the connection methods and devices used — all traffic can be inspected, authenticated, and filtered by the Cloudflare SASE services, then securely routed to their intended destinations. Additionally, consistent policies can be applied across all traffic, no matter how it arrives at Cloudflare.
@@ -434,19 +435,19 @@ All of the above methods result in only the DNS requests — not all traffic —
 
 The following table summarizes SWG capabilities for the various methods of forwarding traffic to Cloudflare (as of Oct 2023):
 
-|                                | IP tunnel or Interconnect (Magic WAN) | Device Agent (WARP)<sup>\*1</sup> | Remote Browser | Browser proxy | DNS proxy        |
-| ------------------------------ | ------------------------------------- | --------------------------------- | -------------- | ------------- | ---------------- |
-| Types of traffic forwarded     | TCP/UDP                               | TPC/UDP                           | HTTP           | HTTP          | DNS              |
-| **Policy types**               |                                       |                                   |                |               |                  |
-| DNS                            | Yes                                   | Yes                               | Yes            | Yes           | Yes              |
-| HTTP/S<sup>\*2</sup>           | Yes                                   | Yes                               | Yes            | Yes           | N/A              |
-| Network (L3/L4 parameter)      | Yes                                   | Yes                               | Yes            | Yes           | No               |
-| **Data available in policies** |                                       |                                   |                |               |                  |
-| Identity information           | No                                    | Yes                               | Yes            | No            | No<sup>\*3</sup> |
-| Device posture                 | No                                    | Yes                               | No             | No            | No               |
-| **Capabilities**               |                                       |                                   |                |               |                  |
-| Remote browser isolation       | Yes                                   | Yes                               | Yes            | Yes           | N/A              |
-| Enforce egress IP              | Yes                                   | Yes                               | Yes            | Yes           | N/A              |
+|                                | IP tunnel or Interconnect (Cloudflare WAN) | Device Agent (WARP)<sup>\*1</sup> | Remote Browser | Browser proxy | DNS proxy        |
+| ------------------------------ | ------------------------------------------ | --------------------------------- | -------------- | ------------- | ---------------- |
+| Types of traffic forwarded     | TCP/UDP                                    | TPC/UDP                           | HTTP           | HTTP          | DNS              |
+| **Policy types**               |                                            |                                   |                |               |                  |
+| DNS                            | Yes                                        | Yes                               | Yes            | Yes           | Yes              |
+| HTTP/S<sup>\*2</sup>           | Yes                                        | Yes                               | Yes            | Yes           | N/A              |
+| Network (L3/L4 parameter)      | Yes                                        | Yes                               | Yes            | Yes           | No               |
+| **Data available in policies** |                                            |                                   |                |               |                  |
+| Identity information           | No                                         | Yes                               | Yes            | No            | No<sup>\*3</sup> |
+| Device posture                 | No                                         | Yes                               | No             | No            | No               |
+| **Capabilities**               |                                            |                                   |                |               |                  |
+| Remote browser isolation       | Yes                                        | Yes                               | Yes            | Yes           | N/A              |
+| Enforce egress IP              | Yes                                        | Yes                               | Yes            | Yes           | N/A              |
 
 Notes:
 
@@ -678,7 +679,7 @@ It's worth noting that many of the capabilities described in this document can b
 | Topic                     | Content                                                                                                                                                                           |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Cloudflare Tunnels        | [Understanding Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) - [Open source repository for `cloudflared`](https://github.com/cloudflare/cloudflared) |
-| WAN as a Service          | [Cloudflare Magic WAN documentation](/magic-wan/)                                                                                                                                 |
+| WAN as a Service          | [Cloudflare WAN documentation](/cloudflare-wan/)                                                                                                                                  |
 | Secure Web Gateway        | [How to build Gateway policies](/cloudflare-one/traffic-policies/)                                                                                                                |
 | Zero Trust Network Access | [How to build Access policies](/cloudflare-one/access-controls/policies/)                                                                                                         |
 | Remote Browser Isolation  | [Understanding browser isolation](/cloudflare-one/remote-browser-isolation/)                                                                                                      |

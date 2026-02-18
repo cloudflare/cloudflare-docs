@@ -21,19 +21,19 @@ params:
 
 import { AnchorHeading, Aside, Markdown, Render } from "~/components";
 
-## Magic routing table
+## Cloudflare Virtual Network routing table
 
 The {props.virtualNetworkName} is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
 
 - Magic Transit delivery for [Denial of Service (DoS)](/ddos-protection/) and <a href={props.mFirewallURL}>{props.mFirewallName}</a> filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
-- {props.productName} packet transport between Magic tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as <a href={props.warpClientURL}>WARP Client</a>, <a href={props.remoteBrowserURL}>Remote Browser Isolation</a>, <a href={props.accessURL}>Access</a>, and <a href={props.gatewayURL}>Gateway</a>.
+- {props.productName} packet transport between IPsec/GRE tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as <a href={props.warpClientURL}>WARP Client</a>, <a href={props.remoteBrowserURL}>Remote Browser Isolation</a>, <a href={props.accessURL}>Access</a>, and <a href={props.gatewayURL}>Gateway</a>.
 
-The Magic routing table supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [CNI with Dataplane v2](/network-interconnect/). You can add entries to the Magic routing table through static route configuration or through routes learned through BGP peering (beta).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
+The {props.virtualNetworkName} supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [CNI with Dataplane v2](/network-interconnect/). You can add entries to the {props.virtualNetworkName} through static route configuration or through routes learned through BGP peering (beta).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
 
 
 ### Allowed IP ranges
 
-The following IPv4 address ranges are allowed in the Magic Routing table:
+The following IPv4 address ranges are allowed in the Cloudflare Virtual Network routing table:
 
 { props.magicWord === "Magic Transit" && (
   <>
@@ -51,7 +51,7 @@ The following IPv4 address ranges are allowed in the Magic Routing table:
 { props.magicWord !== "Magic Transit" && (
   <>
 		<Render
-			file="routing/magic-wan-allowed-ip-ranges"
+			file="routing/cloudflare-wan-allowed-ip-ranges"
 			product="networking-services"
 			params={{
 				productName: props.productName,
@@ -100,7 +100,7 @@ Aside from priority, scoping static routes to specific geographic regions also i
 
 ### Set priority for BGP routes
 
-When BGP advertises a route, Cloudflare automatically adds it to the Magic routing table with a default priority of `100` which applies to [all regions](#scoping-routes-to-specific-regions). However, if a static route exists with the same prefix and priority, the static route always takes precedence over the BGP route. Set a different priority for static routes (more or less than `100`) depending on which you want to prioritize. Lower values have greater priority.
+When BGP advertises a route, Cloudflare automatically adds it to the Cloudflare Virtual Network routing table with a default priority of `100` which applies to [all regions](#scoping-routes-to-specific-regions). However, if a static route exists with the same prefix and priority, the static route always takes precedence over the BGP route. Set a different priority for static routes (more or less than `100`) depending on which you want to prioritize. Lower values have greater priority.
 
 Additionally, when multiple BGP routes exist with the same prefix length and priority, ECMP distributes traffic across them using [equal-cost multi-path (ECMP) routing](#equal-cost-multi-path-routing).
 
@@ -114,13 +114,13 @@ The default BGP route priority is `100`. This base priority can be adjusted usin
 
 The community values supported for setting base route priority are:
 
-- `13335:60010`: Set base Magic route priority to `10`
-- `13335:60050`: Set base Magic route priority to `50`
-- `UNSET`: Set base Magic route priority to `100`
-- `13335:60150`: Set base Magic route priority to `150`
-- `13335:60200`: Set base Magic route priority to `200`
-- `13335:60901`: Set base Magic route priority to `501000`
-- `13335:60902`: Set base Magic route priority to `1001000`
+- `13335:60010`: Set base route priority to `10`
+- `13335:60050`: Set base route priority to `50`
+- `UNSET`: Set base route priority to `100`
+- `13335:60150`: Set base route priority to `150`
+- `13335:60200`: Set base route priority to `200`
+- `13335:60901`: Set base route priority to `501000`
+- `13335:60902`: Set base route priority to `1001000`
 
 Setting multiple base priority communities in the same prefix update message is a misconfiguration. In this situation, Cloudflare prefers the highest priority (lowest integer value).
 
@@ -150,14 +150,14 @@ Cloudflare adjusts route priority when using AS prepending with communities. For
 		<AnchorHeading title="Automatic Return Routing (beta)" depth={2} />
 		<Markdown
 		text={`
-Automatic Return Routing (ARR) allows Cloudflare to track network flows from your Magic WAN connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode (beta)](#unified-routing-mode-beta).
+Automatic Return Routing (ARR) allows Cloudflare to track network flows from your Cloudflare WAN (formerly Magic WAN) connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode (beta)](#unified-routing-mode-beta).
 
-Instead of relying on static or dynamic routes for the return path, Magic WAN learns flows and remembers which connection a given flow arrived on. For any matching return traffic, Magic WAN uses this learned state to choose the next hop. This simplifies configuration, reduces the number of routes you must manage, and helps preserve symmetry for stateful traffic.
+Instead of relying on static or dynamic routes for the return path, Cloudflare WAN learns flows and remembers which connection a given flow arrived on. For any matching return traffic, Cloudflare WAN uses this learned state to choose the next hop. This simplifies configuration, reduces the number of routes you must manage, and helps preserve symmetry for stateful traffic.
 
 ARR provides the following benefits:
 
-- **Removes the need for return routes**: For supported traffic types like new TCP connections (TCP SYN), UDP, and ICMP echo traffic, Magic WAN no longer requires a routing table entry to return traffic to the originating tunnel or interconnect.
-- **Maintains symmetric routing for flows**: Responses to a given flow (for example, a TCP session) return over the same Magic WAN connection that carried the initial request — important for stateful firewalls and middleboxes.
+- **Removes the need for return routes**: For supported traffic types like new TCP connections (TCP SYN), UDP, and ICMP echo traffic, Cloudflare WAN no longer requires a routing table entry to return traffic to the originating tunnel or interconnect.
+- **Maintains symmetric routing for flows**: Responses to a given flow (for example, a TCP session) return over the same Cloudflare WAN connection that carried the initial request — important for stateful firewalls and middleboxes.
 - **Supports overlapping IP space**: Because the return path is tied to the learned connection state instead of a destination prefix in the routing table, Automatic Return Routing can support scenarios where different sites use overlapping private address space.
 - **Operates per connection**: You decide which IPsec / GRE tunnels or network interconnects should use this behavior by enabling the feature on each connection.
 		`}
@@ -167,16 +167,16 @@ ARR provides the following benefits:
 		<AnchorHeading title="How ARR works" depth={3} />
 		<Markdown
 		text={`
-When traffic that is eligible for Automatic Return Routing (ARR) arrives on a connection with ARR enabled, Magic WAN creates a flow entry that records:
+When traffic that is eligible for Automatic Return Routing (ARR) arrives on a connection with ARR enabled, Cloudflare WAN creates a flow entry that records:
 
 - The source and destination IP addresses
 - The relevant ports or identifiers, depending on the protocol
 - The connection (tunnel or interconnect) that the traffic arrived on
 
-For any subsequent packets that match this flow and require a next hop, Magic WAN:
+For any subsequent packets that match this flow and require a next hop, Cloudflare WAN:
 
 1. Checks for a matching Automatic Return Routing flow.
-2. If a match exists, routes the packet back to the same connection where the flow was learned, instead of consulting the Magic WAN routing table.
+2. If a match exists, routes the packet back to the same connection where the flow was learned, instead of consulting the Cloudflare Virtual Network routing table.
 
 The initial request from your network to the Internet still uses your configured static or BGP routes. ARR only affects the return path for supported traffic after the flow is learned.
 		`}
@@ -199,7 +199,7 @@ Automatic Return Routing applies when:
   - A private network connected to Cloudflare through Cloudflare Tunnel
   - A private network connected to Cloudflare through WARP Connector
 
-In this initial release, ARR does not change routing for traffic between Magic WAN connections (for example, traffic from one Magic WAN tunnel or interconnect to another). That traffic continues to follow your configured Magic WAN routes.
+In this initial release, ARR does not change routing for traffic between Cloudflare WAN connections (for example, traffic from one Cloudflare WAN tunnel or interconnect to another). That traffic continues to follow your configured Cloudflare WAN routes.
 		`}
 		inline={false}
 		/>
@@ -211,7 +211,7 @@ In this initial release, ARR does not change routing for traffic between Magic W
 
 The Unified Routing mode is the newer Cloudflare One data plane that uses a single routing fabric for all supported connection types. Unified Routing mode routes traffic across WARP, Cloudflare Tunnel, IPsec, GRE, and Cloudflare Network Interconnect (CNI) in a single system, making it easier to set up your Cloudflare One connections.
 
-In the {props.productName} dashboard, routing mode appears where you manage Magic routes:
+In the {props.productName} dashboard, routing mode appears where you manage routes:
 
 - **Routing mode: Unified** — your account is on the unified data plane and supports the new routing features.
 - **Routing mode: Legacy** — your account uses the previous data plane and does not support all unified routing features.
@@ -260,7 +260,7 @@ The following limitations apply to accounts using Unified Routing mode. This lis
 | Network analytics | Not yet fully supported |
 | Basic packet captures | Captures exclude Automatic Return Routing or BGP-over-tunnels traffic |
 | Full packet captures | Not yet supported |
-| Advanced Magic Firewall features: GeoIP/Country rules, IP Lists, ASN Lists, Threat Intel Lists, IDS, Rate Limiting, SIP, Managed Rulesets | Not yet supported |
+| Advanced Cloudflare Network Firewall features: GeoIP/Country rules, IP Lists, ASN Lists, Threat Intel Lists, IDS, Rate Limiting, SIP, Managed Rulesets | Not yet supported |
 | Gateway filtering rules | Not supported on traffic where both the onramp and offramp is IPsec/GRE/CNI |
 | Load Balancer | Not supported to IPsec/GRE/CNI destinations |
 
@@ -268,14 +268,14 @@ The following limitations apply to accounts using Unified Routing mode. This lis
 
 Unified Routing is currently in closed beta. To sign up:
 
-- **Existing Magic WAN or Magic Transit customers**: Cloudflare recommends you evaluate the new functionality with your use case in a non-production account. Contact your account team to enable Unified Routing.
+- **Existing Cloudflare WAN or Magic Transit customers**: Cloudflare recommends you evaluate the new functionality with your use case in a non-production account. Contact your account team to enable Unified Routing.
 - **New customers**: Contact your account team to enable Unified Routing in a proof-of-concept for your use case.
 
 ## Scoping routes to specific regions
 
 If you have multiple connectivity paths to a network segment and want to apply different route prioritization based on where traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user.
 
-When you scope a route to a Cloudflare data center region, it only shows up in the Magic routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
+When you scope a route to a Cloudflare data center region, it only shows up in the Cloudflare Virtual Network routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
 
 :::note
 Scoping routes to specific regions is not supported with BGP peering, and is only available to statically configured routes at this time.
@@ -472,7 +472,7 @@ With this functionality, you can:
 
 - Establish an eBGP session between your devices and the {props.productName} service when connected through CNI, GRE or IPsec tunnels.
 - Secure the session by MD5 authentication to prevent misconfigurations.
-- Exchange routes dynamically between your devices and your Magic routing table.
+- Exchange routes dynamically between your devices and your Cloudflare Virtual Network routing table.
 
 ### Release status
 
@@ -526,17 +526,17 @@ Once connectivity between the Cloudflare edge and the centralized relay is resto
 2. **Global update**: The relay reconciles these updates and propagates any changes to the rest of the Cloudflare global network.
 3. **FIB unfreeze**: The local forwarding tables at the edge are unfrozen and updated with the latest validated routing instructions.
 
-### BGP peering with the Magic routing table
+### BGP peering with the Cloudflare Virtual Network routing table
 
-{props.productName} BGP peering is with the {props.virtualNetworkName} (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the on-ramp <a href={props.setupBgpPeering}>Advertised prefix list</a>.
+{props.productName} BGP peering is with the {props.virtualNetworkName} (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Cloudflare Virtual Network routing table plus any additional prefixes configured in the on-ramp <a href={props.setupBgpPeering}>Advertised prefix list</a>.
 
-If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). It is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
+If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). It is not currently possible to share Cloudflare Virtual Network BGP peering and PNI on the same physical interconnect port.
 
 ### BGP route distribution and convergence
 
-Cloudflare redistributes routes received from your device into the Magic routing table, which both {props.productName} and Magic Transit use.
+Cloudflare redistributes routes received from your device into the Cloudflare Virtual Network routing table, which both {props.productName} and Magic Transit use.
 
-All routes in the Magic routing table are advertised to BGP peers. Each BGP peer receives each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
+All routes in the Cloudflare Virtual Network routing table are advertised to BGP peers. Each BGP peer receives each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
 
 BGP peering sessions can advertise reachable prefixes to a peer and withdraw previously advertised prefixes. This propagation takes no more than a few minutes.
 
@@ -569,7 +569,7 @@ BGP support currently has the following limitations:
 
 { props.magicWord === "Magic Transit" && (
   <>
-    <p>For Magic Transit customers, BGP with the Magic routing table is separated from the announcement of anycast prefixes at the Cloudflare edge. Anycast withdrawal must be controlled with existing methods documented in <a href="/magic-transit/how-to/advertise-prefixes/">Advertise prefixes</a>.</p>
+    <p>For Magic Transit customers, BGP with the {props.virtualNetworkName} is separated from the announcement of anycast prefixes at the Cloudflare edge. Anycast withdrawal must be controlled with existing methods documented in <a href="/magic-transit/how-to/advertise-prefixes/">Advertise prefixes</a>.</p>
   </>
   )
 }
