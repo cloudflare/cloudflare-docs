@@ -173,3 +173,10 @@ If your framework is not detected, ensure your `package.json` includes the frame
 ### Configuration already exists
 
 If a Wrangler configuration file already exists, automatic configuration will not run. To reconfigure your project, delete the existing configuration file and run `wrangler deploy` or `wrangler setup` again.
+
+### Workspaces
+
+Currently support for projects within workspaces is limited. Wrangler does not traverse the filesystem upwards so it doesn't detect when a project is part of a workspace, this might result in erroneous situations where for example
+the frameworks is incorrectly not detected (because installed as a dependency of the workspace rather than the project itself).
+
+We'll work on improving support for projects within workspaces. If you encounter workspace-related issues, please report them in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
