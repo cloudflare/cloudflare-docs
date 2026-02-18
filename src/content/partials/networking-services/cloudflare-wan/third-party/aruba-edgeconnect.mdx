@@ -105,6 +105,8 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Business Intent Overlay screen with breakout and CF overlays](~/assets/images/cloudflare-wan/third-party/aruba-edge-connect/biz-intent-overlay.png)
 
+*Note: Labels in this image may reflect a previous product name.*
+
 </Details>
 
 <Details header="IPsec tunnel configuration">
@@ -125,6 +127,8 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Business Intent Overlay screen with breakout and CF overlays for IPsec](~/assets/images/cloudflare-wan/third-party/aruba-edge-connect/biz-intent-overlay-ipsec.png)
 
+*Note: Labels in this image may reflect a previous product name.*
+
 </Details>
 
 ## 3. Create tunnels on Cloudflare and EdgeConnect
@@ -132,6 +136,8 @@ The service name used to send traffic through the tunnel created in the next ste
 <Details header="GRE tunnel configuration">
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products](~/assets/images/cloudflare-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram.png)
+
+*Note: Labels in this image may reflect a previous product name.*
 
 1. Create a tunnel on the EdgeConnect using Cloudflare's assigned public anycast IP and the service used in the overlay policy in the [previous step](#2-configure-overlay-policies).
 2. Create a Virtual Tunnel Interface (VTI) using the private IP pair shared with CF GRE tunnel endpoint and the passthrough tunnel to match the newly created tunnel alias (**CF_GRE_east** in our example).
@@ -149,6 +155,8 @@ The service name used to send traffic through the tunnel created in the next ste
 <Details header="IPsec tunnel configuration">
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products for IPsec tunnels](~/assets/images/cloudflare-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram-ipsec.png)
+
+*Note: Labels in this image may reflect a previous product name.*
 
 For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/create/).
 
