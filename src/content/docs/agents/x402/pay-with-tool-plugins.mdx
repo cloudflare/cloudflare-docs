@@ -6,38 +6,19 @@ sidebar:
 description: Add x402 payment handling to OpenCode and Claude Code.
 ---
 
-Add x402 payment handling to AI coding tools so they can pay for paywalled resources automatically.
+The following examples show how to add x402 payment handling to AI coding tools. When the tool encounters a 402 response, it pays automatically and retries.
 
-## Prerequisites
+Both examples require:
 
-- OpenCode or Claude Code installed
-- A wallet with USDC (test on `base-sepolia`, production on `base`)
-
-## Setup
-
-Both implementations use the same dependencies and environment variable.
-
-Install the x402 packages:
-
-```sh
-npm install @x402/fetch @x402/evm viem
-```
-
-Set your wallet private key:
-
-```sh
-export X402_PRIVATE_KEY="0xYourPrivateKey"
-```
-
-Get test USDC from the [Circle faucet](https://faucet.circle.com/).
+- A wallet private key (set as `X402_PRIVATE_KEY` environment variable)
+- The x402 packages: `@x402/fetch`, `@x402/evm`, and `viem`
 
 ## OpenCode plugin
 
-OpenCode plugins expose tools to the agent. Create an `x402-fetch` tool that handles 402 responses.
-
-Create `.opencode/plugins/x402-payment.ts`:
+OpenCode plugins expose tools to the agent. To create an `x402-fetch` tool that handles 402 responses, create `.opencode/plugins/x402-payment.ts`:
 
 ```ts
+// Use base-sepolia for testing. Get test USDC from https://faucet.circle.com/
 import type { Plugin } from "@opencode-ai/plugin";
 import { tool } from "@opencode-ai/plugin";
 import { x402Client, wrapFetchWithPayment } from "@x402/fetch";
@@ -90,32 +71,10 @@ When the built-in `webfetch` returns a 402, the agent calls `x402-fetch` to retr
 
 ## Claude Code hook
 
-Claude Code hooks intercept tool results. Hook into `WebFetch` responses to handle 402s transparently.
-
-Create `.claude/settings.json`:
-
-```json
-{
-	"hooks": {
-		"PostToolUse": [
-			{
-				"matcher": "WebFetch",
-				"hooks": [
-					{
-						"type": "command",
-						"command": "node .claude/dist/handle-x402.mjs",
-						"timeout": 30
-					}
-				]
-			}
-		]
-	}
-}
-```
-
-Create `.claude/scripts/handle-x402.mjs`:
+Claude Code hooks intercept tool results. To handle 402s transparently, create a script at `.claude/scripts/handle-x402.mjs`:
 
 ```js
+// Use base-sepolia for testing. Get test USDC from https://faucet.circle.com/
 import { x402Client, wrapFetchWithPayment } from "@x402/fetch";
 import { registerExactEvmScheme } from "@x402/evm/exact/client";
 import { privateKeyToAccount } from "viem/accounts";
@@ -174,10 +133,25 @@ function readStdin() {
 }
 ```
 
-Build the hook:
+Register the hook in `.claude/settings.json`:
 
-```sh
-cd .claude && npm run build
+```json
+{
+	"hooks": {
+		"PostToolUse": [
+			{
+				"matcher": "WebFetch",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node .claude/scripts/handle-x402.mjs",
+						"timeout": 30
+					}
+				]
+			}
+		]
+	}
+}
 ```
 
 ## Related
