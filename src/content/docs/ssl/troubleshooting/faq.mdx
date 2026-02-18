@@ -13,7 +13,7 @@ The following provide answers to the most common questions associated with Cloud
 
 ## If I have multiple Cloudflare certificates, which one is used?
 
-Cloudflare certificates are prioritized by a combination of hostname specificity, zone specificity, and certificate type.
+Cloudflare certificates are prioritized by a combination of hostname specificity, zone specificity, and certificate type.
 
 For more details, refer to [Certificate and hostname priority](/ssl/reference/certificate-and-hostname-priority/).
 
@@ -40,16 +40,6 @@ For further SEO tweaks, refer to our article on [improving SEO Rankings with Clo
 
 ***
 
-## How long does it take for Cloudflare's SSL to activate?
-
-If Cloudflare is your [authoritative DNS provider](/dns/zone-setups/full-setup), Universal SSL certificates typically issue within 15 minutes of domain activation at Cloudflare and do not require further customer action after domain activation.
-
-Alternatively, if you use [Cloudflare services via `CNAME` records](/dns/zone-setups/partial-setup) set at your authoritative DNS provider, provisioning your Universal SSL certificate requires manual addition of [DNS verification records](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup) at your authoritative DNS provider. [Advanced SSL certificates](/ssl/edge-certificates/advanced-certificate-manager/) also typically issue within 15 minutes.
-
-If the Certificate Authority requires a manual review of brand, phishing, or TLD requirements, a Universal SSL certificate can take longer than 24 hours to issue.
-
-***
-
 ## What does SSL invalid brand check mean?
 
 Some domains are not eligible for the Universal SSL if they contain words that conflict with trademarked domains.
@@ -58,19 +48,6 @@ To resolve this issue, you can:
 
 * Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
 * Upload your own [custom certificate](/ssl/edge-certificates/custom-certificates/uploading/).
-
-***
-
-## Does Cloudflare SSL support Internationalized Domain Names (IDN)?
-
-The double byte / IDN / punycode domains support for Cloudflare edge certificates depends on the [certificate authority (CA)](/ssl/reference/certificate-authorities).
-Google Trust Services does not support punycode domains as mentioned in the [certificate authorities limitations](/ssl/reference/certificate-authorities/#limitations-1).
-
-***
-
-## How do I redirect all visitors to HTTPS/SSL?
-
-Refer to [Encrypt all visitor traffic](/ssl/edge-certificates/encrypt-visitor-traffic/).
 
 ***
 
@@ -119,33 +96,11 @@ If you are encountering issues with PayPal IPN when the traffic is proxied by Cl
 
 ***
 
-## Does Cloudflare support TLS client authentication?
-
-Yes. For more details, refer to our documentation on [Mutual TLS authentication](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/).
-
-***
-
 ## How do I obtain an SSL certificate for customers on partial (CNAME) setup?
 
 A [partial DNS setup](/dns/zone-setups/partial-setup/) requires additional steps to provision and validate an SSL certificate.
 
 For more details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl#partial-dns-setup).
-
-***
-
-## Can I use Certificate Pinning?
-
-No. Multiple industry leaders — including [Digicert](https://www.digicert.com/blog/certificate-pinning-what-is-certificate-pinning) and [Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Public_Key_Pinning) — have discouraged certificate pinning because of security concerns.
-
-For a safer alternative, use [Certificate Transparency Monitoring](/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/).
-
-Refer to [Certificate pinning](/ssl/reference/certificate-pinning/) for more details.
-
-***
-
-## Where can I learn more about SSL?
-
-To learn more about SSL, go to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/ssl/what-is-ssl/).
 
 ***
 
