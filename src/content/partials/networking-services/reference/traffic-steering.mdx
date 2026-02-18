@@ -2,6 +2,7 @@
 params:
   - magicWord
   - productName
+  - routingTableName
   - virtualNetworkName
   - mFirewallName
   - mFirewallURL
@@ -21,19 +22,19 @@ params:
 
 import { AnchorHeading, Aside, Markdown, Render } from "~/components";
 
-## Cloudflare Virtual Network routing table
+<AnchorHeading depth={2} title={`${props.routingTableName}`} />
 
 The {props.virtualNetworkName} is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
 
 - Magic Transit delivery for [Denial of Service (DoS)](/ddos-protection/) and <a href={props.mFirewallURL}>{props.mFirewallName}</a> filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
 - {props.productName} packet transport between IPsec/GRE tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as <a href={props.warpClientURL}>WARP Client</a>, <a href={props.remoteBrowserURL}>Remote Browser Isolation</a>, <a href={props.accessURL}>Access</a>, and <a href={props.gatewayURL}>Gateway</a>.
 
-The {props.virtualNetworkName} supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [CNI with Dataplane v2](/network-interconnect/). You can add entries to the {props.virtualNetworkName} through static route configuration or through routes learned through BGP peering (beta).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
+The {props.virtualNetworkName} supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [CNI with Dataplane v2](/network-interconnect/). You can add entries to the {props.routingTableName} through static route configuration or through routes learned through BGP peering (beta).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
 
 
 ### Allowed IP ranges
 
-The following IPv4 address ranges are allowed in the Cloudflare Virtual Network routing table:
+The following IPv4 address ranges are allowed in the {props.routingTableName}:
 
 { props.magicWord === "Magic Transit" && (
   <>
@@ -100,7 +101,7 @@ Aside from priority, scoping static routes to specific geographic regions also i
 
 ### Set priority for BGP routes
 
-When BGP advertises a route, Cloudflare automatically adds it to the Cloudflare Virtual Network routing table with a default priority of `100` which applies to [all regions](#scoping-routes-to-specific-regions). However, if a static route exists with the same prefix and priority, the static route always takes precedence over the BGP route. Set a different priority for static routes (more or less than `100`) depending on which you want to prioritize. Lower values have greater priority.
+When BGP advertises a route, Cloudflare automatically adds it to the {props.routingTableName} with a default priority of `100` which applies to [all regions](#scoping-routes-to-specific-regions). However, if a static route exists with the same prefix and priority, the static route always takes precedence over the BGP route. Set a different priority for static routes (more or less than `100`) depending on which you want to prioritize. Lower values have greater priority.
 
 Additionally, when multiple BGP routes exist with the same prefix length and priority, ECMP distributes traffic across them using [equal-cost multi-path (ECMP) routing](#equal-cost-multi-path-routing).
 
@@ -275,7 +276,7 @@ Unified Routing is currently in closed beta. To sign up:
 
 If you have multiple connectivity paths to a network segment and want to apply different route prioritization based on where traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user.
 
-When you scope a route to a Cloudflare data center region, it only shows up in the Cloudflare Virtual Network routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
+When you scope a route to a Cloudflare data center region, it only shows up in the {props.routingTableName} in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
 
 :::note
 Scoping routes to specific regions is not supported with BGP peering, and is only available to statically configured routes at this time.
@@ -472,7 +473,7 @@ With this functionality, you can:
 
 - Establish an eBGP session between your devices and the {props.productName} service when connected through CNI, GRE or IPsec tunnels.
 - Secure the session by MD5 authentication to prevent misconfigurations.
-- Exchange routes dynamically between your devices and your Cloudflare Virtual Network routing table.
+- Exchange routes dynamically between your devices and your {props.routingTableName}.
 
 ### Release status
 
@@ -487,7 +488,7 @@ The following table outlines the current availability and recommended use cases 
 
 #### Global routing and anycast edge
 
-Magic Networking makes a one-pass, per-packet routing decision at the Cloudflare data center that first processes the packet (the ingress node). This ensures that even when a packet traverses multiple nodes within the Cloudflare backbone, its path is determined at the point of entry for maximum efficiency.
+{props.virtualNetworkName} makes a one-pass, per-packet routing decision at the Cloudflare data center that first processes the packet (the ingress node). This ensures that even when a packet traverses multiple nodes within the Cloudflare backbone, its path is determined at the point of entry for maximum efficiency.
 
 Your BGP session over IPsec, GRE, or CNI is established with the Cloudflare data center closest to your BGP peer device. Routes learned here must propagate to Cloudflare's global edge to govern how traffic is routed across the entire network.
 
@@ -496,7 +497,7 @@ Your BGP session over IPsec, GRE, or CNI is established with the Cloudflare data
 
 #### Centralized route propagation
 
-Magic Networking uses a centralized control plane for route propagation, functioning similarly to a BGP Route Reflector. This architecture decouples the physical BGP session from global route distribution:
+{props.virtualNetworkName} uses a centralized control plane for route propagation, functioning similarly to a BGP Route Reflector. This architecture decouples the physical BGP session from global route distribution:
 
 - **Session termination**: BGP peering sessions are terminated at the Cloudflare edge location closest to your router.
 - **SDN conversion**: Ingress BGP updates are converted into Software-Defined Networking (SDN) state and transmitted to a centralized relay function.
@@ -526,17 +527,17 @@ Once connectivity between the Cloudflare edge and the centralized relay is resto
 2. **Global update**: The relay reconciles these updates and propagates any changes to the rest of the Cloudflare global network.
 3. **FIB unfreeze**: The local forwarding tables at the edge are unfrozen and updated with the latest validated routing instructions.
 
-### BGP peering with the Cloudflare Virtual Network routing table
+<AnchorHeading depth={3} title={`BGP peering with the ${props.routingTableName}`} />
 
-{props.productName} BGP peering is with the {props.virtualNetworkName} (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Cloudflare Virtual Network routing table plus any additional prefixes configured in the on-ramp <a href={props.setupBgpPeering}>Advertised prefix list</a>.
+{props.productName} BGP peering is with the {props.routingTableName} (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the {props.routingTableName} plus any additional prefixes configured in the on-ramp <a href={props.setupBgpPeering}>Advertised prefix list</a>.
 
-If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). It is not currently possible to share Cloudflare Virtual Network BGP peering and PNI on the same physical interconnect port.
+If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). It is not currently possible to share {props.virtualNetworkName} BGP peering and PNI on the same physical interconnect port.
 
 ### BGP route distribution and convergence
 
-Cloudflare redistributes routes received from your device into the Cloudflare Virtual Network routing table, which both {props.productName} and Magic Transit use.
+Cloudflare redistributes routes received from your device into the {props.routingTableName}{ props.magicWord !== "Magic Transit" && (<>, which both {props.productName} and Magic Transit use</>)}.
 
-All routes in the Cloudflare Virtual Network routing table are advertised to BGP peers. Each BGP peer receives each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
+All routes in the {props.routingTableName} are advertised to BGP peers. Each BGP peer receives each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
 
 BGP peering sessions can advertise reachable prefixes to a peer and withdraw previously advertised prefixes. This propagation takes no more than a few minutes.
 
@@ -569,7 +570,7 @@ BGP support currently has the following limitations:
 
 { props.magicWord === "Magic Transit" && (
   <>
-    <p>For Magic Transit customers, BGP with the {props.virtualNetworkName} is separated from the announcement of anycast prefixes at the Cloudflare edge. Anycast withdrawal must be controlled with existing methods documented in <a href="/magic-transit/how-to/advertise-prefixes/">Advertise prefixes</a>.</p>
+    <p>For Magic Transit customers, BGP with the {props.routingTableName} is separated from the announcement of anycast prefixes at the Cloudflare edge. Anycast withdrawal must be controlled with existing methods documented in <a href="/magic-transit/how-to/advertise-prefixes/">Advertise prefixes</a>.</p>
   </>
   )
 }
