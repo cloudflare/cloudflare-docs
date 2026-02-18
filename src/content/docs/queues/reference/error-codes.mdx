@@ -46,7 +46,7 @@ For the [Cloudflare API via HTTP](/api/resources/queues/subresources/messages/),
 
 ### Client side errors
 
-| Error Code | HTTP Status              | Details                                                                    | Recommended actions                                                                                                                                                                                                       |
+| Error Code | Error                    | Details                                                                    | Recommended actions                                                                                                                                                                                                       |
 | ---------- | ------------------------ | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
 | 10104      | QueueNotFound            | Queue does not exist                                                       | Check for existence of `queue_id` in [List Queues endpoint](/api/resources/queues/)                                                                                                                                       |
 | 10105      | FeatureFlagNotSet        | Feature flag not set                                                       | Ensure that feature flag is set past `February 17, 2026` compatibility date                                                                                                                                               |
@@ -63,7 +63,7 @@ For the [Cloudflare API via HTTP](/api/resources/queues/subresources/messages/),
 
 ### 429 type errors
 
-| Error Code | HTTP Status               | Details                      | Recommended actions                                                                                |
+| Error Code | Error                     | Details                      | Recommended actions                                                                                |
 | ---------- | ------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------- |
 | 10250      | QueueOverloaded           | Queue is overloaded          | Temporarily back off sending messages to the queue.                                                |
 | 10251      | QueueStorageLimitExceeded | Queue storage limit exceeded | [Purge queue](/queues/configuration/pause-purge/#purge-queue) or wait for queue to process backlog |
