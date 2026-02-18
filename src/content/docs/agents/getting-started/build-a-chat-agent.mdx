@@ -121,22 +121,33 @@ export class ChatAgent extends AIChatAgent {
 
 				// Approval tool: requires user confirmation before executing
 				calculate: tool({
-					description: "Perform a calculation",
+					description:
+						"Perform a math calculation with two numbers. " +
+						"Requires user approval for large numbers.",
 					inputSchema: z.object({
-						expression: z.string().describe("Math expression to evaluate"),
-						amount: z
-							.number()
-							.optional()
-							.describe("Dollar amount involved, if any"),
+						a: z.number().describe("First number"),
+						b: z.number().describe("Second number"),
+						operator: z
+							.enum(["+", "-", "*", "/", "%"])
+							.describe("Arithmetic operator"),
 					}),
-					needsApproval: async ({ amount }) => (amount ?? 0) > 100,
-					execute: async ({ expression }) => {
-						try {
-							const result = new Function(`return ${expression}`)();
-							return { expression, result: Number(result) };
-						} catch {
-							return { expression, error: "Invalid expression" };
+					needsApproval: async ({ a, b }) =>
+						Math.abs(a) > 1000 || Math.abs(b) > 1000,
+					execute: async ({ a, b, operator }) => {
+						const ops: Record<string, (x: number, y: number) => number> = {
+							"+": (x, y) => x + y,
+							"-": (x, y) => x - y,
+							"*": (x, y) => x * y,
+							"/": (x, y) => x / y,
+							"%": (x, y) => x % y,
+						};
+						if (operator === "/" && b === 0) {
+							return { error: "Division by zero" };
 						}
+						return {
+							expression: `${a} ${operator} ${b}`,
+							result: ops[operator](a, b),
+						};
 					},
 				}),
 			},
@@ -165,7 +176,7 @@ export default {
 | ---------------- | ---------- | ----------------- | ---------------------------------------------------- |
 | `getWeather`     | Yes        | No                | Runs on the server automatically                     |
 | `getUserTimezone`| No         | No                | Sent to the client; browser provides the result      |
-| `calculate`      | Yes        | Yes (over $100)   | Pauses for user approval, then runs on server        |
+| `calculate`      | Yes        | Yes (large numbers) | Pauses for user approval, then runs on server       |
 
 ## 4. Write the client
 
@@ -311,7 +322,7 @@ Try these prompts:
 
 - **"What is the weather in Tokyo?"** — calls the server-side `getWeather` tool
 - **"What timezone am I in?"** — calls the client-side `getUserTimezone` tool (the browser provides the answer)
-- **"Calculate 200 * 3 (amount: $600)"** — triggers the approval UI before executing
+- **"What is 5000 times 3?"** — triggers the approval UI before executing (numbers over 1000)
 
 ## 6. Deploy
 
