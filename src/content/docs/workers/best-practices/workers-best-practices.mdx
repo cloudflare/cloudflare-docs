@@ -125,7 +125,7 @@ For more information, refer to [Secrets](/workers/configuration/secrets/).
 
 [Wrangler environments](/workers/wrangler/environments/) let you deploy the same code to separate Workers for production, staging, and development. Each environment creates a distinct Worker named `{name}-{env}` (for example, `my-api-production` and `my-api-staging`).
 
-Each environment is treated separately. Bindings and vars need to be declared per environment and are not inherited. See [non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys). The root Worker (without an environment suffix) is a separate deployment. If you do not intend to use it, do not deploy without specifying an environment using `--env`.
+Each environment is treated separately. Bindings and vars need to be declared per environment and are not inherited. Refer to [non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys). The root Worker (without an environment suffix) is a separate deployment. If you do not intend to use it, do not deploy without specifying an environment using `--env`.
 
 <WranglerConfig>
 
