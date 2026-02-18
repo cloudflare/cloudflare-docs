@@ -164,7 +164,9 @@ You can also manually configure your project by following the framework-specific
 
 ### Multiple frameworks detected
 
-When run in CI, if your project contains multiple frameworks, automatic configuration will fail with an error. In this case, you need to manually configure your project or specify a root directory that contains only one framework.
+When you import a repository via [Workers Builds](/workers/ci-cd/builds/) in the Cloudflare dashboard, automatic configuration will fail if your project contains multiple frameworks. To resolve this, set the [root directory](/workers/ci-cd/builds/configuration/#build-settings) to the path containing only one framework. For monorepos, refer to [monorepo setup](/workers/ci-cd/builds/advanced-setups/#monorepos).
+
+When running `wrangler deploy` or `wrangler setup` locally, Wrangler will prompt you to select which framework to use if multiple frameworks are detected.
 
 ### Framework not detected
 
@@ -176,7 +178,6 @@ If a Wrangler configuration file already exists, automatic configuration will no
 
 ### Workspaces
 
-Currently support for projects within workspaces is limited. Wrangler does not traverse the filesystem upwards so it doesn't detect when a project is part of a workspace, this might result in erroneous situations where for example
-the frameworks is incorrectly not detected (because installed as a dependency of the workspace rather than the project itself).
+Support for monorepos and npm/yarn/pnpm workspaces is currently limited. Wrangler analyzes the project directory where you run the command, but does not detect dependencies installed at the workspace root. This can cause framework detection to fail if the framework is listed as a dependency in the workspace's root `package.json` rather than in the individual project's `package.json`.
 
-We'll work on improving support for projects within workspaces. If you encounter workspace-related issues, please report them in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+If you encounter issues, report them in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
