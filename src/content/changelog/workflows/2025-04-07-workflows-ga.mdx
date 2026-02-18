@@ -29,12 +29,12 @@ For example, if you wanted to implement a human-in-the-loop approval process, yo
 <TypeScriptExample>
 
 ```ts
-import { Workflow, WorkflowEvent } from "cloudflare:workflows";
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from "cloudflare:workers";
 
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// Other steps in your Workflow
-		let event = await step.waitForEvent<IncomingStripeWebhook>("receive invoice paid webhook from Stripe", { type: "stripe-webhook", timeout: "1 hour" })
+		let stripeEvent = await step.waitForEvent<IncomingStripeWebhook>("receive invoice paid webhook from Stripe", { type: "stripe-webhook", timeout: "1 hour" })
 		// Rest of your Workflow
 	}
 }

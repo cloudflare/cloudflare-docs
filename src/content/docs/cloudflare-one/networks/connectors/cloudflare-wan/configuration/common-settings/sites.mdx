@@ -1,0 +1,23 @@
+---
+title: Set up a site
+pcx_content_type: how-to
+sidebar:
+  order: 1
+  badge:
+    text: Beta
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="sites/sites"
+	product="networking-services"
+	params={{
+		magicWord: "CF1 Cloudflare WAN",
+		greIpsecTunnelsURL: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
+		connectorURL: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/",
+		cniURL: "/cloudflare-one/networks/connectors/cloudflare-wan/network-interconnect/",
+		connectorName: "Cloudflare One Appliance",
+		magicTunnelHcsURL: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/"
+	}}
+/>

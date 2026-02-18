@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: RtkAi
+description: API reference for RtkAi component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `view` | `AIView` | ✅ | - | View type |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkAi } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkAi />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkAi } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkAi
+      meeting={meeting}
+      size="md"
+      view={aiview}
+    />
+  );
+}
+```
+

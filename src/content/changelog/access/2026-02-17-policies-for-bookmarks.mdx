@@ -1,0 +1,18 @@
+---
+title: Policies for bookmark applications
+description: Control which users see bookmark applications in the App Launcher by assigning Access policies.
+date: 2026-02-17
+products:
+  - access
+---
+
+You can now assign [Access policies](/cloudflare-one/access-controls/policies/) to [bookmark applications](/cloudflare-one/access-controls/applications/bookmarks/). This lets you control which users see a bookmark in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) based on identity, device posture, and other policy rules.
+
+Previously, bookmark applications were visible to all users in your organization. With policy support, you can now:
+
+- **Tailor the App Launcher to each user** — Users only see the applications they have access to, reducing clutter and preventing accidental clicks on irrelevant resources.
+- **Restrict visibility of sensitive bookmarks** — Limit who can view bookmarks to internal tools or partner resources based on group membership, identity provider, or device posture.
+
+Bookmarks support all [Access policy configurations](/cloudflare-one/access-controls/policies/) except purpose justification, temporary authentication, and application isolation. If no policy is assigned, the bookmark remains visible to all users (maintaining backwards compatibility).
+
+For more information, refer to [Add bookmarks](/cloudflare-one/access-controls/applications/bookmarks/).

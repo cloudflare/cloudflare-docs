@@ -227,10 +227,10 @@ Examples:
 
 ```txt
 # Check if there is an HTTP request header with the exact name 'X-My-Header'
-has_value(http.request.headers.name, "X-My-Header")
+has_value(http.request.headers.names, "X-My-Header")
 
 # Check if there is a request header with the exact name provided as the first query argument:
-has_value(http.request.headers.name, http.request.uri.args.names[0])
+has_value(http.request.headers.names, http.request.uri.args.names[0])
 ```
 
 ### `len`
@@ -627,7 +627,7 @@ For more examples of wildcard matching, refer to [Wildcard matching](/ruleset-en
 Currently, you can only use the `wildcard_replace()` function in rewrite expressions of [URL rewrites](/rules/transform/url-rewrite/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 :::
 
-## Magic Firewall Functions
+## Cloudflare Network Firewall Functions
 
 ### `bit_slice`
 

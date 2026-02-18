@@ -140,9 +140,11 @@ console.log('Logs:', logs);
 
 ## Stop processes
 
+Stop background processes and their children:
+
 <TypeScriptExample>
 ```
-// Stop specific process
+// Stop specific process (terminates entire process tree)
 await sandbox.killProcess(server.id);
 
 // Force kill if needed
@@ -150,6 +152,22 @@ await sandbox.killProcess(server.id, 'SIGKILL');
 
 // Stop all processes
 await sandbox.killAllProcesses();
+```
+</TypeScriptExample>
+
+`killProcess()` terminates the specified process and all child processes it spawned. This ensures that processes running in the background do not leave orphaned child processes when terminated.
+
+For example, if your process spawns multiple worker processes or background tasks, `killProcess()` will clean up the entire process tree:
+
+<TypeScriptExample>
+```
+// This script spawns multiple child processes
+const batch = await sandbox.startProcess(
+  'bash -c "process1 & process2 & process3 & wait"'
+);
+
+// killProcess() terminates the bash process AND all three child processes
+await sandbox.killProcess(batch.id);
 ```
 </TypeScriptExample>
 

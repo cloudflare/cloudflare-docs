@@ -3,11 +3,15 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
-  - publish_date: "2026-01-23"
+  - publish_date: "2026-02-19"
     title: "Documentation updates for robots.txt and sitemaps"
     description: |-
       * Added [robots.txt and sitemaps reference page](/browser-rendering/reference/robots-txt/) explaining how Browser Rendering identifies as a bot and interacts with robots.txt.
       * Updated [automatic request headers documentation](/browser-rendering/reference/automatic-request-headers/) with User-Agent string details.
+  - publish_date: "2026-02-03"
+    title: "@cloudflare/puppeteer v1.0.6 released"
+    description: |-
+      * Released version 1.0.6 of [`@cloudflare/puppeteer`](https://github.com/cloudflare/puppeteer/releases/tag/v1.0.6), which includes a fix for rendering large text PDFs.
   - publish_date: "2026-01-21"
     title: "@cloudflare/puppeteer v1.0.5 released"
     description: |-
@@ -85,7 +89,7 @@ entries:
   - publish_date: "2025-06-30"
     title: New Web Bot Auth headers
     description: |-
-      * Browser Rendering now supports [Web Bot Auth](/reference/automatic-request-headers/) by automatically attaching `Signature-agent`, `Signature`, and `Signature-input ` headers to verify that a request originates from Cloudflare Browser Rendering.
+      * Browser Rendering now supports [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/) by automatically attaching `Signature-agent`, `Signature`, and `Signature-input ` headers to verify that a request originates from Cloudflare Browser Rendering.
   - publish_date: "2025-06-27"
     title: Bug fix to debug log noise in Workers
     description: |-

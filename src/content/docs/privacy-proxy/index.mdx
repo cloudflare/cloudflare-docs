@@ -1,0 +1,68 @@
+---
+title: Privacy Proxy
+pcx_content_type: overview
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Privacy Proxy
+---
+
+import {
+  Description,
+  Feature,
+  Plan,
+  RelatedProduct,
+} from "~/components";
+
+<Description>
+
+A MASQUE-based forward proxy that protects user privacy while preserving geolocation accuracy.
+
+</Description>
+
+<Plan type="enterprise" />
+
+Privacy Proxy is a managed proxy service that runs on Cloudflare's global network. It uses the [MASQUE](https://datatracker.ietf.org/wg/masque/about/) protocol suite to proxy TCP and UDP traffic via HTTP CONNECT and CONNECT-UDP methods over HTTP/2 and HTTP/3.
+
+Privacy Proxy separates user identity from user activity. Users authenticate to the proxy without revealing which destinations they visit, and destination servers see requests from Cloudflare IP addresses without learning who made them.
+
+Privacy Proxy powers services like [Microsoft Edge Secure Network](https://blog.cloudflare.com/cloudflare-now-powering-microsoft-edge-secure-network/) and serves as a second-hop relay for [iCloud Private Relay](https://blog.cloudflare.com/icloud-private-relay/).
+
+---
+
+## Features
+
+<Feature header="Single-hop deployment" href="/privacy-proxy/concepts/deployment-models/#single-hop">
+Deploy Privacy Proxy as a standalone proxy where Cloudflare handles authentication, proxying, and egress.
+</Feature>
+
+<Feature header="Double-hop deployment" href="/privacy-proxy/concepts/deployment-models/#double-hop">
+Operate your own first-hop proxy to authenticate users, then relay traffic through Cloudflare for additional privacy separation.
+</Feature>
+
+<Feature header="Geolocation preservation" href="/privacy-proxy/concepts/geolocation/">
+Maintain accurate geolocation for users without exposing their real IP addresses, ensuring location-relevant content and services work correctly.
+</Feature>
+
+<Feature header="Privacy Pass authentication" href="/privacy-proxy/concepts/authentication/">
+Authenticate users with Privacy Pass tokens for production deployments, ensuring privacy-preserving access control.
+</Feature>
+
+---
+
+## Related products
+
+<RelatedProduct header="Privacy Gateway" href="/privacy-gateway/" product="privacy-gateway">
+Implements the Oblivious HTTP (OHTTP) standard for request-level privacy, hiding client IP addresses from application backends.
+</RelatedProduct>
+
+<RelatedProduct header="WARP Client" href="/warp-client/" product="warp-client">
+Cloudflare's consumer VPN application that uses similar privacy-preserving proxy technology.
+</RelatedProduct>
+
+---
+
+## Availability
+
+Privacy Proxy is available as a managed service for Enterprise customers. [Contact us](https://www.cloudflare.com/lp/privacy-edge/) to discuss your use case and get started.

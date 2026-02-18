@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: rtk-pip-toggle
+description: API reference for rtk-pip-toggle component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-pip-toggle></rtk-pip-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-pip-toggle
+ [meeting]="meeting"
+ size="md"
+ variant="button">
+</rtk-pip-toggle>
+```
+

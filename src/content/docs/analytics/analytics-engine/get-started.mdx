@@ -21,10 +21,15 @@ You do not need to manually create a dataset in the Cloudflare dashboard. Worker
 
 <WranglerConfig>
 
-```toml
-[[analytics_engine_datasets]]
-binding = "<BINDING_NAME>"
-dataset = "<DATASET_NAME>"
+```jsonc
+{
+	"analytics_engine_datasets": [
+		{
+			"binding": "<BINDING_NAME>",
+			"dataset": "<DATASET_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

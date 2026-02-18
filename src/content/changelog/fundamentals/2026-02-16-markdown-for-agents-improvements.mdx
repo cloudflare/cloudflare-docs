@@ -1,0 +1,19 @@
+---
+title: Content encoding support for Markdown for Agents and other improvements
+description: Markdown for Agents now supports content encoding and larger responses.
+products:
+  - fundamentals
+date: 2026-02-16
+---
+
+When AI systems request pages from any website that uses Cloudflare and has [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) enabled, they can express the preference for `text/markdown` in the request: our network will automatically and efficiently convert the HTML to markdown, when possible, on the fly.
+
+This release adds the following improvements:
+
+- The origin response limit was raised from 1 MB to 2 MB (2,097,152 bytes).
+- We no longer require the origin to send the `content-length` header.
+- We now support content encoded responses from the origin.
+
+If you haven’t enabled automatic Markdown conversion yet, visit the [AI Crawl Control](https://dash.cloudflare.com/?to=/:account/:zone/ai) section of the Cloudflare dashboard and enable **Markdown for Agents**.
+
+Refer to our [developer documentation](/fundamentals/reference/markdown-for-agents/) for more details.

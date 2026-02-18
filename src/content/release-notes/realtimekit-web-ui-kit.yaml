@@ -3,6 +3,69 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-01-30"
+    title: RealtimeKit Web UI Kit 1.1.0
+    description: |-
+      **Compatibility:** Works best with RealtimeKit Web Core 1.2.4 or later.
+
+      **Features**
+
+      - Chat message operations (edit, delete, pin) are now available to all participants.
+      - Chat pagination with infinite scroll for improved performance in meetings with high message volume.
+      - Pinned messages are now displayed in a dedicated view for easy access.
+      - Added `overrides` prop support on `rtk-meeting` and `rtk-ui-provider` for easier UI customization. Available overrides include:
+        - `disablePrivateChat` - Disable private chat functionality.
+        - `disableEmojiPicker` - Hide emoji picker in chat component.
+        ```tsx
+        <RtkMeeting meeting={meeting} overrides={{
+          disablePrivateChat: true,
+          disableEmojiPicker: true
+        }} />
+        ```
+
+      **New components**
+
+      - `rtk-chat-header` - Header component with pinned messages and private chat selector.
+      - `rtk-pinned-message-selector` - Displays all pinned messages with paginated infinite scroll.
+      - `rtk-chat-selector` - Switch between public chat and private chats with specific participants.
+
+      **Component enhancements**
+
+      - `rtk-chat-composer-view` now accepts `isSending` prop to display sender messages on the right and other messages on the left with different colors.
+      - `rtk-chat-messages-ui-paginated` now accepts `privateChatRecipient` prop for displaying paginated private chat messages.
+      - `rtk-chat-messages-ui-paginated` now emits `editMessage`, `deleteMessage`, and `pinMessage` events for message operations.
+      - `rtk-menu-item` and `rtk-menu-list` now accept `menuVariant` prop for different color schemes based on user actions.
+      - `rtk-message-view` now accepts `isEdited`, `isSelf`, `messageType`, and `pinned` props for appropriate message rendering.
+      - Added automatic scrolling to new messages.
+
+      **Breaking changes**
+
+      Removed non-operational chat channel components to streamline the SDK. `rtk-chat` remains fully operational.
+      - Removed `rtk-channel-creator`.
+      - Removed `rtk-channel-header`.
+      - Removed `rtk-channel-details`.
+      - Removed `rtk-channel-selector-ui`.
+      - Removed `rtk-channel-selector-view`.
+      - `rtk-chat-composer-ui` no longer accepts `channelId` prop.
+      - `rtk-chat` no longer accepts `disablePrivateChat` prop. Use preset configuration instead, or pass as override:
+        ```tsx
+        <RtkMeeting meeting={meeting} overrides={{disablePrivateChat: true}} />
+        ```
+
+      **Deprecations**
+
+      - `rtk-chat-composer-ui` is deprecated due to scalability limitations and lack of pagination support.
+
+      **Known limitations**
+
+      - Total message count for public and private chats is not currently displayed.
+
+  - publish_date: "2025-12-17"
+    title: RealtimeKit Web UI Kit 1.0.8
+    description: |-
+      **Fixes**
+
+      - Fixed iOS issue where the chat compose view would zoom when typing a message.
   - publish_date: "2025-11-18"
     title: RealtimeKit Web UI Kit 1.0.7
     description: |-

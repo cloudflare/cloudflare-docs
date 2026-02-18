@@ -6,7 +6,7 @@ sidebar:
   label: Self-hosted public application
 ---
 
-import { Render } from "~/components";
+import { Render, Stream } from "~/components";
 
 You can securely publish internal tools and applications by adding Cloudflare Access as an authentication layer between the end user and your origin server.
 
@@ -18,6 +18,8 @@ This guide covers how to make a web application accessible to anyone on the Inte
 - Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
 
 ## 1. Add your application to Access
+
+<Stream id="68749ece14a062ff81eeb1079e0325ed" title="How to set up Cloudflare Access" thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/tunnel%203_%20set%20up%20access.png" />
 
 <Render
 	file="access/self-hosted-app/generic-public-app"

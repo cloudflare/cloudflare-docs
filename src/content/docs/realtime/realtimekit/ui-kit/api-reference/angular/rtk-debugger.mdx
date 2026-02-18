@@ -1,0 +1,36 @@
+---
+pcx_content_type: navigation
+title: rtk-debugger
+description: API reference for rtk-debugger component (Angular Library)
+---
+A troubleshooting component to identify and fix any issues in the meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-debugger></rtk-debugger>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-debugger
+ [meeting]="meeting"
+ size="md">
+</rtk-debugger>
+```
+

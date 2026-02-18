@@ -17,7 +17,7 @@ Refer to the following sections to learn how to manage certificates used with th
 
 ## Expired certificates
 
-Client certificates are not deleted from Cloudflare upon expiration unless a [delete](/api/resources/origin_tls_client_auth/methods/delete/) request is sent to the Cloudflare API. However, requests are dropped at your origin if your origin only accepts a valid client certificate.
+Cloudflare does not delete client certificates upon expiration unless you send a delete request to the Cloudflare API for the relevant certificate ([Delete a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/delete/) or [Delete a hostname-level certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/delete/)). If your origin only accepts a valid client certificate, it will drop requests when the certificate expires.
 
 Make sure you have [notifications](/notifications/notification-available/#ssltls) set up to get alerts 30 days and 14 days before an AOP certificate expires.
 
@@ -34,13 +34,13 @@ First, set up [zone-level pulls](/ssl/origin-configuration/authenticated-origin-
 ## Replace a certificate without downtime
 
 :::caution[No automatic removal]
-Client certificates are not deleted from Cloudflare upon expiration unless a [delete](/api/resources/origin_tls_client_auth/methods/delete/) request is sent to the Cloudflare API.
+Cloudflare does not delete client certificates upon expiration unless you send a delete request to the Cloudflare API for the relevant certificate ([Delete a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/delete/) or [Delete a hostname-level certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/delete/)).
 :::
 
 ### Per-hostname
 
-1. [Upload the new certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/create/).
-2. [List your certificates](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/list/) and note the ID for the certificate you uploaded.
+1. [Upload the new certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/create/).
+2. [List your certificates](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/list/) and note the ID for the certificate you uploaded.
 3. [Enable Authenticated Origin Pulls for the specific hostname](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/), using the ID obtained in step 2 to specify the certificate you want to use:
 
 <APIRequest
@@ -63,9 +63,9 @@ If you keep both certificates, the API will state `active` for both but the most
 
 ### Zone-level
 
-1. [Upload the new certificate](/api/resources/origin_tls_client_auth/methods/create/).
-2. [Check whether new certificate is Active](/api/resources/origin_tls_client_auth/methods/get/).
-3. Once certificate is active, [delete the previous certificate](/api/resources/origin_tls_client_auth/methods/delete/).
+1. [Upload the new certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/create/).
+2. [Check whether new certificate is Active](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/get/).
+3. Once certificate is active, [delete the previous certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/delete/).
 
 :::note
 If you keep both certificates, the API will state `active` for both but the most recently deployed certificate will be the one enabled and used.

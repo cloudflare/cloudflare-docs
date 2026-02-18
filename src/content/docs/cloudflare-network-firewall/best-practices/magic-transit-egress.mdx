@@ -1,0 +1,15 @@
+---
+pcx_content_type: concept
+title: Magic Transit egress
+sidebar:
+  order: 4
+---
+
+The suggestions in the [Minimal ruleset](/cloudflare-network-firewall/best-practices/minimal-ruleset/) and [Extended ruleset](/cloudflare-network-firewall/best-practices/extended-ruleset/) are recommendations for ingress traffic.
+
+For Magic Transit egress traffic, consider the following information:
+
+- The Cloudflare Network Firewall (formerly Magic Firewall) rules will apply to both Magic Transit ingress and egress traffic passing via Cloudflare.
+- Network Firewall is not stateful for your Magic Transit egress traffic.
+- Network Firewall is not stateful in both directions after DDoS mitigations.
+- If you have a Network Firewall "default drop" catchall rule for ingress traffic, you will need to add an earlier rule to permit traffic sourced from your Magic Transit prefix with the destination as **any** to allow outbound egress traffic.

@@ -10,6 +10,7 @@ description: Deploy a TanStack Start application to Cloudflare Workers.
 
 import {
 	Description,
+	Details,
 	Render,
 	PackageManagers,
 	Steps,
@@ -76,7 +77,7 @@ If you have an existing TanStack Start application, configure it to run on Cloud
    {
    	"$schema": "node_modules/wrangler/config-schema.json",
    	"name": "<YOUR_PROJECT_NAME>",
-   	"compatibility_date": "2025-01-01",
+   	"compatibility_date": "$today",
    	"compatibility_flags": ["nodejs_compat"],
    	"main": "@tanstack/react-start/server-entry",
    	"observability": {
@@ -116,6 +117,154 @@ Preview the build locally before deploying:
 <PackageManagers type="run" args="preview" />
 
 :::
+
+## Custom entrypoints
+
+TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypoint. Create a custom server entrypoint to add additional Workers handlers such as [Queues](/queues/) and [Cron Triggers](/workers/configuration/cron-triggers/). This is also where you can add additional exports such as [Durable Objects](/durable-objects/) and [Workflows](/workflows/).
+
+
+<Steps>
+
+1. Create a custom server entrypoint file:
+
+   <TypeScriptExample filename="src/server.ts">
+
+   ```ts
+   import handler from "@tanstack/react-start/server-entry";
+
+   // Export Durable Objects as named exports
+   export { MyDurableObject } from "./my-durable-object";
+
+   export default {
+   	fetch: handler.fetch,
+
+   	// Handle Queue messages
+   	async queue(batch, env, ctx) {
+   		for (const message of batch.messages) {
+   			console.log("Processing message:", message.body);
+   			message.ack();
+   		}
+   	},
+
+   	// Handle Cron Triggers
+   	async scheduled(event, env, ctx) {
+   		console.log("Cron triggered:", event.cron);
+   	},
+   };
+   ```
+
+   </TypeScriptExample>
+
+2. Update your Wrangler configuration to point to your custom entrypoint:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"main": "app/server.ts",
+   }
+   ```
+
+   </WranglerConfig>
+
+</Steps>
+
+### Test scheduled handlers locally
+
+Test your scheduled handler locally using the `/cdn-cgi/handler/scheduled` endpoint:
+
+```sh
+curl "http://localhost:3000/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
+```
+
+<Details header="Example: Using Workflows">
+
+Export a Workflow class from your custom entrypoint to run durable, multi-step tasks:
+
+<TypeScriptExample filename="app/server.ts">
+
+```ts
+import {
+	WorkflowEntrypoint,
+	WorkflowStep,
+	WorkflowEvent,
+} from "cloudflare:workers";
+
+export class MyWorkflow extends WorkflowEntrypoint<Env> {
+	async run(event: WorkflowEvent<{ input: string }>, step: WorkflowStep) {
+		const result = await step.do("process data", async () => {
+			return `Processed: ${event.payload.input}`;
+		});
+
+		await step.sleep("wait", "10 seconds");
+
+		await step.do("finalize", async () => {
+			console.log("Workflow complete:", result);
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Add the Workflow configuration to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+</Details>
+
+<Details header="Example: Using Service Bindings">
+
+Add a service binding to call another Worker's RPC methods from your TanStack Start application:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"services": [
+		{
+			"binding": "AUTH_SERVICE",
+			"service": "auth-worker",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Call the bound Worker's methods from a server function:
+
+<TypeScriptExample filename="app/routes/index.tsx">
+
+```ts
+import { createServerFn } from "@tanstack/react-start";
+import { env } from "cloudflare:workers";
+
+const verifyUser = createServerFn()
+	.inputValidator((token: string) => token)
+	.handler(async ({ data: token }) => {
+		const result = await env.AUTH_SERVICE.verify(token);
+		return result;
+	});
+```
+
+</TypeScriptExample>
+
+</Details>
 
 ## Bindings
 

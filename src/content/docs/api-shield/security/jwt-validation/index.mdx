@@ -106,6 +106,8 @@ To automatically keep your JWKS up to date when your identity provider refreshes
 Token configuration rules will automatically apply to new endpoints added to Endpoint Management if those endpoints also match the rule.
 :::
 
+---
+
 ## Special cases
 
 ### Validate two JWTs with different identity providers on a single request
@@ -122,10 +124,19 @@ API Shield will verify JSON Web Tokens regardless of whether or not they have th
 
 <Render file="rate-limit-user" product="api-shield" />
 
+### Ignore `OPTIONS` pre-flight CORS requests
+
+Due to cross-origin resource sharing (CORS) security, web browsers will send "pre-flight" requests using the `OPTIONS` verb to API endpoints before sending a `GET` (or other verb) request. By definition, `OPTIONS` requests do not include headers or cookies and are anonymous. 
+
+If you expect web browsers to be valid clients of your API, and to prevent blocking `OPTIONS` requests from those browsers, Cloudflare recommends adding `or http.request.method eq "OPTIONS"` to your JWT validation rules.
+
+---
+
 ## Availability
 
 JWT validation is available for all API Shield customers. Enterprise customers who have not purchased API Shield can preview [API Shield as a non-contract service](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or by contacting your account team.
 
+---
 ## Limitations
 
 Currently, the following known limitations exist:

@@ -1,0 +1,38 @@
+---
+pcx_content_type: navigation
+title: rtk-emoji-picker
+description: API reference for rtk-emoji-picker component (Web Components (HTML) Library)
+---
+A very simple emoji picker component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `focusWhenOpened` | `boolean` | ✅ | - | Controls whether or not to focus on mount |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-emoji-picker></rtk-emoji-picker>
+```
+
+### With Properties
+
+```html
+<rtk-emoji-picker>
+</rtk-emoji-picker>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-emoji-picker");
+
+  el.focusWhenOpened= true;
+</script>
+```

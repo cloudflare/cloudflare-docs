@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: RtkFileDropzone
+description: API reference for RtkFileDropzone component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `hostEl` | `HTMLElement` | ✅ | - | Host element on which drop events to attach |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkFileDropzone } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkFileDropzone />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkFileDropzone } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkFileDropzone
+      hostEl={htmlelement}
+    />
+  );
+}
+```
+
