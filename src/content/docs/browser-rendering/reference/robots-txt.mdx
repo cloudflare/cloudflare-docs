@@ -7,24 +7,14 @@ sidebar:
 
 This page provides general guidance on configuring `robots.txt` and sitemaps for websites you plan to access with Browser Rendering.
 
-## User-Agent
-
-Browser Rendering uses a standard browser User-Agent by default:
-
-```txt
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
-```
-
-This means `robots.txt` rules targeting `User-agent: *` will apply to Browser Rendering requests. You can customize the User-Agent using the `userAgent` parameter in your API request.
-
 ## Identifying Browser Rendering requests
 
-While Browser Rendering uses a standard browser User-Agent, requests can be identified by the [automatic headers](/browser-rendering/reference/automatic-request-headers/) that Cloudflare attaches:
+Requests can be identified by the [automatic headers](/browser-rendering/reference/automatic-request-headers/) that Cloudflare attaches:
 
 - `cf-brapi-request-id` — Unique identifier for REST API requests
 - `Signature-agent` — Points to Cloudflare's bot verification keys
 
-For Cloudflare security products, Browser Rendering has a bot detection ID of `128292352`. Use this to create WAF rules that allow or block Browser Rendering traffic.
+Browser Rendering has a bot detection ID of `128292352`. Use this to create WAF rules that allow or block Browser Rendering traffic.
 
 ## Best practices for robots.txt
 
