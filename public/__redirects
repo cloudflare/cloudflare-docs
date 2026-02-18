@@ -1063,9 +1063,13 @@
 /cloudflare-one/changelog/magic-firewall/ /cloudflare-one/changelog/cloudflare-network-firewall/ 301
 # CF1 packet filtering overview rename
 /cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
+# cross-product magic-firewall slug renames
+/learning-paths/data-center-protection/enable-magic-firewall/ /learning-paths/data-center-protection/enable-network-firewall/ 301
+/analytics/graphql-api/tutorials/querying-magic-firewall-samples/ /analytics/graphql-api/tutorials/querying-network-firewall-samples/ 301
+/analytics/graphql-api/tutorials/querying-magic-firewall-ids-samples/ /analytics/graphql-api/tutorials/querying-network-firewall-ids-samples/ 301
 # magic-network-monitoring (renamed to network-flow)
-/magic-network-monitoring/routers/ /network-flow/routers/supported-routers/ 301
-/magic-network-monitoring/tutorials/ /network-flow/tutorials/graphql-analytics/ 301
+/magic-network-monitoring/routers/ /network-flow/routers/ 301
+/magic-network-monitoring/tutorials/ /network-flow/tutorials/ 301
 /magic-network-monitoring/rules/recommended-rule-configuration/ /network-flow/rules/static-threshold/ 301
 /magic-network-monitoring/rules/sflow-ddos-alerts/ /rules/configure-rule-notifications/ 301
 /magic-network-monitoring/notifications/ /rules/rule-notifications/ 301
