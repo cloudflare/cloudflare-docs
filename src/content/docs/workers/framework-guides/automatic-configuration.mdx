@@ -6,7 +6,7 @@ sidebar:
 description: Learn how Wrangler automatically detects and configures your project for Cloudflare Workers.
 ---
 
-import { WranglerConfig } from "~/components";
+import { PackageManagers, WranglerConfig } from "~/components";
 
 Wrangler can automatically detect your framework and configure your project for Cloudflare Workers. This allows you to deploy existing projects with a single command, without manually setting up configuration files or installing adapters.
 
@@ -29,23 +29,23 @@ When you run `wrangler deploy` or `wrangler setup` in a project directory withou
 
 Automatic configuration supports the following frameworks:
 
-| Framework | Adapter/Tool | Notes |
-|-----------|--------------|-------|
-| [Next.js](/workers/framework-guides/web-apps/nextjs/) | `@opennextjs/cloudflare` | Runs `@opennextjs/cloudflare migrate` automatically |
-| [Astro](/workers/framework-guides/web-apps/astro/) | `@astrojs/cloudflare` | Runs `astro add cloudflare` automatically |
-| [SvelteKit](/workers/framework-guides/web-apps/sveltekit/) | `@sveltejs/adapter-cloudflare` | Runs `sv add sveltekit-adapter` automatically |
-| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/) | Built-in Cloudflare preset | |
-| [React Router](/workers/framework-guides/web-apps/react-router/) | Cloudflare Vite plugin | |
-| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset | |
-| [Qwik](/workers/framework-guides/web-apps/more-web-frameworks/qwik/) | Built-in Cloudflare adapter | |
-| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/) | Cloudflare Vite plugin | |
-| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/) | | |
-| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/) | Built-in Cloudflare preset | |
-| [Vite](/workers/vite-plugin/) | Cloudflare Vite plugin | |
-| [Hono](/workers/framework-guides/web-apps/more-web-frameworks/hono/) | | |
-| [Vike](/workers/framework-guides/web-apps/vike/) | | |
-| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/) | | |
-| Static sites | None | Any directory with an `index.html` |
+| Framework                                                                    | Adapter/Tool                   | Notes                                               |
+| ---------------------------------------------------------------------------- | ------------------------------ | --------------------------------------------------- |
+| [Next.js](/workers/framework-guides/web-apps/nextjs/)                        | `@opennextjs/cloudflare`       | Runs `@opennextjs/cloudflare migrate` automatically |
+| [Astro](/workers/framework-guides/web-apps/astro/)                           | `@astrojs/cloudflare`          | Runs `astro add cloudflare` automatically           |
+| [SvelteKit](/workers/framework-guides/web-apps/sveltekit/)                   | `@sveltejs/adapter-cloudflare` | Runs `sv add sveltekit-adapter` automatically       |
+| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)         | Built-in Cloudflare preset     |                                                     |
+| [React Router](/workers/framework-guides/web-apps/react-router/)             | Cloudflare Vite plugin         |                                                     |
+| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset     |                                                     |
+| [Qwik](/workers/framework-guides/web-apps/more-web-frameworks/qwik/)         | Built-in Cloudflare adapter    |                                                     |
+| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/)         | Cloudflare Vite plugin         |                                                     |
+| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/)   |                                |                                                     |
+| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/)     | Built-in Cloudflare preset     |                                                     |
+| [Vite](/workers/vite-plugin/)                                                | Cloudflare Vite plugin         |                                                     |
+| [Hono](/workers/framework-guides/web-apps/more-web-frameworks/hono/)         |                                |                                                     |
+| [Vike](/workers/framework-guides/web-apps/vike/)                             |                                |                                                     |
+| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/)         |                                |                                                     |
+| Static sites                                                                 | None                           | Any directory with an `index.html`                  |
 
 ## Files created and modified
 
@@ -59,18 +59,18 @@ A new Wrangler configuration file is created with settings appropriate for your 
 
 ```jsonc
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "my-project",
-  "main": "dist/_worker.js/index.js",
-  "compatibility_date": "$today",
-  "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "binding": "ASSETS",
-    "directory": "dist"
-  },
-  "observability": {
-    "enabled": true
-  }
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "my-project",
+	"main": "dist/_worker.js/index.js",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "dist",
+	},
+	"observability": {
+		"enabled": true,
+	},
 }
 ```
 
@@ -84,11 +84,11 @@ New scripts are added to your `package.json`:
 
 ```json
 {
-  "scripts": {
-    "deploy": "npm run build && wrangler deploy",
-    "preview": "npm run build && wrangler dev",
-    "cf-typegen": "wrangler types"
-  }
+	"scripts": {
+		"deploy": "npm run build && wrangler deploy",
+		"preview": "npm run build && wrangler dev",
+		"cf-typegen": "wrangler types"
+	}
 }
 ```
 
@@ -118,9 +118,7 @@ _routes.json
 
 To deploy an existing project, run [`wrangler deploy`](/workers/wrangler/commands/#deploy) in your project directory:
 
-```sh
-npx wrangler deploy
-```
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 Wrangler will detect your framework, show the configuration it will apply, and prompt you to confirm before making changes and deploying.
 
@@ -128,9 +126,7 @@ Wrangler will detect your framework, show the configuration it will apply, and p
 
 To configure your project without deploying, use [`wrangler setup`](/workers/wrangler/commands/#setup):
 
-```sh
-npx wrangler setup
-```
+<PackageManagers type="exec" pkg="wrangler" args="setup" />
 
 This is useful when you want to review the generated configuration before deploying.
 
@@ -138,9 +134,7 @@ This is useful when you want to review the generated configuration before deploy
 
 To see what changes would be made without actually modifying any files:
 
-```sh
-npx wrangler setup --dry-run
-```
+<PackageManagers type="exec" pkg="wrangler" args="setup --dry-run" />
 
 This outputs a summary of the configuration that would be generated.
 
@@ -148,9 +142,7 @@ This outputs a summary of the configuration that would be generated.
 
 To skip the confirmation prompts, use the [`--yes` flag](/workers/wrangler/commands/#deploy):
 
-```sh
-npx wrangler deploy --yes
-```
+<PackageManagers type="exec" pkg="wrangler" args="deploy --yes" />
 
 This applies the configuration automatically using sensible defaults. This is useful in CI/CD environments or when you want to accept the detected settings without reviewing them.
 
