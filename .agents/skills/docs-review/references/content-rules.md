@@ -52,7 +52,7 @@ Checklist for reviewing MDX documentation changes. Each rule includes what to ch
 | `$` prefix in terminal commands    | Remove — copy button copies verbatim                     |
 | Two trailing spaces for line break | Use `<br/>`                                              |
 | Passive voice                      | Rewrite in active voice                                  |
-
+| "See" | Use "Refer to" |
 ## Code Examples — Component Usage
 
 These checks are docs-specific (which component to use). For deeper code correctness (types, API usage, binding access, error handling, security), load the `code-review` skill.
