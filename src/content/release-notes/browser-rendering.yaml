@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-02-18"
+    title: "@cloudflare/playwright 1.1.1 released"
+    description: |-
+      * Released version 1.1.1 of [`@cloudflare/playwright`](https://github.com/cloudflare/playwright/releases/tag/v1.1.1), with a fix for using encoded byte length instead of string length in the chunking loop. This resolves issues when using Browser Rendering with Notion.
   - publish_date: "2025-10-21"
     title: Added guidance on REST API timeouts and custom fonts
     description: |-
