@@ -6,7 +6,7 @@ products:
 date: 2026-02-10
 ---
 
-In December 2025, we [introduced automatic configuration](/changelog/2025-12-16-wrangler-autoconfig/) as an experimental feature that detects your framework and configures your project for Cloudflare Workers. Starting with Wrangler **TODO_VERSION**, [automatic configuration](/workers/framework-guides/autoconfig/) is now the default behavior of [`wrangler deploy`](/workers/wrangler/commands/#deploy).
+In December 2025, we [introduced automatic configuration](/changelog/2025-12-16-wrangler-autoconfig/) as an experimental feature that detects your framework and configures your project for Cloudflare Workers. Starting with Wrangler **TODO_VERSION**, [automatic configuration](/workers/framework-guides/) is now the default behavior of [`wrangler deploy`](/workers/wrangler/commands/#deploy).
 
 ## What's new
 
@@ -20,14 +20,14 @@ You no longer need to pass the `--x-autoconfig` flag. This is now the default be
 
 ![Automatic configuration pull request created by Workers Builds](~/assets/images/workers/ci-cd/builds/automatic-pr.png)
 
-When you import a Git repository through the Cloudflare dashboard without a Wrangler configuration file, the deploy command (`wrangler deploy`) triggers [automatic configuration](/workers/framework-guides/autoconfig/) non-interactively. This detects your framework, creates the necessary configuration, and opens a [pull request](/workers/ci-cd/builds/automatic-prs/) for you to review. This PR includes:
+When you import a Git repository through the Cloudflare dashboard without a Wrangler configuration file, the deploy command (`wrangler deploy`) triggers [automatic configuration](/workers/framework-guides/) non-interactively. This detects your framework, creates the necessary configuration, and opens a [pull request](/workers/ci-cd/builds/) for you to review. This PR includes:
 
 - A `wrangler.jsonc` [configuration file](/workers/wrangler/configuration/)
 - Any required framework adapters
 - Updated `package.json` scripts
 - A [preview deployment](/workers/configuration/previews/) so you can test before merging
 
-Once you merge the PR, your project is fully configured and future builds will deploy normally. Refer to [Automatic pull requests](/workers/ci-cd/builds/automatic-prs/) for more details.
+Once you merge the PR, your project is fully configured and future builds will deploy normally. Refer to [Workers Builds](/workers/ci-cd/builds/) for more details.
 
 :::note
 Automatic pull requests are only created when your deploy command is `npx wrangler deploy`. If you have a custom deploy command, automatic configuration will still run and configure your project, but no PR will be created.
