@@ -625,37 +625,34 @@ export class MyAgent extends Agent {
 
 Override the default OAuth provider used when connecting to MCP servers by implementing `createMcpOAuthProvider()` on your Agent class. This enables custom authentication strategies such as pre-registered client credentials or mTLS, beyond the built-in dynamic client registration.
 
+The override is used for both new connections (`addMcpServer`) and restored connections after a Durable Object restart.
+
 <TypeScriptExample>
 
 ```ts
 import { Agent } from "agents";
-import type { OAuthClientProvider } from "@modelcontextprotocol/sdk/client/auth.js";
+import type { AgentMcpOAuthProvider } from "agents";
 
 export class MyAgent extends Agent {
-	createMcpOAuthProvider(
-		serverUrlHash: string,
-		callbackUrl: string,
-	): OAuthClientProvider {
+	createMcpOAuthProvider(callbackUrl: string): AgentMcpOAuthProvider {
 		return {
 			get redirectUrl() {
-				return new URL(callbackUrl);
+				return callbackUrl;
 			},
 			get clientMetadata() {
 				return {
-					// Use pre-registered client credentials
 					client_id: this.env.MCP_CLIENT_ID,
 					client_secret: this.env.MCP_CLIENT_SECRET,
 					redirect_uris: [callbackUrl],
 				};
 			},
 			clientInformation() {
-				// Return pre-registered client info
 				return {
 					client_id: this.env.MCP_CLIENT_ID,
 					client_secret: this.env.MCP_CLIENT_SECRET,
 				};
 			},
-			// ... implement other OAuthClientProvider methods
+			// ... implement other AgentMcpOAuthProvider methods
 		};
 	}
 }
@@ -664,6 +661,29 @@ export class MyAgent extends Agent {
 </TypeScriptExample>
 
 If you do not override this method, the agent uses the default provider which performs [OAuth 2.0 Dynamic Client Registration](https://datatracker.ietf.org/doc/html/rfc7591) with the MCP server.
+
+### Custom storage backend
+
+To keep the built-in OAuth logic (CSRF state, PKCE, nonce generation, token management) but route token storage to a different backend, import `DurableObjectOAuthClientProvider` and pass your own storage adapter:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, DurableObjectOAuthClientProvider } from "agents";
+import type { AgentMcpOAuthProvider } from "agents";
+
+export class MyAgent extends Agent {
+	createMcpOAuthProvider(callbackUrl: string): AgentMcpOAuthProvider {
+		return new DurableObjectOAuthClientProvider(
+			myCustomStorage, // any DurableObjectStorage-compatible adapter
+			this.name,
+			callbackUrl,
+		);
+	}
+}
+```
+
+</TypeScriptExample>
 
 ## Advanced: MCPClientManager
 
