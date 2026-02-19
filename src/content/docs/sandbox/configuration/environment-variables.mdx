@@ -183,9 +183,10 @@ Then pass them to your sandbox:
 
 ```typescript
 import { getSandbox } from "@cloudflare/sandbox";
+export { Sandbox } from '@cloudflare/sandbox';
 
 interface Env {
-	Sandbox: DurableObjectNamespace;
+  Sandbox: DurableObjectNamespace<Sandbox>;
 	OPENAI_API_KEY: string;
 	DATABASE_URL: string;
 }
