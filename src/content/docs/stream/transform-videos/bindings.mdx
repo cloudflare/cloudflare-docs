@@ -1,13 +1,13 @@
 ---
 pcx_content_type: how-to
-title: Bindings for Workers
+title: Bind to Workers API
 sidebar:
   order: 1
 ---
 
 import { WranglerConfig, InlineBadge } from "~/components";
 
-# Media Transformations Bindings for Workers <InlineBadge preset="beta" />
+## Media Transformations in Workers <InlineBadge preset="beta" />
 
 A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Media Transformations](/stream/transform-videos/), [R2 buckets](/r2/buckets/), or [KV namespaces](/kv/concepts/kv-namespaces/).
 
@@ -27,12 +27,6 @@ The Media binding is enabled on a per-Worker basis.
 [Bindings](/workers/runtime-apis/bindings/) can be configured in the Cloudflare dashboard for your Worker or in the Wrangler configuration file in your project directory.
 
 To bind Media Transformations to your Worker, add the following to the end of your Wrangler configuration file:
-
-:::note[Placeholder: JSONC]
-
-provide in TOML and JSONC
-
-:::
 
 <WranglerConfig>
 
