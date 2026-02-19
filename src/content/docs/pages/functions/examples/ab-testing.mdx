@@ -23,7 +23,7 @@ const abTest = async (context) => {
 		// if cookie ab-test-cookie=new then change the request to go to /test
 		// if no cookie set, pass x% of traffic and set a cookie value to "current" or "new"
 
-		let cookie = request.headers.get("cookie");
+		let cookie = context.request.headers.get("cookie");
 		// is cookie set?
 		if (cookie && cookie.includes(`${cookieName}=new`)) {
 			// pass the request to /test
