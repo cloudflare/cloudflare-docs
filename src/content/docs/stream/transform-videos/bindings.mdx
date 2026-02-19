@@ -208,24 +208,28 @@ Unlike transformations via URL, responses from the Media binding are _not_ autom
 
 ## Local development
 
-The Media Transformations API is available in local development through [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. However, transformations operations will be performed using a remote resource and are subject to usage charges beyond the included free-tier.
+The Media Transformations API is available _in remote mode_ for local development through [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. Transformations operations will be performed using a remote resource and are subject to usage charges beyond the included free-tier.
 
-To test in local development, run:
+To enable usage in local development, add `remote` to the binding configuration:
+
+<WranglerConfig>
+
+```toml
+[media]
+binding = "MEDIA" # available in your Worker on env.MEDIA
+remote = true
+```
+
+</WranglerConfig>
+
+Then run:
 
 ```sh
 npx wrangler dev
 ```
 
-:::note[Placeholder: Local development limitations]
+:::note
 
-The specific features supported in offline/local mode for Media bindings need to be confirmed. This section will be updated with details on which transformation options are available locally versus requiring remote mode.
+The Media Transformation binding does not support local simulation. If `remote = true` is not specified, the binding will produce an error during local development.
 
 :::
-
-To test the full-fidelity remote version of Media Transformations, use the `--remote` flag:
-
-```sh
-npx wrangler dev --remote
-```
-
-When testing with the [Workers Vitest integration](/workers/testing/vitest-integration/), the offline version is used by default to avoid hitting the Cloudflare API in tests.
