@@ -8,6 +8,7 @@ description: Create an Astro application and deploy it to Cloudflare Workers wit
 ---
 
 import {
+	AutoconfigDiagram,
 	Badge,
 	Details,
 	Steps,
@@ -33,14 +34,6 @@ import {
 **Or just deploy**: Create a static blog with Astro and deploy it on Cloudflare Workers, with CI/CD and previews all set up for you.
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/templates/tree/main/astro-blog-starter-template)
-
-:::tip[Already have an Astro project?]
-You can deploy an existing Astro project to Cloudflare Workers with a single command:
-
-<PackageManagers type="exec" pkg="wrangler" args="deploy" />
-
-Wrangler will automatically detect Astro, install the Cloudflare adapter, and configure your project. Refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/) for details.
-:::
 
 ## What is Astro?
 
@@ -80,6 +73,29 @@ Astro is also framework-agnostic, and supports every major UI framework, includi
   </Steps>
 
 ## Deploy an existing Astro project on Workers
+
+:::tip[Automatic configuration]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect Astro, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="Astro"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: "dist/_worker.js/index.js" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: ./dist, binding: ASSETS" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+		{ label: "adapter", file: "astro.config.mjs", value: "@astrojs/cloudflare" },
+	]}
+/>
+
+## Manual configuration
+
+If you prefer to configure your project manually, follow the steps below.
 
 ### If you have a static site
 

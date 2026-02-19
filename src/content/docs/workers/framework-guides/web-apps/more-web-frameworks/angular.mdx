@@ -6,6 +6,7 @@ description: Create an Angular application and deploy it to Cloudflare Workers w
 ---
 
 import {
+	AutoconfigDiagram,
 	Badge,
 	Description,
 	InlineBadge,
@@ -15,13 +16,21 @@ import {
 
 In this guide, you will create a new [Angular](https://angular.dev/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 
-:::tip[Already have an Angular project?]
-You can deploy an existing Angular project to Cloudflare Workers with a single command:
+:::tip[Automatic configuration]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect Angular, generate the necessary configuration, and deploy your project.
 
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-Wrangler will automatically configure your project. Refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/) for details.
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
 :::
+
+<AutoconfigDiagram
+	framework="Angular"
+	configs={[
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: dist/browser" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+	]}
+/>
 
 ## 1. Set up a new project
 
