@@ -41,24 +41,20 @@ Within your Worker code, you can interact with this binding by using `env.MEDIA.
 
 ## Methods
 
-:::note[Placeholder: vs Images]
+The Media Transformations binding is similar to the [Images binding](/images/transform-images/bindings/), except the method chain order is fixed and the result of an `input()` cannot be reused across multiple transformations.
 
-note similarities with Images binding, note that Media Transformations has a strict order
-
-the return types on intermediate methods are unimportant, users can't interact with those
-objects directly, should find a way to remove these
-
-:::
 
 ### `.input()`
 
-- Entry point for the Media binding.
+The starting point for the Media binding, which accepts raw content.
+
 - Accepts a `ReadableStream<Uint8Array>` containing the video bytes.
-- Returns a `MediaTransformer` for chaining transformation operations.
 
 ### `.transform()`
 
-- Defines how the video should be resized and fitted.
+Defines how the video input should be transformed by resizing or cropping.
+
+- Chains onto `.input()`.
 - Accepts the following parameters:
   - `width`: Target width in pixels (10-2000).
   - `height`: Target height in pixels (10-2000).
@@ -67,11 +63,12 @@ objects directly, should find a way to remove these
     - `cover`: Scales the video to entirely cover the output dimensions with a center-weighted crop.
     - `scale-down`: Same as `contain`, but only scales down. Does not upscale.
 - Refer to [Transform videos options](/stream/transform-videos/#options) for more details.
-- Returns a `MediaTransformationGenerator`.
+- Return value should be used with `.output()`.
 
 ### `.output()`
 
-- Configures the output format and extraction parameters.
+Defines what to extract from the transformed video and how the output will be formatted.
+
 - Accepts the following parameters:
   - `mode`: The type of output to generate.
     - `video`: Outputs an H.264/AAC optimized MP4 file.
@@ -83,11 +80,10 @@ objects directly, should find a way to remove these
   - `imageCount`: Number of frames to include in a spritesheet.
   - `format`: Output format for `frame` mode (`jpg`, `png`) or `audio` mode (`m4a`).
   - `audio`: Boolean to include or exclude audio in `video` mode. Default: `true`.
-- Returns a `MediaTransformationResult`.
 
 ### Result methods
 
-After calling `.output()`, you receive a `MediaTransformationResult` with the following methods. These methods return Promises and must be awaited:
+Finally, after configuring the output, three methods are available to receive results. These methods return Promises and must be awaited:
 
 - `.response()`: Returns a `Promise<Response>` — the transformed media as an HTTP Response object, ready to return to the client or store in cache.
 - `.media()`: Returns a `Promise<ReadableStream<Uint8Array>>` — the transformed media as a byte stream.
