@@ -1,5 +1,5 @@
 ---
-summary: Serve an SPA shell from Workers Static Assets and use HTMLRewriter to inject bootstrap data, eliminating client-side data fetching on initial load.
+summary: Use HTMLRewriter to inject bootstrap data into an SPA shell — whether the shell is served from Workers Static Assets or fetched from an external origin.
 tags:
   - TypeScript
   - SPA
@@ -7,17 +7,30 @@ pcx_content_type: example
 title: SPA shell with bootstrap data
 sidebar:
   order: 1001
-description: Serve an SPA shell from Workers Static Assets and use HTMLRewriter to inject prefetched bootstrap data inline, eliminating client-side data fetching on initial page load.
+description: Use HTMLRewriter to inject prefetched bootstrap data into an SPA shell, eliminating client-side data fetching on initial load. Works with Workers Static Assets or an externally hosted SPA.
 reviewed: 2026-02-19
 ---
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-This example uses a Worker to serve a single-page application (SPA) shell from [Workers Static Assets](/workers/static-assets/) and inject prefetched API data with [HTMLRewriter](/workers/runtime-apis/html-rewriter/). The Worker fetches bootstrap data in parallel with the HTML shell and streams the result to the browser, so the SPA has everything it needs before its JavaScript runs.
+This example uses a Worker and [HTMLRewriter](/workers/runtime-apis/html-rewriter/) to inject prefetched API data into a single-page application (SPA) shell. The Worker fetches bootstrap data in parallel with the HTML shell and streams the result to the browser, so the SPA has everything it needs before its JavaScript runs.
+
+Two variants are shown:
+
+1. **Static Assets** — The SPA is deployed to [Workers Static Assets](/workers/static-assets/) alongside the Worker.
+2. **External origin** — The SPA is hosted outside Cloudflare (for example, on AWS S3, Vercel, Netlify, or your own server) and the Worker sits in front of it as a reverse proxy.
+
+Both variants use the same HTMLRewriter injection technique and the same client-side consumption pattern. Choose the one that matches your deployment.
 
 This pattern works with any SPA framework — React, Vue, Svelte, or others.
 
-## Configure static assets
+---
+
+## Option 1: SPA on Workers Static Assets
+
+Use this variant when your SPA build output is deployed alongside the Worker using [Workers Static Assets](/workers/static-assets/).
+
+### Configure static assets
 
 Set `not_found_handling` to `"single-page-application"` so that every route returns `index.html`. Use `run_worker_first` to route all requests through your Worker except hashed assets under `/assets/*`, which are served directly.
 
@@ -41,7 +54,7 @@ Set `not_found_handling` to `"single-page-application"` so that every route retu
 
 For more details on these options, refer to [Static Assets routing](/workers/static-assets/routing/) and the [`run_worker_first` reference](/workers/static-assets/binding/#run_worker_first).
 
-## Inject bootstrap data with HTMLRewriter
+### Inject bootstrap data with HTMLRewriter
 
 The Worker starts fetching API data immediately, then fetches the SPA shell from static assets. HTMLRewriter streams the `<head>` to the browser right away. When the `<body>` handler runs, it awaits the API response and prepends a `<script>` tag containing the serialized data.
 
@@ -72,6 +85,105 @@ export default {
 		const shell = await env.ASSETS.fetch(
 			new Request(new URL("/index.html", request.url)),
 		);
+
+		// Use HTMLRewriter to stream the shell and inject data into <body>.
+		return new HTMLRewriter()
+			.on("body", {
+				async element(el) {
+					const data = await dataPromise;
+					if (data) {
+						el.prepend(
+							`<script>window.__BOOTSTRAP_DATA__=${JSON.stringify(data)}</script>`,
+							{ html: true },
+						);
+					}
+				},
+			})
+			.transform(shell);
+	},
+} satisfies ExportedHandler<Env>;
+
+async function fetchBootstrapData(
+	env: Env,
+	pathname: string,
+	headers: Headers,
+): Promise<unknown | null> {
+	try {
+		const res = await fetch(`${env.API_BASE_URL}/api/bootstrap`, {
+			headers: {
+				Cookie: headers.get("Cookie") || "",
+				"X-Request-Path": pathname,
+			},
+		});
+		if (!res.ok) return null;
+		return await res.json();
+	} catch {
+		// If the API is down, the shell still loads and the SPA
+		// falls back to client-side data fetching.
+		return null;
+	}
+}
+```
+
+</TypeScriptExample>
+
+---
+
+## Option 2: SPA hosted on an external origin
+
+Use this variant when your HTML, CSS, and JavaScript are deployed outside Cloudflare — for example, on AWS S3, Google Cloud Storage, Vercel, Netlify, or your own server. The Worker acts as a reverse proxy: it fetches the SPA shell from the external origin, uses HTMLRewriter to inject bootstrap data, and streams the modified response to the browser.
+
+### Configure the Worker
+
+Because the SPA is not in Workers Static Assets, you do not need an `assets` block. Instead, store the external origin URL as an environment variable. Attach the Worker to your domain with a [Custom Domain](/workers/configuration/routing/custom-domains/) or a [Route](/workers/configuration/routing/routes/).
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-spa-proxy",
+	"main": "src/worker.ts",
+	"compatibility_date": "$today",
+	"vars": {
+		"SPA_ORIGIN": "https://my-spa.example-hosting.com",
+		"API_BASE_URL": "https://api.example.com",
+	},
+}
+```
+
+</WranglerConfig>
+
+### Inject bootstrap data with HTMLRewriter
+
+The Worker fetches both the SPA shell and API data in parallel. When the SPA origin responds, HTMLRewriter streams the HTML while injecting bootstrap data into `<body>`. Static assets (CSS, JS, images) are passed through to the external origin without modification.
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	SPA_ORIGIN: string;
+	API_BASE_URL: string;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		// Pass static asset requests through to the external origin unmodified.
+		if (url.pathname.match(/\.\w+$/) && !url.pathname.endsWith(".html")) {
+			return fetch(new Request(`${env.SPA_ORIGIN}${url.pathname}`, request));
+		}
+
+		// Start fetching bootstrap data immediately — do not await yet.
+		const dataPromise = fetchBootstrapData(env, url.pathname, request.headers);
+
+		// Fetch the SPA shell from the external origin.
+		// SPA routers serve index.html for all routes.
+		const shell = await fetch(`${env.SPA_ORIGIN}/index.html`);
+
+		if (!shell.ok) {
+			return new Response("Origin returned an error", { status: 502 });
+		}
 
 		// Use HTMLRewriter to stream the shell and inject data into <body>.
 		return new HTMLRewriter()
@@ -224,6 +336,8 @@ This pattern is a good fit when:
 - Your API origin adds latency that you want to hide behind the HTML stream.
 - You want the SPA to remain functional even when the API is unreachable.
 
+Use **Option 1** (Static Assets) when your SPA build output is deployed alongside the Worker. Use **Option 2** (external origin) when your SPA is already hosted elsewhere and you want to add data injection without changing your existing deployment pipeline.
+
 This pattern is not needed when:
 
 - Your SPA does not need server-side data on initial load.
@@ -236,3 +350,5 @@ This pattern is not needed when:
 - [Workers Static Assets](/workers/static-assets/) — Serve static files alongside your Worker.
 - [Static Assets routing](/workers/static-assets/routing/) — Configure `run_worker_first` and `not_found_handling`.
 - [Static Assets binding](/workers/static-assets/binding/) — Reference for the `ASSETS` binding and routing options.
+- [Custom Domains](/workers/configuration/routing/custom-domains/) — Attach a Worker to a domain as the origin.
+- [Routes](/workers/configuration/routing/routes/) — Run a Worker in front of an existing origin server.
