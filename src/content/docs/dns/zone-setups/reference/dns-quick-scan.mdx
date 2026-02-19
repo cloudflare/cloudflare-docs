@@ -1,15 +1,24 @@
 ---
 pcx_content_type: concept
 title: Records quick scan
-
 ---
 
-import { Details, Example } from "~/components"
+import { Details, Example } from "~/components";
 
 To help all customers get started when a new zone is created, Cloudflare offers a DNS records quick scan.
 
 :::note[Where to find the quick scan]
 On the dashboard, quick scan is only available as you are onboarding a new domain. Via API, you can manually invoke quick scan with the [Trigger DNS Records Scan endpoint](/api/resources/dns/subresources/records/methods/scan_trigger/).
+:::
+
+:::caution[Deprecated API endpoint]
+The synchronous `POST /zones/{zone_id}/dns_records/scan` endpoint is deprecated. Use the following three-step async flow instead:
+
+1. `POST /zones/{zone_id}/dns_records/scan/trigger` — starts the scan in the background.
+2. `GET /zones/{zone_id}/dns_records/scan/review` — lists records the scan has found so far.
+3. `POST /zones/{zone_id}/dns_records/scan/review` — accepts or rejects each record.
+
+The async scan does **not** automatically add records to your zone. Accepted records are permanently added; rejected records are permanently deleted. The old synchronous endpoint added records automatically without a review step.
 :::
 
 ## How quick scan works
@@ -23,27 +32,26 @@ Since DNS record names are automatically appended with the domain that the recor
 <Example>
 DNS management for **example.com**:
 
-| Type | Name     | Content                 |
-| ---- | -------- | ----------------------- |
-| **A**   | **@**     | `192.0.2.0`  |
-| **CNAME**   | **www**     | `example.com`  |
-| **A**        | **mail**   | `192.0.2.100`      |
-| **MX**        | **@**   | `mail.example.com`      |
-| *CNAME*   | *my-store1900*     | `example-shop.saas.test`  |
+| Type      | Name           | Content                  |
+| --------- | -------------- | ------------------------ |
+| **A**     | **@**          | `192.0.2.0`              |
+| **CNAME** | **www**        | `example.com`            |
+| **A**     | **mail**       | `192.0.2.100`            |
+| **MX**    | **@**          | `mail.example.com`       |
+| _CNAME_   | _my-store1900_ | `example-shop.saas.test` |
 
 </Example>
 
 <Example>
 DNS management for **domain.test**:
 
-| Type | Name     | Content                 |
-| ---- | -------- | ----------------------- |
-| **A**   | **@**     | `192.0.2.8`  |
-| **CNAME**   | **www**     | `domain.test`  |
-| *CNAME*   | *specific-internal-name*     | `services.test.dev`  |
-| **A**        | **mail**   | `192.0.2.20`      |
-| **MX**        | **@**   | `mail.domain.test`      |
-
+| Type      | Name                     | Content             |
+| --------- | ------------------------ | ------------------- |
+| **A**     | **@**                    | `192.0.2.8`         |
+| **CNAME** | **www**                  | `domain.test`       |
+| _CNAME_   | _specific-internal-name_ | `services.test.dev` |
+| **A**     | **mail**                 | `192.0.2.20`        |
+| **MX**    | **@**                    | `mail.domain.test`  |
 
 </Example>
 
@@ -71,9 +79,9 @@ You should always [review your DNS records](/dns/zone-setups/full-setup/setup/#r
 
 <Example>
 
-| Type       | Name | Content  | TTL     |
-| ---------- | ---- | -------- | ------- |
-| `A`        | `@`  | `<IPv4>` | `<TTL>` |
+| Type | Name | Content  | TTL     |
+| ---- | ---- | -------- | ------- |
+| `A`  | `@`  | `<IPv4>` | `<TTL>` |
 
 </Example>
 
@@ -85,45 +93,45 @@ Virtually all zones on a [primary setup (full)](/dns/zone-setups/full-setup/) ar
 
 <Example>
 
-| Type       | Name  | Content    | TTL     |
-| ---------- | ----- | ---------- | ------- |
-| `CNAME`    | `www` | `<TARGET>` | `<TTL>` |
+| Type    | Name  | Content    | TTL     |
+| ------- | ----- | ---------- | ------- |
+| `CNAME` | `www` | `<TARGET>` | `<TTL>` |
 
 </Example>
 
 <Example>
 
-| Type       | Name  | Content  | TTL     |
-| ---------- | ----- | -------- | ------- |
-| `A`        | `www` | `<IPv4>` | `<TTL>` |
+| Type | Name  | Content  | TTL     |
+| ---- | ----- | -------- | ------- |
+| `A`  | `www` | `<IPv4>` | `<TTL>` |
 
 </Example>
 
-Since it is still common that visitors type `www.<DOMAIN>` in their browsers expecting to reach the domain, zones will usually have a  [CNAME](/dns/manage-dns-records/reference/dns-record-types/#cname) or an [A](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) record named `www`. This allows queries for `www.<DOMAIN>` to return the expected result.
+Since it is still common that visitors type `www.<DOMAIN>` in their browsers expecting to reach the domain, zones will usually have a [CNAME](/dns/manage-dns-records/reference/dns-record-types/#cname) or an [A](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) record named `www`. This allows queries for `www.<DOMAIN>` to return the expected result.
 
 ### Email records
 
 <Example>
 
-| Type       | Name | Mail server        | TTL     | Priority     |
-| ---------- | ---- | ------------------ | ------- | ------------ |
-| `MX`       | `@`  | `webmail.<DOMAIN>` | `<TTL>` | `<PRIORITY>` |
+| Type | Name | Mail server        | TTL     | Priority     |
+| ---- | ---- | ------------------ | ------- | ------------ |
+| `MX` | `@`  | `webmail.<DOMAIN>` | `<TTL>` | `<PRIORITY>` |
 
 </Example>
 
 <Example>
 
-| Type       | Name   | Content    | TTL     |
-| ---------- | ------ | ---------- | ------- |
-| `CNAME`    | `mail` | `<TARGET>` | `<TTL>` |
+| Type    | Name   | Content    | TTL     |
+| ------- | ------ | ---------- | ------- |
+| `CNAME` | `mail` | `<TARGET>` | `<TTL>` |
 
 </Example>
 
 <Example>
 
-| Type       | Name      | Content  | TTL     |
-| ---------- | --------- | -------- | ------- |
-| `A`        | `webmail` | `<IPv4>` | `<TTL>` |
+| Type | Name      | Content  | TTL     |
+| ---- | --------- | -------- | ------- |
+| `A`  | `webmail` | `<IPv4>` | `<TTL>` |
 
 </Example>
 

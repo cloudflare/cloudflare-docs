@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: Time to Live (TTL)
 sidebar:
   order: 3
-
 ---
 
 import { GlossaryTooltip } from "~/components";
@@ -27,6 +26,12 @@ It may take longer than 5 minutes for you to actually experience record changes,
 For **DNS only** records, you can choose a TTL between **30 seconds** (Enterprise) or **60 seconds** (non-Enterprise) and **1 day**.
 
 A TTL of **Auto** is set to 300 seconds (five minutes).
+
+## API representation
+
+When using the API, TTL values are integers in seconds. The value `1` is a special sentinel that means **Auto** (300 seconds effective TTL) — it does not mean a 1-second TTL.
+
+You will see `"ttl": 1` in API responses for any record set to Auto. To set Auto when creating or updating a record, send `"ttl": 1`.
 
 ## Nameserver TTL
 

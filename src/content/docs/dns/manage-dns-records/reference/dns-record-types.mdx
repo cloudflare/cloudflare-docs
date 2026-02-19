@@ -27,16 +27,16 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 These records include the following fields:
 
+<Render file="records-name-field" product="dns" />- **IPv4/IPv6 address**: Your
+origin server address (cannot be a [Cloudflare
+IP](https://www.cloudflare.com/ips))
 
-<Render file="records-name-field" product="dns" />
-- **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
+:::note
 
-  :::note
+Cloudflare uses the [canonical notation](https://www.rfc-editor.org/rfc/rfc5952.html#section-4.2) to store DNS records. This means that an AAAA record with content `fe80::0:0:1` is stored and returned as `fe80::1`, for example.
 
-  Cloudflare uses the [canonical notation](https://www.rfc-editor.org/rfc/rfc5952.html#section-4.2) to store DNS records. This means that an AAAA record with content `fe80::0:0:1` is stored and returned as `fe80::1`, for example.
-
-  Alternative notations of IPv4 addresses (`1.1` for `1.0.0.1`, for example) are not supported for A records.
-  :::
+Alternative notations of IPv4 addresses (`1.1` for `1.0.0.1`, for example) are not supported for A records.
+:::
 
 - **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
@@ -100,13 +100,13 @@ When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/c
 
 These records include the following fields:
 
-
-<Render file="records-name-field" product="dns" />
-- **Target**: The hostname where traffic should be directed (`example.com`).
-- **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
-  - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
-  - If the **Proxy Status** is **DNS Only**, you can customize the value.
-- **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
+<Render file="records-name-field" product="dns" />- **Target**: The hostname
+where traffic should be directed (`example.com`). - **TTL**: Time to live, which
+controls how long DNS resolvers should cache a response before revalidating it.
+- If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which
+is 300 seconds. - If the **Proxy Status** is **DNS Only**, you can customize the
+value. - **Proxy status**: For more details, refer to [Proxied DNS
+records](/dns/proxy-status/).
 
 #### Proxied CNAME records
 
@@ -121,7 +121,7 @@ DNS management for **example.com**:
 
 | Type  | Name | Content                | Proxy status |
 | ----- | ---- | ---------------------- | ------------ |
-| CNAME | abc  | `target.external.test` | Proxied     |
+| CNAME | abc  | `target.external.test` | Proxied      |
 
 </Example>
 
@@ -178,7 +178,7 @@ When creating CNAME records [using the API](/dns/manage-dns-records/how-to/creat
 		"zone_id": "<ZONE_ID>",
 		"zone_name": "example.com",
 		"name": "www.example.com",
-		"type": "A",
+		"type": "CNAME",
 		"content": "www.another-example.com",
 		"proxiable": true,
 		"proxied": false,
@@ -418,7 +418,12 @@ You only need to add NS records to your DNS records table in Cloudflare when you
 Your assigned Cloudflare nameservers, custom nameservers, and their corresponding [nameserver TTLs](/dns/nameservers/nameserver-options/#nameserver-ttl) are controlled via dedicated sections on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page. For details, refer to [Nameservers](/dns/nameservers/).
 :::
 
+:::caution
+NS records cannot share a name with any other record type. If a record of any other type already exists at a name, you cannot add an NS record at that same name — and vice versa. This applies at creation and when using PUT or PATCH to update existing records.
+:::
+
 #### Limits
+
 <Render file="ns-delegation-name-limit" product="dns" />
 
 ### DS and DNSKEY
