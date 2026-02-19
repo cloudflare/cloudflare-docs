@@ -87,21 +87,15 @@ objects directly, should find a way to remove these
 
 ### Result methods
 
-After calling `.output()`, you receive a `MediaTransformationResult` with the following methods:
+After calling `.output()`, you receive a `MediaTransformationResult` with the following methods. These methods return Promises and must be awaited:
 
-- `.response()`: Returns the transformed media as an HTTP `Response` object, ready to return to the client or store in cache.
-- `.media()`: Returns the transformed media as a `ReadableStream<Uint8Array>`.
-- `.contentType()`: Returns the MIME type string of the output (for example, `video/mp4`, `image/jpeg`, `audio/mp4`).
+- `.response()`: Returns a `Promise<Response>` — the transformed media as an HTTP Response object, ready to return to the client or store in cache.
+- `.media()`: Returns a `Promise<ReadableStream<Uint8Array>>` — the transformed media as a byte stream.
+- `.contentType()`: Returns a `Promise<string>` — the MIME type of the output (for example, `video/mp4`, `image/jpeg`, `audio/mp4`).
 
 ## Examples
 
 ### Generate an optimized video clip
-
-:::note[Placeholder: Awaits?]
-
-The response() method (or whole thing) may need to be awaited
-
-:::
 
 Resize a video and extract a 5-second clip:
 
@@ -114,7 +108,7 @@ export default {
 			.transform({ width: 480, height: 270 })
 			.output({ mode: "video", time: "0s", duration: "5s" });
 
-		return result.response();
+		return await result.response();
 	},
 };
 ```
@@ -132,7 +126,7 @@ export default {
 			.transform({ width: 640, height: 360 })
 			.output({ mode: "frame", time: "2s", format: "jpg" });
 
-		return result.response();
+		return await result.response();
 	},
 };
 ```
@@ -150,7 +144,7 @@ export default {
 			.transform({})
 			.output({ mode: "audio", time: "0s", duration: "30s" });
 
-		return result.response();
+		return await result.response();
 	},
 };
 ```
@@ -169,8 +163,8 @@ export default {
 			.output({ mode: "video", time: "0s", duration: "10s", audio: false });
 
 		// Store the transformed video directly in R2
-		await env.R2_BUCKET.put("output-480p.mp4", result.media(), {
-			httpMetadata: { contentType: result.contentType() },
+		await env.R2_BUCKET.put("output-480p.mp4", await result.media(), {
+			httpMetadata: { contentType: await result.contentType() },
 		});
 
 		return new Response("Video transformed and stored", { status: 200 });
@@ -198,7 +192,7 @@ export default {
 				.transform({ width: 480, height: 270 })
 				.output({ mode: "video", time: "0s", duration: "5s" });
 
-			return result.response();
+			return await result.response();
 		} catch (e) {
 			if (e instanceof Error && "code" in e) {
 				// Handle MediaError
