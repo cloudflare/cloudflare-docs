@@ -46,6 +46,8 @@ Automatic configuration supports the following frameworks:
 | [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/)         |                                |                                                     |
 | Static sites                                                                 | None                           | Any directory with an `index.html`                  |
 
+Automatic configuration may also work with other projects, such as React or Vue SPAs. Try running `wrangler deploy` or `wrangler setup` to see if your project is detected.
+
 ## Files created and modified
 
 When automatic configuration runs, the following files may be created or modified:
@@ -178,7 +180,7 @@ When running `wrangler deploy` or `wrangler setup` locally, Wrangler will prompt
 
 ### Framework not detected
 
-If your framework is not detected, ensure your `package.json` includes the framework as a dependency. If the framework is not in the [supported list](#supported-frameworks), you'll need to manually configure your project.
+If your framework is not detected, ensure your `package.json` includes the framework as a dependency.
 
 ### Configuration already exists
 
