@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: fs
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig, Details } from "~/components";
 
 <Render file="nodejs-compat-howto" product="workers" />
 
@@ -26,7 +26,9 @@ const config = readFileSync("/bundle/config.txt", "utf8");
 writeFileSync("/tmp/abc.txt", "Hello, world!");
 ```
 
-The Workers Virtual File System (VFS) is a memory-based file system that allows
+## Virtual file system
+
+The Workers virtual file system (VFS) is a memory-based file system that allows
 you to read modules included in your Worker bundle as read-only files, access a
 directory for writing temporary files, or access common
 [character devices](https://linux-kernel-labs.github.io/refs/heads/master/labs/device_drivers.html) like
@@ -34,8 +36,7 @@ directory for writing temporary files, or access common
 
 The directory structure initially looks like:
 
-```
-
+```txt
 /bundle
 └── (one file for each module in your Worker bundle)
 /tmp
@@ -45,8 +46,9 @@ The directory structure initially looks like:
 ├── random
 ├── full
 └── zero
-
 ```
+
+### Read from the bundle
 
 The `/bundle` directory contains the files for all modules included in your
 Worker bundle, which you can read using APIs like `readFileSync` or
@@ -68,6 +70,8 @@ export default {
 };
 ```
 
+### Write temporary files
+
 The `/tmp` directory is writable, and you can use it to create temporary files
 or directories. You can also create symlinks in this directory. However, the
 contents of `/tmp` are not persistent and are unique to each request. This means
@@ -88,6 +92,8 @@ export default {
 };
 ```
 
+### Character devices
+
 The `/dev` directory contains common character devices:
 
 - `/dev/null`: A null device that discards all data written to it and returns
@@ -100,6 +106,8 @@ The `/dev` directory contains common character devices:
 - `/dev/zero`: A device that provides an infinite stream of zero bytes on reads
   and discards all data written to it.
 
+### VFS behavior and limits
+
 All operations on the VFS are synchronous. You can use the synchronous,
 asynchronous callback, or promise-based APIs provided by the `node:fs` module
 but all operations will be performed synchronously.
@@ -107,10 +115,10 @@ but all operations will be performed synchronously.
 Timestamps for files in the VFS are currently always set to the Unix epoch
 (`1970-01-01T00:00:00Z`). This means that operations that rely on timestamps,
 like `fs.stat`, will always return the same timestamp for all files in the VFS.
-This is a temporary limitation that will be addressed in a future release.
+This is a known limitation.
 
 Since all temporary files are held in memory, the total size of all temporary
-files and directories created count towards your Worker’s memory limit. If you
+files and directories created count towards your Worker's memory limit. If you
 exceed this limit, the Worker instance will be terminated and restarted.
 
 The file system implementation has the following limits:
@@ -119,9 +127,9 @@ The file system implementation has the following limits:
   separators. Because paths are handled as file URLs internally, the limit
   accounts for percent-encoding of special characters, decoding characters
   that do not need encoding before the limit is checked. For example, the
-  path `/tmp/abcde%66/ghi%zz' is 18 characters long because the `%66`does
-not need to be percent-encoded and is therefore counted as one character,
-while the`%zz` is an invalid percent-encoding that is counted as 3 characters.
+  path `/tmp/abcde%66/ghi%zz` is 18 characters long because the `%66` does
+  not need to be percent-encoded and is therefore counted as one character,
+  while the `%zz` is an invalid percent-encoding that is counted as 3 characters.
 - The maximum number of path segments is 48. For example, the path `/a/b/c` is
   3 segments.
 - The maximum size of an individual file is 128 MB total.
@@ -134,5 +142,230 @@ supported:
 - The `force` option in the `fs.rm` API has not yet been implemented.
 - Timestamps for files are always set to the Unix epoch (`1970-01-01T00:00:00Z`).
 - File permissions and ownership are not supported.
+
+## Mount persistent storage with worker-fs-mount
+
+The built-in virtual file system is ephemeral — `/tmp` is cleared between requests, and `/bundle` is read-only. If you need persistent, durable file storage accessible through the standard `node:fs` API, you can use the [`worker-fs-mount`](https://github.com/danlapid/worker-fs-mount) package to mount Cloudflare storage services (such as [R2](/r2/) or [Durable Objects](/durable-objects/)) as virtual file system paths.
+
+This approach works like a Unix mount point: you choose a path (for example, `/storage`), associate it with a storage backend, and then use standard `node:fs` APIs like `readFile`, `writeFile`, `mkdir`, and `stat` against that path. The `worker-fs-mount` package intercepts calls to `node:fs` and routes them to the appropriate storage backend based on the path prefix. Paths that do not match any mount fall through to the built-in virtual file system.
+
+This is especially useful when you rely on npm packages that expect filesystem access. Instead of rewriting those libraries, you can mount a Cloudflare storage backend and let the existing `node:fs` calls work as-is.
+
+### How it works
+
+The `worker-fs-mount` package uses [Wrangler module aliasing](/workers/wrangler/configuration/#module-aliasing) to replace the `node:fs/promises` and `node:fs` imports with a mount-aware shim. When your code calls `fs.readFile('/storage/file.txt')`, the shim checks whether `/storage` matches a mounted path prefix. If it does, the operation is routed to the storage backend. If not, it falls through to the built-in `node:fs` implementation.
+
+The storage backends implement a stream-based interface. Higher-level operations like `readFile` and `writeFile` are built on top of lower-level `createReadStream` and `createWriteStream` methods. This means each storage backend only needs to implement a small set of core methods — `stat`, `createReadStream`, `createWriteStream`, `readdir`, `mkdir`, and `rm` — and the full `node:fs` API surface is derived from those.
+
+### Install
+
+```sh
+npm install worker-fs-mount
+```
+
+Depending on which storage backend you want to use, also install the corresponding package:
+
+```sh
+npm install @worker-fs-mount/r2-fs
+npm install @worker-fs-mount/durable-object-fs
+npm install @worker-fs-mount/memory-fs
+```
+
+### Configure Wrangler
+
+Add the module alias to your Wrangler configuration so that `node:fs` imports are intercepted by `worker-fs-mount`:
+
+<WranglerConfig>
+
+```toml
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "$today"
+
+# Replace node:fs imports with the mount-aware shim
+[alias]
+"node:fs/promises" = "worker-fs-mount/fs"
+"node:fs" = "worker-fs-mount/fs-sync"
+```
+
+</WranglerConfig>
+
+The `node:fs` alias is only needed if you use synchronous methods like `readFileSync`. If you only use `node:fs/promises`, you can omit the second alias.
+
+:::note
+The alias replaces imports by exact string match. Inside the `worker-fs-mount` shim, the real `node:fs` is imported as `fs` (without the `node:` prefix) to avoid an alias loop. This means your code should always import `node:fs/promises` or `node:fs` (with the `node:` prefix) so the alias takes effect.
+:::
+
+### Mount an R2 bucket
+
+To use an [R2 bucket](/r2/) as a persistent file system, create an `R2Filesystem` instance and mount it at a path. Files you write are stored as R2 objects, and directories are tracked with marker objects.
+
+<WranglerConfig>
+
+```toml
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "$today"
+
+[alias]
+"node:fs/promises" = "worker-fs-mount/fs"
+
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "my-storage-bucket"
+```
+
+</WranglerConfig>
+
+```ts
+import { mount } from "worker-fs-mount";
+import { R2Filesystem } from "@worker-fs-mount/r2-fs";
+import { env } from "cloudflare:workers";
+import fs from "node:fs/promises";
+
+// Mount R2 at module scope — available across all requests
+mount("/storage", new R2Filesystem(env.STORAGE));
+
+export default {
+	async fetch(request: Request): Promise<Response> {
+		// Write a file — stored as an R2 object
+		await fs.writeFile("/storage/hello.txt", "Hello from R2!");
+
+		// Read it back
+		const content = await fs.readFile("/storage/hello.txt", "utf8");
+
+		// List files
+		const files = await fs.readdir("/storage");
+
+		return Response.json({ content, files });
+	},
+};
+```
+
+Because the R2 binding is available at module scope through the [`env` object from `cloudflare:workers`](/workers/runtime-apis/bindings/), you can call `mount()` at the top level. The mount persists for the lifetime of the Worker instance and is shared across requests.
+
+### Mount a Durable Object
+
+[Durable Objects](/durable-objects/) with [SQLite storage](/durable-objects/best-practices/access-durable-objects-storage/) provide a strongly consistent file system backend. The `@worker-fs-mount/durable-object-fs` package stores file entries in a SQLite table inside the Durable Object.
+
+Because Durable Object stubs require I/O to obtain (you need to call `idFromName()` and `get()`), you cannot mount them at module scope. Instead, use `withMounts()` to create a request-scoped mount that is automatically cleaned up:
+
+<WranglerConfig>
+
+```toml
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "$today"
+
+[alias]
+"node:fs/promises" = "worker-fs-mount/fs"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["DurableObjectFilesystem"]
+```
+
+</WranglerConfig>
+
+```ts
+import { mount, withMounts } from "worker-fs-mount";
+import { DurableObjectFilesystem } from "@worker-fs-mount/durable-object-fs";
+import { WorkerEntrypoint } from "cloudflare:workers";
+import fs from "node:fs/promises";
+
+interface Env {
+	DurableObjectFilesystem: DurableObjectNamespace<DurableObjectFilesystem>;
+}
+
+export { DurableObjectFilesystem };
+
+export default class extends WorkerEntrypoint<Env> {
+	async fetch(request: Request): Promise<Response> {
+		return withMounts(async () => {
+			// Get a Durable Object stub for user-specific storage
+			const id = this.env.DurableObjectFilesystem.idFromName("user-123");
+			const stub = this.env.DurableObjectFilesystem.get(id);
+
+			// Mount it at /data — scoped to this request only
+			mount("/data", stub);
+
+			await fs.writeFile("/data/notes.txt", "Durable storage!");
+			const content = await fs.readFile("/data/notes.txt", "utf8");
+
+			return new Response(content);
+			// Mount is automatically cleaned up when withMounts() returns
+		});
+	}
+}
+```
+
+The `withMounts()` function uses [`AsyncLocalStorage`](/workers/runtime-apis/nodejs/asynclocalstorage/) internally to isolate mounts per request. This ensures that concurrent requests do not interfere with each other's mounted paths.
+
+### Synchronous access inside Durable Objects
+
+If your code runs inside a Durable Object and you need synchronous `node:fs` methods (like `readFileSync`), use `LocalDOFilesystem`. This accesses the Durable Object's SQLite storage directly and synchronously, without going through RPC:
+
+```ts
+import { mount } from "worker-fs-mount";
+import { LocalDOFilesystem } from "@worker-fs-mount/durable-object-fs/local";
+import { readFileSync, writeFileSync } from "node:fs";
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		mount("/data", new LocalDOFilesystem(ctx.storage.sql));
+	}
+
+	async fetch(request: Request): Promise<Response> {
+		writeFileSync("/data/config.json", JSON.stringify({ key: "value" }));
+		const config = readFileSync("/data/config.json", "utf8");
+		return new Response(config);
+	}
+}
+```
+
+:::note
+Synchronous `node:fs` methods only work with storage backends that implement the `SyncWorkerFilesystem` interface, such as `LocalDOFilesystem`. Calling synchronous methods on an async-only mount (like R2) throws an `ENOSYS` error.
+:::
+
+### Supported operations on mounted paths
+
+The following `node:fs` operations are supported on mounted paths:
+
+| Operation                   | Async (`node:fs/promises`) | Sync (`node:fs`)                    |
+| --------------------------- | -------------------------- | ----------------------------------- |
+| Read files                  | `readFile`                 | `readFileSync`                      |
+| Write files                 | `writeFile`                | `writeFileSync`                     |
+| Append to files             | `appendFile`               | `appendFileSync`                    |
+| File metadata               | `stat`, `lstat`            | `statSync`, `lstatSync`             |
+| List directories            | `readdir`                  | `readdirSync`                       |
+| Create directories          | `mkdir`                    | `mkdirSync`                         |
+| Remove files or directories | `rm`, `unlink`, `rmdir`    | `rmSync`, `unlinkSync`, `rmdirSync` |
+| Copy files                  | `copyFile`, `cp`           | `copyFileSync`                      |
+| Rename (same mount)         | `rename`                   | `renameSync`                        |
+| Check access                | `access`                   | `accessSync`                        |
+| Truncate files              | `truncate`                 | `truncateSync`                      |
+| Symlinks                    | `symlink`, `readlink`      | `symlinkSync`, `readlinkSync`       |
+| Check existence             | —                          | `existsSync`                        |
+
+Cross-mount `rename` operations are not supported and return an `EXDEV` error. Use `copyFile` followed by `unlink` to move files between mounts. File descriptor operations (`open`, `read`, `write`, `close` with file descriptors) are not supported on mounted paths.
+
+### Mount rules
+
+- Mount paths must be absolute (start with `/`).
+- The built-in virtual file system paths `/bundle`, `/tmp`, and `/dev` cannot be used as mount points.
+- Nested mounts are not allowed. If `/storage` is mounted, you cannot also mount `/storage/sub`.
+- Each path can only have one mount at a time.
+
+<Details header="Available storage backends">
+
+| Backend                 | Package                                    | Persistence | Access pattern | Use case                        |
+| ----------------------- | ------------------------------------------ | ----------- | -------------- | ------------------------------- |
+| R2                      | `@worker-fs-mount/r2-fs`                   | Durable     | Async only     | Large files, blob storage       |
+| Durable Object (remote) | `@worker-fs-mount/durable-object-fs`       | Durable     | Async only     | Per-user or per-session storage |
+| Durable Object (local)  | `@worker-fs-mount/durable-object-fs/local` | Durable     | Sync and async | Synchronous access inside a DO  |
+| In-memory               | `@worker-fs-mount/memory-fs`               | Ephemeral   | Async only     | Testing                         |
+
+You can also implement your own storage backend by extending `WorkerEntrypoint` and implementing the `WorkerFilesystem` interface (for async access) or the `SyncWorkerFilesystem` interface (for synchronous access). Refer to the [`worker-fs-mount` repository](https://github.com/danlapid/worker-fs-mount) for details on the interface.
+
+</Details>
 
 The full `node:fs` API is documented in the [Node.js documentation for `node:fs`](https://nodejs.org/api/fs.html).
