@@ -64,15 +64,15 @@ In this example, the Worker has access to local-only D1 database. The correspond
 		{
 			"binding": "DB",
 			"database_name": "test-db",
-			"database_id": "c020574a-5623-407b-be0c-cd192bab9545"
-		}
-	]
+			"database_id": "c020574a-5623-407b-be0c-cd192bab9545",
+		},
+	],
 }
 ```
 
 </WranglerConfig>
 
-Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information. Any changes you make when running against a remote database cannot be undone.
+Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/remote-bindings/) for more information. Any changes you make when running against a remote database cannot be undone.
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 
@@ -97,9 +97,9 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) should rese
 			"binding": "DB", // Should match preview_database_id
 			"database_name": "YOUR_DATABASE_NAME",
 			"database_id": "the-id-of-your-D1-database-goes-here", // wrangler d1 info YOUR_DATABASE_NAME
-			"preview_database_id": "DB" // Required for Pages local development
-		}
-	]
+			"preview_database_id": "DB", // Required for Pages local development
+		},
+	],
 }
 ```
 
@@ -134,8 +134,6 @@ Users of wrangler `2.x` must use the `--persist` flag: previous versions of wran
 
 You can use Miniflare's [support for D1](https://miniflare.dev/storage/d1) to create D1 databases you can use for testing:
 
-
-
 <WranglerConfig>
 
 ```jsonc
@@ -144,9 +142,9 @@ You can use Miniflare's [support for D1](https://miniflare.dev/storage/d1) to cr
 		{
 			"binding": "DB",
 			"database_name": "test-db",
-			"database_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-		}
-	]
+			"database_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+		},
+	],
 }
 ```
 
@@ -186,9 +184,9 @@ Given the below Wrangler configuration:
 			"binding": "DB", // i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
 			"database_name": "your-database", // the name of your D1 database, set when created
 			"database_id": "<UUID>", // The unique ID of your D1 database, returned when you create your database or run `
-			"preview_database_id": "local-test-db" // A user-defined ID for your local test database.
-		}
-	]
+			"preview_database_id": "local-test-db", // A user-defined ID for your local test database.
+		},
+	],
 }
 ```
 

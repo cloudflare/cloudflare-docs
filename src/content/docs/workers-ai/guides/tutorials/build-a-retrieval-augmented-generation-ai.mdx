@@ -81,7 +81,7 @@ You will now be able to go to [http://localhost:8787](http://localhost:8787) to 
 
 ## 3. Adding the AI binding
 
-To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/) as a [remote binding](/workers/development-testing/#remote-bindings). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
+To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/) as a [remote binding](/workers/development-testing/remote-bindings/). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
 
 :::note
 
@@ -99,8 +99,8 @@ This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/mod
 {
 	"ai": {
 		"binding": "AI",
-		"remote": true
-	}
+		"remote": true,
+	},
 }
 ```
 
@@ -158,9 +158,9 @@ Then, add the configuration details for your new Vectorize index to the [Wrangle
 	"vectorize": [
 		{
 			"binding": "VECTOR_INDEX",
-			"index_name": "vector-index"
-		}
-	]
+			"index_name": "vector-index",
+		},
+	],
 }
 ```
 
@@ -187,9 +187,9 @@ Then, paste the configuration details output from the previous command into the 
 		{
 			"binding": "DB", // available in your Worker on env.DB
 			"database_name": "database",
-			"database_id": "abc-def-geh" // replace this with a real database_id (UUID)
-		}
-	]
+			"database_id": "abc-def-geh", // replace this with a real database_id (UUID)
+		},
+	],
 }
 ```
 
@@ -222,9 +222,9 @@ To begin, add a new `[[workflows]]` block to your [Wrangler configuration file](
 		{
 			"name": "rag",
 			"binding": "RAG_WORKFLOW",
-			"class_name": "RAGWorkflow"
-		}
-	]
+			"class_name": "RAGWorkflow",
+		},
+	],
 }
 ```
 
@@ -424,58 +424,53 @@ To begin, install the `@anthropic-ai/sdk` package:
 In `src/index.js`, you can update the `GET /` route to check for the `ANTHROPIC_API_KEY` environment variable. If it is set, we can generate text using the Anthropic SDK. If it is not set, we'll fall back to the existing Workers AI code:
 
 ```js
-import Anthropic from '@anthropic-ai/sdk';
+import Anthropic from "@anthropic-ai/sdk";
 
-app.get('/', async (c) => {
-  // ... Existing code
-	const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
+app.get("/", async (c) => {
+	// ... Existing code
+	const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`;
 
-	let modelUsed = ""
-	let response = null
+	let modelUsed = "";
+	let response = null;
 
 	if (c.env.ANTHROPIC_API_KEY) {
 		const anthropic = new Anthropic({
-			apiKey: c.env.ANTHROPIC_API_KEY
-		})
+			apiKey: c.env.ANTHROPIC_API_KEY,
+		});
 
-		const model = "claude-3-5-sonnet-latest"
-		modelUsed = model
+		const model = "claude-3-5-sonnet-latest";
+		modelUsed = model;
 
 		const message = await anthropic.messages.create({
 			max_tokens: 1024,
 			model,
-			messages: [
-				{ role: 'user', content: question }
-			],
-			system: [systemPrompt, notes ? contextMessage : ''].join(" ")
-		})
+			messages: [{ role: "user", content: question }],
+			system: [systemPrompt, notes ? contextMessage : ""].join(" "),
+		});
 
 		response = {
-			response: message.content.map(content => content.text).join("\n")
-		}
+			response: message.content.map((content) => content.text).join("\n"),
+		};
 	} else {
-		const model = "@cf/meta/llama-3.1-8b-instruct"
-		modelUsed = model
+		const model = "@cf/meta/llama-3.1-8b-instruct";
+		modelUsed = model;
 
-		response = await c.env.AI.run(
-			model,
-			{
-				messages: [
-					...(notes.length ? [{ role: 'system', content: contextMessage }] : []),
-					{ role: 'system', content: systemPrompt },
-					{ role: 'user', content: question }
-				]
-			}
-		)
+		response = await c.env.AI.run(model, {
+			messages: [
+				...(notes.length ? [{ role: "system", content: contextMessage }] : []),
+				{ role: "system", content: systemPrompt },
+				{ role: "user", content: question },
+			],
+		});
 	}
 
 	if (response) {
-		c.header('x-model-used', modelUsed)
-		return c.text(response.response)
+		c.header("x-model-used", modelUsed);
+		return c.text(response.response);
 	} else {
-		return c.text("We were unable to generate output", 500)
+		return c.text("We were unable to generate output", 500);
 	}
-})
+});
 ```
 
 Finally, you'll need to set the `ANTHROPIC_API_KEY` environment variable in your Workers application. You can do this by using `wrangler secret put`:

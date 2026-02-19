@@ -186,7 +186,7 @@ For Chromium-based browsers, the router uses the **Speculation Rules API** - a m
 
 **Example injected speculation rules:**
 
-```json
+````json
 {
 	"prefetch": [
 		{
@@ -209,7 +209,7 @@ To enable smooth transitions, set `"smoothTransitions": true` in your `ROUTES` c
 	],
 	"smoothTransitions": true
 }
-```
+````
 
 The router automatically injects CSS into HTML responses:
 
@@ -241,13 +241,10 @@ To add a new microfrontend to your application after initial setup:
 
 2. **Add a [service binding](/workers/runtime-apis/bindings/service-bindings/) in your router's Wrangler configuration file**
 
-	<WranglerConfig>
-	```toml
-	[[services]]
-	binding = "MICROFRONTEND_C"
-	service = "my-new-microfrontend"
-	```
-	</WranglerConfig>
+   <WranglerConfig>
+   	```toml [[services]] binding = "MICROFRONTEND_C" service =
+   	"my-new-microfrontend" ```
+   </WranglerConfig>
 
 3. **Update the `ROUTES` environment variable**
 
@@ -276,7 +273,7 @@ Your new microfrontend is now accessible at the configured path (for example, `/
 
 During development, you can test your microfrontend architecture locally using Wrangler's service binding support. Run the router Worker locally using `wrangler dev`, and then in separate terminals run each of the microfrontends.
 
-If you only need to work on one of the microfrontends, you can run the others remotely using [remote bindings](/workers/development-testing/#remote-bindings), without needing to have access to the source code or run a local dev server.
+If you only need to work on one of the microfrontends, you can run the others remotely using [remote bindings](/workers/development-testing/remote-bindings/), without needing to have access to the source code or run a local dev server.
 
 For each microfrontend you want to run remotely while in local dev, configure its service binding with the remote flag:
 

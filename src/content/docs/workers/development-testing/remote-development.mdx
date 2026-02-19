@@ -1,0 +1,35 @@
+---
+pcx_content_type: concept
+title: "wrangler dev --remote (legacy)"
+sidebar:
+  order: 3
+  label: Remote development (legacy)
+description: Run your Worker code entirely on Cloudflare's infrastructure using wrangler dev --remote.
+---
+
+import { PackageManagers, Render } from "~/components";
+
+:::caution
+For most development tasks, we recommend using [local development](/workers/development-testing/local-development/) with [remote bindings](/workers/development-testing/remote-bindings/) instead of `wrangler dev --remote`. Local development provides faster iteration, and remote bindings give you access to real Cloudflare resources without the overhead of uploading your Worker code for every change.
+:::
+
+Separate from Miniflare-powered [local development](/workers/development-testing/local-development/), Wrangler offers a fully remote development mode via [`wrangler dev --remote`](/workers/wrangler/commands/#dev). Remote development is [**not** supported in the Vite plugin](/workers/development-testing/wrangler-vs-vite/).
+
+<PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
+
+During **remote development**, all of your Worker code is uploaded to a temporary preview environment on Cloudflare's infrastructure, and changes to your code are automatically uploaded as you save.
+
+When using remote development, all bindings automatically connect to their remote resources. Unlike local development, you cannot configure bindings to use local simulations — they will always use the deployed resources on Cloudflare's network.
+
+## When to use remote development
+
+- For most development tasks, the most efficient and productive experience will be [local development](/workers/development-testing/local-development/) along with [remote bindings](/workers/development-testing/remote-bindings/) when needed.
+- You may want to use `wrangler dev --remote` for testing features or behaviors that are highly specific to Cloudflare's network and cannot be adequately simulated locally or tested via remote bindings.
+
+## Considerations
+
+- Iteration is significantly slower than local development due to the upload/deployment step for each change.
+
+## Limitations
+
+- When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in [Workers platform limits](/workers/platform/limits/#number-of-routes-per-zone-when-using-wrangler-dev---remote).

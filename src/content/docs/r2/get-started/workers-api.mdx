@@ -13,7 +13,7 @@ import {
 	Render,
 	Tabs,
 	TabItem,
-	Steps
+	Steps,
 } from "~/components";
 
 [Workers](/workers/) let you run code at the edge. When you bind an R2 bucket to a Worker, you can read and write objects directly using the [Workers API](/r2/api/workers/workers-api-usage/).
@@ -44,12 +44,12 @@ import {
 
    ```jsonc
    {
-     "r2_buckets": [
-       {
-         "binding": "MY_BUCKET",
-         "bucket_name": "my-bucket"
-       }
-     ]
+   	"r2_buckets": [
+   		{
+   			"binding": "MY_BUCKET",
+   			"bucket_name": "my-bucket",
+   		},
+   	],
    }
    ```
 
@@ -137,7 +137,7 @@ export default {
    :::note[Local development]
    By default, `wrangler dev` uses a local R2 simulation. Objects you store during development exist only on your machine in the `.wrangler/state` folder and do not affect your production bucket.
 
-   To connect to your real R2 bucket during development, add `"remote": true` to your R2 binding in your Wrangler configuration file. Refer to [remote bindings](/workers/development-testing/#remote-bindings) for more information.
+   To connect to your real R2 bucket during development, add `"remote": true` to your R2 binding in your Wrangler configuration file. Refer to [remote bindings](/workers/development-testing/remote-bindings/) for more information.
    :::
 
 2. Once the dev server is running, test storing and retrieving objects:
@@ -164,7 +164,7 @@ export default {
 
    # Retrieve the object
    curl https://r2-worker.<YOUR_SUBDOMAIN>.workers.dev/my-file.txt
-	 ```
+   ```
 
 </Steps>
 
