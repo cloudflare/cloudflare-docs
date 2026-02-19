@@ -1,0 +1,580 @@
+---
+title: Mount persistent storage as a file system
+pcx_content_type: tutorial
+difficulty: Advanced
+products:
+  - workers
+  - r2
+  - durable-objects
+tags:
+  - Node.js
+  - TypeScript
+  - Bindings
+reviewed: 2025-06-15
+description: >-
+  Build a custom node:fs shim that routes filesystem operations to Cloudflare storage backends like R2 and Durable Objects using Wrangler module aliasing.
+---
+
+import { WranglerConfig } from "~/components";
+
+The built-in Workers [virtual file system](/workers/runtime-apis/nodejs/fs/) is ephemeral. The `/tmp` directory resets between requests and `/bundle` is read-only. This tutorial shows how to build a custom `node:fs` replacement that routes filesystem operations to persistent Cloudflare storage services based on path prefixes.
+
+After completing this tutorial, calls like `fs.readFile('/storage/data.json')` will read from an [R2](/r2/) bucket, while paths like `/tmp/scratch.txt` still use the built-in virtual file system.
+
+This pattern is useful when you rely on npm packages that expect filesystem access. Instead of rewriting those libraries, your shim transparently routes their `node:fs` calls to a Cloudflare storage backend.
+
+## Prerequisites
+
+- A Cloudflare account
+- Node.js 18.0 or later
+- Familiarity with [Workers](/workers/), [R2](/r2/), and [Durable Objects](/durable-objects/)
+
+## 1. Understand the approach
+
+[Wrangler module aliasing](/workers/wrangler/configuration/#module-aliasing) lets you replace any module import with your own implementation. In this tutorial, you alias `node:fs/promises` to a custom shim module that:
+
+1. Re-exports the `node:fs/promises` API surface.
+2. Checks whether the requested path falls under a registered prefix (like `/storage`).
+3. Forwards matching operations to a storage backend (R2, Durable Objects, or others).
+4. Falls through to the real `node:fs` implementation for all other paths.
+
+You configure this alias in your Wrangler configuration file:
+
+<WranglerConfig>
+
+```toml
+[alias]
+"node:fs/promises" = "./src/fs-shim.ts"
+```
+
+</WranglerConfig>
+
+:::caution
+Inside your shim, you must import the real `fs` module without the `node:` prefix. Wrangler aliases match on the exact import string. Using `import * as realFs from "fs"` avoids triggering the alias recursively. If you use `import * as realFs from "node:fs"`, the import resolves back to your shim and creates an infinite loop.
+:::
+
+## 2. Define the storage backend interface
+
+Each storage backend implements a small set of core methods. The interface is stream-based — higher-level operations like `readFile` and `writeFile` derive from these streaming primitives.
+
+Create a file at `src/mount-registry.ts` and add the following types:
+
+```ts title="src/mount-registry.ts"
+export interface Stat {
+	type: "file" | "directory" | "symlink";
+	size: number;
+	lastModified?: Date;
+}
+
+export interface DirEntry {
+	name: string;
+	type: "file" | "directory" | "symlink";
+}
+
+export interface StorageBackend {
+	stat(path: string): Promise<Stat | null>;
+	createReadStream(
+		path: string,
+		options?: { start?: number; end?: number },
+	): Promise<ReadableStream<Uint8Array>>;
+	createWriteStream(
+		path: string,
+		options?: { flags?: "w" | "a" },
+	): Promise<WritableStream<Uint8Array>>;
+	readdir(path: string): Promise<DirEntry[]>;
+	mkdir(
+		path: string,
+		options?: { recursive?: boolean },
+	): Promise<string | undefined>;
+	rm(
+		path: string,
+		options?: { recursive?: boolean; force?: boolean },
+	): Promise<void>;
+}
+```
+
+With only these six methods, you can derive many higher-level operations:
+
+- `readFile` — collect a read stream into a buffer.
+- `writeFile` — pipe data into a write stream.
+- `copyFile` — pipe a read stream into a write stream.
+- `rename` — copy followed by delete.
+- `access` — call `stat` and check the result.
+- `unlink` — call `stat` to verify the path is a file, then call `rm`.
+
+## 3. Build a mount registry
+
+The mount registry tracks which path prefixes map to which backends. Add the following to your `src/mount-registry.ts` file below the interface definitions:
+
+```ts title="src/mount-registry.ts"
+const mounts = new Map<string, StorageBackend>();
+
+export function mount(prefix: string, backend: StorageBackend): void {
+	if (!prefix.startsWith("/")) {
+		throw new Error("Mount path must be absolute");
+	}
+	// Do not allow mounting over built-in paths
+	for (const reserved of ["/bundle", "/tmp", "/dev"]) {
+		if (prefix === reserved || prefix.startsWith(reserved + "/")) {
+			throw new Error(`Cannot mount over reserved path: ${reserved}`);
+		}
+	}
+	mounts.set(prefix, backend);
+}
+
+export function findMount(
+	path: string,
+): { backend: StorageBackend; relativePath: string } | null {
+	for (const [prefix, backend] of mounts) {
+		if (path === prefix) {
+			return { backend, relativePath: "/" };
+		}
+		if (path.startsWith(prefix + "/")) {
+			return { backend, relativePath: path.slice(prefix.length) };
+		}
+	}
+	return null;
+}
+```
+
+The `mount` function registers a storage backend at a given prefix. The `findMount` function resolves a full path to its backend and the relative path within that backend.
+
+:::note
+For request-scoped isolation — for example, when different requests need different backends like per-user [Durable Objects](/durable-objects/) — you can use [`AsyncLocalStorage`](/workers/runtime-apis/nodejs/asynclocalstorage/) to store a per-request mount map instead of a global one. Step 7 covers this pattern.
+:::
+
+## 4. Write the fs shim
+
+Create the shim module that Wrangler aliases in place of `node:fs/promises`. This file intercepts filesystem calls and routes them to mounted backends.
+
+```ts title="src/fs-shim.ts"
+// IMPORTANT: import "fs" without the "node:" prefix to avoid
+// triggering the Wrangler alias recursively
+import * as realFs from "fs";
+import { findMount } from "./mount-registry";
+
+const realFsPromises = realFs.promises;
+
+// Helper: collect a ReadableStream into a Uint8Array
+async function collectStream(
+	stream: ReadableStream<Uint8Array>,
+): Promise<Uint8Array> {
+	const reader = stream.getReader();
+	const chunks: Uint8Array[] = [];
+	let total = 0;
+	while (true) {
+		const { done, value } = await reader.read();
+		if (done) break;
+		chunks.push(value);
+		total += value.length;
+	}
+	const result = new Uint8Array(total);
+	let offset = 0;
+	for (const chunk of chunks) {
+		result.set(chunk, offset);
+		offset += chunk.length;
+	}
+	return result;
+}
+
+// Helper: write data to a WritableStream
+async function writeToStream(
+	stream: WritableStream<Uint8Array>,
+	data: Uint8Array,
+): Promise<void> {
+	const writer = stream.getWriter();
+	await writer.write(data);
+	await writer.close();
+}
+
+export async function readFile(
+	path: string,
+	options?: { encoding?: string },
+): Promise<string | Uint8Array> {
+	const match = findMount(path);
+	if (match) {
+		const stream = await match.backend.createReadStream(match.relativePath);
+		const data = await collectStream(stream);
+		if (options?.encoding) {
+			return new TextDecoder().decode(data);
+		}
+		return data;
+	}
+	return realFsPromises.readFile(path, options);
+}
+
+export async function writeFile(
+	path: string,
+	data: string | Uint8Array,
+): Promise<void> {
+	const match = findMount(path);
+	if (match) {
+		const bytes =
+			typeof data === "string" ? new TextEncoder().encode(data) : data;
+		const stream = await match.backend.createWriteStream(match.relativePath, {
+			flags: "w",
+		});
+		await writeToStream(stream, bytes);
+		return;
+	}
+	return realFsPromises.writeFile(path, data);
+}
+
+export async function stat(path: string) {
+	const match = findMount(path);
+	if (match) {
+		const s = await match.backend.stat(match.relativePath);
+		if (!s) {
+			const err = new Error(
+				`ENOENT: no such file or directory, stat '${path}'`,
+			);
+			(err as any).code = "ENOENT";
+			throw err;
+		}
+		// Return a Stats-like object
+		return {
+			isFile: () => s.type === "file",
+			isDirectory: () => s.type === "directory",
+			isSymbolicLink: () => s.type === "symlink",
+			size: s.size,
+			mtime: s.lastModified ?? new Date(0),
+		};
+	}
+	return realFsPromises.stat(path);
+}
+
+export async function readdir(path: string): Promise<string[]> {
+	const match = findMount(path);
+	if (match) {
+		const entries = await match.backend.readdir(match.relativePath);
+		return entries.map((e) => e.name);
+	}
+	return realFsPromises.readdir(path);
+}
+
+export async function mkdir(
+	path: string,
+	options?: { recursive?: boolean },
+): Promise<string | undefined> {
+	const match = findMount(path);
+	if (match) {
+		return match.backend.mkdir(match.relativePath, options);
+	}
+	return realFsPromises.mkdir(path, options);
+}
+
+export async function rm(
+	path: string,
+	options?: { recursive?: boolean; force?: boolean },
+): Promise<void> {
+	const match = findMount(path);
+	if (match) {
+		return match.backend.rm(match.relativePath, options);
+	}
+	return realFsPromises.rm(path, options);
+}
+
+// Re-export anything your shim does not override
+export const { access, copyFile, rename, chmod, chown } = realFsPromises;
+
+export default {
+	readFile,
+	writeFile,
+	stat,
+	readdir,
+	mkdir,
+	rm,
+	access: realFsPromises.access,
+	copyFile: realFsPromises.copyFile,
+	rename: realFsPromises.rename,
+};
+```
+
+This example covers the core pattern. A production implementation would wrap additional methods (`appendFile`, `copyFile`, `rename`, `unlink`, `truncate`, `symlink`, `readlink`) by deriving them from the six core streaming methods. For example, `copyFile` pipes a source read stream into a destination write stream, and `rename` does a copy followed by a delete.
+
+## 5. Implement an R2 storage backend
+
+With the shim and registry in place, implement a concrete backend that stores files in [R2](/r2/).
+
+R2 uses flat key-value storage. Directories do not exist natively, so this implementation uses a delimiter-based listing and `.dir` marker objects to represent empty directories.
+
+```ts title="src/r2-backend.ts"
+import type { StorageBackend, Stat, DirEntry } from "./mount-registry";
+
+const DIRECTORY_MARKER = ".dir";
+
+export class R2StorageBackend implements StorageBackend {
+	private bucket: R2Bucket;
+
+	constructor(bucket: R2Bucket) {
+		this.bucket = bucket;
+	}
+
+	async stat(path: string): Promise<Stat | null> {
+		// Normalize: remove leading slash for R2 keys
+		const key = path === "/" ? "" : path.slice(1);
+
+		if (key === "") {
+			return { type: "directory", size: 0 };
+		}
+
+		// Check if it is a file
+		const obj = await this.bucket.head(key);
+		if (obj) {
+			return {
+				type: "file",
+				size: obj.size,
+				lastModified: obj.uploaded,
+			};
+		}
+
+		// Check if it is a directory (has a marker or children)
+		const dirMarker = await this.bucket.head(key + "/" + DIRECTORY_MARKER);
+		if (dirMarker) {
+			return { type: "directory", size: 0 };
+		}
+
+		// Check for any objects with this prefix
+		const list = await this.bucket.list({ prefix: key + "/", limit: 1 });
+		if (list.objects.length > 0) {
+			return { type: "directory", size: 0 };
+		}
+
+		return null;
+	}
+
+	async createReadStream(
+		path: string,
+		options?: { start?: number; end?: number },
+	): Promise<ReadableStream<Uint8Array>> {
+		const key = path.slice(1);
+		const range =
+			options?.start !== undefined || options?.end !== undefined
+				? {
+						offset: options?.start,
+						length:
+							options?.end !== undefined
+								? options.end - (options?.start ?? 0) + 1
+								: undefined,
+					}
+				: undefined;
+
+		const obj = await this.bucket.get(key, range ? { range } : undefined);
+		if (!obj) {
+			throw Object.assign(new Error(`ENOENT: ${path}`), { code: "ENOENT" });
+		}
+		return obj.body;
+	}
+
+	async createWriteStream(
+		path: string,
+		options?: { flags?: "w" | "a" },
+	): Promise<WritableStream<Uint8Array>> {
+		const key = path.slice(1);
+		const { readable, writable } = new TransformStream<Uint8Array>();
+
+		// Upload the stream to R2 in the background
+		this.bucket.put(key, readable);
+
+		return writable;
+	}
+
+	async readdir(path: string): Promise<DirEntry[]> {
+		const prefix = path === "/" ? "" : path.slice(1) + "/";
+		const entries: DirEntry[] = [];
+		const seen = new Set<string>();
+
+		let cursor: string | undefined;
+		do {
+			const list = await this.bucket.list({
+				prefix,
+				delimiter: "/",
+				cursor,
+			});
+
+			for (const obj of list.objects) {
+				const name = obj.key.slice(prefix.length);
+				if (name && name !== DIRECTORY_MARKER && !seen.has(name)) {
+					seen.add(name);
+					entries.push({ name, type: "file" });
+				}
+			}
+
+			for (const dp of list.delimitedPrefixes) {
+				const name = dp.slice(prefix.length).replace(/\/$/, "");
+				if (name && !seen.has(name)) {
+					seen.add(name);
+					entries.push({ name, type: "directory" });
+				}
+			}
+
+			cursor = list.truncated ? list.cursor : undefined;
+		} while (cursor);
+
+		return entries;
+	}
+
+	async mkdir(
+		path: string,
+		options?: { recursive?: boolean },
+	): Promise<string | undefined> {
+		const key = path === "/" ? "" : path.slice(1);
+		// Create a directory marker object
+		await this.bucket.put(key + "/" + DIRECTORY_MARKER, "");
+		return path;
+	}
+
+	async rm(
+		path: string,
+		options?: { recursive?: boolean; force?: boolean },
+	): Promise<void> {
+		const key = path.slice(1);
+
+		if (options?.recursive) {
+			// Delete all objects under this prefix
+			const prefix = key + "/";
+			let cursor: string | undefined;
+			do {
+				const list = await this.bucket.list({ prefix, cursor });
+				if (list.objects.length > 0) {
+					await this.bucket.delete(list.objects.map((o) => o.key));
+				}
+				cursor = list.truncated ? list.cursor : undefined;
+			} while (cursor);
+		}
+
+		// Delete the object or directory marker itself
+		await this.bucket.delete(key);
+		await this.bucket.delete(key + "/" + DIRECTORY_MARKER);
+	}
+}
+```
+
+## 6. Configure Wrangler and wire everything together
+
+Set up the Wrangler configuration with the module alias and R2 binding, then create the Worker entry point.
+
+### Wrangler configuration
+
+<WranglerConfig>
+
+```toml
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "$today"
+
+[alias]
+"node:fs/promises" = "./src/fs-shim.ts"
+
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "my-storage-bucket"
+```
+
+</WranglerConfig>
+
+### Worker entry point
+
+The R2 binding is available at module scope through the `env` object from `cloudflare:workers`. You can register the backend at the top level. The registration persists for the lifetime of the Worker instance and is shared across requests.
+
+```ts title="src/index.ts"
+import { mount } from "./mount-registry";
+import { R2StorageBackend } from "./r2-backend";
+import { env } from "cloudflare:workers";
+import fs from "node:fs/promises";
+
+// Register R2 as the backend for /storage paths
+mount("/storage", new R2StorageBackend(env.STORAGE));
+
+export default {
+	async fetch(request: Request): Promise<Response> {
+		// Write a file — stored as an R2 object
+		await fs.writeFile("/storage/hello.txt", "Hello from R2!");
+
+		// Read it back through the standard fs API
+		const content = await fs.readFile("/storage/hello.txt", "utf8");
+
+		// List files in the storage directory
+		const files = await fs.readdir("/storage");
+
+		return Response.json({ content, files });
+	},
+};
+```
+
+When this Worker runs, `fs.writeFile('/storage/hello.txt', ...)` flows through the shim, matches the `/storage` prefix, and writes the data to R2. The `fs.readFile` call reads it back from R2. Any path outside `/storage` falls through to the built-in virtual file system.
+
+## 7. Handle per-request backends with AsyncLocalStorage
+
+Some backends require request-scoped setup. For example, [Durable Objects](/durable-objects/) require I/O to obtain a reference (calling `idFromName()` and `get()`). When concurrent requests need different backends — for example, per-user Durable Objects — you need request-scoped registrations so they do not interfere with each other.
+
+Modify the mount registry to use [`AsyncLocalStorage`](/workers/runtime-apis/nodejs/asynclocalstorage/) for per-request isolation:
+
+```ts title="src/mount-registry.ts (updated)"
+import { AsyncLocalStorage } from "node:async_hooks";
+
+// Stat, DirEntry, and StorageBackend interfaces remain the same
+
+type MountMap = Map<string, StorageBackend>;
+const storage = new AsyncLocalStorage<MountMap>();
+const globalMounts = new Map<string, StorageBackend>();
+
+function getMounts(): MountMap {
+	return storage.getStore() ?? globalMounts;
+}
+
+export function mount(prefix: string, backend: StorageBackend): void {
+	getMounts().set(prefix, backend);
+}
+
+export function findMount(
+	path: string,
+): { backend: StorageBackend; relativePath: string } | null {
+	for (const [prefix, backend] of getMounts()) {
+		if (path === prefix) return { backend, relativePath: "/" };
+		if (path.startsWith(prefix + "/")) {
+			return { backend, relativePath: path.slice(prefix.length) };
+		}
+	}
+	return null;
+}
+
+export function withMounts<T>(fn: () => T): T {
+	return storage.run(new Map(), fn);
+}
+```
+
+Use `withMounts()` in your Worker entry point to scope backend registrations to a single request:
+
+```ts title="src/index.ts (updated)"
+import { withMounts, mount } from "./mount-registry";
+import { WorkerEntrypoint } from "cloudflare:workers";
+import fs from "node:fs/promises";
+
+export default class extends WorkerEntrypoint<Env> {
+	async fetch(request: Request): Promise<Response> {
+		return withMounts(async () => {
+			const id = this.env.DO_NAMESPACE.idFromName("user-123");
+			const stub = this.env.DO_NAMESPACE.get(id);
+
+			// Register the DO stub as a storage backend.
+			// Your Durable Object would implement the StorageBackend
+			// interface via RPC.
+			mount("/data", stub);
+
+			await fs.writeFile("/data/notes.txt", "Persisted in Durable Object!");
+			const content = await fs.readFile("/data/notes.txt", "utf8");
+
+			return new Response(content);
+		});
+	}
+}
+```
+
+The `withMounts()` function creates an isolated mount map for each request. Backends registered inside one `withMounts()` callback are not visible to other concurrent requests.
+
+## Next steps
+
+- For more information about the built-in virtual file system, refer to [node:fs](/workers/runtime-apis/nodejs/fs/).
+- Learn about [Wrangler module aliasing](/workers/wrangler/configuration/#module-aliasing) for other use cases.
+- Explore [R2](/r2/) and [Durable Objects](/durable-objects/) for persistent storage options.
+- Review [AsyncLocalStorage](/workers/runtime-apis/nodejs/asynclocalstorage/) for request-scoped state management.
