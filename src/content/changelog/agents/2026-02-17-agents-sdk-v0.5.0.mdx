@@ -20,11 +20,11 @@ A new `this.retry()` method lets you retry any async operation with exponential 
 ```ts
 class MyAgent extends Agent {
 	async onRequest(request: Request) {
-		const result = await this.retry(() => fetch("https://example.com/api"), {
-			maxRetries: 3,
-			shouldRetry: (error) => error.status !== 404,
+		const data = await this.retry(() => callUnreliableService(), {
+			maxAttempts: 4,
+			shouldRetry: (err) => !(err instanceof PermanentError),
 		});
-		return result;
+		return Response.json(data);
 	}
 }
 ```
@@ -37,14 +37,14 @@ Retry options are also available per-task on `queue()`, `schedule()`, `scheduleE
 
 ```ts
 // Per-task retry configuration, persisted in SQLite alongside the task
-await this.schedule("sendReport", Date.now() + 60_000, {
-	retry: { maxRetries: 5 },
+await this.schedule(Date.now() + 60_000, "sendReport", { userId: "abc" }, {
+	retry: { maxAttempts: 5 },
 });
 
 // Class-level retry defaults
 class MyAgent extends Agent {
 	static options = {
-		retry: { maxRetries: 3 },
+		retry: { maxAttempts: 3 },
 	};
 }
 ```
