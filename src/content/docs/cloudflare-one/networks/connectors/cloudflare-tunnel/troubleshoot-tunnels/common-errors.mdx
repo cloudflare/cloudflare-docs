@@ -67,7 +67,7 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 For more information, refer to the [comprehensive list](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
 
-## I see a 502 Bad Gateway error when connecting to a tunnel published application route.
+## I see a 502 Bad Gateway error when connecting to an HTTP or HTTPS application through tunnel.
 
 A `502 Bad Gateway` error on a tunnel route means the tunnel itself is connected to the Cloudflare network, but `cloudflared` cannot reach the origin service defined in your ingress rule. Unlike [error 1033](#i-see-an-error-1033-when-attempting-to-run-a-tunnel), which indicates the tunnel is not connected to Cloudflare, a 502 error indicates the problem is between `cloudflared` and your local service.
 
