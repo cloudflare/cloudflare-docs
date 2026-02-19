@@ -57,7 +57,7 @@ export default {
 
 } satisfies ExportedHandler<Env>;
 
-````
+```
 </TypeScriptExample>
 
 :::note
@@ -195,4 +195,3 @@ Streams handle validation differently based on their configuration:
 - **Unstructured streams**: Accept any valid JSON structure. Data is stored in a single `value` column.
 
 For structured streams, ensure your events match the schema definition. Invalid events will be accepted but dropped, so validate your data before sending to avoid dropped events. When using Worker bindings, run `wrangler types` to generate [typed pipeline bindings](#typed-pipeline-bindings) that catch schema violations at compile time. You can also query the [user error metrics](/pipelines/observability/metrics/#user-error-metrics) to monitor dropped events and diagnose schema validation issues.
-````
