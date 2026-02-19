@@ -65,7 +65,7 @@ export default {
 		// No agent matched - handle other routes
 		return new Response("Not found", { status: 404 });
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -197,7 +197,7 @@ export default {
 		const url = new URL(request.url);
 
 		// Custom routing - server determines instance from session
-		if (url.pathname === "/user") {
+		if (url.pathname.startsWith("/user/")) {
 			const session = await getSession(request);
 			const agent = await getAgentByName(env.UserAgent, session.userId);
 			return agent.fetch(request); // Forward request directly to agent
@@ -209,7 +209,7 @@ export default {
 			new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -461,7 +461,7 @@ export default {
 			props: { userId: session.userId, role: session.role },
 		});
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -521,7 +521,7 @@ export default {
 			new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -585,7 +585,7 @@ export default {
 			new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -673,7 +673,7 @@ export default {
 			})) ?? new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -708,7 +708,7 @@ export default {
 			new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>

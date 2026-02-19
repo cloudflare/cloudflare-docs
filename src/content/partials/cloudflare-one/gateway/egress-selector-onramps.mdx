@@ -12,6 +12,6 @@ import { Render, Details, GlossaryTooltip } from "~/components";
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ✅            |
 | [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                              | 🚧[^1]        |
 
-[^1]: Not compatible with [ECMP routing](/cloudflare-wan/reference/traffic-steering/#equal-cost-multi-path-routing). For hostname-based routing to work, DNS queries and the resulting network traffic must reach Cloudflare over the same Cloudflare WAN tunnel. <br/>
+[^1]: Not compatible with [ECMP routing](/cloudflare-wan/reference/traffic-steering/#equal-cost-multi-path-routing). For hostname-based routing to work, DNS queries and the resulting network traffic must reach Cloudflare over the same IPsec/GRE tunnel. <br/>
 
 <Render file="gateway/egress-selector-warp-version" product="cloudflare-one" />

@@ -47,7 +47,7 @@ To peer with Cloudflare, advertise prefixes with a prefix length of `/24` or sho
 	- **Dataplane v1**: Supports a native 1,500-byte MTU for traffic from Cloudflare to you (ingress), but still requires a 1,476-byte MTU for traffic from you to Cloudflare (egress).
 	- **Dataplane v2**: Supports a maximum MTU of 1,500 bytes bidirectionally with no GRE requirement.
 - **Bidirectional Forwarding Detection (BFD):**
-	- **Dataplane v1**: BFD provides fast failure detection for BGP sessions and is supported on direct connections. To enable BFD, contact your account team. Note that BFD on a CNI does not impact the failover time for Magic Transit / WAN tunnels, which rely on separate health checks.
+	- **Dataplane v1**: BFD provides fast failure detection for BGP sessions and is supported on direct connections. To enable BFD, contact your account team. Note that BFD on a CNI does not impact the failover time for IPsec/GRE tunnels, which rely on separate health checks.
 	- **Dataplane v2**: Not yet supported.
 - **Link Aggregation Control Protocol (LACP)**:
 	- **Dataplane v1**: To increase bandwidth and provide link resiliency, Cloudflare supports combining multiple physical CNI ports into a single logical channel using Link Aggregation Control Protocol (LACP). You can bundle multiple connections to increase total throughput and add redundancy to your private connection with Cloudflare.

@@ -9,13 +9,15 @@ import { Render, Tabs, TabItem } from "~/components";
 
 Use the following AI tools to get the most out of Cloudflare (and our docs).
 
-## llms.txt
+## Docs in Markdown for LLMs
 
 <Render file="llms-txt" product="style-guide" />
 
-## MCP
+## Documentation MCP Server
 
 Cloudflare runs a catalog of managed remote MCP Servers which you can connect to using OAuth on clients like [Claude](https://modelcontextprotocol.io/quickstart/user), [Windsurf](https://docs.windsurf.com/windsurf/cascade/mcp), our own [AI Playground](https://playground.ai.cloudflare.com/) or any [SDK that supports MCP](https://github.com/cloudflare/agents/tree/main/packages/agents/src/mcp).
+
+One of the available MCP servers is the [Documentation MCP Server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize), which you can use to get up-to-date reference information on Cloudflare.
 
 <Tabs>
 	<TabItem label="Cursor">
@@ -60,7 +62,7 @@ Our docs site also supports [agent skills](https://agentskills.io/home) that are
 To install them:
 
 ```sh
-$ npx skills add https://developers.cloudflare.com
+npx skills add https://developers.cloudflare.com
 ```
 
 ## AI resources for documentation contributors

@@ -175,7 +175,7 @@ compatibility_date = "$today"
 
 </WranglerConfig>
 ```
-You should generally use `$today` for the compatibility_date value for new projects. This magic string is automatically replaced with the current date at build time, ensuring documentation always suggests the latest date.
+You should generally use `$today` for the compatibility_date value for new projects. This magic string is automatically replaced with the current date at build time, ensuring documentation always suggests the latest date. When `$today` is used, the component also automatically injects a comment above the `compatibility_date` line (e.g., `# Set this to today's date` in TOML, `// Set this to today's date` in JSONC) so readers know to keep it current.
 
 ### TabItem (Starlight built-in)
 

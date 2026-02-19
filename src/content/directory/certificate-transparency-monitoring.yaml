@@ -1,0 +1,12 @@
+id: Uw7Mcj
+name: certificate-transparency-monitoring
+
+entry:
+  title: Certificate Transparency Monitoring
+  url: /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/
+  show: false
+
+meta:
+  title: Cloudflare Certificate Transparency Monitoring docs
+  description: Certificate Transparency Monitoring is a feature that improves security by allowing you to double-check any SSL/TLS certificates issued for your domain.
+  author: "@cloudflare"

@@ -84,7 +84,7 @@ entries:
   - publish_date: "2025-06-30"
     title: New Web Bot Auth headers
     description: |-
-      * Browser Rendering now supports [Web Bot Auth](/reference/automatic-request-headers/) by automatically attaching `Signature-agent`, `Signature`, and `Signature-input ` headers to verify that a request originates from Cloudflare Browser Rendering.
+      * Browser Rendering now supports [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/) by automatically attaching `Signature-agent`, `Signature`, and `Signature-input ` headers to verify that a request originates from Cloudflare Browser Rendering.
   - publish_date: "2025-06-27"
     title: Bug fix to debug log noise in Workers
     description: |-

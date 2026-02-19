@@ -34,7 +34,7 @@ When connecting to an OAuth-protected server, check if `authUrl` is returned. If
 <TypeScriptExample>
 
 ```ts title="src/index.ts"
-export class MyAgent extends Agent<Env, never> {
+export class MyAgent extends Agent {
 	async onRequest(request: Request): Promise<Response> {
 		const url = new URL(request.url);
 
@@ -79,7 +79,7 @@ Redirect users back to your application after OAuth completes:
 <TypeScriptExample>
 
 ```ts title="src/index.ts"
-export class MyAgent extends Agent<Env, never> {
+export class MyAgent extends Agent {
 	onStart() {
 		this.mcp.configureOAuthCallback({
 			successRedirect: "/dashboard",
@@ -102,7 +102,7 @@ If you opened OAuth in a popup, close it automatically when complete:
 ```ts title="src/index.ts"
 import { Agent } from "agents";
 
-export class MyAgent extends Agent<Env, never> {
+export class MyAgent extends Agent {
 	onStart() {
 		this.mcp.configureOAuthCallback({
 			customHandler: () => {
@@ -181,7 +181,7 @@ Poll the connection status via an endpoint:
 <TypeScriptExample>
 
 ```ts title="src/index.ts"
-export class MyAgent extends Agent<Env, never> {
+export class MyAgent extends Agent {
 	async onRequest(request: Request): Promise<Response> {
 		const url = new URL(request.url);
 
@@ -305,7 +305,7 @@ type Env = {
 	MyAgent: DurableObjectNamespace<MyAgent>;
 };
 
-export class MyAgent extends Agent<Env, never> {
+export class MyAgent extends Agent {
 	onStart() {
 		this.mcp.configureOAuthCallback({
 			customHandler: () => {
@@ -370,7 +370,7 @@ export default {
 			new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>

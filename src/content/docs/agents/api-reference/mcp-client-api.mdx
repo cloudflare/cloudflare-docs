@@ -240,7 +240,7 @@ export default {
 			new Response("Not found", { status: 404 })
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -465,6 +465,11 @@ async addMcpServer(
       headers?: HeadersInit;
       type?: "sse" | "streamable-http" | "auto";
     };
+    retry?: {
+      maxAttempts?: number;
+      baseDelayMs?: number;
+      maxDelayMs?: number;
+    };
   }
 ): Promise<
   | { id: string; state: "authenticating"; authUrl: string }
@@ -484,6 +489,7 @@ async addMcpServer(
   - `transport` — Transport layer configuration:
     - `headers` — Custom HTTP headers for authentication
     - `type` — Transport type: `"streamable-http"` (default), `"sse"`, or `"auto"`
+  - `retry` — Retry options for connection and reconnection attempts. Persisted and used when restoring connections after hibernation or after OAuth completion. Default: 3 attempts, 500ms base delay, 5s max delay. Refer to [Retries](/agents/api-reference/retries/) for details on `RetryOptions`.
 
 #### Returns
 
@@ -615,6 +621,50 @@ export class MyAgent extends Agent {
 
 </TypeScriptExample>
 
+## Custom OAuth provider
+
+Override the default OAuth provider used when connecting to MCP servers by implementing `createMcpOAuthProvider()` on your Agent class. This enables custom authentication strategies such as pre-registered client credentials or mTLS, beyond the built-in dynamic client registration.
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import type { OAuthClientProvider } from "@modelcontextprotocol/sdk/client/auth.js";
+
+export class MyAgent extends Agent {
+	createMcpOAuthProvider(
+		serverUrlHash: string,
+		callbackUrl: string,
+	): OAuthClientProvider {
+		return {
+			get redirectUrl() {
+				return new URL(callbackUrl);
+			},
+			get clientMetadata() {
+				return {
+					// Use pre-registered client credentials
+					client_id: this.env.MCP_CLIENT_ID,
+					client_secret: this.env.MCP_CLIENT_SECRET,
+					redirect_uris: [callbackUrl],
+				};
+			},
+			clientInformation() {
+				// Return pre-registered client info
+				return {
+					client_id: this.env.MCP_CLIENT_ID,
+					client_secret: this.env.MCP_CLIENT_SECRET,
+				};
+			},
+			// ... implement other OAuthClientProvider methods
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+If you do not override this method, the agent uses the default provider which performs [OAuth 2.0 Dynamic Client Registration](https://datatracker.ietf.org/doc/html/rfc7591) with the MCP server.
+
 ## Advanced: MCPClientManager
 
 For fine-grained control, use `this.mcp` directly:
@@ -668,6 +718,10 @@ this.mcp.onServerStateChanged(() => {
 ```
 
 </TypeScriptExample>
+
+:::note
+MCP server list broadcasts (`cf_agent_mcp_servers`) are automatically filtered to exclude connections where [`shouldSendProtocolMessages`](/agents/api-reference/protocol-messages/) returned `false`.
+:::
 
 ### Lifecycle methods
 

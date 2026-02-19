@@ -341,6 +341,10 @@ None of the options for this command are required. Also, many can be set in your
   - Defaults to `gradual`, where the default rollout is 10% then 100% of instances.
 - `--strict` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Turns on strict mode for the deployment command, meaning that the command will be more defensive and prevent deployments which could introduce potential issues. In particular, this mode prevents deployments if the deployment would potentially override remote settings in non-interactive environments.
+- `--tag` <Type text="string" /> <MetaInfo text="optional" />
+  - A tag for this Worker version. Matches the behavior of `wrangler versions upload --tag`.
+- `--message` <Type text="string" /> <MetaInfo text="optional" />
+  - A descriptive message for this Worker version and deployment. Matches the behavior of `wrangler versions upload --message`. The message is also applied to the deployment.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 

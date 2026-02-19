@@ -39,7 +39,8 @@
 /magic-cloud-networking/changelog/index.xml /changelog/rss/multi-cloud-networking.xml 301
 /magic-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
 /cloudflare-network-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
-/magic-network-monitoring/changelog/index.xml /changelog/rss/magic-network-monitoring.xml 301
+/magic-network-monitoring/changelog/index.xml /changelog/rss/network-flow.xml 301
+/network-flow/changelog/index.xml /changelog/rss/network-flow.xml 301
 /magic-transit/changelog/index.xml /changelog/rss/magic-transit.xml 301
 /magic-wan/changelog/index.xml /changelog/rss/cloudflare-wan.xml 301
 /network-interconnect/changelog/index.xml /changelog/rss/network-interconnect.xml 301
@@ -1062,12 +1063,18 @@
 /cloudflare-one/changelog/magic-firewall/ /cloudflare-one/changelog/cloudflare-network-firewall/ 301
 # CF1 packet filtering overview rename
 /cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
-# magic-network-monitoring
-/magic-network-monitoring/routers/ /magic-network-monitoring/routers/supported-routers/ 301
-/magic-network-monitoring/tutorials/ /magic-network-monitoring/tutorials/graphql-analytics/ 301
-/magic-network-monitoring/rules/recommended-rule-configuration/ /magic-network-monitoring/rules/static-threshold/ 301
+# cross-product magic-firewall slug renames
+/learning-paths/data-center-protection/enable-magic-firewall/ /learning-paths/data-center-protection/enable-network-firewall/ 301
+/analytics/graphql-api/tutorials/querying-magic-firewall-samples/ /analytics/graphql-api/tutorials/querying-network-firewall-samples/ 301
+/analytics/graphql-api/tutorials/querying-magic-firewall-ids-samples/ /analytics/graphql-api/tutorials/querying-network-firewall-ids-samples/ 301
+# magic-network-monitoring (renamed to network-flow)
+/magic-network-monitoring/routers/ /network-flow/routers/ 301
+/magic-network-monitoring/tutorials/ /network-flow/tutorials/ 301
+/magic-network-monitoring/rules/recommended-rule-configuration/ /network-flow/rules/static-threshold/ 301
 /magic-network-monitoring/rules/sflow-ddos-alerts/ /rules/configure-rule-notifications/ 301
 /magic-network-monitoring/notifications/ /rules/rule-notifications/ 301
+/magic-network-monitoring/magic-network-monitoring-free/ /network-flow/network-flow-free/ 301
+/magic-transit/magic-network-monitoring/ /magic-transit/network-flow/ 301
 /magic-firewall/how-to/create-rate-limiting-rules/ /cloudflare-network-firewall/how-to/create-rate-limiting-policies/ 301
 
 # magic-transit
@@ -1079,7 +1086,7 @@
 /magic-transit/about/health-checks/ /magic-transit/reference/tunnel-health-checks/ 301
 /magic-transit/about/traffic-steering/ /magic-transit/reference/traffic-steering/ 301
 /magic-transit/about/tunnels-and-encapsulation/ /magic-transit/reference/gre-ipsec-tunnels/ 301
-/magic-transit/how-to/auto-advertise-prefixes/ /magic-network-monitoring/rules/ 301
+/magic-transit/how-to/auto-advertise-prefixes/ /network-flow/rules/ 301
 /magic-transit/prerequisites/ /magic-transit/get-started/ 301
 /magic-transit/how-to/ /magic-transit/how-to/configure-tunnel-endpoints/ 301
 /magic-transit/reference/ /magic-transit/reference/anti-replay-protection/ 301
@@ -1142,6 +1149,7 @@
 /magic-wan/configuration/connector/maintenance/remove-connectors/ /cloudflare-wan/configuration/appliance/maintenance/remove-appliances/ 301
 /magic-wan/configuration/connector/configure-virtual-connector/ /cloudflare-wan/configuration/appliance/configure-virtual-appliance/ 301
 /magic-wan/configuration/connector/configure-hardware-connector/ /cloudflare-wan/configuration/appliance/configure-hardware-appliance/ 301
+/reference-architecture/diagrams/sase/magic-wan-connector-deployment/ /reference-architecture/diagrams/sase/cloudflare-one-appliance-deployment/ 301
 
 # network
 /network/response-buffering/ /network/ 301
@@ -2553,13 +2561,21 @@
 /magic-firewall/* /cloudflare-network-firewall/:splat 301
 
 # Cloudflare WAN (formerly Magic WAN)
+/magic-wan/configuration/connector/configure-hardware-connector/* /cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
+/cloudflare-wan/configuration/connector/configure-hardware-connector/* /cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
+/cloudflare-wan/configuration/appliance/configure-hardware-connector/* /cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
 /cloudflare-wan/configuration/connector/* /cloudflare-wan/configuration/appliance/:splat 301
 /magic-wan/* /cloudflare-wan/:splat 301
 
 # WAN Tunnels → Cloudflare WAN (within Cloudflare One)
+/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/configure-hardware-connector/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
 /cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/:splat 301
 /cloudflare-one/networks/connectors/wan-tunnels/configuration/appliance/configure-hardware-connector/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
+/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-connector/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
 /cloudflare-one/networks/connectors/wan-tunnels/* /cloudflare-one/networks/connectors/cloudflare-wan/:splat 301
 
 # Multi-Cloud Networking (formerly Magic Cloud Networking)
 /magic-cloud-networking/* /multi-cloud-networking/:splat 301
+
+# Network Flow (formerly Magic Network Monitoring)
+/magic-network-monitoring/* /network-flow/:splat 301

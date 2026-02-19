@@ -605,26 +605,29 @@ class SmartScheduler extends Agent {
 
 ### `scheduleSchema`
 
-A Zod schema for validating parsed scheduling data:
+A Zod schema for validating parsed scheduling data. Uses a discriminated union on `when.type` so each variant only contains the fields it needs:
 
 <TypeScriptExample>
 
 ```ts
 import { scheduleSchema } from "agents";
 
-// The schema shape:
+// The schema is a discriminated union:
 // {
 //   description: string,
-//   when: {
-//     type: "scheduled" | "delayed" | "cron" | "no-schedule",
-//     date?: Date,            // for "scheduled"
-//     delayInSeconds?: number, // for "delayed"
-//     cron?: string           // for "cron"
-//   }
+//   when:
+//     | { type: "scheduled", date: string }       // ISO 8601 date string
+//     | { type: "delayed", delayInSeconds: number }
+//     | { type: "cron", cron: string }
+//     | { type: "no-schedule" }
 // }
 ```
 
 </TypeScriptExample>
+
+:::note
+Dates are returned as ISO 8601 strings (not `Date` objects) for compatibility with both Zod v3 and v4 JSON schema generation.
+:::
 
 ## Scheduling vs Queue vs Workflows
 
@@ -632,7 +635,7 @@ import { scheduleSchema } from "agents";
 | ------------------ | ------------------ | ----------------- | ------------------- |
 | **When**           | Immediately (FIFO) | Future time       | Future time         |
 | **Execution**      | Sequential         | At scheduled time | Multi-step          |
-| **Retries**        | Manual             | Manual            | Automatic           |
+| **Retries**        | Built-in           | Built-in          | Automatic           |
 | **Persistence**    | SQLite             | SQLite            | Workflow engine     |
 | **Recurring**      | No                 | Yes (cron)        | No (use scheduling) |
 | **Complex logic**  | No                 | No                | Yes                 |
@@ -715,10 +718,10 @@ Schedule a task to run repeatedly at a fixed interval.
 ### `getSchedule()`
 
 ```ts
-async getSchedule<T>(id: string): Promise<Schedule<T> | undefined>
+getSchedule<T>(id: string): Schedule<T> | undefined
 ```
 
-Get a scheduled task by ID. Returns `undefined` if not found.
+Get a scheduled task by ID. Returns `undefined` if not found. This method is synchronous.
 
 ### `getSchedules()`
 
@@ -730,7 +733,7 @@ getSchedules<T>(criteria?: {
 }): Schedule<T>[]
 ```
 
-Get scheduled tasks matching the criteria.
+Get scheduled tasks matching the criteria. This method is synchronous.
 
 ### `cancelSchedule()`
 

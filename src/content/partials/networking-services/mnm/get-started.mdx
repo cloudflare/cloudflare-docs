@@ -4,24 +4,24 @@
 
 import { APIRequest, Badge, DashButton, GlossaryTooltip } from "~/components";
 
-Magic Network Monitoring includes an onboarding workflow that guides you step-by-step through the product configuration process. If you are unable to complete the configuration in one session, you can exit the workflow and resume it at any time.
+Network Flow (formerly Magic Network Monitoring) includes an onboarding workflow that guides you step-by-step through the product configuration process. If you are unable to complete the configuration in one session, you can exit the workflow and resume it at any time.
 
-To begin using Magic Network Monitoring for network and/or cloud traffic visibility, complete the list of tasks below.
+To begin using Network Flow for network and/or cloud traffic visibility, complete the list of tasks below.
 
 - [NetFlow and sFlow guide](#netflow-and-sflow-guide)
 - [VPC flow log guide (beta)](#vpc-flow-log-guide)
 
 If you are an Enterprise customer, Cloudflare can significantly accelerate the onboarding timeline during active-attack scenarios.
 
-Enterprise customers that would like to use Magic Network Monitoring and Magic Transit On Demand together can begin by [configuring Magic Transit](/magic-transit/get-started/).
+Enterprise customers that would like to use Network Flow and Magic Transit On Demand together can begin by [configuring Magic Transit](/magic-transit/get-started/).
 
 ## NetFlow and sFlow guide
 
 ### 1. Verify NetFlow or sFlow capabilities
 
-Verify your routers are capable of exporting <GlossaryTooltip term="NetFlow">NetFlow</GlossaryTooltip> or <GlossaryTooltip term="sFlow">sFlow</GlossaryTooltip> to an IP address on Cloudflare's network. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
+Verify your routers are capable of exporting <GlossaryTooltip term="NetFlow">NetFlow</GlossaryTooltip> or <GlossaryTooltip term="sFlow">sFlow</GlossaryTooltip> to an IP address on Cloudflare's network. Network Flow supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
 
-Refer to [Supported routers](/magic-network-monitoring/routers/supported-routers) to view a list of supported routers. The list is not exhaustive.
+Refer to [Supported routers](/network-flow/routers/supported-routers) to view a list of supported routers. The list is not exhaustive.
 
 ### 2. Register your router with Cloudflare
 
@@ -31,7 +31,7 @@ When you register your router with Cloudflare, your router links your NetFlow or
 
 <DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/flow-analytics" />
 
-2. In **Network flow (Magic Network Monitoring)**, select **Configure Network flow**.
+2. In **Network flow**, select **Configure Network flow**.
 3. Select the **Configure routers** tab.
 4. (Optional) Under **IP Address**, enter your router's public IP address.
 5. Under **Default router sampling rate**, enter a value for the <GlossaryTooltip term="sampling">sampling</GlossaryTooltip> rate. The value should match the sampling rate of your NetFlow or sFlow configuration.
@@ -41,7 +41,7 @@ When you register your router with Cloudflare, your router links your NetFlow or
 
 Next, configure your router to send NetFlow or sFlow data to Cloudflare. For this step, you will also need to have your router's configuration menu open to input the values shown in the Cloudflare dashboard.
 
-Refer to the [NetFlow and IPFIX configuration guide](/magic-network-monitoring/routers/netflow-ipfix-config/) or the [sFlow configuration guide](/magic-network-monitoring/routers/sflow-config/) for more information.
+Refer to the [NetFlow and IPFIX configuration guide](/network-flow/routers/netflow-ipfix-config/) or the [sFlow configuration guide](/network-flow/routers/sflow-config/) for more information.
 
 1. From **Configure routers** in the dashboard, select either **NetFlow Configuration** or **sFlow configuration**.
 2. Follow the configuration steps for the selected configuration type.
@@ -64,21 +64,21 @@ This will only be visible during the onboarding process. When you are finished o
 
 ### 5. Create rules
 
-Create rules to analyze data for a specific set of destinations or to implement thresholds. Refer to [Rules](/magic-network-monitoring/rules/) for more information.
+Create rules to analyze data for a specific set of destinations or to implement thresholds. Refer to [Rules](/network-flow/rules/) for more information.
 
 ## VPC flow log guide <Badge text="Beta" variant="caution" />
 
 ### 1. Verify cloud flow log capabilities
 
-Verify that your Amazon Web Services (AWS) account is capable of exporting AWS Virtual Private Cloud (VPC) flow logs through AWS Firehose. Currently, Magic Network Monitoring only supports VPC flow log ingestion for AWS.
+Verify that your Amazon Web Services (AWS) account is capable of exporting AWS Virtual Private Cloud (VPC) flow logs through AWS Firehose. Currently, Network Flow only supports VPC flow log ingestion for AWS.
 
 ### 2. Set up AWS Firehose to export VPC flow logs to Cloudflare
 
 :::note
-AWS VPC flow logs can only be configured through the Cloudflare API for Magic Network Monitoring. There are no inputs in the dashboard for configuring AWS VPC flow logs.
+AWS VPC flow logs can only be configured through the Cloudflare API for Network Flow. There are no inputs in the dashboard for configuring AWS VPC flow logs.
 :::
 
-1. Create an authorization token using [Cloudflare's API for Magic Network Monitoring](/api/resources/magic_network_monitoring/subresources/vpc_flows/subresources/tokens/methods/create/). This authorization token allows Cloudflare to identify and verify the account sending VPC flow logs to our endpoint.
+1. Create an authorization token using [Cloudflare's API for Network Flow](/api/resources/magic_network_monitoring/subresources/vpc_flows/subresources/tokens/methods/create/). This authorization token allows Cloudflare to identify and verify the account sending VPC flow logs to our endpoint.
 
 	<APIRequest
 		path="/accounts/{account_id}/mnm/vpc-flows/token"
@@ -93,10 +93,10 @@ AWS VPC flow logs can only be configured through the Cloudflare API for Magic Ne
 
 ### 3. Verify your cloud traffic via analytics
 
-After setting up AWS Firehose to send VPC flow logs to Magic Network Monitoring, you can confirm that Cloudflare is receiving the logs as expected by searching for your cloud traffic data in the analytics page of the Magic Network Monitoring dashboard.
+After setting up AWS Firehose to send VPC flow logs to Network Flow, you can confirm that Cloudflare is receiving the logs as expected by searching for your cloud traffic data in the analytics page of the Network Flow dashboard.
 
 1. Go to the **Network flow** page.
 
 <DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/flow-analytics" />
 
-2. The default view will be the analytics dashboard for Magic Network Monitoring.
+2. The default view will be the analytics dashboard for Network Flow.

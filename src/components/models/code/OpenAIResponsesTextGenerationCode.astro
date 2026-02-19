@@ -1,6 +1,6 @@
 ---
 import { z } from "astro:schema";
-import { Code } from "@astrojs/starlight/components";
+import { Aside, Code } from "@astrojs/starlight/components";
 import Details from "~/components/Details.astro";
 
 type Props = z.infer<typeof props>;
@@ -69,3 +69,25 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/
 		<Code code={curl} lang="sh" />
 	</Details>
 
+	<Aside type="note" title="Multiple API format support">
+		This model supports three different API formats:
+		<ul>
+			<li>
+				<strong>Responses API</strong> (<code>/ai/v1/responses</code>) - Native
+				OpenAI responses format shown above with <code>input</code> parameter
+			</li>
+			<li>
+				<strong>Workers AI Run</strong> (<code>/ai/run</code>) - Dynamic format
+				detection, accepts Chat Completions (<code>messages</code>), legacy Completions
+				(<code>prompt</code>), or Responses API (<code>input</code>)
+			</li>
+			<li>
+				<strong>Chat Completions</strong> (<code>/v1/chat/completions</code>) -
+				OpenAI-compatible endpoint with <code>messages</code> array. Refer to{" "}
+				<a href="/workers-ai/configuration/open-ai-compatibility/">
+					OpenAI Compatibility
+				</a>{" "}
+				for details.
+			</li>
+		</ul>
+	</Aside>

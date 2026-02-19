@@ -15,7 +15,7 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
 
 Cloudflare Workflows provides durable execution capabilities, allowing developers to create reliable, repeatable workflows that run in the background. Workflows are designed to resume execution even if the underlying compute fails, ensuring that tasks complete eventually. They are built on top of Cloudflare Workers and handle scaling and provisioning automatically.
 
-Workflows are triggered by events, such as Event Notifications consumed from a Queue, HTTP requests, another Worker, or even scheduled timers. Individual steps within a Workflow are designed as retriable units of work. The state is persisted between steps, allowing workflows to resume from the last successful step after failures. Workflows automatically generate metrics for each step, aiding in debugging and observability.
+Workflows are triggered by events, such as Event Notifications consumed from a Queue, HTTP requests, another Worker, or even scheduled timers. Individual steps within a Workflow are designed as retryable units of work. The state is persisted between steps, allowing workflows to resume from the last successful step after failures. Workflows automatically generate metrics for each step, aiding in debugging and observability.
 
     <Card>
         <YouTube id="slS4RBV0SBk" />
@@ -73,7 +73,7 @@ Workflows are triggered by events, such as Event Notifications consumed from a Q
 
     #### Workflow Steps
 
-    Each discrete, retriable task in the workflow is defined using `await step.do()`.
+    Each discrete, retryable task in the workflow is defined using `await step.do()`.
 
     ##### Content Moderation
 

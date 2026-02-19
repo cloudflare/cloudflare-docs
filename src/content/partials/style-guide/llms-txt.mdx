@@ -4,13 +4,21 @@
 
 import { Width } from "~/components";
 
-We have implemented `llms.txt`, `llms-full.txt` and also created per-page Markdown links as follows:
+We have implemented `llms.txt` and `llms-full.txt` as follows:
 
-- [`llms.txt`](/llms.txt)
-- [`llms-full.txt`](/llms-full.txt)
-  - We also provide a `llms-full.txt` file on a per-product basis, i.e [`/workers/llms-full.txt`](/workers/llms-full.txt)
-- [`/$page/index.md`](index.md)
-  - Add `/index.md` to the end of any page to get the Markdown version, i.e [`/style-guide/index.md`](/style-guide/index.md)
+- [`llms.txt`](/llms.txt) — An LLM-friendly directory of all available documentation pages for Dev Platform products in Markdown format.
+- [`llms-full.txt`](/llms-full.txt) — The full contents of the Developer Docs for LLM consumption in Markdown format. We also provide a `llms-full.txt` file on a per-product basis - for example, [`/workers/llms-full.txt`](/workers/llms-full.txt).
+
+To obtain a Markdown version of a single documentation page, you can:
+
+- Send a request to `/$page/index.md` — Add `/index.md` to the end of any page to get the Markdown version. For example, [`/style-guide/index.md`](/style-guide/index.md).
+
+- Send a request to `/$page/` with an `Accept` header requesting a page in Markdown format — Uses [Markdown for Agents](/fundamentals/reference/markdown-for-agents/). For example:
+
+  ```bash
+  curl "https://developers.cloudflare.com/style-guide/" \
+    --header "Accept: text/markdown"
+  ```
 
 In the top right of this page, you will see a `Page options` button where you can copy the current page as Markdown that can be given to your LLM of choice.
 

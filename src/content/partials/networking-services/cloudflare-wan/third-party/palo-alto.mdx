@@ -87,19 +87,19 @@ You need to <a href={props.configureBidirectionalHealthChecksUrl}>configure bidi
 
 When you create IPsec tunnels with the option **Add pre-shared key later**, the Cloudflare dashboard will show you a warning indicator:
 
-![IPsec Tunnels - No PSK](~/assets/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/03_magic_ipsec_tun_no_psk.png)
+![IPsec Tunnels - No PSK](~/assets/images/cloudflare-wan/third-party/palo-alto/cloudflare_dash_ipsec/03_magic_ipsec_tun_no_psk.png)
 
 1. Select **Edit** to edit the properties of each tunnel.
 2. Select **Generate a new pre-shared key** > **Update and generate pre-shared key**.
-   ![Generate a new pre-shared key for each of your IPsec tunnels](~/assets/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/04_magic_ipsec_tun_01_gen_psk.png)
+   ![Generate a new pre-shared key for each of your IPsec tunnels](~/assets/images/cloudflare-wan/third-party/palo-alto/cloudflare_dash_ipsec/04_magic_ipsec_tun_01_gen_psk.png)
 3. Copy the pre-shared key value for each of your IPsec tunnels, and save these values somewhere safe. Then, select **Done**.
-   ![Take note of your pre-shared key, and keep it in a safe place](~/assets/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/05_magic_ipsec_tun_01_show_psk.png)
+   ![Take note of your pre-shared key, and keep it in a safe place](~/assets/images/cloudflare-wan/third-party/palo-alto/cloudflare_dash_ipsec/05_magic_ipsec_tun_01_show_psk.png)
 
 #### IPsec identifier - FQDN (Fully Qualified Domain Name)
 
 After creating your IPsec tunnels, the Cloudflare dashboard will list them under the **Tunnels** tab. Select the arrow (**>**) on each of your IPsec tunnel to collect the FQDN ID value from each of them. The FQDN ID value will be required when configuring IKE Phase 1 on the Palo Alto Networks Next-Generation Firewall.
 
-![Take note of the FQDN ID value for each of your IPsec tunnels](~/assets/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/08_magic_ipsec_tun_01_fqdn.png)
+![Take note of the FQDN ID value for each of your IPsec tunnels](~/assets/images/cloudflare-wan/third-party/palo-alto/cloudflare_dash_ipsec/08_magic_ipsec_tun_01_fqdn.png)
 
 ### Static routes
 
@@ -119,7 +119,7 @@ Create a <a href={props.staticRouteUrl}>static route</a> for each of the two IPs
 - **Prefix**: `10.1.100.0/24`
 - **Tunnel/Next hop**: `SFO_IPSEC_TUN02`
 
-![Add static routes for each of the IPsec tunnels you created in the previous step](~/assets/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/10_magic_ipsec_static_routes.png)
+![Add static routes for each of the IPsec tunnels you created in the previous step](~/assets/images/cloudflare-wan/third-party/palo-alto/cloudflare_dash_ipsec/10_magic_ipsec_static_routes.png)
 
 ## Palo Alto Networks Next-Generation Firewall
 
@@ -295,9 +295,9 @@ You can define an Interface Management Profile to allow ping from the dashboard:
 2. In the **Network** tab select **Add**.
 3. Create profiles to allow Ping, and in the **Network Services** group select **Ping**.
 
-![Interface Mgmt Profile](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/01_int_mgmt_prof.png)
+![Interface Mgmt Profile](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/01_int_mgmt_prof.png)
 
-![Interface Mgmt Profile](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/02_int_mgmt_prof.png)
+![Interface Mgmt Profile](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/02_int_mgmt_prof.png)
 
 #### Set up via command line
 
@@ -333,9 +333,9 @@ Follow the guidance on the images below to set up the Ethernet interfaces throug
 |                  | IP                 | `VLAN0100_L3_10-1-100-254--24` <br/> address object |
 | **Advanced tab** | Management Profile | _Mgmt_Services_                                    |
 
-![Set up ethernet1/1 on the dashboard](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/01_ethernet-1-1_page1.png)
-![Set up ethernet1/1 on the dashboard](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/02_ethernet-1-1_page2.png)
-![Set up ethernet1/1 on the dashboard](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/03_ethernet-1-1_page3.png)
+![Set up ethernet1/1 on the dashboard](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/01_ethernet-1-1_page1.png)
+![Set up ethernet1/1 on the dashboard](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/02_ethernet-1-1_page2.png)
+![Set up ethernet1/1 on the dashboard](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/03_ethernet-1-1_page3.png)
 
 ##### ethernet1/2: `Untrust_L3_Zone`
 
@@ -352,13 +352,13 @@ Follow the guidance on the images below to set up the Ethernet interfaces throug
 |                  | Adjust TCP MSS      | **Enable**                                           |
 |                  | IPv4 MSS Adjustment | `64`                                                 |
 
-![Set up ethernet1/2 on the dashboard](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/04_ethernet-1-2_page1.png)
-![Set up ethernet1/2 on the dashboard](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/05_ethernet-1-2_page2.png)
-![Set up ethernet1/2 on the dashboard](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/06_ethernet-1-2_page3.png)
+![Set up ethernet1/2 on the dashboard](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/04_ethernet-1-2_page1.png)
+![Set up ethernet1/2 on the dashboard](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/05_ethernet-1-2_page2.png)
+![Set up ethernet1/2 on the dashboard](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/06_ethernet-1-2_page3.png)
 
 After setting up your Ethernet interfaces, they should show up on the overview page:
 
-![Ethernet Interfaces - Overview](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/07_ethernet_interfaces_overview.png)
+![Ethernet Interfaces - Overview](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/07_ethernet_interfaces_overview.png)
 
 #### Set up via command line
 
@@ -400,9 +400,9 @@ MTU is set to `1450`. This value may need to be adjusted for optimal performance
 | **Advanced tab** | Management Profile | _Allow_Ping_                                     |
 |                  | MTU                | `1450`                                            |
 
-![Set up tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/01_tunnel_1_page1.png)
-![Set up tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/02_tunnel_1_page2.png)
-![Set up tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/03_tunnel_1_page3.png)
+![Set up tunnel 1](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/01_tunnel_1_page1.png)
+![Set up tunnel 1](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/02_tunnel_1_page2.png)
+![Set up tunnel 1](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/03_tunnel_1_page3.png)
 
 _Note: Labels in these images may reflect previous product names._
 
@@ -417,15 +417,15 @@ _Note: Labels in these images may reflect previous product names._
 | **Advanced tab** | Management Profile | _Allow_Ping_                                     |
 |                  | MTU                | `1450`                                            |
 
-![Set up tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/04_tunnel_2_page1.png)
-![Set up tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/05_tunnel_2_page2.png)
-![Set up tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/06_tunnel_2_page3.png)
+![Set up tunnel 2](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/04_tunnel_2_page1.png)
+![Set up tunnel 2](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/05_tunnel_2_page2.png)
+![Set up tunnel 2](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/06_tunnel_2_page3.png)
 
 _Note: Labels in these images may reflect previous product names._
 
 After setting up your Tunnel interfaces, they should show up on the overview page:
 
-![Tunnel Interfaces - Overview](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/07_tunnel_interfaces_overview.png)
+![Tunnel Interfaces - Overview](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/07_tunnel_interfaces_overview.png)
 
 _Note: Labels in this image may reflect previous product names._
 
@@ -469,7 +469,7 @@ Any Cloudflare WAN protected networks that are not local should be considered pa
 |                 | Interfaces              | **ethernet1/1** |
 |                 | Zone Protection Profile | _None_          |
 
-![The Palo Alto interface showing the Trust_L3_Zone](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/01_trust_zone.png)
+![The Palo Alto interface showing the Trust_L3_Zone](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_zones/01_trust_zone.png)
 
 ##### `Untrust_L3_zone`
 
@@ -480,7 +480,7 @@ Any Cloudflare WAN protected networks that are not local should be considered pa
 |                   | Interfaces              | **ethernet1/2**       |
 |                   | Zone Protection Profile | _Untrust_Zone_Prof_ |
 
-![The Palo Alto interface showing the Untrust_L3_Zone](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/02_untrust_zone.png)
+![The Palo Alto interface showing the Untrust_L3_Zone](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_zones/02_untrust_zone.png)
 
 ##### `Cloudflare_L3_zone`
 
@@ -491,8 +491,8 @@ Any Cloudflare WAN protected networks that are not local should be considered pa
 |                      | Interfaces              | **tunnel.1** <br/> **tunnel.2** |
 |                      | Zone Protection Profile | _None_                          |
 
-![The Palo Alto interface showing the Cloudflare_L3_Zone](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/03_cloudflare_zone.png)
-![The Palo Alto interface showing the Tunnel Interfaces overview section](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/04_zones_overview.png)
+![The Palo Alto interface showing the Cloudflare_L3_Zone](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_zones/03_cloudflare_zone.png)
+![The Palo Alto interface showing the Tunnel Interfaces overview section](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_zones/04_zones_overview.png)
 
 #### Set up via command line
 
@@ -590,8 +590,10 @@ Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
 | **Advanced tab**  | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_ |
 |                   | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
-![IKE gateway settings for tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/03_ike_gw01_page1.png)
-![IKE gateway settings for tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/04_ike_gw01_page2.png)
+![IKE gateway settings for tunnel 1](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_ipsec_tunnels/03_ike_gw01_page1.png)
+![IKE gateway settings for tunnel 1](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_ipsec_tunnels/04_ike_gw01_page2.png)
+
+_Note: Labels in these images may reflect previous product names._
 
 ##### Tunnel 2 settings: `CF_Magic_WAN_IKE_02`
 
@@ -611,8 +613,10 @@ Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
 | **Advanced tab** | IKE crypto profile   | _CF_IKE_Crypto_CBC_ |
 |                  | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
-![IKE gateway settings for tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/05_ike_gw02_page1.png)
-![IKE gateway settings for tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/06_ike_gw02_page2.png)
+![IKE gateway settings for tunnel 2](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_ipsec_tunnels/05_ike_gw02_page1.png)
+![IKE gateway settings for tunnel 2](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_ipsec_tunnels/06_ike_gw02_page2.png)
+
+_Note: Labels in these images may reflect previous product names._
 
 #### Set up via command line
 
@@ -675,8 +679,10 @@ There are a few prerequisites you should be aware of before continuing:
 |                         | IPsec crypto profile     | _CF_IKE_Crypto_CBC_    |
 |                         | Enable Replay Protection | **Disable**               |
 
-![Set up the IPsec tunnel](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/07_ipsec_tun01_page1.png)
-![Set up the IPsec tunnel](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/08_ipsec_tun01_page2.png)
+![Set up the IPsec tunnel](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_ipsec_tunnels/07_ipsec_tun01_page1.png)
+![Set up the IPsec tunnel](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_ipsec_tunnels/08_ipsec_tun01_page2.png)
+
+_Note: Labels in these images may reflect previous product names._
 
 ##### Tunnel 2 settings: `CF_Magic_WAN_IPsec_02`
 
@@ -687,8 +693,10 @@ There are a few prerequisites you should be aware of before continuing:
 |                         | IPsec crypto profile     | _CF_IKE_Crypto_CBC_    |
 |                         | Enable Replay Protection | **Disable**               |
 
-![Set up the IPsec tunnel](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/09_ipsec_tun02_page1.png)
-![Set up the IPsec tunnel](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/10_ipsec_tun02_page2.png)
+![Set up the IPsec tunnel](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_ipsec_tunnels/09_ipsec_tun02_page1.png)
+![Set up the IPsec tunnel](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_ipsec_tunnels/10_ipsec_tun02_page2.png)
+
+_Note: Labels in these images may reflect previous product names._
 
 #### Set up via command line
 
@@ -946,13 +954,13 @@ ECMP is disabled on the Palo Alto Networks Next-Generation Firewall by default. 
 
 First, ensure the General tab displays both the Ethernet and tunnel interfaces. If any of the interfaces are not displayed, either use **Add** to specify the missing interface(s), or visit the Interfaces menu to ensure the relevant Virtual Router is selected.
 
-![Make sure the Ethernet and tunnel interfaces show up in Virtual Router](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/01_virtual_router_interfaces.png)
+![Make sure the Ethernet and tunnel interfaces show up in Virtual Router](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_virtual_router/01_virtual_router_interfaces.png)
 
 1. Open the **Router settings** for the default Virtual Router and select the **ECMP** tab.
 2. Select the checkboxes next to **Enable**, **Symmetric Return**, and **Strict Source Path** (all three checkboxes should be selected).
 3. Under **Load Balance**, change the **Method** from _IP Modulo_ to _Weighted Round Robin_ and add both tunnel interfaces. Ensure the weights match the weights defined in Cloudflare WAN static routes (reference the Cloudflare Dashboard).
 
-![Make sure all checkboxes are selected](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/02_virtual_router_ecmp.png)
+![Make sure all checkboxes are selected](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_virtual_router/02_virtual_router_ecmp.png)
 
 You can also use the command line to make these changes:
 
@@ -989,7 +997,7 @@ The environment used for this tutorial assumes two Cloudflare WAN protected netw
 |                            | Route Table | _Unicast_                          |
 |                            | BFD Profile | _Disable BFD_                      |
 
-![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.1)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/03_virtual_router_static_vlan0010_tun01.png)
+![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.1)](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_virtual_router/03_virtual_router_static_vlan0010_tun01.png)
 
 _Note: Labels in this image may reflect previous product names._
 
@@ -1005,7 +1013,7 @@ _Note: Labels in this image may reflect previous product names._
 |                            | Route Table | _Unicast_                          |
 |                            | BFD Profile | _Disable BFD_                      |
 
-![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.2)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/04_virtual_router_static_vlan0010_tun02.png)
+![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.2)](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_virtual_router/04_virtual_router_static_vlan0010_tun02.png)
 
 _Note: Labels in this image may reflect previous product names._
 
@@ -1021,7 +1029,7 @@ _Note: Labels in this image may reflect previous product names._
 |                            | Route Table | _Unicast_                          |
 |                            | BFD Profile | _Disable BFD_                      |
 
-![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/05_virtual_router_static_vlan0020_tun01.png)
+![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_virtual_router/05_virtual_router_static_vlan0020_tun01.png)
 
 _Note: Labels in this image may reflect previous product names._
 
@@ -1037,7 +1045,7 @@ _Note: Labels in this image may reflect previous product names._
 |                            | Route Table | _Unicast_                          |
 |                            | BFD Profile | _Disable BFD_                      |
 
-![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/06_virtual_router_static_vlan0020_tun02.png)
+![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_virtual_router/06_virtual_router_static_vlan0020_tun02.png)
 
 _Note: Labels in this image may reflect previous product names._
 
@@ -1116,12 +1124,12 @@ Cloudflare health checks are sent from random servers across Cloudflare's global
 |                                 | Schedule            | _None_                                                                      |
 |                                 | QoS Marking         | _None_                                                                      |
 
-![Bidirectional Health Check Rule - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/01_bidirect_hc_general.png)
-![Bidirectional Health Check Rule - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/02_bidirect_hc_source.png)
-![Bidirectional Health Check Rule - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/03_bidirect_hc_dest.png)
-![Bidirectional Health Check Rule - Apps](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/04_bidirect_hc_apps.png)
-![Bidirectional Health Check Rule - Service/URL Category](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/05_bidirect_hc_service-url.png)
-![Bidirectional Health Check Rule - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/06_bidirect_hc_action.png)
+![Bidirectional Health Check Rule - General](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/01_bidirect_hc_general.png)
+![Bidirectional Health Check Rule - Source](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/02_bidirect_hc_source.png)
+![Bidirectional Health Check Rule - Destination](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/03_bidirect_hc_dest.png)
+![Bidirectional Health Check Rule - Apps](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/04_bidirect_hc_apps.png)
+![Bidirectional Health Check Rule - Service/URL Category](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/05_bidirect_hc_service-url.png)
+![Bidirectional Health Check Rule - Action](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/06_bidirect_hc_action.png)
 
 ##### Setup via command line
 
@@ -1173,10 +1181,10 @@ Ensure have the following:
 |                                         | Next Hop            | _IP Address_                       |
 |                                         |                     | _CF_MWAN_IPsec_VTI_01_Remote_ |
 
-![Bidirectional Health Checks via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/01_pbf_hc_01_general.png)
-![Bidirectional Health Checks via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/02_pbf_hc_01_source.png)
-![Bidirectional Health Checks via tunnel.1 - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/03_pbf_hc_01_dest-app-service.png)
-![Bidirectional Health Checks via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/04_pbf_hc_01_forwarding.png)
+![Bidirectional Health Checks via tunnel.1 - General](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/01_pbf_hc_01_general.png)
+![Bidirectional Health Checks via tunnel.1 - Source](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/02_pbf_hc_01_source.png)
+![Bidirectional Health Checks via tunnel.1 - Destination](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/03_pbf_hc_01_dest-app-service.png)
+![Bidirectional Health Checks via tunnel.1 - Forwarding](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/04_pbf_hc_01_forwarding.png)
 
 _Note: Labels in these images may reflect previous product names._
 
@@ -1195,10 +1203,10 @@ _Note: Labels in these images may reflect previous product names._
 |                                         | Next Hop            | _IP Address_                       |
 |                                         |                     | _CF_MWAN_IPsec_VTI_02_Remote_ |
 
-![Bidirectional Health Checks via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/05_pbf_hc_02_general.png)
-![Bidirectional Health Checks via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/06_pbf_hc_02_source.png)
-![Bidirectional Health Checks via tunnel.2 - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/07_pbf_hc_02_dest-app-service.png)
-![Bidirectional Health Checks via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/08_pbf_hc_02_forwarding.png)
+![Bidirectional Health Checks via tunnel.2 - General](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/05_pbf_hc_02_general.png)
+![Bidirectional Health Checks via tunnel.2 - Source](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/06_pbf_hc_02_source.png)
+![Bidirectional Health Checks via tunnel.2 - Destination](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/07_pbf_hc_02_dest-app-service.png)
+![Bidirectional Health Checks via tunnel.2 - Forwarding](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/08_pbf_hc_02_forwarding.png)
 
 _Note: Labels in these images may reflect previous product names._
 
@@ -1244,7 +1252,7 @@ Use the Traffic log viewer to ensure that the health check traffic is allowed. S
 rule eq Cloudflare_Tunnel_Bidirect_HC
 ```
 
-![Bidirectional health check logging - Filter by rule name](~/assets/images/magic-wan/third-party/palo-alto/panw_logging/02_logging_tunnel_hc_filter_rulename.png)
+![Bidirectional health check logging - Filter by rule name](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_logging/02_logging_tunnel_hc_filter_rulename.png)
 
 If you do not see any traffic matching the filter, replace the filter with one that displays log entries based on the addresses associated with the `CF_Health_Check_Anycast_01` and `CF_Health_Check_Anycast_02` Address objects.
 
@@ -1254,7 +1262,7 @@ If you do not see any traffic matching the filter, replace the filter with one t
 ( addr.src in 172.64.240.253 ) or ( addr.src in 172.64.240.254 )
 ```
 
-![Bidirectional health check logging - filter by health check anycast IPs](~/assets/images/magic-wan/third-party/palo-alto/panw_logging/01_logging_tunnel_hc_filter_ip.png)
+![Bidirectional health check logging - filter by health check anycast IPs](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_logging/01_logging_tunnel_hc_filter_ip.png)
 
 #### Policy-based forwarding
 
@@ -1264,13 +1272,13 @@ Troubleshooting policy-based forwarding can be a bit challenging. The ideal way 
 
 2. Traffic originating from `CF_Health_Check_Anycast_01` (`172.64.240.253`) should ingress and egress interface tunnel.1.
 
-![Bidirectional Health Check Logging - tunnel.1](~/assets/images/magic-wan/third-party/palo-alto/panw_logging/03_logging_tunnel_hc_tun01.png)
+![Bidirectional Health Check Logging - tunnel.1](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_logging/03_logging_tunnel_hc_tun01.png)
 
 3. Select the magnifying glass next to one of the log entries with source IP address `172.64.240.254`.
 
 4. Traffic originating from `CF_Health_Check_Anycast_02` (`172.64.240.254`) should ingress and egress interface tunnel.2.
 
-![Bidirectional Health Check Logging - tunnel.2](~/assets/images/magic-wan/third-party/palo-alto/panw_logging/04_logging_tunnel_hc_tun02.png)
+![Bidirectional Health Check Logging - tunnel.2](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_logging/04_logging_tunnel_hc_tun02.png)
 
 If the traffic is not ingressing/egressing the same interface, you likely have an issue with the policy-based forwarding rule(s) not matching.
 
@@ -1305,12 +1313,12 @@ Rules must be defined to facilitate traffic from the trust network to the Cloudf
 |                                       | Schedule            | _None_                                                        |
 |                                       | QoS Marking         | _None_                                                        |
 
-![Trust to Cloudflare WAN - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/07_trust_to_mwan_general.png)
-![Trust to Cloudflare WAN - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/08_trust_to_mwan_source.png)
-![Trust to Cloudflare WAN - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/09_trust_to_mwan_dest.png)
-![Trust to Cloudflare WAN - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/10_trust_to_mwan_apps.png)
-![Trust to Cloudflare WAN - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/11_trust_to_mwan_service-url.png)
-![Trust to Cloudflare WAN - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/12_trust_to_mwan_action.png)
+![Trust to Cloudflare WAN - General](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/07_trust_to_mwan_general.png)
+![Trust to Cloudflare WAN - Source](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/08_trust_to_mwan_source.png)
+![Trust to Cloudflare WAN - Destination](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/09_trust_to_mwan_dest.png)
+![Trust to Cloudflare WAN - Applications](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/10_trust_to_mwan_apps.png)
+![Trust to Cloudflare WAN - Services/URL Categories](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/11_trust_to_mwan_service-url.png)
+![Trust to Cloudflare WAN - Action](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/12_trust_to_mwan_action.png)
 
 _Note: Labels in these images may reflect previous product names._
 
@@ -1346,12 +1354,12 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type univer
 |                                       | Schedule            | _None_                                                        |
 |                                       | QoS Marking         | _None_                                                        |
 
-![Cloudflare WAN to Trust - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/13_mwan_to_trust_general.png)
-![Cloudflare WAN to Trust - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/14_mwan_to_trust_source.png)
-![Cloudflare WAN to Trust - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/15_mwan_to_trust_dest.png)
-![Cloudflare WAN to Trust - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/16_mwan_to_trust_apps.png)
-![Cloudflare WAN to Trust - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/17_mwan_to_trust_service-url.png)
-![Cloudflare WAN to Trust - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/18_mwan_to_trust_action.png)
+![Cloudflare WAN to Trust - General](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/13_mwan_to_trust_general.png)
+![Cloudflare WAN to Trust - Source](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/14_mwan_to_trust_source.png)
+![Cloudflare WAN to Trust - Destination](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/15_mwan_to_trust_dest.png)
+![Cloudflare WAN to Trust - Applications](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/16_mwan_to_trust_apps.png)
+![Cloudflare WAN to Trust - Services/URL Categories](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/17_mwan_to_trust_service-url.png)
+![Cloudflare WAN to Trust - Action](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_security_rules/18_mwan_to_trust_action.png)
 
 _Note: Labels in these images may reflect previous product names._
 
@@ -1397,10 +1405,10 @@ Security rules match traffic flows based on source and destination zone. Policy-
 |                                         | Next hop            | _IP Address_                                                  |
 |                                         |                     | _CF_MWAN_IPsec_VTI_01_Remote_                            |
 
-![PBF: Trust to Cloudflare WAN via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
-![PBF: Trust to Cloudflare WAN via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
-![PBF: Trust to Cloudflare WAN via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
-![PBF: Trust to Cloudflare WAN via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - General](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Source](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Destinations](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Forwarding](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
 
 _Note: Labels in these images may reflect previous product names._
 
@@ -1434,10 +1442,10 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_01 negate-destination no
 |                                         | Next hop            | _IP Address_                                                  |
 |                                         |                     | _CF_MWAN_IPsec_VTI_02_Remote_                            |
 
-![PBF: Trust to Cloudflare WAN via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/13_pbf_mwan_sites_tun02_general.png)
-![PBF: Trust to Cloudflare WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
-![PBF: Trust to Cloudflare WAN via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
-![PBF: Trust to Cloudflare WAN via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - General](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/13_pbf_mwan_sites_tun02_general.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Source](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Destinations](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Forwarding](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
 
 _Note: Labels in these images may reflect previous product names._
 
@@ -1497,12 +1505,12 @@ Also, traffic from Trust to the Internet would typically be defined as `Trust_L3
 |                                      | Schedule            | _None_                                                                         |
 |                                      | QoS Marking         | _None_                                                                         |
 
-![Trust to Cloudflare WAN Egress - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/01_trust_mwan_egress_general.png)
-![Trust to Cloudflare WAN Egress - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
-![Trust to Cloudflare WAN Egress - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/03__trust_mwan_egress_destination.png)
-![Trust to Cloudflare WAN Egress - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/04_trust_mwan_egress_apps.png)
-![Trust to Cloudflare WAN Egress - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/05_trust_mwan_egress_service-url.png)
-![Trust to Cloudflare WAN Egress - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/06_trust_mwan_egress_actions.png)
+![Trust to Cloudflare WAN Egress - General](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/01_trust_mwan_egress_general.png)
+![Trust to Cloudflare WAN Egress - Source](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
+![Trust to Cloudflare WAN Egress - Destination](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/03__trust_mwan_egress_destination.png)
+![Trust to Cloudflare WAN Egress - Applications](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/04_trust_mwan_egress_apps.png)
+![Trust to Cloudflare WAN Egress - Services/URL Categories](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/05_trust_mwan_egress_service-url.png)
+![Trust to Cloudflare WAN Egress - Action](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/06_trust_mwan_egress_actions.png)
 
 _Note: Labels in these images may reflect previous product names._
 
@@ -1537,10 +1545,10 @@ set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow negate-destinatio
 |                                         | Next Hop            | _IP Address_                                                                   |
 |                                         |                     | _CF_MWAN_IPsec_VTI_01_Remote_                                             |
 
-![PBF: Trust to Cloudflare WAN Egress via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/07_pbf_trust_mwan_egress_tun01_general.png)
-![PBF: Trust to Cloudflare WAN via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
-![PBF: Trust to Cloudflare WAN via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/09_pbf_trust_mwan_egress_tun01_dest.png)
-![PBF: Trust to Cloudflare WAN via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/10_pbf_trust_mwan_egress_tun01_forward.png)
+![PBF: Trust to Cloudflare WAN Egress via tunnel.1 - General](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/07_pbf_trust_mwan_egress_tun01_general.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Source](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Destinations](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/09_pbf_trust_mwan_egress_tun01_dest.png)
+![PBF: Trust to Cloudflare WAN via tunnel.1 - Forwarding](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/10_pbf_trust_mwan_egress_tun01_forward.png)
 
 _Note: Labels in these images may reflect previous product names._
 
@@ -1575,10 +1583,10 @@ set rulebase pbf rules PBF_MWAN_Egress_01 negate-destination yes
 |                                         | Next Hop            | _IP Address_                                                                   |
 |                                         |                     | _CF_MWAN_IPsec_VTI_02_Remote_                                             |
 
-![PBF: Trust to Cloudflare WAN Egress via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/11_pbf_trust_mwan_egress_tun02_general.png)
-![PBF: Trust to Cloudflare WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)
-![PBF: Trust to Cloudflare WAN via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/13_pbf_trust_mwan_egress_tun02_dest.png)
-![PBF: Trust to Cloudflare WAN via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/14_pbf_trust_mwan_egress_tun02_forward.png)
+![PBF: Trust to Cloudflare WAN Egress via tunnel.2 - General](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/11_pbf_trust_mwan_egress_tun02_general.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Source](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Destinations](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/13_pbf_trust_mwan_egress_tun02_dest.png)
+![PBF: Trust to Cloudflare WAN via tunnel.2 - Forwarding](~/assets/images/cloudflare-wan/third-party/palo-alto/panw_mwan_egress/14_pbf_trust_mwan_egress_tun02_forward.png)
 
 _Note: Labels in these images may reflect previous product names._
 

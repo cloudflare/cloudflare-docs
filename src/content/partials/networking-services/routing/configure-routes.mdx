@@ -4,6 +4,7 @@ params:
   - magicWord
   - trafficSteeringPage
   - productName
+  - virtualNetworkName
   - tunnelEndpoints
   - routePrioritization
   - chooseWeights
@@ -13,11 +14,12 @@ params:
   - addTunnelsURL?
   - unifiedRoutingModeURL?
   - arrReferenceURL?
+  - routingTableName
 ---
 
 import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
-Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Cloudflare Virtual Network routing table through static route configuration or routes learned from BGP peering (beta) (available over CNI with Dataplane v2, as well as IPsec and GRE tunnels).
+{props.virtualNetworkName} uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the {props.routingTableName} through static route configuration or routes learned from BGP peering (beta) (available over CNI with Dataplane v2, as well as IPsec and GRE tunnels).
 
 Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more information about all the technical aspects related to:
 - Routes' priorities and weights
@@ -412,9 +414,9 @@ BGP peering is available when using the following on-ramps:
 
 ### Choose an ASN for BGP peering
 
-The Cloudflare Virtual Network routing table is managed by the customer. You can select both the Cloudflare-side ASN (Autonomous System Number) and the ASN for your customer device. The customer device ASN can be 2-byte or 4-byte. <Markdown text={props.publicAsnMT} />
+The {props.routingTableName} is managed by the customer. You can select both the Cloudflare-side ASN (Autonomous System Number) and the ASN for your customer device. The customer device ASN can be 2-byte or 4-byte. <Markdown text={props.publicAsnMT} />
 
-By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the Cloudflare Virtual Network routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (any value between `64512` and `65534`, such as `65000`).
+By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the {props.routingTableName}. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (any value between `64512` and `65534`, such as `65000`).
 
 :::note
 If you are setting up BGP over IPsec or GRE tunnels you cannot change this value.

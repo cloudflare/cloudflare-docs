@@ -6,7 +6,11 @@ sidebar:
   order: 1
 ---
 
-import { WranglerConfig, TypeScriptExample } from "~/components";
+import {
+	WranglerConfig,
+	TypeScriptExample,
+	PackageManagers,
+} from "~/components";
 
 Best practices for Workers based on production patterns, Cloudflare's own internal usage, and common issues seen across the developer community.
 
@@ -56,9 +60,7 @@ Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler
 
 Re-run `wrangler types` whenever you add or rename a binding.
 
-```bash
-wrangler types
-```
+<PackageManagers type="exec" pkg="wrangler" args="types" />
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -104,12 +106,17 @@ Secrets (API keys, tokens, database credentials) must never appear in your Wrang
 
 </WranglerConfig>
 
-```bash
-# Store secrets securely
-wrangler secret put API_KEY
+To add a secret, run the following command and provide the secret interactively when prompted:
 
-# For local development, use .env (make sure it is in .gitignore)
-# API_KEY=sk-test-abc123
+<PackageManagers type="exec" pkg="wrangler" args="secret put API_KEY" />
+
+You can also pipe secrets from other tools or environment variables:
+
+```bash
+# Pipe from another CLI tool
+npx some-cli-tool --get-secret | npx wrangler secret put API_KEY
+# Pipe from an environment variable or .env file
+echo "$API_KEY" | npx wrangler secret put API_KEY
 ```
 
 For more information, refer to [Secrets](/workers/configuration/secrets/).
@@ -118,7 +125,7 @@ For more information, refer to [Secrets](/workers/configuration/secrets/).
 
 [Wrangler environments](/workers/wrangler/environments/) let you deploy the same code to separate Workers for production, staging, and development. Each environment creates a distinct Worker named `{name}-{env}` (for example, `my-api-production` and `my-api-staging`).
 
-Treat the root configuration as your base (shared settings), and override per environment. The root Worker (without an environment suffix) is a separate deployment. If you do not intend to use it, do not deploy without specifying an environment.
+Each environment is treated separately. Bindings and vars need to be declared per environment and are not inherited. Refer to [non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys). The root Worker (without an environment suffix) is a separate deployment. If you do not intend to use it, do not deploy without specifying an environment using `--env`.
 
 <WranglerConfig>
 
@@ -129,7 +136,7 @@ Treat the root configuration as your base (shared settings), and override per en
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 
-	// Shared bindings go in the root config
+	// This binding only applies to the root Worker
 	"kv_namespaces": [{ "binding": "CACHE", "id": "dev-kv-id" }],
 
 	"env": {
@@ -153,11 +160,9 @@ Treat the root configuration as your base (shared settings), and override per en
 
 </WranglerConfig>
 
-```bash
-# Deploy to a specific environment
-wrangler deploy --env production
-wrangler deploy --env staging
-```
+With this configuration file, to deploy to staging:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy --env staging" />
 
 For more information, refer to [Environments](/workers/wrangler/environments/).
 
@@ -166,7 +171,7 @@ For more information, refer to [Environments](/workers/wrangler/environments/).
 Workers support two routing mechanisms, and they serve different purposes:
 
 - **[Custom domains](/workers/configuration/routing/custom-domains/)**: The Worker **is** the origin. Cloudflare creates DNS records and SSL certificates automatically. Use this when your Worker handles all traffic for a hostname.
-- **[Routes](/workers/configuration/routing/routes/)**: The Worker runs **in front of** an existing origin server. You must have a proxied (orange-clouded) DNS record for the hostname before adding a route.
+- **[Routes](/workers/configuration/routing/routes/)**: The Worker runs **in front of** an existing origin server. You must have a Cloudflare proxied (orange-clouded) DNS record for the hostname before adding a route.
 
 The most common mistake with routes is missing the DNS record. Without a proxied DNS record, requests to the hostname return `ERR_NAME_NOT_RESOLVED` and never reach your Worker. If you do not have a real origin, add a proxied `AAAA` record pointing to `100::` as a placeholder.
 
@@ -272,7 +277,7 @@ For more information, refer to [Streams](/workers/runtime-apis/streams/).
 
 [`ctx.waitUntil()`](/workers/runtime-apis/context/) lets you perform work after the response is sent to the client, such as analytics, cache writes, non-critical logging, or webhook notifications. This keeps your response fast while still completing background tasks.
 
-There are two common pitfalls: destructuring `ctx` (which loses the `this` binding and throws "Illegal invocation"), and exceeding the 30-second time limit after the response is sent.
+There are two common pitfalls: destructuring `ctx` (which loses the `this` binding and throws "Illegal invocation"), and exceeding the 30-second `waitUntil` time limit after the response is sent.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -365,7 +370,7 @@ export default {
 
 ### Use Queues and Workflows for async and background work
 
-Long-running, retriable, or non-urgent tasks should not block a request. Use [Queues](/queues/) and [Workflows](/workflows/) to move work out of the critical path. They serve different purposes:
+Long-running, retryable, or non-urgent tasks should not block a request. Use [Queues](/queues/) and [Workflows](/workflows/) to move work out of the critical path. They serve different purposes:
 
 **Use Queues when** you need to decouple a producer from a consumer. Queues are a message broker: one Worker sends a message, another Worker processes it later. They are the right choice for fan-out (one event triggers many consumers), buffering and batching (aggregate messages before writing to a downstream service), and simple single-step background jobs (send an email, fire a webhook, write a log). Queues provide at-least-once delivery with configurable retries per message.
 

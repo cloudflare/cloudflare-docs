@@ -199,13 +199,13 @@ You'll need to create two [GitHub OAuth Apps](https://docs.github.com/en/apps/oa
 	- **Homepage URL**: `http://localhost:8788`
 	- **Authorization callback URL**: `http://localhost:8788/callback`
 
-2. For the OAuth app you just created, add the client ID of the OAuth app as `GITHUB_CLIENT_ID` and generate a client secret, adding it as `GITHUB_CLIENT_SECRET` to a `.dev.vars` file in the root of your project, which [will be used to set secrets in local development](/workers/configuration/secrets/).
+2. For the OAuth app you just created, add the client ID of the OAuth app as `GITHUB_CLIENT_ID` and generate a client secret, adding it as `GITHUB_CLIENT_SECRET` to a `.env` file in the root of your project, which [will be used to set secrets in local development](/workers/configuration/secrets/).
 
 	```sh
-	touch .dev.vars
-	echo 'GITHUB_CLIENT_ID="your-client-id"' >> .dev.vars
-	echo 'GITHUB_CLIENT_SECRET="your-client-secret"' >> .dev.vars
-	cat .dev.vars
+	touch .env
+	echo 'GITHUB_CLIENT_ID="your-client-id"' >> .env
+	echo 'GITHUB_CLIENT_SECRET="your-client-secret"' >> .env
+	cat .env
 	```
 
 3. Run the following command to start the development server:

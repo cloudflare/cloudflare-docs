@@ -1,0 +1,12 @@
+id: LAdRw3
+name: automatic-ssl-tls-upgrader
+
+entry:
+  title: Automatic SSL/TLS
+  url: /ssl/origin-configuration/ssl-modes/#automatic-ssltls-default
+  show: false
+
+meta:
+  title: Cloudflare Automatic SSL/TLS docs
+  description: Automatic SSL/TLS leverages advanced methods to select the most secure encryption mode for your website by evaluating your origin's certification and capabilities.
+  author: "@cloudflare"

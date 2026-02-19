@@ -87,20 +87,20 @@ accDescr: Shows how DNS queries from Cloudflare WAN and WARP Connector flow thro
 
 ## Outbound Internet traffic
 
-By default, the following traffic routed through Cloudflare WAN tunnels and destined to public IP addresses is proxied/filtered through Cloudflare Gateway:
+By default, the following traffic routed through IPsec/GRE tunnels and destined to public IP addresses is proxied/filtered through Cloudflare Gateway:
 
 - TCP, UDP, and ICMP traffic sourced from [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IPs or WARP devices.
 - TCP and UDP traffic sourced from [BYOIP](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/) and destined to a well-known port (`0`-`1023`).
 
-By default, traffic destined to public IPs will be routed over the public Internet. If you want to configure specific public IP ranges to be routed through your Cloudflare WAN tunnels instead of over the public Internet after filtering, contact your account team.
+By default, traffic destined to public IPs will be routed over the public Internet. If you want to configure specific public IP ranges to be routed through your IPsec/GRE tunnels instead of over the public Internet after filtering, contact your account team.
 
 This traffic will egress from Cloudflare according to the <a href={props.egressPoliciesURL}>egress policies</a> you define in Cloudflare Gateway. By default, it will egress from a shared Cloudflare public IP range.
 
 ## Private traffic
 
-By default, TCP, UDP, and ICMP traffic routed through Cloudflare WAN tunnels and destined to routes behind <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel</a> will be proxied/filtered through Cloudflare Gateway.
+By default, TCP, UDP, and ICMP traffic routed through IPsec/GRE tunnels and destined to routes behind <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel</a> will be proxied/filtered through Cloudflare Gateway.
 
-Contact your account team to enable Gateway filtering for traffic destined to routes behind Cloudflare WAN tunnels.
+Contact your account team to enable Gateway filtering for traffic destined to routes behind IPsec/GRE tunnels.
 
 ### Default filtering criteria
 

@@ -20,7 +20,7 @@ You can connect your SonicWall appliance through <a href={props.ipsecTunnelsUrl}
 
 ## Topology
 
-![Topology diagram showing how to connect SonicWall appliances to Cloudflare WAN](~/assets/images/magic-wan/third-party/sonicwall/topology.png)
+![Topology diagram showing how to connect SonicWall appliances to Cloudflare WAN](~/assets/images/cloudflare-wan/third-party/sonicwall/topology.png)
 
 _Note: Labels in this image may reflect previous product names._
 
@@ -43,7 +43,7 @@ The following instructions show how to set up an IPsec connection on your SonicW
    - **Cloudflare endpoint**: Refers to the anycast IP provided by Cloudflare (in blue).
    - **FQDN ID**: The ID used in the VPN policy for the SonicWall's Local IKE ID. Copy this ID and save it. You will need it when configuring the tunnel on your SonicWall (in green).
 
-   ![An example of what your IPsec tunnel should look like](~/assets/images/magic-wan/third-party/sonicwall/step3.png)
+   ![An example of what your IPsec tunnel should look like](~/assets/images/cloudflare-wan/third-party/sonicwall/step3.png)
 
 :::note
 The interface address on the Cloudflare side of the tunnel is `10.200.1.0/31`. You will need to use `10.200.1.1/31` on the SonicWall side of the tunnel.
@@ -74,7 +74,7 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 <div class="large-img">
 
-![Configure a VPN policy on your SonicWall device](~/assets/images/magic-wan/third-party/sonicwall/3-vpn-config.png)
+![Configure a VPN policy on your SonicWall device](~/assets/images/cloudflare-wan/third-party/sonicwall/3-vpn-config.png)
 
 </div>
 
@@ -99,7 +99,7 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 <div class="large-img">
 
-![Enable anti-replay on your SonicWall device](~/assets/images/magic-wan/third-party/sonicwall/5-anti-replay.png)
+![Enable anti-replay on your SonicWall device](~/assets/images/cloudflare-wan/third-party/sonicwall/5-anti-replay.png)
 
 </div>
 
@@ -118,16 +118,16 @@ You will need to use a different IP pair for each tunnel/site.
 
 <div class="large-img">
 
-![Enable ping so that your interface can be pinged for debugging and Cloudflare WAN health checks](~/assets/images/magic-wan/third-party/sonicwall/6-vpn-ping.png)
+![Enable ping so that your interface can be pinged for debugging and Cloudflare WAN health checks](~/assets/images/cloudflare-wan/third-party/sonicwall/6-vpn-ping.png)
 
 </div>
 
 5. Select **Advanced**.
-6. Enable the **Enable Asymmetric Route Support** option. This is required for the Cloudflare WAN tunnel health check.
+6. Enable the **Enable Asymmetric Route Support** option. This is required for the IPsec tunnel health check.
 
 <div class="large-img">
 
-![Enable Asymmetric Route Support. It is required for Cloudflare WAN health checks](~/assets/images/magic-wan/third-party/sonicwall/6-vpn-assymetric.png)
+![Enable Asymmetric Route Support. It is required for Cloudflare WAN health checks](~/assets/images/cloudflare-wan/third-party/sonicwall/6-vpn-assymetric.png)
 
 </div>
 
@@ -146,7 +146,7 @@ To add an address object:
 
 <div class="large-img">
 
-![Enter the appropriate settings for your object](~/assets/images/magic-wan/third-party/sonicwall/7-address-objects-settings.png)
+![Enter the appropriate settings for your object](~/assets/images/cloudflare-wan/third-party/sonicwall/7-address-objects-settings.png)
 
 </div>
 
@@ -157,7 +157,7 @@ To add an address object:
 
 <div class="large-img">
 
-![Copy the individual network objects and add them to your group](~/assets/images/magic-wan/third-party/sonicwall/7-add-objects-group.png)
+![Copy the individual network objects and add them to your group](~/assets/images/cloudflare-wan/third-party/sonicwall/7-add-objects-group.png)
 
 </div>
 

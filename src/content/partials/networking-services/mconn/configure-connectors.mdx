@@ -57,7 +57,7 @@ In this page you will find instructions on how to configure {props.productName}.
 
 { props.magicWord === "hardware" && (
   <>
-		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">Cloudflare WAN</a> before you can purchase and use {props.productName}. {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
+		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan/">Cloudflare WAN</a> before you can purchase and use {props.productName}. {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
 
 		<p>You also need to purchase {props.productName} before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for {props.productName}.</p>
 
@@ -526,7 +526,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 		<p><em>{props.productName} connects to the router in the site, and only some of the LANs connect to Appliance.</em></p>
 
-		<p>Refer to <a href="/reference-architecture/diagrams/sase/magic-wan-connector-deployment/">{props.productName} deployment options</a> for a high-level explanation of the deployment options that make sense to most environments, as well as a few advanced use cases.</p>
+		<p>Refer to <a href="/reference-architecture/diagrams/sase/cloudflare-one-appliance-deployment/">{props.productName} deployment options</a> for a high-level explanation of the deployment options that make sense to most environments, as well as a few advanced use cases.</p>
 
 		<AnchorHeading title="Firewall settings required" depth={4} />
 		<p>If there is a firewall deployed upstream of {props.productName}, configure the firewall to allow the following traffic:</p>

@@ -42,7 +42,7 @@ For Turnstile to function properly in WebView, the following requirements must b
 
 #### Android WebView
 
-```js wrap 
+```java wrap 
 WebView webView = findViewById(R.id.webview);
 WebSettings webSettings = webView.getSettings();
 
@@ -64,7 +64,7 @@ webView.loadUrl("https://yoursite.com/protected-form");
 
 #### iOS WKWebView (Swift)
 
-```js wrap
+```swift wrap
 import WebKit
 
 class ViewController: UIViewController {
@@ -105,7 +105,7 @@ export default function App() {
 
 #### Flutter WebView
 
-```js wrap
+```dart wrap
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class WebViewScreen extends StatelessWidget {
@@ -140,11 +140,11 @@ class WebViewScreen extends StatelessWidget {
 
 Changing the User Agent during a session causes Turnstile challenges to fail because the system relies on consistent browser characteristics to validate the visitor's authenticity. When the User Agent changes mid-session, Turnstile treats this as a potential security risk and rejects the challenge.
 
-```js wrap
+```java wrap
 // Android - Set consistent User Agent
 webSettings.setUserAgentString(webSettings.getUserAgentString());
 ```
-```js wrap
+```swift wrap
 // iOS - Maintain default User Agent
 webView.customUserAgent = webView.value(forKey: "userAgent") as? String
 ```
@@ -179,13 +179,13 @@ The exact configuration method varies by platform, but the principle is to expli
 
 Cookies and local storage not persisting between sessions can cause Turnstile to fail because it relies on these mechanisms to maintain state and track visitor behavior. This commonly occurs when WebView storage settings are too restrictive or when the app clears storage between sessions. Ensure that your WebView is configured to properly handle cookies and local storage.
 
-```js wrap
+```java wrap
 // Android - Enable cookies
 CookieManager.getInstance().setAcceptCookie(true);
 CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
 ```
 
-```js wrap
+```swift wrap
 // iOS - Configure cookie storage
 webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
 ```

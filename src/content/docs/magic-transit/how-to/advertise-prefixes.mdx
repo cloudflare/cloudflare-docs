@@ -50,7 +50,7 @@ Cloudflare offers multiple mechanisms to control the announcement and withdrawal
 
 - **Addressing API**: Manually control prefix advertisements through API calls. Refer to [Advertise or withdraw a BGP prefix](#advertise-or-withdraw-a-bgp-prefix).
 - **BGP peering with route reflectors**: Control advertisements through BGP sessions to Cloudflare's globally distributed route reflectors, either over the Internet or over a CNI connection with Dataplane v1. Contact your Cloudflare account team if you need this option. Refer to [BGP control with Cloudflare Route Reflectors](#bgp-control-with-cloudflare-route-reflectors).
-- **Magic Network Monitoring**: Automatically announce prefixes based on user-defined traffic thresholds observed in your network. Refer to [Magic Network Monitoring](/magic-network-monitoring/).
+- **Network Flow**: Automatically announce prefixes based on user-defined traffic thresholds observed in your network. Refer to [Network Flow](/network-flow/) (formerly Magic Network Monitoring).
 - **BGP peering with Magic Transit Virtual Network routing table**: Automatically control prefix advertisements based on BGP routes learned through CNI with Dataplane v2, or GRE and IPsec tunnels (beta, requires [Unified Routing](/magic-transit/reference/traffic-steering/#unified-routing-mode-beta)). Refer to [BGP control to Magic Transit Virtual Network routing table](#bgp-control-to-magic-transit-virtual-network-routing-table).
 
 :::caution[Important]
@@ -208,7 +208,7 @@ Refer to the [caution about AS prepends](#use-the-api-to-set-as-prepends-on-a-bg
 
 Optionally, you can use BGP to control the advertisement status of your prefix — advertised or withdrawn — from Cloudflare's global network for on-demand deployment scenarios. BGP control works by establishing BGP sessions to Cloudflare's globally distributed Route Reflectors, which initiate propagation of your prefix advertisement across Cloudflare's global network. You can peer with Cloudflare's Route Reflectors through Internet or CNI. CNI peering is available through your account team.
 
-You can advertise prefixes from Cloudflare's network in a supported on-demand method such as BGP control, or dynamically through the UI, API, or [Magic Network Monitoring](/magic-transit/magic-network-monitoring/). During the onboarding of your on-demand prefixes, specify whether you want BGP-controlled advertisement or dynamic advertisement (through dashboard/API/Magic Network Monitoring).
+You can advertise prefixes from Cloudflare's network in a supported on-demand method such as BGP control, or dynamically through the UI, API, or [Network Flow](/magic-transit/network-flow/). During the onboarding of your on-demand prefixes, specify whether you want BGP-controlled advertisement or dynamic advertisement (through dashboard/API/Network Flow).
 
 Our network architecture utilizes multiple, redundant Route Reflectors. The failure of any single reflector does not impact overall network resiliency or traffic forwarding. For maximum resiliency, we recommend peering with all three of Cloudflare's redundant Route Reflectors.
 
