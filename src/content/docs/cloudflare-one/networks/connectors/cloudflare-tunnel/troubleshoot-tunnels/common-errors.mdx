@@ -145,12 +145,6 @@ To resolve, use one of the following approaches:
 
 If the port in your ingress rule does not match the port your service is listening on, `cloudflared` will log a `connection refused` error for that port. Double-check the `service` URL in your ingress rule and compare it against the port your application is bound to.
 
-You can validate which ingress rule applies to a given hostname by running:
-
-```sh
-cloudflared tunnel ingress rule https://app.example.com
-```
-
 ## I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
 
 This error occurs when `cloudflared` does not recognize the SSL/TLS certificate presented by your origin. To resolve the issue, set the [origin server name](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#originservername) parameter to the hostname on your origin certificate. Here is an example of a locally-managed tunnel configuration:
