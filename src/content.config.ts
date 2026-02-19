@@ -89,8 +89,8 @@ export const collections = {
 		loader: dataLoader("learning-paths"),
 		schema: learningPathsSchema,
 	}),
-	products: defineCollection({
-		loader: dataLoader("products"),
+	directory: defineCollection({
+		loader: dataLoader("directory"),
 	}),
 	"workers-ai-models": defineCollection({
 		loader: dataLoader("workers-ai-models"),

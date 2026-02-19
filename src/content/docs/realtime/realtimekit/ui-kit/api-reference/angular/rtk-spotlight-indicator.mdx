@@ -1,0 +1,33 @@
+---
+pcx_content_type: navigation
+title: rtk-spotlight-indicator
+description: API reference for rtk-spotlight-indicator component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-spotlight-indicator></rtk-spotlight-indicator>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-spotlight-indicator
+ [meeting]="meeting"
+ size="md">
+</rtk-spotlight-indicator>
+```
+

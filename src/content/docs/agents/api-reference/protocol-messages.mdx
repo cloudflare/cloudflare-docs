@@ -1,0 +1,202 @@
+---
+title: Protocol messages
+pcx_content_type: concept
+sidebar:
+  order: 9
+---
+
+import { TypeScriptExample } from "~/components";
+
+When a WebSocket client connects to an Agent, the framework automatically sends several JSON text frames — identity, state, and MCP server lists. You can suppress these per-connection protocol messages for clients that cannot handle them.
+
+## Overview
+
+On every new connection, the Agent sends three protocol messages:
+
+| Message type           | Content                   |
+| ---------------------- | ------------------------- |
+| `cf_agent_identity`    | Agent name and class      |
+| `cf_agent_state`       | Current agent state       |
+| `cf_agent_mcp_servers` | Connected MCP server list |
+
+State and MCP messages are also broadcast to all connections whenever they change.
+
+For most web clients this is fine — the [Client SDK](/agents/api-reference/client-sdk/) and `useAgent` hook consume these messages automatically. However, some clients cannot handle JSON text frames:
+
+- **Binary-only clients** — MQTT devices, IoT sensors, custom binary protocols
+- **Lightweight clients** — Embedded systems with minimal WebSocket stacks
+- **Non-browser clients** — Hardware devices connecting via WebSocket
+
+For these connections, you can suppress protocol messages while keeping everything else (RPC, regular messages, broadcasts via `this.broadcast()`) working normally.
+
+## Suppressing protocol messages
+
+Override `shouldSendProtocolMessages` to control which connections receive protocol messages. Return `false` to suppress them.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, type Connection, type ConnectionContext } from "agents";
+
+export class IoTAgent extends Agent<Env, State> {
+	shouldSendProtocolMessages(
+		connection: Connection,
+		ctx: ConnectionContext,
+	): boolean {
+		const url = new URL(ctx.request.url);
+		return url.searchParams.get("protocol") !== "false";
+	}
+}
+```
+
+</TypeScriptExample>
+
+This hook runs during `onConnect`, before any messages are sent. When it returns `false`:
+
+- No `cf_agent_identity`, `cf_agent_state`, or `cf_agent_mcp_servers` messages are sent on connect
+- The connection is excluded from state and MCP broadcasts going forward
+- RPC calls, regular `onMessage` handling, and `this.broadcast()` still work normally
+
+### Using WebSocket subprotocol
+
+You can also check the WebSocket subprotocol header, which is the standard way to negotiate protocols over WebSocket:
+
+<TypeScriptExample>
+
+```ts
+export class MqttAgent extends Agent<Env, State> {
+	shouldSendProtocolMessages(
+		connection: Connection,
+		ctx: ConnectionContext,
+	): boolean {
+		// MQTT-over-WebSocket clients negotiate via subprotocol
+		const subprotocol = ctx.request.headers.get("Sec-WebSocket-Protocol");
+		return subprotocol !== "mqtt";
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Checking protocol status
+
+Use `isConnectionProtocolEnabled` to check whether a connection has protocol messages enabled:
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent<Env, State> {
+	@callable()
+	async getConnectionInfo() {
+		const { connection } = getCurrentAgent();
+		if (!connection) return null;
+
+		return {
+			protocolEnabled: this.isConnectionProtocolEnabled(connection),
+			readonly: this.isConnectionReadonly(connection),
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+## What is and is not suppressed
+
+The following table shows what still works when protocol messages are suppressed for a connection:
+
+| Action                                                   | Works? |
+| -------------------------------------------------------- | ------ |
+| Receive `cf_agent_identity` on connect                   | **No** |
+| Receive `cf_agent_state` on connect and broadcasts       | **No** |
+| Receive `cf_agent_mcp_servers` on connect and broadcasts | **No** |
+| Send and receive regular WebSocket messages              | Yes    |
+| Call `@callable()` RPC methods                           | Yes    |
+| Receive `this.broadcast()` messages                      | Yes    |
+| Send binary data                                         | Yes    |
+| Mutate agent state via RPC                               | Yes    |
+
+## Combining with readonly
+
+A connection can be both readonly and protocol-suppressed. This is useful for binary devices that should observe but not modify state:
+
+<TypeScriptExample>
+
+```ts
+export class SensorHub extends Agent<Env, SensorState> {
+	shouldSendProtocolMessages(
+		connection: Connection,
+		ctx: ConnectionContext,
+	): boolean {
+		const url = new URL(ctx.request.url);
+		// Binary sensors don't handle JSON protocol frames
+		return url.searchParams.get("type") !== "sensor";
+	}
+
+	shouldConnectionBeReadonly(
+		connection: Connection,
+		ctx: ConnectionContext,
+	): boolean {
+		const url = new URL(ctx.request.url);
+		// Sensors can only report data via RPC, not modify shared state
+		return url.searchParams.get("type") === "sensor";
+	}
+
+	@callable()
+	async reportReading(sensorId: string, value: number) {
+		// This RPC still works for readonly+no-protocol connections
+		// because it writes to SQL, not agent state
+		this
+			.sql`INSERT INTO readings (sensor_id, value, ts) VALUES (${sensorId}, ${value}, ${Date.now()})`;
+	}
+}
+```
+
+</TypeScriptExample>
+
+Both flags are stored in the connection's WebSocket attachment and hidden from `connection.state` — they do not interfere with each other or with user-defined connection state.
+
+## API reference
+
+### `shouldSendProtocolMessages`
+
+An overridable hook that determines if a connection should receive protocol messages when it connects.
+
+| Parameter    | Type                | Description                           |
+| ------------ | ------------------- | ------------------------------------- |
+| `connection` | `Connection`        | The connecting client                 |
+| `ctx`        | `ConnectionContext` | Contains the upgrade request          |
+| **Returns**  | `boolean`           | `false` to suppress protocol messages |
+
+Default: returns `true` (all connections receive protocol messages).
+
+This hook is evaluated once on connect. The result is persisted in the connection's WebSocket attachment and survives [hibernation](/agents/api-reference/websockets/#hibernation).
+
+### `isConnectionProtocolEnabled`
+
+Check if a connection currently has protocol messages enabled.
+
+| Parameter    | Type         | Description                             |
+| ------------ | ------------ | --------------------------------------- |
+| `connection` | `Connection` | The connection to check                 |
+| **Returns**  | `boolean`    | `true` if protocol messages are enabled |
+
+Safe to call at any time, including after the agent wakes from hibernation.
+
+## How it works
+
+Protocol status is stored as an internal flag in the connection's WebSocket attachment — the same mechanism used by [readonly connections](/agents/api-reference/readonly-connections/). This means:
+
+- **Survives hibernation** — the flag is serialized and restored when the agent wakes up
+- **No cleanup needed** — connection state is automatically discarded when the connection closes
+- **Zero overhead** — no database tables or queries, just the connection's built-in attachment
+- **Safe from user code** — `connection.state` and `connection.setState()` never expose or overwrite the flag
+
+Unlike [readonly](/agents/api-reference/readonly-connections/) which can be toggled dynamically with `setConnectionReadonly()`, protocol status is set once on connect and cannot be changed afterward. To change a connection's protocol status, the client must disconnect and reconnect.
+
+## Related resources
+
+- [Readonly connections](/agents/api-reference/readonly-connections/)
+- [WebSockets](/agents/api-reference/websockets/)
+- [Store and sync state](/agents/api-reference/store-and-sync-state/)
+- [MCP Client API](/agents/api-reference/mcp-client-api/)

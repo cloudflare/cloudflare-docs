@@ -33,7 +33,7 @@ entries:
     general_definition: |-
       a firewall is a security system that monitors and controls network traffic based on a set of security rules.
     associated_products:
-      - Magic Firewall
+      - Cloudflare Network Firewall
 
   - term: LLM
     general_definition: |-

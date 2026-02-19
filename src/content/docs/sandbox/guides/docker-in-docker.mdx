@@ -1,0 +1,100 @@
+---
+title: Run Docker-in-Docker
+pcx_content_type: how-to
+sidebar:
+  order: 10
+description: Run Docker commands inside a sandbox container.
+---
+
+import { Render, TypeScriptExample } from "~/components";
+
+This guide shows you how to run Docker inside a Sandbox, enabling you to build and run container images from within a secure sandbox.
+
+## When to use Docker-in-Docker
+
+Use Docker-in-Docker when you need to:
+
+- **Develop containerized applications** - Run `docker build` to create images from Dockerfiles
+- **Run Docker as part of CI/CD** - Respond to code changes and build and push images using Cloudflare Containers
+- **Run arbitrary container images** - Start containers from an end-user provided image
+
+## Create a Docker-enabled image
+
+Cloudflare Containers run without root privileges, so you must use the rootless Docker image. Create a custom Dockerfile that combines the sandbox binary with Docker:
+
+```dockerfile title="Dockerfile"
+FROM docker:dind-rootless
+USER root
+
+# Use the musl build so it runs on Alpine-based docker:dind-rootless
+COPY --from=docker.io/cloudflare/sandbox:0.7.4-musl /container-server/sandbox /sandbox
+COPY --from=docker.io/cloudflare/sandbox:0.7.4-musl /usr/lib/libstdc++.so.6 /usr/lib/libstdc++.so.6
+COPY --from=docker.io/cloudflare/sandbox:0.7.4-musl /usr/lib/libgcc_s.so.1 /usr/lib/libgcc_s.so.1
+COPY --from=docker.io/cloudflare/sandbox:0.7.4-musl /bin/bash /bin/bash
+COPY --from=docker.io/cloudflare/sandbox:0.7.4-musl /usr/lib/libreadline.so.8 /usr/lib/libreadline.so.8
+COPY --from=docker.io/cloudflare/sandbox:0.7.4-musl /usr/lib/libreadline.so.8.2 /usr/lib/libreadline.so.8.2
+
+# Create startup script that starts dockerd with
+# iptables disabled, waits for readiness, then keeps running
+RUN printf '#!/bin/sh\n\
+  set -eu\n\
+  dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false &\n\
+  until docker version >/dev/null 2>&1; do sleep 0.2; done\n\
+  echo "Docker is ready"\n\
+  wait\n' > /home/rootless/boot-docker-for-dind.sh && chmod +x /home/rootless/boot-docker-for-dind.sh
+
+ENTRYPOINT ["/sandbox"]
+CMD ["/home/rootless/boot-docker-for-dind.sh"]
+
+```
+
+<Render file="dind-network-host-caveat" product="containers" />
+
+## Use Docker in your sandbox
+
+Once deployed, you can run Docker commands through the sandbox:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "docker-sandbox");
+
+// Build an image
+await sandbox.writeFile(
+	"/workspace/Dockerfile",
+	`
+FROM alpine:latest
+RUN apk add --no-cache curl
+CMD ["echo", "Hello from Docker!"]
+`,
+);
+
+const build = await sandbox.exec(
+	"docker build --network=host -t my-image /workspace",
+);
+if (!build.success) {
+	console.error("Build failed:", build.stderr);
+}
+
+// Run a container
+const run = await sandbox.exec("docker run --network=host --rm my-image");
+console.log(run.stdout); // "Hello from Docker!"
+```
+
+</TypeScriptExample>
+
+## Limitations
+
+Docker-in-Docker in Cloudflare Containers has the following limitations:
+
+- **No iptables** - Network isolation features that rely on iptables are not available
+- **Rootless mode only** - You cannot use privileged containers or features requiring root
+- **Ephemeral storage** - Built images and containers are lost when the sandbox sleeps. You must persist them manually.
+
+## Related resources
+
+- [Dockerfile reference](/sandbox/configuration/dockerfile/) - Customize your sandbox image
+- [Execute commands](/sandbox/guides/execute-commands/) - Run commands in the sandbox
+- [Background processes](/sandbox/guides/background-processes/) - Manage long-running processes

@@ -7,7 +7,7 @@ sidebar:
 
 import { WranglerConfig, TypeScriptExample } from "~/components";
 
-A Workflow contains one or more steps. Each step is a self-contained, individually retriable component of a Workflow. Steps may emit (optional) state that allows a Workflow to persist and continue from that step, even if a Workflow fails due to a network or infrastructure issue.
+A Workflow contains one or more steps. Each step is a self-contained, individually retryable component of a Workflow. Steps may emit (optional) state that allows a Workflow to persist and continue from that step, even if a Workflow fails due to a network or infrastructure issue.
 
 This is a small guidebook on how to build more resilient and correct Workflows.
 
@@ -629,3 +629,8 @@ export class MyWorkflow extends WorkflowEntrypoint {
 ```
 
 </TypeScriptExample>
+
+## Related resources
+
+- [Workers Best Practices](/workers/best-practices/workers-best-practices/): code patterns for request handling, observability, and security that apply to the Workers triggering your Workflows.
+- [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/): best practices for stateful, coordinated applications — useful when combining Durable Objects with Workflows.

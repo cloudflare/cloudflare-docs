@@ -46,11 +46,17 @@ The following build-related options are handled by Vite and are not applicable w
 
 The following options have Vite equivalents that should be used instead:
 
-| Wrangler option | Vite equivalent |
-| --- | --- |
-| `define` | [`define`](https://vite.dev/config/shared-options.html#define) |
-| `alias` | [`resolve.alias`](https://vite.dev/config/shared-options.html#resolve-alias) |
-| `minify` | [`build.minify`](https://vite.dev/config/build-options.html#build-minify) |
-| Local dev settings (`ip`, `port`, `local_protocol`, etc.) | [Server options](https://vite.dev/config/server-options.html) |
+| Wrangler option                                           | Vite equivalent                                                              |
+| --------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `define`                                                  | [`define`](https://vite.dev/config/shared-options.html#define)               |
+| `alias`                                                   | [`resolve.alias`](https://vite.dev/config/shared-options.html#resolve-alias) |
+| `minify`                                                  | [`build.minify`](https://vite.dev/config/build-options.html#build-minify)    |
+| Local dev settings (`ip`, `port`, `local_protocol`, etc.) | [Server options](https://vite.dev/config/server-options.html)                |
 
 See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information about configuring your Worker environments in Vite.
+
+### Inferred
+
+If [build.sourcemap](https://vite.dev/config/build-options#build-sourcemap) is enabled for a given Worker environment in the Vite config, `"upload_source_maps": true` is automatically added to the output Wrangler configuration file.
+This means that generated sourcemaps are uploaded by default.
+To override this setting, you can set the value of `upload_source_maps` explicitly in the input Worker config.

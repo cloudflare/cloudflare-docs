@@ -12,18 +12,22 @@ The Website data source allows you to connect a domain you own so its pages can 
 You can only crawl domains that you have onboarded onto the same Cloudflare account. Refer to [Onboard a domain](/fundamentals/manage-domains/add-site/) for more information on adding a domain to your Cloudflare account.
 
 :::caution[Bot protection may block crawling]
-If you use Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the AI Search (AutoRAG) crawler. Make sure to configure an exception or an allow-list for the AutoRAG crawler in your settings.
+If you use Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the AI Search crawler. Make sure to configure an exception or an allow-list for the AI Search crawler in your settings.
 :::
 
 ## How website crawling works
 
 When you connect a domain, the crawler looks for your website's sitemap to determine which pages to visit:
 
-1. The crawler first checks the `robots.txt` for listed sitemaps. If it exists, it reads all sitemaps existing inside.
+1. The crawler first checks `robots.txt` for listed sitemaps.
 2. If no `robots.txt` is found, the crawler checks for a sitemap at `/sitemap.xml`.
 3. If no sitemap is available, the domain cannot be crawled.
 
-Pages are indexed in order of the `<priority>` attribute set in the sitemap, if this field is defined.
+### Indexing order
+
+If your sitemaps include `<priority>` attributes, AI Search reads all sitemaps and indexes pages based on each page's priority value, regardless of which sitemap the page is in.
+
+If no `<priority>` is specified, pages are indexed in the order the sitemaps are listed in `robots.txt`, from top to bottom.
 
 AI Search supports `.gz` compressed sitemaps. Both `robots.txt` and sitemaps can use partial URLs.
 
@@ -48,7 +52,7 @@ Configure your `robots.txt` and sitemap to help AI Search crawl your site effici
 
 ### robots.txt
 
-The AI Search crawler uses the user agent `Cloudflare-AutoRAG`. Your `robots.txt` file should reference your sitemap and allow the crawler:
+The AI Search crawler uses the user agent `Cloudflare-AI-Search`. Your `robots.txt` file should reference your sitemap and allow the crawler:
 
 ```txt title="robots.txt"
 User-agent: *
@@ -74,7 +78,7 @@ To block all other crawlers but allow only AI Search:
 User-agent: *
 Disallow: /
 
-User-agent: Cloudflare-AutoRAG
+User-agent: Cloudflare-AI-Search
 Allow: /
 
 Sitemap: https://example.com/sitemap.xml
@@ -139,6 +143,14 @@ If you have Security rules configured to block bot activity, you can add a rule 
 </Steps>
 
 ## Parsing options
+
+You can configure parsing options during onboarding or in your instance settings under **Parser options**.
+
+### Sitemap
+
+By default, AI Search crawls all sitemaps listed in your `robots.txt` in the order they appear (top to bottom). If you do not want the crawler to index everything, you can specify a single sitemap URL to limit which pages are crawled.
+
+### Rendering mode
 
 You can choose how pages are parsed during crawling:
 

@@ -24,7 +24,7 @@ The following example rule applies rate limiting to requests with a specific [AT
 <Example>
 
 **When incoming requests match**:<br/>
-`(any(cf.bot_management.detection_ids[*] eq 201326593 and cf.waf.credential_check.username_and_password_leaked))`
+`(any(cf.bot_management.detection_ids[*] eq 201326593) and cf.waf.credential_check.username_and_password_leaked)`
 
 **With the same characteristics**: _IP_
 

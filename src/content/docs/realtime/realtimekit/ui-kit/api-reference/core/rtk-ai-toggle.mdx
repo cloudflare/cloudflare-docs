@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: rtk-ai-toggle
+description: API reference for rtk-ai-toggle component (Web Components (HTML) Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-ai-toggle></rtk-ai-toggle>
+```
+
+### With Properties
+
+```html
+<rtk-ai-toggle
+ size="md"
+ variant"button">
+</rtk-ai-toggle>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-ai-toggle");
+
+  el.meeting= meeting
+</script>
+```

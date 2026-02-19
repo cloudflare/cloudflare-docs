@@ -1,0 +1,42 @@
+---
+pcx_content_type: navigation
+title: rtk-plugins
+description: API reference for rtk-plugins component (Web Components (HTML) Library)
+---
+A component which lists all available plugins from their preset,
+ and ability to enable or disable plugins.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-plugins></rtk-plugins>
+```
+
+### With Properties
+
+```html
+<rtk-plugins
+ size="md">
+</rtk-plugins>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-plugins");
+
+  el.meeting= meeting
+</script>
+```

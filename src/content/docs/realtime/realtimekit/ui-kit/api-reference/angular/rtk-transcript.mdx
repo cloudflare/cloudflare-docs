@@ -1,0 +1,35 @@
+---
+pcx_content_type: navigation
+title: rtk-transcript
+description: API reference for rtk-transcript component (Angular Library)
+---
+A component which shows a transcript.
+ You need to remove the element after you receive the
+ `rtkTranscriptDismiss` event.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `transcript` | `Transcript & { renderedId?: string }` | ❌ | - | Message |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-transcript></rtk-transcript>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-transcript
+ [t]="rtki18n"
+ transcript="example">
+</rtk-transcript>
+```
+

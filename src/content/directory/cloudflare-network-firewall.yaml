@@ -1,0 +1,13 @@
+id: zAAXNP
+name: Cloudflare Network Firewall
+
+entry:
+  title: Cloudflare Network Firewall
+  url: /cloudflare-network-firewall/
+  group: Cloudflare One
+  additional_groups: [Network security]
+
+meta:
+  title: Cloudflare Network Firewall docs
+  description: Protect your enterprise network with advanced firewall-as-a-service protection
+  author: "@cloudflare"

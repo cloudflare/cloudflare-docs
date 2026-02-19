@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-breakout-rooms-toggle
+description: API reference for rtk-breakout-rooms-toggle component (Angular Library)
+---
+A button which toggles visibility of breakout rooms.
+ You need to pass the `meeting` object to it.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ✅ | - | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ✅ | - | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-breakout-rooms-toggle></rtk-breakout-rooms-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-breakout-rooms-toggle
+ [iconPack]="defaultIconPack"
+ [meeting]="meeting"
+ size="md">
+</rtk-breakout-rooms-toggle>
+```
+

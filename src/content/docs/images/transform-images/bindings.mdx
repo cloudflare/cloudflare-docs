@@ -19,6 +19,12 @@ For example, when you allow Workers to interact with Images, you can:
 
 Bindings can be configured in the Cloudflare dashboard for your Worker or in the Wrangler configuration file in your project's directory.
 
+:::note[Billing]
+
+Every call to the Images binding counts as one unique transformation. Refer to [Images pricing](/images/pricing/) for more information about transformation billing.
+
+:::
+
 ## Setup
 
 The Images binding is enabled on a per-Worker basis.
@@ -105,7 +111,11 @@ return response;
 
 - Outputs information about the image, such as `format`, `fileSize`, `width`, and `height`.
 
-Responses from the Images binding are not automatically cached. Workers lets you interact directly with the Cache API to customize cache behavior using Workers. You can implement logic in your script to store transformations in Cloudflare’s cache.
+:::note
+
+Responses from the Images binding are not automatically cached. Workers lets you interact directly with the [Cache API](/workers/runtime-apis/cache/) to customize cache behavior. You can implement logic in your script to store transformations in Cloudflare's cache.
+
+:::
 
 ## Interact with your Images binding locally
 

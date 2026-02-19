@@ -1,0 +1,52 @@
+---
+pcx_content_type: navigation
+title: RtkSettingsAudio
+description: API reference for RtkSettingsAudio component (React Library)
+---
+A component which lets to manage your audio devices and audio preferences.
+ Emits `rtkStateUpdate` event with data for muting notification sounds:
+ ```ts
+ {
+  prefs: {
+    muteNotificationSounds: boolean
+  }
+ }
+ ```
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSettingsAudio } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkSettingsAudio />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSettingsAudio } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkSettingsAudio
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

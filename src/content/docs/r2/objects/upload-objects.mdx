@@ -5,13 +5,24 @@ sidebar:
   order: 2
 ---
 
-import { Steps, Tabs, TabItem, Render, DashButton } from "~/components"
+import { Steps, Tabs, TabItem, Render, DashButton, LinkCard, TypeScriptExample } from "~/components"
 
-There are several ways to upload objects to R2:
-1. Using the [S3 API](/r2/api/s3/api/), which is supported by a wide range of tools and libraries (recommended)
-2. Directly from within a Worker using R2's [Workers API](/r2/api/workers/)
-3. Using the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview)
-4. Using the [Wrangler](/r2/reference/wrangler-commands/) command-line (`wrangler r2`)
+There are several ways to upload objects to R2. Which approach you choose depends on the size of your objects and your performance requirements.
+
+## Choose an upload method
+
+| | Single upload (`PUT`) | Multipart upload |
+|---|---|---|
+| **Best for** | Small to medium files (under ~100 MB) | Large files, or when you need parallelism and resumability |
+| **Maximum object size** | 5 GiB | 5 TiB (up to 10,000 parts) |
+| **Part size** | N/A | 5 MiB – 5 GiB per part |
+| **Resumable** | No — must restart the entire upload | Yes — only failed parts need to be retried |
+| **Parallel upload** | No | Yes — parts can be uploaded concurrently |
+| **When to use** | Quick, simple uploads of small objects | Video, backups, datasets, or any file where reliability matters |
+
+:::note
+Most S3-compatible SDKs and tools (such as `rclone`) automatically choose multipart upload for large files based on a configurable threshold. You do not typically need to implement multipart logic yourself when using the S3 API.
+:::
 
 ## Upload via dashboard
 
@@ -30,82 +41,720 @@ You will receive a confirmation message after a successful upload.
 
 ## Upload via Workers API
 
-Use R2 [bindings](/workers/runtime-apis/bindings/) in Workers to upload objects server-side:
+Use R2 [bindings](/workers/runtime-apis/bindings/) in Workers to upload objects server-side. Refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage/) for instructions on setting up an R2 binding.
 
-```ts ins={3}
+### Single upload
+
+Use `put()` to upload an object in a single request. This is the simplest approach for small to medium objects.
+
+<TypeScriptExample>
+
+```ts
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		await env.MY_BUCKET.put("image.png", request.body);
-		return new Response("Uploaded");
+	async fetch(request: Request, env: Env): Promise<Response> {
+		try {
+			const object = await env.MY_BUCKET.put("image.png", request.body, {
+				httpMetadata: {
+					contentType: "image/png",
+				},
+			});
+
+			if (object === null) {
+				return new Response("Precondition failed or upload returned null", { status: 412 });
+			}
+
+			return Response.json({
+				key: object.key,
+				size: object.size,
+				etag: object.etag,
+			});
+		} catch (err) {
+			return new Response(`Upload failed: ${err}`, { status: 500 });
+		}
 	},
 } satisfies ExportedHandler<Env>;
 ```
 
-For complete documentation, refer to [Workers API](/r2/api/workers/workers-api-usage/).
+</TypeScriptExample>
+
+### Multipart upload
+
+Use `createMultipartUpload()` and `resumeMultipartUpload()` for large files or when you need to upload parts in parallel. Each part must be at least 5 MiB (except the last part).
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const key = "large-file.bin";
+
+		// Create a new multipart upload
+		const multipartUpload = await env.MY_BUCKET.createMultipartUpload(key);
+
+		try {
+			// In a real application, these would be actual data chunks.
+			// Each part except the last must be at least 5 MiB.
+			const firstChunk = new Uint8Array(5 * 1024 * 1024); // placeholder
+			const secondChunk = new Uint8Array(1024); // placeholder
+
+			const part1 = await multipartUpload.uploadPart(1, firstChunk);
+			const part2 = await multipartUpload.uploadPart(2, secondChunk);
+
+			// Complete the upload with all parts
+			const object = await multipartUpload.complete([part1, part2]);
+
+			return Response.json({
+				key: object.key,
+				etag: object.httpEtag,
+			});
+		} catch (err) {
+			// Abort on failure so incomplete uploads do not count against storage
+			await multipartUpload.abort();
+			return new Response(`Multipart upload failed: ${err}`, { status: 500 });
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+In most cases, the multipart state (the `uploadId` and uploaded part ETags) is tracked by the client sending requests to your Worker. The following example exposes an HTTP API that a client application can call to create, upload parts for, and complete a multipart upload:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const key = url.pathname.slice(1);
+		const action = url.searchParams.get("action");
+
+		if (!key || !action) {
+			return new Response("Missing key or action", { status: 400 });
+		}
+
+		switch (action) {
+			// Step 1: Client calls POST /<key>?action=mpu-create
+			case "mpu-create": {
+				const upload = await env.MY_BUCKET.createMultipartUpload(key);
+				return Response.json({ key: upload.key, uploadId: upload.uploadId });
+			}
+
+			// Step 2: Client calls PUT /<key>?action=mpu-uploadpart&uploadId=...&partNumber=...
+			case "mpu-uploadpart": {
+				const uploadId = url.searchParams.get("uploadId");
+				const partNumber = Number(url.searchParams.get("partNumber"));
+				if (!uploadId || !partNumber || !request.body) {
+					return new Response("Missing uploadId, partNumber, or body", { status: 400 });
+				}
+				const upload = env.MY_BUCKET.resumeMultipartUpload(key, uploadId);
+				try {
+					const part = await upload.uploadPart(partNumber, request.body);
+					return Response.json(part);
+				} catch (err) {
+					return new Response(String(err), { status: 400 });
+				}
+			}
+
+			// Step 3: Client calls POST /<key>?action=mpu-complete&uploadId=...
+			case "mpu-complete": {
+				const uploadId = url.searchParams.get("uploadId");
+				if (!uploadId) {
+					return new Response("Missing uploadId", { status: 400 });
+				}
+				const upload = env.MY_BUCKET.resumeMultipartUpload(key, uploadId);
+				const body = await request.json<{ parts: R2UploadedPart[] }>();
+				try {
+					const object = await upload.complete(body.parts);
+					return new Response(null, {
+						headers: { etag: object.httpEtag },
+					});
+				} catch (err) {
+					return new Response(String(err), { status: 400 });
+				}
+			}
+
+			// Abort an in-progress upload
+			case "mpu-abort": {
+				const uploadId = url.searchParams.get("uploadId");
+				if (!uploadId) {
+					return new Response("Missing uploadId", { status: 400 });
+				}
+				const upload = env.MY_BUCKET.resumeMultipartUpload(key, uploadId);
+				try {
+					await upload.abort();
+				} catch (err) {
+					return new Response(String(err), { status: 400 });
+				}
+				return new Response(null, { status: 204 });
+			}
+
+			default:
+				return new Response(`Unknown action: ${action}`, { status: 400 });
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+For the complete Workers API reference, refer to [Workers API reference](/r2/api/workers/workers-api-reference/).
+
+### Presigned URLs (Workers)
+
+When you need clients (browsers, mobile apps) to upload directly to R2 without proxying through your Worker, generate a presigned URL server-side and hand it to the client:
+
+<TypeScriptExample>
+
+```ts
+import { AwsClient } from "aws4fetch";
+
+interface Env {
+	R2_ACCESS_KEY_ID: string;
+	R2_SECRET_ACCESS_KEY: string;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const r2 = new AwsClient({
+			accessKeyId: env.R2_ACCESS_KEY_ID,
+			secretAccessKey: env.R2_SECRET_ACCESS_KEY,
+		});
+
+		// Generate a presigned PUT URL valid for 1 hour
+		const url = new URL(
+			"https://<ACCOUNT_ID>.r2.cloudflarestorage.com/my-bucket/image.png",
+		);
+		url.searchParams.set("X-Amz-Expires", "3600");
+
+		const signed = await r2.sign(
+			new Request(url, { method: "PUT" }),
+			{ aws: { signQuery: true } },
+		);
+
+		// Return the signed URL to the client — they can PUT directly to R2
+		return Response.json({ url: signed.url });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+For full presigned URL documentation including GET, PUT, and security best practices, refer to [Presigned URLs](/r2/api/s3/presigned-urls/).
 
 ## Upload via S3 API
 
-Use S3-compatible SDKs to upload objects. You'll need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [R2 API token](/r2/api/tokens/).
+Use S3-compatible SDKs to upload objects. You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [R2 API token](/r2/api/tokens/).
+
+### Single upload
 
 <Tabs>
-<TabItem label="JavaScript">
+<TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { readFile } from "node:fs/promises";
 
 const S3 = new S3Client({
-	region: "auto", // Required by SDK but not used by R2
-	// Provide your Cloudflare account ID
+	region: "auto",
 	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
-	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
 	credentials: {
-		accessKeyId: '<ACCESS_KEY_ID>',
-		secretAccessKey: '<SECRET_ACCESS_KEY>',
+		accessKeyId: "<ACCESS_KEY_ID>",
+		secretAccessKey: "<SECRET_ACCESS_KEY>",
 	},
 });
 
-await S3.send(
+const fileContent = await readFile("./image.png");
+
+const response = await S3.send(
 	new PutObjectCommand({
 		Bucket: "my-bucket",
 		Key: "image.png",
 		Body: fileContent,
+		ContentType: "image/png",
 	}),
 );
+console.log(`Uploaded successfully. ETag: ${response.ETag}`);
 ```
 
 </TabItem>
-<TabItem label="Python">
+<TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { readFile } from "node:fs/promises";
+
+const S3 = new S3Client({
+	region: "auto",
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
+	credentials: {
+		accessKeyId: "<ACCESS_KEY_ID>",
+		secretAccessKey: "<SECRET_ACCESS_KEY>",
+	},
+});
+
+const fileContent = await readFile("./image.png");
+
+const response = await S3.send(
+	new PutObjectCommand({
+		Bucket: "my-bucket",
+		Key: "image.png",
+		Body: fileContent,
+		ContentType: "image/png",
+	}),
+);
+console.log(`Uploaded successfully. ETag: ${response.ETag}`);
+```
+
+</TabItem>
+<TabItem label="Python" icon="seti:python">
 
 ```python
 import boto3
 
 s3 = boto3.client(
-	service_name="s3",
-	# Provide your Cloudflare account ID
-	endpoint_url=f"https://{ACCOUNT_ID}.r2.cloudflarestorage.com",
-	# Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
-	aws_access_key_id=ACCESS_KEY_ID,
-	aws_secret_access_key=SECRET_ACCESS_KEY,
-	region_name="auto", # Required by SDK but not used by R2
+    service_name="s3",
+    endpoint_url="https://<ACCOUNT_ID>.r2.cloudflarestorage.com",
+    aws_access_key_id="<ACCESS_KEY_ID>",
+    aws_secret_access_key="<SECRET_ACCESS_KEY>",
+    region_name="auto",
 )
 
-s3.put_object(Bucket="my-bucket", Key="image.png", Body=file_content)
+with open("./image.png", "rb") as f:
+    response = s3.put_object(
+        Bucket="my-bucket",
+        Key="image.png",
+        Body=f,
+        ContentType="image/png",
+    )
+    print(f"Uploaded successfully. ETag: {response['ETag']}")
 ```
 
 </TabItem>
 </Tabs>
 
-Refer to R2's [S3 API documentation](/r2/api/s3/api/) for all S3 API methods.
+### Multipart upload
 
-### Presigned URLs
+Most S3 SDKs handle multipart uploads automatically when the file exceeds a configurable threshold. The examples below show both automatic (high-level) and manual (low-level) approaches.
 
-For client-side uploads where users upload directly to R2, use presigned URLs. Your server generates a temporary upload URL that clients can use without exposing your API credentials.
+#### Automatic multipart upload
 
-1. Your application generates a presigned PUT URL using an S3 SDK
-2. Send the URL to your client
-3. Client uploads directly to R2 using the presigned URL
+The SDK splits the file and uploads parts in parallel.
 
-For details on generating and using presigned URLs, refer to [Presigned URLs](/r2/api/s3/presigned-urls/).
+<Tabs>
+<TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
+import { createReadStream } from "node:fs";
+
+const S3 = new S3Client({
+	region: "auto",
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
+	credentials: {
+		accessKeyId: "<ACCESS_KEY_ID>",
+		secretAccessKey: "<SECRET_ACCESS_KEY>",
+	},
+});
+
+const upload = new Upload({
+	client: S3,
+	params: {
+		Bucket: "my-bucket",
+		Key: "large-file.bin",
+		Body: createReadStream("./large-file.bin"),
+	},
+	// Upload parts in parallel (default: 4)
+	leavePartsOnError: false,
+});
+
+upload.on("httpUploadProgress", (progress) => {
+	console.log(`Uploaded ${progress.loaded ?? 0} bytes`);
+});
+
+const result = await upload.done();
+console.log(`Upload complete. ETag: ${result.ETag}`);
+```
+
+</TabItem>
+<TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
+import { createReadStream } from "node:fs";
+
+const S3 = new S3Client({
+	region: "auto",
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
+	credentials: {
+		accessKeyId: "<ACCESS_KEY_ID>",
+		secretAccessKey: "<SECRET_ACCESS_KEY>",
+	},
+});
+
+const upload = new Upload({
+	client: S3,
+	params: {
+		Bucket: "my-bucket",
+		Key: "large-file.bin",
+		Body: createReadStream("./large-file.bin"),
+	},
+	leavePartsOnError: false,
+});
+
+upload.on("httpUploadProgress", (progress) => {
+	console.log(`Uploaded ${progress.loaded ?? 0} bytes`);
+});
+
+const result = await upload.done();
+console.log(`Upload complete. ETag: ${result.ETag}`);
+```
+
+</TabItem>
+<TabItem label="Python" icon="seti:python">
+
+```python
+import boto3
+
+s3 = boto3.client(
+    service_name="s3",
+    endpoint_url="https://<ACCOUNT_ID>.r2.cloudflarestorage.com",
+    aws_access_key_id="<ACCESS_KEY_ID>",
+    aws_secret_access_key="<SECRET_ACCESS_KEY>",
+    region_name="auto",
+)
+
+# upload_file automatically uses multipart for large files
+s3.upload_file(
+    Filename="./large-file.bin",
+    Bucket="my-bucket",
+    Key="large-file.bin",
+)
+```
+
+</TabItem>
+</Tabs>
+
+#### Manual multipart upload
+
+Use the low-level API when you need full control over part sizes or upload order.
+
+<Tabs>
+<TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import {
+	S3Client,
+	CreateMultipartUploadCommand,
+	UploadPartCommand,
+	CompleteMultipartUploadCommand,
+	AbortMultipartUploadCommand,
+	type CompletedPart,
+} from "@aws-sdk/client-s3";
+import { createReadStream, statSync } from "node:fs";
+
+const S3 = new S3Client({
+	region: "auto",
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
+	credentials: {
+		accessKeyId: "<ACCESS_KEY_ID>",
+		secretAccessKey: "<SECRET_ACCESS_KEY>",
+	},
+});
+
+const bucket = "my-bucket";
+const key = "large-file.bin";
+const partSize = 10 * 1024 * 1024; // 10 MiB per part
+
+// Step 1: Create the multipart upload
+const { UploadId } = await S3.send(
+	new CreateMultipartUploadCommand({ Bucket: bucket, Key: key }),
+);
+
+try {
+	const fileSize = statSync("./large-file.bin").size;
+	const partCount = Math.ceil(fileSize / partSize);
+	const parts: CompletedPart[] = [];
+
+	// Step 2: Upload each part
+	for (let i = 0; i < partCount; i++) {
+		const start = i * partSize;
+		const end = Math.min(start + partSize, fileSize);
+		const { ETag } = await S3.send(
+			new UploadPartCommand({
+				Bucket: bucket,
+				Key: key,
+				UploadId,
+				PartNumber: i + 1,
+				Body: createReadStream("./large-file.bin", { start, end: end - 1 }),
+				ContentLength: end - start,
+			}),
+		);
+		parts.push({ PartNumber: i + 1, ETag });
+	}
+
+	// Step 3: Complete the upload
+	await S3.send(
+		new CompleteMultipartUploadCommand({
+			Bucket: bucket,
+			Key: key,
+			UploadId,
+			MultipartUpload: { Parts: parts },
+		}),
+	);
+	console.log("Multipart upload complete.");
+} catch (err) {
+	// Abort on failure to clean up incomplete parts
+	try {
+		await S3.send(
+			new AbortMultipartUploadCommand({ Bucket: bucket, Key: key, UploadId }),
+		);
+	} catch (_abortErr) {
+		// Best-effort cleanup — the original error is more important
+	}
+	throw err;
+}
+```
+
+</TabItem>
+<TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import {
+	S3Client,
+	CreateMultipartUploadCommand,
+	UploadPartCommand,
+	CompleteMultipartUploadCommand,
+	AbortMultipartUploadCommand,
+} from "@aws-sdk/client-s3";
+import { createReadStream, statSync } from "node:fs";
+
+const S3 = new S3Client({
+	region: "auto",
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
+	credentials: {
+		accessKeyId: "<ACCESS_KEY_ID>",
+		secretAccessKey: "<SECRET_ACCESS_KEY>",
+	},
+});
+
+const bucket = "my-bucket";
+const key = "large-file.bin";
+const partSize = 10 * 1024 * 1024; // 10 MiB per part
+
+// Step 1: Create the multipart upload
+const { UploadId } = await S3.send(
+	new CreateMultipartUploadCommand({ Bucket: bucket, Key: key }),
+);
+
+try {
+	const fileSize = statSync("./large-file.bin").size;
+	const partCount = Math.ceil(fileSize / partSize);
+	const parts = [];
+
+	// Step 2: Upload each part
+	for (let i = 0; i < partCount; i++) {
+		const start = i * partSize;
+		const end = Math.min(start + partSize, fileSize);
+		const { ETag } = await S3.send(
+			new UploadPartCommand({
+				Bucket: bucket,
+				Key: key,
+				UploadId,
+				PartNumber: i + 1,
+				Body: createReadStream("./large-file.bin", { start, end: end - 1 }),
+				ContentLength: end - start,
+			}),
+		);
+		parts.push({ PartNumber: i + 1, ETag });
+	}
+
+	// Step 3: Complete the upload
+	await S3.send(
+		new CompleteMultipartUploadCommand({
+			Bucket: bucket,
+			Key: key,
+			UploadId,
+			MultipartUpload: { Parts: parts },
+		}),
+	);
+	console.log("Multipart upload complete.");
+} catch (err) {
+	// Abort on failure to clean up incomplete parts
+	try {
+		await S3.send(
+			new AbortMultipartUploadCommand({ Bucket: bucket, Key: key, UploadId }),
+		);
+	} catch (_abortErr) {
+		// Best-effort cleanup — the original error is more important
+	}
+	throw err;
+}
+```
+
+</TabItem>
+<TabItem label="Python" icon="seti:python">
+
+```python
+import boto3
+import math
+import os
+
+s3 = boto3.client(
+    service_name="s3",
+    endpoint_url="https://<ACCOUNT_ID>.r2.cloudflarestorage.com",
+    aws_access_key_id="<ACCESS_KEY_ID>",
+    aws_secret_access_key="<SECRET_ACCESS_KEY>",
+    region_name="auto",
+)
+
+bucket = "my-bucket"
+key = "large-file.bin"
+file_path = "./large-file.bin"
+part_size = 10 * 1024 * 1024  # 10 MiB per part
+
+# Step 1: Create the multipart upload
+mpu = s3.create_multipart_upload(Bucket=bucket, Key=key)
+upload_id = mpu["UploadId"]
+
+try:
+    file_size = os.path.getsize(file_path)
+    part_count = math.ceil(file_size / part_size)
+    parts = []
+
+    # Step 2: Upload each part
+    with open(file_path, "rb") as f:
+        for i in range(part_count):
+            data = f.read(part_size)
+            response = s3.upload_part(
+                Bucket=bucket,
+                Key=key,
+                UploadId=upload_id,
+                PartNumber=i + 1,
+                Body=data,
+            )
+            parts.append({"PartNumber": i + 1, "ETag": response["ETag"]})
+
+    # Step 3: Complete the upload
+    s3.complete_multipart_upload(
+        Bucket=bucket,
+        Key=key,
+        UploadId=upload_id,
+        MultipartUpload={"Parts": parts},
+    )
+    print("Multipart upload complete.")
+except Exception:
+    # Abort on failure to clean up incomplete parts
+    try:
+        s3.abort_multipart_upload(Bucket=bucket, Key=key, UploadId=upload_id)
+    except Exception:
+        pass  # Best-effort cleanup — the original error is more important
+    raise
+```
+
+</TabItem>
+</Tabs>
+
+### Presigned URLs (S3 API)
+
+For client-side uploads where users upload directly to R2 without going through your server, generate a presigned PUT URL. Your server creates the URL and the client uploads to it — no API credentials are exposed to the client.
+
+<Tabs>
+<TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
+const S3 = new S3Client({
+	region: "auto",
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
+	credentials: {
+		accessKeyId: "<ACCESS_KEY_ID>",
+		secretAccessKey: "<SECRET_ACCESS_KEY>",
+	},
+});
+
+const presignedUrl = await getSignedUrl(
+	S3,
+	new PutObjectCommand({
+		Bucket: "my-bucket",
+		Key: "user-upload.png",
+		ContentType: "image/png",
+	}),
+	{ expiresIn: 3600 }, // Valid for 1 hour
+);
+
+console.log(presignedUrl);
+// Return presignedUrl to the client
+```
+
+</TabItem>
+<TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
+const S3 = new S3Client({
+	region: "auto",
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
+	credentials: {
+		accessKeyId: "<ACCESS_KEY_ID>",
+		secretAccessKey: "<SECRET_ACCESS_KEY>",
+	},
+});
+
+const presignedUrl = await getSignedUrl(
+	S3,
+	new PutObjectCommand({
+		Bucket: "my-bucket",
+		Key: "user-upload.png",
+		ContentType: "image/png",
+	}),
+	{ expiresIn: 3600 }, // Valid for 1 hour
+);
+
+console.log(presignedUrl);
+// Return presignedUrl to the client
+```
+
+</TabItem>
+<TabItem label="Python" icon="seti:python">
+
+```python
+import boto3
+
+s3 = boto3.client(
+    service_name="s3",
+    endpoint_url="https://<ACCOUNT_ID>.r2.cloudflarestorage.com",
+    aws_access_key_id="<ACCESS_KEY_ID>",
+    aws_secret_access_key="<SECRET_ACCESS_KEY>",
+    region_name="auto",
+)
+
+presigned_url = s3.generate_presigned_url(
+    "put_object",
+    Params={
+        "Bucket": "my-bucket",
+        "Key": "user-upload.png",
+        "ContentType": "image/png",
+    },
+    ExpiresIn=3600,  # Valid for 1 hour
+)
+
+print(presigned_url)
+# Return presigned_url to the client
+```
+
+</TabItem>
+</Tabs>
+
+For full presigned URL documentation, refer to [Presigned URLs](/r2/api/s3/presigned-urls/).
+
+Refer to R2's [S3 API documentation](/r2/api/s3/api/) for all supported S3 API methods.
 
 ## Upload via CLI
 
@@ -137,7 +786,7 @@ For more information, refer to our [rclone example](/r2/examples/rclone/).
 
 :::note
 
-Wrangler supports uploading files up to 315MB and only allows one object at a time. For large files or bulk uploads, use [rclone](/r2/examples/rclone/) or another [S3-compatible](/r2/api/s3/) tool.
+Wrangler supports uploading files up to 315 MB and only allows one object at a time. For large files or bulk uploads, use [rclone](/r2/examples/rclone/) or another [S3-compatible](/r2/api/s3/) tool.
 
 :::
 
@@ -148,3 +797,48 @@ wrangler r2 object put test-bucket/image.png --file=image.png
 ```
 
 You can set the `Content-Type` (MIME type), `Content-Disposition`, `Cache-Control` and other HTTP header metadata through optional flags.
+
+## Multipart upload details
+
+### Part size limits
+
+- Minimum part size: 5 MiB (except for the last part)
+- Maximum part size: 5 GiB
+- Maximum number of parts: 10,000
+- All parts except the last must be the same size
+
+### Incomplete upload lifecycles
+
+Incomplete multipart uploads are automatically aborted after 7 days by default. You can change this by [configuring a custom lifecycle policy](/r2/buckets/object-lifecycles/).
+
+### ETags
+
+ETags for objects uploaded via multipart differ from those uploaded with a single `PUT`. The ETag of each part is the MD5 hash of that part's contents. The ETag of the completed multipart object is the hash of the concatenated binary MD5 sums of all parts, followed by a hyphen and the number of parts.
+
+For example, if a two-part upload has part ETags `bce6bf66aeb76c7040fdd5f4eccb78e6` and `8165449fc15bbf43d3b674595cbcc406`, the completed object's ETag will be `f77dc0eecdebcd774a2a22cb393ad2ff-2`.
+
+## Related resources
+
+<LinkCard
+	title="Workers API reference"
+	href="/r2/api/workers/workers-api-reference/"
+	description="Full reference for the R2 Workers API including put(), createMultipartUpload(), and more."
+/>
+
+<LinkCard
+	title="S3 API compatibility"
+	href="/r2/api/s3/api/"
+	description="Supported S3 API operations and R2-specific behavior."
+/>
+
+<LinkCard
+	title="Presigned URLs"
+	href="/r2/api/s3/presigned-urls/"
+	description="Generate temporary upload and download URLs for client-side access."
+/>
+
+<LinkCard
+	title="Object lifecycles"
+	href="/r2/buckets/object-lifecycles/"
+	description="Configure automatic cleanup of incomplete multipart uploads."
+/>

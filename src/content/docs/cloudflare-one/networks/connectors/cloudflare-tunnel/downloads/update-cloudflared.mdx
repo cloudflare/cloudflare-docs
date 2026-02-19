@@ -67,7 +67,7 @@ Use the following commands if you installed `cloudflared` using the `dpkg` packa
 1. Update the `cloudflared` package:
 
 ```sh
-curl --location --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared.deb
+curl --location --output cloudflared.deb "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$(dpkg --print-architecture).deb" && sudo dpkg -i cloudflared.deb
 ```
 
 2. Restart the service:
