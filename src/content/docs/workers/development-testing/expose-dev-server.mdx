@@ -62,7 +62,7 @@ Quick tunnels have a limit of 200 concurrent in-flight requests and do not suppo
 
 ## Named tunnel (persistent hostname)
 
-A named tunnel gives you a stable hostname on your own domain. This requires a Cloudflare account with a domain. You can create a named tunnel using the Cloudflare dashboard (recommended) or the `cloudflared` CLI.
+A named tunnel gives you a stable hostname on your own domain. This requires a Cloudflare account with a domain. You can create a named tunnel using the Cloudflare dashboard (recommended) or the [`cloudflared` CLI](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/).
 
 <Tabs>
   <TabItem label="Dashboard (Recommended)">
@@ -157,7 +157,7 @@ npx wrangler dev --ip 0.0.0.0 --port 8787
 
 ### Custom port with Vite
 
-When using the Cloudflare Vite plugin, configure the port in `vite.config.js`:
+When using the [Cloudflare Vite plugin](/workers/vite-plugin/), configure the port in `vite.config.js`:
 
 ```js
 import { defineConfig } from "vite";
@@ -175,16 +175,16 @@ Then point `cloudflared` at the same port.
 
 ## Common use cases
 
-| Use case                                                                  | Approach                                                                                                                                   |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| Share a preview link with a teammate                                      | Quick tunnel — send them the `trycloudflare.com` URL                                                                                       |
-| Test from a mobile device on the same network                             | Quick tunnel or named tunnel — open the URL on your phone                                                                                  |
-| Receive webhooks from an external service (for example, Stripe or GitHub) | Quick tunnel or named tunnel — set the webhook URL to the tunnel hostname                                                                  |
-| Persistent dev environment for a team                                     | Named tunnel with a stable hostname and an [Access policy](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) |
+| Use case                                                                  | Approach                                                                                                                                                                        |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Share a preview link with a teammate                                      | [Quick tunnel](#quick-tunnel-no-account-required) — send them the `trycloudflare.com` URL                                                                                       |
+| Test from a mobile device on the same network                             | [Quick tunnel](#quick-tunnel-no-account-required) or [named tunnel](#named-tunnel-persistent-hostname) — open the URL on your phone                                             |
+| Receive webhooks from an external service (for example, Stripe or GitHub) | [Quick tunnel](#quick-tunnel-no-account-required) or [named tunnel](#named-tunnel-persistent-hostname) — set the webhook URL to the tunnel hostname                             |
+| Persistent dev environment for a team                                     | [Named tunnel](#named-tunnel-persistent-hostname) with a stable hostname and an [Access policy](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) |
 
 ## Limitations
 
-- Quick tunnels generate a new URL each time you restart `cloudflared`. For stable URLs, use a named tunnel.
+- [Quick tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) generate a new URL each time you restart `cloudflared`. For stable URLs, use a [named tunnel](#named-tunnel-persistent-hostname).
 - Quick tunnels are capped at 200 concurrent in-flight requests.
 - Quick tunnels do not support Server-Sent Events (SSE).
-- If you have an existing `~/.cloudflared/config.yaml`, quick tunnels may not work. Rename the file temporarily or use a named tunnel instead.
+- If you have an existing `~/.cloudflared/config.yaml`, quick tunnels may not work. Rename the file temporarily or use a [named tunnel](#named-tunnel-persistent-hostname) instead.
