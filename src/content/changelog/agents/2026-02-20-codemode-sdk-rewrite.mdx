@@ -20,8 +20,6 @@ The [`@cloudflare/codemode`](https://www.npmjs.com/package/@cloudflare/codemode)
 
 - **`createCodeTool()`** — Returns a standard AI SDK `Tool` to use in your AI agents.
 - **`Executor` interface** — Minimal `execute(code, fns)` contract. Implement for any code sandboxing primitive or runtime.
-- **`sanitizeToolName()`** — Converts MCP-style tool names (hyphens, dots) to valid JS identifiers
-- **`needsApproval` filtering** — Tools with `needsApproval` are automatically excluded from code generation.
 
 ### `DynamicWorkerExecutor`
 Runs code in a [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/). It comes with the following features:
