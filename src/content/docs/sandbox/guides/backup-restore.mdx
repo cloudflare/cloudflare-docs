@@ -194,7 +194,7 @@ console.log(`Backup ID: ${backup.id}`);
 
 ## Configure TTL
 
-Set a custom time-to-live for backups. The default TTL is 24 hours (86400 seconds). The `ttl` value must be a positive number of seconds:
+Set a custom time-to-live for backups. The default TTL is 3 days (259200 seconds). The `ttl` value must be a positive number of seconds:
 
 <TypeScriptExample>
 
@@ -219,7 +219,7 @@ const longBackup = await sandbox.createBackup({
 
 ### How TTL is enforced
 
-The TTL is enforced at **restore time**, not at creation time. When you call `restoreBackup()`, the SDK reads the backup metadata from R2 and compares the creation timestamp plus TTL against the current time. If the TTL has elapsed, the restore is rejected with a `BACKUP_EXPIRED` error.
+The TTL is enforced at **restore time**, not at creation time. When you call `restoreBackup()`, the SDK reads the backup metadata from R2 and compares the creation timestamp plus TTL against the current time (with a 60-second buffer to prevent race conditions). If the TTL has elapsed, the restore is rejected with a `BACKUP_EXPIRED` error.
 
 The TTL does **not** automatically delete backup objects from R2. Expired backups remain in your bucket and continue to consume storage until you explicitly delete them or configure an automatic cleanup rule.
 

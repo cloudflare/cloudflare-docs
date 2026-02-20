@@ -24,7 +24,7 @@ await sandbox.createBackup(options: BackupOptions): Promise<DirectoryBackup>
 - `options` - Backup configuration (see [`BackupOptions`](#backupoptions)):
   - `dir` (required) - Absolute path to the directory to back up (for example, `"/workspace"`)
   - `name` (optional) - Human-readable name for the backup. Maximum 256 characters, no control characters.
-  - `ttl` (optional) - Time-to-live in seconds until the backup expires. Default: `86400` (24 hours). Must be a positive number.
+  - `ttl` (optional) - Time-to-live in seconds until the backup expires. Default: `259200` (3 days). Must be a positive number.
 
 **Returns**: `Promise<DirectoryBackup>` containing:
 
@@ -83,7 +83,7 @@ await sandbox.restoreBackup(backup: DirectoryBackup): Promise<RestoreBackupResul
 
 - `success` - Whether the restore succeeded
 - `dir` - Directory that was restored
-- `backupId` - Backup ID that was restored
+- `id` - Backup ID that was restored
 
 <TypeScriptExample>
 ```
@@ -194,7 +194,7 @@ interface BackupOptions {
 
 - `dir` (required) - Absolute path to the directory to back up
 - `name` (optional) - Human-readable backup name. Maximum 256 characters, no control characters.
-- `ttl` (optional) - Time-to-live in seconds. Default: `86400` (24 hours). Must be a positive number.
+- `ttl` (optional) - Time-to-live in seconds. Default: `259200` (3 days). Must be a positive number.
 
 ### `DirectoryBackup`
 
@@ -216,7 +216,7 @@ interface DirectoryBackup {
 interface RestoreBackupResult {
 	success: boolean;
 	dir: string;
-	backupId: string;
+	id: string;
 }
 ```
 
@@ -224,7 +224,7 @@ interface RestoreBackupResult {
 
 - `success` - Whether the restore succeeded
 - `dir` - Directory that was restored
-- `backupId` - Backup ID that was restored
+- `id` - Backup ID that was restored
 
 ## Related resources
 
