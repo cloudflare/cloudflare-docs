@@ -7,6 +7,7 @@ import { getEntry, render } from "astro:content";
 
 import Header from "~/components/changelog/Header.astro";
 import Pagination from "~/components/changelog/Pagination.astro";
+import SearchAll from "~/components/changelog/SearchAll.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
 
 import { Steps } from "~/components";
@@ -95,6 +96,8 @@ const props = {
 		lastPage={page.lastPage}
 		baseUrl={`/changelog/product/${productId}/`}
 	/>
+
+	<SearchAll />
 </StarlightPage>
 
 <style>
