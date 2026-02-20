@@ -47,6 +47,42 @@ For CI/CD or automation, you can create a [Cloudflare API token](https://dash.cl
 
 For more details and configuration options, refer to the [Cloudflare MCP repository](https://github.com/cloudflare/mcp).
 
+### Installing via agent and IDE plugins
+
+You can install the [Cloudflare Skills plugin](https://github.com/cloudflare/skills), which bundles the Cloudflare MCP servers alongside contextual skills and slash commands for building on Cloudflare. The plugin works with any agent that supports the Agent Skills standard, including Claude Code, OpenCode, OpenAI Codex, and Pi.
+
+**Claude Code**
+
+Install using the [plugin marketplace](https://code.claude.com/docs/en/discover-plugins#add-from-github):
+
+```txt
+/plugin marketplace add cloudflare/skills
+```
+
+**Cursor**
+
+Install from the Cursor Marketplace or add manually via **Settings** > **Rules** > **Add Rule** > **Remote Rule (Github)** with `cloudflare/skills`.
+
+**npx skills**
+
+Install using the [`npx skills`](https://skills.sh) CLI:
+
+```sh
+npx skills add https://github.com/cloudflare/skills
+```
+
+**Clone or copy**
+
+Clone the [cloudflare/skills](https://github.com/cloudflare/skills) repository and copy the skill folders into the appropriate directory for your agent:
+
+| Agent        | Skill directory              | Docs                                                                               |
+| ------------ | ---------------------------- | ---------------------------------------------------------------------------------- |
+| Claude Code  | `~/.claude/skills/`          | [docs](https://code.claude.com/docs/en/skills)                                     |
+| Cursor       | `~/.cursor/skills/`          | [docs](https://cursor.com/docs/context/skills)                                     |
+| OpenCode     | `~/.config/opencode/skills/` | [docs](https://opencode.ai/docs/skills/)                                           |
+| OpenAI Codex | `~/.codex/skills/`           | [docs](https://developers.openai.com/codex/skills/)                                |
+| Pi           | `~/.pi/agent/skills/`        | [docs](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent#skills) |
+
 ## Product-specific MCP servers
 
 In addition to the Cloudflare API MCP server, Cloudflare provides product-specific MCP servers for targeted use cases:
