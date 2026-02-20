@@ -22,7 +22,7 @@ Create an R2 bucket for storing backups:
 npx wrangler r2 bucket create my-backup-bucket
 ```
 
-Add the `BACKUP_BUCKET` R2 binding to your Wrangler configuration:
+Add the `BACKUP_BUCKET` R2 binding and presigned URL credentials to your Wrangler configuration:
 
 <WranglerConfig>
 
@@ -52,6 +52,10 @@ Add the `BACKUP_BUCKET` R2 binding to your Wrangler configuration:
 			"tag": "v1",
 		},
 	],
+	"vars": {
+		"BACKUP_BUCKET_NAME": "my-backup-bucket",
+		"CLOUDFLARE_ACCOUNT_ID": "<YOUR_ACCOUNT_ID>",
+	},
 	"r2_buckets": [
 		{
 			"binding": "BACKUP_BUCKET",
@@ -62,6 +66,15 @@ Add the `BACKUP_BUCKET` R2 binding to your Wrangler configuration:
 ```
 
 </WranglerConfig>
+
+Then set your R2 API credentials as secrets:
+
+```sh
+npx wrangler secret put R2_ACCESS_KEY_ID
+npx wrangler secret put R2_SECRET_ACCESS_KEY
+```
+
+You can create R2 API tokens in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **R2** > **Overview** > **Manage R2 API Tokens**. The token needs **Object Read & Write** permissions for your backup bucket.
 
 ## Create a backup
 
@@ -81,7 +94,7 @@ console.log(`Backup created: ${backup.id}`);
 
 </TypeScriptExample>
 
-The SDK creates a compressed squashfs archive of the directory and uploads it to your R2 bucket. The maximum archive size is 500 MB.
+The SDK creates a compressed squashfs archive of the directory and uploads it directly to your R2 bucket using a presigned URL.
 
 ## Restore a backup
 
@@ -145,7 +158,7 @@ const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 const backup = await sandbox.createBackup({
 	dir: "/workspace",
 	name: "deploy-v2",
-	ttl: 86400,
+	ttl: 604800, // 7 days
 });
 
 await env.KV.put(`backup:${userId}`, JSON.stringify(backup));
@@ -181,7 +194,7 @@ console.log(`Backup ID: ${backup.id}`);
 
 ## Configure TTL
 
-Set a custom time-to-live for backups. The default TTL is 1 hour (3600 seconds) and the maximum is 24 hours (86400 seconds):
+Set a custom time-to-live for backups. The default TTL is 24 hours (86400 seconds). The `ttl` value must be a positive number of seconds:
 
 <TypeScriptExample>
 
@@ -198,15 +211,98 @@ const shortBackup = await sandbox.createBackup({
 const longBackup = await sandbox.createBackup({
 	dir: "/workspace",
 	name: "daily-snapshot",
-	ttl: 86400, // 24 hours
+	ttl: 604800, // 7 days
 });
 ```
 
 </TypeScriptExample>
 
-:::note[Expired backups in R2]
-Expired backups are not automatically deleted from R2. Configure [R2 lifecycle rules](/r2/buckets/object-lifecycles/) to clean up expired objects.
-:::
+### How TTL is enforced
+
+The TTL is enforced at **restore time**, not at creation time. When you call `restoreBackup()`, the SDK reads the backup metadata from R2 and compares the creation timestamp plus TTL against the current time. If the TTL has elapsed, the restore is rejected with a `BACKUP_EXPIRED` error.
+
+The TTL does **not** automatically delete backup objects from R2. Expired backups remain in your bucket and continue to consume storage until you explicitly delete them or configure an automatic cleanup rule.
+
+### Configure R2 lifecycle rules for automatic cleanup
+
+To automatically remove expired backup objects from R2, set up an [R2 object lifecycle rule](/r2/buckets/object-lifecycles/) on your backup bucket. This is the recommended way to prevent expired backups from accumulating indefinitely.
+
+For example, if your longest TTL is 7 days, configure a lifecycle rule to delete objects older than 7 days from the `backups/` prefix. This ensures R2 storage does not grow unbounded while giving you a buffer to restore any non-expired backup.
+
+## Clean up backup objects in R2
+
+Backup archives are stored in your R2 bucket under the `backups/` prefix with the structure `backups/{backupId}/data.sqsh` and `backups/{backupId}/meta.json`. You can use the `BACKUP_BUCKET` R2 binding to manage these objects directly.
+
+### Replace the latest backup (delete-then-write)
+
+If you only need the most recent backup, delete the previous one before creating a new one:
+
+<TypeScriptExample>
+
+```typescript
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+// Delete the previous backup's R2 objects before creating a new one
+if (previousBackup) {
+	await env.BACKUP_BUCKET.delete(`backups/${previousBackup.id}/data.sqsh`);
+	await env.BACKUP_BUCKET.delete(`backups/${previousBackup.id}/meta.json`);
+}
+
+// Create a fresh backup
+const backup = await sandbox.createBackup({
+	dir: "/workspace",
+	name: "latest",
+});
+
+// Store the handle so you can delete it next time
+await env.KV.put("latest-backup", JSON.stringify(backup));
+```
+
+</TypeScriptExample>
+
+### List and delete old backups by prefix
+
+To clean up multiple old backups, list objects under the `backups/` prefix and delete them by key:
+
+<TypeScriptExample>
+
+```typescript
+// List all backup objects in the bucket
+const listed = await env.BACKUP_BUCKET.list({ prefix: "backups/" });
+
+for (const object of listed.objects) {
+	// Parse the backup ID from the key (backups/{id}/data.sqsh or backups/{id}/meta.json)
+	const parts = object.key.split("/");
+	const backupId = parts[1];
+
+	// Delete objects older than 7 days
+	const ageMs = Date.now() - object.uploaded.getTime();
+	const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+	if (ageMs > sevenDaysMs) {
+		await env.BACKUP_BUCKET.delete(object.key);
+		console.log(`Deleted expired object: ${object.key}`);
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Delete a specific backup by ID
+
+If you have the backup ID, delete both its archive and metadata directly:
+
+<TypeScriptExample>
+
+```typescript
+const backupId = backup.id;
+
+await env.BACKUP_BUCKET.delete(`backups/${backupId}/data.sqsh`);
+await env.BACKUP_BUCKET.delete(`backups/${backupId}/meta.json`);
+```
+
+</TypeScriptExample>
 
 ## Copy-on-write behavior
 
@@ -254,7 +350,7 @@ try {
 		// Missing BACKUP_BUCKET binding or invalid directory path
 		console.error("Configuration error:", error.message);
 	} else if (error.code === "BACKUP_CREATE_FAILED") {
-		// Archive creation failed or exceeds 500 MB limit
+		// Archive creation or upload to R2 failed
 		console.error("Backup failed:", error.message);
 	}
 }
@@ -281,9 +377,9 @@ try {
 - **Use checkpoints** - Create backups before risky operations like package installations or migrations
 - **Set appropriate TTLs** - Use short TTLs for temporary checkpoints and longer TTLs for persistent snapshots
 - **Store handles externally** - Persist `DirectoryBackup` handles to KV, D1, or Durable Object storage for cross-request access
-- **Configure R2 lifecycle rules** - Set up [object lifecycle rules](/r2/buckets/object-lifecycles/) to clean up expired backups
+- **Configure R2 lifecycle rules** - Set up [object lifecycle rules](/r2/buckets/object-lifecycles/) to automatically delete expired backups from R2, since TTL is only enforced at restore time
+- **Clean up old backups** - Delete previous backup objects from R2 when you no longer need them, or use the delete-then-write pattern for rolling backups
 - **Handle errors** - Wrap backup and restore calls in try/catch blocks
-- **Keep archives small** - Back up only the directories you need to stay within the 500 MB limit
 - **Re-restore after restart** - The FUSE mount is ephemeral, so re-restore from the backup handle after container restarts
 
 ## Related resources
