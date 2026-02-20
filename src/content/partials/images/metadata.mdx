@@ -4,7 +4,7 @@
 
 import { Tabs, TabItem } from "~/components";
 
-Controls the amount of invisible EXIF metadata that should be preserved. Even if EXIF metadata is discarded, Cloudflare maintains the correct color profiles and pixel orientations of the original images.
+Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Content Credentials (C2PA metadata) may be preserved if the [setting is enabled](/images/transform-images/preserve-content-credentials).
 
 Content Credentials (C2PA metadata) may be preserved if [Content Credentials preservation is enabled](/images/transform-images/preserve-content-credentials).
 
