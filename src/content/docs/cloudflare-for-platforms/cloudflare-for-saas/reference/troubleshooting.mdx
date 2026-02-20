@@ -124,6 +124,33 @@ Consider the following solutions:
 - Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to `google`: this sets Google Trust Services as the CA for your custom hostnames. In your API call, make sure to also include `method` and `type` in the `ssl` object.
 - If you are using a custom certificate for your custom hostname, refer to the [custom certificates troubleshooting](/ssl/edge-certificates/custom-certificates/troubleshooting/#lets-encrypt-chain-update).
 
+## Certificate authority change not taking effect via API
+
+When using the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) PATCH endpoint to change the `certificate_authority` of an existing custom hostname, the `ssl.type` and `ssl.method` fields are also required. Omitting them returns an error.
+
+<Details header="Example API call">
+
+```sh
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "ssl": {
+      "type": "dv",
+      "method": "http",
+      "certificate_authority": "google"
+  }
+}'
+```
+
+</Details>
+
+If you only want to change the CA without modifying validation settings, use `"type": "dv"` and `"method": "http"` (or `"txt"` if using DNS-based validation). Valid `certificate_authority` values are `"google"`, `"lets_encrypt"`, `"ssl_com"`, or `""` (empty string for default CA). Refer to the [certificate authorities reference](/ssl/reference/certificate-authorities/) for more details.
+
+***
+
 ## Custom hostname fails to verify because the zone is held
 
 The [zone hold feature](/fundamentals/account/account-security/zone-holds/) is a toggle that will prevent their zone from being activated on other Cloudflare account. When enabled, Cloudflare is not able to issue an SSL/TLS certificate on behalf of that domain name for either a zone or custom hostname.

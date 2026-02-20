@@ -8,7 +8,7 @@ head:
     content: Issue certificates
 ---
 
-import { Render } from "~/components";
+import { Details, Render } from "~/components";
 
 Cloudflare automatically issues certificates when you [create a custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/).
 
@@ -23,6 +23,58 @@ There are several required steps before a custom hostname and its certificate ca
 If you create the custom hostname via API, you can leave the `certificate_authority` parameter empty to set it to “default CA”. With this option, Cloudflare checks the CAA records before requesting the certificates, which helps ensure the certificates can be issued from the CA.
 
 Refer to [this certificate authorities reference page](/ssl/reference/certificate-authorities/) to learn more about the CAs that Cloudflare uses to issue SSL/TLS certificates.
+
+## Change certificate authority
+
+To change the CA for an existing custom hostname, use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) PATCH endpoint. You must include `ssl.type` and `ssl.method` alongside `ssl.certificate_authority` — omitting `type` or `method` returns an error.
+
+This triggers certificate re-issuance with the new CA.
+
+<Details header="Switch to Google Trust Services">
+
+```sh
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "ssl": {
+      "type": "dv",
+      "method": "http",
+      "certificate_authority": "google"
+  }
+}'
+```
+
+</Details>
+
+<Details header="Reset to default CA">
+
+To let Cloudflare choose the best CA, set `certificate_authority` to an empty string:
+
+```sh
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "ssl": {
+      "type": "dv",
+      "method": "http",
+      "certificate_authority": ""
+  }
+}'
+```
+
+</Details>
+
+:::note
+
+The only valid value for `type` is `"dv"`. For `method`, use `"http"` or `"txt"` with ACME-based CAs (Let's Encrypt, Google Trust Services). If you only want to change the CA without modifying validation settings, use your existing validation method.
+
+:::
 
 ## Certificate details and compatibility
 
