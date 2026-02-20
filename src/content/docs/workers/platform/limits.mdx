@@ -181,9 +181,9 @@ You can configure the fail mode by toggling the corresponding [route](/workers/c
 
 A subrequest is any request a Worker makes using the [Fetch API](/workers/runtime-apis/fetch/) or to Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
 
-| Limit                            | Workers Free | Workers Paid                              |
-| -------------------------------- | ------------ | ----------------------------------------- |
-| Subrequests per invocation       | 50           | 10,000 (up to 10M)                        |
+| Limit                            | Workers Free | Workers Paid           |
+| -------------------------------- | ------------ | ---------------------- |
+| Subrequests per invocation       | 50           | 10,000 (up to 10M)    |
 | Subrequests to internal services | 1,000        | Matches configured limit (default 10,000) |
 
 Each subrequest in a redirect chain counts against this limit. The total number of subrequests may exceed the number of `fetch()` calls in your code. You can change the subrequest limit per Worker using the [`limits` configuration](/workers/wrangler/configuration/#limits) in your Wrangler configuration file.
@@ -312,7 +312,7 @@ If you need more than 500 Workers, consider using [Workers for Platforms](/cloud
 
 ### Routes with `wrangler dev --remote` {/* routes-remote-dev */}
 
-When you run a [remote development](/workers/development-testing/remote-development/) session using the `--remote` flag, Cloudflare enforces a limit of 50 routes per zone. The Quick Editor in the Cloudflare dashboard also uses `wrangler dev --remote`, so the same limit applies.
+When you run a [remote development](/workers/development-testing/remote-bindings/) session using the `--remote` flag, Cloudflare enforces a limit of 50 routes per zone. The Quick Editor in the Cloudflare dashboard also uses `wrangler dev --remote`, so the same limit applies.
 
 If your zone has more than 50 routes, you cannot run a remote session until you remove routes to get under the limit.
 

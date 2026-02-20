@@ -188,9 +188,7 @@ export default {
 		// This is a simple proxy scenario.
 		// In this case, you will need to replace the URL with the proper protocol (http vs. https), hostname and port of the service.
 		// For example, this could be "http://localhost:1111", "http://192.0.0.1:3000", "https://my-internal-api.example.com"
-		const targetUrl = new URL(
-			`http://<ENTER_SERVICE_HOST>:<ENTER_SERVICE_PORT>${url.pathname}${url.search}`,
-		);
+		const targetUrl = new URL(`http://<ENTER_SERVICE_HOST>:<ENTER_SERVICE_PORT>${url.pathname}${url.search}`);
 
 		// Create new request with the target URL but preserve all other properties
 		const proxyRequest = new Request(targetUrl, {
@@ -204,6 +202,7 @@ export default {
 		return response;
 	},
 } satisfies ExportedHandler<Env>;
+
 ```
 
 ## 6. Test locally

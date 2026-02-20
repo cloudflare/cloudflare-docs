@@ -186,7 +186,7 @@ For Chromium-based browsers, the router uses the **Speculation Rules API** - a m
 
 **Example injected speculation rules:**
 
-````json
+```json
 {
 	"prefetch": [
 		{
@@ -209,7 +209,7 @@ To enable smooth transitions, set `"smoothTransitions": true` in your `ROUTES` c
 	],
 	"smoothTransitions": true
 }
-````
+```
 
 The router automatically injects CSS into HTML responses:
 
@@ -241,10 +241,13 @@ To add a new microfrontend to your application after initial setup:
 
 2. **Add a [service binding](/workers/runtime-apis/bindings/service-bindings/) in your router's Wrangler configuration file**
 
-   <WranglerConfig>
-   	```toml [[services]] binding = "MICROFRONTEND_C" service =
-   	"my-new-microfrontend" ```
-   </WranglerConfig>
+	<WranglerConfig>
+	```toml
+	[[services]]
+	binding = "MICROFRONTEND_C"
+	service = "my-new-microfrontend"
+	```
+	</WranglerConfig>
 
 3. **Update the `ROUTES` environment variable**
 

@@ -37,9 +37,9 @@ In the following example, the binding is called `TODO`. In the `kv_namespaces` p
 	"kv_namespaces": [
 		{
 			"binding": "TODO",
-			"id": "06779da6940b431db6e566b4846d64db",
-		},
-	],
+			"id": "06779da6940b431db6e566b4846d64db"
+		}
+	]
 }
 ```
 
@@ -49,14 +49,14 @@ With this, the deployed Worker will have a `TODO` field in their environment obj
 
 ```js
 export default {
-	async fetch(request, env, ctx) {
-		// Get the value for the "to-do:123" key
-		// NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
-		let value = await env.TODO.get("to-do:123");
+  async fetch(request, env, ctx) {
+    // Get the value for the "to-do:123" key
+    // NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
+    let value = await env.TODO.get("to-do:123");
 
-		// Return the value, as is, for the Response
-		return new Response(value);
-	},
+    // Return the value, as is, for the Response
+    return new Response(value);
+  },
 };
 ```
 
@@ -76,9 +76,9 @@ To have `wrangler dev` connect to your Workers KV namespace running on Cloudflar
 	"kv_namespaces": [
 		{
 			"binding": "TODO",
-			"id": "06779da6940b431db6e566b4846d64db",
-		},
-	],
+			"id": "06779da6940b431db6e566b4846d64db"
+		}
+	]
 }
 ```
 
@@ -94,13 +94,13 @@ An example might look like:
 import { DurableObject } from "cloudflare:workers";
 
 export class MyDurableObject extends DurableObject {
-	constructor(ctx, env) {
-		super(ctx, env);
-	}
+  constructor(ctx, env) {
+    super(ctx, env);
+  }
 
-	async fetch(request) {
-		const valueFromKV = await this.env.NAMESPACE.get("someKey");
-		return new Response(valueFromKV);
-	}
+  async fetch(request) {
+    const valueFromKV = await this.env.NAMESPACE.get("someKey");
+    return new Response(valueFromKV);
+  }
 }
 ```

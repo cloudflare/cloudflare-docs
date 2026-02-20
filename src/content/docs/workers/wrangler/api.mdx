@@ -78,9 +78,11 @@ const worker = await unstable_dev(script, options);
 ### Parameters
 
 - `script` <Type text="string" />
+
   - A string containing a path to your Worker script, relative to your Worker project's root directory.
 
 - `options` <Type text="object" /> <MetaInfo text="optional" />
+
   - Optional options object containing `wrangler dev` configuration settings.
   - Include an `experimental` object inside `options` to access experimental features such as `disableExperimentalWarning`.
     - Set `disableExperimentalWarning` to `true` to disable Wrangler's warning about using `unstable_` prefixed APIs.
@@ -90,10 +92,12 @@ const worker = await unstable_dev(script, options);
 `unstable_dev()` returns an object containing the following methods:
 
 - `fetch()` `Promise<Response>`
+
   - Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.
   - Refer to [`Fetch`](/workers/runtime-apis/fetch/).
 
 - `stop()` `Promise<void>`
+
   - Shuts down the dev server.
 
 ### Usage
@@ -275,7 +279,9 @@ const platform = await getPlatformProxy(options);
 ### Parameters
 
 - `options` <Type text="object" /> <MetaInfo text="optional" />
+
   - Optional options object containing preferences for the bindings:
+
     - `environment` string
 
       The environment to use.
@@ -297,6 +303,7 @@ const platform = await getPlatformProxy(options);
     - `experimental` `{ remoteBindings: boolean }`
 
       Object used to enable experimental features, no guarantees are made to the stability of this API, use at your own risk.
+
       - `remoteBindings` Enables `getPlatformProxy` to connect to [remote bindings](/workers/development-testing/remote-bindings/).
 
 ### Return Type
@@ -304,20 +311,25 @@ const platform = await getPlatformProxy(options);
 `getPlatformProxy()` returns a `Promise` resolving to an object containing the following fields.
 
 - `env` `Record<string, unknown>`
+
   - Object containing proxies to bindings that can be used in the same way as production bindings. This matches the shape of the `env` object passed as the second argument to modules-format workers. These proxy to binding implementations run inside `workerd`.
   - TypeScript Tip: `getPlatformProxy<Env>()` is a generic function. You can pass the shape of the bindings record as a type argument to get proper types without `unknown` values.
 
 - `cf` IncomingRequestCfProperties read-only
+
   - Mock of the `Request`'s `cf` property, containing data similar to what you would see in production.
 
 - `ctx` object
+
   - Mock object containing implementations of the [`waitUntil`](/workers/runtime-apis/context/#waituntil) and [`passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception) functions that do nothing.
 
 - `caches` object
+
   - Emulation of the [Workers `caches` runtime API](/workers/runtime-apis/cache/).
   - For the time being, all cache operations do nothing. A more accurate emulation will be made available soon.
 
 - `dispose()` () => `Promise<void>`
+
   - Terminates the underlying `workerd` process.
   - Call this after the platform proxy is no longer required by the program. If you are running a long running process (such as a dev server) that can indefinitely make use of the proxy, you do not need to call this function.
 
@@ -330,8 +342,8 @@ The `getPlatformProxy` function uses bindings found in the [Wrangler configurati
 ```jsonc
 {
 	"vars": {
-		"MY_VARIABLE": "test",
-	},
+		"MY_VARIABLE": "test"
+	}
 }
 ```
 
@@ -385,6 +397,7 @@ The bindings supported by `getPlatformProxy` are:
   <Render file="ai-local-usage-charges" product="workers" />
 
 - [Durable Object bindings](/durable-objects/api/)
+
   - To use a Durable Object binding with `getPlatformProxy`, always specify a [`script_name`](/workers/wrangler/configuration/#durable-objects).
 
     For example, you might have the following binding in a Wrangler configuration file read by `getPlatformProxy`.
@@ -393,15 +406,15 @@ The bindings supported by `getPlatformProxy` are:
 
     ```jsonc
     {
-    	"durable_objects": {
-    		"bindings": [
-    			{
-    				"name": "MyDurableObject",
-    				"class_name": "MyDurableObject",
-    				"script_name": "external-do-worker",
-    			},
-    		],
-    	},
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "MyDurableObject",
+            "class_name": "MyDurableObject",
+            "script_name": "external-do-worker"
+          }
+        ]
+      }
     }
     ```
 

@@ -12,13 +12,7 @@ description: >-
   This tutorial shows how to create an API that allows you to securely run queries against a D1 database. The API can be used to customize access controls and/or limit what tables can be queried.
 ---
 
-import {
-	Render,
-	PackageManagers,
-	Steps,
-	Details,
-	WranglerConfig,
-} from "~/components";
+import { Render, PackageManagers, Steps, Details, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to create an API that allows you to securely run queries against a D1 database.
 
@@ -473,6 +467,7 @@ Now that everything is working as expected, the last step is to deploy it to the
     ```
 
 6.  To test it, run the following cURL command with the correct `YOUR_API_KEY` and `DEPLOYED_APP_LINK`.
+
     - Use the `YOUR_API_KEY` you have generated as the secret API key.
     - You can also find your `DEPLOYED_APP_LINK` from the Cloudflare dashboard > **Workers & Pages** > **`d1-http`** > **Settings** > **Domains & Routes**.
 
