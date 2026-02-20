@@ -11,36 +11,6 @@ import { GlossaryTooltip } from "~/components"
 
 The following provide answers to the most common questions associated with Cloudflare SSL/TLS certificates and settings.
 
-## If I have multiple Cloudflare certificates, which one is used?
-
-Cloudflare certificates are prioritized by a combination of hostname specificity, zone specificity, and certificate type.
-
-For more details, refer to [Certificate and hostname priority](/ssl/reference/certificate-and-hostname-priority/).
-
-:::caution
-
-
-Occasionally, the Cloudflare dashboard displays a wildcard certificate with only the apex hostname listed (and does not include the wildcard symbol `*`).
-
-This behavior occurs when all of the following conditions are true:
-
-* The zone is on a [subdomain setup](/dns/zone-setups/subdomain-setup/).
-* The certificate has a subject or SAN that is a wildcard for the zone's parent domain.
-
-
-:::
-
-***
-
-## What does SSL invalid brand check mean?
-
-Some domains are not eligible for the Universal SSL if they contain words that conflict with trademarked domains.
-
-To resolve this issue, you can:
-
-* Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
-* Upload your own [custom certificate](/ssl/edge-certificates/custom-certificates/uploading/).
-
 ***
 
 ## Does SSL work for hosting partners?
@@ -61,38 +31,12 @@ SSL certificate.
 
 ***
 
-## Are Cloudflare SSL certificates shared?
-
-No. Cloudflare SSL/TLS certificates are not shared across domains nor across customers.
-
-***
-
-## Why do I see a Cloudflare certificate when an SSL certificate is installed at my website?
-
-Cloudflare must decrypt traffic in order to cache and filter malicious traffic. Cloudflare either re-encrypts traffic or sends plain text traffic to the origin web server depending on your domain's [encryption mode](/ssl/origin-configuration/ssl-modes/).
-
-***
-
-## I want Cloudflare to use an SSL certificate that I purchased elsewhere.
-
-Domains on Business and Enterprise plans can upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates).
-
-***
-
 ## Does enabling Cloudflare affect PayPal's TLS 1.2 requirement?
 
 No. Since Cloudflare does not proxy connections made directly to `paypal.com`, enabling Cloudflare for your domain does not affect how TLS connections are made.
 
 However, note that PayPal IPN (Instant Payment Notification) might not support [TLS version 1.3](/ssl/edge-certificates/additional-options/tls-13/) if you have it enabled on your zone.
 If you are encountering issues with PayPal IPN when the traffic is proxied by Cloudflare, try setting the [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2`.
-
-***
-
-## How do I obtain an SSL certificate for customers on partial (CNAME) setup?
-
-A [partial DNS setup](/dns/zone-setups/partial-setup/) requires additional steps to provision and validate an SSL certificate.
-
-For more details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl#partial-dns-setup).
 
 ***
 
@@ -104,11 +48,3 @@ We recommend one of the following options:
 
 * Change the Universal Certificate Authority to a different CA.
 * Add an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [custom certificate](/ssl/edge-certificates/custom-certificates/) using a different CA.
-
-***
-
-## What is the HTTP version used for OCSP?
-
-Our OCSP implementation uses HTTP/1.1 by default for plain HTTP connections.
-
-For HTTPS connections, the client automatically attempts to use HTTP/2 if the server supports it through the TLS ALPN (Application-Layer Protocol Negotiation) extension. If HTTP/2 is not available or supported by the server, it will fall back to HTTP/1.1.

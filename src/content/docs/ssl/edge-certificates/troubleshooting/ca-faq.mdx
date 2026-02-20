@@ -17,6 +17,18 @@ Refer to this page for frequently asked questions about Cloudflare SSL/TLS certi
 
 Yes. Cloudflare can issue both RSA and ECDSA certificates.
 
+### Are Cloudflare SSL certificates shared?
+
+No. Cloudflare SSL/TLS certificates are not shared across domains nor across customers.
+
+### If I have multiple Cloudflare certificates, which one is used?
+
+Cloudflare certificates are prioritized by a combination of hostname specificity, zone specificity, and certificate type. For more details, refer to [Certificate and hostname priority](/ssl/reference/certificate-and-hostname-priority/).
+
+### Why do I see a Cloudflare certificate when an SSL certificate is installed at my website?
+
+Cloudflare must decrypt traffic in order to cache and filter malicious traffic. Cloudflare either re-encrypts traffic or sends plain text traffic to the origin web server depending on your domain's [encryption mode](/ssl/origin-configuration/ssl-modes/).
+
 ## Certificate authorities (CAs)
 
 ### Which certificate authorities does Cloudflare use?
@@ -64,11 +76,3 @@ Universal certificates on free zones only receive an ECDSA certificate. Paid zon
 When [ordering an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/), you can choose the CA through the UI or API.
 
 [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) allows you to get full certificate coverage. When enabling Total TLS, you can choose the CA that will be used for all Total TLS certificates.
-
-## Renewal
-
-### Error when clicking `Approve Certificate` on a Certificate Approval renewal email
-
-The full error message is: `An error occurred while attempting to validate your domain. Please try again later or contact support for assistance.`
-
-Check the status of the certificate on the [Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/:zone/ssl-tls). If the status is `Active`, you can disregard this email and the error message.
