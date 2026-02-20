@@ -26,13 +26,13 @@ click D "#basic-post-request" "See basic POST instructions"
 click E "#direct-creator-uploads-with-tus-protocol" "Learn about tus protocol"
 ```
 
-Whether you use basic POST or tus protocol, you must specify a maximum duration to reserve for the user's upload to ensure it can be accommodated within your available storage. This duration will be deducted from your account's available storage until the user's upload is received. Once the upload is processed, its actual duration will be counted and the remaining reservation will be relased. If the video errors or is not received before the link expires, the entire reservation will be released.
+Whether you use basic `POST` or tus protocol, you must specify a maximum duration to reserve for the user's upload to ensure it can be accommodated within your available storage. This duration will be deducted from your account's available storage until the user's upload is received. Once the upload is processed, its actual duration will be counted and the remaining reservation will be relased. If the video errors or is not received before the link expires, the entire reservation will be released.
 
 ## Basic POST request
 
 If your end user's video is under 200 MB and their connection is reliable, we recommend using this method. If your end user's connection is unreliable, we recommend using the [tus protocol](#direct-creator-uploads-with-tus-protocol) instead.
 
-To enable direct creator uploads with a POST request:
+To enable direct creator uploads with a `POST` request:
 
 1. Generate a unique, one-time upload URL using the [Direct upload API](/api/resources/stream/subresources/direct_upload/methods/create/).
 
