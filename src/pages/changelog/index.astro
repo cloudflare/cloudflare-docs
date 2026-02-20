@@ -11,8 +11,6 @@ import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelog";
 import { directoryByGroup } from "~/util/directory";
 
-import { render } from "astro:content";
-
 let notes = await getChangelogs({
 	filter: (entry) => !entry.data.hidden,
 });
