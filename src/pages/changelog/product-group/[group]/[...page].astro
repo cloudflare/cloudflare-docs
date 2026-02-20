@@ -1,0 +1,149 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
+
+import Header from "~/components/changelog/Header.astro";
+import ProductPills from "~/components/changelog/ProductPills.astro";
+
+import { Steps } from "~/components";
+import { format } from "date-fns";
+import { getChangelogs } from "~/util/changelog";
+import { directoryByGroup } from "~/util/directory";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const allNotes = await getChangelogs({
+		filter: (entry) => !entry.data.hidden,
+	});
+
+	return directoryByGroup.flatMap(([groupName, groupProducts]) => {
+		const groupProductIds = groupProducts.map((p) => p.id);
+		const notes = allNotes.filter((note) =>
+			note.data.products.some((p) => groupProductIds.includes(p.id)),
+		);
+		const slug = groupName.replaceAll(" ", "-").toLowerCase();
+
+		return paginate(notes, {
+			params: { group: slug },
+			props: { groupName },
+			pageSize: 25,
+		});
+	});
+}) satisfies GetStaticPaths;
+
+const { page, groupName } = Astro.props;
+
+const props = {
+	frontmatter: {
+		title: `${groupName} Changelog`,
+		tableOfContents: false,
+		template: "splash",
+		chatbot_deprioritize: true,
+	},
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<Header />
+	{
+		page.data.map(async (entry) => {
+			const date = format(entry.data.date, "MMM dd, yyyy");
+			const { Content } = await render(entry);
+
+			return (
+				<div class="mt-0! sm:flex">
+					<time
+						datetime={entry.data.date.toISOString()}
+						class="text-xs leading-6 font-bold whitespace-nowrap sm:pr-4 sm:text-right"
+					>
+						{date}
+					</time>
+					<Steps>
+						<ol class="mt-0! overflow-x-auto">
+							<li class="pb-16!">
+								<div>
+									<h3 class="leading-none">
+										<a
+											href={`/changelog/post/${entry.id}/`}
+											class="mb-4 text-black! no-underline hover:underline"
+										>
+											{entry.data.title}
+										</a>
+									</h3>
+									<ProductPills products={entry.data.products} />
+								</div>
+								<Content />
+							</li>
+						</ol>
+					</Steps>
+				</div>
+			);
+		})
+	}
+
+	<nav class="mt-8 flex items-center justify-between" aria-label="Pagination">
+		{
+			page.url.prev ? (
+				<a
+					href={page.url.prev}
+					class="bg-cl1-brand-orange text-cl1-black flex h-12 items-center justify-center rounded-sm px-6 font-medium no-underline"
+				>
+					← Previous
+				</a>
+			) : (
+				<span />
+			)
+		}
+		<span class="text-sl-color-gray-3 text-sm">
+			Page {page.currentPage} of {page.lastPage}
+		</span>
+		{
+			page.url.next ? (
+				<a
+					href={page.url.next}
+					class="bg-cl1-brand-orange text-cl1-black flex h-12 items-center justify-center rounded-sm px-6 font-medium no-underline"
+				>
+					Next →
+				</a>
+			) : (
+				<span />
+			)
+		}
+	</nav>
+</StarlightPage>
+
+<style>
+	:root {
+		.sl-container {
+			--sl-content-width: 50rem !important;
+			margin-inline: auto !important;
+		}
+
+		.feedback-prompt-content {
+			display: none !important;
+		}
+
+		#footer-links {
+			justify-content: center;
+		}
+	}
+
+	.sl-steps {
+		--bullet-size: 24px !important;
+
+		& > li {
+			padding-inline-start: calc(var(--bullet-size) + 2.5rem) !important;
+
+			&::before {
+				content: "•" !important;
+				font-size: calc(var(--bullet-size) * 2) !important;
+				line-height: calc(var(--bullet-size) / 1.5) !important;
+				color: var(--orange-accent-200) !important;
+			}
+		}
+	}
+</style>
