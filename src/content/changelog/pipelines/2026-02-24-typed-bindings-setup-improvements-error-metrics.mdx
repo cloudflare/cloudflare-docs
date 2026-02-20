@@ -1,0 +1,83 @@
+---
+title: Dropped event metrics, typed Pipelines bindings, and improved setup
+description: Monitor dropped events in the dashboard and via GraphQL, generate schema-aware TypeScript types for pipeline bindings, and set up pipelines faster with Simple mode.
+products:
+  - pipelines
+  - workers
+date: 2026-02-24
+---
+
+[Cloudflare Pipelines](/pipelines/) ingests streaming data via [Workers](/workers/) or HTTP endpoints, transforms it with SQL, and writes it to [R2](/r2/) as Apache Iceberg tables. Today we are shipping three improvements to help you catch data issues earlier, set up pipelines faster, and understand why events get dropped.
+
+## Dropped event metrics
+
+When [stream](/pipelines/streams/) events do not match the expected schema, Pipelines accepts them during ingestion but silently drops them during processing. Until now, there was no way to see which events were dropped or why.
+
+A new **Errors** tab in the Cloudflare dashboard now surfaces dropped events with detailed error messages, grouped by error type.
+
+![The Errors tab in the Cloudflare dashboard showing deserialization errors grouped by type with individual error details](~/assets/images/pipelines/pipelines-error-log-dash.png)
+
+You can also query dropped events programmatically via the new `pipelinesUserErrorsAdaptiveGroups` GraphQL dataset. The dataset breaks down failures by specific error type (`missing_field`, `type_mismatch`, `parse_failure`, or `null_value`) so you can trace issues back to the source.
+
+```graphql
+query GetPipelineUserErrors(
+	$accountTag: String!
+	$pipelineId: String!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			pipelinesUserErrorsAdaptiveGroups(
+				limit: 100
+				filter: {
+					pipelineId: $pipelineId
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+				orderBy: [count_DESC]
+			) {
+				count
+				dimensions {
+					errorFamily
+					errorType
+				}
+			}
+		}
+	}
+}
+```
+
+For the full list of dimensions, error types, and additional query examples, refer to [User error metrics](/pipelines/observability/metrics/#user-error-metrics).
+
+## Typed Pipelines bindings
+
+Sending data to a pipeline from a Worker previously used a generic `Pipeline<PipelineRecord>` type, which meant schema mismatches (wrong field names, incorrect types) were only caught at runtime as dropped events.
+
+Running `wrangler types` now generates schema-specific TypeScript types for your [pipeline bindings](/pipelines/streams/writing-to-streams/#send-via-workers). TypeScript catches missing required fields and incorrect field types at compile time, before your code is deployed.
+
+```ts
+declare namespace Cloudflare {
+	type EcommerceStreamRecord = {
+		user_id: string;
+		event_type: string;
+		product_id?: string;
+		amount?: number;
+	};
+	interface Env {
+		STREAM: import("cloudflare:pipelines").Pipeline<Cloudflare.EcommerceStreamRecord>;
+	}
+}
+```
+
+You must be authenticated via `wrangler login` for schema fetching to work. If not authenticated or if the stream has no schema, `wrangler types` falls back to the generic type.
+
+For more information, refer to [Typed pipeline bindings](/pipelines/streams/writing-to-streams/#typed-pipeline-bindings).
+
+## Improved Pipelines setup
+
+Setting up a new pipeline previously required multiple manual steps: creating an R2 bucket, enabling R2 Data Catalog, generating an API token, and configuring format, compression, and rolling policies individually.
+
+The `wrangler pipelines setup` command now offers a **Simple** setup mode that applies recommended defaults and automatically creates the [R2 bucket](/r2/buckets/) and enables [R2 Data Catalog](/r2/data-catalog/) if they do not already exist. Validation errors during setup prompt you to retry inline rather than restarting the entire process.
+
+For a full walkthrough, refer to the [Getting started guide](/pipelines/getting-started/).

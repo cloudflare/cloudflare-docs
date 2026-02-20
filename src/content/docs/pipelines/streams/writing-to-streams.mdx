@@ -43,18 +43,15 @@ Sends an array of JSON-serializable records to the stream. Returns a Promise tha
 ```typescript
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const event = {
-			user_id: "12345",
-			event_type: "purchase",
-			product_id: "widget-001",
-			amount: 29.99,
-		};
+		const events = await request.json();
 
-		await env.STREAM.send([event]);
+    	await env.STREAM.send(events);
 
-		return new Response("Event sent");
-	},
+    	return new Response("Events sent");
+    },
+
 } satisfies ExportedHandler<Env>;
+
 ```
 </TypeScriptExample>
 

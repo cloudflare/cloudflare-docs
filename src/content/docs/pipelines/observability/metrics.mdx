@@ -53,7 +53,7 @@ The `AccountPipelinesSinkAdaptiveGroups` dataset provides the following dimensio
 
 ### User error metrics
 
-Pipelines track events that are dropped during processing due to deserialization errors. When a structured stream receives events that do not match its defined schema, those events are accepted during ingestion but dropped during processing. The `AccountPipelinesUserErrorsAdaptiveGroups` dataset provides visibility into these dropped events, telling you which events were dropped and why.
+Pipelines track events that are dropped during processing due to deserialization errors. When a structured stream receives events that do not match its defined schema, those events are accepted during ingestion but dropped during processing. The `AccountPipelinesUserErrorsAdaptiveGroups` dataset provides visibility into these dropped events, telling you which events were dropped and why. You can explore the full schema of this dataset using GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
 
 | Metric | GraphQL Field Name | Description                             |
 | ------ | ------------------ | --------------------------------------- |
