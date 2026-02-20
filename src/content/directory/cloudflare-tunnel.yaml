@@ -3,7 +3,11 @@ name: Cloudflare Tunnel
 
 entry:
   title: Cloudflare Tunnel
-  group: Network Services
+  group: Core platform
+  additional_groups:
+    - Network security
+    - Application security
+    - Developer platform
   url: /cloudflare-tunnel/
 
 meta:
