@@ -67,62 +67,62 @@ A named tunnel gives you a stable hostname on your own domain. This requires a C
 <Tabs>
   <TabItem label="Dashboard (Recommended)">
 
-  Create and manage the tunnel from the Cloudflare One dashboard:
+Create and manage the tunnel from the Cloudflare dashboard:
 
-  1. Log in to [Cloudflare One](https://one.dash.cloudflare.com) and go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
-  2. Select **Create a tunnel**, choose **Cloudflared**, and give it a name (for example, `my-worker-dev`).
-  3. Install and run `cloudflared` using the command shown in the dashboard.
-  4. On the **Published applications** tab, add a public hostname (for example, `dev-worker.example.com`) and set the service to `HTTP` / `localhost:8787`.
-  5. Select **Save**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/tunnels) and go to **Networking** > **Tunnels**.
+2. Select **Create a tunnel**, choose **Cloudflared**, and give it a name (for example, `my-worker-dev`).
+3. Install and run `cloudflared` using the command shown in the dashboard.
+4. On the **Published applications** tab, add a public hostname (for example, `dev-worker.example.com`) and set the service to `HTTP` / `localhost:8787`.
+5. Select **Save**.
 
-  For full details, refer to [Create a tunnel (dashboard)](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
+For full details, refer to [Create a tunnel (dashboard)](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
 
-  Start your dev server in a separate terminal:
+Start your dev server in a separate terminal:
 
-  ```sh
-  npx wrangler dev
-  ```
+```sh
+npx wrangler dev
+```
 
-  Your Worker is now reachable at `https://dev-worker.example.com`.
+Your Worker is now reachable at `https://dev-worker.example.com`.
 
   </TabItem>
   <TabItem label="CLI">
 
-  Create and configure the tunnel locally with `cloudflared`:
+Create and configure the tunnel locally with `cloudflared`:
 
-  ```sh
-  cloudflared tunnel login
-  cloudflared tunnel create my-worker-dev
-  cloudflared tunnel route dns my-worker-dev dev-worker.example.com
-  ```
+```sh
+cloudflared tunnel login
+cloudflared tunnel create my-worker-dev
+cloudflared tunnel route dns my-worker-dev dev-worker.example.com
+```
 
-  Create `~/.cloudflared/config.yml`:
+Create `~/.cloudflared/config.yml`:
 
-  ```yaml
-  tunnel: my-worker-dev
-  credentials-file: ~/.cloudflared/<TUNNEL_ID>.json
+```yaml
+tunnel: my-worker-dev
+credentials-file: ~/.cloudflared/<TUNNEL_ID>.json
 
-  ingress:
-    - hostname: dev-worker.example.com
-      service: http://localhost:8787
-    - service: http_status:404
-  ```
+ingress:
+  - hostname: dev-worker.example.com
+    service: http://localhost:8787
+  - service: http_status:404
+```
 
-  Replace `<TUNNEL_ID>` with the UUID printed when you created the tunnel.
+Replace `<TUNNEL_ID>` with the UUID printed when you created the tunnel.
 
-  Start your dev server in one terminal:
+Start your dev server in one terminal:
 
-  ```sh
-  npx wrangler dev
-  ```
+```sh
+npx wrangler dev
+```
 
-  In a second terminal, start the tunnel:
+In a second terminal, start the tunnel:
 
-  ```sh
-  cloudflared tunnel run my-worker-dev
-  ```
+```sh
+cloudflared tunnel run my-worker-dev
+```
 
-  Your Worker is now reachable at `https://dev-worker.example.com`.
+Your Worker is now reachable at `https://dev-worker.example.com`.
 
   </TabItem>
 </Tabs>
@@ -164,10 +164,10 @@ import { defineConfig } from "vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
 
 export default defineConfig({
-  plugins: [cloudflare()],
-  server: {
-    port: 8787,
-  },
+	plugins: [cloudflare()],
+	server: {
+		port: 8787,
+	},
 });
 ```
 
@@ -175,12 +175,12 @@ Then point `cloudflared` at the same port.
 
 ## Common use cases
 
-| Use case | Approach |
-| --- | --- |
-| Share a preview link with a teammate | Quick tunnel — send them the `trycloudflare.com` URL |
-| Test from a mobile device on the same network | Quick tunnel or named tunnel — open the URL on your phone |
-| Receive webhooks from an external service (for example, Stripe or GitHub) | Quick tunnel or named tunnel — set the webhook URL to the tunnel hostname |
-| Persistent dev environment for a team | Named tunnel with a stable hostname and an [Access policy](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) |
+| Use case                                                                  | Approach                                                                                                                                   |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Share a preview link with a teammate                                      | Quick tunnel — send them the `trycloudflare.com` URL                                                                                       |
+| Test from a mobile device on the same network                             | Quick tunnel or named tunnel — open the URL on your phone                                                                                  |
+| Receive webhooks from an external service (for example, Stripe or GitHub) | Quick tunnel or named tunnel — set the webhook URL to the tunnel hostname                                                                  |
+| Persistent dev environment for a team                                     | Named tunnel with a stable hostname and an [Access policy](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) |
 
 ## Limitations
 
