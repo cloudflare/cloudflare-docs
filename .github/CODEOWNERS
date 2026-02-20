@@ -69,7 +69,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/cloud-and-saas-findings/ @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/traffic-policies/ @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/remote-browser-isolation/ @deadlypants1973 @cloudflare/pcx-technical-writing

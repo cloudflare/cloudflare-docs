@@ -2374,8 +2374,7 @@
 /cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
 /cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
 
-# Cloudflare Tunnel IA restructure (quick tunnels moved under other-tunnel-types)
-/cloudflare-tunnel/quick-tunnels/ /tunnel/other-tunnel-types/quick-tunnels/ 301
+
 
 # ============================================================================
 # DYNAMIC REDIRECTS
@@ -2583,10 +2582,7 @@
 # Network Flow (formerly Magic Network Monitoring)
 /magic-network-monitoring/* /network-flow/:splat 301
 
-# Cloudflare Tunnel IA restructure (locally-managed + quick tunnels moved under other-tunnel-types)
-/cloudflare-tunnel/local-management/* /tunnel/other-tunnel-types/local-management/:splat 301
-
-# Cloudflare Tunnel rename to /tunnel/ with flat structure
+# Cloudflare Tunnel flat structure redirects
 /tunnel/get-started/create-remote-tunnel/ /tunnel/setup/ 301
 /tunnel/get-started/create-remote-tunnel-api/ /tunnel/setup/ 301
 /tunnel/get-started/ /tunnel/setup/ 301
@@ -2612,4 +2608,3 @@
 /tunnel/troubleshoot/* /tunnel/troubleshooting/ 301
 /tunnel/downloads/license/ https://github.com/cloudflare/cloudflared/blob/master/LICENSE 301
 /tunnel/downloads/copyrights/ https://github.com/cloudflare/cloudflared 301
-/cloudflare-tunnel/* /tunnel/:splat 301
