@@ -22,25 +22,35 @@ Private images do not currently support custom paths.
 
 :::
 
-The example below uses a Worker that takes in a regular URL without a signed token and returns a tokenized URL that expires after one day. You can, however, set this expiration period to whatever you need, by changing the const `EXPIRATION` value.
+## Generate signed URLs from your backend
+
+Signed URLs are generated server-side to protect your signing key. The example below uses a Cloudflare Worker, but the same signing logic can be implemented in any backend environment (Node.js, Python, PHP, Go, etc.).
+
+The Worker accepts a regular Images URL and returns a signed URL that expires after one day. Adjust the `EXPIRATION` value to set a different expiry period.
+
+:::note
+Never hardcode your signing key in source code. Store it as a secret using [`npx wrangler secret put`](/workers/wrangler/commands/#secret) and access it via the `env` parameter. For more information, refer to [Secrets](/workers/configuration/secrets/).
+:::
 
 <TypeScriptExample>
 
 ```ts
-const KEY = "YOUR_KEY_FROM_IMAGES_DASHBOARD";
 const EXPIRATION = 60 * 60 * 24; // 1 day
 
-const bufferToHex = (buffer) =>
+const bufferToHex = (buffer: ArrayBuffer) =>
 	[...new Uint8Array(buffer)]
 		.map((x) => x.toString(16).padStart(2, "0"))
 		.join("");
 
-async function generateSignedUrl(url) {
+async function generateSignedUrl(
+	url: URL,
+	signingKey: string,
+): Promise<Response> {
 	// `url` is a full imagedelivery.net URL
 	// e.g. https://imagedelivery.net/cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile
 
 	const encoder = new TextEncoder();
-	const secretKeyData = encoder.encode(KEY);
+	const secretKeyData = encoder.encode(signingKey);
 	const key = await crypto.subtle.importKey(
 		"raw",
 		secretKeyData,
@@ -49,16 +59,16 @@ async function generateSignedUrl(url) {
 		["sign"],
 	);
 
-	// Attach the expiration value to the `url`
+	// Attach the expiration value to the URL
 	const expiry = Math.floor(Date.now() / 1000) + EXPIRATION;
 	url.searchParams.set("exp", expiry);
 	// `url` now looks like
 	// https://imagedelivery.net/cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile?exp=1631289275
 
 	const stringToSign = url.pathname + "?" + url.searchParams.toString();
-	// for example, /cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile?exp=1631289275
+	// e.g. /cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile?exp=1631289275
 
-	// Generate the signature
+	// Generate the HMAC signature
 	const mac = await crypto.subtle.sign(
 		"HMAC",
 		key,
@@ -66,7 +76,7 @@ async function generateSignedUrl(url) {
 	);
 	const sig = bufferToHex(new Uint8Array(mac).buffer);
 
-	// And attach it to the `url`
+	// Attach the signature to the URL
 	url.searchParams.set("sig", sig);
 
 	return new Response(url);
@@ -74,13 +84,14 @@ async function generateSignedUrl(url) {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const url = new URL(event.request.url);
+		const url = new URL(request.url);
 		const imageDeliveryURL = new URL(
 			url.pathname
 				.slice(1)
 				.replace("https:/imagedelivery.net", "https://imagedelivery.net"),
 		);
-		return generateSignedUrl(imageDeliveryURL);
+		// IMAGES_SIGNING_KEY is set via `npx wrangler secret put IMAGES_SIGNING_KEY`
+		return generateSignedUrl(imageDeliveryURL, env.IMAGES_SIGNING_KEY);
 	},
 } satisfies ExportedHandler<Env>;
 ```
