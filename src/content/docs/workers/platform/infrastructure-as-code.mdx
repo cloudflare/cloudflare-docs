@@ -245,6 +245,26 @@ bindings = [{
 - `name`: The binding name to access via `env.HYPERDRIVE`
 - `id`: The ID of your Hyperdrive configuration
 
+### VPC Service Binding
+
+Bind to a [VPC Service](/workers-vpc/configuration/vpc-services/) for accessing resources in your private network:
+
+```tf
+bindings = [{
+  type = "vpc_service"
+  name = "PRIVATE_API"
+  service_id = "your-vpc-service-id"
+}]
+```
+
+**Properties:**
+
+- `type`: `"vpc_service"`
+- `name`: The binding name to access via `env.PRIVATE_API`
+- `service_id`: The ID of your VPC Service (from `cloudflare_connectivity_directory_service` or the dashboard)
+
+You can create the VPC Service with Terraform using the `cloudflare_connectivity_directory_service` resource. For a full walkthrough, refer to [Manage VPC Services via API and Terraform](/workers-vpc/reference/manage-vpc-services/).
+
 ### Analytics Engine Binding
 
 Bind to an [Analytics Engine](/analytics/analytics-engine/) dataset:
@@ -346,6 +366,11 @@ resource "cloudflare_worker_version" "my_worker_version" {
       type = "secret_text"
       name = "API_KEY"
       text = var.api_key
+    },
+    {
+      type = "vpc_service"
+      name = "PRIVATE_API"
+      service_id = var.vpc_service_id
     }
   ]
 }
