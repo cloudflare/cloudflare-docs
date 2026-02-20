@@ -7,7 +7,7 @@ products:
 date: 2026-02-24
 ---
 
-[Cloudflare Pipelines](/pipelines/) ingests streaming data via [Workers](/workers/) or HTTP endpoints, transforms it with SQL, and writes it to [R2](/r2/) as Apache Iceberg tables. Today we are shipping three improvements to help you catch data issues earlier, set up pipelines faster, and understand why events get dropped.
+[Cloudflare Pipelines](/pipelines/) ingests streaming data via [Workers](/workers/) or HTTP endpoints, transforms it with SQL, and writes it to [R2](/r2/) as Apache Iceberg tables. Today we are shipping three improvements to help you catch data issues earlier, set up Pipelines faster, and understand why events get dropped.
 
 ## Dropped event metrics
 
@@ -52,9 +52,9 @@ For the full list of dimensions, error types, and additional query examples, ref
 
 ## Typed Pipelines bindings
 
-Sending data to a pipeline from a Worker previously used a generic `Pipeline<PipelineRecord>` type, which meant schema mismatches (wrong field names, incorrect types) were only caught at runtime as dropped events.
+Sending data to a Pipeline from a Worker previously used a generic `Pipeline<PipelineRecord>` type, which meant schema mismatches (wrong field names, incorrect types) were only caught at runtime as dropped events.
 
-Running `wrangler types` now generates schema-specific TypeScript types for your [pipeline bindings](/pipelines/streams/writing-to-streams/#send-via-workers). TypeScript catches missing required fields and incorrect field types at compile time, before your code is deployed.
+Running `wrangler types` now generates schema-specific TypeScript types for your [Pipeline bindings](/pipelines/streams/writing-to-streams/#send-via-workers). TypeScript catches missing required fields and incorrect field types at compile time, before your code is deployed.
 
 ```ts
 declare namespace Cloudflare {
@@ -72,11 +72,11 @@ declare namespace Cloudflare {
 
 You must be authenticated via `wrangler login` for schema fetching to work. If not authenticated or if the stream has no schema, `wrangler types` falls back to the generic type.
 
-For more information, refer to [Typed pipeline bindings](/pipelines/streams/writing-to-streams/#typed-pipeline-bindings).
+For more information, refer to [Typed Pipeline bindings](/pipelines/streams/writing-to-streams/#typed-pipeline-bindings).
 
 ## Improved Pipelines setup
 
-Setting up a new pipeline previously required multiple manual steps: creating an R2 bucket, enabling R2 Data Catalog, generating an API token, and configuring format, compression, and rolling policies individually.
+Setting up a new Pipeline previously required multiple manual steps: creating an R2 bucket, enabling R2 Data Catalog, generating an API token, and configuring format, compression, and rolling policies individually.
 
 The `wrangler pipelines setup` command now offers a **Simple** setup mode that applies recommended defaults and automatically creates the [R2 bucket](/r2/buckets/) and enables [R2 Data Catalog](/r2/data-catalog/) if they do not already exist. Validation errors during setup prompt you to retry inline rather than restarting the entire process.
 
