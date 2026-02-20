@@ -1,0 +1,131 @@
+---
+interface Props {
+	currentPage: number;
+	lastPage: number;
+	/** Base URL for this paginated route, e.g. "/changelog/" or "/changelog/product/workers/".
+	 *  Must end with a trailing slash.
+	 *  Page 1 = baseUrl, page N = baseUrl + N + "/".
+	 */
+	baseUrl: string;
+}
+
+const { currentPage, lastPage, baseUrl } = Astro.props;
+
+function pageUrl(n: number): string {
+	return n === 1 ? baseUrl : `${baseUrl}${n}/`;
+}
+
+/**
+ * Build the list of items to render in the page number strip.
+ * Always shows: first, last, current, one before current, one after current.
+ * Gaps between non-adjacent numbers are represented as null (rendered as "...").
+ *
+ * Example for currentPage=5, lastPage=12:
+ *   [1, null, 4, 5, 6, null, 12]
+ */
+function buildPageItems(current: number, last: number): (number | null)[] {
+	if (last <= 1) return [];
+
+	const visible = new Set<number>();
+	visible.add(1);
+	visible.add(last);
+	visible.add(current);
+	if (current - 1 >= 1) visible.add(current - 1);
+	if (current + 1 <= last) visible.add(current + 1);
+
+	const sorted = [...visible].sort((a, b) => a - b);
+
+	const items: (number | null)[] = [];
+	for (let i = 0; i < sorted.length; i++) {
+		if (i > 0 && sorted[i] - sorted[i - 1] > 1) {
+			items.push(null); // ellipsis gap
+		}
+		items.push(sorted[i]);
+	}
+	return items;
+}
+
+const items = buildPageItems(currentPage, lastPage);
+const prevUrl = currentPage > 1 ? pageUrl(currentPage - 1) : null;
+const nextUrl = currentPage < lastPage ? pageUrl(currentPage + 1) : null;
+---
+
+{
+	lastPage > 1 && (
+		<nav class="pagination mt-8 flex items-center justify-between" aria-label="Pagination">
+			{prevUrl ? (
+				<a href={prevUrl} class="pagination-btn no-underline">
+					← Prev
+				</a>
+			) : (
+				<span class="pagination-btn disabled">← Prev</span>
+			)}
+
+			<div class="flex items-center gap-1">
+				{items.map((item) =>
+					item === null ? (
+						<span class="flex h-9 items-center justify-center px-2 text-sm text-sl-color-gray-3">
+							…
+						</span>
+					) : item === currentPage ? (
+						<span class="pagination-btn active" aria-current="page">
+							{item}
+						</span>
+					) : (
+						<a href={pageUrl(item)} class="pagination-btn no-underline">
+							{item}
+						</a>
+					),
+				)}
+			</div>
+
+			{nextUrl ? (
+				<a href={nextUrl} class="pagination-btn no-underline">
+					Next →
+				</a>
+			) : (
+				<span class="pagination-btn disabled">Next →</span>
+			)}
+		</nav>
+	)
+}
+
+<style>
+	:root {
+		--pagination-active-bg: rgb(46 105 255);
+		--pagination-active-color: white;
+		--pagination-hover-bg: rgb(46 105 255 / 0.15);
+	}
+
+	:root[data-theme="dark"] {
+		--pagination-active-bg: rgb(246 130 31);
+		--pagination-active-color: black;
+		--pagination-hover-bg: rgb(246 130 31 / 0.15);
+	}
+
+	.pagination-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 2.25rem;
+		min-width: 2.25rem;
+		padding-inline: 0.75rem;
+		border-radius: 0.25rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+
+	.pagination-btn:not(.active):not(.disabled):hover {
+		background-color: var(--pagination-hover-bg);
+	}
+
+	.pagination-btn.active {
+		background-color: var(--pagination-active-bg);
+		color: var(--pagination-active-color);
+		font-weight: 700;
+	}
+
+	.pagination-btn.disabled {
+		opacity: 0.35;
+	}
+</style>

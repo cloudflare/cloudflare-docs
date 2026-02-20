@@ -6,6 +6,7 @@ import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
 
 import Header from "~/components/changelog/Header.astro";
+import Pagination from "~/components/changelog/Pagination.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
 
 import { Steps } from "~/components";
@@ -85,35 +86,11 @@ const props = {
 		})
 	}
 
-	<nav class="mt-8 flex items-center justify-between" aria-label="Pagination">
-		{
-			page.url.prev ? (
-				<a
-					href={page.url.prev}
-					class="bg-cl1-brand-orange text-cl1-black flex h-12 items-center justify-center rounded-sm px-6 font-medium no-underline"
-				>
-					← Previous
-				</a>
-			) : (
-				<span />
-			)
-		}
-		<span class="text-sl-color-gray-3 text-sm">
-			Page {page.currentPage} of {page.lastPage}
-		</span>
-		{
-			page.url.next ? (
-				<a
-					href={page.url.next}
-					class="bg-cl1-brand-orange text-cl1-black flex h-12 items-center justify-center rounded-sm px-6 font-medium no-underline"
-				>
-					Next →
-				</a>
-			) : (
-				<span />
-			)
-		}
-	</nav>
+	<Pagination
+		currentPage={page.currentPage}
+		lastPage={page.lastPage}
+		baseUrl={`/changelog/product-group/${Astro.params.group}/`}
+	/>
 </StarlightPage>
 
 <style>
