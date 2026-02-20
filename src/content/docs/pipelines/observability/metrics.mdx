@@ -105,8 +105,8 @@ This query returns the total bytes and records read by a pipeline from streams, 
 
 ```graphql graphql-api-explorer
 query PipelineOperatorMetrics(
-	$accountTag: string!
-	$pipelineId: string!
+	$accountTag: String!
+	$pipelineId: String!
 	$datetimeStart: Time!
 	$datetimeEnd: Time!
 ) {
@@ -138,9 +138,9 @@ This query returns detailed metrics about data written to a specific sink, inclu
 
 ```graphql graphql-api-explorer
 query PipelineSinkMetrics(
-	$accountTag: string!
-	$pipelineId: string!
-	$sinkId: string!
+	$accountTag: String!
+	$pipelineId: String!
+	$sinkId: String!
 	$datetimeStart: Time!
 	$datetimeEnd: Time!
 ) {
@@ -174,8 +174,8 @@ This query returns a summary of events that were dropped due to schema validatio
 
 ```graphql graphql-api-explorer
 query GetPipelineUserErrors(
-	$accountTag: string!
-	$pipelineId: string!
+	$accountTag: String!
+	$pipelineId: String!
 	$datetimeStart: Time!
 	$datetimeEnd: Time!
 ) {
@@ -286,6 +286,7 @@ pipelinesUserErrorsAdaptiveGroups(
 	}
 }
 ```
+
 :::note
 In addition to `pipelinesUserErrorsAdaptiveGroups`, you can also query the `pipelinesUserErrorsAdaptive` dataset, which provides detailed error descriptions within the last 24 hours. Be aware that querying this dataset may return a large volume of data if your pipeline processes many events.
 :::

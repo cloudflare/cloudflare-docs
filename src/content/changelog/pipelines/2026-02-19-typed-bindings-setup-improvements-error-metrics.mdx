@@ -46,15 +46,20 @@ A new **Errors** tab in the Cloudflare dashboard shows dropped events with detai
 You can also query dropped events programmatically via the new `pipelinesUserErrorsAdaptiveGroups` GraphQL dataset. When structured stream events fail schema validation, you can query the specific error type (`missing_field`, `type_mismatch`, `parse_failure`, or `null_value`) and see how many events were affected.
 
 ```graphql
-query GetPipelineUserErrors($accountTag: string!, $pipelineId: string!) {
+query GetPipelineUserErrors(
+	$accountTag: String!
+	$pipelineId: String!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
 	viewer {
 		accounts(filter: { accountTag: $accountTag }) {
 			pipelinesUserErrorsAdaptiveGroups(
 				limit: 100
 				filter: {
 					pipelineId: $pipelineId
-					datetime_geq: "2026-02-12T00:00:00Z"
-					datetime_leq: "2026-02-19T23:59:59Z"
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
 				}
 				orderBy: [count_DESC]
 			) {

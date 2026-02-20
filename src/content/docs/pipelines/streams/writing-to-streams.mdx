@@ -47,16 +47,14 @@ export default {
 			user_id: "12345",
 			event_type: "purchase",
 			product_id: "widget-001",
-			amount: 29.99
+			amount: 29.99,
 		};
 
-    	await env.STREAM.send([event]);
+		await env.STREAM.send([event]);
 
-    	return new Response('Event sent');
-    },
-
+		return new Response("Event sent");
+	},
 } satisfies ExportedHandler<Env>;
-
 ```
 </TypeScriptExample>
 
