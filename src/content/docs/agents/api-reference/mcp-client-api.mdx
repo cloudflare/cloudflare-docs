@@ -95,9 +95,9 @@ await this.addMcpServer("server", "https://mcp.example.com/mcp", {
 
 | Transport         | Description                                         |
 | ----------------- | --------------------------------------------------- |
-| `streamable-http` | HTTP with streaming - recommended default           |
+| `auto`            | Auto-detect based on server response (default)      |
+| `streamable-http` | HTTP with streaming                                 |
 | `sse`             | Server-Sent Events - legacy/compatibility transport |
-| `auto`            | Auto-detect based on server response                |
 
 ### Custom headers
 
@@ -488,7 +488,7 @@ async addMcpServer(
   - `client` — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
   - `transport` — Transport layer configuration:
     - `headers` — Custom HTTP headers for authentication
-    - `type` — Transport type: `"streamable-http"` (default), `"sse"`, or `"auto"`
+    - `type` — Transport type: `"auto"` (default), `"streamable-http"`, or `"sse"`
   - `retry` — Retry options for connection and reconnection attempts. Persisted and used when restoring connections after hibernation or after OAuth completion. Default: 3 attempts, 500ms base delay, 5s max delay. Refer to [Retries](/agents/api-reference/retries/) for details on `RetryOptions`.
 
 #### Returns
@@ -694,7 +694,8 @@ For fine-grained control, use `this.mcp` directly:
 <TypeScriptExample>
 
 ```ts
-// 1. Register the server
+// 1. Register the server (saves to storage and creates in-memory connection)
+const id = "my-server";
 await this.mcp.registerServer(id, {
 	url: "https://mcp.example.com/mcp",
 	name: "My Server",
@@ -702,7 +703,7 @@ await this.mcp.registerServer(id, {
 	transport: { type: "auto" },
 });
 
-// 2. Connect
+// 2. Connect (initializes transport, handles OAuth if needed)
 const connectResult = await this.mcp.connectToServer(id);
 
 if (connectResult.state === "failed") {
@@ -711,15 +712,17 @@ if (connectResult.state === "failed") {
 }
 
 if (connectResult.state === "authenticating") {
-	// Handle OAuth...
+	console.log("OAuth required:", connectResult.authUrl);
 	return;
 }
 
-// 3. Discover capabilities
-const discoverResult = await this.mcp.discoverIfConnected(id);
+// 3. Discover capabilities (transitions from "connected" to "ready")
+if (connectResult.state === "connected") {
+	const discoverResult = await this.mcp.discoverIfConnected(id);
 
-if (!discoverResult?.success) {
-	console.error("Discovery failed:", discoverResult?.error);
+	if (!discoverResult?.success) {
+		console.error("Discovery failed:", discoverResult?.error);
+	}
 }
 ```
 
@@ -730,11 +733,14 @@ if (!discoverResult?.success) {
 <TypeScriptExample>
 
 ```ts
-// Listen for state changes
-this.mcp.onServerStateChanged(() => {
+// Listen for state changes (onServerStateChanged is an Event<void>)
+const disposable = this.mcp.onServerStateChanged(() => {
 	console.log("MCP server state changed");
 	this.broadcastMcpServers(); // Notify connected clients
 });
+
+// Clean up the subscription when no longer needed
+// disposable.dispose();
 ```
 
 </TypeScriptExample>

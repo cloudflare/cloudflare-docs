@@ -14,6 +14,20 @@ This guide will show you how to deploy your own remote MCP server on Cloudflare 
 - **Without authentication** — anyone can connect and use the server (no login required).
 - **With [authentication and authorization](/agents/guides/remote-mcp-server/#add-authentication)** — users sign in before accessing tools, and you can control which tools an agent can call based on the user's permissions.
 
+## Choosing an approach
+
+The Agents SDK provides multiple ways to create MCP servers. Choose the approach that fits your use case:
+
+| Approach | Stateful? | Requires Durable Objects? | Best for |
+| --- | --- | --- | --- |
+| [`createMcpHandler()`](/agents/api-reference/mcp-handler-api/) | No | No | Stateless tools, simplest setup |
+| [`McpAgent`](/agents/api-reference/mcp-agent-api/) | Yes | Yes | Stateful tools, per-session state, elicitation |
+| Raw `WebStandardStreamableHTTPServerTransport` | No | No | Full control, no SDK dependency |
+
+- **`createMcpHandler()`** is the fastest way to get a stateless MCP server running. Use it when your tools do not need per-session state.
+- **`McpAgent`** gives you a Durable Object per session with built-in state management, elicitation support, and both SSE and Streamable HTTP transports.
+- **Raw transport** gives you full control if you want to use the `@modelcontextprotocol/sdk` directly without the Agents SDK helpers.
+
 ## Deploy your first MCP server
 
 You can start by deploying a [public MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) without authentication, then add user authentication and scoped authorization later. If you already know your server will require authentication, you can skip ahead to the [next section](/agents/guides/remote-mcp-server/#add-authentication).
