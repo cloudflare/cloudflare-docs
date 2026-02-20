@@ -1,0 +1,88 @@
+---
+title: Create a locally-managed tunnel
+pcx_content_type: how-to
+sidebar:
+  order: 1
+---
+
+Follow this step-by-step guide to create and run a locally-managed tunnel using the CLI.
+
+:::tip
+If your server is behind a restrictive firewall, verify it can reach Cloudflare on port `7844` before proceeding. Refer to [Connectivity pre-checks](/tunnel/troubleshooting/#connectivity-pre-checks).
+:::
+
+## Prerequisites
+
+- [Add a website to Cloudflare](/fundamentals/manage-domains/add-site/).
+- [Change your domain nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
+- [Install `cloudflared`](/tunnel/downloads/) on your server.
+
+## 1. Authenticate `cloudflared`
+
+```sh
+cloudflared tunnel login
+```
+
+This opens a browser window where you log in to your Cloudflare account and select your hostname. After authenticating, `cloudflared` generates a [cert.pem file](/tunnel/other-tunnel-types/local-management/local-tunnel-terms/#certpem) in the [default `cloudflared` directory](/tunnel/other-tunnel-types/local-management/local-tunnel-terms/#default-cloudflared-directory).
+
+## 2. Create a tunnel
+
+```sh
+cloudflared tunnel create <NAME>
+```
+
+This creates a persistent relationship between the name you provide and a UUID, generates a [tunnel credentials file](/tunnel/other-tunnel-types/local-management/local-tunnel-terms/#credentials-file), and creates a subdomain at `.cfargotunnel.com`.
+
+Take note of the tunnel UUID and credentials file path from the output.
+
+Confirm the tunnel was created:
+
+```sh
+cloudflared tunnel list
+```
+
+## 3. Create a configuration file
+
+In your `.cloudflared` directory, create a [`config.yml` file](/tunnel/other-tunnel-types/local-management/configuration-file/):
+
+```yml
+url: http://localhost:8000
+tunnel: <Tunnel-UUID>
+credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
+```
+
+## 4. Route traffic to the tunnel
+
+Create a DNS CNAME record that points traffic to your tunnel:
+
+```sh
+cloudflared tunnel route dns <UUID or NAME> <hostname>
+```
+
+## 5. Run the tunnel
+
+```sh
+cloudflared tunnel run <UUID or NAME>
+```
+
+If your configuration file has a custom name or is not in the `.cloudflared` directory, add the `--config` flag:
+
+```sh
+cloudflared tunnel --config /path/your-config-file.yml run <UUID or NAME>
+```
+
+:::note
+`cloudflared` can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to [Run as a service](/tunnel/other-tunnel-types/local-management/as-a-service/).
+:::
+
+## 6. Verify the tunnel
+
+```sh
+cloudflared tunnel info <UUID or NAME>
+```
+
+Your tunnel is now running. For routing options, refer to [Routing](/tunnel/routing/). To add identity-based access controls, refer to [Cloudflare Access integration](/tunnel/integrations/#cloudflare-access).
+
+:::note[Looking for private network routing?]
+For WARP-to-tunnel private network access, refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+:::

@@ -1,0 +1,218 @@
+---
+title: Monitoring
+pcx_content_type: reference
+sidebar:
+  order: 5
+---
+
+import {
+	AvailableNotifications,
+	DashButton,
+	Details,
+	Render,
+} from "~/components";
+
+Cloudflare Tunnel exposes logs, metrics, and diagnostic tools to help you monitor tunnel health and resolve issues.
+
+## Tunnel health
+
+You can check your tunnel connection status in the [Cloudflare dashboard](https://dash.cloudflare.com/) by going to **Networking** > **Tunnels**, or by running `cloudflared tunnel list`.
+
+<DashButton url="/?to=/:account/tunnels" />
+
+<Render file="tunnel/tunnel-status" product="cloudflare-one" />
+
+:::note[Tunnel status scope]
+The tunnel status only reflects the connection between `cloudflared` and the Cloudflare network. It does not indicate whether `cloudflared` can reach your internal services. A tunnel can appear **Healthy** while users are unable to connect to an application.
+:::
+
+### Notifications
+
+Administrators can receive alerts when tunnels change health or deployment status. Notifications can be delivered by email, webhook, or third-party services.
+
+To configure tunnel notifications, refer to [Create a notification](/notifications/get-started/#create-a-notification).
+
+<AvailableNotifications product="Tunnel" />
+
+## Logs
+
+Tunnel logs record all activity between `cloudflared` and the Cloudflare global network, and all activity between `cloudflared` and your origin server.
+
+### Server-side logs
+
+If you have access to the origin server, use the [`--loglevel`](/tunnel/configuration/#loglevel) flag to set the log level when you start the tunnel. By default, `cloudflared` prints logs to stdout and does not persist them. Use the [`--logfile`](/tunnel/configuration/#logfile) flag to write logs to a file.
+
+For a locally-managed tunnel:
+
+```sh
+cloudflared tunnel --loglevel info --logfile cloudflared.log run <UUID>
+```
+
+For a remotely-managed tunnel, add `--loglevel info` and `--logfile <PATH>` to your system service as described in [Run parameters](/tunnel/configuration/#run-parameters).
+
+### Remote log streaming (CLI)
+
+You can stream real-time logs from a running tunnel without SSH access to the server. `cloudflared` must be installed on your local machine.
+
+1. Authenticate `cloudflared`:
+
+   ```sh
+   cloudflared tunnel login
+   ```
+
+2. Stream logs:
+
+   ```sh
+   cloudflared tail <UUID>
+   ```
+
+   Add `--output=json` and pipe to [jq](https://stedolan.github.io/jq/) for structured output. Use `--level`, `--event`, or `--sampling` flags to filter by severity, event type, or sample rate.
+
+   For [replicas](/tunnel/configuration/#replicas-and-high-availability), specify which instance to stream from with `--connector-id <CONNECTOR_ID>`.
+
+:::note
+Dashboard-based log streaming is available in the [Cloudflare One dashboard](https://one.dash.cloudflare.com/) under **Networks** > **Connectors** > **Cloudflare Tunnels**.
+:::
+
+## Metrics
+
+When you run a tunnel, `cloudflared` exposes a [Prometheus](https://prometheus.io/docs/introduction/overview/) metrics endpoint. You can scrape this endpoint from a remote machine using the Prometheus toolkit.
+
+### Default metrics server address
+
+In non-containerized environments, `cloudflared` starts the metrics server on `127.0.0.1:<PORT>/metrics`, where `<PORT>` is the first available port in the range `20241` to `20245`. If all ports are unavailable, `cloudflared` binds to a random port. In containerized environments (Docker, Kubernetes), the default address is `0.0.0.0:<PORT>/metrics`.
+
+Check your [tunnel logs](#server-side-logs) to find the default port:
+
+```text
+2024-12-19T21:17:58Z INF Starting metrics server on 127.0.0.1:20241/metrics
+```
+
+### Configure a custom address
+
+To serve metrics on a custom IP and port, use the [`--metrics`](/tunnel/configuration/#metrics) flag:
+
+```sh
+cloudflared tunnel --metrics 127.0.0.1:60123 run my-tunnel
+```
+
+To add the `--metrics` flag to a remotely-managed tunnel, refer to [Run parameters](/tunnel/configuration/#run-parameters).
+
+:::note
+To fetch metrics from another machine on the local network, replace `127.0.0.1` with the internal IP of the `cloudflared` server (for example, `192.168.x.x`). To serve metrics on all interfaces, use `0.0.0.0`.
+:::
+
+Verify the metrics server is running by opening `http://localhost:60123/metrics`. You can then export the data to Prometheus and Grafana. Refer to the [Grafana tutorial](/cloudflare-one/tutorials/grafana/) for setup instructions.
+
+### cloudflared metrics
+
+| Name                                                | Description                                                                     | Type    | Labels                                     |
+| --------------------------------------------------- | ------------------------------------------------------------------------------- | ------- | ------------------------------------------ |
+| `build_info`                                        | Build and version information.                                                  | GAUGE   | `goversion`, `revision`, `type`, `version` |
+| `cloudflared_tcp_active_sessions`                   | Concurrent TCP sessions being proxied to any origin.                            | GAUGE   |                                            |
+| `cloudflared_tcp_total_sessions`                    | Total TCP sessions proxied to any origin.                                       | COUNTER |                                            |
+| `cloudflared_tunnel_active_streams`                 | Total number of active streams.                                                 | GAUGE   |                                            |
+| `cloudflared_tunnel_concurrent_requests_per_tunnel` | Concurrent requests proxied through each tunnel.                                | GAUGE   |                                            |
+| `cloudflared_tunnel_ha_connections`                 | Number of active HA connections.                                                | GAUGE   |                                            |
+| `cloudflared_tunnel_request_errors`                 | Number of errors proxying to origin.                                            | COUNTER |                                            |
+| `cloudflared_tunnel_server_locations`               | Where each tunnel is connected. `1` means current location, `0` means previous. | GAUGE   | `connection_id`, `edge_location`           |
+| `cloudflared_tunnel_timer_retries`                  | Unacknowledged heartbeat count.                                                 | GAUGE   |                                            |
+| `cloudflared_tunnel_total_requests`                 | Total requests proxied through all tunnels.                                     | COUNTER |                                            |
+| `cloudflared_udp_active_sessions`                   | Concurrent UDP sessions being proxied to any origin.                            | GAUGE   |                                            |
+| `cloudflared_udp_total_sessions`                    | Total UDP sessions proxied to any origin.                                       | COUNTER |                                            |
+| `quic_client_latest_rtt`                            | Latest round-trip time (RTT) measured on a connection.                          | GAUGE   | `conn_index`                               |
+| `quic_client_smoothed_rtt`                          | Smoothed RTT for a connection in ms.                                            | GAUGE   | `conn_index`                               |
+
+<Details header="All metrics (including internal)">
+
+| Name                                             | Description                                                                                             | Type    | Labels                 |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | ------- | ---------------------- |
+| `cloudflared_config_local_config_pushes`         | Number of local configuration pushes to Cloudflare.                                                     | COUNTER |                        |
+| `cloudflared_config_local_config_pushes_errors`  | Number of errors during local configuration pushes.                                                     | COUNTER |                        |
+| `cloudflared_orchestration_config_version`       | Configuration version.                                                                                  | GAUGE   |                        |
+| `cloudflared_tunnel_tunnel_authenticate_success` | Number of successful tunnel authentication events.                                                      | COUNTER |                        |
+| `cloudflared_tunnel_tunnel_register_success`     | Number of successful tunnel registrations.                                                              | COUNTER | `rpcName`              |
+| `coredns_panics_total`                           | Number of panics.                                                                                       | COUNTER |                        |
+| `quic_client_closed_connections`                 | Number of connections that have been closed.                                                            | COUNTER |                        |
+| `quic_client_lost_packets`                       | Number of packets lost from a connection.                                                               | COUNTER | `conn_index`, `reason` |
+| `quic_client_min_rtt`                            | Lowest RTT measured on a connection in ms.                                                              | GAUGE   | `conn_index`           |
+| `quic_client_packet_too_big_dropped`             | Packets received from origin too big to send to Cloudflare, dropped.                                    | COUNTER |                        |
+| `quic_client_total_connections`                  | Number of connections initiated. For all QUIC metrics, client means the side initiating the connection. | COUNTER |                        |
+| `promhttp_metric_handler_requests_in_flight`     | Current number of scrapes being served.                                                                 | GAUGE   |                        |
+| `promhttp_metric_handler_requests_total`         | Total number of scrapes by HTTP status code.                                                            | COUNTER | `code`                 |
+
+</Details>
+
+## Diagnostic logs
+
+Cloudflare Tunnel generates diagnostic reports that collect data from a single `cloudflared` instance running on the local machine. This requires `cloudflared` version 2024.12.2 or later.
+
+### Generate diagnostics
+
+1. (Linux only) To include network diagnostics, allow the `cloudflared` user to create raw and packet sockets without root permissions:
+
+   ```sh
+   sudo setcap cap_net_raw+ep /usr/bin/traceroute && sudo setcap cap_net_raw+ep /usr/bin/traceroute
+   ```
+
+   If you do not set `cap_net_raw`, traceroute data will be unavailable.
+
+2. Generate diagnostic logs:
+
+   ```sh
+   cloudflared tunnel diag
+   ```
+
+   If multiple `cloudflared` instances run on the same host, specify the [metrics server address](#configure-a-custom-address):
+
+   ```sh
+   cloudflared tunnel diag --metrics 127.0.0.1:20241
+   ```
+
+This command outputs the status of each diagnostic task and places a `cloudflared-diag-YYYY-MM-DDThh-mm-ss.zip` file in your working directory.
+
+<Details header="Docker diagnostics">
+
+`cloudflared` reads diagnostic data from the [metrics server](#metrics). Expose the metrics server from the Docker container so the host machine can reach it.
+
+1. Deploy the container with port forwarding to the metrics port:
+
+   ```sh
+   docker run -d -p 20241:<METRICS_PORT> docker.io/cloudflare/cloudflared tunnel ...
+   ```
+
+2. Verify the metrics server is reachable:
+
+   ```sh
+   curl localhost:20241/diag/tunnel
+   ```
+
+3. Run the diagnostic using the Docker container ID or name:
+
+   ```sh
+   cloudflared tunnel diag --diag-container-id=<CONTAINER_ID>
+   ```
+
+</Details>
+
+<Details header="Kubernetes diagnostics">
+
+Use port forwarding to connect to the metrics server. Forward a local port in the range `20241`-`20245` to the container metrics port:
+
+```sh
+kubectl port-forward <POD> <DIAGNOSTIC_PORT>:<METRICS_PORT>
+```
+
+Then run:
+
+```sh
+cloudflared tunnel diag --diag-pod-id=<POD_ID>
+```
+
+If the pod has multiple containers and `cloudflared` is not the first, add `--diag-container-id=<CONTAINER_NAME>`.
+
+</Details>
+
+### Diagnostic file contents
+
+<Render file="tunnel/tunnel-diag-file" product="cloudflare-one" />

@@ -1,0 +1,161 @@
+---
+title: Troubleshooting
+pcx_content_type: troubleshooting
+sidebar:
+  order: 8
+---
+
+import { Details, GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
+
+Use this page to diagnose and resolve common issues with Cloudflare Tunnel. For tunnel health monitoring, logs, and metrics, refer to [Monitoring](/tunnel/monitoring/).
+
+## Connectivity pre-checks
+
+Before deploying a tunnel, validate that your environment can reach [Cloudflare Tunnel endpoints](/tunnel/configuration/#firewall-rules). Run these tests from the same host machine that will run `cloudflared`.
+
+### DNS resolution
+
+Cloudflare Tunnel requires outbound connectivity to `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com` (or `us-region1` and `us-region2` for the [US region](/tunnel/configuration/#region)).
+
+Verify that your DNS resolver returns the expected IP addresses:
+
+<Tabs>
+<TabItem label="Global region">
+
+```sh
+dig A region1.v2.argotunnel.com
+```
+
+```sh
+dig A region2.v2.argotunnel.com
+```
+
+You should see IP addresses in the `198.41.192.x` and `198.41.200.x` ranges.
+
+</TabItem>
+<TabItem label="US region">
+
+```sh
+dig A us-region1.v2.argotunnel.com
+```
+
+```sh
+dig A us-region2.v2.argotunnel.com
+```
+
+You should see IP addresses in the `198.41.218.x` and `198.41.219.x` ranges.
+
+</TabItem>
+</Tabs>
+
+If you receive a `SERVFAIL`, `NXDOMAIN`, or empty answer, test against Cloudflare's public resolver:
+
+```sh
+dig A region1.v2.argotunnel.com @1.1.1.1
+```
+
+- **Only `1.1.1.1` works** — Your local DNS resolver is misconfigured or blocked. Configure the host to use `1.1.1.1`, or investigate with your system administrator.
+- **Neither resolver works** — Your firewall may be blocking DNS queries (UDP port `53`). Check for firewall rules or contact your DNS provider.
+
+### Network connectivity
+
+After confirming DNS resolution, test whether your host can send packets to Cloudflare on port `7844`. Choose an IP from your `dig` output (for example, `198.41.192.167`).
+
+```sh
+nc -uvz -w 3 198.41.192.167 7844  # UDP
+nc -vz -w 3 198.41.192.167 7844   # TCP
+```
+
+| Result                   | Meaning                                                            | Action                                                                                                                                                |
+| ------------------------ | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Both UDP and TCP succeed | `cloudflared` can connect using `quic` (UDP) or `http2` (TCP).     | Deploy the tunnel.                                                                                                                                    |
+| UDP succeeds, TCP fails  | TCP on port `7844` is blocked. `cloudflared` can only use `quic`.  | Allow TCP on port `7844`, or do not force `http2` in your [protocol](/tunnel/configuration/#protocol) configuration.                                  |
+| TCP succeeds, UDP fails  | UDP on port `7844` is blocked. `cloudflared` can only use `http2`. | Allow UDP on port `7844`, or do not force `quic` in your [protocol](/tunnel/configuration/#protocol) configuration.                                   |
+| Both fail                | Packets are being dropped between the host and Cloudflare.         | Allow all traffic over port `7844` on the local network firewall. If this does not resolve the issue, troubleshoot with your ISP or service provider. |
+
+### Get help
+
+If DNS or network tests fail, the problem is likely in your local environment. Debug with your administrator, ISP, or cloud provider.
+
+<Render
+	file="warp/support-ticket-best-practices"
+	product="cloudflare-one"
+	params={{ tunnelMode: true }}
+/>
+
+## Common errors
+
+If you do not see your issue below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/), view your [tunnel logs](/tunnel/monitoring/#logs), or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### `cloudflared service is already installed`
+
+Only one instance of `cloudflared` may run as a service per machine. Add additional routes to your existing tunnel instead, or run `sudo cloudflared service uninstall` to remove the existing service.
+
+### `An A, AAAA, or CNAME record with that host already exists`
+
+Choose a different hostname for your tunnel, or delete the existing DNS record in the [Cloudflare dashboard](https://dash.cloudflare.com).
+
+### Tunnel credentials file does not exist
+
+If you see `Tunnel credentials file '/root/.cloudflared/<UUID>.json' doesn't exist or is not a file`, verify that the `credentials-file` path in your `config.yml` points to the correct location. You may need to change `/root/` to your home directory.
+
+### Tunnel fails to authenticate
+
+If the authenticating user is removed from the account or their permissions change, Cloudflare rolls the API key. The certificate retains the old key and authentication fails. Run `cloudflared tunnel login` again to regenerate the certificate, or create a dedicated service user to authenticate.
+
+### `x509: certificate signed by unknown authority`
+
+The origin uses a certificate that `cloudflared` does not trust. To resolve:
+
+- Add the certificate to the system certificate pool.
+- Use the `--origin-ca-pool` flag and specify the path to the certificate.
+- Use the `--no-tls-verify` flag to skip certificate verification.
+
+### Error 1033
+
+<Render file="tunnel/1033-error" product="cloudflare-one" />
+
+For more information, refer to [Cloudflare 1xxx errors](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/).
+
+### `ERR_TOO_MANY_REDIRECTS`
+
+Set the [origin server name](/tunnel/configuration/#originservername) parameter to the hostname on your origin certificate:
+
+```txt
+ingress:
+  - hostname: test.example.com
+    service: https://localhost:443
+    originRequest:
+      originServerName: test.example.com
+```
+
+### `websocket: bad handshake`
+
+Your `cloudflared access` client cannot reach your `cloudflared tunnel` origin. Common causes:
+
+- The tunnel is not running or not connected to Cloudflare.
+- WebSockets are not [enabled](/network/websockets/#enable-websockets).
+- SSL/TLS encryption mode is set to **Off (not secure)**. Set it to **Flexible**, **Full**, or **Full (strict)** in **SSL/TLS** > **Overview**.
+- Requests are blocked by [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/).
+- One or more [Workers routes](/workers/configuration/routing/routes/) overlap with the tunnel hostname.
+
+### Tunnel connections fail with SSL error
+
+If `cloudflared` returns `error="remote error: tls: handshake failure"`, verify the hostname is covered by an SSL certificate. Multi-level subdomains may require an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) because Universal SSL does not cover more than one level of subdomain.
+
+### `Too many open files`
+
+Increase the open file descriptor limit to at least 70,000 with `ulimit -n 70000` on the host running `cloudflared`. Configure the limit persistently for your operating system.
+
+### `failed to sufficiently increase receive buffer size`
+
+This message from the [quic-go library](https://github.com/quic-go/quic-go) is generally not impactful. For high-bandwidth environments, set the maximum receive buffer size on Linux:
+
+```sh
+echo 'net.core.rmem_max=2500000' | sudo tee /etc/sysctl.d/98-core-rmem-max.conf
+sudo sysctl -p /etc/sysctl.d/98-core-rmem-max.conf
+```
+
+### Streaming responses are buffered
+
+Proxied traffic through Cloudflare Tunnel is buffered by default unless the origin server includes the `Content-Type: text/event-stream` response header. This header tells `cloudflared` to stream data as it arrives instead of buffering the entire response.

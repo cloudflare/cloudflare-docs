@@ -78,10 +78,10 @@ product:cloudflare-one:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/cloudflare-one/**
-product:cloudflare-tunnel:
+product:tunnel:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/cloudflare-tunnel/**
+          - src/content/docs/tunnel/**
 product:constellation:
   - changed-files:
       - any-glob-to-any-file:

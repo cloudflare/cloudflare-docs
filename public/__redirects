@@ -2375,7 +2375,7 @@
 /cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
 
 # Cloudflare Tunnel IA restructure (quick tunnels moved under other-tunnel-types)
-/cloudflare-tunnel/quick-tunnels/ /cloudflare-tunnel/other-tunnel-types/quick-tunnels/ 301
+/cloudflare-tunnel/quick-tunnels/ /tunnel/other-tunnel-types/quick-tunnels/ 301
 
 # ============================================================================
 # DYNAMIC REDIRECTS
@@ -2584,4 +2584,32 @@
 /magic-network-monitoring/* /network-flow/:splat 301
 
 # Cloudflare Tunnel IA restructure (locally-managed + quick tunnels moved under other-tunnel-types)
-/cloudflare-tunnel/local-management/* /cloudflare-tunnel/other-tunnel-types/local-management/:splat 301
+/cloudflare-tunnel/local-management/* /tunnel/other-tunnel-types/local-management/:splat 301
+
+# Cloudflare Tunnel rename to /tunnel/ with flat structure
+/tunnel/get-started/create-remote-tunnel/ /tunnel/setup/ 301
+/tunnel/get-started/create-remote-tunnel-api/ /tunnel/setup/ 301
+/tunnel/get-started/ /tunnel/setup/ 301
+/tunnel/configure-tunnels/tunnel-with-firewall/ /tunnel/configuration/#firewall-rules 301
+/tunnel/configure-tunnels/tunnel-availability/ /tunnel/configuration/#replicas-and-high-availability 301
+/tunnel/configure-tunnels/tunnel-permissions/ /tunnel/configuration/#tunnel-tokens 301
+/tunnel/configure-tunnels/cloudflared-parameters/ /tunnel/configuration/#run-parameters 301
+/tunnel/configure-tunnels/* /tunnel/configuration/ 301
+/tunnel/routing/dns/ /tunnel/routing/#dns-records 301
+/tunnel/routing/load-balancers/ /tunnel/routing/#load-balancing 301
+/tunnel/routing/protocols/ /tunnel/routing/#supported-protocols 301
+/tunnel/integrations/workers-vpc/ /tunnel/integrations/#workers-vpc 301
+/tunnel/integrations/load-balancing/ /tunnel/integrations/#load-balancing 301
+/tunnel/integrations/access/ /tunnel/integrations/#cloudflare-access 301
+/tunnel/integrations/spectrum/ /tunnel/integrations/#spectrum 301
+/tunnel/monitor-tunnels/logs/ /tunnel/monitoring/#logs 301
+/tunnel/monitor-tunnels/metrics/ /tunnel/monitoring/#metrics 301
+/tunnel/monitor-tunnels/notifications/ /tunnel/monitoring/#tunnel-health 301
+/tunnel/monitor-tunnels/* /tunnel/monitoring/ 301
+/tunnel/troubleshoot/common-errors/ /tunnel/troubleshooting/#common-errors 301
+/tunnel/troubleshoot/diag-logs/ /tunnel/monitoring/#diagnostic-logs 301
+/tunnel/troubleshoot/connectivity-prechecks/ /tunnel/troubleshooting/#connectivity-pre-checks 301
+/tunnel/troubleshoot/* /tunnel/troubleshooting/ 301
+/tunnel/downloads/license/ https://github.com/cloudflare/cloudflared/blob/master/LICENSE 301
+/tunnel/downloads/copyrights/ https://github.com/cloudflare/cloudflared 301
+/cloudflare-tunnel/* /tunnel/:splat 301
