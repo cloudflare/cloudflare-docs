@@ -98,6 +98,8 @@ A remotely-managed tunnel only requires a token to run. Anyone with the token ca
 
 ### Get the token
 
+To get the token for a remotely-managed tunnel:
+
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
@@ -105,8 +107,9 @@ A remotely-managed tunnel only requires a token to run. Anyone with the token ca
 
    <DashButton url="/?to=/:account/tunnels" />
 
-2. Select a tunnel and select **Edit**.
-3. Copy the `cloudflared` installation command — the token is the `eyJ...` string.
+2. Select your tunnel.
+3. Select **Add a replica**.
+3. Copy the `cloudflared` installation command into a text editor (do not run the command). The token is the `eyJ...` string.
 
 </TabItem>
 <TabItem label="API">
@@ -123,27 +126,31 @@ A remotely-managed tunnel only requires a token to run. Anyone with the token ca
 
 Rotate tokens regularly to reduce the risk of compromise. For tunnels with multiple [replicas](#replicas-and-high-availability), rotate outside working hours and update replicas in batches.
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels**, select your tunnel, select **Edit**, then select **Refresh token**. Copy the new installation command.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels**.
 
-2. On each replica, update and restart:
+   <DashButton url="/?to=/:account/tunnels" />
 
-   ```sh
-   sudo cloudflared service install <NEW_TOKEN>
-   sudo systemctl restart cloudflared.service
-   ```
+2. Select your tunnel.
+3. Select **Rotate token**.
+	After rotating the token, `cloudflared` cannot establish new connections with the old token. Existing connectors remain active until restarted.
+4. Select **Add replica** and copy the new `cloudflared` installation command.
+5. On each replica, reinstall the `cloudflared` service using the new token:
 
-After refreshing, `cloudflared` cannot establish new connections with the old token. Existing connectors remain active until restarted.
+	```sh
+	sudo cloudflared service uninstall
+	sudo cloudflared service install <NEW_TOKEN>
+	```
 
 <Details header="Rotate a compromised token">
 
-If your tunnel token is compromised, immediately refresh the token (step 1 above), then force-disconnect all existing connections:
+If your tunnel token is compromised, immediately [rotate the token](#rotate-a-token), then force-disconnect all existing connections:
 
 <APIRequest
 	path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/connections"
 	method="DELETE"
 />
 
-Then update and restart all replicas with the new token.
+Then reinstall the `cloudflared` service on all replicas using the new token.
 
 </Details>
 
