@@ -65,8 +65,6 @@ const props = {
 				.map((group) => group[0])
 				.sort();
 
-			const { Content } = await render(entry);
-
 			return (
 				<div
 					class:list={["mt-0! sm:flex", { "hidden!": idx >= 50 }]}
@@ -98,7 +96,7 @@ const props = {
 									</h3>
 									<ProductPills products={entry.data.products} />
 								</div>
-								<Content />
+								<p>{entry.data.description}</p>
 							</li>
 						</ol>
 					</Steps>
