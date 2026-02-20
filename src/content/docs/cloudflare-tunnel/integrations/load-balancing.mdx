@@ -1,0 +1,40 @@
+---
+pcx_content_type: integration-guide
+title: Load Balancing
+sidebar:
+  order: 2
+description: Use Cloudflare Tunnel as origin endpoints in Load Balancer pools for high availability and intelligent traffic steering.
+---
+
+[Cloudflare Load Balancing](/load-balancing/) distributes traffic across multiple origins using health checks, steering algorithms, and failover logic. When combined with Cloudflare Tunnel, you can load balance traffic to origins that do not have publicly routable IP addresses.
+
+## How it works
+
+Each Cloudflare Tunnel is assigned a subdomain of `cfargotunnel.com` using the tunnel's UUID. You add this subdomain as an [endpoint address](/load-balancing/understand-basics/load-balancing-components/#endpoints) in a Load Balancer pool, and specify the application hostname in the [endpoint host header](/load-balancing/additional-options/override-http-host-headers/).
+
+This allows Cloudflare to steer traffic across multiple tunnels — typically one tunnel per data center or cloud region — using latency-based, geolocation, or other [steering algorithms](/load-balancing/understand-basics/traffic-steering/).
+
+## Architecture patterns
+
+### Single tunnel with replicas
+
+For basic high availability, deploy multiple [`cloudflared` replicas](/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas) of the same tunnel. Cloudflare routes requests to the geographically closest replica. This approach does not require Load Balancing.
+
+### Multiple tunnels with Load Balancer
+
+For intelligent traffic steering and health-check-based failover, create separate tunnels per data center and add each as an endpoint in a Load Balancer pool. This provides:
+
+- Active health monitoring per tunnel
+- Automatic failover when a tunnel becomes unhealthy
+- Traffic distribution based on your chosen steering algorithm
+- Session affinity options
+
+## Get started
+
+For step-by-step setup instructions, refer to [Public load balancers](/cloudflare-tunnel/routing/load-balancers/).
+
+## Related resources
+
+- [Tunnel availability and failover](/cloudflare-tunnel/configure-tunnels/tunnel-availability/) — When to use replicas versus load balancers.
+- [Load Balancing with Tunnel](/load-balancing/additional-options/cloudflare-tunnel/) — Load Balancing product documentation for tunnel endpoints.
+- [Load Balancing reference architecture](/reference-architecture/architectures/load-balancing/) — Design patterns for load balancing with tunnels.
