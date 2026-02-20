@@ -41,7 +41,8 @@ If your server is behind a restrictive firewall, verify it can reach Cloudflare 
 	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/tunnel%204_%20set%20up%20tunnel.png"
 />
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels**. <DashButton url="/?to=/:account/tunnels" />
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels**.
+	<DashButton url="/?to=/:account/tunnels" />
 
 2. Select **Create Tunnel**.
 
@@ -99,10 +100,10 @@ Your tunnel should appear on the **Tunnels** page with a `Healthy` status.
 5. For **Service URL**, enter the local address and port of your application.
 
    For example, if your web server runs on the same machine as `cloudflared`:
-   - HTTP on port 80: `http://localhost:80`
-   - HTTPS on port 443: `https://localhost:443`
+   - HTTP on port `80`: `http://localhost:80`
+   - HTTPS on port `443`: `https://localhost:443`
 
-   If the application runs on a different machine: `http://192.0.2.1:80`
+   If your web server runs on a different machine: `http://192.0.2.1:80`
 
 6. Select **Add route**.
 
@@ -145,7 +146,7 @@ Your tunnel should appear on the **Tunnels** page with a `Healthy` status.
    	}}
    />
 
-3. Install `cloudflared` on your server and run the tunnel using the `token` from the previous step:
+3. Install `cloudflared` on your server and run the tunnel using the `token` obtained in [Create a tunnel](/tunnel/setup/#create-a-tunnel):
 
    <Render file="tunnel/install-and-run-tunnel" product="cloudflare-one" />
 
