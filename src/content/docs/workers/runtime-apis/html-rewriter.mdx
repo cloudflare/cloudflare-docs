@@ -135,51 +135,43 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 #### Methods
 
-- <code>getAttribute(namestring)</code> : string | null
-  - Returns the value for a given attribute name on the element, or `null` if it is not found.
+- <code>getAttribute(namestring)</code> : string | null - Returns the value for
+  a given attribute name on the element, or `null` if it is not found.
 
-- <code>hasAttribute(namestring)</code> : boolean
-  - Returns a boolean indicating whether an attribute exists on the element.
+- <code>hasAttribute(namestring)</code> : boolean - Returns a boolean indicating
+  whether an attribute exists on the element.
 
-- <code>setAttribute(namestring, valuestring)</code> : Element
-  - Sets an attribute to a provided value, creating the attribute if it does not exist.
+- <code>setAttribute(namestring, valuestring)</code> : Element - Sets an
+  attribute to a provided value, creating the attribute if it does not exist.
 
-- <code>removeAttribute(namestring)</code> : Element
-  - Removes the attribute.
+- <code>removeAttribute(namestring)</code> : Element - Removes the attribute.
 
 - <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Inserts content before the element.
+  Element - Inserts content before the element.
 
   <Render file="content_and_contentoptions" product="workers" />
 
 - <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Inserts content right after the element.
+  Element - Inserts content right after the element.
 
 - <code>prepend(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Inserts content right after the start tag of the element.
+  Element - Inserts content right after the start tag of the element.
 
 - <code>append(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Inserts content right before the end tag of the element.
+  Element - Inserts content right before the end tag of the element.
 
 - <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Removes the element and inserts content in place of it.
+  Element - Removes the element and inserts content in place of it.
 
 - <code>
   	setInnerContent(contentContent, contentOptionsContentOptionsoptional)
   </code>
-  : Element
-  - Replaces content of the element.
+  : Element - Replaces content of the element.
 
-- <code>remove()</code> : Element
-  - Removes the element with all its content.
+- <code>remove()</code> : Element - Removes the element with all its content.
 
-- <code>removeAndKeepContent()</code> : Element
-  - Removes the start tag and end tag of the element but keeps its inner content intact.
+- <code>removeAndKeepContent()</code> : Element - Removes the start tag and end
+  tag of the element but keeps its inner content intact.
 
 - `onEndTag(handlerFunction<void>)` : void
   - Registers a handler that is invoked when the end tag of the element is reached.
@@ -196,17 +188,14 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 #### Methods
 
 - <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  EndTag
-  - Inserts content right before the end tag.
+  EndTag - Inserts content right before the end tag.
 
 - <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  EndTag
-  - Inserts content right after the end tag.
+  EndTag - Inserts content right after the end tag.
 
   <Render file="content_and_contentoptions" product="workers" />
 
-- <code>remove()</code> : EndTag
-  - Removes the element with all its content.
+- <code>remove()</code> : EndTag - Removes the element with all its content.
 
 ### Text chunks
 
@@ -228,21 +217,17 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 #### Methods
 
 - <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Inserts content before the element.
+  Element - Inserts content before the element.
 
   <Render file="content_and_contentoptions" product="workers" />
 
 - <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Inserts content right after the element.
+  Element - Inserts content right after the element.
 
 - <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Removes the element and inserts content in place of it.
+  Element - Removes the element and inserts content in place of it.
 
-- <code>remove()</code> : Element
-  - Removes the element with all its content.
+- <code>remove()</code> : Element - Removes the element with all its content.
 
 ### Comments
 
@@ -267,21 +252,17 @@ class ElementHandler {
 #### Methods
 
 - <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Inserts content before the element.
+  Element - Inserts content before the element.
 
   <Render file="content_and_contentoptions" product="workers" />
 
 - <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Inserts content right after the element.
+  Element - Inserts content right after the element.
 
 - <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element
-  - Removes the element and inserts content in place of it.
+  Element - Removes the element and inserts content in place of it.
 
-- <code>remove()</code> : Element
-  - Removes the element with all its content.
+- <code>remove()</code> : Element - Removes the element with all its content.
 
 ### Doctype
 
@@ -322,8 +303,7 @@ class DocumentHandler {
 #### Methods
 
 - <code>append(contentContent, contentOptionsContentOptionsoptional)</code> :
-  DocumentEnd
-  - Inserts content after the end of the document.
+  DocumentEnd - Inserts content after the end of the document.
 
   <Render file="content_and_contentoptions" product="workers" />
 
@@ -428,3 +408,4 @@ async function handle(request) {
 - [Tutorial: Localize a Website](/pages/tutorials/localize-a-website/)
 - [Example: rewrite links](/workers/examples/rewrite-links/)
 - [Example: Inject Turnstile](/workers/examples/turnstile-html-rewriter/)
+- [Example: SPA shell with bootstrap data](/workers/examples/spa-shell/)

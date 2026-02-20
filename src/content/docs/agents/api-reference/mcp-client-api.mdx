@@ -95,9 +95,9 @@ await this.addMcpServer("server", "https://mcp.example.com/mcp", {
 
 | Transport         | Description                                         |
 | ----------------- | --------------------------------------------------- |
-| `streamable-http` | HTTP with streaming - recommended default           |
+| `auto`            | Auto-detect based on server response (default)      |
+| `streamable-http` | HTTP with streaming                                 |
 | `sse`             | Server-Sent Events - legacy/compatibility transport |
-| `auto`            | Auto-detect based on server response                |
 
 ### Custom headers
 
@@ -488,7 +488,7 @@ async addMcpServer(
   - `client` — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
   - `transport` — Transport layer configuration:
     - `headers` — Custom HTTP headers for authentication
-    - `type` — Transport type: `"streamable-http"` (default), `"sse"`, or `"auto"`
+    - `type` — Transport type: `"auto"` (default), `"streamable-http"`, or `"sse"`
   - `retry` — Retry options for connection and reconnection attempts. Persisted and used when restoring connections after hibernation or after OAuth completion. Default: 3 attempts, 500ms base delay, 5s max delay. Refer to [Retries](/agents/api-reference/retries/) for details on `RetryOptions`.
 
 #### Returns
@@ -625,37 +625,34 @@ export class MyAgent extends Agent {
 
 Override the default OAuth provider used when connecting to MCP servers by implementing `createMcpOAuthProvider()` on your Agent class. This enables custom authentication strategies such as pre-registered client credentials or mTLS, beyond the built-in dynamic client registration.
 
+The override is used for both new connections (`addMcpServer`) and restored connections after a Durable Object restart.
+
 <TypeScriptExample>
 
 ```ts
 import { Agent } from "agents";
-import type { OAuthClientProvider } from "@modelcontextprotocol/sdk/client/auth.js";
+import type { AgentMcpOAuthProvider } from "agents";
 
 export class MyAgent extends Agent {
-	createMcpOAuthProvider(
-		serverUrlHash: string,
-		callbackUrl: string,
-	): OAuthClientProvider {
+	createMcpOAuthProvider(callbackUrl: string): AgentMcpOAuthProvider {
 		return {
 			get redirectUrl() {
-				return new URL(callbackUrl);
+				return callbackUrl;
 			},
 			get clientMetadata() {
 				return {
-					// Use pre-registered client credentials
 					client_id: this.env.MCP_CLIENT_ID,
 					client_secret: this.env.MCP_CLIENT_SECRET,
 					redirect_uris: [callbackUrl],
 				};
 			},
 			clientInformation() {
-				// Return pre-registered client info
 				return {
 					client_id: this.env.MCP_CLIENT_ID,
 					client_secret: this.env.MCP_CLIENT_SECRET,
 				};
 			},
-			// ... implement other OAuthClientProvider methods
+			// ... implement other AgentMcpOAuthProvider methods
 		};
 	}
 }
@@ -664,6 +661,29 @@ export class MyAgent extends Agent {
 </TypeScriptExample>
 
 If you do not override this method, the agent uses the default provider which performs [OAuth 2.0 Dynamic Client Registration](https://datatracker.ietf.org/doc/html/rfc7591) with the MCP server.
+
+### Custom storage backend
+
+To keep the built-in OAuth logic (CSRF state, PKCE, nonce generation, token management) but route token storage to a different backend, import `DurableObjectOAuthClientProvider` and pass your own storage adapter:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, DurableObjectOAuthClientProvider } from "agents";
+import type { AgentMcpOAuthProvider } from "agents";
+
+export class MyAgent extends Agent {
+	createMcpOAuthProvider(callbackUrl: string): AgentMcpOAuthProvider {
+		return new DurableObjectOAuthClientProvider(
+			myCustomStorage, // any DurableObjectStorage-compatible adapter
+			this.name,
+			callbackUrl,
+		);
+	}
+}
+```
+
+</TypeScriptExample>
 
 ## Advanced: MCPClientManager
 
@@ -674,7 +694,8 @@ For fine-grained control, use `this.mcp` directly:
 <TypeScriptExample>
 
 ```ts
-// 1. Register the server
+// 1. Register the server (saves to storage and creates in-memory connection)
+const id = "my-server";
 await this.mcp.registerServer(id, {
 	url: "https://mcp.example.com/mcp",
 	name: "My Server",
@@ -682,7 +703,7 @@ await this.mcp.registerServer(id, {
 	transport: { type: "auto" },
 });
 
-// 2. Connect
+// 2. Connect (initializes transport, handles OAuth if needed)
 const connectResult = await this.mcp.connectToServer(id);
 
 if (connectResult.state === "failed") {
@@ -691,15 +712,17 @@ if (connectResult.state === "failed") {
 }
 
 if (connectResult.state === "authenticating") {
-	// Handle OAuth...
+	console.log("OAuth required:", connectResult.authUrl);
 	return;
 }
 
-// 3. Discover capabilities
-const discoverResult = await this.mcp.discoverIfConnected(id);
+// 3. Discover capabilities (transitions from "connected" to "ready")
+if (connectResult.state === "connected") {
+	const discoverResult = await this.mcp.discoverIfConnected(id);
 
-if (!discoverResult?.success) {
-	console.error("Discovery failed:", discoverResult?.error);
+	if (!discoverResult?.success) {
+		console.error("Discovery failed:", discoverResult?.error);
+	}
 }
 ```
 
@@ -710,11 +733,14 @@ if (!discoverResult?.success) {
 <TypeScriptExample>
 
 ```ts
-// Listen for state changes
-this.mcp.onServerStateChanged(() => {
+// Listen for state changes (onServerStateChanged is an Event<void>)
+const disposable = this.mcp.onServerStateChanged(() => {
 	console.log("MCP server state changed");
 	this.broadcastMcpServers(); // Notify connected clients
 });
+
+// Clean up the subscription when no longer needed
+// disposable.dispose();
 ```
 
 </TypeScriptExample>

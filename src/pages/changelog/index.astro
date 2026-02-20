@@ -38,6 +38,11 @@ notes = notes.flatMap((note) => {
 	return note;
 });
 
+// Limit rendered entries to avoid shipping megabytes of hidden HTML.
+// The page was 2.45 MB / ~38K DOM nodes with all entries rendered.
+// See https://github.com/cloudflare/cloudflare-docs/issues/28482
+notes = notes.slice(0, 50);
+
 const props = {
 	frontmatter: {
 		title: "Changelogs",
@@ -53,7 +58,7 @@ const props = {
 <StarlightPage {...props}>
 	<Header notes={notes} />
 	{
-		notes.map(async (entry, idx) => {
+		notes.map(async (entry) => {
 			const date = format(entry.data.date, "MMM dd, yyyy");
 
 			const productIds = entry.data.products.map((product) => product.id);
@@ -69,7 +74,7 @@ const props = {
 
 			return (
 				<div
-					class:list={["mt-0! sm:flex", { "hidden!": idx >= 50 }]}
+					class="mt-0! sm:flex"
 					data-products={JSON.stringify(
 						productIds.concat(
 							productGroups.map((group) =>
@@ -106,6 +111,17 @@ const props = {
 			);
 		})
 	}
+	<div id="changelog-no-results" class="hidden! py-12 text-center">
+		<p class="text-sm text-sl-color-gray-3">
+			No recent entries for this product.
+		</p>
+		<a
+			href="/search/?contentType=Changelog+entry"
+			class="text-sm font-medium text-orange-accent-200 no-underline hover:underline"
+		>
+			Search all changelog entries &rarr;
+		</a>
+	</div>
 	<div class="flex items-center justify-center">
 		<a
 			id="changelog-search-button"
@@ -153,9 +169,7 @@ const props = {
 
 		const value = filter!.value;
 
-		const filtered = entries
-			.filter((e) => filterByProduct(e, value))
-			.slice(0, 10);
+		const filtered = entries.filter((e) => filterByProduct(e, value));
 
 		for (const entry of entries) {
 			const show = filtered.includes(entry);
@@ -164,6 +178,22 @@ const props = {
 				entry.classList.remove("hidden!");
 			} else {
 				entry.classList.add("hidden!");
+			}
+		}
+
+		// Show empty state when a product filter matches nothing
+		const noResults = document.getElementById("changelog-no-results");
+
+		if (noResults) {
+			if (filtered.length === 0 && value && value !== "all") {
+				noResults.classList.remove("hidden!");
+
+				const link = noResults.querySelector("a");
+				if (link) {
+					link.href = `/search/?contentType=Changelog+entry&product=${encodeURIComponent(value)}`;
+				}
+			} else {
+				noResults.classList.add("hidden!");
 			}
 		}
 
