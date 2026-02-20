@@ -23,25 +23,11 @@ When you run a tunnel, `cloudflared` establishes four outbound-only, [post-quant
 
 A replica is an additional `cloudflared` instance that points to the same tunnel. Each replica creates four new connections, providing additional ingress points to your origin. You can run up to 25 replicas (100 connections) per tunnel. Traffic routes to the geographically closest replica.
 
-```mermaid
-graph LR
-	C((Cloudflare))
-	subgraph E[Your network]
-			cf1["cloudflared <br> (replica 1)"]
-			cf2["cloudflared <br> (replica 2)"]
-			S1[Application]
-			cf1-->S1
-			cf2-->S1
-	end
-	C -- "Connections x 4"--> cf1
-	C --> cf1
-	C --> cf1
-	C --> cf1
-	C -- "Connections x 4"--> cf2
-	C --> cf2
-	C --> cf2
-	C --> cf2
-```
+<Render file="tunnel/cloudflared-replicas-diagram" product="cloudflare-one" />
+
+### Deploy a replica
+<Tabs>
+<TabItem label="Dashboard">
 
 To deploy a replica for a remotely-managed tunnel:
 
@@ -49,12 +35,18 @@ To deploy a replica for a remotely-managed tunnel:
 
    <DashButton url="/?to=/:account/tunnels" />
 
-2. Select your tunnel, then select **Edit**.
-3. Select the operating system of the host where you want to deploy a replica.
-4. Copy the installation command and run it on the host.
+2. Select your tunnel.
+3. Select **Add a replica**.
+4. Select the operating system of the host where you want to deploy a replica.
+5. Copy the installation command and run it on the host.
 
-For locally-managed tunnels, run `cloudflared tunnel run <NAME>` on an additional host using the same tunnel credentials.
+</TabItem>
 
+<TabItem label="CLI">
+To deploy a replica for a [locally-managed tunnel](/tunnel/other-tunnel-types/local-management/), run `cloudflared tunnel run <NAME>` on an additional host using the same [tunnel credentials](/tunnel/other-tunnel-types/local-management/#tunnel-permissions).
+</TabItem>
+
+</Tabs>
 :::note
 For intelligent traffic steering, failover logic, or health alerts, use [Cloudflare Load Balancing](/tunnel/routing/#load-balancing) instead of replicas.
 :::
