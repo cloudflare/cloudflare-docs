@@ -13,7 +13,7 @@ For the [JavaScript APIs](/queues/configuration/javascript-apis/), Queues operat
 
 ```js
 try {
-	await env.MY_QUEUE.send("message," { delaySeconds: 999999});
+	await env.MY_QUEUE.send("message", { delaySeconds: 999999 });
     return new Response('Sent message to the queue');
 } catch (error) {
 	console.error(error);
