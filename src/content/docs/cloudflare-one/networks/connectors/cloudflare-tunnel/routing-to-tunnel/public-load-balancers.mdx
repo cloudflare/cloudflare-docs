@@ -154,21 +154,13 @@ Here is an example of what your DNS records will look like before and after sett
 
 ### Monitors and TCP tunnel origins
 
-If you have a tunnel to a port or SSH port, do not set up a [TCP monitor](/load-balancing/monitors/). Instead, set up a health check endpoint on the `cloudflared` host and create an HTTPS monitor. For example, you can use `cloudflared` to return a fixed HTTP status response:
-
-1. In your Cloudflare Tunnel, [add a published application route](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application) to represent the health check endpoint:
-	- **Hostame**: Enter a hostname for the health check endpoint (for example, `health-check.example.com`)
-	- **Service Type**: _HTTP_STATUS_
-	- **HTTP Status Code**: `200`
-2. From the **Load Balancing** page, [create a monitor](/load-balancing/monitors/create-monitor/) with the following properties:
-	- **Type**: _HTTPS_
-	- **Path**: `/`
-	- **Port**: `443`
-	- **Expected Code(s)**: `200`
-	- **Header Name**: `Host`
-	- **Value**: `health-check.example.com`
-
-You can now assign this monitor to your load balancer endpoint. The monitor will only verify that your server is reachable. It does not check whether the server is running and accepting requests.
+<Render
+  file="tunnel/load-balancer-tcp-monitors"
+  product="cloudflare-one"
+  params={{
+    publishedAppRouteURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application"
+  }}
+/>
 
 ### Session affinity and replicas
 
@@ -176,8 +168,10 @@ The load balancer does not distinguish between [replicas](/cloudflare-one/networ
 
 ### Local connection preference
 
-If you notice traffic imbalances across endpoints in different locations, you may have to adjust your load balancer setup.
-
-When an end user sends a request to your application, Cloudflare routes their traffic using [Anycast routing](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) and their request typically goes to the nearest Cloudflare data center. Cloudflare Tunnel will prefer to serve the request using `cloudflared` connections in the same data center. This behavior can impact how connections are weighted and traffic is distributed.
-
-If you are running [`cloudflared` replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/), switch to separate Cloudflare tunnels so that you can have more granular control over [traffic steering](/load-balancing/understand-basics/traffic-steering/).
+<Render
+  file="tunnel/load-balancer-local-connection"
+  product="cloudflare-one"
+  params={{
+    replicasURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/"
+  }}
+/>
