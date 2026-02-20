@@ -26,7 +26,7 @@ Refer to [this certificate authorities reference page](/ssl/reference/certificat
 
 ## Change certificate authority
 
-To change the CA for an existing custom hostname, use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) PATCH endpoint. You must include `ssl.type` and `ssl.method` alongside `ssl.certificate_authority` — omitting `type` or `method` returns an error.
+To change the CA for an existing managed custom hostname, use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) PATCH endpoint. You must include `ssl.type` and `ssl.method` alongside `ssl.certificate_authority` — these fields are always required when [editing a managed hostname's SSL settings](/cloudflare-for-platforms/cloudflare-for-saas/start/common-api-calls/#managed-certificates).
 
 This triggers certificate re-issuance with the new CA.
 
@@ -70,11 +70,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_ho
 
 </Details>
 
-:::note
-
-The only valid value for `type` is `"dv"`. For `method`, use `"http"` or `"txt"` with ACME-based CAs (Let's Encrypt, Google Trust Services). If you only want to change the CA without modifying validation settings, use your existing validation method.
-
-:::
+Valid `certificate_authority` values: `"google"` (Google Trust Services), `"lets_encrypt"` (Let's Encrypt), `"ssl_com"` (SSL.com), or `""` (empty string for default CA).
 
 ## Certificate details and compatibility
 

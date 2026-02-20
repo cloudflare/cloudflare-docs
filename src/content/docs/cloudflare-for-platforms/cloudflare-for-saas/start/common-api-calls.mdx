@@ -19,25 +19,24 @@ As a SaaS provider, you may want to configure and manage Cloudflare for SaaS [vi
 | [List custom hostnames](/api/resources/custom_hostnames/methods/list/)                                        | Use the `page` parameter to pull additional pages. Add a `hostname` parameter to search for specific hostnames.                         |
 | [Create custom hostname](/api/resources/custom_hostnames/methods/create/)                                      | In the `validation_records` object of the response, use the `txt_name` and `txt_record` listed  to validate the custom hostname.        |
 | [Custom hostname details](/api/resources/custom_hostnames/methods/get/)                                    |                                                                                                                                         |
-| [Edit custom hostname](/api/resources/custom_hostnames/methods/edit/)                                          | When sent with an `ssl` object that matches the existing value, indicates that hostname should restart domain control validation (DCV). Can also [change the certificate authority](#change-certificate-authority). |
+| [Edit custom hostname](/api/resources/custom_hostnames/methods/edit/)                                          | When sent with an `ssl` object that matches the existing value, indicates that hostname should restart domain control validation (DCV). Refer to [Edit custom hostname SSL](#edit-custom-hostname-ssl) for required fields. |
 | [Delete custom hostname](/api/resources/custom_hostnames/methods/delete/) | Also deletes any associated SSL/TLS certificates.                                                                                       |
 
-### Change certificate authority
+### Edit custom hostname SSL
 
-To change the [certificate authority (CA)](/ssl/reference/certificate-authorities/) for an existing custom hostname, send a PATCH request with `ssl.certificate_authority` set to the desired CA. You must also include `ssl.type` and `ssl.method` — omitting them returns an error.
+Custom hostname SSL configurations come in two types, each with different required fields when sending a [PATCH request](/api/resources/custom_hostnames/methods/edit/).
 
-Valid `certificate_authority` values:
+#### Managed certificates
 
-- `"google"` — Google Trust Services
-- `"lets_encrypt"` — Let's Encrypt
-- `"ssl_com"` — SSL.com
-- `""` (empty string) — Default CA (Cloudflare selects the best option)
+Cloudflare handles the certificate lifecycle (ordering, validation, renewal). When editing a managed custom hostname's `ssl` object, `type` and `method` are always required:
 
-Valid `method` values: `"http"`, `"txt"`. Non-ACME CAs also support `"email"` and `"cname"`.
+- `type` — Validation type. The only valid value is `"dv"`.
+- `method` — Validation method. Use `"http"` or `"txt"`.
+- `certificate_authority` — Optional. Valid values: `"google"`, `"lets_encrypt"`, `"ssl_com"`, or `""` (empty string for [default CA](/ssl/reference/certificate-authorities/)).
 
-Changing the CA triggers certificate re-issuance with the new CA.
+Changing the `certificate_authority` triggers certificate re-issuance with the new CA.
 
-<Details header="Switch to Google Trust Services">
+<Details header="Example: Change certificate authority">
 
 ```sh
 curl --request PATCH \
@@ -56,7 +55,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_ho
 
 </Details>
 
-<Details header="Reset to default CA">
+<Details header="Example: Reset to default CA">
 
 ```sh
 curl --request PATCH \
@@ -69,6 +68,32 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_ho
       "type": "dv",
       "method": "http",
       "certificate_authority": ""
+  }
+}'
+```
+
+</Details>
+
+#### Custom certificates
+
+You provide your own certificate and key material. When editing a [custom certificate](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/) hostname's `ssl` object, `custom_certificate` is always required, plus one of `custom_key` or `custom_csr_id`:
+
+- `custom_certificate` — PEM-encoded certificate. Always required.
+- `custom_key` — PEM-encoded private key. Required unless using a CSR.
+- `custom_csr_id` — ID of a previously created [certificate signing request](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/). Required if the private key was generated via CSR.
+
+<Details header="Example: Update custom certificate">
+
+```sh
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "ssl": {
+      "custom_certificate": "<CERTIFICATE_STRING>",
+      "custom_key": "<PRIVATE_KEY_STRING>"
   }
 }'
 ```
