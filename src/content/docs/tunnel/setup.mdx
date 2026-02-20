@@ -9,7 +9,14 @@ head:
 description: Create your first Cloudflare Tunnel and publish an application in under 5 minutes.
 ---
 
-import { Render, Stream, Tabs, TabItem, APIRequest } from "~/components";
+import {
+	DashButton,
+	Render,
+	Stream,
+	Tabs,
+	TabItem,
+	APIRequest,
+} from "~/components";
 
 Create a Cloudflare Tunnel and publish your first application in under 5 minutes.
 
@@ -24,6 +31,8 @@ If your server is behind a restrictive firewall, verify it can reach Cloudflare 
 :::
 
 ## Create a tunnel
+
+<DashButton url="/?to=/:account/tunnels" />
 
 <Tabs syncKey="setupMethod">
 <TabItem label="Dashboard">
