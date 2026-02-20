@@ -20,6 +20,13 @@ For example, when you use Media Transformations within Workers, you can:
 - Extract still frames and spritesheets for videos and use them for classification or description with [Workers AI](/workers-ai/)
 - Extract audio tracks from video files for dynamic transcription using Workers AI
 
+### Limitations while in Beta
+
+The binding for Media Transformations is currently in public open beta. During this period:
+
+- Transformation operations via the binding will not be billed.
+- Certain operations may incur higher latency.
+
 ## Setup
 
 The Media binding is enabled on a per-Worker basis.
@@ -43,19 +50,17 @@ Within your Worker code, you can interact with this binding by using `env.MEDIA.
 
 The Media Transformations binding is similar to the [Images binding](/images/transform-images/bindings/), except the method chain order is fixed and the result of an `input()` cannot be reused across multiple transformations.
 
-
 ### `.input()`
 
 The starting point for the Media binding, which accepts raw content.
 
 - Accepts a `ReadableStream<Uint8Array>` containing the video bytes.
 
-### `.transform()`
+### `.transform()` (optional)
 
-Defines how the video input should be transformed by resizing or cropping.
+Defines how the video input should be transformed by resizing or cropping. This method is optional — if you do not need to resize or crop, you can call `.output()` directly on the result of `.input()`.
 
-- Chains onto `.input()`.
-- Accepts the following parameters:
+- Accepts the following parameters (all optional):
   - `width`: Target width in pixels (10-2000).
   - `height`: Target height in pixels (10-2000).
   - `fit`: How to resize the video to fit the specified dimensions.
@@ -63,11 +68,10 @@ Defines how the video input should be transformed by resizing or cropping.
     - `cover`: Scales the video to entirely cover the output dimensions with a center-weighted crop.
     - `scale-down`: Same as `contain`, but only scales down. Does not upscale.
 - Refer to [Transform videos options](/stream/transform-videos/#options) for more details.
-- Return value should be used with `.output()`.
 
 ### `.output()`
 
-Defines what to extract from the transformed video and how the output will be formatted.
+Defines what to extract from the video and how the output will be formatted. Refer to [source video requirements](/stream/transform-videos/#source-video-requirements) and [limitations](/stream/transform-videos/#limitations) for input and output constraints.
 
 - Accepts the following parameters:
   - `mode`: The type of output to generate.
@@ -129,16 +133,18 @@ export default {
 
 ### Extract audio
 
-Extract the audio track from a video as an M4A file:
+Extract the audio track from a video as an M4A file. This example demonstrates skipping `.transform()` since no resizing is needed:
 
 ```ts
 export default {
 	async fetch(request, env) {
 		const video = await env.R2_BUCKET.get("input.mp4");
 
-		const result = env.MEDIA.input(video.body)
-			.transform({})
-			.output({ mode: "audio", time: "0s", duration: "30s" });
+		const result = env.MEDIA.input(video.body).output({
+			mode: "audio",
+			time: "0s",
+			duration: "30s",
+		});
 
 		return await result.response();
 	},
@@ -170,13 +176,18 @@ export default {
 
 ## Error handling
 
-Transformation errors throw a `MediaError`, which extends the standard `Error` interface with additional information:
+Errors can be thrown at different points in the method chain:
+
+- `.input()` can throw errors related to account limits (free tier or subscription) or service disruptions.
+- `.output()` can throw errors related to the transformation operation itself, such as invalid parameters or unsupported input formats.
+
+Errors throw a `MediaError`, which extends the standard `Error` interface with additional information:
 
 - `code`: A numeric error code.
 - `message`: A description of the error.
 - `stack`: Optional stack trace.
 
-Use a try-catch block to handle transformation errors:
+Use a try-catch block to handle errors:
 
 ```ts
 export default {
@@ -206,9 +217,13 @@ export default {
 
 Unlike transformations via URL, responses from the Media binding are _not_ automatically cached. Workers lets you interact directly with the [Cache API](/workers/runtime-apis/cache/) to customize cache behavior. You can implement logic in your script to store transformations in Cloudflare's cache or R2 storage.
 
+## Billing
+
+Refer to Stream's [Pricing](/stream/pricing/) information for costs. Transformations executed via the binding are billed on a per-operation basis, not based on request uniqueness. For best cost and performance optimization, cache or store outputs for reuse.
+
 ## Local development
 
-The Media Transformations API is available _in remote mode_ for local development through [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. Transformations operations will be performed using a remote resource and are subject to usage charges beyond the included free-tier.
+The Media Transformations API is available _in remote mode_ for local development through [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. Transformations operations will be performed using a remote resource and are subject to usage charges beyond the included free tier.
 
 To enable usage in local development, add `remote` to the binding configuration:
 
