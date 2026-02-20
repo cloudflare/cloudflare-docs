@@ -1,0 +1,237 @@
+---
+pcx_content_type: how-to
+title: Observability
+sidebar:
+  order: 6
+---
+
+This guide covers how to capture logs, errors, and performance metrics from dynamically loaded user Workers. When running user-generated code, you need visibility into what each Worker is doing so you can debug issues and surface information to your users.
+
+## Capture logs with Tail Workers
+
+To capture logs from user Workers, create a tail worker and attach it using the `tails` option in the loader callback. The tail worker receives `console.log()` output, errors, and HTTP status after each user Worker execution.
+
+### Create the tail worker
+
+Create a `WorkerEntrypoint` that implements the `tail()` method. This method receives `TraceItem` events containing logs, exceptions, and request metadata.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class LogTailer extends WorkerEntrypoint {
+	async tail(events) {
+		const { workerName } = this.ctx.props;
+
+		for (const event of events) {
+			const logs = event.logs.map((log) => ({
+				level: log.level,
+				message: Array.isArray(log.message)
+					? log.message.map((m) => String(m)).join(" ")
+					: String(log.message),
+				timestamp: log.timestamp,
+			}));
+
+			if (logs.length > 0) {
+				// Send logs to a Durable Object, queue, or external service
+				await this.forwardLogs(workerName, logs);
+			}
+		}
+	}
+
+	async forwardLogs(workerName, logs) {
+		// Implementation depends on where you want to store logs
+	}
+}
+```
+
+### Attach the tail worker
+
+Pass the tail worker in the `tails` array when loading a user Worker:
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		const tenantId = getTenantFromRequest(request);
+
+		return env.LOADER.get(tenantId, async () => {
+			const code = await env.CODE_STORAGE.get(`code:${tenantId}`);
+
+			return {
+				mainModule: "index.js",
+				modules: { "index.js": code },
+				// Attach tail worker to capture logs
+				tails: [
+					ctx.exports.LogTailer({
+						props: { workerName: tenantId },
+					}),
+				],
+			};
+		});
+	},
+};
+
+export { LogTailer } from "./log-tailer.js";
+```
+
+## Collect logs for retrieval
+
+To display logs back to your users to help debug during active development, use a Durable Object to collect logs and provide them on demand.
+
+The pattern works like this:
+
+1. Before executing the user Worker, create a log session in a Durable Object
+2. The tail worker sends logs to the same Durable Object
+3. After execution, retrieve logs from the Durable Object with a timeout
+
+```js
+// Before executing the user Worker
+const logSession = exports.LogSession.getByName(workerName);
+const logWaiter = await logSession.waitForLogs();
+
+// Execute the user Worker
+const response = await worker.fetch(request);
+
+// Retrieve logs (wait up to 1 second for tail worker to deliver them)
+const logs = await logWaiter.getLogs(1000);
+```
+
+The Durable Object stores logs temporarily and resolves the waiter when logs arrive. For a complete implementation of this pattern, see the [workers-builder logging example](https://github.com/danlapid/workers-builder/blob/main/examples/basic/src/logging.ts).
+
+## Handle errors
+
+Detect and capture errors from user Workers so you can surface them to your users.
+
+### Detect uncaught exceptions
+
+The Workers runtime catches uncaught exceptions and returns a 500 status with "Internal Server Error". Check for this pattern:
+
+```js
+const response = await entrypoint.fetch(request);
+const body = await response.text();
+
+let workerError = null;
+
+if (response.status >= 500) {
+	if (body === "Internal Server Error") {
+		workerError = { message: "Worker threw an uncaught exception." };
+	} else {
+		workerError = { message: body };
+	}
+}
+```
+
+### Capture stack traces
+
+Wrap the fetch call to capture exceptions with stack traces:
+
+```js
+let workerError = null;
+
+try {
+	const response = await entrypoint.fetch(request);
+} catch (err) {
+	workerError = {
+		message: err instanceof Error ? err.message : String(err),
+		stack: err instanceof Error ? err.stack : undefined,
+	};
+}
+```
+
+### Enable source maps
+
+If you are using workers-builder, enable source maps for readable stack traces that point to the original source code:
+
+```js
+const { mainModule, modules } = await createWorker({
+	files: sourceFiles,
+	sourcemap: true,
+});
+```
+
+## Track performance metrics
+
+Measure three timing phases to understand where time is spent:
+
+- **Build time** - Time to resolve dependencies and bundle with esbuild
+- **Load time** - Cold start time (first invocation after build)
+- **Run time** - Actual handler execution time
+
+```js
+import { createWorker } from "workers-builder";
+
+export default {
+	async fetch(request, env, ctx) {
+		const tenantId = getTenantFromRequest(request);
+		let buildTime = 0;
+
+		const worker = env.LOADER.get(tenantId, async () => {
+			// Measure build time
+			const buildStart = Date.now();
+			const { mainModule, modules } = await createWorker({
+				files: await getSourceFiles(tenantId),
+			});
+			buildTime = Date.now() - buildStart;
+
+			return { mainModule, modules };
+		});
+
+		// Measure load time (cold start)
+		const loadStart = Date.now();
+		const entrypoint = worker.getEntrypoint();
+		const loadTime = Date.now() - loadStart;
+
+		// Measure run time
+		const runStart = Date.now();
+		const response = await entrypoint.fetch(request);
+		const runTime = Date.now() - runStart;
+
+		// Return timing with response
+		return Response.json({
+			timing: { buildTime, loadTime, runTime },
+		});
+	},
+};
+```
+
+## Example response structure
+
+Return observability data to your frontend so users can see what happened:
+
+```json
+{
+	"bundleInfo": {
+		"mainModule": "src/index.ts",
+		"modules": ["src/index.ts", "node_modules/hono/dist/index.js"],
+		"warnings": []
+	},
+	"response": {
+		"status": 200,
+		"headers": { "content-type": "application/json" },
+		"body": "{\"message\": \"Hello!\"}"
+	},
+	"workerError": null,
+	"logs": [
+		{ "level": "log", "message": "Request received", "timestamp": 1234567890 },
+		{
+			"level": "info",
+			"message": "Processing complete",
+			"timestamp": 1234567891
+		}
+	],
+	"timing": {
+		"buildTime": 450,
+		"loadTime": 120,
+		"runTime": 15
+	}
+}
+```
+
+For a complete working example, see the [workers-builder playground](https://github.com/danlapid/workers-builder/tree/main/examples/basic).
+
+## Other observability options
+
+For additional observability features, refer to:
+
+- [Workers Logs](/workers/observability/logs/) for native tracing and log collection
+- [Logpush](/workers/observability/logs/logpush/) to send logs from dispatch namespaces to external destinations
+- [Tail Workers](/workers/observability/logs/tail-workers/) for more on tail worker configuration and use cases

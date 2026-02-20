@@ -1,0 +1,180 @@
+---
+pcx_content_type: how-to
+title: Dynamic Workers
+sidebar:
+  order: 1
+---
+
+import { WranglerConfig, Tabs, TabItem } from "~/components";
+
+Dynamic Workers let you load and execute user code at runtime using the [Worker Loader binding](/workers/runtime-apis/bindings/worker-loader/). This gives you the ability to customize every part of how code is stored, bundled, and loaded rather than using Cloudflare's upload APIs.
+
+Use dynamic Workers when you need to:
+
+- **Generate code at runtime** - AI coding agents that create Workers on-the-fly
+- **Control the entire pipeline** - Custom bundling, validation, or transformation before execution
+- **Store code your way** - Keep user code in R2, KV, D1, or an external database
+- **Build code playgrounds** - Interactive environments where users write and run code instantly
+
+## Basic pattern
+
+Your worker fetches code from your storage and passes it to `env.LOADER.get()` via a callback:
+
+```js
+export default {
+	async fetch(request, env) {
+		const tenantId = getTenantFromRequest(request);
+
+		return env.LOADER.get(tenantId, async () => {
+			// Fetch code from your storage
+			const code = await env.CODE_STORAGE.get(`code:${tenantId}`);
+
+			return {
+				mainModule: "index.js",
+				modules: { "index.js": code },
+				compatibilityDate: "2026-01-01",
+				env: { KV: env.TENANT_KV },
+			};
+		});
+	},
+};
+```
+
+The callback is only invoked if the worker is not already cached. Once loaded, subsequent requests use the cached worker until it is evicted or you request a different cache key.
+
+## Configure the Worker Loader binding
+
+Add the Worker Loader binding to your wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+[[worker_loaders]]
+binding = "LOADER"
+```
+
+</WranglerConfig>
+
+In your TypeScript types:
+
+```ts
+interface Env {
+	LOADER: WorkerLoader;
+	CODE_STORAGE: KVNamespace;
+}
+```
+
+## Bundling source code with workers-builder
+
+When your users provide source files with npm dependencies (not pre-bundled code), you need to bundle them before they can run. The [workers-builder](https://github.com/danlapid/workers-builder) library handles this automatically.
+
+### What workers-builder does
+
+- Takes source files with `package.json` dependencies
+- Fetches packages from npm registry
+- Bundles everything with esbuild
+- Returns modules ready for the Worker Loader binding
+
+This is useful for AI coding agents that dynamically generate JavaScript with real npm dependencies.
+
+### Installation
+
+```sh
+npm install workers-builder
+```
+
+### Usage pattern
+
+Bundle source code on first request and cache the result:
+
+```js
+import { createWorker } from "workers-builder";
+
+export default {
+	async fetch(request, env) {
+		const tenantId = getTenantFromRequest(request);
+
+		return env.LOADER.get(tenantId, async () => {
+			// Check if we already have bundled code
+			let bundled = await env.BUNDLED_CODE.get(`bundled:${tenantId}`, {
+				type: "json",
+			});
+
+			if (!bundled) {
+				// Fetch raw source files from storage
+				const sourceFiles = await env.SOURCE_CODE.get(`source:${tenantId}`, {
+					type: "json",
+				});
+
+				// Bundle with workers-builder (installs npm deps, runs esbuild)
+				const { mainModule, modules, wranglerConfig } = await createWorker({
+					files: sourceFiles,
+					bundle: true,
+					minify: false,
+				});
+
+				bundled = { mainModule, modules, wranglerConfig };
+
+				// Cache the bundled result for future requests
+				await env.BUNDLED_CODE.put(
+					`bundled:${tenantId}`,
+					JSON.stringify(bundled),
+				);
+			}
+
+			return {
+				mainModule: bundled.mainModule,
+				modules: bundled.modules,
+				compatibilityDate:
+					bundled.wranglerConfig?.compatibilityDate ?? "2026-01-01",
+				compatibilityFlags: bundled.wranglerConfig?.compatibilityFlags ?? [],
+			};
+		});
+	},
+};
+```
+
+### Example: AI agent generates a Hono app
+
+An AI agent generates source files with dependencies:
+
+```js
+const files = {
+	"src/index.ts": `
+    import { Hono } from 'hono';
+    import { cors } from 'hono/cors';
+
+    const app = new Hono();
+    app.use('*', cors());
+    app.get('/', (c) => c.text('Hello from AI-generated code!'));
+    export default app;
+  `,
+	"package.json": JSON.stringify({
+		dependencies: {
+			hono: "^4.0.0",
+		},
+	}),
+};
+
+// workers-builder bundles this into modules ready for the loader
+const { mainModule, modules } = await createWorker({ files });
+```
+
+### workers-builder options
+
+| Option       | Type                     | Default  | Description                    |
+| ------------ | ------------------------ | -------- | ------------------------------ |
+| `files`      | `Record<string, string>` | required | Source files (path to content) |
+| `entryPoint` | `string`                 | auto     | Override entry point detection |
+| `bundle`     | `boolean`                | `true`   | Bundle into single file        |
+| `minify`     | `boolean`                | `false`  | Minify output                  |
+| `sourcemap`  | `boolean`                | `false`  | Generate inline source maps    |
+
+### Entry point detection
+
+workers-builder automatically detects the entry point in this order:
+
+1. `entryPoint` option (if provided)
+2. `main` field in wrangler config
+3. `exports`, `module`, or `main` field in `package.json`
+4. Default paths: `src/index.ts`, `src/index.js`, `index.ts`, `index.js`

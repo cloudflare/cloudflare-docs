@@ -1,0 +1,195 @@
+---
+pcx_content_type: how-to
+title: Version management
+sidebar:
+  order: 4
+---
+
+This guide covers how to store multiple code versions and control which one runs. With Dynamic Workers, you can implement rollbacks, A/B testing, gradual rollouts, and preview deployments.
+
+## Version storage schema
+
+Store version metadata and code separately in KV. Use a consistent key structure for easy lookup.
+
+### Version metadata
+
+Store information about each version:
+
+```txt
+Key: versions:{tenant_id}:{version_id}
+```
+
+```json
+{
+	"id": "v_abc123",
+	"created_at": "2026-02-20T10:00:00Z",
+	"message": "Added new checkout flow",
+	"tag": "v2.3.1",
+	"code_ref": "code:tenant-123:v_abc123",
+	"config": {
+		"compatibility_date": "2026-01-01"
+	}
+}
+```
+
+### Active deployment
+
+Track which version is currently deployed:
+
+```txt
+Key: deployment:{tenant_id}
+```
+
+```json
+{
+	"active_version": "v_abc123",
+	"deployed_at": "2026-02-20T12:00:00Z",
+	"deployed_by": "user@platform.com"
+}
+```
+
+### Code storage
+
+Store the actual code separately. Use KV for small scripts (under 25 MB) or R2 for larger bundles:
+
+```txt
+Key: code:{tenant_id}:{version_id}
+```
+
+```js
+export default {
+	async fetch(request, env) {
+		return new Response("Hello from v_abc123!");
+	},
+};
+```
+
+## Load a specific version
+
+Fetch the active version and load the corresponding code. For how to configure bindings for each tenant, refer to [Bindings](/cloudflare-for-platforms/workers-for-platforms/build-a-platform/bindings/).
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		const tenantId = getTenantFromRequest(request);
+
+		// Get active deployment for this tenant
+		const deployment = await env.CONFIG.get(`deployment:${tenantId}`, {
+			type: "json",
+		});
+		if (!deployment) {
+			return new Response("Tenant not found", { status: 404 });
+		}
+
+		const versionId = deployment.active_version;
+
+		// Load the specific version
+		return env.LOADER.get(`${tenantId}:${versionId}`, async () => {
+			const version = await env.CONFIG.get(
+				`versions:${tenantId}:${versionId}`,
+				{ type: "json" },
+			);
+			const code = await env.CODE_STORE.get(version.code_ref);
+
+			// Get tenant bindings (see Bindings page)
+			const tenantConfig = await env.CONFIG.get(`tenant:${tenantId}`, {
+				type: "json",
+			});
+
+			return {
+				compatibilityDate: version.config.compatibility_date,
+				mainModule: "index.js",
+				modules: { "index.js": code },
+				env: {
+					KV: { namespaceId: tenantConfig.kvNamespaceId },
+					DB: { databaseId: tenantConfig.d1DatabaseId },
+				},
+			};
+		});
+	},
+};
+```
+
+## Cache key strategy
+
+The cache key `${tenantId}:${versionId}` ensures different versions are cached separately. This matters because:
+
+- When you deploy a new version, requests immediately use the new cache key
+- The old version remains cached (until evicted) but is no longer accessed
+- Rolling back to a previous version reuses its existing cache entry if still warm
+- Different tenants never share cached workers, even if they run the same code
+
+If you used only `tenantId` as the cache key, deploying a new version would require waiting for the old cached worker to be evicted.
+
+## Deploy a new version
+
+To deploy a new version:
+
+### 1. Store the code
+
+```js
+const newVersionId = `v_${crypto.randomUUID().slice(0, 8)}`;
+
+await env.CODE_STORE.put(`code:${tenantId}:${newVersionId}`, newCode);
+```
+
+### 2. Store version metadata
+
+```js
+await env.CONFIG.put(
+	`versions:${tenantId}:${newVersionId}`,
+	JSON.stringify({
+		id: newVersionId,
+		created_at: new Date().toISOString(),
+		message: deployMessage,
+		code_ref: `code:${tenantId}:${newVersionId}`,
+		config: {
+			compatibility_date: "2026-01-01",
+		},
+	}),
+);
+```
+
+### 3. Update the active deployment
+
+```js
+await env.CONFIG.put(
+	`deployment:${tenantId}`,
+	JSON.stringify({
+		active_version: newVersionId,
+		deployed_at: new Date().toISOString(),
+		deployed_by: deployedBy,
+	}),
+);
+```
+
+The next request uses the new cache key and loads the new version.
+
+## Rollback
+
+To rollback, update the active deployment to point to a previous version:
+
+```js
+async function rollback(env, tenantId, targetVersionId) {
+	// Verify the version exists
+	const version = await env.CONFIG.get(
+		`versions:${tenantId}:${targetVersionId}`,
+		{ type: "json" },
+	);
+	if (!version) {
+		throw new Error("Version not found");
+	}
+
+	// Update active deployment
+	await env.CONFIG.put(
+		`deployment:${tenantId}`,
+		JSON.stringify({
+			active_version: targetVersionId,
+			deployed_at: new Date().toISOString(),
+			deployed_by: "rollback",
+		}),
+	);
+}
+```
+
+The next request uses the rolled-back version's cache key. If that version is still cached, it loads instantly.

@@ -1,0 +1,216 @@
+---
+pcx_content_type: how-to
+title: Preview URLs
+sidebar:
+  order: 5
+---
+
+Platforms can set up preview domains to let users test specific versions before deploying. Your worker parses the hostname to determine the tenant and version to serve.
+
+## Setup requirements
+
+1. **Register a preview domain**: For example, `platform-preview.app`
+2. **Create a wildcard DNS record**: `*.platform-preview.app` pointing to your worker's origin
+3. **Set a wildcard route**: `*/*` pointing to your worker
+4. **Parse hostnames**: Determine tenant and version from the subdomain
+
+## URL patterns
+
+Support multiple URL patterns for flexibility:
+
+| Pattern                                    | Example                                    | Behavior                           |
+| ------------------------------------------ | ------------------------------------------ | ---------------------------------- |
+| `{project}.platform-preview.app`           | `my-project.platform-preview.app`          | Serves the active/latest version   |
+| `{version}.{project}.platform-preview.app` | `v_abc123.my-project.platform-preview.app` | Serves a specific version          |
+| `{alias}.{project}.platform-preview.app`   | `staging.my-project.platform-preview.app`  | Serves version pointed to by alias |
+
+## Route preview URLs
+
+Parse the hostname to extract the tenant and version, then load the appropriate code:
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		const url = new URL(request.url);
+		const hostname = url.hostname;
+		const previewDomain = "platform-preview.app";
+
+		let tenantId, versionId;
+
+		if (hostname.endsWith(previewDomain)) {
+			const subdomain = hostname.replace(`.${previewDomain}`, "");
+			const subdomainParts = subdomain.split(".");
+
+			if (subdomainParts.length === 1) {
+				// {project}.platform-preview.app → latest version
+				tenantId = subdomainParts[0];
+				const deployment = await env.CONFIG.get(`deployment:${tenantId}`, {
+					type: "json",
+				});
+				versionId = deployment?.active_version;
+			} else if (subdomainParts.length === 2) {
+				// {versionOrAlias}.{project}.platform-preview.app
+				const versionOrAlias = subdomainParts[0];
+				tenantId = subdomainParts[1];
+
+				// Check if it is an alias or version ID
+				const alias = await env.CONFIG.get(
+					`alias:${tenantId}:${versionOrAlias}`,
+				);
+				versionId = alias || versionOrAlias;
+			}
+		}
+
+		if (!tenantId || !versionId) {
+			return new Response("Preview not found", { status: 404 });
+		}
+
+		// Load the specific version
+		return env.LOADER.get(`${tenantId}:${versionId}`, async () => {
+			const version = await env.CONFIG.get(
+				`versions:${tenantId}:${versionId}`,
+				{ type: "json" },
+			);
+
+			if (!version) {
+				throw new Error("Version not found");
+			}
+
+			const code = await env.CODE_STORE.get(version.code_ref);
+
+			// Get tenant bindings (see Bindings page)
+			const tenantConfig = await env.CONFIG.get(`tenant:${tenantId}`, {
+				type: "json",
+			});
+
+			return {
+				compatibilityDate: version.config.compatibility_date,
+				mainModule: "index.js",
+				modules: { "index.js": code },
+				env: {
+					KV: { namespaceId: tenantConfig.kvNamespaceId },
+					DB: { databaseId: tenantConfig.d1DatabaseId },
+				},
+			};
+		});
+	},
+};
+```
+
+## Version aliases
+
+Store named aliases that point to version IDs for user-friendly URLs:
+
+```txt
+Key: alias:{tenant_id}:staging
+Value: v_xyz789
+
+Key: alias:{tenant_id}:canary
+Value: v_abc123
+
+Key: alias:{tenant_id}:production
+Value: v_def456
+```
+
+This enables URLs like:
+
+- `staging.my-project.platform-preview.app`
+- `canary.my-project.platform-preview.app`
+- `production.my-project.platform-preview.app`
+
+### Manage aliases
+
+Create or update an alias:
+
+```js
+async function setAlias(env, tenantId, aliasName, versionId) {
+	// Verify the version exists
+	const version = await env.CONFIG.get(`versions:${tenantId}:${versionId}`, {
+		type: "json",
+	});
+	if (!version) {
+		throw new Error("Version not found");
+	}
+
+	await env.CONFIG.put(`alias:${tenantId}:${aliasName}`, versionId);
+}
+```
+
+Delete an alias:
+
+```js
+async function deleteAlias(env, tenantId, aliasName) {
+	await env.CONFIG.delete(`alias:${tenantId}:${aliasName}`);
+}
+```
+
+List all aliases for a tenant:
+
+```js
+async function listAliases(env, tenantId) {
+	const aliases = await env.CONFIG.list({ prefix: `alias:${tenantId}:` });
+	return aliases.keys.map((key) => ({
+		name: key.name.replace(`alias:${tenantId}:`, ""),
+	}));
+}
+```
+
+## Combine with production routing
+
+Handle both production and preview traffic in the same worker:
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		const url = new URL(request.url);
+		const hostname = url.hostname;
+
+		let tenantId, versionId;
+
+		if (hostname.endsWith("platform-preview.app")) {
+			// Preview URL routing (as shown above)
+			({ tenantId, versionId } = await parsePreviewUrl(hostname, env));
+		} else if (hostname.endsWith("platform.app")) {
+			// Production routing - always use active deployment
+			tenantId = hostname.replace(".platform.app", "");
+			const deployment = await env.CONFIG.get(`deployment:${tenantId}`, {
+				type: "json",
+			});
+			versionId = deployment?.active_version;
+		} else {
+			return new Response("Unknown domain", { status: 404 });
+		}
+
+		if (!tenantId || !versionId) {
+			return new Response("Not found", { status: 404 });
+		}
+
+		return env.LOADER.get(`${tenantId}:${versionId}`, async () => {
+			// Load version (same as before)
+		});
+	},
+};
+
+async function parsePreviewUrl(hostname, env) {
+	const previewDomain = "platform-preview.app";
+	const subdomain = hostname.replace(`.${previewDomain}`, "");
+	const parts = subdomain.split(".");
+
+	let tenantId, versionId;
+
+	if (parts.length === 1) {
+		tenantId = parts[0];
+		const deployment = await env.CONFIG.get(`deployment:${tenantId}`, {
+			type: "json",
+		});
+		versionId = deployment?.active_version;
+	} else if (parts.length === 2) {
+		const versionOrAlias = parts[0];
+		tenantId = parts[1];
+		const alias = await env.CONFIG.get(`alias:${tenantId}:${versionOrAlias}`);
+		versionId = alias || versionOrAlias;
+	}
+
+	return { tenantId, versionId };
+}
+```

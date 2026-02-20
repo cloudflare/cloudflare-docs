@@ -1,0 +1,36 @@
+---
+pcx_content_type: navigation
+title: Build a platform on dynamic workers
+sidebar:
+  order: 12
+  group:
+    hideIndex: true
+---
+
+import { DirectoryListing } from "~/components";
+
+This section covers building platforms where you store and manage user code and assets yourself, loading them dynamically at runtime using the Worker Loader binding.
+
+## Standard approach vs dynamic workers
+
+With the standard Workers for Platforms approach, you upload user Workers via the Workers for Platforms API and Cloudflare stores and manages the code. This works well for most platforms.
+
+With the Dynamic Workers approach, you store code in your own storage (R2, KV, or an external database) and load it at runtime via a callback. This gives you full control over:
+
+- **Code storage and retrieval**: Store code anywhere and fetch it when needed
+- **Version management**: Maintain multiple versions and select which to serve at dispatch time
+- **Bundling**: Bundle source files with npm dependencies on-demand
+- **Asset serving**: Serve static assets from your own storage with custom isolation and caching
+
+## Use cases
+
+Dynamic Workers are useful when you need:
+
+- **AI coding agents**: Dynamically generate and deploy JavaScript with real npm dependencies
+- **Custom versioning**: Implement rollbacks, A/B testing, or gradual rollouts
+- **External code sources**: Load code from external systems or databases
+- **Custom asset management**: Serve assets from R2 with per-tenant isolation
+
+## Pages in this section
+
+<DirectoryListing />

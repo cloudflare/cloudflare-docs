@@ -1,0 +1,309 @@
+---
+pcx_content_type: how-to
+title: Bindings
+sidebar:
+  order: 3
+---
+
+This guide covers how to provision and pass resources to user Workers. Each tenant or application can receive its own set of bindings (KV namespaces, D1 databases, R2 buckets) without requiring separate Worker deployments.
+
+## Create resources and store mappings
+
+Before you can pass bindings to user Workers, you need to:
+
+1. **Create the resource** (KV namespace, D1 database, R2 bucket) using the Cloudflare API or dashboard
+2. **Store the resource ID** in a mapping so you can look it up at load time
+
+For example, when onboarding a new tenant:
+
+```js
+// 1. Create a KV namespace for the tenant
+const kvResponse = await fetch(
+	`https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces`,
+	{
+		method: "POST",
+		headers: {
+			Authorization: `Bearer ${apiToken}`,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			title: `tenant-${tenantId}-kv`,
+		}),
+	},
+);
+const { result: kvNamespace } = await kvResponse.json();
+
+// 2. Store the mapping so you can look it up later
+await env.CONFIG.put(
+	`tenant:${tenantId}`,
+	JSON.stringify({
+		tenantId: tenantId,
+		kvNamespaceId: kvNamespace.id,
+		// Add other resource IDs as you create them
+	}),
+);
+```
+
+Your tenant config in KV looks like:
+
+```txt
+Key: tenant:{tenant_id}
+```
+
+```json
+{
+	"tenantId": "tenant-123",
+	"kvNamespaceId": "abc123...",
+	"d1DatabaseId": "def456...",
+	"r2BucketId": "xyz789..."
+}
+```
+
+## Pass bindings to user Workers
+
+When loading a user Worker, look up the tenant's resource IDs and pass them as bindings. The bindings are created dynamically at load time - you do not need to declare them in your wrangler configuration.
+
+```js
+export default {
+	async fetch(request, env) {
+		const tenantId = getTenantFromRequest(request);
+
+		return env.LOADER.get(tenantId, async () => {
+			const code = await env.CODE_STORAGE.get(`code:${tenantId}`);
+
+			// Look up which resources this tenant should receive
+			const tenantConfig = await env.CONFIG.get(`tenant:${tenantId}`, {
+				type: "json",
+			});
+
+			return {
+				mainModule: "index.js",
+				modules: { "index.js": code },
+				env: {
+					// Pass the resource IDs - bindings are created at load time
+					USER_KV: { namespaceId: tenantConfig.kvNamespaceId },
+					USER_DB: { databaseId: tenantConfig.d1DatabaseId },
+					USER_BUCKET: { bucketName: tenantConfig.r2BucketId },
+				},
+			};
+		});
+	},
+};
+```
+
+The user Worker receives these bindings and uses them like any other Worker:
+
+```js
+export default {
+	async fetch(request, env) {
+		const data = await env.USER_KV.get("my-key");
+		return new Response(data);
+	},
+};
+```
+
+## Wrap bindings
+
+You can wrap bindings to intercept every operation before it reaches the underlying resource. This is useful for:
+
+- **Metering**: Log every read, write, and delete for billing
+- **Quota enforcement**: Block operations that exceed storage or request limits
+- **Audit logging**: Track what data tenants access
+- **Rate limiting**: Throttle operations per tenant
+
+To wrap a binding, create a `WorkerEntrypoint` class that proxies calls to the underlying binding while adding your custom logic.
+
+### Create a wrapped R2 binding
+
+This example wraps an R2 bucket to add metering and quota checks:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class R2WithMetering extends WorkerEntrypoint {
+	async get(key) {
+		const start = Date.now();
+		const result = await this.ctx.props.bucket.get(key);
+
+		// Log the operation for billing
+		this.env.ANALYTICS.writeDataPoint({
+			indexes: [this.ctx.props.tenantId],
+			blobs: ["r2_get", key],
+			doubles: [result?.size || 0, Date.now() - start],
+		});
+
+		return result;
+	}
+
+	async put(key, value, options) {
+		const size = value.byteLength || value.length || 0;
+
+		// Check quota before allowing write
+		const usage = await this.getTenantUsage(this.ctx.props.tenantId);
+		if (usage.r2StorageBytes + size > this.ctx.props.limits.r2StorageBytes) {
+			throw new Error("Storage limit exceeded");
+		}
+
+		const start = Date.now();
+		const result = await this.ctx.props.bucket.put(key, value, options);
+
+		// Log the operation
+		this.env.ANALYTICS.writeDataPoint({
+			indexes: [this.ctx.props.tenantId],
+			blobs: ["r2_put", key],
+			doubles: [size, Date.now() - start],
+		});
+
+		return result;
+	}
+
+	async delete(key) {
+		const start = Date.now();
+		await this.ctx.props.bucket.delete(key);
+
+		this.env.ANALYTICS.writeDataPoint({
+			indexes: [this.ctx.props.tenantId],
+			blobs: ["r2_delete", key],
+			doubles: [0, Date.now() - start],
+		});
+	}
+
+	async list(options) {
+		const start = Date.now();
+		const result = await this.ctx.props.bucket.list(options);
+
+		this.env.ANALYTICS.writeDataPoint({
+			indexes: [this.ctx.props.tenantId],
+			blobs: ["r2_list", options?.prefix || ""],
+			doubles: [result.objects.length, Date.now() - start],
+		});
+
+		return result;
+	}
+
+	async getTenantUsage(tenantId) {
+		// Fetch current usage from your tracking system
+		const usage = await this.env.USAGE_TRACKING.get(`usage:${tenantId}`, {
+			type: "json",
+		});
+		return usage || { r2StorageBytes: 0 };
+	}
+}
+```
+
+### Pass wrapped binding to user Worker
+
+Pass the wrapped binding via `ctx.exports` when loading the user Worker:
+
+```js
+import { exports } from "cloudflare:workers";
+
+export default {
+	async fetch(request, env, ctx) {
+		const tenantId = getTenantFromRequest(request);
+
+		return env.LOADER.get(tenantId, async () => {
+			const code = await env.CODE_STORAGE.get(`code:${tenantId}`);
+			const tenantConfig = await env.CONFIG.get(`tenant:${tenantId}`, {
+				type: "json",
+			});
+
+			return {
+				mainModule: "index.js",
+				modules: { "index.js": code },
+				env: {
+					// Tenant gets wrapped binding, not raw R2
+					BUCKET: ctx.exports.R2WithMetering({
+						props: {
+							bucket: { bucketName: tenantConfig.r2BucketId },
+							tenantId,
+							limits: tenantConfig.limits,
+						},
+					}),
+				},
+			};
+		});
+	},
+};
+
+// Re-export for ctx.exports access
+export { R2WithMetering } from "./metered-r2.js";
+```
+
+The user Worker uses the binding normally. It does not know the binding is wrapped:
+
+```js
+export default {
+	async fetch(request, env) {
+		// This goes through R2WithMetering, which meters and enforces limits
+		const object = await env.BUCKET.get("my-file.txt");
+		return new Response(object?.body);
+	},
+};
+```
+
+### Wrap a KV binding
+
+The same pattern works for other bindings. Here is an example for KV:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class KVWithMetering extends WorkerEntrypoint {
+	async get(key, options) {
+		const start = Date.now();
+		const result = await this.ctx.props.kv.get(key, options);
+
+		this.env.ANALYTICS.writeDataPoint({
+			indexes: [this.ctx.props.tenantId],
+			blobs: ["kv_get", key],
+			doubles: [result?.length || 0, Date.now() - start],
+		});
+
+		return result;
+	}
+
+	async put(key, value, options) {
+		const size =
+			typeof value === "string" ? value.length : value.byteLength || 0;
+
+		// Check write quota
+		if (size > this.ctx.props.limits.maxValueSize) {
+			throw new Error("Value size exceeds limit");
+		}
+
+		const start = Date.now();
+		await this.ctx.props.kv.put(key, value, options);
+
+		this.env.ANALYTICS.writeDataPoint({
+			indexes: [this.ctx.props.tenantId],
+			blobs: ["kv_put", key],
+			doubles: [size, Date.now() - start],
+		});
+	}
+
+	async delete(key) {
+		const start = Date.now();
+		await this.ctx.props.kv.delete(key);
+
+		this.env.ANALYTICS.writeDataPoint({
+			indexes: [this.ctx.props.tenantId],
+			blobs: ["kv_delete", key],
+			doubles: [0, Date.now() - start],
+		});
+	}
+
+	async list(options) {
+		const start = Date.now();
+		const result = await this.ctx.props.kv.list(options);
+
+		this.env.ANALYTICS.writeDataPoint({
+			indexes: [this.ctx.props.tenantId],
+			blobs: ["kv_list", options?.prefix || ""],
+			doubles: [result.keys.length, Date.now() - start],
+		});
+
+		return result;
+	}
+}
+```

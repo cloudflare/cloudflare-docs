@@ -1,0 +1,188 @@
+---
+pcx_content_type: how-to
+title: Static assets
+sidebar:
+  order: 2
+---
+
+When building a platform, you may need to serve static assets (HTML, CSS, images) for your tenants' applications. If you want to store these assets in your own infrastructure, such as R2 or any other storage system, rather than using [Cloudflare's built-in static assets](/cloudflare-for-platforms/workers-for-platforms/configuration/static-assets/), this guide shows you how to build a custom asset server.
+
+With platform-managed assets, you have full control over:
+
+- **Storage backend**: Use R2 or any storage system
+- **Per-tenant isolation**: Organize assets by tenant using folder structures
+- **Caching strategy**: Implement custom cache headers and edge caching
+- **Asset versioning**: Store multiple versions and serve the appropriate one
+
+## Set up asset serving
+
+To serve assets from your own storage, you create an asset server using `WorkerEntrypoint`. This class fetches assets from R2 (or your storage) and returns them to the user Worker.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class AssetServer extends WorkerEntrypoint {
+	async fetch(request) {
+		// These props identify which tenant's assets to serve
+		const { customerId, projectId } = this.ctx.props;
+		const pathname = new URL(request.url).pathname;
+
+		// Build the R2 key based on tenant structure
+		const key = `${customerId}/${projectId}${pathname}`;
+
+		const object = await this.env.R2.get(key);
+		if (!object) {
+			return new Response("Not found", { status: 404 });
+		}
+
+		return new Response(object.body, {
+			headers: {
+				"content-type":
+					object.httpMetadata?.contentType ?? "application/octet-stream",
+				"cache-control": "public, max-age=3600",
+			},
+		});
+	}
+}
+```
+
+## Provide the asset binding to user Workers
+
+When loading a user Worker, create an instance of your asset server and pass it as a binding. The props you provide (like `customerId` and `projectId`) scope the asset server to that tenant's assets.
+
+```js
+import { exports } from "cloudflare:workers";
+
+export default {
+	async fetch(request, env, ctx) {
+		const tenantId = getTenantFromRequest(request);
+		const tenant = await getTenantConfig(tenantId);
+
+		return env.LOADER.get(tenant.workerId, async () => {
+			const code = await env.CODE_STORAGE.get(`code:${tenantId}`);
+
+			return {
+				mainModule: "index.js",
+				modules: { "index.js": code },
+				env: {
+					// Create an asset server scoped to this tenant
+					ASSETS: ctx.exports.AssetServer({
+						props: {
+							customerId: tenant.customerId,
+							projectId: tenant.projectId,
+						},
+					}),
+				},
+			};
+		});
+	},
+};
+
+// Re-export for ctx.exports access
+export { AssetServer } from "./asset-server.js";
+```
+
+## User Worker fetches assets
+
+User Workers receive an `ASSETS` binding that lets them fetch static files. When the user Worker calls `env.ASSETS.fetch()`, the request goes to your asset server, which retrieves the file from storage and returns it.
+
+```js
+export default {
+	async fetch(request, env) {
+		// Fetch the asset from the platform's storage
+		return env.ASSETS.fetch(request);
+	},
+};
+```
+
+The user Worker does not need to know where assets are stored or how they are organized. Your platform handles all the details.
+
+## Per-tenant isolation
+
+Organize assets in R2 by tenant to ensure isolation:
+
+```txt
+{customerId}/{projectId}/index.html
+{customerId}/{projectId}/styles.css
+{customerId}/{projectId}/images/logo.png
+```
+
+The `AssetServer` receives the `customerId` and `projectId` via props, ensuring each tenant can only access their own assets.
+
+## Add caching
+
+Extend the asset server to implement caching strategies:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class AssetServer extends WorkerEntrypoint {
+	async fetch(request) {
+		const { customerId, projectId, cacheMaxAge } = this.ctx.props;
+		const pathname = new URL(request.url).pathname;
+		const key = `${customerId}/${projectId}${pathname}`;
+
+		// Check cache first
+		const cacheKey = new Request(request.url, request);
+		const cache = caches.default;
+		let response = await cache.match(cacheKey);
+
+		if (response) {
+			return response;
+		}
+
+		// Fetch from R2
+		const object = await this.env.R2.get(key);
+		if (!object) {
+			return new Response("Not found", { status: 404 });
+		}
+
+		response = new Response(object.body, {
+			headers: {
+				"content-type":
+					object.httpMetadata?.contentType ?? "application/octet-stream",
+				"cache-control": `public, max-age=${cacheMaxAge ?? 3600}`,
+				etag: object.etag,
+			},
+		});
+
+		// Store in cache
+		ctx.waitUntil(cache.put(cacheKey, response.clone()));
+
+		return response;
+	}
+}
+```
+
+## Asset versioning
+
+To serve different asset versions, include the version in the R2 path:
+
+```js
+export class AssetServer extends WorkerEntrypoint {
+	async fetch(request) {
+		const { customerId, projectId, version } = this.ctx.props;
+		const pathname = new URL(request.url).pathname;
+
+		// Include version in the key
+		const key = `${customerId}/${projectId}/${version}${pathname}`;
+
+		const object = await this.env.R2.get(key);
+		// ... rest of implementation
+	}
+}
+```
+
+Pass the version when creating the asset binding:
+
+```js
+ASSETS: ctx.exports.AssetServer({
+	props: {
+		customerId: tenant.customerId,
+		projectId: tenant.projectId,
+		version: deployment.active_version,
+	},
+});
+```
+
+For more on version management, refer to [Version management](/cloudflare-for-platforms/workers-for-platforms/build-a-platform/versioning/).
