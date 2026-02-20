@@ -17,22 +17,22 @@ Cloudflare Tunnel allows users to deploy additional instances of our connector, 
 
 ```mermaid
 graph LR
-	C((Cloudflare))
-	subgraph E[Private network]
-			cf1["cloudflared <br> (Tunnel-1 replica)"]
-			cf2["cloudflared <br> (Tunnel-1 replica)"]
-			S1[Application]
-			cf1-->S1
-			cf2-->S1
-	end
-	C -- "Connections x 4 <br>"--> cf1
-	C --> cf1
-	C --> cf1
-	C --> cf1
-	C -- Connections x 4--> cf2
-	C --> cf2
-	C --> cf2
-	C --> cf2
+    C((Cloudflare))
+    subgraph E[Private network]
+        cf1["cloudflared <br> (Tunnel-1 replica)"]
+        cf2["cloudflared <br> (Tunnel-1 replica)"]
+        S1[Application]
+        cf1-->S1
+        cf2-->S1
+    end
+    C -- "Connections x 4 <br>"--> cf1
+    C --> cf1
+    C --> cf1
+    C --> cf1
+    C -- Connections x 4--> cf2
+    C --> cf2
+    C --> cf2
+    C --> cf2
 ```
 
 By design, replicas do not offer any level of traffic steering (random, hash, or round-robin). Instead, when a request arrives to Cloudflare, it will be forwarded to the replica that is geographically closest. If that distance calculation is unsuccessful or the connection fails, we will retry others, but there is no guarantee about which connection is chosen.
@@ -51,26 +51,26 @@ For setup instructions, refer to [Deploy cloudflared replicas](/cloudflare-one/n
 
 ```mermaid
 graph LR
-		accTitle: Load balancing traffic to applications behind Cloudflare Tunnel
+    accTitle: Load balancing traffic to applications behind Cloudflare Tunnel
 
     A[Internet] --> C{Cloudflare <br> Load Balancer}
     B[WARP clients] --> C
-		M[Cloudflare WAN] --> C
+    M[Cloudflare WAN] --> C
     C -- Tunnel 1 --> cf1
     C -- Tunnel 2 --> cf2
-		subgraph F[Data center 2]
-				cf2[cloudflared <br> server]
-       	S3[App server]
+    subgraph F[Data center 2]
+        cf2[cloudflared <br> server]
+        S3[App server]
         S4[App server]
-				cf2-->S3
-				cf2-->S4
+        cf2-->S3
+        cf2-->S4
     end
-		subgraph E[Data center 1]
-				cf1[cloudflared <br> server]
+    subgraph E[Data center 1]
+        cf1[cloudflared <br> server]
         S1[App server]
         S2[App server]
-				cf1-->S1
-				cf1-->S2
+        cf1-->S1
+        cf1-->S2
     end
 ```
 

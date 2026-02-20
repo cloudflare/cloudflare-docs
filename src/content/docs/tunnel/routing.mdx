@@ -52,24 +52,24 @@ Use a [public load balancer](/load-balancing/load-balancers/) to distribute traf
 
 ```mermaid
 graph LR
-		accTitle: Load balancing traffic to applications behind Cloudflare Tunnel
+    accTitle: Load balancing traffic to applications behind Cloudflare Tunnel
 
     A[Internet] --> C{Cloudflare <br> Load Balancer}
     C -- Tunnel 1 --> cf1
     C -- Tunnel 2 --> cf2
-		subgraph F[Data center 2]
-				cf2[cloudflared]
-       	S3[App server]
+    subgraph F[Data center 2]
+        cf2[cloudflared]
+        S3[App server]
         S4[App server]
-				cf2-->S3
-				cf2-->S4
+        cf2-->S3
+        cf2-->S4
     end
-		subgraph E[Data center 1]
-				cf1[cloudflared]
+    subgraph E[Data center 1]
+        cf1[cloudflared]
         S1[App server]
         S2[App server]
-				cf1-->S1
-				cf1-->S2
+        cf1-->S1
+        cf1-->S2
     end
 ```
 
