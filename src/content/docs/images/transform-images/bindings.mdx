@@ -86,6 +86,7 @@ return response;
 - You must define [a supported format](/images/transform-images/#supported-output-formats) such as AVIF, WebP, or JPEG for the [transformed image](/images/transform-images/).
 - This is required since there is no default format to fallback to.
 - [Image quality](/images/transform-images/transform-via-url/#quality) can be altered by specifying `quality` on a 1-100 scale.
+- [Animation preservation](/images/transform-images/transform-via-url/#anim) can be controlled with the `anim` parameter. Set `anim: false` to reduce animations to still images.
 
 For example, to rotate, resize, and blur an image, then output the image as AVIF:
 
@@ -111,7 +112,11 @@ return response;
 
 - Outputs information about the image, such as `format`, `fileSize`, `width`, and `height`.
 
-Responses from the Images binding are not automatically cached. Workers lets you interact directly with the Cache API to customize cache behavior using Workers. You can implement logic in your script to store transformations in Cloudflare’s cache.
+:::note
+
+Responses from the Images binding are not automatically cached. Workers lets you interact directly with the [Cache API](/workers/runtime-apis/cache/) to customize cache behavior. You can implement logic in your script to store transformations in Cloudflare's cache.
+
+:::
 
 ## Interact with your Images binding locally
 
