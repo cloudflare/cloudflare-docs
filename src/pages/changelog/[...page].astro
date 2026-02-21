@@ -2,6 +2,7 @@
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 import Header from "~/components/changelog/Header.astro";
 import Pagination from "~/components/changelog/Pagination.astro";
@@ -20,6 +21,8 @@ export const getStaticPaths = (async ({ paginate }) => {
 	return paginate(visibleNotes, { pageSize: 25 });
 }) satisfies GetStaticPaths;
 
+type ChangelogEntry = CollectionEntry<"changelog">;
+
 const { page } = Astro.props;
 ---
 
@@ -35,7 +38,7 @@ const { page } = Astro.props;
 >
 	<Header />
 	{
-		page.data.map(async (entry) => {
+		page.data.map(async (entry: ChangelogEntry) => {
 			const date = format(entry.data.date, "MMM dd, yyyy");
 			const { Content } = await render(entry);
 
