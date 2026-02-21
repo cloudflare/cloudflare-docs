@@ -20,16 +20,17 @@ Agents can browse the web using the [Browser Rendering](/browser-rendering/) API
 
 The [Browser Rendering](/browser-rendering/) allows you to spin up headless browser instances, render web pages, and interact with websites through your Agent.
 
-You can define a method that uses Puppeteer to pull the content of a web page, parse the DOM, and extract relevant information by calling the OpenAI model:
+You can define a method that uses Puppeteer to pull the content of a web page, parse the DOM, and extract relevant information by calling a model via [Workers AI](/workers-ai/):
 
 <TypeScriptExample>
 
 ```ts
 interface Env {
 	BROWSER: Fetcher;
+	AI: Ai;
 }
 
-export class MyAgent extends Agent {
+export class MyAgent extends Agent<Env> {
 	async browse(browserInstance: Fetcher, urls: string[]) {
 		let responses = [];
 		for (const url of urls) {
@@ -42,21 +43,14 @@ export class MyAgent extends Agent {
 				"body",
 				(element) => element.innerHTML,
 			);
-			const client = new OpenAI({
-				apiKey: this.env.OPENAI_API_KEY,
-			});
 
-			let resp = await client.chat.completions.create({
-				model: this.env.MODEL,
+			let resp = await this.env.AI.run("@cf/zai-org/glm-4.7-flash", {
 				messages: [
 					{
 						role: "user",
 						content: `Return a JSON object with the product names, prices and URLs with the following format: { "name": "Product Name", "price": "Price", "url": "URL" } from the website content below. <content>${bodyContent}</content>`,
 					},
 				],
-				response_format: {
-					type: "json_object",
-				},
 			});
 
 			responses.push(resp);
@@ -79,6 +73,9 @@ You'll also need to add install the `@cloudflare/puppeteer` package and add the 
 ```jsonc
 {
 	// ...
+	"ai": {
+		"binding": "AI",
+	},
 	"browser": {
 		"binding": "MYBROWSER",
 	},
