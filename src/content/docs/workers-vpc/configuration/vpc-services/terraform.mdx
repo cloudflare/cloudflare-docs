@@ -1,6 +1,7 @@
 ---
 title: Configure with Terraform
-pcx_content_type: concept
+pcx_content_type: how-to
+description: Learn how to manage VPC Services using the Cloudflare Terraform provider.
 sidebar:
   order: 2
 ---
@@ -92,7 +93,7 @@ Once a VPC Service exists, bind it to a Worker using the `vpc_service` binding t
 resource "cloudflare_worker_version" "my_worker_version" {
   account_id         = var.account_id
   worker_id          = cloudflare_worker.my_worker.id
-  compatibility_date = "$today"
+  compatibility_date = "2025-02-21" # Set this to today's date
   main_module        = "worker.js"
 
   modules = [{
