@@ -1,21 +1,23 @@
 ---
 pcx_content_type: concept
 title: Tools
+tags:
+  - MCP
 sidebar:
   order: 2
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { TypeScriptExample } from "~/components";
 
-Model Context Protocol (MCP) tools are functions that a [MCP Server](/agents/model-context-protocol) provides and MCP clients can call.
+Model Context Protocol (MCP) tools are functions that an [MCP Server](/agents/model-context-protocol) provides and MCP clients can call.
 
 When you build MCP Servers with the `agents` package, you can define tools the [same way as shown in the `@modelcontextprotocol/sdk` package's examples](https://github.com/modelcontextprotocol/typescript-sdk?tab=readme-ov-file#tools).
 
-For example, the following code from [this example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-server) defines a simple MCP server that adds two numbers together:
+For example, the following code defines a simple MCP server that adds two numbers together:
 
 <TypeScriptExample>
 ```ts title="src/index.ts"
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { McpAgent } from "agents/mcp";
 import { z } from "zod";
 

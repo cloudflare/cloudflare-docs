@@ -97,7 +97,7 @@ You can use the [Wrangler CLI](/workers/wrangler) to create a new MCP Server on 
       🌐 Opening browser...
       ```
 
-      The MCP inspector will launch in your web browser. You can also launch it manually by opening a browser and going to `https://localhost:<PORT>`. Check the command output for the local port where MCP Inspector is running. In this example, the MCP server is served on port `5173`.
+      The MCP Inspector will launch in your web browser. You can also launch it manually by opening a browser and going to `http://localhost:<PORT>`. Check the command output for the local port where MCP Inspector is running. In this example, MCP Inspector is served on port `5173`.
 
    2. In the MCP inspector, enter the URL of your MCP server (`http://localhost:8788/mcp`), and select **Connect**. Select **List Tools** to show the tools that your MCP server exposes.
 
@@ -161,7 +161,7 @@ For a step-by-step deployment guide, refer to [Secure MCP servers with Access fo
 
 ### Third-party OAuth
 
-You can connect your MCP server with any [OAuth provider](/agents/model-context-protocol/authorization/#2-third-party-oauth-provider) that supports the OAuth 2.0 specification, including GitHub, Google, Slack, [Stytch](/agents/model-context-protocol/authorization/#stytch), [Auth0](/agents/model-context-protocol/authorization/#stytch), [WorkOS](/agents/model-context-protocol/authorization/#stytch), and more.
+You can connect your MCP server with any [OAuth provider](/agents/model-context-protocol/authorization/#2-third-party-oauth-provider) that supports the OAuth 2.0 specification, including GitHub, Google, Slack, [Stytch](/agents/model-context-protocol/authorization/#stytch), [Auth0](/agents/model-context-protocol/authorization/#auth0), [WorkOS](/agents/model-context-protocol/authorization/#workos), and more.
 
 The following example demonstrates how to use GitHub as an OAuth provider.
 
@@ -190,7 +190,7 @@ import GitHubHandler from "./github-handler";
 
 export default new OAuthProvider({
 	apiRoute: "/mcp",
-	apiHandler: MyMCP.Router,
+	apiHandler: MyMCP.serve("/mcp"),
 	defaultHandler: GitHubHandler,
 	authorizeEndpoint: "/authorize",
 	tokenEndpoint: "/token",
@@ -198,7 +198,7 @@ export default new OAuthProvider({
 });
 ```
 
-This will ensure that your users are redirected to GitHub to authenticate. To get this working though, you need to create OAuth client apps in the steps below.
+This ensures that your users are redirected to GitHub to authenticate. To get this working though, you need to create OAuth client apps in the steps below.
 
 #### Step 2 — Create an OAuth App
 
@@ -303,7 +303,7 @@ npx wrangler secret put GITHUB_CLIENT_SECRET
     npm run deploy
     ```
 
-5.  Connect to your server running at `worker-name.account-name.workers.dev/mcp` using the [AI Playground](https://playground.ai.cloudflare.com/), MCP inspector or ([other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients)), and authenticate with GitHub.
+5.  Connect to your server running at `worker-name.account-name.workers.dev/mcp` using the [AI Playground](https://playground.ai.cloudflare.com/), MCP Inspector, or [other MCP clients](/agents/guides/test-remote-mcp-server/), and authenticate with GitHub.
 
 ## Next steps
 
