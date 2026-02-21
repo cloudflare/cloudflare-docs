@@ -7,7 +7,7 @@ sidebar:
   order: 12
 ---
 
-import { Render, TypeScriptExample, LinkCard } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 The `createMcpHandler` function creates a fetch handler to serve your [MCP server](/agents/model-context-protocol/). Use it when you want a stateless MCP server that runs in a plain Worker (no Durable Object). For stateful MCP servers that persist state across requests, use the [`McpAgent`](/agents/api-reference/mcp-agent-api) class instead.
 
@@ -191,6 +191,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 const STATE_KEY = "mcp-transport-state";
 
+type State = { counter: number };
+
 export class MyStatefulMcpAgent extends Agent<Env, State> {
 	server = new McpServer({
 		name: "Stateful MCP Server",
@@ -236,7 +238,7 @@ export default {
 		const agent = await getAgentByName(env.MyStatefulMcpAgent, sessionId);
 
 		// Route the MCP request to the agent
-		return await agent.onMcpRequest(request);
+		return await agent.onRequest(request);
 	},
 } satisfies ExportedHandler<Env>;
 ```
