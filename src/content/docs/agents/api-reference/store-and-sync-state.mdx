@@ -663,15 +663,12 @@ export class ReasoningAgent extends Agent<Env> {
 		const userPrompt = `${prompt.user}\n\nUser history:\n${context.join("\n")}`;
 
 		try {
-			const response = await this.env.AI.run(
-				"@cf/zai-org/glm-4.7-flash",
-				{
-					messages: [
-						{ role: "system", content: systemPrompt },
-						{ role: "user", content: userPrompt },
-					],
-				},
-			);
+			const response = await this.env.AI.run("@cf/zai-org/glm-4.7-flash", {
+				messages: [
+					{ role: "system", content: systemPrompt },
+					{ role: "user", content: userPrompt },
+				],
+			});
 
 			// Store the response in history
 			this
@@ -704,7 +701,7 @@ This works because each instance of an Agent has its own database, and the state
 | Method                | Signature                                                    | Description                                   |
 | --------------------- | ------------------------------------------------------------ | --------------------------------------------- |
 | `setState`            | `(state: State) => void`                                     | Update state, persist, and broadcast          |
-| `onStateChanged`       | `(state: State, source: Connection \| "server") => void`     | Called when state changes                     |
+| `onStateChanged`      | `(state: State, source: Connection \| "server") => void`     | Called when state changes                     |
 | `validateStateChange` | `(nextState: State, source: Connection \| "server") => void` | Validate before persistence (throw to reject) |
 
 ### Workflow step methods

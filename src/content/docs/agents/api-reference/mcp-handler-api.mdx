@@ -257,11 +257,11 @@ The MCP SDK 1.26.0 introduces a breaking change for stateless MCP servers that a
 
 ### Who is affected?
 
-| Server Type | Affected? | Action Required |
-|-------------|-----------|-----------------|
-| Stateful servers using `Agent`/Durable Object | No | No changes needed |
-| Stateless servers using `createMcpHandler` | Yes | Create new `McpServer` per request |
-| Stateless servers using raw SDK transport | Yes | Create new `McpServer` and transport per request |
+| Server Type                                   | Affected? | Action Required                                  |
+| --------------------------------------------- | --------- | ------------------------------------------------ |
+| Stateful servers using `Agent`/Durable Object | No        | No changes needed                                |
+| Stateless servers using `createMcpHandler`    | Yes       | Create new `McpServer` per request               |
+| Stateless servers using raw SDK transport     | Yes       | Create new `McpServer` and transport per request |
 
 ### Why is this necessary?
 
