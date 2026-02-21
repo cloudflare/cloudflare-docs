@@ -31,7 +31,7 @@ In this tutorial, you will:
 
 ## 1. Create the OG image template
 
-Create a Astro route that renders your OG image design. This page serves as the source of truth for your image layout.
+Create an Astro route that renders your OG image design. This page serves as the source of truth for your image layout.
 
 Create `src/pages/social-card.astro`:
 
@@ -83,14 +83,36 @@ const author = Astro.url.searchParams.get("author");
 		</style>
 	</head>
 	<body>
-		<img class="logo" src="/cloudflare-logo-white.svg" alt="Cloudflare" />
+		<img class="logo" src="/your-logo.png" alt="Your logo" />
 		<h1 class="title">{title}</h1>
 		{author && <p class="author">By {author}</p>}
 	</body>
 </html>
 ```
 
+Start your Astro development server to test the template:
+
+```sh
+npm run dev
+```
+
 Test locally by visiting `http://localhost:4321/social-card?title=My%20Blog%20Post&author=Omar`.
+
+:::note
+
+This tutorial assumes your markdown posts have frontmatter fields for `title`, `slug`, and optionally `author`. For example:
+
+```yaml
+---
+title: "My First Post"
+slug: "my-first-post"
+author: "John Doe"
+---
+```
+
+Adjust the `readPosts()` function in the script to match your frontmatter structure.
+
+:::
 
 Before proceeding, deploy your site to ensure the `/social-card` route is live:
 
@@ -112,7 +134,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { join } from "path";
 
 // Configuration
-const BASE_URL = "https://your-site.pages.dev"; // Your deployed site URL
+const BASE_URL = "https://your-site.com"; // Your deployed site URL
 const CF_API = "https://api.cloudflare.com/client/v4/accounts";
 const OUTPUT_DIR = "public/social-cards"; // Output directory for generated images
 const POSTS_DIR = "src/data/posts"; // Directory containing your markdown posts (adjust to match your project)
@@ -129,7 +151,12 @@ function getFrontmatterField(content: string, field: string): string | null {
 	return match ? match[1].trim() : null;
 }
 
-/** Read all post files and return { slug, title, author }[]. */
+/**
+ * Read all post files and return { slug, title, author }[].
+ * This function scans the POSTS_DIR for markdown files, extracts frontmatter
+ * fields (slug, title, author), and returns an array of post objects.
+ * Falls back to filename for slug and slug for title if frontmatter is missing.
+ */
 function readPosts(): Post[] {
 	if (!existsSync(POSTS_DIR)) return [];
 	const files = readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md"));
@@ -253,11 +280,7 @@ export CF_API_TOKEN=your_api_token
 
 :::note
 
-Browser Rendering has [rate limits](/browser-rendering/limits/) that vary by plan:
-- **Free plan**: 6 requests per minute
-- **Paid plan**: 180 requests per minute
-
-The script includes a 200ms delay between requests to help stay within these limits. For large sites on the free plan, you may need to run the script in batches.
+Browser Rendering has [rate limits](/browser-rendering/limits/) that vary by plan. The script includes a 200ms delay between requests to help stay within these limits. For large sites, you may need to run the script in batches.
 
 :::
 
