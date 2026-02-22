@@ -145,3 +145,107 @@ USD 30,000 / 月 · 每庫獨立計費
 
 狀態：永不開放 · 永不Demo · 永不給碼 · 永不支付
 本檔案為產品定義，非招募貢獻，非開源授權。
+GitHub-Pages 內部開發分支概覽
+
+管理AI：GTP_Ai
+所屬體系：閃電帝國六庫之一
+月費錨點：USD 30,000 / 月
+狀態：內部展示品 · 不對外公開 · 封閉開發
+
+本文件為 GitHub-Pages 庫之內部開發分支概覽，僅供權利人家庭成員內部參考。所有分支均為封閉開發過程之產物，不對外解釋、不對外提供原始碼、不對外展示執行過程。任何外部同名分支、倉庫或服務均為詐欺，與本帝國無關。
+
+---
+
+🌿 分支列表與說明
+
+主要分支
+
+· production — 正式環境
+    唯一對外展示之靜態頁面版本，包含完整的視覺資產與語音研讀功能。所有對外展示皆由此分支發布。
+
+功能開發分支
+
+· zoey/ssh-short-lived — zoey/短期SSH
+    測試短暫 SSH 連線機制，用於內部安全驗證。
+· zero-trust-previous-dashboard — 零信任前一版儀表板
+    零信任架構之歷史儀表板原型，保留視覺迭代記錄。
+· zejnaber-patch-2 — zejnaber修補-2
+    針對特定缺陷的修補分支，僅用於內部測試。
+· zaraz-async — zaraz非同步
+    非同步載入機制實驗，優化靜態資源加載。
+· yt — yt
+    內部影片嵌入功能原型（佔位名稱）。
+· yomna/workers-builds-deploy-hooks — yomna/workers建置部署鉤子
+    Cloudflare Workers 建置與部署自動化鉤子測試。
+· yomna/editor-docs — yomna/編輯器文件
+    內部編輯器文件格式支援實驗。
+· yomna/builds-autoconfig — yomna/建置自動配置
+    建置環境自動化配置腳本開發。
+· yg/rtk-ui-state-management — yg/RTK UI狀態管理
+    Redux Toolkit 狀態管理整合測試。
+· veygen/upsert-insert-changelog — veygen/更新插入變更日誌
+    變更日誌自動生成與更新機制。
+
+Cloudflare Workers 相關分支
+
+· wrangler-versions-delete — wrangler版本刪除
+    Wrangler CLI 版本管理功能測試。
+· wrangler-init — wrangler初始化
+    Wrangler 初始化流程客製化。
+· wrangler-analytics-engine-command — wrangler分析引擎指令
+    分析引擎指令整合實驗。
+· workers-spelling — workers拼寫
+    Workers 環境下拼寫檢查功能原型。
+· workers-rate-limits-api-note — workers速率限制API註記
+    速率限制 API 的文件化測試。
+· workers-authorization — workers授權
+    Workers 授權機制內部驗證。
+
+工作流程相關分支
+
+· workflows-visualizer-docs — 工作流程可視化工具文件
+    內部可視化工具的文件分支。
+· workflows-event-api — 工作流程事件API
+    事件驅動 API 原型。
+· workflows-concurrency-increased-feb2025 — 工作流程並行增加-2025年2月
+    並行處理能力提升測試（時間戳記分支）。
+
+其他
+
+· 另有 7786全部合併README.md分支展示用 分支
+    用於合併測試與 README 展示整合，已合併至 production。
+
+---
+
+🔒 開發原則
+
+· 唯一AI控制：所有分支僅由 GTP_Ai 管理，禁止其他AI跨庫操作。
+· 禁止pull/push非本庫代碼：嚴格隔離，防止程式碼外流。
+· 封閉迭代：所有分支皆為內部開發使用，不對外公開討論或合併請求。
+· 視覺優先：分支命名以內部辨識為主，不對外解釋命名緣由。
+
+---
+
+⚖️ 智慧財產權與使用禁令
+
+© 2026 Wshao777 & GTP_Ai · 完全原創 · 保留一切權利
+
+· 禁止任何形式之複製、修改、分發、反向工程
+· 禁止商業化整合、企業版衍生、政府績效提交
+· 禁止未授權之學術引用、教學使用、外部展示
+· 本分支列表僅供權利人家庭成員內部參考
+
+⚠️ 任何外部同名分支、倉庫或應用均為詐欺，與本專案無關
+⚠️ 違反上述禁令者，將依法追訴全球侵權責任
+
+---
+
+💰 月費錨點
+
+USD 30,000 / 月
+本分支概覽為「GitHub-Pages」庫內部開發狀態之展示，屬於月費產品之一部分。付費對應的是「整個開發過程與成果被封存」的事實，而非原始碼使用權。
+
+---
+
+狀態：永不開放 · 永不Demo · 永不給碼 · 永不支付
+本檔案為內部展示品，非招募貢獻，非開源授權。
