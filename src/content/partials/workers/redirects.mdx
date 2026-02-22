@@ -45,18 +45,7 @@ Only one redirect can be defined per line and must follow this format, otherwise
 
   - Optional parameter
 
-### Comments
-
 Lines starting with a `#` will be treated as comments.
-
-You can also add inline comments to redirect rules. Any `#` token that appears after the `source` and `destination` (and optional `code`) will be treated as the start of a comment and ignored. URL fragments (for example, `/page#section`) are not affected because they do not have a space before the `#`.
-
-```txt
-# Full-line comment explaining the next group of redirects
-/old-page /new-page 301 # Moved during site redesign
-/blog/* /articles/:splat # Blog URL migration
-/page /page2#section 301 # URL fragment is preserved
-```
 
 ### Per file
 
@@ -78,7 +67,7 @@ A complete example with multiple redirects may look like the following:
 /trailing /trailing/ 301
 /notrailing/ /nottrailing 301
 /page/ /page2/#fragment 301
-/blog/* https://blog.my.domain/:splat # Blog migration
+/blog/* https://blog.my.domain/:splat
 /products/:code/:name /products?code=:code&name=:name
 ```
 
