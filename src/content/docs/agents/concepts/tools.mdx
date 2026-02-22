@@ -1,45 +1,228 @@
 ---
 title: Tools
 pcx_content_type: concept
+description: Tools let agents take action — call APIs, query databases, run calculations. Learn the three tool patterns available on Cloudflare and when to use each.
+tags:
+  - AI
+  - MCP
 sidebar:
   order: 4
 ---
 
-### What are tools?
+import { TypeScriptExample, LinkCard } from "~/components";
 
-Tools enable AI systems to interact with external services and perform actions. They provide a structured way for agents and workflows to invoke APIs, manipulate data, and integrate with external systems. Tools form the bridge between AI decision-making capabilities and real-world actions.
+Tools are functions that an agent can call to take action — look up data, call an API, run a calculation, send an email. Without tools, an LLM can only generate text. With tools, it can interact with the outside world.
 
-### Understanding tools
+On Cloudflare, tools appear in three contexts. The right choice depends on **who is calling the tool**.
 
-In an AI system, tools are typically implemented as function calls that the AI can use to accomplish specific tasks. For example, a travel booking agent might have tools for:
+| Pattern                               | Who calls it                                      | Defined with                                     | Use case                                                                     |
+| ------------------------------------- | ------------------------------------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------- |
+| [AI SDK tools](#ai-sdk-tools)         | The LLM (during a chat)                           | `tool()` from the `ai` package                   | Chat agents that need to fetch data, run logic, or ask for user confirmation |
+| [MCP tools](#mcp-tools)               | Remote MCP clients (Claude, Cursor, other agents) | `server.tool()` from `@modelcontextprotocol/sdk` | Exposing capabilities to any MCP-compatible client                           |
+| [Callable methods](#callable-methods) | Browser or mobile clients                         | `@callable()` decorator                          | RPC from a frontend over WebSocket                                           |
 
-- Searching flight availability
-- Checking hotel rates
-- Processing payments
-- Sending confirmation emails
+## AI SDK tools
 
-Each tool has a defined interface specifying its inputs, outputs, and expected behavior. This allows the AI system to understand when and how to use each tool appropriately.
+When building chat agents with [`AIChatAgent`](/agents/api-reference/chat-agents/), you define tools using the [AI SDK](https://ai-sdk.dev)'s `tool()` function. The LLM decides when to call them based on the conversation.
 
-### Common tool patterns
+Tools can run in three modes:
 
-#### API integration tools
+- **Server-side** — has an `execute` function that runs on the server automatically
+- **Client-side** — no `execute` function; the browser handles the tool call and returns a result
+- **Human-in-the-loop** — has a `needsApproval` function; waits for user confirmation before executing
 
-The most common type of tools are those that wrap external APIs. These tools handle the complexity of API authentication, request formatting, and response parsing, presenting a clean interface to the AI system.
+<TypeScriptExample>
 
-#### Model Context Protocol (MCP)
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { streamText, tool, convertToModelMessages } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+import { z } from "zod";
 
-The [Model Context Protocol](https://modelcontextprotocol.io/introduction) provides a standardized way to define and interact with tools. Think of it as an abstraction on top of APIs designed for LLMs to interact with external resources. MCP defines a consistent interface for:
+export class ChatAgent extends AIChatAgent {
+	async onChatMessage() {
+		const workersai = createWorkersAI({ binding: this.env.AI });
 
-- **Tool Discovery**: Systems can dynamically discover available tools
-- **Parameter Validation**: Tools specify their input requirements using JSON Schema
-- **Error Handling**: Standardized error reporting and recovery
-- **State Management**: Tools can maintain state across invocations
+		const result = streamText({
+			model: workersai("@cf/meta/llama-4-scout-17b-16e-instruct"),
+			messages: await convertToModelMessages(this.messages),
+			tools: {
+				getWeather: tool({
+					description: "Get the current weather for a city",
+					inputSchema: z.object({
+						city: z.string().describe("City name"),
+					}),
+					execute: async ({ city }) => {
+						const res = await fetch(`https://api.weather.example.com/${city}`);
+						return res.json();
+					},
+				}),
 
-#### Data processing tools
+				getUserLocation: tool({
+					description: "Get the user's location from their browser",
+					inputSchema: z.object({}),
+					// No execute — the client handles this tool call
+				}),
 
-Tools that handle data transformation and analysis are essential for many AI workflows. These might include:
+				deleteAccount: tool({
+					description: "Permanently delete the user's account",
+					inputSchema: z.object({
+						userId: z.string(),
+					}),
+					needsApproval: async () => true,
+					execute: async ({ userId }) => {
+						await this.env.DB.prepare("DELETE FROM users WHERE id = ?")
+							.bind(userId)
+							.run();
+						return { deleted: true };
+					},
+				}),
+			},
+		});
 
-- CSV parsing and analysis
-- Image processing
-- Text extraction
-- Data validation
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TypeScriptExample>
+
+The LLM sees the tool names, descriptions, and input schemas. It decides which tool to call based on the user's message. The AI SDK handles the loop: the LLM calls a tool, gets the result, and uses it to generate the next response.
+
+For a full walkthrough, refer to [Build a chat agent](/agents/getting-started/build-a-chat-agent/).
+
+## MCP tools
+
+[Model Context Protocol (MCP)](/agents/model-context-protocol/) tools are designed for a different audience: remote clients like Claude, Cursor, or other agents that discover and call your tools over the network.
+
+You define MCP tools with `server.tool()` from the `@modelcontextprotocol/sdk` package. Each tool gets a name, a description, a Zod input schema, and a handler.
+
+<TypeScriptExample>
+
+```ts
+import { McpAgent } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+
+export class MyMCP extends McpAgent {
+	server = new McpServer({ name: "Inventory", version: "1.0.0" });
+
+	async init() {
+		this.server.tool(
+			"checkStock",
+			"Check inventory for a product by SKU",
+			{ sku: z.string().describe("Product SKU code") },
+			async ({ sku }) => {
+				const item = this.sql<{ quantity: number }>`
+          SELECT quantity FROM inventory WHERE sku = ${sku}`;
+				return {
+					content: [
+						{
+							type: "text",
+							text:
+								item.length > 0
+									? `${sku}: ${item[0].quantity} in stock`
+									: `${sku}: not found`,
+						},
+					],
+				};
+			},
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Because `McpAgent` extends `Agent`, your MCP tools have access to persistent state (`this.state`, `this.sql`), scheduling, and every other agent capability. A stateless alternative is available via [`createMcpHandler`](/agents/api-reference/mcp-handler-api/) for tools that do not need persistence.
+
+For more on MCP tool definitions, refer to [MCP tools](/agents/model-context-protocol/tools/).
+
+## Callable methods
+
+Callable methods are not tools in the LLM sense — they are RPC endpoints that browser and mobile clients call directly over WebSocket. Mark any agent method with `@callable()` to expose it.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+
+export class TodoAgent extends Agent<Env, { todos: string[] }> {
+	initialState = { todos: [] };
+
+	@callable()
+	addTodo(text: string) {
+		this.setState({ todos: [...this.state.todos, text] });
+		return this.state.todos;
+	}
+
+	@callable()
+	removeTodo(index: number) {
+		const todos = this.state.todos.filter((_, i) => i !== index);
+		this.setState({ todos });
+		return todos;
+	}
+}
+```
+
+</TypeScriptExample>
+
+Clients call these methods through the agent stub:
+
+<TypeScriptExample>
+
+```ts
+import { useAgent } from "agents/react";
+import type { TodoAgent } from "./server";
+
+function App() {
+	const agent = useAgent<TodoAgent>({ agent: "TodoAgent" });
+
+	const handleAdd = async () => {
+		const todos = await agent.stub.addTodo("Buy groceries");
+		console.log(todos);
+	};
+}
+```
+
+</TypeScriptExample>
+
+For the full callable methods API, refer to [Callable methods](/agents/api-reference/callable-methods/).
+
+## Choosing the right pattern
+
+| Question                                                       | Answer | Use                                                 |
+| -------------------------------------------------------------- | ------ | --------------------------------------------------- |
+| Should the **LLM** decide when to call it?                     | Yes    | AI SDK `tool()`                                     |
+| Should **remote MCP clients** be able to discover and call it? | Yes    | MCP `server.tool()`                                 |
+| Should a **browser or mobile app** call it directly?           | Yes    | `@callable()`                                       |
+| Does a destructive action need **user confirmation**?          | Yes    | AI SDK `tool()` with `needsApproval`                |
+| Does the tool need **persistent state** across calls?          | Yes    | MCP tool on `McpAgent`, or `@callable()` on `Agent` |
+
+These patterns are not mutually exclusive. A single agent can expose `@callable()` methods for its frontend, AI SDK tools for its chat interface, and run an MCP server for external clients.
+
+## Next steps
+
+<LinkCard
+	title="Build a chat agent"
+	href="/agents/getting-started/build-a-chat-agent/"
+	description="Full walkthrough of AI SDK tools with server, client, and approval patterns."
+/>
+
+<LinkCard
+	title="MCP tools reference"
+	href="/agents/model-context-protocol/tools/"
+	description="Defining tools, handling results, and input validation for MCP servers."
+/>
+
+<LinkCard
+	title="Callable methods"
+	href="/agents/api-reference/callable-methods/"
+	description="Expose agent methods to browser and mobile clients over WebSocket."
+/>
+
+<LinkCard
+	title="Human in the loop"
+	href="/agents/concepts/human-in-the-loop/"
+	description="Approval flows and manual intervention patterns."
+/>

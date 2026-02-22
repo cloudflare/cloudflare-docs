@@ -1,6 +1,7 @@
 ---
 title: What are agents?
 pcx_content_type: concept
+description: Agents are stateful AI systems that run on Cloudflare's global network. Learn the mental model and see what one looks like in code.
 tags:
   - AI
   - LLM
@@ -8,98 +9,133 @@ sidebar:
   order: 2
 ---
 
-import { LinkCard } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
-An agent is an AI system that can autonomously execute tasks by making decisions about tool usage and process flow. Unlike traditional automation that follows predefined paths, agents can dynamically adapt their approach based on context and intermediate results. Agents are also distinct from co-pilots (such as traditional chat applications) in that they can fully automate a task, as opposed to simply augmenting and extending human input.
+An agent is an AI system that autonomously executes multi-step tasks. It decides which tools to call, in what order, and adapts its plan based on intermediate results. Unlike a traditional API workflow (fixed steps, deterministic output) or a co-pilot (waits for your input at every turn), an agent can take a goal, figure out the steps, and execute them end-to-end.
 
-- **Agents** → non-linear, non-deterministic (can change from run to run)
-- **Workflows** → linear, deterministic execution paths
-- **Co-pilots** → augmentative AI assistance requiring human intervention
+## What makes Cloudflare agents different
 
-## Example: Booking vacations
+Most agent frameworks run your agent as a stateless function: each request reconstructs context from scratch, calls a model, returns a response, and forgets everything. You bolt on a database for memory, a message queue for scheduling, and a pub/sub layer for real-time updates — all as separate infrastructure.
 
-If this is your first time working with or interacting with agents, this example illustrates how an agent works within a context like booking a vacation.
+On Cloudflare, an agent is a [Durable Object](/durable-objects/) — a stateful micro-server with its own embedded SQLite database, running on Cloudflare's global network. Every agent instance:
 
-Imagine you are trying to book a vacation. You need to research flights, find hotels, check restaurant reviews, and keep track of your budget.
+- **Persists state automatically** — `this.state` and `this.sql` survive restarts, deploys, and hibernation. No external database required.
+- **Stays connected** — clients connect via WebSocket. State changes broadcast to all connected clients in real-time.
+- **Runs autonomously** — agents can schedule their own work (cron, delays, one-shot timers) and call models without a user present.
+- **Hibernates when idle** — no traffic means no cost. The agent wakes on the next request.
+- **Scales horizontally** — each unique name creates a separate instance. One agent class can have millions of instances running independently.
 
-### Traditional workflow automation
+## An agent in code
 
-A traditional automation system follows a predetermined sequence:
+An agent is a class. You extend `Agent`, define state, and expose methods:
 
-- Takes specific inputs (dates, location, budget)
-- Calls predefined API endpoints in a fixed order
-- Returns results based on hardcoded criteria
-- Cannot adapt if unexpected situations arise
+<TypeScriptExample>
 
-![Traditional workflow automation diagram](~/assets/images/agents/workflow-automation.svg)
+```ts
+import { Agent, callable } from "agents";
 
-### AI Co-pilot
+type State = {
+	messages: Array<{ role: string; content: string }>;
+};
 
-A co-pilot acts as an intelligent assistant that:
+export class MyAgent extends Agent<Env, State> {
+	initialState: State = { messages: [] };
 
-- Provides hotel and itinerary recommendations based on your preferences
-- Can understand and respond to natural language queries
-- Offers guidance and suggestions
-- Requires human decision-making and action for execution
+	@callable()
+	async chat(userMessage: string) {
+		const messages = [
+			...this.state.messages,
+			{ role: "user", content: userMessage },
+		];
 
-![A co-pilot diagram](~/assets/images/agents/co-pilot.svg)
+		const response = await this.env.AI.run(
+			"@cf/meta/llama-4-scout-17b-16e-instruct",
+			{ messages },
+		);
 
-### Agent
+		this.setState({
+			messages: [
+				...messages,
+				{ role: "assistant", content: response.response },
+			],
+		});
 
-An agent combines AI's ability to make judgments and call the relevant tools to execute the task. An agent's output will be nondeterministic given:
+		return response.response;
+	}
+}
+```
 
-- Real-time availability and pricing changes
-- Dynamic prioritization of constraints
-- Ability to recover from failures
-- Adaptive decision-making based on intermediate results
+</TypeScriptExample>
 
-![An agent diagram](~/assets/images/agents/agent-workflow.svg)
+This agent stores conversation history in its state, calls an LLM, and persists the result — all without an external database, a separate API server, or any glue infrastructure. Every connected client sees the state update in real-time.
 
-An agent can dynamically generate an itinerary and execute on booking reservations, similarly to what you would expect from a travel agent.
+## The agent lifecycle
 
-## Components of agent systems
+Agents operate in a loop driven by external events and internal schedules:
 
-Agent systems typically have three primary components:
+```mermaid
+flowchart TD
+    A["onStart"] --> B["onConnect / onRequest / onEmail"]
+    B --> C["Receive input"]
+    C --> D["Call tools / LLMs"]
+    D --> E["setState / sql"]
+    E --> F["Broadcast to clients"]
+    F -->|"New input"| C
+    F -->|"No activity"| G["Hibernate"]
+    G -->|"Next request"| A
+```
 
-- **Decision Engine**: Usually an LLM (Large Language Model) that determines action steps
-- **Tool Integration**: APIs, functions, and services the agent can utilize — often via [MCP](/agents/model-context-protocol/)
-- **Memory System**: Maintains context and tracks task progress
+| Lifecycle method | When it runs                                                               |
+| ---------------- | -------------------------------------------------------------------------- |
+| `onStart`        | Instance wakes up — on first request, after hibernation, or after a deploy |
+| `onConnect`      | A WebSocket client connects                                                |
+| `onMessage`      | A WebSocket message is received                                            |
+| `onRequest`      | An HTTP request arrives                                                    |
+| `onEmail`        | An email is routed to this instance                                        |
+| `setState`       | Persists state to SQLite and broadcasts to all connected clients           |
 
-### How agents work
+## How the pieces map together
 
-Agents operate in a continuous loop of:
+If you have read about agent architectures elsewhere, here is how the standard components map to Cloudflare primitives:
 
-1. **Observing** the current state or task
-2. **Planning** what actions to take, using AI for reasoning
-3. **Executing** those actions using available tools
-4. **Learning** from the results (storing results in memory, updating task progress, and preparing for next iteration)
+| Concept              | On Cloudflare                                                                  | Learn more                                                          |
+| -------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| **Decision engine**  | Any LLM — Workers AI, OpenAI, Anthropic, or any provider via the Vercel AI SDK | [Calling LLMs](/agents/concepts/calling-llms/)                      |
+| **Tool integration** | `@callable()` methods, MCP servers and clients                                 | [Tools](/agents/concepts/tools/)                                    |
+| **Memory**           | `this.state` (synced key-value), `this.sql` (embedded SQLite)                  | [Store and sync state](/agents/api-reference/store-and-sync-state/) |
+| **Scheduling**       | `this.schedule()` for cron, delays, and one-shot timers                        | [Schedule tasks](/agents/api-reference/schedule-tasks/)             |
+| **Orchestration**    | Cloudflare Workflows for durable, multi-step pipelines                         | [Workflows](/agents/concepts/workflows/)                            |
+| **Human oversight**  | Workflow approvals, MCP elicitation                                            | [Human in the loop](/agents/concepts/human-in-the-loop/)            |
 
-## Building agents on Cloudflare
+## When to use an agent
 
-The Cloudflare Agents SDK provides the infrastructure for building production agents:
+Not every problem needs an agent. Use the simplest model that fits:
 
-- **Persistent state** — Each agent instance has its own SQLite database for storing context and memory
-- **Real-time sync** — State changes automatically broadcast to all connected clients via WebSockets
-- **Hibernation** — Agents sleep when idle and wake on demand, so you only pay for what you use
-- **Global edge deployment** — Agents run close to your users on Cloudflare's network
-- **Built-in capabilities** — Scheduling, task queues, workflows, email handling, and more
+| Use case                                                 | Build with                |
+| -------------------------------------------------------- | ------------------------- |
+| Stateless API proxy or simple request-response           | A [Worker](/workers/)     |
+| Multi-step pipeline with retries and guaranteed delivery | A [Workflow](/workflows/) |
+| Stateful, interactive, or autonomous AI system           | An **Agent**              |
+| Long-running pipeline initiated by an interactive agent  | An **Agent + Workflow**   |
+
+If your system needs to remember context across requests, stay connected to users in real-time, or act on its own schedule — build an agent.
 
 ## Next steps
 
 <LinkCard
 	title="Quick start"
 	href="/agents/getting-started/quick-start/"
-	description="Build your first agent in 10 minutes."
+	description="Build a working agent in 10 minutes."
 />
 
 <LinkCard
-	title="Agents API"
-	href="/agents/api-reference/agents-api/"
-	description="Complete API reference for the Agents SDK."
+	title="Agent class internals"
+	href="/agents/concepts/agent-class/"
+	description="How Agent is built on top of Durable Objects, layer by layer."
 />
 
 <LinkCard
-	title="Using AI models"
-	href="/agents/api-reference/using-ai-models/"
-	description="Integrate OpenAI, Anthropic, and other providers."
+	title="Calling LLMs"
+	href="/agents/concepts/calling-llms/"
+	description="Patterns for using LLMs inside a stateful agent."
 />
