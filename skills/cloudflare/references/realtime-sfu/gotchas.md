@@ -10,7 +10,8 @@
 ### "No media flow"
 
 **Cause:** SDP exchange incomplete, connection not established, tracks not added before offer, browser permissions missing
-**Solution:** 
+**Solution:**
+
 1. Verify SDP exchange complete
 2. Check `pc.connectionState === 'connected'`
 3. Ensure tracks added before creating offer
@@ -20,7 +21,8 @@
 ### "Track not receiving"
 
 **Cause:** Track not published, track ID not shared, session IDs mismatch, `pc.ontrack` not set, renegotiation needed
-**Solution:** 
+**Solution:**
+
 1. Verify track published successfully
 2. Confirm track ID shared between peers
 3. Check session IDs match
@@ -31,22 +33,23 @@
 
 **Cause:** Network changed, firewall blocked UDP, TURN needed, transient network issue
 **Solution:**
+
 ```typescript
 pc.oniceconnectionstatechange = async () => {
-  if (pc.iceConnectionState === 'failed') {
-    console.warn('ICE failed, attempting restart');
-    await pc.restartIce(); // Triggers new ICE gathering
-    
-    // Create new offer with ICE restart flag
-    const offer = await pc.createOffer({iceRestart: true});
-    await pc.setLocalDescription(offer);
-    
-    // Send to backend → Cloudflare API
-    await fetch(`/api/sessions/${sessionId}/renegotiate`, {
-      method: 'PUT',
-      body: JSON.stringify({sdp: offer.sdp})
-    });
-  }
+	if (pc.iceConnectionState === "failed") {
+		console.warn("ICE failed, attempting restart");
+		await pc.restartIce(); // Triggers new ICE gathering
+
+		// Create new offer with ICE restart flag
+		const offer = await pc.createOffer({ iceRestart: true });
+		await pc.setLocalDescription(offer);
+
+		// Send to backend → Cloudflare API
+		await fetch(`/api/sessions/${sessionId}/renegotiate`, {
+			method: "PUT",
+			body: JSON.stringify({ sdp: offer.sdp }),
+		});
+	}
 };
 ```
 
@@ -54,6 +57,7 @@ pc.oniceconnectionstatechange = async () => {
 
 **Cause:** Sender paused track, network congestion, codec mismatch, mobile browser backgrounded
 **Solution:**
+
 1. Check `track.enabled` and `track.readyState === 'live'`
 2. Verify sender active: `pc.getSenders().find(s => s.track === track)`
 3. Check stats for packet loss/jitter (see patterns.md)
@@ -64,13 +68,14 @@ pc.oniceconnectionstatechange = async () => {
 
 **Cause:** Mobile switching WiFi↔cellular, laptop changing networks
 **Solution:**
+
 ```typescript
 // Listen for network changes
-if ('connection' in navigator) {
-  (navigator as any).connection.addEventListener('change', async () => {
-    console.log('Network changed');
-    await pc.restartIce(); // Use ICE restart pattern above
-  });
+if ("connection" in navigator) {
+	(navigator as any).connection.addEventListener("change", async () => {
+		console.log("Network changed");
+		await pc.restartIce(); // Use ICE restart pattern above
+	});
 }
 
 // Or use PartyTracks (handles automatically)
@@ -79,19 +84,23 @@ if ('connection' in navigator) {
 ## Retry with Exponential Backoff
 
 ```typescript
-async function fetchWithRetry(url: string, options: RequestInit, maxRetries = 3) {
-  for (let i = 0; i < maxRetries; i++) {
-    try {
-      const res = await fetch(url, options);
-      if (res.ok) return res;
-      if (res.status >= 500) throw new Error('Server error');
-      return res; // Client error, don't retry
-    } catch (err) {
-      if (i === maxRetries - 1) throw err;
-      const delay = Math.min(1000 * 2 ** i, 10000); // Cap at 10s
-      await new Promise(resolve => setTimeout(resolve, delay));
-    }
-  }
+async function fetchWithRetry(
+	url: string,
+	options: RequestInit,
+	maxRetries = 3,
+) {
+	for (let i = 0; i < maxRetries; i++) {
+		try {
+			const res = await fetch(url, options);
+			if (res.ok) return res;
+			if (res.status >= 500) throw new Error("Server error");
+			return res; // Client error, don't retry
+		} catch (err) {
+			if (i === maxRetries - 1) throw err;
+			const delay = Math.min(1000 * 2 ** i, 10000); // Cap at 10s
+			await new Promise((resolve) => setTimeout(resolve, delay));
+		}
+	}
 }
 ```
 
@@ -108,17 +117,17 @@ async function fetchWithRetry(url: string, options: RequestInit, maxRetries = 3)
 
 ## Limits
 
-| Resource/Limit | Value | Notes |
-|----------------|-------|-------|
-| Egress (Free) | 1TB/month | Per account |
-| Egress (Paid) | $0.05/GB | After free tier |
-| Inbound traffic | Free | All plans |
-| TURN service | Free | Included with SFU |
-| Participants | No hard limit | Client bandwidth/CPU bound (typically 10-50 tracks) |
-| Tracks per session | No hard limit | Client resources limited |
-| Session duration | No hard limit | Production calls run for hours |
-| WebRTC ports | UDP 1024-65535 | Outbound only, required for media |
-| API rate limit | 600 req/min | Per app, burst allowed |
+| Resource/Limit     | Value          | Notes                                               |
+| ------------------ | -------------- | --------------------------------------------------- |
+| Egress (Free)      | 1TB/month      | Per account                                         |
+| Egress (Paid)      | $0.05/GB       | After free tier                                     |
+| Inbound traffic    | Free           | All plans                                           |
+| TURN service       | Free           | Included with SFU                                   |
+| Participants       | No hard limit  | Client bandwidth/CPU bound (typically 10-50 tracks) |
+| Tracks per session | No hard limit  | Client resources limited                            |
+| Session duration   | No hard limit  | Production calls run for hours                      |
+| WebRTC ports       | UDP 1024-65535 | Outbound only, required for media                   |
+| API rate limit     | 600 req/min    | Per app, burst allowed                              |
 
 ## Security Checklist
 

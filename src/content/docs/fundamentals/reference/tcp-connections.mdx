@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: TCP connections
-
 ---
 
 The following section explains how Cloudflare directs traffic efficiently with anycast routing and serves as an intermediary between users and origin servers. The second part covers TCP connections and keep-alives for performance optimization, and lastly, TCP Fast Open (TFO), a protocol extension that enhances the speed of TCP connections.
@@ -16,7 +15,7 @@ accTitle: Connections with Cloudflare
 A[Visitor] <-- Connection --> B[Cloudflare global network] <-- Connection --> C[Origin server]
 ```
 
-<br/>
+<br />
 
 User traffic is routed to the nearest Cloudflare data center based on the shortest [Border Gateway Protocol](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) (BGP) path, thanks to [anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routing. Cloudflare then processes the request. In case a request is not served from Cloudflare’s data centers, Cloudflare will open a connection to the origin server to forward the request.
 
@@ -34,9 +33,7 @@ For connections to users, Cloudflare has a default idle timeout of 400 seconds. 
 
 :::note
 
-
 Be aware that even if there are keep-alives, Cloudflare cannot guarantee to keep a connection, since besides idleness, there are other reasons, like capacity balancing, data center maintenance or node restarts that can cause disconnections. Having this in mind, applications should be structured to handle disconnections gracefully.
-
 
 :::
 

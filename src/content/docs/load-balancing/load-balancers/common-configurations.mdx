@@ -3,7 +3,6 @@ pcx_content_type: configuration
 title: Common configurations
 sidebar:
   order: 6
-
 ---
 
 Consider the following sections to understand how to achieve some commonly used load balancer configurations.
@@ -36,13 +35,11 @@ This setup speeds up overall requests, but is more vulnerable to planned or unpl
 
 To set up a load balancer with **active-active failover**, either:
 
-* Create a load balancer with a single pool (`primary`) with multiple endpoints (`endpoint-1` and `endpoint-2`) and set the same [**Weight**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) for each endpoint.
-* Create a load balancer with two pools (`primary` and `secondary`) and — for [**Traffic Steering**](/load-balancing/understand-basics/traffic-steering/steering-policies/) — select any option except for **Off**.
+- Create a load balancer with a single pool (`primary`) with multiple endpoints (`endpoint-1` and `endpoint-2`) and set the same [**Weight**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) for each endpoint.
+- Create a load balancer with two pools (`primary` and `secondary`) and — for [**Traffic Steering**](/load-balancing/understand-basics/traffic-steering/steering-policies/) — select any option except for **Off**.
 
 :::note
 
-
 For more background reading on server failover and common configurations, refer to [our Learning Center](https://www.cloudflare.com/learning/performance/what-is-server-failover/).
-
 
 :::

@@ -75,20 +75,22 @@ The `x-fal-target-url` format is compliant with the Fal SDKs, so AI Gateway can 
 import { fal } from "@fal-ai/client";
 
 fal.config({
-  credentials: "{fal_ai_token}", // OR pass a cloudflare api token if using BYOK on AI Gateway
-  proxyUrl: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/fal"
+	credentials: "{fal_ai_token}", // OR pass a cloudflare api token if using BYOK on AI Gateway
+	proxyUrl:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/fal",
 });
 
 const result = await fal.subscribe("fal-ai/bytedance/seedream/v4/edit", {
-  "input": {
-    "prompt": "Dress the model in the clothes and hat. Add a cat to the scene and change the background to a Victorian era building.",
-    "image_urls": [
-      "https://storage.googleapis.com/falserverless/example_inputs/seedream4_edit_input_1.png",
-      "https://storage.googleapis.com/falserverless/example_inputs/seedream4_edit_input_2.png",
-      "https://storage.googleapis.com/falserverless/example_inputs/seedream4_edit_input_3.png",
-      "https://storage.googleapis.com/falserverless/example_inputs/seedream4_edit_input_4.png"
-    ]
-  }
+	input: {
+		prompt:
+			"Dress the model in the clothes and hat. Add a cat to the scene and change the background to a Victorian era building.",
+		image_urls: [
+			"https://storage.googleapis.com/falserverless/example_inputs/seedream4_edit_input_1.png",
+			"https://storage.googleapis.com/falserverless/example_inputs/seedream4_edit_input_2.png",
+			"https://storage.googleapis.com/falserverless/example_inputs/seedream4_edit_input_3.png",
+			"https://storage.googleapis.com/falserverless/example_inputs/seedream4_edit_input_4.png",
+		],
+	},
 });
 
 console.log(result.data.images[0]);

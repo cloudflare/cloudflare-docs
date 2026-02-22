@@ -3,14 +3,13 @@ pcx_content_type: how-to
 title: DNSSEC
 sidebar:
   order: 8
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 <Render file="dnssec-definition" product="dns" />
 
-***
+---
 
 ## Disable DNSSEC
 
@@ -18,7 +17,7 @@ import { Render } from "~/components"
 
 <Render file="dnssec-enabled-migration" product="dns" />
 
-***
+---
 
 ## Enable DNSSEC
 
@@ -34,7 +33,7 @@ When you enable DNSSEC, Cloudflare signs your zone, publishes your public signin
 
 <Render file="dnssec-auto-add" product="dns" />
 
-***
+---
 
 ## Other DNSSEC setup options
 
@@ -42,14 +41,14 @@ If you are using Cloudflare as your Secondary DNS provider and want to configure
 
 If you want to set up DNSSEC on a subdomain zone, refer to [Subdomain DNSSEC](/dns/zone-setups/subdomain-setup/dnssec/).
 
-***
+---
 
 ## Limitations
 
 If your registrar does not support DNSSEC with Cloudflare's preferred cipher choice (Algorithm 13), you have several options:
 
-* Contact your registrar to ask for DNSSEC with modern encryption.
-* Transfer your domain to a different registrar that supports DNSSEC with Algorithm 13
-* File a [complaint with ICANN](https://www.icann.org/compliance/complaint), citing your registrar's lack of compliance.
+- Contact your registrar to ask for DNSSEC with modern encryption.
+- Transfer your domain to a different registrar that supports DNSSEC with Algorithm 13
+- File a [complaint with ICANN](https://www.icann.org/compliance/complaint), citing your registrar's lack of compliance.
 
-If your top-level domain does not support DNSSEC with Algorithm 13 (also known as *ECDSA Curve P-256 with SHA-256*), [contact that top-level domain](https://www.iana.org/domains/root/db).
+If your top-level domain does not support DNSSEC with Algorithm 13 (also known as _ECDSA Curve P-256 with SHA-256_), [contact that top-level domain](https://www.iana.org/domains/root/db).

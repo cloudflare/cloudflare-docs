@@ -8,13 +8,13 @@
 
 ```jsonc
 {
-  "secrets_store_secrets": [
-    {
-      "binding": "API_KEY",
-      "store_id": "abc123",
-      "secret_name": "stripe_api_key"
-    }
-  ]
+	"secrets_store_secrets": [
+		{
+			"binding": "API_KEY",
+			"store_id": "abc123",
+			"secret_name": "stripe_api_key",
+		},
+	],
 }
 ```
 
@@ -28,6 +28,7 @@ secret_name = "stripe_api_key"
 ```
 
 Fields:
+
 - `binding`: Variable name for `env` access
 - `store_id`: From `wrangler secrets-store store list`
 - `secret_name`: Identifier (no spaces)
@@ -38,26 +39,26 @@ Fields:
 
 ```jsonc
 {
-  "env": {
-    "production": {
-      "secrets_store_secrets": [
-        {
-          "binding": "API_KEY",
-          "store_id": "prod-store",
-          "secret_name": "prod_api_key"
-        }
-      ]
-    },
-    "staging": {
-      "secrets_store_secrets": [
-        {
-          "binding": "API_KEY",
-          "store_id": "staging-store",
-          "secret_name": "staging_api_key"
-        }
-      ]
-    }
-  }
+	"env": {
+		"production": {
+			"secrets_store_secrets": [
+				{
+					"binding": "API_KEY",
+					"store_id": "prod-store",
+					"secret_name": "prod_api_key",
+				},
+			],
+		},
+		"staging": {
+			"secrets_store_secrets": [
+				{
+					"binding": "API_KEY",
+					"store_id": "staging-store",
+					"secret_name": "staging_api_key",
+				},
+			],
+		},
+	},
 }
 ```
 
@@ -125,18 +126,26 @@ Best practice: Separate names for local/prod:
 
 ```jsonc
 {
-  "env": {
-    "development": {
-      "secrets_store_secrets": [
-        { "binding": "API_KEY", "store_id": "store", "secret_name": "dev_api_key" }
-      ]
-    },
-    "production": {
-      "secrets_store_secrets": [
-        { "binding": "API_KEY", "store_id": "store", "secret_name": "prod_api_key" }
-      ]
-    }
-  }
+	"env": {
+		"development": {
+			"secrets_store_secrets": [
+				{
+					"binding": "API_KEY",
+					"store_id": "store",
+					"secret_name": "dev_api_key",
+				},
+			],
+		},
+		"production": {
+			"secrets_store_secrets": [
+				{
+					"binding": "API_KEY",
+					"store_id": "store",
+					"secret_name": "prod_api_key",
+				},
+			],
+		},
+	},
 }
 ```
 
@@ -154,6 +163,7 @@ Best practice: Separate names for local/prod:
 **Method 2**: Create secret directly from Worker settings dropdown
 
 Deploy options:
+
 - **Deploy**: Immediate 100%
 - **Save version**: Gradual rollout
 

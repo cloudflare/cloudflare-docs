@@ -4,10 +4,10 @@
 
 Tunnels use one of two config sources:
 
-| Config Source | Storage | Updates | Use Case |
-|---------------|---------|---------|----------|
-| Local | `config.yml` file | Edit file, restart | Dev, multi-env, version control |
-| Cloudflare | Dashboard/API | Instant, no restart | Production, centralized management |
+| Config Source | Storage           | Updates             | Use Case                           |
+| ------------- | ----------------- | ------------------- | ---------------------------------- |
+| Local         | `config.yml` file | Edit file, restart  | Dev, multi-env, version control    |
+| Cloudflare    | Dashboard/API     | Instant, no restart | Production, centralized management |
 
 **Token-based tunnels** = config source: Cloudflare
 **Locally-managed tunnels** = config source: local
@@ -28,7 +28,7 @@ credentials-file: /path/to/<UUID>.json
 ingress:
   - hostname: app.example.com
     service: http://localhost:8000
-  - service: http_status:404  # Required catch-all
+  - service: http_status:404 # Required catch-all
 ```
 
 ## Ingress Rules
@@ -41,20 +41,21 @@ ingress:
   - hostname: static.example.com
     path: \.(jpg|png|css|js)$
     service: https://localhost:8001
-  
+
   # Wildcard hostname
   - hostname: "*.example.com"
     service: https://localhost:8002
-  
+
   # Path only (all hostnames)
   - path: /api/.*
     service: http://localhost:9000
-  
+
   # Catch-all (required)
   - service: http_status:404
 ```
 
 **Validation**:
+
 ```bash
 cloudflared tunnel ingress validate
 cloudflared tunnel ingress rule https://foo.example.com
@@ -62,19 +63,20 @@ cloudflared tunnel ingress rule https://foo.example.com
 
 ## Service Types
 
-| Protocol | Format | Client Requirement |
-|----------|--------|-------------------|
-| HTTP | `http://localhost:8000` | Browser |
-| HTTPS | `https://localhost:8443` | Browser |
-| TCP | `tcp://localhost:2222` | `cloudflared access tcp` |
-| SSH | `ssh://localhost:22` | `cloudflared access ssh` |
-| RDP | `rdp://localhost:3389` | `cloudflared access rdp` |
-| Unix | `unix:/path/to/socket` | Browser |
-| Test | `hello_world` | Browser |
+| Protocol | Format                   | Client Requirement       |
+| -------- | ------------------------ | ------------------------ |
+| HTTP     | `http://localhost:8000`  | Browser                  |
+| HTTPS    | `https://localhost:8443` | Browser                  |
+| TCP      | `tcp://localhost:2222`   | `cloudflared access tcp` |
+| SSH      | `ssh://localhost:22`     | `cloudflared access ssh` |
+| RDP      | `rdp://localhost:3389`   | `cloudflared access rdp` |
+| Unix     | `unix:/path/to/socket`   | Browser                  |
+| Test     | `hello_world`            | Browser                  |
 
 ## Origin Configuration
 
 ### Connection Settings
+
 ```yaml
 originRequest:
   connectTimeout: 30s
@@ -85,14 +87,16 @@ originRequest:
 ```
 
 ### TLS Settings
+
 ```yaml
 originRequest:
-  noTLSVerify: true                      # Disable cert verification
-  originServerName: "app.internal"       # Override SNI
-  caPool: /path/to/ca.pem                # Custom CA
+  noTLSVerify: true # Disable cert verification
+  originServerName: "app.internal" # Override SNI
+  caPool: /path/to/ca.pem # Custom CA
 ```
 
 ### HTTP Settings
+
 ```yaml
 originRequest:
   disableChunkedEncoding: true
@@ -118,6 +122,7 @@ cloudflared tunnel route ip add 192.168.1.100/32 my-tunnel
 ## Config Source Comparison
 
 ### Local Config
+
 ```yaml
 # config.yml
 tunnel: <UUID>
@@ -137,6 +142,7 @@ cloudflared tunnel run my-tunnel
 **Cons:** Requires file distribution, manual restarts
 
 ### Cloudflare Config (Token-Based)
+
 ```bash
 # No config file needed
 cloudflared tunnel --no-autoupdate run --token <TOKEN>

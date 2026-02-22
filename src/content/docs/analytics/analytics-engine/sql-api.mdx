@@ -7,7 +7,6 @@ head:
   - tag: title
     content: Workers Analytics Engine SQL API
 description: The SQL API for Workers Analytics Engine
-
 ---
 
 The Workers Analytics Engine SQL API is an HTTP API that allows executing SQL queries against your Workers Analytics Engine datasets.
@@ -24,10 +23,10 @@ Use the dashboard to create a token with permission to read analytics data on yo
 2. Select **Create Token**.
 3. Select **Create Custom Token**.
 4. Complete the **Create Custom Token** form as follows:
-   * Give your token a descriptive name.
-   * For **Permissions** select *Account* | *Account Analytics* | *Read*
-   * Optionally configure account and IP restrictions and TTL.
-   * Submit and confirm the form to create the token.
+   - Give your token a descriptive name.
+   - For **Permissions** select _Account_ | _Account Analytics_ | _Read_
+   - Optionally configure account and IP restrictions and TTL.
+   - Submit and confirm the form to create the token.
 5. Make a note of the token string.
 
 ## Querying the API
@@ -62,7 +61,7 @@ The table will have the following columns:
 | ---------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | dataset                      | string   | This column will contain the dataset name in every row.                                                                                                                                                                                              |
 | timestamp                    | DateTime | The timestamp at which the event was logged in your worker.                                                                                                                                                                                          |
-| \_sample\_interval           | integer  | In case that the data has been sampled, this column indicates what the sample rate is for this row (that is, how many rows of the original data are represented by this row). Refer to the [sampling](#sampling) section below for more information. |
+| \_sample_interval            | integer  | In case that the data has been sampled, this column indicates what the sample rate is for this row (that is, how many rows of the original data are represented by this row). Refer to the [sampling](#sampling) section below for more information. |
 | index1                       | string   | The index value that was logged with the event. The value in this column is used as the key for sampling.                                                                                                                                            |
 | blob1<br/>...<br/>blob20     | string   | The blob values that were logged with the event.                                                                                                                                                                                                     |
 | double1<br/>...<br/>double20 | double   | The double values that were logged with the event.                                                                                                                                                                                                   |

@@ -40,7 +40,7 @@ export default {
 		// Background task that should complete even after response is sent
 		cleanupTempData(env.KV_NAMESPACE);
 		return new Response("Hello, World!");
-	}
+	},
 };
 
 function cleanupTempData(kvNamespace) {

@@ -51,7 +51,7 @@ While you can manually override a rule from `Log` to `Block`, consider the follo
 
 - The default action of a rule is decided during the testing period. Cloudflare may set its default action to **DDoS Dynamic**, which may use rate-limiting or a multi-step mitigation combination based on traffic factors. By applying a manual `Block` override, you prevent your configuration from automatically inheriting the more nuanced DDoS Dynamic action once it is released.
 
-If you choose to override a testing rule to mitigate an active attack, Cloudflare recommends reviewing that override periodically to see if the rule has been promoted to a permanent default action. 
+If you choose to override a testing rule to mitigate an active attack, Cloudflare recommends reviewing that override periodically to see if the rule has been promoted to a permanent default action.
 
 ## Availability
 

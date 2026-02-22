@@ -1,7 +1,6 @@
 ---
 pcx_content_type: example
 title: Querying Access login events with GraphQL
-
 ---
 
 In this example, we are going to use the GraphQL Analytics API to retrieve logs for an Access login event. These logs are particularly useful for determining why a user received a `403` Forbidden error, since they surface additional data beyond what is shown in the dashboard Access logs.
@@ -10,9 +9,9 @@ The following API call will request logs for a single Access login event and out
 
 You will need to insert your `<CLOUDFLARE_ACCOUNT_TAG>`, your API credentials in `<API_TOKEN>`[^1], and substitute your own values for the following variables:
 
-* `rayID`: A unique identifier assigned to the authentication request.
-* `datetimeStart`: The earliest event time to query (no earlier than September 16, 2022).
-* `datetimeEnd`: The latest event time to query. Be sure to specify a time range that includes the login event you are querying.
+- `rayID`: A unique identifier assigned to the authentication request.
+- `datetimeStart`: The earliest event time to query (no earlier than September 16, 2022).
+- `datetimeEnd`: The latest event time to query. Be sure to specify a time range that includes the login event you are querying.
 
 ## API Call
 
@@ -60,44 +59,44 @@ https://api.cloudflare.com/client/v4/graphql \
 
 :::note
 
-Rather than filter by `cfRayId`, you may also [filter](/analytics/graphql-api/features/filtering/) by any other field in the query such as `userUuid` or `deviceId`. 
+Rather than filter by `cfRayId`, you may also [filter](/analytics/graphql-api/features/filtering/) by any other field in the query such as `userUuid` or `deviceId`.
 :::
 
 ## Response
 
 ```json
 {
-  "data": {
-    "viewer": {
-      "accounts": [
-        {
-          "accessLoginRequestsAdaptiveGroups": [
-            {
-              "dimensions": {
-                "approvingPolicyId": "",
-                "cfRayId": "744927037ce06d68",
-                "country": "US",
-                "datetime": "2022-09-02T20:56:27Z",
-                "deviceId": "",
-                "hasExistingJWT": 0,
-                "hasGatewayEnabled": 0,
-                "hasWarpEnabled": 0,
-                "identityProvider": "nonidentity",
-                "ipAddress": "2a09:bac0:15::814:7b37",
-                "isSuccessfulLogin": 0,
-                "mtlsCertSerialId": "",
-                "mtlsCommonName": "",
-                "mtlsStatus": "NONE",
-                "serviceTokenId": "",
-                "userUuid": ""
-              }
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "errors": null
+	"data": {
+		"viewer": {
+			"accounts": [
+				{
+					"accessLoginRequestsAdaptiveGroups": [
+						{
+							"dimensions": {
+								"approvingPolicyId": "",
+								"cfRayId": "744927037ce06d68",
+								"country": "US",
+								"datetime": "2022-09-02T20:56:27Z",
+								"deviceId": "",
+								"hasExistingJWT": 0,
+								"hasGatewayEnabled": 0,
+								"hasWarpEnabled": 0,
+								"identityProvider": "nonidentity",
+								"ipAddress": "2a09:bac0:15::814:7b37",
+								"isSuccessfulLogin": 0,
+								"mtlsCertSerialId": "",
+								"mtlsCommonName": "",
+								"mtlsStatus": "NONE",
+								"serviceTokenId": "",
+								"userUuid": ""
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"errors": null
 }
 ```
 

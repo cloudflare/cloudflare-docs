@@ -9,7 +9,6 @@ sidebar:
 head:
   - tag: title
     content: Configure Programmable Flow Protection via API
-
 ---
 
 Use the [Cloudflare API](/api/) to configure Programmable Flow Protection via API.
@@ -30,26 +29,26 @@ The following table summarizes the available operations.
 
 ### Program API endpoints
 
-| Operation | Verb + Endpoint |
-| --- | --- |
-| Upload a program | `POST /accounts/{account_id}/magic/programmable_flow_protection/configs/programs` |
-| Update a program | `PATCH /accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}` |
-| List programs | `GET /accounts/{account_id}/magic/programmable_flow_protection/configs/programs` |
-| Delete a program | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}` |
-| Delete all programs | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/programs` |
+| Operation           | Verb + Endpoint                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------ |
+| Upload a program    | `POST /accounts/{account_id}/magic/programmable_flow_protection/configs/programs`                |
+| Update a program    | `PATCH /accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`  |
+| List programs       | `GET /accounts/{account_id}/magic/programmable_flow_protection/configs/programs`                 |
+| Delete a program    | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}` |
+| Delete all programs | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/programs`              |
 
 ### Rule API endpoints
 
-| Operation | Verb + Endpoint |
-| --- | --- |
-| Create a rule | `POST /accounts/{account_id}/magic/programmable_flow_protection/configs/rules` |
-| Update a rule | `PATCH /accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}` |
-| List rules | `GET /accounts/{account_id}/magic/programmable_flow_protection/configs/rules` |
-| Delete a rule | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}` |
-| Delete all rules | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/rules` |
+| Operation        | Verb + Endpoint                                                                            |
+| ---------------- | ------------------------------------------------------------------------------------------ |
+| Create a rule    | `POST /accounts/{account_id}/magic/programmable_flow_protection/configs/rules`             |
+| Update a rule    | `PATCH /accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}`  |
+| List rules       | `GET /accounts/{account_id}/magic/programmable_flow_protection/configs/rules`              |
+| Delete a rule    | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}` |
+| Delete all rules | `DELETE /accounts/{account_id}/magic/programmable_flow_protection/configs/rules`           |
 
 ### Debug Packet CAPture (PCAP) API endpoint
 
-| Operation | Verb + Endpoint |
-| --- | --- |
+| Operation                   | Verb + Endpoint                                                                                                                 |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | Debug Packet CAPture (PCAP) | `POST /accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}/pcap?ip_offset={ip_offset_value}` |

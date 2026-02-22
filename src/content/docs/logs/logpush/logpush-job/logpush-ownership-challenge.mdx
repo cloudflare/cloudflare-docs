@@ -67,17 +67,17 @@ Your bucket's IAM/access controls and Cloudflare account security are the primar
 
 ## Which destinations require an ownership challenge?
 
-| Destination | Ownership challenge required |
-| --- | --- |
-| AWS S3 | Yes (or use access key/secret key) |
-| Google Cloud Storage | Yes |
-| Azure Blob Storage | Yes |
-| Sumo Logic | Yes |
-| S3-compatible storage | No |
-| HTTP endpoints | No |
-| Datadog | No |
-| Splunk | No |
-| New Relic | No |
+| Destination           | Ownership challenge required       |
+| --------------------- | ---------------------------------- |
+| AWS S3                | Yes (or use access key/secret key) |
+| Google Cloud Storage  | Yes                                |
+| Azure Blob Storage    | Yes                                |
+| Sumo Logic            | Yes                                |
+| S3-compatible storage | No                                 |
+| HTTP endpoints        | No                                 |
+| Datadog               | No                                 |
+| Splunk                | No                                 |
+| New Relic             | No                                 |
 
 For destinations that do not require an ownership challenge, Cloudflare uses alternative authentication methods such as API keys or tokens.
 

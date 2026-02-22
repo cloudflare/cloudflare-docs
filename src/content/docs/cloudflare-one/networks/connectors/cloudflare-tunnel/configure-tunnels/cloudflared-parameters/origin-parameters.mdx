@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: Origin configuration parameters
 sidebar:
   order: 9
-
 ---
 
 Origin configuration parameters determine how `cloudflared` proxies traffic to your origin server. If you are using remotely-managed tunnels (default), configure these settings [using the dashboard or API](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/#update-origin-configuration). If you are using [locally-managed tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/), add these parameters to your [configuration file](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/).
@@ -24,7 +23,7 @@ Hostname that `cloudflared` should expect from your origin server certificate. I
 | ------- | ----------------- |
 | `false` | Match SNI to Host |
 
-When `true`, `cloudflared` will automatically set the Server Name Indication (SNI) during the TLS handshake to the hostname of the incoming request. 
+When `true`, `cloudflared` will automatically set the Server Name Indication (SNI) during the TLS handshake to the hostname of the incoming request.
 
 This setting is useful when directing traffic to entry points that host multiple services and rely on SNI to route requests or present the correct certificate. It eliminates the need to explicitly configure [`originServerName`](#originservername) for individual services when using wildcard routing.
 
@@ -114,8 +113,8 @@ When `true`, Happy Eyeballs is disabled.
 `cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
 This configures what type of proxy will be started. Valid options are:
 
-* `""` for the regular proxy
-* `"socks"` for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/cloudflare-one/tutorials/kubectl/) for more information.
+- `""` for the regular proxy
+- `"socks"` for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/cloudflare-one/tutorials/kubectl/) for more information.
 
 ### proxyAddress
 

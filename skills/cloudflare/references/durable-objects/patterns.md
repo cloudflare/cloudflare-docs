@@ -2,14 +2,14 @@
 
 ## When to Use Which Pattern
 
-| Need | Pattern | ID Strategy |
-|------|---------|-------------|
-| Rate limit per user/IP | Rate Limiting | `idFromName(identifier)` |
-| Mutual exclusion | Distributed Lock | `idFromName(resource)` |
-| >1K req/s throughput | Sharding | `newUniqueId()` or hash |
-| Real-time updates | WebSocket Collab | `idFromName(room)` |
-| User sessions | Session Management | `idFromName(sessionId)` |
-| Background cleanup | Alarm-based | Any |
+| Need                   | Pattern            | ID Strategy              |
+| ---------------------- | ------------------ | ------------------------ |
+| Rate limit per user/IP | Rate Limiting      | `idFromName(identifier)` |
+| Mutual exclusion       | Distributed Lock   | `idFromName(resource)`   |
+| >1K req/s throughput   | Sharding           | `newUniqueId()` or hash  |
+| Real-time updates      | WebSocket Collab   | `idFromName(room)`       |
+| User sessions          | Session Management | `idFromName(sessionId)`  |
+| Background cleanup     | Alarm-based        | Any                      |
 
 ## RPC vs fetch()
 
@@ -17,8 +17,8 @@
 **fetch()**: Legacy compat, HTTP semantics, proxying
 
 ```typescript
-const count = await stub.increment();  // RPC
-const count = await (await stub.fetch(req)).json();  // fetch()
+const count = await stub.increment(); // RPC
+const count = await (await stub.fetch(req)).json(); // fetch()
 ```
 
 ## Sharding (High Throughput)
@@ -27,22 +27,24 @@ Single DO ~1K req/s max. Shard for higher throughput:
 
 ```typescript
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
-    const userId = new URL(req.url).searchParams.get("user");
-    const hash = hashCode(userId) % 100;  // 100 shards
-    const id = env.COUNTER.idFromName(`shard:${hash}`);
-    return env.COUNTER.get(id).fetch(req);
-  }
+	async fetch(req: Request, env: Env): Promise<Response> {
+		const userId = new URL(req.url).searchParams.get("user");
+		const hash = hashCode(userId) % 100; // 100 shards
+		const id = env.COUNTER.idFromName(`shard:${hash}`);
+		return env.COUNTER.get(id).fetch(req);
+	},
 };
 
 function hashCode(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) hash = ((hash << 5) - hash) + str.charCodeAt(i);
-  return Math.abs(hash);
+	let hash = 0;
+	for (let i = 0; i < str.length; i++)
+		hash = (hash << 5) - hash + str.charCodeAt(i);
+	return Math.abs(hash);
 }
 ```
 
 **Decisions:**
+
 - **Shard count**: 10-1000 typical (start with 100, measure, adjust)
 - **Shard key**: User ID, IP, session - must distribute evenly (use hash)
 - **Aggregation**: Coordinator DO or external system (D1, R2)
@@ -110,20 +112,23 @@ async webSocketMessage(ws: WebSocket, msg: string) {
 ### WebSocket Reconnection
 
 **Client-side** (exponential backoff):
+
 ```typescript
 class ResilientWS {
-  private delay = 1000;
-  connect(url: string) {
-    const ws = new WebSocket(url);
-    ws.onclose = () => setTimeout(() => {
-      this.connect(url);
-      this.delay = Math.min(this.delay * 2, 30000);
-    }, this.delay);
-  }
+	private delay = 1000;
+	connect(url: string) {
+		const ws = new WebSocket(url);
+		ws.onclose = () =>
+			setTimeout(() => {
+				this.connect(url);
+				this.delay = Math.min(this.delay * 2, 30000);
+			}, this.delay);
+	}
 }
 ```
 
 **Server-side** (cleanup on close):
+
 ```typescript
 async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
   const { userId } = ws.deserializeAttachment();

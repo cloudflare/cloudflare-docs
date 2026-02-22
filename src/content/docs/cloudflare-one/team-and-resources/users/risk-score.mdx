@@ -56,11 +56,11 @@ While the Okta integration is turned on, Cloudflare One will send any user risk 
 
 By default, all predefined behaviors are disabled. When a behavior is enabled, Cloudflare One will continuously evaluate all users within the organization for the behavior. You can [change the risk level](#change-risk-behavior-risk-levels) for predefined behaviors if the default assignment does not suit your environment.
 
-| Risk behaviors                         | Requirements                                                                                                | Description                                                                                                                                                                                                            |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Impossible travel                      | [A configured Access application](/cloudflare-one/access-controls/applications/http-apps/)                                            | User has a successful login from two different locations that they could not have traveled between in that period of time. Matches will appear in your [Access authentication logs](/cloudflare-one/insights/logs/audit-logs/). |
-| High number of DLP policies triggered  | [A configured DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/)                     | User has created a high number of DLP policy matches within a narrow frame of time. Matches will appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).                                  |
-| SentinelOne threat detected on machine | [SentinelOne service provider integration](/cloudflare-one/integrations/service-providers/sentinelone/) | SentinelOne returns one or more configured [device posture attributes](/cloudflare-one/integrations/service-providers/sentinelone/#device-posture-attributes) for a user.                                          |
+| Risk behaviors                         | Requirements                                                                                            | Description                                                                                                                                                                                                                     |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Impossible travel                      | [A configured Access application](/cloudflare-one/access-controls/applications/http-apps/)              | User has a successful login from two different locations that they could not have traveled between in that period of time. Matches will appear in your [Access authentication logs](/cloudflare-one/insights/logs/audit-logs/). |
+| High number of DLP policies triggered  | [A configured DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/)                          | User has created a high number of DLP policy matches within a narrow frame of time. Matches will appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).                                           |
+| SentinelOne threat detected on machine | [SentinelOne service provider integration](/cloudflare-one/integrations/service-providers/sentinelone/) | SentinelOne returns one or more configured [device posture attributes](/cloudflare-one/integrations/service-providers/sentinelone/#device-posture-attributes) for a user.                                                       |
 
 ## Manage risk behaviors
 
@@ -83,6 +83,6 @@ You can change the risk level for a behavior at any time.
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources**.
 2. Go to **Users**.
 3. Select **Risk score** > **Risk behaviors**.
-2. Select the risk behavior you want to modify.
-3. In the drop-down menu, choose your desired risk level.
-4. Select **Save**.
+4. Select the risk behavior you want to modify.
+5. In the drop-down menu, choose your desired risk level.
+6. Select **Save**.

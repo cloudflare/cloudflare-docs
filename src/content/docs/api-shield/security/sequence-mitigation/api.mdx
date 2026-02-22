@@ -8,24 +8,23 @@ sidebar:
 head:
   - tag: title
     content: Configure sequence mitigation via the API
-
 ---
 
 Configuring sequence mitigation via the API consists of building a rule object by choosing the sequence and setting the type of rule and its action.
 
 ```json title="Example of a rule object"
 {
-    "id": "d4909253-390f-4956-89fd-92a5b0cd86d8",
-    "title": "<RULE_TITLE>",
-    "kind": "allow",
-    "action": "block",
-    "sequence": [
-     "0d9bf70c-92e1-4bb3-9411-34a3bcc59003",
-     "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"
-    ],
-    "priority": 0,
-    "last_updated": "2023-07-24T12:06:51.796286Z",
-    "created_at": "2023-07-24T12:06:51.796286Z"
+	"id": "d4909253-390f-4956-89fd-92a5b0cd86d8",
+	"title": "<RULE_TITLE>",
+	"kind": "allow",
+	"action": "block",
+	"sequence": [
+		"0d9bf70c-92e1-4bb3-9411-34a3bcc59003",
+		"b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"
+	],
+	"priority": 0,
+	"last_updated": "2023-07-24T12:06:51.796286Z",
+	"created_at": "2023-07-24T12:06:51.796286Z"
 }
 ```
 

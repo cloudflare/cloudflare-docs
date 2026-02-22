@@ -15,19 +15,19 @@ You can locate `{zone_id}` and `{account_id}` arguments based on the [Find zone 
 The `{job_id}` argument is numeric, like 123456.
 The `{dataset_id}` argument indicates the log category (such as `http_requests` or `audit_logs`).
 
-| Operation | Description                                 | API                                                                                                                                                                                              |
+| Operation | Description                                 | API                                                                                            |
 | --------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `POST`    | Create job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/create/)                                             |
-| `GET`     | Retrieve job details                        | [Documentation](/api/resources/logpush/subresources/datasets/subresources/jobs/methods/get/)                                     |
-| `GET`     | Retrieve all jobs for all datasets          | [Documentation](/api/resources/logpush/subresources/jobs/methods/list/)                                                 |
-| `GET`     | Retrieve all jobs for a dataset             | [Documentation](/api/resources/logpush/subresources/datasets/subresources/jobs/methods/get/)        |
+| `POST`    | Create job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/create/)                      |
+| `GET`     | Retrieve job details                        | [Documentation](/api/resources/logpush/subresources/datasets/subresources/jobs/methods/get/)   |
+| `GET`     | Retrieve all jobs for all datasets          | [Documentation](/api/resources/logpush/subresources/jobs/methods/list/)                        |
+| `GET`     | Retrieve all jobs for a dataset             | [Documentation](/api/resources/logpush/subresources/datasets/subresources/jobs/methods/get/)   |
 | `GET`     | Retrieve all available fields for a dataset | [Documentation](/api/resources/logpush/subresources/datasets/subresources/fields/methods/get/) |
-| `PUT`     | Update job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/update/)                                      |
-| `DELETE`  | Delete job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/delete/)                           |
-| `POST`    | Check whether destination exists            | [Documentation](/api/resources/logpush/subresources/validate/methods/destination/) |
-| `POST`    | Get ownership challenge                     | [Documentation](/api/resources/logpush/subresources/ownership/methods/validate/)                                      |
-| `POST`    | Validate ownership challenge                | [Documentation](/api/resources/logpush/subresources/ownership/methods/validate/)                      |
-| `POST`    | Validate log options                        | [Documentation](/api/resources/logpush/subresources/validate/methods/origin/)                           |
+| `PUT`     | Update job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/update/)                      |
+| `DELETE`  | Delete job                                  | [Documentation](/api/resources/logpush/subresources/jobs/methods/delete/)                      |
+| `POST`    | Check whether destination exists            | [Documentation](/api/resources/logpush/subresources/validate/methods/destination/)             |
+| `POST`    | Get ownership challenge                     | [Documentation](/api/resources/logpush/subresources/ownership/methods/validate/)               |
+| `POST`    | Validate ownership challenge                | [Documentation](/api/resources/logpush/subresources/ownership/methods/validate/)               |
+| `POST`    | Validate log options                        | [Documentation](/api/resources/logpush/subresources/validate/methods/origin/)                  |
 
 For concrete examples, refer to the tutorials in [Logpush examples](/logs/logpush/examples/).
 
@@ -44,25 +44,25 @@ Before creating a new job, ownership of the destination must be proven.
 To issue an ownership challenge token to your destination:
 
 <APIRequest
-  path="/zones/{zone_id}/logpush/ownership"
-  method="POST"
-  json={{
-    destination_conf: "s3://<BUCKET_PATH>?region=us-west-2",
-  }}
+	path="/zones/{zone_id}/logpush/ownership"
+	method="POST"
+	json={{
+		destination_conf: "s3://<BUCKET_PATH>?region=us-west-2",
+	}}
 />
 
 A challenge file will be written to the destination, and the filename will be in the response (the filename may be expressed as a path, if appropriate for your destination):
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "valid": true,
-    "message": "",
-    "filename": "<PATH_TO_CHALLENGE_FILE>.txt"
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"valid": true,
+		"message": "",
+		"filename": "<PATH_TO_CHALLENGE_FILE>.txt"
+	},
+	"success": true
 }
 ```
 
@@ -135,23 +135,23 @@ For more information on the value for your cloud storage provider, consult the f
 To check if a destination is already in use:
 
 <APIRequest
-  path="/zones/{zone_id}/logpush/validate/destination/exists"
-  method="POST"
-  json={{
-    destination_conf: "s3://foo",
-  }}
+	path="/zones/{zone_id}/logpush/validate/destination/exists"
+	method="POST"
+	json={{
+		destination_conf: "s3://foo",
+	}}
 />
 
 Response
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "exists": false
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"exists": false
+	},
+	"success": true
 }
 ```
 
@@ -170,28 +170,28 @@ The kind parameter cannot be used to update existing Logpush jobs. You can only 
 :::
 
 <APIRequest
-  path="/zones/{zone_id}/logpush/jobs"
-  method="POST"
-  json={{
-    name: "<DOMAIN_NAME>",
-    destination_conf: "s3://<BUCKET_PATH>?region=us-west-2",
-    dataset: "http_requests",
-    output_options: {
-      field_names: [
-        "ClientIP",
-        "ClientRequesrHost",
-        "ClientRequestMethod",
-        " ClientRequestURI",
-        "EdgeEndTimestamp",
-        "EdgeResponseBytes",
-        "EdgeResponseStatus",
-        "EdgeStartTimestamp",
+	path="/zones/{zone_id}/logpush/jobs"
+	method="POST"
+	json={{
+		name: "<DOMAIN_NAME>",
+		destination_conf: "s3://<BUCKET_PATH>?region=us-west-2",
+		dataset: "http_requests",
+		output_options: {
+			field_names: [
+				"ClientIP",
+				"ClientRequesrHost",
+				"ClientRequestMethod",
+				" ClientRequestURI",
+				"EdgeEndTimestamp",
+				"EdgeResponseBytes",
+				"EdgeResponseStatus",
+				"EdgeStartTimestamp",
 				"RayID",
-      ],
+			],
 			timestamp_format: "rfc3339",
-    },
+		},
 		kind: "edge",
-  }}
+	}}
 />
 
 ## Options
@@ -202,7 +202,7 @@ If you are still using logpull_options, here are the options that you can custom
 
 1. **Fields** (optional): Refer to [Datasets](/logs/logpush/logpush-job/datasets/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/{dataset_id}/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/{dataset_id}/fields/default`.
 2. **Timestamp format** (optional): The format in which timestamp fields will be returned. Value options: `unixnano` (nanoseconds unit - default), `unix` (seconds unit), `rfc3339` (seconds unit).
-3. **Redaction for CVE-2021-44228** (optional): This option will replace every occurrence of `${` with `x{`.  To enable it, set `"CVE-2021-44228": true`.
+3. **Redaction for CVE-2021-44228** (optional): This option will replace every occurrence of `${` with `x{`. To enable it, set `"CVE-2021-44228": true`.
 
 :::note[Note]
 
@@ -212,26 +212,26 @@ The **CVE-2021-44228** parameter can only be set through the API at this time. U
 To check if the selected **logpull_options** are valid:
 
 <APIRequest
-  path="/zones/{zone_id}/logpush/validate/origin"
-  method="POST"
-  json={{
+	path="/zones/{zone_id}/logpush/validate/origin"
+	method="POST"
+	json={{
 		logpull_options:
 			"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
 		dataset: "http_requests",
-  }}
+	}}
 />
 
 Response
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "valid": true,
-    "message": ""
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"valid": true,
+		"message": ""
+	},
+	"success": true
 }
 ```
 
@@ -277,10 +277,10 @@ When customer-configured sampling is applied, the `SampleInterval` field value i
 
 These parameters control the size of each upload batch — not how quickly data is delivered. Use them to prevent overloading your destination with uploads that are too large or too small.
 
-| Parameter | Description | Default |
-| --- | --- | --- |
-| `max_upload_bytes` | Maximum uncompressed file size of a batch of logs. | Varies by destination |
-| `max_upload_records` | Maximum number of log lines per batch. | 100,000 |
+| Parameter                     | Description                                                               | Default               |
+| ----------------------------- | ------------------------------------------------------------------------- | --------------------- |
+| `max_upload_bytes`            | Maximum uncompressed file size of a batch of logs.                        | Varies by destination |
+| `max_upload_records`          | Maximum number of log lines per batch.                                    | 100,000               |
 | `max_upload_interval_seconds` | Maximum time-span of log data per batch (used during catch-up scenarios). | Varies by destination |
 
 :::note

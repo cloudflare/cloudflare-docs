@@ -70,12 +70,12 @@ You can filter logs by event type (`--event`), event level (`--level`), or sampl
 cloudflared tail --level debug <UUID>
 ```
 
-| Flag         | Description                                                                                                                                                                                           | Allowed values                            | Default value |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------------- |
-| `--event`    | Filter by the type of event / request.                                                                                                                                                                | `cloudflared`, `http`, `tcp`, `udp`       | All events    |
+| Flag         | Description                                                                                                                                                                                                                    | Allowed values                            | Default value |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------- | ------------- |
+| `--event`    | Filter by the type of event / request.                                                                                                                                                                                         | `cloudflared`, `http`, `tcp`, `udp`       | All events    |
 | `--level`    | Return logs at this level and above. Works independently of the [`--loglevel`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#loglevel) setting on the server. | `debug`, `info`, `warn`, `error`, `fatal` | `debug`       |
-| `--sampling` | Sample a fraction of the total logs.                                                                                                                                                                  | Number from `0.0` to `1.0`                | `1.0`         |
-|              |                                                                                                                                                                                                       |                                           |               |
+| `--sampling` | Sample a fraction of the total logs.                                                                                                                                                                                           | Number from `0.0` to `1.0`                | `1.0`         |
+|              |                                                                                                                                                                                                                                |                                           |               |
 
 #### View logs for a replica
 

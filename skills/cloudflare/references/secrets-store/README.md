@@ -38,12 +38,14 @@ API Token permissions: `Account Secrets Store Edit/Read`
 ## When to Use
 
 **Use Secrets Store when:**
+
 - Multiple Workers share same credential
 - Centralized management needed
 - Compliance requires audit trail
 - Team collaboration on secrets
 
 **Use Worker Secrets when:**
+
 - Secret unique to one Worker
 - Simple single-Worker project
 - No cross-Worker sharing needed
@@ -52,15 +54,15 @@ API Token permissions: `Account Secrets Store Edit/Read`
 
 ### Reading Order by Task
 
-| Task | Start Here | Then Read |
-|------|------------|-----------|
-| Quick overview | README.md | - |
-| First-time setup | README.md → configuration.md | api.md |
-| Add secret to Worker | configuration.md | api.md |
-| Implement access pattern | api.md | patterns.md |
-| Debug errors | gotchas.md | api.md |
-| Secret rotation | patterns.md | configuration.md |
-| Best practices | gotchas.md | patterns.md |
+| Task                     | Start Here                   | Then Read        |
+| ------------------------ | ---------------------------- | ---------------- |
+| Quick overview           | README.md                    | -                |
+| First-time setup         | README.md → configuration.md | api.md           |
+| Add secret to Worker     | configuration.md             | api.md           |
+| Implement access pattern | api.md                       | patterns.md      |
+| Debug errors             | gotchas.md                   | api.md           |
+| Secret rotation          | patterns.md                  | configuration.md |
+| Best practices           | gotchas.md                   | patterns.md      |
 
 ### Files
 
@@ -70,5 +72,6 @@ API Token permissions: `Account Secrets Store Edit/Read`
 - [gotchas.md](./gotchas.md) - Security issues, limits, best practices
 
 ## See Also
+
 - [workers](../workers/) - Worker bindings integration
 - [wrangler](../wrangler/) - CLI secret management commands

@@ -3,15 +3,14 @@ title: 2023-02-01 - Updates to security fields
 pcx_content_type: overview
 sidebar:
   order: 300
-
 ---
 
-import { GlossaryTooltip, DashButton } from "~/components"
+import { GlossaryTooltip, DashButton } from "~/components";
 
 Cloudflare will deploy some updates to security-related fields in Cloudflare Logs. These updates will affect the following datasets:
 
-* [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/)
-* [Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/)
+- [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/)
+- [Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/)
 
 ## Timeline
 
@@ -23,18 +22,18 @@ For the log fields being added, Cloudflare will gradually start adding them to l
 
 For the log fields being renamed, Cloudflare will:
 
-* **Add new fields** with the same data as the fields that will be removed on phase 2 (described in this document as old fields). These new fields will become gradually available. Refer to the next sections for details.
-* **Announce the deprecation of the old fields.** Cloudflare will remove these fields from logs datasets on August 1, 2023.
+- **Add new fields** with the same data as the fields that will be removed on phase 2 (described in this document as old fields). These new fields will become gradually available. Refer to the next sections for details.
+- **Announce the deprecation of the old fields.** Cloudflare will remove these fields from logs datasets on August 1, 2023.
 
 For the log fields being removed, Cloudflare is announcing them as deprecated. Their removal from logs datasets will occur on August 1, 2023.
 
 In addition to these Cloudflare Logs changes, Cloudflare will also add new security-related fields to the following [GraphQL datasets](/analytics/graphql-api/features/data-sets/):
 
-* `httpRequestsAdaptive `
-* `httpRequestsAdaptiveGroups`
-* `firewallEventsAdaptive`
-* `firewallEventsAdaptiveGroups`
-* `firewallEventsAdaptiveByTimeGroups`
+- `httpRequestsAdaptive `
+- `httpRequestsAdaptiveGroups`
+- `firewallEventsAdaptive`
+- `firewallEventsAdaptiveGroups`
+- `firewallEventsAdaptiveByTimeGroups`
 
 ### Phase 2 (August 1, 2023)
 
@@ -46,26 +45,22 @@ For the log fields being removed, Cloudflare will also remove them from the Clou
 
 The following concepts are used below in the reviewed field descriptions:
 
-* **Terminating action:** One of the following actions:
-
-  * `block`
-  * `js_challenge`
-  * `managed_challenge`
-  * `challenge` (*Interactive Challenge*)
+- **Terminating action:** One of the following actions:
+  - `block`
+  - `js_challenge`
+  - `managed_challenge`
+  - `challenge` (_Interactive Challenge_)
 
 For more information on these actions, refer to the [Actions](/ruleset-engine/rules-language/actions/) reference in the Rules language documentation.
 
-* **Security rule:** One of the following rule types:
-
-  * [WAF managed rule](/waf/managed-rules/)
-  * [WAF custom rule](/waf/custom-rules/)
-  * [WAF rate limiting rule](/waf/rate-limiting-rules/)
+- **Security rule:** One of the following rule types:
+  - [WAF managed rule](/waf/managed-rules/)
+  - [WAF custom rule](/waf/custom-rules/)
+  - [WAF rate limiting rule](/waf/rate-limiting-rules/)
 
 ## HTTP Requests dataset changes
 
 The following fields will be renamed in the [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) dataset according to the two-phase strategy outlined in the [timeline](#timeline):
-
-
 
 | New field name            | Type         | Description                                                                        | Old field name<br/>(deprecated on Aug 1, 2023) |
 | ------------------------- | ------------ | ---------------------------------------------------------------------------------- | ---------------------------------------------- |
@@ -76,11 +71,7 @@ The following fields will be renamed in the [HTTP Requests](/logs/logpush/logpus
 | `SecurityActions`         | String Array | Array of actions that Cloudflare security products performed on the request.       | `FirewallMatchesActions`                       |
 | `SecuritySources`         | String Array | Array of Cloudflare security products that matched the request.                    | `FirewallMatchesSources`                       |
 
-
-
 The following fields are now deprecated and they will be removed from the HTTP Requests dataset on August 1, 2023:
-
-
 
 | Deprecated field name | Notes                                                                 |
 | --------------------- | --------------------------------------------------------------------- |
@@ -89,43 +80,29 @@ The following fields are now deprecated and they will be removed from the HTTP R
 | `EdgeRateLimitID`     | Used in the previous version of rate limiting rules (now deprecated). |
 | `SecurityLevel`       | N/A                                                                   |
 
-
-
 ## Firewall Events dataset changes
 
 The following fields will be added to the [Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/) dataset:
-
-
 
 | Field name    | Type   | Description                                                        |
 | ------------- | ------ | ------------------------------------------------------------------ |
 | `Description` | String | The description of the rule triggered by the request.              |
 | `Ref`         | String | The user-defined identifier for the rule triggered by the request. |
 
-
-
 ## Changes to GraphQL datasets
 
 Cloudflare will add the following fields to the `httpRequestsAdaptive `and `httpRequestsAdaptiveGroups `datasets:
-
-
 
 | Field name       | Type   | Description                                                              |
 | ---------------- | ------ | ------------------------------------------------------------------------ |
 | `securityAction` | String | Action of the security rule that triggered a terminating action, if any. |
 | `securitySource` | String | Source of the security rule that triggered a terminating action, if any. |
 
-
-
 Cloudflare will also add the following field to the `firewallEventsAdaptive`, `firewallEventsAdaptiveGroups`, and `firewallEventsAdaptiveByTimeGroups` datasets:
-
-
 
 | Field name    | Type   | Description                                           |
 | ------------- | ------ | ----------------------------------------------------- |
 | `description` | String | The description of the rule triggered by the request. |
-
-
 
 These new fields will become gradually available.
 
@@ -140,8 +117,8 @@ After updating Logpush jobs, you may need to update external filters or reports 
 ### Update Logpush job in the dashboard
 
 1. In the Cloudflare dashboard, go to the **Logpush** page.
- 
-    <DashButton url="/?to=/:account/:zone/analytics/logs" />
+
+   <DashButton url="/?to=/:account/:zone/analytics/logs" />
 
 2. Select **Edit** next to the Logpush job you wish to edit.
 3. Under **Select data fields**, update the fields in your job. The new security log fields are available under **General**.
@@ -149,7 +126,7 @@ After updating Logpush jobs, you may need to update external filters or reports 
 
 ### Update Logpush job via API
 
-Follow the instructions in [Update output\_options](/logs/logpush/examples/example-logpush-curl/#optional---update-output_options) to update the fields in the Logpush job.
+Follow the instructions in [Update output_options](/logs/logpush/examples/example-logpush-curl/#optional---update-output_options) to update the fields in the Logpush job.
 
 ### Update Logpush job via Terraform
 

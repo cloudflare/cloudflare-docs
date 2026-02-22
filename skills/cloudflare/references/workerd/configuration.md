@@ -1,6 +1,7 @@
 # Workerd Configuration
 
 ## Basic Structure
+
 ```capnp
 using Workerd = import "/workerd/workerd.capnp";
 
@@ -17,7 +18,9 @@ const mainWorker :Workerd.Worker = (
 ```
 
 ## Services
+
 **Worker**: Run JS/Wasm code
+
 ```capnp
 (name = "api", worker = (
   modules = [(name = "index.js", esModule = embed "index.js")],
@@ -27,21 +30,25 @@ const mainWorker :Workerd.Worker = (
 ```
 
 **Network**: Internet access
+
 ```capnp
 (name = "internet", network = (allow = ["public"], tlsOptions = (trustBrowserCas = true)))
 ```
 
 **External**: Reverse proxy
+
 ```capnp
 (name = "backend", external = (address = "api.com:443", http = (style = tls)))
 ```
 
 **Disk**: Static files
+
 ```capnp
 (name = "assets", disk = (path = "/var/www", writable = false))
 ```
 
 ## Sockets
+
 ```capnp
 (name = "http", address = "*:8080", http = (), service = "main")
 (name = "https", address = "*:443", https = (options = (), tlsOptions = (keypair = (...))), service = "main")
@@ -49,6 +56,7 @@ const mainWorker :Workerd.Worker = (
 ```
 
 ## Worker Formats
+
 ```capnp
 # ES Modules (recommended)
 modules = [(name = "index.js", esModule = embed "src/index.js"), (name = "wasm.wasm", wasm = embed "build/module.wasm")]
@@ -61,9 +69,11 @@ serviceWorkerScript = embed "worker.js"
 ```
 
 ## Bindings
+
 Bindings expose resources to workers. ES modules: `env.BINDING`, Service workers: globals.
 
 ### Primitive Types
+
 ```capnp
 (name = "API_KEY", text = "secret")                    # String
 (name = "CONFIG", json = '{"key":"val"}')              # Parsed JSON
@@ -72,6 +82,7 @@ Bindings expose resources to workers. ES modules: `env.BINDING`, Service workers
 ```
 
 ### Service Binding
+
 ```capnp
 (name = "AUTH", service = "auth-worker")               # Basic
 (name = "API", service = (
@@ -82,6 +93,7 @@ Bindings expose resources to workers. ES modules: `env.BINDING`, Service workers
 ```
 
 ### Storage
+
 ```capnp
 (name = "CACHE", kvNamespace = "kv-service")           # KV
 (name = "STORAGE", r2Bucket = "r2-service")            # R2
@@ -96,6 +108,7 @@ Bindings expose resources to workers. ES modules: `env.BINDING`, Service workers
 ```
 
 ### Other
+
 ```capnp
 (name = "TASKS", queue = "queue-service")
 (name = "ANALYTICS", analyticsEngine = "analytics")
@@ -105,6 +118,7 @@ Bindings expose resources to workers. ES modules: `env.BINDING`, Service workers
 ```
 
 ## Compatibility
+
 ```capnp
 compatibilityDate = "2024-01-15"                       # Always set!
 compatibilityFlags = ["nodejs_compat", "streams_enable_constructors"]
@@ -113,6 +127,7 @@ compatibilityFlags = ["nodejs_compat", "streams_enable_constructors"]
 Version = max compat date. Update carefully after testing.
 
 ## Parameter Bindings (Inheritance)
+
 ```capnp
 const base :Workerd.Worker = (
   modules = [...], compatibilityDate = "2024-01-15",
@@ -126,6 +141,7 @@ const derived :Workerd.Worker = (
 ```
 
 ## Durable Objects Config
+
 ```capnp
 const worker :Workerd.Worker = (
   modules = [...],
@@ -150,7 +166,7 @@ bindings = [
       apiToken = .envVar("CF_API_TOKEN")
     )
   )),
-  
+
   # Remote R2
   (name = "PROD_R2", r2Bucket = (
     remote = (
@@ -159,7 +175,7 @@ bindings = [
       apiToken = .envVar("CF_API_TOKEN")
     )
   )),
-  
+
   # Remote Durable Object
   (name = "PROD_DO", durableObjectNamespace = (
     remote = (
@@ -175,6 +191,7 @@ bindings = [
 **Note:** Remote bindings require network access and valid Cloudflare API credentials.
 
 ## Logging & Debugging
+
 ```capnp
 logging = (structuredLogging = true, stdoutPrefix = "OUT: ", stderrPrefix = "ERR: ")
 v8Flags = ["--expose-gc", "--max-old-space-size=2048"]  # ⚠️ Unsupported in production

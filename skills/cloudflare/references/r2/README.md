@@ -5,6 +5,7 @@ S3-compatible object storage with zero egress fees, optimized for large file sto
 ## Overview
 
 R2 provides:
+
 - S3-compatible API (Workers API + S3 REST)
 - Zero egress fees globally
 - Strong consistency for writes/deletes
@@ -23,7 +24,7 @@ wrangler r2 object put my-bucket/file.txt --file=./local.txt
 ```typescript
 // Upload
 await env.MY_BUCKET.put(key, data, {
-  httpMetadata: { contentType: 'image/jpeg' }
+	httpMetadata: { contentType: "image/jpeg" },
 });
 
 // Download
@@ -33,13 +34,13 @@ if (object) return new Response(object.body);
 
 ## Core Operations
 
-| Method | Purpose | Returns |
-|--------|---------|---------|
-| `put(key, value, options?)` | Upload object | `R2Object \| null` |
-| `get(key, options?)` | Download object | `R2ObjectBody \| R2Object \| null` |
-| `head(key)` | Get metadata only | `R2Object \| null` |
-| `delete(keys)` | Delete object(s) | `Promise<void>` |
-| `list(options?)` | List objects | `R2Objects` |
+| Method                      | Purpose           | Returns                            |
+| --------------------------- | ----------------- | ---------------------------------- |
+| `put(key, value, options?)` | Upload object     | `R2Object \| null`                 |
+| `get(key, options?)`        | Download object   | `R2ObjectBody \| R2Object \| null` |
+| `head(key)`                 | Get metadata only | `R2Object \| null`                 |
+| `delete(keys)`              | Delete object(s)  | `Promise<void>`                    |
+| `list(options?)`            | List objects      | `R2Objects`                        |
 
 ## Storage Classes
 
@@ -74,6 +75,7 @@ async queue(batch: MessageBatch, env: Env) {
 
 **First-time users:** README → configuration.md → api.md → patterns.md  
 **Specific tasks:**
+
 - Setup: configuration.md
 - Client uploads: patterns.md (presigned URLs)
 - Public static site: patterns.md (public access + custom domain)

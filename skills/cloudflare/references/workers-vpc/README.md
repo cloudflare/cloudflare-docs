@@ -7,6 +7,7 @@ Connect Cloudflare Workers to private networks and internal infrastructure using
 Workers VPC connectivity enables outbound TCP connections from Workers to private resources in AWS, Azure, GCP, on-premises datacenters, or any private network. This is achieved through the **TCP Sockets API** (`cloudflare:sockets`), which provides low-level network access for custom protocols and services.
 
 **Key capabilities:**
+
 - Direct TCP connections to private IPs and hostnames
 - TLS/StartTLS support for encrypted connections
 - Integration with Cloudflare Tunnel for secure private network access
@@ -18,23 +19,25 @@ Workers VPC connectivity enables outbound TCP connections from Workers to privat
 
 Need private network connectivity from Workers?
 
-| Requirement | Use | Why |
-|------------|-----|-----|
-| HTTP/HTTPS APIs in private network | VPC Services (beta, separate docs) | SSRF-safe, declarative bindings |
-| PostgreSQL/MySQL databases | [Hyperdrive](../hyperdrive/) | Connection pooling, caching, optimized |
-| Custom TCP protocols (SSH, MQTT, proprietary) | **TCP Sockets (this doc)** | Full protocol control |
-| Simple HTTP with lowest latency | TCP Sockets + [Smart Placement](../smart-placement/) | Manual optimization |
-| Expose on-prem to internet (inbound) | [Cloudflare Tunnel](../tunnel/) | Not Worker-specific |
+| Requirement                                   | Use                                                  | Why                                    |
+| --------------------------------------------- | ---------------------------------------------------- | -------------------------------------- |
+| HTTP/HTTPS APIs in private network            | VPC Services (beta, separate docs)                   | SSRF-safe, declarative bindings        |
+| PostgreSQL/MySQL databases                    | [Hyperdrive](../hyperdrive/)                         | Connection pooling, caching, optimized |
+| Custom TCP protocols (SSH, MQTT, proprietary) | **TCP Sockets (this doc)**                           | Full protocol control                  |
+| Simple HTTP with lowest latency               | TCP Sockets + [Smart Placement](../smart-placement/) | Manual optimization                    |
+| Expose on-prem to internet (inbound)          | [Cloudflare Tunnel](../tunnel/)                      | Not Worker-specific                    |
 
 ## When to Use TCP Sockets
 
 **Use TCP Sockets when you need:**
+
 - ✅ Direct control over wire protocols (e.g., Postgres wire protocol, SSH, Redis RESP)
 - ✅ Non-HTTP protocols (MQTT, SMTP, custom binary protocols)
 - ✅ StartTLS or custom TLS negotiation
 - ✅ Streaming binary data over TCP
 
 **Don't use TCP Sockets when:**
+
 - ❌ You just need HTTP/HTTPS (use `fetch()` or VPC Services)
 - ❌ You need PostgreSQL/MySQL (use Hyperdrive for pooling)
 - ❌ You need WebSocket (use native Workers WebSocket)
@@ -42,31 +45,31 @@ Need private network connectivity from Workers?
 ## Quick Start
 
 ```typescript
-import { connect } from 'cloudflare:sockets';
+import { connect } from "cloudflare:sockets";
 
 export default {
-  async fetch(req: Request): Promise<Response> {
-    // Connect to private service
-    const socket = connect(
-      { hostname: "db.internal.company.net", port: 5432 },
-      { secureTransport: "on" }
-    );
+	async fetch(req: Request): Promise<Response> {
+		// Connect to private service
+		const socket = connect(
+			{ hostname: "db.internal.company.net", port: 5432 },
+			{ secureTransport: "on" },
+		);
 
-    try {
-      await socket.opened; // Wait for connection
-      
-      const writer = socket.writable.getWriter();
-      await writer.write(new TextEncoder().encode("QUERY\r\n"));
-      await writer.close();
+		try {
+			await socket.opened; // Wait for connection
 
-      const reader = socket.readable.getReader();
-      const { value } = await reader.read();
-      
-      return new Response(value);
-    } finally {
-      await socket.close();
-    }
-  }
+			const writer = socket.writable.getWriter();
+			await writer.write(new TextEncoder().encode("QUERY\r\n"));
+			await writer.close();
+
+			const reader = socket.readable.getReader();
+			const { value } = await reader.read();
+
+			return new Response(value);
+		} finally {
+			await socket.close();
+		}
+	},
 };
 ```
 
@@ -97,11 +100,11 @@ See [configuration.md](./configuration.md) for Tunnel setup details.
 
 ## Key Limits
 
-| Limit | Value |
-|-------|-------|
-| Max concurrent sockets per request | 6 |
-| Blocked destinations | Cloudflare IPs, localhost, port 25 |
-| Scope requirement | Must create in handler (not global) |
+| Limit                              | Value                               |
+| ---------------------------------- | ----------------------------------- |
+| Max concurrent sockets per request | 6                                   |
+| Blocked destinations               | Cloudflare IPs, localhost, port 25  |
+| Scope requirement                  | Must create in handler (not global) |
 
 See [gotchas.md](./gotchas.md) for complete limits and troubleshooting.
 

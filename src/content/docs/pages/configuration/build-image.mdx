@@ -85,6 +85,7 @@ To migrate to this new version, configure your Pages project settings in the das
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
+
 2. Select your Pages project.
 3. Go to **Deployments** > **All deployments** > and select the latest version.
 
@@ -105,7 +106,6 @@ The following features are not currently supported when using the v3 build syste
 Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) container.
 
 <PagesBuildEnvironment />
-
 
 ## Build Image Policy
 
@@ -128,6 +128,7 @@ Preinstalled software (languages and tools) will be updated before reaching end-
 - **Major version updates**: Updated to the next stable long-term support (LTS) version with 3 months’ notice.
 
 **How you'll be notified (for changes requiring notice):**
+
 - [Cloudflare Changelog](https://developers.cloudflare.com/changelog/)
 - Dashboard notifications for projects that will receive the update
 - Email notifications to project owners
@@ -137,6 +138,7 @@ To maintain a specific version and avoid automatic updates, [override the defaul
 ### Best Practices
 
 To avoid unexpected build failures:
+
 - **Monitor announcements** via the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/), dashboard notifications, and email
 - **Plan for migration** when you receive update notices
 - **Pin specific versions** of critical preinstalled software by [overriding default versions](/pages/configuration/build-image/#override-default-versions)

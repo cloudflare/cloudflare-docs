@@ -3,14 +3,13 @@ pcx_content_type: how-to
 title: Configure PagerDuty
 sidebar:
   order: 2
-
 ---
 
 import { DashButton } from "~/components";
 
 :::note
 
-This feature is only available if your account has at least one zone on a Business or higher plan. For more information, refer to our [plans](https://www.cloudflare.com/plans/). 
+This feature is only available if your account has at least one zone on a Business or higher plan. For more information, refer to our [plans](https://www.cloudflare.com/plans/).
 :::
 
 Cloudflare’s Notification service supports routing notifications to PagerDuty. By sending notifications to PagerDuty you can leverage the same service definitions and escalation paths that you would for other third-party services that you connect to PagerDuty.
@@ -21,14 +20,15 @@ To use PagerDuty as a connected service, you must [sign up for a PagerDuty accou
 
 :::note
 
-According to PagerDuty, you will need an account with the following permissions to add a connected service: User, Admin, Manager, Global Admin, or Account Owner. 
+According to PagerDuty, you will need an account with the following permissions to add a connected service: User, Admin, Manager, Global Admin, or Account Owner.
 :::
 
 ## Connect PagerDuty to a Cloudflare account
 
 1. In the Cloudflare dashboard, go to the **Notifications** page.
-  
-    <DashButton url="/?to=/:account/notifications" />
+
+   <DashButton url="/?to=/:account/notifications" />
+
 2. Go to **Destinations**.
 3. In the **Connected notification services** card, select **Connect**.
 4. Log in to your [PagerDuty account](https://www.pagerduty.com/) to connect it to your Cloudflare account.
@@ -46,8 +46,9 @@ Disconnecting PagerDuty will disable any notifications being sent to PagerDuty w
 If other delivery destinations were selected, then those notifications will still be routed as configured.
 
 1. In the Cloudflare dashboard, go to the **Notifications** page.
-  
-    <DashButton url="/?to=/:account/notifications" />
+
+   <DashButton url="/?to=/:account/notifications" />
+
 2. Go to **Destinations**.
 3. In the **Connected notification services** card, select **View** on the PagerDuty service you want to disconnect.
 4. Select **Disconnect** > **Confirm**.

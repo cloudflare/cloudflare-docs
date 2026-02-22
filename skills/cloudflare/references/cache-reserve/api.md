@@ -20,10 +20,10 @@ Cache Reserve is a **zone-level configuration**, not a per-request API. It works
 ```typescript
 // Cache Reserve works automatically via standard fetch
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    // Standard fetch uses Cache Reserve automatically
-    return await fetch(request);
-  }
+	async fetch(request: Request, env: Env): Promise<Response> {
+		// Standard fetch uses Cache Reserve automatically
+		return await fetch(request);
+	},
 };
 ```
 
@@ -36,19 +36,19 @@ export default {
 const cache = caches.default;
 let response = await cache.match(request);
 if (!response) {
-  response = await fetch(request);
-  await cache.put(request, response.clone()); // Bypasses Cache Reserve!
+	response = await fetch(request);
+	await cache.put(request, response.clone()); // Bypasses Cache Reserve!
 }
 
 // ✅ CORRECT: Use standard fetch for Cache Reserve compatibility
 return await fetch(request);
 
 // ✅ CORRECT: Use Cache API only for custom cache namespaces
-const customCache = await caches.open('my-custom-cache');
+const customCache = await caches.open("my-custom-cache");
 let response = await customCache.match(request);
 if (!response) {
-  response = await fetch(request);
-  await customCache.put(request, response.clone()); // Custom cache OK
+	response = await fetch(request);
+	await customCache.put(request, response.clone()); // Custom cache OK
 }
 ```
 
@@ -59,28 +59,28 @@ if (!response) {
 ```typescript
 // Purge specific URL from Cache Reserve immediately
 const purgeCacheReserveByURL = async (
-  zoneId: string,
-  apiToken: string,
-  urls: string[]
+	zoneId: string,
+	apiToken: string,
+	urls: string[],
 ) => {
-  const response = await fetch(
-    `https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`,
-    {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ files: urls })
-    }
-  );
-  return await response.json();
+	const response = await fetch(
+		`https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`,
+		{
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${apiToken}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ files: urls }),
+		},
+	);
+	return await response.json();
 };
 
 // Example usage
-await purgeCacheReserveByURL('zone123', 'token456', [
-  'https://example.com/image.jpg',
-  'https://example.com/video.mp4'
+await purgeCacheReserveByURL("zone123", "token456", [
+	"https://example.com/image.jpg",
+	"https://example.com/video.mp4",
 ]);
 ```
 
@@ -89,16 +89,20 @@ await purgeCacheReserveByURL('zone123', 'token456', [
 ```typescript
 // Purge by cache tag - forces revalidation, not immediate removal
 await fetch(
-  `https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`,
-  {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${apiToken}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tags: ['tag1', 'tag2'] })
-  }
+	`https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`,
+	{
+		method: "POST",
+		headers: {
+			Authorization: `Bearer ${apiToken}`,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ tags: ["tag1", "tag2"] }),
+	},
 );
 ```
 
 **Purge behavior:**
+
 - **By URL**: Immediate removal from Cache Reserve + edge cache
 - **By tag/host/prefix**: Revalidation only, assets remain in storage (costs continue)
 
@@ -107,8 +111,8 @@ await fetch(
 ```typescript
 // Requires Cache Reserve OFF first
 await fetch(
-  `https://api.cloudflare.com/client/v4/zones/${zoneId}/cache/cache_reserve_clear`,
-  { method: 'POST', headers: { 'Authorization': `Bearer ${apiToken}` } }
+	`https://api.cloudflare.com/client/v4/zones/${zoneId}/cache/cache_reserve_clear`,
+	{ method: "POST", headers: { Authorization: `Bearer ${apiToken}` } },
 );
 
 // Check status: GET same endpoint returns { state: "In-progress" | "Completed" }
@@ -160,22 +164,24 @@ const crHitsQuery = `
 
 ```graphql
 query CacheReserveAnalytics($zoneTag: string, $since: string, $until: string) {
-  viewer {
-    zones(filter: { zoneTag: $zoneTag }) {
-      httpRequests1dGroups(
-        filter: { datetime_geq: $since, datetime_leq: $until }
-        limit: 1000
-      ) {
-        dimensions { date }
-        sum {
-          cachedBytes
-          cachedRequests
-          bytes
-          requests
-        }
-      }
-    }
-  }
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			httpRequests1dGroups(
+				filter: { datetime_geq: $since, datetime_leq: $until }
+				limit: 1000
+			) {
+				dimensions {
+					date
+				}
+				sum {
+					cachedBytes
+					cachedRequests
+					bytes
+					requests
+				}
+			}
+		}
+	}
 }
 ```
 

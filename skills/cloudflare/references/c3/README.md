@@ -67,24 +67,24 @@ pnpm create cloudflare@latest
 
 ## In This Reference
 
-| File | Purpose | Use When |
-|------|---------|----------|
-| **api.md** | Complete CLI flag reference | Scripting, CI/CD, advanced usage |
+| File                 | Purpose                          | Use When                            |
+| -------------------- | -------------------------------- | ----------------------------------- |
+| **api.md**           | Complete CLI flag reference      | Scripting, CI/CD, advanced usage    |
 | **configuration.md** | Generated files, bindings, types | Understanding output, customization |
-| **patterns.md** | Workflows, CI/CD, monorepos | Real-world integration |
-| **gotchas.md** | Troubleshooting failures | Deployment blocked, errors |
+| **patterns.md**      | Workflows, CI/CD, monorepos      | Real-world integration              |
+| **gotchas.md**       | Troubleshooting failures         | Deployment blocked, errors          |
 
 ## Reading Order
 
-| Task | Read |
-|------|------|
-| Create first project | README only |
-| Set up CI/CD | README → api → patterns |
-| Debug failed deploy | gotchas |
-| Understand generated files | configuration |
-| Full CLI reference | api |
-| Create custom template | patterns → configuration |
-| Convert existing project | README → patterns |
+| Task                       | Read                     |
+| -------------------------- | ------------------------ |
+| Create first project       | README only              |
+| Set up CI/CD               | README → api → patterns  |
+| Debug failed deploy        | gotchas                  |
+| Understand generated files | configuration            |
+| Full CLI reference         | api                      |
+| Create custom template     | patterns → configuration |
+| Convert existing project   | README → patterns        |
 
 ## Post-Creation
 

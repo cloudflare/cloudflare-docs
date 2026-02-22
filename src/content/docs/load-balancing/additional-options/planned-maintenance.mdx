@@ -15,9 +15,7 @@ To direct traffic away from your endpoint immediately, [adjust settings on the p
 
 :::note
 
-
 If you want to divert traffic from an endpoint to prevent it from becoming unhealthy, use [Load Shedding](/load-balancing/additional-options/load-shedding/) instead.
-
 
 :::
 
@@ -31,9 +29,7 @@ If a pool falls below its **Health Threshold**, it will be considered **Unhealth
 
 :::note
 
-
 Endpoint drain is only available for [proxied load balancers (orange-clouded)](/load-balancing/understand-basics/proxy-modes/).
-
 
 :::
 
@@ -60,10 +56,10 @@ To remove an endpoint from rotation while still preserving session continuity, s
 To direct traffic away from an endpoint immediately:
 
 1. Do one of the following actions:
-   * On the endpoint's [monitor](/load-balancing/monitors/), update the monitor settings so the endpoint will fail health monitor requests, such as putting an incorrect value for the **Response Body** or **Response Code**.
-   * On the pool, disable the endpoint.
-   * On the pool, set the [endpoint weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) to `0` (though traffic may still reach the endpoint if it is included in multiple pools).
+   - On the endpoint's [monitor](/load-balancing/monitors/), update the monitor settings so the endpoint will fail health monitor requests, such as putting an incorrect value for the **Response Body** or **Response Code**.
+   - On the pool, disable the endpoint.
+   - On the pool, set the [endpoint weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) to `0` (though traffic may still reach the endpoint if it is included in multiple pools).
 2. Monitor [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/) to make sure no requests are reaching the pool.
-   * If you are using [DNS-only load balancing (gray-clouded)](/load-balancing/understand-basics/proxy-modes/), changes may be delayed due to DNS resolver caching.
+   - If you are using [DNS-only load balancing (gray-clouded)](/load-balancing/understand-basics/proxy-modes/), changes may be delayed due to DNS resolver caching.
 3. Perform your required maintenance or upgrades.
 4. Undo the changes you made in **Step 1**.

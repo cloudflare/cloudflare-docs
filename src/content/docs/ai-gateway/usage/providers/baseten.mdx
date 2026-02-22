@@ -54,31 +54,31 @@ const gatewayId = "{gateway_id}";
 const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/baseten`;
 
 const openai = new OpenAI({
-  apiKey,
-  baseURL,
+	apiKey,
+	baseURL,
 });
 
 const model = "openai/gpt-oss-120b";
 const messages = [{ role: "user", content: "What is Cloudflare?" }];
 
 const chatCompletion = await openai.chat.completions.create({
-  model,
-  messages,
+	model,
+	messages,
 });
 
 console.log(chatCompletion);
 ```
 
 <Render
-  file="chat-completions-providers"
-  product="ai-gateway"
-  params={{
-    name: "Baseten",
-    jsonexample: `
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Baseten",
+		jsonexample: `
 {
   "model": "baseten/{model}"
-}`
-  }}
+}`,
+	}}
 />
 
 ## Model-specific endpoints
@@ -107,15 +107,15 @@ const modelId = "{model_id}";
 const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/baseten`;
 
 const response = await fetch(`${baseURL}/model/${modelId}`, {
-  method: "POST",
-  headers: {
-    "Authorization": `Bearer ${basetenApiToken}`,
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    prompt: "What is Cloudflare?",
-    max_tokens: 100,
-  }),
+	method: "POST",
+	headers: {
+		Authorization: `Bearer ${basetenApiToken}`,
+		"Content-Type": "application/json",
+	},
+	body: JSON.stringify({
+		prompt: "What is Cloudflare?",
+		max_tokens: 100,
+	}),
 });
 
 const result = await response.json();

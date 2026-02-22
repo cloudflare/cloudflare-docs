@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Application paths
 sidebar:
   order: 5
-
 ---
 
 Application paths define the URLs protected by an Access policy. When adding a self-hosted application to Access, you can choose to protect the entire website by entering its apex domain, or alternatively, protect specific subdomains and paths.
@@ -24,9 +23,9 @@ When you create an application for a specific subdomain or path, you can use ast
 
 A wildcard in the **Subdomain** field only matches that specific subdomain level. It does not cover the apex domain or multiple levels of the subdomain. If you want to cover multiple subdomain levels, you can use multiple wildcards.
 
-| Application     | Covers                                       | Does not cover |
-| --------------- | -------------------------------------------- | -------------- |
-| `*.example.com` | `alpha.example.com` <br/> `beta.example.com` | `example.com` <br/> `foo.bar.example.com`  |
+| Application     | Covers                                       | Does not cover                            |
+| --------------- | -------------------------------------------- | ----------------------------------------- |
+| `*.example.com` | `alpha.example.com` <br/> `beta.example.com` | `example.com` <br/> `foo.bar.example.com` |
 
 #### Match all paths of an apex domain
 
@@ -40,9 +39,9 @@ To protect an apex domain and all of the paths under it, leave the **Path** fiel
 
 Using a wildcard in the **Subdomain** field does not cover the parent subdomain nor the apex domain.
 
-| Application          | Covers                                                 | Does not cover                          |
-| -------------------- | ------------------------------------------------------ | --------------------------------------- |
-| `*.test.example.com` | `alpha.test.example.com` <br/> `beta.test.example.com` | `test.example.com`  <br/> `example.com` |
+| Application          | Covers                                                 | Does not cover                         |
+| -------------------- | ------------------------------------------------------ | -------------------------------------- |
+| `*.test.example.com` | `alpha.test.example.com` <br/> `beta.test.example.com` | `test.example.com` <br/> `example.com` |
 
 #### Partially match subdomains
 
@@ -70,8 +69,8 @@ Using a wildcard in the middle of the **Path** field covers multiple segments of
 
 ### Limitations
 
-* At most one wildcard in between each dot in the **Subdomain**. For example, `foo*bar*baz.example.com` is not allowed.
-* At most one wildcard in between each slash in the **Path**. For example, `example.com/foo*bar*baz` is not allowed.
+- At most one wildcard in between each dot in the **Subdomain**. For example, `foo*bar*baz.example.com` is not allowed.
+- At most one wildcard in between each slash in the **Path**. For example, `example.com/foo*bar*baz` is not allowed.
 
 ## Subdomain setups
 

@@ -7,10 +7,9 @@ head:
   - tag: title
     content: Sampling with Workers Analytics Engine
 description: How data written to Workers Analytics Engine is automatically sampled at scale
-
 ---
 
-Workers Analytics Engine offers the ability to write an extensive amount of data and retrieve it quickly, at minimal or no cost. To facilitate writing large amounts of data at a reasonable cost, Workers Analytics Engine employs weighted adaptive [sampling](https://en.wikipedia.org/wiki/Sampling_\(statistics\)).
+Workers Analytics Engine offers the ability to write an extensive amount of data and retrieve it quickly, at minimal or no cost. To facilitate writing large amounts of data at a reasonable cost, Workers Analytics Engine employs weighted adaptive [sampling](<https://en.wikipedia.org/wiki/Sampling_(statistics)>).
 
 When utilizing sampling, you do not need every single data point to answer questions about a dataset. For a sufficiently large dataset, the [necessary sample size](https://select-statistics.co.uk/blog/importance-effect-sample-size/) does not depend on the size of the original population. Necessary sample size depends on the variance of your measure, the size of the subgroups you analyze, and how accurate your estimate must be.
 
@@ -23,11 +22,11 @@ At a high level, the way sampling works is:
 
 In the following sections, you will learn:
 
-* [How sampling works](/analytics/analytics-engine/sampling/#how-sampling-works).
-* [How to read sampled data](/analytics/analytics-engine/sampling/#how-to-read-sampled-data).
-* [How is data sampled](/analytics/analytics-engine/sampling/#how-is-data-sampled).
-* [How Adaptive Bit Rate Sampling works](/analytics/analytics-engine/sampling/#adaptive-bit-rate-sampling-at-read-time).
-* [How to pick your index such that your data is sampled in a usable way](/analytics/analytics-engine/sampling/#how-to-select-an-index).
+- [How sampling works](/analytics/analytics-engine/sampling/#how-sampling-works).
+- [How to read sampled data](/analytics/analytics-engine/sampling/#how-to-read-sampled-data).
+- [How is data sampled](/analytics/analytics-engine/sampling/#how-is-data-sampled).
+- [How Adaptive Bit Rate Sampling works](/analytics/analytics-engine/sampling/#adaptive-bit-rate-sampling-at-read-time).
+- [How to pick your index such that your data is sampled in a usable way](/analytics/analytics-engine/sampling/#how-to-select-an-index).
 
 ## How sampling works
 
@@ -43,15 +42,15 @@ The key point is that the map's quality does not solely depend on the resolution
 
 There are similarities between the how a mapping services handles resolution and Cloudflare Analytics delivers analytics using adaptive samples:
 
-* **How data is stored**:
-  * **Mapping service**: Imagery stored at different resolutions.
-  * **Cloudflare Analytics**: Events stored at different sample rates.
-* **How data is displayed to user**:
-  * **Mapping service**: The total number of pixels is \~constant for a given screen size, regardless of the area selected.
-  * **Cloudflare Analytics**: A similar number of events are read for each query, regardless of the size of the dataset or length of time selected.
-* **How a resolution is selected**:
-  * **Mapping service**: The area represented by each pixel will depend on the size of the map being rendered. In a more zoomed out map, each pixel will represent a larger area.
-  * **Cloudflare Analytics**: The sample interval of each event in the result depends on the size of the underlying dataset and length of time selected. For a query over a large dataset or long length of time, each sampled event may stand in for many similar events.
+- **How data is stored**:
+  - **Mapping service**: Imagery stored at different resolutions.
+  - **Cloudflare Analytics**: Events stored at different sample rates.
+- **How data is displayed to user**:
+  - **Mapping service**: The total number of pixels is \~constant for a given screen size, regardless of the area selected.
+  - **Cloudflare Analytics**: A similar number of events are read for each query, regardless of the size of the dataset or length of time selected.
+- **How a resolution is selected**:
+  - **Mapping service**: The area represented by each pixel will depend on the size of the map being rendered. In a more zoomed out map, each pixel will represent a larger area.
+  - **Cloudflare Analytics**: The sample interval of each event in the result depends on the size of the underlying dataset and length of time selected. For a query over a large dataset or long length of time, each sampled event may stand in for many similar events.
 
 ## How to read sampled data
 
@@ -86,11 +85,11 @@ If we took a [simple random sample](https://en.wikipedia.org/wiki/Simple_random_
 
 ![The same graphic as above, but now based on a 1% sample of the data.](~/assets/images/analytics/sample-data.png)
 
-Notice that the larger bars look more or less unchanged, and yet they are still quite accurate. But as you analyze smaller customers, results get [quantized](https://en.wikipedia.org/wiki/Quantization_\(signal_processing\)) and may even be rounded to 0 entirely.
+Notice that the larger bars look more or less unchanged, and yet they are still quite accurate. But as you analyze smaller customers, results get [quantized](<https://en.wikipedia.org/wiki/Quantization_(signal_processing)>) and may even be rounded to 0 entirely.
 
 This shows that while a one percent (1%) or even smaller sample of a large population may be sufficient, we may need to store a larger proportion of events for a small population to get accurate results.
 
-We do this through a technique called equitable sampling. This means that we will equalize the number of events we store for each unique index value. For relatively uncommon index values, we may write all of the data points that we get via `writeDataPoint()`.  But if you write lots of data points to a single index value, we will start to sample.
+We do this through a technique called equitable sampling. This means that we will equalize the number of events we store for each unique index value. For relatively uncommon index values, we may write all of the data points that we get via `writeDataPoint()`. But if you write lots of data points to a single index value, we will start to sample.
 
 Here is the same distribution, but now with (a simulation of) equitable sampling applied:
 
@@ -116,23 +115,23 @@ In order to get accurate results with sampled data, select an appropriate value 
 
 The index has the following properties, which are important to consider when choosing an index:
 
-* Get accurate summary statistics about your entire dataset, across all index values.
-* Get an accurate count of the number of unique values of your index.
-* Get accurate summary statistics (for example, count, sum) within a particular index value.
-* See the `Top N` values of specific fields that are not in your index.
-* Filter on most fields.
-* Run other aggregations like quantiles.
+- Get accurate summary statistics about your entire dataset, across all index values.
+- Get an accurate count of the number of unique values of your index.
+- Get accurate summary statistics (for example, count, sum) within a particular index value.
+- See the `Top N` values of specific fields that are not in your index.
+- Filter on most fields.
+- Run other aggregations like quantiles.
 
 Some limitations and trade-offs to consider are:
 
-* You may not be able to get accurate unique counts of fields that are not in your index.
-  * For example, if you index on `hostname`, you may not be able to count the number of unique URLs.
-* You may not be able to observe very rare values of fields not in the index.
-  * For example, a particular URL for a hostname, if you index on host and have millions of unique URLs.
-* You may not be able to run accurate queries across multiple indices at once.
-  * For example, you may only be able to query for one host at a time (or all of them) and expect accurate results.
-* There is no guarantee you can retrieve any one individual record.
-* You cannot necessarily reconstruct exact sequences of events.
+- You may not be able to get accurate unique counts of fields that are not in your index.
+  - For example, if you index on `hostname`, you may not be able to count the number of unique URLs.
+- You may not be able to observe very rare values of fields not in the index.
+  - For example, a particular URL for a hostname, if you index on host and have millions of unique URLs.
+- You may not be able to run accurate queries across multiple indices at once.
+  - For example, you may only be able to query for one host at a time (or all of them) and expect accurate results.
+- There is no guarantee you can retrieve any one individual record.
+- You cannot necessarily reconstruct exact sequences of events.
 
 It is not recommended to write a unique index value on every row (like a UUID) for most use cases. While this will make it possible to retrieve individual data points very quickly, it will slow down most queries for aggregations and time series.
 

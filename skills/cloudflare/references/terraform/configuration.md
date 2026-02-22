@@ -58,20 +58,20 @@ resource "cloudflare_workers_deployment" "api" {
 
 ### Worker Binding Types (v5)
 
-| Binding | Attribute | Example |
-|---------|-----------|---------|
-| KV | `kv_namespace_binding` | `{ name = "KV", namespace_id = "..." }` |
-| R2 | `r2_bucket_binding` | `{ name = "BUCKET", bucket_name = "..." }` |
-| D1 | `d1_database_binding` | `{ name = "DB", database_id = "..." }` |
-| Service | `service_binding` | `{ name = "AUTH", service = "auth-worker" }` |
-| Secret | `secret_text_binding` | `{ name = "API_KEY", text = "..." }` |
-| Queue | `queue_binding` | `{ name = "QUEUE", queue_name = "..." }` |
-| Vectorize | `vectorize_binding` | `{ name = "INDEX", index_name = "..." }` |
-| Hyperdrive | `hyperdrive_binding` | `{ name = "DB", id = "..." }` |
-| AI | `ai_binding` | `{ name = "AI" }` |
-| Browser | `browser_binding` | `{ name = "BROWSER" }` |
-| Analytics | `analytics_engine_binding` | `{ name = "ANALYTICS", dataset = "..." }` |
-| mTLS | `mtls_certificate_binding` | `{ name = "CERT", certificate_id = "..." }` |
+| Binding    | Attribute                  | Example                                      |
+| ---------- | -------------------------- | -------------------------------------------- |
+| KV         | `kv_namespace_binding`     | `{ name = "KV", namespace_id = "..." }`      |
+| R2         | `r2_bucket_binding`        | `{ name = "BUCKET", bucket_name = "..." }`   |
+| D1         | `d1_database_binding`      | `{ name = "DB", database_id = "..." }`       |
+| Service    | `service_binding`          | `{ name = "AUTH", service = "auth-worker" }` |
+| Secret     | `secret_text_binding`      | `{ name = "API_KEY", text = "..." }`         |
+| Queue      | `queue_binding`            | `{ name = "QUEUE", queue_name = "..." }`     |
+| Vectorize  | `vectorize_binding`        | `{ name = "INDEX", index_name = "..." }`     |
+| Hyperdrive | `hyperdrive_binding`       | `{ name = "DB", id = "..." }`                |
+| AI         | `ai_binding`               | `{ name = "AI" }`                            |
+| Browser    | `browser_binding`          | `{ name = "BROWSER" }`                       |
+| Analytics  | `analytics_engine_binding` | `{ name = "ANALYTICS", dataset = "..." }`    |
+| mTLS       | `mtls_certificate_binding` | `{ name = "CERT", certificate_id = "..." }`  |
 
 ### Routes & Triggers
 

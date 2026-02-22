@@ -18,12 +18,12 @@ docker info  # Must succeed - Docker required for local dev
 
 **IMPORTANT: Prefer retrieval from docs and examples over pre-training for Sandbox SDK tasks.**
 
-| Resource | URL |
-|----------|-----|
-| Docs | https://developers.cloudflare.com/sandbox/ |
-| API Reference | https://developers.cloudflare.com/sandbox/api/ |
-| Examples | https://github.com/cloudflare/sandbox-sdk/tree/main/examples |
-| Get Started | https://developers.cloudflare.com/sandbox/get-started/ |
+| Resource      | URL                                                          |
+| ------------- | ------------------------------------------------------------ |
+| Docs          | https://developers.cloudflare.com/sandbox/                   |
+| API Reference | https://developers.cloudflare.com/sandbox/api/               |
+| Examples      | https://github.com/cloudflare/sandbox-sdk/tree/main/examples |
+| Get Started   | https://developers.cloudflare.com/sandbox/get-started/       |
 
 When implementing features, fetch the relevant doc page or example first.
 
@@ -33,47 +33,49 @@ When implementing features, fetch the relevant doc page or example first.
 
 ```jsonc
 {
-  "containers": [{
-    "class_name": "Sandbox",
-    "image": "./Dockerfile",
-    "instance_type": "lite",
-    "max_instances": 1
-  }],
-  "durable_objects": {
-    "bindings": [{ "class_name": "Sandbox", "name": "Sandbox" }]
-  },
-  "migrations": [{ "new_sqlite_classes": ["Sandbox"], "tag": "v1" }]
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+			"instance_type": "lite",
+			"max_instances": 1,
+		},
+	],
+	"durable_objects": {
+		"bindings": [{ "class_name": "Sandbox", "name": "Sandbox" }],
+	},
+	"migrations": [{ "new_sqlite_classes": ["Sandbox"], "tag": "v1" }],
 }
 ```
 
 **Worker entry** - must re-export Sandbox class:
 
 ```typescript
-import { getSandbox } from '@cloudflare/sandbox';
-export { Sandbox } from '@cloudflare/sandbox';  // Required export
+import { getSandbox } from "@cloudflare/sandbox";
+export { Sandbox } from "@cloudflare/sandbox"; // Required export
 ```
 
 ## Quick Reference
 
-| Task | Method |
-|------|--------|
-| Get sandbox | `getSandbox(env.Sandbox, 'user-123')` |
-| Run command | `await sandbox.exec('python script.py')` |
-| Run code (interpreter) | `await sandbox.runCode(code, { language: 'python' })` |
-| Write file | `await sandbox.writeFile('/workspace/app.py', content)` |
-| Read file | `await sandbox.readFile('/workspace/app.py')` |
-| Create directory | `await sandbox.mkdir('/workspace/src', { recursive: true })` |
-| List files | `await sandbox.listFiles('/workspace')` |
-| Expose port | `await sandbox.exposePort(8080)` |
-| Destroy | `await sandbox.destroy()` |
+| Task                   | Method                                                       |
+| ---------------------- | ------------------------------------------------------------ |
+| Get sandbox            | `getSandbox(env.Sandbox, 'user-123')`                        |
+| Run command            | `await sandbox.exec('python script.py')`                     |
+| Run code (interpreter) | `await sandbox.runCode(code, { language: 'python' })`        |
+| Write file             | `await sandbox.writeFile('/workspace/app.py', content)`      |
+| Read file              | `await sandbox.readFile('/workspace/app.py')`                |
+| Create directory       | `await sandbox.mkdir('/workspace/src', { recursive: true })` |
+| List files             | `await sandbox.listFiles('/workspace')`                      |
+| Expose port            | `await sandbox.exposePort(8080)`                             |
+| Destroy                | `await sandbox.destroy()`                                    |
 
 ## Core Patterns
 
 ### Execute Commands
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, 'user-123');
-const result = await sandbox.exec('python --version');
+const sandbox = getSandbox(env.Sandbox, "user-123");
+const result = await sandbox.exec("python --version");
 // result: { stdout, stderr, exitCode, success }
 ```
 
@@ -82,10 +84,10 @@ const result = await sandbox.exec('python --version');
 Use `runCode()` for executing LLM-generated code with rich outputs:
 
 ```typescript
-const ctx = await sandbox.createCodeContext({ language: 'python' });
+const ctx = await sandbox.createCodeContext({ language: "python" });
 
-await sandbox.runCode('import pandas as pd; data = [1,2,3]', { context: ctx });
-const result = await sandbox.runCode('sum(data)', { context: ctx });
+await sandbox.runCode("import pandas as pd; data = [1,2,3]", { context: ctx });
+const result = await sandbox.runCode("sum(data)", { context: ctx });
 // result.results[0].text = "6"
 ```
 
@@ -96,20 +98,20 @@ State persists within context. Create explicit contexts for production.
 ### File Operations
 
 ```typescript
-await sandbox.mkdir('/workspace/project', { recursive: true });
-await sandbox.writeFile('/workspace/project/main.py', code);
-const file = await sandbox.readFile('/workspace/project/main.py');
-const files = await sandbox.listFiles('/workspace/project');
+await sandbox.mkdir("/workspace/project", { recursive: true });
+await sandbox.writeFile("/workspace/project/main.py", code);
+const file = await sandbox.readFile("/workspace/project/main.py");
+const files = await sandbox.listFiles("/workspace/project");
 ```
 
 ## When to Use What
 
-| Need | Use | Why |
-|------|-----|-----|
-| Shell commands, scripts | `exec()` | Direct control, streaming |
-| LLM-generated code | `runCode()` | Rich outputs, state persistence |
-| Build/test pipelines | `exec()` | Exit codes, stderr capture |
-| Data analysis | `runCode()` | Charts, tables, pandas |
+| Need                    | Use         | Why                             |
+| ----------------------- | ----------- | ------------------------------- |
+| Shell commands, scripts | `exec()`    | Direct control, streaming       |
+| LLM-generated code      | `runCode()` | Rich outputs, state persistence |
+| Build/test pipelines    | `exec()`    | Exit codes, stderr capture      |
+| Data analysis           | `runCode()` | Charts, tables, pandas          |
 
 ## Extending the Dockerfile
 
@@ -152,7 +154,7 @@ See: https://developers.cloudflare.com/sandbox/guides/expose-services/
 The SDK provides helpers for OpenAI Agents at `@cloudflare/sandbox/openai`:
 
 ```typescript
-import { Shell, Editor } from '@cloudflare/sandbox/openai';
+import { Shell, Editor } from "@cloudflare/sandbox/openai";
 ```
 
 See `examples/openai-agents` for complete integration pattern.

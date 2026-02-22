@@ -11,26 +11,21 @@ import { DashButton } from "~/components";
 
 By default, Cloudflare [caches static content](/cache/concepts/default-cache-behavior/) such as images, CSS, and JavaScript. However, you can extend Cloudflare caching to work with HTML by creating custom [Cache Rules](/cache/how-to/cache-rules/).
 
-
 ### Cache more requests
 
-1. In  the Cloudflare dashboard, go to the **Caching** > **Cache Rules** page. 
+1. In the Cloudflare dashboard, go to the **Caching** > **Cache Rules** page.
 
-    <DashButton url="/?to=/:account/:zone/caching/cache-rules" />
+   <DashButton url="/?to=/:account/:zone/caching/cache-rules" />
 
 2. Select **Create rule**.
 3. For When incoming requests match, enter either your entire website or a specific path on your application, based on the Hostname or URI Path. Refer to the [available fields](/cache/how-to/cache-rules/settings/#fields).
 4. For Cache eligibility, define how these requests should be cached and for how long. Refer to the available [cache eligibility settings](/cache/how-to/cache-rules/settings/#eligible-for-cache-settings).
 5. You can then monitor the effectiveness of your cache settings using [Cache Analytics](/cache/performance-review/cache-analytics/) and update your configuration according to our [Cache performance guide](/cache/performance-review/cache-performance/).
 
-
 ### Advanced cache optimizations
 
-
-
-* [Custom Cache Keys](/cache/how-to/cache-keys/) allows you to precisely set the cacheability setting for any resource.
-* [Origin Cache Control](/cache/concepts/cache-control/) can be used to let the Cache-Control headers tell Cloudflare how to handle content from the origin server.
-
+- [Custom Cache Keys](/cache/how-to/cache-keys/) allows you to precisely set the cacheability setting for any resource.
+- [Origin Cache Control](/cache/concepts/cache-control/) can be used to let the Cache-Control headers tell Cloudflare how to handle content from the origin server.
 
 ## Tiered Cache
 
@@ -40,7 +35,6 @@ It works by dividing Cloudflare's data centers into a hierarchy of lower-tiers a
 
 Refer to [Enable Tiered Cache](/cache/how-to/tiered-cache/#enable-tiered-cache) to get started.
 
-
 ### Cache Reserve
 
 [Cache Reserve](/cache/advanced-configuration/cache-reserve/) is a large, persistent data store implemented on top of [R2](/r2/).
@@ -49,11 +43,9 @@ With a single click in the dashboard, your cacheable content will be written to 
 
 This ensures that your content is served from cache longer, shielding your origin from unneeded egress fees.
 
-
 ## Cloudflare Waiting Room
 
 [Cloudflare Waiting Room](/waiting-room/) allows you to route excess users of your website to a customized waiting room, helping preserve customer experience and protect origin servers from being overwhelmed with requests.
-
 
 ## Use Cloudflare IP addresses
 
@@ -61,11 +53,9 @@ Take action to prevent attacks to your application during peak season by configu
 
 Refer to [Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) for more information.
 
-
 ## Monitor traffic
 
 You can use the Cloudflare dashboard to closely monitor the traffic on your domain and fine-tune your cache and security settings accordingly.
-
 
 ### Zone and Account analytics
 
@@ -73,13 +63,11 @@ You can use the Cloudflare dashboard to closely monitor the traffic on your doma
 
 [Cloudflare account analytics](/analytics/account-and-zone-analytics/account-analytics/) lets you access a wide range of aggregated metrics from all the sites under a specific Cloudflare account.
 
-
 ### Security Analytics and Security Events
 
 [Security Analytics](/waf/analytics/security-analytics/) displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
 You can also use the [Security Events](/waf/analytics/security-events/) to review mitigated requests and tailor your security configurations.
-
 
 ### Cache Analytics
 

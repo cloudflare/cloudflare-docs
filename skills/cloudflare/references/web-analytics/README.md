@@ -5,6 +5,7 @@ Privacy-first web analytics providing Core Web Vitals, traffic metrics, and user
 ## Overview
 
 Cloudflare Web Analytics provides:
+
 - **Core Web Vitals** - LCP, FID, CLS, INP, TTFB monitoring
 - **Page views & visits** - Traffic patterns without cookies
 - **Referrers & paths** - Traffic sources and popular pages
@@ -48,16 +49,17 @@ Is your site proxied through Cloudflare?
 
 ### Proxied vs Non-Proxied Sites
 
-| Type | Description | Beacon Injection | Limit |
-|------|-------------|------------------|-------|
-| **Proxied** | DNS through Cloudflare (orange cloud) | Automatic or manual | Unlimited |
-| **Non-proxied** | External hosting, manual beacon | Manual only | 10 sites max |
+| Type            | Description                           | Beacon Injection    | Limit        |
+| --------------- | ------------------------------------- | ------------------- | ------------ |
+| **Proxied**     | DNS through Cloudflare (orange cloud) | Automatic or manual | Unlimited    |
+| **Non-proxied** | External hosting, manual beacon       | Manual only         | 10 sites max |
 
 ### SPA Mode
 
 **Critical for modern frameworks:**
+
 ```json
-{"token": "YOUR_TOKEN", "spa": true}
+{ "token": "YOUR_TOKEN", "spa": true }
 ```
 
 Without `spa: true`, client-side navigation (React Router, Vue Router, Next.js routing) will NOT be tracked. Only initial page loads will register.
@@ -65,6 +67,7 @@ Without `spa: true`, client-side navigation (React Router, Vue Router, Next.js r
 ### CSP Requirements
 
 If using Content Security Policy, allow both domains:
+
 ```
 script-src https://static.cloudflareinsights.com https://cloudflareinsights.com;
 ```
@@ -72,6 +75,7 @@ script-src https://static.cloudflareinsights.com https://cloudflareinsights.com;
 ## Features
 
 ### Core Web Vitals Debugging
+
 - **LCP (Largest Contentful Paint)** - Identifies slow-loading hero images/elements
 - **FID (First Input Delay)** - Interaction responsiveness (legacy metric)
 - **INP (Interaction to Next Paint)** - Modern interaction responsiveness metric
@@ -81,6 +85,7 @@ script-src https://static.cloudflareinsights.com https://cloudflareinsights.com;
 Dashboard shows top 5 problematic elements with CSS selectors for debugging.
 
 ### Traffic Filters
+
 - **Bot filtering** - Exclude automated traffic from metrics
 - **Date ranges** - Custom time period analysis
 - **Geographic** - Country-level filtering
@@ -92,14 +97,17 @@ Dashboard shows top 5 problematic elements with CSS selectors for debugging.
 Create custom tracking rules for advanced configurations:
 
 **Sample Rate Rules:**
+
 - Reduce data collection percentage for high-traffic sites
 - Example: Track only 50% of visitors to reduce volume
 
 **Path-Based Rules:**
+
 - Different behavior per route
 - Example: Exclude `/admin/*` or `/internal/*` from tracking
 
 **Host-Based Rules:**
+
 - Multi-domain configurations
 - Example: Separate tracking for staging vs production subdomains
 
@@ -107,13 +115,13 @@ Create custom tracking rules for advanced configurations:
 
 ## Plan Limits
 
-| Feature | Free | Notes |
-|---------|------|-------|
-| Proxied sites | Unlimited | DNS through Cloudflare |
-| Non-proxied sites | 10 | External hosting |
-| Pageviews | Unlimited | No volume limits |
-| Data retention | 6 months | Rolling window |
-| Rules | Plan-dependent | Check dashboard |
+| Feature           | Free           | Notes                  |
+| ----------------- | -------------- | ---------------------- |
+| Proxied sites     | Unlimited      | DNS through Cloudflare |
+| Non-proxied sites | 10             | External hosting       |
+| Pageviews         | Unlimited      | No volume limits       |
+| Data retention    | 6 months       | Rolling window         |
+| Rules             | Plan-dependent | Check dashboard        |
 
 ## Privacy & Compliance
 

@@ -22,7 +22,7 @@ WARP client releases for Windows, macOS, and Linux come in two forms: beta and s
 - [Stable releases](/cloudflare-one/team-and-resources/devices/warp/download-warp/), including those labeled as LTS releases, are production-ready and will include the latest features as well as functional and security bug fixes. Functional and security bugs found in non-LTS stable releases will be fixed in later stable releases; they are not backported to previous versions. Therefore, Cloudflare recommends regularly deploying the latest stable release.
 - [LTS releases](/cloudflare-one/team-and-resources/devices/warp/download-warp/lts-releases/) are guaranteed to continue receiving security bug fixes for at least 12 months or 90 days after the next LTS release, whichever is greater. For example, if there are 15 months between two consecutive LTS releases, the earlier LTS release will receive security fixes for 18 months (from its release until 90 days after the later LTS release). An upcoming stable release will be declared an LTS release in advance to notify customers of the upcoming 90-day migration period.
 
-	To ensure timely security fixes with less frequent [version testing](/cloudflare-one/team-and-resources/devices/warp/download-warp/update-warp/#test-before-updates), customers may choose to deploy only LTS releases and skip the stable releases in between. This approach is recommended for large or risk-averse organizations where stability is more important than rapid adoption of the latest features.
+  To ensure timely security fixes with less frequent [version testing](/cloudflare-one/team-and-resources/devices/warp/download-warp/update-warp/#test-before-updates), customers may choose to deploy only LTS releases and skip the stable releases in between. This approach is recommended for large or risk-averse organizations where stability is more important than rapid adoption of the latest features.
 
 ### Mobile platforms
 
@@ -45,6 +45,7 @@ WARP is guaranteed to support operating systems for the primary maintenance time
 ### Windows
 
 The WARP client support policy for Windows follows [Microsoft's Lifecycle Policy](https://learn.microsoft.com/en-us/lifecycle/).
+
 - **Windows 10 and 11**: WARP supports [Windows client versions](https://learn.microsoft.com/en-us/windows/release-health/supported-versions-windows-client) as long as they remain in active servicing under Microsoft's Modern Lifecycle Policy. Enterprise LTSC editions must remain under Mainstream Support.
 - **Windows Server**: WARP support for Windows Server is pending. Once testing is complete, our policy will be to support [Windows Server LTSC releases](https://learn.microsoft.com/en-us/windows/release-health/windows-server-release-info) within their Mainstream Support window. Annual Channel releases of Windows Server will not be supported.
 
@@ -54,14 +55,14 @@ There is only one version of Windows 10 still supported by the WARP client: the 
 
 As of December 2025, the following versions of Windows are supported:
 
-| Windows version          | Supported until                                                                               |
-| ----------------------- | -------------------------------------------------------------------------------------------- |
-| Windows&nbsp;10&nbsp;21H2&nbsp;LTSC     | January 2027                                                                                  |
-| Windows&nbsp;11&nbsp;24H2&nbsp;LTSC     | October 2029                                                                                  |
-| Windows&nbsp;11&nbsp;25H2          | October 2027                                                                                  |
-| Windows&nbsp;11&nbsp;24H2          | October 2026                                                                                  |
-| Windows&nbsp;Server&nbsp;2025&nbsp;LTSC | Pending full testing. Once complete, will be supported until November 2029.                   |
-| Windows&nbsp;Server&nbsp;2022&nbsp;LTSC | Pending full testing. Once complete, will be supported until October 2026.                    |
+| Windows version                         | Supported until                                                                                                                            |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Windows&nbsp;10&nbsp;21H2&nbsp;LTSC     | January 2027                                                                                                                               |
+| Windows&nbsp;11&nbsp;24H2&nbsp;LTSC     | October 2029                                                                                                                               |
+| Windows&nbsp;11&nbsp;25H2               | October 2027                                                                                                                               |
+| Windows&nbsp;11&nbsp;24H2               | October 2026                                                                                                                               |
+| Windows&nbsp;Server&nbsp;2025&nbsp;LTSC | Pending full testing. Once complete, will be supported until November 2029.                                                                |
+| Windows&nbsp;Server&nbsp;2022&nbsp;LTSC | Pending full testing. Once complete, will be supported until October 2026.                                                                 |
 | Windows&nbsp;Server&nbsp;2019&nbsp;LTSC | [To be determined](#older-versions-of-windows-server) as it is currently out of mainstream Microsoft support. Usage is highly discouraged. |
 
 #### Older versions of Windows Server
@@ -78,11 +79,11 @@ The WARP client supports the current major version of macOS and the two previous
 
 As of December 2025, the following major versions of macOS are supported:
 
-| macOS version | Supported until |
-| --- | --- |
-| macOS&nbsp;26&nbsp;(Tahoe) | Release of 2028 major version |
+| macOS version                | Supported until               |
+| ---------------------------- | ----------------------------- |
+| macOS&nbsp;26&nbsp;(Tahoe)   | Release of 2028 major version |
 | macOS&nbsp;15&nbsp;(Sequoia) | Release of 2027 major version |
-| macOS&nbsp;14&nbsp;(Sonoma) | Release of 2026 major version |
+| macOS&nbsp;14&nbsp;(Sonoma)  | Release of 2026 major version |
 
 ### Debian
 
@@ -90,10 +91,10 @@ The WARP client supports all Debian releases within their [standard EOL window](
 
 As of December 2025, the following versions of Debian are supported:
 
-| Debian version | Supported until |
-| --- | --- |
-| Debian&nbsp;13&nbsp;(Trixie) | August 2028 |
-| Debian&nbsp;12&nbsp;(Bookworm) | June 2026 |
+| Debian version                 | Supported until |
+| ------------------------------ | --------------- |
+| Debian&nbsp;13&nbsp;(Trixie)   | August 2028     |
+| Debian&nbsp;12&nbsp;(Bookworm) | June 2026       |
 
 ### Ubuntu
 
@@ -101,13 +102,12 @@ The WARP client supports all Ubuntu releases within their [Standard Security Mai
 
 As of December 2025, the following versions of Ubuntu are supported:
 
-
-| Ubuntu version | Supported until |
-| --- | --- |
-| Ubuntu&nbsp;25.10&nbsp;(Questing&nbsp;Quokka) | July 2026 |
-| Ubuntu&nbsp;25.04&nbsp;(Plucky&nbsp;Puffin) | January 2026 |
-| Ubuntu&nbsp;24.04&nbsp;LTSC&nbsp;(Noble&nbsp;Numbat) | April 2029 |
-| Ubuntu&nbsp;22.04&nbsp;LTSC&nbsp;(Jammy&nbsp;Jellyfish) | April 2027 |
+| Ubuntu version                                          | Supported until |
+| ------------------------------------------------------- | --------------- |
+| Ubuntu&nbsp;25.10&nbsp;(Questing&nbsp;Quokka)           | July 2026       |
+| Ubuntu&nbsp;25.04&nbsp;(Plucky&nbsp;Puffin)             | January 2026    |
+| Ubuntu&nbsp;24.04&nbsp;LTSC&nbsp;(Noble&nbsp;Numbat)    | April 2029      |
+| Ubuntu&nbsp;22.04&nbsp;LTSC&nbsp;(Jammy&nbsp;Jellyfish) | April 2027      |
 
 ### Red Hat Enterprise Linux (RHEL)
 
@@ -115,10 +115,10 @@ WARP client support for RHEL is pending. Once testing is complete, our policy wi
 
 As of December 2025, only RHEL 8 has completed full compatibility testing, which is now out of the Red Hat Full Support window. This section will be updated as we add RHEL support to match Red Hat's support lifecyle.
 
-| RHEL version | Supported until |
-| --- | --- |
+| RHEL version | Supported until                                                        |
+| ------------ | ---------------------------------------------------------------------- |
 | RHEL&nbsp;10 | Pending full testing. Once complete, will be supported until May 2030. |
-| RHEL&nbsp;9 | Pending full testing. Once complete, will be supported until May 2027. |
+| RHEL&nbsp;9  | Pending full testing. Once complete, will be supported until May 2027. |
 
 ### iOS and iPadOS
 
@@ -126,8 +126,8 @@ The WARP client supports the current major version of iOS and iPadOS as well as 
 
 As of December 2025, the following versions of iOS and iPadOS are supported:
 
-| iOS or iPadOS version | Supported until |
-| --- | --- |
+| iOS or iPadOS version            | Supported until               |
+| -------------------------------- | ----------------------------- |
 | iOS&nbsp;and&nbsp;iPadOS&nbsp;26 | Release of 2028 major version |
 | iOS&nbsp;and&nbsp;iPadOS&nbsp;18 | Release of 2027 major version |
 | iOS&nbsp;and&nbsp;iPadOS&nbsp;17 | Release of 2026 major version |
@@ -142,12 +142,12 @@ The WARP client is regularly tested on much older versions of Android to maximiz
 
 As of December 2025, the following versions of Android are supported:
 
-| Android version | Supported until |
-| --- | --- |
-| Android&nbsp;16 | Release of 2029 major version |
-| Android&nbsp;15 | Release of 2028 major version |
-| Android&nbsp;14 | Release of 2027 major version |
-| Android&nbsp;13 | Release of 2026 major version |
+| Android version   | Supported until                                           |
+| ----------------- | --------------------------------------------------------- |
+| Android&nbsp;16   | Release of 2029 major version                             |
+| Android&nbsp;15   | Release of 2028 major version                             |
+| Android&nbsp;14   | Release of 2027 major version                             |
+| Android&nbsp;13   | Release of 2026 major version                             |
 | Android&nbsp;9-12 | Not officially supported, but expected to generally work. |
 
 ### ChromeOS

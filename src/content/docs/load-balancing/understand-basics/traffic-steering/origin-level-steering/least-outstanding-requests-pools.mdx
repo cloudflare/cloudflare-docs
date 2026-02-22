@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Least Outstanding Requests steering - Endpoint-level steering
-
 ---
 
 **Least Outstanding Requests steering** allows you to route traffic to endpoints that currently have the lowest number of outstanding requests.
@@ -19,9 +18,9 @@ Least Outstanding Requests steering is best to use if your endpoints are easily 
 
 ```json title="Pools"
 {
-  "origin_steering": {
-    "policy": "least_outstanding_requests"
-  }
+	"origin_steering": {
+		"policy": "least_outstanding_requests"
+	}
 }
 ```
 

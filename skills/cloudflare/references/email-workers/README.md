@@ -7,6 +7,7 @@ Process incoming emails programmatically using Cloudflare Workers runtime.
 Email Workers enable custom email processing logic at the edge. Build spam filters, auto-responders, ticket systems, notification handlers, and more using the same Workers runtime you use for HTTP requests.
 
 **Key capabilities**:
+
 - Process inbound emails with full message access
 - Forward to verified destinations
 - Send replies with proper threading
@@ -19,27 +20,27 @@ Email Workers enable custom email processing logic at the edge. Build spam filte
 
 ```typescript
 export default {
-  async email(message, env, ctx) {
-    // Reject spam
-    if (message.from.includes('spam.com')) {
-      message.setReject('Blocked');
-      return;
-    }
-    
-    // Forward to inbox
-    await message.forward('inbox@example.com');
-  }
+	async email(message, env, ctx) {
+		// Reject spam
+		if (message.from.includes("spam.com")) {
+			message.setReject("Blocked");
+			return;
+		}
+
+		// Forward to inbox
+		await message.forward("inbox@example.com");
+	},
 };
 ```
 
 ### Core Operations
 
-| Operation | Method | Use Case |
-|-----------|--------|----------|
-| Forward | `message.forward(to, headers?)` | Route to verified destination |
-| Reject | `message.setReject(reason)` | Block with SMTP error |
-| Reply | `message.reply(emailMessage)` | Auto-respond with threading |
-| Parse | postal-mime library | Extract subject, body, attachments |
+| Operation | Method                          | Use Case                           |
+| --------- | ------------------------------- | ---------------------------------- |
+| Forward   | `message.forward(to, headers?)` | Route to verified destination      |
+| Reject    | `message.setReject(reason)`     | Block with SMTP error              |
+| Reply     | `message.reply(emailMessage)`   | Auto-respond with threading        |
+| Parse     | postal-mime library             | Extract subject, body, attachments |
 
 ## Reading Order
 
@@ -53,12 +54,12 @@ For comprehensive understanding, read files in this order:
 
 ## In This Reference
 
-| File | Description | Key Topics |
-|------|-------------|------------|
-| [api.md](./api.md) | Complete API reference | ForwardableEmailMessage, SendEmail bindings, reply() method, postal-mime/mimetext APIs |
-| [configuration.md](./configuration.md) | Setup and configuration | wrangler.jsonc, bindings, deployment, dependencies |
-| [patterns.md](./patterns.md) | Real-world examples | Allowlists from KV, auto-reply with threading, attachment extraction, webhook notifications |
-| [gotchas.md](./gotchas.md) | Pitfalls and debugging | Stream consumption, ctx.waitUntil errors, security, limits |
+| File                                   | Description             | Key Topics                                                                                  |
+| -------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------- |
+| [api.md](./api.md)                     | Complete API reference  | ForwardableEmailMessage, SendEmail bindings, reply() method, postal-mime/mimetext APIs      |
+| [configuration.md](./configuration.md) | Setup and configuration | wrangler.jsonc, bindings, deployment, dependencies                                          |
+| [patterns.md](./patterns.md)           | Real-world examples     | Allowlists from KV, auto-reply with threading, attachment extraction, webhook notifications |
+| [gotchas.md](./gotchas.md)             | Pitfalls and debugging  | Stream consumption, ctx.waitUntil errors, security, limits                                  |
 
 ## Architecture
 
@@ -73,6 +74,7 @@ Incoming Email → Email Routing → Email Worker
 ```
 
 **Event flow**:
+
 1. Email arrives at your domain
 2. Email Routing matches route (e.g., `support@example.com`)
 3. Bound Email Worker receives `ForwardableEmailMessage`
@@ -117,13 +119,13 @@ See [gotchas.md](./gotchas.md#readablestream-can-only-be-consumed-once) for deta
 
 ## Limits
 
-| Limit | Value |
-|-------|-------|
-| Max message size | 25 MiB |
-| Max routing rules | 200 |
-| Max destinations | 200 |
-| CPU time (free tier) | 10ms |
-| CPU time (paid tier) | 50ms |
+| Limit                | Value  |
+| -------------------- | ------ |
+| Max message size     | 25 MiB |
+| Max routing rules    | 200    |
+| Max destinations     | 200    |
+| CPU time (free tier) | 10ms   |
+| CPU time (paid tier) | 50ms   |
 
 See [gotchas.md](./gotchas.md#limits-reference) for complete limits table.
 

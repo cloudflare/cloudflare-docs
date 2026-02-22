@@ -3,12 +3,9 @@ pcx_content_type: reference
 title: Expression validation
 sidebar:
   order: 8
-
 ---
 
 The Cloudflare Filters API supports an endpoint for validating expressions.
-
-
 
 ## Examples
 
@@ -22,14 +19,14 @@ curl "https://api.cloudflare.com/client/v4/filters/validate-expr?expression=ip.s
 
 ```json title="Response"
 {
-  "result": null,
-  "success": false,
-  "errors": [
-    {
-      "message": "Filter parsing error:\n`ip.src==34`\n          ^^ couldn't parse address in network: invalid IP address syntax\n"
-    }
-  ],
-  "messages": null
+	"result": null,
+	"success": false,
+	"errors": [
+		{
+			"message": "Filter parsing error:\n`ip.src==34`\n          ^^ couldn't parse address in network: invalid IP address syntax\n"
+		}
+	],
+	"messages": null
 }
 ```
 
@@ -55,14 +52,14 @@ curl "https://api.cloudflare.com/client/v4/filters/validate-expr" \
 
 ```json title="Response"
 {
-  "result": null,
-  "success": false,
-  "errors": [
-    {
-      "message": "Filter parsing error:\n`ip.src in {2400:cb00::/32 2405:8100::/2000 2c0f:f248::/32 2a06:98c0::/29}`\n                                        ^^^^ number too large to fit in target type while parsing with radix 10\n"
-    }
-  ],
-  "messages": null
+	"result": null,
+	"success": false,
+	"errors": [
+		{
+			"message": "Filter parsing error:\n`ip.src in {2400:cb00::/32 2405:8100::/2000 2c0f:f248::/32 2a06:98c0::/29}`\n                                        ^^^^ number too large to fit in target type while parsing with radix 10\n"
+		}
+	],
+	"messages": null
 }
 ```
 

@@ -13,6 +13,7 @@ Expert guidance for building stateful applications with Cloudflare Durable Objec
 ## Overview
 
 Durable Objects combine compute with storage in globally-unique, strongly-consistent packages:
+
 - **Globally unique instances**: Each DO has unique ID for multi-client coordination
 - **Co-located storage**: Fast, strongly-consistent storage with compute
 - **Automatic placement**: Objects spawn near first request location
@@ -33,6 +34,7 @@ Critical rules preventing most production issues:
 ## Core Concepts
 
 ### Class Structure
+
 All DOs extend `DurableObject` base class with constructor receiving `DurableObjectState` (storage, WebSockets, alarms) and `Env` (bindings).
 
 ### Lifecycle States
@@ -50,9 +52,11 @@ All DOs extend `DurableObject` base class with constructor receiving `DurableObj
 - **Destroyed**: Data deleted via migration or manual deletion
 
 ### Accessing from Workers
+
 Workers use bindings to get stubs, then call RPC methods directly (recommended) or use fetch handler (legacy).
 
 **RPC vs fetch() decision:**
+
 ```
 ├─ New project + compat ≥2024-04-03 → RPC (type-safe, simpler)
 ├─ Need HTTP semantics (headers, status) → fetch()
@@ -63,6 +67,7 @@ Workers use bindings to get stubs, then call RPC methods directly (recommended) 
 See [Patterns: RPC vs fetch()](./patterns.md) for examples.
 
 ### ID Generation
+
 - `idFromName()`: Deterministic, named coordination (rate limiting, locks)
 - `newUniqueId()`: Random IDs for sharding high-throughput workloads
 - `idFromString()`: Derive from existing IDs
@@ -71,6 +76,7 @@ See [Patterns: RPC vs fetch()](./patterns.md) for examples.
 ### Storage Options
 
 **Which storage API?**
+
 ```
 ├─ Structured data, relations, transactions → SQLite (recommended)
 ├─ Simple KV on SQLite DO → ctx.storage.kv (sync KV)
@@ -84,6 +90,7 @@ See [Patterns: RPC vs fetch()](./patterns.md) for examples.
 See [DO Storage](../do-storage/README.md) for deep dive.
 
 ### Special Features
+
 - **Alarms**: Schedule future execution per-DO (1 per DO - use queue pattern for multiple)
 - **WebSocket Hibernation**: Zero-cost idle connections (memory cleared on hibernation)
 - **Point-in-Time Recovery**: Restore to any point in 30 days (SQLite only)
@@ -94,24 +101,26 @@ See [DO Storage](../do-storage/README.md) for deep dive.
 import { DurableObject } from "cloudflare:workers";
 
 export class Counter extends DurableObject<Env> {
-  async increment(): Promise<number> {
-    const result = this.ctx.storage.sql.exec(
-      `INSERT INTO counters (id, value) VALUES (1, 1)
+	async increment(): Promise<number> {
+		const result = this.ctx.storage.sql
+			.exec(
+				`INSERT INTO counters (id, value) VALUES (1, 1)
        ON CONFLICT(id) DO UPDATE SET value = value + 1
-       RETURNING value`
-    ).one();
-    return result.value;
-  }
+       RETURNING value`,
+			)
+			.one();
+		return result.value;
+	}
 }
 
 // Worker access
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const id = env.COUNTER.idFromName("global");
-    const stub = env.COUNTER.get(id);
-    const count = await stub.increment();
-    return new Response(`Count: ${count}`);
-  }
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const id = env.COUNTER.idFromName("global");
+		const stub = env.COUNTER.get(id);
+		const count = await stub.increment();
+		return new Response(`Count: ${count}`);
+	},
 };
 ```
 

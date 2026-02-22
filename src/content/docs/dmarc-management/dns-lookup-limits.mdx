@@ -5,7 +5,6 @@ sidebar:
   order: 4
 head: []
 description: Review number of DNS lookups on your SPF records
-
 ---
 
 The [Sender Policy Framework (SPF)](https://datatracker.ietf.org/doc/rfc4408/) specification has a limit on the number of DNS lookups required to fully resolve an SPF record. According to the specification, SPF must limit the number of DNS lookups to 10 per SPF check. If your SPF records exceed this number, your emails might not reach their destination.

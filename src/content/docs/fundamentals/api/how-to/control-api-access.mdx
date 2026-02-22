@@ -3,7 +3,6 @@ title: Control API Access
 pcx_content_type: concept
 sidebar:
   order: 4
-
 ---
 
 import { DashButton } from "~/components";
@@ -18,7 +17,7 @@ To restrict the API access for the entire account:
 
 1. In the Cloudflare dashboard, go to the **Members** page.
 
-    <DashButton url="/?to=/:account/members" />
+   <DashButton url="/?to=/:account/members" />
 
 2. Locate the **Enable API Access** section and then update the setting.
 
@@ -26,9 +25,7 @@ To restrict the API access for the entire account:
 
 :::note
 
-
 Member-level settings will override the account-level setting. If a specific member has API access enabled whereas the account has the access disabled, that member can still call APIs related to the Enterprise account.
-
 
 :::
 
@@ -36,6 +33,6 @@ To restrict the API access for a specific member:
 
 1. In the Cloudflare dashboard, go to the **Members** page.
 
-    <DashButton url="/?to=/:account/members" />
+   <DashButton url="/?to=/:account/members" />
 
 2. Click on the member to expand and choose the intended **API Access**. If `Account Default`, then it follows the account level setting.

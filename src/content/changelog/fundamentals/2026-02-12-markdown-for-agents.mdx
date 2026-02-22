@@ -8,7 +8,6 @@ date: 2026-02-12
 
 Cloudflare's network now supports real-time content conversion at the source, for enabled zones using [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Content_negotiation) headers. When AI systems request pages from any website that uses Cloudflare and has Markdown for Agents enabled, they can express the preference for `text/markdown` in the request: our network will automatically and efficiently convert the HTML to markdown, when possible, on the fly.
 
-
 Here is a curl example with the `Accept` negotiation header requesting this page from our developer documentation:
 
 ```bash

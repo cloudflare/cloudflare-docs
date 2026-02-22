@@ -6,17 +6,18 @@ Instead of `run_worker_first = true`, use array patterns:
 
 ```jsonc
 {
-  "assets": {
-    "run_worker_first": [
-      "/api/*",           // API routes
-      "/admin/*",         // Admin area
-      "!/admin/assets/*"  // Except admin assets
-    ]
-  }
+	"assets": {
+		"run_worker_first": [
+			"/api/*", // API routes
+			"/admin/*", // Admin area
+			"!/admin/assets/*", // Except admin assets
+		],
+	},
 }
 ```
 
 **Benefits:**
+
 - Reduces Worker invocations
 - Lowers costs
 - Improves asset delivery performance
@@ -27,10 +28,10 @@ For SPAs, use `compatibility_date = "2025-04-01"` or later:
 
 ```jsonc
 {
-  "compatibility_date": "2025-04-01",
-  "assets": {
-    "not_found_handling": "single-page-application"
-  }
+	"compatibility_date": "2025-04-01",
+	"assets": {
+		"not_found_handling": "single-page-application",
+	},
 }
 ```
 
@@ -42,7 +43,7 @@ Always type your environment:
 
 ```typescript
 interface Env {
-  ASSETS: Fetcher;
+	ASSETS: Fetcher;
 }
 ```
 
@@ -86,26 +87,27 @@ interface Env {
 ### "Assets not updating after deployment"
 
 **Cause:** Browser or CDN cache serving old assets  
-**Solution:** 
+**Solution:**
+
 - Hard refresh browser (Cmd+Shift+R / Ctrl+F5)
 - Use cache-busting (hashed filenames)
 - Verify deployment completed: `wrangler tail`
 
 ## Limits
 
-| Resource/Limit | Free | Paid | Notes |
-|----------------|------|------|-------|
-| Max asset size | 25 MiB | 25 MiB | Per file |
-| Total assets | 20,000 | **100,000** | Requires Wrangler 4.34.0+ (Sep 2025) |
-| Worker invocations | 100k/day | 10M/month | Optimize with `run_worker_first` patterns |
-| Asset storage | Unlimited | Unlimited | Included |
+| Resource/Limit     | Free      | Paid        | Notes                                     |
+| ------------------ | --------- | ----------- | ----------------------------------------- |
+| Max asset size     | 25 MiB    | 25 MiB      | Per file                                  |
+| Total assets       | 20,000    | **100,000** | Requires Wrangler 4.34.0+ (Sep 2025)      |
+| Worker invocations | 100k/day  | 10M/month   | Optimize with `run_worker_first` patterns |
+| Asset storage      | Unlimited | Unlimited   | Included                                  |
 
 ### Version Requirements
 
-| Feature | Minimum Wrangler Version |
-|---------|--------------------------|
-| 100k file limit (paid) | 4.34.0 |
-| Vite plugin | 4.0.0 + @cloudflare/vite-plugin 1.0.0 |
+| Feature                 | Minimum Wrangler Version                 |
+| ----------------------- | ---------------------------------------- |
+| 100k file limit (paid)  | 4.34.0                                   |
+| Vite plugin             | 4.0.0 + @cloudflare/vite-plugin 1.0.0    |
 | Navigation optimization | 4.0.0 + compatibility_date: "2025-04-01" |
 
 ## Performance Tips
@@ -127,10 +129,10 @@ Serve assets directly when possible:
 
 ```jsonc
 {
-  "assets": {
-    // Only invoke Worker for dynamic routes
-    "run_worker_first": ["/api/*", "/auth/*"]
-  }
+	"assets": {
+		// Only invoke Worker for dynamic routes
+		"run_worker_first": ["/api/*", "/auth/*"],
+	},
 }
 ```
 

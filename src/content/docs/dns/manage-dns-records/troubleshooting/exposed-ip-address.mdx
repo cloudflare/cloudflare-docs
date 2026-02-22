@@ -4,7 +4,6 @@ source: https://support.cloudflare.com/hc/en-us/articles/115003687931-Warning-ab
 title: Exposed IP addresses
 sidebar:
   order: 12
-
 ---
 
 When your DNS records are [proxied](/dns/proxy-status/), Cloudflare speeds up and protects your site.
@@ -17,7 +16,7 @@ When your server’s IP address is exposed, your server is more vulnerable to di
 
 Below are two cases where you might receive an IP exposure warning from Cloudflare.
 
-***
+---
 
 ## DNS records that should be proxied
 
@@ -29,7 +28,7 @@ Cloudflare recommends [proxying](/dns/proxy-status/) the record so that any `dig
 
 To take advantage of Cloudflare’s performance and security benefits, we recommend you proxy DNS records that handle HTTP traffic, including `A`, `AAAA`, and `CNAME` records.
 
-***
+---
 
 ## DNS records that should be DNS-only
 
@@ -45,5 +44,5 @@ However, there are times when some of your DNS records need to remain DNS-only. 
 
 To mitigate this risk, we recommend that you:
 
-* Analyze the impact of hosting multiple services on the same origin server in cases when you cannot avoid having DNS-only records.
-* Proxy all records that share the same origin IP address as your apex domain and can be safely proxied through Cloudflare.
+- Analyze the impact of hosting multiple services on the same origin server in cases when you cannot avoid having DNS-only records.
+- Proxy all records that share the same origin IP address as your apex domain and can be safely proxied through Cloudflare.

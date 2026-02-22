@@ -4,16 +4,16 @@ Expert guidance for building real-time audio/video/data applications using Cloud
 
 ## Reading Order
 
-| Task | Files | ~Tokens |
-|------|-------|---------|
-| New project | README → configuration | ~1200 |
-| Implement publish/subscribe | README → api | ~1600 |
-| Add PartyTracks | patterns (PartyTracks section) | ~800 |
-| Build presence system | patterns (DO section) | ~800 |
-| Debug connection issues | gotchas | ~700 |
-| Scale to millions | patterns (Cascading section) | ~600 |
-| Add simulcast | patterns (Advanced section) | ~500 |
-| Configure TURN | configuration (TURN section) | ~400 |
+| Task                        | Files                          | ~Tokens |
+| --------------------------- | ------------------------------ | ------- |
+| New project                 | README → configuration         | ~1200   |
+| Implement publish/subscribe | README → api                   | ~1600   |
+| Add PartyTracks             | patterns (PartyTracks section) | ~800    |
+| Build presence system       | patterns (DO section)          | ~800    |
+| Debug connection issues     | gotchas                        | ~700    |
+| Scale to millions           | patterns (Cascading section)   | ~600    |
+| Add simulcast               | patterns (Advanced section)    | ~500    |
+| Configure TURN              | configuration (TURN section)   | ~400    |
 
 ## In This Reference
 
@@ -27,6 +27,7 @@ Expert guidance for building real-time audio/video/data applications using Cloud
 Cloudflare Realtime SFU: WebRTC infrastructure on global network (310+ cities). Anycast routing, no regional constraints, pub/sub model.
 
 **Core concepts:**
+
 - **Sessions:** WebRTC PeerConnection to Cloudflare edge
 - **Tracks:** Audio/video/data channels you publish or subscribe to
 - **No rooms:** Build presence layer yourself via track sharing (see patterns.md)
@@ -35,11 +36,11 @@ Cloudflare Realtime SFU: WebRTC infrastructure on global network (310+ cities). 
 
 ## Choose Your Approach
 
-| Approach | When to Use | Complexity |
-|----------|-------------|------------|
-| **PartyTracks** | Production apps with device switching, React | Low - Observable-based, handles reconnections |
-| **Raw API** | Custom requirements, non-browser, learning | Medium - Full control, manual WebRTC lifecycle |
-| **RealtimeKit** | End-to-end SDK with UI components | Lowest - Managed state, React hooks |
+| Approach        | When to Use                                  | Complexity                                     |
+| --------------- | -------------------------------------------- | ---------------------------------------------- |
+| **PartyTracks** | Production apps with device switching, React | Low - Observable-based, handles reconnections  |
+| **Raw API**     | Custom requirements, non-browser, learning   | Medium - Full control, manual WebRTC lifecycle |
+| **RealtimeKit** | End-to-end SDK with UI components            | Lowest - Managed state, React hooks            |
 
 **Recommendation:** Start with PartyTracks for most production applications. See patterns.md for PartyTracks examples.
 

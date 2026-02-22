@@ -68,13 +68,13 @@ Flag `env.X` inside a class extending a platform base class. Flag `this.env.X` i
 
 ### Type integrity rules
 
-| Rule | Detail |
-|------|--------|
-| No `any` | Never on binding types, handler params, or API responses |
-| No double-casting | `as unknown as T` hides real incompatibilities — fix the underlying design |
-| Justify suppressions | `@ts-ignore`/`@ts-expect-error` must include a comment explaining why |
-| Prefer `satisfies` | Use `satisfies ExportedHandler<Env>` over `as` — validates without widening |
-| Validate, do not assert | Schema or type guard for untyped data (JSON, parsed bodies), not `as` |
+| Rule                    | Detail                                                                      |
+| ----------------------- | --------------------------------------------------------------------------- |
+| No `any`                | Never on binding types, handler params, or API responses                    |
+| No double-casting       | `as unknown as T` hides real incompatibilities — fix the underlying design  |
+| Justify suppressions    | `@ts-ignore`/`@ts-expect-error` must include a comment explaining why       |
+| Prefer `satisfies`      | Use `satisfies ExportedHandler<Env>` over `as` — validates without widening |
+| Validate, do not assert | Schema or type guard for untyped data (JSON, parsed bodies), not `as`       |
 
 ### Stale class patterns
 
@@ -108,14 +108,14 @@ For executable examples, verify: `name`, `compatibility_date`, `main`. Check the
 
 ### Common config mistakes
 
-| Check | What to look for |
-|-------|-----------------|
+| Check                      | What to look for                                   |
+| -------------------------- | -------------------------------------------------- |
 | Stale `compatibility_date` | Should be recent; use `$today` placeholder in docs |
-| Missing DO migrations | Every new DO class needs a migration entry |
-| Binding name mismatch | Config `binding`/`name` must match `env.X` in code |
-| Secrets in config | Never in `vars` — use `wrangler secret put` |
-| Wrong binding key | Verify top-level key name against the schema |
-| Missing entrypoint | `main` required for executable Workers |
+| Missing DO migrations      | Every new DO class needs a migration entry         |
+| Binding name mismatch      | Config `binding`/`name` must match `env.X` in code |
+| Secrets in config          | Never in `vars` — use `wrangler secret put`        |
+| Wrong binding key          | Verify top-level key name against the schema       |
+| Missing entrypoint         | `main` required for executable Workers             |
 
 ---
 

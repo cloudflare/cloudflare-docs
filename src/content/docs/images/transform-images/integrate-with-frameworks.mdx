@@ -3,7 +3,6 @@ title: Integrate with frameworks
 pcx_content_type: reference
 sidebar:
   order: 6
-
 ---
 
 ## Next.js
@@ -24,11 +23,11 @@ Add the following settings to the **next.config.js** file located at the root ou
 
 ```ts
 module.exports = {
-  images: {
-    loader: 'custom',
-    loaderFile: './imageLoader.ts',
-  },
-}
+	images: {
+		loader: "custom",
+		loaderFile: "./imageLoader.ts",
+	},
+};
 ```
 
 Next, create the `imageLoader.ts` file in the specified path (relative to the root of your Next.js application).
@@ -37,22 +36,22 @@ Next, create the `imageLoader.ts` file in the specified path (relative to the ro
 import type { ImageLoaderProps } from "next/image";
 
 const normalizeSrc = (src: string) => {
-    return src.startsWith("/") ? src.slice(1) : src;
+	return src.startsWith("/") ? src.slice(1) : src;
 };
 
 export default function cloudflareLoader({
-    src,
-    width,
-    quality,
+	src,
+	width,
+	quality,
 }: ImageLoaderProps) {
-    const params = [`width=${width}`];
-    if (quality) {
-      params.push(`quality=${quality}`);
-    }
-    if (process.env.NODE_ENV === "development") {
-      return `${src}?${params.join("&")}`;
-    }
-    return `/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
+	const params = [`width=${width}`];
+	if (quality) {
+		params.push(`quality=${quality}`);
+	}
+	if (process.env.NODE_ENV === "development") {
+		return `${src}?${params.join("&")}`;
+	}
+	return `/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
 }
 ```
 
@@ -61,43 +60,41 @@ export default function cloudflareLoader({
 Alternatively, define a loader for each `<Image />` component.
 
 ```js
-import Image from 'next/image';
+import Image from "next/image";
 
 const normalizeSrc = (src) => {
-  return src.startsWith('/') ? src.slice(1) : src;
+	return src.startsWith("/") ? src.slice(1) : src;
 };
 
 const cloudflareLoader = ({ src, width, quality }) => {
-  const params = [`width=${width}`];
-  if (quality) {
-    params.push(`quality=${quality}`);
-  }
-  if (process.env.NODE_ENV === "development") {
-    return `${src}?${params.join("&")}`;
-  }
-  return `/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
+	const params = [`width=${width}`];
+	if (quality) {
+		params.push(`quality=${quality}`);
+	}
+	if (process.env.NODE_ENV === "development") {
+		return `${src}?${params.join("&")}`;
+	}
+	return `/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
 };
 
 const MyImage = (props) => {
-  return (
-    <Image
-      loader={cloudflareLoader}
-      src="/me.png"
-      alt="Picture of the author"
-      width={500}
-      height={500}
-      {...props}
-    />
-  );
+	return (
+		<Image
+			loader={cloudflareLoader}
+			src="/me.png"
+			alt="Picture of the author"
+			width={500}
+			height={500}
+			{...props}
+		/>
+	);
 };
 ```
 
 :::note
 
-
 For local development, you can enable [Resize images from any origin checkbox](/images/get-started/) for your zone. Then, replace `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}` with an absolute URL path:
 
 `https://<YOUR_DOMAIN.COM>/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`
-
 
 :::

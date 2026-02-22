@@ -16,12 +16,12 @@ You can enable and configure reranking in the dashboard or directly in your API 
 
 ```javascript
 const answer = await env.AI.autorag("my-autorag").aiSearch({
-  query: "How do I train a llama to deliver coffee?",
-  model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-  reranking: {
-    enabled: true,
-    model: "@cf/baai/bge-reranker-base"
-  }
+	query: "How do I train a llama to deliver coffee?",
+	model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+	reranking: {
+		enabled: true,
+		model: "@cf/baai/bge-reranker-base",
+	},
 });
 ```
 
@@ -32,14 +32,14 @@ Previously, [system prompts](/ai-search/configuration/system-prompt/) could only
 ```javascript
 // Dynamically set query and system prompt in AI Search
 async function getAnswer(query, tone) {
-  const systemPrompt = `You are a ${tone} assistant.`;
+	const systemPrompt = `You are a ${tone} assistant.`;
 
-  const response = await env.AI.autorag("my-autorag").aiSearch({
-    query: query,
-    system_prompt: systemPrompt
-  });
+	const response = await env.AI.autorag("my-autorag").aiSearch({
+		query: query,
+		system_prompt: systemPrompt,
+	});
 
-  return response;
+	return response;
 }
 
 // Example usage
@@ -51,4 +51,3 @@ console.log(answer);
 ```
 
 Learn more about [Reranking](/ai-search/configuration/reranking/) and [System Prompt](/ai-search/configuration/system-prompt/) in AI Search.
-

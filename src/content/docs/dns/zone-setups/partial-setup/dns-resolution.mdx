@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: DNS resolution in partial zones
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 When you have a partial zone (<GlossaryTooltip term="CNAME setup" link="/dns/zone-setups/partial-setup/">CNAME setup</GlossaryTooltip>), Cloudflare handles DNS records a bit differently from primary zones (full setup) in order to internally resolve the origin server where proxied HTTP requests are sent to.
 
@@ -59,7 +58,7 @@ When you avoid this situation - meaning you do not have the **target** of the CN
       end
 ```
 
-***
+---
 
 ## Records pointing to a partial zone within the same account
 

@@ -15,41 +15,41 @@ How are you calling the Cloudflare API?
 
 ## SDK Selection
 
-| Language | Package | Best For | Default Retries |
-|----------|---------|----------|-----------------|
-| TypeScript | `cloudflare` | Node.js, Bun, Next.js, Workers | 2 |
-| Python | `cloudflare` | FastAPI, Django, scripts | 2 |
-| Go | `cloudflare-go/v4` | CLI tools, microservices | 10 |
+| Language   | Package            | Best For                       | Default Retries |
+| ---------- | ------------------ | ------------------------------ | --------------- |
+| TypeScript | `cloudflare`       | Node.js, Bun, Next.js, Workers | 2               |
+| Python     | `cloudflare`       | FastAPI, Django, scripts       | 2               |
+| Go         | `cloudflare-go/v4` | CLI tools, microservices       | 10              |
 
 All SDKs are Stainless-generated from OpenAPI spec (consistent APIs).
 
 ## Authentication Methods
 
-| Method | Security | Use Case | Scope |
-|--------|----------|----------|-------|
-| **API Token** ✓ | Scoped, rotatable | Production | Per-zone or account |
-| API Key + Email | Full account access | Legacy only | Everything |
-| User Service Key | Limited | Origin CA certs only | Origin CA |
+| Method           | Security            | Use Case             | Scope               |
+| ---------------- | ------------------- | -------------------- | ------------------- |
+| **API Token** ✓  | Scoped, rotatable   | Production           | Per-zone or account |
+| API Key + Email  | Full account access | Legacy only          | Everything          |
+| User Service Key | Limited             | Origin CA certs only | Origin CA           |
 
 **Always use API tokens** for new projects.
 
 ## Rate Limits
 
-| Limit | Value |
-|-------|-------|
-| Per user/token | 1200 requests / 5 minutes |
-| Per IP | 200 requests / second |
-| GraphQL | 320 / 5 minutes (cost-based) |
+| Limit          | Value                        |
+| -------------- | ---------------------------- |
+| Per user/token | 1200 requests / 5 minutes    |
+| Per IP         | 200 requests / second        |
+| GraphQL        | 320 / 5 minutes (cost-based) |
 
 ## Reading Order
 
-| Task | Files to Read |
-|------|---------------|
-| Initialize SDK client | api.md |
-| Configure auth/timeout/retry | configuration.md |
-| Find usage patterns | patterns.md |
-| Debug errors/rate limits | gotchas.md |
-| Product-specific APIs | ../workers/, ../r2/, ../kv/, etc. |
+| Task                         | Files to Read                     |
+| ---------------------------- | --------------------------------- |
+| Initialize SDK client        | api.md                            |
+| Configure auth/timeout/retry | configuration.md                  |
+| Find usage patterns          | patterns.md                       |
+| Debug errors/rate limits     | gotchas.md                        |
+| Product-specific APIs        | ../workers/, ../r2/, ../kv/, etc. |
 
 ## In This Reference
 

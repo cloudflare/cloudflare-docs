@@ -77,7 +77,7 @@ async queue(batch: MessageBatch, env: Env): Promise<void> {
       msg.ack();
       continue;
     }
-    
+
     await processMessage(msg.body);
     await env.PROCESSED_KV.put(msg.id, '1', { expirationTtl: 86400 });
     msg.ack();
@@ -93,10 +93,13 @@ async queue(batch: MessageBatch, env: Env): Promise<void> {
 
 ```typescript
 // Use json for pull consumers
-await env.MY_QUEUE.send(data, { contentType: 'json' });
+await env.MY_QUEUE.send(data, { contentType: "json" });
 
 // Use v8 only for push consumers with complex JS types
-await env.MY_QUEUE.send({ date: new Date(), tags: new Set() }, { contentType: 'v8' });
+await env.MY_QUEUE.send(
+	{ date: new Date(), tags: new Set() },
+	{ contentType: "v8" },
+);
 ```
 
 ### "Messages Not Being Delivered"
@@ -126,7 +129,7 @@ async queue(batch: MessageBatch, env: Env): Promise<void> {
       if (isRetryable(error)) {
         const delay = Math.min(30 * (2 ** msg.attempts), 43200);
         msg.retry({ delaySeconds: delay });
-      } 
+      }
       // Permanent errors: ack to avoid infinite retries
       else {
         console.error('Permanent error, sending to DLQ:', error);
@@ -144,7 +147,7 @@ function isRetryable(error: unknown): boolean {
   }
   if (error instanceof Error) {
     // Don't retry: validation, auth, not found
-    return !error.message.includes('validation') && 
+    return !error.message.includes('validation') &&
            !error.message.includes('unauthorized') &&
            !error.message.includes('not found');
   }
@@ -162,14 +165,15 @@ function isRetryable(error: unknown): boolean {
 
 **When to use each content type:**
 
-| Content Type | Use When | Readable By | Supports |
-|--------------|----------|-------------|----------|
-| `json` (default) | Pull consumers, dashboard visibility, simple objects | All (push/pull/dashboard) | JSON-serializable types only |
-| `v8` | Push consumers only, complex JS objects | Push consumers only | Date, Map, Set, BigInt, typed arrays |
-| `text` | String-only payloads | All | Strings only |
-| `bytes` | Binary data (images, files) | All | ArrayBuffer, Uint8Array |
+| Content Type     | Use When                                             | Readable By               | Supports                             |
+| ---------------- | ---------------------------------------------------- | ------------------------- | ------------------------------------ |
+| `json` (default) | Pull consumers, dashboard visibility, simple objects | All (push/pull/dashboard) | JSON-serializable types only         |
+| `v8`             | Push consumers only, complex JS objects              | Push consumers only       | Date, Map, Set, BigInt, typed arrays |
+| `text`           | String-only payloads                                 | All                       | Strings only                         |
+| `bytes`          | Binary data (images, files)                          | All                       | ArrayBuffer, Uint8Array              |
 
 **Decision tree:**
+
 1. Need to view in dashboard or use pull consumer? → Use `json`
 2. Need Date, Map, Set, or other V8 types? → Use `v8` (push consumers only)
 3. Just strings? → Use `text`
@@ -177,30 +181,33 @@ function isRetryable(error: unknown): boolean {
 
 ```typescript
 // Dashboard/pull: use json
-await env.QUEUE.send({ id: 123, name: 'test' }, { contentType: 'json' });
+await env.QUEUE.send({ id: 123, name: "test" }, { contentType: "json" });
 
 // Complex JS types (push only): use v8
-await env.QUEUE.send({ 
-  created: new Date(), 
-  tags: new Set(['a', 'b']) 
-}, { contentType: 'v8' });
+await env.QUEUE.send(
+	{
+		created: new Date(),
+		tags: new Set(["a", "b"]),
+	},
+	{ contentType: "v8" },
+);
 ```
 
 ## Limits
 
-| Limit | Value | Notes |
-|-------|-------|-------|
-| Max queues | 10,000 | Per account |
-| Message size | 128 KB | Maximum per message |
-| Batch size (consumer) | 100 messages | Maximum messages per batch |
-| Batch size (sendBatch) | 100 msgs or 256 KB | Whichever limit reached first |
-| Throughput | 5,000 msgs/sec | Per queue |
-| Retention | 4-14 days | Configurable retention period |
-| Max backlog | 25 GB | Maximum queue backlog size |
-| Max delay | 12 hours (43,200s) | Maximum message delay |
-| Max retries | 100 | Maximum retry attempts |
-| CPU time default | 30s | Per consumer invocation |
-| CPU time max | 300s (5 min) | Configurable via `limits.cpu_ms` |
-| Operations per message | 3 (write + read + delete) | Base cost per message |
-| Pricing | $0.40 per 1M operations | After 1M free operations |
-| Message charging | Per 64 KB chunk | Messages charged in 64 KB increments |
+| Limit                  | Value                     | Notes                                |
+| ---------------------- | ------------------------- | ------------------------------------ |
+| Max queues             | 10,000                    | Per account                          |
+| Message size           | 128 KB                    | Maximum per message                  |
+| Batch size (consumer)  | 100 messages              | Maximum messages per batch           |
+| Batch size (sendBatch) | 100 msgs or 256 KB        | Whichever limit reached first        |
+| Throughput             | 5,000 msgs/sec            | Per queue                            |
+| Retention              | 4-14 days                 | Configurable retention period        |
+| Max backlog            | 25 GB                     | Maximum queue backlog size           |
+| Max delay              | 12 hours (43,200s)        | Maximum message delay                |
+| Max retries            | 100                       | Maximum retry attempts               |
+| CPU time default       | 30s                       | Per consumer invocation              |
+| CPU time max           | 300s (5 min)              | Configurable via `limits.cpu_ms`     |
+| Operations per message | 3 (write + read + delete) | Base cost per message                |
+| Pricing                | $0.40 per 1M operations   | After 1M free operations             |
+| Message charging       | Per 64 KB chunk           | Messages charged in 64 KB increments |

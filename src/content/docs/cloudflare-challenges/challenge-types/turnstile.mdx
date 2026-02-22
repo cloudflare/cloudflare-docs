@@ -13,7 +13,7 @@ Turnstile differs from Challenges Pages in that the Challenge does not pause the
 
 In most cases, nothing further is required from the visitor. However, if necessary, Turnstile may display a simple checkbox that the visitor must click to proceed.
 
-After the Challenge passes, Turnstile issues a clearance token to the visitor that must be validated via the [Siteverify API](/turnstile/get-started/server-side-validation/) before completing a sensitive action like login, sign up, or other form submissions. 
+After the Challenge passes, Turnstile issues a clearance token to the visitor that must be validated via the [Siteverify API](/turnstile/get-started/server-side-validation/) before completing a sensitive action like login, sign up, or other form submissions.
 
 <Render file="siteverify-warning" product="turnstile" />
 
@@ -23,13 +23,13 @@ While there are three types of widgets that you can choose to implement on your 
 
 - **Managed (recommended)**: Functions similar to a Managed Challenge Page. It selects a Challenge based on the signals gathered from the visitor's browser and presents an interaction only if it detects potentially automated traffic.
 
-- **Non-Interactive**: The widget is displayed, but the visitor does not need to interact with it to verify their identity. 
+- **Non-Interactive**: The widget is displayed, but the visitor does not need to interact with it to verify their identity.
 
 - **Invisible**: The widget is completely invisible to the visitor, but the Challenge still runs in the background.
 
 ## Implementation
 
-When you create a widget for your website or application via the Cloudflare dashboard, you will receive a sitekey. 
+When you create a widget for your website or application via the Cloudflare dashboard, you will receive a sitekey.
 
 The sitekey is used with [client-side rendering](/turnstile/get-started/client-side-rendering/#implicitly-render-the-turnstile-widget) by adding it to the `<div>` container placeholder. You will then place that `<div>` code snippet where you want to add the widget to your site page or form.
 

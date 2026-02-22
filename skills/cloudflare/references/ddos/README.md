@@ -10,15 +10,15 @@ Autonomous, always-on protection against DDoS attacks across L3/4 and L7.
 
 ## Plan Availability
 
-| Feature | Free | Pro | Business | Enterprise | Enterprise Advanced |
-|---------|------|-----|----------|------------|---------------------|
-| HTTP DDoS (L7) | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Network DDoS (L3/4) | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Override rules | 1 | 1 | 1 | 1 | 10 |
-| Custom expressions | ✗ | ✗ | ✗ | ✗ | ✓ |
-| Log action | ✗ | ✗ | ✗ | ✗ | ✓ |
-| Adaptive DDoS | ✗ | ✗ | ✗ | ✓ | ✓ |
-| Alert filters | Basic | Basic | Basic | Advanced | Advanced |
+| Feature             | Free  | Pro   | Business | Enterprise | Enterprise Advanced |
+| ------------------- | ----- | ----- | -------- | ---------- | ------------------- |
+| HTTP DDoS (L7)      | ✓     | ✓     | ✓        | ✓          | ✓                   |
+| Network DDoS (L3/4) | ✓     | ✓     | ✓        | ✓          | ✓                   |
+| Override rules      | 1     | 1     | 1        | 1          | 10                  |
+| Custom expressions  | ✗     | ✗     | ✗        | ✗          | ✓                   |
+| Log action          | ✗     | ✗     | ✗        | ✗          | ✓                   |
+| Adaptive DDoS       | ✗     | ✗     | ✗        | ✓          | ✓                   |
+| Alert filters       | Basic | Basic | Basic    | Advanced   | Advanced            |
 
 ## Actions & Sensitivity
 
@@ -29,13 +29,14 @@ Autonomous, always-on protection against DDoS attacks across L3/4 and L7.
 
 ## Reading Order
 
-| File | Purpose | Start Here If... |
-|------|---------|------------------|
-| [configuration.md](./configuration.md) | Dashboard setup, rule structure, adaptive profiles | You're setting up DDoS protection for the first time |
-| [api.md](./api.md) | API endpoints, SDK usage, ruleset ID discovery | You're automating configuration or need programmatic access |
-| [patterns.md](./patterns.md) | Protection strategies, defense-in-depth, dynamic response | You need implementation patterns or layered security |
-| [gotchas.md](./gotchas.md) | False positives, tuning, error handling | You're troubleshooting or optimizing existing protection |
+| File                                   | Purpose                                                   | Start Here If...                                            |
+| -------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------- |
+| [configuration.md](./configuration.md) | Dashboard setup, rule structure, adaptive profiles        | You're setting up DDoS protection for the first time        |
+| [api.md](./api.md)                     | API endpoints, SDK usage, ruleset ID discovery            | You're automating configuration or need programmatic access |
+| [patterns.md](./patterns.md)           | Protection strategies, defense-in-depth, dynamic response | You need implementation patterns or layered security        |
+| [gotchas.md](./gotchas.md)             | False positives, tuning, error handling                   | You're troubleshooting or optimizing existing protection    |
 
 ## See Also
+
 - [waf](../waf/) - Application-layer security rules
 - [bot-management](../bot-management/) - Bot detection and mitigation

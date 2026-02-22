@@ -5,10 +5,9 @@ sidebar:
   order: 2
 head: []
 description: Cloudflare WAN uses a static configuration to route your traffic through anycast tunnels from Cloudflare's global network to your locations. If you are connected through CNI with Dataplane v2, you also have access to BGP peering (beta). Learn how to configure routing.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 <Render
 	file="routing/configure-routes"
@@ -17,17 +16,23 @@ import { Render } from "~/components"
 		magicWord: "Cloudflare WAN",
 		trafficSteeringPage: "/cloudflare-wan/reference/traffic-steering/",
 		productName: "Cloudflare WAN",
-		tunnelEndpoints: "/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
-		routePrioritization: "/cloudflare-wan/reference/traffic-steering/#route-prioritization",
-		chooseWeights: "/cloudflare-wan/reference/traffic-steering/#set-priority-and-weights-for-static-routes",
+		tunnelEndpoints:
+			"/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
+		routePrioritization:
+			"/cloudflare-wan/reference/traffic-steering/#route-prioritization",
+		chooseWeights:
+			"/cloudflare-wan/reference/traffic-steering/#set-priority-and-weights-for-static-routes",
 		publicAsnMT: " ",
 		productGatewayOrEgress: "Cloudflare WAN with Gateway",
 		cfTunnelURL: "/cloudflare-wan/zero-trust/cloudflare-tunnel/",
 		sitesURL: "/cloudflare-wan/configuration/common-settings/sites/",
-		addTunnelsURL: "/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels",
-		unifiedRoutingModeURL: "/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta",
-		arrReferenceURL: "/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta",
+		addTunnelsURL:
+			"/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels",
+		unifiedRoutingModeURL:
+			"/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta",
+		arrReferenceURL:
+			"/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta",
 		virtualNetworkName: "Cloudflare Virtual Network",
-		routingTableName: "Cloudflare Virtual Network routing table"
+		routingTableName: "Cloudflare Virtual Network routing table",
 	}}
 />

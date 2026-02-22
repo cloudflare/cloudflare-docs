@@ -20,8 +20,8 @@ resource "cloudflare_workflow" "my_workflow" {
 ```
 
 # Examples
-Here are full examples of how to configure `cloudflare_workflow` in Terraform, using the existing [`cloudflare_workers_script` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_script), and the beta [`cloudflare_worker_version` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker_version).
 
+Here are full examples of how to configure `cloudflare_workflow` in Terraform, using the existing [`cloudflare_workers_script` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_script), and the beta [`cloudflare_worker_version` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker_version).
 
 #### With `cloudflare_workflow` and `cloudflare_workers_script`
 
@@ -44,10 +44,9 @@ resource "cloudflare_workflow" "workflow" {
 
 ```
 
-
 #### With `cloudflare_workflow`, and the new beta resources
-You can more granularly control the lifecycle of each Worker resource using the beta [`cloudflare_worker_version`](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs/resources/worker_version) resource, alongside the [`cloudflare_worker`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker) and [`cloudflare_workers_deployment`](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs/resources/workers_deployment) resources.
 
+You can more granularly control the lifecycle of each Worker resource using the beta [`cloudflare_worker_version`](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs/resources/worker_version) resource, alongside the [`cloudflare_worker`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker) and [`cloudflare_workers_deployment`](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs/resources/workers_deployment) resources.
 
 ```hcl
 
@@ -89,4 +88,5 @@ resource "cloudflare_workflow" "my_workflow" {
 ```
 
 ## Try it out
--  Get started with [the Cloudflare Terraform provider (v5.11.0)](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs) and the new [`cloudflare_workflow` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workflow).
+
+- Get started with [the Cloudflare Terraform provider (v5.11.0)](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs) and the new [`cloudflare_workflow` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workflow).

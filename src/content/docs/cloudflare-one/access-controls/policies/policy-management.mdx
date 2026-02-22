@@ -48,7 +48,7 @@ To delete a reusable Access policy:
 
 ## Test your policies
 
-You can test your Access policies against all existing user identities in your Zero Trust organization.  For the policy tester to work, users must have logged into the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) or any other Access application at some point in time.
+You can test your Access policies against all existing user identities in your Zero Trust organization. For the policy tester to work, users must have logged into the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) or any other Access application at some point in time.
 
 Cloudflare will use the most recent device that was authenticated with Access to test your policies.
 
@@ -70,25 +70,22 @@ You can test your Access application policies against your user population befor
 
 To test if users have access to an application:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
-2. Locate the application you want to test and select **Configure**.
-3. Go to **Policies** > **Policy tester**.
-4. To test all active users in your organization, select **Test policies**.
+1.  In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
+2.  Locate the application you want to test and select **Configure**.
+3.  Go to **Policies** > **Policy tester**.
+4.  To test all active users in your organization, select **Test policies**.
 
-		The policy tester reports the percentage of users who are allowed or denied access to this application based on all configured policies. You can expand the test results to view a list of allowed or blocked users.
+        The policy tester reports the percentage of users who are allowed or denied access to this application based on all configured policies. You can expand the test results to view a list of allowed or blocked users.
 
-5. To perform a detailed test on a single user:
+5.  To perform a detailed test on a single user:
 
-	a. If you made any changes to your policies, first save the application.
+    a. If you made any changes to your policies, first save the application.
 
-	b. Select **testing a single user**.
+    b. Select **testing a single user**.
 
-	c. Enter their email address and select **Test policies**.
+    c. Enter their email address and select **Test policies**.
 
-	The single user test results will show:
-		- Whether the user is allowed or denied access to this application based on all configured policies.
-		- The user's identity from their most recent Access login attempt.
-		- Whether the user matches individual Allow, Block, or Bypass policies.
+    The single user test results will show: - Whether the user is allowed or denied access to this application based on all configured policies. - The user's identity from their most recent Access login attempt. - Whether the user matches individual Allow, Block, or Bypass policies.
 
 ## Legacy policies
 
@@ -108,8 +105,8 @@ To migrate legacy policies to reusable policies:
 You can use the API to convert a legacy policy into a reusable policy. To convert a legacy policy, make a `PUT` request with an empty request body:
 
 <APIRequest
-  path="/accounts/{account_id}/access/apps/{app_id}/policies/{policy_id}/make_reusable"
-  method="PUT"
+	path="/accounts/{account_id}/access/apps/{app_id}/policies/{policy_id}/make_reusable"
+	method="PUT"
 />
 
 The policy is now removed from the applications endpoint (`/access/apps/$APP_ID/policies`) and managed using the [reusable policies endpoints](/api/resources/zero_trust/subresources/access/subresources/policies/)(`/access/policies/$POLICY_ID`).

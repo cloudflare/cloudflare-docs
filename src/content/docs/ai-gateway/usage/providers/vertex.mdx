@@ -60,17 +60,17 @@ The service account JSON must include an additional key called `region` with the
 
 ```json
 {
-  "type": "service_account",
-  "project_id": "your-project-id",
-  "private_key_id": "your-private-key-id",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n",
-  "client_email": "your-service-account@your-project.iam.gserviceaccount.com",
-  "client_id": "your-client-id",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/your-service-account%40your-project.iam.gserviceaccount.com",
-  "region": "us-east1"
+	"type": "service_account",
+	"project_id": "your-project-id",
+	"private_key_id": "your-private-key-id",
+	"private_key": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n",
+	"client_email": "your-service-account@your-project.iam.gserviceaccount.com",
+	"client_id": "your-client-id",
+	"auth_uri": "https://accounts.google.com/o/oauth2/auth",
+	"token_uri": "https://oauth2.googleapis.com/token",
+	"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+	"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/your-service-account%40your-project.iam.gserviceaccount.com",
+	"region": "us-east1"
 }
 ```
 
@@ -113,21 +113,22 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/compl
 ### Example with OpenAI SDK
 
 ```javascript
-import OpenAI from 'openai';
+import OpenAI from "openai";
 
 const client = new OpenAI({
-  apiKey: '{service_account_json}',
-  baseURL: 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat'
+	apiKey: "{service_account_json}",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
 });
 
 const response = await client.chat.completions.create({
-  model: 'google-vertex-ai/google/gemini-2.5-pro',
-  messages: [
-    {
-      role: 'user',
-      content: 'What is Cloudflare?'
-    }
-  ]
+	model: "google-vertex-ai/google/gemini-2.5-pro",
+	messages: [
+		{
+			role: "user",
+			content: "What is Cloudflare?",
+		},
+	],
 });
 
 console.log(response.choices[0].message.content);
@@ -175,4 +176,3 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vert
         }'
 
 ```
-

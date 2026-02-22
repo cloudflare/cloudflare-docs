@@ -18,7 +18,6 @@ The newly supported datasets include:
 - `Spectrum_events`
 - `Zaraz_events`
 
-
 ## Account Level
 
 - `Audit Logs`
@@ -31,9 +30,8 @@ The newly supported datasets include:
 - `Sinkhole HTTP`
 - `ipsec_logs`
 
-
 :::note
-`Auditlog` and `Auditlog_v2` datasets require `audit-log.read` permission for querying. 
+`Auditlog` and `Auditlog_v2` datasets require `audit-log.read` permission for querying.
 
 The `biso_user_actions` dataset requires either the `Super Admin` or `ZT PII` role for querying.
 :::
@@ -43,4 +41,3 @@ The `biso_user_actions` dataset requires either the `Super Admin` or `ZT PII` ro
 You can now use Log Explorer to query and filter with each of these datasets. For example, you can identify an IP address exhibiting suspicious behavior in the `FW_event` logs, and then instantly pivot to the `Network Analytics` logs or `Access` logs to see its network-level traffic profile or if it bypassed a corporate policy.
 
 To learn more and get started, refer to the [Log Explorer documentation](/log-explorer/) and the [Cloudflare Logs documentation](/logs/).
-

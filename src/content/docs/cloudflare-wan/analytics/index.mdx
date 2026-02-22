@@ -10,7 +10,8 @@ import { Render } from "~/components";
 
 Use Cloudflare WAN (formerly Magic WAN) analytics to monitor site performance and troubleshoot issues.
 
-<Render file="analytics/overview"
+<Render
+	file="analytics/overview"
 	product="networking-services"
 	params={{
 		magicWord: "Cloudflare WAN",
@@ -19,6 +20,6 @@ Use Cloudflare WAN (formerly Magic WAN) analytics to monitor site performance an
 		traceRoutes: "/cloudflare-wan/analytics/traceroutes/",
 		graphQlTunnelBandwidthURL: "/cloudflare-wan/analytics/query-bandwidth/",
 		graphQlTunnelHealthURL: "/cloudflare-wan/analytics/query-tunnel-health/",
-		siteAnalyticsURL: "/cloudflare-wan/analytics/site-analytics/"
+		siteAnalyticsURL: "/cloudflare-wan/analytics/site-analytics/",
 	}}
 />

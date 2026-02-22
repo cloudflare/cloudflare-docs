@@ -3,10 +3,9 @@ title: Tunnel capacity for cloudflared
 pcx_content_type: overview
 sidebar:
   order: 3
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Now that you have a Cloudflare Tunnel up and running, evaluate whether `cloudflared` has enough system resources to handle the expected volume of requests from end users. <Render file="tunnel/tunnel-capacity-intro" product="cloudflare-one" />
 If you have exhausted the ports on a single machine, you will need to add additional servers running `cloudflared`.

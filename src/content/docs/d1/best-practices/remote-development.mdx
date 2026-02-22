@@ -4,7 +4,6 @@ pcx_content_type: concept
 reviewed: 2025-09-02
 sidebar:
   order: 9
-
 ---
 
 import { DashButton } from "~/components";
@@ -15,17 +14,16 @@ D1 supports remote development using the [dashboard playground](/workers/playgro
 
 :::note
 
-
 This guide assumes you have previously created a Worker, and a D1 database.
 
 Users new to D1 and/or Cloudflare Workers should read the [D1 tutorial](/d1/get-started/) to install `wrangler` and deploy their first database.
-
 
 :::
 
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
+
 2. Select an existing Worker.
 3. Go to the **Bindings** tab.
 4. Select **Add binding**.
@@ -42,14 +40,14 @@ Use the following Worker script to verify that the Worker has access to the boun
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    const res = await env.DB.prepare("SELECT 1;").run();
-    return new Response(JSON.stringify(res, null, 2));
-  },
+	async fetch(request, env, ctx) {
+		const res = await env.DB.prepare("SELECT 1;").run();
+		return new Response(JSON.stringify(res, null, 2));
+	},
 };
 ```
 
 ## Related resources
 
-* Learn [how to debug D1](/d1/observability/debug-d1/).
-* Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.
+- Learn [how to debug D1](/d1/observability/debug-d1/).
+- Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.

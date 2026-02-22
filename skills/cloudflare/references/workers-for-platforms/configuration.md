@@ -3,19 +3,23 @@
 ## Dispatch Namespace Binding
 
 ### wrangler.jsonc
+
 ```jsonc
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "dispatch_namespaces": [{
-    "binding": "DISPATCHER",
-    "namespace": "production"
-  }]
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"dispatch_namespaces": [
+		{
+			"binding": "DISPATCHER",
+			"namespace": "production",
+		},
+	],
 }
 ```
 
 ## Worker Isolation Mode
 
 Workers in a namespace run in **untrusted mode** by default for security:
+
 - No access to `request.cf` object
 - Isolated cache per Worker (no shared cache)
 - `caches.default` disabled
@@ -32,24 +36,27 @@ curl -X PUT \
 ```
 
 **Caveats:**
+
 - Workers share cache within namespace (use cache key prefixes: `customer-${id}:${key}`)
 - `request.cf` object accessible
 - Redeploy existing Workers after enabling trusted mode
 
 **When to use:** Internal platforms, A/B testing platforms, need geolocation data
 
-
 ### With Outbound Worker
+
 ```jsonc
 {
-  "dispatch_namespaces": [{
-    "binding": "DISPATCHER",
-    "namespace": "production",
-    "outbound": {
-      "service": "outbound-worker",
-      "parameters": ["customer_context"]
-    }
-  }]
+	"dispatch_namespaces": [
+		{
+			"binding": "DISPATCHER",
+			"namespace": "production",
+			"outbound": {
+				"service": "outbound-worker",
+				"parameters": ["customer_context"],
+			},
+		},
+	],
 }
 ```
 
@@ -69,26 +76,27 @@ Set CPU time and subrequest limits per invocation:
 
 ```typescript
 const userWorker = env.DISPATCHER.get(
-  workerName,
-  {},
-  {
-    limits: { 
-      cpuMs: 10,        // Max CPU ms
-      subRequests: 5    // Max fetch() calls
-    }
-  }
+	workerName,
+	{},
+	{
+		limits: {
+			cpuMs: 10, // Max CPU ms
+			subRequests: 5, // Max fetch() calls
+		},
+	},
 );
 ```
 
 Handle limit violations:
+
 ```typescript
 try {
-  return await userWorker.fetch(request);
+	return await userWorker.fetch(request);
 } catch (e) {
-  if (e.message.includes("CPU time limit")) {
-    return new Response("CPU limit exceeded", { status: 429 });
-  }
-  throw e;
+	if (e.message.includes("CPU time limit")) {
+		return new Response("CPU limit exceeded", { status: 429 });
+	}
+	throw e;
 }
 ```
 
@@ -97,14 +105,15 @@ try {
 Deploy HTML/CSS/images with Workers. See [api.md](./api.md#static-assets) for upload process.
 
 ### Wrangler
+
 ```jsonc
 {
-  "name": "customer-site",
-  "main": "./src/index.js",
-  "assets": {
-    "directory": "./public",
-    "binding": "ASSETS"
-  }
+	"name": "customer-site",
+	"main": "./src/index.js",
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS",
+	},
 }
 ```
 
@@ -144,21 +153,25 @@ Common patterns: `customer-123`, `free|pro|enterprise`, `production|staging`
 **Supported binding types:** 29 total including KV, D1, R2, Durable Objects, Analytics Engine, Service, Assets, Queue, Vectorize, Hyperdrive, Workflow, AI, Browser, and more.
 
 Add via API metadata (see [api.md](./api.md#deploy-with-bindings)):
+
 ```json
 {
-  "bindings": [
-    {"type": "kv_namespace", "name": "USER_KV", "namespace_id": "..."},
-    {"type": "r2_bucket", "name": "STORAGE", "bucket_name": "..."},
-    {"type": "d1", "name": "DB", "id": "..."}
-  ]
+	"bindings": [
+		{ "type": "kv_namespace", "name": "USER_KV", "namespace_id": "..." },
+		{ "type": "r2_bucket", "name": "STORAGE", "bucket_name": "..." },
+		{ "type": "d1", "name": "DB", "id": "..." }
+	]
 }
 ```
 
 Preserve existing bindings:
+
 ```json
 {
-  "bindings": [{"type": "r2_bucket", "name": "STORAGE", "bucket_name": "new"}],
-  "keep_bindings": ["kv_namespace", "d1"]  // Preserves existing bindings of these types
+	"bindings": [
+		{ "type": "r2_bucket", "name": "STORAGE", "bucket_name": "new" }
+	],
+	"keep_bindings": ["kv_namespace", "d1"] // Preserves existing bindings of these types
 }
 ```
 

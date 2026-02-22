@@ -5,6 +5,7 @@ Expert guidance for Cloudflare R2 SQL - serverless distributed query engine for 
 ## Reading Order
 
 **New to R2 SQL?** Start here:
+
 1. Read "What is R2 SQL?" and "When to Use" below
 2. [configuration.md](configuration.md) - Enable catalog, create tokens
 3. [patterns.md](patterns.md) - Wrangler CLI and integration examples
@@ -12,6 +13,7 @@ Expert guidance for Cloudflare R2 SQL - serverless distributed query engine for 
 5. [gotchas.md](gotchas.md) - Limitations and troubleshooting
 
 **Quick reference?** Jump to:
+
 - [Run a query via Wrangler](patterns.md#wrangler-cli-query)
 - [SQL syntax reference](api.md#sql-syntax)
 - [ORDER BY limitations](gotchas.md#order-by-limitations)
@@ -29,6 +31,7 @@ R2 SQL is Cloudflare's **serverless distributed analytics query engine** for que
 ### What is Apache Iceberg?
 
 Open table format for large-scale analytics datasets in object storage:
+
 - **ACID transactions** - Safe concurrent reads/writes
 - **Metadata optimization** - Fast queries without full table scans
 - **Schema evolution** - Add/rename/drop columns without rewrites
@@ -37,6 +40,7 @@ Open table format for large-scale analytics datasets in object storage:
 ## When to Use
 
 **Use R2 SQL for:**
+
 - **Log analytics** - Query application/system logs with WHERE filters and aggregations
 - **BI dashboards** - Generate reports from large analytical datasets
 - **Fraud detection** - Analyze transaction patterns with GROUP BY/HAVING
@@ -44,6 +48,7 @@ Open table format for large-scale analytics datasets in object storage:
 - **Ad-hoc exploration** - Run SQL queries on Iceberg tables via Wrangler CLI
 
 **Don't use R2 SQL for:**
+
 - **Workers/Pages runtime** - R2 SQL has no Workers binding, use HTTP API from external systems
 - **Real-time queries (<100ms)** - Optimized for analytical batch queries, not OLTP
 - **Complex joins/CTEs** - Limited SQL feature set (no JOINs, subqueries, CTEs currently)
@@ -68,18 +73,21 @@ Do you need to query structured data in R2?
 ## Architecture Overview
 
 **Query Planner:**
+
 - Top-down metadata investigation with multi-layer pruning
 - Partition-level, column-level, and row-group pruning
 - Streaming pipeline - execution starts before planning completes
 - Early termination with LIMIT - stops when result complete
 
 **Query Execution:**
+
 - Coordinator distributes work to workers across Cloudflare network
 - Workers run Apache DataFusion for parallel query execution
 - Parquet column pruning - reads only required columns
 - Ranged reads from R2 for efficiency
 
 **Aggregation Strategies:**
+
 - Scatter-gather - simple aggregations (SUM, COUNT, AVG)
 - Shuffling - ORDER BY/HAVING on aggregates via hash partitioning
 
@@ -102,11 +110,13 @@ npx wrangler r2 sql query "my-bucket" "SELECT * FROM default.my_table LIMIT 10"
 ## Important Limitations
 
 **CRITICAL: No Workers Binding**
+
 - R2 SQL cannot be called directly from Workers/Pages code
 - For programmatic access, use HTTP API from external systems
 - Or query via PyIceberg, Spark, etc. (see r2-data-catalog reference)
 
 **SQL Feature Set:**
+
 - No JOINs, CTEs, subqueries, window functions
 - ORDER BY supports aggregation columns (not just partition keys)
 - LIMIT max 10,000 (default 500)

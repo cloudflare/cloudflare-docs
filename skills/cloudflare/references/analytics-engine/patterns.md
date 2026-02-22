@@ -2,21 +2,21 @@
 
 ## Use Cases
 
-| Use Case | Key Metrics | Index On |
-|----------|-------------|----------|
-| API Metering | requests, bytes, compute_units | api_key |
-| Feature Usage | feature, action, duration | user_id |
-| Error Tracking | error_type, endpoint, count | customer_id |
-| Performance | latency_ms, cache_status | endpoint |
-| A/B Testing | variant, conversions | user_id |
+| Use Case       | Key Metrics                    | Index On    |
+| -------------- | ------------------------------ | ----------- |
+| API Metering   | requests, bytes, compute_units | api_key     |
+| Feature Usage  | feature, action, duration      | user_id     |
+| Error Tracking | error_type, endpoint, count    | customer_id |
+| Performance    | latency_ms, cache_status       | endpoint    |
+| A/B Testing    | variant, conversions           | user_id     |
 
 ## API Metering (Billing)
 
 ```typescript
 env.ANALYTICS.writeDataPoint({
-  blobs: [pathname, method, status, tier],
-  doubles: [1, computeUnits, bytes, latencyMs],
-  indexes: [apiKey]
+	blobs: [pathname, method, status, tier],
+	doubles: [1, computeUnits, bytes, latencyMs],
+	indexes: [apiKey],
 });
 
 // Query: Monthly usage by customer
@@ -28,9 +28,9 @@ env.ANALYTICS.writeDataPoint({
 
 ```typescript
 env.ANALYTICS.writeDataPoint({
-  blobs: [endpoint, method, errorName, errorMessage.slice(0, 1000)],
-  doubles: [1, timeToErrorMs],
-  indexes: [customerId]
+	blobs: [endpoint, method, errorName, errorMessage.slice(0, 1000)],
+	doubles: [1, timeToErrorMs],
+	indexes: [customerId],
 });
 ```
 
@@ -38,9 +38,9 @@ env.ANALYTICS.writeDataPoint({
 
 ```typescript
 env.ANALYTICS.writeDataPoint({
-  blobs: [pathname, method, cacheStatus, status],
-  doubles: [latencyMs, 1],
-  indexes: [userId]
+	blobs: [pathname, method, cacheStatus, status],
+	doubles: [latencyMs, 1],
+	indexes: [userId],
 });
 
 // Query: P95 latency by endpoint
@@ -49,13 +49,13 @@ env.ANALYTICS.writeDataPoint({
 
 ## Anti-Patterns
 
-| ❌ Wrong | ✅ Correct |
-|----------|-----------|
-| `await writeDataPoint()` | `writeDataPoint()` (fire-and-forget) |
+| ❌ Wrong                              | ✅ Correct                             |
+| ------------------------------------- | -------------------------------------- |
+| `await writeDataPoint()`              | `writeDataPoint()` (fire-and-forget)   |
 | `indexes: [method]` (low cardinality) | `blobs: [method]`, `indexes: [userId]` |
-| `blobs: [JSON.stringify(obj)]` | Store ID in blob, full object in D1/KV |
-| Write every request at 10M/min | Pre-aggregate per second |
-| Query from Worker | Query from external service/API |
+| `blobs: [JSON.stringify(obj)]`        | Store ID in blob, full object in D1/KV |
+| Write every request at 10M/min        | Pre-aggregate per second               |
+| Query from Worker                     | Query from external service/API        |
 
 ## Best Practices
 
@@ -70,13 +70,13 @@ env.ANALYTICS.writeDataPoint({
 ```typescript
 /**
  * Dataset: my_metrics
- * 
+ *
  * Blobs:
  *   blob1: endpoint, blob2: method, blob3: status
- * 
+ *
  * Doubles:
  *   double1: latency_ms, double2: count (always 1)
- * 
+ *
  * Indexes:
  *   index1: customer_id (high cardinality)
  */

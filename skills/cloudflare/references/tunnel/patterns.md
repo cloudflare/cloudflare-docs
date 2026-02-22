@@ -3,6 +3,7 @@
 ## Docker Deployment
 
 ### Token-Based (Recommended)
+
 ```yaml
 services:
   cloudflared:
@@ -12,6 +13,7 @@ services:
 ```
 
 ### Local Config
+
 ```yaml
 services:
   cloudflared:
@@ -40,20 +42,20 @@ spec:
         app: cloudflared
     spec:
       containers:
-      - name: cloudflared
-        image: cloudflare/cloudflared:latest
-        args:
-        - tunnel
-        - --no-autoupdate
-        - run
-        - --token
-        - $(TUNNEL_TOKEN)
-        env:
-        - name: TUNNEL_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: tunnel-credentials
-              key: token
+        - name: cloudflared
+          image: cloudflare/cloudflared:latest
+          args:
+            - tunnel
+            - --no-autoupdate
+            - run
+            - --token
+            - $(TUNNEL_TOKEN)
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: tunnel-credentials
+                  key: token
 ```
 
 ## High Availability
@@ -74,6 +76,7 @@ Run same config on multiple machines. Cloudflare automatically load balances. Lo
 ## Use Cases
 
 ### Web Application
+
 ```yaml
 ingress:
   - hostname: myapp.example.com
@@ -82,6 +85,7 @@ ingress:
 ```
 
 ### SSH Access
+
 ```yaml
 ingress:
   - hostname: ssh.example.com
@@ -92,6 +96,7 @@ ingress:
 Client: `cloudflared access ssh --hostname ssh.example.com`
 
 ### gRPC Service
+
 ```yaml
 ingress:
   - hostname: grpc.example.com
@@ -151,34 +156,35 @@ import * as random from "@pulumi/random";
 const secret = new random.RandomId("secret", { byteLength: 32 });
 
 const tunnel = new cloudflare.ZeroTrustTunnelCloudflared("tunnel", {
-  accountId: accountId,
-  name: "app-tunnel",
-  secret: secret.b64Std,
+	accountId: accountId,
+	name: "app-tunnel",
+	secret: secret.b64Std,
 });
 
 const config = new cloudflare.ZeroTrustTunnelCloudflaredConfig("config", {
-  accountId: accountId,
-  tunnelId: tunnel.id,
-  config: {
-    ingressRules: [
-      { hostname: "app.example.com", service: "http://localhost:8000" },
-      { service: "http_status:404" },
-    ],
-  },
+	accountId: accountId,
+	tunnelId: tunnel.id,
+	config: {
+		ingressRules: [
+			{ hostname: "app.example.com", service: "http://localhost:8000" },
+			{ service: "http_status:404" },
+		],
+	},
 });
 
 new cloudflare.Record("dns", {
-  zoneId: zoneId,
-  name: "app",
-  value: tunnel.cname,
-  type: "CNAME",
-  proxied: true,
+	zoneId: zoneId,
+	name: "app",
+	value: tunnel.cname,
+	type: "CNAME",
+	proxied: true,
 });
 ```
 
 ## Service Installation
 
 ### Linux systemd
+
 ```bash
 cloudflared service install
 systemctl start cloudflared && systemctl enable cloudflared
@@ -186,6 +192,7 @@ journalctl -u cloudflared -f  # Logs
 ```
 
 ### macOS launchd
+
 ```bash
 sudo cloudflared service install
 sudo launchctl start com.cloudflare.cloudflared

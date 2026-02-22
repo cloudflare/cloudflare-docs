@@ -3,9 +3,11 @@
 ## Common Errors
 
 ### "Missing compatibility date"
+
 **Cause:** Compatibility date not set
 **Solution:**
 ❌ Wrong:
+
 ```capnp
 const worker :Workerd.Worker = (
   serviceWorkerScript = embed "worker.js"
@@ -13,6 +15,7 @@ const worker :Workerd.Worker = (
 ```
 
 ✅ Correct:
+
 ```capnp
 const worker :Workerd.Worker = (
   serviceWorkerScript = embed "worker.js",
@@ -21,16 +24,19 @@ const worker :Workerd.Worker = (
 ```
 
 ### Wrong Binding Type
+
 **Problem:** JSON not parsed
 **Cause:** Using `text = '{"key":"value"}'` instead of `json`
 **Solution:** Use `json = '{"key":"value"}'` for parsed objects
 
 ### Service vs Namespace
+
 **Problem:** Cannot create DO instance
 **Cause:** Using `service = "room-service"` for Durable Object
 **Solution:** Use `durableObjectNamespace = "Room"` for DO bindings
 
 ### Module Name Mismatch
+
 **Problem:** Import fails
 **Cause:** Module name includes path: `name = "src/index.js"`
 **Solution:** Use simple names: `name = "index.js"`, embed with path
@@ -40,29 +46,35 @@ const worker :Workerd.Worker = (
 **Problem:** Fetch fails with network error
 **Cause:** No network service configured (workerd has no global fetch)
 **Solution:** Add network service binding:
+
 ```capnp
 services = [(name = "internet", network = (allow = ["public"]))]
 bindings = [(name = "NET", service = "internet")]
 ```
 
 Or external service:
+
 ```capnp
 bindings = [(name = "API", service = (external = (address = "api.com:443", http = (style = tls))))]
 ```
 
 ### "Worker not responding"
+
 **Cause:** Socket misconfigured, no fetch handler, or port unavailable
 **Solution:** Verify socket `address` matches, worker exports `fetch()`, port available
 
 ### "Binding not found"
+
 **Cause:** Name mismatch or service doesn't exist
 **Solution:** Check binding name in config matches code (`env.BINDING` for ES modules)
 
 ### "Module not found"
+
 **Cause:** Module name doesn't match import or bad embed path
 **Solution:** Module `name` must match import path exactly, verify `embed` path
 
 ### "Compatibility error"
+
 **Cause:** Date not set or API unavailable on that date
 **Solution:** Set `compatibilityDate`, verify API available on that date
 
@@ -120,11 +132,11 @@ bindings = [(name = "API", service = (external = (address = "api.com:443", http 
 
 ## Limits
 
-| Resource/Limit | Value | Notes |
-|----------------|-------|-------|
-| V8 flags | Unsupported in production | Use with caution |
+| Resource/Limit     | Value                      | Notes              |
+| ------------------ | -------------------------- | ------------------ |
+| V8 flags           | Unsupported in production  | Use with caution   |
 | Compatibility date | Must match workerd version | Update if mismatch |
-| Module count | Affects startup time | Many imports slow |
+| Module count       | Affects startup time       | Many imports slow  |
 
 ## Troubleshooting Steps
 

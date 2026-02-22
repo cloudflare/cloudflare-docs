@@ -3,7 +3,6 @@ title: Policy design
 pcx_content_type: overview
 sidebar:
   order: 1
-
 ---
 
 Most policy building for private network access happens within the Gateway DNS and Gateway Network policy builders. For the most part, customers use a mixture of DNS resolution, SNI hostname values, and IP address groupings as the baseline for defining policies that pertain to specific applications.
@@ -12,11 +11,11 @@ Most policy building for private network access happens within the Gateway DNS a
 
 Before building your policies, it is helpful to ask yourself a few questions:
 
-* Should all users and services be able to reach all connected subnets? Are there explicit exceptions?
-* Do all applications live within a primary network range, and are they defined by static or dynamic hosts and IP addresses?
-* Are there DevOps workflows that rely on completely ephemeral IPs or subdomains?
-* Do you have sources of truth for identity and device posture that will be used in policies?
-* Do you plan to immediately implement a default-deny model? In other words, will you block all users except for those who match an explicit Allow policy?
+- Should all users and services be able to reach all connected subnets? Are there explicit exceptions?
+- Do all applications live within a primary network range, and are they defined by static or dynamic hosts and IP addresses?
+- Are there DevOps workflows that rely on completely ephemeral IPs or subdomains?
+- Do you have sources of truth for identity and device posture that will be used in policies?
+- Do you plan to immediately implement a default-deny model? In other words, will you block all users except for those who match an explicit Allow policy?
 
 ## Prepare to build policies
 

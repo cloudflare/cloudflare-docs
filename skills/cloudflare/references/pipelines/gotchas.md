@@ -7,16 +7,20 @@
 **Most common issue.** Events accepted (HTTP 200) but never appear in sink.
 
 **Causes:**
+
 1. Schema validation fails - structured streams drop invalid events silently
 2. Waiting for roll interval (10-300s) - expected behavior
 
 **Solution:** Validate client-side with Zod:
+
 ```typescript
 const EventSchema = z.object({ user_id: z.string(), amount: z.number() });
 try {
-  const validated = EventSchema.parse(rawEvent);
-  await env.STREAM.send([validated]);
-} catch (e) { /* get immediate feedback */ }
+	const validated = EventSchema.parse(rawEvent);
+	await env.STREAM.send([validated]);
+} catch (e) {
+	/* get immediate feedback */
+}
 ```
 
 ### Pipelines Are Immutable
@@ -44,24 +48,24 @@ npx wrangler deploy
 
 ## Common Errors
 
-| Error | Cause | Fix |
-|-------|-------|-----|
-| Events not in R2 | Roll interval not elapsed | Wait 10-300s, check `roll_interval` |
-| Schema validation failures | Type mismatch, missing fields | Validate client-side |
-| Rate limit (429) | >5 MB/s per stream | Batch events, request increase |
-| Payload too large (413) | >1 MB request | Split into smaller batches |
-| Cannot delete stream | Pipeline references it | Delete pipelines first |
-| Sink credential errors | Token expired | Recreate sink with new credentials |
+| Error                      | Cause                         | Fix                                 |
+| -------------------------- | ----------------------------- | ----------------------------------- |
+| Events not in R2           | Roll interval not elapsed     | Wait 10-300s, check `roll_interval` |
+| Schema validation failures | Type mismatch, missing fields | Validate client-side                |
+| Rate limit (429)           | >5 MB/s per stream            | Batch events, request increase      |
+| Payload too large (413)    | >1 MB request                 | Split into smaller batches          |
+| Cannot delete stream       | Pipeline references it        | Delete pipelines first              |
+| Sink credential errors     | Token expired                 | Recreate sink with new credentials  |
 
 ## Limits (Open Beta)
 
-| Resource | Limit |
-|----------|-------|
-| Streams/Sinks/Pipelines per account | 20 each |
-| Payload size | 1 MB |
-| Ingest rate per stream | 5 MB/s |
-| Event retention | 24 hours |
-| Recommended batch size | 100 events |
+| Resource                            | Limit      |
+| ----------------------------------- | ---------- |
+| Streams/Sinks/Pipelines per account | 20 each    |
+| Payload size                        | 1 MB       |
+| Ingest rate per stream              | 5 MB/s     |
+| Event retention                     | 24 hours   |
+| Recommended batch size              | 100 events |
 
 ## SQL Limitations
 

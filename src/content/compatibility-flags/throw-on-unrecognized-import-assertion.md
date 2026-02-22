@@ -19,4 +19,3 @@ attribute is encountered that is not recognized.
 
 When the `ignore_unrecognized_import_assertion` flag is set, Workers will
 ignore unrecognized import attributes.
-

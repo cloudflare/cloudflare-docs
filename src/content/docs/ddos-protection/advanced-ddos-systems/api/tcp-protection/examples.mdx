@@ -3,7 +3,6 @@ title: Common API calls
 pcx_content_type: configuration
 sidebar:
   order: 2
-
 ---
 
 The following sections contain example requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/advanced-ddos-systems/api/tcp-protection/#endpoints).
@@ -19,12 +18,12 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 
 ```json title="Example response"
 {
-  "result": {
-    "enabled": false
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"enabled": false
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -53,16 +52,16 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 
 ```json output
 {
-  "result": [
-    {
-      "prefix": "203.0.113/24",
-      "comment": "My prefix",
-      "excluded": false
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"prefix": "203.0.113/24",
+			"comment": "My prefix",
+			"excluded": false
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -90,27 +89,27 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 
 ```json output
 {
-  "result": [
-    {
-      "id": "<PREFIX_1_ID>",
-      "prefix": "192.0.2.0/24",
-      "excluded": false,
-      "comment": "Game ranges",
-      "created_on": "<TIMESTAMP>",
-      "modified_on": "<TIMESTAMP>"
-    },
-    {
-      "id": "<PREFIX_2_ID>",
-      "prefix": "192.0.2.2/26",
-      "excluded": true,
-      "comment": "Range for a specific game",
-      "created_on": "<TIMESTAMP>",
-      "modified_on": "<TIMESTAMP>"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<PREFIX_1_ID>",
+			"prefix": "192.0.2.0/24",
+			"excluded": false,
+			"comment": "Game ranges",
+			"created_on": "<TIMESTAMP>",
+			"modified_on": "<TIMESTAMP>"
+		},
+		{
+			"id": "<PREFIX_2_ID>",
+			"prefix": "192.0.2.2/26",
+			"excluded": true,
+			"comment": "Range for a specific game",
+			"created_on": "<TIMESTAMP>",
+			"modified_on": "<TIMESTAMP>"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -125,19 +124,19 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 
 ```json output
 {
-  "result": [
-    {
-      "id": "<ALLOWLIST_PREFIX_ID>",
-      "prefix": "192.0.2.127",
-      "comment": "Single IP address in allowlist",
-      "enabled": true,
-      "created_on": "<TIMESTAMP>",
-      "modified_on": "<TIMESTAMP>"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<ALLOWLIST_PREFIX_ID>",
+			"prefix": "192.0.2.127",
+			"comment": "Single IP address in allowlist",
+			"enabled": true,
+			"created_on": "<TIMESTAMP>",
+			"modified_on": "<TIMESTAMP>"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -158,17 +157,17 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 
 ```json output
 {
-  "result": {
-    "id": "<ALLOWLIST_PREFIX_1_ID>",
-    "prefix": "203.0.113.0/26",
-    "comment": "Partner range",
-    "enabled": true,
-    "created_on": "<TIMESTAMP>",
-    "modified_on": "<TIMESTAMP>"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<ALLOWLIST_PREFIX_1_ID>",
+		"prefix": "203.0.113.0/26",
+		"comment": "Partner range",
+		"enabled": true,
+		"created_on": "<TIMESTAMP>",
+		"modified_on": "<TIMESTAMP>"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -191,19 +190,19 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 
 ```json output
 {
-  "result": {
-    "id": "<SYN_FLOOD_RULE_ID>",
-    "scope": "region",
-    "name": "WEUR",
-    "mode": "monitoring",
-    "rate_sensitivity": "medium",
-    "burst_sensitivity": "medium",
-    "created_on": "<TIMESTAMP>",
-    "modified_on": "<TIMESTAMP>"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<SYN_FLOOD_RULE_ID>",
+		"scope": "region",
+		"name": "WEUR",
+		"mode": "monitoring",
+		"rate_sensitivity": "medium",
+		"burst_sensitivity": "medium",
+		"created_on": "<TIMESTAMP>",
+		"modified_on": "<TIMESTAMP>"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -228,19 +227,19 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 
 ```json output
 {
-  "result": {
-    "id": "<OOS_TCP_RULE_ID>",
-    "scope": "region",
-    "name": "WEUR",
-    "mode": "monitoring",
-    "rate_sensitivity": "low",
-    "burst_sensitivity": "low",
-    "created_on": "<TIMESTAMP>",
-    "modified_on": "<TIMESTAMP>"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<OOS_TCP_RULE_ID>",
+		"scope": "region",
+		"name": "WEUR",
+		"mode": "monitoring",
+		"rate_sensitivity": "low",
+		"burst_sensitivity": "low",
+		"created_on": "<TIMESTAMP>",
+		"modified_on": "<TIMESTAMP>"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -262,16 +261,16 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 
 ```json output
 {
-  "result": {
-    "id": "<SYN_FLOOD_FILTER_ID>",
-    "expression": "ip.dst in { 192.0.2.0/24 }",
-    "mode": "monitoring",
-    "created_on": "<TIMESTAMP>",
-    "modified_on": "<TIMESTAMP>"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<SYN_FLOOD_FILTER_ID>",
+		"expression": "ip.dst in { 192.0.2.0/24 }",
+		"mode": "monitoring",
+		"created_on": "<TIMESTAMP>",
+		"modified_on": "<TIMESTAMP>"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -293,16 +292,16 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 
 ```json output
 {
-  "result": {
-    "id": "<OOS_TCP_FILTER_ID>",
-    "expression": "ip.dst in { 203.0.113.0/24 } and tcp.dstport in { 8000..8081 }",
-    "mode": "disabled",
-    "created_on": "<TIMESTAMP>",
-    "modified_on": "<TIMESTAMP>"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<OOS_TCP_FILTER_ID>",
+		"expression": "ip.dst in { 203.0.113.0/24 } and tcp.dstport in { 8000..8081 }",
+		"mode": "disabled",
+		"created_on": "<TIMESTAMP>",
+		"modified_on": "<TIMESTAMP>"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

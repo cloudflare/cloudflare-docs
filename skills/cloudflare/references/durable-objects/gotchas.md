@@ -44,6 +44,7 @@ async alarm() { await this.cleanup(); }
 **Solution:** Lazy initialization or cache in storage
 
 **Critical understanding:** Constructor runs in two scenarios:
+
 1. **Cold start** - DO evicted from memory, first request creates new instance
 2. **Wake from hibernation** - DO with WebSockets hibernated, message/alarm wakes it
 
@@ -151,35 +152,37 @@ async criticalOperation() {
 ```typescript
 // Warming strategy (periodically ping critical DOs)
 export default {
-  async scheduled(event: ScheduledEvent, env: Env) {
-    const criticalIds = ["auth", "sessions", "locks"];
-    await Promise.all(criticalIds.map(name => {
-      const id = env.MY_DO.idFromName(name);
-      const stub = env.MY_DO.get(id);
-      return stub.ping();  // Keep warm
-    }));
-  }
+	async scheduled(event: ScheduledEvent, env: Env) {
+		const criticalIds = ["auth", "sessions", "locks"];
+		await Promise.all(
+			criticalIds.map((name) => {
+				const id = env.MY_DO.idFromName(name);
+				const stub = env.MY_DO.get(id);
+				return stub.ping(); // Keep warm
+			}),
+		);
+	},
 };
 ```
 
 ## Limits
 
-| Limit | Free | Paid | Notes |
-|-------|------|------|-------|
-| SQLite storage per DO | 10 GB | 10 GB | Per Durable Object instance |
-| SQLite total storage | 5 GB | Unlimited | Account-wide quota |
-| Key+value size | 2 MB | 2 MB | Single KV pair (SQLite/async) |
-| CPU time default | 30s | 30s | Per request; configurable |
-| CPU time max | 300s | 300s | Set via `limits.cpu_ms` |
-| DO classes | 100 | 500 | Distinct DO class definitions |
-| SQL columns | 100 | 100 | Per table |
-| SQL statement size | 100 KB | 100 KB | Max SQL query size |
-| WebSocket message size | 32 MiB | 32 MiB | Per message |
-| Request throughput | ~1K req/s | ~1K req/s | Per DO (soft limit - shard for more) |
-| Alarms per DO | 1 | 1 | Use queue pattern for multiple events |
-| Total DOs | Unlimited | Unlimited | Create as many instances as needed |
-| WebSockets | Unlimited | Unlimited | Within 128MB memory limit per DO |
-| Memory per DO | 128 MB | 128 MB | In-memory state + WebSocket buffers |
+| Limit                  | Free      | Paid      | Notes                                 |
+| ---------------------- | --------- | --------- | ------------------------------------- |
+| SQLite storage per DO  | 10 GB     | 10 GB     | Per Durable Object instance           |
+| SQLite total storage   | 5 GB      | Unlimited | Account-wide quota                    |
+| Key+value size         | 2 MB      | 2 MB      | Single KV pair (SQLite/async)         |
+| CPU time default       | 30s       | 30s       | Per request; configurable             |
+| CPU time max           | 300s      | 300s      | Set via `limits.cpu_ms`               |
+| DO classes             | 100       | 500       | Distinct DO class definitions         |
+| SQL columns            | 100       | 100       | Per table                             |
+| SQL statement size     | 100 KB    | 100 KB    | Max SQL query size                    |
+| WebSocket message size | 32 MiB    | 32 MiB    | Per message                           |
+| Request throughput     | ~1K req/s | ~1K req/s | Per DO (soft limit - shard for more)  |
+| Alarms per DO          | 1         | 1         | Use queue pattern for multiple events |
+| Total DOs              | Unlimited | Unlimited | Create as many instances as needed    |
+| WebSockets             | Unlimited | Unlimited | Within 128MB memory limit per DO      |
+| Memory per DO          | 128 MB    | 128 MB    | In-memory state + WebSocket buffers   |
 
 ## Hibernation Caveats
 

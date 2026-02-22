@@ -8,7 +8,6 @@ description: Use C3 (`create-cloudflare` CLI) to set up and deploy new
   applications using framework-specific setup guides to ensure each new
   application follows Cloudflare and any third-party best practices for
   deployment.
-
 ---
 
 import {
@@ -82,30 +81,24 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
 />
 
 - `DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
-
   - The directory where the application should be created. The name of the application is taken from the directory name.
 
 - `NESTED ARGS..` <Type text="string[]" /> <MetaInfo text="optional" />
-
   - CLI arguments to pass to eventual third party CLIs C3 might invoke (in the case of full-stack applications).
 
 - `--category` <Type text="string" /> <MetaInfo text="optional" />
-
   - The kind of templates that should be created.
 
   - The possible values for this option are:
-
     - `hello-world`: Hello World example
     - `web-framework`: Framework Starter
     - `demo`: Application Starter
     - `remote-template`: Template from a GitHub repo
 
 - `--type` <Type text="string" /> <MetaInfo text="optional" />
-
   - The type of application that should be created.
 
   - The possible values for this option are:
-
     - `hello-world`: A basic "Hello World" Cloudflare Worker.
     - `hello-world-durable-object`: A [Durable Object](/durable-objects/) and a Worker to communicate with it.
     - `common`: A Cloudflare Worker which implements a common example of routing/proxying functionalities.
@@ -115,11 +108,9 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
     - `pre-existing`: Fetch a Worker initialized from the Cloudflare dashboard.
 
 - `--framework` <Type text="string" /> <MetaInfo text="optional" />
-
   - The type of framework to use to create a web application (when using this option, `--type` is ignored).
 
   - The possible values for this option are:
-
     - `angular`
     - `astro`
     - `docusaurus`
@@ -135,11 +126,9 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
     - `vue`
 
 - `--template` <Type text="string" /> <MetaInfo text="optional" />
-
   - Create a new project via an external template hosted in a git repository
 
   - The value for this option may be specified as any of the following:
-
     - `user/repo`
     - `git@github.com:user/repo`
     - `https://github.com/user/repo`
@@ -152,7 +141,6 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
     See the `degit` [docs](https://github.com/Rich-Harris/degit) for more details.
 
     At a minimum, templates must contain the following:
-
     - `package.json`
     - [Wrangler configuration file](/pages/functions/wrangler-configuration/)
     - `src/` containing a worker script referenced from the Wrangler configuration file
@@ -160,51 +148,40 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
     See the [templates folder](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare/templates) of this repo for more examples.
 
 - `--deploy` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
-
   - Deploy your application after it has been created.
 
 - `--lang` <Type text="string" /> <MetaInfo text="(default: ts) optional" />
-
   - The programming language of the template.
 
   - The possible values for this option are:
-
     - `ts`
     - `js`
     - `python`
 
 - `--ts` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
-
   - Use TypeScript in your application. Deprecated. Use `--lang=ts` instead.
 
 - `--git` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
-
   - Initialize a local git repository for your application.
 
 - `--open` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
-
   - Open with your browser the deployed application (this option is ignored if the application is not deployed).
 
 - `--existing-script` <Type text="string" /> <MetaInfo text="optional" />
-
   - The name of an existing Cloudflare Workers script to clone locally. When using this option, `--type` is coerced to `pre-existing`.
 
   - When `--existing-script` is specified, `deploy` will be ignored.
 
 - `-y`, `--accept-defaults` <Type text="boolean" /> <MetaInfo text="optional" />
-
   - Use all the default C3 options each can also be overridden by specifying it.
 
 - `--auto-update` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
-
   - Automatically uses the latest version of C3.
 
 - `-v`, `--version` <Type text="boolean" /> <MetaInfo text="optional" />
-
   - Show version number.
 
 - `-h`, `--help` <Type text="boolean" /> <MetaInfo text="optional" />
-
   - Show a help message.
 
 :::note

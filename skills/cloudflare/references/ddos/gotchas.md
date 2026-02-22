@@ -6,6 +6,7 @@
 
 **Cause**: Sensitivity too high, wrong action, or missing exceptions  
 **Solution**:
+
 1. Lower sensitivity for specific rule/category
 2. Use `log` action first to validate (Enterprise Advanced)
 3. Add exception with custom expression (e.g., allowlist IPs)
@@ -15,13 +16,19 @@
 
 **Cause**: Sensitivity too low or wrong action  
 **Solution**: Increase to `default` sensitivity and use `block` action:
+
 ```typescript
 const config = {
-  rules: [{
-    expression: "true",
-    action: "execute",
-    action_parameters: { id: managedRulesetId, overrides: { sensitivity_level: "default", action: "block" } },
-  }],
+	rules: [
+		{
+			expression: "true",
+			action: "execute",
+			action_parameters: {
+				id: managedRulesetId,
+				overrides: { sensitivity_level: "default", action: "block" },
+			},
+		},
+	],
 };
 ```
 
@@ -67,24 +74,24 @@ const config = {
 
 ## API Error Codes
 
-| Error Code | Message | Cause | Solution |
-|------------|---------|-------|----------|
-| 10000 | Authentication error | Invalid/missing API token | Check token has DDoS permissions |
-| 81000 | Ruleset validation failed | Invalid rule structure | Verify `action_parameters.id` is managed ruleset ID |
-| 81020 | Expression not allowed | Custom expressions on wrong plan | Use `"true"` or upgrade to Enterprise Advanced |
-| 81021 | Rule limit exceeded | Too many override rules | Reduce rules or upgrade (Enterprise Advanced: 10) |
-| 81022 | Invalid sensitivity level | Wrong sensitivity value | Use: `default`, `medium`, `low`, `eoff` |
-| 81023 | Invalid action | Wrong action for plan | Enterprise Advanced only: `log` action |
+| Error Code | Message                   | Cause                            | Solution                                            |
+| ---------- | ------------------------- | -------------------------------- | --------------------------------------------------- |
+| 10000      | Authentication error      | Invalid/missing API token        | Check token has DDoS permissions                    |
+| 81000      | Ruleset validation failed | Invalid rule structure           | Verify `action_parameters.id` is managed ruleset ID |
+| 81020      | Expression not allowed    | Custom expressions on wrong plan | Use `"true"` or upgrade to Enterprise Advanced      |
+| 81021      | Rule limit exceeded       | Too many override rules          | Reduce rules or upgrade (Enterprise Advanced: 10)   |
+| 81022      | Invalid sensitivity level | Wrong sensitivity value          | Use: `default`, `medium`, `low`, `eoff`             |
+| 81023      | Invalid action            | Wrong action for plan            | Enterprise Advanced only: `log` action              |
 
 ## Limits
 
-| Resource/Limit | Free/Pro/Business | Enterprise | Enterprise Advanced |
-|----------------|-------------------|------------|---------------------|
-| Override rules per zone | 1 | 1 | 10 |
-| Custom expressions | ✗ | ✗ | ✓ |
-| Log action | ✗ | ✗ | ✓ |
-| Adaptive DDoS | ✗ | ✓ | ✓ |
-| Traffic history required | - | 7 days | 7 days |
+| Resource/Limit           | Free/Pro/Business | Enterprise | Enterprise Advanced |
+| ------------------------ | ----------------- | ---------- | ------------------- |
+| Override rules per zone  | 1                 | 1          | 10                  |
+| Custom expressions       | ✗                 | ✗          | ✓                   |
+| Log action               | ✗                 | ✗          | ✓                   |
+| Adaptive DDoS            | ✗                 | ✓          | ✓                   |
+| Traffic history required | -                 | 7 days     | 7 days              |
 
 ## Tuning Strategy
 

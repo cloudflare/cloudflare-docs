@@ -3,6 +3,7 @@
 ## Configuration Methods
 
 ### 1. Dashboard (GUI)
+
 **Best for**: Quick tests, single snippets, visual rule building
 
 ```
@@ -18,6 +19,7 @@
 ```
 
 ### 2. REST API
+
 **Best for**: CI/CD, automation, programmatic management
 
 ```bash
@@ -55,6 +57,7 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/snippets/$SNIPPET_NAME
 ```
 
 ### 3. Terraform
+
 **Best for**: Infrastructure-as-code, multi-zone deployments
 
 ```hcl
@@ -76,7 +79,7 @@ provider "cloudflare" {
 resource "cloudflare_snippet" "security_headers" {
   zone_id = var.zone_id
   name    = "security_headers"
-  
+
   main_module = "security_headers.js"
   files {
     name    = "security_headers.js"
@@ -87,7 +90,7 @@ resource "cloudflare_snippet" "security_headers" {
 # Create snippet rule
 resource "cloudflare_snippet_rules" "security_rules" {
   zone_id = var.zone_id
-  
+
   rules {
     description  = "Apply security headers to all requests"
     enabled      = true
@@ -98,6 +101,7 @@ resource "cloudflare_snippet_rules" "security_rules" {
 ```
 
 ### 4. Pulumi
+
 **Best for**: Multi-cloud IaC, TypeScript/Python/Go workflows
 
 ```typescript
@@ -106,24 +110,28 @@ import * as fs from "fs";
 
 // Create snippet
 const securitySnippet = new cloudflare.Snippet("security-headers", {
-  zoneId: zoneId,
-  name: "security_headers",
-  mainModule: "security_headers.js",
-  files: [{
-    name: "security_headers.js",
-    content: fs.readFileSync("./snippets/security_headers.js", "utf8"),
-  }],
+	zoneId: zoneId,
+	name: "security_headers",
+	mainModule: "security_headers.js",
+	files: [
+		{
+			name: "security_headers.js",
+			content: fs.readFileSync("./snippets/security_headers.js", "utf8"),
+		},
+	],
 });
 
 // Create snippet rule
 const snippetRule = new cloudflare.SnippetRules("security-rules", {
-  zoneId: zoneId,
-  rules: [{
-    description: "Apply security headers",
-    enabled: true,
-    expression: "true",
-    snippetName: securitySnippet.name,
-  }],
+	zoneId: zoneId,
+	rules: [
+		{
+			description: "Apply security headers",
+			enabled: true,
+			expression: "true",
+			snippetName: securitySnippet.name,
+		},
+	],
 });
 ```
 
@@ -174,19 +182,20 @@ not http.headers["user-agent"] contains "bot"
 
 ### Expression Functions
 
-| Function | Example | Description |
-|----------|---------|-------------|
-| `starts_with()` | `starts_with(http.request.uri.path, "/api/")` | Check prefix |
-| `ends_with()` | `ends_with(http.request.uri.path, ".json")` | Check suffix |
-| `contains()` | `contains(http.headers["user-agent"], "Mobile")` | Check substring |
-| `matches()` | `matches(http.request.uri.path, "^/api/")` | Regex match |
-| `lower()` | `lower(http.host) eq "example.com"` | Convert to lowercase |
-| `upper()` | `upper(http.headers["x-api-key"])` | Convert to uppercase |
-| `len()` | `len(http.request.uri.path) gt 100` | String length |
+| Function        | Example                                          | Description          |
+| --------------- | ------------------------------------------------ | -------------------- |
+| `starts_with()` | `starts_with(http.request.uri.path, "/api/")`    | Check prefix         |
+| `ends_with()`   | `ends_with(http.request.uri.path, ".json")`      | Check suffix         |
+| `contains()`    | `contains(http.headers["user-agent"], "Mobile")` | Check substring      |
+| `matches()`     | `matches(http.request.uri.path, "^/api/")`       | Regex match          |
+| `lower()`       | `lower(http.host) eq "example.com"`              | Convert to lowercase |
+| `upper()`       | `upper(http.headers["x-api-key"])`               | Convert to uppercase |
+| `len()`         | `len(http.request.uri.path) gt 100`              | String length        |
 
 ## Deployment Workflow
 
 ### Development
+
 1. Write snippet code locally
 2. Test syntax with `node snippet.js` or TypeScript compiler
 3. Deploy to Dashboard or use API with `Save as Draft`
@@ -194,6 +203,7 @@ not http.headers["user-agent"] contains "bot"
 5. Enable rule when ready
 
 ### Production
+
 1. Store snippet code in version control
 2. Use Terraform/Pulumi for reproducible deployments
 3. Deploy to staging zone first
@@ -203,17 +213,18 @@ not http.headers["user-agent"] contains "bot"
 
 ## Limits & Requirements
 
-| Resource | Limit | Notes |
-|----------|-------|-------|
-| Snippet size | 32 KB | Per snippet, compressed |
-| Snippet name | 64 chars | `a-z`, `0-9`, `_` only, immutable |
-| Snippets per zone | 20 | Soft limit, contact support for more |
-| Rules per zone | 20 | One rule per snippet typical |
-| Expression length | 4096 chars | Per rule expression |
+| Resource          | Limit      | Notes                                |
+| ----------------- | ---------- | ------------------------------------ |
+| Snippet size      | 32 KB      | Per snippet, compressed              |
+| Snippet name      | 64 chars   | `a-z`, `0-9`, `_` only, immutable    |
+| Snippets per zone | 20         | Soft limit, contact support for more |
+| Rules per zone    | 20         | One rule per snippet typical         |
+| Expression length | 4096 chars | Per rule expression                  |
 
 ## Authentication
 
 ### API Token (Recommended)
+
 ```bash
 # Create token at: https://dash.cloudflare.com/profile/api-tokens
 # Required permissions: Zone.Snippets:Edit, Zone.Rules:Edit
@@ -221,7 +232,8 @@ export CLOUDFLARE_API_TOKEN="your_token_here"
 ```
 
 ### API Key (Legacy)
+
 ```bash
 export CLOUDFLARE_EMAIL="your@email.com"
 export CLOUDFLARE_API_KEY="your_global_api_key"
-``` 
+```

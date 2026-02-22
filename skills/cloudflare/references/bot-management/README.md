@@ -5,6 +5,7 @@ Enterprise-grade bot detection, protection, and mitigation using ML/heuristics, 
 ## Overview
 
 Bot Management provides multi-tier protection:
+
 - **Free (Bot Fight Mode)**: Auto-blocks definite bots, no config
 - **Pro/Business (Super Bot Fight Mode)**: Configurable actions, static resource protection, analytics groupings
 - **Enterprise (Bot Management)**: Granular 1-99 scores, WAF integration, JA3/JA4 fingerprinting, Workers API, Advanced Analytics
@@ -33,13 +34,13 @@ Bot Management provides multi-tier protection:
 
 ## Reading Order
 
-| Task | Files to Read |
-|------|---------------|
+| Task                  | Files to Read             |
+| --------------------- | ------------------------- |
 | Enable bot protection | README → configuration.md |
-| Workers bot detection | README → api.md |
-| WAF rule templates | README → patterns.md |
-| Debug bot issues | gotchas.md |
-| Advanced analytics | api.md#bot-analytics |
+| Workers bot detection | README → api.md           |
+| WAF rule templates    | README → patterns.md      |
+| Debug bot issues      | gotchas.md                |
+| Advanced analytics    | api.md#bot-analytics      |
 
 ## Core Concepts
 
@@ -51,24 +52,24 @@ Bot Management provides multi-tier protection:
 
 ## Platform Limits
 
-| Plan | Bot Scores | JA3/JA4 | Custom Rules | Analytics Retention |
-|------|------------|---------|--------------|---------------------|
-| Free | No (auto-block only) | No | 5 | N/A (no analytics) |
-| Pro/Business | Groupings only | No | 20/100 | 30 days (72h at a time) |
-| Enterprise | 1-99 granular | Yes | 1,000+ | 30 days (1 week at a time) |
+| Plan         | Bot Scores           | JA3/JA4 | Custom Rules | Analytics Retention        |
+| ------------ | -------------------- | ------- | ------------ | -------------------------- |
+| Free         | No (auto-block only) | No      | 5            | N/A (no analytics)         |
+| Pro/Business | Groupings only       | No      | 20/100       | 30 days (72h at a time)    |
+| Enterprise   | 1-99 granular        | Yes     | 1,000+       | 30 days (1 week at a time) |
 
 ## Basic Patterns
 
 ```typescript
 // Workers: Check bot score
 export default {
-  async fetch(request: Request): Promise<Response> {
-    const botScore = request.cf?.botManagement?.score;
-    if (botScore && botScore < 30 && !request.cf?.botManagement?.verifiedBot) {
-      return new Response('Bot detected', { status: 403 });
-    }
-    return fetch(request);
-  }
+	async fetch(request: Request): Promise<Response> {
+		const botScore = request.cf?.botManagement?.score;
+		if (botScore && botScore < 30 && !request.cf?.botManagement?.verifiedBot) {
+			return new Response("Bot detected", { status: 403 });
+		}
+		return fetch(request);
+	},
 };
 ```
 

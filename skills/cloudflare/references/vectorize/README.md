@@ -29,14 +29,14 @@ const matches = await env.VECTORIZE.query(queryVector, { topK: 5 });
 
 ## Reading Order
 
-| Task | Files to Read |
-|------|---------------|
-| New to Vectorize | README only |
-| Implement feature | README + api + patterns |
-| Setup/configure | README + configuration |
-| Debug issues | gotchas |
-| Integrate with AI | README + patterns |
-| RAG implementation | README + patterns |
+| Task               | Files to Read           |
+| ------------------ | ----------------------- |
+| New to Vectorize   | README only             |
+| Implement feature  | README + api + patterns |
+| Setup/configure    | README + configuration  |
+| Debug issues       | gotchas                 |
+| Integrate with AI  | README + patterns       |
+| RAG implementation | README + patterns       |
 
 ## File Guide
 
@@ -58,11 +58,11 @@ What are you building?
 └─ Pre-normalized vectors → dot-product
 ```
 
-| Metric | Best For | Score Interpretation |
-|--------|----------|---------------------|
-| `cosine` | Text embeddings, semantic similarity | Higher = closer (1.0 = identical) |
-| `euclidean` | Absolute distance, spatial data | Lower = closer (0.0 = identical) |
-| `dot-product` | Recommendations, normalized vectors | Higher = closer |
+| Metric        | Best For                             | Score Interpretation              |
+| ------------- | ------------------------------------ | --------------------------------- |
+| `cosine`      | Text embeddings, semantic similarity | Higher = closer (1.0 = identical) |
+| `euclidean`   | Absolute distance, spatial data      | Lower = closer (0.0 = identical)  |
+| `dot-product` | Recommendations, normalized vectors  | Higher = closer                   |
 
 **Note:** Index configuration is immutable. Cannot change dimensions or metric after creation.
 
@@ -90,8 +90,8 @@ const result = await env.AI.run("@cf/baai/bge-base-en-v1.5", { text: [query] });
 
 // 2. Query Vectorize
 const matches = await env.VECTORIZE.query(result.data[0], {
-  topK: 5,
-  returnMetadata: "indexed"
+	topK: 5,
+	returnMetadata: "indexed",
 });
 ```
 
@@ -99,19 +99,23 @@ const matches = await env.VECTORIZE.query(result.data[0], {
 
 ```typescript
 // 1. Generate query embedding
-const embedding = await env.AI.run("@cf/baai/bge-base-en-v1.5", { text: [query] });
+const embedding = await env.AI.run("@cf/baai/bge-base-en-v1.5", {
+	text: [query],
+});
 
 // 2. Search Vectorize
 const matches = await env.VECTORIZE.query(embedding.data[0], { topK: 5 });
 
 // 3. Fetch full documents from R2/D1/KV
-const docs = await Promise.all(matches.matches.map(m => 
-  env.R2.get(m.metadata.key).then(obj => obj?.text())
-));
+const docs = await Promise.all(
+	matches.matches.map((m) =>
+		env.R2.get(m.metadata.key).then((obj) => obj?.text()),
+	),
+);
 
 // 4. Generate LLM response with context
 const answer = await env.AI.run("@cf/meta/llama-3-8b-instruct", {
-  prompt: `Context: ${docs.join("\n\n")}\n\nQuestion: ${query}\n\nAnswer:`
+	prompt: `Context: ${docs.join("\n\n")}\n\nQuestion: ${query}\n\nAnswer:`,
 });
 ```
 

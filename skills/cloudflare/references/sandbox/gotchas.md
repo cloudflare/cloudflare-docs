@@ -8,12 +8,12 @@
 **Solution:** Always call `destroy()` when done with keepAlive containers
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, 'temp', { keepAlive: true });
+const sandbox = getSandbox(env.Sandbox, "temp", { keepAlive: true });
 try {
-  const result = await sandbox.exec('python script.py');
-  return result.stdout;
+	const result = await sandbox.exec("python script.py");
+	return result.stdout;
 } finally {
-  await sandbox.destroy();  // REQUIRED to free resources
+	await sandbox.destroy(); // REQUIRED to free resources
 }
 ```
 
@@ -24,17 +24,17 @@ try {
 
 ```typescript
 async function execWithRetry(sandbox, cmd) {
-  for (let i = 0; i < 3; i++) {
-    try {
-      return await sandbox.exec(cmd);
-    } catch (e) {
-      if (e.code === 'CONTAINER_NOT_READY') {
-        await new Promise(r => setTimeout(r, 2000));
-        continue;
-      }
-      throw e;
-    }
-  }
+	for (let i = 0; i < 3; i++) {
+		try {
+			return await sandbox.exec(cmd);
+		} catch (e) {
+			if (e.code === "CONTAINER_NOT_READY") {
+				await new Promise((r) => setTimeout(r, 2000));
+				continue;
+			}
+			throw e;
+		}
+	}
 }
 ```
 
@@ -47,6 +47,7 @@ async function execWithRetry(sandbox, cmd) {
 
 **Cause:** Custom domain not configured, wildcard DNS missing, `normalizeId` not set, or `proxyToSandbox()` not called
 **Solution:** Check:
+
 1. Custom domain configured? (not `.workers.dev`)
 2. Wildcard DNS set up? (`*.domain.com → worker.domain.com`)
 3. `normalizeId: true` in getSandbox?
@@ -56,6 +57,7 @@ async function execWithRetry(sandbox, cmd) {
 
 **Cause:** Cold start (container provisioning)
 **Solution:**
+
 - Use `sleepAfter` instead of creating new sandboxes
 - Pre-warm with cron triggers
 - Set `keepAlive: true` for critical sandboxes
@@ -77,8 +79,8 @@ async function execWithRetry(sandbox, cmd) {
 
 ```typescript
 // These create DIFFERENT sandboxes:
-getSandbox(env.Sandbox, 'MyApp');              // DO ID: hash('MyApp')
-getSandbox(env.Sandbox, 'MyApp', { normalizeId: true });  // DO ID: hash('myapp')
+getSandbox(env.Sandbox, "MyApp"); // DO ID: hash('MyApp')
+getSandbox(env.Sandbox, "MyApp", { normalizeId: true }); // DO ID: hash('myapp')
 ```
 
 ### "Code context variables disappeared"
@@ -102,10 +104,10 @@ const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
 
 ```typescript
 // Cost-optimized
-getSandbox(env.Sandbox, 'id', { sleepAfter: '30m', keepAlive: false });
+getSandbox(env.Sandbox, "id", { sleepAfter: "30m", keepAlive: false });
 
 // Always-on (requires destroy())
-getSandbox(env.Sandbox, 'id', { keepAlive: true });
+getSandbox(env.Sandbox, "id", { keepAlive: true });
 ```
 
 ```jsonc
@@ -116,6 +118,7 @@ getSandbox(env.Sandbox, 'id', { keepAlive: true });
 ## Security Best Practices
 
 ### Sandbox Isolation
+
 - Each sandbox = isolated container (filesystem, network, processes)
 - Use unique sandbox IDs per tenant for multi-tenant apps
 - Sandboxes cannot communicate directly
@@ -127,16 +130,16 @@ getSandbox(env.Sandbox, 'id', { keepAlive: true });
 const result = await sandbox.exec(`python3 -c "${userCode}"`);
 
 // ✅ SAFE: Write to file, execute file
-await sandbox.writeFile('/workspace/user_code.py', userCode);
-const result = await sandbox.exec('python3 /workspace/user_code.py');
+await sandbox.writeFile("/workspace/user_code.py", userCode);
+const result = await sandbox.exec("python3 /workspace/user_code.py");
 ```
 
 ### Resource Limits
 
 ```typescript
 // Timeout long-running commands
-const result = await sandbox.exec('python3 script.py', {
-  timeout: 30000  // 30 seconds
+const result = await sandbox.exec("python3 script.py", {
+	timeout: 30000, // 30 seconds
 });
 ```
 
@@ -144,39 +147,43 @@ const result = await sandbox.exec('python3 script.py', {
 
 ```typescript
 // ❌ NEVER hardcode secrets
-const token = 'ghp_abc123';
+const token = "ghp_abc123";
 
 // ✅ Use environment secrets
 const token = env.GITHUB_TOKEN;
 
 // Pass to sandbox via exec env
-const result = await sandbox.exec('git clone ...', {
-  env: { GIT_TOKEN: token }
+const result = await sandbox.exec("git clone ...", {
+	env: { GIT_TOKEN: token },
 });
 ```
 
 ### Preview URL Security
+
 Preview URLs include auto-generated tokens:
+
 ```
 https://8080-sandbox-abc123def456.yourdomain.com
 ```
+
 Token changes on each expose operation, preventing unauthorized access.
 
 ## Limits
 
-| Resource | Lite | Standard | Heavy |
-|----------|------|----------|-------|
-| RAM | 256MB | 512MB | 1GB |
-| vCPU | 0.5 | 1 | 2 |
+| Resource | Lite  | Standard | Heavy |
+| -------- | ----- | -------- | ----- |
+| RAM      | 256MB | 512MB    | 1GB   |
+| vCPU     | 0.5   | 1        | 2     |
 
-| Operation | Default Timeout | Override |
-|-----------|----------------|----------|
-| Container provisioning | 30s | `SANDBOX_INSTANCE_TIMEOUT_MS` |
-| Port readiness | 90s | `SANDBOX_PORT_TIMEOUT_MS` |
-| exec() | 120s | `timeout` option |
-| sleepAfter | 10m | `sleepAfter` option |
+| Operation              | Default Timeout | Override                      |
+| ---------------------- | --------------- | ----------------------------- |
+| Container provisioning | 30s             | `SANDBOX_INSTANCE_TIMEOUT_MS` |
+| Port readiness         | 90s             | `SANDBOX_PORT_TIMEOUT_MS`     |
+| exec()                 | 120s            | `timeout` option              |
+| sleepAfter             | 10m             | `sleepAfter` option           |
 
 **Performance**:
+
 - **First deploy**: 2-3 min for container build
 - **Cold start**: 2-3s when waking from sleep
 - **Bucket mounting**: Production only (FUSE not in dev)

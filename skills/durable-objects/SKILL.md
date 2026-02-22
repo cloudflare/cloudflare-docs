@@ -11,12 +11,12 @@ Build stateful, coordinated applications on Cloudflare's edge using Durable Obje
 
 **Prefer retrieval from official docs over pre-training for Durable Objects tasks.**
 
-| Resource | URL |
-|----------|-----|
-| Docs | https://developers.cloudflare.com/durable-objects/ |
-| API Reference | https://developers.cloudflare.com/durable-objects/api/ |
+| Resource       | URL                                                               |
+| -------------- | ----------------------------------------------------------------- |
+| Docs           | https://developers.cloudflare.com/durable-objects/                |
+| API Reference  | https://developers.cloudflare.com/durable-objects/api/            |
 | Best Practices | https://developers.cloudflare.com/durable-objects/best-practices/ |
-| Examples | https://developers.cloudflare.com/durable-objects/examples/ |
+| Examples       | https://developers.cloudflare.com/durable-objects/examples/       |
 
 Fetch the relevant doc page when implementing features.
 
@@ -41,13 +41,13 @@ Search: `blockConcurrencyWhile`, `idFromName`, `getByName`, `setAlarm`, `sql.exe
 
 ### Use Durable Objects For
 
-| Need | Example |
-|------|---------|
-| Coordination | Chat rooms, multiplayer games, collaborative docs |
-| Strong consistency | Inventory, booking systems, turn-based games |
-| Per-entity storage | Multi-tenant SaaS, per-user data |
-| Persistent connections | WebSockets, real-time notifications |
-| Scheduled work per entity | Subscription renewals, game timeouts |
+| Need                      | Example                                           |
+| ------------------------- | ------------------------------------------------- |
+| Coordination              | Chat rooms, multiplayer games, collaborative docs |
+| Strong consistency        | Inventory, booking systems, turn-based games      |
+| Per-entity storage        | Multi-tenant SaaS, per-user data                  |
+| Persistent connections    | WebSockets, real-time notifications               |
+| Scheduled work per entity | Subscription renewals, game timeouts              |
 
 ### Do NOT Use For
 
@@ -62,10 +62,10 @@ Search: `blockConcurrencyWhile`, `idFromName`, `getByName`, `setAlarm`, `sql.exe
 ```jsonc
 // wrangler.jsonc
 {
-  "durable_objects": {
-    "bindings": [{ "name": "MY_DO", "class_name": "MyDurableObject" }]
-  },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["MyDurableObject"] }]
+	"durable_objects": {
+		"bindings": [{ "name": "MY_DO", "class_name": "MyDurableObject" }],
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["MyDurableObject"] }],
 }
 ```
 
@@ -75,37 +75,37 @@ Search: `blockConcurrencyWhile`, `idFromName`, `getByName`, `setAlarm`, `sql.exe
 import { DurableObject } from "cloudflare:workers";
 
 export interface Env {
-  MY_DO: DurableObjectNamespace<MyDurableObject>;
+	MY_DO: DurableObjectNamespace<MyDurableObject>;
 }
 
 export class MyDurableObject extends DurableObject<Env> {
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
-    ctx.blockConcurrencyWhile(async () => {
-      this.ctx.storage.sql.exec(`
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		ctx.blockConcurrencyWhile(async () => {
+			this.ctx.storage.sql.exec(`
         CREATE TABLE IF NOT EXISTS items (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           data TEXT NOT NULL
         )
       `);
-    });
-  }
+		});
+	}
 
-  async addItem(data: string): Promise<number> {
-    const result = this.ctx.storage.sql.exec<{ id: number }>(
-      "INSERT INTO items (data) VALUES (?) RETURNING id",
-      data
-    );
-    return result.one().id;
-  }
+	async addItem(data: string): Promise<number> {
+		const result = this.ctx.storage.sql.exec<{ id: number }>(
+			"INSERT INTO items (data) VALUES (?) RETURNING id",
+			data,
+		);
+		return result.one().id;
+	}
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const stub = env.MY_DO.getByName("my-instance");
-    const id = await stub.addItem("hello");
-    return Response.json({ id });
-  },
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const stub = env.MY_DO.getByName("my-instance");
+		const id = await stub.addItem("hello");
+		return Response.json({ id });
+	},
 };
 ```
 
@@ -177,10 +177,10 @@ import { env } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 
 describe("MyDO", () => {
-  it("should work", async () => {
-    const stub = env.MY_DO.getByName("test");
-    const result = await stub.addItem("test");
-    expect(result).toBe(1);
-  });
+	it("should work", async () => {
+		const stub = env.MY_DO.getByName("test");
+		const result = await stub.addItem("test");
+		expect(result).toBe(1);
+	});
 });
 ```

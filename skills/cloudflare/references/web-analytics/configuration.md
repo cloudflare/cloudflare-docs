@@ -6,16 +6,17 @@
 
 Dashboard → Web Analytics → Add site → Select hostname → Done
 
-| Injection Option | Description |
-|------------------|-------------|
-| Enable | Auto-inject for all visitors (default) |
-| Enable, excluding EU | No injection for EU (GDPR) |
-| Enable with manual snippet | You add beacon manually |
-| Disable | Pause tracking |
+| Injection Option           | Description                            |
+| -------------------------- | -------------------------------------- |
+| Enable                     | Auto-inject for all visitors (default) |
+| Enable, excluding EU       | No injection for EU (GDPR)             |
+| Enable with manual snippet | You add beacon manually                |
+| Disable                    | Pause tracking                         |
 
 **Fails if response has:** `Cache-Control: public, no-transform`
 
 **CSP required:**
+
 ```
 script-src https://static.cloudflareinsights.com https://cloudflareinsights.com;
 ```
@@ -25,8 +26,11 @@ script-src https://static.cloudflareinsights.com https://cloudflareinsights.com;
 Dashboard → Web Analytics → Add site → Enter hostname → Copy snippet
 
 ```html
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js' 
-        data-cf-beacon='{"token": "YOUR_TOKEN", "spa": true}'></script>
+<script
+	defer
+	src="https://static.cloudflareinsights.com/beacon.min.js"
+	data-cf-beacon='{"token": "YOUR_TOKEN", "spa": true}'
+></script>
 ```
 
 **Limits:** 10 non-proxied sites per account
@@ -49,8 +53,8 @@ Dashboard → Web Analytics → Add site → Enter hostname → Copy snippet
 
 ```typescript
 // Only load in production
-if (process.env.NODE_ENV === 'production') {
-  // Load beacon
+if (process.env.NODE_ENV === "production") {
+	// Load beacon
 }
 ```
 
@@ -65,6 +69,7 @@ Or use environment-specific tokens via env vars.
 ## Rules (Plan-dependent)
 
 Configure in dashboard for:
+
 - **Sample rate** - reduce collection % for high-traffic
 - **Path-based** - different behavior per route
 - **Host-based** - separate tracking per domain

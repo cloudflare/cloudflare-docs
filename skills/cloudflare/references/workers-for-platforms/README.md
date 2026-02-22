@@ -34,20 +34,23 @@ Multi-tenant platform with isolated customer code execution at scale.
 ## Architecture
 
 **4 Components:**
+
 1. **Dispatch Namespace** - Container for unlimited customer Workers, automatic isolation (untrusted mode by default - no request.cf access, no shared cache)
 2. **Dynamic Dispatch Worker** - Entry point, routes requests, enforces platform logic (auth, limits, validation)
 3. **User Workers** - Customer code in isolated sandboxes, API-deployed, optional bindings (KV/D1/R2/DO)
 4. **Outbound Worker** (optional) - Intercepts external fetch, controls egress, logs subrequests (blocks TCP socket connect() API)
 
 **Request Flow:**
+
 ```
-Request → Dispatch Worker → Determines user Worker → env.DISPATCHER.get("customer") 
+Request → Dispatch Worker → Determines user Worker → env.DISPATCHER.get("customer")
 → User Worker executes (Outbound Worker for external fetch) → Response → Dispatch Worker → Client
 ```
 
 ## Decision Trees
 
 ### When to Use Workers for Platforms
+
 ```
 Need to run code?
 ├─ Your code only → Regular Workers
@@ -56,6 +59,7 @@ Need to run code?
 ```
 
 ### Routing Strategy Selection
+
 ```
 Hostname routing needed?
 ├─ Subdomains only (*.saas.com) → `*.saas.com/*` route + subdomain extraction
@@ -64,6 +68,7 @@ Hostname routing needed?
 ```
 
 ### Isolation Mode Selection
+
 ```
 Worker mode?
 ├─ Running customer code → Untrusted (default)
@@ -74,14 +79,15 @@ Worker mode?
 
 ## In This Reference
 
-| File | Purpose | When to Read |
-|------|---------|--------------|
-| [configuration.md](./configuration.md) | Namespace setup, dispatch worker config | First-time setup, changing limits |
-| [api.md](./api.md) | User worker API, dispatch API, outbound worker | Deploying workers, SDK integration |
-| [patterns.md](./patterns.md) | Multi-tenancy, routing, egress control | Planning architecture, scaling |
-| [gotchas.md](./gotchas.md) | Limits, isolation issues, best practices | Debugging, production prep |
+| File                                   | Purpose                                        | When to Read                       |
+| -------------------------------------- | ---------------------------------------------- | ---------------------------------- |
+| [configuration.md](./configuration.md) | Namespace setup, dispatch worker config        | First-time setup, changing limits  |
+| [api.md](./api.md)                     | User worker API, dispatch API, outbound worker | Deploying workers, SDK integration |
+| [patterns.md](./patterns.md)           | Multi-tenancy, routing, egress control         | Planning architecture, scaling     |
+| [gotchas.md](./gotchas.md)             | Limits, isolation issues, best practices       | Debugging, production prep         |
 
 ## See Also
+
 - [workers](../workers/) - Core Workers runtime documentation
 - [durable-objects](../durable-objects/) - Stateful multi-tenant patterns
 - [sandbox](../sandbox/) - Alternative for untrusted code execution

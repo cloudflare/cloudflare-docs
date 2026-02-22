@@ -63,7 +63,7 @@ const openai = createOpenAI({
 
 :::note
 When an AI Gateway is accessed from a Cloudflare Worker using a **binding**, the `cf-aig-authorization` header does not need to be manually included.  
-Requests made through bindings are **pre-authenticated** within the associated Cloudflare account. 
+Requests made through bindings are **pre-authenticated** within the associated Cloudflare account.
 :::
 
 The following table outlines gateway behavior based on the authentication settings and header status:

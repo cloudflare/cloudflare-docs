@@ -205,8 +205,6 @@ The private app AUD, if any.
 
 Type: ``
 
-
-
 ## Quarantined
 
 Type: `bool`

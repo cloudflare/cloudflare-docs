@@ -59,30 +59,30 @@
 
 ## Limits
 
-| Limit | Free | Paid | Notes |
-|-------|------|------|-------|
-| CPU per step | 10ms | 30s (default), 5min (max) | Set via `limits.cpu_ms` in wrangler.jsonc |
-| Step state | 1 MiB | 1 MiB | Per step return value |
-| Instance state | 100 MB | 1 GB | Total state per workflow instance |
-| Steps per workflow | 1,024 | 1,024 | `step.sleep()` doesn't count |
-| Executions per day | 100k | Unlimited | Daily execution limit |
-| Concurrent instances | 25 | 10k | Maximum concurrent workflows; waiting state excluded |
-| Queued instances | 100k | 1M | Maximum queued workflow instances |
-| Subrequests per step | 50 | 1,000 | Maximum outbound requests per step |
-| State retention | 3 days | 30 days | How long completed instances kept |
-| Step timeout default | 10 min | 10 min | Per attempt |
-| waitForEvent timeout default | 24h | 24h | Maximum 365 days |
-| waitForEvent timeout max | 365 days | 365 days | Maximum wait time |
+| Limit                        | Free     | Paid                      | Notes                                                |
+| ---------------------------- | -------- | ------------------------- | ---------------------------------------------------- |
+| CPU per step                 | 10ms     | 30s (default), 5min (max) | Set via `limits.cpu_ms` in wrangler.jsonc            |
+| Step state                   | 1 MiB    | 1 MiB                     | Per step return value                                |
+| Instance state               | 100 MB   | 1 GB                      | Total state per workflow instance                    |
+| Steps per workflow           | 1,024    | 1,024                     | `step.sleep()` doesn't count                         |
+| Executions per day           | 100k     | Unlimited                 | Daily execution limit                                |
+| Concurrent instances         | 25       | 10k                       | Maximum concurrent workflows; waiting state excluded |
+| Queued instances             | 100k     | 1M                        | Maximum queued workflow instances                    |
+| Subrequests per step         | 50       | 1,000                     | Maximum outbound requests per step                   |
+| State retention              | 3 days   | 30 days                   | How long completed instances kept                    |
+| Step timeout default         | 10 min   | 10 min                    | Per attempt                                          |
+| waitForEvent timeout default | 24h      | 24h                       | Maximum 365 days                                     |
+| waitForEvent timeout max     | 365 days | 365 days                  | Maximum wait time                                    |
 
 **Note:** Instances in `waiting` state (from `step.sleep` or `step.waitForEvent`) don't count toward concurrent instance limit, allowing millions of sleeping workflows.
 
 ## Pricing
 
-| Metric | Free | Paid | Notes |
-|--------|------|------|-------|
-| Requests | 100k/day | 10M/mo + $0.30/M | Workflow invocations |
-| CPU time | 10ms/invoke | 30M CPU-ms/mo + $0.02/M CPU-ms | Actual CPU usage |
-| Storage | 1 GB | 1 GB/mo + $0.20/GB-mo | All instances (running/errored/sleeping/completed) |
+| Metric   | Free        | Paid                           | Notes                                              |
+| -------- | ----------- | ------------------------------ | -------------------------------------------------- |
+| Requests | 100k/day    | 10M/mo + $0.30/M               | Workflow invocations                               |
+| CPU time | 10ms/invoke | 30M CPU-ms/mo + $0.02/M CPU-ms | Actual CPU usage                                   |
+| Storage  | 1 GB        | 1 GB/mo + $0.20/GB-mo          | All instances (running/errored/sleeping/completed) |
 
 ## References
 

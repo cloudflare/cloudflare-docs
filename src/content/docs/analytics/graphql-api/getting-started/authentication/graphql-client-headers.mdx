@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Configure GraphQL client endpoint and HTTP headers
 sidebar:
   order: 41
-
 ---
 
 1. Launch [GraphiQL](https://www.gatsbyjs.com/docs/how-to/querying-data/running-queries-with-graphiql/).
@@ -14,13 +13,13 @@ sidebar:
    ![Editing HTTP Headers Window](~/assets/images/analytics/GraphiQL-edit-http-headers-window.png)
 
 3. Select **Add Header** to configure authentication. You can use Cloudflare Analytics API token authentication (recommended) or Cloudflare API key authentication.
-   * **Token authentication**:
+   - **Token authentication**:
 
      Enter **Authorization** in the **Header Name** field, and enter `Bearer {your-analytics-token}` in the **Header value** field, then select **Save**.
 
      ![Editing HTTP Headers](~/assets/images/analytics/GraphiQL-edit-http-headers-token.png)
 
-   * **Key authentication**:
+   - **Key authentication**:
 
      Enter `X-AUTH-EMAIL` in the **Header name** field and your email address registered with Cloudflare in the **Header value** field, and select **Save**.<br/>
 
@@ -33,9 +32,7 @@ sidebar:
 
 :::note[Note]
 
-
 The right-side response pane is empty when you enter your information correctly. An error displays when there are problems with your header credentials.
-
 
 :::
 

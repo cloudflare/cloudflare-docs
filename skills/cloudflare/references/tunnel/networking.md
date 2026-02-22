@@ -6,12 +6,13 @@
 
 Cloudflared requires outbound access on:
 
-| Port | Protocol | Purpose | Required |
-|------|----------|---------|----------|
-| 7844 | TCP/UDP | Primary tunnel protocol (QUIC) | Yes |
-| 443 | TCP | Fallback (HTTP/2) | Yes |
+| Port | Protocol | Purpose                        | Required |
+| ---- | -------- | ------------------------------ | -------- |
+| 7844 | TCP/UDP  | Primary tunnel protocol (QUIC) | Yes      |
+| 443  | TCP      | Fallback (HTTP/2)              | Yes      |
 
 **Network path:**
+
 ```
 cloudflared → edge.argotunnel.com:7844 (preferred)
 cloudflared → region.argotunnel.com:443 (fallback)
@@ -20,6 +21,7 @@ cloudflared → region.argotunnel.com:443 (fallback)
 ### Firewall Rules
 
 #### Minimal (Production)
+
 ```bash
 # Outbound only
 ALLOW tcp/udp 7844 to *.argotunnel.com
@@ -27,6 +29,7 @@ ALLOW tcp 443 to *.argotunnel.com
 ```
 
 #### Full (Recommended)
+
 ```bash
 # Tunnel connectivity
 ALLOW tcp/udp 7844 to *.argotunnel.com
@@ -43,6 +46,7 @@ ALLOW tcp 443 to objects.githubusercontent.com
 ### IP Ranges
 
 Cloudflare Anycast IPs (tunnel endpoints):
+
 ```
 # IPv4
 198.41.192.0/24
@@ -75,27 +79,29 @@ cloudflared tunnel --loglevel debug run my-tunnel
 
 ### Common Connectivity Errors
 
-| Error | Cause | Solution |
-|-------|-------|----------|
-| "no such host" | DNS blocked | Allow port 53 UDP/TCP |
-| "context deadline exceeded" | Port 7844 blocked | Allow UDP/TCP 7844 |
-| "TLS handshake timeout" | Port 443 blocked | Allow TCP 443, disable SSL inspection |
+| Error                       | Cause             | Solution                              |
+| --------------------------- | ----------------- | ------------------------------------- |
+| "no such host"              | DNS blocked       | Allow port 53 UDP/TCP                 |
+| "context deadline exceeded" | Port 7844 blocked | Allow UDP/TCP 7844                    |
+| "TLS handshake timeout"     | Port 443 blocked  | Allow TCP 443, disable SSL inspection |
 
 ## Protocol Selection
 
 Cloudflared automatically selects protocol:
 
-| Protocol | Port | Priority | Use Case |
-|----------|------|----------|----------|
-| QUIC | 7844 UDP | 1st (preferred) | Low latency, best performance |
-| HTTP/2 | 443 TCP | 2nd (fallback) | QUIC blocked by firewall |
+| Protocol | Port     | Priority        | Use Case                      |
+| -------- | -------- | --------------- | ----------------------------- |
+| QUIC     | 7844 UDP | 1st (preferred) | Low latency, best performance |
+| HTTP/2   | 443 TCP  | 2nd (fallback)  | QUIC blocked by firewall      |
 
 **Force HTTP/2 fallback:**
+
 ```bash
 cloudflared tunnel --protocol http2 run my-tunnel
 ```
 
 **Verify active protocol:**
+
 ```bash
 cloudflared tunnel info my-tunnel
 # Shows "connections" with protocol type
@@ -157,12 +163,12 @@ If corporate proxy intercepts TLS, add corporate root CA to system trust store.
 
 ## Bandwidth and Rate Limits
 
-| Limit | Value | Notes |
-|-------|-------|-------|
-| Request size | 100 MB | Single HTTP request |
-| Upload speed | No hard limit | Governed by network/plan |
-| Concurrent connections | 1000 per tunnel | Across all replicas |
-| Requests per second | No limit | Subject to DDoS detection |
+| Limit                  | Value           | Notes                     |
+| ---------------------- | --------------- | ------------------------- |
+| Request size           | 100 MB          | Single HTTP request       |
+| Upload speed           | No hard limit   | Governed by network/plan  |
+| Concurrent connections | 1000 per tunnel | Across all replicas       |
+| Requests per second    | No limit        | Subject to DDoS detection |
 
 **Large file transfers:**
 Use R2 or Workers with chunked uploads instead of streaming through tunnel.

@@ -17,7 +17,7 @@ Serverless functions on Cloudflare Pages using Workers runtime. Full-stack dev w
 ## Decision Tree: Is This Pages Functions?
 
 ```
-Need serverless backend? 
+Need serverless backend?
 ├─ Yes, for a static site → Pages Functions
 ├─ Yes, standalone API → Workers
 └─ Just static hosting → Pages (no functions)
@@ -45,6 +45,7 @@ Framework-based?
 ```
 
 **Rules:**
+
 - `index.js` → directory root
 - Trailing slash optional
 - Specific routes precede catch-alls
@@ -53,19 +54,21 @@ Framework-based?
 ## Dynamic Routes
 
 **Single segment** `[param]` → string:
+
 ```js
 // /functions/users/[user].js
 export function onRequest(context) {
-  return new Response(`Hello ${context.params.user}`);
+	return new Response(`Hello ${context.params.user}`);
 }
 // Matches: /users/nevi
 ```
 
 **Multi-segment** `[[param]]` → array:
+
 ```js
 // /functions/users/[[catchall]].js
 export function onRequest(context) {
-  return new Response(JSON.stringify(context.params.catchall));
+	return new Response(JSON.stringify(context.params.catchall));
 }
 // Matches: /users/nevi/foobar → ["nevi", "foobar"]
 ```
@@ -81,6 +84,7 @@ export function onRequest(context) {
 ## Reading Order
 
 **New to Pages Functions?** Start here:
+
 1. [README.md](./README.md) - Overview, routing, decision tree (you are here)
 2. [configuration.md](./configuration.md) - TypeScript setup, wrangler.jsonc, bindings
 3. [api.md](./api.md) - EventContext, handlers, bindings reference
@@ -88,11 +92,13 @@ export function onRequest(context) {
 5. [gotchas.md](./gotchas.md) - Common errors, debugging, limits
 
 **Quick reference lookup:**
+
 - Bindings table → [api.md](./api.md)
 - Error diagnosis → [gotchas.md](./gotchas.md)
 - TypeScript setup → [configuration.md](./configuration.md)
 
 ## See Also
+
 - [pages](../pages/) - Pages platform overview and static site deployment
 - [workers](../workers/) - Workers runtime API reference
 - [d1](../d1/) - D1 database integration with Pages Functions

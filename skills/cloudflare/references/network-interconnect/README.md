@@ -42,17 +42,18 @@ Private, high-performance connectivity to Cloudflare's network. **Enterprise-onl
 
 ## Throughput
 
-| Direction | 10G | 100G |
-|-----------|-----|------|
-| CF → Customer | 10 Gbps | 100 Gbps |
-| Customer → CF (peering) | 10 Gbps | 100 Gbps |
-| Customer → CF (Magic) | 1 Gbps/tunnel or CNI | 1 Gbps/tunnel or CNI |
+| Direction               | 10G                  | 100G                 |
+| ----------------------- | -------------------- | -------------------- |
+| CF → Customer           | 10 Gbps              | 100 Gbps             |
+| Customer → CF (peering) | 10 Gbps              | 100 Gbps             |
+| Customer → CF (Magic)   | 1 Gbps/tunnel or CNI | 1 Gbps/tunnel or CNI |
 
 ## Timeline
 
 2-4 weeks typical. Steps: request → config review → order connection → configure → test → enable health checks → activate → monitor.
 
 ## In This Reference
+
 - [configuration.md](./configuration.md) - BGP, routing, setup
 - [api.md](./api.md) - API endpoints, SDKs
 - [patterns.md](./patterns.md) - HA, hybrid cloud, failover
@@ -60,18 +61,19 @@ Private, high-performance connectivity to Cloudflare's network. **Enterprise-onl
 
 ## Reading Order by Task
 
-| Task | Files to Load |
-|------|---------------|
-| Initial setup | README → configuration.md → api.md |
-| Create interconnect via API | api.md → gotchas.md |
-| Design HA architecture | patterns.md → README |
-| Troubleshoot connection | gotchas.md → configuration.md |
-| Cloud integration (AWS/GCP) | configuration.md → patterns.md |
-| Monitor + alerts | configuration.md |
+| Task                        | Files to Load                      |
+| --------------------------- | ---------------------------------- |
+| Initial setup               | README → configuration.md → api.md |
+| Create interconnect via API | api.md → gotchas.md                |
+| Design HA architecture      | patterns.md → README               |
+| Troubleshoot connection     | gotchas.md → configuration.md      |
+| Cloud integration (AWS/GCP) | configuration.md → patterns.md     |
+| Monitor + alerts            | configuration.md                   |
 
 ## Automation Boundary
 
 **API-Automatable:**
+
 - List/create/delete interconnects (Direct, Partner)
 - List available slots
 - Get interconnect status
@@ -80,6 +82,7 @@ Private, high-performance connectivity to Cloudflare's network. **Enterprise-onl
 - Query settings
 
 **Requires Account Team:**
+
 - Initial request approval
 - AWS Direct Connect setup (send LOA+VLAN to CF)
 - GCP Cloud Interconnect final activation
@@ -89,11 +92,13 @@ Private, high-performance connectivity to Cloudflare's network. **Enterprise-onl
 - Escalations + troubleshooting support
 
 **Cannot Be Automated:**
+
 - Physical cross-connect installation (Direct)
 - Partner portal operations (virtual circuit ordering)
 - AWS/GCP portal operations
 - Maintenance window coordination
 
 ## See Also
+
 - [tunnel](../tunnel/) - Alternative for private network connectivity
 - [spectrum](../spectrum/) - Layer 4 proxy for TCP/UDP traffic

@@ -3,7 +3,6 @@ pcx_content_type: get-started
 title: Get started
 sidebar:
   order: 2
-
 ---
 
 import { DashButton } from "~/components";
@@ -18,7 +17,7 @@ Once Cloudflare has the credentials required to access your cloud environments, 
 
 1. Go to the **Cloud integrations (beta)** page.
 
-	<DashButton url="/?to=/:account/mcn/integrations" />
+   <DashButton url="/?to=/:account/mcn/integrations" />
 
 2. Select **Add** > **AWS integration**.
 3. Give a descriptive name to your integration. Optionally, you can also add a description for it.
@@ -31,29 +30,29 @@ Once Cloudflare has the credentials required to access your cloud environments, 
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ec2:AcceptTransitGatewayPeeringAttachment",
-                "ec2:CreateTransitGatewayPeeringAttachment",
-                "ec2:DeleteTransitGatewayPeeringAttachment",
-                "ec2:DescribeRegions",
-                "ec2:DescribeTransitGatewayPeeringAttachments",
-                "ec2:RejectTransitGatewayPeeringAttachment",
-                "ec2:GetManagedPrefixListEntries",
-                "ec2:CreateManagedPrefixList",
-                "ec2:ModifyManagedPrefixList",
-                "ec2:DeleteManagedPrefixList",
-                "ec2:CreateTransitGatewayPrefixListReference",
-                "ec2:DeleteTransitGatewayPrefixListReference",
-                "ec2:GetTransitGatewayPrefixListReferences",
-                "ec2:ModifyTransitGatewayPrefixListReference"
-            ],
-            "Resource": "*"
-        }
-    ]
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Action": [
+				"ec2:AcceptTransitGatewayPeeringAttachment",
+				"ec2:CreateTransitGatewayPeeringAttachment",
+				"ec2:DeleteTransitGatewayPeeringAttachment",
+				"ec2:DescribeRegions",
+				"ec2:DescribeTransitGatewayPeeringAttachments",
+				"ec2:RejectTransitGatewayPeeringAttachment",
+				"ec2:GetManagedPrefixListEntries",
+				"ec2:CreateManagedPrefixList",
+				"ec2:ModifyManagedPrefixList",
+				"ec2:DeleteManagedPrefixList",
+				"ec2:CreateTransitGatewayPrefixListReference",
+				"ec2:DeleteTransitGatewayPrefixListReference",
+				"ec2:GetTransitGatewayPrefixListReferences",
+				"ec2:ModifyTransitGatewayPrefixListReference"
+			],
+			"Resource": "*"
+		}
+	]
 }
 ```
 
@@ -62,15 +61,15 @@ Once Cloudflare has the credentials required to access your cloud environments, 
 1. Create an [AWS role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-custom.html) with the following settings:
    - **Trusted entity type**: Select **Custom trust policy**, and paste the custom trust policy returned by the Cloudflare dashboard.
    - **Permissions**: Add the IAM policy you created in the previous step, along with these AWS-managed policies:
-      - `NetworkAdministrator`
-      - `AmazonEC2ReadOnlyAccess`
-      - `AmazonVPCReadOnlyAccess`
-      - `IAMReadOnlyAccess`
+     - `NetworkAdministrator`
+     - `AmazonEC2ReadOnlyAccess`
+     - `AmazonVPCReadOnlyAccess`
+     - `IAMReadOnlyAccess`
    - **ARN**: Copy the ARN for your newly created user.
 
    :::note
-	 The trust policy may take several minutes to propagate to all regions. It usually takes less than four minutes, but can sometimes take longer. You may have to retry the **Authorize** button while the propagation takes effect.
-	 :::
+   The trust policy may take several minutes to propagate to all regions. It usually takes less than four minutes, but can sometimes take longer. You may have to retry the **Authorize** button while the propagation takes effect.
+   :::
 
 2. Select **I authorize Cloudflare to access my AWS account.**
 3. Select **Authorize**.
@@ -85,7 +84,7 @@ The first discovery of resources may not succeed in all regions while the IAM po
 
 1. In the Cloudflare dashboard, go to **Cloud integrations (beta)**.
 
-	<DashButton url="/?to=/:account/mcn/integrations" />
+   <DashButton url="/?to=/:account/mcn/integrations" />
 
 2. Select **Add** > **Azure integration**.
 3. Give a descriptive name to your integration. Optionally, you can also add a description for it.
@@ -108,8 +107,8 @@ Multi-Cloud Networking does not support personal Microsoft accounts. Sign in usi
 6. In **Verify account ownership**, [add the tags displayed in the Cloudflare dashboard](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources-portal).
 
    :::note
-	 The tags may take several minutes to propagate and become readable to Cloudflare. It usually takes less than four minutes, but can sometimes take longer. You may have to retry the **Authorize** button while the propagation takes effect.
-	 :::
+   The tags may take several minutes to propagate and become readable to Cloudflare. It usually takes less than four minutes, but can sometimes take longer. You may have to retry the **Authorize** button while the propagation takes effect.
+   :::
 
 7. Select **I authorize Cloudflare to access my Azure account.** If your account does not have administrator privileges, you may need to pass this link to an account that has administrator privileges.
 8. Select **Authorize**.
@@ -124,7 +123,7 @@ The first discovery of resources may not succeed in all regions while the IAM po
 
 1. In the Cloudflare dashboard, go to **Cloud integrations (beta)**.
 
-	<DashButton url="/?to=/:account/mcn/integrations" />
+   <DashButton url="/?to=/:account/mcn/integrations" />
 
 2. Select **Add** > **Google integration**.
 3. Give a descriptive name to your integration. Optionally, you can also add a description for it.
@@ -135,8 +134,8 @@ The first discovery of resources may not succeed in all regions while the IAM po
 
 1. Create a new [GCP service account](https://cloud.google.com/iam/docs/service-accounts-create) in your **Google account** > **GCP Console** > **IAM & Admin** > **Service Accounts**.
 2. Grant the new service account these roles:
-	- `Compute Network Admin`
-	- `Compute Viewer`
+   - `Compute Network Admin`
+   - `Compute Viewer`
 3. Under **IAM & Admin** > **Service Accounts**, select the service account you just created, and navigate to the **Permissions** tab.
 4. Grant the **Service Account Token Creator** role to our bot account to allow it to impersonate this service account. Learn how to grant a specific role [in Google's documentation](https://cloud.google.com/iam/docs/manage-access-service-accounts#grant-single-role):
    - `mcn-integrations-bot-prod@mcn-gcp-01.iam.gserviceaccount.com`

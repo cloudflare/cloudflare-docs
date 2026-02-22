@@ -4,10 +4,9 @@ pcx_content_type: concept
 title: Volumetric Abuse Detection
 sidebar:
   order: 2
-
 ---
 
-import { GlossaryTooltip, Steps, Render, APIRequest } from "~/components"
+import { GlossaryTooltip, Steps, Render, APIRequest } from "~/components";
 
 Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate limiting.
 
@@ -25,7 +24,7 @@ Volumetric Abuse Detection rate limits are a way to prevent blatant volumetric a
 
 Volumetric Abuse Detection analyzes your API's individual session traffic statistics to recommend per-endpoint, per-session rate limits.
 
-To access your endpoints: 
+To access your endpoints:
 
 Old dashboard: **Security** > **API Shield** > **Endpoint Management**
 
@@ -41,11 +40,19 @@ Thresholds are suggested only for endpoints that satisfy all of the following re
 
 - The endpoint must receive sufficient valid traffic (traffic that meets the [API Discovery](/api-shield/security/api-discovery/#requirements) criteria). Intermittent or erratic traffic may prevent suggestions.
 - The endpoint must be accessed by at least 50 distinct sessions in any 24-hour period during the last seven days.
-- <GlossaryTooltip term="session identifier" link="/api-shield/get-started/#to-set-up-session-identifiers">Session identifiers</GlossaryTooltip>, such as an authorization token available as a request header or cookie, must be configured to allow Cloudflare to accurately detect individual sessions and perform the required per-session rate analysis.
+- <GlossaryTooltip
+  	term="session identifier"
+  	link="/api-shield/get-started/#to-set-up-session-identifiers"
+  >
+  	Session identifiers
+  </GlossaryTooltip>
+  , such as an authorization token available as a request header or cookie, must
+  be configured to allow Cloudflare to accurately detect individual sessions and
+  perform the required per-session rate analysis.
 
 After adding a session identifier, allow 24 hours for rate limit recommendations to appear on endpoints in the Cloudflare dashboard.
 
-### Rate limiting recommendation calculation 
+### Rate limiting recommendation calculation
 
 Once rate limit recommendations appear in **Endpoints**, select the endpoint row to view more detail about the recommendation. You will see the overall recommended rate limit value, as well as p99, p90, and p50 rate limit values.
 
@@ -71,8 +78,8 @@ Refer to the [Rules documentation](https://developers.cloudflare.com/waf/rate-li
 [Rate limit recommendations are available via the API](/api/resources/api_gateway/subresources/operations/methods/get/) if you would like to dynamically update rate limits over time.
 
 <APIRequest
-  path="/zones/{zone_id}/api_gateway/operations/{operation_id}"
-  method="GET"
+	path="/zones/{zone_id}/api_gateway/operations/{operation_id}"
+	method="GET"
 />
 
 ## Special cases

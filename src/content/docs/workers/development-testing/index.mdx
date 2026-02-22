@@ -36,25 +36,35 @@ By default, your Worker code runs locally and bindings connect to locally simula
 		href="/workers/development-testing/remote-bindings/"
 		description="Connect to deployed Cloudflare resources during local development on a per-binding basis."
 	/>
-	<LinkCard
-		title="Remote development (legacy)"
-		href="/workers/development-testing/remote-development/"
-		description="Run your Worker entirely on Cloudflare's infrastructure using wrangler dev --remote."
-	/>
 </CardGrid>
 
 ## More resources
 
 <CardGrid>
 	<LinkCard
+		title="Environment variables and secrets"
+		href="/workers/development-testing/environment-variables/"
+		description="Manage environment variables and secrets during local development."
+	/>
+	<LinkCard
+		title="Supported bindings per development mode"
+		href="/workers/development-testing/bindings-per-env/"
+		description="See which bindings support local simulations, remote connections, and remote development."
+	/>
+	<LinkCard
+		title="Vite plugin"
+		href="/workers/vite-plugin/"
+		description="Use the Cloudflare Vite plugin for frontend-centric Worker development."
+	/>
+	<LinkCard
 		title="Choosing between Wrangler & Vite"
 		href="/workers/development-testing/wrangler-vs-vite/"
 		description="Guidance on when to use Wrangler vs the Cloudflare Vite plugin."
 	/>
 	<LinkCard
-		title="Bindings per environment"
-		href="/workers/development-testing/bindings-per-env/"
-		description="See which bindings support local simulations, remote connections, and remote development."
+		title="Developing with multiple Workers"
+		href="/workers/development-testing/multi-workers/"
+		description="Develop and test multiple Workers together locally."
 	/>
 	<LinkCard
 		title="Adding local data"
@@ -67,13 +77,8 @@ By default, your Worker code runs locally and bindings connect to locally simula
 		description="Write and run tests for your Workers using Vitest."
 	/>
 	<LinkCard
-		title="Multi-Worker development"
-		href="/workers/development-testing/multi-workers/"
-		description="Develop and test multiple Workers together locally."
-	/>
-	<LinkCard
-		title="Environment variables"
-		href="/workers/development-testing/environment-variables/"
-		description="Manage environment variables and secrets during local development."
+		title="Remote development (legacy)"
+		href="/workers/development-testing/remote-development/"
+		description="Run your Worker entirely on Cloudflare's infrastructure using wrangler dev --remote."
 	/>
 </CardGrid>

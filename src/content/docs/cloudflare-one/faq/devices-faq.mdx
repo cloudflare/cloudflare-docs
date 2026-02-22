@@ -5,7 +5,6 @@ sidebar:
   order: 6
 head: []
 description: Review frequently asked questions about devices in Cloudflare Zero Trust.
-
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
@@ -18,8 +17,8 @@ As the WARP client has replaced WinDivert with WinTun architecture, all Windows 
 
 As our [Network Map](https://www.cloudflare.com/en-gb/network/) shows, we have locations all over the globe. However, in the Advanced Connection stats of our application, you may notice that the data center (colo) you are connecting to isn't necessarily the one physically closest to your location. This can be due to a number of reasons:
 
-* Sometimes your nearest colo may be undergoing maintenance or having problems. Check the [Cloudflare Status page](https://www.cloudflarestatus.com/) for system status.
-* Your Internet provider may choose to route traffic along an alternate path for reasons such as cost savings, reliability, or other infrastructure concerns.
+- Sometimes your nearest colo may be undergoing maintenance or having problems. Check the [Cloudflare Status page](https://www.cloudflarestatus.com/) for system status.
+- Your Internet provider may choose to route traffic along an alternate path for reasons such as cost savings, reliability, or other infrastructure concerns.
 
 ## Why is my public IP address sometimes visible?
 
@@ -48,8 +47,8 @@ An [OS firewall rule](/cloudflare-one/team-and-resources/devices/warp/configure-
 
 If your private network is [exposed via Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/):
 
-* Verify that the WARP client is [properly configured](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#device-configuration) on the device.
-* Verify that the user is allowed through by your Access and Gateway policies.
-* Verify that the [local LAN settings](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#router-configuration) for the device do not overlap with the CIDR range of your private network.
+- Verify that the WARP client is [properly configured](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#device-configuration) on the device.
+- Verify that the user is allowed through by your Access and Gateway policies.
+- Verify that the [local LAN settings](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#router-configuration) for the device do not overlap with the CIDR range of your private network.
 
 When contacting Cloudflare support, ensure that you include [WARP debug logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/) for your device. These logs will help Cloudflare support understand the overall architecture of your machine and networks.

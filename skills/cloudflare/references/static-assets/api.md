@@ -8,11 +8,11 @@ The `ASSETS` binding provides access to static assets via the `Fetcher` interfac
 
 ```typescript
 interface Env {
-  ASSETS: Fetcher;
+	ASSETS: Fetcher;
 }
 
 interface Fetcher {
-  fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
+	fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
 }
 ```
 
@@ -29,10 +29,12 @@ await env.ASSETS.fetch("https://any-host/path/to/asset.png");
 await env.ASSETS.fetch(new URL("/index.html", request.url));
 
 // 4. Constructed Request object
-await env.ASSETS.fetch(new Request(new URL("/logo.png", request.url), {
-  method: "GET",
-  headers: request.headers
-}));
+await env.ASSETS.fetch(
+	new Request(new URL("/logo.png", request.url), {
+		method: "GET",
+		headers: request.headers,
+	}),
+);
 ```
 
 **Key behaviors:**
@@ -48,9 +50,9 @@ await env.ASSETS.fetch(new Request(new URL("/logo.png", request.url), {
 
 ```typescript
 // All resolve to same asset:
-env.ASSETS.fetch("https://example.com/logo.png")
-env.ASSETS.fetch("https://ignored.host/logo.png")
-env.ASSETS.fetch("/logo.png")
+env.ASSETS.fetch("https://example.com/logo.png");
+env.ASSETS.fetch("https://ignored.host/logo.png");
+env.ASSETS.fetch("/logo.png");
 ```
 
 Assets are resolved relative to configured `assets.directory`.
@@ -59,22 +61,22 @@ Assets are resolved relative to configured `assets.directory`.
 
 Request headers that affect response:
 
-| Header | Effect |
-|--------|--------|
-| `Accept-Encoding` | Controls compression (gzip, brotli) |
-| `Range` | Enables partial content (206 responses) |
-| `If-None-Match` | Conditional request via ETag |
+| Header              | Effect                                    |
+| ------------------- | ----------------------------------------- |
+| `Accept-Encoding`   | Controls compression (gzip, brotli)       |
+| `Range`             | Enables partial content (206 responses)   |
+| `If-None-Match`     | Conditional request via ETag              |
 | `If-Modified-Since` | Conditional request via modification date |
 
 Custom headers pass through but don't affect asset serving.
 
 ### Method Support
 
-| Method | Supported | Response |
-|--------|-----------|----------|
-| `GET` | ✅ Yes | Asset content |
-| `HEAD` | ✅ Yes | Headers only, no body |
-| `POST`, `PUT`, etc. | ❌ No | 405 Method Not Allowed |
+| Method              | Supported | Response               |
+| ------------------- | --------- | ---------------------- |
+| `GET`               | ✅ Yes    | Asset content          |
+| `HEAD`              | ✅ Yes    | Headers only, no body  |
+| `POST`, `PUT`, etc. | ❌ No     | 405 Method Not Allowed |
 
 ## Response Behavior
 
@@ -82,16 +84,16 @@ Custom headers pass through but don't affect asset serving.
 
 Automatically set based on file extension:
 
-| Extension | Content-Type |
-|-----------|--------------|
-| `.html` | `text/html; charset=utf-8` |
-| `.css` | `text/css` |
-| `.js` | `application/javascript` |
-| `.json` | `application/json` |
-| `.png` | `image/png` |
-| `.jpg`, `.jpeg` | `image/jpeg` |
-| `.svg` | `image/svg+xml` |
-| `.woff2` | `font/woff2` |
+| Extension       | Content-Type               |
+| --------------- | -------------------------- |
+| `.html`         | `text/html; charset=utf-8` |
+| `.css`          | `text/css`                 |
+| `.js`           | `application/javascript`   |
+| `.json`         | `application/json`         |
+| `.png`          | `image/png`                |
+| `.jpg`, `.jpeg` | `image/jpeg`               |
+| `.svg`          | `image/svg+xml`            |
+| `.woff2`        | `font/woff2`               |
 
 ### Default Headers
 
@@ -129,11 +131,11 @@ Used for conditional requests (`If-None-Match`). Returns `304 Not Modified` if m
 
 ## Error Responses
 
-| Status | Condition | Behavior |
-|--------|-----------|----------|
-| `404` | Asset not found | Body depends on `not_found_handling` config |
-| `405` | Non-GET/HEAD method | `{ "error": "Method not allowed" }` |
-| `416` | Invalid Range header | Range not satisfiable |
+| Status | Condition            | Behavior                                    |
+| ------ | -------------------- | ------------------------------------------- |
+| `404`  | Asset not found      | Body depends on `not_found_handling` config |
+| `405`  | Non-GET/HEAD method  | `{ "error": "Method not allowed" }`         |
+| `416`  | Invalid Range header | Range not satisfiable                       |
 
 ### 404 Handling
 
@@ -159,12 +161,12 @@ const response = await env.ASSETS.fetch(request);
 
 // Clone and modify
 return new Response(response.body, {
-  status: response.status,
-  headers: {
-    ...Object.fromEntries(response.headers),
-    'Cache-Control': 'public, max-age=31536000',
-    'X-Custom': 'value'
-  }
+	status: response.status,
+	headers: {
+		...Object.fromEntries(response.headers),
+		"Cache-Control": "public, max-age=31536000",
+		"X-Custom": "value",
+	},
 });
 ```
 
@@ -176,8 +178,8 @@ See patterns.md:27-35 for full example.
 const response = await env.ASSETS.fetch(request);
 
 if (!response.ok) {
-  // Asset not found or error
-  return new Response('Custom error page', { status: 404 });
+	// Asset not found or error
+	return new Response("Custom error page", { status: 404 });
 }
 
 return response;
@@ -189,8 +191,8 @@ return response;
 const url = new URL(request.url);
 
 // Serve different assets based on conditions
-if (url.pathname === '/') {
-  return env.ASSETS.fetch('/index.html');
+if (url.pathname === "/") {
+	return env.ASSETS.fetch("/index.html");
 }
 
 return env.ASSETS.fetch(request);

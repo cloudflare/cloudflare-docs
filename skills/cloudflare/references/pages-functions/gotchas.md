@@ -2,16 +2,16 @@
 
 ## Error Diagnosis
 
-| Symptom | Likely Cause | Solution |
-|---------|--------------|----------|
-| **Function not invoking** | Wrong `/functions` location, wrong extension, or `_routes.json` excludes path | Check `pages_build_output_dir`, use `.js`/`.ts`, verify `_routes.json` |
-| **`ctx.env.BINDING` undefined** | Binding not configured or name mismatch | Add to `wrangler.jsonc`, verify exact name (case-sensitive), redeploy |
-| **TypeScript errors on `ctx.env`** | Missing type definition | Run `wrangler types` or define `interface Env {}` |
-| **Middleware not running** | Wrong filename/location or missing `ctx.next()` | Name exactly `_middleware.js`, export `onRequest`, call `ctx.next()` |
-| **Secrets missing in production** | `.dev.vars` not deployed | `.dev.vars` is local only - set production secrets via dashboard or `wrangler secret put` |
-| **Type mismatch on binding** | Wrong interface type | See [api.md](./api.md) bindings table for correct types |
-| **"KV key not found" but exists** | Key in wrong namespace or env | Verify namespace binding, check preview vs production env |
-| **Function times out** | Synchronous wait or missing `await` | All I/O must be async/await, use `ctx.waitUntil()` for background tasks |
+| Symptom                            | Likely Cause                                                                  | Solution                                                                                  |
+| ---------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Function not invoking**          | Wrong `/functions` location, wrong extension, or `_routes.json` excludes path | Check `pages_build_output_dir`, use `.js`/`.ts`, verify `_routes.json`                    |
+| **`ctx.env.BINDING` undefined**    | Binding not configured or name mismatch                                       | Add to `wrangler.jsonc`, verify exact name (case-sensitive), redeploy                     |
+| **TypeScript errors on `ctx.env`** | Missing type definition                                                       | Run `wrangler types` or define `interface Env {}`                                         |
+| **Middleware not running**         | Wrong filename/location or missing `ctx.next()`                               | Name exactly `_middleware.js`, export `onRequest`, call `ctx.next()`                      |
+| **Secrets missing in production**  | `.dev.vars` not deployed                                                      | `.dev.vars` is local only - set production secrets via dashboard or `wrangler secret put` |
+| **Type mismatch on binding**       | Wrong interface type                                                          | See [api.md](./api.md) bindings table for correct types                                   |
+| **"KV key not found" but exists**  | Key in wrong namespace or env                                                 | Verify namespace binding, check preview vs production env                                 |
+| **Function times out**             | Synchronous wait or missing `await`                                           | All I/O must be async/await, use `ctx.waitUntil()` for background tasks                   |
 
 ## Common Errors
 
@@ -20,9 +20,14 @@
 **Problem:** `ctx.env.MY_BINDING` shows type error  
 **Cause:** No type definition for `Env`  
 **Solution:** Run `npx wrangler types` or manually define:
+
 ```typescript
-interface Env { MY_BINDING: KVNamespace; }
-export const onRequest: PagesFunction<Env> = async (ctx) => { /* ... */ };
+interface Env {
+	MY_BINDING: KVNamespace;
+}
+export const onRequest: PagesFunction<Env> = async (ctx) => {
+	/* ... */
+};
 ```
 
 ### Secrets not available in production
@@ -30,6 +35,7 @@ export const onRequest: PagesFunction<Env> = async (ctx) => { /* ... */ };
 **Problem:** `ctx.env.SECRET_KEY` is undefined in production  
 **Cause:** `.dev.vars` is local-only, not deployed  
 **Solution:** Set production secrets:
+
 ```bash
 echo "value" | npx wrangler pages secret put SECRET_KEY --project-name=my-app
 ```
@@ -39,10 +45,10 @@ echo "value" | npx wrangler pages secret put SECRET_KEY --project-name=my-app
 ```typescript
 // Console logging
 export async function onRequest(ctx) {
-  console.log('Request:', ctx.request.method, ctx.request.url);
-  const res = await ctx.next();
-  console.log('Status:', res.status);
-  return res;
+	console.log("Request:", ctx.request.method, ctx.request.url);
+	const res = await ctx.next();
+	console.log("Status:", res.status);
+	return res;
 }
 ```
 
@@ -59,13 +65,13 @@ npx wrangler pages deployment tail --status error
 
 ## Limits
 
-| Resource | Free | Paid |
-|----------|------|------|
-| CPU time | 10ms | 50ms |
-| Memory | 128 MB | 128 MB |
-| Script size | 10 MB compressed | 10 MB compressed |
-| Env vars | 5 KB per var, 64 max | 5 KB per var, 64 max |
-| Requests | 100k/day | Unlimited ($0.50/million) |
+| Resource    | Free                 | Paid                      |
+| ----------- | -------------------- | ------------------------- |
+| CPU time    | 10ms                 | 50ms                      |
+| Memory      | 128 MB               | 128 MB                    |
+| Script size | 10 MB compressed     | 10 MB compressed          |
+| Env vars    | 5 KB per var, 64 max | 5 KB per var, 64 max      |
+| Requests    | 100k/day             | Unlimited ($0.50/million) |
 
 ## Best Practices
 
@@ -76,10 +82,12 @@ npx wrangler pages deployment tail --status error
 ## Migration
 
 **Workers → Pages Functions:**
+
 - `export default { fetch(req, env) {} }` → `export function onRequest(ctx) { const { request, env } = ctx; }`
 - Use `_worker.js` for complex routing: `env.ASSETS.fetch(request)` for static files
 
 **Other platforms → Pages:**
+
 - File-based routing: `/functions/api/users.js` → `/api/users`
 - Dynamic routes: `[param]` not `:param`
 - Replace Node.js deps with Workers APIs or add `nodejs_compat` flag

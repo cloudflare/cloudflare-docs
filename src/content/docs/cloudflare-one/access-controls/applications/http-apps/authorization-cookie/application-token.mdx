@@ -53,18 +53,18 @@ The payload contains the actual claim and user information to pass to the applic
 }
 ```
 
-| Field          | Description                                                                                                                                                                                                                                                                                     |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| aud            | [Application audience (AUD) tag](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#get-your-aud-tag) of the Access application.                                                                                                                                                    |
-| email          | The email address of the authenticated user, verified by the identity provider.                                                                                                                                                                                                                 |
-| exp            | The expiration timestamp for the token (Unix time).                                                                                                                                                                                                                                             |
-| iat            | The issuance timestamp for the token (Unix time).                                                                                                                                                                                                                                               |
-| nbf            | The not-before timestamp for the token (Unix time), used to check if the token was received before it should be used.                                                                                                                                                                           |
-| iss            | The Cloudflare Access domain URL for the application.                                                                                                                                                                                                                                           |
-| type           | The type of Access token (`app` for application token or `org` for global session token).                                                                                                                                                                                                       |
-| identity_nonce | A cache key used to get the [user's identity](#user-identity).                                                                                                                                                                                                                                  |
+| Field          | Description                                                                                                                                                                                                                                                                                               |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| aud            | [Application audience (AUD) tag](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#get-your-aud-tag) of the Access application.                                                                                                                                |
+| email          | The email address of the authenticated user, verified by the identity provider.                                                                                                                                                                                                                           |
+| exp            | The expiration timestamp for the token (Unix time).                                                                                                                                                                                                                                                       |
+| iat            | The issuance timestamp for the token (Unix time).                                                                                                                                                                                                                                                         |
+| nbf            | The not-before timestamp for the token (Unix time), used to check if the token was received before it should be used.                                                                                                                                                                                     |
+| iss            | The Cloudflare Access domain URL for the application.                                                                                                                                                                                                                                                     |
+| type           | The type of Access token (`app` for application token or `org` for global session token).                                                                                                                                                                                                                 |
+| identity_nonce | A cache key used to get the [user's identity](#user-identity).                                                                                                                                                                                                                                            |
 | sub            | The ID of the user. This value is unique to an email address per account. The user would get a different `sub` if they are [removed](/cloudflare-one/team-and-resources/users/seat-management/#remove-a-user) and re-added to your Zero Trust organization, or if they log into a different organization. |
-| country        | The country where the user authenticated from.                                                                                                                                                                                                                                                  |
+| country        | The country where the user authenticated from.                                                                                                                                                                                                                                                            |
 
 #### Custom SAML attributes and OIDC claims
 
@@ -117,15 +117,15 @@ Access will return a JSON structure containing the following data:
 }
 ```
 
-| Field       | Description                                                                                                                                      |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| type        | The type of Access token (`app` for application token or `org` for global session token).                                                        |
+| Field       | Description                                                                                                                                                                    |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| type        | The type of Access token (`app` for application token or `org` for global session token).                                                                                      |
 | aud         | The [application audience (AUD) tag](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#get-your-aud-tag) of the Access application. |
-| exp         | The expiration timestamp of the JWT (Unix time).                                                                                                 |
-| iss         | The Cloudflare Access domain URL for the application.                                                                                            |
-| common_name | The Client ID of the service token (`CF-Access-Client-Id`).                                                                                      |
-| iat         | The issuance timestamp of the JWT (Unix time).                                                                                                   |
-| sub         | Contains an empty string when authentication was through a service token.                                                                        |
+| exp         | The expiration timestamp of the JWT (Unix time).                                                                                                                               |
+| iss         | The Cloudflare Access domain URL for the application.                                                                                                                          |
+| common_name | The Client ID of the service token (`CF-Access-Client-Id`).                                                                                                                    |
+| iat         | The issuance timestamp of the JWT (Unix time).                                                                                                                                 |
+| sub         | Contains an empty string when authentication was through a service token.                                                                                                      |
 
 ## Signature
 

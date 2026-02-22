@@ -2,13 +2,14 @@
 
 ## Choosing a Testing Approach
 
-| Approach | Use Case | Speed | Setup | Runtime |
-|----------|----------|-------|-------|---------|
-| **getPlatformProxy** | Unit tests, logic testing | Fast | Low | Miniflare |
-| **Miniflare API** | Integration tests, full control | Medium | Medium | Miniflare |
-| **vitest-pool-workers** | Vitest runner integration | Medium | Medium | workerd |
+| Approach                | Use Case                        | Speed  | Setup  | Runtime   |
+| ----------------------- | ------------------------------- | ------ | ------ | --------- |
+| **getPlatformProxy**    | Unit tests, logic testing       | Fast   | Low    | Miniflare |
+| **Miniflare API**       | Integration tests, full control | Medium | Medium | Miniflare |
+| **vitest-pool-workers** | Vitest runner integration       | Medium | Medium | workerd   |
 
 **Quick guide:**
+
 - Unit tests → getPlatformProxy
 - Integration tests → Miniflare API
 - Vitest workflows → vitest-pool-workers
@@ -27,10 +28,10 @@ import { env } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 
 describe("Business logic", () => {
-  it("processes data with KV", async () => {
-    await env.KV.put("test", "value");
-    expect(await env.KV.get("test")).toBe("value");
-  });
+	it("processes data with KV", async () => {
+		await env.KV.put("test", "value");
+		expect(await env.KV.get("test")).toBe("value");
+	});
 });
 ```
 
@@ -50,9 +51,9 @@ npm i -D @cloudflare/vitest-pool-workers
 import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
 
 export default defineWorkersConfig({
-  test: {
-    poolOptions: { workers: { wrangler: { configPath: "./wrangler.toml" } } },
-  },
+	test: {
+		poolOptions: { workers: { wrangler: { configPath: "./wrangler.toml" } } },
+	},
 });
 ```
 
@@ -61,8 +62,8 @@ import { env, SELF } from "cloudflare:test";
 import { it, expect } from "vitest";
 
 it("handles fetch", async () => {
-  const res = await SELF.fetch("http://example.com/");
-  expect(res.status).toBe(200);
+	const res = await SELF.fetch("http://example.com/");
+	expect(res.status).toBe(200);
 });
 ```
 
@@ -78,12 +79,12 @@ import { Miniflare } from "miniflare";
 
 let mf;
 before(() => {
-  mf = new Miniflare({ scriptPath: "src/index.js", kvNamespaces: ["TEST_KV"] });
+	mf = new Miniflare({ scriptPath: "src/index.js", kvNamespaces: ["TEST_KV"] });
 });
 
 test("fetch", async () => {
-  const res = await mf.dispatchFetch("http://localhost/");
-  assert.strictEqual(await res.text(), "Hello");
+	const res = await mf.dispatchFetch("http://localhost/");
+	assert.strictEqual(await res.text(), "Hello");
 });
 
 after(() => mf.dispose());
@@ -104,7 +105,7 @@ const count = await storage.get("count");
 // Queue
 const worker = await mf.getWorker();
 await worker.queue("my-queue", [
-  { id: "msg1", timestamp: new Date(), body: { userId: 123 }, attempts: 1 },
+	{ id: "msg1", timestamp: new Date(), body: { userId: 123 }, attempts: 1 },
 ]);
 
 // Scheduled
@@ -115,15 +116,20 @@ await worker.scheduled({ cron: "0 0 * * *" });
 
 ```js
 // Per-test isolation
-beforeEach(() => { mf = new Miniflare({ kvNamespaces: ["TEST"] }); });
+beforeEach(() => {
+	mf = new Miniflare({ kvNamespaces: ["TEST"] });
+});
 afterEach(() => mf.dispose());
 
 // Mock external APIs
 new Miniflare({
-  workers: [
-    { name: "main", serviceBindings: { API: "mock-api" }, script: `...` },
-    { name: "mock-api", script: `export default { async fetch() { return Response.json({mock: true}); } }` },
-  ],
+	workers: [
+		{ name: "main", serviceBindings: { API: "mock-api" }, script: `...` },
+		{
+			name: "mock-api",
+			script: `export default { async fetch() { return Response.json({mock: true}); } }`,
+		},
+	],
 });
 ```
 
@@ -133,17 +139,17 @@ new Miniflare({
 import type { KVNamespace } from "@cloudflare/workers-types";
 
 interface Env {
-  KV: KVNamespace;
-  API_KEY: string;
+	KV: KVNamespace;
+	API_KEY: string;
 }
 
 const env = await mf.getBindings<Env>();
 await env.KV.put("key", "value"); // Typed!
 
 export default {
-  async fetch(req: Request, env: Env) {
-    return new Response(await env.KV.get("key"));
-  }
+	async fetch(req: Request, env: Env) {
+		return new Response(await env.KV.get("key"));
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -151,7 +157,7 @@ export default {
 
 ```js
 const res = await mf.dispatchFetch("http://localhost/ws", {
-  headers: { Upgrade: "websocket" },
+	headers: { Upgrade: "websocket" },
 });
 assert.strictEqual(res.status, 101);
 ```

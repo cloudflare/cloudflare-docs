@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 By default, all DNS requests on the user device are resolved by Cloudflare's [public DNS resolver](/1.1.1.1/) except for common top level domains used for local resolution (such as `localhost`). You can connect an internal DNS resolver to Cloudflare and use it to resolve non-publicly routed domains.
 
@@ -13,24 +13,23 @@ By default, all DNS requests on the user device are resolved by Cloudflare's [pu
 
 To resolve private DNS queries:
 
-1. [Connect your private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/) with Cloudflare Tunnel.
+1.  [Connect your private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/) with Cloudflare Tunnel.
 
-2. Under **Networks** > **Routes**, verify that the IP address of your internal DNS resolver is included in the tunnel.
+2.  Under **Networks** > **Routes**, verify that the IP address of your internal DNS resolver is included in the tunnel.
 
-		:::note
+        :::note
 
-		Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp).
+        Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp).
 
-		:::
+        :::
 
-3. Route specific DNS queries to your internal DNS resolver using one of the following options:
+3.  Route specific DNS queries to your internal DNS resolver using one of the following options:
+    - [Create a Local Domain Fallback entry](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) that points to the internal DNS resolver. For example, you can instruct the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
+    - Alternatively, [create a resolver policy](/cloudflare-one/traffic-policies/resolver-policies/#create-a-resolver-policy) that points to the internal DNS resolver. <Render file="gateway/resolver-policies-intro" product="cloudflare-one"/>
 
-	- [Create a Local Domain Fallback entry](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) that points to the internal DNS resolver. For example, you can instruct the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
-	- Alternatively, [create a resolver policy](/cloudflare-one/traffic-policies/resolver-policies/#create-a-resolver-policy) that points to the internal DNS resolver. <Render file="gateway/resolver-policies-intro" product="cloudflare-one"/>
+4.  [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP and UDP.
 
-4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP and UDP.
-
-5. Finally, ensure that your tunnel uses QUIC as the default [transport protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol). This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries.
+5.  Finally, ensure that your tunnel uses QUIC as the default [transport protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol). This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries.
 
 The WARP client will now send DNS queries to your internal DNS resolver for resolution. To learn more, refer to [How the WARP client handles DNS requests](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
 

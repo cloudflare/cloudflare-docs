@@ -29,7 +29,7 @@ const experimental = definition.metadata.status === "experimental";
 // CED-191 some commands are present but marked as "hidden" and shouldn't be shown
 if (definition.metadata.hidden) {
 	throw new Error(
-		`[WranglerCommand] "${command}" is marked as hidden. If you want to publish, fix upstream in workers-sdk repo.`
+		`[WranglerCommand] "${command}" is marked as hidden. If you want to publish, fix upstream in workers-sdk repo.`,
 	);
 }
 

@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, DashButton } from "~/components"
+import { Render, DashButton } from "~/components";
 
 ## Monitoring
 
@@ -20,17 +20,18 @@ The Status column displays three statuses:
 - **Unhealthy**: The link operational state at interconnect port is down. This might mean the CCR does not see light, cannot negotiate an Ethernet signal, or the light levels are below -20 dBm. You can take general troubleshooting steps to solve the issue (such as checking cables and status lights for connectivity issues). If you are unable to solve the issue in this way, contact your account team.
 - **Pending**: The link is not yet active. This is expected and can occur for several reasons: the customer has not received a cross-connect, the device is unresponsive, or physical adjustments may be required, such as swapping RX/TX fibers. The **Pending** status will disappear after the customer completes the cross-connect and status moves to **Active**.
 
-
 ## Alerts (v1 dataplane only)
 
 You can configure notifications for upcoming CNI maintenance events using the Notifications feature in the Cloudflare dashboard. It is recommended to subscribe to two types of notifications to stay fully informed.
 
 **CNI Connection Maintenance Alert (beta):** This alert informs you about maintenance events (scheduled, updated, or canceled) that directly impact your CNI circuits used with the Cloudflare Virtual Network only.
+
 - You will receive warnings up to two weeks in advance for maintenance impacting your Magic Transit/WAN CNI connections.
 - You will be notified if the details of a scheduled maintenance change or if it is canceled.
 - For recently added maintenance, notifications are sent after a six-hour delay to prevent alerting fatigue from minor adjustments.
 
 **Cloudflare Status Maintenance Notification:** This alert informs you about maintenance for an entire Cloudflare Point of Presence (PoP). While not specific to your CNI, this maintenance will impact all CNI services in that location. This includes connections used only for peering without Cloudflare Virtual Network.
+
 - You will be warned about potentially disruptive maintenance at the PoP level.
 - By default, you are notified for all event types (Scheduled, Changed, Canceled), but you can filter these.
 - By default, you are notified for all Cloudflare PoPs, but you can filter for only the specific locations where you have CNI circuits.
@@ -41,7 +42,7 @@ You can configure notifications for upcoming CNI maintenance events using the No
 
 1. In the Cloudflare dashboard, go to the **Notifications** page.
 
-	<DashButton url="/?to=/:account/notifications" />
+   <DashButton url="/?to=/:account/notifications" />
 
 2. Select **Add**.
 3. From the product drop-down menu, select _Cloudflare Network Interconnect_.
@@ -53,9 +54,10 @@ You can configure notifications for upcoming CNI maintenance events using the No
 ### Enable Cloudflare Status Maintenance Notification
 
 First, identify the PoP code for your CNI circuit:
+
 1. In the Cloudflare dashboard, go to the **Connectors** page.
 
-	<DashButton url="/?to=/:account/magic-networks/connections" />
+   <DashButton url="/?to=/:account/magic-networks/connections" />
 
 2. Select the **Interconnects** tab.
 3. Select the CNI you want to enable notifications for.

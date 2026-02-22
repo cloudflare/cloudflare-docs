@@ -11,12 +11,12 @@ Earlier this year, we announced the launch of the new [Terraform v5 Provider](/c
 ### Changes
 
 - Broad fixes across resources with recurring diffs, including, but not limited to:
-	- `cloudflare_zero_trust_gateway_policy`
-	- `cloudflare_zero_trust_access_application`
-	- `cloudflare_zero_trust_tunnel_cloudflared_route`
-	- `cloudflare_zone_setting`
-	- `cloudflare_ruleset`
-	- `cloudflare_page_rule`
+  - `cloudflare_zero_trust_gateway_policy`
+  - `cloudflare_zero_trust_access_application`
+  - `cloudflare_zero_trust_tunnel_cloudflared_route`
+  - `cloudflare_zone_setting`
+  - `cloudflare_ruleset`
+  - `cloudflare_page_rule`
 - Zone settings can be re-applied without client errors
 - Page rules conversion errors are fixed
 - Failure to apply changes to `cloudflare_zero_trust_tunnel_cloudflared_route`
@@ -25,6 +25,7 @@ Earlier this year, we announced the launch of the new [Terraform v5 Provider](/c
 For a more detailed look at all of the changes, see the [changelog](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v5.5.0) in GitHub.
 
 ### Issues Closed
+
 - [#5304: Importing cloudflare_zero_trust_gateway_policy invalid attribute filter value](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5304)
 - [#5303: cloudflare_page_rule import does not set values for all of the fields in terraform state](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5303)
 - [#5178: cloudflare_page_rule Page rule creation with redirect fails](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5178)

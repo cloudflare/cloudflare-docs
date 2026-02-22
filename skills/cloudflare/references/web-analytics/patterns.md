@@ -16,8 +16,13 @@ Dashboard → Core Web Vitals → Click metric → Debug View shows top 5 proble
 
 ```css
 /* Reserve space */
-.ad-container { min-height: 250px; }
-img { width: 400px; height: 300px; } /* Explicit dimensions */
+.ad-container {
+	min-height: 250px;
+}
+img {
+	width: 400px;
+	height: 300px;
+} /* Explicit dimensions */
 ```
 
 ### INP Fixes
@@ -27,27 +32,29 @@ img { width: 400px; height: 300px; } /* Explicit dimensions */
 const handleInput = debounce(search, 300);
 
 // Yield to main thread
-await task(); await new Promise(r => setTimeout(r, 0)); await task2();
+await task();
+await new Promise((r) => setTimeout(r, 0));
+await task2();
 
 // Move to Web Worker for heavy computation
 ```
 
-| Metric | Good | Poor |
-|--------|------|------|
-| LCP | ≤2.5s | >4s |
-| INP | ≤200ms | >500ms |
-| CLS | ≤0.1 | >0.25 |
+| Metric | Good   | Poor   |
+| ------ | ------ | ------ |
+| LCP    | ≤2.5s  | >4s    |
+| INP    | ≤200ms | >500ms |
+| CLS    | ≤0.1   | >0.25  |
 
 ## GDPR Consent
 
 ```typescript
 // Load beacon only after consent
-const consent = localStorage.getItem('analytics-consent');
-if (consent === 'accepted') {
-  const script = document.createElement('script');
-  script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-  script.setAttribute('data-cf-beacon', '{"token": "TOKEN", "spa": true}');
-  document.body.appendChild(script);
+const consent = localStorage.getItem("analytics-consent");
+if (consent === "accepted") {
+	const script = document.createElement("script");
+	script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+	script.setAttribute("data-cf-beacon", '{"token": "TOKEN", "spa": true}');
+	document.body.appendChild(script);
 }
 ```
 

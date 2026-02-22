@@ -3,14 +3,13 @@ title: Routing traffic
 pcx_content_type: learning-unit
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Before, we covered how requests move from load balancers to pools and then from pools to individual servers.
 
-What we did not mention, however, was *how* the load balancer and pools make those decisions.
+What we did not mention, however, was _how_ the load balancer and pools make those decisions.
 
 This is a concept known as routing.
 
@@ -58,5 +57,5 @@ Often, load balancers have a special pool known as the **Fallback Pool**, which 
 
 Finally, specific settings can also affect the ways a load balancer distributes traffic, such as:
 
-* Routing based on [specific aspects](/load-balancing/additional-options/load-balancing-rules/) of the request.
-* Sending all requests from a [specific end user](/load-balancing/understand-basics/session-affinity/) to the same server, preserving information about their user session like items in a shopping cart.
+- Routing based on [specific aspects](/load-balancing/additional-options/load-balancing-rules/) of the request.
+- Sending all requests from a [specific end user](/load-balancing/understand-basics/session-affinity/) to the same server, preserving information about their user session like items in a shopping cart.

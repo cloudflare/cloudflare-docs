@@ -37,16 +37,16 @@ STREAM_CUSTOMER_CODE=your-customer-code
 
 ```jsonc
 {
-  "name": "stream-worker",
-  "main": "src/index.ts",
-  "compatibility_date": "2025-01-01", // Use current date for new projects
-  "vars": {
-    "CF_ACCOUNT_ID": "your-account-id"
-  }
-  // Store secrets: wrangler secret put CF_API_TOKEN
-  // wrangler secret put STREAM_KEY_ID
-  // wrangler secret put STREAM_JWK
-  // wrangler secret put WEBHOOK_SECRET
+	"name": "stream-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-01-01", // Use current date for new projects
+	"vars": {
+		"CF_ACCOUNT_ID": "your-account-id",
+	},
+	// Store secrets: wrangler secret put CF_API_TOKEN
+	// wrangler secret put STREAM_KEY_ID
+	// wrangler secret put STREAM_JWK
+	// wrangler secret put WEBHOOK_SECRET
 }
 ```
 
@@ -55,6 +55,7 @@ STREAM_CUSTOMER_CODE=your-customer-code
 Create once for self-signing tokens (thousands of daily users).
 
 **Create key**
+
 ```bash
 curl -X POST \
   "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/keys" \
@@ -64,6 +65,7 @@ curl -X POST \
 ```
 
 **Store in secrets**
+
 ```bash
 wrangler secret put STREAM_KEY_ID
 wrangler secret put STREAM_JWK
@@ -72,6 +74,7 @@ wrangler secret put STREAM_JWK
 ## Webhooks
 
 **Setup webhook URL**
+
 ```bash
 curl -X PUT \
   "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/webhook" \
@@ -83,6 +86,7 @@ curl -X PUT \
 ```
 
 **Store secret**
+
 ```bash
 wrangler secret put WEBHOOK_SECRET
 ```
@@ -92,23 +96,26 @@ wrangler secret put WEBHOOK_SECRET
 ```typescript
 // Direct upload
 const uploadConfig = {
-  maxDurationSeconds: 3600,
-  expiry: new Date(Date.now() + 3600000).toISOString(),
-  requireSignedURLs: true,
-  allowedOrigins: ['https://yourdomain.com'],
-  meta: { creator: 'user-123' }
+	maxDurationSeconds: 3600,
+	expiry: new Date(Date.now() + 3600000).toISOString(),
+	requireSignedURLs: true,
+	allowedOrigins: ["https://yourdomain.com"],
+	meta: { creator: "user-123" },
 };
 
 // Live input
 const liveConfig = {
-  recording: { mode: 'automatic', timeoutSeconds: 30 },
-  deleteRecordingAfterDays: 30
+	recording: { mode: "automatic", timeoutSeconds: 30 },
+	deleteRecordingAfterDays: 30,
 };
 
 // Watermark
 const watermark = {
-  name: 'Logo', opacity: 0.7, padding: 20,
-  position: 'lowerRight', scale: 0.15
+	name: "Logo",
+	opacity: 0.7,
+	padding: 20,
+	position: "lowerRight",
+	scale: 0.15,
 };
 ```
 
@@ -117,13 +124,16 @@ const watermark = {
 ```typescript
 // Access rules: allow US/CA, block CN/RU, or IP allowlist
 const geoRestrict = [
-  { type: 'ip.geoip.country', action: 'allow', country: ['US', 'CA'] },
-  { type: 'any', action: 'block' }
+	{ type: "ip.geoip.country", action: "allow", country: ["US", "CA"] },
+	{ type: "any", action: "block" },
 ];
 
 // Player params for iframe
 const playerParams = new URLSearchParams({
-  autoplay: 'true', muted: 'true', preload: 'auto', defaultTextTrack: 'en'
+	autoplay: "true",
+	muted: "true",
+	preload: "auto",
+	defaultTextTrack: "en",
 });
 ```
 

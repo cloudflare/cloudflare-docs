@@ -9,23 +9,31 @@ description: Cloudflare recommends two tunnels for each ISP and network location
 
 import { Render } from "~/components";
 
-<Render file="routing/configure-tunnels"
+<Render
+	file="routing/configure-tunnels"
 	product="networking-services"
 	params={{
 		magicWord: "Magic Transit",
 		productName: "Magic Transit",
-		tunnelsAndEncapsulationPagePath: "/magic-transit/reference/gre-ipsec-tunnels/",
-		ciphersPagePath: "/magic-transit/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
+		tunnelsAndEncapsulationPagePath:
+			"/magic-transit/reference/gre-ipsec-tunnels/",
+		ciphersPagePath:
+			"/magic-transit/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
 		antiReplayPagePath: "/magic-transit/reference/anti-replay-protection/",
 		cniLink: "/magic-transit/network-interconnect/",
-		updateHCFrequencyPage: "/magic-transit/network-health/update-tunnel-health-checks-frequency/",
+		updateHCFrequencyPage:
+			"/magic-transit/network-health/update-tunnel-health-checks-frequency/",
 		tunnelHealthChecksPage: "/magic-transit/reference/tunnel-health-checks/",
 		biVsUniHealthCheck: "unidirectional",
-		tunnelHealthDash: "/magic-transit/network-health/check-tunnel-health-dashboard/",
-		biVsUniHealthCheckDefaults: "For Magic Transit this option defaults to unidirectional",
+		tunnelHealthDash:
+			"/magic-transit/network-health/check-tunnel-health-dashboard/",
+		biVsUniHealthCheckDefaults:
+			"For Magic Transit this option defaults to unidirectional",
 		configureRoutesURL: "/magic-transit/how-to/configure-routes/",
-		unifiedRoutingURL: "/magic-transit/reference/traffic-steering/#unified-routing-mode-beta",
-		troubleshootTunnelHealthURL: "/magic-transit/troubleshooting/tunnel-health/",
-		troubleshootIpsecURL: "/magic-transit/troubleshooting/ipsec-troubleshoot/"
+		unifiedRoutingURL:
+			"/magic-transit/reference/traffic-steering/#unified-routing-mode-beta",
+		troubleshootTunnelHealthURL:
+			"/magic-transit/troubleshooting/tunnel-health/",
+		troubleshootIpsecURL: "/magic-transit/troubleshooting/ipsec-troubleshoot/",
 	}}
 />

@@ -61,31 +61,27 @@ import { McpAgent } from "agents/mcp";
 import { z } from "zod";
 
 export class MyMCP extends McpAgent {
-  server = new Server({ name: "my-mcp", version: "1.0.0" });
+	server = new Server({ name: "my-mcp", version: "1.0.0" });
 
-  async init() {
-    // Simple tool with parameters
-    this.server.tool(
-      "add",
-      { a: z.number(), b: z.number() },
-      async ({ a, b }) => ({
-        content: [{ type: "text", text: String(a + b) }],
-      })
-    );
+	async init() {
+		// Simple tool with parameters
+		this.server.tool(
+			"add",
+			{ a: z.number(), b: z.number() },
+			async ({ a, b }) => ({
+				content: [{ type: "text", text: String(a + b) }],
+			}),
+		);
 
-    // Tool that calls external API
-    this.server.tool(
-      "get_weather",
-      { city: z.string() },
-      async ({ city }) => {
-        const response = await fetch(`https://api.weather.com/${city}`);
-        const data = await response.json();
-        return {
-          content: [{ type: "text", text: JSON.stringify(data) }],
-        };
-      }
-    );
-  }
+		// Tool that calls external API
+		this.server.tool("get_weather", { city: z.string() }, async ({ city }) => {
+			const response = await fetch(`https://api.weather.com/${city}`);
+			const data = await response.json();
+			return {
+				content: [{ type: "text", text: JSON.stringify(data) }],
+			};
+		});
+	}
 }
 ```
 
@@ -97,13 +93,13 @@ export class MyMCP extends McpAgent {
 import { MyMCP } from "./mcp";
 
 export default {
-  fetch(request: Request, env: Env, ctx: ExecutionContext) {
-    const url = new URL(request.url);
-    if (url.pathname === "/mcp") {
-      return MyMCP.serveSSE("/mcp").fetch(request, env, ctx);
-    }
-    return new Response("MCP Server", { status: 200 });
-  },
+	fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		const url = new URL(request.url);
+		if (url.pathname === "/mcp") {
+			return MyMCP.serveSSE("/mcp").fetch(request, env, ctx);
+		}
+		return new Response("MCP Server", { status: 200 });
+	},
 };
 
 export { MyMCP };
@@ -136,12 +132,12 @@ Server accessible at `https://[worker-name].[account].workers.dev/mcp`
 
 ```json
 {
-  "mcpServers": {
-    "my-server": {
-      "command": "npx",
-      "args": ["mcp-remote", "https://my-mcp.workers.dev/mcp"]
-    }
-  }
+	"mcpServers": {
+		"my-server": {
+			"command": "npx",
+			"args": ["mcp-remote", "https://my-mcp.workers.dev/mcp"]
+		}
+	}
 }
 ```
 
@@ -157,10 +153,10 @@ return { content: [{ type: "text", text: "result" }] };
 
 // Multiple content items
 return {
-  content: [
-    { type: "text", text: "Here's the data:" },
-    { type: "text", text: JSON.stringify(data, null, 2) },
-  ],
+	content: [
+		{ type: "text", text: "Here's the data:" },
+		{ type: "text", text: JSON.stringify(data, null, 2) },
+	],
 };
 ```
 
@@ -168,16 +164,16 @@ return {
 
 ```typescript
 this.server.tool(
-  "create_user",
-  {
-    email: z.string().email(),
-    name: z.string().min(1).max(100),
-    role: z.enum(["admin", "user", "guest"]),
-    age: z.number().int().min(0).optional(),
-  },
-  async (params) => {
-    // params are fully typed and validated
-  }
+	"create_user",
+	{
+		email: z.string().email(),
+		name: z.string().min(1).max(100),
+		role: z.enum(["admin", "user", "guest"]),
+		age: z.number().int().min(0).optional(),
+	},
+	async (params) => {
+		// params are fully typed and validated
+	},
 );
 ```
 
@@ -185,13 +181,13 @@ this.server.tool(
 
 ```typescript
 export class MyMCP extends McpAgent<Env> {
-  async init() {
-    this.server.tool("query_db", { sql: z.string() }, async ({ sql }) => {
-      // Access D1 binding
-      const result = await this.env.DB.prepare(sql).all();
-      return { content: [{ type: "text", text: JSON.stringify(result) }] };
-    });
-  }
+	async init() {
+		this.server.tool("query_db", { sql: z.string() }, async ({ sql }) => {
+			// Access D1 binding
+			const result = await this.env.DB.prepare(sql).all();
+			return { content: [{ type: "text", text: JSON.stringify(result) }] };
+		});
+	}
 }
 ```
 
@@ -200,6 +196,7 @@ export class MyMCP extends McpAgent<Env> {
 For OAuth-protected servers, see [references/oauth-setup.md](references/oauth-setup.md).
 
 Supported providers:
+
 - GitHub
 - Google
 - Auth0

@@ -41,6 +41,7 @@ PUT /zones/{zone_id}/api_gateway/settings/schema_validation
 ## BOLA Detection
 
 ### Enumeration Detection
+
 Detects sequential resource access (e.g., `/users/1`, `/users/2`, `/users/3`).
 
 ```javascript
@@ -50,6 +51,7 @@ Detects sequential resource access (e.g., `/users/1`, `/users/2`, `/users/3`).
 ```
 
 ### Parameter Pollution
+
 Detects duplicate/excessive parameters in requests.
 
 ```javascript
@@ -59,6 +61,7 @@ Detects duplicate/excessive parameters in requests.
 ```
 
 ### Combined BOLA Protection
+
 ```javascript
 // Comprehensive BOLA rule
 (cf.api_gateway.cf-risk-bola-enumeration or cf.api_gateway.cf-risk-bola-pollution)
@@ -69,6 +72,7 @@ and http.host eq "api.example.com"
 ## Authentication Posture
 
 ### Detect Missing Auth
+
 ```javascript
 // Log endpoints lacking authentication
 (cf.api_gateway.cf-risk-missing-auth and http.host eq "api.example.com")
@@ -76,6 +80,7 @@ and http.host eq "api.example.com"
 ```
 
 ### Detect Mixed Auth
+
 ```javascript
 // Alert on inconsistent auth patterns
 (cf.api_gateway.cf-risk-mixed-auth and http.host eq "api.example.com")
@@ -136,18 +141,18 @@ and http.host eq "api.example.com"
 
 ## OWASP API Security Top 10 Mapping (2026)
 
-| OWASP Issue | API Shield Solutions |
-|-------------|---------------------|
+| OWASP Issue                                 | API Shield Solutions                                                                          |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | API1:2023 Broken Object Level Authorization | **BOLA Detection** (enumeration + pollution), Sequence mitigation, Schema, JWT, Rate Limiting |
-| API2:2023 Broken Authentication | **Auth Posture**, mTLS, JWT validation, Bot Management |
-| API3:2023 Broken Object Property Auth | Schema validation, JWT validation |
-| API4:2023 Unrestricted Resource Access | Rate Limiting, **Volumetric Abuse Detection**, **GraphQL Protection**, Bot Management |
-| API5:2023 Broken Function Level Auth | Schema validation, JWT validation, Auth Posture |
-| API6:2023 Unrestricted Business Flows | Sequence mitigation, Bot Management |
-| API7:2023 SSRF | Schema validation, WAF managed rules |
-| API8:2023 Security Misconfiguration | **Schema Validation 2.0**, Auth Posture, WAF rules |
-| API9:2023 Improper Inventory Management | **API Discovery**, Schema learning, Auth Posture |
-| API10:2023 Unsafe API Consumption | JWT validation, Schema validation, WAF managed |
+| API2:2023 Broken Authentication             | **Auth Posture**, mTLS, JWT validation, Bot Management                                        |
+| API3:2023 Broken Object Property Auth       | Schema validation, JWT validation                                                             |
+| API4:2023 Unrestricted Resource Access      | Rate Limiting, **Volumetric Abuse Detection**, **GraphQL Protection**, Bot Management         |
+| API5:2023 Broken Function Level Auth        | Schema validation, JWT validation, Auth Posture                                               |
+| API6:2023 Unrestricted Business Flows       | Sequence mitigation, Bot Management                                                           |
+| API7:2023 SSRF                              | Schema validation, WAF managed rules                                                          |
+| API8:2023 Security Misconfiguration         | **Schema Validation 2.0**, Auth Posture, WAF rules                                            |
+| API9:2023 Improper Inventory Management     | **API Discovery**, Schema learning, Auth Posture                                              |
+| API10:2023 Unsafe API Consumption           | JWT validation, Schema validation, WAF managed                                                |
 
 ## Monitoring
 
@@ -157,19 +162,19 @@ and http.host eq "api.example.com"
 
 ## Availability (2026)
 
-| Feature | Availability | Notes |
-|---------|-------------|-------|
-| mTLS (CF-managed CA) | All plans | Self-service |
-| Endpoint Management | All plans | Limited operations |
-| Schema Validation 2.0 | All plans | Limited operations |
-| API Discovery | Enterprise | 10K+ ops |
-| JWT Validation | Enterprise add-on | Full validation |
-| BOLA Detection | Enterprise add-on | Requires session IDs |
-| Auth Posture | Enterprise add-on | Security audit |
-| Volumetric Abuse Detection | Enterprise add-on | Traffic analysis |
-| GraphQL Protection | Enterprise add-on | Query limits |
-| Sequence Mitigation | Enterprise (beta) | Contact team |
-| Full Suite | Enterprise add-on | All features |
+| Feature                    | Availability      | Notes                |
+| -------------------------- | ----------------- | -------------------- |
+| mTLS (CF-managed CA)       | All plans         | Self-service         |
+| Endpoint Management        | All plans         | Limited operations   |
+| Schema Validation 2.0      | All plans         | Limited operations   |
+| API Discovery              | Enterprise        | 10K+ ops             |
+| JWT Validation             | Enterprise add-on | Full validation      |
+| BOLA Detection             | Enterprise add-on | Requires session IDs |
+| Auth Posture               | Enterprise add-on | Security audit       |
+| Volumetric Abuse Detection | Enterprise add-on | Traffic analysis     |
+| GraphQL Protection         | Enterprise add-on | Query limits         |
+| Sequence Mitigation        | Enterprise (beta) | Contact team         |
+| Full Suite                 | Enterprise add-on | All features         |
 
 **Enterprise limits:** 10K operations (contact for higher). Preview access available for non-contract evaluation.
 

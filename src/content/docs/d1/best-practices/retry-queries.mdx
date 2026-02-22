@@ -3,7 +3,6 @@ title: Retry queries
 pcx_content_type: concept
 sidebar:
   order: 3
-
 ---
 
 import { GitHubCode } from "~/components";
@@ -25,20 +24,20 @@ You can use libraries abstracting that already like [`@cloudflare/actors`](https
 import { tryWhile } from "@cloudflare/actors";
 
 function queryD1Example(d1: D1Database, sql: string) {
-  return await tryWhile(async () => {
-    return await d1.prepare(sql).run();
-  }, shouldRetry);
+	return await tryWhile(async () => {
+		return await d1.prepare(sql).run();
+	}, shouldRetry);
 }
 
 function shouldRetry(err: unknown, nextAttempt: number) {
-  const errMsg = String(err);
-  const isRetryableError =
-    errMsg.includes("Network connection lost") ||
-    errMsg.includes("storage caused object to be reset") ||
-    errMsg.includes("reset because its code was updated");
-  if (nextAttempt <= 5 && isRetryableError) {
-    return true;
-  }
-  return false;
+	const errMsg = String(err);
+	const isRetryableError =
+		errMsg.includes("Network connection lost") ||
+		errMsg.includes("storage caused object to be reset") ||
+		errMsg.includes("reset because its code was updated");
+	if (nextAttempt <= 5 && isRetryableError) {
+		return true;
+	}
+	return false;
 }
 ```

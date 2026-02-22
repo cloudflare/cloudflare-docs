@@ -11,17 +11,17 @@ Cloudflare Email Routing enables custom email addresses for your domain that rou
 ```typescript
 // Basic email handler
 export default {
-  async email(message, env, ctx) {
-    // CRITICAL: Must consume stream before response
-    const parser = new PostalMime.default();
-    const email = await parser.parse(await message.raw.arrayBuffer());
-    
-    // Process email
-    console.log(`From: ${message.from}, Subject: ${email.subject}`);
-    
-    // Forward or reject
-    await message.forward("verified@destination.com");
-  }
+	async email(message, env, ctx) {
+		// CRITICAL: Must consume stream before response
+		const parser = new PostalMime.default();
+		const email = await parser.parse(await message.raw.arrayBuffer());
+
+		// Process email
+		console.log(`From: ${message.from}, Subject: ${email.subject}`);
+
+		// Forward or reject
+		await message.forward("verified@destination.com");
+	},
 } satisfies ExportedHandler<Env>;
 ```
 

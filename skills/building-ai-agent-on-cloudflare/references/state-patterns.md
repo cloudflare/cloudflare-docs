@@ -8,15 +8,15 @@ State is automatically persisted to the `cf_agents_state` SQL table. The `this.s
 
 ```typescript
 class MyAgent extends Agent<Env, { count: number }> {
-  initialState = { count: 0 };
+	initialState = { count: 0 };
 
-  increment() {
-    this.setState({ count: this.state.count + 1 });
-  }
+	increment() {
+		this.setState({ count: this.state.count + 1 });
+	}
 
-  onStateUpdate(state: State, source: string) {
-    console.log("State updated by:", source);
-  }
+	onStateUpdate(state: State, source: string) {
+		console.log("State updated by:", source);
+	}
 }
 ```
 
@@ -31,10 +31,10 @@ class MyAgent extends Agent<Env, { count: number }> {
 
 ```typescript
 interface State {
-  currentUser: { id: string; name: string };
-  preferences: Record<string, string>;
-  recentMessages: Message[];  // Keep limited, e.g., last 50
-  isTyping: boolean;
+	currentUser: { id: string; name: string };
+	preferences: Record<string, string>;
+	recentMessages: Message[]; // Keep limited, e.g., last 50
+	isTyping: boolean;
 }
 ```
 
@@ -59,20 +59,20 @@ Combine both for optimal performance:
 
 ```typescript
 interface State {
-  recentMessages: Message[];
-  onlineUsers: string[];
-  currentDocument: Document | null;
+	recentMessages: Message[];
+	onlineUsers: string[];
+	currentDocument: Document | null;
 }
 
 export class HybridAgent extends Agent<Env, State> {
-  initialState: State = {
-    recentMessages: [],
-    onlineUsers: [],
-    currentDocument: null,
-  };
+	initialState: State = {
+		recentMessages: [],
+		onlineUsers: [],
+		currentDocument: null,
+	};
 
-  async onStart() {
-    await this.sql`
+	async onStart() {
+		await this.sql`
       CREATE TABLE IF NOT EXISTS messages (
         id TEXT PRIMARY KEY,
         user_id TEXT NOT NULL,
@@ -81,27 +81,27 @@ export class HybridAgent extends Agent<Env, State> {
       )
     `;
 
-    const recent = await this.sql`
+		const recent = await this.sql`
       SELECT * FROM messages
       ORDER BY created_at DESC
       LIMIT 50
     `;
 
-    this.setState({
-      ...this.state,
-      recentMessages: recent.reverse(),
-    });
-  }
+		this.setState({
+			...this.state,
+			recentMessages: recent.reverse(),
+		});
+	}
 
-  async addMessage(message: Message) {
-    await this.sql`
+	async addMessage(message: Message) {
+		await this.sql`
       INSERT INTO messages (id, user_id, content)
       VALUES (${message.id}, ${message.userId}, ${message.content})
     `;
 
-    const recentMessages = [...this.state.recentMessages, message].slice(-50);
-    this.setState({ ...this.state, recentMessages });
-  }
+		const recentMessages = [...this.state.recentMessages, message].slice(-50);
+		this.setState({ ...this.state, recentMessages });
+	}
 }
 ```
 
@@ -113,41 +113,42 @@ The SDK includes a built-in queue for background task processing. Tasks are stor
 
 ### Queue Methods
 
-| Method | Purpose |
-|--------|---------|
-| `queue(callback, payload)` | Add task, returns task ID |
-| `dequeue(id)` | Remove specific task |
-| `dequeueAll()` | Clear entire queue |
+| Method                       | Purpose                       |
+| ---------------------------- | ----------------------------- |
+| `queue(callback, payload)`   | Add task, returns task ID     |
+| `dequeue(id)`                | Remove specific task          |
+| `dequeueAll()`               | Clear entire queue            |
 | `dequeueAllByCallback(name)` | Remove tasks by callback name |
-| `getQueue(id)` | Get single task |
-| `getQueues(key, value)` | Find tasks by payload field |
+| `getQueue(id)`               | Get single task               |
+| `getQueues(key, value)`      | Find tasks by payload field   |
 
 ### Queue Example
 
 ```typescript
 export class TaskAgent extends Agent<Env, State> {
-  async onMessage(connection: Connection, message: string) {
-    const data = JSON.parse(message);
+	async onMessage(connection: Connection, message: string) {
+		const data = JSON.parse(message);
 
-    if (data.type === "process_later") {
-      const taskId = await this.queue("processItem", {
-        itemId: data.itemId,
-        priority: data.priority,
-      });
+		if (data.type === "process_later") {
+			const taskId = await this.queue("processItem", {
+				itemId: data.itemId,
+				priority: data.priority,
+			});
 
-      connection.send(JSON.stringify({ queued: true, taskId }));
-    }
-  }
+			connection.send(JSON.stringify({ queued: true, taskId }));
+		}
+	}
 
-  // Callback receives payload and QueueItem metadata
-  async processItem(payload: { itemId: string }, item: QueueItem) {
-    console.log(`Processing ${payload.itemId}, queued at ${item.createdAt}`);
-    // Successfully executed tasks are auto-removed
-  }
+	// Callback receives payload and QueueItem metadata
+	async processItem(payload: { itemId: string }, item: QueueItem) {
+		console.log(`Processing ${payload.itemId}, queued at ${item.createdAt}`);
+		// Successfully executed tasks are auto-removed
+	}
 }
 ```
 
 **Queue characteristics:**
+
 - Sequential processing (no parallelization)
 - Persists across agent restarts
 - No built-in retry mechanism
@@ -164,22 +165,23 @@ import { getCurrentAgent } from "agents";
 
 // External utility function
 async function logActivity(action: string) {
-  const { agent } = getCurrentAgent<MyAgent>();
-  await agent.sql`
+	const { agent } = getCurrentAgent<MyAgent>();
+	await agent.sql`
     INSERT INTO activity_log (action, timestamp)
     VALUES (${action}, ${Date.now()})
   `;
 }
 
 export class MyAgent extends Agent<Env, State> {
-  async performAction() {
-    // Context automatically available
-    await logActivity("action_performed");
-  }
+	async performAction() {
+		// Context automatically available
+		await logActivity("action_performed");
+	}
 }
 ```
 
 `getCurrentAgent<T>()` returns:
+
 - `agent` - The current agent instance
 - `connection` - Connection object (if applicable)
 - `request` - Request object (if applicable)
@@ -248,23 +250,26 @@ Track ephemeral state for each connected client:
 
 ```typescript
 export class MultiUserAgent extends Agent<Env, State> {
-  private connectionState = new Map<string, {
-    userId: string;
-    cursor: { x: number; y: number };
-    lastActivity: number;
-  }>();
+	private connectionState = new Map<
+		string,
+		{
+			userId: string;
+			cursor: { x: number; y: number };
+			lastActivity: number;
+		}
+	>();
 
-  async onConnect(connection: Connection) {
-    this.connectionState.set(connection.id, {
-      userId: "",
-      cursor: { x: 0, y: 0 },
-      lastActivity: Date.now(),
-    });
-  }
+	async onConnect(connection: Connection) {
+		this.connectionState.set(connection.id, {
+			userId: "",
+			cursor: { x: 0, y: 0 },
+			lastActivity: Date.now(),
+		});
+	}
 
-  async onClose(connection: Connection) {
-    this.connectionState.delete(connection.id);
-  }
+	async onClose(connection: Connection) {
+		this.connectionState.delete(connection.id);
+	}
 }
 ```
 
@@ -276,34 +281,34 @@ When state schema changes:
 
 ```typescript
 interface StateV2 {
-  messages: Array<{ id: string; content: string; timestamp: string }>;
-  version: 2;
+	messages: Array<{ id: string; content: string; timestamp: string }>;
+	version: 2;
 }
 
 export class MigratingAgent extends Agent<Env, StateV2> {
-  initialState: StateV2 = {
-    messages: [],
-    version: 2,
-  };
+	initialState: StateV2 = {
+		messages: [],
+		version: 2,
+	};
 
-  async onStart() {
-    const rawState = this.state as any;
+	async onStart() {
+		const rawState = this.state as any;
 
-    if (!rawState.version || rawState.version < 2) {
-      const migratedMessages = (rawState.messages || []).map(
-        (content: string, i: number) => ({
-          id: `migrated-${i}`,
-          content,
-          timestamp: new Date().toISOString(),
-        })
-      );
+		if (!rawState.version || rawState.version < 2) {
+			const migratedMessages = (rawState.messages || []).map(
+				(content: string, i: number) => ({
+					id: `migrated-${i}`,
+					content,
+					timestamp: new Date().toISOString(),
+				}),
+			);
 
-      this.setState({
-        messages: migratedMessages,
-        version: 2,
-      });
-    }
-  }
+			this.setState({
+				messages: migratedMessages,
+				version: 2,
+			});
+		}
+	}
 }
 ```
 
@@ -315,26 +320,27 @@ Keep state lean for performance:
 
 ```typescript
 export class LeanStateAgent extends Agent<Env, State> {
-  private readonly MAX_RECENT_MESSAGES = 100;
+	private readonly MAX_RECENT_MESSAGES = 100;
 
-  async addMessage(message: Message) {
-    await this.sql`INSERT INTO messages (id, content) VALUES (${message.id}, ${message.content})`;
+	async addMessage(message: Message) {
+		await this
+			.sql`INSERT INTO messages (id, content) VALUES (${message.id}, ${message.content})`;
 
-    let recentMessages = [...this.state.recentMessages, message];
-    if (recentMessages.length > this.MAX_RECENT_MESSAGES) {
-      recentMessages = recentMessages.slice(-this.MAX_RECENT_MESSAGES);
-    }
+		let recentMessages = [...this.state.recentMessages, message];
+		if (recentMessages.length > this.MAX_RECENT_MESSAGES) {
+			recentMessages = recentMessages.slice(-this.MAX_RECENT_MESSAGES);
+		}
 
-    this.setState({
-      ...this.state,
-      recentMessages,
-      stats: {
-        ...this.state.stats,
-        totalMessages: this.state.stats.totalMessages + 1,
-        lastActivity: new Date().toISOString(),
-      },
-    });
-  }
+		this.setState({
+			...this.state,
+			recentMessages,
+			stats: {
+				...this.state.stats,
+				totalMessages: this.state.stats.totalMessages + 1,
+				lastActivity: new Date().toISOString(),
+			},
+		});
+	}
 }
 ```
 

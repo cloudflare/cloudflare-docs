@@ -5,6 +5,7 @@ Expert guidance for Cloudflare Workers AI - serverless GPU-powered AI inference 
 ## Overview
 
 Workers AI provides:
+
 - 50+ pre-trained models (LLMs, embeddings, image generation, speech-to-text, translation)
 - Native Workers binding (no external API calls)
 - Pay-per-use pricing (neurons consumed per inference)
@@ -18,16 +19,16 @@ Workers AI provides:
 
 ```typescript
 interface Env {
-  AI: Ai;
+	AI: Ai;
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const response = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
-      messages: [{ role: 'user', content: 'What is Cloudflare?' }]
-    });
-    return Response.json(response);
-  }
+	async fetch(request: Request, env: Env) {
+		const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+			messages: [{ role: "user", content: "What is Cloudflare?" }],
+		});
+		return Response.json(response);
+	},
 };
 ```
 
@@ -42,24 +43,29 @@ wrangler deploy
 ### Text Generation (Chat/Completion)
 
 **Quality Priority**:
+
 - **Best quality**: `@cf/meta/llama-3.1-70b-instruct` (expensive, ~2000 neurons)
 - **Balanced**: `@cf/meta/llama-3.1-8b-instruct` (good quality, ~200 neurons)
 - **Fastest/cheapest**: `@cf/mistral/mistral-7b-instruct-v0.1` (~50 neurons)
 
 **Function Calling**:
+
 - Use `@cf/meta/llama-3.1-8b-instruct` or `@cf/meta/llama-3.1-70b-instruct` (native tool support)
 
 **Code Generation**:
+
 - Use `@cf/deepseek-ai/deepseek-coder-6.7b-instruct` (specialized for code)
 
 ### Embeddings (Semantic Search/RAG)
 
 **English text**:
+
 - **Best**: `@cf/baai/bge-large-en-v1.5` (1024 dims, highest quality)
 - **Balanced**: `@cf/baai/bge-base-en-v1.5` (768 dims, good quality)
 - **Fast**: `@cf/baai/bge-small-en-v1.5` (384 dims, lower quality but fast)
 
 **Multilingual**:
+
 - Use `@hf/sentence-transformers/paraphrase-multilingual-minilm-l12-v2`
 
 ### Image Generation
@@ -101,23 +107,25 @@ curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/run/@cf/meta/
 **Why**: Unified interface across providers
 
 ```typescript
-import { openai } from '@ai-sdk/openai';
+import { openai } from "@ai-sdk/openai";
 
-const model = openai('model-name', {
-  baseURL: 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/v1',
-  headers: { Authorization: 'Bearer <API_TOKEN>' }
+const model = openai("model-name", {
+	baseURL: "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/v1",
+	headers: { Authorization: "Bearer <API_TOKEN>" },
 });
 ```
 
 ## RAG vs Direct Generation
 
 ### Use RAG (Vectorize + Workers AI) When:
+
 - Answering questions about specific documents/data
 - Need factual accuracy from known corpus
 - Context exceeds model's window (>4K tokens)
 - Building knowledge base chat
 
 ### Use Direct Generation When:
+
 - Creative writing, brainstorming
 - General knowledge questions
 - Small context fits in prompt (<4K tokens)
@@ -125,13 +133,13 @@ const model = openai('model-name', {
 
 ## Platform Limits
 
-| Limit | Free Tier | Paid Plans |
-|-------|-----------|------------|
-| Neurons/day | 10,000 | Pay per use |
-| Rate limit | Varies by model | Higher (contact support) |
-| Context window | Model dependent (2K-8K) | Same |
-| Streaming | ✅ Supported | ✅ Supported |
-| Function calling | ✅ Supported (select models) | ✅ Supported |
+| Limit            | Free Tier                    | Paid Plans               |
+| ---------------- | ---------------------------- | ------------------------ |
+| Neurons/day      | 10,000                       | Pay per use              |
+| Rate limit       | Varies by model              | Higher (contact support) |
+| Context window   | Model dependent (2K-8K)      | Same                     |
+| Streaming        | ✅ Supported                 | ✅ Supported             |
+| Function calling | ✅ Supported (select models) | ✅ Supported             |
 
 **Pricing**: Free 10K neurons/day, then pay per neuron consumed (varies by model)
 
@@ -177,6 +185,7 @@ wrangler deploy
 **Start here**: Quick Start above → configuration.md (setup)
 
 **Common tasks**:
+
 - First time setup: configuration.md → Add binding + deploy
 - Choose model: Model Selection Decision Tree (above) → api.md
 - Build RAG: patterns.md → Vectorize integration

@@ -12,56 +12,64 @@ wrangler kv namespace create MY_NAMESPACE --preview  # For local dev
 ## Workers Binding
 
 **wrangler.jsonc:**
+
 ```jsonc
 {
-  "kv_namespaces": [
-    {
-      "binding": "MY_KV",
-      "id": "abc123xyz789"
-    },
-    // Optional: Different namespace for preview/development
-    {
-      "binding": "MY_KV",
-      "preview_id": "preview-abc123"
-    }
-  ]
+	"kv_namespaces": [
+		{
+			"binding": "MY_KV",
+			"id": "abc123xyz789",
+		},
+		// Optional: Different namespace for preview/development
+		{
+			"binding": "MY_KV",
+			"preview_id": "preview-abc123",
+		},
+	],
 }
 ```
 
 ## TypeScript Types
 
 **env.d.ts:**
+
 ```typescript
 interface Env {
-  MY_KV: KVNamespace;
-  SESSIONS: KVNamespace;
-  CACHE: KVNamespace;
+	MY_KV: KVNamespace;
+	SESSIONS: KVNamespace;
+	CACHE: KVNamespace;
 }
 ```
 
 **worker.ts:**
+
 ```typescript
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // env.MY_KV is now typed as KVNamespace
-    const value = await env.MY_KV.get("key");
-    return new Response(value || "Not found");
-  }
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		// env.MY_KV is now typed as KVNamespace
+		const value = await env.MY_KV.get("key");
+		return new Response(value || "Not found");
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
 **Type-safe JSON operations:**
+
 ```typescript
 interface UserProfile {
-  name: string;
-  email: string;
-  role: "admin" | "user";
+	name: string;
+	email: string;
+	role: "admin" | "user";
 }
 
 const profile = await env.USERS.get<UserProfile>("user:123", "json");
 // profile: UserProfile | null (type-safe!)
 if (profile) {
-  console.log(profile.name); // TypeScript knows this is a string
+	console.log(profile.name); // TypeScript knows this is a string
 }
 ```
 
@@ -102,18 +110,18 @@ wrangler dev --remote       # Remote KV (production)
 ### Single Operations
 
 ```typescript
-import Cloudflare from 'cloudflare';
+import Cloudflare from "cloudflare";
 
 const client = new Cloudflare({
-  apiEmail: process.env.CLOUDFLARE_EMAIL,
-  apiKey: process.env.CLOUDFLARE_API_KEY
+	apiEmail: process.env.CLOUDFLARE_EMAIL,
+	apiKey: process.env.CLOUDFLARE_API_KEY,
 });
 
 // Single key operations
-await client.kv.namespaces.values.update(namespaceId, 'key', {
-  account_id: accountId,
-  value: 'value',
-  expiration_ttl: 3600
+await client.kv.namespaces.values.update(namespaceId, "key", {
+	account_id: accountId,
+	value: "value",
+	expiration_ttl: 3600,
 });
 ```
 
@@ -122,23 +130,23 @@ await client.kv.namespaces.values.update(namespaceId, 'key', {
 ```typescript
 // Bulk update (up to 10,000 keys, max 100MB total)
 await client.kv.namespaces.bulkUpdate(namespaceId, {
-  account_id: accountId,
-  body: [
-    { key: "key1", value: "value1", expiration_ttl: 3600 },
-    { key: "key2", value: "value2", metadata: { version: 1 } },
-    { key: "key3", value: "value3" }
-  ]
+	account_id: accountId,
+	body: [
+		{ key: "key1", value: "value1", expiration_ttl: 3600 },
+		{ key: "key2", value: "value2", metadata: { version: 1 } },
+		{ key: "key3", value: "value3" },
+	],
 });
 
 // Bulk get (up to 100 keys)
 const results = await client.kv.namespaces.bulkGet(namespaceId, {
-  account_id: accountId,
-  keys: ["key1", "key2", "key3"]
+	account_id: accountId,
+	keys: ["key1", "key2", "key3"],
 });
 
 // Bulk delete (up to 10,000 keys)
 await client.kv.namespaces.bulkDelete(namespaceId, {
-  account_id: accountId,
-  keys: ["key1", "key2", "key3"]
+	account_id: accountId,
+	keys: ["key1", "key2", "key3"],
 });
 ```

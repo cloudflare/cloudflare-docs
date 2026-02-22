@@ -97,17 +97,17 @@ Errors include context about the operation:
 
 ```typescript
 try {
-  await sandbox.exec('invalid-command');
+	await sandbox.exec("invalid-command");
 } catch (error) {
-  // error.message includes command and sandbox context
+	// error.message includes command and sandbox context
 }
 ```
 
 For `runCode()`, check `result.error` instead of catching:
 
 ```typescript
-const result = await sandbox.runCode('1/0', { language: 'python' });
+const result = await sandbox.runCode("1/0", { language: "python" });
 if (result.error) {
-  console.error(result.error.name);  // "ZeroDivisionError"
+	console.error(result.error.name); // "ZeroDivisionError"
 }
 ```

@@ -3,7 +3,6 @@ title: Choose a connection method
 pcx_content_type: overview
 sidebar:
   order: 1
-
 ---
 
 There are [multiple ways](/reference-architecture/architectures/sase/#connecting-networks) to onramp traffic from your private networks to Cloudflare. This page will focus on the two software-based methods that are commonly used for a VPN replacement use case: Cloudflare Tunnel via cloudflared and Cloudflare Tunnel via WARP Connector. Both of these methods involve installing lightweight software — either `cloudflared` or Cloudflare WARP — on a host machine in your network. The software creates a secure tunnel, called a Cloudflare Tunnel, to connect services and applications to Cloudflare’s global network.
@@ -20,12 +19,12 @@ WARP Connector is a more flexible and advanced option to connect your network tr
 
 |                                | cloudflared                | WARP Connector                  |
 | ------------------------------ | -------------------------- | ------------------------------- |
-| High availability and failover | ✅                          | Coming soon                     |
-| Bidirectional traffic          | ❌                          | ✅                               |
+| High availability and failover | ✅                         | Coming soon                     |
+| Bidirectional traffic          | ❌                         | ✅                              |
 | Source IP of request           | `cloudflared` host machine | Virtual IP of requesting device |
 | Host machine                   | Linux, macOS, Windows      | AMD Linux                       |
-| IPv4                           | ✅                          | ✅                               |
-| IPv6                           | ✅                          | ❌                               |
+| IPv4                           | ✅                         | ✅                              |
+| IPv6                           | ✅                         | ❌                              |
 | OSI layer                      | L4                         | L3                              |
 | Protocol                       | QUIC or HTTP/2             | WireGuard                       |
 

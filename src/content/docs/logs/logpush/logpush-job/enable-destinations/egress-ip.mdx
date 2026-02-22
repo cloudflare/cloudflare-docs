@@ -37,22 +37,23 @@ The following example shows how to set up logpush and Dedicated CDN Egress IPs t
 1. Register or use an existing zone for the dedicated egress IPs pool.
 2. Contact your account team to get the ID for your dedicated egress IPs pool.
 3. Make a `PATCH` request to the [Edit Zone Setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint:
-  - Specify `aegis` as the setting ID in the URL.
-  - In the request body, set `enabled` to `true` and use the ID from the previous step as `pool_id`.
+
+- Specify `aegis` as the setting ID in the URL.
+- In the request body, set `enabled` to `true` and use the ID from the previous step as `pool_id`.
 
 <APIRequest
-  path="/zones/{zone_id}/settings/{setting_id}"
-  method="PATCH"
-  json={{
-		  "id": "aegis",
-			"value": {
-				"enabled": true,
-				"pool_id": "<YOUR_EGRESS_POOL_ID>",
-				},
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="PATCH"
+	json={{
+		id: "aegis",
+		value: {
+			enabled: true,
+			pool_id: "<YOUR_EGRESS_POOL_ID>",
+		},
 	}}
 	parameters={{
-    setting_id: "aegis",
-  }}
+		setting_id: "aegis",
+	}}
 />
 
 ## 3. Proxy zone setup
@@ -62,7 +63,6 @@ The following example shows how to set up logpush and Dedicated CDN Egress IPs t
 ![Create a DNS record in the Cloudflare dashboard to define the HTTP destination endpoint](~/assets/images/logs/endpoint.png)
 
 2. If needed, configure [origin rules](/rules/origin-rules/) to specify a custom port. This is useful if your destination only accepts traffic on a non standard port, for example `12345`. You can configure `logpush.yourdestinationendpoint.com` (without specifying a port, as Cloudflare by default only proxies traffic on HTTP/HTTPS ports) to proxy to `yourdestinationendpoint.com:12345`.
-
 
 ## 4. Configure Logpush
 

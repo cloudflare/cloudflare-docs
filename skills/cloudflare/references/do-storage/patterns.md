@@ -4,22 +4,22 @@
 
 ```typescript
 export class MyDurableObject extends DurableObject {
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
-    this.sql = ctx.storage.sql;
-    
-    // Use SQLite's built-in user_version pragma
-    const ver = this.sql.exec("PRAGMA user_version").one()?.user_version || 0;
-    
-    if (ver === 0) {
-      this.sql.exec(`CREATE TABLE users(id INTEGER PRIMARY KEY, name TEXT)`);
-      this.sql.exec("PRAGMA user_version = 1");
-    }
-    if (ver === 1) {
-      this.sql.exec(`ALTER TABLE users ADD COLUMN email TEXT`);
-      this.sql.exec("PRAGMA user_version = 2");
-    }
-  }
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.sql = ctx.storage.sql;
+
+		// Use SQLite's built-in user_version pragma
+		const ver = this.sql.exec("PRAGMA user_version").one()?.user_version || 0;
+
+		if (ver === 0) {
+			this.sql.exec(`CREATE TABLE users(id INTEGER PRIMARY KEY, name TEXT)`);
+			this.sql.exec("PRAGMA user_version = 1");
+		}
+		if (ver === 1) {
+			this.sql.exec(`ALTER TABLE users ADD COLUMN email TEXT`);
+			this.sql.exec("PRAGMA user_version = 2");
+		}
+	}
 }
 ```
 
@@ -27,22 +27,22 @@ export class MyDurableObject extends DurableObject {
 
 ```typescript
 export class UserCache extends DurableObject {
-  cache = new Map<string, User>();
-  async getUser(id: string): Promise<User | undefined> {
-    if (this.cache.has(id)) {
-      const cached = this.cache.get(id);
-      if (cached) return cached;
-    }
-    const user = await this.ctx.storage.get<User>(`user:${id}`);
-    if (user) this.cache.set(id, user);
-    return user;
-  }
-  async updateUser(id: string, data: Partial<User>) {
-    const updated = { ...await this.getUser(id), ...data };
-    this.cache.set(id, updated);
-    await this.ctx.storage.put(`user:${id}`, updated);
-    return updated;
-  }
+	cache = new Map<string, User>();
+	async getUser(id: string): Promise<User | undefined> {
+		if (this.cache.has(id)) {
+			const cached = this.cache.get(id);
+			if (cached) return cached;
+		}
+		const user = await this.ctx.storage.get<User>(`user:${id}`);
+		if (user) this.cache.set(id, user);
+		return user;
+	}
+	async updateUser(id: string, data: Partial<User>) {
+		const updated = { ...(await this.getUser(id)), ...data };
+		this.cache.set(id, updated);
+		await this.ctx.storage.put(`user:${id}`, updated);
+		return updated;
+	}
 }
 ```
 
@@ -50,14 +50,28 @@ export class UserCache extends DurableObject {
 
 ```typescript
 export class RateLimiter extends DurableObject {
-  async checkLimit(key: string, limit: number, window: number): Promise<boolean> {
-    const now = Date.now();
-    this.sql.exec('DELETE FROM requests WHERE key = ? AND timestamp < ?', key, now - window);
-    const count = this.sql.exec('SELECT COUNT(*) as count FROM requests WHERE key = ?', key).one().count;
-    if (count >= limit) return false;
-    this.sql.exec('INSERT INTO requests (key, timestamp) VALUES (?, ?)', key, now);
-    return true;
-  }
+	async checkLimit(
+		key: string,
+		limit: number,
+		window: number,
+	): Promise<boolean> {
+		const now = Date.now();
+		this.sql.exec(
+			"DELETE FROM requests WHERE key = ? AND timestamp < ?",
+			key,
+			now - window,
+		);
+		const count = this.sql
+			.exec("SELECT COUNT(*) as count FROM requests WHERE key = ?", key)
+			.one().count;
+		if (count >= limit) return false;
+		this.sql.exec(
+			"INSERT INTO requests (key, timestamp) VALUES (?, ?)",
+			key,
+			now,
+		);
+		return true;
+	}
 }
 ```
 
@@ -65,16 +79,20 @@ export class RateLimiter extends DurableObject {
 
 ```typescript
 export class BatchProcessor extends DurableObject {
-  pending: string[] = [];
-  async addItem(item: string) {
-    this.pending.push(item);
-    if (!await this.ctx.storage.getAlarm()) await this.ctx.storage.setAlarm(Date.now() + 5000);
-  }
-  async alarm() {
-    const items = [...this.pending];
-    this.pending = [];
-    this.sql.exec(`INSERT INTO processed_items (item, timestamp) VALUES ${items.map(() => "(?, ?)").join(", ")}`, ...items.flatMap(item => [item, Date.now()]));
-  }
+	pending: string[] = [];
+	async addItem(item: string) {
+		this.pending.push(item);
+		if (!(await this.ctx.storage.getAlarm()))
+			await this.ctx.storage.setAlarm(Date.now() + 5000);
+	}
+	async alarm() {
+		const items = [...this.pending];
+		this.pending = [];
+		this.sql.exec(
+			`INSERT INTO processed_items (item, timestamp) VALUES ${items.map(() => "(?, ?)").join(", ")}`,
+			...items.flatMap((item) => [item, Date.now()]),
+		);
+	}
 }
 ```
 
@@ -82,16 +100,18 @@ export class BatchProcessor extends DurableObject {
 
 ```typescript
 export class Counter extends DurableObject {
-  value: number;
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
-    ctx.blockConcurrencyWhile(async () => { this.value = (await ctx.storage.get("value")) || 0; });
-  }
-  async increment() {
-    this.value++;
-    this.ctx.storage.put("value", this.value); // Don't await (output gate protects)
-    return this.value;
-  }
+	value: number;
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		ctx.blockConcurrencyWhile(async () => {
+			this.value = (await ctx.storage.get("value")) || 0;
+		});
+	}
+	async increment() {
+		this.value++;
+		this.ctx.storage.put("value", this.value); // Don't await (output gate protects)
+		return this.value;
+	}
 }
 ```
 
@@ -120,29 +140,40 @@ Hierarchical DO pattern where parent manages child DOs:
 ```typescript
 // Parent DO coordinates children
 export class Workspace extends DurableObject {
-  async createDocument(name: string): Promise<string> {
-    const docId = crypto.randomUUID();
-    const childId = this.env.DOCUMENT.idFromName(`${this.ctx.id.toString()}:${docId}`);
-    const childStub = this.env.DOCUMENT.get(childId);
-    await childStub.initialize(name);
-    
-    // Track child in parent storage
-    this.sql.exec('INSERT INTO documents (id, name, created) VALUES (?, ?, ?)', 
-      docId, name, Date.now());
-    return docId;
-  }
-  
-  async listDocuments(): Promise<string[]> {
-    return this.sql.exec('SELECT id FROM documents').toArray().map(r => r.id);
-  }
+	async createDocument(name: string): Promise<string> {
+		const docId = crypto.randomUUID();
+		const childId = this.env.DOCUMENT.idFromName(
+			`${this.ctx.id.toString()}:${docId}`,
+		);
+		const childStub = this.env.DOCUMENT.get(childId);
+		await childStub.initialize(name);
+
+		// Track child in parent storage
+		this.sql.exec(
+			"INSERT INTO documents (id, name, created) VALUES (?, ?, ?)",
+			docId,
+			name,
+			Date.now(),
+		);
+		return docId;
+	}
+
+	async listDocuments(): Promise<string[]> {
+		return this.sql
+			.exec("SELECT id FROM documents")
+			.toArray()
+			.map((r) => r.id);
+	}
 }
 
 // Child DO
 export class Document extends DurableObject {
-  async initialize(name: string) {
-    this.sql.exec('CREATE TABLE IF NOT EXISTS content(key TEXT PRIMARY KEY, value TEXT)');
-    this.sql.exec('INSERT INTO content VALUES (?, ?)', 'name', name);
-  }
+	async initialize(name: string) {
+		this.sql.exec(
+			"CREATE TABLE IF NOT EXISTS content(key TEXT PRIMARY KEY, value TEXT)",
+		);
+		this.sql.exec("INSERT INTO content VALUES (?, ?)", "name", name);
+	}
 }
 ```
 
@@ -155,7 +186,7 @@ async updateMetrics(userId: string, actions: Action[]) {
   // All writes coalesce - no await needed
   for (const action of actions) {
     this.ctx.storage.put(`user:${userId}:lastAction`, action.type);
-    this.ctx.storage.put(`user:${userId}:count`, 
+    this.ctx.storage.put(`user:${userId}:count`,
       await this.ctx.storage.get(`user:${userId}:count`) + 1);
   }
   // Output gate ensures all writes confirm before response

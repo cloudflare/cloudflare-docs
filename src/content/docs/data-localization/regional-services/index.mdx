@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Regional Services
 sidebar:
   order: 6
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 Regional Services gives you the ability to accommodate regional restrictions by choosing which subset of data centers decrypt and service HTTPS traffic.
 
@@ -20,17 +19,17 @@ Regional Services globally ingests traffic, implementing [L3/L4 DDoS mitigations
 
 Regional Services ensures that all edge application services operate within the selected region. This includes (the following list is not exhaustive):
 
-* Storing and retrieving content from Cache.
-* Blocking malicious HTTP payloads with the Web Application Firewall (WAF).
-* Detecting and blocking suspicious activity with Bot Management.
-* Running Cloudflare Workers scripts.
-* Load Balancing traffic to the best origin servers (or other <GlossaryTooltip term="endpoint">endpoints</GlossaryTooltip>).
+- Storing and retrieving content from Cache.
+- Blocking malicious HTTP payloads with the Web Application Firewall (WAF).
+- Detecting and blocking suspicious activity with Bot Management.
+- Running Cloudflare Workers scripts.
+- Load Balancing traffic to the best origin servers (or other <GlossaryTooltip term="endpoint">endpoints</GlossaryTooltip>).
 
 ## Request flow example
 
 The following diagram is a high-level example of the flow of a request coming from an end user located within the US connecting to a website using Cloudflare Regional Services set to EU.
 
-<br/>
+<br />
 
 ```mermaid
 sequenceDiagram
@@ -55,7 +54,7 @@ sequenceDiagram
     CloudflarePoPDUB->>User in US: Forwards response with content
 ```
 
-<br/>
+<br />
 
 ## Additional information
 

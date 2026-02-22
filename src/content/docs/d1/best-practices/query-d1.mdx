@@ -49,15 +49,16 @@ Given the following JSON object (`type:blob`) in a column named `sensor_reading`
 
 ```json
 {
-    "measurement": {
-        "temp_f": "77.4",
-        "aqi": [21, 42, 58],
-        "o3": [18, 500],
-        "wind_mph": "13",
-        "location": "US-NY"
-    }
+	"measurement": {
+		"temp_f": "77.4",
+		"aqi": [21, 42, 58],
+		"o3": [18, 500],
+		"wind_mph": "13",
+		"location": "US-NY"
+	}
 }
 ```
+
 ```sql
 -- Extract the temperature value
 SELECT json_extract(sensor_reading, '$.measurement.temp_f')-- returns "77.4" as TEXT
@@ -77,22 +78,24 @@ This requires you to:
 
 ```js title="index.js"
 export default {
-    async fetch(request, env) {
-        const {pathname} = new URL(request.url);
-        const companyName1 = `Bs Beverages`;
-        const companyName2 = `Around the Horn`;
-        const stmt = env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
+	async fetch(request, env) {
+		const { pathname } = new URL(request.url);
+		const companyName1 = `Bs Beverages`;
+		const companyName2 = `Around the Horn`;
+		const stmt = env.DB.prepare(
+			`SELECT * FROM Customers WHERE CompanyName = ?`,
+		);
 
-        if (pathname === `/RUN`) {
-            const returnValue = await stmt.bind(companyName1).run();
-            return Response.json(returnValue);
-        }
+		if (pathname === `/RUN`) {
+			const returnValue = await stmt.bind(companyName1).run();
+			return Response.json(returnValue);
+		}
 
-        return new Response(
-            `Welcome to the D1 API Playground!
+		return new Response(
+			`Welcome to the D1 API Playground!
 						\nChange the URL to test the various methods inside your index.js file.`,
-        );
-    },
+		);
+	},
 };
 ```
 
@@ -111,6 +114,7 @@ You can use Wrangler commands to query a D1 database. Note that Wrangler command
 ```sh
 npx wrangler d1 execute prod-d1-tutorial --command="SELECT * FROM Customers"
 ```
+
 ```sh output
 🌀 Mapping SQL input into an array of statements
 🌀 Executing on local database production-db-backend (<DATABASE_ID>) from .wrangler/state/v3/d1:

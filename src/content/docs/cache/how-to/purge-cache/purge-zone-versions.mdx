@@ -3,7 +3,6 @@ title: Purge zone versions via API
 pcx_content_type: how-to
 sidebar:
   order: 8
-
 ---
 
 To purge zone versions via the Cloudflare API, follow these steps:
@@ -20,44 +19,44 @@ This API call will return a JSON response similar to the example below:
 
 ```json
 {
-  "result": {
-    "environments": [
-      {
-        "name": "Production",
-        "ref": "12abcd3e45f678940a573f51834a54",
-        "version": 0,
-        "expression": "(cf.zone.name eq \"example.com\")",
-        "locked_on_deployment": false,
-        "position": {
-          "before": "5d41402abc4b2a76b9719d911017c"
-        }
-      },
-      {
-        "name": "Staging",
-        "ref": "5d41402abc4b2a76b9719d911017c",
-        "version": 0,
-        "expression": "((cf.edge.server_ip in {1.2.3.4 5.6.7.8})) and (cf.zone.name eq \"example.com\")",
-        "locked_on_deployment": false,
-        "position": {
-          "before": "49f0bad299687c62334182178bfd",
-          "after": "12abcd3e45f678940a573f51834a54"
-        }
-      },
-      {
-        "name": "Development",
-        "ref": "49f0bad299687c62334182178bfd",
-        "version": 0,
-        "expression": "((any(http.request.cookies[\"development\"][*] eq \"true\"))) and (cf.zone.name eq \"example.com\")",
-        "locked_on_deployment": false,
-        "position": {
-          "after": "5d41402abc4b2a76b9719d911017c"
-        }
-      }
-    ]
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"environments": [
+			{
+				"name": "Production",
+				"ref": "12abcd3e45f678940a573f51834a54",
+				"version": 0,
+				"expression": "(cf.zone.name eq \"example.com\")",
+				"locked_on_deployment": false,
+				"position": {
+					"before": "5d41402abc4b2a76b9719d911017c"
+				}
+			},
+			{
+				"name": "Staging",
+				"ref": "5d41402abc4b2a76b9719d911017c",
+				"version": 0,
+				"expression": "((cf.edge.server_ip in {1.2.3.4 5.6.7.8})) and (cf.zone.name eq \"example.com\")",
+				"locked_on_deployment": false,
+				"position": {
+					"before": "49f0bad299687c62334182178bfd",
+					"after": "12abcd3e45f678940a573f51834a54"
+				}
+			},
+			{
+				"name": "Development",
+				"ref": "49f0bad299687c62334182178bfd",
+				"version": 0,
+				"expression": "((any(http.request.cookies[\"development\"][*] eq \"true\"))) and (cf.zone.name eq \"example.com\")",
+				"locked_on_deployment": false,
+				"position": {
+					"after": "5d41402abc4b2a76b9719d911017c"
+				}
+			}
+		]
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -73,7 +72,7 @@ https://api.cloudflare.com/client/v4/zones/<zone_id>/purge_cache/
 
 To purge non-production environments, you must use a new `purge_cache` endpoint and specify the environment you would like to purge.
 
-To purge the Staging environment from the example above, send a request to the following endpoint: 
+To purge the Staging environment from the example above, send a request to the following endpoint:
 
 ```bash
 https://api.cloudflare.com/client/v4/zones/<zone_id>/environments/5d41402abc4b2a76b9719d911017c/purge_cache/

@@ -28,21 +28,21 @@ A sample Network Error Report payload appears as follows:
 
 ```json
 {
-  "age": 20,
-  "type": "network-error",
-  "url": "https://example.com/previous-page",
-  "body": {
-    "elapsed_time": 18,
-    "method": "POST",
-    "phase": "dns",
-    "protocol": "http/1.1",
-    "referrer": "https://example.com/previous-page",
-    "sampling_fraction": 1,
-    "server_ip": "",
-    "status_code": 0,
-    "type": "dns.name_not_resolved",
-    "url": "https://example-host.com/"
-  }
+	"age": 20,
+	"type": "network-error",
+	"url": "https://example.com/previous-page",
+	"body": {
+		"elapsed_time": 18,
+		"method": "POST",
+		"phase": "dns",
+		"protocol": "http/1.1",
+		"referrer": "https://example.com/previous-page",
+		"sampling_fraction": 1,
+		"server_ip": "",
+		"status_code": 0,
+		"type": "dns.name_not_resolved",
+		"url": "https://example-host.com/"
+	}
 }
 ```
 
@@ -50,9 +50,9 @@ A sample Network Error Report payload appears as follows:
 
 Cloudflare uses geolocation lookups to extract the following information from every client IP in a NEL report:
 
-* Client ASN
-* Client country
-* Client metro area
+- Client ASN
+- Client country
+- Client metro area
 
 Cloudflare uses internal lookups to associate the above data with a customer domain and customer account.
 

@@ -23,7 +23,7 @@ Different metrics serve distinct roles in providing insights into your applicati
 
 To create a new dashboard, go to the **Log Explorer** > **Dashboards** page.
 
-   <DashButton url="/?to=/:account/log-explorer/dashboards" />
+<DashButton url="/?to=/:account/log-explorer/dashboards" />
 
 When creating a dashboard, you have two options: building one from scratch or using a pre-designed template.
 
@@ -59,16 +59,15 @@ The available chart types include:
 
 The available metrics and filters vary based on the dataset you want to use. For example, when using the HTTP Requests dataset, you can select **origin response duration** as a metric. You can then choose your preferred aggregation method for that metric, such as total, median, or quantiles. The following table outlines the datasets, fields, and available metrics:
 
-
-| Dataset          | Field                  | Definition | Metrics |
-|-----------------|-----------------|------------|---------|
-| HTTP Requests | Requests | The number of requests sent by a client to a server over the HTTP protocol. | Total |
-| | DNS Response Time | The time taken for a DNS query to be resolved, measured from when a request is made to when a response is received. | Total, Average, Median, 95th percentile, 99th percentile |
-| | Time to First Byte | The duration from when a request is made to when the first byte of the response is received from the server. | Total, Average, Median, 95th percentile, 99th percentile |
-| | Bytes returned to the Client | The amount of data (in bytes) sent from the server to the client in response to requests. | Total, Average, Median, 95th percentile, 99th percentile |
-| | Number of visits | Unique visits or sessions to a website or application. | Total |
-| | Origin response duration | The time taken by the origin server to process and respond to a request. | Total, Average, Median, 95th percentile, 99th percentile |
-| Security Events | Security events | Actions taken by Application Security products such as WAF and Bot Management. | Total |
+| Dataset         | Field                        | Definition                                                                                                          | Metrics                                                  |
+| --------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| HTTP Requests   | Requests                     | The number of requests sent by a client to a server over the HTTP protocol.                                         | Total                                                    |
+|                 | DNS Response Time            | The time taken for a DNS query to be resolved, measured from when a request is made to when a response is received. | Total, Average, Median, 95th percentile, 99th percentile |
+|                 | Time to First Byte           | The duration from when a request is made to when the first byte of the response is received from the server.        | Total, Average, Median, 95th percentile, 99th percentile |
+|                 | Bytes returned to the Client | The amount of data (in bytes) sent from the server to the client in response to requests.                           | Total, Average, Median, 95th percentile, 99th percentile |
+|                 | Number of visits             | Unique visits or sessions to a website or application.                                                              | Total                                                    |
+|                 | Origin response duration     | The time taken by the origin server to process and respond to a request.                                            | Total, Average, Median, 95th percentile, 99th percentile |
+| Security Events | Security events              | Actions taken by Application Security products such as WAF and Bot Management.                                      | Total                                                    |
 
 ##### Filters
 

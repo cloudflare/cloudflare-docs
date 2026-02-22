@@ -1,10 +1,9 @@
 ---
 title: Cache by status code
 pcx_content_type: how-to
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as `STALE` or discarded from cache. Status codes are returned by a resource's origin.
 
@@ -15,10 +14,10 @@ Setting cache TTL based on response status overrides the [default cache behavior
 The maximum caching limit for Free, Pro, and Business customers is 512 MB per file, and the maximum caching limit for Enterprise customers is 5 GB per file. If you need to raise the limits, contact your Customer Success Manager.
 
 <Render
-  file="edge-ttl"
+	file="edge-ttl"
 	product="cache"
 	params={{
-		conditional: "dedicated-cache-tile"
+		conditional: "dedicated-cache-tile",
 	}}
 />
 
@@ -75,9 +74,9 @@ curl --request PUT \
 
 Provide a JSON object containing status codes and their corresponding TTLs. Each key-value pair in the cache TTL by status cache rule has the following syntax:
 
-* `status_code`: An integer value such as 200 or 500. `status_code` matches the exact status code from the origin web server. Valid status codes are between 100-999.
-* `status_code_range`: Integer values for `from` and `to`. `status_code_range` matches any status code from the origin web server within the specified range.
-* `value`: An integer value that defines the duration an asset is valid in seconds or one of the following strings: `no-store` (equivalent to `-1`), `no-cache` (equivalent to `0`).
+- `status_code`: An integer value such as 200 or 500. `status_code` matches the exact status code from the origin web server. Valid status codes are between 100-999.
+- `status_code_range`: Integer values for `from` and `to`. `status_code_range` matches any status code from the origin web server within the specified range.
+- `value`: An integer value that defines the duration an asset is valid in seconds or one of the following strings: `no-store` (equivalent to `-1`), `no-cache` (equivalent to `0`).
 
 ## Set cache TTL by response status via a Cloudflare Worker
 

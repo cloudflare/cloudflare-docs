@@ -11,11 +11,13 @@ Deploying static site to Workers is now easier. When you run `wrangler deploy [d
 ## Before and after
 
 **Before:** Required remembering multiple flags and parameters
+
 ```bash
 wrangler deploy --assets ./dist --compatibility-date 2025-09-09 --name my-project
 ```
 
 **After:** Simple directory deployment with guided setup
+
 ```bash
 wrangler deploy dist
 # Interactive prompts handle the rest as shown in the example flow below
@@ -24,12 +26,14 @@ wrangler deploy dist
 ## What's new
 
 **Interactive prompts for missing configuration:**
+
 - Wrangler detects when you're trying to deploy a directory of static assets
 - Prompts you to confirm the deployment type
 - Asks for a project name (with smart defaults)
 - Automatically sets the compatibility date to today
 
 **Automatic configuration generation:**
+
 - Creates a `wrangler.jsonc` file with your deployment settings
 - Stores your choices for future deployments
 - Eliminates the need to remember complex command-line flags
@@ -60,4 +64,3 @@ wrangler deploy
 ## Requirements
 
 - You must use Wrangler version 4.24.4 or later in order to use this feature
-

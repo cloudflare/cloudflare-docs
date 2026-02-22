@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Hash steering
-
 ---
 
 **Hash steering** guides Cloudflare to send requests to endpoints based on a combination of [endpoint weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) and previous requests from that IP address. Ensures requests from the same IP address will hit the same endpoint, but actual traffic distribution may differ from endpoint weights.
@@ -20,6 +19,3 @@ When a request originates from a browser, it lacks an `x-forwarded-for` header, 
 ### Workaround
 
 To ensure Hash Steering works correctly when using a Worker in front of a Load Balancer, manually set the `x-forwarded-for` header in the Worker to the client's original IP address. By manually setting `x-forwarded-for` to `CF-Connecting-IP`, Hash Steering will function as expected, ensuring traffic consistency for end users.
-
-
-

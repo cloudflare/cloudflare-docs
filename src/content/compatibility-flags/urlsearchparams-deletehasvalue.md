@@ -21,7 +21,7 @@ For an example of how this change could break existing code, consider code that 
 ```js
 const usp = new URLSearchParams();
 // ...
-['abc', 'xyz'].forEach(usp.delete.bind(usp));
+["abc", "xyz"].forEach(usp.delete.bind(usp));
 ```
 
 The `forEach()` automatically passes multiple parameters to the function that is passed in. Prior to the addition of the new standard parameters, these extra arguments would have been ignored.
@@ -31,5 +31,5 @@ Now, however, the additional arguments have meaning and change the behavior of t
 ```js
 const usp = new URLSearchParams();
 // ...
-['abc', 'xyz'].forEach((key) => usp.delete(key));
+["abc", "xyz"].forEach((key) => usp.delete(key));
 ```

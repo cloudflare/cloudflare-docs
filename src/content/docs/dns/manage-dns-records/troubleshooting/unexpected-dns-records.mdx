@@ -6,9 +6,9 @@ sidebar:
   label: Unexpected DNS records
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
-## Additional	records after import
+## Additional records after import
 
 You find several unexpected DNS records after adding your domain to Cloudflare.
 
@@ -23,10 +23,9 @@ To solve this issue, you can do one of the following:
 - [Delete records in bulk](/dns/manage-dns-records/how-to/batch-record-changes/#delete-records-in-bulk).
 
 - Remove and re-add your domain:
-
-   1. [Remove your domain](/fundamentals/manage-domains/remove-domain/) from Cloudflare.
-   2. Delete the wildcard record from your authoritative DNS.
-   3. [Re-add](/fundamentals/manage-domains/add-site/) the domain.
+  1.  [Remove your domain](/fundamentals/manage-domains/remove-domain/) from Cloudflare.
+  2.  Delete the wildcard record from your authoritative DNS.
+  3.  [Re-add](/fundamentals/manage-domains/add-site/) the domain.
 
 ---
 
@@ -46,8 +45,8 @@ If you need more `_acme-challenge.<hostname>` TXT records in order to provision 
 
 If you want to remove these records:
 
- * [Disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) to remove the records related to universal and backup certificates.
- * [Delete advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) to remove the records related to advanced certificates.
+- [Disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) to remove the records related to universal and backup certificates.
+- [Delete advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) to remove the records related to advanced certificates.
 
 ---
 

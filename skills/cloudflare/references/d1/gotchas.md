@@ -44,16 +44,16 @@
 
 ## Plan Tier Limits
 
-| Limit | Free Tier | Paid Plans | Notes |
-|-------|-----------|------------|-------|
-| Database size | 500 MB | 10 GB | Design for multiple DBs per tenant on paid |
-| Row size | 1 MB | 1 MB | Store large files in R2, not D1 |
-| Query timeout | 30s | 30s (900s with sessions) | Use sessions API for migrations |
-| Batch size | 1,000 statements | 10,000 statements | Split large batches accordingly |
-| Time Travel | 7 days | 30 days | Point-in-time recovery window |
-| Read replicas | ❌ Not available | ✅ Available | Paid add-on for lower latency |
-| Sessions API | ❌ Not available | ✅ Up to 15 min | For migrations and heavy operations |
-| Concurrent requests | 10,000/min | Higher | Contact support for custom limits |
+| Limit               | Free Tier        | Paid Plans               | Notes                                      |
+| ------------------- | ---------------- | ------------------------ | ------------------------------------------ |
+| Database size       | 500 MB           | 10 GB                    | Design for multiple DBs per tenant on paid |
+| Row size            | 1 MB             | 1 MB                     | Store large files in R2, not D1            |
+| Query timeout       | 30s              | 30s (900s with sessions) | Use sessions API for migrations            |
+| Batch size          | 1,000 statements | 10,000 statements        | Split large batches accordingly            |
+| Time Travel         | 7 days           | 30 days                  | Point-in-time recovery window              |
+| Read replicas       | ❌ Not available | ✅ Available             | Paid add-on for lower latency              |
+| Sessions API        | ❌ Not available | ✅ Up to 15 min          | For migrations and heavy operations        |
+| Concurrent requests | 10,000/min       | Higher                   | Contact support for custom limits          |
 
 ## Production Gotchas
 

@@ -12,6 +12,7 @@ disable_flag: "disable_weak_ref"
 ---
 
 Enables the use of [`FinalizationRegistry`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry) and [`WeakRef`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef) built-ins.
+
 - `FinalizationRegistry` allows you to register a cleanup callback that runs after an object has been garbage-collected.
 - `WeakRef` creates a weak reference to an object, allowing it to be garbage-collected if no other strong references exist.
 

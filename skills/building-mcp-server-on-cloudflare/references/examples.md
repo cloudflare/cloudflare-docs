@@ -36,6 +36,7 @@ npm create cloudflare@latest -- my-mcp-server \
 **Main repository:** `github.com/cloudflare/ai` (check demos directory)
 
 Other authentication providers:
+
 - Auth0
 - WorkOS AuthKit
 - Logto
@@ -48,14 +49,14 @@ Other authentication providers:
 
 ## Selection Matrix
 
-| Goal | Boilerplate |
-|------|-------------|
-| Testing/learning | authless |
-| GitHub API access | github-oauth |
-| Google API access | google-oauth |
-| Enterprise auth | auth0 / authkit |
-| Slack apps | slack-oauth |
-| Zero Trust | cf-access |
+| Goal              | Boilerplate     |
+| ----------------- | --------------- |
+| Testing/learning  | authless        |
+| GitHub API access | github-oauth    |
+| Google API access | google-oauth    |
+| Enterprise auth   | auth0 / authkit |
+| Slack apps        | slack-oauth     |
+| Zero Trust        | cf-access       |
 
 ---
 
@@ -90,12 +91,12 @@ npx wrangler deploy
 
 ```json
 {
-  "mcpServers": {
-    "my-server": {
-      "command": "npx",
-      "args": ["mcp-remote", "https://my-mcp-server.my-account.workers.dev/mcp"]
-    }
-  }
+	"mcpServers": {
+		"my-server": {
+			"command": "npx",
+			"args": ["mcp-remote", "https://my-mcp-server.my-account.workers.dev/mcp"]
+		}
+	}
 }
 ```
 

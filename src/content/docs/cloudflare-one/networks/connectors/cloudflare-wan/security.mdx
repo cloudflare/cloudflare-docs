@@ -6,14 +6,15 @@ sidebar:
 head:
   - tag: title
     content: Enable security filters
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="cloudflare-wan/security-filters"
+<Render
+	file="cloudflare-wan/security-filters"
 	product="networking-services"
 	params={{
-		gatewayURL: "/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-gateway/"
+		gatewayURL:
+			"/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-gateway/",
 	}}
 />

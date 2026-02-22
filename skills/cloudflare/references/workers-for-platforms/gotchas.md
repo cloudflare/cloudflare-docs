@@ -9,13 +9,13 @@
 
 ```typescript
 try {
-  const userWorker = env.DISPATCHER.get(workerName);
-  return userWorker.fetch(request);
+	const userWorker = env.DISPATCHER.get(workerName);
+	return userWorker.fetch(request);
 } catch (e) {
-  if (e.message.startsWith("Worker not found")) {
-    return new Response("Worker not found", { status: 404 });
-  }
-  throw e;  // Re-throw unexpected errors
+	if (e.message.startsWith("Worker not found")) {
+		return new Response("Worker not found", { status: 404 });
+	}
+	throw e; // Re-throw unexpected errors
 }
 ```
 
@@ -66,17 +66,17 @@ try {
 
 ```typescript
 async function deployWithBackoff(deploy: () => Promise<void>, maxRetries = 3) {
-  for (let i = 0; i < maxRetries; i++) {
-    try {
-      return await deploy();
-    } catch (e) {
-      if (e.status === 429 && i < maxRetries - 1) {
-        await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
-        continue;
-      }
-      throw e;
-    }
-  }
+	for (let i = 0; i < maxRetries; i++) {
+		try {
+			return await deploy();
+		} catch (e) {
+			if (e.status === 429 && i < maxRetries - 1) {
+				await new Promise((r) => setTimeout(r, Math.pow(2, i) * 1000));
+				continue;
+			}
+			throw e;
+		}
+	}
 }
 ```
 
@@ -92,43 +92,43 @@ async function deployWithBackoff(deploy: () => Promise<void>, maxRetries = 3) {
 
 ## Platform Limits
 
-| Limit | Value | Notes |
-|-------|-------|-------|
-| Workers per namespace | Unlimited | Unlike regular Workers (500 per account) |
-| Namespaces per account | Unlimited | Best practice: 1 production + 1 staging |
-| Max tags per Worker | 8 | For filtering and organization |
-| Worker mode | Untrusted (default) | No `request.cf` access unless trusted mode |
-| Cache isolation | Per-Worker (untrusted) | Shared in trusted mode with key prefixes |
-| Durable Object namespaces | Unlimited | No per-account limit for WfP |
-| Gradual Deployments | Not supported | All-at-once only |
-| `caches.default` | Disabled (untrusted) | Use Cache API with custom keys |
+| Limit                     | Value                  | Notes                                      |
+| ------------------------- | ---------------------- | ------------------------------------------ |
+| Workers per namespace     | Unlimited              | Unlike regular Workers (500 per account)   |
+| Namespaces per account    | Unlimited              | Best practice: 1 production + 1 staging    |
+| Max tags per Worker       | 8                      | For filtering and organization             |
+| Worker mode               | Untrusted (default)    | No `request.cf` access unless trusted mode |
+| Cache isolation           | Per-Worker (untrusted) | Shared in trusted mode with key prefixes   |
+| Durable Object namespaces | Unlimited              | No per-account limit for WfP               |
+| Gradual Deployments       | Not supported          | All-at-once only                           |
+| `caches.default`          | Disabled (untrusted)   | Use Cache API with custom keys             |
 
 ## Asset Upload Limits
 
-| Limit | Value | Notes |
-|-------|-------|-------|
-| Upload session JWT validity | 1 hour | Must complete upload within this time |
-| Completion token validity | 1 hour | Must deploy within this time after upload |
-| Asset hash format | First 16 bytes SHA-256 | 32 hex characters |
-| Base64 encoding | Required | For binary files |
+| Limit                       | Value                  | Notes                                     |
+| --------------------------- | ---------------------- | ----------------------------------------- |
+| Upload session JWT validity | 1 hour                 | Must complete upload within this time     |
+| Completion token validity   | 1 hour                 | Must deploy within this time after upload |
+| Asset hash format           | First 16 bytes SHA-256 | 32 hex characters                         |
+| Base64 encoding             | Required               | For binary files                          |
 
 ## API Rate Limits
 
-| Limit Type | Value | Scope |
-|------------|-------|-------|
-| Client API | 1200 requests / 5 min | Per account |
-| Client API | 200 requests / sec | Per IP address |
-| GraphQL | Varies by query cost | Query complexity |
+| Limit Type | Value                 | Scope            |
+| ---------- | --------------------- | ---------------- |
+| Client API | 1200 requests / 5 min | Per account      |
+| Client API | 200 requests / sec    | Per IP address   |
+| GraphQL    | Varies by query cost  | Query complexity |
 
 See [Cloudflare API Rate Limits](https://developers.cloudflare.com/fundamentals/api/reference/limits/) for details.
 
 ## Operational Limits
 
-| Operation | Limit | Notes |
-|-----------|-------|-------|
-| CPU time (custom limits) | Up to Workers plan limit | Set per-invocation in dispatch worker |
-| Subrequests (custom limits) | Up to Workers plan limit | Set per-invocation in dispatch worker |
-| Outbound Worker subrequests | Not intercepted for DO/mTLS | Only regular fetch() calls |
-| TCP sockets with outbound | Disabled | `connect()` API unavailable |
+| Operation                   | Limit                       | Notes                                 |
+| --------------------------- | --------------------------- | ------------------------------------- |
+| CPU time (custom limits)    | Up to Workers plan limit    | Set per-invocation in dispatch worker |
+| Subrequests (custom limits) | Up to Workers plan limit    | Set per-invocation in dispatch worker |
+| Outbound Worker subrequests | Not intercepted for DO/mTLS | Only regular fetch() calls            |
+| TCP sockets with outbound   | Disabled                    | `connect()` API unavailable           |
 
 See [README.md](./README.md), [configuration.md](./configuration.md), [api.md](./api.md), [patterns.md](./patterns.md)

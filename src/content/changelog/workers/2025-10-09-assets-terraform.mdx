@@ -5,7 +5,8 @@ products:
   - workers
 date: 2025-10-09
 ---
-import { Code } from 'astro-expressive-code/components';
+
+import { Code } from "astro-expressive-code/components";
 
 You can now upload Workers with [static assets](/workers/static-assets/) (like HTML, CSS, JavaScript, images) with the [Cloudflare Terraform provider v5.11.0](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs), making it even easier to deploy and manage full-stack apps with IaC.
 
@@ -15,13 +16,11 @@ You can now upload Workers with [static assets](/workers/static-assets/) (like H
 
 You can get started today with [the Cloudflare Terraform provider (v5.11.0)](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs), using either the existing [`cloudflare_workers_script` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_script), or the beta [`cloudflare_worker_version` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker_version).
 
-
 ## Examples
 
 #### With `cloudflare_workers_script`
 
 Here's how you can use the existing [`cloudflare_workers_script`](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs/resources/workers_script) resource to upload your Worker code and assets in one shot.
-
 
 ```hcl
 resource "cloudflare_workers_script" "my_app" {
@@ -82,10 +81,11 @@ resource "cloudflare_workers_deployment" "my_app_deployment" {
 ```
 
 ## What's changed
-Under the hood, the Cloudflare Terraform provider now handles the same logic that Wrangler uses for static asset uploads. This includes scanning your assets directory, computing hashes for each file, generating a manifest with file metadata, and calling the Cloudflare API to upload any missing files in chunks. We support large directories with parallel uploads and chunking, and when the asset manifest hash changes, we detect what's changed and trigger an upload for *only* those changed files.
 
+Under the hood, the Cloudflare Terraform provider now handles the same logic that Wrangler uses for static asset uploads. This includes scanning your assets directory, computing hashes for each file, generating a manifest with file metadata, and calling the Cloudflare API to upload any missing files in chunks. We support large directories with parallel uploads and chunking, and when the asset manifest hash changes, we detect what's changed and trigger an upload for _only_ those changed files.
 
 ## Try it out
--  Get started with [the Cloudflare Terraform provider (v5.11.0)](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs)
+
+- Get started with [the Cloudflare Terraform provider (v5.11.0)](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs)
 - You can use either the existing [`cloudflare_workers_script` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_script) to upload your Worker code and assets in one resource.
 - Or you can use the new beta [`cloudflare_worker_version` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker_version) (along with the [`cloudflare_worker`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker) and [`cloudflare_workers_deployment`](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs/resources/workers_deployment)) resources to more granularly control the lifecycle of each Worker resource.

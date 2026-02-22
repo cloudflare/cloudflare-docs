@@ -5,6 +5,7 @@ Expert guidance for Cloudflare D1, a serverless SQLite database designed for hor
 ## Overview
 
 D1 is Cloudflare's managed, serverless database with:
+
 - SQLite SQL semantics and compatibility
 - Built-in disaster recovery via Time Travel (30-day point-in-time recovery)
 - Horizontal scale-out architecture (10 GB per database)
@@ -31,8 +32,14 @@ wrangler dev
 ```typescript
 // .all() - Returns all rows; .first() - First row or null; .first(col) - Single column value
 // .run() - INSERT/UPDATE/DELETE; .raw() - Array of arrays (efficient)
-const { results, success, meta } = await env.DB.prepare('SELECT * FROM users WHERE active = ?').bind(true).all();
-const user = await env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(userId).first();
+const { results, success, meta } = await env.DB.prepare(
+	"SELECT * FROM users WHERE active = ?",
+)
+	.bind(true)
+	.all();
+const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?")
+	.bind(userId)
+	.first();
 ```
 
 ## Batch Operations
@@ -40,9 +47,12 @@ const user = await env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(userI
 ```typescript
 // Multiple queries in single round trip (atomic transaction)
 const results = await env.DB.batch([
-  env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(1),
-  env.DB.prepare('SELECT * FROM posts WHERE author_id = ?').bind(1),
-  env.DB.prepare('UPDATE users SET last_access = ? WHERE id = ?').bind(Date.now(), 1)
+	env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(1),
+	env.DB.prepare("SELECT * FROM posts WHERE author_id = ?").bind(1),
+	env.DB.prepare("UPDATE users SET last_access = ? WHERE id = ?").bind(
+		Date.now(),
+		1,
+	),
 ]);
 ```
 
@@ -52,10 +62,10 @@ const results = await env.DB.batch([
 // Create long-running session for analytics/migrations (up to 15 minutes)
 const session = env.DB.withSession();
 try {
-  await session.prepare('CREATE INDEX idx_heavy ON large_table(column)').run();
-  await session.prepare('ANALYZE').run();
+	await session.prepare("CREATE INDEX idx_heavy ON large_table(column)").run();
+	await session.prepare("ANALYZE").run();
 } finally {
-  session.close(); // Always close to release resources
+	session.close(); // Always close to release resources
 }
 ```
 
@@ -63,22 +73,26 @@ try {
 
 ```typescript
 // Read from nearest replica for lower latency (automatic failover)
-const user = await env.DB_REPLICA.prepare('SELECT * FROM users WHERE id = ?').bind(userId).first();
+const user = await env.DB_REPLICA.prepare("SELECT * FROM users WHERE id = ?")
+	.bind(userId)
+	.first();
 
 // Writes always go to primary
-await env.DB.prepare('UPDATE users SET last_login = ? WHERE id = ?').bind(Date.now(), userId).run();
+await env.DB.prepare("UPDATE users SET last_login = ? WHERE id = ?")
+	.bind(Date.now(), userId)
+	.run();
 ```
 
 ## Platform Limits
 
-| Limit | Free Tier | Paid Plans |
-|-------|-----------|------------|
-| Database size | 500 MB | 10 GB per database |
-| Row size | 1 MB max | 1 MB max |
-| Query timeout | 30 seconds | 30 seconds |
-| Batch size | 1,000 statements | 10,000 statements |
-| Time Travel retention | 7 days | 30 days |
-| Read replicas | Not available | Yes (paid add-on) |
+| Limit                 | Free Tier        | Paid Plans         |
+| --------------------- | ---------------- | ------------------ |
+| Database size         | 500 MB           | 10 GB per database |
+| Row size              | 1 MB max         | 1 MB max           |
+| Query timeout         | 30 seconds       | 30 seconds         |
+| Batch size            | 1,000 statements | 10,000 statements  |
+| Time Travel retention | 7 days           | 30 days            |
+| Read replicas         | Not available    | Yes (paid add-on)  |
 
 **Pricing**: $5/month per database beyond free tier + $0.001 per 1K reads + $1 per 1M writes + $0.75/GB storage/month
 
@@ -114,6 +128,7 @@ wrangler dev --persist-to=./.wrangler/state
 **Start here**: Quick Start above → configuration.md (setup) → api.md (queries)
 
 **Common tasks**:
+
 - First time setup: configuration.md → Run migrations
 - Adding queries: api.md → Prepared statements
 - Pagination/caching: patterns.md

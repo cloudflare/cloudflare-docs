@@ -3,7 +3,6 @@ pcx_content_type: navigation
 title: View and submit reports
 sidebar:
   order: 5
-
 ---
 
 import { DashButton } from "~/components";
@@ -17,8 +16,10 @@ Cloudflare offers three ways for you to submit an abuse report:
 - Public form: Refer to [Submit an Abuse Report](https://abuse.cloudflare.com/) to learn more.
 - The Cloudflare dashboard, on the **Abuse reports** page.
 
-    <DashButton url="/?to=/:account/abuse-reports" />
-  Optionally, filter the reports based on date, report status, report type, and domain.
+  <DashButton url="/?to=/:account/abuse-reports" />
+  Optionally, filter the reports based on date, report status, report type, and
+  domain.
+
 - The Cloudflare API: Use the [Abuse Reports API](/api/resources/abuse_reports/) to submit an abuse report.
 
 ## View submitted reports
@@ -27,7 +28,7 @@ Users with Admin, Super Admin, or Trust & Safety roles can view any abuse report
 
 1. In the Cloudflare dashboard, go to the **Abuse reports** page.
 
-    <DashButton url="/?to=/:account/abuse-reports" />
+   <DashButton url="/?to=/:account/abuse-reports" />
 
 2. Optionally, filter the reports based on date, report status, report type, and domain.
 
@@ -35,6 +36,6 @@ If there was a mitigation against your website due to the abuse allegation, you 
 
 ## Receive notifications
 
-You can enable abuse notifications for your account to configure email, webhook, or PagerDuty alerts about new abuse reports against your websites. 
+You can enable abuse notifications for your account to configure email, webhook, or PagerDuty alerts about new abuse reports against your websites.
 
 For help setting up alerts, refer to [Configure Cloudflare notifications](/notifications/get-started/).

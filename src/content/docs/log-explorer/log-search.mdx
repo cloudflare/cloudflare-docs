@@ -27,33 +27,32 @@ You can filter and view your logs via the Cloudflare dashboard or the API.
 For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), go to **Custom SQL**, and enter the following SQL query:
 
 ```sql
-SELECT 
-	clientRequestScheme, 
-	clientRequestHost, 
-	clientRequestMethod, 
-	edgeResponseStatus, 
-	clientRequestUserAgent 
-FROM http_requests 
-WHERE RayID = '806c30a3cec56817' 
+SELECT
+	clientRequestScheme,
+	clientRequestHost,
+	clientRequestMethod,
+	edgeResponseStatus,
+	clientRequestUserAgent
+FROM http_requests
+WHERE RayID = '806c30a3cec56817'
 LIMIT 1
 ```
-
 
 As another example, to find Cloudflare Access requests with selected columns from a specific timeframe you could perform the following SQL query:
 
 ```sql
-SELECT 
-	CreatedAt, 
-	AppDomain, 
-	AppUUID, 
-	Action, 
-	Allowed, 
-	Country, 
-	RayID, 
-	Email, 
-	IPAddress, 
-	UserUID 
-FROM access_requests 
+SELECT
+	CreatedAt,
+	AppDomain,
+	AppUUID,
+	Action,
+	Allowed,
+	Country,
+	RayID,
+	Email,
+	IPAddress,
+	UserUID
+FROM access_requests
 WHERE Date >= '2025-02-06' AND Date <= '2025-02-06' AND CreatedAt >= '2025-02-06T12:28:39Z' AND CreatedAt <= '2025-02-06T12:58:39Z'
 ```
 
@@ -92,21 +91,21 @@ All the tables supported by Log Explorer contain a special column called `date`,
 
 ```sql
 SELECT
-	clientip, 
-	clientrequesthost, 
-	clientrequestmethod, 
-	clientrequesturi, 
-	edgeendtimestamp, 
-	edgeresponsestatus, 
-	originresponsestatus, 
-	edgestarttimestamp, 
-	rayid, 
-	clientcountry, 
-	clientrequestpath, 
+	clientip,
+	clientrequesthost,
+	clientrequestmethod,
+	clientrequesturi,
+	edgeendtimestamp,
+	edgeresponsestatus,
+	originresponsestatus,
+	edgestarttimestamp,
+	rayid,
+	clientcountry,
+	clientrequestpath,
 	date
-FROM 
+FROM
 	http_requests
-WHERE 
+WHERE
 	date = '2023-10-12' LIMIT 500
 ```
 

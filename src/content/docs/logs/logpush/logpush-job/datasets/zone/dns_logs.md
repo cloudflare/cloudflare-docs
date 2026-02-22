@@ -49,7 +49,7 @@ Whether the response was cached or not.
 
 Type: `int`
 
-Integer value of response code. For more information refer to  [Response code](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6).
+Integer value of response code. For more information refer to [Response code](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6).
 
 ## SourceIP
 

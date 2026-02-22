@@ -56,16 +56,16 @@ See [README.md](./README.md), [configuration.md](./configuration.md), [api.md](.
 
 ## Limits
 
-| Limit | Free | Paid | Notes |
-|-------|------|------|-------|
-| Max configs | 10 | 25 | Hyperdrive configurations per account |
-| Worker connections | 6 | 6 | Max concurrent connections per Worker invocation |
-| Username/DB name | 63 bytes | 63 bytes | Maximum length |
-| Connection timeout | 15s | 15s | Time to establish connection |
-| Idle timeout | 10 min | 10 min | Connection idle timeout |
-| Max origin connections | ~20 | ~100 | Connections to origin database |
-| Query duration max | 60s | 60s | Queries >60s terminated |
-| Cached response max | 50 MB | 50 MB | Responses >50MB returned but not cached |
+| Limit                  | Free     | Paid     | Notes                                            |
+| ---------------------- | -------- | -------- | ------------------------------------------------ |
+| Max configs            | 10       | 25       | Hyperdrive configurations per account            |
+| Worker connections     | 6        | 6        | Max concurrent connections per Worker invocation |
+| Username/DB name       | 63 bytes | 63 bytes | Maximum length                                   |
+| Connection timeout     | 15s      | 15s      | Time to establish connection                     |
+| Idle timeout           | 10 min   | 10 min   | Connection idle timeout                          |
+| Max origin connections | ~20      | ~100     | Connections to origin database                   |
+| Query duration max     | 60s      | 60s      | Queries >60s terminated                          |
+| Cached response max    | 50 MB    | 50 MB    | Responses >50MB returned but not cached          |
 
 ## Resources
 

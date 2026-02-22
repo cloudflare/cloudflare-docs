@@ -13,9 +13,9 @@ With AI Search you can now use models from different providers like OpenAI and A
 To use AI Search with other [model providers](/ai-search/configuration/models/):
 
 1. **Add provider keys to AI Gateway**
-    1. Go to AI > AI Gateway in the dashboard.
-    2. Select or create an AI gateway.
-    3. In Provider Keys, choose your provider, click Add, and enter the key.
+   1. Go to AI > AI Gateway in the dashboard.
+   2. Select or create an AI gateway.
+   3. In Provider Keys, choose your provider, click Add, and enter the key.
 2. **Connect a gateway to AI Search**: When creating a new AI Search, select the AI Gateway with your provider keys. For an existing AI Search, go to Settings and switch to a gateway that has your keys under Resources.
 3. **Select models**: Embedding models are only available to be changed when creating a new AI Search. Generation model can be selected when creating a new AI Search and can be changed at any time in Settings.
 
@@ -23,22 +23,19 @@ Once configured, your AI Search instance will be able to reference models availa
 
 ```javascript
 export default {
-  async fetch(request, env) {
-    
-    // Query your AI Search instance with a natural language question to an OpenAI model
-    const result = await env.AI.autorag("my-ai-search").aiSearch({
-      query: "What's new for Cloudflare Birthday Week?",
-      model: "openai/gpt-5"
-    });
+	async fetch(request, env) {
+		// Query your AI Search instance with a natural language question to an OpenAI model
+		const result = await env.AI.autorag("my-ai-search").aiSearch({
+			query: "What's new for Cloudflare Birthday Week?",
+			model: "openai/gpt-5",
+		});
 
-    // Return only the generated answer as plain text
-    return new Response(result.response, {
-      headers: { "Content-Type": "text/plain" },
-    });
-  },
+		// Return only the generated answer as plain text
+		return new Response(result.response, {
+			headers: { "Content-Type": "text/plain" },
+		});
+	},
 };
 ```
 
 In the coming weeks we will also roll out updates to align the APIs with the new name. The existing APIs will continue to be supported for the time being. Stay tuned to the [AI Search Changelog](/changelog/?product=ai-search) and [Discord](https://discord.cloudflare.com/) for more updates!
-
-

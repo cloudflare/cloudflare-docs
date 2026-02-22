@@ -7,6 +7,7 @@ Expert guidance for Cloudflare Zaraz - server-side tag manager for loading third
 Zaraz offloads third-party scripts (analytics, ads, chat, marketing) to Cloudflare's edge, improving site speed, privacy, and security. Zero client-side performance impact.
 
 **Core Concepts:**
+
 - **Server-side execution** - Scripts run on Cloudflare, not user's browser
 - **Single HTTP request** - All tools loaded via one endpoint
 - **Privacy-first** - Control data sent to third parties
@@ -22,24 +23,26 @@ Zaraz offloads third-party scripts (analytics, ads, chat, marketing) to Cloudfla
 
 ```javascript
 // Track page view
-zaraz.track('page_view');
+zaraz.track("page_view");
 
 // Track custom event
-zaraz.track('button_click', { button_id: 'cta' });
+zaraz.track("button_click", { button_id: "cta" });
 
 // Set user properties
-zaraz.set('userId', 'user_123');
+zaraz.set("userId", "user_123");
 ```
 
 ## When to Use Zaraz
 
 **Use Zaraz when:**
+
 - Adding multiple third-party tools (analytics, ads, marketing)
 - Site performance is critical (no client-side JS overhead)
 - Privacy compliance required (GDPR, CCPA)
 - Non-technical teams need to manage tools
 
 **Use Workers directly when:**
+
 - Building custom server-side tracking logic
 - Need full control over data processing
 - Integrating with complex backend systems
@@ -47,24 +50,24 @@ zaraz.set('userId', 'user_123');
 
 ## In This Reference
 
-| File | Purpose | When to Read |
-|------|---------|--------------|
-| [api.md](./api.md) | Web API, zaraz object, consent methods | Implementing tracking calls |
-| [configuration.md](./configuration.md) | Dashboard setup, triggers, tools | Initial setup, adding tools |
-| [patterns.md](./patterns.md) | SPA, e-commerce, Worker integration | Best practices, common scenarios |
-| [gotchas.md](./gotchas.md) | Troubleshooting, limits, pitfalls | Debugging issues |
+| File                                   | Purpose                                | When to Read                     |
+| -------------------------------------- | -------------------------------------- | -------------------------------- |
+| [api.md](./api.md)                     | Web API, zaraz object, consent methods | Implementing tracking calls      |
+| [configuration.md](./configuration.md) | Dashboard setup, triggers, tools       | Initial setup, adding tools      |
+| [patterns.md](./patterns.md)           | SPA, e-commerce, Worker integration    | Best practices, common scenarios |
+| [gotchas.md](./gotchas.md)             | Troubleshooting, limits, pitfalls      | Debugging issues                 |
 
 ## Reading Order by Task
 
-| Task | Files to Read |
-|------|---------------|
-| Add analytics to site | README → configuration.md |
-| Track custom events | README → api.md |
-| Debug tracking issues | gotchas.md |
-| SPA tracking | api.md → patterns.md (SPA section) |
-| E-commerce tracking | api.md#ecommerce → patterns.md#ecommerce |
-| Worker integration | patterns.md#worker-integration |
-| GDPR compliance | api.md#consent → configuration.md#consent |
+| Task                  | Files to Read                             |
+| --------------------- | ----------------------------------------- |
+| Add analytics to site | README → configuration.md                 |
+| Track custom events   | README → api.md                           |
+| Debug tracking issues | gotchas.md                                |
+| SPA tracking          | api.md → patterns.md (SPA section)        |
+| E-commerce tracking   | api.md#ecommerce → patterns.md#ecommerce  |
+| Worker integration    | patterns.md#worker-integration            |
+| GDPR compliance       | api.md#consent → configuration.md#consent |
 
 ## Decision Tree
 

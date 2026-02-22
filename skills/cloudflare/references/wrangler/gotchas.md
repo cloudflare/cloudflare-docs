@@ -16,6 +16,7 @@
 
 **Cause:** Using local simulation instead of remote execution
 **Solution:** Choose appropriate remote mode:
+
 - `wrangler dev` (default): Local simulation, fast, limited accuracy
 - `wrangler dev --remote`: Full remote execution, production-accurate, slower
 - Use `remote: "minimal"` in tests for fast tests with real remote bindings
@@ -24,10 +25,11 @@
 
 **Cause:** Using local mode when remote resources needed
 **Solution:** Use `remote` option:
+
 ```typescript
-const worker = await startWorker({ 
-  config: "wrangler.jsonc",
-  remote: true  // or "minimal" for faster tests
+const worker = await startWorker({
+	config: "wrangler.jsonc",
+	remote: true, // or "minimal" for faster tests
 });
 ```
 
@@ -35,6 +37,7 @@ const worker = await startWorker({
 
 **Cause:** Missing compatibility_date
 **Solution:** Always set `compatibility_date`:
+
 ```jsonc
 { "compatibility_date": "2025-01-01" }
 ```
@@ -43,13 +46,14 @@ const worker = await startWorker({
 
 **Cause:** Missing script_name for external DOs
 **Solution:** Always specify `script_name` for external Durable Objects:
+
 ```jsonc
 {
-  "durable_objects": {
-    "bindings": [
-      { "name": "MY_DO", "class_name": "MyDO", "script_name": "my-worker" }
-    ]
-  }
+	"durable_objects": {
+		"bindings": [
+			{ "name": "MY_DO", "class_name": "MyDO", "script_name": "my-worker" },
+		],
+	},
 }
 ```
 
@@ -69,6 +73,7 @@ For local DOs in same Worker, `script_name` is optional.
 
 **Cause:** Missing Node.js compatibility flag
 **Solution:** Some bindings (Hyperdrive with `pg`) require:
+
 ```jsonc
 { "compatibility_flags": ["nodejs_compat_v2"] }
 ```
@@ -76,17 +81,19 @@ For local DOs in same Worker, `script_name` is optional.
 ### "Workers Assets 404 errors"
 
 **Cause:** Asset path mismatch or incorrect `html_handling`
-**Solution:** 
+**Solution:**
+
 - Check `assets.directory` points to correct build output
 - Set `html_handling: "auto-trailing-slash"` for SPAs
 - Use `not_found_handling: "single-page-application"` to serve index.html for 404s
+
 ```jsonc
 {
-  "assets": {
-    "directory": "./dist",
-    "html_handling": "auto-trailing-slash",
-    "not_found_handling": "single-page-application"
-  }
+	"assets": {
+		"directory": "./dist",
+		"html_handling": "auto-trailing-slash",
+		"not_found_handling": "single-page-application",
+	},
 }
 ```
 
@@ -94,49 +101,53 @@ For local DOs in same Worker, `script_name` is optional.
 
 **Cause:** Misunderstanding of Smart Placement
 **Solution:** Smart Placement only helps when Worker accesses D1 or Durable Objects. It doesn't affect KV, R2, or external API latency.
+
 ```jsonc
-{ "placement": { "mode": "smart" } }  // Only beneficial with D1/DOs
+{ "placement": { "mode": "smart" } } // Only beneficial with D1/DOs
 ```
 
 ### "unstable_startWorker not found"
 
 **Cause:** Using outdated API
 **Solution:** Use stable `startWorker` instead:
+
 ```typescript
-import { startWorker } from "wrangler";  // Not unstable_startWorker
+import { startWorker } from "wrangler"; // Not unstable_startWorker
 ```
 
 ### "outboundService not mocking fetch"
 
 **Cause:** Mock function not returning Response
 **Solution:** Always return Response, use `fetch(req)` for passthrough:
+
 ```typescript
 const worker = await startWorker({
-  outboundService: (req) => {
-    if (shouldMock(req)) {
-      return new Response("mocked");
-    }
-    return fetch(req);  // Required for non-mocked requests
-  }
+	outboundService: (req) => {
+		if (shouldMock(req)) {
+			return new Response("mocked");
+		}
+		return fetch(req); // Required for non-mocked requests
+	},
 });
 ```
 
 ## Limits
 
-| Resource/Limit | Value | Notes |
-|----------------|-------|-------|
-| Bindings per Worker | 64 | Total across all types |
-| Environments | Unlimited | Named envs in config |
-| Config file size | ~1MB | Keep reasonable |
-| Workers Assets size | 25 MB | Per deployment |
-| Workers Assets files | 20,000 | Max number of files |
-| Script size (compressed) | 1 MB | Free, 10 MB paid |
-| CPU time | 10-50ms | Free, 50-500ms paid |
-| Subrequest limit | 50 | Free, 1000 paid |
+| Resource/Limit           | Value     | Notes                  |
+| ------------------------ | --------- | ---------------------- |
+| Bindings per Worker      | 64        | Total across all types |
+| Environments             | Unlimited | Named envs in config   |
+| Config file size         | ~1MB      | Keep reasonable        |
+| Workers Assets size      | 25 MB     | Per deployment         |
+| Workers Assets files     | 20,000    | Max number of files    |
+| Script size (compressed) | 1 MB      | Free, 10 MB paid       |
+| CPU time                 | 10-50ms   | Free, 50-500ms paid    |
+| Subrequest limit         | 50        | Free, 1000 paid        |
 
 ## Troubleshooting
 
 ### Authentication Issues
+
 ```bash
 wrangler logout
 wrangler login
@@ -144,17 +155,21 @@ wrangler whoami
 ```
 
 ### Configuration Errors
+
 ```bash
 wrangler check  # Validate config
 ```
+
 Use wrangler.jsonc with `$schema` for validation.
 
 ### Binding Not Available
+
 - Check binding exists in config
 - For environments, ensure binding defined for that env
 - Local dev: some bindings need `--remote`
 
 ### Deployment Failures
+
 ```bash
 wrangler tail              # Check logs
 wrangler deploy --dry-run  # Validate
@@ -162,6 +177,7 @@ wrangler whoami            # Check account limits
 ```
 
 ### Local Development Issues
+
 ```bash
 rm -rf .wrangler/state     # Clear local state
 wrangler dev --remote      # Use remote bindings
@@ -170,12 +186,13 @@ wrangler dev --inspector-port 9229  # Enable debugging
 ```
 
 ### Testing Issues
+
 ```bash
 # If tests hang, ensure dispose() is called
 worker.dispose()  // Always cleanup
 
 # If bindings don't work in tests
-const worker = await startWorker({ 
+const worker = await startWorker({
   config: "wrangler.jsonc",
   remote: "minimal"  // Use remote bindings
 });

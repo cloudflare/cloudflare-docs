@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: SDK ecosystem support policy
 sidebar:
   order: 5
-
 ---
 
 ## Lifecycle
@@ -19,7 +18,7 @@ These lifecycle stages may be referred to in different terms across Cloudflare p
 
 ### Early access
 
-During this stage, Cloudflare makes SDK changes available that we are seeking feedback on prior to releasing for general usage. Early access will  often include warning labels or caveats on functionality that is subject to change without notice. In general, early access SDKs are not suitable for production systems unless explicitly mentioned.
+During this stage, Cloudflare makes SDK changes available that we are seeking feedback on prior to releasing for general usage. Early access will often include warning labels or caveats on functionality that is subject to change without notice. In general, early access SDKs are not suitable for production systems unless explicitly mentioned.
 
 ### Active support
 
@@ -39,13 +38,13 @@ While Cloudflare cannot provide support for all older versions of our libraries 
 
 The SDK ecosystem follows semantic versioning, which defines versions as follows:
 
-* MAJOR version when there are backward-incompatible changes made.
-* MINOR version when functionality is added in a backward compatible-manner.
-* PATCH version for backward-compatible bug fixes (without any improvements).
+- MAJOR version when there are backward-incompatible changes made.
+- MINOR version when functionality is added in a backward compatible-manner.
+- PATCH version for backward-compatible bug fixes (without any improvements).
 
 :::caution
 
-As Cloudflare has recently swapped to [automatically generating our libraries using OpenAPI](https://blog.cloudflare.com/lessons-from-building-an-automated-sdk-pipeline), we have relaxed the strict versioning requirements on the libraries (Terraform is not changing). Minor releases *may* contain breaking changes in the forms of method, structure, or type renames as the service owners stabilize their schemas and iterate on usability improvements.
+As Cloudflare has recently swapped to [automatically generating our libraries using OpenAPI](https://blog.cloudflare.com/lessons-from-building-an-automated-sdk-pipeline), we have relaxed the strict versioning requirements on the libraries (Terraform is not changing). Minor releases _may_ contain breaking changes in the forms of method, structure, or type renames as the service owners stabilize their schemas and iterate on usability improvements.
 
 If this is not suitable for your use case, pin to a known good version or use the previous major version of the library.
 :::
@@ -60,5 +59,5 @@ Alongside the automatic migration approach, we provide documentation on the chan
 
 ## Related resources
 
-* [Semantic versioning definitions](https://semver.org/)
-* [Cloudflare's Terraform documentation](/terraform/)
+- [Semantic versioning definitions](https://semver.org/)
+- [Cloudflare's Terraform documentation](/terraform/)

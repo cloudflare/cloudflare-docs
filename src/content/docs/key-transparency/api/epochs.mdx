@@ -43,7 +43,7 @@ curl 'https://plexi.key-transparency.cloudflare.com/namespaces/{namespace}/audit
 - If `root` is defined for the namespace, the first epoch must match it (number and digest).
 - Epochs must be increasing. Second epoch is 2, third is 3, etc.
 - Epochs must have a unique digest or it will be rejected.
-- Epochs cannot be republished. 
+- Epochs cannot be republished.
 - Digest must be a 32 byte string hex encoded (length 64).
 
 If a namespace is disabled, you receive the following error:

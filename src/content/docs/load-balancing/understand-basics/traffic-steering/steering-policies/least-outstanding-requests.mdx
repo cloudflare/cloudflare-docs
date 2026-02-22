@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Least Outstanding Requests steering - Steering policies
-
 ---
 
 **Least Outstanding Requests steering** allows you to route traffic to pools that currently have the lowest number of outstanding requests.
@@ -19,7 +18,7 @@ Least Outstanding Requests steering is best to use if your pools are easily over
 
 ```json title="Load Balancers"
 {
-  "steering_policy": "least_outstanding_requests"
+	"steering_policy": "least_outstanding_requests"
 }
 ```
 

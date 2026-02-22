@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Querying Workers Analytics Engine from Grafana
-
 ---
 
 Workers Analytics Engine is optimized for powering time series analytics that can be visualized using tools like Grafana. Every event written from the runtime is automatically populated with a `timestamp` field.
@@ -17,10 +16,10 @@ We recommend the use of the [Altinity plugin for Clickhouse](https://grafana.com
 
 Configure the plugin as follows:
 
-* URL: `https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql`. Replace `<account_id>` with your 32 character account ID (available in the Cloudflare dashboard).
-* Leave all auth settings off.
-* Add a custom header with a name of `Authorization` and value set to `Bearer <token>`. Replace `<token>` with suitable API token string (refer to the [SQL API docs](/analytics/analytics-engine/sql-api/#authentication) for more information on this).
-* No other options need to be set.
+- URL: `https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql`. Replace `<account_id>` with your 32 character account ID (available in the Cloudflare dashboard).
+- Leave all auth settings off.
+- Add a custom header with a name of `Authorization` and value set to `Bearer <token>`. Replace `<token>` with suitable API token string (refer to the [SQL API docs](/analytics/analytics-engine/sql-api/#authentication) for more information on this).
+- No other options need to be set.
 
 ## Querying timeseries data
 
@@ -32,8 +31,8 @@ SELECT
     blob1 AS label,
     SUM(_sample_interval * double1) / SUM(_sample_interval) AS average_metric
 FROM dataset_name
-WHERE 
-    timestamp <= NOW() 
+WHERE
+    timestamp <= NOW()
     AND timestamp > NOW() - INTERVAL '1' DAY
 GROUP BY blob1, t
 ORDER BY t

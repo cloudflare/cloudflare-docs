@@ -38,11 +38,18 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/r2/sql/q
 ```
 
 Response:
+
 ```json
 {
-  "success": true,
-  "result": [{"user_id": "user_123", "timestamp": "2025-01-15T10:30:00Z", "status": 200}],
-  "errors": []
+	"success": true,
+	"result": [
+		{
+			"user_id": "user_123",
+			"timestamp": "2025-01-15T10:30:00Z",
+			"status": 200
+		}
+	],
+	"errors": []
 }
 ```
 
@@ -111,6 +118,7 @@ table.append(pa.Table.from_pandas(df, schema=schema))
 ```
 
 Query with R2 SQL:
+
 ```bash
 npx wrangler r2 sql query "my-bucket" "
   SELECT user_id, SUM(page_views)
@@ -125,6 +133,7 @@ See [r2-data-catalog/patterns.md](../r2-data-catalog/patterns.md) for advanced P
 ## Use Cases
 
 ### Log Analytics
+
 ```sql
 -- Error rate by endpoint
 SELECT path, COUNT(*), SUM(CASE WHEN status >= 400 THEN 1 ELSE 0 END) as errors
@@ -143,6 +152,7 @@ GROUP BY status ORDER BY COUNT(*) DESC;
 ```
 
 ### Fraud Detection
+
 ```sql
 -- High-value transactions
 SELECT location, COUNT(*), SUM(amount), AVG(amount)
@@ -156,6 +166,7 @@ GROUP BY merchant_category HAVING COUNT(*) > 10 ORDER BY COUNT(*) DESC;
 ```
 
 ### Business Intelligence
+
 ```sql
 -- Sales by department
 SELECT department, SUM(revenue), AVG(revenue), COUNT(*) FROM sales.transactions
@@ -188,6 +199,7 @@ See [r2-data-catalog/patterns.md](../r2-data-catalog/patterns.md) for more engin
 ## Performance Optimization
 
 ### Partitioning
+
 - **Time-series:** day/hour on timestamp
 - **Geographic:** region/country
 - **Avoid:** High-cardinality keys (user_id)
@@ -200,17 +212,19 @@ PartitionSpec(PartitionField(source_id=1, field_id=1000, transform=DayTransform(
 ```
 
 ### Query Optimization
+
 - **Always use LIMIT** for early termination
 - **Filter on partition keys first**
 - **Multiple filters** for better pruning
 
 ```sql
 -- Better: Multiple filters on partition key
-SELECT * FROM logs.requests 
+SELECT * FROM logs.requests
 WHERE timestamp >= '2025-01-15T00:00:00Z' AND status = 404 AND method = 'GET' LIMIT 100;
 ```
 
 ### File Organization
+
 - **Pipelines roll:** Dev 10-30s, Prod 300+s
 - **Target Parquet:** 100-500MB compressed
 

@@ -4,11 +4,11 @@ Query existing Cloudflare resources to reference in your configurations.
 
 ## v5 Data Source Names
 
-| v4 Name | v5 Name | Notes |
-|---------|---------|-------|
-| `cloudflare_record` | `cloudflare_dns_record` | |
-| `cloudflare_worker_script` | `cloudflare_workers_script` | Note: plural |
-| `cloudflare_access_*` | `cloudflare_zero_trust_*` | Access → Zero Trust |
+| v4 Name                    | v5 Name                     | Notes               |
+| -------------------------- | --------------------------- | ------------------- |
+| `cloudflare_record`        | `cloudflare_dns_record`     |                     |
+| `cloudflare_worker_script` | `cloudflare_workers_script` | Note: plural        |
+| `cloudflare_access_*`      | `cloudflare_zero_trust_*`   | Access → Zero Trust |
 
 ## Zone Data Sources
 
@@ -116,15 +116,15 @@ resource "aws_security_group_rule" "allow_cloudflare" {
 
 ### Import ID Formats
 
-| Resource | Import ID Format |
-|----------|------------------|
-| `cloudflare_zone` | `<zone-id>` |
-| `cloudflare_dns_record` | `<zone-id>/<record-id>` |
-| `cloudflare_workers_script` | `<account-id>/<script-name>` |
+| Resource                          | Import ID Format              |
+| --------------------------------- | ----------------------------- |
+| `cloudflare_zone`                 | `<zone-id>`                   |
+| `cloudflare_dns_record`           | `<zone-id>/<record-id>`       |
+| `cloudflare_workers_script`       | `<account-id>/<script-name>`  |
 | `cloudflare_workers_kv_namespace` | `<account-id>/<namespace-id>` |
-| `cloudflare_r2_bucket` | `<account-id>/<bucket-name>` |
-| `cloudflare_d1_database` | `<account-id>/<database-id>` |
-| `cloudflare_pages_project` | `<account-id>/<project-name>` |
+| `cloudflare_r2_bucket`            | `<account-id>/<bucket-name>`  |
+| `cloudflare_d1_database`          | `<account-id>/<database-id>`  |
+| `cloudflare_pages_project`        | `<account-id>/<project-name>` |
 
 ```bash
 # Example: Import DNS record

@@ -7,6 +7,7 @@
 **Solution:**
 
 Phases execute sequentially (can't be changed):
+
 1. `http_request_firewall_custom` - Custom rules
 2. `http_request_firewall_managed` - Managed rulesets
 3. `http_ratelimit` - Rate limiting
@@ -51,6 +52,7 @@ Test expressions in Security Events before deploying.
 **Solution:**
 
 Skip types:
+
 - `ruleset: 'current'` - Skip remaining rules in current ruleset only
 - `phases: ['phase_name']` - Skip entire phases
 
@@ -83,17 +85,23 @@ Skip types:
 ```typescript
 // WRONG: This deletes all existing rules!
 await client.rulesets.update({
-  zone_id: 'zone_id',
-  ruleset_id: 'ruleset_id',
-  rules: [{ action: 'block', expression: 'cf.waf.score gt 50' }],
+	zone_id: "zone_id",
+	ruleset_id: "ruleset_id",
+	rules: [{ action: "block", expression: "cf.waf.score gt 50" }],
 });
 
 // CORRECT: Get existing rules first
-const ruleset = await client.rulesets.get({ zone_id: 'zone_id', ruleset_id: 'ruleset_id' });
+const ruleset = await client.rulesets.get({
+	zone_id: "zone_id",
+	ruleset_id: "ruleset_id",
+});
 await client.rulesets.update({
-  zone_id: 'zone_id',
-  ruleset_id: 'ruleset_id',
-  rules: [...ruleset.rules, { action: 'block', expression: 'cf.waf.score gt 50' }],
+	zone_id: "zone_id",
+	ruleset_id: "ruleset_id",
+	rules: [
+		...ruleset.rules,
+		{ action: "block", expression: "cf.waf.score gt 50" },
+	],
 });
 ```
 
@@ -112,7 +120,7 @@ const ruleset = await client.rulesets.get({
 console.log(ruleset.rules.map(r => ({ id: r.id, description: r.description })));
 
 // Use correct IDs in overrides
-{ action: 'execute', action_parameters: { id: 'efb7b8c949ac4650a09736fc376e9aee', 
+{ action: 'execute', action_parameters: { id: 'efb7b8c949ac4650a09736fc376e9aee',
   overrides: { rules: [{ id: '5de7edfa648c4d6891dc3e7f84534ffa', action: 'log' }] } } }
 ```
 
@@ -133,6 +141,7 @@ console.log(ruleset.rules.map(r => ({ id: r.id, description: r.description })));
 **Solution:**
 
 Add more characteristics: User-Agent, session cookie, or authorization header
+
 ```typescript
 {
   action: 'block',
@@ -160,16 +169,17 @@ Add more characteristics: User-Agent, session cookie, or authorization header
 
 ## Limits & Quotas
 
-| Resource | Free | Pro | Business | Enterprise |
-|----------|------|-----|----------|------------|
-| Custom rules | 5 | 20 | 100 | 1000 |
-| Rate limiting rules | 1 | 10 | 25 | 100 |
-| Rule expression length | 4096 chars | 4096 chars | 4096 chars | 4096 chars |
-| Rules per ruleset | 75 | 75 | 400 | 1000 |
-| Managed rulesets | Yes | Yes | Yes | Yes |
-| Rate limit characteristics | 2 | 3 | 5 | 5 |
+| Resource                   | Free       | Pro        | Business   | Enterprise |
+| -------------------------- | ---------- | ---------- | ---------- | ---------- |
+| Custom rules               | 5          | 20         | 100        | 1000       |
+| Rate limiting rules        | 1          | 10         | 25         | 100        |
+| Rule expression length     | 4096 chars | 4096 chars | 4096 chars | 4096 chars |
+| Rules per ruleset          | 75         | 75         | 400        | 1000       |
+| Managed rulesets           | Yes        | Yes        | Yes        | Yes        |
+| Rate limit characteristics | 2          | 3          | 5          | 5          |
 
 **Important Notes:**
+
 - Rules execute in order; first match wins (except skip rules)
 - Expression evaluation stops at first `false` in AND chains
 - `matches` regex operator is slower than string operators

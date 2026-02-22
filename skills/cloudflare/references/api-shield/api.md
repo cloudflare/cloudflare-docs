@@ -40,78 +40,92 @@ POST /jwt_validation_rules             # Rule: {name,hostname,token_validation_i
 ## Workers Integration
 
 ### Access JWT Claims
+
 ```js
 export default {
-  async fetch(req, env) {
-    // Access validated JWT payload
-    const jwt = req.cf?.jwt?.payload?.[env.JWT_CONFIG_ID]?.[0];
-    if (jwt) {
-      const userId = jwt.sub;
-      const role = jwt.role;
-    }
-  }
-}
+	async fetch(req, env) {
+		// Access validated JWT payload
+		const jwt = req.cf?.jwt?.payload?.[env.JWT_CONFIG_ID]?.[0];
+		if (jwt) {
+			const userId = jwt.sub;
+			const role = jwt.role;
+		}
+	},
+};
 ```
 
 ### Access mTLS Info
+
 ```js
 export default {
-  async fetch(req, env) {
-    const tls = req.cf?.tlsClientAuth;
-    if (tls?.certVerified === 'SUCCESS') {
-      const fingerprint = tls.certFingerprintSHA256;
-      // Authenticated client
-    }
-  }
-}
+	async fetch(req, env) {
+		const tls = req.cf?.tlsClientAuth;
+		if (tls?.certVerified === "SUCCESS") {
+			const fingerprint = tls.certFingerprintSHA256;
+			// Authenticated client
+		}
+	},
+};
 ```
 
 ### Dynamic JWKS Update
+
 ```js
 export default {
-  async scheduled(event, env) {
-    const jwks = await (await fetch('https://auth.example.com/.well-known/jwks.json')).json();
-    await fetch(`https://api.cloudflare.com/client/v4/zones/${env.ZONE_ID}/api_gateway/token_validation/${env.CONFIG_ID}`, {
-      method: 'PATCH',
-      headers: {'Authorization': `Bearer ${env.CF_API_TOKEN}`, 'Content-Type': 'application/json'},
-      body: JSON.stringify({jwks: JSON.stringify(jwks)})
-    });
-  }
-}
+	async scheduled(event, env) {
+		const jwks = await (
+			await fetch("https://auth.example.com/.well-known/jwks.json")
+		).json();
+		await fetch(
+			`https://api.cloudflare.com/client/v4/zones/${env.ZONE_ID}/api_gateway/token_validation/${env.CONFIG_ID}`,
+			{
+				method: "PATCH",
+				headers: {
+					Authorization: `Bearer ${env.CF_API_TOKEN}`,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ jwks: JSON.stringify(jwks) }),
+			},
+		);
+	},
+};
 ```
 
 ## Firewall Fields
 
 ### Core Fields
+
 ```js
-cf.api_gateway.auth_id_present           // Session ID present
-cf.api_gateway.request_violates_schema   // Schema violation
-cf.api_gateway.fallthrough_triggered     // No endpoint match
-cf.tls_client_auth.cert_verified         // mTLS cert valid
-cf.tls_client_auth.cert_fingerprint_sha256
+cf.api_gateway.auth_id_present; // Session ID present
+cf.api_gateway.request_violates_schema; // Schema violation
+cf.api_gateway.fallthrough_triggered; // No endpoint match
+cf.tls_client_auth.cert_verified; // mTLS cert valid
+cf.tls_client_auth.cert_fingerprint_sha256;
 ```
 
 ### JWT Validation (2026)
+
 ```js
 // Modern validation syntax
-is_jwt_valid(http.request.jwt.payload["{config_id}"][0])
+is_jwt_valid(http.request.jwt.payload["{config_id}"][0]);
 
 // Legacy (still supported)
-cf.api_gateway.jwt_claims_valid
+cf.api_gateway.jwt_claims_valid;
 
 // Extract claims
-lookup_json_string(http.request.jwt.payload["{config_id}"][0], "claim_name")
+lookup_json_string(http.request.jwt.payload["{config_id}"][0], "claim_name");
 ```
 
 ### Risk Labels (2026)
+
 ```js
 // BOLA detection
-cf.api_gateway.cf-risk-bola-enumeration  // Sequential resource access detected
-cf.api_gateway.cf-risk-bola-pollution    // Parameter pollution detected
+cf.api_gateway.cf - risk - bola - enumeration; // Sequential resource access detected
+cf.api_gateway.cf - risk - bola - pollution; // Parameter pollution detected
 
 // Authentication posture
-cf.api_gateway.cf-risk-missing-auth      // Endpoint lacks authentication
-cf.api_gateway.cf-risk-mixed-auth        // Inconsistent auth patterns
+cf.api_gateway.cf - risk - missing - auth; // Endpoint lacks authentication
+cf.api_gateway.cf - risk - mixed - auth; // Inconsistent auth patterns
 ```
 
 ## BOLA Detection

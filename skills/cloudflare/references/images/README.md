@@ -5,6 +5,7 @@
 ## Quick Decision Tree
 
 **Need to:**
+
 - **Transform in Worker?** → [api.md](api.md#workers-binding-api-2026-primary-method) (Workers Binding API)
 - **Upload from Worker?** → [api.md](api.md#upload-from-worker) (REST API)
 - **Upload from client?** → [patterns.md](patterns.md#upload-from-client-direct-creator-upload) (Direct Creator Upload)
@@ -16,28 +17,31 @@
 ## Reading Order
 
 **For building image upload/transform feature:**
+
 1. [configuration.md](configuration.md) - Setup Workers binding
 2. [api.md](api.md#workers-binding-api-2026-primary-method) - Learn transform API
 3. [patterns.md](patterns.md#upload-from-client-direct-creator-upload) - Direct upload pattern
 4. [gotchas.md](gotchas.md) - Check limits and errors
 
 **For URL-based transforms:**
+
 1. [configuration.md](configuration.md#variants-configuration) - Create variants
 2. [api.md](api.md#url-transform-api) - URL syntax
 3. [patterns.md](patterns.md#responsive-images) - Responsive patterns
 
 **For troubleshooting:**
+
 1. [gotchas.md](gotchas.md#common-errors) - Error messages
 2. [gotchas.md](gotchas.md#limits) - Size/format limits
 
 ## Core Methods
 
-| Method | Use Case | Location |
-|--------|----------|----------|
-| `env.IMAGES.input().transform()` | Transform in Worker | [api.md:11](api.md) |
-| REST API `/images/v1` | Upload images | [api.md:57](api.md) |
-| Direct Creator Upload | Client-side upload | [api.md:127](api.md) |
-| URL transforms | Static image delivery | [api.md:112](api.md) |
+| Method                           | Use Case              | Location             |
+| -------------------------------- | --------------------- | -------------------- |
+| `env.IMAGES.input().transform()` | Transform in Worker   | [api.md:11](api.md)  |
+| REST API `/images/v1`            | Upload images         | [api.md:57](api.md)  |
+| Direct Creator Upload            | Client-side upload    | [api.md:127](api.md) |
+| URL transforms                   | Static image delivery | [api.md:112](api.md) |
 
 ## In This Reference
 

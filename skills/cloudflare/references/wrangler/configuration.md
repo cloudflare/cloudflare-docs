@@ -8,12 +8,12 @@ Configuration reference for wrangler.jsonc (recommended).
 
 ```jsonc
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "my-worker",
-  "main": "src/index.ts",
-  "compatibility_date": "2025-01-01",  // Use current date
-  "vars": { "API_KEY": "dev-key" },
-  "kv_namespaces": [{ "binding": "MY_KV", "id": "abc123" }]
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-01-01", // Use current date
+	"vars": { "API_KEY": "dev-key" },
+	"kv_namespaces": [{ "binding": "MY_KV", "id": "abc123" }],
 }
 ```
 
@@ -26,15 +26,15 @@ Non-inheritable (define per env): `vars`, bindings (KV, D1, R2, etc.)
 
 ```jsonc
 {
-  "name": "my-worker",
-  "vars": { "ENV": "dev" },
-  "env": {
-    "production": {
-      "name": "my-worker-prod",
-      "vars": { "ENV": "prod" },
-      "route": { "pattern": "example.com/*", "zone_name": "example.com" }
-    }
-  }
+	"name": "my-worker",
+	"vars": { "ENV": "dev" },
+	"env": {
+		"production": {
+			"name": "my-worker-prod",
+			"vars": { "ENV": "prod" },
+			"route": { "pattern": "example.com/*", "zone_name": "example.com" },
+		},
+	},
 }
 ```
 
@@ -69,12 +69,12 @@ Deploy: `wrangler deploy --env production`
 { "r2_buckets": [{ "binding": "ASSETS", "bucket_name": "my-assets" }] }
 
 // Durable Objects
-{ "durable_objects": { 
-  "bindings": [{ 
-    "name": "COUNTER", 
+{ "durable_objects": {
+  "bindings": [{
+    "name": "COUNTER",
     "class_name": "Counter",
     "script_name": "my-worker"  // Required for external DOs
-  }] 
+  }]
 } }
 { "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Counter"] }] }
 
@@ -113,27 +113,28 @@ Recommended for serving static files (replaces old `site` config).
 
 ```jsonc
 {
-  "assets": {
-    "directory": "./public",
-    "binding": "ASSETS",
-    "html_handling": "auto-trailing-slash",  // or "none", "force-trailing-slash"
-    "not_found_handling": "single-page-application"  // or "404-page", "none"
-  }
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS",
+		"html_handling": "auto-trailing-slash", // or "none", "force-trailing-slash"
+		"not_found_handling": "single-page-application", // or "404-page", "none"
+	},
 }
 ```
 
 Access in Worker:
+
 ```typescript
 export default {
-  async fetch(request, env) {
-    // Try serving static asset first
-    const asset = await env.ASSETS.fetch(request);
-    if (asset.status !== 404) return asset;
-    
-    // Custom logic for non-assets
-    return new Response("API response");
-  }
-}
+	async fetch(request, env) {
+		// Try serving static asset first
+		const asset = await env.ASSETS.fetch(request);
+		if (asset.status !== 404) return asset;
+
+		// Custom logic for non-assets
+		return new Response("API response");
+	},
+};
 ```
 
 ## Placement
@@ -142,9 +143,9 @@ Control where Workers run geographically.
 
 ```jsonc
 {
-  "placement": {
-    "mode": "smart"  // or "off"
-  }
+	"placement": {
+		"mode": "smart", // or "off"
+	},
 }
 ```
 
@@ -156,7 +157,7 @@ Control where Workers run geographically.
 Omit resource IDs - Wrangler creates them and writes back to config on deploy.
 
 ```jsonc
-{ "kv_namespaces": [{ "binding": "MY_KV" }] }  // No id - auto-provisioned
+{ "kv_namespaces": [{ "binding": "MY_KV" }] } // No id - auto-provisioned
 ```
 
 After deploy, ID is added to config automatically.

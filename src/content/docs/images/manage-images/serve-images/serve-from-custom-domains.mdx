@@ -4,6 +4,7 @@ title: Serve images from custom domains
 sidebar:
   order: 22
 ---
+
 import { DashButton } from "~/components";
 
 Image delivery is supported from all customer domains under the same Cloudflare account. To serve images through custom domains, an image URL should be adjusted to the following format:
@@ -50,7 +51,6 @@ To create a rule:
    ```
 
 4. Under **Then rewrite the path and/or query** > **Path**, enter the following values (using your account hash):
-
    - **Target path**: [`/`] `images/*`
    - **Rewrite to**: [`/`] `cdn-cgi/imagedelivery/<ACCOUNT_HASH>/${1}`
 

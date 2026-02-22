@@ -10,31 +10,31 @@ pnpm create cloudflare@latest [name] [-- flags]
 
 ## Core Flags
 
-| Flag | Values | Description |
-|------|--------|-------------|
-| `--type` | `hello-world`, `web-app`, `demo`, `pre-existing`, `remote-template` | Application type |
-| `--platform` | `workers` (default), `pages` | Target platform |
-| `--framework` | `next`, `remix`, `astro`, `react-router`, `solid`, `svelte`, `qwik`, `vue`, `angular`, `hono` | Web framework (requires `--type=web-app`) |
-| `--lang` | `ts`, `js`, `python` | Language (for `--type=hello-world`) |
-| `--ts` / `--no-ts` | - | TypeScript for web apps |
+| Flag               | Values                                                                                        | Description                               |
+| ------------------ | --------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `--type`           | `hello-world`, `web-app`, `demo`, `pre-existing`, `remote-template`                           | Application type                          |
+| `--platform`       | `workers` (default), `pages`                                                                  | Target platform                           |
+| `--framework`      | `next`, `remix`, `astro`, `react-router`, `solid`, `svelte`, `qwik`, `vue`, `angular`, `hono` | Web framework (requires `--type=web-app`) |
+| `--lang`           | `ts`, `js`, `python`                                                                          | Language (for `--type=hello-world`)       |
+| `--ts` / `--no-ts` | -                                                                                             | TypeScript for web apps                   |
 
 ## Deployment Flags
 
-| Flag | Description |
-|------|-------------|
+| Flag                       | Description                                           |
+| -------------------------- | ----------------------------------------------------- |
 | `--deploy` / `--no-deploy` | Deploy immediately (prompts interactive, skips in CI) |
-| `--git` / `--no-git` | Initialize git (default: yes) |
-| `--open` | Open browser after deploy |
+| `--git` / `--no-git`       | Initialize git (default: yes)                         |
+| `--open`                   | Open browser after deploy                             |
 
 ## Advanced Flags
 
-| Flag | Description |
-|------|-------------|
-| `--template=user/repo` | GitHub template or local path |
+| Flag                                | Description                                      |
+| ----------------------------------- | ------------------------------------------------ |
+| `--template=user/repo`              | GitHub template or local path                    |
 | `--existing-script=./src/worker.ts` | Existing script (requires `--type=pre-existing`) |
-| `--category=ai\|database\|realtime` | Demo filter (requires `--type=demo`) |
-| `--experimental` | Enable experimental features |
-| `--wrangler-defaults` | Skip wrangler prompts |
+| `--category=ai\|database\|realtime` | Demo filter (requires `--type=demo`)             |
+| `--experimental`                    | Enable experimental features                     |
+| `--wrangler-defaults`               | Skip wrangler prompts                            |
 
 ## Environment Variables
 

@@ -15,6 +15,7 @@ Specialized Workers that consume execution events from producer Workers for logg
 ### What Are Tail Workers?
 
 Tail Workers automatically process events from producer Workers (the Workers being monitored). They receive:
+
 - HTTP request/response info
 - Console logs (`console.log/error/warn/debug`)
 - Uncaught exceptions
@@ -22,6 +23,7 @@ Tail Workers automatically process events from producer Workers (the Workers bei
 - Diagnostic channel events
 
 **Key characteristics:**
+
 - Invoked AFTER producer finishes executing
 - Capture entire request lifecycle including Service Bindings and Dynamic Dispatch sub-requests
 - Billed by CPU time, not request count
@@ -32,6 +34,7 @@ Tail Workers automatically process events from producer Workers (the Workers bei
 **Before using Tail Workers, consider OpenTelemetry:**
 
 For batch exports to observability tools (Sentry, Grafana, Honeycomb):
+
 - OTEL export sends logs/traces in batches (more efficient)
 - Built-in integrations with popular platforms
 - Lower overhead than Tail Workers
@@ -67,16 +70,16 @@ Need observability for Workers?
 
 ```typescript
 export default {
-  async tail(events, env, ctx) {
-    // Process events from producer Worker
-    ctx.waitUntil(
-      fetch(env.LOG_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(events),
-      })
-    );
-  }
+	async tail(events, env, ctx) {
+		// Process events from producer Worker
+		ctx.waitUntil(
+			fetch(env.LOG_ENDPOINT, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(events),
+			}),
+		);
+	},
 };
 ```
 

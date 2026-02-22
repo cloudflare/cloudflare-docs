@@ -20,9 +20,9 @@ server modules.
 This enables compatibility with Node.js libraries and existing code that
 use the standard Node.js HTTP server APIs. The available functionality includes:
 
-* `http.createServer()` for creating HTTP servers
-* `http.Server` class for server instances
-* `http.ServerResponse` for handling server responses
+- `http.createServer()` for creating HTTP servers
+- `http.Server` class for server instances
+- `http.ServerResponse` for handling server responses
 
 This flag must be used in combination with the `enable_nodejs_http_modules` flag
 to enable full features of `node:http`.

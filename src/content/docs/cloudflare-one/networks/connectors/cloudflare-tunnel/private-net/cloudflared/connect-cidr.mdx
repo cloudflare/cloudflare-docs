@@ -19,9 +19,9 @@ To connect your infrastructure with Cloudflare Tunnel:
 
 4. (Optional) Under **Additional settings**, select a [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) for this tunnel route. This step is only needed if the route's IP/CIDR range overlaps with another route in your account. If you do not select a virtual network, the IP route will be assigned to the `default` network.
 
-	:::note
-	To create a new virtual network, select **Manage virtual networks**.
-	:::
+   :::note
+   To create a new virtual network, select **Manage virtual networks**.
+   :::
 
 ## 2. Set up the client
 
@@ -29,7 +29,11 @@ To connect your infrastructure with Cloudflare Tunnel:
 
 ## 3. Route private network IPs through WARP
 
-<Render file="tunnel/warp-to-tunnel-route-ips" product="cloudflare-one" params={{ one: "private network"}}/>
+<Render
+	file="tunnel/warp-to-tunnel-route-ips"
+	product="cloudflare-one"
+	params={{ one: "private network" }}
+/>
 
 ## 4. (Recommended) Filter network traffic with Gateway
 
@@ -41,7 +45,7 @@ To connect your infrastructure with Cloudflare Tunnel:
 
 ### Zero Trust policies
 
-<Render file="tunnel/catch-all-policy" product="cloudflare-one"/>
+<Render file="tunnel/catch-all-policy" product="cloudflare-one" />
 
 If you have applications clearly defined by IPs or hostnames, we recommend [creating an Access application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) and managing user access alongside your SaaS and other web apps. Alternatively, if you prefer to secure a private network using a traditional firewall model, you can build Gateway network and DNS policies for IP ranges and domains.
 

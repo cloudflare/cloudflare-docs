@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Geo Key Manager
 sidebar:
   order: 4
-
 ---
 
 Geo Key Manager offers enhanced control over the storage location of private SSL/TLS keys, ensuring compliance with regional data regulations and security requirements.
@@ -18,7 +17,7 @@ Geo Key Manager was restricted to the US, EU, and high-security data centers, bu
 
 The following diagram is a high-level example of the flow of the Cloudflare data centers without private TLS key. In this process, data centers have to request and create temporary Session Keys to perform TLS termination by reaching out to Cloudflare data centers which hold the private TLS keys:
 
-<br/>
+<br />
 
 ```mermaid
 sequenceDiagram
@@ -35,6 +34,6 @@ sequenceDiagram
     User-->>CloudflarePoP: Subsequent requests use the Session Key
 ```
 
-<br/>
+<br />
 
 For detailed information on setup and supported options, refer to [Geo Key Manager documentation](/ssl/edge-certificates/geokey-manager/).

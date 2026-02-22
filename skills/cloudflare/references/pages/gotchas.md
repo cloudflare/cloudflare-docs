@@ -59,6 +59,7 @@
 ### ⚠️ Deprecated Frameworks
 
 **Next.js**: Official adapter (`@cloudflare/next-on-pages`) **deprecated** and unmaintained.
+
 - **Problem**: No updates since 2024; incompatible with Next.js 15+; missing App Router features
 - **Cause**: Cloudflare discontinued official support; community fork exists but limited
 - **Solutions**:
@@ -67,6 +68,7 @@
   3. **Migration**: Switch to SvelteKit/Nuxt (similar DX, full Pages support)
 
 **Remix**: Official adapter (`@remix-run/cloudflare-pages`) **deprecated**.
+
 - **Problem**: No maintenance from Remix team; compatibility issues with Remix v2+
 - **Cause**: Remix team deprecated all framework adapters
 - **Solutions**:
@@ -77,19 +79,23 @@
 ### ✅ Supported Frameworks
 
 **SvelteKit**:
+
 - Use `@sveltejs/adapter-cloudflare`
 - Access bindings via `platform.env` in server load functions
 - Set `platform: 'cloudflare'` in `svelte.config.js`
 
 **Astro**:
+
 - Built-in Cloudflare adapter
 - Access bindings via `Astro.locals.runtime.env`
 
 **Nuxt**:
+
 - Set `nitro.preset: 'cloudflare-pages'` in `nuxt.config.ts`
 - Access bindings via `event.context.cloudflare.env`
 
 **Qwik, Solid Start**:
+
 - Built-in or official Cloudflare adapters available
 - Check respective framework docs for binding access
 
@@ -97,9 +103,9 @@
 
 ```typescript
 // Log request details
-console.log('Request:', { method: request.method, url: request.url });
-console.log('Env:', Object.keys(env));
-console.log('Params:', params);
+console.log("Request:", { method: request.method, url: request.url });
+console.log("Env:", Object.keys(env));
+console.log("Params:", params);
 ```
 
 **View logs**: `npx wrangler pages deployment tail --project-name=my-project`
@@ -130,7 +136,8 @@ console.log('Params:', params);
 
 **Problem**: Local dev with `--remote` altered production database/KV  
 **Cause**: Remote bindings connect directly to production resources; writes are real  
-**Solution**: 
+**Solution**:
+
 - Use `--remote` only for read-heavy debugging
 - Create separate preview environments for testing
 - Never use `--remote` for write operations during development
@@ -139,7 +146,8 @@ console.log('Params:', params);
 
 **Problem**: `npx wrangler pages dev --remote` fails with "Unauthorized" or auth error  
 **Cause**: Not logged in, session expired, or insufficient account permissions  
-**Solution**: 
+**Solution**:
+
 1. Run `npx wrangler login` to re-authenticate
 2. Verify account has access to project and bindings
 3. Check binding IDs match production configuration
@@ -153,43 +161,50 @@ console.log('Params:', params);
 ## Common Errors
 
 ### "Module not found"
+
 **Cause**: Dependencies not bundled or build output incorrect  
 **Solution**: Check build output directory, ensure dependencies bundled
 
 ### "Binding not found"
+
 **Cause**: Binding not configured or types out of sync  
 **Solution**: Verify wrangler.jsonc, run `npx wrangler types`
 
 ### "Request exceeded CPU limit"
+
 **Cause**: Code execution too slow or heavy compute  
 **Solution**: Optimize hot paths, upgrade to Workers Paid
 
 ### "Script too large"
+
 **Cause**: Bundle size exceeds limit  
 **Solution**: Tree-shake, use dynamic imports, code-split
 
 ### "Too many subrequests"
+
 **Cause**: Exceeded 50 subrequest limit  
 **Solution**: Batch or reduce fetch calls
 
 ### "KV key not found"
+
 **Cause**: Key doesn't exist or wrong namespace  
 **Solution**: Check namespace matches environment
 
 ### "D1 error"
+
 **Cause**: Wrong database_id or missing migrations  
 **Solution**: Verify config, run `wrangler d1 migrations list`
 
 ## Limits Reference (Jan 2026)
 
-| Resource | Free | Paid |
-|----------|------|------|
-| Functions Requests | 100k/day | Unlimited |
-| CPU Time | 10ms/req | 30ms/req |
-| Memory | 128MB | 128MB |
-| Script Size | 1MB | 10MB |
-| Subrequests | 50/req | 1,000/req |
-| Deployments | 500/month | 5,000/month |
+| Resource           | Free      | Paid        |
+| ------------------ | --------- | ----------- |
+| Functions Requests | 100k/day  | Unlimited   |
+| CPU Time           | 10ms/req  | 30ms/req    |
+| Memory             | 128MB     | 128MB       |
+| Script Size        | 1MB       | 10MB        |
+| Subrequests        | 50/req    | 1,000/req   |
+| Deployments        | 500/month | 5,000/month |
 
 **Tip**: Hitting CPU limit? Optimize hot paths or upgrade to Workers Paid plan.
 

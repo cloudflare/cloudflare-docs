@@ -45,15 +45,15 @@ const ideogramApiKey = "{ideogram_api_key}";
 const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/ideogram`;
 
 const response = await fetch(`${baseURL}/v1/ideogram-v3/generate`, {
-  method: "POST",
-  headers: {
-    "Api-Key": ideogramApiKey,
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    prompt: "A serene landscape with mountains and a lake at sunset",
-    model: "V_3",
-  }),
+	method: "POST",
+	headers: {
+		"Api-Key": ideogramApiKey,
+		"Content-Type": "application/json",
+	},
+	body: JSON.stringify({
+		prompt: "A serene landscape with mountains and a lake at sunset",
+		model: "V_3",
+	}),
 });
 
 const result = await response.json();

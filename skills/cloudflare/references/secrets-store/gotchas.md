@@ -9,9 +9,9 @@
 
 ```typescript
 try {
-  const key = await env.API_KEY.get();
+	const key = await env.API_KEY.get();
 } catch (error) {
-  return new Response("Configuration error", { status: 500 });
+	return new Response("Configuration error", { status: 500 });
 }
 ```
 
@@ -51,11 +51,11 @@ Runtime parsing with error handling:
 
 ```typescript
 try {
-  const configStr = await env.CONFIG.get();
-  const config = JSON.parse(configStr);
+	const configStr = await env.CONFIG.get();
+	const config = JSON.parse(configStr);
 } catch (error) {
-  console.error("Invalid config JSON:", error);
-  return new Response("Invalid configuration", { status: 500 });
+	console.error("Invalid config JSON:", error);
+	return new Response("Invalid configuration", { status: 500 });
 }
 ```
 
@@ -81,17 +81,17 @@ try {
 
 ## Limits
 
-| Limit | Value | Notes |
-|-------|-------|-------|
-| Max secrets per account | 100 | Beta limit |
-| Max stores per account | 1 | Beta limit |
-| Max secret size | 1024 bytes | Per secret |
-| Local secrets | Don't count toward limit | Only production secrets count |
-| Scopes available | `workers`, `ai-gateway` | Must have correct scope for access |
-| Scope | Account-level | Can be reused across multiple Workers |
-| Access method | `await env.BINDING.get()` | Async only, throws on error |
-| Management | Centralized | Via secrets-store commands |
-| Local dev | Separate local secrets | Use without `--remote` flag |
-| Regional availability | Global except China Network | Unavailable in China Network |
+| Limit                   | Value                       | Notes                                 |
+| ----------------------- | --------------------------- | ------------------------------------- |
+| Max secrets per account | 100                         | Beta limit                            |
+| Max stores per account  | 1                           | Beta limit                            |
+| Max secret size         | 1024 bytes                  | Per secret                            |
+| Local secrets           | Don't count toward limit    | Only production secrets count         |
+| Scopes available        | `workers`, `ai-gateway`     | Must have correct scope for access    |
+| Scope                   | Account-level               | Can be reused across multiple Workers |
+| Access method           | `await env.BINDING.get()`   | Async only, throws on error           |
+| Management              | Centralized                 | Via secrets-store commands            |
+| Local dev               | Separate local secrets      | Use without `--remote` flag           |
+| Regional availability   | Global except China Network | Unavailable in China Network          |
 
 See: [configuration.md](./configuration.md), [api.md](./api.md), [patterns.md](./patterns.md)

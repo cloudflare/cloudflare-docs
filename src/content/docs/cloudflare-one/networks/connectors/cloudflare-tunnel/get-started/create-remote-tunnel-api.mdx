@@ -25,12 +25,12 @@ Follow this guide to set up a Cloudflare Tunnel using the API.
 Make a `POST` request to the [Cloudflare Tunnel](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/create/) endpoint:
 
 <APIRequest
-  path="/accounts/{account_id}/cfd_tunnel"
-  method="POST"
-  json={{
-    name: "api-tunnel",
-    config_src: "cloudflare",
-  }}
+	path="/accounts/{account_id}/cfd_tunnel"
+	method="POST"
+	json={{
+		name: "api-tunnel",
+		config_src: "cloudflare",
+	}}
 />
 
 ```sh output
@@ -75,46 +75,47 @@ Before you publish an application through your tunnel, you must:
 
 Follow these steps to publish an application to the Internet. If you are looking to connect a private resource, skip to the [Connect a network](#3b-connect-a-network) section.
 
-1. Make a [`PUT` request](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/) to route your [local service URL](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/protocols/) to a public hostname. For example,
+1.  Make a [`PUT` request](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/) to route your [local service URL](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/protocols/) to a public hostname. For example,
 
-		<APIRequest
-			path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/configurations"
-			method="PUT"
-			json={{
-				config: {
-					ingress: [
-						{
-							hostname: "app.example.com",
-							service: "http://localhost:8001",
-							originRequest: {},
-						},
-						{
-							service: "http_status:404",
-						},
-					],
-				},
-			}}
-		/>
-   :::note
-   If you add a multi-level subdomain (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/faq/troubleshooting/#i-see-this-site-cant-provide-a-secure-connection).
-   :::
+        <APIRequest
+        	path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/configurations"
+        	method="PUT"
+        	json={{
+        		config: {
+        			ingress: [
+        				{
+        					hostname: "app.example.com",
+        					service: "http://localhost:8001",
+        					originRequest: {},
+        				},
+        				{
+        					service: "http_status:404",
+        				},
+        			],
+        		},
+        	}}
+        />
 
-   Your ingress rules must include a catch-all rule at the end. In this example, `cloudflared` will respond with a 404 status code when the request does not match any of the previous hostnames.
+    :::note
+    If you add a multi-level subdomain (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/faq/troubleshooting/#i-see-this-site-cant-provide-a-secure-connection).
+    :::
 
-2. [Create a DNS record](/api/resources/dns/subresources/records/methods/create/) for your application:
+    Your ingress rules must include a catch-all rule at the end. In this example, `cloudflared` will respond with a 404 status code when the request does not match any of the previous hostnames.
 
-		<APIRequest
-			path="/zones/{zone_id}/dns_records"
-			method="POST"
-			json={{
-				type: "CNAME",
-				proxied: true,
-				name: "app.example.com",
-				content: "c1744f8b-faa1-48a4-9e5c-02ac921467fa.cfargotunnel.com",
-			}}
-		/>
+2.  [Create a DNS record](/api/resources/dns/subresources/records/methods/create/) for your application:
 
-   This DNS record allows Cloudflare to proxy `app.example.com` traffic to your Cloudflare Tunnel (`<tunnel-id>.cfargotunnel.com`).
+        <APIRequest
+        	path="/zones/{zone_id}/dns_records"
+        	method="POST"
+        	json={{
+        		type: "CNAME",
+        		proxied: true,
+        		name: "app.example.com",
+        		content: "c1744f8b-faa1-48a4-9e5c-02ac921467fa.cfargotunnel.com",
+        	}}
+        />
+
+    This DNS record allows Cloudflare to proxy `app.example.com` traffic to your Cloudflare Tunnel (`<tunnel-id>.cfargotunnel.com`).
 
 This application will be publicly available on the Internet once you [run the tunnel](#4-install-and-run-the-tunnel). To allow or block specific users, [create an Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
 
@@ -123,13 +124,13 @@ This application will be publicly available on the Internet once you [run the tu
 To connect a private network through your tunnel, [add a tunnel route](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/create/):
 
 <APIRequest
-  path="/accounts/{account_id}/teamnet/routes"
-  method="POST"
-  json={{
-    network: "172.16.0.0/16",
-    tunnel_id: "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
-    comment: "Example private network route",
-  }}
+	path="/accounts/{account_id}/teamnet/routes"
+	method="POST"
+	json={{
+		network: "172.16.0.0/16",
+		tunnel_id: "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
+		comment: "Example private network route",
+	}}
 />
 
 `cloudflared` can now route traffic to these destination IPs. To configure Zero Trust policies and connect as a user, refer to [Connect private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/).
@@ -145,11 +146,11 @@ Install `cloudflared` on your server and run the tunnel using the `token` value 
 To check if the tunnel is serving traffic:
 
 <APIRequest
-  path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}"
-  method="GET"
-  parameters={{
-    tunnel_id: "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
-  }}
+	path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}"
+	method="GET"
+	parameters={{
+		tunnel_id: "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
+	}}
 />
 
 ```sh output

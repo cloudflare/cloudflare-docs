@@ -4,7 +4,6 @@ pcx_content_type: reference
 
 sidebar:
   order: 1
-
 ---
 
 ## Error Rate
@@ -26,7 +25,7 @@ This approach does not work as well for low traffic zones. If there are not many
 
 ### Service-level objective recommendations
 
-SLOs determine the sensitivity of an alert.  For example, if you want to be alerted on all spikes in 5xx errors, you should select high sensitivity. If you want to be alerted on only large spikes, you should select a lower sensitivity.
+SLOs determine the sensitivity of an alert. For example, if you want to be alerted on all spikes in 5xx errors, you should select high sensitivity. If you want to be alerted on only large spikes, you should select a lower sensitivity.
 
 Your traffic levels impact the accuracy of high sensitivity alerts. High sensitivity alerts are not recommended for zones with low traffic since the Error Rate alert will likely alert on every 5xx error. However, If you have a zone that has very high traffic (hundreds of millions of requests per day), High Sensitivity SLOs are recommended.
 

@@ -18,25 +18,25 @@ This feature is only available if you are using the following identity providers
 
 To enforce an MFA requirement to an application:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
+1.  In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
 
-2. Find the application for which you want to enforce MFA and select **Configure**. Alternatively, [create a new application](/cloudflare-one/access-controls/applications/http-apps/).
+2.  Find the application for which you want to enforce MFA and select **Configure**. Alternatively, [create a new application](/cloudflare-one/access-controls/applications/http-apps/).
 
-3. Go to **Policies**.
+3.  Go to **Policies**.
 
-4. If your application already has a policy containing an identity requirement, find it and select **Configure**.
+4.  If your application already has a policy containing an identity requirement, find it and select **Configure**.
 
-	:::note
-	The policy should contain an Include rule that uses identity-based selectors. For example, the Include rule could allow users who are part of a [rule group](/cloudflare-one/access-controls/policies/groups/), email domain, or identity provider group.
-	:::
+    :::note
+    The policy should contain an Include rule that uses identity-based selectors. For example, the Include rule could allow users who are part of a [rule group](/cloudflare-one/access-controls/policies/groups/), email domain, or identity provider group.
+    :::
 
-5. Add the following rule to the policy:
+5.  Add the following rule to the policy:
 
-		| Rule type | Selector | Value |
-		| ---------- | -------- | ------ |
-		| Require    | Authentication method |  `mfa - multiple-factor authentication` |
+        | Rule type | Selector | Value |
+        | ---------- | -------- | ------ |
+        | Require    | Authentication method |  `mfa - multiple-factor authentication` |
 
-6. Save the policy.
+6.  Save the policy.
 
 :::caution[Important]
 

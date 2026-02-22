@@ -5,23 +5,24 @@
 ```typescript
 // From @cloudflare/workers-types
 interface Pipeline {
-  send(data: object | object[]): Promise<void>;
+	send(data: object | object[]): Promise<void>;
 }
 
 interface Env {
-  STREAM: Pipeline;
+	STREAM: Pipeline;
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    // send() returns Promise<void> - no result data
-    await env.STREAM.send([event]);
-    return new Response('OK');
-  }
+	async fetch(request: Request, env: Env): Promise<Response> {
+		// send() returns Promise<void> - no result data
+		await env.STREAM.send([event]);
+		return new Response("OK");
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
 **Key points:**
+
 - `send()` accepts single object or array
 - Always returns `Promise<void>` (no confirmation data)
 - Throws on network/validation errors (wrap in try/catch)
@@ -32,25 +33,28 @@ export default {
 ### Single Event
 
 ```typescript
-await env.STREAM.send([{
-  user_id: "12345",
-  event_type: "purchase",
-  product_id: "widget-001",
-  amount: 29.99
-}]);
+await env.STREAM.send([
+	{
+		user_id: "12345",
+		event_type: "purchase",
+		product_id: "widget-001",
+		amount: 29.99,
+	},
+]);
 ```
 
 ### Batch Events
 
 ```typescript
 const events = [
-  { user_id: "user1", event_type: "view" },
-  { user_id: "user2", event_type: "purchase", amount: 50 }
+	{ user_id: "user1", event_type: "view" },
+	{ user_id: "user2", event_type: "purchase", amount: 50 },
 ];
 await env.STREAM.send(events);
 ```
 
 **Limits:**
+
 - Max 1 MB per request
 - 5 MB/s per stream
 
@@ -58,14 +62,20 @@ await env.STREAM.send(events);
 
 ```typescript
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    const event = { /* ... */ };
-    
-    // Don't block response on send
-    ctx.waitUntil(env.STREAM.send([event]));
-    
-    return new Response('OK');
-  }
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const event = {
+			/* ... */
+		};
+
+		// Don't block response on send
+		ctx.waitUntil(env.STREAM.send([event]));
+
+		return new Response("OK");
+	},
 };
 ```
 
@@ -73,11 +83,11 @@ export default {
 
 ```typescript
 try {
-  await env.STREAM.send([event]);
+	await env.STREAM.send([event]);
 } catch (error) {
-  console.error('Pipeline send failed:', error);
-  // Log to another system, retry, or return error response
-  return new Response('Failed to track event', { status: 500 });
+	console.error("Pipeline send failed:", error);
+	// Log to another system, retry, or return error response
+	return new Response("Failed to track event", { status: 500 });
 }
 ```
 
@@ -122,29 +132,29 @@ Create token: Dashboard → Workers → API tokens → Create with Pipeline Send
 
 ### Response Codes
 
-| Code | Meaning | Action |
-|------|---------|--------|
-| 200 | Accepted | Success |
-| 400 | Invalid format | Check JSON array, schema match |
-| 401 | Auth failed | Verify token valid |
-| 413 | Payload too large | Split into smaller batches (<1 MB) |
-| 429 | Rate limited | Back off, retry with delay |
-| 5xx | Server error | Retry with exponential backoff |
+| Code | Meaning           | Action                             |
+| ---- | ----------------- | ---------------------------------- |
+| 200  | Accepted          | Success                            |
+| 400  | Invalid format    | Check JSON array, schema match     |
+| 401  | Auth failed       | Verify token valid                 |
+| 413  | Payload too large | Split into smaller batches (<1 MB) |
+| 429  | Rate limited      | Back off, retry with delay         |
+| 5xx  | Server error      | Retry with exponential backoff     |
 
 ## SQL Functions Quick Reference
 
 Available in `INSERT INTO sink SELECT ... FROM stream` transformations:
 
-| Function | Example | Use Case |
-|----------|---------|----------|
-| `UPPER(s)` | `UPPER(event_type)` | Normalize strings |
-| `LOWER(s)` | `LOWER(email)` | Case-insensitive matching |
-| `CONCAT(...)` | `CONCAT(user_id, '_', product_id)` | Generate composite keys |
-| `CASE WHEN ... THEN ... END` | `CASE WHEN amount > 100 THEN 'high' ELSE 'low' END` | Conditional enrichment |
-| `CAST(x AS type)` | `CAST(timestamp AS string)` | Type conversion |
-| `COALESCE(x, y)` | `COALESCE(amount, 0.0)` | Default values |
-| Math operators | `amount * 1.1`, `price / quantity` | Calculations |
-| Comparison | `amount > 100`, `status IN ('active', 'pending')` | Filtering |
+| Function                     | Example                                             | Use Case                  |
+| ---------------------------- | --------------------------------------------------- | ------------------------- |
+| `UPPER(s)`                   | `UPPER(event_type)`                                 | Normalize strings         |
+| `LOWER(s)`                   | `LOWER(email)`                                      | Case-insensitive matching |
+| `CONCAT(...)`                | `CONCAT(user_id, '_', product_id)`                  | Generate composite keys   |
+| `CASE WHEN ... THEN ... END` | `CASE WHEN amount > 100 THEN 'high' ELSE 'low' END` | Conditional enrichment    |
+| `CAST(x AS type)`            | `CAST(timestamp AS string)`                         | Type conversion           |
+| `COALESCE(x, y)`             | `COALESCE(amount, 0.0)`                             | Default values            |
+| Math operators               | `amount * 1.1`, `price / quantity`                  | Calculations              |
+| Comparison                   | `amount > 100`, `status IN ('active', 'pending')`   | Filtering                 |
 
 **String types for CAST:** `string`, `int32`, `int64`, `float32`, `float64`, `bool`, `timestamp`
 
@@ -193,7 +203,7 @@ WHERE event_type IN ('purchase', 'refund')
 export WRANGLER_R2_SQL_AUTH_TOKEN=YOUR_CATALOG_TOKEN
 
 npx wrangler r2 sql query "warehouse_name" "
-SELECT 
+SELECT
   event_type,
   COUNT(*) as event_count,
   SUM(amount) as total_revenue

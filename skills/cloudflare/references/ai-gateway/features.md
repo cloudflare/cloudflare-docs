@@ -39,11 +39,11 @@ Detect PII (emails, SSNs, credit cards). Actions: Flag, Block, or Redact.
 
 ## Billing Modes
 
-| Mode | Description | Setup |
-|------|-------------|-------|
+| Mode                | Description                              | Setup                                  |
+| ------------------- | ---------------------------------------- | -------------------------------------- |
 | **Unified Billing** | Pay through Cloudflare, no provider keys | Use `cf-aig-authorization` header only |
-| **BYOK** | Store provider keys in dashboard | Add keys in Provider Keys section |
-| **Pass-through** | Send provider key with each request | Include provider's auth header |
+| **BYOK**            | Store provider keys in dashboard         | Add keys in Provider Keys section      |
+| **Pass-through**    | Send provider key with each request      | Include provider's auth header         |
 
 ## Zero Data Retention
 
@@ -74,16 +74,16 @@ Or via API: set `model`, `input_cost`, `output_cost`.
 
 ## Supported Providers (22+)
 
-| Provider | Unified API | Notes |
-|----------|-------------|-------|
-| OpenAI | `openai/gpt-4o` | Full support |
-| Anthropic | `anthropic/claude-sonnet-4-5` | Full support |
-| Google AI | `google-ai-studio/gemini-2.0-flash` | Full support |
-| Workers AI | `workersai/@cf/meta/llama-3` | Native |
-| Azure OpenAI | `azure-openai/*` | Deployment names |
-| AWS Bedrock | Provider endpoint only | `/bedrock/*` |
-| Groq | `groq/*` | Fast inference |
-| Mistral, Cohere, Perplexity, xAI, DeepSeek, Cerebras | Full support | - |
+| Provider                                             | Unified API                         | Notes            |
+| ---------------------------------------------------- | ----------------------------------- | ---------------- |
+| OpenAI                                               | `openai/gpt-4o`                     | Full support     |
+| Anthropic                                            | `anthropic/claude-sonnet-4-5`       | Full support     |
+| Google AI                                            | `google-ai-studio/gemini-2.0-flash` | Full support     |
+| Workers AI                                           | `workersai/@cf/meta/llama-3`        | Native           |
+| Azure OpenAI                                         | `azure-openai/*`                    | Deployment names |
+| AWS Bedrock                                          | Provider endpoint only              | `/bedrock/*`     |
+| Groq                                                 | `groq/*`                            | Fast inference   |
+| Mistral, Cohere, Perplexity, xAI, DeepSeek, Cerebras | Full support                        | -                |
 
 ## Best Practices
 

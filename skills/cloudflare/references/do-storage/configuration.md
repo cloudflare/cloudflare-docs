@@ -3,14 +3,15 @@
 ## SQLite-backed (Recommended)
 
 **wrangler.jsonc:**
+
 ```jsonc
 {
-  "migrations": [
-    {
-      "tag": "v1",
-      "new_sqlite_classes": ["Counter", "Session", "RateLimiter"]
-    }
-  ]
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["Counter", "Session", "RateLimiter"],
+		},
+	],
 }
 ```
 
@@ -19,14 +20,15 @@
 ## KV-backed (Legacy)
 
 **wrangler.jsonc:**
+
 ```jsonc
 {
-  "migrations": [
-    {
-      "tag": "v1",
-      "new_classes": ["OldCounter"]
-    }
-  ]
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_classes": ["OldCounter"],
+		},
+	],
 }
 ```
 
@@ -34,50 +36,50 @@
 
 ```typescript
 export class MyDurableObject extends DurableObject {
-  sql: SqlStorage;
-  
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
-    this.sql = ctx.storage.sql;
-    
-    // Initialize schema
-    this.sql.exec(`
+	sql: SqlStorage;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.sql = ctx.storage.sql;
+
+		// Initialize schema
+		this.sql.exec(`
       CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
         email TEXT UNIQUE
       );
     `);
-  }
+	}
 }
 
 // Binding
 interface Env {
-  MY_DO: DurableObjectNamespace;
+	MY_DO: DurableObjectNamespace;
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const id = env.MY_DO.idFromName('singleton');
-    const stub = env.MY_DO.get(id);
-    
-    // Modern RPC: call methods directly (recommended)
-    const result = await stub.someMethod();
-    return Response.json(result);
-    
-    // Legacy: forward request (still works)
-    // return stub.fetch(request);
-  }
-}
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const id = env.MY_DO.idFromName("singleton");
+		const stub = env.MY_DO.get(id);
+
+		// Modern RPC: call methods directly (recommended)
+		const result = await stub.someMethod();
+		return Response.json(result);
+
+		// Legacy: forward request (still works)
+		// return stub.fetch(request);
+	},
+};
 ```
 
 ## CPU Limits
 
 ```jsonc
 {
-  "limits": {
-    "cpu_ms": 300000  // 5 minutes (default 30s)
-  }
+	"limits": {
+		"cpu_ms": 300000, // 5 minutes (default 30s)
+	},
 }
 ```
 
@@ -98,15 +100,15 @@ const stub = env.MY_DO.get(id, { locationHint: "enam" });
 
 ```typescript
 export class Counter extends DurableObject {
-  value: number;
-  
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
-    
-    // Block concurrent requests during init
-    ctx.blockConcurrencyWhile(async () => {
-      this.value = (await ctx.storage.get("value")) || 0;
-    });
-  }
+	value: number;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		// Block concurrent requests during init
+		ctx.blockConcurrencyWhile(async () => {
+			this.value = (await ctx.storage.get("value")) || 0;
+		});
+	}
 }
 ```

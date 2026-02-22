@@ -34,20 +34,20 @@ Once thresholds are configured, the Advanced DDoS Protection systems have been i
 
 Automatic thresholds for Cloudflare's Advanced DDoS Protection system optimizes the detection and mitigation of DDoS attacks by automatically calculating appropriate traffic thresholds for each system for each customer account. This system applies to Advanced TCP Protection (specifically SYN Flood Protection and Out-of-State TCP Flood Protection) and Advanced DNS Protection.
 
-Make sure that you have properly onboarded to the Advanced DDoS Protection system to benefit from automatic thresholds. 
+Make sure that you have properly onboarded to the Advanced DDoS Protection system to benefit from automatic thresholds.
 
 #### Process
 
-The automatic threshold system calculates thresholds every 10 minutes for both new and existing Magic Transit accounts, provided they meet the requirements outlined in the process below. 
+The automatic threshold system calculates thresholds every 10 minutes for both new and existing Magic Transit accounts, provided they meet the requirements outlined in the process below.
 
 - The `flowtrackd` account was created within the past 7 to 10 days.
 - The account has at least one configured global threshold (rate and burst). This can be a threshold that was automatically provisioned by the system or manually provisioned by Cloudflare.
 
 These checks are performed independently for SYN Flood Protection, Out-of-State TCP Flood Protection, and Advanced DNS Protection. The criteria does not require the presence of any rules to be configured. Accounts initially provisioned by the automatic system will have default thresholds. Otherwise, thresholds may be unconfigured if they are not set by Cloudflare.
 
-After seven days, the system calculates a rate and burst threshold for each of the protection components. However, they are not applied. Cloudflare must review the draft thresholds produced by the automatic calculation system before creating real thresholds for your traffic. 
+After seven days, the system calculates a rate and burst threshold for each of the protection components. However, they are not applied. Cloudflare must review the draft thresholds produced by the automatic calculation system before creating real thresholds for your traffic.
 
-Thresholds are applied globally per account. There is no minimum packets-per-second (pps) requirement for threshold calculation, but for those under 100 pps, the system will default to a reasonable non-zero rate and burst. 
+Thresholds are applied globally per account. There is no minimum packets-per-second (pps) requirement for threshold calculation, but for those under 100 pps, the system will default to a reasonable non-zero rate and burst.
 
 Thresholds are derived using the 95th percentile (P95) of observed traffic over the preceding seven days:
 
@@ -55,9 +55,9 @@ Thresholds are derived using the 95th percentile (P95) of observed traffic over 
 - Out-of-State TCP Flood Protection: Based on all other TCP flag traffic.
 - Advanced DNS Protection: Based on DNS over UDP traffic.
 
-While the calculation typically occurs automatically after seven days, Cloudflare can force an earlier calculation if you want to enable the system in protective mode in advance. 
+While the calculation typically occurs automatically after seven days, Cloudflare can force an earlier calculation if you want to enable the system in protective mode in advance.
 
-The automatic threshold calculation system does not differentiate between legitimate and attack traffic. If you are onboarded or experience attacks during the seven day observation period, the calculated thresholds may be inaccurate, depending on the attack's size, duration, and frequency relative to legitimate traffic. In such cases, Cloudflare will likely need to trigger a recalculation. Future improvements will allow you to run a recalculation without the assistance of your Cloudflare account team. 
+The automatic threshold calculation system does not differentiate between legitimate and attack traffic. If you are onboarded or experience attacks during the seven day observation period, the calculated thresholds may be inaccurate, depending on the attack's size, duration, and frequency relative to legitimate traffic. In such cases, Cloudflare will likely need to trigger a recalculation. Future improvements will allow you to run a recalculation without the assistance of your Cloudflare account team.
 
 #### Implementation
 
@@ -65,7 +65,7 @@ You should enable the automatically provisioned rules. Initially, these rules wi
 
 #### Recalculation
 
-Automatic thresholds are calculated only once. Cloudflare can manually trigger a recalculation. Adding, approving, removing, delegating, advertising, or withdrawing prefixes after initial onboarding does not automatically re-trigger the calculation. It is recommended to move the relevant systems to Monitor mode before making changes that impact traffic levels and requesting a recalculation from Cloudflare. Future improvements will take these events into consideration. 
+Automatic thresholds are calculated only once. Cloudflare can manually trigger a recalculation. Adding, approving, removing, delegating, advertising, or withdrawing prefixes after initial onboarding does not automatically re-trigger the calculation. It is recommended to move the relevant systems to Monitor mode before making changes that impact traffic levels and requesting a recalculation from Cloudflare. Future improvements will take these events into consideration.
 
 #### Overrides
 
@@ -77,7 +77,7 @@ If you are actively under attack and diverting traffic to Cloudflare, the automa
 
 #### Limitations
 
-Customers currently do not have visibility into the calculated thresholds or an indication of whether thresholds have been configured. Future improvements aim to indicate when thresholds have been configured and when they were last updated. 
+Customers currently do not have visibility into the calculated thresholds or an indication of whether thresholds have been configured. Future improvements aim to indicate when thresholds have been configured and when they were last updated.
 
 The auto-threshold calculation component currently runs only in PDX. Therefore, this feature is not compatible if you have enabled Data Localization Services (DLS) and are located outside of the US, such as EU CMB. Future improvements will address this limitation.
 
@@ -115,8 +115,7 @@ Enable the Advanced DDoS system and begin routing traffic through it.
 
 <Steps>
 	1. In the Cloudflare dashboard, go to the **L3/4 DDoS protection** page.
- 
-		<DashButton url="/?to=/:account/network-security/ddos" />	
-	2. Go to **Advanced Protection** > **General settings**.
-  3. Under **General settings**, toggle the feature status **On**.
+	<DashButton url="/?to=/:account/network-security/ddos" />
+	2. Go to **Advanced Protection** > **General settings**. 3. Under **General
+	settings**, toggle the feature status **On**.
 </Steps>

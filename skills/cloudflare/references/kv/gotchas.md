@@ -25,26 +25,26 @@ return new Response(newValue); // Don't re-read
 
 ```typescript
 async function putWithRetry(
-  kv: KVNamespace,
-  key: string,
-  value: string,
-  maxAttempts = 5
+	kv: KVNamespace,
+	key: string,
+	value: string,
+	maxAttempts = 5,
 ): Promise<void> {
-  let delay = 1000;
-  for (let i = 0; i < maxAttempts; i++) {
-    try {
-      await kv.put(key, value);
-      return;
-    } catch (err) {
-      if (err instanceof Error && err.message.includes("429")) {
-        if (i === maxAttempts - 1) throw err;
-        await new Promise(r => setTimeout(r, delay));
-        delay *= 2; // Exponential backoff
-      } else {
-        throw err;
-      }
-    }
-  }
+	let delay = 1000;
+	for (let i = 0; i < maxAttempts; i++) {
+		try {
+			await kv.put(key, value);
+			return;
+		} catch (err) {
+			if (err instanceof Error && err.message.includes("429")) {
+				if (i === maxAttempts - 1) throw err;
+				await new Promise((r) => setTimeout(r, delay));
+				delay *= 2; // Exponential backoff
+			} else {
+				throw err;
+			}
+		}
+	}
 }
 ```
 
@@ -82,32 +82,34 @@ return new Response(config.theme);
 // Check → create pattern has race condition
 const exists = await env.KV.get("key"); // null, cached as "not found"
 if (!exists) {
-  await env.KV.put("key", "value");
-  // Next get() may still return null for ~60s due to negative cache
+	await env.KV.put("key", "value");
+	// Next get() may still return null for ~60s due to negative cache
 }
 
 // Alternative: Always assume key may not exist, use defaults
-const value = await env.KV.get("key") ?? "default-value";
+const value = (await env.KV.get("key")) ?? "default-value";
 ```
 
 ## Performance Tips
 
-| Scenario | Recommendation | Why |
-|----------|----------------|-----|
-| Large values (>1MB) | Use `stream` type | Avoids buffering entire value in memory |
-| Many small keys | Coalesce into one JSON object | Reduces operations, improves cache hit rate |
-| High write volume | Spread across different keys | Avoid 1 write/second per-key limit |
-| Cold reads | Increase `cacheTtl` parameter | Reduces latency for frequently-read data |
-| Bulk operations | Use array form of get() | Single operation, better performance |
+| Scenario            | Recommendation                | Why                                         |
+| ------------------- | ----------------------------- | ------------------------------------------- |
+| Large values (>1MB) | Use `stream` type             | Avoids buffering entire value in memory     |
+| Many small keys     | Coalesce into one JSON object | Reduces operations, improves cache hit rate |
+| High write volume   | Spread across different keys  | Avoid 1 write/second per-key limit          |
+| Cold reads          | Increase `cacheTtl` parameter | Reduces latency for frequently-read data    |
+| Bulk operations     | Use array form of get()       | Single operation, better performance        |
 
 ## Cost Examples
 
 **Free tier:**
+
 - 100K reads/day = 3M/month ✅
 - 1K writes/day = 30K/month ✅
 - 1GB storage ✅
 
 **Example paid workload:**
+
 - 10M reads/month = $5.00
 - 100K writes/month = $0.50
 - 1GB storage = $0.50
@@ -115,17 +117,17 @@ const value = await env.KV.get("key") ?? "default-value";
 
 ## Limits
 
-| Limit | Value | Notes |
-|-------|-------|-------|
-| Key size | 512 bytes | Maximum key length |
-| Value size | 25 MiB | Maximum value; 413 error if exceeded |
-| Metadata size | 1024 bytes | Maximum metadata per key |
-| cacheTtl minimum | 60s | Minimum cache TTL |
-| Write rate per key | 1 write/second | All plans; 429 error if exceeded |
-| Propagation time | ≤60s | Global propagation time |
-| Bulk get max | 100 keys | Maximum keys per bulk operation |
-| Operations per Worker | 1,000 | Per request (bulk counts as 1) |
-| Reads pricing | $0.50 per 10M | Per million reads |
-| Writes pricing | $5.00 per 1M | Per million writes |
-| Deletes pricing | $5.00 per 1M | Per million deletes |
-| Storage pricing | $0.50 per GB-month | Per GB per month |
+| Limit                 | Value              | Notes                                |
+| --------------------- | ------------------ | ------------------------------------ |
+| Key size              | 512 bytes          | Maximum key length                   |
+| Value size            | 25 MiB             | Maximum value; 413 error if exceeded |
+| Metadata size         | 1024 bytes         | Maximum metadata per key             |
+| cacheTtl minimum      | 60s                | Minimum cache TTL                    |
+| Write rate per key    | 1 write/second     | All plans; 429 error if exceeded     |
+| Propagation time      | ≤60s               | Global propagation time              |
+| Bulk get max          | 100 keys           | Maximum keys per bulk operation      |
+| Operations per Worker | 1,000              | Per request (bulk counts as 1)       |
+| Reads pricing         | $0.50 per 10M      | Per million reads                    |
+| Writes pricing        | $5.00 per 1M       | Per million writes                   |
+| Deletes pricing       | $5.00 per 1M       | Per million deletes                  |
+| Storage pricing       | $0.50 per GB-month | Per GB per month                     |

@@ -51,11 +51,13 @@ Lower `mediaConfiguration.video` resolution/frameRate, monitor network condition
 
 **Cause:** Multiple devices picking up same audio source
 **Solution:**
+
 - Lower `mediaConfiguration.video` resolution/frameRate
 - Monitor network conditions
 - Reduce participant count or grid size
 
 ### Issue: Echo or audio feedback
+
 **Cause**: Multiple devices picking up same audio source
 
 **Solutions**:
@@ -72,6 +74,7 @@ Use Chrome/Edge/Firefox (Safari limited support), check browser permissions, try
 **Cause:** RealtimeKit has no built-in scheduling system
 **Solution:**
 Store meeting IDs in your database with timestamps. Generate participant tokens only when user should join. Example:
+
 ```typescript
 // Store in DB
 { meetingId: 'abc123', scheduledFor: '2026-02-15T10:00:00Z', userId: 'user456' }
@@ -92,35 +95,39 @@ Verify preset has `canRecord: true` and `canStartStopRecording: true`, ensure se
 
 ## Limits
 
-| Resource | Limit |
-|----------|-------|
-| Max participants per session | 100 |
-| Max concurrent sessions per App | 1000 |
-| Max recording duration | 6 hours |
-| Max meeting duration | 24 hours |
-| Max chat message length | 4000 characters |
-| Max preset name length | 64 characters |
-| Max meeting title length | 256 characters |
-| Max participant name length | 256 characters |
-| Token expiration | 24 hours (default) |
-| WebRTC ports required | UDP 1024-65535 |
+| Resource                        | Limit              |
+| ------------------------------- | ------------------ |
+| Max participants per session    | 100                |
+| Max concurrent sessions per App | 1000               |
+| Max recording duration          | 6 hours            |
+| Max meeting duration            | 24 hours           |
+| Max chat message length         | 4000 characters    |
+| Max preset name length          | 64 characters      |
+| Max meeting title length        | 256 characters     |
+| Max participant name length     | 256 characters     |
+| Token expiration                | 24 hours (default) |
+| WebRTC ports required           | UDP 1024-65535     |
 
 ## Network Requirements
 
 ### Firewall Rules
+
 Allow outbound UDP/TCP to:
+
 - `*.cloudflare.com` ports 443, 80
 - UDP ports 1024-65535 (WebRTC media)
 
 ### TURN Service
+
 Enable for users behind restrictive firewalls/proxies:
+
 ```jsonc
 // wrangler.jsonc
 {
-  "vars": {
-    "TURN_SERVICE_ID": "your_turn_service_id"
-  }
-  // Set secret: wrangler secret put TURN_SERVICE_TOKEN
+	"vars": {
+		"TURN_SERVICE_ID": "your_turn_service_id",
+	},
+	// Set secret: wrangler secret put TURN_SERVICE_TOKEN
 }
 ```
 
@@ -131,38 +138,74 @@ TURN automatically configured in SDK when enabled in account.
 ```typescript
 // Check devices
 const devices = await meeting.self.getAllDevices();
-meeting.self.on('deviceListUpdate', ({ added, removed, devices }) => console.log('Devices:', { added, removed, devices }));
+meeting.self.on("deviceListUpdate", ({ added, removed, devices }) =>
+	console.log("Devices:", { added, removed, devices }),
+);
 
 // Monitor participants
-meeting.participants.joined.on('participantJoined', (p) => console.log(`${p.name} joined:`, { id: p.id, userId: p.userId, audioEnabled: p.audioEnabled, videoEnabled: p.videoEnabled }));
+meeting.participants.joined.on("participantJoined", (p) =>
+	console.log(`${p.name} joined:`, {
+		id: p.id,
+		userId: p.userId,
+		audioEnabled: p.audioEnabled,
+		videoEnabled: p.videoEnabled,
+	}),
+);
 
 // Check room state
-meeting.self.on('roomJoined', () => console.log('Room:', { meetingId: meeting.meta.meetingId, meetingTitle: meeting.meta.meetingTitle, participantCount: meeting.participants.joined.size() + 1, audioEnabled: meeting.self.audioEnabled, videoEnabled: meeting.self.videoEnabled }));
+meeting.self.on("roomJoined", () =>
+	console.log("Room:", {
+		meetingId: meeting.meta.meetingId,
+		meetingTitle: meeting.meta.meetingTitle,
+		participantCount: meeting.participants.joined.size() + 1,
+		audioEnabled: meeting.self.audioEnabled,
+		videoEnabled: meeting.self.videoEnabled,
+	}),
+);
 
 // Log all events
-['roomJoined', 'audioUpdate', 'videoUpdate', 'screenShareUpdate', 'deviceUpdate', 'deviceListUpdate'].forEach(event => meeting.self.on(event, (data) => console.log(`[self] ${event}:`, data)));
-['participantJoined', 'participantLeft'].forEach(event => meeting.participants.joined.on(event, (data) => console.log(`[participants] ${event}:`, data)));
-meeting.chat.on('chatUpdate', (data) => console.log('[chat] chatUpdate:', data));
+[
+	"roomJoined",
+	"audioUpdate",
+	"videoUpdate",
+	"screenShareUpdate",
+	"deviceUpdate",
+	"deviceListUpdate",
+].forEach((event) =>
+	meeting.self.on(event, (data) => console.log(`[self] ${event}:`, data)),
+);
+["participantJoined", "participantLeft"].forEach((event) =>
+	meeting.participants.joined.on(event, (data) =>
+		console.log(`[participants] ${event}:`, data),
+	),
+);
+meeting.chat.on("chatUpdate", (data) =>
+	console.log("[chat] chatUpdate:", data),
+);
 ```
 
 ## Security & Performance
 
 ### Security: Do NOT
+
 - Expose `CLOUDFLARE_API_TOKEN` in client code, hardcode credentials in frontend
 - Reuse participant tokens, store tokens in localStorage without encryption
 - Allow client-side meeting creation
 
 ### Security: DO
+
 - Generate tokens server-side only, use HTTPS, implement rate limiting
 - Validate user auth before generating tokens, use `custom_participant_id` to map to your user system
 - Set appropriate preset permissions per user role, rotate API tokens regularly
 
 ### Performance
+
 - **CPU**: Lower video resolution/frameRate, disable video for audio-only, use `meeting.participants.active` for large meetings, implement virtual scrolling
 - **Bandwidth**: Set max resolution in `mediaConfiguration`, disable screenshare audio if unneeded, use audio-only mode, implement adaptive bitrate
 - **Memory**: Clean up event listeners on unmount, call `meeting.leave()` when done, don't store large participant arrays
 
 ## In This Reference
+
 - [README.md](README.md) - Overview, core concepts, quick start
 - [configuration.md](configuration.md) - SDK config, presets, wrangler setup
 - [api.md](api.md) - Client SDK APIs, REST endpoints

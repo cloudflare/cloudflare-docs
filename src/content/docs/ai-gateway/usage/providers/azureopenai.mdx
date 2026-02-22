@@ -49,14 +49,14 @@ curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway}/azure-openai/{
 import { AzureOpenAI } from "openai";
 
 const azure_openai = new AzureOpenAI({
-  apiKey: "{azure_api_key}",
-  baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway}/azure-openai/{resource_name}/`,
-  apiVersion: "2023-05-15",
-  defaultHeaders: { "cf-aig-authorization": "{cf-api-token}" }, // if authenticated
+	apiKey: "{azure_api_key}",
+	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway}/azure-openai/{resource_name}/`,
+	apiVersion: "2023-05-15",
+	defaultHeaders: { "cf-aig-authorization": "{cf-api-token}" }, // if authenticated
 });
 
 const result = await azure_openai.chat.completions.create({
-  model: '{deployment_name}',
-  messages: [{ role: "user", content: "Hello" }],
+	model: "{deployment_name}",
+	messages: [{ role: "user", content: "Hello" }],
 });
 ```

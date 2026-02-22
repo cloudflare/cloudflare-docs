@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Terraform
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 Get started with API Shield using Terraform from the examples below. For more information on how to use Terraform with Cloudflare, refer to the [Terraform documentation](/terraform/).
 
@@ -57,7 +56,7 @@ resource "cloudflare_api_shield_operation" "get_image" {
   host     = "example.com"
   endpoint = "/api/images/{var1}"
 }
- 
+
 resource "cloudflare_api_shield_operation" "post_image" {
   zone_id  = var.zone_id
   method   = "POST"
@@ -70,7 +69,7 @@ resource "cloudflare_api_shield_operation" "post_image" {
 
 :::note
 
-It is required to configure Endpoint Management if you want to set up Schema validation using Terraform. 
+It is required to configure Endpoint Management if you want to set up Schema validation using Terraform.
 :::
 
 Refer to the example configuration below to manage [Schema validation](/api-shield/security/schema-validation/api/) on your zone.
@@ -85,13 +84,13 @@ resource "cloudflare_schema_validation_schemas" "example_schema" {
   source             = file("./schemas/example-schema.yaml")
   validation_enabled = true
 }
- 
+
 # Block all requests that violate schema by default
 resource "cloudflare_schema_validation_settings" "zone_level_settings" {
   zone_id                              = var.zone_id
   validation_default_mitigation_action = "block"
 }
- 
+
 # For endpoint post_image - only log requests that violate schema
 resource "cloudflare_schema_validation_operation_settings" "post_image_log_only" {
   zone_id           = var.zone_id

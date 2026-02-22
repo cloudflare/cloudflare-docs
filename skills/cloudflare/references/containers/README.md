@@ -24,28 +24,28 @@ Use when working with Cloudflare Containers: deploying containerized apps on Wor
 import { Container } from "@cloudflare/containers";
 
 export class MyContainer extends Container {
-  defaultPort = 8080;
-  sleepAfter = "30m";
+	defaultPort = 8080;
+	sleepAfter = "30m";
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const container = env.MY_CONTAINER.getByName("instance-1");
-    await container.startAndWaitForPorts();
-    return container.fetch(request);
-  }
+	async fetch(request: Request, env: Env) {
+		const container = env.MY_CONTAINER.getByName("instance-1");
+		await container.startAndWaitForPorts();
+		return container.fetch(request);
+	},
 };
 ```
 
 ## Reading Order
 
-| Task | Files |
-|------|-------|
-| Setup new container project | README → configuration.md |
-| Implement container logic | README → api.md → patterns.md |
-| Choose routing pattern | patterns.md (routing section) |
-| Debug issues | gotchas.md |
-| Production hardening | gotchas.md → patterns.md (lifecycle) |
+| Task                        | Files                                |
+| --------------------------- | ------------------------------------ |
+| Setup new container project | README → configuration.md            |
+| Implement container logic   | README → api.md → patterns.md        |
+| Choose routing pattern      | patterns.md (routing section)        |
+| Debug issues                | gotchas.md                           |
+| Production hardening        | gotchas.md → patterns.md (lifecycle) |
 
 ## Routing Decision Tree
 
@@ -59,12 +59,14 @@ export default {
 ## When to Use Containers vs Workers
 
 **Use Containers when:**
+
 - Need stateful, long-lived processes (sessions, WebSockets, games)
 - Running existing containerized apps (Node.js, Python, custom binaries)
 - Need filesystem access or specific system dependencies
 - Per-user/session isolation with dedicated compute
 
 **Use Workers when:**
+
 - Stateless HTTP handlers
 - Sub-millisecond cold starts required
 - Auto-scaling to zero critical

@@ -23,7 +23,7 @@ let { descriptions, folder, maxDepth, tag } = props.parse(Astro.props);
 if (!folder) folder = Astro.params.slug!;
 
 // Strip leading or trailing slashes
-folder = folder.replace(/^\/|\/$/g, '')
+folder = folder.replace(/^\/|\/$/g, "");
 
 const baseDepth = folder.split("/").length;
 
@@ -60,9 +60,9 @@ function buildPageTree(parentPath: string, currentDepth: number): PageNode[] {
 const pageTree = buildPageTree(folder, baseDepth + 1);
 
 if (pageTree.length === 0) {
-	throw new Error (
-		`[DirectoryListing] Bad folder parameter (determined by current folder OR the "folder" input) of "${folder}". Check to make sure "${folder}" exists, has child pages, .`
-	)
+	throw new Error(
+		`[DirectoryListing] Bad folder parameter (determined by current folder OR the "folder" input) of "${folder}". Check to make sure "${folder}" exists, has child pages, .`,
+	);
 }
 ---
 

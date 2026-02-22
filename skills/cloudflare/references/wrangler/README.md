@@ -5,6 +5,7 @@ Official CLI for Cloudflare Workers - develop, manage, and deploy Workers from t
 ## What is Wrangler?
 
 Wrangler is the Cloudflare Developer Platform CLI that allows you to:
+
 - Create, develop, and deploy Workers
 - Manage bindings (KV, D1, R2, Durable Objects, etc.)
 - Configure routing and environments
@@ -24,17 +25,18 @@ Run commands: `npx wrangler <command>` (or `pnpm`/`yarn wrangler`)
 
 ## Reading Order
 
-| If you want to... | Start here |
-|-------------------|------------|
-| Create/deploy Worker quickly | Essential Commands below → [patterns.md](./patterns.md) §New Worker |
-| Configure bindings (KV, D1, R2) | [configuration.md](./configuration.md) §Bindings |
-| Write integration tests | [api.md](./api.md) §startWorker |
-| Debug production issues | [gotchas.md](./gotchas.md) + Essential Commands §Monitoring |
-| Set up multi-environment workflow | [configuration.md](./configuration.md) §Environments |
+| If you want to...                 | Start here                                                          |
+| --------------------------------- | ------------------------------------------------------------------- |
+| Create/deploy Worker quickly      | Essential Commands below → [patterns.md](./patterns.md) §New Worker |
+| Configure bindings (KV, D1, R2)   | [configuration.md](./configuration.md) §Bindings                    |
+| Write integration tests           | [api.md](./api.md) §startWorker                                     |
+| Debug production issues           | [gotchas.md](./gotchas.md) + Essential Commands §Monitoring         |
+| Set up multi-environment workflow | [configuration.md](./configuration.md) §Environments                |
 
 ## Essential Commands
 
 ### Project & Development
+
 ```bash
 wrangler init [name]              # Create new project
 wrangler dev                      # Local dev server (fast, simulated)
@@ -50,6 +52,7 @@ wrangler whoami                   # Check auth status
 ## Resource Management
 
 ### KV
+
 ```bash
 wrangler kv namespace create NAME
 wrangler kv key put "key" "value" --namespace-id=<id>
@@ -57,6 +60,7 @@ wrangler kv key get "key" --namespace-id=<id>
 ```
 
 ### D1
+
 ```bash
 wrangler d1 create NAME
 wrangler d1 execute NAME --command "SQL"
@@ -65,6 +69,7 @@ wrangler d1 migrations apply NAME
 ```
 
 ### R2
+
 ```bash
 wrangler r2 bucket create NAME
 wrangler r2 object put BUCKET/key --file path
@@ -72,6 +77,7 @@ wrangler r2 object get BUCKET/key
 ```
 
 ### Other Resources
+
 ```bash
 wrangler queues create NAME
 wrangler vectorize create NAME --dimensions N --metric cosine
@@ -83,6 +89,7 @@ wrangler pages deployment create --project NAME --branch main
 ```
 
 ### Secrets
+
 ```bash
 wrangler secret put NAME          # Set Worker secret
 wrangler secret list              # List Worker secrets
@@ -95,6 +102,7 @@ wrangler secret-store:secret list STORE_NAME
 ```
 
 ### Monitoring
+
 ```bash
 wrangler tail                     # Real-time logs
 wrangler tail --env production    # Tail specific env

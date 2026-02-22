@@ -11,6 +11,7 @@ Earlier this year, we announced the launch of the new [Terraform v5 Provider](/c
 Thank you for continuing to raise issues. We triage them weekly and they help make our products stronger.
 
 ### Changes
+
 - Resources stablized:
   - `cloudflare_custom_pages`
   - `cloudflare_page_rule`
@@ -18,13 +19,14 @@ Thank you for continuing to raise issues. We triage them weekly and they help ma
   - `cloudflare_argo_tiered_caching`
 - Addressed chronic drift issues in `cloudflare_logpush_job`, `cloudflare_zero_trust_dns_location`, `cloudflare_ruleset` & `cloudflare_api_token`
 - `cloudflare_zone_subscripton` returns expected values `rate_plan.id` from former versions
-- `cloudflare_workers_script` can now successfully be destroyed with bindings & migration for Durable Objects now recorded in tfstate 
-- Ability to configure `add_headers` under `cloudflare_zero_trust_gateway_policy` 
+- `cloudflare_workers_script` can now successfully be destroyed with bindings & migration for Durable Objects now recorded in tfstate
+- Ability to configure `add_headers` under `cloudflare_zero_trust_gateway_policy`
 - Other bug fixes
 
 For a more detailed look at all of the changes, see the [changelog](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v5.8.2) in GitHub.
 
 ### Issues Closed
+
 - [#5666: cloudflare_ruleset example lists id which is a read-only field](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5666)
 - [#5578: cloudflare_logpush_job plan always suggests changes](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5578)
 - [#5552: 5.4.0: Since provider update, existing cloudflare_list_item would be recreated "created" state](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5552)

@@ -40,17 +40,17 @@ To define a new origin:
 
 ![Add the origin for source images in the Cloudflare dashboard](~/assets/images/images/add-origin.png)
 
-  When you add a root domain, subdomains are not accepted. In other words, if you add `b.com`, then source images from `media.b.com` will be rejected.
+When you add a root domain, subdomains are not accepted. In other words, if you add `b.com`, then source images from `media.b.com` will be rejected.
 
-  To support individual subdomains, define an additional origin such as `media.b.com`. If you add only `media.b.com` and not the root domain, then source images from the root domain (`b.com`) and other subdomains (`cdn.b.com`) will be rejected.
+To support individual subdomains, define an additional origin such as `media.b.com`. If you add only `media.b.com` and not the root domain, then source images from the root domain (`b.com`) and other subdomains (`cdn.b.com`) will be rejected.
 
-  To support all subdomains, use the `*` wildcard at the beginning of the root domain. For example, `*.b.com` will accept source images from the root domain (like `b.com/image.png`) as well as from subdomains (like `media.b.com/image.png` or `cdn.b.com/image.png`).
+To support all subdomains, use the `*` wildcard at the beginning of the root domain. For example, `*.b.com` will accept source images from the root domain (like `b.com/image.png`) as well as from subdomains (like `media.b.com/image.png` or `cdn.b.com/image.png`).
 
 3. Optionally, you can specify the **Path** for the source image. If no path is specified, then source images from all paths on this domain are accepted.
 
-  Cloudflare checks whether the defined path is at the beginning of the source path. If the defined path is not present at the beginning of the path, then the source image will be rejected.
+Cloudflare checks whether the defined path is at the beginning of the source path. If the defined path is not present at the beginning of the path, then the source image will be rejected.
 
-  For example, if you define an origin with domain `b.com` and path `/themes`, then `b.com/themes/image.png` will be accepted but `b.com/media/themes/image.png` will be rejected.
+For example, if you define an origin with domain `b.com` and path `/themes`, then `b.com/themes/image.png` will be accepted but `b.com/media/themes/image.png` will be rejected.
 
 4. Select **Add**. Your origin will now appear in your list of allowed origins.
 5. Select **Save**. These changes will take effect immediately.

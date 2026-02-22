@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Developing with multiple Workers
 sidebar:
-  order: 3
+  order: 8
 head: []
 description: Learn how to develop with multiple Workers using different approaches and configurations.
 ---
@@ -20,11 +20,11 @@ We recommend this approach as the default for most development workflows as it e
 You can run multiple Workers in a single dev command by passing multiple configuration files to your dev server:
 
 **Using Wrangler**
-   
+
 <PackageManagers
-  type="exec"
-  pkg="wrangler"
-  args="dev -c ./app/wrangler.jsonc -c ./api/wrangler.jsonc"
+	type="exec"
+	pkg="wrangler"
+	args="dev -c ./app/wrangler.jsonc -c ./api/wrangler.jsonc"
 />
 
 The first config (`./app/wrangler.jsonc`) is treated as the primary Worker, exposed at `http://localhost:8787`. Additional configs (e.g. `./api/wrangler.jsonc`) run as auxiliary Workers, available via service bindings or tail consumers from the primary Worker.
@@ -38,16 +38,16 @@ import { defineConfig } from "vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
 
 export default defineConfig({
-  plugins: [
-    cloudflare({
-      configPath: "./app/wrangler.jsonc",
-      auxiliaryWorkers: [
-        {
-          configPath: "./api/wrangler.jsonc",
-        },
-      ],
-    }),
-  ],
+	plugins: [
+		cloudflare({
+			configPath: "./app/wrangler.jsonc",
+			auxiliaryWorkers: [
+				{
+					configPath: "./api/wrangler.jsonc",
+				},
+			],
+		}),
+	],
 });
 ```
 
@@ -66,17 +66,17 @@ Then run:
 You can also run each Worker in a separate dev commands, each with its own terminal and configuration.
 
 <PackageManagers
-  comment="Terminal 1"
-  type="exec"
-  pkg="wrangler"
-  args="dev -c ./app/wrangler.jsonc"
+	comment="Terminal 1"
+	type="exec"
+	pkg="wrangler"
+	args="dev -c ./app/wrangler.jsonc"
 />
 
 <PackageManagers
-  comment="Terminal 2"
-  type="exec"
-  pkg="wrangler"
-  args="dev -c ./api/wrangler.jsonc"
+	comment="Terminal 2"
+	type="exec"
+	pkg="wrangler"
+	args="dev -c ./api/wrangler.jsonc"
 />
 
 These Workers run in different dev commands but can still communicate with each other via service bindings or tail consumers **regardless of whether they are started with `wrangler dev` or `vite dev`**.

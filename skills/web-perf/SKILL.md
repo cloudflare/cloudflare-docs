@@ -31,14 +31,14 @@ Ask the user to add this to their MCP config:
 
 ## Quick Reference
 
-| Task | Tool Call |
-|------|-----------|
-| Load page | `navigate_page(url: "...")` |
-| Start trace | `performance_start_trace(autoStop: true, reload: true)` |
+| Task            | Tool Call                                                              |
+| --------------- | ---------------------------------------------------------------------- |
+| Load page       | `navigate_page(url: "...")`                                            |
+| Start trace     | `performance_start_trace(autoStop: true, reload: true)`                |
 | Analyze insight | `performance_analyze_insight(insightSetId: "...", insightName: "...")` |
-| List requests | `list_network_requests(resourceTypes: ["Script", "Stylesheet", ...])` |
-| Request details | `get_network_request(reqid: <id>)` |
-| A11y snapshot | `take_snapshot(verbose: true)` |
+| List requests   | `list_network_requests(resourceTypes: ["Script", "Stylesheet", ...])`  |
+| Request details | `get_network_request(reqid: <id>)`                                     |
+| A11y snapshot   | `take_snapshot(verbose: true)`                                         |
 
 ## Workflow
 
@@ -56,11 +56,13 @@ Audit Progress:
 ### Phase 1: Performance Trace
 
 1. Navigate to the target URL:
+
    ```
    navigate_page(url: "<target-url>")
    ```
 
 2. Start a performance trace with reload to capture cold-load metrics:
+
    ```
    performance_start_trace(autoStop: true, reload: true)
    ```
@@ -68,6 +70,7 @@ Audit Progress:
 3. Wait for trace completion, then retrieve results.
 
 **Troubleshooting:**
+
 - If trace returns empty or fails, verify the page loaded correctly with `navigate_page` first
 - If insight names don't match, inspect the trace response to list available insights
 
@@ -79,20 +82,22 @@ Use `performance_analyze_insight` to extract key metrics.
 
 Common insight names:
 
-| Metric | Insight Name | What to Look For |
-|--------|--------------|------------------|
-| LCP | `LCPBreakdown` | Time to largest contentful paint; breakdown of TTFB, resource load, render delay |
-| CLS | `CLSCulprits` | Elements causing layout shifts (images without dimensions, injected content, font swaps) |
-| Render Blocking | `RenderBlocking` | CSS/JS blocking first paint |
-| Document Latency | `DocumentLatency` | Server response time issues |
-| Network Dependencies | `NetworkRequestsDepGraph` | Request chains delaying critical resources |
+| Metric               | Insight Name              | What to Look For                                                                         |
+| -------------------- | ------------------------- | ---------------------------------------------------------------------------------------- |
+| LCP                  | `LCPBreakdown`            | Time to largest contentful paint; breakdown of TTFB, resource load, render delay         |
+| CLS                  | `CLSCulprits`             | Elements causing layout shifts (images without dimensions, injected content, font swaps) |
+| Render Blocking      | `RenderBlocking`          | CSS/JS blocking first paint                                                              |
+| Document Latency     | `DocumentLatency`         | Server response time issues                                                              |
+| Network Dependencies | `NetworkRequestsDepGraph` | Request chains delaying critical resources                                               |
 
 Example:
+
 ```
 performance_analyze_insight(insightSetId: "<id-from-trace>", insightName: "LCPBreakdown")
 ```
 
 **Key thresholds (good/needs-improvement/poor):**
+
 - TTFB: < 800ms / < 1.8s / > 1.8s
 - FCP: < 1.8s / < 3s / > 3s
 - LCP: < 2.5s / < 4s / > 4s
@@ -104,6 +109,7 @@ performance_analyze_insight(insightSetId: "<id-from-trace>", insightName: "LCPBr
 ### Phase 3: Network Analysis
 
 List all network requests to identify optimization opportunities:
+
 ```
 list_network_requests(resourceTypes: ["Script", "Stylesheet", "Document", "Font", "Image"])
 ```
@@ -118,6 +124,7 @@ list_network_requests(resourceTypes: ["Script", "Stylesheet", "Document", "Font"
 6. **Unused preconnects**: If flagged, verify by checking if ANY requests went to that origin. If zero requests, it's definitively unused—recommend removal. If requests exist but loaded late, the preconnect may still be valuable.
 
 For detailed request info:
+
 ```
 get_network_request(reqid: <id>)
 ```
@@ -125,11 +132,13 @@ get_network_request(reqid: <id>)
 ### Phase 4: Accessibility Snapshot
 
 Take an accessibility tree snapshot:
+
 ```
 take_snapshot(verbose: true)
 ```
 
 **Flag high-level gaps:**
+
 - Missing or duplicate ARIA IDs
 - Elements with poor contrast ratios (check against WCAG AA: 4.5:1 for normal text, 3:1 for large text)
 - Focus traps or missing focus indicators
@@ -145,17 +154,17 @@ Analyze the codebase to understand where improvements can be made.
 
 Search for configuration files to identify the stack:
 
-| Tool | Config Files |
-|------|--------------|
-| Webpack | `webpack.config.js`, `webpack.*.js` |
-| Vite | `vite.config.js`, `vite.config.ts` |
-| Rollup | `rollup.config.js`, `rollup.config.mjs` |
-| esbuild | `esbuild.config.js`, build scripts with `esbuild` |
-| Parcel | `.parcelrc`, `package.json` (parcel field) |
-| Next.js | `next.config.js`, `next.config.mjs` |
-| Nuxt | `nuxt.config.js`, `nuxt.config.ts` |
-| SvelteKit | `svelte.config.js` |
-| Astro | `astro.config.mjs` |
+| Tool      | Config Files                                      |
+| --------- | ------------------------------------------------- |
+| Webpack   | `webpack.config.js`, `webpack.*.js`               |
+| Vite      | `vite.config.js`, `vite.config.ts`                |
+| Rollup    | `rollup.config.js`, `rollup.config.mjs`           |
+| esbuild   | `esbuild.config.js`, build scripts with `esbuild` |
+| Parcel    | `.parcelrc`, `package.json` (parcel field)        |
+| Next.js   | `next.config.js`, `next.config.mjs`               |
+| Nuxt      | `nuxt.config.js`, `nuxt.config.ts`                |
+| SvelteKit | `svelte.config.js`                                |
+| Astro     | `astro.config.mjs`                                |
 
 Also check `package.json` for framework dependencies and build scripts.
 

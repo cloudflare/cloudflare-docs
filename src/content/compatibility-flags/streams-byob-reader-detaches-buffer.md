@@ -20,12 +20,12 @@ User code should never try to reuse an `ArrayBuffer` that has been passed into a
 let reader = readable.getReader({ mode: "byob" });
 let arrayBufferView = new Uint8Array(4096);
 while (true) {
-  let result = await reader.read(arrayBufferView);
-  if (result.done) break;
-  // Optionally something with `result` here.
-  // Re-use the same memory for the next `read()` by creating
-  // a new Uint8Array backed by the result's ArrayBuffer.
-  arrayBufferView = new Uint8Array(result.value.buffer);
+	let result = await reader.read(arrayBufferView);
+	if (result.done) break;
+	// Optionally something with `result` here.
+	// Re-use the same memory for the next `read()` by creating
+	// a new Uint8Array backed by the result's ArrayBuffer.
+	arrayBufferView = new Uint8Array(result.value.buffer);
 }
 ```
 

@@ -192,7 +192,10 @@ export default {
 		const newRequest = new Request(url.toString(), request);
 
 		newRequest.headers.set("cf-access-client-id", env.CF_ACCESS_CLIENT_ID);
-		newRequest.headers.set("cf-access-client-secret", env.CF_ACCESS_CLIENT_SECRET);
+		newRequest.headers.set(
+			"cf-access-client-secret",
+			env.CF_ACCESS_CLIENT_SECRET,
+		);
 		try {
 			const response = await fetch(newRequest);
 
@@ -222,7 +225,7 @@ npx wrangler deploy
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to the **Workers & Pages** page.
 
-	<DashButton url="/?to=/:account/workers-and-pages" />
+   <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select your newly created Worker.
 

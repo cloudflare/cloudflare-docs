@@ -6,34 +6,34 @@ R2 Data Catalog exposes standard [Apache Iceberg REST Catalog API](https://githu
 
 **Most common operations:**
 
-| Task | PyIceberg Code |
-|------|----------------|
-| Connect | `RestCatalog(name="r2", warehouse=bucket, uri=uri, token=token)` |
-| List namespaces | `catalog.list_namespaces()` |
-| Create namespace | `catalog.create_namespace("logs")` |
-| Create table | `catalog.create_table(("ns", "table"), schema=schema)` |
-| Load table | `catalog.load_table(("ns", "table"))` |
-| Append data | `table.append(pyarrow_table)` |
-| Query data | `table.scan().to_pandas()` |
-| Compact files | `table.rewrite_data_files(target_file_size_bytes=128*1024*1024)` |
+| Task             | PyIceberg Code                                                    |
+| ---------------- | ----------------------------------------------------------------- |
+| Connect          | `RestCatalog(name="r2", warehouse=bucket, uri=uri, token=token)`  |
+| List namespaces  | `catalog.list_namespaces()`                                       |
+| Create namespace | `catalog.create_namespace("logs")`                                |
+| Create table     | `catalog.create_table(("ns", "table"), schema=schema)`            |
+| Load table       | `catalog.load_table(("ns", "table"))`                             |
+| Append data      | `table.append(pyarrow_table)`                                     |
+| Query data       | `table.scan().to_pandas()`                                        |
+| Compact files    | `table.rewrite_data_files(target_file_size_bytes=128*1024*1024)`  |
 | Expire snapshots | `table.expire_snapshots(older_than=timestamp_ms, retain_last=10)` |
 
 ## REST Endpoints
 
 Base: `https://<account-id>.r2.cloudflarestorage.com/iceberg/<bucket-name>`
 
-| Operation | Method | Path |
-|-----------|--------|------|
-| Catalog config | GET | `/v1/config` |
-| List namespaces | GET | `/v1/namespaces` |
-| Create namespace | POST | `/v1/namespaces` |
-| Delete namespace | DELETE | `/v1/namespaces/{ns}` |
-| List tables | GET | `/v1/namespaces/{ns}/tables` |
-| Create table | POST | `/v1/namespaces/{ns}/tables` |
-| Load table | GET | `/v1/namespaces/{ns}/tables/{table}` |
-| Update table | POST | `/v1/namespaces/{ns}/tables/{table}` |
-| Delete table | DELETE | `/v1/namespaces/{ns}/tables/{table}` |
-| Rename table | POST | `/v1/tables/rename` |
+| Operation        | Method | Path                                 |
+| ---------------- | ------ | ------------------------------------ |
+| Catalog config   | GET    | `/v1/config`                         |
+| List namespaces  | GET    | `/v1/namespaces`                     |
+| Create namespace | POST   | `/v1/namespaces`                     |
+| Delete namespace | DELETE | `/v1/namespaces/{ns}`                |
+| List tables      | GET    | `/v1/namespaces/{ns}/tables`         |
+| Create table     | POST   | `/v1/namespaces/{ns}/tables`         |
+| Load table       | GET    | `/v1/namespaces/{ns}/tables/{table}` |
+| Update table     | POST   | `/v1/namespaces/{ns}/tables/{table}` |
+| Delete table     | DELETE | `/v1/namespaces/{ns}/tables/{table}` |
+| Rename table     | POST   | `/v1/tables/rename`                  |
 
 **Authentication:** Bearer token in header: `Authorization: Bearer <token>`
 
@@ -189,11 +189,11 @@ print(f"Files: {len(table.scan().plan_files())}")
 
 ## Error Codes
 
-| Code | Meaning | Common Causes |
-|------|---------|---------------|
-| 401 | Unauthorized | Invalid/missing token |
-| 404 | Not Found | Catalog not enabled, namespace/table missing |
-| 409 | Conflict | Already exists, concurrent update |
-| 422 | Validation | Invalid schema, incompatible type |
+| Code | Meaning      | Common Causes                                |
+| ---- | ------------ | -------------------------------------------- |
+| 401  | Unauthorized | Invalid/missing token                        |
+| 404  | Not Found    | Catalog not enabled, namespace/table missing |
+| 409  | Conflict     | Already exists, concurrent update            |
+| 422  | Validation   | Invalid schema, incompatible type            |
 
 See [gotchas.md](gotchas.md) for detailed troubleshooting.

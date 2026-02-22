@@ -12,14 +12,14 @@ import { streamText, convertToModelMessages } from "ai";
 import { openai } from "@ai-sdk/openai";
 
 export class Chat extends AIChatAgent<Env> {
-  async onChatMessage(onFinish) {
-    const result = streamText({
-      model: openai("gpt-4o"),
-      messages: await convertToModelMessages(this.messages),
-      onFinish
-    });
-    return result.toUIMessageStreamResponse();
-  }
+	async onChatMessage(onFinish) {
+		const result = streamText({
+			model: openai("gpt-4o"),
+			messages: await convertToModelMessages(this.messages),
+			onFinish,
+		});
+		return result.toUIMessageStreamResponse();
+	}
 }
 ```
 
@@ -27,15 +27,15 @@ export class Chat extends AIChatAgent<Env> {
 
 ```typescript
 export class Chat extends AIChatAgent<Env> {
-  async onChatMessage(onFinish) {
-    const result = streamText({
-      model: openai("gpt-4o"),
-      system: "You are a helpful assistant specializing in...",
-      messages: await convertToModelMessages(this.messages),
-      onFinish
-    });
-    return result.toUIMessageStreamResponse();
-  }
+	async onChatMessage(onFinish) {
+		const result = streamText({
+			model: openai("gpt-4o"),
+			system: "You are a helpful assistant specializing in...",
+			messages: await convertToModelMessages(this.messages),
+			onFinish,
+		});
+		return result.toUIMessageStreamResponse();
+	}
 }
 ```
 
@@ -46,23 +46,23 @@ import { tool } from "ai";
 import { z } from "zod";
 
 const tools = {
-  getWeather: tool({
-    description: "Get weather for a location",
-    parameters: z.object({ location: z.string() }),
-    execute: async ({ location }) => `Weather in ${location}: 72°F, sunny`
-  })
+	getWeather: tool({
+		description: "Get weather for a location",
+		parameters: z.object({ location: z.string() }),
+		execute: async ({ location }) => `Weather in ${location}: 72°F, sunny`,
+	}),
 };
 
 export class Chat extends AIChatAgent<Env> {
-  async onChatMessage(onFinish) {
-    const result = streamText({
-      model: openai("gpt-4o"),
-      messages: await convertToModelMessages(this.messages),
-      tools,
-      onFinish
-    });
-    return result.toUIMessageStreamResponse();
-  }
+	async onChatMessage(onFinish) {
+		const result = streamText({
+			model: openai("gpt-4o"),
+			messages: await convertToModelMessages(this.messages),
+			tools,
+			onFinish,
+		});
+		return result.toUIMessageStreamResponse();
+	}
 }
 ```
 
@@ -74,19 +74,19 @@ For more control, use `createUIMessageStream`:
 import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
 
 export class Chat extends AIChatAgent<Env> {
-  async onChatMessage(onFinish) {
-    const stream = createUIMessageStream({
-      execute: async ({ writer }) => {
-        const result = streamText({
-          model: openai("gpt-4o"),
-          messages: await convertToModelMessages(this.messages),
-          onFinish
-        });
-        writer.merge(result.toUIMessageStream());
-      }
-    });
-    return createUIMessageStreamResponse({ stream });
-  }
+	async onChatMessage(onFinish) {
+		const stream = createUIMessageStream({
+			execute: async ({ writer }) => {
+				const result = streamText({
+					model: openai("gpt-4o"),
+					messages: await convertToModelMessages(this.messages),
+					onFinish,
+				});
+				writer.merge(result.toUIMessageStream());
+			},
+		});
+		return createUIMessageStreamResponse({ stream });
+	}
 }
 ```
 
@@ -111,37 +111,32 @@ import { useAgent } from "agents/react";
 import { useAgentChat } from "@cloudflare/ai-chat/react";
 
 function ChatUI() {
-  const agent = useAgent({
-    agent: "Chat",
-    name: "my-chat-session"
-  });
+	const agent = useAgent({
+		agent: "Chat",
+		name: "my-chat-session",
+	});
 
-  const { 
-    messages, 
-    input, 
-    handleInputChange, 
-    handleSubmit, 
-    status 
-  } = useAgentChat({ agent });
+	const { messages, input, handleInputChange, handleSubmit, status } =
+		useAgentChat({ agent });
 
-  return (
-    <div>
-      {messages.map((m) => (
-        <div key={m.id}>
-          <strong>{m.role}:</strong> {m.content}
-        </div>
-      ))}
-      
-      <form onSubmit={handleSubmit}>
-        <input 
-          value={input} 
-          onChange={handleInputChange}
-          disabled={status === "streaming"}
-        />
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  );
+	return (
+		<div>
+			{messages.map((m) => (
+				<div key={m.id}>
+					<strong>{m.role}:</strong> {m.content}
+				</div>
+			))}
+
+			<form onSubmit={handleSubmit}>
+				<input
+					value={input}
+					onChange={handleInputChange}
+					disabled={status === "streaming"}
+				/>
+				<button type="submit">Send</button>
+			</form>
+		</div>
+	);
 }
 ```
 
@@ -153,14 +148,14 @@ For non-chat streaming, use `@callable({ streaming: true })`:
 import { Agent, callable, StreamingResponse } from "agents";
 
 export class MyAgent extends Agent<Env> {
-  @callable({ streaming: true })
-  async streamData(stream: StreamingResponse, query: string) {
-    for (let i = 0; i < 10; i++) {
-      stream.send(`Result ${i}: ${query}`);
-      await sleep(100);
-    }
-    stream.close();
-  }
+	@callable({ streaming: true })
+	async streamData(stream: StreamingResponse, query: string) {
+		for (let i = 0; i < 10; i++) {
+			stream.send(`Result ${i}: ${query}`);
+			await sleep(100);
+		}
+		stream.close();
+	}
 }
 ```
 
@@ -170,9 +165,9 @@ Client receives streamed messages via WebSocket RPC.
 
 `useAgentChat` status:
 
-| Status | Meaning |
-|--------|---------|
-| `ready` | Idle, ready for input |
-| `streaming` | Response streaming |
+| Status      | Meaning               |
+| ----------- | --------------------- |
+| `ready`     | Idle, ready for input |
+| `streaming` | Response streaming    |
 | `submitted` | Request sent, waiting |
-| `error` | Error occurred |
+| `error`     | Error occurred        |

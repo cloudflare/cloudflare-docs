@@ -9,13 +9,14 @@ description: Use Magic Transit analytics to monitor network performance and trou
 
 import { Render } from "~/components";
 
-<Render file="analytics/overview"
+<Render
+	file="analytics/overview"
 	product="networking-services"
 	params={{
 		productName: "Magic Transit",
 		networkAnalyticsURL: "/magic-transit/analytics/network-analytics/",
 		traceRoutes: "/magic-transit/analytics/traceroutes/",
 		graphQlTunnelBandwidthURL: "/magic-transit/analytics/query-bandwidth/",
-		graphQlTunnelHealthURL: "/magic-transit/analytics/query-tunnel-health/"
-		 }}
+		graphQlTunnelHealthURL: "/magic-transit/analytics/query-tunnel-health/",
+	}}
 />

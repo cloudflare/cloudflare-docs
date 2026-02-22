@@ -22,7 +22,7 @@ Therefore, it is recommended that you **use the [Cloudflare CDN](/cache/)**, whi
 - You perform DDoS filtering in the first point of contact from the Internet, which is a recommended best practice.
 
 :::caution[L3/4 DDoS mitigation accuracy]
-Using a third-party WAF or CDN service in front of Cloudflare can negatively impact the accuracy of L3/4 DDoS mitigation. 
+Using a third-party WAF or CDN service in front of Cloudflare can negatively impact the accuracy of L3/4 DDoS mitigation.
 
 When traffic is proxied through another vendor, the vendor's IP addresses are available to Cloudflare's network-layer protection systems rather than the true client IP addresses. This lack of visibility into the original source can lead to less effective automated mitigation and potential false positives.
 :::

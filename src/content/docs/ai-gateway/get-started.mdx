@@ -21,7 +21,7 @@ In this guide, you will learn how to create and use your first AI Gateway.
 
 <Render file="create-gateway" product="ai-gateway" />
 
-### Authenticated gateway 🔒 
+### Authenticated gateway 🔒
 
 When you enable authentication on a gateway, each request is required to include a valid Cloudflare API token, adding an extra layer of security. We recommend using an authenticated gateway to prevent unauthorized access. [Learn more](/ai-gateway/configuration/authentication/).
 
@@ -37,15 +37,14 @@ Authenticate with your upstream AI provider using one of the following options:
 
 ### Unified API Endpoint
 
-<Badge text="OpenAI Compatible" variant="tip" size="small" /><Badge text="Recommended" variant="success" size="small" />
+<Badge text="OpenAI Compatible" variant="tip" size="small" />
+<Badge text="Recommended" variant="success" size="small" />
 <br />
 <br />
 
 The easiest way to get started with AI Gateway is through our OpenAI-compatible `/chat/completions` endpoint. This allows you to use existing OpenAI SDKs and tools with minimal code changes while gaining access to multiple AI providers.
 
-`
-https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/compat/chat/completions
-`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/compat/chat/completions`
 
 **Key benefits:**
 
@@ -53,11 +52,9 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/compat/chat/com
 - Switch between providers by changing the `model` parameter
 - Dynamic Routing - Define complex routing scenarios requiring conditional logic, conduct A/B tests, set rate / budget limits, etc
 
-
 #### Example:
 
 <CodeSnippets forceAPI="unified" />
-
 
 Refer to [Unified API](/ai-gateway/usage/chat-completion/) to learn more about OpenAI compatibility.
 

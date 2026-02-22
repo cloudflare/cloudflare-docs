@@ -12,10 +12,10 @@ Cloudflare now provides two new request fields in the Ruleset engine that let yo
 
 ### New fields
 
-| Field | Type | Description |
-| --- | --- | --- |
-| `cf.edge.client_tcp` | Boolean | Indicates whether the request used TCP. A value of true means the client connected using TCP instead of QUIC. |
-| `cf.timings.client_tcp_rtt_msec` | Number | Reports the smoothed TCP round-trip time between the client and Cloudflare in milliseconds. For example, a value of 20 indicates roughly twenty milliseconds of RTT. |
+| Field                            | Type    | Description                                                                                                                                                          |
+| -------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cf.edge.client_tcp`             | Boolean | Indicates whether the request used TCP. A value of true means the client connected using TCP instead of QUIC.                                                        |
+| `cf.timings.client_tcp_rtt_msec` | Number  | Reports the smoothed TCP round-trip time between the client and Cloudflare in milliseconds. For example, a value of 20 indicates roughly twenty milliseconds of RTT. |
 
 Example filter expression:
 

@@ -3,10 +3,9 @@ title: Purge cache by cache-tags
 pcx_content_type: concept
 sidebar:
   order: 3
-
 ---
 
-import { DashButton } from "~/components"
+import { DashButton } from "~/components";
 
 Cache-tag purging makes multi-file purging easier because you can instantly bulk purge by adding cache-tags to your assets, such as webpages, image files, and more.
 
@@ -20,9 +19,7 @@ Cache-tag purging makes multi-file purging easier because you can instantly bulk
 
 :::caution[Warning]
 
-
 Be careful when purging. A cache MISS can cause execution delays by requiring a fetch from your origin server.
-
 
 :::
 
@@ -32,19 +29,19 @@ You add cache-tags to your web content in `Cache-Tag` HTTP response headers to a
 
 When your content reaches our edge network, Cloudflare:
 
-* Removes the `Cache-Tag` HTTP header before sending the response to your website visitor or passing the response to a [Worker](/workers/). Your end users or Worker never see `Cache-Tag` HTTP headers on your Cloudflare-enabled website.
-* Removes whitespaces from the header and any before and after cache-tag names: `tag1`, `tag2` and `tag1,tag2` are considered the same.
-* Removes all repeated and trailing commas before applying cache-tags: `tag1,,,tag2` and `tag1,tag2` are considered the same.
+- Removes the `Cache-Tag` HTTP header before sending the response to your website visitor or passing the response to a [Worker](/workers/). Your end users or Worker never see `Cache-Tag` HTTP headers on your Cloudflare-enabled website.
+- Removes whitespaces from the header and any before and after cache-tag names: `tag1`, `tag2` and `tag1,tag2` are considered the same.
+- Removes all repeated and trailing commas before applying cache-tags: `tag1,,,tag2` and `tag1,tag2` are considered the same.
 
 ## A few things to remember
 
-* A single HTTP response can have more than one `Cache-Tag` HTTP header field.
-* The minimum length of a cache-tag is one byte.
-* Individual tags do not have a maximum length, but the aggregate `Cache-Tag` HTTP header cannot exceed 16 KB after the header field name, which is approximately 1,000 unique tags. Length includes whitespace and commas but does not include the header field name.
-* For cache purges, the maximum length of a cache-tag in an API call is 1,024 characters.
-* The `Cache-Tag` HTTP header must only contain printable ASCII encoded characters.
-* Spaces are not allowed in cache-tags.
-* Case is not sensitive. For example, `Tag1` and `tag1` are considered the same.
+- A single HTTP response can have more than one `Cache-Tag` HTTP header field.
+- The minimum length of a cache-tag is one byte.
+- Individual tags do not have a maximum length, but the aggregate `Cache-Tag` HTTP header cannot exceed 16 KB after the header field name, which is approximately 1,000 unique tags. Length includes whitespace and commas but does not include the header field name.
+- For cache purges, the maximum length of a cache-tag in an API call is 1,024 characters.
+- The `Cache-Tag` HTTP header must only contain printable ASCII encoded characters.
+- Spaces are not allowed in cache-tags.
+- Case is not sensitive. For example, `Tag1` and `tag1` are considered the same.
 
 ## Purge using cache-tags
 
@@ -58,7 +55,6 @@ When your content reaches our edge network, Cloudflare:
 5. Select **Purge**.
 
 For information on rate limits, refer to the [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits) section.
-
 
 ## Resulting cache status
 

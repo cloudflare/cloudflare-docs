@@ -5,15 +5,14 @@ tags:
   - JSON
 sidebar:
   order: 5
-
 ---
 
 D1 has built-in support for querying and parsing JSON data stored within a database. This enables you to:
 
-* [Query paths](#extract-values) within a stored JSON object - for example, extracting the value of named key or array index directly, which is especially useful with larger JSON objects.
-* Insert and/or replace values within an object or array.
-* [Expand the contents of a JSON object](#expand-arrays-for-in-queries) or array into multiple rows - for example, for use as part of a `WHERE ... IN` predicate.
-* Create [generated columns](/d1/reference/generated-columns/) that are automatically populated with values from JSON objects you insert.
+- [Query paths](#extract-values) within a stored JSON object - for example, extracting the value of named key or array index directly, which is especially useful with larger JSON objects.
+- Insert and/or replace values within an object or array.
+- [Expand the contents of a JSON object](#expand-arrays-for-in-queries) or array into multiple rows - for example, for use as part of a `WHERE ... IN` predicate.
+- Create [generated columns](/d1/reference/generated-columns/) that are automatically populated with values from JSON objects you insert.
 
 One of the biggest benefits to parsing JSON within D1 directly is that it can directly reduce the number of round-trips (queries) to your database. It reduces the cases where you have to read a JSON object into your application (1), parse it, and then write it back (2).
 
@@ -23,18 +22,18 @@ This allows you to more precisely query over data and reduce the result set your
 
 JSON data is stored as a `TEXT` column in D1. JSON types follow the same [type conversion rules](/d1/worker-api/#type-conversion) as D1 in general, including:
 
-* A JSON null is treated as a D1 `NULL`.
-* A JSON number is treated as an `INTEGER` or `REAL`.
-* Booleans are treated as `INTEGER` values: `true` as `1` and `false` as `0`.
-* Object and array values as `TEXT`.
+- A JSON null is treated as a D1 `NULL`.
+- A JSON number is treated as an `INTEGER` or `REAL`.
+- Booleans are treated as `INTEGER` values: `true` as `1` and `false` as `0`.
+- Object and array values as `TEXT`.
 
 ## Supported functions
 
 The following table outlines the JSON functions built into D1 and example usage.
 
-* The `json` argument placeholder can be a JSON object, array, string, number or a null value.
-* The `value` argument accepts string literals (only) and treats input as a string, even if it is well-formed JSON. The exception to this rule is when nesting `json_*` functions: the outer (wrapping) function will interpret the inner (wrapped) functions return value as JSON.
-* The `path` argument accepts path-style traversal syntax - for example, `$` to refer to the top-level object/array, `$.key1.key2` to refer to a nested object, and `$.key[2]` to index into an array.
+- The `json` argument placeholder can be a JSON object, array, string, number or a null value.
+- The `value` argument accepts string literals (only) and treats input as a string, even if it is well-formed JSON. The exception to this rule is when nesting `json_*` functions: the outer (wrapping) function will interpret the inner (wrapped) functions return value as JSON.
+- The `path` argument accepts path-style traversal syntax - for example, `$` to refer to the top-level object/array, `$.key1.key2` to refer to a nested object, and `$.key[2]` to index into an array.
 
 | Function                                                    | Description                                                                                                                                                    | Example                                                                                   |
 | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
@@ -51,7 +50,7 @@ The following table outlines the JSON functions built into D1 and example usage.
 | `json_replace(json, path, value)`                           | Insert a value at the given path. Overwrites an existing value, but does not create a new key if it doesn't exist.                                             |                                                                                           |
 | `json_set(json, path, value)`                               | Insert a value at the given path. Overwrites an existing value.                                                                                                |                                                                                           |
 | `json_type(json)` - `json_type(json, path)`                 | Return the type of the provided value or value at the specified path. Returns one of `null`, `true`, `false`, `integer`, `real`, `text`, `array`, or `object`. | `json_type('{"temperatures":[73.6, 77.8, 80.2]}', '$.temperatures')` returns `array`      |
-| `json_valid(json)`                                          | Returns 0 (false) for invalid JSON, and 1 (true) for valid JSON.                                                                                               | `json_valid({invalid:json})`returns`0\`                                                  |
+| `json_valid(json)`                                          | Returns 0 (false) for invalid JSON, and 1 (true) for valid JSON.                                                                                               | `json_valid({invalid:json})`returns`0\`                                                   |
 | `json_quote(value)`                                         | Converts the provided SQL value into its JSON representation.                                                                                                  | `json_quote('[1, 2, 3]')` returns `[1,2,3]`                                               |
 | `json_group_array(value)`                                   | Returns the provided value(s) as a JSON array.                                                                                                                 |                                                                                           |
 | `json_each(value)` - `json_each(value, path)`               | Returns each element within the object as an individual row. It will only traverse the top-level object.                                                       |                                                                                           |
@@ -100,9 +99,9 @@ Refer to [Generated columns](/d1/reference/generated-columns/) to learn more abo
 
 There are three ways to extract a value from a JSON object in D1:
 
-* The `json_extract()` function - for example, `json_extract(text_column_containing_json, '$.path.to.value)`.
-* The `->` operator, which returns a JSON representation of the value.
-* The `->>` operator, which returns an SQL representation of the value.
+- The `json_extract()` function - for example, `json_extract(text_column_containing_json, '$.path.to.value)`.
+- The `->` operator, which returns a JSON representation of the value.
+- The `->>` operator, which returns an SQL representation of the value.
 
 The `->` and `->>` operators functions both operate similarly to the same operators in PostgreSQL and MySQL/MariaDB.
 
@@ -110,13 +109,13 @@ Given the following JSON object in a column named `sensor_reading`, you can extr
 
 ```json
 {
-    "measurement": {
-        "temp_f": "77.4",
-        "aqi": [21, 42, 58],
-        "o3": [18, 500],
-        "wind_mph": "13",
-        "location": "US-NY"
-    }
+	"measurement": {
+		"temp_f": "77.4",
+		"aqi": [21, 42, 58],
+		"o3": [18, 500],
+		"wind_mph": "13",
+		"location": "US-NY"
+	}
 }
 ```
 
@@ -146,8 +145,12 @@ For example, given the following JSON object stored in a column called `login_hi
 
 ```json
 {
-    "user_id": "abc12345",
-    "previous_logins": ["2023-03-31T21:07:14-05:00", "2023-03-28T08:21:02-05:00", "2023-03-28T05:52:11-05:00"]
+	"user_id": "abc12345",
+	"previous_logins": [
+		"2023-03-31T21:07:14-05:00",
+		"2023-03-28T08:21:02-05:00",
+		"2023-03-28T05:52:11-05:00"
+	]
 }
 ```
 
@@ -162,7 +165,13 @@ You can also use `json_array_length` as a predicate in a more complex query - fo
 You can insert a value into an existing JSON object or array using `json_insert()`. For example, if you have a `TEXT` column called `login_history` in a `users` table containing the following object:
 
 ```json
-{"history": ["2023-05-13T15:13:02+00:00", "2023-05-14T07:11:22+00:00", "2023-05-15T15:03:51+00:00"]}
+{
+	"history": [
+		"2023-05-13T15:13:02+00:00",
+		"2023-05-14T07:11:22+00:00",
+		"2023-05-15T15:03:51+00:00"
+	]
+}
 ```
 
 To add a new timestamp to the `history` array within our `login_history` column, write a query resembling the following:
@@ -195,11 +204,11 @@ This would extract only the `value` column from the table returned by `json_each
 
 `json_each` effectively returns a table with multiple columns, with the most relevant being:
 
-* `key` - the key (or index).
-* `value` - the literal value of each element parsed by `json_each`.
-* `type` - the type of the value: one of `null`, `true`, `false`, `integer`, `real`, `text`, `array`, or `object`.
-* `fullkey` - the full path to the element: e.g. `$[1]` for the second element in an array, or `$.path.to.key` for a nested object.
-* `path` - the top-level path - `$` as the path for an element with a `fullkey` of `$[0]`.
+- `key` - the key (or index).
+- `value` - the literal value of each element parsed by `json_each`.
+- `type` - the type of the value: one of `null`, `true`, `false`, `integer`, `real`, `text`, `array`, or `object`.
+- `fullkey` - the full path to the element: e.g. `$[1]` for the second element in an array, or `$.path.to.key` for a nested object.
+- `path` - the top-level path - `$` as the path for an element with a `fullkey` of `$[0]`.
 
 In this example, `SELECT * FROM json_each('[183183, 13913, 94944]')` would return a table resembling the below:
 
@@ -213,12 +222,12 @@ key|value|type|id|fullkey|path
 You can use `json_each` with [D1 Workers Binding API](/d1/worker-api/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/worker-api/d1-database/#guidance):
 
 ```ts
-const stmt = context.env.DB
-    .prepare("UPDATE users SET last_audited = ? WHERE id IN (SELECT value FROM json_each(?1))")
-const resp = await stmt.bind(
-    "2023-05-16T11:24:08+00:00",
-    JSON.stringify([183183, 13913, 94944])
-    ).run()
+const stmt = context.env.DB.prepare(
+	"UPDATE users SET last_audited = ? WHERE id IN (SELECT value FROM json_each(?1))",
+);
+const resp = await stmt
+	.bind("2023-05-16T11:24:08+00:00", JSON.stringify([183183, 13913, 94944]))
+	.run();
 ```
 
 This would only update rows in your `users` table where the `id` matches one of the three provided.

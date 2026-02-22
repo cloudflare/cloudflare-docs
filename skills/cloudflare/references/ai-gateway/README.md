@@ -27,32 +27,32 @@ Expert guidance for implementing Cloudflare AI Gateway - a universal gateway for
 Most modern pattern using official `ai-gateway-provider` package with automatic fallbacks.
 
 ```typescript
-import { createAiGateway } from 'ai-gateway-provider';
-import { createOpenAI } from '@ai-sdk/openai';
-import { generateText } from 'ai';
+import { createAiGateway } from "ai-gateway-provider";
+import { createOpenAI } from "@ai-sdk/openai";
+import { generateText } from "ai";
 
 const gateway = createAiGateway({
-  accountId: process.env.CF_ACCOUNT_ID,
-  gateway: process.env.CF_GATEWAY_ID,
+	accountId: process.env.CF_ACCOUNT_ID,
+	gateway: process.env.CF_GATEWAY_ID,
 });
 
-const openai = createOpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY 
+const openai = createOpenAI({
+	apiKey: process.env.OPENAI_API_KEY,
 });
 
 // Single model
 const { text } = await generateText({
-  model: gateway(openai('gpt-4o')),
-  prompt: 'Hello'
+	model: gateway(openai("gpt-4o")),
+	prompt: "Hello",
 });
 
 // Automatic fallback array
 const { text } = await generateText({
-  model: gateway([
-    openai('gpt-4o'),              // Try first
-    anthropic('claude-sonnet-4-5'), // Fallback
-  ]),
-  prompt: 'Hello'
+	model: gateway([
+		openai("gpt-4o"), // Try first
+		anthropic("claude-sonnet-4-5"), // Fallback
+	]),
+	prompt: "Hello",
 });
 ```
 
@@ -63,20 +63,20 @@ const { text } = await generateText({
 Drop-in replacement for OpenAI API with multi-provider support.
 
 ```typescript
-import OpenAI from 'openai';
+import OpenAI from "openai";
 
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/compat`,
-  defaultHeaders: {
-    'cf-aig-authorization': `Bearer ${cfToken}` // For authenticated gateways
-  }
+	apiKey: process.env.OPENAI_API_KEY,
+	baseURL: `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/compat`,
+	defaultHeaders: {
+		"cf-aig-authorization": `Bearer ${cfToken}`, // For authenticated gateways
+	},
 });
 
 // Switch providers by changing model format: {provider}/{model}
 const response = await client.chat.completions.create({
-  model: 'openai/gpt-4o', // or 'anthropic/claude-sonnet-4-5'
-  messages: [{ role: 'user', content: 'Hello!' }]
+	model: "openai/gpt-4o", // or 'anthropic/claude-sonnet-4-5'
+	messages: [{ role: "user", content: "Hello!" }],
 });
 ```
 
@@ -86,54 +86,54 @@ For Cloudflare Workers using Workers AI.
 
 ```typescript
 export default {
-  async fetch(request, env, ctx) {
-    const response = await env.AI.run(
-      '@cf/meta/llama-3-8b-instruct',
-      { messages: [{ role: 'user', content: 'Hello!' }] },
-      { 
-        gateway: { 
-          id: 'my-gateway',
-          metadata: { userId: '123', team: 'engineering' }
-        } 
-      }
-    );
-    
-    return Response.json(response);
-  }
+	async fetch(request, env, ctx) {
+		const response = await env.AI.run(
+			"@cf/meta/llama-3-8b-instruct",
+			{ messages: [{ role: "user", content: "Hello!" }] },
+			{
+				gateway: {
+					id: "my-gateway",
+					metadata: { userId: "123", team: "engineering" },
+				},
+			},
+		);
+
+		return Response.json(response);
+	},
 };
 ```
 
 ## Headers Quick Reference
 
-| Header | Purpose | Example | Notes |
-|--------|---------|---------|-------|
-| `cf-aig-authorization` | Gateway auth | `Bearer {token}` | Required for authenticated gateways |
-| `cf-aig-metadata` | Tracking | `{"userId":"x"}` | Max 5 entries, flat structure |
-| `cf-aig-cache-ttl` | Cache duration | `3600` | Seconds, min 60, max 2592000 (30 days) |
-| `cf-aig-skip-cache` | Bypass cache | `true` | - |
-| `cf-aig-cache-key` | Custom cache key | `my-key` | Must be unique per response |
-| `cf-aig-collect-log` | Skip logging | `false` | Default: true |
-| `cf-aig-cache-status` | Cache hit/miss | Response only | `HIT` or `MISS` |
+| Header                 | Purpose          | Example          | Notes                                  |
+| ---------------------- | ---------------- | ---------------- | -------------------------------------- |
+| `cf-aig-authorization` | Gateway auth     | `Bearer {token}` | Required for authenticated gateways    |
+| `cf-aig-metadata`      | Tracking         | `{"userId":"x"}` | Max 5 entries, flat structure          |
+| `cf-aig-cache-ttl`     | Cache duration   | `3600`           | Seconds, min 60, max 2592000 (30 days) |
+| `cf-aig-skip-cache`    | Bypass cache     | `true`           | -                                      |
+| `cf-aig-cache-key`     | Custom cache key | `my-key`         | Must be unique per response            |
+| `cf-aig-collect-log`   | Skip logging     | `false`          | Default: true                          |
+| `cf-aig-cache-status`  | Cache hit/miss   | Response only    | `HIT` or `MISS`                        |
 
 ## In This Reference
 
-| File | Purpose |
-|------|---------|
-| [sdk-integration.md](./sdk-integration.md) | Vercel AI SDK, OpenAI SDK, Workers binding patterns |
-| [configuration.md](./configuration.md) | Dashboard setup, wrangler, API tokens |
-| [features.md](./features.md) | Caching, rate limits, guardrails, DLP, BYOK, unified billing |
-| [dynamic-routing.md](./dynamic-routing.md) | Fallbacks, A/B testing, conditional routing |
-| [troubleshooting.md](./troubleshooting.md) | Debugging, errors, observability, gotchas |
+| File                                       | Purpose                                                      |
+| ------------------------------------------ | ------------------------------------------------------------ |
+| [sdk-integration.md](./sdk-integration.md) | Vercel AI SDK, OpenAI SDK, Workers binding patterns          |
+| [configuration.md](./configuration.md)     | Dashboard setup, wrangler, API tokens                        |
+| [features.md](./features.md)               | Caching, rate limits, guardrails, DLP, BYOK, unified billing |
+| [dynamic-routing.md](./dynamic-routing.md) | Fallbacks, A/B testing, conditional routing                  |
+| [troubleshooting.md](./troubleshooting.md) | Debugging, errors, observability, gotchas                    |
 
 ## Reading Order
 
-| Task | Files |
-|------|-------|
-| First-time setup | README + [configuration.md](./configuration.md) |
-| SDK integration | README + [sdk-integration.md](./sdk-integration.md) |
-| Enable caching | README + [features.md](./features.md) |
-| Setup fallbacks | README + [dynamic-routing.md](./dynamic-routing.md) |
-| Debug errors | README + [troubleshooting.md](./troubleshooting.md) |
+| Task             | Files                                               |
+| ---------------- | --------------------------------------------------- |
+| First-time setup | README + [configuration.md](./configuration.md)     |
+| SDK integration  | README + [sdk-integration.md](./sdk-integration.md) |
+| Enable caching   | README + [features.md](./features.md)               |
+| Setup fallbacks  | README + [dynamic-routing.md](./dynamic-routing.md) |
+| Debug errors     | README + [troubleshooting.md](./troubleshooting.md) |
 
 ## Architecture
 
@@ -146,6 +146,7 @@ Your App → AI Gateway → AI Provider (OpenAI, Anthropic, etc.)
 ```
 
 **Key URL patterns:**
+
 - Unified API (OpenAI-compatible): `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions`
 - Provider-specific: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/{provider}/{endpoint}`
 - Dynamic routes: Use route name instead of model: `dynamic/{route-name}`

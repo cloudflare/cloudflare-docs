@@ -4,13 +4,13 @@ Expert guidance for API Shield - comprehensive API security suite for discovery,
 
 ## Reading Order
 
-| Task | Files to Read |
-|------|---------------|
-| Initial setup | README → configuration.md |
-| Implement JWT validation | configuration.md → api.md |
-| Add schema validation | configuration.md → patterns.md |
-| Detect API attacks | patterns.md → api.md |
-| Debug issues | gotchas.md |
+| Task                     | Files to Read                  |
+| ------------------------ | ------------------------------ |
+| Initial setup            | README → configuration.md      |
+| Implement JWT validation | configuration.md → api.md      |
+| Add schema validation    | configuration.md → patterns.md |
+| Detect API attacks       | patterns.md → api.md           |
+| Debug issues             | gotchas.md                     |
 
 ## Feature Selection
 

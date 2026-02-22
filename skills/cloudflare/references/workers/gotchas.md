@@ -39,8 +39,14 @@
 
 ```typescript
 const session = env.DB.withSession();
-await session.prepare('INSERT INTO users (name) VALUES (?)').bind('Alice').run();
-const user = await session.prepare('SELECT * FROM users WHERE name = ?').bind('Alice').first(); // Guaranteed to see Alice
+await session
+	.prepare("INSERT INTO users (name) VALUES (?)")
+	.bind("Alice")
+	.run();
+const user = await session
+	.prepare("SELECT * FROM users WHERE name = ?")
+	.bind("Alice")
+	.first(); // Guaranteed to see Alice
 ```
 
 **When to use sessions:** Write → Read patterns, transactions requiring consistency
@@ -66,18 +72,26 @@ Then import: `import type { Env } from './.wrangler/types/runtime';`
 ```typescript
 // ❌ Old fetch pattern
 export class MyDO {
-  async fetch(request: Request) {
-    const { method } = await request.json();
-    if (method === 'increment') return new Response(String(await this.increment()));
-  }
-  async increment() { return ++this.value; }
+	async fetch(request: Request) {
+		const { method } = await request.json();
+		if (method === "increment")
+			return new Response(String(await this.increment()));
+	}
+	async increment() {
+		return ++this.value;
+	}
 }
 const stub = env.DO.get(id);
-const res = await stub.fetch('http://x', { method: 'POST', body: JSON.stringify({ method: 'increment' }) });
+const res = await stub.fetch("http://x", {
+	method: "POST",
+	body: JSON.stringify({ method: "increment" }),
+});
 
 // ✅ RPC pattern (type-safe, no serialization overhead)
 export class MyDO {
-  async increment() { return ++this.value; }
+	async increment() {
+		return ++this.value;
+	}
 }
 const stub = env.DO.get(id);
 const count = await stub.increment(); // Direct method call
@@ -90,12 +104,12 @@ const count = await stub.increment(); // Direct method call
 
 ```typescript
 export class WebSocketDO {
-  async webSocketMessage(ws: WebSocket, message: string) {
-    // Handle message
-  }
-  async webSocketClose(ws: WebSocket, code: number) {
-    // Cleanup
-  }
+	async webSocketMessage(ws: WebSocket, message: string) {
+		// Handle message
+	}
+	async webSocketClose(ws: WebSocket, code: number) {
+		// Cleanup
+	}
 }
 ```
 
@@ -108,25 +122,27 @@ Hibernation automatically suspends inactive connections, wakes on events
 
 ```typescript
 // ✅ Hono (Workers-native)
-import { Hono } from 'hono';
+import { Hono } from "hono";
 const app = new Hono();
-app.use('*', async (c, next) => { /* middleware */ await next(); });
+app.use("*", async (c, next) => {
+	/* middleware */ await next();
+});
 ```
 
 See [frameworks.md](./frameworks.md) for full patterns
 
 ## Limits
 
-| Limit | Value | Notes |
-|-------|-------|-------|
-| Request size | 100 MB | Maximum incoming request size |
-| Response size | Unlimited | Supports streaming |
-| CPU time (standard) | 10ms | Standard Workers |
-| CPU time (unbound) | 30ms | Unbound Workers |
-| Subrequests | 1000 | Per request |
-| KV reads | 1000 | Per request |
-| KV write size | 25 MB | Maximum per write |
-| Environment size | 5 MB | Total size of env bindings |
+| Limit               | Value     | Notes                         |
+| ------------------- | --------- | ----------------------------- |
+| Request size        | 100 MB    | Maximum incoming request size |
+| Response size       | Unlimited | Supports streaming            |
+| CPU time (standard) | 10ms      | Standard Workers              |
+| CPU time (unbound)  | 30ms      | Unbound Workers               |
+| Subrequests         | 1000      | Per request                   |
+| KV reads            | 1000      | Per request                   |
+| KV write size       | 25 MB     | Maximum per write             |
+| Environment size    | 5 MB      | Total size of env bindings    |
 
 ## See Also
 

@@ -21,8 +21,8 @@ In practice, this means that when a user that owns `example.com` and has Cloudfl
 
 ### Before you begin
 
-* Note that Cloudflare only supports the [Domain Connect synchronous flow](https://www.domainconnect.org/getting-started/).
-* Domain Connect templates and tools are published on GitHub, so you must have a GitHub account and be familiar with [GitHub forks and pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks).
+- Note that Cloudflare only supports the [Domain Connect synchronous flow](https://www.domainconnect.org/getting-started/).
+- Domain Connect templates and tools are published on GitHub, so you must have a GitHub account and be familiar with [GitHub forks and pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks).
 
 ### 1. Add templates to the repository
 
@@ -30,12 +30,12 @@ Domain Connect templates are published and maintained on a GitHub repository.
 
 1. Create a fork of the [templates repository](https://github.com/Domain-Connect/Templates).
 2. Add your template. You can create a copy of one of the existing templates and edit it according to your needs.
-   * Refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc) for details on the different available fields.
-	 :::note
-	 Not all fields (properties) are supported by Cloudflare, and some will be mandatory for onboarding your template. Refer to the [properties support](#properties-support) section below for details.
-	 :::
-   * If present, you must set the `syncBlock` field on your template to `false`. This means the template flow will be synchronous, which is the only option supported by Cloudflare.
-   * You must also provide a synchronous public key domain (`syncPubKeyDomain` [^1]). When your template is in use, synchronous calls will be digitally signed.
+   - Refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc) for details on the different available fields.
+     :::note
+     Not all fields (properties) are supported by Cloudflare, and some will be mandatory for onboarding your template. Refer to the [properties support](#properties-support) section below for details.
+     :::
+   - If present, you must set the `syncBlock` field on your template to `false`. This means the template flow will be synchronous, which is the only option supported by Cloudflare.
+   - You must also provide a synchronous public key domain (`syncPubKeyDomain` [^1]). When your template is in use, synchronous calls will be digitally signed.
 3. Make sure you follow the naming format defined by Domain Connect: `<providerId>.<serviceId>.json`.
 
 :::note[Tip]

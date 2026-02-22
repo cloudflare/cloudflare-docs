@@ -4,20 +4,19 @@ pcx_content_type: concept
 head:
   - tag: title
     content: Default Cache Behavior
-
 ---
 
-import { FeatureTable, Render, DashButton } from "~/components"
+import { FeatureTable, Render, DashButton } from "~/components";
 
 Cloudflare respects the origin web server’s cache headers in the following order unless an [Edge Cache TTL cache rule](/cache/how-to/cache-rules/settings/#edge-ttl) overrides the headers. Refer to the [Edge TTL](/cache/how-to/configure-cache-status-code/#edge-ttl) section for details on default TTL behavior.
 
-* Cloudflare **does not** cache the resource when:
-  * The `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0`.
-  * The [Set-Cookie header](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache) exists.
-  * The HTTP request method is anything other than a `GET`.
-* Cloudflare **does** cache the resource when:
-  * The `Cache-Control` header is set to `public` and `max-age` is greater than 0.
-  * The `Expires` header is set to a future date.
+- Cloudflare **does not** cache the resource when:
+  - The `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0`.
+  - The [Set-Cookie header](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache) exists.
+  - The HTTP request method is anything other than a `GET`.
+- Cloudflare **does** cache the resource when:
+  - The `Cache-Control` header is set to `public` and `max-age` is greater than 0.
+  - The `Expires` header is set to a future date.
 
 :::note
 Cloudflare does cache the resource even if there is no `Cache-Control` header based on [status codes](/cache/how-to/configure-cache-status-code/#edge-ttl).
@@ -33,8 +32,8 @@ When [Origin Cache Control](/cache/concepts/cache-control/) is enabled on an Ent
 
 Clients can send range requests to be served from the cache using the `Range` header. Note that:
 
- - If the origin response includes a `Content-Length` header, then the specified byte range will be returned with an [HTTP 206](/support/troubleshooting/http-status-codes/2xx-success/#206-partial-content) response.
- - If the origin response does not include the `Content-Length` header, the cache will return the full content with an HTTP 200 response.
+- If the origin response includes a `Content-Length` header, then the specified byte range will be returned with an [HTTP 206](/support/troubleshooting/http-status-codes/2xx-success/#206-partial-content) response.
+- If the origin response does not include the `Content-Length` header, the cache will return the full content with an HTTP 200 response.
 
 ## Default cached file extensions
 
@@ -55,10 +54,10 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
 To cache additional content, refer to [Cache Rules](/cache/how-to/cache-rules/) to create a rule to cache everything.
 
 <Render
-  file="edge-ttl"
+	file="edge-ttl"
 	product="cache"
 	params={{
-		conditional: "dedicated-cache-tile"
+		conditional: "dedicated-cache-tile",
 	}}
 />
 
@@ -66,14 +65,14 @@ To cache additional content, refer to [Cache Rules](/cache/how-to/cache-rules/) 
 
 Cloudflare’s CDN provides several cache customization options:
 
-* Caching behavior for individual URLs via [Cache Rules](/cache/how-to/cache-rules/)
+- Caching behavior for individual URLs via [Cache Rules](/cache/how-to/cache-rules/)
 
- <DashButton url="/?to=/:account/:zone/caching/cache-rules" />
+<DashButton url="/?to=/:account/:zone/caching/cache-rules" />
 
-* Customize caching with [Cloudflare Workers](/workers/reference/how-the-cache-works/)
-* Adjust caching level, cache TTL, and more in the Caching page in the Cloudflare dashboard:
+- Customize caching with [Cloudflare Workers](/workers/reference/how-the-cache-works/)
+- Adjust caching level, cache TTL, and more in the Caching page in the Cloudflare dashboard:
 
- <DashButton url="/?to=/:account/:zone/caching/configuration" />
+<DashButton url="/?to=/:account/:zone/caching/configuration" />
 
 ### Upload limits
 
@@ -87,8 +86,8 @@ If you require a larger upload, you can group requests into smaller chunks, uplo
 
 Cloudflare cacheable file limits:
 
-* Free, Pro and Business customers have a limit of 512 MB.
-* For Enterprise customers the default maximum cacheable file size is 5 GB. Contact your account team to request a limit increase.
+- Free, Pro and Business customers have a limit of 512 MB.
+- For Enterprise customers the default maximum cacheable file size is 5 GB. Contact your account team to request a limit increase.
 
 ## When does Cloudflare cache successfully?
 

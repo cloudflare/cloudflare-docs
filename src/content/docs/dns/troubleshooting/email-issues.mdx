@@ -9,7 +9,7 @@ sidebar:
   order: 6
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 If you have issues sending or receiving mail, follow these troubleshooting steps.
 
@@ -29,7 +29,7 @@ NS records are used to delegate the management of a hostname to another DNS prov
 
 When set to [Flatten all CNAMEs](/dns/cname-flattening/set-up-cname-flattening/) in your Cloudflare DNS settings, queries to all `CNAME` records will flatten to an `A` record; no `CNAME` records will be returned.
 
-Also, if `CNAME` records are not returned by the queried nameserver (sometimes nameservers will return TXT records), this may result in nothing being returned when ***Flatten all CNAMEs*** is enabled. Changing to ***Flatten at the root*** should fix any issues with your CNAME records not being returned.
+Also, if `CNAME` records are not returned by the queried nameserver (sometimes nameservers will return TXT records), this may result in nothing being returned when **_Flatten all CNAMEs_** is enabled. Changing to **_Flatten at the root_** should fix any issues with your CNAME records not being returned.
 
 ## Is Cloudflare Spectrum enabled on your account?
 
@@ -59,8 +59,8 @@ Since proxying mail traffic to Cloudflare would break your mail services, Cloudf
 
 Removing the `dc-######` record is only possible via one of these methods:
 
-* If no mail is received for the domain, delete the `MX` record.
-* If mail is received for the domain, update the `MX` record to resolve to a separate `A` record for a mail subdomain that is not proxied by Cloudflare:
+- If no mail is received for the domain, delete the `MX` record.
+- If mail is received for the domain, update the `MX` record to resolve to a separate `A` record for a mail subdomain that is not proxied by Cloudflare:
 
 `example.com MX mail.example.com` `mail.example.com A 192.0.2.1` `example.com A 203.0.113.1`
 
@@ -70,7 +70,7 @@ If your mail server resides on the same IP as your web server, your MX
 record will expose your origin IP address.
 :::
 
-***
+---
 
 ## Best practices for MX records on Cloudflare
 

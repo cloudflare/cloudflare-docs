@@ -1,76 +1,125 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: how-to
 title: Environment variables and secrets
 sidebar:
-  order: 1
+  order: 4
 head: []
-description: Configuring environment variables and secrets for local development
+description: Configure environment variables and secrets for local development using .env files.
 ---
 
-import { PackageManagers, Render, Steps } from "~/components";
+import { Details, PackageManagers, Steps } from "~/components";
 
-<Render file="secrets-in-dev" product="workers" />
+During local development, you can define environment variables and secrets in a `.env` file in the root of your project (next to your [Wrangler configuration file](/workers/wrangler/configuration/)). Values defined in `.env` files are available on the `env` object in your Worker code, just like variables and secrets defined in your Wrangler configuration or set via the Cloudflare dashboard.
 
-### Basic setup
+:::caution
+Do not commit `.env` files to version control. Add `.env*` to your project's `.gitignore` file to prevent accidental exposure of secrets.
+:::
 
-Here are steps to set up environment variables for local development using either `.dev.vars` or `.env` files.
-
-<Steps>
-
-1.  Create a `.dev.vars` / `.env` file in your project root.
-
-2.  Add key-value pairs:
-
-    ```ini title=".dev.vars/.env"
-    API_HOST="localhost:3000"
-    DEBUG="true"
-    SECRET_TOKEN="my-local-secret-token"
-    ```
-
-3.  Run your `dev` command
-
-        **Wrangler**
-        <PackageManagers type="exec" pkg="wrangler" args="dev" />
-
-
-        **Vite plugin**
-         <PackageManagers type="exec" pkg="vite" args="dev" />
-
-</Steps>
-
-## Multiple local environments
-
-To simulate different local environments, you can provide environment-specific files.
-For example, you might have a `staging` environment that requires different settings than your development environment.
+## Setting up a `.env` file
 
 <Steps>
 
-1.  Create a file named `.dev.vars.<environment-name>`/`.env.<environment-name>`. For example, we can use `.dev.vars.staging`/`.env.staging`.
+1. Create a `.env` file in your project root directory.
 
-2.  Add key-value pairs:
+2. Add your variables and secrets as key-value pairs using [dotenv](https://hexdocs.pm/dotenvy/dotenv-file-format.html) syntax:
 
-    ```ini title=".dev.vars.staging/.env.staging"
-    API_HOST="staging.localhost:3000"
-    DEBUG="false"
-    SECRET_TOKEN="staging-token"
-    ```
+   ```bash title=".env"
+   API_HOST="localhost:3000"
+   DEBUG="true"
+   SECRET_TOKEN="my-local-secret-token"
+   ```
 
-3.  Specify the environment when running the `dev` command:
+3. Start your local development server:
 
-        **Wrangler**
+   **Wrangler**
 
-        <PackageManagers type="exec" pkg="wrangler" args="dev --env staging" />
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-        **Vite plugin**
+   **Vite plugin**
 
-        <PackageManagers type="exec" pkg="vite" args="dev" prefix="CLOUDFLARE_ENV=staging" />
-
-        - If using `.dev.vars.staging`, only the values from that file will be applied instead of `.dev.vars`.
-        - If using `.env.staging`, the values will be merged with `.env` files, with the most specific file taking precedence.
+   <PackageManagers type="exec" pkg="vite" args="dev" />
 
 </Steps>
 
-## Learn more
+Your Worker code can then access these values through the `env` object:
 
-- To learn how to configure multiple environments in Wrangler configuration, [read the documentation](/workers/wrangler/environments/#_top).
-- To learn how to use Wrangler environments and Vite environments together, [read the Vite plugin documentation](/workers/vite-plugin/reference/cloudflare-environments/)
+```ts
+export default {
+	async fetch(request, env) {
+		const host = env.API_HOST;
+		const token = env.SECRET_TOKEN;
+		// ...
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+:::note
+Do not use `vars` in your Wrangler configuration file to store sensitive values. Use a `.env` file for secrets during local development.
+:::
+
+## Multiple environments
+
+You can define environment-specific `.env` files to use different values for different [Cloudflare environments](/workers/wrangler/environments/). For example, you might have a `staging` environment that requires different settings than your default development environment.
+
+<Steps>
+
+1. Create a file named `.env.<environment-name>`. For example, `.env.staging`:
+
+   ```bash title=".env.staging"
+   API_HOST="staging.example.com"
+   DEBUG="false"
+   SECRET_TOKEN="staging-secret-token"
+   ```
+
+2. Specify the environment when running your development server:
+
+   **Wrangler**
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev --env staging" />
+
+   **Vite plugin**
+
+   <PackageManagers
+   	type="exec"
+   	pkg="vite"
+   	args="dev"
+   	prefix="CLOUDFLARE_ENV=staging"
+   />
+
+</Steps>
+
+When using `.env` files, all matching files are loaded and the values are merged. For each variable, the value from the most specific file takes precedence, in the following order:
+
+1. `.env.<environment-name>.local` (most specific)
+2. `.env.local`
+3. `.env.<environment-name>`
+4. `.env` (least specific)
+
+## Controlling `.env` behavior
+
+You can control how `.env` files are loaded in local development by setting environment variables on the process running your development tools:
+
+- To disable loading variables from `.env` files (without providing a `.dev.vars` file), set the `CLOUDFLARE_LOAD_DEV_VARS_FROM_DOT_ENV` environment variable to `"false"`.
+- To include every environment variable defined in your system's process environment as a local development variable, ensure there is no `.dev.vars` file and then set the `CLOUDFLARE_INCLUDE_PROCESS_ENV` environment variable to `"true"`.
+
+<Details header="Legacy format: .dev.vars">
+
+The `.dev.vars` file is the legacy format for defining local development variables. It uses the same [dotenv](https://hexdocs.pm/dotenvy/dotenv-file-format.html) syntax as `.env` files:
+
+```bash title=".dev.vars"
+SECRET_KEY="value"
+API_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+```
+
+If a `.dev.vars` file is present, values in `.env` files will not be included in the `env` object during local development. You should use either `.dev.vars` or `.env`, but not both.
+
+For environment-specific overrides with `.dev.vars`, create files named `.dev.vars.<environment-name>`. Unlike `.env` files, `.dev.vars` files do not merge across environments. If `.dev.vars.<environment-name>` exists, only that file is loaded and the base `.dev.vars` file is not loaded.
+
+Add `.dev.vars*` to your `.gitignore` file to prevent committing secrets.
+
+</Details>
+
+## Related resources
+
+- For information on configuring multiple environments in Wrangler configuration, refer to [Environments](/workers/wrangler/environments/).
+- For information on using Wrangler environments and Vite environments together, refer to the [Vite plugin documentation](/workers/vite-plugin/reference/cloudflare-environments/).

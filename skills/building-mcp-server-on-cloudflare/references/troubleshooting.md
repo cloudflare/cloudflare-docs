@@ -11,6 +11,7 @@ Common errors and solutions for MCP servers on Cloudflare.
 **Causes & Solutions:**
 
 1. **Wrong URL path**
+
    ```
    # Wrong
    https://my-server.workers.dev/
@@ -20,6 +21,7 @@ Common errors and solutions for MCP servers on Cloudflare.
    ```
 
 2. **Worker not deployed**
+
    ```bash
    wrangler deployments list
    # If empty, deploy first:
@@ -38,12 +40,12 @@ MCP uses SSE (Server-Sent Events), not WebSockets. Ensure your client is configu
 
 ```json
 {
-  "mcpServers": {
-    "my-server": {
-      "command": "npx",
-      "args": ["mcp-remote", "https://my-server.workers.dev/mcp"]
-    }
-  }
+	"mcpServers": {
+		"my-server": {
+			"command": "npx",
+			"args": ["mcp-remote", "https://my-server.workers.dev/mcp"]
+		}
+	}
 }
 ```
 
@@ -54,29 +56,29 @@ If calling from browser-based client:
 ```typescript
 // Add CORS headers to your worker
 export default {
-  async fetch(request: Request, env: Env) {
-    // Handle preflight
-    if (request.method === "OPTIONS") {
-      return new Response(null, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type",
-        },
-      });
-    }
+	async fetch(request: Request, env: Env) {
+		// Handle preflight
+		if (request.method === "OPTIONS") {
+			return new Response(null, {
+				headers: {
+					"Access-Control-Allow-Origin": "*",
+					"Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+					"Access-Control-Allow-Headers": "Content-Type",
+				},
+			});
+		}
 
-    const response = await handleRequest(request, env);
+		const response = await handleRequest(request, env);
 
-    // Add CORS headers to response
-    const headers = new Headers(response.headers);
-    headers.set("Access-Control-Allow-Origin", "*");
+		// Add CORS headers to response
+		const headers = new Headers(response.headers);
+		headers.set("Access-Control-Allow-Origin", "*");
 
-    return new Response(response.body, {
-      status: response.status,
-      headers,
-    });
-  },
+		return new Response(response.body, {
+			status: response.status,
+			headers,
+		});
+	},
 };
 ```
 
@@ -152,6 +154,7 @@ OAuth token missing or expired.
 
 1. **Check client is handling OAuth flow**
 2. **Verify secrets are set:**
+
    ```bash
    wrangler secret list
    # Should show GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET
@@ -168,9 +171,11 @@ OAuth token missing or expired.
 OAuth callback URL doesn't match app configuration.
 
 **Local development:**
+
 - OAuth app callback: `http://localhost:8788/callback`
 
 **Production:**
+
 - OAuth app callback: `https://[worker-name].[account].workers.dev/callback`
 
 Must match EXACTLY (including trailing slash or lack thereof).
@@ -181,6 +186,7 @@ State parameter validation failed.
 
 1. **Clear browser cookies and retry**
 2. **Check KV is storing state:**
+
    ```typescript
    // In your auth handler
    console.log("Storing state:", state);
@@ -232,7 +238,7 @@ new_classes = ["MyMCP"]
 And class must be exported:
 
 ```typescript
-export { MyMCP };  // Don't forget this!
+export { MyMCP }; // Don't forget this!
 ```
 
 ## Deployment Errors
@@ -275,21 +281,22 @@ wrangler deploy
 
 ```typescript
 export class MyMCP extends McpAgent {
-  async init() {
-    console.log("MCP Server initializing...");
-    console.log("Environment:", Object.keys(this.env));
+	async init() {
+		console.log("MCP Server initializing...");
+		console.log("Environment:", Object.keys(this.env));
 
-    this.server.tool("test", {}, async () => {
-      console.log("Test tool called");
-      return { content: [{ type: "text", text: "OK" }] };
-    });
+		this.server.tool("test", {}, async () => {
+			console.log("Test tool called");
+			return { content: [{ type: "text", text: "OK" }] };
+		});
 
-    console.log("Tools registered");
-  }
+		console.log("Tools registered");
+	}
 }
 ```
 
 View logs:
+
 ```bash
 wrangler tail --format pretty
 ```
