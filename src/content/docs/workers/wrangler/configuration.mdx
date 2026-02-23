@@ -274,7 +274,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `queues` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Queue producers and consumers that your Worker should be bound to. Refer to [Queues](#queues).
 
-- `workflows` <Type text="object[]" /> <MetaInfo text="optional" />
+- `workflows` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Workflows that your Worker should be bound to. Refer to [Workflows](#workflows).
 
 - `tail_consumers` <Type text="object" /> <MetaInfo text="optional" />
@@ -1131,9 +1131,9 @@ Example:
 {
 	"workflows": [
 		{
-			"binding": "MY_WORKFLOW",
-			"name": "my-workflow",
-			"class_name": "MyWorkflow",
+			"binding": "<BINDING_NAME>",
+			"name": "<WORKFLOW_NAME>",
+			"class_name": "<CLASS_NAME>",
 		},
 	],
 }
