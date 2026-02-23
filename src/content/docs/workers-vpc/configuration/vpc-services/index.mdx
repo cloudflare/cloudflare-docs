@@ -29,7 +29,7 @@ A VPC Service consists of:
 - **Tunnel ID**: The Cloudflare Tunnel that provides network connectivity
 - **Hostname or IPv4/IPv6 addresses**: The hostname, or IPv4 and/or IPv6 addresses to use to route to your service from the tunnel in your private network
 - **Ports**: HTTP and/or HTTPS port configuration (optional, defaults to 80/443)
-- **Resolver IPs**: Optionally, a specific resolver IP can be provided -- when not provided, `cloudflared` will direct DNS traffic to the currently configured default system resolver.
+- **Resolver IPs**: Optionally, a specific resolver IP can be provided — when not provided, `cloudflared` will direct DNS traffic to the currently configured default system resolver.
 
 Requests are encrypted in flight until they reach your network via a tunnel, regardless of the scheme used in the URL provided to `fetch`. If the `http` scheme is used, a plaintext connection is established to the service from the tunnel.
 
