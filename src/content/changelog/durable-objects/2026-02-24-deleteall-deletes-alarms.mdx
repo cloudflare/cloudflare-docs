@@ -20,6 +20,4 @@ await this.ctx.storage.deleteAll();
 await this.ctx.storage.deleteAll();
 ```
 
-If you need the previous behavior where alarms are preserved, call `getAlarm()` before `deleteAll()` and then restore the alarm with `setAlarm()`.
-
 For more information, refer to the [Storage API documentation](/durable-objects/api/sqlite-storage-api/#deleteall).
