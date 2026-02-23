@@ -2581,6 +2581,7 @@
 /magic-network-monitoring/* /network-flow/:splat 301
 
 # Changelog (individual entry route moved to /post/)
-/changelog/2024-:rest/ /changelog/post/2024-:rest/ 301
-/changelog/2025-:rest/ /changelog/post/2025-:rest/ 301
-/changelog/2026-:rest/ /changelog/post/2026-:rest/ 301
+/changelog/2024-* /changelog/post/2024-:splat 301
+/changelog/2025-* /changelog/post/2025-:splat 301
+/changelog/2026-* /changelog/post/2026-:splat 301
+
