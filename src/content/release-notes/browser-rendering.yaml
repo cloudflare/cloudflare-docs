@@ -8,6 +8,10 @@ entries:
     description: |-
       * Added [robots.txt and sitemaps reference page](/browser-rendering/reference/robots-txt/) explaining how Browser Rendering identifies as a bot and interacts with robots.txt.
       * Updated [automatic request headers documentation](/browser-rendering/reference/automatic-request-headers/) with User-Agent string details.
+  - publish_date: "2026-02-18"
+    title: "@cloudflare/playwright v1.1.1 released"
+    description: |-
+      * Released version 1.1.1 of [`@cloudflare/playwright`](https://github.com/cloudflare/playwright/releases/tag/v1.1.1), which includes a bug fix that resolves a chunking issue that could occur when generating large PDFs. Upgrade to this version to avoid this issue.
   - publish_date: "2026-02-03"
     title: "@cloudflare/puppeteer v1.0.6 released"
     description: |-

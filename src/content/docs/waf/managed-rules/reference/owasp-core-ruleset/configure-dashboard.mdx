@@ -51,7 +51,7 @@ You can configure (or override) the following Cloudflare OWASP Core Ruleset sett
   - _Low - 60 and higher_
   - _Medium - 40 and higher_ (default)
   - _High - 25 and higher_
-- **OWASP action**: The action to perform when the calculated [request threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score) is greater than the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold). The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Interactive Challenge_, and _Log_.
+- **OWASP action**: The action to perform when the calculated [request threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score) is greater than the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold). The available actions are: _Block_, _Log_, _Non-Interactive Challenge_, _Managed Challenge_, and _Interactive Challenge_.
 - **[Payload logging](/waf/managed-rules/payload-logging/configure/)**: When enabled, logs the request information (payload) that triggered a specific rule of the managed ruleset. You must configure a public key to encrypt the payload.
 
 Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-in-the-dashboard), do the following to configure it in the dashboard:

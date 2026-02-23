@@ -25,118 +25,118 @@ import {
 	Tabs,
 	TypeScriptExample,
 	WranglerConfig,
+	LinkCard,
 } from "~/components";
 
-Agents are systems that use AI models to make decisions and execute tasks autonomously. They integrate with external APIs, execute custom functions, and maintain access to your data sources to handle complex workflows.
+Most AI applications today are stateless — they process a request, return a response, and forget everything. Real agents need more. They need to remember conversations, act on schedules, call tools, coordinate with other agents, and stay connected to users in real-time. The Agents SDK gives you all of this as a TypeScript class.
 
-Think of agents as digital assistants with persistent context, they remember previous interactions, maintain consistent behavior patterns, and have access to specific tools and capabilities for their designated roles.
+Each agent runs on a [Durable Object](/durable-objects/) — a stateful micro-server with its own SQL database, WebSocket connections, and scheduling. Deploy once and Cloudflare runs your agents across its global network, scaling to tens of millions of instances. No infrastructure to manage, no sessions to reconstruct, no state to externalize.
 
-Built on Cloudflare's infrastructure, agents are stateful classes that run on Durable Objects. They handle HTTP requests, WebSocket connections, task scheduling, AI model integration and more.
+### Get started
 
-### Ship your first Agent
-
-To use the Agent starter template and create your first Agent with the Agents SDK:
-
-1. Create a new project:
+Three commands to a running agent. No API keys required — the starter uses [Workers AI](/workers-ai/) by default.
 
 ```sh
 npx create-cloudflare@latest --template cloudflare/agents-starter
+cd agents-starter && npm install
+npm run dev
 ```
 
-2. Install dependencies:
+The starter includes streaming AI chat, server-side and client-side tools, human-in-the-loop approval, and task scheduling — a foundation you can build on or tear apart. You can also swap in [OpenAI, Anthropic, Google Gemini, or any other provider](/agents/api-reference/using-ai-models/).
 
-```sh
-npm install
-```
+<LinkCard
+	title="Build a chat agent"
+	href="/agents/getting-started/build-a-chat-agent/"
+	description="Step-by-step tutorial that walks through the starter and shows how to customize it."
+/>
 
-3. Set up your environment:
+<LinkCard
+	title="Add to an existing project"
+	href="/agents/getting-started/add-to-existing-project/"
+	description="Install the agents package into a Workers project and wire up routing."
+/>
 
-Create a `.env` file:
+### What agents can do
 
-```txt
-OPENAI_API_KEY=your_openai_api_key
-```
+- **Remember everything** — Every agent has a built-in [SQL database](/agents/api-reference/store-and-sync-state/) and key-value state that syncs to connected clients in real-time. State survives restarts, deploys, and hibernation.
+- **Build AI chat** — [`AIChatAgent`](/agents/api-reference/chat-agents/) gives you streaming AI chat with automatic message persistence, resumable streams, and tool support. Pair it with the [`useAgentChat`](/agents/api-reference/chat-agents/) React hook to build chat UIs in minutes.
+- **Think with any model** — Call [any AI model](/agents/api-reference/using-ai-models/) — Workers AI, OpenAI, Anthropic, Gemini — and stream responses over [WebSockets](/agents/api-reference/websockets/) or [Server-Sent Events](/agents/api-reference/http-sse/). Long-running reasoning models that take minutes to respond work out of the box.
+- **Use and serve tools** — Define server-side tools, client-side tools that run in the browser, and [human-in-the-loop](/agents/concepts/human-in-the-loop/) approval flows. Expose your agent's tools to other agents and LLMs via [MCP](/agents/api-reference/mcp-agent-api/).
+- **Act on their own** — [Schedule tasks](/agents/api-reference/schedule-tasks/) on a delay, at a specific time, or on a cron. Agents can wake themselves up, do work, and go back to sleep — without a user present.
+- **Browse the web** — Spin up [headless browsers](/agents/api-reference/browse-the-web/) to scrape, screenshot, and interact with web pages.
+- **Orchestrate work** — Run multi-step [workflows](/agents/api-reference/run-workflows/) with automatic retries, or coordinate across multiple agents.
+- **React to events** — Handle [inbound email](/agents/api-reference/email/), HTTP requests, WebSocket messages, and state changes — all from the same class.
 
-4. Run locally:
+### How it works
 
-```sh
-npm start
-```
-
-5. Deploy:
-
-```sh
-npm run deploy
-```
-
-Head to the guide on [building a chat agent](/agents/getting-started/build-a-chat-agent/) to learn how the starter project is built and how to use it as a foundation for your own agents.
-
-If you are already building on [Workers](/workers/), you can install the `agents` package directly into an existing project:
-
-```sh
-npm i agents
-```
-
-And then define your first Agent by creating a class that extends the `Agent` class:
+An agent is a TypeScript class. Methods marked with `@callable()` become typed RPC that clients can call directly over WebSocket.
 
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents";
+import { Agent, callable } from "agents";
 
-export class MyAgent extends Agent {
-	// Define methods on the Agent:
-	// https://developers.cloudflare.com/agents/api-reference/agents-api/
-	//
-	// Every Agent has built in state via this.setState and this.sql
-	// Built-in scheduling via this.schedule
-	// Agents support WebSockets, HTTP requests, state synchronization and
-	// can run for seconds, minutes or hours: as long as the tasks need.
+export class CounterAgent extends Agent<Env, { count: number }> {
+	initialState = { count: 0 };
+
+	@callable()
+	increment() {
+		this.setState({ count: this.state.count + 1 });
+		return this.state.count;
+	}
 }
 ```
 
 </TypeScriptExample>
 
-Lastly, add the [Durable Objects](/durable-objects/) binding to your wrangler file:
+```tsx
+import { useAgent } from "agents/react";
 
-<WranglerConfig>
-```jsonc
-{
-	"durable_objects": {
-		"bindings": [
-			{
-				"name": "MyAgent",
-				"class_name": "MyAgent"
-			}
-		]
-	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": [
-				"MyAgent"
-			]
-		}
-	]
+function Counter() {
+	const [count, setCount] = useState(0);
+	const agent = useAgent({
+		agent: "CounterAgent",
+		onStateUpdate: (state) => setCount(state.count),
+	});
+
+	return <button onClick={() => agent.stub.increment()}>{count}</button>;
 }
 ```
-</WranglerConfig>
 
-Dive into the [Agent SDK reference](/agents/api-reference/agents-api/) to learn more about how to use the Agents SDK package and defining an `Agent`.
+For AI chat, extend `AIChatAgent` instead. Messages are persisted automatically, streams resume on disconnect, and the React hook handles the UI.
 
-### Why build agents on Cloudflare?
+<TypeScriptExample>
 
-We built the Agents SDK with a few things in mind:
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { createWorkersAI } from "workers-ai-provider";
+import { streamText, convertToModelMessages } from "ai";
 
-- **Batteries (state) included**: Agents come with [built-in state management](/agents/api-reference/store-and-sync-state/), with the ability to automatically sync state between an Agent and clients, trigger events on state changes, and read+write to each Agent's SQL database.
-- **Communicative**: You can connect to an Agent via [WebSockets](/agents/api-reference/websockets/) and stream updates back to client in real-time. Handle a long-running response from a reasoning model, the results of an [asynchronous workflow](/agents/api-reference/run-workflows/), or build a chat app that builds on the `useAgent` hook included in the Agents SDK.
-- **Extensible**: Agents are code. Use the [AI models](/agents/api-reference/using-ai-models/) you want, bring-your-own headless browser service, pull data from your database hosted in another cloud, add your own methods to your Agent and call them.
+export class ChatAgent extends AIChatAgent {
+	async onChatMessage() {
+		const workersai = createWorkersAI({ binding: this.env.AI });
+		const result = streamText({
+			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			messages: await convertToModelMessages(this.messages),
+		});
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
 
-Agents built with Agents SDK can be deployed directly to Cloudflare and run on top of [Durable Objects](/durable-objects/) — which you can think of as stateful micro-servers that can scale to tens of millions — and are able to run wherever they need to. Run your Agents close to a user for low-latency interactivity, close to your data for throughput, and/or anywhere in between.
+</TypeScriptExample>
+
+Refer to the [quick start](/agents/getting-started/quick-start/) for a full walkthrough, the [chat agents guide](/agents/api-reference/chat-agents/) for the full chat API, or the [Agents API reference](/agents/api-reference/agents-api/) for the complete SDK.
 
 ---
 
 ### Build on the Cloudflare Platform
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+
+Run machine learning models, powered by serverless GPUs, on Cloudflare's global network. No API keys required.
+
+</RelatedProduct>
 
 <RelatedProduct header="Workers" href="/workers/" product="workers">
 
@@ -152,13 +152,7 @@ Observe and control your AI applications with caching, rate limiting, request re
 
 <RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
 
-Build full-stack AI applications with Vectorize, Cloudflare's vector database. Adding Vectorize enables you to perform tasks such as semantic search, recommendations, anomaly detection or can be used to provide context and memory to an LLM.
-
-</RelatedProduct>
-
-<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
-
-Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
+Build full-stack AI applications with Vectorize, Cloudflare's vector database for semantic search, recommendations, and providing context to LLMs.
 
 </RelatedProduct>
 

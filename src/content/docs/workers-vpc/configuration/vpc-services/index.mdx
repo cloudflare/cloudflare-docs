@@ -5,14 +5,7 @@ sidebar:
   order: 1
 ---
 
-import {
-	GlossaryTooltip,
-	Tabs,
-	TabItem,
-	Example,
-	Render,
-	WranglerConfig,
-} from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 VPC Services are the core building block of Workers VPC. They represent specific resources in your private network that Workers can access through Cloudflare Tunnel.
 
@@ -36,7 +29,7 @@ A VPC Service consists of:
 - **Tunnel ID**: The Cloudflare Tunnel that provides network connectivity
 - **Hostname or IPv4/IPv6 addresses**: The hostname, or IPv4 and/or IPv6 addresses to use to route to your service from the tunnel in your private network
 - **Ports**: HTTP and/or HTTPS port configuration (optional, defaults to 80/443)
-- **Resolver IPs**: Optionally, a specific resolver IP can be provided -- when not provided, `cloudflared` will direct DNS traffic to the currently configured default system resolver.
+- **Resolver IPs**: Optionally, a specific resolver IP can be provided — when not provided, `cloudflared` will direct DNS traffic to the currently configured default system resolver.
 
 Requests are encrypted in flight until they reach your network via a tunnel, regardless of the scheme used in the URL provided to `fetch`. If the `http` scheme is used, a plaintext connection is established to the service from the tunnel.
 
@@ -69,7 +62,7 @@ If your origin service presents a certificate that is not issued by a publicly t
 
 The following is an example of a VPC Service for a service using custom HTTP and HTTPS ports, and both IPv4 and IPv6 addresses. These configurations represent the expected contract of the [REST API for creating a VPC Service](/api/resources/connectivity/subresources/directory/subresources/services/), a type of service within the broader connectivity directory.
 
-```json
+```jsonc
 {
 	"type": "http",
 	"name": "human-readable-name",
@@ -83,15 +76,15 @@ The following is an example of a VPC Service for a service using custom HTTP and
 		"ipv4": "10.0.0.1",
 		"ipv6": "fe80::",
 		"network": {
-			"tunnel_id": "0191dce4-9ab4-7fce-b660-8e5dec5172da"
-		}
-	}
+			"tunnel_id": "0191dce4-9ab4-7fce-b660-8e5dec5172da",
+		},
+	},
 }
 ```
 
 The following is an example of a VPC Service for a service using custom HTTP and HTTPS ports as well, using a hostname. Note that since we are using a hostname, we must provide our service with a `resolver_network` that optionally has `resolver_ips`.
 
-```json
+```jsonc
 {
 	"type": "http",
 	"name": "human-readable-name",
@@ -105,9 +98,9 @@ The following is an example of a VPC Service for a service using custom HTTP and
 		"hostname": "example.com",
 		"resolver_network": {
 			"tunnel_id": "0191dce4-9ab4-7fce-b660-8e5dec5172da",
-			"resolver_ips": ["10.0.0.1"] // Optional
-		}
-	}
+			"resolver_ips": ["10.0.0.1"], // Optional
+		},
+	},
 }
 ```
 
@@ -165,6 +158,7 @@ You can have multiple VPC service bindings:
 
 ## Next steps
 
+- [Configure VPC Services with Terraform](/workers-vpc/configuration/vpc-services/terraform/) for managing VPC Services as infrastructure
 - Set up [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/) for your environment
 - Learn about the [Service Binding API](/workers-vpc/api/)
 - Refer to [examples](/workers-vpc/examples/) of common use cases

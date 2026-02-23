@@ -150,7 +150,7 @@ For more information on creating overrides, refer to [Override a managed ruleset
 
 To define the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold), or to specify the [action](/ruleset-engine/rules-language/actions/) to perform when the threat score is greater than the threshold, create a [rule override](/ruleset-engine/managed-rulesets/override-managed-ruleset/#work-with-overrides) for the last rule in the managed ruleset that:
 
-- Specifies the action to take in the `action` property. The available actions are: `block` (default), `managed_challenge`, `js_challenge`, `log`, and `challenge`.
+- Specifies the action to take in the `action` property. The available actions are: `js_challenge` (Non-Interactive Challenge), `managed_challenge` (Managed Challenge), `block` (default), `challenge` (Interactive Challenge), and `log`.
 - Defines the desired anomaly score threshold (an integer value) in the `score_threshold` property.
 
 ### Example

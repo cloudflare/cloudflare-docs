@@ -5,17 +5,15 @@ sidebar:
   order: 5
 ---
 
-The core of the `agents` library is the exported `Agent` class. Following the pattern from [Durable Objects](/durable-objects/api/), the main API for developers is to extend the `Agent` class to inherit all the built-in features. While this effectively is a supercharged primitive that allows developers to only write the logic they need in their agents, it obscures the inner workings.
+The core of the `agents` library is the `Agent` class. You extend it, override a few methods, and get state management, WebSockets, scheduling, RPC, and more for free. This page explains how `Agent` is built, layer by layer, so you understand what is happening under the hood.
 
-This document tries to bridge that gap, empowering any developer aiming to get started writing agents to get the full picture and avoid common pitfalls. The snippets shown here are primarily illustrative, and do not necessarily represent best practices. For a more in-depth look at the inner workings of the `Agent` class, check out the [API reference](/agents/api-reference/) and the [source code](https://github.com/cloudflare/agents/blob/main/packages/agents/src/index.ts).
+The snippets shown here are illustrative and do not necessarily represent best practices. For the full API, refer to the [API reference](/agents/api-reference/) and the [source code](https://github.com/cloudflare/agents/blob/main/packages/agents/src/index.ts).
 
 ## What is the Agent?
 
-The `Agent` class is an extension of `DurableObject`. That is to say, they _are_ Durable Objects. If you are not familiar with Durable Objects, it is highly recommended that you read [What are Durable Objects](/durable-objects/), but at their core, Durable Objects are globally addressable (each instance has a unique ID) single-threaded compute instances with long term storage (key-value/SQLite).
+The `Agent` class is an extension of `DurableObject` — agents _are_ Durable Objects. If you are not familiar with Durable Objects, read [What are Durable Objects](/durable-objects/) first. At their core, Durable Objects are globally addressable (each instance has a unique ID), single-threaded compute instances with long-term storage (key-value and SQLite).
 
-Note that `Agent` does not extend `DurableObject` directly, but instead extends `Server`. `Server` is a class provided by [PartyKit](https://github.com/cloudflare/partykit/tree/main/packages/partyserver).
-
-You can visualize the logic as a Matryoshka doll: **DurableObject** > **Server** > **Agent**.
+`Agent` does not extend `DurableObject` directly. It extends `Server` from the [`partyserver`](https://github.com/cloudflare/partykit/tree/main/packages/partyserver) package, which extends `DurableObject`. Think of it as layers: **DurableObject** > **Server** > **Agent**.
 
 ## Layer 0: Durable Object
 
@@ -41,8 +39,8 @@ By writing a Durable Object class which inherits from the built-in type `Durable
 // not initialized or maybe had never even been created!
 const stub = env.MY_DO.getByName("foo");
 
-// We can call any public method of the class since. The runtime
-// **ensures** the constructor is called for us if the instance wasn't active.
+// We can call any public method on the class. The runtime
+// ensures the constructor is called if the instance was not active.
 await stub.bar();
 ```
 
@@ -73,8 +71,7 @@ export class MyDurableObject extends DurableObject {
 	}
 
 	async webSocketMessage(ws, message) {
-		// echo back the messages
-		ws.send(msg);
+		ws.send(message);
 	}
 }
 ```
@@ -95,30 +92,27 @@ The base `DurableObject` class sets the [DurableObjectState](/durable-objects/ap
 
 ```ts
 const sql = this.ctx.storage.sql;
-const kv = this.ctx.storage.kv;
 
-// An example of a synchronous SQL query
+// Synchronous SQL query
 const rows = sql.exec("SELECT * FROM contacts WHERE country = ?", "US");
 
-// And an example of the synchronous KV
-const token = kv.get("someToken");
+// Key-value storage
+const token = this.ctx.storage.get("someToken");
 ```
 
 ### `this.ctx.env`
 
 Lastly, it is worth mentioning that the Durable Object also has the Worker `Env` in `this.env`. Learn more in [Bindings](/workers/runtime-apis/bindings).
 
-## Layer 1: Partykit `Server`
+## Layer 1: `Server` (partyserver)
 
-Now that you have seen what Durable Objects come with out-of-the-box, what [PartyKit](https://github.com/cloudflare/partykit)'s `Server` (package `partyserver`) implements will be clearer. It is an opinionated `DurableObject` wrapper that improves DX by hiding away Durable Object primitives in favor of more developer friendly callbacks.
+Now that you have seen what Durable Objects provide out of the box, the `Server` class from [`partyserver`](https://github.com/cloudflare/partykit/tree/main/packages/partyserver) will make more sense. It is an opinionated `DurableObject` wrapper that replaces low-level primitives with developer-friendly callbacks.
 
-An important note is that `Server` does NOT persist to the Durable Object storage, so you will not see extra storage operations by using it.
+`Server` does not add any storage operations of its own — it only wraps the Durable Object lifecycle.
 
 ### Addressing
 
-`partyserver` exposes helper to address your Durable Objects instead of manually through your bindings. This allows `partyserver` to implement several improvements, including a unique URL routing scheme for your Durable Objects (e.g. `<your-worker>/servers/:durableClass/:durableName`).
-
-Compare this to the Durable Object addressing [example above](#rpc).
+`partyserver` exposes helpers to address Durable Objects by name instead of going through bindings manually. This includes a URL routing scheme (`<your-worker>/servers/:durableClass/:durableName`) that the Agent layer builds on.
 
 ```ts
 // Note the await here!
@@ -128,25 +122,21 @@ const stub = await getServerByName(env.MY_DO, "foo");
 await stub.bar();
 ```
 
-Since we have a URL addressing scheme, we also get access to `routePartykitRequest()`.
+The URL scheme also enables a request router. In the Agent layer, this is re-exported as `routeAgentRequest`:
 
 ```ts
   async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-    // Behind the scenes, PartyKit normalizes your DO binding names
-    // and tries to do some pattern matching.
-    const res = await routePartykitRequest(request, env);
+    const res = await routeAgentRequest(request, env);
 
     if (res) return res;
 
-    return Response("Not found", { status: 404 });
+    return new Response("Not found", { status: 404 });
   }
 ```
 
-You can also refer to [the implementation](https://github.com/cloudflare/partykit/blob/main/packages/partyserver/src/index.ts#L122) to learn more.
-
 ### `onStart`
 
-The extra plumbing that `Server` includes on addressing allows it to expose an `onStart` callback that is executed every time the Durable Object starts up (the Durable Object was evicted, hibernated or never created at all) and before any `fetch` or RPC.
+The addressing layer allows `Server` to expose an `onStart` callback that runs every time the Durable Object starts up (after eviction, hibernation, or first creation) and before any `fetch` or RPC call.
 
 ```ts
 class MyServer extends Server {
@@ -217,7 +207,7 @@ class MyAgent extends Agent<Env, { count: number }> {
 }
 ```
 
-State is stored in the `cf_agents_state` SQL table. State messages are sent with `type: "cf_agent_state"` (both from the client and the server). Since the `agents` provides [JS and React clients](/agents/api-reference/store-and-sync-state/#synchronizing-state), real-time state updates are available out of the box.
+State is stored in the `cf_agents_state` SQL table. State messages are sent with `type: "cf_agent_state"` (both from the client and the server). Since `agents` provides [JS and React clients](/agents/api-reference/store-and-sync-state/#synchronizing-state), real-time state updates are available out of the box.
 
 ### `this.sql`
 
@@ -247,7 +237,7 @@ class MyAgent extends Agent {
 
 ### RPC and Callable Methods
 
-`agents` take Durable Objects RPC one step forward by implementing RPC through WebSockets, so clients can also call methods on the Agent directly. To make a method callable through WS, developers can use the `@callable` decorator. Methods can return a serializable value or a stream (when using `@callable({ stream: true })`).
+`agents` takes Durable Objects RPC one step further by implementing RPC through WebSockets, so clients can call methods on the Agent directly. To make a method callable through WebSocket, use the `@callable()` decorator. Methods can return a serializable value or a stream (when using `@callable({ stream: true })`).
 
 ```ts
 class MyAgent extends Agent {
@@ -389,7 +379,7 @@ export default {
 
 ### Context Management
 
-`agents` wraps all your methods with an `AsyncLocalStorage` to maintain context throughout the request lifecycle. This allows you to access the current agent, connection, request, or email (depending of what event is being handled) from anywhere in your code:
+`agents` wraps all your methods with an `AsyncLocalStorage` to maintain context throughout the request lifecycle. This allows you to access the current agent, connection, request, or email (depending on what event is being handled) from anywhere in your code:
 
 ```ts
 import { getCurrentAgent } from "agents";
@@ -469,17 +459,22 @@ You can safely call `this.destroy()` from within a scheduled task callback. The 
 
 ### Routing
 
-The `Agent` class re-exports PartyKit's [addressing helpers](#addressing) as `getAgentByName` and `routeAgentRequest`.
+The `Agent` class re-exports the [addressing helpers](#addressing) as `getAgentByName` and `routeAgentRequest`.
 
 ```ts
-// Same API as getServerByName
 const stub = await getAgentByName(env.MY_DO, "foo");
-// ...
+await stub.someMethod();
 
-// Same API as routeServerRequest
 const res = await routeAgentRequest(request, env);
-
 if (res) return res;
 
-return Response("Not found", { status: 404 });
+return new Response("Not found", { status: 404 });
 ```
+
+## Layer 3: `AIChatAgent`
+
+The [`AIChatAgent`](/agents/api-reference/chat-agents/) class from `@cloudflare/ai-chat` extends `Agent` with an opinionated layer for AI chat. It adds automatic message persistence to SQLite, resumable streaming, tool support (server-side, client-side, and human-in-the-loop), and a React hook (`useAgentChat`) for building chat UIs.
+
+The full hierarchy is: **DurableObject** > **Server** > **Agent** > **AIChatAgent**.
+
+If you are building a chat agent, start with `AIChatAgent`. If you need lower-level control or are not building a chat interface, use `Agent` directly.

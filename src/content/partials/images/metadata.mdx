@@ -4,9 +4,8 @@
 
 import { Tabs, TabItem } from "~/components";
 
-Controls amount of invisible metadata (EXIF data) that should be preserved.
+Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Content Credentials (C2PA metadata) may be preserved if the [setting is enabled](/images/transform-images/preserve-content-credentials).
 
-Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Content Credentials (C2PA metadata) may be preserved if the [setting is enabled](/images/transform-images/preserve-content-credentials).
 
 Available options are `copyright`, `keep`, and `none`. The default for all JPEG images is `copyright`. WebP and PNG output formats will always discard EXIF metadata.
 

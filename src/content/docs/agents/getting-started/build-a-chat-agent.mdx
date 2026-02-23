@@ -172,11 +172,11 @@ export default {
 
 ### What each tool type does
 
-| Tool             | `execute`? | `needsApproval`? | Behavior                                             |
-| ---------------- | ---------- | ----------------- | ---------------------------------------------------- |
-| `getWeather`     | Yes        | No                | Runs on the server automatically                     |
-| `getUserTimezone`| No         | No                | Sent to the client; browser provides the result      |
-| `calculate`      | Yes        | Yes (large numbers) | Pauses for user approval, then runs on server       |
+| Tool              | `execute`? | `needsApproval`?    | Behavior                                        |
+| ----------------- | ---------- | ------------------- | ----------------------------------------------- |
+| `getWeather`      | Yes        | No                  | Runs on the server automatically                |
+| `getUserTimezone` | No         | No                  | Sent to the client; browser provides the result |
+| `calculate`       | Yes        | Yes (large numbers) | Pauses for user approval, then runs on server   |
 
 ## 4. Write the client
 

@@ -26,14 +26,14 @@ In this example, you run an e-commerce site and want to display prices in the lo
 
    <DashButton url="/?to=/:account/:zone/rules/overview" />
 
-2. Select **Create rule** and select the option **URL Rewrite Rule**.  
-3. Enter a descriptive name, such as `Vary by Country - Canada`.  
+2. Select **Create rule** and select the option **URL Rewrite Rule**.
+3. Enter a descriptive name, such as `Vary by Country - Canada`.
 4. In **If incoming requests match...**, select **Custom filter expression**.
-5. Under **When incoming requests match...**, create the following expression:  
-   - **Field:** `Country`  
-   - **Operator:** `equals`  
-   - **Value:** `Canada`  
-6. Under **Then...** 
+5. Under **When incoming requests match...**, create the following expression:
+   - **Field:** `Country`
+   - **Operator:** `equals`
+   - **Value:** `Canada`
+6. Under **Then...**
     - for **Path**, select **Preserve**.
     - for **Query**, select **Rewrite to**: **Dynamic** `loc=ca`
 7. Select **Save**.
@@ -146,7 +146,7 @@ If your origin serves different content types (for example, `application/json` v
 3. Enter  rule name, such as `Vary by Accept Header`.
 4. Set the condition for the rule to apply (for example, a specific hostname or path).
 5. Under **Cache key**, select **Use custom key**.
-6. Select **Add new**. 
+6. Select **Add new**.
     - **Type**: `Header`
     - **Name**: `Accept`
     - **Value**: Add each `value`, or leave empty for all.
@@ -244,15 +244,15 @@ The simplest solution is to create a [Transform Rule](/rules/transform/) that ch
 
    <DashButton url="/?to=/:account/:zone/rules/overview" />
 
-2. Select **Create rule** and select the option **URL Rewrite Rule**.  
+2. Select **Create rule** and select the option **URL Rewrite Rule**.
 3. Enter a name, such as `Vary by RSC Header`.
-4. In **If incoming requests match...**, select **Custom filter expression**.
-5. Under **When incoming requests match...**, manually edit the expression so that it checks for the presence of the `RSC` header:
-    - `(http.request.headers["rsc"] is not null)`
+4. In **If incoming requests match**, select **Custom filter expression**.
+5. Under **When incoming requests match**, manually edit the expression so that it checks for the presence of the `RSC` header:
+    - `has_key(http.request.headers, "rsc")`
 
-6. Under `Then...` 
-    - for **Path**, select **Preserve**
-    - for **Query**, select **Rewrite to**, select **Dynamic**: `_rsc=1`
+6. Under **Then**:
+    - For **Path**, select **Preserve**.
+    - For **Query**, select **Rewrite to**, select **Static**: `_rsc=1`.
 
 7. Select **Save**.
 

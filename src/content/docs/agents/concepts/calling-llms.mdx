@@ -2,35 +2,221 @@
 title: Calling LLMs
 pcx_content_type: concept
 tags:
-  - LLM
+  - AI
 sidebar:
   order: 6
 ---
 
-import { Render } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
-### Understanding LLM providers and model types
+Agents change how you work with LLMs. In a stateless Worker, every request starts from scratch — you reconstruct context, call a model, return the response, and forget everything. An Agent keeps state between calls, stays connected to clients over WebSocket, and can call models on its own schedule without a user present.
 
-Different LLM providers offer models optimized for specific types of tasks. When building AI systems, choosing the right model is crucial for both performance and cost efficiency.
+This page covers the patterns that become possible when your LLM calls happen inside a stateful Agent. For provider setup and code examples, refer to [Using AI Models](/agents/api-reference/using-ai-models/).
 
-#### Reasoning Models
+## State as context
 
-Models like OpenAI's o1, Anthropic's Claude, and DeepSeek's R1 are particularly well-suited for complex reasoning tasks. These models excel at:
+Every Agent has a built-in [SQL database](/agents/api-reference/store-and-sync-state/) and key-value state. Instead of passing an entire conversation history from the client on every request, the Agent stores it and builds prompts from its own storage.
 
-- Breaking down problems into steps
-- Following complex instructions
-- Maintaining context across long conversations
-- Generating code and technical content
+<TypeScriptExample>
 
-For example, when implementing a travel booking system, you might use a reasoning model to analyze travel requirements and generate appropriate booking strategies.
+```ts
+import { Agent } from "agents";
 
-#### Instruction Models
+export class ResearchAgent extends Agent<Env> {
+	async buildPrompt(userMessage: string) {
+		const history = this.sql<{ role: string; content: string }>`
+			SELECT role, content FROM messages
+			ORDER BY timestamp DESC LIMIT 50`;
 
-Models like GPT-4 and Claude Instant are optimized for following straightforward instructions efficiently. They work well for:
+		const preferences = this.sql<{ key: string; value: string }>`
+			SELECT key, value FROM user_preferences`;
 
-- Content generation
-- Simple classification tasks
-- Basic question answering
-- Text transformation
+		return [
+			{ role: "system", content: this.systemPrompt(preferences) },
+			...history.reverse(),
+			{ role: "user", content: userMessage },
+		];
+	}
+}
+```
 
-These models are often more cost-effective for straightforward tasks that do not require complex reasoning.
+</TypeScriptExample>
+
+This means the client does not need to send the full conversation on every message. The Agent owns the history, can prune it, enrich it with retrieved documents, or summarize older turns before sending to the model.
+
+## Surviving disconnections
+
+Reasoning models like DeepSeek R1 or GLM-4 can take 30 seconds to several minutes to respond. In a stateless request-response architecture, the client must stay connected the entire time. If the connection drops, the response is lost.
+
+An Agent keeps running after the client disconnects. When the response arrives, the Agent can persist it to state and deliver it when the client reconnects — even hours or days later.
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import { streamText } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+
+export class MyAgent extends Agent<Env> {
+	async onMessage(connection: Connection, message: WSMessage) {
+		const { prompt } = JSON.parse(message as string);
+		const workersai = createWorkersAI({ binding: this.env.AI });
+
+		const result = streamText({
+			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			prompt,
+		});
+
+		for await (const chunk of result.textStream) {
+			connection.send(JSON.stringify({ type: "chunk", content: chunk }));
+		}
+
+		this.sql`INSERT INTO responses (prompt, response, timestamp)
+			VALUES (${prompt}, ${await result.text}, ${Date.now()})`;
+	}
+}
+```
+
+</TypeScriptExample>
+
+With [`AIChatAgent`](/agents/api-reference/chat-agents/), this is handled automatically — messages are persisted to SQLite and streams resume on reconnect.
+
+## Autonomous model calls
+
+Agents do not need a user request to call a model. You can schedule model calls to run in the background — for nightly summarization, periodic classification, monitoring, or any task that should happen without human interaction.
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+
+export class DigestAgent extends Agent<Env> {
+	async onStart() {
+		this.schedule("0 8 * * *", "generateDailyDigest", {});
+	}
+
+	async generateDailyDigest() {
+		const articles = this.sql<{ title: string; body: string }>`
+			SELECT title, body FROM articles
+			WHERE created_at > datetime('now', '-1 day')`;
+
+		const workersai = createWorkersAI({ binding: this.env.AI });
+		const { text } = await generateText({
+			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			prompt: `Summarize these articles:\n${articles.map((a) => a.title + ": " + a.body).join("\n\n")}`,
+		});
+
+		this.sql`INSERT INTO digests (summary, created_at)
+			VALUES (${text}, ${Date.now()})`;
+
+		this.broadcast(JSON.stringify({ type: "digest", summary: text }));
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Multi-model pipelines
+
+Because an Agent maintains state across calls, you can chain multiple models in a single method — using a fast model for classification, a reasoning model for planning, and an embedding model for retrieval — without losing context between steps.
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import { generateText, embed } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+
+export class TriageAgent extends Agent<Env> {
+	async triage(ticket: string) {
+		const workersai = createWorkersAI({ binding: this.env.AI });
+
+		const { text: category } = await generateText({
+			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			prompt: `Classify this support ticket into one of: billing, technical, account. Ticket: ${ticket}`,
+		});
+
+		const { embedding } = await embed({
+			model: workersai("@cf/baai/bge-base-en-v1.5"),
+			value: ticket,
+		});
+		const similar = await this.env.VECTOR_DB.query(embedding, { topK: 5 });
+
+		const { text: response } = await generateText({
+			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			prompt: `Draft a response for this ${category} ticket. Similar resolved tickets: ${JSON.stringify(similar)}. Ticket: ${ticket}`,
+		});
+
+		this.sql`INSERT INTO tickets (content, category, response, created_at)
+			VALUES (${ticket}, ${category}, ${response}, ${Date.now()})`;
+
+		return { category, response };
+	}
+}
+```
+
+</TypeScriptExample>
+
+Each intermediate result stays in the Agent's memory for the duration of the method, and the final result is persisted to SQL for future reference.
+
+## Caching and cost control
+
+Persistent storage means you can cache model responses and avoid redundant calls. This is especially useful for expensive operations like embeddings or long reasoning chains.
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+
+export class CachingAgent extends Agent<Env> {
+	async cachedGenerate(prompt: string) {
+		const cached = this.sql<{ response: string }>`
+			SELECT response FROM llm_cache WHERE prompt = ${prompt}`;
+
+		if (cached.length > 0) {
+			return cached[0].response;
+		}
+
+		const workersai = createWorkersAI({ binding: this.env.AI });
+		const { text } = await generateText({
+			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			prompt,
+		});
+
+		this.sql`INSERT INTO llm_cache (prompt, response, created_at)
+			VALUES (${prompt}, ${text}, ${Date.now()})`;
+
+		return text;
+	}
+}
+```
+
+</TypeScriptExample>
+
+For provider-level caching and rate limit management across multiple agents, use [AI Gateway](/ai-gateway/).
+
+## Next steps
+
+<LinkCard
+	title="Using AI Models"
+	href="/agents/api-reference/using-ai-models/"
+	description="Provider setup, streaming, and code examples for Workers AI, OpenAI, Anthropic, and more."
+/>
+
+<LinkCard
+	title="Chat agents"
+	href="/agents/api-reference/chat-agents/"
+	description="AIChatAgent handles message persistence, resumable streaming, and tools automatically."
+/>
+
+<LinkCard
+	title="Store and sync state"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="SQL database and key-value state APIs for building context and caching."
+/>
+
+<LinkCard
+	title="Schedule tasks"
+	href="/agents/api-reference/schedule-tasks/"
+	description="Run autonomous model calls on a delay, schedule, or cron."
+/>

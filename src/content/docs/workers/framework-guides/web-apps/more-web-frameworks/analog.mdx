@@ -5,11 +5,29 @@ tags: ["full-stack", "Angular"]
 description: Create an Analog application and deploy it to Cloudflare Workers.
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { AutoconfigDiagram, Render, PackageManagers } from "~/components";
 
 In this guide, you will create a new [Analog](https://analogjs.org/) application and deploy to Cloudflare Workers.
 
 [Analog](https://analogjs.org/) is a fullstack meta-framework for Angular, powered by [Vite](https://vitejs.dev/) and [Nitro](https://nitro.unjs.io/).
+
+:::tip[Already have an Analog project?]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect Analog, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="Analog"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: ".output/server/index.mjs" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: .output/public" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+	]}
+/>
 
 ## 1. Set up a new project
 

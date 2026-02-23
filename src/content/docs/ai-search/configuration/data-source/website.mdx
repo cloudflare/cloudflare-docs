@@ -146,9 +146,9 @@ If you have Security rules configured to block bot activity, you can add a rule 
 
 You can configure parsing options during onboarding or in your instance settings under **Parser options**.
 
-### Sitemap
+### Specific sitemap
 
-By default, AI Search crawls all sitemaps listed in your `robots.txt` in the order they appear (top to bottom). If you do not want the crawler to index everything, you can specify a single sitemap URL to limit which pages are crawled.
+By default, AI Search crawls all sitemaps listed in your `robots.txt` in the order they appear (top to bottom). If you do not want the crawler to index everything, you can specify a single sitemap URL to limit which pages are crawled. You can add up to 5 specific sitemaps.
 
 ### Rendering mode
 
@@ -157,7 +157,7 @@ You can choose how pages are parsed during crawling:
 - **Static sites**: Downloads the raw HTML for each page.
 - **Rendered sites**: Loads pages with a headless browser and downloads the fully rendered version, including dynamic JavaScript content. Note that the [Browser Rendering](/browser-rendering/pricing/) limits and billing apply.
 
-## Access protected content
+## Extra headers for access protected content
 
 If your website has pages behind authentication or are only visible to logged-in users, you can configure custom HTTP headers to allow the AI Search crawler to access this protected content. You can add up to five custom HTTP headers to the requests AI Search sends when crawling your site.
 

@@ -45,12 +45,12 @@ Cloudflare Rate Limiting (previous version) is an add-on service for all custome
 
 The number of allowed rate limiting rules depends on the domain's plan:
 
-| Plan       | Rules | Rules matching response headers | Actions                                                               | Action Duration                                                       | Request Period                                                  |
-| ---------- | ----- | ------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Free       | 1     | 1                               | Block                                                                 | 1 minute or 1 hour                                                    | 10 seconds or 1 minute                                          |
-| Pro        | 10    | 1                               | Block, Interactive Challenge, JS Challenge, Managed Challenge, or Log | 1 minute or 1 hour                                                    | 10 seconds or 1 minute                                          |
-| Business   | 15    | 10                              | Block, Interactive Challenge, JS Challenge, Managed Challenge, or Log | 1 minute, 1 hour, or 24 hours                                         | 10 seconds, 1 minute, or 10 minutes                             |
-| Enterprise | 100   | 10                              | Block, Interactive Challenge, JS Challenge, Managed Challenge, or Log | Any duration entered between 10 seconds and 86,400 seconds (24 hours) | Any value entered between 10 seconds and 3,600 seconds (1 hour) |
+| Plan       | Rules | Rules matching response headers | Actions                                                                            | Action Duration                                                       | Request Period                                                  |
+| ---------- | ----- | ------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Free       | 1     | 1                               | Block                                                                              | 1 minute or 1 hour                                                    | 10 seconds or 1 minute                                          |
+| Pro        | 10    | 1                               | Block, Non-Interactive Challenge, Managed Challenge, Interactive Challenge, or Log  | 1 minute or 1 hour                                                    | 10 seconds or 1 minute                                          |
+| Business   | 15    | 10                              | Block, Non-Interactive Challenge, Managed Challenge, Interactive Challenge, or Log  | 1 minute, 1 hour, or 24 hours                                         | 10 seconds, 1 minute, or 10 minutes                             |
+| Enterprise | 100   | 10                              | Block, Non-Interactive Challenge, Managed Challenge, Interactive Challenge, or Log  | Any duration entered between 10 seconds and 86,400 seconds (24 hours) | Any value entered between 10 seconds and 3,600 seconds (1 hour) |
 
 Cloudflare Rate Limiting supports multiple levels of configuration control depending on the domain’s Cloudflare plan. The table below maps out what you can do based on your plan:
 
@@ -123,7 +123,7 @@ Rule mitigations consist of mitigation action and ban duration.
 Rate limit actions are based on the domain plan as mentioned in [Availability](#availability):
 
 - **Block**: Cloudflare issues an `HTTP 429` error when the threshold is exceeded.
-- **JS Challenge**: Visitor must pass a Cloudflare JavaScript Challenge. If passed, Cloudflare allows the request.
+- **Non-Interactive Challenge**: Visitor must pass a Cloudflare non-interactive challenge. If passed, Cloudflare allows the request.
 - **Managed Challenge (recommended)**: Visitor must pass a challenge dynamically chosen by Cloudflare based on the characteristics of the request. If passed, Cloudflare allows the request.
 - **Interactive Challenge**: Visitor must pass an Interactive Challenge. If passed, Cloudflare allows the request.
 - **Log**: Requests are logged in [Cloudflare Logs](/logs/). This helps test rules before applying to production.

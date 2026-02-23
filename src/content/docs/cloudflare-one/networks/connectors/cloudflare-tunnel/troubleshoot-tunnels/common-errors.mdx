@@ -67,6 +67,84 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 For more information, refer to the [comprehensive list](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
 
+## I see a 502 Bad Gateway error when connecting to an HTTP or HTTPS application through tunnel.
+
+A `502 Bad Gateway` error with `Unable to reach the origin service. The service may be down or it may not be responding to traffic from cloudflared` on a tunnel route means the tunnel itself is connected to the Cloudflare network, but `cloudflared` cannot reach the origin service defined in your ingress rule. Unlike [error 1033](#i-see-an-error-1033-when-attempting-to-run-a-tunnel), which indicates the tunnel is not connected to Cloudflare, a 502 error indicates the problem is between `cloudflared` and your local service.
+
+To identify the specific cause, review your [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) for `error`-level messages. Common causes include:
+
+### Origin service is not running
+
+If the origin service has stopped or never started, `cloudflared` logs will show an error similar to:
+
+```txt
+error="dial tcp [::1]:8080: connect: connection refused"
+```
+
+To resolve, verify the service is running and listening on the expected port:
+
+```sh
+curl -v http://localhost:8080
+```
+
+If the service is not running, start or restart it. You can confirm the service is listening by running `ss -tlnp | grep <PORT>` (Linux) or `lsof -iTCP -sTCP:LISTEN -nP | grep <PORT>` (macOS).
+
+### Origin service URL uses the wrong protocol
+
+If the origin expects HTTPS but the [published application route](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application) specifies `http://`, or vice versa, `cloudflared` logs will show an error similar to:
+
+```txt
+error="net/http: HTTP/1.x transport connection broken: malformed HTTP response \"\x15\x03\x01\x00\x02\x02\""
+```
+
+To resolve, update the `service` field in your published application route to match the [protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/protocols/) your origin expects. For example, change `http://localhost:8080` to `https://localhost:8080`. If you are using a locally-managed tunnel, update your ingress rule in the [configuration file](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/#file-structure-for-published-applications).
+
+### Origin service URL points to the wrong port
+
+If the port in your [published application route](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application) does not match the port your service is listening on, `cloudflared` will log a `connection refused` error for that port. Double-check the `service` URL in your ingress rule and compare it against the port your application is bound to.
+
+### Origin uses a certificate that `cloudflared` does not trust
+
+If the origin presents a TLS certificate that `cloudflared` cannot verify, the logs will show an error similar to:
+
+```txt
+error="x509: certificate is valid for example.com, not localhost"
+```
+
+This commonly occurs when the origin uses a self-signed certificate or when an SSL/TLS inspection proxy sits between `cloudflared` and the origin.
+
+To resolve, use one of the following approaches:
+
+- Set [`originServerName`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#originservername) to the hostname on the origin certificate in your [published application route](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application). If you are using a locally-managed tunnel, here is an example of a [configuration file](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/):
+
+  ```yml
+  ingress:
+    - hostname: app.example.com
+      service: https://localhost:443
+      originRequest:
+        originServerName: app.example.com
+  ```
+
+- Provide the CA certificate using [`caPool`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#capool):
+
+  ```yml
+  ingress:
+    - hostname: app.example.com
+      service: https://localhost:443
+      originRequest:
+        caPool: /path/to/ca-cert.pem
+  ```
+
+- As a last resort, disable TLS verification with [`noTLSVerify`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#notlsverify). This is not recommended for production environments.
+
+  ```yml
+  ingress:
+    - hostname: app.example.com
+      service: https://localhost:443
+      originRequest:
+        noTLSVerify: true
+  ```
+
 ## I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
 
 This error occurs when `cloudflared` does not recognize the SSL/TLS certificate presented by your origin. To resolve the issue, set the [origin server name](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#originservername) parameter to the hostname on your origin certificate. Here is an example of a locally-managed tunnel configuration:

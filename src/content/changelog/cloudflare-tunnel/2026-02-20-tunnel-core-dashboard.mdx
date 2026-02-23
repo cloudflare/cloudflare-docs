@@ -1,0 +1,37 @@
+---
+title: Manage Cloudflare Tunnel directly from the main Cloudflare Dashboard
+description: Create and configure Tunnels for public applications, Workers VPC, and Load Balancing without leaving the Core Dashboard — now with native integrations and unified visibility.
+date: 2026-02-20
+---
+
+import { Render } from "~/components";
+
+[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) is now available in the main Cloudflare Dashboard at [Networking > Tunnels](https://dash.cloudflare.com/?to=/:account/tunnels), bringing first-class Tunnel management to developers using Tunnel for securing origin servers.
+
+![Manage Tunnels in the Core Dashboard](~/assets/images/changelog/cloudflare-tunnel/tunnel-core-dashboard.gif)
+
+This new experience provides everything you need to manage Tunnels for [public applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/), including:
+
+- **Full Tunnel lifecycle management**: Create, configure, delete, and monitor all your Tunnels in one place.
+- **Native integrations**: View Tunnels by name when configuring [DNS records](/dns/manage-dns-records/how-to/create-dns-records/) and [Workers VPC](/workers-vpc/) — no more copy-pasting UUIDs.
+- **Real-time visibility**: Monitor [replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) and Tunnel [health status](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/#tunnel-status) directly in the dashboard.
+- **Routing map**: Manage all ingress routes for your Tunnel, including [public applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/), [private hostnames](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/), [private CIDRs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/), and [Workers VPC services](/workers-vpc/), from a single interactive interface.
+
+## Choose the right dashboard for your use case
+
+**Core Dashboard**: Navigate to [Networking > Tunnels](https://dash.cloudflare.com/?to=/:account/tunnels) to manage Tunnels for:
+
+- Securing origin servers and [public applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) with CDN, WAF, Load Balancing, and DDoS protection
+- Connecting [Workers to private services](/workers-vpc/) via Workers VPC
+
+**Cloudflare One Dashboard**: Navigate to [Zero Trust > Networks > Connectors](https://one.dash.cloudflare.com/?to=/:account/networks/connectors) to manage Tunnels for:
+
+- Securing your public applications with [Zero Trust access policies](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/)
+- Connecting users to [private applications](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/)
+- Building a [private mesh network](/reference-architecture/architectures/sase/#connecting-networks)
+
+Both dashboards provide complete Tunnel management capabilities — choose based on your primary workflow.
+
+## Get started
+
+New to Tunnel? Learn how to [get started with Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) or explore advanced use cases like [securing SSH servers](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/) or [running Tunnels in Kubernetes](/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/kubernetes/).

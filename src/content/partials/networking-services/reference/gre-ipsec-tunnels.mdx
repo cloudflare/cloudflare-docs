@@ -84,6 +84,10 @@ a --> 1== Cloudflare anycast GRE <br> single endpoint ==>i --> j
 
 ## IPsec tunnels
 
+:::note[Post-quantum IPsec closed beta]
+Post-quantum key agreement for IPsec tunnels with third-party devices is currently in closed beta. Contact your account team to request access. Post-quantum IPsec is generally available when using the [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/).
+:::
+
 [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) is a group of protocols that work together to set up encrypted connections between devices. It helps keep data you send over public networks secure. Organizations often use IPsec to set up Virtual Private Networks (VPNs), and it works by encrypting IP packets and authenticating the source where the packets come from.
 
 For information on how to set up an IPsec tunnel, refer to <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>. To learn more about the configuration parameters {props.productName} uses to create an IPsec tunnel, keep reading.
@@ -92,11 +96,13 @@ For information on how to set up an IPsec tunnel, refer to <a href={props.tunnel
 
 {props.productName} uses the following stages to establish an IPsec tunnel:
 
-- **Initial Exchange** (`IKE_SA_INIT`): IKE peers negotiate parameters for the IKE Security Association (SA) and establish a shared secret for key derivation. After this exchange, the peers have a secure communication channel but they have not yet authenticated each other. If supported, the peers will also perform Network Address Translation (NAT) detection in this exchange.
-- **Auth Exchange** (`IKE_AUTH`): Using the secure tunnel from the initial exchange, IKE peers mutually authenticate each other. After authentication, they establish the IKE security association (SA). Next, the peers negotiate and establish an IPsec tunnel, known as a Child SA.
+- **Initial Exchange** (`IKE_SA_INIT`): IKE peers negotiate parameters for the IKE Security Association (SA) and establish a shared secret for key derivation, and when relevant, signal support for post-quantum key exchange with [RFC 9370](https://datatracker.ietf.org/doc/rfc9370/). After this exchange, the peers have a secure communication channel but they have not yet authenticated each other.
+- **Intermediate Exchange** (`IKE_INTERMEDIATE`): If both peers support RFC 9370, they perform an additional key exchange using ML-KEM (Module-Lattice-based Key-Encapsulation Mechanism), a post-quantum key exchange specified in [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/). This creates a hybrid shared secret by combining a secret derived from classical Diffie-Hellman (established during the `IKE_SA_INIT`) with post-quantum ML-KEM to protect against [harvest-now, decrypt-later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks.
+- **Auth Exchange** (`IKE_AUTH`): Using the keys established from both the `IKE_SA_INIT` and the `IKE_INTERMEDIATE` exchange, IKE peers mutually authenticate each other. After authentication, they establish the IKE security association (SA). Next, the peers negotiate and establish an IPsec tunnel, known as a Child SA.
+- **Rekeying**: Periodically, or through manual intervention, IKE SAs can be rekeyed to generate new SAs with fresh keys for the session. This rekey operation is performed for both the IKE SA (to refresh the control plane) and the Child SAs (to refresh the data plane). When a hybrid exchange is in use (RFC 9370), the rekey process for the IKE SA will once again perform the parallel classical (DH) and post-quantum (ML-KEM) exchanges to ensure continued quantum resistance.
 
 :::note
-The IKE SA and the Child SA are separate entities, each with their own parameters. The Child SA is the actual IPsec tunnel where user traffic flows (that is, the dataplane). The IKE SA sets up and manages the Child SA.
+The IKE SA and the Child SA are separate entities, each with their own parameters. The Child SA is the dataplane IPsec tunnel where user traffic flows (that is, the ESP layer of IPsec). The IKE SA sets up and manages the Child SA.
 :::
 
 In summary, IKEv2 creates an IKE SA that uses certain cryptographic transforms. It then uses that IKE SA to create a Child SA which itself uses certain cryptographic transforms. The following configuration section details which of these transforms {props.productName} currently supports for IKE SAs and Child SAs.
@@ -120,15 +126,17 @@ Documentation sometimes refers to IKE SA as Phase 1 as per IKEv1 language.
 - **Integrity** (sometimes referred to as Authentication)
   - SHA2-256
 
-- **Diffie-Hellman group**:
-  Cloudflare supports the following Diffie-Hellman (DH) groups.
+- **Key Exchange Method** (formerly Diffie-Hellman group):
+  Cloudflare supports the following key exchange methods for the IKE SA. Note that [RFC 9370](https://datatracker.ietf.org/doc/rfc9370/) renames "DH Group" to "Key Exchange Method" to accommodate non-DH algorithms.
 
-  - DH group 20 (384-bit random ECP group)
-  - DH group 14 (2048-bit MODP group)
-  - DH group 5 (1536-bit MODP group)
+  - **Post-quantum hybrid (beta) (recommended)**: ML-KEM-768 in parallel with DH Group 20 (per RFC 9370 and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/))
+  - Post-quantum hybrid: ML-KEM-1024 in parallel with DH Group 20 (per RFC 9370 and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/))
+  - Classical DH group 20 (384-bit random ECP group)
+  - Classical DH group 14 (2048-bit MODP group)
+  - Classical DH group 5 (1536-bit MODP group)
 
 	:::caution
-	Cloudflare recommends that you use only one DH group when configuring your device, specifically **DH group 20**.
+	Cloudflare recommends the **ML-KEM-768 + DH Group 20** hybrid exchange for post-quantum key agreement. If your appliance does not yet support RFC 9370 and draft-ietf-ipsecme-ikev2-mlkem, use DH group 20.
 	:::
 
 - **Pseudorandom function (PRF)**
@@ -166,6 +174,10 @@ The Child SA. Documentation sometimes refers to this as Phase 2 as per IKEv1 lan
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
+	:::note[Post-quantum security]
+	If the Child SA uses DH groups for Perfect Forward Secrecy, it is still protected against quantum threats if the parent IKE SA was established using a hybrid ML-KEM exchange.
+	:::
+
 	:::caution
 	Cloudflare recommends that you use only one DH group when configuring your device, specifically **DH group 20**.
 	:::
@@ -179,13 +191,14 @@ The Child SA. Documentation sometimes refers to this as Phase 2 as per IKEv1 lan
 - If your router is behind Network Address Translation (NAT) and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port `4500`. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). Cloudflare does not support NAT-T for IKE sessions which begin on port `500` and then switch to port `4500`.
 - (Uncommon) You must disable Extended Sequence Numbers (ESN).
 - If your tunnels need replay protection, enable Dead Peer Detection (DPD) in your router and select the option that restarts your IKE session when a DPD timeout occurs. This "restart" option ensures that the connection can recover in the event that a Cloudflare server goes offline. If your router does not offer this setting, check the router documentation for its dead peer detection behavior.
+- **Multiple Key Exchange ([RFC 9370](https://datatracker.ietf.org/doc/rfc9370/))**: To use post-quantum security, your router must support the `IKE_INTERMEDIATE` and `IKE_FOLLOWUP_KE` exchange as defined in RFC 9370 and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/). Because post-quantum public keys and ciphertexts (like ML-KEM-768) are larger than classical keys, you must enable IKEv2 fragmentation on your router to prevent packets from exceeding the 1,500-byte MTU. When configuring the first Additional Key Exchange, use the IANA-assigned Transform ID `36` for ML-KEM-768, or Transform ID `37` for ML-KEM-1024.
 
 </Details>
 
 <Details header="Optional configuration parameters">
 
 - Disable <a href={props.productURL}>anti-replay protection</a>.
-- **`NULL` encryption for IPsec:** Do not use this option unless necessary because it reduces security by leaving IPsec traffic unencrypted. You must explicitly opt in to use this option.
+- **`NULL` encryption for IPsec (not recommended):** Do not use this option unless necessary because it reduces security by leaving IPsec traffic unencrypted. You must explicitly opt in to use this option. Using this option also eliminates post-quantum protections.
 
 </Details>
 
@@ -226,6 +239,13 @@ If route-based VPNs are not an option and you must use policy-based VPNs, be awa
 - Cloudflare only supports a single set of traffic selectors per Child SA.
 - A policy must cover reply-style health checks — that is, they must match traffic selectors — otherwise, Cloudflare drops them, just like any other traffic from an IPsec tunnel that does not match a policy.
 - A single IPsec tunnel can only contain around 100 Child SAs. Therefore, there is effectively a limit on the number of different policies per tunnel.
+
+### Troubleshooting
+
+For help resolving tunnel issues:
+
+- [Troubleshoot tunnel health](/cloudflare-wan/configuration/common-settings/check-tunnel-health-dashboard/) - Diagnose and fix health check failures
+- [Troubleshoot with IPsec logs](/logs/logpush/logpush-job/datasets/account/ipsec_logs/) - Use Logpush to analyze IPsec handshake issues
 
 { props.magicWord === "Magic Transit" && (
   <>

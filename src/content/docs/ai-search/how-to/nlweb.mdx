@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: NLWeb
 sidebar:
-  order: 1
+  order: 6
 ---
 
 Enable conversational search on your website with NLWeb and Cloudflare AI Search. This template crawls your site, indexes the content, and deploys NLWeb-standard endpoints to serve both people and AI agents.
@@ -24,11 +24,13 @@ You can deploy NLWeb on your website directly through the AI Search dashboard:
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. Go to **Compute & AI** > **AI Search**.
-3. Select **Create AI Search**, then choose the **NLWeb Website** option.
-4. Select your domain from your Cloudflare account.
-5. Click **Start indexing**.
+3. Select **Create**.
+4. Select **Website** as a data source.
+4. Follow the instructions to create an AI Search instance.
+5. Go to the **Settings** for the instance 
+6. Find **NLWeb Worker** and select "Enable AI Search for your website".
 
-Once complete, AI Search will crawl and index your site, then deploy an NLWeb Worker for you.
+Once complete, AI Search will deploy an NLWeb Worker for you that enables you to use the NLWeb API Endpoints.
 
 ## What this template includes
 

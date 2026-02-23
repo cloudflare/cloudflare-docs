@@ -9,6 +9,7 @@ description: Deploy a TanStack Start application to Cloudflare Workers.
 ---
 
 import {
+	AutoconfigDiagram,
 	Description,
 	Details,
 	Render,
@@ -19,6 +20,24 @@ import {
 } from "~/components";
 
 [TanStack Start](https://tanstack.com/start) is a full-stack framework for building web applications with server-side rendering, streaming, server functions, and bundling.
+
+:::tip[Already have a TanStack Start project?]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect TanStack Start, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="TanStack Start"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: ".output/server/index.mjs" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: .output/public" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+	]}
+/>
 
 ## Create a new application
 

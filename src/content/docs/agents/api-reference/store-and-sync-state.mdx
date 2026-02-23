@@ -646,7 +646,11 @@ For example, you can use an Agent's built-in SQL database to pull history, query
 <TypeScriptExample>
 
 ```ts
-export class ReasoningAgent extends Agent {
+interface Env {
+	AI: Ai;
+}
+
+export class ReasoningAgent extends Agent<Env> {
 	async callReasoningModel(prompt: Prompt) {
 		let result = this
 			.sql<History>`SELECT * FROM history WHERE user = ${prompt.userId} ORDER BY timestamp DESC LIMIT 1000`;
@@ -655,30 +659,22 @@ export class ReasoningAgent extends Agent {
 			context.push(row.entry);
 		}
 
-		const client = new OpenAI({
-			apiKey: this.env.OPENAI_API_KEY,
-		});
-
-		// Combine user history with the current prompt
 		const systemPrompt = prompt.system || "You are a helpful assistant.";
 		const userPrompt = `${prompt.user}\n\nUser history:\n${context.join("\n")}`;
 
 		try {
-			const completion = await client.chat.completions.create({
-				model: this.env.MODEL || "o3-mini",
+			const response = await this.env.AI.run("@cf/zai-org/glm-4.7-flash", {
 				messages: [
 					{ role: "system", content: systemPrompt },
 					{ role: "user", content: userPrompt },
 				],
-				temperature: 0.7,
-				max_tokens: 1000,
 			});
 
 			// Store the response in history
 			this
-				.sql`INSERT INTO history (timestamp, user, entry) VALUES (${new Date()}, ${prompt.userId}, ${completion.choices[0].message.content})`;
+				.sql`INSERT INTO history (timestamp, user, entry) VALUES (${new Date()}, ${prompt.userId}, ${response.response})`;
 
-			return completion.choices[0].message.content;
+			return response.response;
 		} catch (error) {
 			console.error("Error calling reasoning model:", error);
 			throw error;
@@ -705,7 +701,7 @@ This works because each instance of an Agent has its own database, and the state
 | Method                | Signature                                                    | Description                                   |
 | --------------------- | ------------------------------------------------------------ | --------------------------------------------- |
 | `setState`            | `(state: State) => void`                                     | Update state, persist, and broadcast          |
-| `onStateChanged`       | `(state: State, source: Connection \| "server") => void`     | Called when state changes                     |
+| `onStateChanged`      | `(state: State, source: Connection \| "server") => void`     | Called when state changes                     |
 | `validateStateChange` | `(nextState: State, source: Connection \| "server") => void` | Validate before persistence (throw to reject) |
 
 ### Workflow step methods
