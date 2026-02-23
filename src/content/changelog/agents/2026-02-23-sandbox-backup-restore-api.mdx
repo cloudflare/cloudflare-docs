@@ -9,7 +9,7 @@ date: 2026-02-23
 
 The Sandbox SDK now supports `createBackup()` and `restoreBackup()` methods for creating point-in-time snapshots of sandbox directories and restoring them.
 
-The main use case is fast environment restoration. Instead of running `git clone` and `npm install` on every new session — which can take minutes — you can back up a fully-initialized `/workspace` directory and restore it in seconds. This makes it practical to pick up exactly where a user left off across requests without repeating expensive setup steps. You can also use backups to checkpoint work before risky operations and roll back if something goes wrong.
+The main use case is fast environment restoration. Instead of running `git clone` and `npm install` on every new session — which can take minutes — you can back up a fully-initialized `/workspace` directory and restore it in seconds. This makes it practical to pick up exactly where a user left off across requests without repeating expensive setup steps. 
 
 ```ts
 import { getSandbox } from "@cloudflare/sandbox";
@@ -29,6 +29,7 @@ Key capabilities:
 - **Configurable TTL** (default: 3 days) enforced at restore time
 - **Persist and reuse across requests** — store backup handles in KV, D1, or Durable Object storage so any subsequent request can restore the same environment
 
-Backups are stored in an [R2](/r2/) bucket. Restores currently use a FUSE overlay with copy-on-write semantics, so the original backup remains unchanged as new writes go to a separate layer. Soon, we will ship native snapshotting that is faster and works at a lower level — with the same API and no changes needed on your side.
+Backups are stored in an [R2](/r2/) bucket. Restores currently use a FUSE overlay with copy-on-write semantics, so the original backup remains unchanged as new writes go to a separate layer. 
+Soon, we will ship native snapshotting that is faster and works at a lower level — with the same API and no changes needed on your side.
 
 To get started, refer to the [backup and restore guide](/sandbox/guides/backup-restore/) for setup instructions and usage patterns, or the [Backups API reference](/sandbox/api/backups/) for full method documentation.
