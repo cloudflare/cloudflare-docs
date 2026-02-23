@@ -16,7 +16,7 @@ Previously, `deleteAll()` only deleted user-stored data for an object. Alarm usa
 await this.ctx.storage.deleteAlarm();
 await this.ctx.storage.deleteAll();
 
-// Now: a single call clears both data and alarms
+// Now: a single call clears both data and the alarm
 await this.ctx.storage.deleteAll();
 ```
 
