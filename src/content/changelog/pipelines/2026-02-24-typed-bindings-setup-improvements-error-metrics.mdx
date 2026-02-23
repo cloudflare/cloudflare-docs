@@ -7,17 +7,15 @@ products:
 date: 2026-02-24
 ---
 
-[Cloudflare Pipelines](/pipelines/) ingests streaming data via [Workers](/workers/) or HTTP endpoints, transforms it with SQL, and writes it to [R2](/r2/) as Apache Iceberg tables. Today we are shipping three improvements to help you catch data issues earlier, set up Pipelines faster, and understand why events get dropped.
+[Cloudflare Pipelines](/pipelines/) ingests streaming data via [Workers](/workers/) or HTTP endpoints, transforms it with SQL, and writes it to [R2](/r2/) as Apache Iceberg tables. Today we're shipping three improvements to help you understand why streaming events get dropped, catch data quality issues early, and set up Pipelines faster.
 
 ## Dropped event metrics
 
-When [stream](/pipelines/streams/) events do not match the expected schema, Pipelines accepts them during ingestion but silently drops them during processing. Until now, there was no way to see which events were dropped or why.
-
-A new **Errors** tab in the Cloudflare dashboard now surfaces dropped events with detailed error messages, grouped by error type.
+When [stream](/pipelines/streams/) events doesn't match the expected schema, Pipelines accepts them during ingestion but drops them when attempting to deliver them to the [sink](/pipelines/sinks/). To help you identify the root cause of these issues, we are introducing a new dashboard and metrics that surface dropped events with detailed error messages.
 
 ![The Errors tab in the Cloudflare dashboard showing deserialization errors grouped by type with individual error details](~/assets/images/pipelines/pipelines-error-log-dash.png)
 
-You can also query dropped events programmatically via the new `pipelinesUserErrorsAdaptiveGroups` GraphQL dataset. The dataset breaks down failures by specific error type (`missing_field`, `type_mismatch`, `parse_failure`, or `null_value`) so you can trace issues back to the source.
+Dropped events can also be queried programmatically via the new `pipelinesUserErrorsAdaptiveGroups` GraphQL dataset. The dataset breaks down failures by specific error type (`missing_field`, `type_mismatch`, `parse_failure`, or `null_value`) so you can trace issues back to the source.
 
 ```graphql
 query GetPipelineUserErrors(
@@ -50,7 +48,7 @@ query GetPipelineUserErrors(
 
 For the full list of dimensions, error types, and additional query examples, refer to [User error metrics](/pipelines/observability/metrics/#user-error-metrics).
 
-## Typed pipeline bindings
+## Typed Pipelines bindings
 
 Sending data to a Pipeline from a Worker previously used a generic `Pipeline<PipelineRecord>` type, which meant schema mismatches (wrong field names, incorrect types) were only caught at runtime as dropped events.
 
@@ -72,7 +70,7 @@ declare namespace Cloudflare {
 
 For more information, refer to [Typed Pipeline bindings](/pipelines/streams/writing-to-streams/#typed-pipeline-bindings).
 
-## Improved pipeline setup
+## Improved Pipelines setup
 
 Setting up a new Pipeline previously required multiple manual steps: creating an R2 bucket, enabling R2 Data Catalog, generating an API token, and configuring format, compression, and rolling policies individually.
 
