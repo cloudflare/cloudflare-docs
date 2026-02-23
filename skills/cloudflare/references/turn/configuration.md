@@ -33,7 +33,6 @@ export const config = envSchema.parse(process.env);
 {
   "name": "turn-credentials-api",
   "main": "src/index.ts",
-  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01",
   "vars": {
     "TURN_KEY_ID": "your-turn-key-id"  // Non-sensitive, can be in vars

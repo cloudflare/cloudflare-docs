@@ -14,7 +14,6 @@ npm install @cloudflare/puppeteer  # or @cloudflare/playwright
 {
   "name": "browser-worker",
   "main": "src/index.ts",
-  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
   "browser": {

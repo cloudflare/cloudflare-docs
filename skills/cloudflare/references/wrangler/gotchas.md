@@ -36,7 +36,6 @@ const worker = await startWorker({
 **Cause:** Missing compatibility_date
 **Solution:** Always set `compatibility_date`:
 ```jsonc
-// Set compatibility_date to today's date
 { "compatibility_date": "2025-01-01" }
 ```
 

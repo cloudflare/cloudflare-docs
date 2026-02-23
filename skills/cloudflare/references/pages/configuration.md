@@ -6,7 +6,6 @@
 {
   "name": "my-pages-project",
   "pages_build_output_dir": "./dist",
-  // Set compatibility_date to today's date
   "compatibility_date": "2026-01-01", // Use current date for new projects
   "compatibility_flags": ["nodejs_compat"],
   "placement": {

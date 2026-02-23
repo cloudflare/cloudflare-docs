@@ -214,7 +214,6 @@ Minimal `wrangler.toml`:
 ```toml
 name = "my-mcp-server"
 main = "src/index.ts"
-# Set compatibility_date to today's date
 compatibility_date = "2024-12-01"
 
 [durable_objects]

@@ -6,7 +6,6 @@
 {
   "name": "your-worker-name",
   "main": "src/index.ts",
-  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01", // Use current date for new projects
   "d1_databases": [
     {

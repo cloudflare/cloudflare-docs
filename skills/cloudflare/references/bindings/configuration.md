@@ -128,7 +128,6 @@ npx wrangler dev --remote  # Uses production bindings
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "my-app",
   "main": "src/index.ts",
-  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01",
   
   "vars": { "API_URL": "https://api.example.com" },

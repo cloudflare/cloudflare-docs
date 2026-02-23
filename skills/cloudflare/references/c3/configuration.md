@@ -18,7 +18,6 @@ my-app/
   "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
   "name": "my-app",
   "main": "src/index.ts",
-  // Set compatibility_date to today's date
   "compatibility_date": "2026-01-27"
 }
 ```

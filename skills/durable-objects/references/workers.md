@@ -11,7 +11,6 @@ High-level guidance for Workers that invoke Durable Objects.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "my-worker",
   "main": "src/index.ts",
-  // Set compatibility_date to today's date
   "compatibility_date": "2024-12-01",
   "compatibility_flags": ["nodejs_compat"],
 
@@ -53,7 +52,6 @@ High-level guidance for Workers that invoke Durable Objects.
 ```toml
 name = "my-worker"
 main = "src/index.ts"
-# Set compatibility_date to today's date
 compatibility_date = "2024-12-01"
 compatibility_flags = ["nodejs_compat"]
 

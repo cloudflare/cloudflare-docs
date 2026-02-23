@@ -7,7 +7,6 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "my-cron-worker",
   "main": "src/index.ts",
-  // Set compatibility_date to today's date
   "compatibility_date": "2025-01-01", // Use current date for new projects
   
   "triggers": {
