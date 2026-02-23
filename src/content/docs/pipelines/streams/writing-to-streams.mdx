@@ -43,31 +43,21 @@ Sends an array of JSON-serializable records to the stream. Returns a Promise tha
 ```typescript
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const events = await request.json();
+		const events = await request.json<Record<string, unknown>[]>();
 
-    	await env.STREAM.send(events);
+		await env.STREAM.send(events);
 
-    	return new Response("Events sent");
-    },
-
+		return new Response("Events sent");
+	},
 } satisfies ExportedHandler<Env>;
-
 ```
 </TypeScriptExample>
 
-:::note
-Run `wrangler types` to generate schema-aware types for your pipeline binding. Refer to [Typed pipeline bindings](#typed-pipeline-bindings) for details.
-:::
+### Typed pipeline bindings
 
-## Typed pipeline bindings
+When a stream has a defined schema, running `wrangler types` generates schema-specific TypeScript types for your pipeline bindings. Instead of the generic `Pipeline<PipelineRecord>`, your bindings get a named record type with full autocomplete and compile-time type checking. Refer to the [`wrangler types` documentation](/workers/wrangler/commands/#types) to learn more.
 
-When a stream has a defined schema, running `wrangler types` generates schema-specific TypeScript types for your pipeline bindings. Instead of the generic `Pipeline<PipelineRecord>`, your bindings get a named record type with full autocomplete and compile-time type checking.
-
-### Prerequisites
-
-You must be authenticated via `wrangler login` for schema fetching to work. If you are not authenticated, `wrangler types` falls back to the generic `Pipeline<PipelineRecord>` type.
-
-### Generated types
+#### Generated types
 
 After running `wrangler types`, the generated `worker-configuration.d.ts` file contains a named record type inside the `Cloudflare` namespace. The type name is derived from the stream name (not the binding name), converted to PascalCase with a `Record` suffix.
 
@@ -87,46 +77,7 @@ declare namespace Cloudflare {
 }
 ```
 
-### Type safety
-
-TypeScript enforces the generated types at compile time. Missing required fields and incorrect field types produce compile errors:
-
-```typescript
-// Missing required field — compile error
-const event = { user_id: "abc", event_time: Date.now() };
-await env.STREAM.send([event]);
-// TS2741: Property 'event_type' is missing
-
-// Wrong field type — compile error
-const event = { user_id: "abc", event_type: "view", amount: "not_a_number" };
-await env.STREAM.send([event]);
-// TS2322: Type 'string' is not assignable to type 'number'
-```
-
-### Schema-to-TypeScript type mapping
-
-The following table shows how stream schema field types map to TypeScript types:
-
-| Schema type  | TypeScript type           | Notes                               |
-| ------------ | ------------------------- | ----------------------------------- |
-| `string`     | `string`                  |                                     |
-| `bool`       | `boolean`                 |                                     |
-| `int32`      | `number`                  |                                     |
-| `int64`      | `number`                  |                                     |
-| `uint32`     | `number`                  |                                     |
-| `uint64`     | `number`                  |                                     |
-| `float32`    | `number`                  |                                     |
-| `float64`    | `number`                  |                                     |
-| `decimal128` | `number`                  |                                     |
-| `timestamp`  | `string \| number`        | RFC 3339 strings or Unix timestamps |
-| `json`       | `Record<string, unknown>` |                                     |
-| `bytes`      | `string`                  | Base64-encoded when sent as JSON    |
-| `list`       | `Array<T>`                | Where `T` is the item type          |
-| `struct`     | `{ field: type; ... }`    | Nested object type                  |
-
-Optional fields (where `required: false` in the schema) receive the `?` modifier in TypeScript.
-
-### Fallback behavior
+#### Fallback behavior
 
 `wrangler types` falls back to the generic `Pipeline<PipelineRecord>` type in the following scenarios:
 

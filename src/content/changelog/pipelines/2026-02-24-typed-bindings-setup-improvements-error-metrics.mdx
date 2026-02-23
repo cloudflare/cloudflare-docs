@@ -50,7 +50,7 @@ query GetPipelineUserErrors(
 
 For the full list of dimensions, error types, and additional query examples, refer to [User error metrics](/pipelines/observability/metrics/#user-error-metrics).
 
-## Typed Pipelines bindings
+## Typed pipeline bindings
 
 Sending data to a Pipeline from a Worker previously used a generic `Pipeline<PipelineRecord>` type, which meant schema mismatches (wrong field names, incorrect types) were only caught at runtime as dropped events.
 
@@ -70,11 +70,9 @@ declare namespace Cloudflare {
 }
 ```
 
-You must be authenticated via `wrangler login` for schema fetching to work. If not authenticated or if the stream has no schema, `wrangler types` falls back to the generic type.
-
 For more information, refer to [Typed Pipeline bindings](/pipelines/streams/writing-to-streams/#typed-pipeline-bindings).
 
-## Improved Pipelines setup
+## Improved pipeline setup
 
 Setting up a new Pipeline previously required multiple manual steps: creating an R2 bucket, enabling R2 Data Catalog, generating an API token, and configuring format, compression, and rolling policies individually.
 
