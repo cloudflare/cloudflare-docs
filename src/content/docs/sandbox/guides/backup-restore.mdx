@@ -16,65 +16,65 @@ Backup and restore does not work with `wrangler dev` because it requires FUSE su
 
 ## Prerequisites
 
-Create an R2 bucket for storing backups:
+1. Create an R2 bucket for storing backups:
 
-```sh
-npx wrangler r2 bucket create my-backup-bucket
-```
+   ```sh
+   npx wrangler r2 bucket create my-backup-bucket
+   ```
 
-Add the `BACKUP_BUCKET` R2 binding and presigned URL credentials to your Wrangler configuration:
+2. Add the `BACKUP_BUCKET` R2 binding and presigned URL credentials to your Wrangler configuration:
 
-<WranglerConfig>
+   <WranglerConfig>
 
-```jsonc
-{
-	"name": "my-sandbox-worker",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-	"compatibility_flags": ["nodejs_compat"],
-	"containers": [
-		{
-			"class_name": "Sandbox",
-			"image": "./Dockerfile",
-		},
-	],
-	"durable_objects": {
-		"bindings": [
-			{
-				"class_name": "Sandbox",
-				"name": "Sandbox",
-			},
-		],
-	},
-	"migrations": [
-		{
-			"new_sqlite_classes": ["Sandbox"],
-			"tag": "v1",
-		},
-	],
-	"vars": {
-		"BACKUP_BUCKET_NAME": "my-backup-bucket",
-		"CLOUDFLARE_ACCOUNT_ID": "<YOUR_ACCOUNT_ID>",
-	},
-	"r2_buckets": [
-		{
-			"binding": "BACKUP_BUCKET",
-			"bucket_name": "my-backup-bucket",
-		},
-	],
-}
-```
+   ```jsonc
+   {
+   	"name": "my-sandbox-worker",
+   	"main": "src/index.ts",
+   	"compatibility_date": "$today",
+   	"compatibility_flags": ["nodejs_compat"],
+   	"containers": [
+   		{
+   			"class_name": "Sandbox",
+   			"image": "./Dockerfile",
+   		},
+   	],
+   	"durable_objects": {
+   		"bindings": [
+   			{
+   				"class_name": "Sandbox",
+   				"name": "Sandbox",
+   			},
+   		],
+   	},
+   	"migrations": [
+   		{
+   			"new_sqlite_classes": ["Sandbox"],
+   			"tag": "v1",
+   		},
+   	],
+   	"vars": {
+   		"BACKUP_BUCKET_NAME": "my-backup-bucket",
+   		"CLOUDFLARE_ACCOUNT_ID": "<YOUR_ACCOUNT_ID>",
+   	},
+   	"r2_buckets": [
+   		{
+   			"binding": "BACKUP_BUCKET",
+   			"bucket_name": "my-backup-bucket",
+   		},
+   	],
+   }
+   ```
 
-</WranglerConfig>
+   </WranglerConfig>
 
-Then set your R2 API credentials as secrets:
+3. Set your R2 API credentials as secrets:
 
-```sh
-npx wrangler secret put R2_ACCESS_KEY_ID
-npx wrangler secret put R2_SECRET_ACCESS_KEY
-```
+   ```sh
+   npx wrangler secret put R2_ACCESS_KEY_ID
+   npx wrangler secret put R2_SECRET_ACCESS_KEY
+   ```
 
-You can create R2 API tokens in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **R2** > **Overview** > **Manage R2 API Tokens**. The token needs **Object Read & Write** permissions for your backup bucket.
+   You can create R2 API tokens in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **R2** > **Overview** > **Manage R2 API Tokens**. The token needs **Object Read & Write** permissions for your backup bucket.
 
 ## Create a backup
 
@@ -82,7 +82,7 @@ Use `createBackup()` to snapshot a directory and upload it to R2:
 
 <TypeScriptExample>
 
-```typescript
+```ts
 import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
@@ -102,7 +102,7 @@ Use `restoreBackup()` to restore a directory from a backup:
 
 <TypeScriptExample>
 
-```typescript
+```ts
 import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
@@ -127,7 +127,7 @@ Save state before risky operations and restore if something fails:
 
 <TypeScriptExample>
 
-```typescript
+```ts
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 // Save checkpoint before risky operation
@@ -151,7 +151,7 @@ The `DirectoryBackup` handle is serializable. Persist it to KV, D1, or Durable O
 
 <TypeScriptExample>
 
-```typescript
+```ts
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 // Create a backup and store the handle in KV
@@ -179,7 +179,7 @@ Add a `name` option to identify backups. Names can be up to 256 characters:
 
 <TypeScriptExample>
 
-```typescript
+```ts
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 const backup = await sandbox.createBackup({
@@ -198,7 +198,7 @@ Set a custom time-to-live for backups. The default TTL is 3 days (259200 seconds
 
 <TypeScriptExample>
 
-```typescript
+```ts
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 // Short-lived backup for a quick operation
@@ -239,7 +239,7 @@ If you only need the most recent backup, delete the previous one before creating
 
 <TypeScriptExample>
 
-```typescript
+```ts
 import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
@@ -268,7 +268,7 @@ To clean up multiple old backups, list objects under the `backups/` prefix and d
 
 <TypeScriptExample>
 
-```typescript
+```ts
 // List all backup objects in the bucket
 const listed = await env.BACKUP_BUCKET.list({ prefix: "backups/" });
 
@@ -295,7 +295,7 @@ If you have the backup ID, delete both its archive and metadata directly:
 
 <TypeScriptExample>
 
-```typescript
+```ts
 const backupId = backup.id;
 
 await env.BACKUP_BUCKET.delete(`backups/${backupId}/data.sqsh`);
@@ -310,7 +310,7 @@ Restore uses FUSE overlayfs to mount the backup as a read-only lower layer. New 
 
 <TypeScriptExample>
 
-```typescript
+```ts
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 // Create a backup
@@ -337,7 +337,7 @@ Backup and restore operations can throw specific errors. Wrap calls in try/catch
 
 <TypeScriptExample>
 
-```typescript
+```ts
 import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");

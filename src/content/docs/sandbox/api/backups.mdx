@@ -32,18 +32,19 @@ await sandbox.createBackup(options: BackupOptions): Promise<DirectoryBackup>
 - `dir` - Directory that was backed up
 
 <TypeScriptExample>
-```ts
-import { getSandbox } from '@cloudflare/sandbox';
 
-const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 // Create a backup of /workspace
-const backup = await sandbox.createBackup({ dir: '/workspace' });
+const backup = await sandbox.createBackup({ dir: "/workspace" });
 
 // Later, restore the backup
 await sandbox.restoreBackup(backup);
+```
 
-````
 </TypeScriptExample>
 
 **How it works**:
@@ -54,6 +55,7 @@ await sandbox.restoreBackup(backup);
 4. The local archive is cleaned up.
 
 **Throws**:
+
 - `InvalidBackupConfigError` - If `dir` is not absolute, contains `..`, the `BACKUP_BUCKET` binding is missing, or the R2 presigned URL credentials are not configured
 - `BackupCreateError` - If the container fails to create the archive or the upload to R2 fails
 
@@ -73,7 +75,7 @@ Restore a previously created backup into a directory using FUSE overlayfs (copy-
 
 ```ts
 await sandbox.restoreBackup(backup: DirectoryBackup): Promise<RestoreBackupResult>
-````
+```
 
 **Parameters**:
 
@@ -86,18 +88,19 @@ await sandbox.restoreBackup(backup: DirectoryBackup): Promise<RestoreBackupResul
 - `id` - Backup ID that was restored
 
 <TypeScriptExample>
+
 ```ts
 // Create a named backup with 24-hour TTL
 const backup = await sandbox.createBackup({
-  dir: '/workspace',
-  name: 'before-refactor',
-  ttl: 86400
+	dir: "/workspace",
+	name: "before-refactor",
+	ttl: 86400,
 });
 
 // Store the handle for later use
 await env.KV.put(`backup:${userId}`, JSON.stringify(backup));
-
 ```
+
 </TypeScriptExample>
 
 **How it works**:
@@ -107,6 +110,7 @@ await env.KV.put(`backup:${userId}`, JSON.stringify(backup));
 3. The container mounts the squashfs archive with FUSE overlayfs.
 
 **Throws**:
+
 - `InvalidBackupConfigError` - If `backup.id` is missing or not a valid UUID, or `backup.dir` is invalid
 - `BackupNotFoundError` - If the backup metadata or archive is not found in R2
 - `BackupExpiredError` - If the backup TTL has elapsed
@@ -127,43 +131,43 @@ The FUSE mount is lost when the sandbox sleeps or restarts. Re-restore from the 
 Use backups as checkpoints before risky operations.
 
 <TypeScriptExample>
-```ts
 
+```ts
 // Save checkpoint before risky operation
-const checkpoint = await sandbox.createBackup({ dir: '/workspace' });
+const checkpoint = await sandbox.createBackup({ dir: "/workspace" });
 
 try {
-await sandbox.exec('npm install some-experimental-package');
-await sandbox.exec('npm run build');
+	await sandbox.exec("npm install some-experimental-package");
+	await sandbox.exec("npm run build");
 } catch (error) {
-// Restore to the checkpoint if something goes wrong
-await sandbox.restoreBackup(checkpoint);
+	// Restore to the checkpoint if something goes wrong
+	await sandbox.restoreBackup(checkpoint);
 }
-
 ```
+
 </TypeScriptExample>
 
 ### Error handling
 
 <TypeScriptExample>
-```ts
 
+```ts
 import { getSandbox } from "@cloudflare/sandbox";
 
-const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 try {
-const backup = await sandbox.createBackup({ dir: '/workspace' });
-console.log(`Backup created: ${backup.id}`);
+	const backup = await sandbox.createBackup({ dir: "/workspace" });
+	console.log(`Backup created: ${backup.id}`);
 } catch (error) {
-if (error.code === 'INVALID_BACKUP_CONFIG') {
-console.error('Configuration error:', error.message);
-} else if (error.code === 'BACKUP_CREATE_FAILED') {
-console.error('Backup failed:', error.message);
+	if (error.code === "INVALID_BACKUP_CONFIG") {
+		console.error("Configuration error:", error.message);
+	} else if (error.code === "BACKUP_CREATE_FAILED") {
+		console.error("Backup failed:", error.message);
+	}
 }
-}
+```
 
-````
 </TypeScriptExample>
 
 ## Behavior
@@ -184,11 +188,11 @@ The TTL does **not** automatically delete objects from R2. Expired backup archiv
 
 ```ts
 interface BackupOptions {
-  dir: string;
-  name?: string;
-  ttl?: number;
+	dir: string;
+	name?: string;
+	ttl?: number;
 }
-````
+```
 
 **Fields**:
 
