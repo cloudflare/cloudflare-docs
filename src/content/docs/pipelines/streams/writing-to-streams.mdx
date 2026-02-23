@@ -61,7 +61,7 @@ When a stream has a defined schema, running `wrangler types` generates schema-sp
 
 After running `wrangler types`, the generated `worker-configuration.d.ts` file contains a named record type inside the `Cloudflare` namespace. The type name is derived from the stream name (not the binding name), converted to PascalCase with a `Record` suffix.
 
-For example, a stream named `ecommerce_stream` with four fields produces:
+Below is example of what generated types look like in `worker-configuration.d.ts` for a stream named `ecommerce_stream`:
 
 ```typescript
 declare namespace Cloudflare {
