@@ -33,7 +33,7 @@ const products = await uniqueProducts(notes);
 
 <div
 	id="changelogHeader"
-	class="mt-0! mb-8 sm:mb-16 ml-[calc(50%-50vw)] flex w-screen items-center justify-evenly border-b-2 border-b-(--sl-color-hairline) bg-linear-to-r from-[#FFE9CB99] to-[#FFFFFF99] p-4 max-sm:flex-col-reverse sm:h-[18.75rem] dark:from-[#FBAD411F] dark:to-[#2C2C2C00]"
+	class="mt-0! mb-8 ml-[calc(50%-50vw)] flex w-screen items-center justify-evenly border-b-2 border-b-(--sl-color-hairline) bg-linear-to-r from-[#FFE9CB99] to-[#FFFFFF99] p-4 max-sm:flex-col-reverse sm:mb-16 sm:h-[18.75rem] dark:from-[#FBAD411F] dark:to-[#2C2C2C00]"
 >
 	<div class="text-center sm:text-left">
 		<h1>Changelog</h1>
@@ -75,17 +75,7 @@ const products = await uniqueProducts(notes);
 		overflow-x: hidden;
 	}
 
-	.changelog-rss-links {
-		display: flex;
-		justify-content: space-between;
-		margin-top: 0.25em !important;
-	}
-
 	@media (max-width: 640px) {
-		.changelog-rss-links {
-			flex-direction: column;
-		}
-
 		#changelogHeader h1 {
 			font-size: 1.75rem;
 		}
