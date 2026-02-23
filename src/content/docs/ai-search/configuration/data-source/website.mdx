@@ -115,6 +115,24 @@ Use these attributes to control crawling behavior:
 | `<changefreq>` | Expected change frequency     | Use when `<lastmod>` is not available. Values: `always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `never`. |
 | `<priority>`   | Relative importance (0.0-1.0) | Set higher values for important pages. AI Search indexes pages in priority order.                                   |
 
+You can also use a Sitemap Index to bundle other, domain specific sitemaps:
+
+```xml title="sitemap-index.xml"
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://www.example.com/sitemap-blog.xml</loc>
+    <lastmod>2024-08-15T10:00:00+00:00</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.example.com/sitemap-docs.xml</loc>
+    <lastmod>2024-08-10T12:00:00+00:00</lastmod>
+  </sitemap>
+</sitemapindex>
+```
+
+When parsing a Sitemap Index, AI Search collects all child sitemaps and then crawls them recursively, collecting all relevant URLs present in your sitemaps.
+
 ### Recommendations
 
 - **Include `<lastmod>`** on all URLs to enable efficient change detection during syncs.
