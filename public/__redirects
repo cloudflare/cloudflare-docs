@@ -57,9 +57,6 @@
 ## legacy
 /release-notes/index.xml /changelog/rss/index.xml 301
 /release-notes/ /changelog/ 301
-/changelog/2024-:rest/ /changelog/post/2024-:rest/ 301
-/changelog/2025-:rest/ /changelog/post/2025-:rest/ 301
-/changelog/2026-:rest/ /changelog/post/2026-:rest/ 301
 
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
@@ -2583,3 +2580,8 @@
 
 # Network Flow (formerly Magic Network Monitoring)
 /magic-network-monitoring/* /network-flow/:splat 301
+
+# Changelog (individual entry route moved to /post/)
+/changelog/2024-:rest/ /changelog/post/2024-:rest/ 301
+/changelog/2025-:rest/ /changelog/post/2025-:rest/ 301
+/changelog/2026-:rest/ /changelog/post/2026-:rest/ 301
