@@ -32,12 +32,24 @@ It accepts an optional `PluginConfig` parameter.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
-- `viteEnvironment` <Type text='{ name?: string }' /> <MetaInfo text='optional' />
+- `config` <Type text='WorkerConfigCustomizer<true>' /> <MetaInfo text='optional' />
+
+  Customize or override Worker configuration programmatically.
+  Accepts a partial configuration object or a function that receives the current config.
+
+  Applied after any config file loads. Use it to override values, modify the existing config, or define Workers entirely in code.
+
+  See [Programmatic configuration](/workers/vite-plugin/reference/programmatic-configuration/) for details.
+
+- `viteEnvironment` <Type text='{ name?: string; childEnvironments?: string[] }' /> <MetaInfo text='optional' />
 
   Optional Vite environment options.
   By default, the environment name is the Worker name with `-` characters replaced with `_`.
   Setting the name here will override this.
   A typical use case is setting `viteEnvironment: { name: "ssr" }` to apply the Worker to the SSR environment.
+
+  The `childEnvironments` option is for supporting React Server Components via [@vitejs/plugin-rsc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc) and frameworks that build on top of it.
+  This enables embedding additional environments with separate module graphs inside a single Worker.
 
   See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information.
 
@@ -63,24 +75,37 @@ It accepts an optional `PluginConfig` parameter.
   All requests are routed through your entry Worker.
   During the build, each Worker is output to a separate subdirectory of `dist`.
 
-:::note
-When running `wrangler deploy`, only your main (entry) Worker will be deployed.
-If using multiple Workers, each auxiliary Worker must be deployed individually.
-You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxiliary-worker>/wrangler.json` for each.
-:::
+  :::note
+  When running `wrangler deploy`, only your main (entry) Worker will be deployed.
+  If using multiple Workers, each auxiliary Worker must be deployed individually.
+  You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxiliary-worker>/wrangler.json` for each.
+  :::
 
 ## `interface AuxiliaryWorkerConfig`
 
-- `configPath` <Type text='string' />
+Auxiliary Workers require a `configPath`, a `config` option, or both.
 
-  A required path to your Worker config file.
+- `configPath` <Type text='string' /> <MetaInfo text='optional' />
+
+  The path to your Worker config file.
+  This field is required unless `config` is provided.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
-- `viteEnvironment` <Type text='{ name?: string }' /> <MetaInfo text='optional' />
+- `config` <Type text='WorkerConfigCustomizer<false>' /> <MetaInfo text='optional' />
+
+  Customize or override Worker configuration programmatically.
+  When used without `configPath`, this allows defining auxiliary Workers entirely in code.
+
+  See [Programmatic configuration](/workers/vite-plugin/reference/programmatic-configuration/) for usage examples.
+
+- `viteEnvironment` <Type text='{ name?: string; childEnvironments?: string[] }' /> <MetaInfo text='optional' />
 
   Optional Vite environment options.
   By default, the environment name is the Worker name with `-` characters replaced with `_`.
   Setting the name here will override this.
+
+  The `childEnvironments` option is for supporting React Server Components via [@vitejs/plugin-rsc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc) and frameworks that build on top of it.
+  This enables embedding additional environments with separate module graphs inside a single Worker.
 
   See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information.

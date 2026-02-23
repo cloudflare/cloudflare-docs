@@ -1,0 +1,9 @@
+---
+title: Fixed custom SQL date picker inconsistencies
+description: Log Explorer now correctly handles custom SQL date field filters.
+date: 2025-11-13
+---
+
+We've resolved a bug in Log Explorer that caused inconsistencies between the custom SQL date field filters and the date picker dropdown. Previously, users attempting to filter logs based on a custom date field via a SQL query sometimes encountered unexpected results or mismatching dates when using the interactive date picker.
+
+This fix ensures that the custom SQL date field filters now align correctly with the selection made in the date picker dropdown, providing a reliable and predictable filtering experience for your log data. This is particularly important for users creating custom log views based on time-sensitive fields.

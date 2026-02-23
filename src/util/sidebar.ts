@@ -6,15 +6,17 @@ import { externalLinkArrow } from "~/plugins/rehype/external-links";
 
 type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
 	order?: number;
+	icon?: { lottieLink: string };
 };
 type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 	order?: number;
+	icon?: { lottieLink: string };
 };
 
 export type SidebarEntry = Link | Group;
 type Badge = Link["badge"];
 
-const products = await getCollection("products");
+const directory = await getCollection("directory");
 const sidebars = new Map<string, Group>();
 
 export async function getSidebar(context: AstroGlobal) {
@@ -91,8 +93,8 @@ export async function generateSidebar(group: Group) {
 		group.entries[0].label = "Overview";
 	}
 
-	const product = products.find((p) => p.id === group.label);
-	if (product && product.data.product.group === "Developer platform") {
+	const product = directory.find((p) => p.id === group.label);
+	if (product && product.data.entry.group === "Developer platform") {
 		const links = [
 			["llms.txt", "/llms.txt"],
 			["prompt.txt", "/workers/prompt.txt"],
@@ -127,6 +129,10 @@ function setSidebarCurrentEntry(
 ): boolean {
 	for (const entry of sidebar) {
 		if (entry.type === "link") {
+			if (entry.attrs["data-external-link"]) {
+				continue;
+			}
+
 			const href = entry.href;
 
 			// Compare with and without trailing slash
@@ -174,6 +180,13 @@ export function flattenSidebar(sidebar: SidebarEntry[]): Link[] {
 	});
 }
 
+function getBadge(link: string): any {
+	if (link.startsWith("/api")) return { text: "API", variant: "note" };
+	if (link.includes("/mcp-server-cloudflare"))
+		return { text: "MCP", variant: "note" };
+	return undefined;
+}
+
 async function handleGroup(group: Group): Promise<SidebarEntry> {
 	const index = group.entries.find(
 		(entry) => entry.type === "link" && entry.href.endsWith(`/${group.label}/`),
@@ -195,17 +208,24 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	const frontmatter = entry.data;
 
+	group.icon = frontmatter.sidebar.group?.icon ?? frontmatter.icon;
 	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
 
 	if (frontmatter.sidebar.group?.badge) {
 		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
+	} else if (frontmatter.wid) {
+		const availabilityBadge = await productAvailabilityBadge(frontmatter.wid);
+		if (availabilityBadge) {
+			group.badge = availabilityBadge;
+		}
 	}
 
 	if (frontmatter.hideChildren) {
 		return {
 			type: "link",
 			href: index.href,
+			icon: group.icon,
 			label: group.label,
 			order: group.order,
 			attrs: {
@@ -275,23 +295,45 @@ async function handleLink(link: Link): Promise<Link> {
 
 	if (link.badge) {
 		link.badge = inferBadgeVariant(link.badge);
+	} else if (frontmatter.wid) {
+		const availabilityBadge = await productAvailabilityBadge(frontmatter.wid);
+		if (availabilityBadge) {
+			link.badge = availabilityBadge;
+		}
 	}
 
 	if (frontmatter.external_link && !frontmatter.sidebar.group?.hideIndex) {
 		return {
 			...link,
+			icon: frontmatter.icon,
 			label: link.label.concat(externalLinkArrow),
 			href: frontmatter.external_link,
-			badge: frontmatter.external_link.startsWith("/api")
-				? {
-						text: "API",
-						variant: "note",
-					}
-				: undefined,
+			badge: getBadge(frontmatter.external_link) ?? link.badge,
+			attrs: {
+				target: "_blank",
+				"data-external-link": true,
+			},
 		};
 	}
 
 	return link;
+}
+
+async function productAvailabilityBadge(
+	wid: string,
+): Promise<Badge | undefined> {
+	try {
+		const availabilityEntry = await getEntry("product-availability", wid);
+		if (
+			availabilityEntry &&
+			availabilityEntry.data.availability?.toLowerCase() === "beta"
+		) {
+			return { text: "Beta", variant: "caution" };
+		}
+	} catch (_error) {
+		// If the entry doesn't exist in the collection, return undefined
+	}
+	return undefined;
 }
 
 function inferBadgeVariant(badge: Badge) {
@@ -324,14 +366,14 @@ export const lookupProductTitle = async (product: string, module: string) => {
 
 		return `${entry?.data?.title} (Learning Paths)`;
 	} else if (product === "1.1.1.1") {
-		const entry = await getEntry("products", "1111");
+		const entry = await getEntry("directory", "1111");
 
-		return entry?.data?.product?.title;
+		return entry?.data?.entry?.title;
 	}
 
-	const entry = await getEntry("products", product);
+	const entry = await getEntry("directory", product);
 
-	return entry?.data?.product?.title ?? "Unknown";
+	return entry?.data?.entry?.title ?? "Unknown";
 };
 
 export function sortBySidebarOrder(a: any, b: any): number {

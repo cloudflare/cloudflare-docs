@@ -1,9 +1,9 @@
 entries:
   - name: Expiring Access Service Token Alert
-    audience: "[Access](/cloudflare-one/policies/access/) customers who want to receive a notification when their service token is about to expire."
+    audience: "[Access](/cloudflare-one/access-controls/policies/) customers who want to receive a notification when their service token is about to expire."
     availability: Purchase of Access
     associatedProducts: Cloudflare Access
-    nextSteps: Extend the expiration date of the service token. For more details, refer to [Renew your service token](/cloudflare-one/identity/service-tokens/#renew-service-tokens).
+    nextSteps: Extend the expiration date of the service token. For more details, refer to [Renew your service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#renew-service-tokens).
     otherFilters: None.
 
   - name: Usage Based Billing
@@ -18,6 +18,25 @@ entries:
 
       * Argo Smart Routing has **Notify when total bytes of traffic exceeds** as a threshold.
       * Load Balancing has **Notify when total number of DNS Queries exceeds** as a threshold.
+
+  - name: Bot Detection Alert
+    audience: Enterprise customers who want to be notified when Cloudflare detects a spike in bot traffic on their zones.
+    availability: Accounts with at least one Enterprise zone.
+    associatedProducts: Bots
+    nextSteps: Select the [Security Analytics](/waf/analytics/security-analytics/) link enclosed in the alert message. Contact support if additional advice is needed on how to investigate the attack further.
+    otherFilters: None.
+    additional_information: After an alert is created on the dashboard, it may take up to 30 minutes before sufficient data is available to begin detecting traffic anomalies. Verified bot traffic is excluded from bot alerts.
+
+  - name: Custom Bot Detection Alert
+    audience: Enterprise customers who want to be notified when Cloudflare detects a spike in bot traffic on their zones.
+    availability: Accounts with at least one Enterprise zone.
+    associatedProducts: Bots
+    nextSteps: Select the [Security Analytics](/waf/analytics/security-analytics/) link enclosed in the alert message. Contact support if additional advice is needed on how to investigate the attack further.
+    otherFilters: Refer to the [alert logic](/bots/reference/alerts/#alert-logic) for more information on additional filters or groupings.
+    additional_information: |-
+      After an alert is created on the dashboard, it may take up to 30 minutes before sufficient data is available to begin detecting traffic anomalies. Verified bot traffic is excluded from both basic and advanced bot alerts.
+
+      Alerts with grouping could cause potential noise if you set them up for a high-traffic zone. Grouping alerts function as if you set up separate policies with a filter for each value. Alerts may trigger multiple values in the same group as long as the traffic for each value reaches the threshold of 200.
 
   - name: Brand Protection Alerts
     audience: Customers who want a summary of activity related to [Brand Protection](/security-center/brand-protection/).
@@ -46,6 +65,13 @@ entries:
     associatedProducts: Security Center
     nextSteps: Review the insight and decide whether you want to resolve it, archive it, or export it.
     otherFilters: You can select the insight(s) you want to be alerted on.
+
+  - name: Abuse report
+    audience: Customers who want to be alerted in the event that an abuse report is filed against their website.
+    availability: All Cloudflare plans.
+    associatedProducts: Security Center
+    nextSteps: View our guidance on [customer abuse report obligations](/fundamentals/reference/report-abuse/abuse-report-obligations/) and more information on how to [view and submit abuse reports](/fundamentals/reference/report-abuse/submit-report/).
+    otherFilters: You can filter the reports based on date, report status, report type, and domain.
 
   - name: Maintenance Notification
     audience: Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/disruptive-maintenance/) for specific data centers. The notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.
@@ -120,7 +146,7 @@ entries:
 
   - name: Advanced HTTP DDoS Attack Alert
     audience: "[WAF](/waf/) or [CDN](/cache/) customers with the [Advanced DDoS Protection](/ddos-protection/) subscription who want to receive a notification when Cloudflare has mitigated attacks that generate more than the configured number of requests per second (100 rps by default)."
-    availability: Enterprise plans.
+    availability: Enterprise plans with the Advanced DDoS Protection add-on.
     associatedProducts: DDoS Protection
     nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
     otherFilters: |-
@@ -169,7 +195,7 @@ entries:
     otherFilters: |-
       Available filters include:
 
-      * You can search for and add pools from your list of pools.
+      * You can search for and add pools from your list of pools. If no pools are selected, the alert will apply to all pools in the account.
       * You can also choose the trigger that fires the notification when the Load Balancing pool is **enabled**, **disabled**, and **either enabled or disabled**.
 
   - name: Load Balancing Health Alert
@@ -194,21 +220,21 @@ entries:
       * Description (optional): A custom description for the notification.
       * Notification Email (can be multiple emails): The email address of the recipient for the notification.
 
-  - name: Magic Network Monitoring - Auto Advertisement
+  - name: Network Flow - Auto Advertisement
     audience: "[Magic Transit on-demand](/magic-transit/on-demand/) customers who use Flow-Based Monitoring and want alerts when Magic Transit is automatically enabled."
     availability: Purchase of Magic Transit.
     associatedProducts: Magic Transit
     nextSteps: No action is needed. You can go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/magic-transit) to review the health and status of your tunnels.
     otherFilters: None.
 
-  - name: Magic Network Monitoring - DDoS Attack
+  - name: Network Flow - DDoS Attack
     audience: "[BYOIP](/byoip/) and [Spectrum](/spectrum/) customers with [Network Analytics](/analytics/network-analytics/) who want to receive a notification when Cloudflare has mitigated attacks that generate an average of at least 12,000 packets per second over a five-second period, with a duration of one minute or more."
     availability: Purchase of Magic Transit and/or BYOIP.
     associatedProducts: Magic Transit
     nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
     otherFilters: None.
 
-  - name: Magic Network Monitoring - Volumetric Attack
+  - name: Network Flow - Volumetric Attack
     audience: "[Magic Transit on-demand](/magic-transit/on-demand/) customers who are using Flow-Based Monitoring to detect attacks when Magic Transit is disabled."
     availability: Purchase of Magic Transit.
     associatedProducts: Magic Transit
@@ -216,10 +242,10 @@ entries:
     otherFilters: None.
 
   - name: Magic Tunnel Health Check Alert
-    audience: Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of tunnel states meeting the selected service-level objective (SLO) drops below the defined threshold for a Magic Tunnel.
-    availability: Purchase of Magic Transit and Magic WAN.
+    audience: Magic Transit and Cloudflare WAN customers who wish to receive alerts when the percentage of tunnel states meeting the selected service-level objective (SLO) drops below the defined threshold for a Magic Tunnel.
+    availability: Purchase of Magic Transit and Cloudflare WAN.
     associatedProducts: Magic Transit
-    nextSteps: Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information on what the issue might be.
+    nextSteps: Refer to the [Magic Transit tunnel health](/magic-transit/network-health/check-tunnel-health-dashboard/) or [Cloudflare WAN IPsec/GRE tunnel health](/cloudflare-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information on what the issue might be.
     otherFilters: |-
       * Notification Name: A custom name for the notification.
       * Description (optional): A custom description for the notification.
@@ -322,10 +348,10 @@ entries:
     otherFilters: None.
 
   - name: Access mTLS Certificate Expiration Alert
-    audience: "[Access](/cloudflare-one/policies/access/) customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate."
-    availability: Purchase of [Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) and/or [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
+    audience: "[Access](/cloudflare-one/access-controls/policies/) customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate."
+    availability: Purchase of [Access](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/) and/or [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
     associatedProducts: SSL/TLS
-    nextSteps: Upload a [renewed certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
+    nextSteps: Upload a [renewed certificate](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
     otherFilters: None.
 
   - name: Advanced Certificate Alert
@@ -352,7 +378,7 @@ entries:
     otherFilters: None.
 
   - name: Universal SSL Alert
-    audience: Customers with universal certificates who want to receive a notification on validation, issuance, and renewal of certificates.
+    audience: Customers with universal certificates who want to receive a notification on validation, issuance, renewal, and expiration notices.
     availability: All Cloudflare plans.
     associatedProducts: SSL/TLS
     nextSteps: You only need to take action if you are notified that you have a certificate that failed. You can find the reasons why a certificate is not being issued in [Troubleshooting SSL errors](/ssl/troubleshooting/general-ssl-errors/).
@@ -375,7 +401,7 @@ entries:
     availability: |-
       [Bring your own CA](/ssl/client-certificates/byo-ca/).
 
-      The mTLS Certificate Store refers to customer uploaded certificates and does not include client certificates generated with the [Cloudflare CA](/ssl/client-certificates/create-a-client-certificate/).
+      The mTLS Certificate Store refers to customer uploaded certificates and does not include client certificates generated with the [Cloudflare CA](/ssl/client-certificates/#how-it-works).
     associatedProducts: SSL/TLS
     nextSteps: Upload a renewed certificate.
     otherFilters: None.
@@ -399,7 +425,7 @@ entries:
     associatedProducts: Traffic Monitoring
     nextSteps: |-
       1. Use the link in the notification you received to see which error codes Cloudflare is seeing.
-      2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/).
+      2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/).
     otherFilters: |-
       Available filters include:
 
@@ -419,7 +445,7 @@ entries:
     associatedProducts: Traffic Monitoring
     nextSteps: |-
       1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
-      2. Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
+      2. Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
     otherFilters: |-
       Multiple filters available:
 
@@ -434,7 +460,7 @@ entries:
     audience: Customers who want to receive a notification when Cloudflare is unable to access their origin. Customers will only receive this notification when their origin is returning a `521` error.
     availability: All Cloudflare plans.
     associatedProducts: Traffic Monitoring
-    nextSteps: Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
+    nextSteps: Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
     otherFilters: None.
     limitations: |-
       Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
@@ -489,15 +515,10 @@ entries:
     audience: Customers who want to be warned about changes in health status for their Cloudflare Tunnels.
     availability: All Cloudflare Zero Trust plans.
     associatedProducts: Tunnel
-    nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/).
+    nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/).
     otherFilters: None.
     additional_information: |-
-      | <div style="width:75px">Health status</div> | Description  |
-      | ------------- | ------------ |
-      | Healthy       | The tunnel is active and serving traffic through four connections to the Cloudflare global network. |
-      | Degraded      | The tunnel is active and serving traffic, but at least one individual connection has failed. Further degradation in [tunnel availability](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) could risk the tunnel going down and failing to serve traffic.|
-      | Down          | The tunnel cannot serve traffic as it has no connections to the Cloudflare global network.|
-      | Inactive      | This value is reserved for tunnels which have been created, but have never been run.|
+      Refer to [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/#tunnel-status) to review the list of possible tunnel statuses (`Healthy`, `Inactive`, `Down` and `Degraded`).
 
   - name: Device connectivity anomaly
     audience: Zero Trust customers who want to be notified when Cloudflare detects a spike or drop in the number of devices connected to the WARP client.
@@ -511,7 +532,7 @@ entries:
         - **Colo**: Cloudflare data center that the device is connected to.
         - **Platform**: Operating system of the device.
         - **Version**: WARP client version (for example, `2024.3.409.0`).
-        - **Mode**: [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) deployed on the device.
+        - **Mode**: [WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) deployed on the device.
 
   - name: DEX test latency
     audience: Zero Trust customers who wish to receive alerts when there is a spike or drop in application latency, as measured by the HTTP test [Resource Fetch time](/cloudflare-one/insights/dex/tests/http/#test-results) or Traceroute test [Round trip time](/cloudflare-one/insights/dex/tests/traceroute/#test-results). Requires setting up a [DEX test](/cloudflare-one/insights/dex/tests/).
@@ -598,5 +619,12 @@ entries:
     audience: Customers who are using free image transformations and want to be notified if they exceed their free quota.
     availability: All Cloudflare plans.
     associatedProducts: Cloudflare Images
+    nextSteps: No action is needed.
+    otherFilters: None.
+
+  - name: Connection Maintenance Alert
+    audience: "[Classic CNI](/network-interconnect/classic-cni/) customers who want to be alerted to maintenance events that might affect Classic CNI."
+    availability: Purchase of Cloudflare Network Interconnect (CNI).
+    associatedProducts: Network Interconnect
     nextSteps: No action is needed.
     otherFilters: None.

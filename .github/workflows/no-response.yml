@@ -17,6 +17,9 @@ on:
 
 jobs:
   noResponse:
+    permissions:
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: lee-dohm/no-response@v0.5.0
@@ -26,5 +29,5 @@ jobs:
           closeComment: >
             This issue was closed automatically because there has been no response
             from the original author. As it stands currently, we don't have enough information
-            to take action. If you believe this issue was closed in error, a) apologies and b) open a new issue 
+            to take action. If you believe this issue was closed in error, a) apologies and b) open a new issue
             and reference this one in the body.

@@ -2,15 +2,7 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 
-import { parse } from "node-html-parser";
-import { process } from "../src/util/rehype";
-
-import rehypeParse from "rehype-parse";
-import rehypeBaseUrl from "../src/plugins/rehype/base-url";
-import rehypeFilterElements from "../src/plugins/rehype/filter-elements";
-import remarkGfm from "remark-gfm";
-import rehypeRemark from "rehype-remark";
-import remarkStringify from "remark-stringify";
+import { htmlToMarkdown } from "../src/util/markdown";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -20,13 +12,38 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
+		if (request.url.endsWith("/llms-full.txt")) {
+			const { pathname } = new URL(request.url);
+			const res = await this.env.VENDORED_MARKDOWN.get(pathname.slice(1));
+
+			return new Response(res?.body, {
+				headers: {
+					"Content-Type": "text/markdown; charset=utf-8",
+				},
+			});
+		}
+
 		if (request.url.endsWith("/index.md")) {
-			const res = await this.env.ASSETS.fetch(
-				request.url.replace("index.md", ""),
-				request,
-			);
+			const htmlUrl = request.url.replace("index.md", "");
+			const res = await this.env.ASSETS.fetch(htmlUrl, request);
 
 			if (res.status === 404) {
+				const redirect = await redirectsEvaluator(
+					new Request(htmlUrl, request),
+					this.env.ASSETS,
+				);
+
+				if (redirect) {
+					const location = redirect.headers.get("location");
+
+					return new Response(null, {
+						status: redirect.status,
+						headers: {
+							Location: location + "index.md",
+						},
+					});
+				}
+
 				return res;
 			}
 
@@ -36,24 +53,16 @@ export default class extends WorkerEntrypoint<Env> {
 			) {
 				const html = await res.text();
 
-				const content = parse(html).querySelector(".sl-markdown-content");
+				const markdown = await htmlToMarkdown(html, request.url);
 
-				if (!content) {
+				if (!markdown) {
 					return new Response("Not Found", { status: 404 });
 				}
-
-				const markdown = await process(content.toString(), [
-					rehypeParse,
-					rehypeBaseUrl,
-					rehypeFilterElements,
-					remarkGfm,
-					rehypeRemark,
-					remarkStringify,
-				]);
 
 				return new Response(markdown, {
 					headers: {
 						"content-type": "text/markdown; charset=utf-8",
+						"x-robots-tag": "noindex",
 					},
 				});
 			}
@@ -91,6 +100,23 @@ export default class extends WorkerEntrypoint<Env> {
 			console.error("Unknown error", error);
 		}
 
-		return this.env.ASSETS.fetch(request);
+		const response = await this.env.ASSETS.fetch(request);
+
+		if (response.status === 404) {
+			const section = new URL(response.url).pathname.split("/").at(1);
+
+			if (!section) return response;
+
+			const notFoundResponse = await this.env.ASSETS.fetch(
+				`http://fakehost/${section}/404/`,
+			);
+
+			return new Response(notFoundResponse.body, {
+				status: 404,
+				headers: notFoundResponse.headers,
+			});
+		}
+
+		return response;
 	}
 }

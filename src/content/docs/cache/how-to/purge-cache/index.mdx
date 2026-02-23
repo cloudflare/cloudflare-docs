@@ -30,6 +30,8 @@ The current purge limits are applied per **account**:
 
 <FeatureTable id="cache.single_file_purge" />
 
+Note that the thresholds for URLs are calculated using a moving average.
+
 ### Token bucket rate limiting
 
 Cloudflare uses token bucket rate limiting to limit the number of purge requests flowing through the system at any given time, ensuring a steady and manageable flow. 

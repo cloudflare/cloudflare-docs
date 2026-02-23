@@ -2,9 +2,22 @@
 link: "/durable-objects/release-notes/"
 productName: Durable Objects
 productLink: "/durable-objects/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2026-01-07"
+    title: Billing for SQLite Storage
+    description: |-
+      Storage billing for SQLite-backed Durable Objects will be enabled in January 2026, with a target date of January 7, 2026 (no earlier). For more details, refer to the [Billing for SQLite Storage](/changelog/durable-objects/2026-01-07-durable-objects-sqlite-storage-billing/).
+  - publish_date: "2025-10-25"
+    description: |-
+      - The maximum WebSocket message size limit has been increased from 1 MiB to 32 MiB.
+  - publish_date: "2025-10-16"
+    title: Durable Objects can access stored data with UI editor
+    description: |-
+      Durable Objects stored data can be viewed and written using [Data Studio](/durable-objects/observability/data-studio/) on the Cloudflare dashboard. Only Durable Objects using [SQLite storage](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) can use Data Studio.
+  - publish_date: "2025-08-21"
+    title: Durable Objects stubs can now be directly constructed by name
+    description: |-
+      A [`DurableObjectStub`](/durable-objects/api/stub) can now be directly constructed by created directly with [`DurableObjectNamespace::getByName`](/durable-objects/api/namespace/#getbyname).
   - publish_date: "2025-04-07"
     title: Durable Objects on Workers Free plan
     description: |-
@@ -13,7 +26,7 @@ entries:
   - publish_date: "2025-04-07"
     title: SQLite in Durable Objects GA
     description: |-
-      [SQLite-backed Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) and corresponding [Storage API](/durable-objects/api/storage-api/) methods like `sql.exec` have moved from beta to general availability. New Durable Object classes should use wrangler configuration for SQLite storage over key-value storage.
+      [SQLite-backed Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) and corresponding [Storage API](/durable-objects/api/sqlite-storage-api/) methods like `sql.exec` have moved from beta to general availability. New Durable Object classes should use wrangler configuration for SQLite storage over key-value storage.
 
       SQLite storage per Durable Object has increased to 10GB for all existing and new objects.
 
@@ -38,7 +51,7 @@ entries:
   - publish_date: "2024-09-26"
     title: (Beta) SQLite storage backend & SQL API available on new Durable Object classes
     description: |-
-      The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/storage-api/#sql-api) and [point-in-time-recovery API](/durable-objects/api/storage-api/#pitr-point-in-time-recovery-api), part of Durable Objects Storage API.
+      The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/sqlite-storage-api/#sql-api) and [point-in-time-recovery API](/durable-objects/api/sqlite-storage-api/#pitr-point-in-time-recovery-api), part of Durable Objects Storage API.
 
       You cannot enable a SQLite storage backend on an existing, deployed Durable Object class. Automatic migration of deployed classes from their key-value storage backend to SQLite storage backend will be available in the future.
 
@@ -67,7 +80,7 @@ entries:
     description: |-
       Durable Objects [request billing](/durable-objects/platform/pricing/#billing-metrics) applies a 20:1 ratio for incoming WebSocket messages. For example, 1 million Websocket received messages across connections would be charged as 50,000 Durable Objects requests.
 
-      This is a billing-only calculation and does not impact Durable Objects [metrics and analytics](/durable-objects/observability/graphql-analytics/).
+      This is a billing-only calculation and does not impact Durable Objects [metrics and analytics](/durable-objects/observability/metrics-and-analytics/).
 
   - publish_date: "2024-02-15"
     title: Optional `alarmInfo` parameter for Durable Object Alarms

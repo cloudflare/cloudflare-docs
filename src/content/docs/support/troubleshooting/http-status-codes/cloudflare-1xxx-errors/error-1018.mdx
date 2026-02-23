@@ -1,0 +1,26 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1018
+source: null
+---
+
+## Error 1018: Could not find host
+
+This error indicates that the host could not be found.
+
+### Common causes
+
+- The Cloudflare domain was recently activated and there is a delay propagating the domain's settings to the Cloudflare edge network.
+- The Cloudflare domain was created via a Cloudflare partner (for example, a hosting provider) and the provider's DNS failed.
+
+:::note
+Error 1018 is returned via a HTTP `409` response code.
+:::
+
+### Resolution
+
+Contact [Cloudflare Support](/support/contacting-cloudflare-support/) with the following details:
+
+- Your domain name.
+- A screenshot of the `1018` error including the [**Ray ID**](/fundamentals/reference/cloudflare-ray-id/) mentioned in the error message.
+- A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) captured while duplicating the error.

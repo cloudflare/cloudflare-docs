@@ -1,0 +1,103 @@
+---
+pcx_content_type: faq
+title: Random hostnames
+structured_data: true
+sidebar:
+  order: 6
+description: Why unexpected hostnames appear in HTTP logs for partial zones.
+---
+
+[❮ Back to FAQ](/logs/faq/)
+
+### Why do I see hostnames in my HTTP logs that I did not configure?
+
+If you use a [partial (CNAME) zone setup](/dns/zone-setups/partial-setup/), you may see hundreds of random hostnames in your HTTP request logs despite only proxying a few DNS records. This is caused by Host header manipulation attacks, not a bug in Cloudflare logging.
+
+### What causes this?
+
+Attackers use a technique called Host header injection:
+
+1. They discover the Cloudflare IP addresses serving your proxied hostname (for example, via DNS lookup of a known proxied subdomain).
+2. They send HTTP requests directly to those IPs with forged `Host` headers containing random subdomain guesses.
+3. Cloudflare logs the `Host` header value as-is in the `ClientRequestHost` field.
+4. The requests reach Cloudflare because they target valid Cloudflare IPs — but the attacker controls the `Host` header content.
+
+The [`http.host` field](/ruleset-engine/rules-language/fields/reference/http.host/) contains the `Host` header from the original request, which means attacker-controlled values appear in your logs.
+
+### Why are partial zones susceptible?
+
+With partial (CNAME) zones:
+
+- Only specific hostnames point to Cloudflare via CNAME at your authoritative DNS provider.
+- Cloudflare does not control the full zone, so it cannot validate that incoming `Host` headers match configured records.
+- Attackers can enumerate subdomains by sending requests to known-good IPs with guessed `Host` headers.
+
+### How do I identify this pattern?
+
+| Indicator                      | What to look for                                                                                                                                            |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Request count distribution** | Legitimate hostnames have thousands of requests. Suspicious hostnames have exactly two to five requests each.                                               |
+| **Hostname patterns**          | Sequential numbers (`0-0`, `0-56`, `007`), common words (`admin`, `api`, `test`, `staging`), or internal service names (`airflow`, `consul`, `prometheus`). |
+| **Source IPs**                 | Suspicious requests often come from a small set of IPs (scanner infrastructure).                                                                            |
+| **Response codes**             | Many 4xx responses (hostname not found, SSL mismatch).                                                                                                      |
+| **DNS correlation**            | Suspicious hostnames do not appear in DNS query logs.                                                                                                       |
+
+### Example data pattern
+
+```txt
+"ClientRequestHost","_count"
+"legitimate-proxied.example.com","12498"    # Real traffic
+"another-proxied.example.com","6082"        # Real traffic
+"0-0.example.com","2"                       # Scanner
+"admin.example.com","2"                     # Scanner
+"api-staging.example.com","2"               # Scanner
+"1234567890.example.com","2"                # Scanner
+```
+
+### How do I block these requests?
+
+Create a [WAF custom rule](/waf/custom-rules/) that only allows requests with valid `Host` headers:
+
+```txt
+Expression:
+(http.host ne "proxied-hostname-1.example.com" and
+ http.host ne "proxied-hostname-2.example.com" and
+ http.host ne "proxied-hostname-3.example.com")
+
+Action: Block
+```
+
+:::tip
+Use a hostname list if you have many proxied hostnames, or use a wildcard match if you use a consistent subdomain pattern.
+:::
+
+### Can I filter these from my logs instead?
+
+Yes. If you prefer cleaner logs without blocking traffic:
+
+- **At Logpush level** — Filter the job to include only known-good hostnames using [Logpush filters](/logs/logpush/logpush-job/filters/).
+- **At SIEM level** — Filter or exclude hostnames with request counts below a threshold during log analysis.
+
+### Are these requests reaching my origin?
+
+Possibly, if the `Host` header happens to match a configured hostname or if you have a default or catch-all origin. Check `EdgeResponseStatus` and `OriginResponseStatus` to see if origins were contacted.
+
+### Is this a security risk?
+
+The risk is low to moderate. The main concerns are:
+
+- Information disclosure if error pages reveal internal details.
+- Resource consumption if requests reach your origin.
+- Log noise that makes real attacks harder to identify.
+
+### Why do suspicious hostnames have exactly two requests?
+
+Automated scanners typically send one to two requests per subdomain guess — one initial probe and possibly one retry. This uniform distribution is a reliable indicator of scanning activity.
+
+### How do I verify my solution is working?
+
+After implementing a WAF rule:
+
+1. Check **Firewall Events** for blocked requests matching your rule.
+2. Compare log volume before and after — suspicious hostnames should disappear.
+3. Verify legitimate traffic is unaffected by checking request counts for real hostnames.

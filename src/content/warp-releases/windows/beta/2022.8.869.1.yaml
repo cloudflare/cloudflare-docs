@@ -7,10 +7,10 @@ releaseNotes: |-
   work).
 
   **Notable updates**
-   
-  - Added ability for ZT Administrators to specify if they want embedded WebView2 browser to be used instead of the default system browser. See [Deployment documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#install-warp-on-windows) for more information
+
+  - Added ability for ZT Administrators to specify if they want embedded WebView2 browser to be used instead of the default system browser. See [Deployment documentation](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#install-warp-on-windows) for more information
   - Fixed failure to reconnect to WARP due to DNS stub server AddrInUse failures
-   
+
   **Known issues**
   - No known issues
 version: 2022.8.869.1

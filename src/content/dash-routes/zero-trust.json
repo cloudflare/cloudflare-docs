@@ -1,0 +1,866 @@
+[
+	{
+		"deeplink": "/?to=/:account/access-controls/settings",
+		"name": "Access settings"
+	},
+	{
+		"deeplink": "/?to=/:account/access-controls/settings/app-launcher",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access-controls/targets",
+		"name": "Targets"
+	},
+	{
+		"deeplink": "/?to=/:account/access/ai-controls",
+		"name": "AI controls"
+	},
+	{
+		"deeplink": "/?to=/:account/access/ai-controls/mcp-server",
+		"name": "AI controls"
+	},
+	{
+		"deeplink": "/?to=/:account/access/ai-controls/mcp-server-portal",
+		"name": "AI controls"
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps",
+		"name": "Applications"
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps/bookmark",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps/edit",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps/infra",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps/mcp",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps/policy-tester",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps/private-policy-rules",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps/rules",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps/saas",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/apps/self-hosted",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/groups",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/groups/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/overview",
+		"name": "Access"
+	},
+	{
+		"deeplink": "/?to=/:account/access/policies",
+		"name": "Policies"
+	},
+	{
+		"deeplink": "/?to=/:account/access/policies/add",
+		"name": "Policies"
+	},
+	{
+		"deeplink": "/?to=/:account/access/rule-groups",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/rule-groups/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/service-auth",
+		"name": "Service auth"
+	},
+	{
+		"deeplink": "/?to=/:account/access/service-auth/mtls",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/service-auth/service-tokens",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/tags",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/tags/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/access/tunnels",
+		"name": "Tunnels"
+	},
+	{
+		"deeplink": "/?to=/:account/ai-playground",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/access/viewall",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/categorieslist",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/dashboards",
+		"name": "Dashboards"
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/dashboards/access-event",
+		"name": "Access event analytics"
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/dashboards/access-report",
+		"name": "Application Access report"
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/dashboards/ai-security-report",
+		"name": "AI security report"
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/dashboards/data-security",
+		"name": "Data security analytics"
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/dashboards/dns-query",
+		"name": "DNS query analytics"
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/dashboards/http-request",
+		"name": "HTTP request analytics"
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/dashboards/network-session",
+		"name": "Network session analytics"
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/dashboards/shadow-it-analytics",
+		"name": "Shadow IT: SaaS analytics"
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/dashboards/shadow-it-private-network",
+		"name": "Shadow IT: Private Network analytics"
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/discovery/privatenetwork",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/discovery/shadowit",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/domainlist",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/analytics/overview",
+		"name": "Analytics"
+	},
+	{
+		"deeplink": "/?to=/:account/browser-isolation/overview",
+		"name": "Browser isolation"
+	},
+	{
+		"deeplink": "/?to=/:account/casb/content",
+		"name": "Content Findings"
+	},
+	{
+		"deeplink": "/?to=/:account/casb/integration",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/casb/overview",
+		"name": "CASB"
+	},
+	{
+		"deeplink": "/?to=/:account/casb/posture",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/dex",
+		"name": "DEX"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/monitoring",
+		"name": "Monitoring"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/monitoring/devices-by-colo",
+		"name": "Connectivity Heat Map"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/monitoring/devices-by-colo-list",
+		"name": "Connectivity Heat Map"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/monitoring/http-tests",
+		"name": "HTTP Test Details"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/monitoring/remote-captures",
+		"name": "Monitoring"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/monitoring/tests",
+		"name": "Monitoring"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/monitoring/traceroute-tests",
+		"name": "Traceroute test details"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/remote-captures",
+		"name": "Remote captures"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/remote-captures/create",
+		"name": "Start a capture"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/remote-captures/warp-diagnostic",
+		"name": "Warp Diagnostic"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/rules",
+		"name": "Tests using a DEX rule"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/rules/create",
+		"name": "Create a DEX rule"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/tests",
+		"name": "Tests"
+	},
+	{
+		"deeplink": "/?to=/:account/dex/tests/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/dex/tests/edit",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/dlp",
+		"name": "Data loss prevention"
+	},
+	{
+		"deeplink": "/?to=/:account/dlp/detection-entries",
+		"name": "Detection entries"
+	},
+	{
+		"deeplink": "/?to=/:account/dlp/detection-entries/dataset",
+		"name": "Edit dataset"
+	},
+	{
+		"deeplink": "/?to=/:account/dlp/detection-entries/document",
+		"name": "Edit document"
+	},
+	{
+		"deeplink": "/?to=/:account/dlp/detection-entries/prompt-topics",
+		"name": "Edit prompt topics"
+	},
+	{
+		"deeplink": "/?to=/:account/dlp/overview",
+		"name": "Overview"
+	},
+	{
+		"deeplink": "/?to=/:account/dlp/profiles",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/dlp/profiles/create",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/email-security",
+		"name": "Email Security"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/directories",
+		"name": "Group Details"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/investigation",
+		"name": "Email details"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/investigation/retro-scan",
+		"name": "Retro scan email details"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/monitoring",
+		"name": "Monitoring"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/outbound-dlp/rules",
+		"name": "Edit policy"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/overview",
+		"name": "Overview"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/overview/generate-retro-scan",
+		"name": "Retro Scan wizard"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/overview/retro-scan-report",
+		"name": "Retro scan overview report"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/overview/setup",
+		"name": "Email Security set up"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/phishguard",
+		"name": "PhishGuard"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/reclassifications",
+		"name": "Reclassifications"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/settings",
+		"name": "Settings"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/settings/domains",
+		"name": "Domains"
+	},
+	{
+		"deeplink": "/?to=/:account/email-security/settings/email-policy",
+		"name": "Email policy"
+	},
+	{
+		"deeplink": "/?to=/:account/gateway",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/gateway/egress-policies",
+		"name": "Egress policies"
+	},
+	{
+		"deeplink": "/?to=/:account/gateway/locations",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/gateway/locations/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/gateway/locations/add-non-authed",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/gateway/overview",
+		"name": "Gateway"
+	},
+	{
+		"deeplink": "/?to=/:account/gateway/policies",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/gateway/proxy-endpoints",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/gateway/proxy-endpoints/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/gateway/resolver-policies",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/gateway/resolver-policies/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/dns-filtering",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/dns-filtering-preface",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/replace-my-vpn",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/replace-my-vpn/device-to-device",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/replace-my-vpn/device-to-network",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/replace-my-vpn/network-to-network",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/secure-private-apps",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/secure-private-apps/clientless-rdp",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/secure-private-apps/clientless-ssh",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/secure-private-apps/private-web-app",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/secure-web-traffic",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/get-started/secure-web-traffic-preface",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/home",
+		"name": "Zero Trust Home"
+	},
+	{
+		"deeplink": "/?to=/:account/home/quick-start",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/home/recent-searches/cloudy",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/home/recent-searches/index",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/home/recent-searches/resources",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/insights",
+		"name": "Insights"
+	},
+	{
+		"deeplink": "/?to=/:account/insights/dashboards",
+		"name": "Dashboards"
+	},
+	{
+		"deeplink": "/?to=/:account/insights/dex",
+		"name": "Digital experience"
+	},
+	{
+		"deeplink": "/?to=/:account/insights/dex/rules",
+		"name": "Tests using a DEX rule"
+	},
+	{
+		"deeplink": "/?to=/:account/insights/dex/tests",
+		"name": "Traceroute test details"
+	},
+	{
+		"deeplink": "/?to=/:account/insights/logs",
+		"name": "Logs"
+	},
+	{
+		"deeplink": "/?to=/:account/insights/logs/ssh",
+		"name": "SSH"
+	},
+	{
+		"deeplink": "/?to=/:account/insights/magic-networking/*",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/insights/network-visibility/*",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/insights/network-visibility/network-overview",
+		"name": "Network visibility"
+	},
+	{
+		"deeplink": "/?to=/:account/insights/network-visibility/wan-connector-health",
+		"name": "Network visibility"
+	},
+	{
+		"deeplink": "/?to=/:account/insights/overview",
+		"name": "Insights"
+	},
+	{
+		"deeplink": "/?to=/:account/integrations",
+		"name": "Integrations"
+	},
+	{
+		"deeplink": "/?to=/:account/integrations/cloud-and-saas",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/integrations/cloud-and-saas/compute-accounts",
+		"name": "Cloud & SaaS"
+	},
+	{
+		"deeplink": "/?to=/:account/integrations/cloud-and-saas/integrations",
+		"name": "Cloud & SaaS"
+	},
+	{
+		"deeplink": "/?to=/:account/integrations/cloud-and-saas/new",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/integrations/identity-providers",
+		"name": "Identity providers"
+	},
+	{
+		"deeplink": "/?to=/:account/integrations/identity-providers/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/integrations/identity-providers/edit",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/integrations/service-providers",
+		"name": "Service providers"
+	},
+	{
+		"deeplink": "/?to=/:account/integrations/service-providers/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/integrations/service-providers/edit",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/logs",
+		"name": "Logs"
+	},
+	{
+		"deeplink": "/?to=/:account/logs/access",
+		"name": "Access"
+	},
+	{
+		"deeplink": "/?to=/:account/logs/admin",
+		"name": "Admin"
+	},
+	{
+		"deeplink": "/?to=/:account/logs/gateway",
+		"name": "Gateway"
+	},
+	{
+		"deeplink": "/?to=/:account/logs/logpush",
+		"name": "Logpush"
+	},
+	{
+		"deeplink": "/?to=/:account/logs/posture",
+		"name": "Posture"
+	},
+	{
+		"deeplink": "/?to=/:account/logs/scim",
+		"name": "SCIM provisioning"
+	},
+	{
+		"deeplink": "/?to=/:account/networks/connectors",
+		"name": "Connectors"
+	},
+	{
+		"deeplink": "/?to=/:account/networks/connectors/wan-connectors",
+		"name": "Connectors"
+	},
+	{
+		"deeplink": "/?to=/:account/networks/overview",
+		"name": "Networks"
+	},
+	{
+		"deeplink": "/?to=/:account/networks/resolvers-proxies",
+		"name": "Resolvers & Proxies"
+	},
+	{
+		"deeplink": "/?to=/:account/networks/resolvers-proxies/pac-file",
+		"name": "Resolvers & Proxies"
+	},
+	{
+		"deeplink": "/?to=/:account/networks/routes",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/networks/routes/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/networks/routes/hostname-routes",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/networks/routes/vnet",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/networks/targets",
+		"name": "Targets"
+	},
+	{
+		"deeplink": "/?to=/:account/networks/tunnels",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/networks/tunnels/add",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/networks/tunnels/new",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/no-permissions",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/oauth",
+		"name": "CASB OAuth"
+	},
+	{
+		"deeplink": "/?to=/:account/onboarding",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/onboarding/proxy",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/onboarding/warp",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/overview",
+		"name": "Overview"
+	},
+	{
+		"deeplink": "/?to=/:account/recent-searches",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/remote-browser-isolation/settings",
+		"name": "Browser isolation settings"
+	},
+	{
+		"deeplink": "/?to=/:account/reusable-components",
+		"name": "Reusable components"
+	},
+	{
+		"deeplink": "/?to=/:account/reusable-components/posture-checks",
+		"name": "Posture checks"
+	},
+	{
+		"deeplink": "/?to=/:account/reusable-components/posture-checks/service-provider",
+		"name": "Posture checks"
+	},
+	{
+		"deeplink": "/?to=/:account/risk-score",
+		"name": "Risk score"
+	},
+	{
+		"deeplink": "/?to=/:account/risk-score/behaviors",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/risk-score/scoring",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings",
+		"name": "Settings"
+	},
+	{
+		"deeplink": "/?to=/:account/settings/account",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/account/payment",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/account/plan",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/authentication",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/authentication/app-launcher",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/browser",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/browser/permissions",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/custom_pages",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/custom_pages/block_page",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/custom_pages/custom_app_launcher",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/custom_pages/custom_block",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/custom_pages/custom_login",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/custom_pages/page_templates",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/devices",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/devices/device-posture",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/devices/edit",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/devices/profile-settings",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/network",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/resources",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/resources/certificates",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/saas_integrations",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/settings/saas_integrations/new",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/team",
+		"name": "My team"
+	},
+	{
+		"deeplink": "/?to=/:account/team-resources",
+		"name": "Team & Resources"
+	},
+	{
+		"deeplink": "/?to=/:account/team-resources/application-library",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/team-resources/devices",
+		"name": "Traceroute Test Results"
+	},
+	{
+		"deeplink": "/?to=/:account/team-resources/devices/device-profiles",
+		"name": "Device Profiles"
+	},
+	{
+		"deeplink": "/?to=/:account/team-resources/devices/managed-networks",
+		"name": "Managed Networks"
+	},
+	{
+		"deeplink": "/?to=/:account/team-resources/users",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/team-resources/users/risk-score",
+		"name": "Users"
+	},
+	{
+		"deeplink": "/?to=/:account/team/application-library",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/team/devices",
+		"name": "Traceroute Test Results"
+	},
+	{
+		"deeplink": "/?to=/:account/team/lists",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/team/lists/addCSV",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/team/lists/addManual",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/team/users",
+		"name": ""
+	},
+	{
+		"deeplink": "/?to=/:account/traffic-policies/traffic-settings",
+		"name": "Traffic settings"
+	},
+	{
+		"deeplink": "/?to=/oauth",
+		"name": "CASB OAuth"
+	}
+]

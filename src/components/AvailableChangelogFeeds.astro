@@ -13,14 +13,14 @@ const productsInChangelog = changelogs.flatMap((entry) =>
 	entry.data.products.map((product) => product.id),
 );
 
-const products = await getCollection("products", (entry) => {
+const directory = await getCollection("directory", (entry) => {
 	return productsInChangelog.includes(entry.id);
 });
 
-const productsByGroup = Object.entries(
+const directoryByGroup = Object.entries(
 	Object.groupBy(
-		products.filter((product) => Boolean(product.data.product.group)),
-		(product) => product.data.product.group,
+		directory.filter((entry) => Boolean(entry.data.entry.group)),
+		(entry) => entry.data.entry.group,
 	),
 ).sort();
 ---
@@ -42,7 +42,7 @@ const productsByGroup = Object.entries(
 </p>
 
 {
-	productsByGroup.map(([group, products]) => (
+	directoryByGroup.map(([group, entries]) => (
 		<>
 			<AnchorHeading depth={4} title={group} />
 			<p>
@@ -51,24 +51,21 @@ const productsByGroup = Object.entries(
 			</p>
 			<Details header="Included products">
 				<ul>
-					{products?.map((product) => (
+					{entries?.map((entry) => (
 						<li>
 							<p>
-								<a href={product.data.product.url}>
-									{product.data.product.title}
-								</a>
+								<a href={entry.data.entry.url}>{entry.data.entry.title}</a>
 							</p>
-							<RSSButton changelog={product.id} />
+							<RSSButton changelog={entry.id} />
 						</li>
 					))}
 				</ul>
 			</Details>
 			{group === "Application security" && (
-				<Aside type="note" title="DDoS and WAF ruleset feeds">
+				<Aside type="note" title="DDoS ruleset feeds">
 					<p>
-						For <a href="/ddos-protection/">DDoS Protection</a> or{" "}
-						<a href="/waf/">WAF</a> updates to managed rulesets, please refer to
-						their independent feeds:
+						For <a href="/ddos-protection/">DDoS Protection</a> updates to
+						managed rulesets, please refer to their independent feeds:
 						<ul>
 							<li>
 								<p>
@@ -85,12 +82,6 @@ const productsByGroup = Object.entries(
 									</a>
 								</p>
 								<RSSButton href="/ddos-protection/change-log/http/index.xml" />
-							</li>
-							<li>
-								<p>
-									<a href="/waf/change-log/">WAF managed ruleset</a>
-								</p>
-								<RSSButton href="/waf/change-log/index.xml" />
 							</li>
 						</ul>
 					</p>

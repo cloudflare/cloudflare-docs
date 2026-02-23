@@ -1,0 +1,44 @@
+---
+title: Remote bindings GA - Connect to remote resources (D1, KV, R2, etc.) during local development
+description: You can now connect to R2 buckets, D1 databases, and other resources running on Cloudflare, while running your Worker's code locally, on your own machine.
+products:
+  - workers
+date: 2025-09-16
+---
+
+import { WranglerConfig, Aside } from "~/components";
+
+Three months ago [we announced the public beta](/changelog/2025-06-18-remote-bindings-beta/) of [remote bindings](/workers/development-testing/#remote-bindings) for local development. Now, we're excited to say that it's available for everyone in Wrangler, Vite, and Vitest without using an experimental flag!
+
+With remote bindings, you can now connect to deployed resources like [R2 buckets](/r2/) and [D1 databases](/d1/) while running Worker code on your local machine. This means you can test your local code changes against real data and services, without the overhead of deploying for each iteration.
+
+## Example configuration
+
+To enable remote bindings, add `"remote" : true` to each binding that you want to rely on a remote resource running on Cloudflare:
+
+<WranglerConfig>
+
+```jsonc title="wrangler.jsonc"
+{
+	"name": "my-worker",
+	"compatibility_date": "$today",
+
+	"r2_buckets": [
+		{
+			"bucket_name": "screenshots-bucket",
+			"binding": "screenshots_bucket",
+			"remote": true,
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+When remote bindings are configured, your Worker **still executes locally**, but all binding calls are proxied to the deployed resource that runs on Cloudflare's network.
+
+**You can [try out remote bindings](/workers/development-testing/#remote-bindings) for local development today with:**
+
+- [Wrangler v4.37.0](/workers/wrangler/)
+- The [Cloudflare Vite Plugin](/workers/vite-plugin/)
+- The [Cloudflare Vitest Plugin](/workers/testing/vitest-integration/)

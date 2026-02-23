@@ -1,0 +1,85 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+
+---
+
+import { FileTree } from "~/components";
+
+## Troubleshooting 403 / CORS issues with R2
+
+If you are encountering a CORS error despite setting up everything correctly, you may follow this troubleshooting guide to help you.
+
+If you see a 401/403 error above the CORS error in your browser console, you are dealing with a different issue (not CORS related).
+
+If you do have a CORS issue, refer to [Resolving CORS issues](#if-it-is-actually-cors).
+
+### If you are using a custom domain
+
+1. Open developer tools on your browser.
+2. Go to the **Network** tab and find the failing request. You may need to reload the page, as requests are only logged after developer tools have been opened.
+3. Check the response headers for the following two headers:
+- `cf-cache-status`
+- `cf-mitigated`
+
+#### If you have a `cf-mitigated` header
+
+Your request was blocked by one of your WAF rules. Inspect your [Security Events](/waf/analytics/security-events/) to identify the cause of the block.
+
+#### If you do not have a `cf-cache-status` header
+
+Your request was blocked by [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/).
+
+Edit your Hotlink Protection settings using a [Configuration Rule](/rules/configuration-rules/), or disable it completely.
+
+### If you are using the S3 API
+
+Your request may be incorrectly signed. You may obtain a better error message by trying the request over curl.
+
+Refer to the working S3 signing examples on the [Examples](/r2/examples/aws/) page.
+
+### If it is actually CORS
+
+Here are some common issues with CORS configurations:
+
+- `ExposeHeaders` is missing headers like `ETag`
+- `AllowedHeaders` is missing headers like `Authorization` or `Content-Type`
+- `AllowedMethods` is missing methods like `POST`/`PUT`
+
+## HTTP 5XX Errors and capacity limitations of Cloudflare R2
+
+When you encounter an HTTP 5XX error, it is usually a sign that your Cloudflare R2 bucket has been overwhelmed by too many concurrent requests. These errors can trigger bucket-wide read and write locks, affecting the performance of all ongoing operations.
+
+To avoid these disruptions, it is important to implement strategies for managing request volume.
+
+Here are some mitigations you can employ:
+
+### Monitor concurrent requests
+
+Track the number of concurrent requests to your bucket. If a client encounters a 5XX error, ensure that it retries the operation and communicates with other clients. By coordinating, clients can collectively slow down, reducing the request rate and maintaining a more stable flow of successful operations.
+
+If your users are directly uploading to the bucket (for example, using the S3 or Workers API), you may not be able to monitor or enforce a concurrency limit. In that case, we recommend bucket sharding.
+
+### Bucket sharding
+
+For higher capacity at the cost of added complexity, consider bucket sharding. This approach distributes reads and writes across multiple buckets, reducing the load on any single bucket.  While sharding cannot prevent a single hot object from exhausting capacity, it can mitigate the overall impact and improve system resilience.
+
+## Objects named `This object is unnamed`
+
+In the Cloudflare dashboard, you can choose to view objects with `/` in the name as folders by selecting **View prefixes as directories**.
+
+For example, an object named `example/object` will be displayed as below.
+
+<FileTree>
+- example
+  - object
+</FileTree>
+
+Object names which end with `/` will cause the Cloudflare dashboard to render the object as a folder with an unnamed object inside.
+
+For example, uploading an object named `example/` into an R2 bucket will be displayed as below.
+
+<FileTree>
+- example
+  - `This object is unnamed`
+</FileTree>

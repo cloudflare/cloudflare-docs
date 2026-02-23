@@ -25,6 +25,10 @@
                     "currency": "USD"
                 }
             ]
+        },
+        {
+            "property_id": "terms",
+            "value": "https://bfl.ai/legal/terms-of-service"
         }
     ],
     "schema": {

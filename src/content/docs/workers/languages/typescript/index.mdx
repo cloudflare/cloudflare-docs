@@ -58,7 +58,7 @@ To ensure that your types are always up-to-date, make sure to run `wrangler type
 	Migrating from `@cloudflare/workers-types` to `wrangler types`
 </h3>
 
-We recommend you use `wrangler types` to generate runtime types, rather than using the `@cloudflare/workers-types` package, as it generates types based on your Worker's [compatibility date](https://github.com/cloudflare/workerd/tree/main/npm/workers-types#compatibility-dates) and `compatibility flags`, ensuring that types match the exact runtime APIs made available to your Worker. 
+We recommend you use `wrangler types` to generate runtime types, rather than using the `@cloudflare/workers-types` package, as it generates types based on your Worker's [compatibility date](https://github.com/cloudflare/workerd/tree/main/npm/workers-types#compatibility-dates) and `compatibility flags`, ensuring that types match the exact runtime APIs made available to your Worker.
 
 :::note
 
@@ -89,7 +89,7 @@ You can now remove any imports from `@cloudflare/workers-types` in your Worker c
 ```json
 {
 	"compilerOptions": {
-		"types": ["worker-configuration.d.ts"]
+		"types": ["./worker-configuration.d.ts"]
 	}
 }
 ```
@@ -107,7 +107,7 @@ Then add this to your `tsconfig.json`.
 ```json
 {
 	"compilerOptions": {
-		"types": ["worker-configuration.d.ts", "node"]
+		"types": ["./worker-configuration.d.ts", "node"]
 	}
 }
 ```
@@ -129,7 +129,7 @@ Most projects will have existing build and development scripts, as well as some 
 }
 ```
 
-We recommend you commit your generated types file for use in CI. Alternatively, you can run `wrangler types` before other CI commands, as it should not take more than a few seconds. For example:
+We recommend you commit your generated types file for use in CI. You can run `wrangler types` before other CI commands, as it should not take more than a few seconds. For example:
 
 <Tabs> <TabItem label="npm">
 
@@ -156,6 +156,36 @@ We recommend you commit your generated types file for use in CI. Alternatively, 
 ```
 
 </TabItem> </Tabs>
+
+Alternatively, if you commit your generated types file and want to verify it stays up-to-date in CI, you can use the `--check` flag:
+
+<Tabs> <TabItem label="npm">
+
+```yaml
+- run: npx wrangler types --check
+- run: npm run build
+- run: npm test
+```
+
+</TabItem> <TabItem label="yarn">
+
+```yaml
+- run: yarn wrangler types --check
+- run: yarn build
+- run: yarn test
+```
+
+</TabItem> <TabItem label="pnpm">
+
+```yaml
+- run: pnpm wrangler types --check
+- run: pnpm run build
+- run: pnpm test
+```
+
+</TabItem> </Tabs>
+
+This fails the CI job if the committed types file is out-of-date, prompting developers to regenerate and commit the updated types.
 
 ### Resources
 

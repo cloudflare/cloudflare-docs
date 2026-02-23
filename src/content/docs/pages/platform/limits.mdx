@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Below are limits observed by the Cloudflare Free plan. For more details on removing these limits, refer to the [Cloudflare plans](https://www.cloudflare.com/plans) page.
 
@@ -30,7 +30,9 @@ Based on your Cloudflare plan type, a Pages project is limited to a specific num
 
 ## Files
 
-Pages uploads each file on your site to Cloudflare's globally distributed network to deliver a low latency experience to every user that visits your site. Cloudflare Pages sites can contain up to 20,000 files.
+Pages uploads each file on your site to Cloudflare's globally distributed network to deliver a low latency experience to every user that visits your site. Cloudflare Pages sites can contain up to 20,000 files on the Free plan.
+
+Paid plans can have up to 100,000 files per site. To enable this increased limit, set the environment variable `PAGES_WRANGLER_MAJOR_VERSION=4` in your Pages project settings.
 
 ## File size
 
@@ -38,11 +40,15 @@ The maximum file size for a single Cloudflare Pages site asset is 25 MiB.
 
 :::note[Larger Files]
 
-
 To serve larger files, consider uploading them to [R2](/r2/) and utilizing the [public bucket](/r2/buckets/public-buckets/) feature. You can also use [custom domains](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain), such as `static.example.com`, for serving these files.
 
-
 :::
+
+## Functions
+
+Requests to [Pages functions](/pages/functions/) count towards your quota for Workers plans, including requests from your Function to KV or Durable Object bindings.
+
+Pages supports the [Standard usage model](/workers/platform/pricing/#example-pricing-standard-usage-model).
 
 ## Headers
 
@@ -60,7 +66,7 @@ A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic
 
 ## Users
 
-Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your Git project – you can manage both public and private repositories, open issues, and accept pull requests via  without impacting your Pages site.
+Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your Git project – you can manage both public and private repositories, open issues, and accept pull requests via without impacting your Pages site.
 
 ## Projects
 

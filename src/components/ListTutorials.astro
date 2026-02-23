@@ -6,22 +6,19 @@ import { process } from "~/util/rehype";
 import rehypeExternalLinks from "~/plugins/rehype/external-links";
 
 type DocsEntry = CollectionEntry<"docs">;
-type VideoEntry = CollectionEntry<"videos">;
 
-const tutorials: Array<DocsEntry | VideoEntry> = [];
+const tutorials: Array<DocsEntry> = [];
 
 const currentSection = Astro.params.slug?.split("/")[0];
-const currentProduct = await getEntry("products", currentSection!);
+const currentProduct = await getEntry("directory", currentSection!);
 
 if (!currentProduct) {
 	throw new Error(
-		`[ListTutorials] Unable to find product YAML for ${currentSection}.`,
+		`[ListTutorials] Unable to find directory entry YAML for ${currentSection}.`,
 	);
 }
 
-const productTitle = currentProduct.data.product.title;
-const videoText = "🎥 Video"
-const tutorialText = "📝 Tutorial"
+const productID = currentProduct.id;
 
 const docs = await getCollection("docs", (entry) => {
 	return (
@@ -30,23 +27,13 @@ const docs = await getCollection("docs", (entry) => {
 		// /src/content/r2/**/*.mdx
 		(entry.id.startsWith(`${currentSection}/`) ||
 			// products: [R2]
-			entry.data.products?.some(
-				(v: string) => v.toUpperCase() === productTitle.toUpperCase(),
-			))
+			entry.data.products?.some((product) => product.id === productID))
 	);
 });
 
 tutorials.push(...docs);
 
-const videos = await getCollection("videos", (entry) => {
-	return entry.data.products.some(
-		(v: string) => v.toUpperCase() === productTitle.toUpperCase(),
-	);
-});
-
-tutorials.push(...videos);
-
-tutorials.sort((a, b) => Number(b.data.updated) - Number(a.data.updated));
+tutorials.sort((a, b) => Number(b.data.reviewed) - Number(a.data.reviewed));
 
 const timeAgo = (date?: Date) => {
 	if (!date) return undefined;
@@ -59,20 +46,15 @@ const timeAgo = (date?: Date) => {
 		<tr>
 			<td>Name</td>
 			<td>Last Updated</td>
-			<td>Type</td>
 			<td>Difficulty</td>
 		</tr>
 	</thead>
 	<tbody>
 		{
 			tutorials.map(async (tutorial) => {
-				const title =
-					tutorial.collection === "docs" ? tutorial.data.title : tutorial.id;
+				const title = tutorial.data.title;
 
-				const href =
-					tutorial.collection === "docs"
-						? `/${tutorial.id}/`
-						: tutorial.data.link;
+				const href = `/${tutorial.id}/`;
 
 				const anchor = await process(`<a href=${href}>${title}</a>`, [
 					rehypeExternalLinks,
@@ -83,8 +65,7 @@ const timeAgo = (date?: Date) => {
 						<td>
 							<Fragment set:html={anchor} />
 						</td>
-						<td>{timeAgo(tutorial.data.updated)}</td>
-						<td>{tutorial.collection === "docs" ? tutorialText : videoText}</td>
+						<td>{timeAgo(tutorial.data.reviewed)}</td>
 						<td>{tutorial.data.difficulty}</td>
 					</tr>
 				);

@@ -1,0 +1,48 @@
+---
+{}
+---
+
+
+import { GlossaryTooltip, DashButton } from "~/components";
+
+Use the GraphQL Analytics API to retrieve Network Flow (formerly Magic Network Monitoring) <GlossaryTooltip term="flow data">flow data</GlossaryTooltip>.
+
+Before you begin, you must have an [API token](/analytics/graphql-api/getting-started/authentication/). For additional help getting started with GraphQL Analytics, refer to [GraphQL Analytics API](/analytics/graphql-api/).
+
+### Obtain your Cloudflare Account ID
+
+To construct a Network Flow GraphQL query for an object, you need a Cloudflare Account ID.
+
+1. Log in to the Cloudflare dashboard, and select your account.
+
+<DashButton url="/?to=/:account/home" />
+
+2. The URL in your browser's address bar should show `https://dash.cloudflare.com/` followed by a hex string. The hex string is your Cloudflare Account ID.
+
+## Explore GraphQL schema with Network Flow example
+
+Run a test query to retrieve a five-minute sum of bits and packets for flows within five-minute intervals. Copy and paste the following code into GraphiQL.
+
+For additional information about the Analytics schema, refer to [Explore the Analytics schema with GraphiQL](/analytics/graphql-api/getting-started/explore-graphql-schema/).
+
+```graphql graphql-api-explorer
+query MagicNetworkMonitoring($accountTag: string!, $start: Time, $end: Time) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			mnmFlowDataAdaptiveGroups(
+				filter: { datetime_gt: $start, datetime_leq: $end }
+				limit: 10
+				orderBy: [datetimeFiveMinutes_DESC]
+			) {
+				sum {
+					bits
+					packets
+				}
+				dimensions {
+					datetimeFiveMinutes
+				}
+			}
+		}
+	}
+}
+```

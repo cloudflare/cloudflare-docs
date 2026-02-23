@@ -6,7 +6,14 @@ head:
     content: Replace insecure JavaScript libraries
 ---
 
-import { GlossaryTooltip, TabItem, Tabs } from "~/components";
+import {
+	GlossaryTooltip,
+	Tabs,
+	TabItem,
+	Steps,
+	APIRequest,
+	DashButton,
+} from "~/components";
 
 This feature, when turned on, automatically rewrites URLs to external JavaScript libraries to point to Cloudflare-hosted libraries instead. This change improves security and performance, and reduces the risk of malicious code being injected.
 
@@ -38,21 +45,30 @@ The feature is available in all Cloudflare plans, and is turned on by default on
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
-2. Go to **Security** > **Settings**.
-3. For **Replace insecure JavaScript libraries**, switch the toggle to **On** or **Off**.
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. Turn **Replace insecure JavaScript libraries** on or off.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 
 Issue a `PATCH` request similar to the following:
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/replace_insecure_js" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{ "value": "on" }'
-```
+<APIRequest
+	path="/zones/{zone_id}/settings/{setting_id}"
+	parameters={{
+		setting_id: "replace_insecure_js",
+	}}
+	method="PATCH"
+	json={{
+		value: "on",
+	}}
+/>
 
 </TabItem> </Tabs>
 

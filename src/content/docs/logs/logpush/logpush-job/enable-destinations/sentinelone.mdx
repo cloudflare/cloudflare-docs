@@ -1,0 +1,162 @@
+---
+title: Enable SentinelOne
+pcx_content_type: how-to
+sidebar:
+  order: 64
+head:
+  - tag: title
+    content: Enable Logpush to SentinelOne
+---
+
+import { Render, APIRequest } from "~/components";
+
+The HTTP Event Collector (HEC) is a reliable method to send log data to SentinelOne Singularity Data Lake. Cloudflare Logpush supports pushing logs directly to SentinelOne HEC via the Cloudflare dashboard or API.
+
+## Manage via the Cloudflare dashboard
+
+<Render file="enable-logpush-job" product="logs" />
+
+4. In **Select a destination**, choose **SentinelOne**.
+
+5. Enter or select the following destination information:
+   - **SentinelOne HEC URL**
+   - **Auth Token** - Event Collector token.
+   - **Source Type** - For example, `marketplace-cloudflare-latest`.
+
+When you are done entering the destination details, select **Continue**.
+
+6. Select the dataset to push to the storage service.
+
+7. In the next step, you need to configure your logpush job:
+   - Enter the **Job name**.
+   - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
+   - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+
+8. In **Advanced Options**, you can:
+   - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+   - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+   - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+9. Select **Submit** once you are done configuring your logpush job.
+
+## Manage via API
+
+To set up a SentinelOne Logpush job:
+
+1. Create a job with the appropriate endpoint URL and authentication parameters.
+2. Enable the job to begin pushing logs.
+
+:::note
+Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to SentinelOne.
+:::
+
+<Render file="enable-read-permissions" product="logs" />
+
+### 1. Create a job
+
+To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
+
+- **name** (optional) - Use your domain name as the job name.
+- **destination_conf** - A log destination consisting of an endpoint URL, source type, authorization header in the string format below.
+  - **SENTINELONE_ENDPOINT_URL**: The SentinelOne raw HTTP Event Collector URL with port. For example: `sentinelone://ingest.us1.sentinelone.net/services/collector/raw`. Cloudflare expects the SentinelOne endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.
+  - **SENTINELONE_AUTH_TOKEN**: The SentinelOne authorization token that is URL-encoded. For example: `Bearer 0e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
+  - **SOURCE_TYPE**: The SentinelOne source type. For example: `marketplace-cloudflare-latest`.
+
+```bash
+"https://<SENTINELONE_ENDPOINT_URL>?sourcetype=<SOURCE_TYPE>&header_Authorization=<SENTINELONE_AUTH_TOKEN>"
+```
+
+- **dataset** - The category of logs you want to receive. Refer to [Datasets](/logs/logpush/logpush-job/datasets/) for the full list of supported datasets.
+
+- **output_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Log Output Options](/logs/logpush/logpush-job/log-output-options/). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
+
+Example request using cURL:
+
+<APIRequest
+	path="/zones/{zone_id}/logpush/jobs"
+	method="POST"
+	json={{
+		name: "<DOMAIN_NAME>",
+		destination_conf:
+			"sentinelone://<SENTINELONE_ENDPOINT_URL>?sourcetype=<SOURCE_TYPE>&header_Authorization=<SENTINELONE_AUTH_TOKEN>",
+		output_options: {
+			field_names: [
+				"ClientIP",
+				"ClientRequestHost",
+				"ClientRequestMethod",
+				"ClientRequestURI",
+				"EdgeEndTimestamp",
+				"EdgeResponseBytes",
+				"EdgeResponseStatus",
+				"EdgeStartTimestamp",
+				"RayID",
+			],
+			timestamp_format: "rfc3339",
+		},
+		dataset: "http_requests",
+	}}
+/>
+
+Response:
+
+```json
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "id": <JOB_ID>,
+    "dataset": "http_requests",
+    "enabled": false,
+    "name": "<DOMAIN_NAME>",
+    "output_options": {
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
+    },
+    "destination_conf": "sentinelone://<SENTINELONE_ENDPOINT_URL>?sourcetype=<SOURCE_TYPE>&header_Authorization=<SENTINELONE_AUTH_TOKEN>",
+    "last_complete": null,
+    "last_error": null,
+    "error_message": null
+  },
+  "success": true
+}
+```
+
+### 2. Enable (update) a job
+
+To enable a job, make a `PUT` request to the Logpush jobs endpoint. Use the job ID returned from the previous step in the URL and send `{"enabled": true}` in the request body.
+
+Example request using cURL:
+
+<APIRequest
+	method="PUT"
+	path="/zones/{zone_id}/logpush/jobs/{job_id}"
+	json={{
+		enabled: true,
+	}}
+/>
+
+Response:
+
+```json
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "id": <JOB_ID>,
+    "dataset": "http_requests",
+    "enabled": true,
+    "name": "<DOMAIN_NAME>",
+    "output_options": {
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
+    },
+    "destination_conf": "sentinelone://<SENTINELONE_ENDPOINT_URL>?sourcetype=<SOURCE_TYPE>&header_Authorization=<SENTINELONE_AUTH_TOKEN>",
+    "last_complete": null,
+    "last_error": null,
+    "error_message": null
+  },
+  "success": true
+}
+```
+
+Refer to the [Logpush FAQ](/logs/faq/logpush/) for troubleshooting information.

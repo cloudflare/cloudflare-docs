@@ -1,0 +1,17 @@
+---
+pcx_content_type: troubleshooting
+title: Error 10048
+source: null
+---
+
+## Error 10048: Preserve path suffix requires subpath matching enabled
+
+This error indicates a configuration mismatch where the **Preserve path suffix** option is used without enabling **Subpath matching** in a URL redirect.
+
+### Common causes
+
+This error occurs when you enable the **Preserve path suffix** option in a redirect without enabling the **Subpath matching** option. The **Preserve path suffix** option of a URL redirect is only applicable when the **Subpath matching** option is also enabled.
+
+### Resolution
+
+Enable **Subpath matching** for the URL redirect with **Preserve path suffix** enabled.

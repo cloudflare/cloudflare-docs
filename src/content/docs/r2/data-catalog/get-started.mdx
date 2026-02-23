@@ -1,0 +1,300 @@
+---
+pcx_content_type: get-started
+title: Getting started
+head: []
+sidebar:
+  order: 2
+description: Learn how to enable the R2 Data Catalog on your bucket, load sample data, and run your first query.
+---
+
+import {
+	Render,
+	PackageManagers,
+	Steps,
+	FileTree,
+	Tabs,
+	TabItem,
+	TypeScriptExample,
+	WranglerConfig,
+	LinkCard,
+	DashButton,
+} from "~/components";
+
+This guide will instruct you through:
+
+- Creating your first [R2 bucket](/r2/buckets/) and enabling its [data catalog](/r2/data-catalog/).
+- Creating an [API token](/r2/api/tokens/) needed for query engines to authenticate with your data catalog.
+- Using [PyIceberg](https://py.iceberg.apache.org/) to create your first Iceberg table in a [marimo](https://marimo.io/) Python notebook.
+- Using [PyIceberg](https://py.iceberg.apache.org/) to load sample data into your table and query it.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## 1. Create an R2 bucket
+
+<Tabs syncKey='CLIvDash'>
+<TabItem label='Wrangler CLI'>
+
+<Steps>
+1. If not already logged in, run:
+
+    	```
+    	npx wrangler login
+    	```
+
+2.  Create an R2 bucket:
+
+        ```
+        npx wrangler r2 bucket create r2-data-catalog-tutorial
+        ```
+
+</Steps>
+
+</TabItem>
+<TabItem label='Dashboard'>
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+2. Select **Create bucket**.
+3. Enter the bucket name: r2-data-catalog-tutorial
+4. Select **Create bucket**.
+</Steps>
+</TabItem>
+</Tabs>
+
+## 2. Enable the data catalog for your bucket
+
+<Tabs syncKey='CLIvDash'>
+<TabItem label='Wrangler CLI'>
+
+Then, enable the catalog on your chosen R2 bucket:
+
+        ```
+        npx wrangler r2 bucket catalog enable r2-data-catalog-tutorial
+        ```
+
+When you run this command, take note of the "Warehouse" and "Catalog URI". You will need these later.
+
+</TabItem>
+<TabItem label='Dashboard'>
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+2. Select the bucket: r2-data-catalog-tutorial.
+3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
+4. Once enabled, note the **Catalog URI** and **Warehouse name**.
+</Steps>
+</TabItem>
+</Tabs>
+
+## 3. Create an API token
+
+Iceberg clients (including [PyIceberg](https://py.iceberg.apache.org/)) must authenticate to the catalog with an [R2 API token](/r2/api/tokens/) that has both R2 and catalog permissions.
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+2. Select **Manage API tokens**.
+
+3. Select **Create API token**.
+
+4. Select the **R2 Token** text to edit your API token name.
+
+5. Under **Permissions**, choose the **Admin Read & Write** permission.
+
+6. Select **Create API Token**.
+
+7. Note the **Token value**.
+
+</Steps>
+
+## 4. Install uv
+
+You need to install a Python package manager. In this guide, use [uv](https://docs.astral.sh/uv/). If you do not already have uv installed, follow the [installing uv guide](https://docs.astral.sh/uv/getting-started/installation/).
+
+## 5. Install marimo and set up your project with uv
+
+We will use [marimo](https://github.com/marimo-team/marimo) as a Python notebook.
+
+<Steps>
+1. Create a directory where our notebook will be stored:
+
+    	```
+    	mkdir r2-data-catalog-notebook
+    	```
+
+2. Change into our new directory:
+
+      ```
+      cd r2-data-catalog-notebook
+      ```
+
+3. Initialize a new uv project (this creates a `.venv` and a `pyproject.toml`):
+
+      ```
+      uv init
+      ```
+
+4. Add marimo and required dependencies:
+
+      ```py
+      uv add marimo pyiceberg pyarrow pandas
+      ```
+
+</Steps>
+
+## 6. Create a Python notebook to interact with the data warehouse
+
+<Steps>
+1. Create a file called `r2-data-catalog-tutorial.py`.
+
+2. Paste the following code snippet into your `r2-data-catalog-tutorial.py` file:
+
+        ```py
+        import marimo
+
+        __generated_with = "0.11.31"
+        app = marimo.App(width="medium")
+
+
+        @app.cell
+        def _():
+        		import marimo as mo
+        		return (mo,)
+
+
+        @app.cell
+        def _():
+        		import pandas
+        		import pyarrow as pa
+        		import pyarrow.compute as pc
+        		import pyarrow.parquet as pq
+
+        		from pyiceberg.catalog.rest import RestCatalog
+
+        		# Define catalog connection details (replace variables)
+        		WAREHOUSE = "<WAREHOUSE>"
+        		TOKEN = "<TOKEN>"
+        		CATALOG_URI = "<CATALOG_URI>"
+
+        		# Connect to R2 Data Catalog
+        		catalog = RestCatalog(
+        				name="my_catalog",
+        				warehouse=WAREHOUSE,
+        				uri=CATALOG_URI,
+        				token=TOKEN,
+        		)
+        		return (
+        				CATALOG_URI,
+        				RestCatalog,
+        				TOKEN,
+        				WAREHOUSE,
+        				catalog,
+        				pa,
+        				pandas,
+        				pc,
+        				pq,
+        		)
+
+
+        @app.cell
+        def _(catalog):
+        		# Create default namespace if needed
+        		catalog.create_namespace_if_not_exists("default")
+        		return
+
+
+        @app.cell
+        def _(pa):
+        		# Create simple PyArrow table
+        		df = pa.table({
+        				"id": [1, 2, 3],
+        				"name": ["Alice", "Bob", "Charlie"],
+        				"score": [80.0, 92.5, 88.0],
+        		})
+        		return (df,)
+
+
+        @app.cell
+        def _(catalog, df):
+        		# Create or load Iceberg table
+        		test_table = ("default", "people")
+        		if not catalog.table_exists(test_table):
+        				print(f"Creating table: {test_table}")
+        				table = catalog.create_table(
+        						test_table,
+        						schema=df.schema,
+        				)
+        		else:
+        				table = catalog.load_table(test_table)
+        		return table, test_table
+
+
+        @app.cell
+        def _(df, table):
+        		# Append data
+        		table.append(df)
+        		return
+
+
+        @app.cell
+        def _(table):
+        		print("Table contents:")
+        		scanned = table.scan().to_arrow()
+        		print(scanned.to_pandas())
+        		return (scanned,)
+
+
+        @app.cell
+        def _():
+        		# Optional cleanup. To run uncomment and run cell
+        		# print(f"Deleting table: {test_table}")
+        		# catalog.drop_table(test_table)
+        		# print("Table dropped.")
+        		return
+
+
+        if __name__ == "__main__":
+        		app.run()
+        ```
+
+3. Replace the `CATALOG_URI`, `WAREHOUSE`, and `TOKEN` variables with your values from sections **2** and **3** respectively.
+
+4. Launch the notebook editor in your browser:
+
+    	```
+    	uv run marimo edit r2-data-catalog-tutorial.py
+    	```
+
+			Once your notebook connects to the catalog, you'll see the catalog along with its namespaces and tables appear in marimo's Datasources panel.
+
+</Steps>
+In the Python notebook above, you:
+
+1. Connect to your catalog.
+2. Create the `default` namespace.
+3. Create a simple PyArrow table.
+4. Create (or load) the `people` table in the `default` namespace.
+5. Append sample data to the table.
+6. Print the contents of the table.
+7. (Optional) Drop the `people` table we created for this tutorial.
+
+## Learn more
+
+<LinkCard
+	title="Managing catalogs"
+	href="/r2/data-catalog/manage-catalogs/"
+	description="Enable or disable R2 Data Catalog on your bucket, retrieve configuration details, and authenticate your Iceberg engine."
+/>
+
+<LinkCard
+	title="Connect to Iceberg engines"
+	href="/r2/data-catalog/config-examples/"
+	description="Find detailed setup instructions for Apache Spark and other common query engines."
+/>

@@ -1,8 +1,12 @@
 ---
-{}
-
+params:
+  - greIpsecURL
+  - warpURL
+  - tracerouteURL
 ---
 
 :::note[Run <code>traceroute</code>]
-Magic WAN clients connecting through [GRE](/magic-wan/configuration/manually/how-to/configure-tunnels/), [IPsec](/magic-wan/configuration/manually/how-to/configure-tunnels/), [CNI](/network-interconnect/) or [WARP](/cloudflare-one/connections/connect-devices/warp/) that want to perform a `traceroute` to an endpoint behind a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) will need to change some settings to make the command useful. Refer to [Run `traceroute`](/magic-wan/configuration/manually/how-to/traceroute/) for more information.
+If you connect through <a href={props.greIpsecURL}>GRE</a>, <a href={props.greIpsecURL}>IPsec</a>, [CNI](/network-interconnect/), or <a href={props.warpURL}>WARP</a> and want to run `traceroute` to an endpoint behind a <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel</a>, you need to change some settings.
+
+Refer to <a href={props.tracerouteURL}>Run `traceroute`</a> for more information.
 :::

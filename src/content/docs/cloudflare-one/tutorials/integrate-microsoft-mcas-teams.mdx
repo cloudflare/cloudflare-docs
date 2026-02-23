@@ -1,8 +1,11 @@
 ---
-updated: 2021-08-19
-category: 🔐 Zero Trust
+reviewed: 2021-08-19
+category: Zero Trust
+difficulty: Intermediate
 pcx_content_type: tutorial
 title: Integrate Microsoft MCAS with Cloudflare Zero Trust
+description: >-
+  With an MCAS API call, you can manage a URL category that contains the blocked URLs. Use the output to create a Hostname List that can be used by Gateway HTTP policies to block them.
 ---
 
 Many security teams rely on Microsoft MCAS (Microsoft Cloud App Security), Microsoft's CASB solution, to identify and block threats on the Internet, as well as allow or block access to cloud applications. This tutorial covers how to integrate MCAS with Cloudflare Zero Trust, and create Gateway HTTP policies to ensure visibility and control over data.
@@ -16,7 +19,7 @@ Microsoft provides an MCAS API endpoint to allow queries to see which applicatio
 ## Basic configuration
 
 In your Microsoft account, you first need to create an API token and URL endpoint to use to query the URLs blocked by MCAS.
-Follow the guide for [Managing API tokens for Microsoft Cloud App Security](https://docs.microsoft.com/en-us/cloud-app-security/api-authentication) to generate a new API token and a custom API URL for the API endpoint.
+Follow the guide for [Managing API tokens for Microsoft Cloud App Security](https://learn.microsoft.com/defender-cloud-apps/api-authentication) to generate a new API token and a custom API URL for the API endpoint.
 
 ## Using the API to query banned applications
 
@@ -58,11 +61,11 @@ If you would like to get a list of all of the MCAS allowed applications, you can
 curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=allowed" -H "Authorization: Token <API token>"
 ```
 
-## Adding a hostname list in Zero Trust
+## Adding a hostname list in Cloudflare One
 
-1. In Zero Trust, go to **My Team** > **Lists**
-2. Select **Upload CSV**. Even though the hostname list is not really in CSV format, it will work with no issues.
-3. Add a name for the list, specify "Hostnames" as the list type, and give it a description.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Reusable components** > **Lists**
+2. Select **Upload CSV**. Even though the hostname list is not in CSV format, it will work with no issues.
+3. Add a name for the list, specify _Hostnames_ as the list type, and give it a description.
 4. Drag and drop your MCAS output file created via the API call, or you can select **Select a file**.
 5. Select **Create**. You will see the list of hostnames that have been added to the list.
 6. Save the list.
@@ -71,7 +74,7 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 ## Creating an HTTP policy
 
-1. Go to **Gateway** > **Firewall policies**. Select **HTTP**.
+1. Go to **Traffic policies** > **Traffic policies** > **HTTP**.
 2. Select **Add a policy**.
 3. Create the following policy.
 

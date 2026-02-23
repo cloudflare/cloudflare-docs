@@ -18,7 +18,7 @@ To use `create-cloudflare` to create a new Angular project, run the following co
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args="my-angular-app --framework=angular"
+	args="my-angular-app --framework=angular --platform=pages"
 />
 
 `create-cloudflare` will install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the Cloudflare Pages adapter, and ask you setup questions.
@@ -29,11 +29,11 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 :::
 
-<Render file="framework-guides/git-integration" />
+<Render file="framework-guides/git-integration" product="pages" />
 
 ### Create a GitHub repository
 
-<Render file="framework-guides/create-gh-repo" /> <br />
+<Render file="framework-guides/create-gh-repo" product="pages" /> <br />
 
 ```sh
 # Skip the following three commands if you have built your application
@@ -49,16 +49,25 @@ git push -u origin main
 
 ### Create a Pages project
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Angular" }} />
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <PagesBuildPreset framework="angular" />
 
+:::caution[On some versions of Angular, you may need to:]
+Change the `Build command` to `npx ng build --output-path dist/cloudflare`\
+Change the `Build directory` to `dist/cloudflare/browser`
+:::
+
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-4. After completing configuration, select the **Save and Deploy**.
+7. After completing configuration, select the **Save and Deploy**.
 
 Review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
 Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying your changes to production.
 
-<Render file="framework-guides/learn-more" params={{ one: "Angular" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Angular" }}
+/>

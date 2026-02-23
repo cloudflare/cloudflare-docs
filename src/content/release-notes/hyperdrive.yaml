@@ -2,9 +2,26 @@
 link: "/hyperdrive/platform/release-notes/"
 productName: Hyperdrive
 productLink: "/hyperdrive/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-12-04"
+    title: Connect to remote databases during local development with wrangler dev
+    description: |-
+      The `localConnectionString` configuration field and `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environment variable now support connecting to remote databases over TLS during local development with `wrangler dev`. 
+
+      When using a remote database connection string, your Worker code runs locally on your machine while connecting directly to the remote database. Hyperdrive caching does not take effect. 
+
+      Refer to [Local development](/hyperdrive/configuration/local-development/) for instructions on how to configure remote database connections for local development.
+  - publish_date: "2025-07-03"
+    title: Hyperdrive now supports configurable connection counts
+    description: |-
+      Hyperdrive configurations can now be set to use a specific number of connections to your origin database. There is a minimum of 5 connections for all configurations and a maximum according to your [Workers plan](/hyperdrive/platform/limits/).
+
+      This limit is a soft maximum. Hyperdrive may make more than this amount of connections in the event of unexpected networking issues in order to ensure high availability and resiliency.
+  - publish_date: "2025-05-05"
+    title: Hyperdrive improves regional caching for prepared statements for faster cache hits
+    description: |-
+      Hyperdrive now better caches prepared statements closer to your Workers. This results in up to 5x faster cache hits by
+      reducing the roundtrips needed between your Worker and Hyperdrive's connection pool.
   - publish_date: "2025-03-07"
     title: Hyperdrive connects to your database using Cloudflare's IP address ranges
     description: |-
@@ -34,13 +51,13 @@ entries:
     description: |-
       Hyperdrive query caching now happens in all locations where Hyperdrive can be accessed. When making a query in a location that has cached the query result, your latency may be decreased by up to 90%.
 
-      Refer to [documentation on how Hyperdrive caches query results](/hyperdrive/configuration/how-hyperdrive-works/#query-caching).
+      Refer to [documentation on how Hyperdrive caches query results](/hyperdrive/concepts/how-hyperdrive-works/#query-caching).
   - publish_date: "2024-11-19"
     title: Hyperdrive now supports clear-text password authentication
     description: |-
       When connecting to a database that requires secure clear-text password authentication over TLS, Hyperdrive will now support this authentication method.
 
-      Refer to the documentation to see [all PostgreSQL authentication modes supported by Hyperdrive](/hyperdrive/reference/supported-databases#supported-postgresql-authentication-modes).
+      Refer to the documentation to see [all PostgreSQL authentication modes supported by Hyperdrive](/hyperdrive/reference/supported-databases-and-features#supported-postgresql-authentication-modes).
   - publish_date: "2024-10-30"
     title: New Hyperdrive configurations to private databases using Tunnels are validated before creation
     description: |-
@@ -52,7 +69,7 @@ entries:
     description: |-
       The popular `pg` ([node-postgres](https://github.com/brianc/node-postgres) driver no longer requires the legacy `node_compat` mode, and can now be used in both Workers and Pages for connecting to Hyperdrive. This uses the new (improved) Node.js compatibility in Workers and Pages.
 
-      You can set [`compatibility_flags = ["nodejs_compat_v2"]`](/workers/runtime-apis/nodejs/) in your `wrangler.toml` or via the Pages dashboard to benefit from this change. Visit the [Hyperdrive documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about the driver versions supported by Hyperdrive.
+      You can set [`compatibility_flags = ["nodejs_compat_v2"]`](/workers/runtime-apis/nodejs/) in your `wrangler.toml` or via the Pages dashboard to benefit from this change. Visit the [Hyperdrive documentation on supported drivers](/hyperdrive/examples/connect-to-postgres/#supported-drivers) to learn more about the driver versions supported by Hyperdrive.
   - publish_date: "2024-08-19"
     title: Improved caching for Postgres.js
     description: |-
@@ -74,7 +91,7 @@ entries:
 
       Developers who had previously set `prepare: false` can remove this configuration when establishing a new Postgres.js client instance.
 
-      Read the [documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about database driver interoperability with Hyperdrive.
+      Read the [documentation on supported drivers](/hyperdrive/examples/connect-to-postgres/#supported-drivers) to learn more about database driver interoperability with Hyperdrive.
   - publish_date: "2024-04-01"
     title: Hyperdrive is now Generally Available
     description: |-

@@ -1,34 +1,42 @@
 ---
 params:
-  - magicProduct?
+  - magicWord?
   - productName
   - healthChecksUrl
   - addTunnelsPath
 ---
 
-import { CURL, AnchorHeading, GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
+import {
+	CURL,
+	AnchorHeading,
+	GlossaryTooltip,
+	Markdown,
+	TabItem,
+	Tabs,
+	DashButton,
+} from "~/components";
 
-By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from {props.productName}.
+By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, Cloudflare Network Interconnect (CNI), or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from {props.productName}.
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
-		<p>For Magic WAN Connector, health checks are sent to IPsec tunnel endpoints.</p>
+		<p>For Cloudflare One Appliance (formerly Magic WAN Connector), Cloudflare sends health checks to IPsec tunnel endpoints.</p>
   </>
   )
 }
 
-You can configure the health check frequency via the dashboard or [the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
+You can configure the health check frequency through the dashboard or [the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/) to suit your use case. For example, if you are connecting a lower-traffic site that does not need immediate failover and you prefer a lower volume of health check traffic, set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues and you want proactive failover at the earliest sign of a potential problem, set this to `high`.
 
 Available options are `low`, `mid`, and `high`.
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
-		<p>To configure health checks frequency in Magic WAN Connector, refer to <a href="#configure-connector">Configure Connector</a></p>
+		<p>To configure health checks frequency in Cloudflare One Appliance, refer to <a href="#configure-connector">Configure Connector</a></p>
   </>
   )
 }
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
 		<AnchorHeading depth={2} title="Manual configuration" />
   </>
@@ -37,7 +45,7 @@ Available options are `low`, `mid`, and `high`.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Refer to <a href={props.addTunnelsPath}>Add tunnels</a> to learn how to create or edit your tunnel.
+1. To create or edit your tunnel, refer to <a href={props.addTunnelsPath}>Add tunnels</a>.
 2. Change the **Health check rate** to your desired rate. For example, _Low_.
 3. Save your changes.
 
@@ -45,26 +53,67 @@ Available options are `low`, `mid`, and `high`.
 
 You can adjust the health check frequency by updating your [GRE](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/), [IPsec](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/), or [CNI](/api/resources/magic_transit/subresources/cf_interconnects/methods/update/) tunnels.
 
-Below is an example of how to adjust tunnel health check frequency to `low`. Note that this command applies to GRE, IPsec and CNI tunnels:
+The following example adjusts tunnel health check frequency to `low`. Note that this command applies to GRE, IPsec and CNI tunnels:
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
 	method="PUT"
 	json={{
-		"health_check":
-			{
-				"rate": "low"
-			}
+		health_check: {
+			rate: "low",
+		},
 	}}
 />
 
 
 </TabItem> </Tabs>
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
+
   <>
 		<AnchorHeading depth={2} title="Configure Connector" />
-		<ol><li>Log in to the <a href='https://dash.cloudflare.com/'>Cloudflare dashboard</a> and select your account.</li><li>Go to <strong>Magic WAN</strong> {'>'} <strong>Sites</strong>.</li><li>Select your site {'>'} <strong>Edit</strong>.</li><li>In <strong>Network</strong> {'>'} <strong>WAN configuration</strong> {'>'} select your WAN {'>'} <strong>Edit</strong>.</li><li>Change the <strong>Health check rate</strong> to your desire rate.</li><li>Select <strong>Save</strong>.</li></ol>
+
+		{ props.magicWord === "Cloudflare WAN" ? (
+			<>
+				<Markdown
+				text={`
+1. Go to the **Connector** page.
+				`}
+				inline={false}
+				/>
+
+				<DashButton url="/?to=/:account/magic-networks/connections" />
+
+				<Markdown
+				text={`
+2. Go the **Appliances** tab > **Profiles**.
+3. Find the Connector profile you want to edit > select the three dots > **Edit**.
+4. In **Network Configuration** > **WAN configuration** > select your WAN > **Edit**.
+				`}
+				inline={false}
+				/>
+			</>
+		) : (
+			<Markdown
+			text={`
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Networks**.
+2. Go to **Connectors** > **Appliances**.
+3. In **Profiles**, find the Connector profile you want to edit > select the three dots > **Edit**.
+4. In **Network Configuration** > **WAN configuration** > select your WAN > **Edit**.
+			`}
+			inline={false}
+			/>
+		)}
+
+		<Markdown
+		text={`
+
+5. Change the **Health check rate** to your desired rate.
+6. Select **Save**.
+		`}
+		inline={false}
+		/>
   </>
-  )
+
+	)
 }

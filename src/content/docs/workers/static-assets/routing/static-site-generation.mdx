@@ -1,0 +1,51 @@
+---
+pcx_content_type: concept
+title: Static Site Generation (SSG) and custom 404 pages
+description: How to configure a Static Site Generation (SSG) application and custom 404 pages with Workers.
+sidebar:
+  order: 3
+---
+
+import { WranglerConfig, Render } from "~/components";
+
+Static Site Generation (SSG) applications are web applications which are predominantely built or "prerendered" ahead-of-time. They are often built with a framework such as [Gatsby](/workers/framework-guides/web-apps/more-web-frameworks/gatsby/) or [Docusaurus](/workers/framework-guides/web-apps/more-web-frameworks/docusaurus/). The build process of these frameworks will produce many HTML files and accompanying client-side resources (e.g. JavaScript bundles, CSS stylesheets, images, fonts, etc.). Data is either static, fetched and compiled into the HTML at build-time, or fetched by the client from an API with client-side requests.
+
+Often, an SSG framework will allow you to create a custom 404 page.
+
+## Configuration
+
+In order to deploy a Static Site Generation application to Workers, you must configure the `assets.directory`, and optionally, the `assets.not_found_handling` and `assets.html_handling` options in your [Wrangler configuration file](/workers/wrangler/configuration/#assets):
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "./dist/",
+		"not_found_handling": "404-page",
+		"html_handling": "auto-trailing-slash"
+	}
+}
+```
+
+</WranglerConfig>
+
+`assets.html_handling` defaults to `auto-trailing-slash` and this will usually give you the desired behavior automatically: individual files (e.g. `foo.html`) will be served _without_ a trailing slash and folder index files (e.g. `foo/index.html`) will be served _with_ a trailing slash. Alternatively, you can force trailing slashes (`force-trailing-slash`) or drop trailing slashes (`drop-trailing-slash`) on requests for HTML pages.
+
+### Custom 404 pages
+
+Configuring `assets.not_found_handling` to `404-page` overrides the default serving behavior of Workers for static assets. When an incoming request does not match a file in the `assets.directory`, Workers will serve the contents of the nearest `404.html` file with a `404 Not Found` status.
+
+<Render file="navigation_requests" product="workers" />
+
+## Local Development
+
+If you are using a Vite-powered SPA framework, you might be interested in using our [Vite plugin](/workers/vite-plugin/) which offers a Vite-native developer experience.
+
+<Render
+	file="static_asset_routing_reference"
+	product="workers"
+	params={{ not_found_handling: "404-page" }}
+/>

@@ -9,7 +9,7 @@ head:
 description: Regardless of whether the browser-to-Cloudflare connection uses HTTP or HTTPS, Cloudflare always connects to the origin over HTTPS with certificate validation.
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Stream, Render, Tabs, TabItem } from "~/components";
 
 :::note
 
@@ -20,12 +20,12 @@ When you set your encryption mode to **Strict (SSL-Only Origin Pull)**, connecti
 
 The certificate presented by the origin will be validated the same as with [Full (strict) mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
-```mermaid
-flowchart LR
-    accTitle: Strict (SSL-Only Origin Pull) SSL/TLS Encryption
-    accDescr: With an encryption mode of Strict (SSL-Only Origin Pull), all connections to the origin will always be made using SSL/TLS.
-    A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[("Origin server (verified) #9989;")]
-```
+<Stream
+  id="f407072cb5b4837c8c3a58a69cde90b5"
+  title="Configure Strict encryption mode"
+  thumbnail="https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/28f00d39-6aee-4a42-c688-e37021bcb000/public"
+/>
+
 
 ## Use when
 
@@ -45,14 +45,14 @@ In addition to **Strict (SSL-Only Origin Pull)** encryption, you can also set up
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="change-encryption-mode-dash" />
+<Render file="change-encryption-mode-dash" product="ssl" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="change-encryption-mode-api" />
+<Render file="change-encryption-mode-api" product="ssl" />
 
 </TabItem> </Tabs>
 
 ## Limitations
 
-<Render file="ssl-mode-errors" />
+<Render file="ssl-mode-errors" product="ssl" />

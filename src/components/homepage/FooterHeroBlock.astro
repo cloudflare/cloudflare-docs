@@ -58,7 +58,7 @@ const blocks = [
 ] as const;
 ---
 
-<div class="flex items-start justify-between py-10 *:!mt-0">
+<div class="flex items-start justify-between py-10 *:mt-0!">
 	{
 		blocks.map(({ title, text, links }) => (
 			<div>
@@ -66,13 +66,13 @@ const blocks = [
 				<p class="w-80">{text}</p>
 				<ul class="list-none pl-0">
 					{links.map((link) => (
-						<li class="!mt-4 flex">
+						<li class="mt-4! flex">
 							<Icon
 								name={link.icon}
 								size="1.5rem"
 								color="var(--sl-color-white)"
 							/>
-							<a href={link.href} class="pl-2 !text-black no-underline">
+							<a href={link.href} class="pl-2 text-black! no-underline">
 								{link.text}
 							</a>
 						</li>

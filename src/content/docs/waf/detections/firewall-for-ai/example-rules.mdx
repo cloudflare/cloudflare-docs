@@ -1,0 +1,53 @@
+---
+pcx_content_type: configuration
+title: Example mitigation rules
+tags:
+  - AI
+sidebar:
+  order: 5
+---
+
+## Block requests with specific PII category in LLM prompt
+
+The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt that tries to obtain PII of a specific [category](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/):
+
+- **When incoming requests match**:
+
+  | Field              | Operator | Value         |
+  | ------------------ | -------- | ------------- |
+  | LLM PII Categories | is in    | `Credit Card` |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD"}))`
+
+- **Action**: _Block_
+
+## Block requests with specific unsafe content categories in LLM prompt
+
+The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt containing unsafe content of specific [categories](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/):
+
+- **When incoming requests match**:
+
+  | Field                       | Operator | Value                            |
+  | --------------------------- | -------- | -------------------------------- |
+  | LLM Unsafe topic categories | is in    | `S1: Violent Crimes` `S10: Hate` |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
+
+- **Action**: _Block_
+
+## Block requests with prompt injection attempt in LLM prompt
+
+The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an [injection score](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/) below `20`. Using a low injection score value in the rule helps avoid false positives.
+
+- **When incoming requests match**:
+
+  | Field               | Operator  | Value |
+  | ------------------- | --------- | ----- |
+  | LLM Injection score | less than | `20`  |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(cf.llm.prompt.injection_score < 20)`
+
+- **Action**: _Block_

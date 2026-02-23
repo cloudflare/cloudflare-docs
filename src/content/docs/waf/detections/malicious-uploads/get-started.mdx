@@ -8,7 +8,15 @@ head:
     content: Get started with malicious uploads detection
 ---
 
-import { Details, TabItem, Tabs } from "~/components";
+import {
+	Details,
+	TabItem,
+	Tabs,
+	Render,
+	Steps,
+	APIRequest,
+	DashButton,
+} from "~/components";
 
 :::note
 WAF content scanning is available to customers on an Enterprise plan with a paid add-on.
@@ -16,37 +24,46 @@ WAF content scanning is available to customers on an Enterprise plan with a paid
 
 ## 1. Turn on the detection
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Detection tools**.
+3. Turn on **Malicious uploads detection**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
 3. Under **Incoming traffic detections**, turn on **Malicious uploads**.
 
+</Steps>
+
 </TabItem> <TabItem label="API">
 
-Enable the feature using a `POST` request similar to the following:
+Use a `POST` request similar to the following:
 
-```bash
-curl --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/enable" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest path="/zones/{zone_id}/content-upload-scan/enable" method="POST" />
 
 </TabItem> <TabItem label="Terraform">
 
-Use the `cloudflare_content_scanning` resource to enable malicious uploads detection for a zone. For example:
-
-```terraform
-resource "cloudflare_content_scanning" "zone_malicious_uploads_example" {
-	zone_id = "<ZONE_ID>"
-	enabled = true
-}
-```
-
-For more information, refer to the [Terraform Cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+<Render file="detections/malicious-uploads-enable-terraform" product="waf" />
 
 </TabItem> </Tabs>
+
+:::note
+
+<Render file="content-scanning-latency" product="waf" />
+
+:::
 
 ## 2. Validate the content scanning behavior
 
@@ -54,11 +71,11 @@ Use [Security Analytics](/waf/analytics/security-analytics/) and HTTP logs to va
 
 You can use the [EICAR anti-malware test file](https://www.eicar.org/download-anti-malware-testfile/) to test content scanning (select the ZIP format).
 
-Alternatively, create a WAF custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate security events (available in **Security** > **Events**) that will allow you to validate your configuration.
+Alternatively, create a custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your configuration.
 
-## 3. Create a WAF custom rule
+## 3. Create a custom rule
 
-Create a WAF [custom rule](/waf/custom-rules/) that blocks detected malicious content objects uploaded to your application.
+[Create a custom rule](/waf/custom-rules/create-dashboard/) that blocks detected malicious content objects uploaded to your application.
 
 For example, create a custom rule with the _Block_ action and the following expression:
 
@@ -72,7 +89,9 @@ If you use the Expression Editor, enter the following expression:
 (cf.waf.content_scan.has_malicious_obj)
 ```
 
-This rule will match requests where the WAF detects a suspicious or malicious content object. For a list of fields provided by WAF content scanning, refer to [Content scanning fields](/waf/detections/malicious-uploads/#content-scanning-fields).
+Rule action: _Block_
+
+This rule will match requests where Cloudflare detects a suspicious or malicious content object. For a list of fields provided by WAF content scanning, refer to [Content scanning fields](/waf/detections/malicious-uploads/#content-scanning-fields).
 
 <Details header="Optional: Combine with other Rules language fields">
 
@@ -112,16 +131,17 @@ For additional examples, refer to [Example rules](/waf/detections/malicious-uplo
 
 To check uploaded content in a way that is not covered by the default configuration, add a [custom scan expression](/waf/detections/malicious-uploads/#custom-scan-expressions).
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+<Steps>
 
-2. Go to **Security** > **Settings**.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
 
-3. Under **Incoming traffic detections**, select **Malicious uploads**.
+   <DashButton url="/?to=/:account/:zone/security/settings" />
 
-4. Select **Add content object location**.
-
+2. (Optional) Filter by **Detection tools**.
+3. Under **Malicious uploads detection** > **Configurations**, select the edit icon.
+4. Select **Add content location**.
 5. In **Content location**, enter your custom scan expression. For example:
 
    ```txt
@@ -130,21 +150,39 @@ To check uploaded content in a way that is not covered by the default configurat
 
 6. Select **Save**.
 
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings**.
+3. Under **Incoming traffic detections**, select **Malicious uploads**.
+4. Select **Add content object location**.
+5. In **Content location**, enter your custom scan expression. For example:
+
+   ```txt
+   lookup_json_string(http.request.body.raw, "file")
+   ```
+
+6. Select **Save**.
+
+</Steps>
+
 </TabItem> <TabItem label="API">
 
 Use a `POST` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '[
-  {
-    "payload": "lookup_json_string(http.request.body.raw, \"file\")"
-  }
-]'
-```
+<APIRequest
+	path="/zones/{zone_id}/content-upload-scan/payloads"
+	method="POST"
+	json={[
+		{
+			payload: 'lookup_json_string(http.request.body.raw, "file")',
+		},
+	]}
+/>
 
 The above request will add the following expression to the current list of custom scan expressions:
 
@@ -154,25 +192,11 @@ lookup_json_string(http.request.body.raw, "file")
 
 </TabItem> <TabItem label="Terraform">
 
-Use the `cloudflare_content_scanning_expression` resource to add a custom scan expression. For example:
-
-```terraform
-resource "cloudflare_content_scanning_expression" "my_custom_scan_expression" {
-  zone_id = <ZONE_ID>
-  payload = "lookup_json_string(http.request.body.raw, \"file\")"
-}
-```
+<Render
+	file="detections/malicious-uploads-configure-expression-terraform"
+	product="waf"
+/>
 
 </TabItem> </Tabs>
 
-The custom scan expression will scan any string found in an HTTP body with the following JSON string:
-
-```json
-{ "file": "<BASE64_ENCODED_STRING>" }
-```
-
-Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information and additional examples of looking up fields in nested JSON payloads.
-
-:::note
-The content scanner will automatically decode Base64 strings.
-:::
+For more information, refer to [Custom scan expressions](/waf/detections/malicious-uploads/#custom-scan-expressions).

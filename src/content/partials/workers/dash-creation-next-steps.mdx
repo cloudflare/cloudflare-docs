@@ -2,7 +2,7 @@
 {}
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, PackageManagers, DashButton } from "~/components";
 
 ### Dashboard
 
@@ -10,10 +10,11 @@ Editing in the dashboard is helpful for simpler use cases.
 
 Once you have created your Worker script, you can edit and deploy your Worker using the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages**.
-3. Select your application.
-4. Select **Edit Code**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your application.
+3. Select **Edit Code**.
 
 ![Edit code directly within the Cloudflare dashboard](~/assets/images/workers/workers-edit-code.png)
 
@@ -31,24 +32,10 @@ Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://gith
 
 3. Run the following command, replacing the value of `[<DIRECTORY>]` which the location you want to put your Worker Script.
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest [<DIRECTORY>] -- --type=pre-existing
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn create cloudflare [<DIRECTORY>] --type=pre-existing
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest [<DIRECTORY>] --type=pre-existing
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="[<DIRECTORY>] --type=pre-existing"
+/>
 
 After you run this command - and work through the prompts - your local changes will not automatically sync with dashboard. So, once you download your script, continue using the CLI.

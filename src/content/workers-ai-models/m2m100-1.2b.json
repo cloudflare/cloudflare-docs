@@ -12,6 +12,10 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "async_queue",
+            "value": "true"
+        },
+        {
             "property_id": "price",
             "value": [
                 {
@@ -42,36 +46,89 @@
     "schema": {
         "input": {
             "type": "object",
-            "properties": {
-                "text": {
-                    "type": "string",
-                    "minLength": 1,
-                    "description": "The text to be translated"
+            "oneOf": [
+                {
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "The text to be translated"
+                        },
+                        "source_lang": {
+                            "type": "string",
+                            "default": "en",
+                            "description": "The language code of the source text (e.g., 'en' for English). Defaults to 'en' if not specified"
+                        },
+                        "target_lang": {
+                            "type": "string",
+                            "description": "The language code to translate the text into (e.g., 'es' for Spanish)"
+                        }
+                    },
+                    "required": [
+                        "text",
+                        "target_lang"
+                    ]
                 },
-                "source_lang": {
-                    "type": "string",
-                    "default": "en",
-                    "description": "The language code of the source text (e.g., 'en' for English). Defaults to 'en' if not specified"
-                },
-                "target_lang": {
-                    "type": "string",
-                    "description": "The language code to translate the text into (e.g., 'es' for Spanish)"
+                {
+                    "properties": {
+                        "requests": {
+                            "type": "array",
+                            "description": "Batch of the embeddings requests to run using async-queue",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "description": "The text to be translated"
+                                    },
+                                    "source_lang": {
+                                        "type": "string",
+                                        "default": "en",
+                                        "description": "The language code of the source text (e.g., 'en' for English). Defaults to 'en' if not specified"
+                                    },
+                                    "target_lang": {
+                                        "type": "string",
+                                        "description": "The language code to translate the text into (e.g., 'es' for Spanish)"
+                                    }
+                                },
+                                "required": [
+                                    "text",
+                                    "target_lang"
+                                ]
+                            }
+                        }
+                    },
+                    "required": [
+                        "requests"
+                    ]
                 }
-            },
-            "required": [
-                "text",
-                "target_lang"
             ]
         },
         "output": {
             "type": "object",
             "contentType": "application/json",
-            "properties": {
-                "translated_text": {
-                    "type": "string",
-                    "description": "The translated text in the target language"
+            "oneOf": [
+                {
+                    "properties": {
+                        "translated_text": {
+                            "type": "string",
+                            "description": "The translated text in the target language"
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "contentType": "application/json",
+                    "title": "Async response",
+                    "properties": {
+                        "request_id": {
+                            "type": "string",
+                            "description": "The async request id that can be used to obtain the results."
+                        }
+                    }
                 }
-            }
+            ]
         }
     }
 }

@@ -3,6 +3,8 @@ pcx_content_type: configuration
 title: Scheduled Handler
 ---
 
+import { TabItem, Tabs } from "~/components";
+
 ## Background
 
 When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-triggers/), the `scheduled()` handler handles the invocation.
@@ -11,12 +13,14 @@ When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-trigge
 
 You can test the behavior of your `scheduled()` handler in local development using Wrangler.
 
-Cron Triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Cron Triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` (or `/cdn-cgi/handler/scheduled` for Python Workers) route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
 npx wrangler dev --test-scheduled
 
 curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
+
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*" # Python Workers
 ```
 
 :::
@@ -25,30 +29,55 @@ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 
 ## Syntax
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 export default {
-	async scheduled(event, env, ctx) {
+	async scheduled(controller, env, ctx) {
 		ctx.waitUntil(doSomeTaskOnASchedule());
 	},
 };
 ```
 
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+interface Env {}
+export default {
+	async scheduled(
+		controller: ScheduledController,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		ctx.waitUntil(doSomeTaskOnASchedule());
+	},
+};
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response, fetch
+
+class Default(WorkerEntrypoint):
+    async def scheduled(self, controller, env, ctx):
+        ctx.waitUntil(doSomeTaskOnASchedule())
+```
+
+</TabItem></Tabs>
+
 ### Properties
 
-- `event.cron` string
-
+- `controller.cron` string
   - The value of the [Cron Trigger](/workers/configuration/cron-triggers/) that started the `ScheduledEvent`.
 
-- `event.type` string
+- `controller.type` string
+  - The type of controller. This will always return `"scheduled"`.
 
-  - The type of event. This will always return `"scheduled"`.
-
-- `event.scheduledTime` number
-
-  - The time the `ScheduledEvent` was scheduled to be executed in milliseconds since January 1, 1970, UTC. It can be parsed as <code>new Date(event.scheduledTime)</code>.
+- `controller.scheduledTime` number
+  - The time the `ScheduledEvent` was scheduled to be executed in milliseconds since January 1, 1970, UTC. It can be parsed as <code>new Date(controller.scheduledTime)</code>.
 
 - `env` object
-
   - An object containing the bindings associated with your Worker using ES modules format, such as KV namespaces and Durable Objects.
 
 - `ctx` object
@@ -58,6 +87,9 @@ export default {
 
 When a Workers script is invoked by a [Cron Trigger](/workers/configuration/cron-triggers/), the Workers runtime starts a `ScheduledEvent` which will be handled by the `scheduled` function in your Workers Module class. The `ctx` argument represents the context your function runs in, and contains the following methods to control what happens next:
 
-- <code>ctx.waitUntil(promisePromise)</code> : void
-
-  - Use this method to notify the runtime to wait for asynchronous tasks (for example, logging, analytics to third-party services, streaming and caching). The first `ctx.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/workers/configuration/cron-triggers/) Past Events table. Otherwise, it will be reported as a success.
+- <code>ctx.waitUntil(promisePromise)</code> : void - Use this method to notify
+  the runtime to wait for asynchronous tasks (for example, logging, analytics to
+  third-party services, streaming and caching). The first `ctx.waitUntil` to
+  fail will be observed and recorded as the status in the [Cron
+  Trigger](/workers/configuration/cron-triggers/) Past Events table. Otherwise,
+  it will be reported as a success.

@@ -24,9 +24,9 @@ When working with values in rule expressions, keep in mind the information in th
 
 Strings are sequences of bytes enclosed by specific delimiters.
 
-Cloudflare rules support two formats for specifying literal strings: [quoted literal strings](#quoted-string-syntax) and [raw strings](#raw-string-syntax). These formats have different delimiters and escaping mechanisms.
+Cloudflare rules support two formats for specifying literal strings, including regular expressions: [quoted literal strings](#quoted-string-syntax) and [raw strings](#raw-string-syntax). These formats have different delimiters and escaping mechanisms.
 
-While you can use either of the two string formats to specify regular expressions in an expression, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax), since the quoted string syntax has complex escaping rules and can lead to unexpected behaviors if not thoroughly tested.
+You can use either of the two string formats to specify regular expressions in an expression. However, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax), since the quoted string syntax has complex escaping rules and can lead to unexpected behaviors if not thoroughly tested.
 
 Regular expression matching is performed using the Rust regular expression engine.
 
@@ -93,17 +93,21 @@ regex_replace(http.host, r"\\", "a")
 http.request.uri.path matches r"/api/login\.aspx$"
 ```
 
-### Case sensitivity and regular expressions in values
+### Case sensitivity in string comparisons
 
-Since the evaluation of string literal values in expressions is case-sensitive, consider writing more than one simple expression to capture variants.
+Since the evaluation of string literal values in expressions is case-sensitive, consider one of the following options to capture capitalization variants in your expression:
 
-Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
+- Use the [`wildcard`](/ruleset-engine/rules-language/operators/#wildcard-matching) operator, which is case-insensitive, to match a string literal.
+- Use the [`lower()`](/ruleset-engine/rules-language/functions/#lower) function to convert the string to lowercase before comparison.
+- Use the [`matches`](/ruleset-engine/rules-language/operators/#regular-expression-matching) operator (only available in Business and Enterprise plans) with a regular expression that matches different variants.
+- Write several sub-expressions with the [`eq`](/ruleset-engine/rules-language/operators/#comparison-operators) or [`contains`](/ruleset-engine/rules-language/operators/#comparison-operators) operator, joined with the [`or`](/ruleset-engine/rules-language/operators/#supported-logical-operators) operator, to capture different variations of the string literal (for example, `<field> eq "a" or <field> eq "A"`).
 
 ### Regular expression limits
 
 Cloudflare has a few limits in place regarding regular expressions. One of those limits is that each rule supports a maximum of 64 regular expressions (regexes), regardless of your domain's plan.
 
 You can use the following strategies to reduce the number of regular expressions in a rule:
+
 - Use the [`contains`](/ruleset-engine/rules-language/operators/#comparison-operators) operator.
 - Use the [`wildcard`](/ruleset-engine/rules-language/operators/#wildcard-matching) / [`strict wildcard`](/ruleset-engine/rules-language/operators/#wildcard-matching) operators.
 - Use the [`starts_with()`](/ruleset-engine/rules-language/functions/#starts_with) and [`ends_with()`](/ruleset-engine/rules-language/functions/#ends_with) functions.
@@ -156,6 +160,7 @@ It is not possible to define your own arrays. You can only use arrays returned b
 
 <Render
 	file="rules-language-missing-value-behavior"
+	product="ruleset-engine"
 	params={{ errorDescription: "an out-of-bounds array index" }}
 />
 
@@ -227,6 +232,7 @@ It is not possible to define your own maps. You can only use maps returned by fi
 
 <Render
 	file="rules-language-missing-value-behavior"
+	product="ruleset-engine"
 	params={{ errorDescription: "a non-existing key in a map" }}
 />
 
@@ -236,7 +242,7 @@ Lists allow you to create a group of items and refer to them collectively, by na
 
 To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.
 
-The following example expression filters requests from IP addresses that are in an [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists) named `office_network`:
+The following example expression filters requests from IP addresses that are in an [IP list](/waf/tools/lists/custom-lists/#ip-lists) named `office_network`:
 
 ```sql
 (ip.src in $office_network)
@@ -254,7 +260,6 @@ Additionally, for some data types you can use ranges as elements:
 
 - For integer values, enter ranges in the form `<start_value>..<end_value>`. An inline list can contain both integer ranges and integer values.
 - For IP addresses, you can enter:
-
   - Explicit IP ranges in the form `<start_address>..<end_address>` (for example, `198.51.100.3..198.51.100.7`).
   - CIDR ranges (for example, `192.0.2.0/24` or `2001:0db8::/32`).
 
@@ -267,5 +272,3 @@ ip.src in {198.51.100.1 198.51.100.3..198.51.100.7 192.0.2.0/24 2001:0db8::/32}
 
 tcp.dstport in {8000..8009 8080..8089}
 ```
-
-

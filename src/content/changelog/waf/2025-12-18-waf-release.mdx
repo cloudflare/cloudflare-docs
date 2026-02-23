@@ -1,0 +1,132 @@
+---
+title: "WAF Release - 2025-12-18"
+description: Cloudflare WAF managed rulesets 2025-12-18 release
+date: 2025-12-18
+---
+
+import { RuleID } from "~/components";
+
+This week's release focuses on improvements to existing detections to enhance coverage.
+
+**Key Findings**
+
+- Existing rule enhancements have been deployed to improve detection resilience against broad classes of web attacks and strengthen behavioral coverage.
+
+
+
+
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+    <tbody>
+	<tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="6429f7386b1546cf9dfce631be5ec20c" />
+      </td>
+      <td>N/A</td>
+      <td>Atlassian Confluence - Code Injection - CVE:CVE-2021-26084 - Beta</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This rule is merged into the original rule "Atlassian Confluence - Code Injection - CVE:CVE-2021-26084" (ID: <RuleID id="e8c550810618437c953cf3a969e0b97a" />)</td>
+   </tr>
+   <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="9108ddb347b3497e9f9351640d9206e3" />
+      </td>
+      <td>N/A</td>
+      <td>PostgreSQL - SQLi - Copy - Beta</td>
+      <td>Log</td>
+      <td>Block</td>      
+      <td>This rule is merged into the original rule "PostgreSQL - SQLi - COPY" (ID: <RuleID id="705a6b5569d5472596910e3ce7265a4e" />)</td>
+   </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="cb687d73cc954092b58b90b00cd00ba7" />
+      </td>
+      <td>N/A</td>
+      <td>Generic Rules - Command Execution - Body</td>
+      <td>Log</td>
+      <td>Disabled</td>      
+      <td>This is a new detection.</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="bf30657ffa2a424cbf6570dbcd679ad4" />
+      </td>
+      <td>N/A</td>
+      <td>Generic Rules - Command Execution - Header</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>This is a new detection.</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="6df040f716194070a242967cfd181fb3" />
+      </td>
+      <td>N/A</td>
+      <td>Generic Rules - Command Execution - URI</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>This is a new detection.</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="39a4fdc37be948709fa7492e7a95bc3a" />
+      </td>
+      <td>N/A</td>
+      <td>SQLi - Tautology - URI - Beta</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This rule is merged into the original rule "SQLi - Tautology - URI" (ID: <RuleID id="4c580ea1b5174183b7f5e940b3de2e0a" />)</td>
+   </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="810e0ffe1dd84e67b159129b432ac90d" />
+      </td>
+      <td>N/A</td>
+      <td>SQLi - WaitFor Function - Beta</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This rule is merged into the original rule "SQLi - WaitFor Function" (ID: <RuleID id="b16fe708799441dea3049a99d5faba59" />)</td>
+   </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="80690005fef342e0ad6bc9af596c741e" />
+      </td>
+      <td>N/A</td>
+      <td>SQLi - AND/OR Digit Operator Digit 2 - Beta</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This rule is merged into the original rule "SQLi - AND/OR Digit Operator Digit" (ID: <RuleID id="98e7e08ae64247e2801ca4b388d80772" />)</td>
+   </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="eaf11ab80b0d491cbb7186f303b2f3fe" />
+      </td>
+      <td>N/A</td>
+      <td>SQLi - Equation 2 - Beta</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This rule is merged into the original rule "SQLi - Equation" (ID: <RuleID id="133c6f83cdf14509a4ca6b82a72a6b3a" />)</td>
+    </tr>
+  </tbody>    
+</table>

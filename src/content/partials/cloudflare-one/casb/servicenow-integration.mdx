@@ -9,6 +9,7 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/integration-description"
+	product="cloudflare-one"
 	params={{
 		integrationName: props.integrationName,
 		integrationAccountType: props.environmentName,
@@ -32,6 +33,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 <Render
 	file="casb/security-findings"
+	product="cloudflare-one"
 	params={{
 		integrationName: props.integrationName,
 		slugRelativePath: props.slugifiedName,

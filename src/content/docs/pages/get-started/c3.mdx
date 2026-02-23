@@ -1,5 +1,5 @@
 ---
-title: CLI
+title: C3 CLI
 pcx_content_type: get-started
 head:
   - tag: title
@@ -8,6 +8,7 @@ description: Use C3 (`create-cloudflare` CLI) to set up and deploy new
   applications using framework-specific setup guides to ensure each new
   application follows Cloudflare and any third-party best practices for
   deployment.
+
 ---
 
 import {
@@ -25,15 +26,18 @@ Cloudflare provides a CLI command for creating new Workers and Pages projects â€
 
 Open a terminal window and run:
 
-<Render file="c3-run-command-no-directory" product="workers" />
+<Render file="c3-run-command-no-directory" product="pages" />
 
 Running this command will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and then ask you questions about the type of application you wish to create.
+
+:::note
+To create a Pages project you must now specify the `--platform=pages` arg, otherwise C3 will always create a Workers project.
+:::
 
 ## Web frameworks
 
 If you choose the "Framework Starter" option, you will be prompted to choose a framework to use. The following frameworks are currently supported:
 
-- [Analog](/pages/framework-guides/deploy-an-analog-site/)
 - [Angular](/pages/framework-guides/deploy-an-angular-site/)
 - [Astro](/pages/framework-guides/deploy-an-astro-site/)
 - [Docusaurus](/pages/framework-guides/deploy-a-docusaurus-site/)
@@ -43,6 +47,7 @@ If you choose the "Framework Starter" option, you will be prompted to choose a f
 - [Nuxt](/pages/framework-guides/deploy-a-nuxt-site/)
 - [Qwik](/pages/framework-guides/deploy-a-qwik-site/)
 - [React](/pages/framework-guides/deploy-a-react-site/)
+- [Redwood](/workers/framework-guides/web-apps/redwoodsdk/)
 - [Remix](/pages/framework-guides/deploy-a-remix-site/)
 - [SolidStart](/pages/framework-guides/deploy-a-solid-start-site/)
 - [SvelteKit](/pages/framework-guides/deploy-a-svelte-kit-site/)
@@ -71,25 +76,11 @@ C3 collects any required input through a series of interactive prompts. You may 
 
 This is the full format of a C3 invocation alongside the possible CLI arguments:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn create cloudflare [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="--platform=pages [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]"
+/>
 
 - `DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -105,7 +96,7 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 
   - The possible values for this option are:
 
-    - `hello-world`: Hello World Starter
+    - `hello-world`: Hello World example
     - `web-framework`: Framework Starter
     - `demo`: Application Starter
     - `remote-template`: Template from a GitHub repo
@@ -139,6 +130,7 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
     - `nuxt`
     - `qwik`
     - `react`
+    - `redwood`
     - `remix`
     - `solid`
     - `svelte`
@@ -185,7 +177,7 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 
 - `--ts` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
-  - Use TypeScript in your application. Deprecated. Uuse `--lang=ts` instead.
+  - Use TypeScript in your application. Deprecated. Use `--lang=ts` instead.
 
 - `--git` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 

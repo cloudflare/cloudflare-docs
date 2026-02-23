@@ -10,7 +10,7 @@ head:
 
 import { GlossaryTooltip } from "~/components";
 
-The Cloudflare Network-layer DDoS Attack Protection managed ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at levels 3 and 4 of the OSI model.
+The Cloudflare Network-layer [DDoS Attack](https://www.cloudflare.com/en-gb/learning/ddos/what-is-a-ddos-attack/) Protection managed ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at levels 3 and 4 of the OSI model.
 
 Cloudflare updates the list of rules in the managed ruleset on a regular basis. Refer to the [changelog](/ddos-protection/change-log/network/) for more information on recent and upcoming changes.
 
@@ -27,13 +27,31 @@ Adjust the behavior of the rules in the managed ruleset by modifying the followi
 
 To adjust rule behavior, use one of the following methods:
 
-- [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/).
-- [Configure the managed ruleset via Cloudflare API](/ddos-protection/managed-rulesets/network/configure-api/).
+- [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/).
+- [Configure the managed ruleset via Cloudflare API](/ddos-protection/managed-rulesets/network/network-overrides/configure-api/).
 - [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-configure-network-layer-ddos-attack-protection).
 
-You can only configure the behavior of the managed ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
+You can only configure the behavior of the managed ruleset to set a stronger or weaker mitigation action (depending on the default action of a specific rule, you can change it to `Block` if the default action is `DDoS Dynamic` or `Log`.), or a lower default sensitivity for all rules. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
 
-Overrides can apply to all <GlossaryTooltip term="data packet">packets</GlossaryTooltip> or to a subset of incoming packets, depending on the override expression. Refer to [Override expressions](/ddos-protection/managed-rulesets/network/override-expressions/) for more information.
+Overrides can apply to all <GlossaryTooltip term="data packet">packets</GlossaryTooltip> or to a subset of incoming packets, depending on the override expression. Refer to [Override expressions](/ddos-protection/managed-rulesets/network/network-overrides/override-expressions/) for more information.
+
+### Network Analytics rule display
+
+Cloudflare regularly deploys new detection rules to the Network-layer DDoS managed ruleset. To ensure high accuracy and minimize false positives, these rules undergo a testing phase before they are fully promoted.
+
+When a rule is in its testing phase, you may notice specific behaviors in the Cloudflare dashboard.
+
+New rules often default to `Log` (visible in **DDoS Managed Rules** > **Browse Rules**). This allows Cloudflare to evaluate the rule's performance against real-world traffic without impacting legitimate packets.
+
+In the [Network Analytics](/analytics/network-analytics/) dashboard, traffic matched by these testing-phase rules is labeled as `Log (rule disabled)`. This is a reporting convention indicating the rule is in a pre-production monitoring state.
+
+While you can manually override a rule from `Log` to `Block`, consider the following before doing so:
+
+- Rules in the testing phase have not yet been fully tuned for broad deployment. Overriding them to a mitigation action (like `Block`) may increase the risk of dropping legitimate traffic.
+
+- The default action of a rule is decided during the testing period. Cloudflare may set its default action to **DDoS Dynamic**, which may use rate-limiting or a multi-step mitigation combination based on traffic factors. By applying a manual `Block` override, you prevent your configuration from automatically inheriting the more nuanced DDoS Dynamic action once it is released.
+
+If you choose to override a testing rule to mitigate an active attack, Cloudflare recommends reviewing that override periodically to see if the rule has been promoted to a permanent default action. 
 
 ## Availability
 
@@ -50,6 +68,6 @@ However, only Magic Transit and Spectrum customers on an Enterprise plan can cus
 Magic Transit customers can configure the following additional products:
 
 - Enable [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) to detect and mitigate sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods or SYN and SYN-ACK floods.
-- Create custom [Magic Firewall](/magic-firewall/) rules to block additional network-layer attacks.
+- Create custom [Network Firewall](/cloudflare-network-firewall/) rules to block additional network-layer attacks.
 
 Spectrum customers can use [IP Access](/waf/tools/ip-access-rules/) rules to block additional network-layer attacks.

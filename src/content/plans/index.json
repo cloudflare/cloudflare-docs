@@ -3,15 +3,15 @@
 		"title": "Account options",
 		"single_sign_on": {
 			"title": "Cloudflare dashboard single sign-on",
-			"link": "/cloudflare-one/applications/configure-apps/dash-sso-apps/",
+			"link": "/fundamentals/manage-members/dashboard-sso/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
-					"summary": "Enterprise-only",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "Yes (with Standard or Premium Success plans)"
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
 				}
 			}
 		},
@@ -31,7 +31,7 @@
 		},
 		"zone_holds": {
 			"title": "Zone holds",
-			"link": "/fundamentals/setup/account/account-security/zone-holds/",
+			"link": "/fundamentals/account/account-security/zone-holds/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -90,7 +90,7 @@
 		},
 		"logpush": {
 			"title": "Logpush",
-			"link": "/logs/about/",
+			"link": "/logs/logpush/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -176,9 +176,9 @@
 					"ent": "30 seconds"
 				},
 				"minimum_cache_rules": {
-					"title": "Minimum Browser Cache TTL (Cache Rules)",
-					"free": "2 hours",
-					"pro": "1 hour",
+					"title": "Minimum Browser Cache TTL",
+					"free": "1 second",
+					"pro": "1 second",
 					"biz": "1 second",
 					"ent": "1 second"
 				},
@@ -438,9 +438,9 @@
 				"options": {
 					"title": "Purge options",
 					"free": "URL, Hostname, Tag, Prefix, and Purge Everything",
-                    "pro": "URL, Hostname, Tag, Prefix, and Purge Everything",
-                    "biz": "URL, Hostname, Tag, Prefix, and Purge Everything",
-                    "ent": "URL, Hostname, Tag, Prefix, and Purge Everything"
+					"pro": "URL, Hostname, Tag, Prefix, and Purge Everything",
+					"biz": "URL, Hostname, Tag, Prefix, and Purge Everything",
+					"ent": "URL, Hostname, Tag, Prefix, and Purge Everything"
 				}
 			}
 		},
@@ -456,19 +456,19 @@
 					"biz": "10 requests per second",
 					"ent": "50 requests per second"
 				},
-                "limits_bucket": {
-                    "title": "Bucket size",
-                    "free": "25",
-                    "pro": "25",
-                    "biz": "50",
-                    "ent": "500"
-                },
-                "limits_operations": {
-                    "title": "Max operations per request",
-                    "free": "100",
-                    "pro": "100",
-                    "biz": "100",
-                    "ent": "100"
+				"limits_bucket": {
+					"title": "Bucket size",
+					"free": "25",
+					"pro": "25",
+					"biz": "50",
+					"ent": "500"
+				},
+				"limits_operations": {
+					"title": "Max operations per request",
+					"free": "100",
+					"pro": "100",
+					"biz": "100",
+					"ent": "100"
 				}
 			}
 		},
@@ -483,6 +483,13 @@
 					"pro": "1500 URLs per second",
 					"biz": "1500 URLs per second",
 					"ent": "3000 URLs per second"
+				},
+				"limits_operations": {
+					"title": "Max operations per request",
+					"free": "100",
+					"pro": "100",
+					"biz": "100",
+					"ent": "500"
 				}
 			}
 		},
@@ -560,20 +567,6 @@
 	"global_configurations": {
 		"title": "Global configurations",
 		"link": "/fundamentals/global-configurations/",
-		"custom_pages": {
-			"title": "Custom error/challenge pages",
-			"link": "/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Pro and above",
-					"free": "No",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
 		"lists": {
 			"title": "Lists",
 			"link": "/waf/tools/lists/",
@@ -587,16 +580,25 @@
 					"ent": "Yes"
 				},
 				"b_number_of_custom_lists": {
-					"title": "Number of custom lists",
+					"title": "Number of custom lists (any type)",
 					"link": "/waf/tools/lists/custom-lists/",
-					"free": 1,
-					"lite": 10,
-					"pro": 10,
-					"biz": 10,
-					"ent": 10
+					"free": "1",
+					"lite": "10",
+					"pro": "10",
+					"biz": "10",
+					"ent": "1,000"
 				},
-				"c_custom_lists_ip": {
-					"title": "Custom lists with IPs (IP lists)",
+				"c_max_list_items": {
+					"title": "Max. number of list items (across all custom lists)",
+					"link": "/waf/tools/lists/custom-lists/",
+					"free": "10,000",
+					"lite": "10,000",
+					"pro": "10,000",
+					"biz": "10,000",
+					"ent": "500,000"
+				},
+				"d_ip_lists": {
+					"title": "IP lists",
 					"link": "/waf/tools/lists/custom-lists/",
 					"free": "Yes",
 					"lite": "Yes",
@@ -604,8 +606,8 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
-				"d_custom_lists_other": {
-					"title": "Other custom lists (ASNs, hostnames)",
+				"e_other_lists": {
+					"title": "Other custom lists (hostnames, ASNs)",
 					"link": "/waf/tools/lists/custom-lists/",
 					"free": "No",
 					"lite": "No",
@@ -613,7 +615,7 @@
 					"biz": "No",
 					"ent": "Yes"
 				},
-				"e_open_proxies_list": {
+				"t_open_proxies_list": {
 					"title": "Managed IP List: Cloudflare Open Proxies",
 					"link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
 					"free": "No",
@@ -621,7 +623,7 @@
 					"biz": "No",
 					"ent": "Yes"
 				},
-				"f_all_managed_ip_lists": {
+				"u_all_managed_ip_lists": {
 					"title": "All Managed IP Lists",
 					"link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
 					"free": "No",
@@ -697,19 +699,33 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
-				"maximum_duration": {
-					"title": "Maximum time interval",
+				"maximum_duration_zone": {
+					"title": "Maximum time interval (zone)",
 					"free": "7 days",
 					"pro": "31 days",
 					"biz": "31 days",
-					"ent": "31 days"
+					"ent": "62 days"
 				},
-				"historical_data": {
-					"title": "Historical data",
+				"maximum_duration_account": {
+					"title": "Maximum time interval (account)",
+					"free": "7 days",
+					"pro": "7 days",
+					"biz": "7 days",
+					"ent": "62 days"
+				},
+				"historical_data_zone": {
+					"title": "Historical data (zone)",
 					"free": "8 days",
 					"pro": "31 days",
 					"biz": "31 days",
-					"ent": "31 days"
+					"ent": "62 days"
+				},
+				"historical_data_account": {
+					"title": "Historical data (account)",
+					"free": "8 days",
+					"pro": "8 days",
+					"biz": "8 days",
+					"ent": "62 days"
 				}
 			}
 		},
@@ -740,6 +756,20 @@
 					"pro": "No",
 					"biz": "No",
 					"ent": "Paid add-on"
+				},
+				"historical_data_account": {
+					"title": "Historical data",
+					"free": "N/A",
+					"pro": "N/A",
+					"biz": "N/A",
+					"ent": "62 days"
+				},
+				"maximum_duration_account": {
+					"title": "Maximum time interval",
+					"free": "N/A",
+					"pro": "N/A",
+					"biz": "N/A",
+					"ent": "62 days"
 				}
 			}
 		},
@@ -1066,20 +1096,6 @@
 				}
 			}
 		},
-		"response_buffering": {
-			"title": "Response buffering",
-			"link": "/network/response-buffering/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Enterprise-only",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "Yes"
-				}
-			}
-		},
 		"true_client_ip_header": {
 			"title": "True Client IP Header",
 			"link": "/fundamentals/reference/http-headers/#true-client-ip-enterprise-plan-only",
@@ -1243,6 +1259,20 @@
 					"pro": 25,
 					"biz": 50,
 					"ent": 300
+				},
+				"x_error_pages": {
+					"title": "Error Pages",
+					"free": "No",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"z_origin_error_pages": {
+					"title": "Origin Error Pages",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
 				}
 			}
 		},
@@ -1318,7 +1348,7 @@
 			}
 		},
 		"snippets": {
-			"title": "Snippets (beta)",
+			"title": "Snippets",
 			"link": "/rules/snippets/",
 			"properties": {
 				"availability": {
@@ -1337,7 +1367,7 @@
 					"ent": 300
 				},
 				"subrequests": {
-					"title": "Number of [[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]",
+					"title": "Number of snippet subrequests",
 					"free": 0,
 					"pro": 2,
 					"biz": 3,
@@ -1458,7 +1488,7 @@
 		"ddos": {
 			"title": "DDoS protection",
 			"link": "/ddos-protection/",
-			"ent_plus": "Enterprise with add-on",
+			"ent_plus": "Enterprise with Advanced DDoS Protection add-on",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -1508,7 +1538,7 @@
 					"link": "/ddos-protection/managed-rulesets/#proactive-false-positive-detection-for-new-rules",
 					"free": "No",
 					"pro": "No",
-					"biz": "Yes",
+					"biz": "No",
 					"ent": "Yes",
 					"ent_plus": "Yes"
 				},
@@ -1546,6 +1576,15 @@
 					"biz": "Available to [Magic Transit](/magic-transit/) customers",
 					"ent": "Available to [Magic Transit](/magic-transit/) customers",
 					"ent_plus": "Available to [Magic Transit](/magic-transit/) customers"
+				},
+				"ruleset_overrides": {
+					"title": "Number of ruleset overrides allowed",
+					"link": "/ddos-protection/reference/alerts/",
+					"free": "1",
+					"pro": "1",
+					"biz": "1",
+					"ent": "1",
+					"ent_plus": "10"
 				},
 				"v_alerts": {
 					"title": "Alerts",
@@ -1622,7 +1661,7 @@
 				"retention": {
 					"title": "Retention",
 					"free": "7",
-					"pro": "31",
+					"pro": "7",
 					"biz": "31",
 					"ent": "90"
 				},
@@ -1860,8 +1899,16 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
-				"z_custom_rulesets": {
-					"title": "Custom rulesets",
+				"x_custom_rulesets_zone": {
+					"title": "Number of custom rulesets (zone)",
+					"link": "/waf/account/custom-rulesets/",
+					"free": "1",
+					"pro": "2",
+					"biz": "5",
+					"ent": "10"
+				},
+				"z_custom_rulesets_account": {
+					"title": "Account-level custom rulesets",
 					"link": "/waf/account/custom-rulesets/",
 					"summary": "Enterprise with add-on",
 					"free": "No",
@@ -1886,7 +1933,7 @@
 					"ent_plus": "Yes"
 				},
 				"b_script_monitor": {
-					"title": "Script monitor",
+					"title": "Script monitoring",
 					"summary": "Available on all plans",
 					"free": "Yes",
 					"pro": "Yes",
@@ -1895,7 +1942,7 @@
 					"ent_plus": "Yes"
 				},
 				"c_connection_monitor": {
-					"title": "Connection monitor",
+					"title": "Connection monitoring",
 					"summary": "Business and above",
 					"free": "No",
 					"pro": "No",
@@ -1904,7 +1951,7 @@
 					"ent_plus": "Yes"
 				},
 				"d_cookie_monitor": {
-					"title": "Cookie monitor",
+					"title": "Cookie monitoring",
 					"summary": "Business and above",
 					"free": "No",
 					"pro": "No",
@@ -1922,7 +1969,7 @@
 					"ent_plus": "Yes"
 				},
 				"f_new_script_new_domain_alerts": {
-					"title": "New Resources Alerts\n\nand New Domain Alerts",
+					"title": "New Resources Alerts\nand New Domain Alerts",
 					"summary": "Business and above",
 					"free": "No",
 					"pro": "No",
@@ -1958,7 +2005,7 @@
 					"ent_plus": "Yes"
 				},
 				"l_cookie_advanced_fields": {
-					"title": "Cookie monitor\n advanced fields",
+					"title": "Cookie monitoring\n advanced fields",
 					"summary": "Enterprise with add-on",
 					"free": "No",
 					"pro": "No",
@@ -2098,7 +2145,7 @@
 					"title": "Pricing",
 					"link": "https://www.cloudflare.com/application-services/products/turnstile/#Page-Pricing-AS",
 					"free": "Free",
-					"ent": "Contact sales"
+					"ent": "Contact Sales"
 				},
 				"widgets": {
 					"title": "Number of widgets",
@@ -2106,11 +2153,21 @@
 					"free": "Up to 20 widgets",
 					"ent": "Unlimited"
 				},
+				"widget_types": {
+					"title": "All widget types",
+					"free": "Yes",
+					"ent": "Yes"
+				},
+				"challenges_limit": {
+					"title": "Unlimited challenges (traffic or verification requests)",
+					"free": "Yes",
+					"ent": "Yes"
+				},
 				"hostname_management": {
 					"title": "Hostname management",
 					"link": "/turnstile/concepts/hostname-management/",
-					"free": "15 hostnames per widget",
-					"ent": "Maximum of 100 hostnames per widget"
+					"free": "10 hostnames per widget",
+					"ent": "Maximum of 200 hostnames per widget"
 				},
 				"anyhostname": {
 					"title": "Any hostname widget (no preconfigured hostnames)",
@@ -2138,6 +2195,16 @@
 				"offlabel": {
 					"title": "Offlabel (remove Cloudflare branding)",
 					"free": "No",
+					"ent": "Yes"
+				},
+				"compliance": {
+					"title": "WCAG 2.1 AA compliance",
+					"free": "Yes",
+					"ent": "Yes"
+				},
+				"community": {
+					"title": "Community support",
+					"free": "Yes",
 					"ent": "Yes"
 				}
 			}
@@ -2206,6 +2273,21 @@
 					"biz": "No",
 					"ent": "Paid add-on"
 				},
+				"http": {
+					"title": "HTTP",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Paid add-on"
+				},
+				"https": {
+					"title": "HTTPS",
+					"link": "spectrum/reference/limitations/#https",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Paid add-on"
+				},
 				"v_minecraft": {
 					"title": "Minecraft (one app allowed)",
 					"link": "/spectrum/reference/limitations/#minecraft",
@@ -2233,20 +2315,6 @@
 	},
 	"speed": {
 		"title": "Speed",
-		"amp": {
-			"title": "AMP Real URL",
-			"link": "/speed/optimization/other/amp-real-url/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Available on all plans",
-					"free": "Yes",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
 		"automatic_platform_optimization": {
 			"title": "Automatic Platform Optimization",
 			"link": "/automatic-platform-optimization/",
@@ -2255,20 +2323,6 @@
 					"title": "Availability",
 					"summary": "Included with Pro and above",
 					"free": "Paid add-on",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
-		"automatic_signed_exchanges": {
-			"title": "Automatic Signed Exchanges (SXGs)",
-			"link": "/speed/optimization/other/signed-exchanges/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Included with Pro and above or [Automatic Platform Optimization](/automatic-platform-optimization/)",
-					"free": "No",
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
@@ -2381,20 +2435,6 @@
 					"pro": "Paid add-on",
 					"biz": "Paid add-on",
 					"ent": "Paid add-on"
-				}
-			}
-		},
-		"mirage": {
-			"title": "Mirage",
-			"link": "/speed/optimization/images/mirage/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Pro and above",
-					"free": "No",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
 				}
 			}
 		},
@@ -2686,7 +2726,7 @@
 					"free": "Yes",
 					"pro": "Yes",
 					"biz": "Yes",
-					"ent": "Yes"
+					"ent": "Contact your account team"
 				},
 				"b_initial_quota": {
 					"title": "Hostnames included",
@@ -2694,14 +2734,21 @@
 					"free": "100",
 					"pro": "100",
 					"biz": "100",
-					"ent": "0"
+					"ent": "Custom"
 				},
 				"c_max_hostnames": {
 					"title": "Max hostnames",
-					"free": "5,000",
-					"pro": "5,000",
-					"biz": "5,000",
-					"ent": "Unlimited, but contact sales if using over 5,000."
+					"free": "50,000",
+					"pro": "50,000",
+					"biz": "50,000",
+					"ent": "Unlimited, but contact sales if using over 50,000."
+				},
+				"d_cost_per_hostname": {
+					"title": "Price per additional hostname",
+					"free": "$0.10",
+					"pro": "$0.10",
+					"biz": "$0.10",
+					"ent": "Custom pricing"
 				},
 				"custom_analytics": {
 					"title": "[Custom analytics](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/)",
@@ -2712,10 +2759,17 @@
 				},
 				"custom_origin": {
 					"title": "[Custom origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/)",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"sni_rewrite": {
+					"title": "[SNI Rewrite for Custom Origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites)",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Yes"
+					"ent": "Contact your account team"
 				},
 				"custom_certificates": {
 					"title": "[Custom certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/)",
@@ -2969,6 +3023,20 @@
 			}
 		}
 	},
+	"secrets_store": {
+		"title": "Secrets Store",
+		"link": "/secrets-store/",
+		"properties": {
+			"availability": {
+				"title": "Availability",
+				"summary": "Available in open beta",
+				"free": "No",
+				"pro": "No",
+				"biz": "No",
+				"ent": "No"
+			}
+		}
+	},
 	"support": {
 		"title": "Support",
 		"a_tickets": {
@@ -3151,7 +3219,7 @@
 					"free": 0,
 					"pro": 0,
 					"biz": 1,
-					"ent": "1 (default)\n\n<em>With add-on</em>\nCustom (can purchase more)"
+					"ent": "1 (default)\n\n<em>With advanced:</em>\nCustom (can purchase more)"
 				},
 				"customized_templates": {
 					"title": "Customized templates",
@@ -3159,7 +3227,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"queueing_methods": {
 					"title": "Queueing methods",
@@ -3167,7 +3235,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "First In First Out (FIFO)",
-					"ent": "First In First Out (FIFO) (default)\n\n<em>With add-on</em>\nAll options"
+					"ent": "First In First Out (FIFO) (default)\n\n<em>With advanced:</em>\nFIFO, Random, Reject, Passthrough"
 				},
 				"configure_multiple_hostnames_paths": {
 					"title": "Configure multiple hostnames and paths",
@@ -3175,7 +3243,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"disable_session_renewal": {
 					"title": "Disable session renewal",
@@ -3183,7 +3251,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"json_response": {
 					"title": "JSON-friendly response",
@@ -3191,7 +3259,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"k_customize_queuing_status_code": {
 					"title": "Customize queuing status code",
@@ -3207,7 +3275,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"rules": {
 					"title": "Waiting Room rules",
@@ -3215,7 +3283,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"session_revocation": {
 					"title": "Session Revocation",
@@ -3223,7 +3291,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"seo_crawler": {
 					"title": "SEO Crawler Bypassing",
@@ -3239,7 +3307,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "Invisible only",
-					"ent": "Invisible (default)\n\n<em>With add-on</em>\nAll options"
+					"ent": "Invisible (default)\n\n<em>With advanced:</em>\nInvisible, Managed, Non Interactive"
 				},
 				"turnstile_fail_action": {
 					"title": "Turnstile Fail Action",
@@ -3247,7 +3315,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "Log only",
-					"ent": "Log only (default)\n\n<em>With add-on</em>\nInfinite queue"
+					"ent": "Log only (default)\n\n<em>With advanced:</em>\nLog only & Infinite queue"
 				}
 			}
 		}

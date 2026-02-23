@@ -3,7 +3,7 @@ releaseNotes: |-
 
   **Notable updates**
 
-  - Fixed an issue where you would incorrectly recieve an "SSL Certificate Missing" error message when you had trouble connecting to WARP
+  - Fixed an issue where you would incorrectly receive an "SSL Certificate Missing" error message when you had trouble connecting to WARP
 
   **Known issues**
 

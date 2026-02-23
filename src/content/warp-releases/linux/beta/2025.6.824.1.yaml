@@ -1,0 +1,34 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements**
+  - Fixed an issue preventing devices from reaching split-tunneled traffic even when WARP was disconnected.
+  - Fix to prevent WARP from re-enabling its firewall rules after a user-initiated disconnect.
+  - Improvement to managed network detection checks for faster switching between managed networks.
+
+  **Known issues**
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+version: 2025.6.824.1
+releaseDate: 2025-07-23T21:24:34.194Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/centos8-arm/version/2025.6.824.1
+packageSize: 52636230
+platformName: Linux
+linuxPlatforms:
+  centos8-arm: 52636230
+  noble-intel: 50974518
+  bookworm-arm: 49841630
+  focal-intel: 51493190
+  centos8-intel: 53572222
+  fedora35-arm: 52430708
+  buster-arm: 50195866
+  focal-arm: 50187524
+  bullseye-intel: 51398148
+  fedora34-intel: 54019369
+  bookworm-intel: 51167848
+  fedora34-arm: 52864538
+  bullseye-arm: 50095998
+  fedora35-intel: 53672865
+  noble-arm: 50275664
+  jammy-intel: 51175070
+  jammy-arm: 49860826
+  buster-intel: 51591844

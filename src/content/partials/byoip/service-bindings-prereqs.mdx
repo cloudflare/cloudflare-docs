@@ -1,0 +1,34 @@
+---
+params:
+ - pre_existing_product
+ - added_product
+---
+
+import { Details } from "~/components";
+
+Cloudflare **strongly** recommends implementing service bindings through an **aggregated** CIDR block, as it is more efficient than adding discrete bindings for non-contiguous CIDR blocks.
+
+<Details header="Example">
+
+**{props.pre_existing_product} protected prefix:** `203.0.113.0/24`
+
+**IPs to upgrade to {props.added_product}:**
+
+`203.0.113.16`<br />
+`203.0.113.17`<br />
+`203.0.113.18`<br />
+`203.0.113.19`<br />
+`203.0.113.20`<br />
+`203.0.113.21`<br />
+`203.0.113.22`<br />
+`203.0.113.23`
+
+Add one discrete {props.added_product} service binding for `203.0.113.16` with a `/29` netmask.
+
+</Details>
+
+Once a service binding is created (or deleted), it will take **four to six hours** to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
+
+:::note
+This guide assumes that the prefix is tied to a single Cloudflare account that has both {props.pre_existing_product} and {props.added_product} properties. If you are using [prefix delegations](/byoip/concepts/prefix-delegations/), the service bindings must be [created](#2-create-service-binding) on the parent account.
+:::

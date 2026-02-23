@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: RPC (WorkerEntrypoint)
+tags:
+  - RPC
 head:
   - tag: title
     content: Service bindings - RPC (WorkerEntrypoint)
@@ -8,7 +10,7 @@ description: Facilitate Worker-to-Worker communication via RPC.
 
 ---
 
-import { DirectoryListing, Render, WranglerConfig } from "~/components"
+import { DirectoryListing, Render, TypeScriptExample, WranglerConfig } from "~/components"
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings) allow one Worker to call into another, without going through a publicly-accessible URL.
 
@@ -51,11 +53,14 @@ For example, a Worker that declares a binding to the [environment variable](/wor
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-
-[vars]
-GREETING = "Hello"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"vars": {
+		"GREETING": "Hello"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -101,6 +106,40 @@ export default class extends WorkerEntrypoint {
 }
 ```
 
+### Fetching static assets
+
+If your Worker has a [static assets binding](/workers/static-assets/binding/), you can call `this.env.ASSETS.fetch()` from within an RPC method. Since RPC methods do not receive a `request` parameter, construct a `Request` or URL with any hostname — the hostname is ignored by the assets binding, only the pathname matters:
+
+<TypeScriptExample>
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class ImageWorker extends WorkerEntrypoint {
+  async getImage(path: string): Promise<Response> {
+    return this.env.ASSETS.fetch(
+      new Request(`https://assets.local${path}`)
+    );
+  }
+}
+```
+
+</TypeScriptExample>
+
+The caller can then invoke this method via RPC:
+
+<TypeScriptExample>
+
+```ts
+const response = await env.IMAGE_SERVICE.getImage("/images/logo.png");
+```
+
+</TypeScriptExample>
+
+:::note
+When fetching assets via the binding, the hostname (for example, `assets.local`) is not meaningful — any valid hostname will work. Only the URL pathname is used to match assets. The convention `assets.local` is used for clarity.
+:::
+
 ## Named entrypoints
 
 You can also export any number of named `WorkerEntrypoint` classes from within a single Worker, in addition to the default export. You can then declare a Service binding to a specific named entrypoint.
@@ -111,13 +150,18 @@ You can use this to group multiple pieces of compute together. For example, you 
 
 <WranglerConfig>
 
-```toml
-name = "todo-app"
-
-[[d1_databases]]
-binding = "D1"
-database_name = "todo-app-db"
-database_id = "<unique-ID-for-your-database>"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "todo-app",
+	"d1_databases": [
+		{
+			"binding": "D1",
+			"database_name": "todo-app-db",
+			"database_id": "<unique-ID-for-your-database>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -145,7 +189,7 @@ export class UserEntrypoint extends WorkerEntrypoint {
       "SELECT title FROM tasks WHERE user_id = ?"
     )
       .bind(userId)
-      .all();
+      .run();
   }
 
   async createTask(userId, title) {
@@ -170,13 +214,18 @@ You can then declare a Service binding directly to `AdminEntrypoint` in another 
 
 <WranglerConfig>
 
-```toml
-name = "admin-app"
-
-[[services]]
-binding = "ADMIN"
-service = "todo-app"
-entrypoint = "AdminEntrypoint"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "admin-app",
+	"services": [
+		{
+			"binding": "ADMIN",
+			"service": "todo-app",
+			"entrypoint": "AdminEntrypoint"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

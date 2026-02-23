@@ -7,7 +7,7 @@ head: []
 description: Learn how to troubleshoot ERR_TOO_MANY_REDIRECTS when using Cloudflare SSL/TLS.
 ---
 
-After you [add a new domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors.
+After you [add a new domain](/fundamentals/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors.
 
 This error occurs when visitors get stuck in a redirect loop.
 
@@ -28,7 +28,7 @@ end
 This error is commonly caused by:
 
 - A misconfiguration of your [SSL/TLS Encryption mode](#encryption-mode-misconfigurations).
-- Various settings in [**SSL/TLS** > **Edge Certificates**](#edge-certificate-settings).
+- Various settings on the [**Edge Certificates**](#edge-certificate-settings) page.
 - A misconfigured [redirect rule](#redirect-rules).
 
 :::note

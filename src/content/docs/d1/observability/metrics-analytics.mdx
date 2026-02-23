@@ -1,11 +1,12 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
+reviewed: 2025-09-02
 sidebar:
   order: 10
 ---
 
-import { Details } from "~/components";
+import { Details, DashButton } from "~/components";
 
 D1 exposes database analytics that allow you to inspect query volume, query latency, and storage size across all and/or each database in your account.
 
@@ -40,10 +41,11 @@ Refer to the [Pricing documentation](/d1/platform/pricing/) for more details on 
 
 Per-database analytics for D1 are available in the Cloudflare dashboard. To view current and historical metrics for a database:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1).
-3. Select an existing database.
-4. Select the **Metrics** tab.
+1. In the Cloudflare dashboard, go to the **D1** page.
+
+   <DashButton url="/?to=/:account/workers/d1" />
+2. Select an existing D1 database.
+3. Select the **Metrics** tab.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 
@@ -61,17 +63,18 @@ D1's GraphQL datasets require an `accountTag` filter with your Cloudflare accoun
 
 To query the sum of `readQueries`, `writeQueries` for a given `$databaseId`, grouping by `databaseId` and `date`:
 
-```graphql
-query {
+```graphql graphql-api-explorer
+query D1ObservabilitySampleQuery(
+	$accountTag: string!
+	$start: Date
+	$end: Date
+	$databaseId: string
+) {
 	viewer {
-		accounts(filter: { accountTag: $accountId }) {
+		accounts(filter: { accountTag: $accountTag }) {
 			d1AnalyticsAdaptiveGroups(
 				limit: 10000
-				filter: {
-					date_geq: $startDate
-					date_leq: $endDate
-					databaseId: $databaseId
-				}
+				filter: { date_geq: $start, date_leq: $end, databaseId: $databaseId }
 				orderBy: [date_DESC]
 			) {
 				sum {
@@ -90,17 +93,18 @@ query {
 
 To query both the average `queryBatchTimeMs` and the 90th percentile `queryBatchTimeMs` per database:
 
-```graphql
-query {
+```graphql graphql-api-explorer
+query D1ObservabilitySampleQuery2(
+	$accountTag: string!
+	$start: Date
+	$end: Date
+	$databaseId: string
+) {
 	viewer {
 		accounts(filter: { accountTag: $accountId }) {
 			d1AnalyticsAdaptiveGroups(
 				limit: 10000
-				filter: {
-					date_geq: $startDate
-					date_leq: $endDate
-					databaseId: $databaseId
-				}
+				filter: { date_geq: $start, date_leq: $end, databaseId: $databaseId }
 				orderBy: [date_DESC]
 			) {
 				quantiles {
@@ -118,17 +122,18 @@ query {
 
 To query your account-wide `readQueries` and `writeQueries`:
 
-```graphql
-query {
+```graphql graphql-api-explorer
+query D1ObservabilitySampleQuery3(
+	$accountTag: string!
+	$start: Date
+	$end: Date
+	$databaseId: string
+) {
 	viewer {
-		accounts(filter: { accountTag: $accountId }) {
+		accounts(filter: { accountTag: $accountTag }) {
 			d1AnalyticsAdaptiveGroups(
 				limit: 10000
-				filter: {
-					date_geq: $startDate
-					date_leq: $endDate
-					databaseId: $databaseId
-				}
+				filter: { date_geq: $start, date_leq: $end, databaseId: $databaseId }
 			) {
 				sum {
 					readQueries
@@ -168,6 +173,7 @@ Run `wrangler d1 insights --help` to view current options.
 ```sh
 npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --limit=3
 ```
+
 ```sh output
  ⛅️ wrangler 3.95.0
 -------------------
@@ -213,6 +219,7 @@ npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --limit
   }
 ]
 ```
+
 </Details>
 
 <Details header="To find top 3 queries by average execution time:">
@@ -220,6 +227,7 @@ npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --limit
 ```sh
 npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --limit=3
 ```
+
 ```sh output
 ⛅️ wrangler 3.95.0
 -------------------
@@ -265,6 +273,7 @@ npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --limit=
   }
 ]
 ```
+
 </Details>
 
 <Details header="To find top 10 queries by rows written in last 7 days:">
@@ -272,6 +281,7 @@ npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --limit=
 ```sh
 npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --limit=10 --timePeriod=7d
 ```
+
 ```sh output
 ⛅️ wrangler 3.95.0
 -------------------
@@ -317,6 +327,7 @@ npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --limi
   }
 ]
 ```
+
 </Details>
 
 :::note

@@ -1,9 +1,11 @@
 ---
-updated: 2023-12-08
-category: 🔐 Zero Trust
+reviewed: 2023-12-08
+category: Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
 title: Protect access to Microsoft 365 with dedicated egress IPs
+description: >-
+  This tutorial covers how to secure access to your Microsoft 365 applications with Cloudflare Gateway dedicated egress IPs.
 ---
 
 :::note
@@ -20,22 +22,22 @@ You can map a named location in Microsoft Entra ID to a location associated with
 
 Make sure you have:
 
-- In Cloudflare, a Zero Trust Enterprise plan with [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/)
+- In Cloudflare, a Zero Trust Enterprise plan with [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/)
 - In Microsoft 365, an organization managed with [Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity/)
 
 ## Create an egress policy in Cloudflare Gateway
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Egress policies**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Egress policies**.
 
 2. Select **Add a policy**.
 
-3. Name your policy, then add conditions to check users are configured in Microsoft Entra ID. For example, you can check for [identity conditions](/cloudflare-one/policies/gateway/identity-selectors/):
+3. Name your policy, then add conditions to check users are configured in Microsoft Entra ID. For example, you can check for [identity conditions](/cloudflare-one/traffic-policies/identity-selectors/):
 
    | Selector         | Operator | Value                                         |
    | ---------------- | -------- | --------------------------------------------- |
    | User Group Names | in       | `Sales and Marketing`, `Retail`, `U.S. Sales` |
 
-   Additionally, you can check for [device posture conditions](/cloudflare-one/identity/devices/):
+   Additionally, you can check for [device posture conditions](/cloudflare-one/reusable-components/posture-checks/):
 
    | Selector                    | Operator | Value                                             | Logic |
    | --------------------------- | -------- | ------------------------------------------------- | ----- |
@@ -72,6 +74,6 @@ Your policy will block access for your selected users from any location except t
 
 ## Test your policies
 
-1. Using [WARP](/cloudflare-one/connections/connect-devices/warp/), sign in to your Zero Trust organization with a user's account.
+1. Using [WARP](/cloudflare-one/team-and-resources/devices/warp/), sign in to your Zero Trust organization with a user's account.
 2. Go to any Microsoft 365 app within your organization. Entra ID should allow access.
 3. Disconnect WARP from your Zero Trust organization. Entra ID should block access to any Microsoft 365 applications.

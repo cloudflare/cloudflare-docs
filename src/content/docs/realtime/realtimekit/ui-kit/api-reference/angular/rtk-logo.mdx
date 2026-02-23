@@ -1,0 +1,35 @@
+---
+pcx_content_type: navigation
+title: rtk-logo
+description: API reference for rtk-logo component (Angular Library)
+---
+A component which loads the logo from your config, or via the `logo-url` attribute.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `logoUrl` | `string` | ✅ | - | Logo URL |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-logo></rtk-logo>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-logo
+ logoUrl="example"
+ [meeting]="meeting">
+</rtk-logo>
+```
+

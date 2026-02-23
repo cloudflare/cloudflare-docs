@@ -1,0 +1,22 @@
+---
+params:
+  - APIendpoint
+---
+
+import { Render } from "~/components";
+
+Use this selector to match against only the hostname specified. For example, you can match `test.example.com` but not `example.com` or `www.test.example.com`.
+
+| UI name | API example                                         |
+| ------- | --------------------------------------------------- |
+| Host    | <code>{props.APIendpoint} == \"example.com\"</code> |
+
+<Render
+	file="gateway/selectors/non-latin-characters"
+	product="cloudflare-one"
+	params={{ inputType: "hostname" }}
+/>
+
+:::note
+Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`www.example.com`). To match this type of website, use the [Domain](#domain) selector instead of the Host selector.
+:::

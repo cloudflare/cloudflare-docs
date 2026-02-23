@@ -13,7 +13,7 @@ import { PagesBuildPreset, Render } from "~/components";
 
 :::note
 
-Do not use this guide unless you have a specific use case for static exports. Cloudflare recommends using the [Deploy a Next.js site](/pages/framework-guides/nextjs/ssr/get-started/) guide.
+Do not use this guide unless you have a specific use case for static exports. Cloudflare recommends using Workers to deploy your Next.js site, for more instructions refer the [Next.js Workers guide](/workers/framework-guides/web-apps/nextjs).
 
 :::
 
@@ -21,7 +21,7 @@ Do not use this guide unless you have a specific use case for static exports. Cl
 
 This guide will instruct you how to deploy a static site Next.js project with [static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports).
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
 ## Select your Next.js project
 
@@ -51,6 +51,7 @@ git push -u origin main
 
 <Render
 	file="deploy-to-pages-steps-with-preset"
+	product="pages"
 	params={{ name: "Next.js (Static HTML Export)" }}
 />
 

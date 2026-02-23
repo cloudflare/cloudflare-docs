@@ -3,7 +3,9 @@
 
 ---
 
-If every hostname on a non-wildcard certificate is [proxying traffic](/dns/proxy-status/) through Cloudflare, Cloudflare can automatically complete DCV on your behalf.
+import { GlossaryTooltip } from "~/components";
+
+If every hostname on a non-wildcard certificate is <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxying traffic</GlossaryTooltip> through Cloudflare and the DCV method is [HTTP](/ssl/edge-certificates/changing-dcv-method/methods/http/), Cloudflare can automatically complete DCV on your behalf.
 
 This applies to customers using [Universal](/ssl/edge-certificates/universal-ssl/) or [Advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
 
@@ -11,3 +13,8 @@ If one of the hostnames on the certificate is not proxying traffic through Cloud
 
 * **Universal**: Perform DCV using one of the available [methods](/ssl/edge-certificates/changing-dcv-method/methods/).
 * **Advanced**: In most cases, you can opt for [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/), which greatly simplifies certificate management.
+
+
+:::tip
+If all hostnames are proxied and non-wildcard but you are using [TXT](/ssl/edge-certificates/changing-dcv-method/methods/txt/) as DCV method for advanced certificates, also consider [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) to simplify the process.
+:::

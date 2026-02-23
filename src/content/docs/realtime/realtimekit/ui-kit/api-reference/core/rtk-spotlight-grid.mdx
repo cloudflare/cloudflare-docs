@@ -1,0 +1,52 @@
+---
+pcx_content_type: navigation
+title: rtk-spotlight-grid
+description: API reference for rtk-spotlight-grid component (Web Components (HTML) Library)
+---
+A grid component that renders two lists of participants: `pinnedParticipants` and `participants`.
+ You can customize the layout to a `column` view, by default is is `row`.
+ - Participants from `pinnedParticipants[]` are rendered inside a larger grid.
+ - Participants from `participants[]` array are rendered in a smaller grid.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `aspectRatio` | `string` | ✅ | - | Aspect Ratio of participant tile  Format: `width:height` |
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `gap` | `number` | ✅ | - | Gap between participant tiles |
+| `gridSize` | `GridSize1` | ✅ | - | Grid size |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `layout` | `GridLayout1` | ✅ | - | Grid Layout |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participants` | `Peer[]` | ✅ | - | Participants |
+| `pinnedParticipants` | `Peer[]` | ✅ | - | Pinned Participants |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-spotlight-grid></rtk-spotlight-grid>
+```
+
+### With Properties
+
+```html
+<rtk-spotlight-grid
+ aspectRatio="example"
+ gridSize="md">
+</rtk-spotlight-grid>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-spotlight-grid");
+
+  el.gap= 42;
+</script>
+```

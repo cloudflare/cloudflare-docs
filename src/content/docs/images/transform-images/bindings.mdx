@@ -17,15 +17,21 @@ For example, when you allow Workers to interact with Images, you can:
 - Optimize an image stored in R2 by passing the blob of bytes representing the image, instead of fetching the public URL for the image.
 - Resize an image, overlay the output over a second image as a watermark, then resize this output into a final result.
 
-Bindings can be configured in the Cloudflare dashboard for your Worker or in the `wrangler.toml` file in your project's directory.
+Bindings can be configured in the Cloudflare dashboard for your Worker or in the Wrangler configuration file in your project's directory.
+
+:::note[Billing]
+
+Every call to the Images binding counts as one unique transformation. Refer to [Images pricing](/images/pricing/) for more information about transformation billing.
+
+:::
 
 ## Setup
 
 The Images binding is enabled on a per-Worker basis.
 
-You can define variables in the `wrangler.toml` file of your Worker project's directory. These variables are bound to external resources at runtime, and you can then interact with them through this variable.
+You can define variables in the Wrangler configuration file of your Worker project's directory. These variables are bound to external resources at runtime, and you can then interact with them through this variable.
 
-To bind Images to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind Images to your Worker, add the following to the end of your Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -77,20 +83,26 @@ return response;
 
 ### `.output()`
 
-- Defines the [output format](/images/transform-images/) for the transformed image such as AVIF, WebP, and JPEG.
+- You must define [a supported format](/images/transform-images/#supported-output-formats) such as AVIF, WebP, or JPEG for the [transformed image](/images/transform-images/).
+- This is required since there is no default format to fallback to.
+- [Image quality](/images/transform-images/transform-via-url/#quality) can be altered by specifying `quality` on a 1-100 scale.
+- [Animation preservation](/images/transform-images/transform-via-url/#anim) can be controlled with the `anim` parameter. Set `anim: false` to reduce animations to still images.
 
 For example, to rotate, resize, and blur an image, then output the image as AVIF:
 
 ```ts
 const info = await env.IMAGES.info(stream);
-// stream contains a valid image, and width/height is available on the info object
+// Stream contains a valid image, and width/height is available on the info object
+
+// You can determine the format based on the use case
+const outputFormat = "image/avif";
 
 const response = (
 	await env.IMAGES.input(stream)
 		.transform({ rotate: 90 })
 		.transform({ width: 128 })
 		.transform({ blur: 20 })
-		.output({ format: "image/avif" })
+		.output({ format: outputFormat })
 ).response();
 
 return response;
@@ -100,7 +112,11 @@ return response;
 
 - Outputs information about the image, such as `format`, `fileSize`, `width`, and `height`.
 
-Responses from the Images binding are not automatically cached. Workers lets you interact directly with the Cache API to customize cache behavior using Workers. You can implement logic in your script to store transformations in Cloudflare’s cache.
+:::note
+
+Responses from the Images binding are not automatically cached. Workers lets you interact directly with the [Cache API](/workers/runtime-apis/cache/) to customize cache behavior. You can implement logic in your script to store transformations in Cloudflare's cache.
+
+:::
 
 ## Interact with your Images binding locally
 
@@ -111,20 +127,18 @@ Wrangler supports two different versions of the Images API:
 - A high-fidelity version that supports all features that are available through the Images API. This is the same version that Cloudflare runs globally in production.
 - A low-fidelity offline version that supports only a subset of features, such as resizing and rotation.
 
-To test the high-fidelity version of Images, you can run `wrangler dev`:
+To test the low-fidelity version of Images, you can run `wrangler dev`:
 
 ```txt
 npx wrangler dev
 ```
 
-This creates a local-only environment that mirrors the production environment where Cloudflare runs the Images API. You can test your Worker with all available transformation features before deploying to production.
+Currently, this version supports only `width`, `height`, `rotate`, and `format`.
 
-To test the low-fidelity offline version of Images, add the `--experimental-images-local-mode` flag:
+To test the high-fidelity remote version of Images, you can use the `--remote` flag:
 
 ```txt
-npm wrangler dev --experimental-images-local-mode
+npx wrangler dev --remote
 ```
-
-Currently, this version supports only `width`, `height`, `rotate`, and `format`.
 
 When testing with the [Workers Vitest integration](/workers/testing/vitest-integration/), the low-fidelity offline version is used by default, to avoid hitting the Cloudflare API in tests.

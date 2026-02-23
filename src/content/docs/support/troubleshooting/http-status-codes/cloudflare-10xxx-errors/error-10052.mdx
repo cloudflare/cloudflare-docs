@@ -1,0 +1,17 @@
+---
+pcx_content_type: troubleshooting
+title: Error 10052
+source: null
+---
+
+## Error 10052: Invalid redirect source URL with port
+
+This error indicates that the source URL includes an unsupported port.
+
+### Common causes
+
+This error occurs when the source URL of a URL redirect includes a port (for example, `https://example.com:8081`), which is not supported. Possible causes include using a custom or non-standard port, copying a URL from another environment that includes a port, or mistakenly using a development or testing URL.
+
+### Resolution
+
+Remove the port from the redirect source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.

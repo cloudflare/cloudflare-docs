@@ -47,10 +47,10 @@ response = requests.post(
   f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}",
     headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
     json={
-	  "query": "Which one is better?"
-      "context": [
+	  "query": "Which one is better?",
+      "contexts": [
         {"text": "a cyberpunk lizzard"},
-		{"text": "a cyberpunk car"},
+		    {"text": "a cyberpunk car"},
       ]
     }
 )
@@ -66,14 +66,14 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 `;
 ---
 
-<Details header="Worker">
+<Details header="Worker" open>
 	<Code code={worker} lang="ts" />
 </Details>
 
-<Details header="Python">
+<Details header="Python" open>
 	<Code code={python} lang="py" />
 </Details>
 
-<Details header="curl">
+<Details header="curl" open>
 	<Code code={curl} lang="sh" />
 </Details>

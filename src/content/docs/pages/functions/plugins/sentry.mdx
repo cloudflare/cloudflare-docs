@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import { PackageManagers } from "~/components";
+
 :::note
 
 Sentry now provides official support for Cloudflare Workers and Pages. Refer to the [Sentry documentation](https://docs.sentry.io/platforms/javascript/guides/cloudflare/) for more details.
@@ -15,9 +17,7 @@ The Sentry Pages Plugin captures and logs all exceptions which occur below it in
 
 ## Installation
 
-```sh
-npm install @cloudflare/pages-plugin-sentry
-```
+<PackageManagers pkg="@cloudflare/pages-plugin-sentry" />
 
 ## Usage
 

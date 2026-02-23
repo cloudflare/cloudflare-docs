@@ -15,7 +15,7 @@ entries:
 
   - term: backup codes
     general_definition: |-
-      backup codes allow restoration of Cloudflare account access outside the normal [two-factor authentication process](/fundamentals/setup/account/account-security/2fa/). A backup code becomes invalid after use.
+      backup codes allow restoration of Cloudflare account access outside the normal [two-factor authentication process](/fundamentals/user-profiles/2fa/). A backup code becomes invalid after use.
 
   - term: CIDR
     general_definition: |-
@@ -57,7 +57,7 @@ entries:
       a DDoS attack is a malicious attempt to disrupt normal traffic of a targeted server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of Internet traffic.
     associated_products:
       - DDoS Protection
-      - Magic Network Monitoring
+      - Network Flow
 
   - term: domain
     general_definition: |-
@@ -112,7 +112,7 @@ entries:
   - term: protocol
     general_definition: |-
       a protocol is a set of rules governing the exchange or transmission of data between devices.
-  
+
   - term: proxy server
     general_definition: |-
       the server that sits between the origin server and the client. Cloudflare is a proxy server for example.
@@ -127,7 +127,7 @@ entries:
 
   - term: roles
     general_definition: |-
-      authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/setup/manage-members/roles/).
+      authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/manage-members/roles/).
 
   - term: Service Level Agreement (SLA)
     general_definition: |-
@@ -192,3 +192,7 @@ entries:
   - term: proxy write timeout
     general_definition: |-
       a proxy write timeout is the maximum amount of time a proxy server allows for sending data to the client before terminating the connection.
+
+  - term: proxy read timeout config
+    general_definition: |-
+      Enterprise customers can increase the a proxy read timeout using a [cache rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) or the [edit zone setting API endpoint](/api/resources/zones/subresources/rate_plans/methods/get/).

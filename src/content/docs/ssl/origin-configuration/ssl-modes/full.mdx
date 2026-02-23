@@ -9,16 +9,15 @@ head:
 description: Cloudflare matches the browser request protocol when connecting to the origin. If the browser uses HTTP, Cloudflare connects to the origin via HTTP; if HTTPS, Cloudflare uses HTTPS without validating the origin’s certificate. This mode is common for origins that use self-signed or otherwise invalid certificates.
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Stream, Render, TabItem, Tabs } from "~/components";
 
 When you set your encryption mode to **Full**, Cloudflare allows HTTPS connections between your visitor and Cloudflare and makes connections to the origin using the scheme requested by the visitor. If your visitor uses `http`, then Cloudflare connects to the origin using plaintext HTTP and vice versa.
 
-```mermaid
-flowchart LR
-        accTitle: Full SSL/TLS Encryption
-        accDescr: With an encryption mode of Full, your application encrypts traffic going to and coming from Cloudflare but does not validate your origin certificate.
-        A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[(Origin server)]
-```
+<Stream
+  id="a1e79096a2b042e0525a8543c232279a"
+  title="Configure Full encryption mode"
+  thumbnail="https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/c0c41f09-2d73-4ee5-8b71-dbb271ed1800/public"
+/>
 
 ## Use when
 
@@ -34,19 +33,19 @@ In addition to **Full** encryption, you can also set up [Authenticated Origin Pu
 
 ### Prerequisites
 
-Before enabling **Full** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate (self-signed, [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/), or purchased from a Certificate Authority). Otherwise, your visitors may experience a [525 error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-525-ssl-handshake-failed).
+Before enabling **Full** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate (self-signed, [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/), or purchased from a Certificate Authority). Otherwise, your visitors may experience a [525 error](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/).
 
-<Render file="ssl-mode-errors" />
+<Render file="ssl-mode-errors" product="ssl" />
 
 ### Process
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="change-encryption-mode-dash" />
+<Render file="change-encryption-mode-dash" product="ssl" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="change-encryption-mode-api" />
+<Render file="change-encryption-mode-api" product="ssl" />
 
 </TabItem> </Tabs>
 

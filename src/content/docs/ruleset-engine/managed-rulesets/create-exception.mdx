@@ -1,13 +1,17 @@
 ---
 title: Create an exception
-pcx_content_type: how-to
+pcx_content_type: configuration
 sidebar:
   order: 5
 ---
 
-Use exceptions to skip the execution of a managed ruleset of some of its rules. Exceptions are also known as skip rules, since the rule action is `skip`.
+Use [exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of a managed ruleset of some of its rules.
 
 The exception configuration includes an [expression](/ruleset-engine/rules-language/expressions/) that defines the skip conditions, and the rules or managed rulesets to skip under those conditions.
+
+If you are using Terraform, refer to [Configure exceptions](/terraform/additional-configurations/waf-managed-rulesets/#configure-exceptions) in the Terraform documentation.
+
+If you are using the Cloudflare dashboard, refer to [Add an exception in the dashboard](/waf/managed-rules/waf-exceptions/define-dashboard/).
 
 :::note
 Currently, only the [Cloudflare Web Application Firewall (WAF)](/waf/managed-rules/waf-exceptions/) supports managed rules exceptions.
@@ -96,8 +100,6 @@ For a full example, refer to the [WAF documentation](/waf/managed-rules/waf-exce
 
 ## Additional notes
 
-Exceptions have priority over [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
-
-If you define an exception that skips all remaining rules, the expressions of those rules are not evaluated.
-
-If you define an exception that skips a rule of a managed ruleset, the expression of the rule that executes the managed ruleset is evaluated and the managed ruleset rules are executed except for that specific rule, which is bypassed.
+- Exceptions have priority over [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
+- If you define an exception that skips all remaining rules, the expressions of those rules are not evaluated.
+- If you define an exception that skips a rule of a managed ruleset, the expression of the rule that executes the managed ruleset is evaluated and the managed ruleset rules are executed except for that specific rule, which is bypassed.

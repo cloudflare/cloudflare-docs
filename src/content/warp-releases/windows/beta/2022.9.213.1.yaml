@@ -13,7 +13,7 @@ releaseNotes: >-
   but mentioning here as well) and handoff from the success page in the browser
   to the client
 
-  - Fixed notification experience so you only recieve a single notification if
+  - Fixed notification experience so you only receive a single notification if
   registration fails instead of hundreds
 
   - Fixed DNS fallback timeouts and related performance issues

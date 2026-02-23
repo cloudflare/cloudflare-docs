@@ -1,7 +1,7 @@
 ---
 title: Hyperdrive
 order: 0
-type: overview
+
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -19,7 +19,7 @@ import {
 	RelatedProduct,
 	Tabs,
 	TabItem,
-	LinkButton
+	LinkButton,
 } from "~/components";
 
 <Description>
@@ -28,39 +28,41 @@ Turn your existing regional database into a globally distributed database.
 
 </Description>
 
-<Plan type="workers-paid" />
+<Plan type="workers-all" />
 
 Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe from [Cloudflare Workers](/workers/), irrespective of your users' location.
 
-Hyperdrive supports any Postgres database, including those hosted on AWS, Google Cloud and Neon, as well as Postgres-compatible databases like CockroachDB and Timescale, with MySQL coming soon. You do not need to write new code or replace your favorite tools: Hyperdrive works with your existing code and tools you use.
+Hyperdrive supports any Postgres or MySQL database, including those hosted on AWS, Google Cloud, Azure, Neon and PlanetScale. Hyperdrive also supports Postgres-compatible databases like CockroachDB and Timescale.
+You do not need to write new code or replace your favorite tools: Hyperdrive works with your existing code and tools you use.
 
 Use Hyperdrive's connection string from your Cloudflare Workers application with your existing Postgres drivers and object-relational mapping (ORM) libraries:
 
 <Tabs>
-	<TabItem label="Workers Binding API">
+	<TabItem label="PostgreSQL">
 	<Tabs>
 	<TabItem label="index.ts">
 ```ts
-import postgres from 'postgres';
+import { Client } from "pg";
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Hyperdrive provides a unique generated connection string to connect to
-		// your database via Hyperdrive that can be used with your existing tools
-		const sql = postgres(env.HYPERDRIVE.connectionString);
+		// Create a new client instance for each request. Hyperdrive maintains the
+		// underlying database connection pool, so creating a new client is fast.
+		const client = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
+		});
 
-    	try {
-    		// Sample SQL query
-    		const results = await sql`SELECT * FROM pg_tables`;
+		try {
+			// Connect to the database
+			await client.connect();
+			// Sample SQL query
+			const result = await client.query("SELECT * FROM pg_tables");
 
-    		// Close the client after the response is returned
-    		ctx.waitUntil(sql.end());
-
-    		return Response.json(results);
-    	} catch (e) {
-    		return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
-    	}
-    },
+			return Response.json(result.rows);
+		} catch (e) {
+			return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
+		}
+	},
 } satisfies ExportedHandler<{ HYPERDRIVE: Hyperdrive }>;
 ```
 
@@ -90,11 +92,72 @@ export default {
 
 </TabItem>
 </Tabs>
+</TabItem>
+<TabItem label="MySQL">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+import { createConnection } from 'mysql2/promise';
 
-<LinkButton href="/hyperdrive/get-started/">Get started</LinkButton>
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+    // Create a new connection on each request. Hyperdrive maintains the
+    // underlying database connection pool, so creating a new client is fast.
+    const connection = await createConnection({
+		 host: env.HYPERDRIVE.host,
+		 user: env.HYPERDRIVE.user,
+		 password: env.HYPERDRIVE.password,
+		 database: env.HYPERDRIVE.database,
+		 port: env.HYPERDRIVE.port,
+
+     // This is needed to use mysql2 with Workers
+     // This configures mysql2 to use static parsing instead of eval() parsing (not available on Workers)
+     disableEval: true
+  });
+
+  const [results, fields] = await connection.query('SHOW tables;');
+
+  return new Response(JSON.stringify({ results, fields }), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '\*',
+    },
+  });
+}} satisfies ExportedHandler<{ HYPERDRIVE: Hyperdrive }>;
+
+```
+
+    </TabItem>
+    <TabItem label="wrangler.jsonc">
+```json
+	{
+		"$schema": "node_modules/wrangler/config-schema.json",
+		"name": "WORKER-NAME",
+		"main": "src/index.ts",
+		"compatibility_date": "2025-02-04",
+		"compatibility_flags": [
+			"nodejs_compat"
+		],
+		"observability": {
+			"enabled": true
+		},
+		"hyperdrive": [
+			{
+				"binding": "HYPERDRIVE",
+				"id": "<YOUR_HYPERDRIVE_ID>",
+				"localConnectionString": "<ENTER_LOCAL_CONNECTION_STRING_FOR_LOCAL_DEVELOPMENT_HERE>"
+			}
+		]
+	}
+```
 
 </TabItem>
 </Tabs>
+
+</TabItem>
+</Tabs>
+
+<LinkButton href="/hyperdrive/get-started/">Get started</LinkButton>
 
 ---
 
@@ -106,15 +169,21 @@ Connect Hyperdrive to your existing database and deploy a [Worker](/workers/) th
 
 </Feature>
 
-<Feature header="PostgreSQL support" href="/hyperdrive/configuration/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">
+<Feature header="PostgreSQL support" href="/hyperdrive/examples/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">
 
 Hyperdrive allows you to connect to any PostgreSQL or PostgreSQL-compatible database.
 
 </Feature>
 
-<Feature header="Query Caching" href="/hyperdrive/configuration/query-caching/" cta="Learn about Query Caching">
+<Feature header="MySQL support" href="/hyperdrive/examples/connect-to-mysql/" cta="Connect Hyperdrive to your MySQL database">
 
-Use Hyperdrive to cache the most popular queries executed against your database.
+Hyperdrive allows you to connect to any MySQL database.
+
+</Feature>
+
+<Feature header="Query Caching" href="/hyperdrive/concepts/query-caching/" cta="Learn about Query Caching">
+
+Default-on caching for your most popular queries executed against your database.
 
 </Feature>
 
@@ -161,7 +230,8 @@ Deploy dynamic front-end applications in record time.
 	href="/workers/platform/storage-options/"
 	icon="document"
 >
-	Learn more about the storage and database options you can build on with Workers.
+	Learn more about the storage and database options you can build on with
+	Workers.
 </LinkTitleCard>
 
 <LinkTitleCard
@@ -169,7 +239,8 @@ Deploy dynamic front-end applications in record time.
 	href="https://discord.cloudflare.com"
 	icon="discord"
 >
-	Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.
+	Connect with the Workers community on Discord to ask questions, show what you
+	are building, and discuss the platform with other developers.
 </LinkTitleCard>
 
 <LinkTitleCard
@@ -177,8 +248,8 @@ Deploy dynamic front-end applications in record time.
 	href="https://x.com/cloudflaredev"
 	icon="x.com"
 >
-	Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Developer Platform.
 </LinkTitleCard>
 
 </CardGrid>
-

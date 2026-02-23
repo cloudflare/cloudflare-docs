@@ -2,8 +2,7 @@
 pcx_content_type: example
 summary: Create an origin rule using Terraform to override the `Host` header,
   the resolved hostname, and the destination port of API requests.
-products:
-  - Origin Rules
+products: [origin-rules]
 title: Define a single origin rule using Terraform
 description: Create an origin rule using Terraform to override the `Host`
   header, the resolved hostname, and the destination port of API requests.
@@ -40,4 +39,10 @@ resource "cloudflare_ruleset" "http_origin_example" {
 }
 ```
 
-<Render file="terraform-additional-resources" />
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
+<Render file="terraform-additional-resources" product="rules" />

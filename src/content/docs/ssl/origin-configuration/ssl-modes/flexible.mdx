@@ -28,17 +28,17 @@ Choose this option when you cannot set up an SSL certificate on your origin or y
 
 ### Prerequisites
 
-<Render file="ssl-mode-errors" />
+<Render file="ssl-mode-errors" product="ssl" />
 
 ### Process
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="change-encryption-mode-dash" />
+<Render file="change-encryption-mode-dash" product="ssl" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="change-encryption-mode-api" />
+<Render file="change-encryption-mode-api" product="ssl" />
 
 </TabItem> </Tabs>
 
@@ -48,4 +48,4 @@ Flexible mode is only supported for HTTPS connections on port 443 (default port)
 
 If your application contains sensitive information (personalized data, user login), use [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (Strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes instead.
 
-<Render file="ssl-mode-no-aop" /> <br />
+<Render file="ssl-mode-no-aop" product="ssl" /> <br />

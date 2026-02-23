@@ -1,0 +1,40 @@
+---
+pcx_content_type: concept
+title: Challenges
+sidebar:
+  order: 1
+---
+
+import { Render, Description, Plan, RelatedProduct } from "~/components";
+
+<Description>
+Challenges are security mechanisms used by Cloudflare to verify whether a visitor to your site is a real human and not a bot or automated script. 
+</Description>
+
+When a Challenge is issued, Cloudflare asks the browser to perform a series of checks that help confirm the visitor's legitimacy. This process involves evaluating client-side signals or asking a visitor to take minimal action such as checking a box or selecting a button. 
+
+Challenges are designed to protect your application without introducing unnecessary friction. Most visitors will pass Challenges automatically without interaction. 
+
+Cloudflare does not use CAPTCHA puzzles or visual tests like selecting objects or typing distorted characters. All challenge types are lightweight, privacy-preserving, and optimized for real-world traffic. 
+
+---
+
+## Related products
+
+<RelatedProduct header="Turnstile" href="/turnstile/" product="turnstile">
+  Use Cloudflare's smart CAPTCHA alternative to run less intrusive Challenges.
+</RelatedProduct>
+
+<RelatedProduct header="Bots" href="/bots/" product="bots">
+	Cloudflare bot solutions identify and mitigate automated traffic to protect
+	your domain from bad bots.
+</RelatedProduct>
+
+<RelatedProduct header="WAF" href="/waf/" product="waf">
+	Get automatic protection from vulnerabilities and the flexibility to create
+	custom rules.
+</RelatedProduct>
+
+<RelatedProduct header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">
+  Detect and mitigate Distributed Denial of Service (DDoS) attacks using Cloudflare's Autonomous Edge. 
+</RelatedProduct>

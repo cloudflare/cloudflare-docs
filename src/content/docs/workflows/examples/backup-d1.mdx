@@ -1,17 +1,15 @@
 ---
-type: example
+
 summary: Export a D1 database into R2 storage with Workflows
-products:
-  - Workflows
-  - D1
-  - R2
-languages:
-  - Typescript
+products: [d1, r2]
+tags:
+  - TypeScript
 pcx_content_type: example
 title: Export and save D1 database
 sidebar:
   order: 3
 description: Send invoice when shopping cart is checked out and paid for
+reviewed: 2024-12-30
 ---
 
 import { TabItem, Tabs, WranglerConfig } from "~/components";
@@ -127,7 +125,6 @@ Here is a minimal package.json:
 ```json
 {
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20241224.0",
 		"wrangler": "^3.99.0"
 	}
 }
@@ -137,23 +134,34 @@ Here is a [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
-```toml
-name = "backup-d1"
-main = "src/index.ts"
-compatibility_date = "2024-12-27"
-compatibility_flags = [ "nodejs_compat" ]
-
-[[workflows]]
-name = "backup-workflow"
-binding = "BACKUP_WORKFLOW"
-class_name = "backupWorkflow"
-
-[[r2_buckets]]
-binding = "BACKUP_BUCKET"
-bucket_name = "d1-backups"
-
-[triggers]
-crons = [ "0 0 * * *" ]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "backup-d1",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"workflows": [
+		{
+			"name": "backup-workflow",
+			"binding": "BACKUP_WORKFLOW",
+			"class_name": "backupWorkflow"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "BACKUP_BUCKET",
+			"bucket_name": "d1-backups"
+		}
+	],
+	"triggers": {
+		"crons": [
+			"0 0 * * *"
+		]
+	}
+}
 ```
 
 </WranglerConfig>

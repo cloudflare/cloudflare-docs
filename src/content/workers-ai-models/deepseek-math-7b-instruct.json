@@ -24,6 +24,10 @@
             "value": "https://huggingface.co/deepseek-ai/deepseek-math-7b-instruct"
         },
         {
+            "property_id": "planned_deprecation_date",
+            "value": "2025-10-01"
+        },
+        {
             "property_id": "terms",
             "value": "https://github.com/deepseek-ai/DeepSeek-Math/blob/main/LICENSE-MODEL"
         }
@@ -82,8 +86,8 @@
                         },
                         "top_p": {
                             "type": "number",
-                            "minimum": 0,
-                            "maximum": 2,
+                            "minimum": 0.001,
+                            "maximum": 1,
                             "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
                         },
                         "top_k": {
@@ -106,13 +110,13 @@
                         },
                         "frequency_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Decreases the likelihood of the model repeating the same lines verbatim."
                         },
                         "presence_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Increases the likelihood of the model introducing new topics."
                         }
@@ -135,8 +139,29 @@
                                         "description": "The role of the message sender (e.g., 'user', 'assistant', 'system', 'tool')."
                                     },
                                     "content": {
-                                        "type": "string",
-                                        "description": "The content of the message as a string."
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "description": "The content of the message as a string."
+                                            },
+                                            {
+                                                "type": "array",
+                                                "description": "Array of text content parts.",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "description": "Type of the content (text)"
+                                                        },
+                                                        "text": {
+                                                            "type": "string",
+                                                            "description": "Text content"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 "required": [
@@ -342,8 +367,8 @@
                         },
                         "top_p": {
                             "type": "number",
-                            "minimum": 0,
-                            "maximum": 2,
+                            "minimum": 0.001,
+                            "maximum": 1,
                             "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
                         },
                         "top_k": {
@@ -366,13 +391,13 @@
                         },
                         "frequency_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Decreases the likelihood of the model repeating the same lines verbatim."
                         },
                         "presence_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Increases the likelihood of the model introducing new topics."
                         }

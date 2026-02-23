@@ -3,6 +3,8 @@ title: When to use Snippets vs Workers
 pcx_content_type: design-guide
 sidebar:
   order: 8
+description: >-
+  This guide helps you determine when to use Snippets or Workers on Cloudflare's global network.
 ---
 
 This guide helps you determine when to use Snippets or Workers on Cloudflare's global network. It provides best practices, comparisons, and real-world use cases to help you choose the right product for your workload.
@@ -44,6 +46,7 @@ Snippets are ideal for fast, cost-free request and response modifications at the
 - Deep integrations with [Developer Platform](/learning-paths/workers/devplat/intro-to-devplat/) services like [Durable Objects](/durable-objects/) or [D1](/d1/).
 - Use cases requiring advanced runtime features, such as:
   - [Environment variables](/workers/configuration/environment-variables/)
+  - [Observability](/workers/observability/logs/)
   - [Bindings](/workers/runtime-apis/bindings/)
   - [Cron triggers](/workers/configuration/cron-triggers/)
   - High [compute limits](/rules/snippets/#limits)
@@ -85,7 +88,7 @@ Snippets are ideal for fast, cost-free request and response modifications at the
 | Analyze execution [logs](/workers/observability/logs/workers-logs/) and track performance metrics                                                                                                             |    ❌    |   ✅    |
 | Deploy via [command-line interface (CLI)](/workers/wrangler/)                                                                                                                                                 |    ❌    |   ✅    |
 | Roll out gradually, roll back to previous [versions](/workers/configuration/versions-and-deployments/)                                                                                                        |    ❌    |   ✅    |
-| Optimize execution with [Smart Placement](/workers/configuration/smart-placement/)                                                                                                                            |    ❌    |   ✅    |
+| Optimize execution with [Smart Placement](/workers/configuration/placement/)                                                                                                                                  |    ❌    |   ✅    |
 
 ---
 

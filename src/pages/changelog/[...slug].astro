@@ -31,8 +31,13 @@ const { Content, headings } = await render(note);
 const props = {
 	frontmatter: {
 		title: note.data.title,
+		description: note.data.description,
 		template: "splash",
 		noindex: note.data.hidden,
+		chatbot_deprioritize: true,
+		pcx_content_type: "changelog-entry",
+		products: note.data.products.map((a) => a.id),
+		lastUpdated: note.data.date,
 	},
 	headings,
 	hideTitle: true,
@@ -53,9 +58,7 @@ const props = {
 		<h2>{note.data.title}</h2>
 		<div>
 			<time class="font-bold" datetime={note.data.date.toISOString()}
-				>{format(note.data.date, "MMM dd, yyyy")}, {
-					format(note.data.date, "hh:mm a")
-				}</time
+				>{format(note.data.date, "MMM dd, yyyy")}</time
 			>
 			<ProductPills products={note.data.products} />
 		</div>

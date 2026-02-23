@@ -1,0 +1,14 @@
+---
+params:
+  - conditional?
+---
+
+During an [internal DNS query resolution](/dns/internal-dns/#architecture-overview), if no internal record is found within a matching internal zone, Cloudflare will check if the matching internal zone is referencing another internal zone. Successive references can be followed with a maximum of five references in a chain.
+
+
+{ props.conditional === "get-started-link" && (
+	<p>
+	For details, refer to <a href="/dns/internal-dns/internal-zones/reference-zones/">reference zones</a>.
+	</p>
+	)
+}

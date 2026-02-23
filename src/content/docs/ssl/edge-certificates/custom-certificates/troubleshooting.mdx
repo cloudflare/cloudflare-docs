@@ -2,6 +2,7 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4667724478349--You-have-reached-your-quota-for-the-requested-resource-Code-2005-
 title: Troubleshooting
+description: Troubleshoot issues with Client certificates
 head:
   - tag: title
     content: Troubleshooting | Custom certificates
@@ -27,7 +28,7 @@ Then, make sure all the information is correct before uploading.
 
 If you move a domain without deleting the custom certificate from the previous zone, the certificate may still [take precedence](/ssl/reference/certificate-and-hostname-priority/) and be presented to your visitors, until the previous zone is [deleted](/dns/zone-setups/reference/domain-status/).
 
-Refer to [Move a domain between Cloudflare accounts](/fundamentals/setup/manage-domains/move-domain/#issue-new-certificates) for details.
+Refer to [Move a domain between Cloudflare accounts](/fundamentals/manage-domains/move-domain/#issue-new-certificates) for details.
 
 ## Let's Encrypt chain update
 
@@ -46,6 +47,8 @@ If you are using a Let's Encrypt certificate uploaded by yourself as a custom ce
 
 The certificate you are trying to upload is invalid. For example, there might be extra lines, or the BEGIN/END text is not correct, or extra characters are added following a copy/paste.
 
+In the case of an update with the [PATCH API call](/api/resources/custom_certificates/methods/edit/), it can mean the path parameter `{custom_certificate_id}` is invalid.
+
 **Solution**
 
 Carefully check the content of the certificate. You may use `openssl` to check all the details of your certificate:
@@ -53,6 +56,8 @@ Carefully check the content of the certificate. You may use `openssl` to check a
 ```bash
 openssl x509 -in certificate.crt -noout -text
 ```
+
+When using the API, carefully check the `{custom_certificate_id}` path parameter. You can confirm the certificate ID by [listing the existing custom certificates](/api/resources/custom_certificates/methods/list/) (`id` in the response).
 
 ### You have reached the maximum number of custom certificates. (Code: 1212)
 
@@ -94,7 +99,7 @@ If you try to upload a certificate **type** but have already reached your quota,
 
 **Solution**
 
-First, check your custom certificate entitlements at **SSL/TLS** > **Edge Certificates**.
+First, check your custom certificate entitlements on the [**Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) page.
 
 Then, when actually uploading or editing the certificate, make sure you select the appropriate option for **Legacy Client Support**.
 

@@ -14,13 +14,19 @@ if (products.length === 0) {
 	products.push(currentSection);
 }
 
-const videos = await getCollection("videos", (entry) => {
+let videos = await getCollection("videos", (entry) => {
 	return (
-		entry.data.link.startsWith("https://youtu") &&
-		entry.data.products?.some((v: string) => products.includes(v))
+		entry.data.link.includes("youtu") &&
+		entry.data.products?.some((v: string) =>
+			products.some((p) => v.trim().toLowerCase() === p.trim().toLowerCase()),
+		)
 	);
 });
 
+videos = videos.sort(
+	(a, b) =>
+		new Date(b.data.updated).getTime() - new Date(a.data.updated).getTime(),
+);
 const entries = videos.map((video) => ({
 	href: video.data.link,
 	title: video.data.id,

@@ -16,6 +16,16 @@
             "value": "true"
         },
         {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per step",
+                    "price": 0,
+                    "currency": "USD"
+                }
+            ]
+        },
+        {
             "property_id": "info",
             "value": "https://huggingface.co/ByteDance/SDXL-Lightning"
         }

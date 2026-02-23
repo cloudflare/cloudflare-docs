@@ -27,7 +27,12 @@ jobs:
       - run: npm run build
         name: Build
         env:
-          NODE_OPTIONS: --max-old-space-size=4096
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        continue-on-error: true
+        with:
+          name: site-html
+          path: dist
       - run: npx wrangler deploy
         name: Deploy to Cloudflare Workers
         env:

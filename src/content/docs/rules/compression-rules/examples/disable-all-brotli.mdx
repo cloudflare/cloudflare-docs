@@ -2,14 +2,13 @@
 pcx_content_type: example
 summary: Create a compression rule to turn off Brotli compression for all
   incoming requests of a given zone.
-products:
-  - Compression Rules
+products: [compression-rules]
 title: Disable Brotli compression
 description: Create a compression rule to turn off Brotli compression for all
   incoming requests of a given zone.
 ---
 
-import { Example, TabItem, Tabs, APIRequest } from "~/components";
+import { Example, TabItem, Tabs, APIRequest, Render } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -40,6 +39,7 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 	json={{
 		rules: [
 			{
+				ref: "always_use_gzip",
 				expression: "true",
 				action: "compress_response",
 				action_parameters: {
@@ -48,6 +48,12 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 			},
 		],
 	}}
+/>
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
 />
 
 </TabItem> </Tabs>

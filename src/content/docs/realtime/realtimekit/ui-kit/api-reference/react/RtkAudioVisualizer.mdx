@@ -1,0 +1,48 @@
+---
+pcx_content_type: navigation
+title: RtkAudioVisualizer
+description: API reference for RtkAudioVisualizer component (React Library)
+---
+An audio visualizer component which visualizes a participants audio.
+ Commonly used inside `rtk-name-tag`.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `hideMuted` | `boolean` | ✅ | - | Hide the visualizer if audio is muted |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `isScreenShare` | `boolean` | ✅ | - | Audio visualizer for screensharing, it will use screenShareTracks.audio instead of audioTrack |
+| `participant` | `Peer` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `AudioVisualizerVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkAudioVisualizer } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkAudioVisualizer />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkAudioVisualizer } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkAudioVisualizer
+      hideMuted={true}
+      isScreenShare={true}
+      participant={participant}
+    />
+  );
+}
+```
+

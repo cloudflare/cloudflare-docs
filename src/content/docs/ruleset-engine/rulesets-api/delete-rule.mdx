@@ -1,6 +1,5 @@
 ---
 pcx_content_type: reference
-type: overview
 title: Delete a rule in a ruleset
 sidebar:
   order: 9
@@ -12,13 +11,10 @@ Deletes a single rule in a ruleset at the account or zone level.
 
 Use one of the following API endpoints:
 
-| Operation                                    | Method + Endpoint                                                     |
-| -------------------------------------------- | --------------------------------------------------------------------- |
-| [Delete an account ruleset rule][dr-account] | `DELETE /accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id}` |
-| [Delete a zone ruleset rule][dr-zone]        | `DELETE /zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}`       |
-
-[dr-account]: /api/resources/rulesets/subresources/rules/methods/delete/
-[dr-zone]: /api/resources/rulesets/methods/delete/
+- [Delete an account ruleset rule](/api/resources/rulesets/subresources/rules/methods/delete/)<br/>
+  `DELETE /accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id}`
+- [Delete a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/delete/)<br/>
+  `DELETE /zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}`
 
 If the delete operation succeeds, the API method call returns a `200 OK` HTTP status code with the complete ruleset in the response body.
 
@@ -49,8 +45,8 @@ The response will include the complete ruleset after deleting the rule.
 				"id": "<RULE_ID_2>",
 				"version": "2",
 				"action": "js_challenge",
-				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
-				"description": "challenge GB and FR or based on IP Reputation",
+				"expression": "(ip.src.country in {\"GB\" \"FR\"} and cf.bot_management.score < 20 and not cf.bot_management.verified_bot)",
+				"description": "challenge GB and FR based on bot score",
 				"last_updated": "2021-07-22T12:54:58.144683Z",
 				"ref": "<RULE_REF_2>",
 				"enabled": true

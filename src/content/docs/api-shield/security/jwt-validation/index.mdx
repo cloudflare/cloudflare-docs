@@ -3,11 +3,18 @@ pcx_content_type: concept
 title: JSON Web Tokens validation
 sidebar:
   order: 6
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import {
+	GlossaryTooltip,
+	Steps,
+	Tabs,
+	TabItem,
+	Render,
+	DashButton,
+} from "~/components";
 
+{/* prettier-ignore */}
 <GlossaryTooltip term="JSON web token (JWT)">JSON web tokens (JWT)</GlossaryTooltip> are often used as part of an authentication component on many web applications today. Since JWTs are crucial to identifying users and their access, ensuring the token’s integrity is important.
 
 API Shield’s JWT validation stops JWT replay attacks and JWT tampering by cryptographically verifying incoming JWTs before they are passed to your API origin. JWT validation will also stop requests with expired tokens or tokens that are not yet valid.
@@ -20,12 +27,34 @@ A JWT validation configuration consists of creating a token validation configura
 
 ### Add a token validation configuration
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Security** > **API Shield** > **Settings**.
-3. Under **JSON Web Token Settings**, select **Add configuration**.
-4. Add a name for your configuration.
-5. Choose where Cloudflare can locate the JWT for this configuration on incoming requests, such as a header or cookie and its name.
-6. Copy and paste your JWT issuer’s public key(s) (JWKS).
+{/* prettier-ignore-start */}
+
+<Tabs syncKey="dashNewNav">
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **API abuse**.
+      3. On **Token configurations**, select **Configure tokens**.
+      4. Add a name for your configuration.
+      5. Choose where Cloudflare can locate the JWT for this configuration on incoming requests, such as a header or cookie and its name.
+      6. Copy and paste your JWT issuer's public key(s) (JWKS).
+    </Steps>
+  </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Go to **Security** > **API Shield** > **Settings**.
+      3. Under **JSON Web Token Settings**, select **Add configuration**.
+      4. Add a name for your configuration.
+      5. Choose where Cloudflare can locate the JWT for this configuration on incoming requests, such as a header or cookie and its name.
+      6. Copy and paste your JWT issuer's public key(s) (JWKS).
+    </Steps>
+  </TabItem>
+</Tabs>
+
+{/* prettier-ignore-end */}
 
 Each JWT issuer typically publishes public keys (JWKS) for verification at a known URL on the Internet. If you do not know where to get them, contact your identity administrator.
 
@@ -33,29 +62,57 @@ To automatically keep your JWKS up to date when your identity provider refreshes
 
 ### Add a JWT validation rule
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Security** > **API Shield** > **API Rules**.
-3. <a id="rule-form"/>
-   Add a name for your rule.
-4. Select a hostname to protect requests with saved endpoints using the rule.
-5. Deselect any endpoints that you want JWT validation to ignore (for example, an endpoint used to generate a JWT).
-6. Select the token validation configuration that corresponds to the incoming requests.
-7. Choose whether to strictly enforce token presence on these endpoints.
-  - You may not expect 100% of clients to send in JWTs with their requests. If this is the case, choose *Ignore*. JWT validation will still validate JWTs that are present.
-  - You may otherwise expect all requests to the selected hostname and endpoints to contain JWTs. If this is the case, choose *Mark as non-compliant*.
-8. Choose an action to take for non-compliant requests. For example, JWTs that do not pass validation (expired, tampered with, or bad signature tokens) or requests with missing JWTs when *Mark as non-compliant* is selected in the previous step.
-9. Select **Save**.
+{/* prettier-ignore-start */}
+
+<Tabs syncKey="dashNewNav">
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+          <DashButton url="/?to=/:account/:zone/security/security-rules" />
+      2. On API JWT validation rules, select **Create rule**.
+      3. Add a name for your rule.
+      4. Select a hostname to protect requests with saved endpoints using the rule.
+      5. Deselect any endpoints that you want JWT validation to ignore (for example, an endpoint used to generate a JWT).
+      6. Select the token validation configuration that corresponds to the incoming requests.
+      7. Choose whether to strictly enforce token presence on these endpoints.
+          - You may not expect 100% of clients to send in JWTs with their requests. If this is the case, choose *Ignore*. JWT validation will still validate JWTs that are present.
+          - You may otherwise expect all requests to the selected hostname and endpoints to contain JWTs. If this is the case, choose *Mark as non-compliant*.
+      8. Choose an action to take for non-compliant requests. For example, JWTs that do not pass validation (expired, tampered with, or bad signature tokens) or requests with missing JWTs when *Mark as non-compliant* is selected in the previous step.
+      9. Select **Save**.
+    </Steps>
+  </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Go to **Security** > **API Shield** > **API Rules**.
+      3. Add a name for your rule.
+      4. Select a hostname to protect requests with saved endpoints using the rule.
+      5. Deselect any endpoints that you want JWT validation to ignore (for example, an endpoint used to generate a JWT).
+      6. Select the token validation configuration that corresponds to the incoming requests.
+      7. Choose whether to strictly enforce token presence on these endpoints.
+          - You may not expect 100% of clients to send in JWTs with their requests. If this is the case, choose *Ignore*. JWT validation will still validate JWTs that are present.
+          - You may otherwise expect all requests to the selected hostname and endpoints to contain JWTs. If this is the case, choose *Mark as non-compliant*.
+      8. Choose an action to take for non-compliant requests. For example, JWTs that do not pass validation (expired, tampered with, or bad signature tokens) or requests with missing JWTs when *Mark as non-compliant* is selected in the previous step.
+      9. Select **Save**.
+    </Steps>
+  </TabItem>
+</Tabs>
+
+{/* prettier-ignore-end */}
 
 :::note
 
-Token configuration rules will automatically apply to new endpoints added to Endpoint Management if those endpoints also match the rule. 
+Token configuration rules will automatically apply to new endpoints added to Endpoint Management if those endpoints also match the rule.
 :::
+
+---
 
 ## Special cases
 
 ### Validate two JWTs with different identity providers on a single request
 
-If you expect that two different JWTs should be present in a request and you want to validate both, you must create two different token configurations. When selecting the two configurations in your validation rule, select *Validate all configurations* under **Validation behavior for multiple configurations**.
+If you expect that two different JWTs should be present in a request and you want to validate both, you must create two different token configurations. When selecting the two configurations in your validation rule, select _Validate all configurations_ under **Validation behavior for multiple configurations**.
 
 ### Support a migration from one identity provider to another
 
@@ -65,10 +122,21 @@ If you expect to migrate between two different identity providers, you must crea
 
 API Shield will verify JSON Web Tokens regardless of whether or not they have the `Bearer` prefix.
 
+<Render file="rate-limit-user" product="api-shield" />
+
+### Ignore `OPTIONS` pre-flight CORS requests
+
+Due to cross-origin resource sharing (CORS) security, web browsers will send "pre-flight" requests using the `OPTIONS` verb to API endpoints before sending a `GET` (or other verb) request. By definition, `OPTIONS` requests do not include headers or cookies and are anonymous. 
+
+If you expect web browsers to be valid clients of your API, and to prevent blocking `OPTIONS` requests from those browsers, Cloudflare recommends adding `or http.request.method eq "OPTIONS"` to your JWT validation rules.
+
+---
+
 ## Availability
 
 JWT validation is available for all API Shield customers. Enterprise customers who have not purchased API Shield can preview [API Shield as a non-contract service](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or by contacting your account team.
 
+---
 ## Limitations
 
 Currently, the following known limitations exist:

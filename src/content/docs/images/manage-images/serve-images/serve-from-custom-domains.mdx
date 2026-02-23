@@ -4,6 +4,7 @@ title: Serve images from custom domains
 sidebar:
   order: 22
 ---
+import { DashButton } from "~/components";
 
 Image delivery is supported from all customer domains under the same Cloudflare account. To serve images through custom domains, an image URL should be adjusted to the following format:
 
@@ -37,21 +38,23 @@ This example lets you rewrite a request from `example.com/images` to `example.co
 
 To create a rule:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
-2. Go to **Rules** > **Overview**.
-3. Next to **URL Rewrite Rules**, select **Create rule**.
-4. Under **If incoming requests match**, select **Wildcard pattern** and enter the following **Request URL** (update with your own domain):
+1. In the Cloudflare dashboard, go to the **Rules Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Next to **URL Rewrite Rules**, select **Create rule**.
+3. Under **If incoming requests match**, select **Wildcard pattern** and enter the following **Request URL** (update with your own domain):
 
    ```txt
    https://example.com/images/*
    ```
 
-5. Under **Then rewrite the path and/or query** > **Path**, enter the following values (using your account hash):
+4. Under **Then rewrite the path and/or query** > **Path**, enter the following values (using your account hash):
 
    - **Target path**: [`/`] `images/*`
    - **Rewrite to**: [`/`] `cdn-cgi/imagedelivery/<ACCOUNT_HASH>/${1}`
 
-6. Select **Deploy** when you are done.
+5. Select **Deploy** when you are done.
 
 ### Advanced version
 
@@ -63,13 +66,15 @@ This example lets you rewrite a request from `example.com/images/some-image-id/w
 
 To create a rule:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
-2. Go to **Rules** > **Overview**.
-3. Next to **URL Rewrite Rules**, select **Create rule**.
-4. Under **If incoming requests match**, select **Custom filter expression** and then select **Edit expression**.
-5. In the text field, enter `(http.request.uri.path matches "^/images/.*$")`.
-6. Under **Path**, select **Rewrite to**.
-7. Select _Dynamic_ and enter the following in the text field.
+1. In the Cloudflare dashboard, go to the **Rules Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Next to **URL Rewrite Rules**, select **Create rule**.
+3. Under **If incoming requests match**, select **Custom filter expression** and then select **Edit expression**.
+4. In the text field, enter `(http.request.uri.path matches "^/images/.*$")`.
+5. Under **Path**, select **Rewrite to**.
+6. Select _Dynamic_ and enter the following in the text field.
 
 ```txt
 regex_replace(

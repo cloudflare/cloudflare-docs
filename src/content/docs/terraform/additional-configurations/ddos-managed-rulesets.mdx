@@ -19,17 +19,22 @@ This page provides examples of configuring [DDoS managed rulesets](/ddos-protect
 
 DDoS managed rulesets are always enabled. Depending on your Cloudflare services, you may be able to adjust their behavior.
 
+If you are using the Cloudflare API, refer to the following resources:
+
+- [Configure HTTP DDoS Attack Protection via API](/ddos-protection/managed-rulesets/http/http-overrides/configure-api/)
+- [Configure Network-layer DDoS Attack Protection via API](/ddos-protection/managed-rulesets/network/network-overrides/configure-api/)
+
 For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
 ## Before you start
 
 ### Obtain the necessary account, zone, and managed ruleset IDs
 
-<Render file="find-ids-managed-rulesets" />
+<Render file="find-ids-managed-rulesets" product="terraform" />
 
 ### (Optional) Delete existing rulesets to start from scratch
 
-<Render file="import-delete-existing-rulesets" />
+<Render file="import-delete-existing-rulesets" product="terraform" />
 
 ---
 
@@ -37,7 +42,7 @@ For more information on deploying and configuring rulesets using the Rulesets AP
 
 This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform.
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
@@ -58,14 +63,14 @@ resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
         rules {
           # Adaptive DDoS Protection based on Locations (Available only to Enterprise zones with Advanced DDoS service)
           id = "a8c6333711ff4b0a81371d1c444be2c3"
-          sensitivity_level = "default"    
-          action = "managed_challenge"      
+          sensitivity_level = "default"
+          action = "managed_challenge"
         }
         rules {
           # Adaptive DDoS Protection based on User-Agents (Available only to Enterprise zones with Advanced DDoS service)
           id = "7709d496081e458899c1e3a6e4fe8e55"
-          sensitivity_level = "default"  
-          action = "managed_challenge"        
+          sensitivity_level = "default"
+          action = "managed_challenge"
         }
         rules {
           # HTTP requests causing a high number of origin errors.
@@ -95,7 +100,7 @@ This example configures the [Network-layer DDoS Attack Protection](/ddos-protect
 
 :::
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "account_level_network_ddos_config" {
@@ -146,7 +151,7 @@ The order of the rules is important: the rule with the highest sensitivity level
 
 :::
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 variable "zone_id" {

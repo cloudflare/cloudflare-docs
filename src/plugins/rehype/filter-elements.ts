@@ -21,6 +21,7 @@ const ALLOWED_ELEMENTS = [
 	"address",
 	"article",
 	"aside",
+	"details",
 	"footer",
 	"header",
 	"h1",
@@ -39,6 +40,7 @@ const ALLOWED_ELEMENTS = [
 	"div",
 	"dl",
 	"dt",
+	"summary",
 	// "figcaption",
 	"figure",
 	"hr",
@@ -93,6 +95,8 @@ const ALLOWED_ELEMENTS = [
 	"tr",
 	// Images
 	"img",
+	// UI frameworks (i.e React)
+	"astro-island",
 	// Custom elements
 	"rule-id",
 	"starlight-tabs",
@@ -109,7 +113,7 @@ const ALLOWED_ATTRIBUTES: Record<string, string[]> = {
 
 const UNWRAP_CLASS_NAMES = ["heading-wrapper"];
 
-const DISALLOWED_CLASS_NAMES = ["external-link", "anchor-link"];
+const DISALLOWED_CLASS_NAMES = ["external-link", "anchor-link", "md-ignore"];
 
 export default function () {
 	return function (tree: Root) {

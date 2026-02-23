@@ -31,8 +31,7 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 									<td>
 										{Date.now() >
 										Math.floor(
-											new Date(properties.planned_deprecation_date).getTime() /
-												1000,
+											new Date(properties.planned_deprecation_date).getTime(),
 										)
 											? "Deprecated"
 											: "Planned Deprecation"}
@@ -107,6 +106,24 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 							{properties.beta && (
 								<tr>
 									<td>Beta</td>
+									<td>Yes</td>
+								</tr>
+							)}
+							{properties.async_queue && (
+								<tr>
+									<td>Batch</td>
+									<td>Yes</td>
+								</tr>
+							)}
+							{properties.partner && (
+								<tr>
+									<td>Partner</td>
+									<td>Yes</td>
+								</tr>
+							)}
+							{properties.realtime && (
+								<tr>
+									<td>Real-time</td>
 									<td>Yes</td>
 								</tr>
 							)}

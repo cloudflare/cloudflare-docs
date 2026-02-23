@@ -2,7 +2,6 @@
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
-import { render } from "astro:content";
 
 import Header from "~/components/changelog/Header.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
@@ -10,16 +9,46 @@ import ProductPills from "~/components/changelog/ProductPills.astro";
 import { Steps } from "~/components";
 import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelog";
+import { directoryByGroup } from "~/util/directory";
 
-const notes = await getChangelogs({
+import { render } from "astro:content";
+
+let notes = await getChangelogs({
 	filter: (entry) => !entry.data.hidden,
 });
+
+const seen = new Map<string, number>();
+
+notes = notes.flatMap((note) => {
+	const products = note.data.products.map((product) => product.id);
+
+	// PCX-19256 - We only want to count dedicated entries against the product length, otherwise specific entries can get obscured
+	if (products.length === 1) {
+		for (const product of products) {
+			const previous = seen.get(product) || 0;
+
+			seen.set(product, previous + 1);
+
+			if (previous >= 5) {
+				return [];
+			}
+		}
+	}
+
+	return note;
+});
+
+// Limit rendered entries to avoid shipping megabytes of hidden HTML.
+// The page was 2.45 MB / ~38K DOM nodes with all entries rendered.
+// See https://github.com/cloudflare/cloudflare-docs/issues/28482
+notes = notes.slice(0, 50);
 
 const props = {
 	frontmatter: {
 		title: "Changelogs",
 		tableOfContents: false,
 		template: "splash",
+		chatbot_deprioritize: true,
 	},
 	hideTitle: true,
 	hideBreadcrumbs: true,
@@ -29,44 +58,52 @@ const props = {
 <StarlightPage {...props}>
 	<Header notes={notes} />
 	{
-		notes.map(async (entry, idx) => {
+		notes.map(async (entry) => {
 			const date = format(entry.data.date, "MMM dd, yyyy");
 
-			const productIds = JSON.stringify(
-				entry.data.products.map((product) => product.id),
-			);
+			const productIds = entry.data.products.map((product) => product.id);
+
+			const productGroups = directoryByGroup
+				.filter((group) =>
+					group[1]?.find((product) => productIds.includes(product.id)),
+				)
+				.map((group) => group[0])
+				.sort();
 
 			const { Content } = await render(entry);
 
 			return (
 				<div
-					class="!mt-0 sm:flex"
-					data-products={productIds}
-					style={`display: ${idx >= 10 ? "none" : ""}`}
+					class="mt-0! sm:flex"
+					data-products={JSON.stringify(
+						productIds.concat(
+							productGroups.map((group) =>
+								group.replaceAll(" ", "-").toLowerCase(),
+							),
+						),
+					)}
 				>
 					<time
 						datetime={entry.data.date.toISOString()}
-						class="whitespace-nowrap text-xs font-bold leading-6 sm:pr-4 sm:text-right"
+						class="text-xs leading-6 font-bold whitespace-nowrap sm:pr-4 sm:text-right"
 					>
 						{date}
 					</time>
 					<Steps>
-						<ol class="!mt-0 overflow-x-auto">
-							<li class="!pb-16">
+						<ol class="mt-0! overflow-x-auto">
+							<li class="pb-16!">
 								<div>
 									<h3 class="leading-none">
 										<a
 											href={`/changelog/${entry.id}/`}
-											class="mb-4 !text-black no-underline hover:underline"
+											class="mb-4 text-black! no-underline hover:underline"
 										>
 											{entry.data.title}
 										</a>
 									</h3>
 									<ProductPills products={entry.data.products} />
 								</div>
-								<p>
-									<Content />
-								</p>
+								<Content />
 							</li>
 						</ol>
 					</Steps>
@@ -74,23 +111,31 @@ const props = {
 			);
 		})
 	}
-	<div class="flex items-center justify-center">
-		<button
-			id="changelogs-next-button"
-			class="h-12 cursor-pointer rounded bg-cl1-brand-orange px-6 font-medium text-cl1-black"
+	<div id="changelog-no-results" class="hidden! py-12 text-center">
+		<p class="text-sm text-sl-color-gray-3">
+			No recent entries for this product.
+		</p>
+		<a
+			href="/search/?contentType=Changelog+entry"
+			class="text-sm font-medium text-orange-accent-200 no-underline hover:underline"
 		>
-			Load more items
-		</button>
+			Search all changelog entries &rarr;
+		</a>
+	</div>
+	<div class="flex items-center justify-center">
+		<a
+			id="changelog-search-button"
+			href="/search/?contentType=Changelog+entry"
+			class="bg-cl1-brand-orange text-cl1-black mr-2 flex h-12 items-center justify-center rounded-sm px-6 font-medium no-underline"
+		>
+			Search for historical entries
+		</a>
 	</div>
 </StarlightPage>
 
 <script>
 	const filter = document.querySelector<HTMLSelectElement>(
 		"#changelogs-next-filter",
-	);
-
-	const button = document.querySelector<HTMLButtonElement>(
-		"#changelogs-next-button",
 	);
 
 	const url = new URL(window.location.href);
@@ -102,43 +147,18 @@ const props = {
 
 	filter?.addEventListener("change", updateFilter);
 
-	button?.addEventListener("click", () => {
-		const entries = [
-			...document.querySelectorAll<HTMLElement>("[data-products]"),
-		];
+	function filterByProduct(e: HTMLElement, value?: string): boolean {
+		if (!value || value === "all") {
+			return true;
+		}
 
-		if (!entries) return;
+		if (!e.dataset.products) {
+			return false;
+		}
 
-		const value = filter!.value;
-
-		const hidden = entries
-			.filter((e) => {
-				if (e.style.display !== "none") {
-					return false;
-				}
-
-				if (value === "all") {
-					return true;
-				}
-
-				if (!e.dataset.products) {
-					return false;
-				}
-
-				const products: string[] = JSON.parse(e.dataset.products);
-
-				if (products.includes(value)) {
-					return true;
-				}
-
-				return false;
-			})
-			.slice(0, 10);
-
-		hidden.forEach((e) => (e.style.display = ""));
-
-		hideButton();
-	});
+		const products: string[] = JSON.parse(e.dataset.products);
+		return products.includes(value);
+	}
 
 	function updateFilter() {
 		const entries = [
@@ -149,33 +169,31 @@ const props = {
 
 		const value = filter!.value;
 
-		const filtered = entries
-			.filter((e) => {
-				if (value === "all") {
-					return true;
-				}
-
-				if (!e.dataset.products) {
-					return false;
-				}
-
-				const products: string[] = JSON.parse(e.dataset.products);
-
-				if (products.includes(value)) {
-					return true;
-				}
-
-				return false;
-			})
-			.slice(0, 5);
+		const filtered = entries.filter((e) => filterByProduct(e, value));
 
 		for (const entry of entries) {
 			const show = filtered.includes(entry);
 
 			if (show) {
-				entry.style.display = "";
+				entry.classList.remove("hidden!");
 			} else {
-				entry.style.display = "none";
+				entry.classList.add("hidden!");
+			}
+		}
+
+		// Show empty state when a product filter matches nothing
+		const noResults = document.getElementById("changelog-no-results");
+
+		if (noResults) {
+			if (filtered.length === 0 && value && value !== "all") {
+				noResults.classList.remove("hidden!");
+
+				const link = noResults.querySelector("a");
+				if (link) {
+					link.href = `/search/?contentType=Changelog+entry&product=${encodeURIComponent(value)}`;
+				}
+			} else {
+				noResults.classList.add("hidden!");
 			}
 		}
 
@@ -188,45 +206,6 @@ const props = {
 		}
 
 		history.replaceState(null, "", url.href);
-
-		hideButton();
-	}
-
-	function hideButton() {
-		const entries = [
-			...document.querySelectorAll<HTMLDivElement>("[data-products]"),
-		];
-
-		if (entries.length === 0) return;
-
-		const filtered = entries.filter((p) => {
-			const value = filter!.value;
-
-			if (value === "all") {
-				return true;
-			}
-
-			if (!p.dataset.products) {
-				return false;
-			}
-
-			const products: string[] = JSON.parse(p.dataset.products);
-
-			if (!products.includes(value)) {
-				return false;
-			}
-
-			return true;
-		});
-
-		const visible = filtered.filter((p) => p.style.display !== "none");
-		const hidden = filtered.length - visible.length;
-
-		if (hidden >= 10) {
-			button!.style.display = "";
-		} else {
-			button!.style.display = "none";
-		}
 	}
 </script>
 

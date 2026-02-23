@@ -1,0 +1,103 @@
+---
+pcx_content_type: troubleshooting
+title: 4xx Client Error
+source: null
+---
+
+`4xx` codes are error responses that indicate an issue on the client's end, potentially due to a network problem.
+
+- `4xx` codes can be used as a response to any request method.
+- The origin server should include an explanation, which should be displayed by the User-Agent, except in the case of a `HEAD` request.
+- [Custom rules](/waf/custom-rules/) can return any response code in the range of `400–499` on your HTML page if the site owner has created a rule with the _Block_ action and configured a custom response code. For more details, refer to [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests).
+
+## Log Explorer
+
+[Log Explorer](/log-explorer/) provides access to Cloudflare logs with all the context available within the Cloudflare platform. 
+You can monitor security and performance issues with custom dashboards or investigate and troubleshoot issues with log search.
+Log explorer [allows to build queries](/log-explorer/log-search/) filtering for specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), which can be useful to investigate HTTP Errors.
+
+## 400 Bad Request
+
+For a complete description of this error refer to the [Error 400](/support/troubleshooting/http-status-codes/4xx-client-error/error-400/) page.
+
+## 401 Unauthorized
+
+For a complete description of this error refer to the [Error 401](/support/troubleshooting/http-status-codes/4xx-client-error/error-401/) page.
+
+
+## 402 Payment Required
+
+The `402 Payment Required` status code is reserved for future use and is not yet implemented according to the standards outlined in [RFC 7231](https://tools.ietf.org/html/rfc7231).
+
+## 403 Forbidden
+
+For a complete description of this error refer to the [Error 403](/support/troubleshooting/http-status-codes/4xx-client-error/error-403/) page.
+
+
+## 404 Not Found
+
+For a complete description of this error refer to the [Error 404](/support/troubleshooting/http-status-codes/4xx-client-error/error-404/) page.
+
+## 405 Method Not Allowed
+
+For a complete description of this error refer to the [Error 405](/support/troubleshooting/http-status-codes/4xx-client-error/error-405/) page.
+
+## 406 Not Acceptable
+
+For a complete description of this error refer to the [Error 406](/support/troubleshooting/http-status-codes/4xx-client-error/error-406/) page.
+
+## 407 Authentication Required
+
+For a complete description of this error refer to the [Error 407](/support/troubleshooting/http-status-codes/4xx-client-error/error-407/) page.
+
+## 408 Request Timeout
+
+For a complete description of this error refer to the [Error 408](/support/troubleshooting/http-status-codes/4xx-client-error/error-408/) page.
+
+## 409 Conflict
+
+For a complete description of this error refer to the [Error 409](/support/troubleshooting/http-status-codes/4xx-client-error/error-409/) page.
+
+## 410 Gone
+
+For a complete description of this error refer to the [Error 410](/support/troubleshooting/http-status-codes/4xx-client-error/error-410/) page.
+
+## 411 Length Required
+
+For a complete description of this error refer to the [Error 411](/support/troubleshooting/http-status-codes/4xx-client-error/error-411/) page.
+
+## 412 Precondition Failed
+
+For a complete description of this error refer to the [Error 412](/support/troubleshooting/http-status-codes/4xx-client-error/error-412/) page.
+
+## 413 Payload Too Large
+
+For a complete description of this error refer to the [Error 413](/support/troubleshooting/http-status-codes/4xx-client-error/error-413/) page.
+
+## 414 URI Too Long
+
+For a complete description of this error refer to the [Error 414](/support/troubleshooting/http-status-codes/4xx-client-error/error-414/) page.
+
+## 415 Unsupported Media Type
+
+For a complete description of this error refer to the [Error 415](/support/troubleshooting/http-status-codes/4xx-client-error/error-415/) page.
+
+## 416 Range Not Satisfiable
+
+For a complete description of this error refer to the [Error 416](/support/troubleshooting/http-status-codes/4xx-client-error/error-416/) page.
+
+## 417 Expectation Failed
+
+For a complete description of this error refer to the [Error 417](/support/troubleshooting/http-status-codes/4xx-client-error/error-417/) page.
+
+## 429 Too Many Requests
+
+For a complete description of this error refer to the [Error 429](/support/troubleshooting/http-status-codes/4xx-client-error/error-429/) page.
+
+## 451 Unavailable For Legal Reason
+
+For a complete description of this error refer to the [Error 451](/support/troubleshooting/http-status-codes/4xx-client-error/error-451/) page.
+
+## 499 Client Close Request
+
+For a complete description of this error refer to the [Error 499](/support/troubleshooting/http-status-codes/4xx-client-error/error-499/) page.

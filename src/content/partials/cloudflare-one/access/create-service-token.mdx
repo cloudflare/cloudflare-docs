@@ -3,11 +3,11 @@
 
 ---
 
-import { Tabs, TabItem, Details } from '~/components';
+import { Tabs, TabItem, Details, APIRequest } from '~/components';
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service Auth** > **Service Tokens**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Service credentials** > **Service Tokens**.
 
 2. Select **Create Service Token**.
 
@@ -23,16 +23,46 @@ import { Tabs, TabItem, Details } from '~/components';
    This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
    :::
 
-</TabItem> <TabItem label="Terraform (v4)">
+</TabItem> <TabItem label="API">
 
-:::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.40.0`.
-:::
+1. Make a `POST` request to the [Access Service Tokens](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/create/) endpoint:
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+	<APIRequest
+		path="/accounts/{account_id}/access/service_tokens"
+		method="POST"
+			json={{
+			name: "CI/CD token",
+			duration: "8760h"
+		}}
+	/>
+
+2. Copy the `client_id` and `client_secret` values returned in the response.
+
+
+	```json title="Response" {2-3}
+	"result": {
+		"client_id": "88bf3b6d86161464f6509f7219099e57.access",
+		"client_secret": "bdd31cbc4dec990953e39163fbbb194c93313ca9f0a6e420346af9d326b1d2a5",
+		"created_at": "2025-09-25T22:26:26Z",
+		"expires_at": "2026-09-25T22:26:26Z",
+		"id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
+		"name": "CI/CD token",
+		"updated_at": "2025-09-25T22:26:26Z",
+		"duration": "8760h",
+		"client_secret_version": 1
+	}
+	```
+
+   :::caution
+   This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
+   :::
+
+</TabItem> <TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Access: Service Tokens Write`
 
-2. Configure the [`cloudflare_zero_trust_access_service_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/zero_trust_access_service_token) resource:
+2. Configure the [`cloudflare_zero_trust_access_service_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_service_token) resource:
 
 		```tf
 		resource "cloudflare_zero_trust_access_service_token" "example_service_token" {

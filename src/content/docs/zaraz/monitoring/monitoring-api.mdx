@@ -28,28 +28,28 @@ You can construct any query you'd like using the above datasets, but here are so
 
 Query for the count of Zaraz events, grouped by time.
 
-```graphql
+```graphql graphql-api-explorer='{"orderBy": "datetimeHour_ASC"}'
 query ZarazEvents(
- $zoneTag: string
- $limit: uint64!
- $start: Date
- $end: Date
- $orderBy: [ZoneZarazTrackAdaptiveGroupsOrderBy!]
+	$zoneTag: string
+	$limit: uint64!
+	$start: Time
+	$end: Time
+	$orderBy: ZoneZarazTrackAdaptiveGroupsOrderBy!
 ) {
- viewer {
-  zones(filter: { zoneTag: $zoneTag }) {
-   data: zarazTrackAdaptiveGroups(
-    limit: $limit
-    filter: { datetimeHour_geq: $start, datetimeHour_leq: $end }
-    orderBy: [$orderBy]
-   ) {
-    count
-    dimensions {
-     ts: datetimeHour
-    }
-   }
-  }
- }
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			data: zarazTrackAdaptiveGroups(
+				limit: $limit
+				filter: { datetimeHour_geq: $start, datetimeHour_leq: $end }
+				orderBy: [$orderBy]
+			) {
+				count
+				dimensions {
+					ts: datetimeHour
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -57,28 +57,28 @@ query ZarazEvents(
 
 Query for the count of Zaraz loads, grouped by time.
 
-```graphql
+```graphql graphql-api-explorer='{"orderBy": "date_ASC"}'
 query ZarazLoads(
- $zoneTag: string
- $limit: uint64!
- $start: Date
- $end: Date
- $orderBy: [ZoneZarazTriggersAdaptiveGroupsOrderBy!]
+	$zoneTag: string
+	$limit: uint64!
+	$start: Date
+	$end: Date
+	$orderBy: ZoneZarazTriggersAdaptiveGroupsOrderBy!
 ) {
- viewer {
-  zones(filter: { zoneTag: $zoneTag }) {
-   data: zarazTriggersAdaptiveGroups(
-    limit: $limit
-    filter: { date_geq: $start, date_leq: $end, triggerName: Pageview }
-    orderBy: [$orderBy]
-   ) {
-    count
-    dimensions {
-     ts: date
-    }
-   }
-  }
- }
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			data: zarazTriggersAdaptiveGroups(
+				limit: $limit
+				filter: { date_geq: $start, date_leq: $end, triggerName: Pageview }
+				orderBy: [$orderBy]
+			) {
+				count
+				dimensions {
+					ts: date
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -86,28 +86,27 @@ query ZarazLoads(
 
 Query for the total execution count of each trigger processed by Zaraz.
 
-```graphql
+```graphql graphql-api-explorer
 query ZarazTriggers(
- $zoneTag: string
- $limit: uint64!
- $start: Date
- $end: Date
- $orderBy: [uint64!]
+	$zoneTag: string
+	$limit: uint64!
+	$start: Date
+	$end: Date
 ) {
- viewer {
-  zones(filter: { zoneTag: $zoneTag }) {
-   data: zarazTriggersAdaptiveGroups(
-    limit: $limit
-    filter: { date_geq: $start, date_leq: $end }
-    orderBy: [count_DESC]
-   ) {
-    count
-    dimensions {
-     name: triggerName
-    }
-   }
-  }
- }
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			data: zarazTriggersAdaptiveGroups(
+				limit: $limit
+				filter: { date_geq: $start, date_leq: $end }
+				orderBy: [count_DESC]
+			) {
+				count
+				dimensions {
+					name: triggerName
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -115,34 +114,34 @@ query ZarazTriggers(
 
 Query for the count of 400 server-side responses, grouped by time and URL.
 
-```graphql
+```graphql graphql-api-explorer='{"orderBy": "datetimeHour_ASC"}'
 query ErroneousResponses(
- $zoneTag: string
- $limit: uint64!
- $start: Date
- $end: Date
- $orderBy: [ZoneZarazFetchAdaptiveGroupsOrderBy!]
+	$zoneTag: string
+	$limit: uint64!
+	$start: Time
+	$end: Time
+	$orderBy: ZoneZarazFetchAdaptiveGroupsOrderBy!
 ) {
- viewer {
-  zones(filter: { zoneTag: $zoneTag }) {
-   data: zarazFetchAdaptiveGroups(
-    limit: $limit
-    filter: {
-     datetimeHour_geq: $start
-     datetimeHour_leq: $end
-     url_neq: ""
-     status: 400
-    }
-    orderBy: [$orderBy]
-   ) {
-    count
-    dimensions {
-     ts: datetimeHour
-     name: url
-    }
-   }
-  }
- }
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			data: zarazFetchAdaptiveGroups(
+				limit: $limit
+				filter: {
+					datetimeHour_geq: $start
+					datetimeHour_leq: $end
+					url_neq: ""
+					status: 400
+				}
+				orderBy: [$orderBy]
+			) {
+				count
+				dimensions {
+					ts: datetimeHour
+					name: url
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -152,11 +151,11 @@ query ErroneousResponses(
 
 ```json
 {
- "zoneTag": "d6dfdf32c704a77ac227243a5eb5ca61",
- "start": "2025-01-01T00:00:00Z",
- "end": "2025-01-30T00:00:00Z",
- "limit": 10000,
- "orderBy": "datetimeHour_ASC"
+	"zoneTag": "d6dfdf32c704a77ac227243a5eb5ca61",
+	"start": "2025-01-01T00:00:00Z",
+	"end": "2025-01-30T00:00:00Z",
+	"limit": 10000,
+	"orderBy": "datetimeHour_ASC"
 }
 ```
 

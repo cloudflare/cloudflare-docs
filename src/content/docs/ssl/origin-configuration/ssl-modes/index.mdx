@@ -9,9 +9,15 @@ description: Encryption modes allow you to control how Cloudflare connects to
   validated.
 ---
 
-import { DirectoryListing, Render, TabItem, Tabs } from "~/components";
+import {
+	DirectoryListing,
+	Render,
+	TabItem,
+	Tabs,
+	APIRequest,
+} from "~/components";
 
-<Render file="encryption-mode-definition" /> <br />
+<Render file="encryption-mode-definition" product="ssl" /> <br />
 
 If possible, Cloudflare strongly recommends using [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes to prevent malicious connections to your origin.
 
@@ -37,25 +43,34 @@ Automatic SSL/TLS leverages advanced methods developed by the SSL/TLS Recommende
 Automatic SSL/TLS will not change your setting to a less secure encryption mode. For example, if your origin certificate expires, the encryption mode will not change from **Full (strict)** to **Full**. You must ensure the validity of your origin SSL/TLS configuration at all times.
 :::
 
-Cloudflare is enabling Automatic SSL/TLS on the following dates:
+Automatic upgrades are applied gradually. Automatic SSL/TLS begins to upgrade the domain by starting with just 1% of its traffic. If no issues are found, the new SSL/TLS encryption mode is applied to traffic in 10% increments until 100% of traffic uses the recommended mode.  If origin connectivity fails during this process, Cloudflare aborts the upgrade, immediately rolls traffic back to the previous mode, and logs the failure. Once 100% of traffic has been successfully upgraded with no TLS-related errors, the domain's SSL/TLS setting is permanently updated.
 
-| Plan           | Using SSL/TLS recommender? | Grace period ends |
-| -------------- | -------------------------- | ----------------- |
-| Non-Enterprise | Yes                        | November 5th, 2024 |
-| Enterprise     | Yes                        | February, 2025   |
-| All plans      | No                         | March, 2025  |
+Flexible → Full/Strict transitions are handled with extra caution since the origin scheme change (HTTP → HTTPS) alters cache keys. In this case, the ramp-up may proceed more slowly to allow cache warm-up before resuming standard increments.
+
+#### Additional details
+
+- **Scan frequency**: Automatic scans currently occur approximately once per month, though they may happen more frequently in some cases (for example, configuration changes or upgrades). Scans stop when:
+  - The site is already using the most secure mode (for example, **Full (strict)**), or
+  - You switch from auto mode to **Custom SSL/TLS**.
+
+- **Error checking before upgrades**: To prevent disruptions, Cloudflare checks for `5XX` errors (like `502` or `503`) and evaluates whether the HTTP and HTTPS content is consistent before upgrading a zone's encryption mode.
+
+- **Upgrade notifications**: Cloudflare sends weekly digest emails listing which zones have been upgraded. These emails are currently sent to Super Admins only.
 
 #### Opt out single zone
 
 If you want to opt a zone out via the API, you can make this API call on or before the grace period expiration date.
 
-```bash
- curl --request PATCH \
-  --url https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/settings/ssl_automatic_mode \
-  --header 'Authorization: Bearer <CF_API_TOKEN>' \
-  --header 'Content-Type: application/json' \
-  --data '{"value":"custom"}'
-```
+<APIRequest
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="PATCH"
+	json={{
+		value: "custom",
+	}}
+	parameters={{
+		setting_id: "ssl_automatic_mode",
+	}}
+/>
 
 #### Opt out multiple zones
 
@@ -106,11 +121,11 @@ To use Custom SSL/TLS, select the custom option (if you prefer to manually set t
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="change-encryption-mode-dash" />
+<Render file="change-encryption-mode-dash" product="ssl" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="change-encryption-mode-api" />
+<Render file="change-encryption-mode-api" product="ssl" />
 
 </TabItem> </Tabs>
 

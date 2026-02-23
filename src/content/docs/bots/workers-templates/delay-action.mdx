@@ -3,11 +3,15 @@ pcx_content_type: how-to
 title: Delay action
 ---
 
+import { TypeScriptExample } from "~/components";
+
 Customers with a Bot Management and a [Workers](/workers/) subscription can use the template below to introduce a delay to requests that are likely from bots.
 
 The template sets a minimum and maximum delay, and delays requests where the bot score is less than 30 and the URI path starts with `/exampleURI`.
 
-```js title="Workers template"
+<TypeScriptExample>
+
+```ts title="Workers template"
 // Configurable Variables
 const PATH_START = '/exampleURI';
 const DELAY_FROM = 5; // in seconds
@@ -32,3 +36,5 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>

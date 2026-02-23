@@ -1,0 +1,12 @@
+id: aqfYFC
+name: dns-filtering
+
+entry:
+  title: DNS filtering
+  url: /cloudflare-one/traffic-policies/initial-setup/dns/
+  show: false
+
+meta:
+  title: Cloudflare DNS filtering docs
+  description: Secure Web Gateway allows you to inspect DNS traffic and control which websites users can visit.
+  author: "@cloudflare"

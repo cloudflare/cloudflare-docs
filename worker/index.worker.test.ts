@@ -1,6 +1,7 @@
 import { SELF } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 import { XMLParser } from "fast-xml-parser";
+import { parse } from "node-html-parser";
 
 describe("Cloudflare Docs", () => {
 	describe("html handling", () => {
@@ -23,7 +24,7 @@ describe("Cloudflare Docs", () => {
 			const request = new Request("http://fakehost/non-existent");
 			const response = await SELF.fetch(request);
 			expect(response.status).toBe(404);
-			expect(await response.text()).toContain("Page not found.");
+			expect(await response.text()).toContain("Check the URL,");
 		});
 	});
 
@@ -32,36 +33,14 @@ describe("Cloudflare Docs", () => {
 			const request = new Request("http://fakehost/docs/");
 			const response = await SELF.fetch(request, { redirect: "manual" });
 			expect(response.status).toBe(301);
-			expect(response.headers.get("Location")).toBe("/products/");
+			expect(response.headers.get("Location")).toBe("/directory/");
 		});
 
 		it("redirects requests without a trailing slash", async () => {
 			const request = new Request("http://fakehost/docs");
 			const response = await SELF.fetch(request, { redirect: "manual" });
 			expect(response.status).toBe(301);
-			expect(response.headers.get("Location")).toBe("/products/");
-		});
-
-		it("redirects /changelog/index.xml to /release-notes/index.xml", async () => {
-			const request = new Request("http://fakehost/changelog/index.xml");
-			const response = await SELF.fetch(request, { redirect: "manual" });
-			expect(response.status).toBe(301);
-			expect(response.headers.get("Location")).toBe("/release-notes/index.xml");
-		});
-
-		it("redirects /changelog-next/ to /changelog/", async () => {
-			const request = new Request("http://fakehost/changelog-next/");
-			const response = await SELF.fetch(request, { redirect: "manual" });
-			expect(response.status).toBe(301);
-			expect(response.headers.get("Location")).toBe("/changelog/");
-		});
-
-		it("redirects /changelog-next/rss.xml to /changelog/rss.xml", async () => {
-			const request = new Request("http://fakehost/changelog-next/rss.xml");
-			const response = await SELF.fetch(request, { redirect: "manual" });
-
-			expect(response.status).toBe(301);
-			expect(response.headers.get("Location")).toBe("/changelog/rss.xml");
+			expect(response.headers.get("Location")).toBe("/directory/");
 		});
 
 		it("redirects /workers/index.html.md to /workers/index.md", async () => {
@@ -70,6 +49,18 @@ describe("Cloudflare Docs", () => {
 
 			expect(response.status).toBe(301);
 			expect(response.headers.get("Location")).toBe("/workers/index.md");
+		});
+
+		it("redirects /fundamentals/setup/manage-domains/remove-domain/index.md to /fundamentals/manage-domains/remove-domain/index.md", async () => {
+			const request = new Request(
+				"http://fakehost/fundamentals/setup/manage-domains/remove-domain/index.md",
+			);
+			const response = await SELF.fetch(request, { redirect: "manual" });
+
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe(
+				"/fundamentals/manage-domains/remove-domain/index.md",
+			);
 		});
 	});
 
@@ -162,49 +153,7 @@ describe("Cloudflare Docs", () => {
 				expect(item).toBeDefined();
 				expect(item.product).toBe("Access");
 				expect(item.category).toBe("Access");
-				expect(item.pubDate).toBe("Mon, 03 Mar 2025 06:00:00 GMT");
-			});
-
-			it("legacy global", async () => {
-				const request = new Request("http://fakehost/release-notes/index.xml");
-				const response = await SELF.fetch(request);
-
-				expect(response.status).toBe(200);
-
-				const xml = await response.text();
-				const parsed = parser.parse(xml);
-				const { channel } = parsed.rss;
-
-				expect(channel.title).toBe("Cloudflare release notes");
-
-				const item = channel.item.find(
-					(item: any) => item.title === "WAF - 2025-02-24",
-				);
-
-				expect(item).toBeDefined();
-				expect(item.product).toBe("WAF");
-				expect(item.pubDate).toBe("Mon, 24 Feb 2025 00:00:00 GMT");
-			});
-
-			it("legacy product-specific", async () => {
-				const request = new Request("http://fakehost/waf/change-log/index.xml");
-				const response = await SELF.fetch(request);
-
-				expect(response.status).toBe(200);
-
-				const xml = await response.text();
-				const parsed = parser.parse(xml);
-				const { channel } = parsed.rss;
-
-				expect(channel.title).toBe("Changelog | WAF");
-
-				const item = channel.item.find(
-					(item: any) => item.title === "WAF - 2025-02-24",
-				);
-
-				expect(item).toBeDefined();
-				expect(item.product).toBeUndefined();
-				expect(item.pubDate).toBe("Mon, 24 Feb 2025 00:00:00 GMT");
+				expect(item.pubDate).toBe("Mon, 03 Mar 2025 00:00:00 GMT");
 			});
 		});
 	});
@@ -219,41 +168,6 @@ describe("Cloudflare Docs", () => {
 			const text = await response.text();
 			expect(text).toContain("# Cloudflare Developer Documentation");
 		});
-
-		it("llms-full.txt", async () => {
-			const request = new Request("http://fakehost/llms-full.txt");
-			const response = await SELF.fetch(request);
-
-			expect(response.status).toBe(200);
-
-			const text = await response.text();
-			expect(text).toContain("URL: https://developers.cloudflare.com/");
-			expect(text).toContain('from "~/components"');
-		});
-
-		it("product-specific llms-full.txt", async () => {
-			const request = new Request("http://fakehost/workers/llms-full.txt");
-			const response = await SELF.fetch(request);
-
-			expect(response.status).toBe(200);
-
-			const text = await response.text();
-			expect(text).toContain("URL: https://developers.cloudflare.com/");
-			expect(text).toContain('from "~/components"');
-		});
-
-		it("area-specific llms-full.txt", async () => {
-			const request = new Request(
-				"http://fakehost/developer-platform/llms-full.txt",
-			);
-			const response = await SELF.fetch(request);
-
-			expect(response.status).toBe(200);
-
-			const text = await response.text();
-			expect(text).toContain("URL: https://developers.cloudflare.com/");
-			expect(text).toContain('from "~/components"');
-		});
 	});
 
 	describe("index.md handling", () => {
@@ -264,10 +178,22 @@ describe("Cloudflare Docs", () => {
 			const response = await SELF.fetch(request);
 
 			expect(response.status).toBe(200);
+			expect(response.headers.get("x-robots-tag")).toBe("noindex");
 
 			const text = await response.text();
 			expect(text).toMatchInlineSnapshot(`
-				"The HTML generated by this file is used as a test fixture for our Markdown generation.
+				"---
+				title: Markdown · Cloudflare Style Guide
+				description: "The HTML generated by this file is used as a test fixture for our
+				  Markdown generation:"
+				lastUpdated: 2025-01-01T00:00:00.000Z
+				chatbotDeprioritize: true
+				source_url:
+				  html: http://fakehost/style-guide/fixtures/markdown/
+				  md: http://fakehost/style-guide/fixtures/markdown/index.md
+				---
+
+				The HTML generated by this file is used as a test fixture for our Markdown generation:
 
 				* mdx
 
@@ -288,7 +214,111 @@ describe("Cloudflare Docs", () => {
 			const request = new Request("http://fakehost/non-existent/index.md");
 			const response = await SELF.fetch(request);
 			expect(response.status).toBe(404);
-			expect(await response.text()).toContain("Page not found.");
+			expect(await response.text()).toContain("Check the URL,");
+		});
+	});
+
+	describe("head tags", async () => {
+		describe("/workers/", async () => {
+			const request = new Request("http://fakehost/workers/");
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(200);
+
+			const html = await response.text();
+			const dom = parse(html);
+
+			it("meta tags", () => {
+				const product = dom.querySelector("meta[name='pcx_product']")
+					?.attributes.content;
+
+				const group = dom.querySelector("meta[name='pcx_content_group']")
+					?.attributes.content;
+
+				const content_type = dom.querySelector("meta[name='pcx_content_type']")
+					?.attributes.content;
+
+				expect(product).toBe("Workers");
+				expect(group).toBe("Developer platform");
+				expect(content_type).toBe("Overview");
+			});
+
+			it("index.md rel='alternate' tag", () => {
+				const markdown = dom.querySelector(
+					"link[rel='alternate'][type='text/markdown']",
+				)?.attributes.href;
+
+				expect(markdown).toBe(
+					"https://developers.cloudflare.com/workers/index.md",
+				);
+			});
+
+			it("og:image tag", () => {
+				const image = dom.querySelector("meta[property='og:image']")?.attributes
+					.content;
+
+				expect(image).toBe(
+					"https://developers.cloudflare.com/dev-products-preview.png",
+				);
+			});
+		});
+
+		describe("/style-guide/fixtures/markdown/", async () => {
+			const request = new Request(
+				"http://fakehost/style-guide/fixtures/markdown/",
+			);
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(200);
+
+			const html = await response.text();
+			const dom = parse(html);
+
+			it("title", () => {
+				const title = dom.querySelector("title")?.textContent;
+
+				expect(title).toMatchInlineSnapshot(
+					`"Markdown · Cloudflare Style Guide"`,
+				);
+			});
+
+			it("description", () => {
+				const desc = dom.querySelector("meta[name='description']")?.attributes
+					.content;
+
+				const og = dom.querySelector("meta[property='og:description']")
+					?.attributes.content;
+
+				expect(desc).toMatchInlineSnapshot(
+					`"The HTML generated by this file is used as a test fixture for our Markdown generation:"`,
+				);
+				expect(og).toMatchInlineSnapshot(
+					`"The HTML generated by this file is used as a test fixture for our Markdown generation:"`,
+				);
+			});
+		});
+		describe("/changelog/ entry content types", async () => {
+			const request = new Request(
+				"http://fakehost/changelog/2025-03-03-saml-oidc-fields-saml-transformations/",
+			);
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(200);
+
+			const html = await response.text();
+			const dom = parse(html);
+
+			it("correct meta tags", () => {
+				const product = dom.querySelector("meta[name='pcx_product']")
+					?.attributes.content;
+
+				const group = dom.querySelector("meta[name='pcx_content_group']")
+					?.attributes.content;
+
+				const content_type = dom.querySelector("meta[name='pcx_content_type']")
+					?.attributes.content;
+
+				expect(product).toBe("Access");
+				expect(group).toBe("Cloudflare One");
+				expect(content_type).toBe("Changelog entry");
+			});
 		});
 	});
 });

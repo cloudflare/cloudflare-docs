@@ -1,13 +1,13 @@
 ---
 title: Bring your own IP space to Cloudflare
 pcx_content_type: reference-architecture-diagram
-products:
-  - DDoS Protection
-  - BYOIP
+products: [byoip, ddos-protection]
 sidebar:
   order: 1
   label: BYOIP to Cloudflare
-updated: 2024-10-24
+reviewed: 2024-10-24
+description: >-
+  Cloudflare allows enterprises to bring their IP space to the Cloudflare network. This allows them to gain the security and performance of the platform while still appearing to the rest of the world via their own public IP space.
 ---
 
 ## Introduction
@@ -48,7 +48,7 @@ Cloudflare is well known for its DDoS mitigation services protecting public webs
 1. In order for Cloudflare to attract traffic destined for customer network prefixes, a Letter of Agency (LOA) must be provided by the customer to Cloudflare, so that the network prefixes can be provisioned and advertised.
 2. Once provisioned, Cloudflare will advertise the customer prefixes to the Internet, attracting traffic destined for those networks to the Cloudflare network.
 3. All traffic destined for those prefixes is routed to Cloudflare.
-4. DDoS traffic is mitigated by Cloudflare and legitimate traffic is directed back to customer networks via [tunnels](/magic-wan/), or via [Cloudflare Network Interconnect](/network-interconnect/) (CNI) on ramps to the customer environment.
+4. DDoS traffic is mitigated by Cloudflare and legitimate traffic is directed back to customer networks via [tunnels](/cloudflare-wan/), or via [Cloudflare Network Interconnect](/network-interconnect/) (CNI) on ramps to the customer environment.
 
 More detailed information about Magic Transit capabilities can be found in the [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/).
 

@@ -1,0 +1,45 @@
+---
+pcx_content_type: how-to
+title: Check tunnel health in the dashboard
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="tunnel-health/check-tunnel-healthchecks-dash"
+	product="networking-services"
+	params={{
+		dashInfo:
+			"The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.",
+		graphQL: "/cloudflare-one/networks/connectors/cloudflare-wan/analytics/query-tunnel-health/",
+		notificationsPath:
+			"[notifications wizard](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/)",
+		packetCaptures: "/cloudflare-network-firewall/packet-captures/",
+		networkAnalytics: "/cloudflare-one/networks/connectors/cloudflare-wan/analytics/network-analytics/",
+		magicWord: "CF1 Cloudflare WAN"
+	}}
+/>
+
+<Render
+	file="tunnel-health/health-checks-compatible-cmb-eu"
+	product="networking-services"
+	params={{
+		productName: "Cloudflare WAN",
+	}}
+/>
+
+## Connectors
+
+<Render
+	file="tunnel-health/mconn-heartbeat-health"
+	product="networking-services"
+	params={{
+		heartbeatURL: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/heartbeat/"
+	}}
+/>
+
+## Troubleshooting
+
+If your tunnels show as unhealthy or degraded, refer to [Troubleshoot tunnel health](/cloudflare-one/networks/connectors/cloudflare-wan/troubleshooting/tunnel-health/) for common issues and solutions.

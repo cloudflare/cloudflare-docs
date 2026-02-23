@@ -1,0 +1,34 @@
+---
+pcx_content_type: navigation
+title: rtk-stage
+description: API reference for rtk-stage component (Angular Library)
+---
+A component used as a stage that commonly houses
+ the `grid` and `sidebar` components.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-stage></rtk-stage>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-stage
+ [iconPack]="defaultIconPack"
+ [t]="rtki18n">
+</rtk-stage>
+```
+

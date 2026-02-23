@@ -1,9 +1,0 @@
-name: Account and Billing
-
-product:
-  title: Account and Billing
-  group: Core platform
-  url: /fundamentals/subscriptions-and-billing/
-
-meta:
-  description: Manage account billing and subscriptions.

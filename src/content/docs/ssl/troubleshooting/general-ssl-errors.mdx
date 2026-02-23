@@ -8,7 +8,7 @@ head: []
 description: Learn how to troubleshoot various SSL/TLS errors with Cloudflare.
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, DashButton } from "~/components";
 
 ## Let's Encrypt chain update
 
@@ -74,7 +74,7 @@ Our SSL vendors verify each SSL certificate request before Cloudflare can issue 
 
 If your Cloudflare SSL certificate is not issued within 24 hours of Cloudflare domain activation:
 
-- If your origin web server has a valid SSL certificate, [temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/), and
+- If your origin web server has a valid SSL certificate, [temporarily pause Cloudflare](/fundamentals/manage-domains/pause-cloudflare/), and
 - [Contact Support](/support/contacting-cloudflare-support/) and provide a screenshot of the errors.
 
 Temporarily pausing Cloudflare will allow the HTTPS traffic to be served properly from your origin web server while the support team investigates the issue.
@@ -87,7 +87,7 @@ Cloudflare SSL/TLS certificates only apply for traffic [proxied through Cloudfla
 
 #### Partial DNS setup
 
-If your domain is on a <GlossaryTooltip term="partial setup" link="/dns/zone-setups/partial-setup/">partial setup</GlossaryTooltip>, confirm whether you have CAA DNS records enabled at your current hosting provider. If so, ensure you [specify the Certificate Authorities that Cloudflare uses](/ssl/edge-certificates/caa-records/) to provision certificates for your domain.
+If your domain is on a <GlossaryTooltip term="CNAME setup" link="/dns/zone-setups/partial-setup/">CNAME setup (partial)</GlossaryTooltip>, confirm whether you have CAA DNS records enabled at your current hosting provider. If so, ensure you [specify the Certificate Authorities that Cloudflare uses](/ssl/edge-certificates/caa-records/) to provision certificates for your domain.
 
 ---
 
@@ -114,13 +114,15 @@ The HSTS headers (`Strict-Transport-Security` and `X-Content-Type-Options`) in t
 
 ### Resolution
 
-You may have configured [HTTP Response Header Modification Rules](/rules/transform/response-header-modification) that are overriding the HSTS header values defined in the **SSL/TLS** app.
+You may have configured [Response Header Transform Rules](/rules/transform/response-header-modification) that are overriding the HSTS header values defined in the **SSL/TLS** app.
 
-1. Go to **Rules** > **Overview**.
-2. Next to **Response Header Transform Rules**, select **Manage Response Header Transform Rules**.
-3. Check the existing rules for a rule that is setting the value of one of the HSTS headers (`Strict-Transport-Security` or `X-Content-Type-Options`).
-4. Delete (or edit) the rule so that the HSTS configuration settings defined in the **SSL/TLS** app are applied.
-5. Repeat this procedure for the other HSTS header.
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Under **Response Header Transform Rules**, search for a rule setting the value of one of the HSTS headers (`Strict-Transport-Security` or `X-Content-Type-Options`).
+3. Delete (or edit) the rule so that the HSTS configuration settings defined in the **SSL/TLS** app are applied.
+4. Repeat this procedure for the other HSTS header.
 
 ---
 
@@ -144,9 +146,7 @@ You are getting the error `NET::ERR_CERT_COMMON_NAME_INVALID` in your browser.
 The following [`openssl`](https://www.openssl.org/) command might help troubleshooting TLS handshake between the client and the Cloudflare network edge:
 
 ```sh
-
 openssl s_client -connect example.com:443 -servername example.com version
-
 ```
 
 :::
@@ -155,5 +155,4 @@ openssl s_client -connect example.com:443 -servername example.com version
 
 ## Kaspersky Antivirus
 
-To avoid SSL errors with the Cloudflare dashboard when using Kaspersky
-Antivirus, allow `dash.cloudflare.com` in Kaspersky.
+To avoid SSL errors with the Cloudflare dashboard when using Kaspersky Antivirus, allow `dash.cloudflare.com` in Kaspersky.

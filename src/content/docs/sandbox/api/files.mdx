@@ -1,0 +1,216 @@
+---
+title: Files
+pcx_content_type: concept
+sidebar:
+  order: 3
+---
+
+import { TypeScriptExample } from "~/components";
+
+Read, write, and manage files in the sandbox filesystem. All paths are absolute (e.g., `/workspace/app.js`).
+
+## Methods
+
+### `writeFile()`
+
+Write content to a file.
+
+```ts
+await sandbox.writeFile(path: string, content: string, options?: WriteFileOptions): Promise<void>
+```
+
+**Parameters**:
+- `path` - Absolute path to the file
+- `content` - Content to write
+- `options` (optional):
+  - `encoding` - File encoding (`"utf-8"` or `"base64"`, default: `"utf-8"`)
+
+<TypeScriptExample>
+```
+await sandbox.writeFile('/workspace/app.js', `console.log('Hello!');`);
+
+// Binary data
+await sandbox.writeFile('/tmp/image.png', base64Data, { encoding: 'base64' });
+```
+</TypeScriptExample>
+
+:::note[Base64 validation]
+When using `encoding: 'base64'`, content must contain only valid base64 characters (A-Z, a-z, 0-9, +, /, =). Invalid base64 content returns a validation error.
+:::
+
+### `readFile()`
+
+Read a file from the sandbox.
+
+```ts
+const file = await sandbox.readFile(path: string, options?: ReadFileOptions): Promise<FileInfo>
+```
+
+**Parameters**:
+- `path` - Absolute path to the file
+- `options` (optional):
+  - `encoding` - File encoding (`"utf-8"` or `"base64"`, default: auto-detected from MIME type)
+
+**Returns**: `Promise<FileInfo>` with `content` and `encoding`
+
+<TypeScriptExample>
+```
+const file = await sandbox.readFile('/workspace/package.json');
+const pkg = JSON.parse(file.content);
+
+// Binary data (auto-detected or forced)
+const image = await sandbox.readFile('/tmp/image.png', { encoding: 'base64' });
+
+// Force encoding (override MIME detection)
+const textAsBase64 = await sandbox.readFile('/workspace/data.txt', { encoding: 'base64' });
+```
+</TypeScriptExample>
+
+:::note[Encoding behavior]
+When `encoding` is specified, it overrides MIME-based auto-detection. Without `encoding`, the SDK detects the appropriate encoding from the file's MIME type.
+:::
+
+### `exists()`
+
+Check if a file or directory exists.
+
+```ts
+const result = await sandbox.exists(path: string): Promise<FileExistsResult>
+```
+
+**Parameters**:
+- `path` - Absolute path to check
+
+**Returns**: `Promise<FileExistsResult>` with `exists` boolean
+
+<TypeScriptExample>
+```
+const result = await sandbox.exists('/workspace/package.json');
+if (result.exists) {
+  const file = await sandbox.readFile('/workspace/package.json');
+  // process file
+}
+
+// Check directory
+const dirResult = await sandbox.exists('/workspace/src');
+if (!dirResult.exists) {
+  await sandbox.mkdir('/workspace/src');
+}
+```
+</TypeScriptExample>
+
+:::note[Available on sessions]
+Both `sandbox.exists()` and `session.exists()` are supported.
+:::
+
+### `mkdir()`
+
+Create a directory.
+
+```ts
+await sandbox.mkdir(path: string, options?: MkdirOptions): Promise<void>
+```
+
+**Parameters**:
+- `path` - Absolute path to the directory
+- `options` (optional):
+  - `recursive` - Create parent directories if needed (default: `false`)
+
+<TypeScriptExample>
+```
+await sandbox.mkdir('/workspace/src');
+
+// Nested directories
+await sandbox.mkdir('/workspace/src/components/ui', { recursive: true });
+```
+</TypeScriptExample>
+
+### `deleteFile()`
+
+Delete a file.
+
+```ts
+await sandbox.deleteFile(path: string): Promise<void>
+```
+
+**Parameters**:
+- `path` - Absolute path to the file
+
+<TypeScriptExample>
+```
+await sandbox.deleteFile('/workspace/temp.txt');
+```
+</TypeScriptExample>
+
+### `renameFile()`
+
+Rename a file.
+
+```ts
+await sandbox.renameFile(oldPath: string, newPath: string): Promise<void>
+```
+
+**Parameters**:
+- `oldPath` - Current file path
+- `newPath` - New file path
+
+<TypeScriptExample>
+```
+await sandbox.renameFile('/workspace/draft.txt', '/workspace/final.txt');
+```
+</TypeScriptExample>
+
+### `moveFile()`
+
+Move a file to a different directory.
+
+```ts
+await sandbox.moveFile(sourcePath: string, destinationPath: string): Promise<void>
+```
+
+**Parameters**:
+- `sourcePath` - Current file path
+- `destinationPath` - Destination path
+
+<TypeScriptExample>
+```
+await sandbox.moveFile('/tmp/download.txt', '/workspace/data.txt');
+```
+</TypeScriptExample>
+
+### `gitCheckout()`
+
+Clone a git repository.
+
+```ts
+await sandbox.gitCheckout(repoUrl: string, options?: GitCheckoutOptions): Promise<void>
+```
+
+**Parameters**:
+- `repoUrl` - Git repository URL
+- `options` (optional):
+  - `branch` - Branch to checkout (default: repository default branch)
+  - `targetDir` - Directory to clone into (default: `/workspace/{repoName}`)
+  - `depth` - Clone depth for shallow clones (e.g., `1` for latest commit only)
+
+<TypeScriptExample>
+```
+await sandbox.gitCheckout('https://github.com/user/repo');
+
+// Specific branch
+await sandbox.gitCheckout('https://github.com/user/repo', {
+  branch: 'develop',
+  targetDir: '/workspace/my-project'
+});
+
+// Shallow clone (faster for large repositories)
+await sandbox.gitCheckout('https://github.com/facebook/react', {
+  depth: 1
+});
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [Manage files guide](/sandbox/guides/manage-files/) - Detailed guide with best practices
+- [Commands API](/sandbox/api/commands/) - Execute commands

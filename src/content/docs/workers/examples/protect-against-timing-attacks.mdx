@@ -1,11 +1,10 @@
 ---
-type: example
+
 summary: Protect against timing attacks by safely comparing values using
   `timingSafeEqual`.
 tags:
   - Security
   - WebCrypto
-languages:
   - TypeScript
   - Python
 pcx_content_type: example
@@ -14,7 +13,14 @@ sidebar:
   order: 1001
 description: Protect against timing attacks by safely comparing values using
   `timingSafeEqual`.
+reviewed: 2023-08-04
 ---
+
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/protect-against-timing-attacks)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
 
 import { TabItem, Tabs } from "~/components";
 
@@ -25,6 +31,10 @@ When strings are compared using the equality operator (`==` or `===`), the compa
 The `timingSafeEqual` function takes two `ArrayBuffer` or `TypedArray` values to compare. These buffers must be of equal length, otherwise an exception is thrown.
 Note that this function is not constant time with respect to the length of the parameters and also does not guarantee constant time for the surrounding code.
 Handling of secrets should be taken with care to not introduce timing side channels.
+
+:::caution
+Do not return early when the input and secret have different lengths. An early return leaks the length of the secret through response timing. Instead, always perform a constant-time comparison as shown in the examples below — when lengths differ, compare the user input against itself and negate the result so the check still fails but takes the same amount of time.
+:::
 
 In order to compare two strings, you must use the [`TextEncoder`](/workers/runtime-apis/encoding/#textencoder) API.
 
@@ -43,20 +53,21 @@ export default {
 
 		const authToken = req.headers.get("Authorization") || "";
 
-		if (authToken.length !== env.MY_SECRET_VALUE.length) {
-			return new Response("Unauthorized", { status: 401 });
-		}
-
 		const encoder = new TextEncoder();
 
-		const a = encoder.encode(authToken);
-		const b = encoder.encode(env.MY_SECRET_VALUE);
+		const userValue = encoder.encode(authToken);
+		const secretValue = encoder.encode(env.MY_SECRET_VALUE);
 
-		if (a.byteLength !== b.byteLength) {
-			return new Response("Unauthorized", { status: 401 });
-		}
+		// Do not return early when lengths differ — that leaks the secret's
+		// length through timing.  Instead, always perform a constant-time
+		// comparison: when the lengths match compare directly; otherwise
+		// compare the user input against itself (always true) and negate.
+		const lengthsMatch = userValue.byteLength === secretValue.byteLength;
+		const isEqual = lengthsMatch
+			? crypto.subtle.timingSafeEqual(userValue, secretValue)
+			: !crypto.subtle.timingSafeEqual(userValue, userValue);
 
-		if (!crypto.subtle.timingSafeEqual(a, b)) {
+		if (!isEqual) {
 			return new Response("Unauthorized", { status: 401 });
 		}
 
@@ -68,30 +79,85 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response
+from workers import WorkerEntrypoint, Response
 from js import TextEncoder, crypto
 
-async def on_fetch(request, env):
-    auth_token = request.headers["Authorization"] or ""
-    secret = env.MY_SECRET_VALUE
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        auth_token = request.headers["Authorization"] or ""
+        secret = self.env.MY_SECRET_VALUE
 
-    if secret is None:
-        return Response("Missing secret binding", status=500)
+        if secret is None:
+            return Response("Missing secret binding", status=500)
 
-    if len(auth_token) != len(secret):
-        return Response("Unauthorized", status=401)
+        encoder = TextEncoder.new()
+        user_value = encoder.encode(auth_token)
+        secret_value = encoder.encode(secret)
 
-    if a.byteLength != b.byteLength:
-        return Response("Unauthorized", status=401)
+        # Do not return early when lengths differ — that leaks the secret's
+        # length through timing.  Always perform a constant-time comparison.
+        if user_value.byteLength == secret_value.byteLength:
+            is_equal = crypto.subtle.timingSafeEqual(user_value, secret_value)
+        else:
+            is_equal = not crypto.subtle.timingSafeEqual(user_value, user_value)
 
-    encoder = TextEncoder.new()
-    a = encoder.encode(auth_token)
-    b = encoder.encode(secret)
+        if not is_equal:
+            return Response("Unauthorized", status=401)
 
-    if not crypto.subtle.timingSafeEqual(a, b):
-        return Response("Unauthorized", status=401)
+        return Response("Welcome!")
+```
 
-    return Response("Welcome!")
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+interface Environment {
+  Bindings: {
+    MY_SECRET_VALUE?: string;
+  }
+}
+
+const app = new Hono<Environment>();
+
+// Middleware to handle authentication with timing-safe comparison
+app.use('*', async (c, next) => {
+  const secret = c.env.MY_SECRET_VALUE;
+
+  if (!secret) {
+    return c.text("Missing secret binding", 500);
+  }
+
+  const authToken = c.req.header("Authorization") || "";
+
+  const encoder = new TextEncoder();
+
+  const userValue = encoder.encode(authToken);
+  const secretValue = encoder.encode(secret);
+
+  // Do not return early when lengths differ — that leaks the secret's
+  // length through timing.  Instead, always perform a constant-time
+  // comparison: when the lengths match compare directly; otherwise
+  // compare the user input against itself (always true) and negate.
+  const lengthsMatch = userValue.byteLength === secretValue.byteLength;
+  const isEqual = lengthsMatch
+    ? crypto.subtle.timingSafeEqual(userValue, secretValue)
+    : !crypto.subtle.timingSafeEqual(userValue, userValue);
+
+  if (!isEqual) {
+    return c.text("Unauthorized", 401);
+  }
+
+  // If we got here, the auth token is valid
+  await next();
+});
+
+// Protected route
+app.get('*', (c) => {
+  return c.text("Welcome!");
+});
+
+export default app;
 ```
 
 </TabItem> </Tabs>

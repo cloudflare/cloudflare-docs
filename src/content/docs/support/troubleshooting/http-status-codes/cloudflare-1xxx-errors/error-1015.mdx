@@ -1,0 +1,27 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1015
+source: null
+---
+
+## Error 1015: You are being rate limited
+
+This error indicates that you are being rate limited by the website.
+
+### Common cause
+
+The site owner implemented [Rate Limiting](/waf/reference/legacy/old-rate-limiting/) that affects your visitor traffic.
+
+:::note
+_Unable to purge_ is another `1015` error code relating to [Cloudflare cache purge](/cache/how-to/purge-cache). Retry the cache purge and contact [Cloudflare support](/support/contacting-cloudflare-support/) if errors persist.
+:::
+
+### Resolution
+
+- If you are a site visitor, contact the site owner to request exclusion of your IP from rate limiting.
+- If you are the site owner, review [Cloudflare Rate Limiting thresholds](/waf/reference/legacy/old-rate-limiting/) and adjust your Rate Limiting configuration.
+- If your Rate Limiting blocks requests in a short time period (for example, one second) try increasing the time period to 10 seconds.
+
+:::note
+If you expect a new Cloudflare Worker to exceed rate limits, refer to the [Workers documentation](/workers/platform/limits/) for guidance.
+:::

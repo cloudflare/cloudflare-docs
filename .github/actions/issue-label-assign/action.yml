@@ -1,0 +1,12 @@
+name: "Assign Issue Owner"
+description: "Assign the issue to its product content owner."
+
+inputs:
+  GITHUB_TOKEN:
+    description: "token for repository access"
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: "node20"
+  main: "index.js"

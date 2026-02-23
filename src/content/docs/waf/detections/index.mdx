@@ -8,11 +8,20 @@ head:
     content: Traffic detections
 ---
 
-import { DirectoryListing, FeatureTable } from "~/components";
+import {
+	DirectoryListing,
+	FeatureTable,
+	Tabs,
+	TabItem,
+	Steps,
+	DashButton,
+} from "~/components";
 
-WAF traffic detections check incoming requests for malicious or potentially malicious activity. Each enabled detection provides one or more scores — available in the [Security Analytics](/waf/analytics/security-analytics/) dashboard — that you can use in WAF rule expressions.
+Traffic detections check incoming requests for malicious or potentially malicious activity. Each enabled detection provides one or more attributes classifying incoming requests. These attributes are available as filters in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, and use can use them in rule expressions.
 
-The WAF currently provides the following detections for finding security threats in incoming requests:
+Once enabled, detections are always on, even if there are no security rules configured with the attributes that detections provide. This means that you can use detection results in [Security Analytics](/waf/analytics/security-analytics/) to identify traffic patterns and check for potentially malicious traffic. For example, you can analyze incoming traffic based on attack score, bot score, [content scan results](/waf/detections/malicious-uploads/), or the [presence of personally identifiable information (PII)](/waf/detections/firewall-for-ai/) in large language model (LLM) prompts.
+
+Cloudflare currently provides the following detections for finding security threats in incoming requests:
 
 <DirectoryListing />
 
@@ -20,15 +29,36 @@ The WAF currently provides the following detections for finding security threats
 
 <FeatureTable id="security.waf_b_detections" />
 
-For more information on bot score, refer to the [Bots documentation](/bots/concepts/bot-score/).
+For more information on bot score, refer to [Bot scores](/bots/concepts/bot-score/).
 
 ## Turn on a detection
 
 To turn on a traffic detection:
 
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. Filter by **Detection tools**.
+3. Turn on the desired detections.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
 3. Under **Incoming traffic detections**, turn on the desired detections.
+
+</Steps>
+
+</TabItem> </Tabs>
 
 Enabled detections will run for all incoming traffic.
 
@@ -36,7 +66,7 @@ Enabled detections will run for all incoming traffic.
 
 On Free plans, the leaked credentials detection is enabled by default, and no action is required.
 
-Currently, you cannot manage the [bot score](/bots/concepts/bot-score/) and [attack score](/waf/detections/attack-score/) detections from the **Security** > **Settings** page. Refer to the documentation of each feature for availability details.
+Currently, you cannot manage the [bot score](/bots/concepts/bot-score/) and [attack score](/waf/detections/attack-score/) detections from the **Settings** page. Refer to the documentation of each feature for availability details.
 
 :::
 

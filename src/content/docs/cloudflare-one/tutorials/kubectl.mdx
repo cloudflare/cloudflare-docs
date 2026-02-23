@@ -1,9 +1,14 @@
 ---
-updated: 2022-07-19
-category: 🔐 Zero Trust
+reviewed: 2022-07-19
+category: Zero Trust
+difficulty: Advanced
 pcx_content_type: tutorial
 title: Connect through Cloudflare Access using kubectl
+description: >-
+  Connecting to Cloudflare's network using kubectl. Create a Zero Trust policy for your machine. Create an outbound-only connection between your machine and Cloudflared's network.
 ---
+
+import { DashButton } from "~/components";
 
 You can connect to machines over `kubectl` using Cloudflare's Zero Trust platform.
 
@@ -15,7 +20,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 **Before you start**
 
-- [Add a website to Cloudflare](/fundamentals/setup/manage-domains/add-site/)
+- [Add a website to Cloudflare](/fundamentals/manage-domains/add-site/)
 
 **Time to complete:**
 
@@ -23,21 +28,21 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 ---
 
-## Create a Zero Trust policy
+## Create an Access policy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 2. Select **Add an application**.
 3. Select **Self-hosted**.
 4. Enter a name for your Access application.
 5. Select **Add public hostname** and input a subdomain. This will be the hostname where your application will be available to users.
-6. [Create a new policy](/cloudflare-one/policies/access/policy-management/) to control who can reach the application, or select existing policies.
-7. Follow the remaining [self-hosted application creation steps](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to publish the application.
+6. [Create a new policy](/cloudflare-one/access-controls/policies/policy-management/) to control who can reach the application, or select existing policies.
+7. Follow the remaining [self-hosted application creation steps](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) to publish the application.
 
 ## Install `cloudflared`
 
 Cloudflare Tunnel creates a secure, outbound-only connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
-Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and install `cloudflared` on the DigitalOcean machine by following the instructions listed on the [Downloads](/cloudflare-one/connections/connect-networks/downloads/) page.
+Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and install `cloudflared` on the DigitalOcean machine by following the instructions listed on the [Downloads](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) page.
 
 ## Authenticate `cloudflared`
 
@@ -69,7 +74,7 @@ cloudflared tunnel list
 
 ## Configure the Tunnel
 
-You can now [configure the tunnel](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/#4-create-a-configuration-file) to serve traffic.
+You can now [configure the tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/create-local-tunnel/#4-create-a-configuration-file) to serve traffic.
 
 Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
 
@@ -95,9 +100,11 @@ ingress:
 
 ## Route to the Tunnel
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/#file-structure-for-public-hostnames).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/#file-structure-for-public-hostnames).
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Select your domain and go to **DNS**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to the **DNS Records** page for your domain.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
 
 2. Select **Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
@@ -117,7 +124,7 @@ You can now run the Tunnel to connect the target service to Cloudflare. Use the 
 cloudflared tunnel run <NAME>
 ```
 
-We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/as-a-service/) that is configured to launch on start.
+We recommend that you run `cloudflared` [as a service](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/as-a-service/) that is configured to launch on start.
 
 ## Connect from a client machine
 

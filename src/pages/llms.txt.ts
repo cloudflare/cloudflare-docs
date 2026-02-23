@@ -3,25 +3,23 @@ import { getCollection } from "astro:content";
 import dedent from "dedent";
 
 export const GET: APIRoute = async () => {
-	const products = await getCollection("products", (p) => {
-		return p.data.product.group?.toLowerCase() === "developer platform";
+	const products = await getCollection("directory", (p) => {
+		return p.data.entry.group?.toLowerCase() === "developer platform";
 	});
 
 	const docs = await getCollection("docs", (e) => {
-		return products.some((p) =>
-			e.id.startsWith(p.data.product.url.slice(1, -1)),
-		);
+		return products.some((p) => e.id.startsWith(p.data.entry.url.slice(1, -1)));
 	});
 
 	const grouped = Object.entries(
 		Object.groupBy(docs, (e) => {
 			const product = products.find((p) =>
-				e.id.startsWith(p.data.product.url.slice(1, -1)),
+				e.id.startsWith(p.data.entry.url.slice(1, -1)),
 			);
 
 			if (!product) throw new Error(`Unable to find product for ${e.id}`);
 
-			return product.data.product.title;
+			return product.data.entry.title;
 		}),
 	);
 
@@ -38,7 +36,7 @@ export const GET: APIRoute = async () => {
 
 				${entries
 					?.map((e) => {
-						const line = `- [${e.data.title}](https://developers.cloudflare.com/${e.id}/)`;
+						const line = `- [${e.data.title}](https://developers.cloudflare.com/${e.id}/index.md)`;
 
 						const description = e.data.description;
 

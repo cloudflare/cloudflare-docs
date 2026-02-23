@@ -4,6 +4,7 @@ title: Tutorial - React SPA with an API
 sidebar:
   order: 2
 description: Create a React SPA with an API Worker using the Vite plugin
+reviewed: 2025-04-04
 ---
 
 import { PackageManagers, WranglerConfig } from "~/components";
@@ -12,7 +13,7 @@ This tutorial takes you through the steps needed to adapt a Vite project to use 
 Much of the content can also be applied to adapting existing Vite projects and to front-end frameworks other than React.
 
 :::note
-If you want to start a new app with a template already set up with Vite, React and the Cloudflare Vite plugin, refer to the [React framework guide](/workers/frameworks/framework-guides/react/).
+If you want to start a new app with a template already set up with Vite, React and the Cloudflare Vite plugin, refer to the [React framework guide](/workers/framework-guides/web-apps/react/).
 To create a standalone Worker, refer to [Get started](/workers/vite-plugin/get-started/).
 :::
 
@@ -60,18 +61,23 @@ Refer to the [API reference](/workers/vite-plugin/reference/api/) for configurat
 
 <WranglerConfig>
 
-```toml
-name = "cloudflare-vite-tutorial"
-compatibility_date = "2025-04-03"
-assets = { not_found_handling = "single-page-application" }
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-vite-tutorial",
+	"compatibility_date": "$today",
+	"assets": {
+		"not_found_handling": "single-page-application"
+	}
+}
 ```
 
 </WranglerConfig>
 
-The [`not_found_handling`](/workers/static-assets/routing/#not_found_handling--404-page--single-page-application--none) value has been set to `single-page-application`.
+The [`not_found_handling`](/workers/static-assets/routing/single-page-application/) value has been set to `single-page-application`.
 This means that all not found requests will serve the `index.html` file.
 With the Cloudflare plugin, the `assets` routing configuration is used in place of Vite's default behavior.
-This ensures that your application's [routing configuration](/workers/static-assets/routing/#routing-configuration) works the same way while developing as it does when deployed to production.
+This ensures that your application's [routing configuration](/workers/static-assets/routing/) works the same way while developing as it does when deployed to production.
 
 Note that the [`directory`](/workers/static-assets/binding/#directory) field is not used when configuring assets with Vite.
 The `directory` in the output configuration will automatically point to the client build output.
@@ -133,11 +139,16 @@ This tutorial, however, will show you how to go a step further and add an API Wo
 
 <WranglerConfig>
 
-```toml
-name = "cloudflare-vite-tutorial"
-compatibility_date = "2025-04-03"
-assets = { not_found_handling = "single-page-application" }
-main = "./worker/index.ts"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-vite-tutorial",
+	"compatibility_date": "$today",
+	"assets": {
+		"not_found_handling": "single-page-application"
+	},
+	"main": "./worker/index.ts"
+}
 ```
 
 </WranglerConfig>
@@ -147,12 +158,8 @@ The `main` field specifies the entry file for your Worker code.
 ### Add your API Worker
 
 ```ts title="worker/index.ts"
-interface Env {
-	ASSETS: Fetcher;
-}
-
 export default {
-	fetch(request, env) {
+	fetch(request) {
 		const url = new URL(request.url);
 
 		if (url.pathname.startsWith("/api/")) {
@@ -163,7 +170,7 @@ export default {
 
 		return new Response(null, { status: 404 });
 	},
-} satisfies ExportedHandler<Env>;
+} satisfies ExportedHandler;
 ```
 
 The Worker above will be invoked for any non-navigation request that does not match a static asset.
@@ -172,6 +179,29 @@ It returns a JSON response if the `pathname` starts with `/api/` and otherwise r
 :::note
 For top-level navigation requests, browsers send a `Sec-Fetch-Mode: navigate` header.
 If this is present and the URL does not match a static asset, the `not_found_handling` behavior will be invoked rather than the Worker.
+This implicit routing is the default behavior.
+
+If you would instead like to define the routes that invoke your Worker explicitly, you can provide an array of route patterns to [`run_worker_first`](/workers/static-assets/binding/#run_worker_first).
+This opts out of interpreting the `Sec-Fetch-Mode` header.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-vite-tutorial",
+	"compatibility_date": "$today",
+	"assets": {
+		"not_found_handling": "single-page-application",
+		"run_worker_first": [
+			"/api/*"
+		]
+	},
+	"main": "./worker/index.ts"
+}
+```
+
+</WranglerConfig>
 :::
 
 ### Call the API from the client
@@ -254,7 +284,7 @@ npm run build
 If you inspect the `dist` directory, you will see that it contains two subdirectories:
 
 - `client` - the client code that runs in the browser
-- `cloudflare-vite-tutorial` - the Worker code alongside the output `wrangler.json` configuration file
+- `cloudflare_vite_tutorial` - the Worker code alongside the output `wrangler.json` configuration file
 
 ### Preview your application
 

@@ -1,0 +1,35 @@
+---
+import { z } from "astro:schema";
+import { SidebarIconSchema } from "~/schemas/types/sidebar";
+import { DotLottieWorkerReact } from "@lottiefiles/dotlottie-react";
+
+type Props = z.infer<typeof props>;
+
+const props = SidebarIconSchema();
+
+let iconProps = props.parse(Astro.props);
+
+// https://angel-rs.github.io/css-color-filter-generator/
+const filter =
+	iconProps?.color === "primary"
+		? "brightness(0) saturate(100%) invert(60%) sepia(90%) saturate(2312%) hue-rotate(347deg) brightness(99%) contrast(95%)" // --orange-accent-200
+		: undefined;
+---
+
+{
+	iconProps?.lottieLink && (
+		<DotLottieWorkerReact
+			style={{
+				filter,
+				height: "17px", // if someone smarter than me can make this properly text height, please go for it
+				width: "17px",
+				marginRight: "0.5em",
+				float: "left",
+			}}
+			src={iconProps.lottieLink}
+			loop
+			autoplay
+			client:load
+		/>
+	)
+}

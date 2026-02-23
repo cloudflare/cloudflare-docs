@@ -1,18 +1,18 @@
 ---
-type: example
+
 summary: Send invoice when shopping cart is checked out and paid for
-products:
-  - Workflows
-  - D1
-  - Email Routing
+products: [d1, email-routing]
+tags:
+  - TypeScript
 pcx_content_type: example
 title: Pay cart and send invoice
 sidebar:
   order: 3
 description: Send invoice when shopping cart is checked out and paid for
+reviewed: 2024-10-24
 ---
 
-import { TabItem, Tabs, WranglerConfig } from "~/components";
+import { TabItem, Tabs, WranglerConfig, Render } from "~/components";
 
 In this example, we implement a Workflow for an e-commerce website that is triggered every time a shopping cart is created.
 
@@ -82,7 +82,7 @@ export class cartInvoicesWorkflow extends WorkflowEntrypoint<Env, Params> {
 					`SELECT * FROM cart WHERE id = ?`,
 				)
 					.bind(event.payload.cartId)
-					.all();
+					.run();
 				// should return { checkedOut: true, amount: 250 , account: { email: "celsomartinho@gmail.com" }};
 				if (results[0].checkedOut === false) {
 					throw new Error("cart hasn't been checked out yet");
@@ -190,7 +190,6 @@ Here's a minimal package.json:
 ```json
 {
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20241022.0",
 		"wrangler": "^3.83.0"
 	},
 	"dependencies": {
@@ -203,19 +202,30 @@ And finally [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
-```toml
-name = "cart-invoices"
-main = "src/index.ts"
-compatibility_date = "2024-10-22"
-compatibility_flags = ["nodejs_compat" ]
-
-[[workflows]]
-name = "cart-invoices-workflow"
-binding = "CART_WORKFLOW"
-class_name = "cartInvoicesWorkflow"
-
-[[send_email]]
-name = "SEND_EMAIL"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cart-invoices",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"workflows": [
+		{
+			"name": "cart-invoices-workflow",
+			"binding": "CART_WORKFLOW",
+			"class_name": "cartInvoicesWorkflow"
+		}
+	],
+	"send_email": [
+		{
+			"name": "SEND_EMAIL"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
+
+<Render file="wrangler-typegen" product="workers" />

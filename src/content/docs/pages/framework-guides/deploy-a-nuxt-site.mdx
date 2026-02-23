@@ -13,7 +13,7 @@ import {
 	ResourcesBySelector,
 	ExternalResources,
 	PackageManagers,
-	Stream,
+	YouTube,
 } from "~/components";
 
 [Nuxt](https://nuxt.com) is a web framework making Vue.js-based development simple and powerful.
@@ -22,11 +22,7 @@ In this guide, you will create a new Nuxt application and deploy it using Cloudf
 
 ### Video Tutorial
 
-<Stream
-	id="fd106a56e13af42eb39b35c499432e4b"
-	title="Deploy a Nuxt Application to Cloudflare"
-	thumbnail="2.5s"
-/>
+<YouTube id="er5PXTI9rXo" />
 
 ## Create a new project using the `create-cloudflare` CLI (C3)
 
@@ -35,7 +31,7 @@ The [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) will configure your N
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args="my-nuxt-app --framework=nuxt"
+	args="my-nuxt-app --framework=nuxt --platform=pages"
 />
 
 C3 will ask you a series of setup questions and create a new project with [`nuxi` (the official Nuxt CLI)](https://github.com/nuxt/cli). C3 will also install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).
@@ -58,11 +54,11 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https://nuxt.com/docs/getting-started/installation). After you have set up your Nuxt project, choose either the [Git integration guide](/pages/get-started/git-integration/) or [Direct Upload guide](/pages/get-started/direct-upload/) to deploy your Nuxt project on Cloudflare Pages.
 
-<Render file="framework-guides/git-integration" />
+<Render file="framework-guides/git-integration" product="pages" />
 
 ### Create a GitHub repository
 
-<Render file="framework-guides/create-gh-repo" />
+<Render file="framework-guides/create-gh-repo" product="pages" />
 
 ```sh
 # Skip the following three commands if you have built your application
@@ -78,13 +74,13 @@ git push -u origin main
 
 ### Create a Pages project
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Nuxt.js" }} />
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <PagesBuildPreset framework="nuxt-js" />
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-4. After completing configuration, select the **Save and Deploy**.
+7. After completing configuration, select the **Save and Deploy**.
 
 Review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
@@ -110,7 +106,7 @@ This module is powered by the [`getPlatformProxy` helper function](/workers/wran
 
 :::note
 
-`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
+Wrangler configuration is used primarily for local development. Bindings specified in it are not available remotely, unless they are created as [remote bindings](/workers/development-testing/#remote-bindings).
 
 :::
 
@@ -120,18 +116,11 @@ In order to access bindings in a deployed application, you will need to [configu
 
 ### Add bindings to TypeScript projects
 
-To get proper type support, you need to create a new `env.d.ts` file in the root of your project and declare a [binding](/pages/functions/bindings/).
+To get proper type support, you need to create a new `env.d.ts` file in the root of your project and declare a [binding](/pages/functions/bindings/). Make sure you have generated Cloudflare runtime types by running [`wrangler types`](/pages/functions/typescript/).
 
 The following is an example of adding a `KVNamespace` binding:
 
 ```ts null {9}
-import {
-	CfProperties,
-	Request,
-	ExecutionContext,
-	KVNamespace,
-} from "@cloudflare/workers-types";
-
 declare module "h3" {
 	interface H3EventContext {
 		cf: CfProperties;
@@ -178,7 +167,11 @@ export default defineEventHandler(({ context }) => {
 
 </TabItem> </Tabs>
 
-<Render file="framework-guides/learn-more" params={{ one: "Nuxt" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Nuxt" }}
+/>
 
 ## Related resources
 

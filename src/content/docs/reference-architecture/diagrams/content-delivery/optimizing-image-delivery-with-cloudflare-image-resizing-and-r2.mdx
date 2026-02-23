@@ -1,15 +1,12 @@
 ---
 title: Optimizing image delivery with Cloudflare image resizing and R2
 pcx_content_type: reference-architecture-diagram
-products:
-  - Images
-  - R2
-  - Cache / CDN
-  - Transform Rules
+products: [cache, images, r2, transform-rules]
 sidebar:
   order: 1
   label: Optimizing image delivery
-updated: 2024-06-12
+reviewed: 2024-06-12
+description: Learn how to get a scalable, high-performance solution to optimizing image delivery.
 ---
 
 ## Introduction
@@ -50,5 +47,5 @@ https://www.mywebsite.com/cdn-cgi/image/width=80,quality=75/uploads/image.jpg
 
 - [Image Resizing Documentation](/images/transform-images/)
 - [Cloudflare R2 Developer Docs](/r2/)
-- [Rewrite URL rules](/rules/transform/url-rewrite/)
+- [URL Rewrite Rules](/rules/transform/url-rewrite/)
 - [Serverless image content management platform](/reference-architecture/diagrams/serverless/serverless-image-content-management/)

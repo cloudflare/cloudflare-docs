@@ -76,7 +76,7 @@ Refer to [Encrypt all visitor traffic](/ssl/edge-certificates/encrypt-visitor-tr
 
 ## Does SSL work for hosting partners?
 
-A free Universal SSL certificate is available for all new Cloudflare domains added via a hosting partner using both [full](/dns/zone-setups/full-setup/) and <GlossaryTooltip term="partial setup" link="/dns/zone-setups/partial-setup/">partial setups</GlossaryTooltip>.
+A free Universal SSL certificate is available for all new Cloudflare domains added via a hosting partner using both [primary (full)](/dns/zone-setups/full-setup/) and <GlossaryTooltip term="CNAME setup" link="/dns/zone-setups/partial-setup/">CNAME (partial)</GlossaryTooltip> setups.
 
 For more details, refer to [Enable Universal SSL certificates](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/).
 
@@ -121,7 +121,7 @@ If you are encountering issues with PayPal IPN when the traffic is proxied by Cl
 
 ## Does Cloudflare support TLS client authentication?
 
-Yes. For more details, refer to our documentation on [Mutual TLS authentication](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
+Yes. For more details, refer to our documentation on [Mutual TLS authentication](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/).
 
 ***
 
@@ -155,5 +155,13 @@ The Let's Encrypt Certificate Authority and SNI are not currently supported by R
 
 We recommend one of the following options:
 
-* Change the Universal Certificate Certificate Authority to a different CA.
+* Change the Universal Certificate Authority to a different CA.
 * Add an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [custom certificate](/ssl/edge-certificates/custom-certificates/) using a different CA.
+
+***
+
+## What is the HTTP version used for OCSP?
+
+Our OCSP implementation uses HTTP/1.1 by default for plain HTTP connections.
+
+For HTTPS connections, the client automatically attempts to use HTTP/2 if the server supports it through the TLS ALPN (Application-Layer Protocol Negotiation) extension. If HTTP/2 is not available or supported by the server, it will fall back to HTTP/1.1.

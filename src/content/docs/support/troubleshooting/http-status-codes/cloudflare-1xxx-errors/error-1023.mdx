@@ -1,0 +1,26 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1023
+source: null
+---
+
+## Error 1023: Could not find host
+
+This error indicates that the host could not be found due to a configuration issue or propagation delay.
+
+### Common causes
+
+- If the owner just signed up for Cloudflare it can take a few minutes for the website's information to be distributed to our global network. Something is wrong with the site's configuration.
+- Usually, this happens when accounts have been signed up with a partner organization (for example, hosting provider) and the provider's DNS fails.
+
+:::note
+Error `1023` is returned via a HTTP `503` response code.
+:::
+
+### Resolution
+
+Contact [Cloudflare Support](/support/contacting-cloudflare-support/) with the following details:
+
+- Your domain name.
+- A screenshot of the `1023` error including the [**Ray ID**](/fundamentals/reference/cloudflare-ray-id/) mentioned in the error message.
+- A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) captured while duplicating the error.

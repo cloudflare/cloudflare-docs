@@ -18,11 +18,11 @@ const { header, href, product } = props.parse(Astro.props);
 		name={product}
 		class="text-7xl text-[color:var(--orange-accent-200)]"
 	/>
-	<div class="!mt-0">
+	<div class="mt-0!">
 		<strong>
 			<a
 				href={href}
-				class="!text-black decoration-[color:var(--orange-accent-200)]"
+				class="text-black! decoration-[color:var(--orange-accent-200)]"
 				>{header}</a
 			>
 		</strong>

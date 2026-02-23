@@ -17,18 +17,20 @@ To enable source maps, add the following to your Worker's [Wrangler configuratio
 
 <WranglerConfig>
 
-```toml
-upload_source_maps = true
+```jsonc
+{
+	"upload_source_maps": true
+}
 ```
 
 </WranglerConfig>
 
-When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2).
+When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy).
 ​​
 
 :::note
 
-Miniflare can also [output source maps](https://miniflare.dev/developing/source-maps) for use in local development or [testing](/workers/testing/integration-testing/#miniflares-api).
+Miniflare can also [output source maps](https://miniflare.dev/developing/source-maps) for use in local development or [testing](/workers/testing/miniflare/writing-tests).
 
 :::
 
@@ -86,3 +88,4 @@ With **source maps uploaded**: all methods reference the correct files and line 
 
 * [Tail Workers](/workers/observability/logs/logpush/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
 * [Real-time logs](/workers/observability/logs/real-time-logs/) - Learn how to capture Workers logs in real-time.
+* [RPC error handling](/workers/runtime-apis/rpc/error-handling/) - Learn how exceptions are handled over RPC (Remote Procedure Call).

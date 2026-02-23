@@ -1,0 +1,106 @@
+---
+pcx_content_type: configuration
+title: Host selectors
+sidebar:
+  order: 2
+---
+
+import { Tabs, TabItem, Details, APIRequest, Render } from "~/components";
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Traffic and DNS mode                                                                        | Enterprise                                                    |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.4.929.0         |
+| macOS    | ✅           | 2025.4.929.0         |
+| Linux    | ✅           | 2025.4.929.0         |
+| iOS      | ✅           | 1.11                 |
+| Android  | ✅           | 2.4.2                |
+| ChromeOS | ✅           | 2.4.2                |
+
+</Details>
+
+When Gateway receives a DNS query for hostname covered by the [Application](/cloudflare-one/traffic-policies/egress-policies/#application), [Content Categories](/cloudflare-one/traffic-policies/egress-policies/#content-categories), [Domain](/cloudflare-one/traffic-policies/egress-policies/#domain), and [Host](/cloudflare-one/traffic-policies/egress-policies/#host) selectors in an Egress policy, Gateway initially resolves DNS to an IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range. This process allows Gateway to map a destination IP with a hostname at [layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) (where Gateway evaluates Egress policies). The destination IP for a hostname is not usually known at layer 4. Prior to evaluating Egress policies, the initially resolved IP is overwritten with the correct destination IP.
+
+![Example egress policy flow](~/assets/images/cloudflare-one/policies/host-selector-diagram.png)
+
+Additional configuration is required when using policies with these selectors.
+
+## Turn on Host selectors
+
+To turn on the selectors for your account:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings**.
+2. In **Policy settings**, turn on **Allow egress policy host selectors**.
+
+</TabItem> <TabItem label="API">
+
+Use the [Patch Zero Trust account configuration](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/) endpoint to update your Zero Trust configuration. For example:
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/configuration"
+	method="PATCH"
+	json={{
+		settings: {
+			host_selector: {
+				enabled: true,
+			},
+		},
+	}}
+/>
+
+</TabItem> </Tabs>
+
+## Prerequisites
+
+Traffic must be on-ramped to Gateway with the following methods:
+
+| On-ramp method                                                                                      | Compatibility |
+| --------------------------------------------------------------------------------------------------- | ------------- |
+| [WARP](/cloudflare-one/team-and-resources/devices/warp/)                                            | ✅            |
+| [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/)                        | ✅            |
+| [Browser Isolation](/cloudflare-one/remote-browser-isolation/)                                      | ✅            |
+| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌            |
+| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                              | ✅            |
+
+Unsupported traffic will be resolved with your default Gateway settings. If you use DNS locations to send a DNS query to Gateway with IPv4, IPv6, DoT, or DoH, Gateway will not return the initial resolved IP for supported traffic nor resolve unsupported traffic.
+
+### Configuration changes
+
+To configure your Zero Trust organization to use Host selectors with Egress policies:
+
+1.  Make sure you deploy the following version of WARP on your users' devices:
+    - **Desktop**: [WARP version 2025.4.929.0](/cloudflare-one/team-and-resources/devices/warp/download-warp/) or later 
+    - **iOS**: [WARP version 1.11](/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios) or later
+    - **Android and Chrome OS**: [WARP version 2.4.2](/cloudflare-one/team-and-resources/devices/warp/download-warp/#android) or later. 
+
+    If you need to support devices running prior versions of WARP, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
+
+    ```diff lang="xml"
+    <array>
+    	<dict>
+    +		<key>doh_in_tunnel</key>
+    +		<true/>
+    	</dict>
+    </array>
+    ```
+
+{/* prettier-ignore-start */}
+
+2. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
+
+The WARP client must be set to _Traffic and DNS mode_ mode for traffic affected by these selectors to route correctly.
+
+{/* prettier-ignore-end */}
+
+## Known issues
+
+### Google Chrome restricts local network access
+
+<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one"/>

@@ -1,0 +1,48 @@
+---
+pcx_content_type: how-to
+title: Identity providers
+tags:
+  - SSO
+---
+
+import { Render } from "~/components";
+
+
+Cloudflare One integrates with your organization's identity provider to apply Cloudflare One and Secure Web Gateway policies. If you work with partners, contractors, or other organizations, you can integrate multiple identity providers simultaneously.
+
+As an alternative to configuring an identity provider, Cloudflare One can send a [one-time PIN (OTP)](/cloudflare-one/integrations/identity-providers/one-time-pin/) to approved email addresses. No configuration needed — simply add a user's email address to an [Access policy](/cloudflare-one/access-controls/policies/) and to the group that allows your team to reach the application. You can simultaneously configure an OTP and an identity provider to allow users to use their own authentication method.
+
+Adding an identity provider as a login method requires configuration both in [Cloudflare One](https://one.dash.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
+
+:::note
+
+Cloudflare One supports social identity providers that do not require administrator accounts, open source providers, and corporate providers. Cloudflare also supports using signed AuthN requests with SAML providers.
+
+:::
+
+## Set up IdPs in Cloudflare One
+
+<Render file="access/idp-integration" product="cloudflare-one" />
+
+Your IdP will now be listed in the **Login methods** card.
+
+## Test IdPs in Cloudflare One
+
+To test if an IdP is correctly configured:
+
+1. Go to **Integrations** > **Identity providers**.
+2. Select **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
+
+### Your provider is connected
+
+If your provider is connected, another window will open in your browser, with this message:
+
+!["Your connection works!" message displayed for a successful IdP test](~/assets/images/cloudflare-one/identity/connected-idp.png)
+
+### Your provider is not connected
+
+If your provider is not connected, another window will open in your browser. Along with an error message, you will receive a detailed explanation of why the test has failed.
+
+## Use The API
+
+We recommend that you use our dashboard to configure your identity providers. However, if you would like to use the [Cloudflare API](https://api.cloudflare.com/), each of the identity provider topics covered here include an example API configuration snippet as well.

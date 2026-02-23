@@ -4,6 +4,10 @@ import { docsLoader, i18nLoader } from "@astrojs/starlight/loaders";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
 
 import { glob, file } from "astro/loaders";
+import { skillsLoader } from "astro-skills";
+
+import { productAvailabilityCollectionConfig } from "./content/collections/product-availability";
+import { granularControlApplicationsCollectionConfig } from "./content/collections/granular-control-applications";
 
 import {
 	appsSchema,
@@ -21,6 +25,7 @@ import {
 	releaseNotesSchema,
 	fieldsSchema,
 	partialsSchema,
+	streamSchema,
 } from "~/schemas";
 
 function contentLoader(name: string) {
@@ -84,8 +89,8 @@ export const collections = {
 		loader: dataLoader("learning-paths"),
 		schema: learningPathsSchema,
 	}),
-	products: defineCollection({
-		loader: dataLoader("products"),
+	directory: defineCollection({
+		loader: dataLoader("directory"),
 	}),
 	"workers-ai-models": defineCollection({
 		loader: dataLoader("workers-ai-models"),
@@ -110,5 +115,16 @@ export const collections = {
 	fields: defineCollection({
 		loader: dataLoader("fields"),
 		schema: fieldsSchema,
+	}),
+	stream: defineCollection({
+		loader: dataLoader("stream"),
+		schema: streamSchema,
+	}),
+	"product-availability": defineCollection(productAvailabilityCollectionConfig),
+	"granular-control-applications": defineCollection(
+		granularControlApplicationsCollectionConfig,
+	),
+	skills: defineCollection({
+		loader: skillsLoader({ base: "./skills" }),
 	}),
 };

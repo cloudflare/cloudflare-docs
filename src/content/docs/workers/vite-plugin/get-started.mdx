@@ -10,7 +10,7 @@ import { PackageManagers, WranglerConfig } from "~/components";
 
 :::note
 This guide demonstrates creating a standalone Worker from scratch.
-{/* Add link to React Router framework guide */}If you would instead like to create a new application from a ready-to-go template, refer to the [React](/workers/frameworks/framework-guides/react/) or [Vue](/workers/frameworks/framework-guides/vue/) framework guides.
+If you would instead like to create a new application from a ready-to-go template, refer to the [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/), [React Router](/workers/framework-guides/web-apps/react-router/), [React](/workers/framework-guides/web-apps/react/) or [Vue](/workers/framework-guides/web-apps/vue/) framework guides.
 :::
 
 ## Start with a basic `package.json`
@@ -57,10 +57,13 @@ Refer to the [API reference](/workers/vite-plugin/reference/api/) for configurat
 
 <WranglerConfig>
 
-```toml
-name = "cloudflare-vite-get-started"
-compatibility_date = "2025-04-03"
-main = "./src/index.ts"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-vite-get-started",
+	"compatibility_date": "$today",
+	"main": "./src/index.ts"
+}
 ```
 
 </WranglerConfig>
@@ -81,7 +84,7 @@ export default {
 };
 ```
 
-A request to this Worker will return 'Running in Cloudflare-Workers!', demonstrating that the code is running inside the Workers runtime.
+A request to this Worker will return **'Running in Cloudflare-Workers!'**, demonstrating that the code is running inside the Workers runtime.
 
 ## Dev, build, preview and deploy
 

@@ -2,8 +2,9 @@
 title: Tunnel health checks
 pcx_content_type: concept
 head: []
-description: Magic Transit uses probes to check for tunnel health. Review
-  information on this page to learn more.
+description: Magic Transit uses probes to check for tunnel health. Review information on this page to learn more.
+sidebar:
+  order: 8
 ---
 
 import { Render } from "~/components";
@@ -12,11 +13,16 @@ import { Render } from "~/components";
 	file="reference/tunnel-health-checks"
 	product="networking-services"
 	params={{
-		addTunnels: "/magic-transit/how-to/configure-tunnels/#add-tunnels",
-		changeHealthCheckRate: "/magic-transit/how-to/tunnel-health-checks/",
+		magicWord: "Magic Transit",
+		addTunnels: "/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels",
+		changeHealthCheckRate: "/magic-transit/network-health/update-tunnel-health-checks-frequency/",
 		probeHealth: "#health-state-and-prioritization",
 		productName: "Magic Transit",
-		staticRoutes: "/magic-transit/how-to/configure-static-routes/",
-		tunnelEndpoints: "/magic-transit/how-to/configure-tunnels/"
+		staticRoutes: "/magic-transit/how-to/configure-routes/",
+		tunnelEndpoints: "/magic-transit/how-to/configure-tunnel-endpoints/"
 	}}
 />
+
+## Troubleshooting
+
+For help resolving tunnel health issues, refer to [Troubleshoot tunnel health](/magic-transit/troubleshooting/tunnel-health/).

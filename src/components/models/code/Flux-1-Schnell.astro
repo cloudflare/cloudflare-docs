@@ -20,6 +20,7 @@ export default {
 	async fetch(request, env): Promise<Response> {
 		const response = await env.AI.run('@cf/black-forest-labs/flux-1-schnell', {
 			prompt: 'a cyberpunk lizard',
+			seed: Math.floor(Math.random() * 10)
 		});
 		// response.image is base64 encoded which can be used directly as an <img src=""> data URI
 		const dataURI = \`data:image/jpeg;charset=utf-8;base64,\${response.image}\`;
@@ -38,6 +39,7 @@ export default {
 	async fetch(request, env): Promise<Response> {
 		const response = await env.AI.run('@cf/black-forest-labs/flux-1-schnell', {
 			prompt: 'a cyberpunk lizard',
+			seed: Math.floor(Math.random() * 10)
 		});
 		// Convert from base64 string
 		const binaryString = atob(response.image);
@@ -56,18 +58,18 @@ const curl = `
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
   -X POST  \\
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"  \\
-  -d '{ "prompt": "cyberpunk cat" }'
+  -d '{ "prompt": "cyberpunk cat", "seed": "Random positive integer" }'
 `;
 ---
 
-<Details header="Workers - Returning a data URI - TypeScript">
+<Details header="Workers - Returning a data URI - TypeScript" open>
 	<Code code={workerReturningDataURI} lang="ts" />
 </Details>
 
-<Details header="Workers - Returning an image - TypeScript">
+<Details header="Workers - Returning an image - TypeScript" open>
 	<Code code={workerReturningImage} lang="ts" />
 </Details>
 
-<Details header="curl">
+<Details header="curl" open>
 	<Code code={curl} lang="sh" />
 </Details>

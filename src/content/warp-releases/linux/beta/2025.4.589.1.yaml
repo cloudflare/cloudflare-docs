@@ -1,0 +1,33 @@
+releaseNotes: |-
+  **Changes and improvements**
+  - Fixed an issue where managed network policies could incorrectly report network location beacons as missing.
+  - Improved DEX test error reporting.
+  - Fixed an issue causing client notifications to fail in IPv6 only environments which prevented the client from receiving configuration changes to settings like device profile.
+  - Added a TCP fallback for the MASQUE tunnel protocol to improve compatibility with networks on MASQUE.
+  - Added new IP addresses for [tunnel connectivity checks](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#connectivity-checks). If your organization uses a firewall or other policies you will need to exempt these IPs.
+  - Fixed an issue where frequent network changes could cause WARP to become unresponsive.
+  - DNS over HTTPS traffic is now included in the WARP tunnel by default.
+version: 2025.4.589.1
+releaseDate: 2025-04-22T19:12:01.383Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.4.589.1
+packageSize: 45489326
+platformName: Linux
+linuxPlatforms:
+  noble-intel: 45489326
+  fedora34-arm: 47398622
+  buster-intel: 46012030
+  focal-intel: 45948596
+  fedora34-intel: 48515297
+  fedora35-arm: 47039916
+  fedora35-intel: 48234480
+  jammy-arm: 44396184
+  jammy-intel: 45625680
+  centos8-intel: 48112596
+  bullseye-arm: 44630670
+  buster-arm: 44689650
+  bookworm-arm: 44384136
+  noble-arm: 44697540
+  focal-arm: 44693254
+  centos8-arm: 47272576
+  bookworm-intel: 45619140
+  bullseye-intel: 45877522

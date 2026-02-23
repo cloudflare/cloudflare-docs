@@ -1,0 +1,97 @@
+---
+title: Set up MX/Inline deployment
+pcx_content_type: concept
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components";
+
+## Prerequisites
+
+To use Email security, you will need to have:
+
+<Render
+	file="email-security/onboarding-prerequisites"
+	product="cloudflare-one"
+/>
+
+## Initiate MX/Inline configuration
+
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
+2. Select **Email security**.
+3. Select **Overview**. Select one of the following options:
+
+- If you have not purchased Email security, select **Contact sales**.
+- If you have not associated any integration, [associate an integration](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#associate-an-integration), then select **Set up**.
+- If you have associated an integration, but have not connected a domain, select [**Connect a domain**](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#connect-a-domain).
+
+4. Select **MX/Inline**.
+5. To start the MX/Inline configuration, you will need to have completed the prerequisite setup on your email provider's platform. Once you have completed this step, select **I confirm that I have completed all the necessary requirements**. Then, select **Start configuration**.
+
+:::note
+You can only onboard one domain at a time.
+:::
+
+## Associate an integration
+
+MX/Inline does not require an integration for protection to be effective. However, it is a best practice to connect an integration.
+
+To associate an integration:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Cloud & SaaS Integrations** > **Integrations**
+2. Select **Connect an integration**.
+3. Select an application: Choose between **Google Workspace CASB + EMAIL**, or **Microsoft CASB + EMAIL**.
+   - Refer to [Enable Gmail BCC integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#1-create-a-service-account-in-your-gcp-project) if you select **Google Workspace CASB + EMAIL**.
+   - Refer to [Enable Microsoft integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/#enable-microsoft-integration) if you select **Microsoft CASB + EMAIL**.
+4. After you have associated an integration, go to **Email security** > **Set up**.
+5. Follow the instructions to [connect a domain](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#connect-a-domain).
+
+## Connect a domain
+
+If you have verified zones on Cloudflare, continue with the following steps:
+
+1. **Connect a domain**: Select your domain. Then, select **Continue**.
+2. **Select position**: This step allows you to choose where Email security fits into your mail flow and configure position settings:
+   - **Select position**: Choose between:
+     - **Sit first (hop count = 1)**: Email security is the first server that receives the email. There are no other email scanners or services between the Internet and Cloudflare.
+     - **Sit in the middle (hop count > 1)**: Email security sits anywhere other than the first position. Other servers receive emails _before_ Email security. There are other email scanners or email services in between.
+   - **Position settings**: Refine how Email security receives and forwards emails:
+     - **Forwarding address**: This is your mail flow next hop after Email security. This value is auto-filled, but you can still change it.
+     - **Outbound TLS**: Choose between:
+       1. **Forward all messages over TLS** (recommended).
+       2. **Forward all messages using opportunistic TLS**.
+   - Select **Continue**.
+3. (**Optional**, select **Skip for now** to skip this step) **Configure quarantine policy**: Select dispositions to automatically prevent certain types of incoming messages from reaching a recipient's inbox.
+4. (Optional) **Update MX records**:
+   - Email security can automatically update MX records for domains that proxy traffic through Cloudflare. Under **Your mail processing location**, select your mail processing location.
+   - You can also choose to allow Cloudflare to update MX records by selecting **I confirm that I allow Cloudflare to update to the new MX records**. When Email security updates MX records, we replace your original MX records with Email security MX records.
+   - Select **Continue**.
+5. **Review details**: Review your domain, then select **Go to domains**.
+
+## Users who do not have domains with Cloudflare
+
+If you do not have domains with Cloudflare, the dashboard will display two options:
+
+- [Enter domain manually](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#enter-domain-manually).
+- [Add a domain to Cloudflare](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#add-a-domain-to-cloudflare).
+
+## Enter domain manually
+
+1. **Add domains**: Manually enter domain names.
+2. **Review all domains**: Review all your domains, then select **Continue**.
+3. **Verify your domains**: It may take up to 24 hours for your domains to be verified. Select **Done**.
+4. Once your domains have been verified, the dashboard will display a message like this: **You have verified domains ready to connect to Email security**. This means that you can now set up Email security via MX/Inline.
+5. Select **Set up**, then select **MX/Inline**.
+6. Follow the steps to [initiate MX/Inline configuration](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#initiate-mxinline-configuration).
+
+### Add a domain to Cloudflare
+
+Selecting **Add a domain to Cloudflare** will redirect you to a new page where you will connect your domain to Cloudflare. Once you have entered an existing domain, select **Continue**.
+
+Then, follow the steps to [Set up MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/).
+
+<Render
+	file="email-security/post-verification-setup"
+	product="cloudflare-one"
+/>

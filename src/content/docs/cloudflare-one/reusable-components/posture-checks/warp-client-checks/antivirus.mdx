@@ -1,0 +1,67 @@
+---
+pcx_content_type: how-to
+title: Antivirus
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Antivirus
+---
+
+import { Render } from "~/components";
+
+The Antivirus device posture attribute checks if any antivirus software is installed and active on a device. The WARP client queries the [Windows Security Center API](https://learn.microsoft.com/en-us/windows/win32/api/iwscapi/ne-iwscapi-wsc_security_product_state) to determine the state of registered security products. For the posture check to pass, Windows Security Center must report that a security product is turned on and up to date.
+
+## Prerequisites
+
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "WARP Client Checks",
+  		link: "/cloudflare-one/reusable-components/posture-checks/warp-client-checks/",
+  	}}
+  />
+
+## Enable the antivirus check
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Reusable components** > **Posture checks**.
+2. Go to **WARP client checks** and select **Add a check**.
+3. Select **Antivirus**.
+4. Enter a descriptive name for the check.
+5. Select your operating system.
+6. (Optional) Set the maximum number of days allowed since the last antivirus signature update. If the device exceeds this limit (for example, you set 30 days but it has been 31 days since the last update), the device will fail the posture check.
+7. Select **Save**.
+
+Next, go to **Insights** > **Logs** > **Posture logs** and verify that the antivirus check is returning the expected results.
+
+## Validate antivirus status
+
+You can use the following commands to validate if the posture check is working as expected.
+
+### Windows
+
+1. Open a PowerShell window.
+2. List all installed antivirus products registered with Windows Security Center:
+
+	```powershell
+	Get-WmiObject -Namespace "root\SecurityCenter2" -ClassName "AntiVirusProduct"
+	```
+
+	```powershell output
+	<redacted>
+	displayName              : Windows Defender
+	instanceGuid             : {00000000-0000-0000-0000-000000000000}
+	pathToSignedProductExe   : windowsdefender://
+	pathToSignedReportingExe : %ProgramFiles%\Windows Defender\MsMpeng.exe
+	productState             : 397568
+	timestamp                : Fri, 09 Jan 2026 12:00:00 GMT
+	PSComputerName           : ENDPOINT-01
+	```
+
+3. Microsoft does not support decoding the `productState` from the `SecurityCenter2` namespace. To verify that an antivirus product is active, open the [Windows Security app](https://support.microsoft.com/en-us/windows/stay-protected-with-the-windows-security-app-2ae0363d-0ada-c064-8b56-6a39afb6a963). The **Virus & threat protection** panel should say `No action needed` with a green checkmark.
+
+	To determine which antivirus product is running, select **Virus & threat protection** > **Manage providers**. You will see the name of the antivirus product (for example, `Windows Defender Antivirus`) and its current state.
+
+4. If you configured a maximum antivirus signature age in your posture check, compare the `timestamp` in the PowerShell output against the current system time. If the difference exceeds the configured number of days, the posture check will fail.
+

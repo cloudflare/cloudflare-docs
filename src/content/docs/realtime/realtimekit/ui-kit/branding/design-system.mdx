@@ -1,0 +1,265 @@
+---
+pcx_content_type: navigation
+title: Design System
+sidebar:
+  order: 2
+---
+
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
+
+RealtimeKit's UI Kit provides all the necessary UI components to allow complete customization of all its UI Kit components. You can customize your brand colours, fonts, logo and more.
+
+## Prerequisites
+
+To get started with customizing the icons for your meetings, you need to first [integrate RealtimeKit's Web SDK](/realtime/realtimekit/ui-kit/) into your web application.
+
+<RTKSDKSelector />
+
+## Override Design System
+
+The `provideRtkDesignSystem()` utility allows you to override the exisiting design system with your own custom design system.
+
+### Installation
+
+<RTKCodeSnippet id="web-web-components">
+
+```html
+<script type="module">
+	import { provideRtkDesignSystem } from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui@latest/dist/index.js";
+</script>
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```javascript
+import { provideRtkDesignSystem } from "@cloudflare/realtimekit-react-ui";
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```javascript
+import { provideRtkDesignSystem } from "@cloudflare/realtimekit-angular-ui";
+```
+
+</RTKCodeSnippet>
+
+### Usage
+
+<RTKCodeSnippet id="web-web-components">
+
+```html
+<div id="app"></div>
+
+<script>
+	provideRtkDesignSystem(document.getElementById("app"), {
+		googleFont: "Lobster",
+		// sets light background colors
+		theme: "light",
+		colors: {
+			danger: "#ffac00",
+			brand: {
+				300: "#00FFE1",
+				400: "#00FFFF",
+				500: "#00E1D4",
+				600: "#007B74",
+				700: "#00655F",
+			},
+			text: "#071428",
+			"text-on-brand": "#ffffff",
+			"video-bg": "#E5E7EB",
+		},
+		borderRadius: "extra-rounded",
+	});
+</script>
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```html
+<div id="app"></div>
+
+<script>
+	provideRtkDesignSystem(document.getElementById("app"), {
+		googleFont: "Lobster",
+		// sets light background colors
+		theme: "light",
+		colors: {
+			danger: "#ffac00",
+			brand: {
+				300: "#00FFE1",
+				400: "#00FFFF",
+				500: "#00E1D4",
+				600: "#007B74",
+				700: "#00655F",
+			},
+			text: "#071428",
+			"text-on-brand": "#ffffff",
+			"video-bg": "#E5E7EB",
+		},
+		borderRadius: "extra-rounded",
+	});
+</script>
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```javascript
+function Example() {
+	const meetingEl = useRef();
+	const { meeting } = useRealtimeKitMeeting();
+
+	useEffect(() => {
+		provideRtkDesignSystem(meetingEl.current, {
+			googleFont: "Lobster",
+			// sets light background colors
+			theme: "light",
+			colors: {
+				danger: "#ffac00",
+				brand: {
+					300: "#00FFE1",
+					400: "#00FFFF",
+					500: "#00E1D4",
+					600: "#007B74",
+					700: "#00655F",
+				},
+				text: "#071428",
+				"text-on-brand": "#ffffff",
+				"video-bg": "#E5E7EB",
+			},
+			borderRadius: "extra-rounded",
+		});
+	}, []);
+
+	return (
+		<div style={{ height: "400px" }}>
+			<RtkMeeting meeting={meeting} ref={meetingEl} mode="fill" />
+		</div>
+	);
+}
+```
+
+</RTKCodeSnippet>
+
+## Design Tokens
+
+UI Kit uses [design tokens](https://css-tricks.com/what-are-design-tokens/) for it's design system.
+
+Design tokens are the design related values which are used to maintain a design system, which provides flexibility in customizing the overall design of a system with values such as: typography, spacing, colors etc.
+
+These design tokens are stored and shared among components with the help of [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties).
+
+### Typography
+
+You can tweak the font family used in your UI Kit components easily with this token. You can edit this value in two ways with the provideRtkDesignSystem utility.
+
+```css
+--rtk-font-family: Inter;
+```
+
+#### Usage
+
+Set either of these values in your design tokens.
+
+- With fontFamily - Use a custom font family, you'll have to load the font manually.
+- With googleFont - Use a google font, the font is loaded automatically.
+
+```javascript
+const designTokens = {
+	fontFamily: "Custom Font",
+	// or
+	googleFont: "A Google Font",
+};
+```
+
+### Colours
+
+CSS Variables are set in the format: `R G B`.
+
+Here are all the color tokens, along with their default values.
+
+```css
+--rtk-colors-brand-500: 33 96 253;
+--rtk-colors-background-1000: 8 8 8;
+/_ ... rest of the shades _/
+```
+
+#### Usage
+
+:::note
+
+Note the exception of `text` and `text-on-brand` colors, you only specify a single color even though there are the following shades: 1000 - 600.
+
+This is because the `provideRtkDesignSystem()` utility sets the color you pass to text-1000 and calculates lighter shades and sets them as well.
+
+Only pass objects for `brand` and `background` colors.
+
+:::
+
+A set of commonly used `background` shades are available by default with the `theme` property.
+
+Theme values are: `light`, `dark`, `darkest`.
+
+Edit color tokens like this. Only the colors you specify will be set.
+
+```javascript
+const designTokens = {
+	theme: "darkest",
+	colors: {
+		brand: { 500: "#0D51FD" },
+		background: { 1000: "#080808" },
+		text: "#ffffff",
+		"text-on-primary": "#ffffff",
+		"video-bg": "#181818",
+	},
+};
+```
+
+### Spacing
+
+The spacing scale is used for setting width, height, margins, paddings, positions etc. throughout the components.
+
+- The default value for the spacing scale base is 4px.
+- Rest of the values are calculated with this base, set to `--rtk-space-1`.
+- Current spacing scale ranges from 0 to 96.
+
+```css
+--rtk-space-1: 4px;
+/* ... rest of the spacing scale */
+```
+
+#### Usage
+
+Set the base of the spacing scale with `spacingBase` property.
+
+```javascript
+const designTokens = {
+	spacingBase: 4, // value in px
+};
+```
+
+### Borders
+
+Border Width and Border Radius properties can also be customized with design tokens!
+
+| Token Name     | Values                                          |
+| -------------- | ----------------------------------------------- |
+| `borderWidth`  | `none`, `thin`, `fat`                           |
+| `borderRadius` | `sharp`, `rounded`, `extra-rounded`, `circular` |
+
+#### Usage
+
+```javascript
+const designTokens = {
+	borderWidth: "thin",
+	borderRadius: "rounded",
+};
+```

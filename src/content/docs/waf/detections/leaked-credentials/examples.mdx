@@ -1,12 +1,11 @@
 ---
-title: Mitigation examples
+title: Example mitigation rules
 pcx_content_type: configuration
 sidebar:
-  order: 4
-  label: Mitigation examples
+  order: 5
 head:
   - tag: title
-    content: Leaked credentials mitigation examples
+    content: Leaked credentials example mitigation rules
 description: Examples of rules for mitigating requests containing leaked credentials.
 ---
 
@@ -18,14 +17,14 @@ import { Example } from "~/components";
 Access to the `cf.waf.credential_check.username_and_password_leaked` field requires a Pro plan or above.
 :::
 
-Create a [rate limiting rule](/waf/rate-limiting-rules/) using [account takeover (ATO) detection](/bots/additional-configurations/detection-ids/#account-takeover-detections) and leaked credentials fields to limit volumetric attacks from particular IP addresses, JA4 Fingerprints, or countries.
+[Create a rate limiting rule](/waf/rate-limiting-rules/create-zone-dashboard/) using [account takeover (ATO) detection](/bots/additional-configurations/detection-ids/#account-takeover-detections) and leaked credentials fields to limit volumetric attacks from particular IP addresses, JA4 Fingerprints, or countries.
 
 The following example rule applies rate limiting to requests with a specific [ATO detection ID](/bots/additional-configurations/detection-ids/#account-takeover-detections) (corresponding to `Observes all login traffic to the zone`) that contain a previously leaked username and password:
 
 <Example>
 
 **When incoming requests match**:<br/>
-`(any(cf.bot_management.detection_ids[*] eq 201326593 and cf.waf.credential_check.username_and_password_leaked))`
+`(any(cf.bot_management.detection_ids[*] eq 201326593) and cf.waf.credential_check.username_and_password_leaked)`
 
 **With the same characteristics**: _IP_
 
@@ -42,7 +41,7 @@ When rate exceeds:
 Access to the _User and Password Leaked_ (`cf.waf.credential_check.username_and_password_leaked`) field requires a Pro plan or above.
 :::
 
-Create a [custom rule](/waf/custom-rules/) that challenges requests containing a previously leaked set of credentials (username and password).
+[Create a custom rule](/waf/custom-rules/create-dashboard/) that challenges requests containing a previously leaked set of credentials (username and password).
 
 - **Expression**: If you use the Expression Builder, configure the following expression:
 
@@ -59,7 +58,3 @@ Create a [custom rule](/waf/custom-rules/) that challenges requests containing a
 - **Action**: _Managed Challenge_
 
 ---
-
-## More resources
-
-- [Terraform example: Add a custom rule challenging requests with leaked credentials](/terraform/additional-configurations/waf-custom-rules/#add-a-custom-rule-challenging-requests-with-leaked-credentials)

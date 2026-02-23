@@ -1,21 +1,25 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import {
+	useEffect,
+	useState,
+	type ChangeEvent,
+	type KeyboardEvent,
+} from "react";
 import FieldBadges from "./fields/FieldBadges";
 import Markdown from "react-markdown";
 import type { CollectionEntry } from "astro:content";
+import { setSearchParams } from "~/util/url";
 
 type Fields = CollectionEntry<"fields">["data"]["entries"];
 
 type Filters = {
 	search: string;
 	categories: string[];
-	keywords: string[];
 };
 
 const FieldCatalog = ({ fields }: { fields: Fields }) => {
 	const [filters, setFilters] = useState<Filters>({
 		search: "",
 		categories: [],
-		keywords: [],
 	});
 
 	const mapped = fields.sort((f1, f2) => {
@@ -58,7 +62,6 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 	});
 
 	useEffect(() => {
-		// On component load, check for deep-links to categories in the query param
 		const params = new URLSearchParams(window.location.search);
 		const categories = params.getAll("field-category");
 		const searchTerm = params.get("search-term") ?? "";
@@ -72,6 +75,22 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 		});
 	}, []);
 
+	useEffect(() => {
+		const params = new URLSearchParams();
+
+		if (filters.search) {
+			params.set("search-term", filters.search);
+		}
+
+		if (filters.categories.length > 0) {
+			filters.categories.forEach((category) =>
+				params.append("field-category", category),
+			);
+		}
+
+		setSearchParams(params);
+	}, [filters]);
+
 	return (
 		<div className="md:flex">
 			<div className="mr-8 w-full md:w-1/4">
@@ -81,15 +100,20 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 					placeholder="Search fields"
 					value={filters.search}
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+					onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+						if (e.key === "Escape") {
+							setFilters({ ...filters, search: "" });
+						}
+					}}
 				/>
 
-				<div className="!mb-8 hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
-						▼ Categories
+				<div className="mb-8! hidden md:block">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
+						Categories
 					</span>
 
 					{categories.map((category) => (
-						<label key={category} className="!my-2 block">
+						<label key={category} className="my-2! block">
 							<input
 								type="checkbox"
 								className="mr-2"
@@ -117,10 +141,10 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 				</div>
 			</div>
 
-			<div className="!mt-0 flex w-full flex-wrap items-stretch gap-[1%] self-start md:w-3/4">
+			<div className="mt-0! flex w-full flex-wrap items-stretch gap-[1%] self-start md:w-3/4">
 				{fieldList.length === 0 && (
 					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800">
-						<span className="text-lg !font-bold">No fields found</span>
+						<span className="text-lg font-bold!">No fields found</span>
 						<p>
 							Try a different search term, or broaden your search by removing
 							filters.
@@ -131,24 +155,24 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 					return (
 						<a
 							key={field.name}
-							className="mb-3 block w-full self-stretch rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
+							className="mb-3 block w-full self-stretch rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
 							href={`/ruleset-engine/rules-language/fields/reference/${field.name}/`}
 						>
 							<div className="-mb-1 flex items-center">
 								<span
-									className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold"
+									className="overflow-hidden text-lg font-semibold text-ellipsis whitespace-nowrap"
 									title={`${field.name}: ${field.data_type}`}
 								>
 									{field.name}
 								</span>
 							</div>
-							<div className="!mt-2 line-clamp-2 text-sm leading-6">
+							<div className="mt-2! line-clamp-2 text-sm leading-6">
 								<Markdown disallowedElements={["a"]} unwrapDisallowed={true}>
 									{field.summary}
 								</Markdown>
 							</div>
 							{field.plan_info_label && (
-								<div className="!mt-2 text-xs">
+								<div className="mt-2! text-xs">
 									<FieldBadges badges={[field.plan_info_label]} />
 								</div>
 							)}

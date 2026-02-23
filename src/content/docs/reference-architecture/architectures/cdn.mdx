@@ -1,13 +1,13 @@
 ---
 title: Content Delivery Network (CDN) Reference Architecture
 pcx_content_type: reference-architecture
-products:
-  - Cache
-  - CDN
+products: [cache]
 sidebar:
   order: 1
   label: Content Delivery Network (CDN)
-updated: 2022-12-02
+reviewed: 2022-12-02
+description: >-
+  This reference architecture discusses the traditional challenges customers face with web applications, how the Cloudflare CDN resolves these challenges, and CDN architecture and design.
 ---
 
 import { Render, PublicStats } from "~/components";
@@ -22,7 +22,7 @@ This reference architecture is designed for IT or network professionals with som
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
-<Render file="what-is-cloudflare-link" />
+<Render file="what-is-cloudflare-link" product="reference-architecture" />
 
 - What is a CDN? | [Website](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) (5 minute read)
 - Analyst Report: [Cloudflare named Leader in 2024 GigaOm Radar for Content Delivery Networks](https://www.cloudflare.com/lp/gigaom-radar-cdn/) (20 minute read)
@@ -119,7 +119,7 @@ Figure 2 shows a simplified view of the Cloudflare CDN. Clients are receiving th
 
 ## Cloudflare CDN architecture and design
 
-Figure 3 is a view of the Cloudflare CDN on the global anycast network. In addition to using anycast for network performance and resiliency, the Cloudflare CDN leverages Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to find the fastest network path to route requests to the origin server. These capabilities are discussed in detail in the remainder of this document.
+Figure 3 is a view of the Cloudflare CDN on the global anycast network. In addition to using anycast for network performance and resiliency, the Cloudflare CDN leverages Tiered Cache to deliver optimized results while saving costs for customers. Customers can also [enable Argo Smart Routing](/argo-smart-routing/get-started/) to find the fastest network path to route requests to the origin server. These capabilities are discussed in detail in the remainder of this document.
 
 ![Figure 3: Diagram representing requests coming from an end user, protected by Cloudflare products including WAF and DDoS protection, and traveling through the anycast Network to reach the origin server using Smart Tiered Cache.](~/assets/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure3.svg "Figure 3: Cloudflare CDN with Tiered Cache on global anycast network")
 
@@ -152,7 +152,7 @@ The different cache topologies allow customers to control how Cloudflare interac
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Recommended for most deployments. It is the default configuration once Tiered Cache is enabled.                                                                       | Recommended for those who have high traffic that is spread across the globe and desire the highest cache usage and best performance possible.     | Recommended for customers who have additional data on their user base and have specific geographic regions they would like to focus on.                                    |
 | Ideal for customers who want to leverage CDN for performance but minimize requests to origin servers and bandwidth utilization between Cloudflare and origin servers. | Generic Global Tiered Topology balances between cache efficiency and latency. Instructs Cloudflare to use all Tier 1 data centers as upper tiers. | Custom Tiered Cache Topology allows customers to set a custom topology that fits specific needs (ex: upper tiers in specific geographic locations serving more customers). |
-| Cloudflare will dynamically find the single best upper tier for an origin using Argo performance and routing data.                                                    |                                                                                                                                                   | Engage with a Customer Success Manager (CSM) to build a custom topology.                                                                                                   |
+| Cloudflare will dynamically find the single best upper tier for an origin using Argo performance and routing data.                                                    |                                                                                                                                                   | Engage your account team to build a custom topology.                                                                                                                       |
 
 ### Traffic flow: Tiered Cache, Smart Tiered Cache topology
 
@@ -202,7 +202,7 @@ Figure 6 details the traffic flow when Tiered Cache and Argo Smart Routing are n
 
 ![Figure 6: Diagram with bidirectional arrows indicating a request between an end user and origin server without Argo Smart Routing enabled.](~/assets/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure6.svg "Figure 6: Cloudflare CDN without Tiered Cache or Argo Smart Routing")
 
-Figure 7 articulates the traffic flow with both Tiered Cache and Argo Smart Routing enabled. When a request is received by Data Center 1 and there is a cache miss, the cache of the upper tier data center, Data Center 4, is checked. If the cached content is not found at the upper tier data center, with Argo Smart Routing enabled, the request is sent on the fastest path from the upper tier data center to the origin.
+Figure 7 articulates the traffic flow with both Tiered Cache and Argo Smart Routing enabled. When a request is received by Data Center 1 and there is a cache miss, the cache of the upper tier data center, Data Center 6, is checked. If the cached content is not found at the upper tier data center, with Argo Smart Routing enabled, the request is sent on the fastest path from the upper tier data center to the origin.
 
 The fastest path is determined by the Argo network intelligence capabilities, which take into account real-time network data such as congestion, latency, and RTT.
 
@@ -241,13 +241,13 @@ Figure 8 illustrates how Cache Reserve can help reduce load on an origin server 
 
 ![Figure 8: Traffic between end users and an origin server showing Cache Reserve as the final step in the architecture of the Cloudflare CDN solution.](~/assets/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure8.svg "Figure 8: Cloudflare CDN with Tiered Cache and Cache Reserve")
 
-### China Network & China Express for clients in China
+### China Network & Global Acceleration for clients in China
 
-Latency is not only proportional to the physical distance between the client and the origin or cache, but it may also increase significantly when traffic comes from or goes to certain countries, such as China. To mitigate the latency, Cloudflare offers two solutions:
+Latency depends not just on how far the client is from the origin or cache, but can also be significantly affected by the geographic region of the traffic — like China. To address these latency challenges, Cloudflare provides two key solutions:
 
-1. [China Network](https://www.cloudflare.com/application-services/products/china-network/) provides in-China caching for end users located in China, regardless of the origin location. This solution is provided by collaborating with JD Cloud and uses their data centers to ensure the fastest and most reliable cache performance for Chinese users compared to data centers outside of China.
-2. [China Express](https://blog.cloudflare.com/improving-customer-experience-in-china-using-china-express) offers reliable and secure connectivity to streamline content from origins to JD Cloud data centers in China. This is particularly beneficial for dynamic content like web applications and API calls.
+1. [China Network](/china-network/) provides in-China caching for end users located in China, regardless of the origin location. This solution is provided by collaborating with JD Cloud and uses their data centers to ensure the fastest and most reliable cache performance for Chinese users compared to data centers outside of China.
+2. [Global Acceleration](/china-network/concepts/global-acceleration/) offers reliable and secure connectivity to streamline content from origins to JD Cloud data centers in China. This is particularly beneficial for dynamic content like web applications and API calls.
 
 ## Summary
 
-To summarize, the Cloudflare CDN is SaaS that helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. The Cloudflare CDN leverages Cloudflare’s global anycast network and Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to ensure the fastest network path is used to route requests to the origin server and also choose to enable Cache Reserve to increase cache hits to further save costs and increase performance of their website or application.
+To summarize, the Cloudflare CDN is SaaS that helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. The Cloudflare CDN leverages Cloudflare’s global anycast network and Tiered Cache to deliver optimized results while saving costs for customers. Customers can also (enable Argo Smart)[argo-smart-routing/get-started/] Routing to ensure the fastest network path is used to route requests to the origin server and also choose to enable Cache Reserve to increase cache hits to further save costs and increase performance of their website or application.

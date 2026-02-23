@@ -4,9 +4,10 @@ title: Transform user-uploaded images before uploading to R2
 description: Set up bindings to connect Images, R2, and Assets to your Worker
 sidebar:
   order: 1
+reviewed: 2025-04-03
 ---
 
-import { WranglerConfig } from "~/components"
+import { WranglerConfig, Render } from "~/components"
 
 
 In this guide, you will build an app that accepts image uploads, overlays the image with a visual watermark, then stores the transformed image in your R2 bucket.
@@ -34,27 +35,32 @@ If you are new, review how to [create your first Worker](/workers/get-started/gu
 
 To start, you will need to set up your project to use the following resources on the Developer Platform:
 
-* [Images](/images/transform-images/bindings/) to transform, resize, and encode images directly from your Worker. 
+* [Images](/images/transform-images/bindings/) to transform, resize, and encode images directly from your Worker.
 * [R2](/r2/api/workers/workers-api-usage/) to connect the bucket for storing transformed images.
 * [Assets](/workers/static-assets/binding/) to access a static image that will be used as the visual watermark.
 
 
 ### Add the bindings to your Wrangler configuration
 
-Configure your `wrangler.toml` file to add the Images, R2, and Assets bindings:
+Configure your Wrangler configuration file to add the Images, R2, and Assets bindings:
 
 <WranglerConfig>
-```toml
-[images]
-binding = "IMAGES"
-
-[[r2_buckets]]
-binding = "R2"
-bucket_name = "<BUCKET>"
-
-[assets]
-directory = "./<DIRECTORY>"
-binding = "ASSETS"
+```jsonc
+{
+	"images": {
+		"binding": "IMAGES"
+	},
+	"r2_buckets": [
+		{
+			"binding": "R2",
+			"bucket_name": "<BUCKET>"
+		}
+	],
+	"assets": {
+		"directory": "./<DIRECTORY>",
+		"binding": "ASSETS"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -131,7 +137,7 @@ export default {
         if (!file || typeof file.arrayBuffer !== "function") {
           return new Response("No image file provided", { status: 400 });
         }
-        
+
         // Read uploaded image as array buffer
         const fileBuffer = await file.arrayBuffer();
       } catch (err) {
@@ -141,6 +147,8 @@ export default {
   }
 };
 ```
+
+<Render file="request-dot-clone-warning" product="workers" />
 
 ## 4: Transform the image
 
@@ -178,7 +186,7 @@ export default {
         if (!file || typeof file.arrayBuffer !== "function") {
           return new Response("No image file provided", { status: 400 });
         }
-        
+
         // Read uploaded image as array buffer
         const fileBuffer = await file.arrayBuffer();
 
@@ -222,7 +230,7 @@ export default {
         if (!file || typeof file.arrayBuffer !== "function") {
           return new Response("No image file provided", { status: 400 });
         }
-        
+
         // Read uploaded image as array buffer
         const fileBuffer = await file.arrayBuffer();
 
@@ -281,7 +289,7 @@ export default {
         if (!file || typeof file.arrayBuffer !== "function") {
           return new Response("No image file provided", { status: 400 });
         }
-        
+
         // Read uploaded image as array buffer
         const fileBuffer = await file.arrayBuffer();
 
@@ -303,10 +311,10 @@ export default {
 
           // Add timestamp to file name
           const fileName = `image-${Date.now()}.avif`;
-          
+
           // Upload to R2
           await env.R2.put(fileName, imageResponse.body)
-         
+
           return new Response(`Image uploaded successfully as ${fileName}`, { status: 200 });
       } catch (err) {
         console.log(err.message)
