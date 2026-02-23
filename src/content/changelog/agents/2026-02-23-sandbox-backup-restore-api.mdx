@@ -1,35 +1,34 @@
 ---
 title: Backup and restore API for Sandbox SDK
-description: Create point-in-time snapshots of sandbox directories and restore them with copy-on-write overlays using R2 storage.
+description: Snapshot and restore sandbox directories in seconds with the new createBackup() and restoreBackup() methods.
 products:
   - agents
   - r2
 date: 2026-02-23
 ---
 
-The Sandbox SDK now supports `createBackup()` and `restoreBackup()` methods for creating point-in-time snapshots of sandbox directories and restoring them with copy-on-write overlays.
+The Sandbox SDK now supports `createBackup()` and `restoreBackup()` methods for creating point-in-time snapshots of sandbox directories and restoring them.
 
-Use backups to checkpoint work before risky operations, roll back to a known-good state, or persist directory snapshots across requests.
+The main use case is fast environment restoration. Instead of running `git clone` and `npm install` on every new session — which can take minutes — you can back up a fully-initialized `/workspace` directory and restore it in seconds. This makes it practical to pick up exactly where a user left off across requests without repeating expensive setup steps. You can also use backups to checkpoint work before risky operations and roll back if something goes wrong.
 
 ```ts
 import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
-// Create a backup of /workspace
+// Back up a fully-initialized workspace
 const backup = await sandbox.createBackup({ dir: "/workspace" });
 
-// Restore the backup after a failed operation
+// On next request, restore instead of re-cloning and reinstalling
 await sandbox.restoreBackup(backup);
 ```
-
-Backups are stored as compressed squashfs archives in an [R2](/r2/) bucket using presigned URLs for direct container-to-R2 transfers. Restores use FUSE overlayfs with copy-on-write semantics, so the original backup remains unchanged as new writes go to a separate upper layer.
 
 Key capabilities:
 
 - **Named backups** with optional human-readable labels
 - **Configurable TTL** (default: 3 days) enforced at restore time
-- **Serializable handles** that can be stored in KV, D1, or Durable Object storage for cross-request access
-- **Specific error codes** (`INVALID_BACKUP_CONFIG`, `BACKUP_CREATE_FAILED`, `BACKUP_NOT_FOUND`, `BACKUP_EXPIRED`, `BACKUP_RESTORE_FAILED`) for precise error handling
+- **Persist and reuse across requests** — store backup handles in KV, D1, or Durable Object storage so any subsequent request can restore the same environment
 
-To get started, configure a `BACKUP_BUCKET` R2 binding and R2 presigned URL credentials in your Wrangler configuration. Refer to the [backup and restore guide](/sandbox/guides/backup-restore/) for setup instructions and usage patterns, or the [Backups API reference](/sandbox/api/backups/) for full method documentation.
+Backups are stored in an [R2](/r2/) bucket. Restores currently use a FUSE overlay with copy-on-write semantics, so the original backup remains unchanged as new writes go to a separate layer. Soon, we will ship native snapshotting that is faster and works at a lower level — with the same API and no changes needed on your side.
+
+To get started, refer to the [backup and restore guide](/sandbox/guides/backup-restore/) for setup instructions and usage patterns, or the [Backups API reference](/sandbox/api/backups/) for full method documentation.
