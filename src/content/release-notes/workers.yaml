@@ -159,7 +159,7 @@ entries:
       - Fixed a bug where when writing to an HTTP Response body would sometimes hang when the client disconnected (and sometimes throw an exception). It will now always throw an exception.
   - publish_date: "2024-07-01"
     description: |-
-      - When using [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), you can now use [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) to send a request to a specific version of your Worker.
+      - When using [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), you can now use [version overrides](/workers/configuration/versions-and-deployments/version-overrides/) to send a request to a specific version of your Worker.
   - publish_date: "2024-06-28"
     description: |-
       - Fixed a bug which caused `Date.now()` to return skewed results if called before the first I/O of the first request after a Worker first started up. The value returned would be offset backwards by the amount of CPU time spent starting the Worker (compiling and running global scope), making it seem like the first I/O (e.g. first fetch()) was slower than it really was. This skew had nothing to do with Spectre mitigations; it was simply a longstanding bug.
