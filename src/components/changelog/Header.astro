@@ -7,6 +7,12 @@ import RSSButton from "~/components/RSSButton.astro";
 import ProductSelect from "~/components/changelog/ProductSelect";
 import HeroImage from "~/assets/images/changelog/hero.svg";
 
+interface Props {
+	showProductSelect?: boolean;
+}
+
+const { showProductSelect = true } = Astro.props;
+
 // Only show products and groups that have at least one visible changelog entry.
 const products = directory.filter(
 	(entry) => entry.data.entry.url && changelogProductIds.includes(entry.id),
@@ -36,14 +42,16 @@ const currentPath = Astro.url.pathname;
 				icon="right-caret"
 			/>
 		</p>
-		<div class="not-content">
-			<ProductSelect
-				client:load
-				products={products}
-				groups={filteredGroups}
-				currentPath={currentPath}
-			/>
-		</div>
+		{showProductSelect && (
+			<div class="not-content">
+				<ProductSelect
+					client:load
+					products={products}
+					groups={filteredGroups}
+					currentPath={currentPath}
+				/>
+			</div>
+		)}
 	</div>
 	<Image src={HeroImage} alt="hero image" height="240" class="mt-0!" />
 </div>
