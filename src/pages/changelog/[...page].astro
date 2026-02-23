@@ -1,5 +1,7 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
 import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
@@ -24,18 +26,20 @@ export const getStaticPaths = (async ({ paginate }) => {
 type ChangelogEntry = CollectionEntry<"changelog">;
 
 const { page } = Astro.props;
----
 
-<StarlightPage
-	frontmatter={{
+const props = {
+	frontmatter: {
 		title: "Changelogs",
 		tableOfContents: false,
 		template: "splash",
 		chatbot_deprioritize: true,
-	}}
-	hideTitle={true}
-	hideBreadcrumbs={true}
->
+	},
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
 	<Header />
 	{
 		page.data.map(async (entry: ChangelogEntry) => {
