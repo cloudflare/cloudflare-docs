@@ -16,8 +16,6 @@ Requests can be identified by the [automatic headers](/browser-rendering/referen
 
 Browser Rendering has a bot detection ID of `128292352`. Use this to create WAF rules that allow or block Browser Rendering traffic.
 
-The default user agent for Browser Rendering crawl requests is `CloudflareBrowserRenderingCrawler/1.0`. Users can override this value when making requests.
-
 ## Best practices for robots.txt
 
 A well-configured `robots.txt` helps crawlers understand which parts of your site they can access.
@@ -66,12 +64,12 @@ Structure your sitemap to help crawlers process your site efficiently:
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://example.com/important-page</loc>
-    <lastmod>2025-01-15T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-15</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://example.com/other-page</loc>
-    <lastmod>2025-01-10T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-10</lastmod>
     <priority>0.5</priority>
   </url>
 </urlset>
@@ -80,38 +78,16 @@ Structure your sitemap to help crawlers process your site efficiently:
 | Attribute    | Purpose                       | Recommendation                                                                 |
 | ------------ | ----------------------------- | ------------------------------------------------------------------------------ |
 | `<loc>`      | URL of the page               | Required. Use full URLs.                                                       |
-| `<lastmod>`  | Last modification date        | Include to help the crawler identify updated content. Use ISO 8601 format.     |
-| `<priority>` | Relative importance (0.0-1.0) | Not currently respected by Browser Rendering, but may be supported in future. |
-
-### Sitemap index files
-
-For large sites with multiple sitemaps, use a sitemap index file. Browser Rendering uses the `depth` parameter to control how many levels of nested sitemaps are crawled:
-
-```xml title="sitemap.xml"
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ...
-</urlset>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-   <sitemap>
-      <loc>https://www.example.com/sitemap-products.xml</loc>
-   </sitemap>
-   <sitemap>
-      <loc>https://www.example.com/sitemap-blog.xml</loc>
-   </sitemap>
-</sitemapindex>
-```
-
-### Caching headers
-
-Browser Rendering periodically refetches sitemaps to keep content fresh. Serve your sitemap with `Last-Modified` or `ETag` response headers so the crawler can detect whether the sitemap has changed since the last fetch.
+| `<lastmod>`  | Last modification date        | Include to help the crawler identify updated content.                          |
+| `<priority>` | Relative importance (0.0-1.0) | Set higher values for important pages. The crawler processes pages in order.   |
 
 ### Recommendations
 
-- Include `<lastmod>` on all URLs to help identify which pages have changed. Use ISO 8601 format (for example, `2025-01-15T00:00:00+00:00`).
-- Use sitemap index files for large sites with multiple sitemaps.
-- Compress large sitemaps using `.gz` format to reduce bandwidth.
-- Keep sitemaps under 50MB and 50,000 URLs per file (standard sitemap limits).
+- **Include `<lastmod>`** on all URLs to help identify which pages have changed.
+- **Set `<priority>`** to control processing order. Pages with higher priority are processed first.
+- **Use sitemap index files** for large sites with multiple sitemaps.
+- **Compress large sitemaps** using `.gz` format to reduce bandwidth.
+- **Keep sitemaps under 50MB** and 50,000 URLs per file (standard sitemap limits).
 
 ## Related resources
 
