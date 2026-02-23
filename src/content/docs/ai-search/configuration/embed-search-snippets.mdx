@@ -1,0 +1,92 @@
+---
+pcx_content_type: concept
+title: UI snippets
+sidebar:
+  order: 8
+---
+
+You can integrate AI Search directly into your website using the Cloudflare AI Search snippet library. This provides production-ready, customizable search and chat components with zero dependencies.
+
+To configure and preview UI snippets for your AI Search instance, visit [search.ai.cloudflare.com](https://search.ai.cloudflare.com/).
+
+:::note
+To use the AI Search snippet library, ensure that the `/chat/completion` and `/search` public endpoints are enabled in your AI Search instance settings. See [Public endpoint configuration](/ai-search/configuration/public-endpoint/) for setup instructions.
+:::
+
+## Installation
+
+You can install the AI Search snippet library via npm or use it directly from the CDN.
+
+### NPM installation
+
+Use npm if you are building with a bundler like Vite, Webpack, or a framework like React, Vue, or Next.js. This allows you to import the components directly into your JavaScript or TypeScript project.
+
+```bash
+npm install @cloudflare/ai-search-snippet
+```
+
+### CDN installation
+
+Use the CDN if you want the simplest setup for static HTML pages or quick prototyping without a build system. Add the script tag directly to your HTML.
+
+```html
+<script
+	type="module"
+	src="https://abc123.search.ai.cloudflare.com/search-snippet.es.js"
+></script>
+```
+
+## Available components
+
+The snippet library provides four web components that you can add to your HTML. Each component connects to your AI Search instance using the `api-url` attribute, which should point to your public endpoint URL.
+
+| Component                | Description                                                   |
+| ------------------------ | ------------------------------------------------------------- |
+| `<search-bar-snippet>`   | An inline search bar that displays results in a dropdown      |
+| `<search-modal-snippet>` | A search modal that opens with `Cmd/Ctrl+K` keyboard shortcut |
+| `<chat-bubble-snippet>`  | A floating chat bubble in the corner of the page              |
+| `<chat-page-snippet>`    | A full-page chat interface with conversation history          |
+
+## Basic usage
+
+The following example shows how to add each component to your page. Replace `abc123` with your AI Search instance's public endpoint hash, which you can find in your AI Search instance settings under **Public Endpoints**.
+
+```html
+<!-- Import the library -->
+<script
+	type="module"
+	src="https://abc123.search.ai.cloudflare.com/search-snippet.es.js"
+></script>
+
+<!-- Search bar with results -->
+<search-bar-snippet
+	api-url="https://abc123.search.ai.cloudflare.com/"
+	placeholder="Search..."
+	max-results="10"
+>
+</search-bar-snippet>
+
+<!-- Modal search (opens with Cmd/Ctrl+K) -->
+<search-modal-snippet
+	api-url="https://abc123.search.ai.cloudflare.com/"
+	placeholder="Search documentation..."
+	max-results="10"
+>
+</search-modal-snippet>
+
+<!-- Floating chat bubble -->
+<chat-bubble-snippet
+	api-url="https://abc123.search.ai.cloudflare.com/"
+	placeholder="Type a message..."
+>
+</chat-bubble-snippet>
+
+<!-- Full-page chat with history -->
+<chat-page-snippet
+	api-url="https://abc123.search.ai.cloudflare.com/"
+	placeholder="Type a message..."
+>
+</chat-page-snippet>
+```
+
+For advanced configuration options and customization, visit [search.ai.cloudflare.com](https://search.ai.cloudflare.com/).

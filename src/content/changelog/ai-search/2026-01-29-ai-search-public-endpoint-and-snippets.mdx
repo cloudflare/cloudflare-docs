@@ -6,7 +6,7 @@ products:
 date: 2026-01-29
 ---
 
-[AI Search](/ai-search/) now supports [public endpoints](/ai-search/public-endpoint/), allowing you to expose your AI Search instance directly to users without requiring a Workers binding or backend proxy.
+[AI Search](/ai-search/) now supports [public endpoints](/ai-search/usage/public-endpoint/), allowing you to expose your AI Search instance directly to users without requiring a Workers binding or backend proxy.
 
 With public endpoints, you can:
 
@@ -19,17 +19,13 @@ To enable a public endpoint for your AI Search instance, go to **Settings** and 
 Once enabled, you can query your AI Search instance directly from the browser:
 
 ```javascript
-const response = await fetch(
-  "https://<hash>.search.ai.cloudflare.com/search",
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query: "How do I get started?" })
-  }
-);
+const response = await fetch("https://<hash>.search.ai.cloudflare.com/search", {
+	method: "POST",
+	headers: { "Content-Type": "application/json" },
+	body: JSON.stringify({ query: "How do I get started?" }),
+});
 
 const results = await response.json();
 ```
 
-Learn more about configuring [public endpoints](/ai-search/configuration/public-endpoint/) in AI Search.
-
+Learn more about configuring [public endpoints](/ai-search/usage/public-endpoint/) in AI Search.

@@ -1,0 +1,68 @@
+---
+pcx_content_type: concept
+title: Public endpoint
+sidebar:
+  order: 7
+---
+
+Configure public endpoints to expose your AI Search instance directly to users without requiring authentication. This enables you to share your AI Search functionality with external users or integrate it into public-facing applications.
+
+## Available endpoints
+
+When enabled, public endpoints are accessible at `https://<hash>.search.ai.cloudflare.com/<endpoint>`, where `<hash>` is your instance's unique public endpoint identifier.
+
+Each AI Search instance can expose three public endpoints:
+
+| Endpoint           | Description                                            |
+| ------------------ | ------------------------------------------------------ |
+| `/search`          | Vector search endpoint that returns relevant documents |
+| `/chat/completion` | OpenAI-compatible chat completion endpoint             |
+| `/mcp`             | Model Context Protocol endpoint for AI agents          |
+
+For details on how to use these endpoints, see [Public endpoint usage](/ai-search/usage/public-endpoint/).
+
+## Enabling and disabling public endpoints
+
+You can enable or disable each public endpoint independently:
+
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Compute & AI** > **AI Search**.
+3. Select your AI Search instance.
+4. Go to **Settings** > **Public Endpoints**.
+5. Toggle each endpoint on or off as needed.
+
+Each endpoint has its own configuration panel for granular control.
+
+## Rate limiting
+
+Configure rate limits to control usage across all public endpoints:
+
+| Setting             | Description                                   | Default  |
+| ------------------- | --------------------------------------------- | -------- |
+| Requests per period | Maximum number of requests allowed            | 120      |
+| Time period         | Time window for the rate limit                | 1 minute |
+| Period type         | Rate limiting technique: `fixed` or `sliding` | `fixed`  |
+
+Rate limits apply across all enabled public endpoints for the AI Search instance.
+
+## CORS configuration
+
+Cross-Origin Resource Sharing (CORS) is enabled by default to support browser-based applications.
+
+The default allowed origins depend on your data source type:
+
+- **Website data sources**: The source domain is automatically added as an allowed origin.
+- **Other data sources**: All origins (`*`) are allowed by default.
+
+You can customize allowed origins in the **Public Endpoints** settings by adding specific hostnames to the CORS rules.
+
+## Security considerations
+
+- Public endpoints do not require authentication.
+- Consider enabling rate limiting to prevent abuse.
+- Use CORS rules to restrict access to specific domains.
+- Monitor usage through your dashboard analytics.
+
+## Related
+
+- [UI snippets](/ai-search/configuration/embed-search-snippets/) - Add pre-built search and chat components to your website using your public endpoints.
