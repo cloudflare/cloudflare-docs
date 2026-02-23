@@ -7,7 +7,7 @@ import StarlightPage, {
 import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.tsx";
 import ModelFeatures from "~/components/models/ModelFeatures.tsx";
-import SchemaViewer from "~/components/models/SchemaViewer.astro";
+import JsonSchemaViewer from "~/components/models/JsonSchemaViewer.tsx";
 
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
 import AutomaticSpeechRecognitionCode from "~/components/models/code/AutomaticSpeechRecognitionCode.astro";
@@ -294,7 +294,7 @@ const starlightPageProps = {
 	<h2 id="Parameters">Parameters</h2>
 	<p><span class="text-red-500">*</span> indicates a required field</p>
 	<h3 id="Input">Input</h3>
-	<SchemaViewer schema={model.schema.input} />
+	<JsonSchemaViewer schema={model.schema.input} client:load />
 
 	<h3 id="Output">Output</h3>
 	{
@@ -309,7 +309,7 @@ const starlightPageProps = {
 				</p>
 			</>
 		) : (
-			<SchemaViewer schema={model.schema.output} />
+			<JsonSchemaViewer schema={model.schema.output} client:load />
 		)
 	}
 
