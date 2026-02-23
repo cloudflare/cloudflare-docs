@@ -1,0 +1,71 @@
+---
+title: Public endpoints, MCP, and UI snippets
+description: Expose AI Search instances via public endpoints, connect to MCP clients, and embed search UI components in your website.
+products:
+  - ai-search
+date: 2026-02-25
+---
+
+[AI Search](/ai-search/) now supports public endpoints, MCP, and UI snippets, making it easy to add search to your website or connect to AI agents without writing backend code.
+
+## Public endpoints
+
+Public endpoints let you call AI Search without requiring authorization or API tokens. To enable, go to **AI** > **AI Search**, select an instance, and go to **Settings** and turn on **Public endpoint**.
+
+Once enabled, your instance is available at:
+
+```txt
+https://<hash>.search.ai.cloudflare.com
+```
+
+Example request:
+
+```javascript
+const response = await fetch(
+	"https://<hash>.search.ai.cloudflare.com/chat/completions",
+	{
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({
+			messages: [{ content: "How do I get started?", role: "user" }],
+		}),
+	},
+);
+
+const results = await response.json();
+```
+
+For more details, refer to the [public endpoint documentation](/ai-search/configuration/public-endpoint/).
+
+## MCP endpoint
+
+Your public endpoint also exposes an MCP server that AI agents can connect to. The MCP endpoint is available at:
+
+```txt
+https://<hash>.search.ai.cloudflare.com/mcp
+```
+
+Add this URL to your MCP client configuration to give AI agents access to search your content. For more details, refer to the [public endpoint documentation](/ai-search/usage/public-endpoint/#mcp).
+
+## UI snippets
+
+UI snippets are pre-built search and chat components you can embed in your website. Visit [search.ai.cloudflare.com](https://search.ai.cloudflare.com/) to configure and preview components for your AI Search instance.
+
+![Example of the search-modal-snippet component](~/assets/images/ai-search/ui-snippet-search-modal.png)
+
+To add a search modal to your page:
+
+```html
+<script
+	type="module"
+	src="https://<hash>.search.ai.cloudflare.com/search-snippet.es.js"
+></script>
+
+<search-modal-snippet
+	api-url="https://<hash>.search.ai.cloudflare.com/"
+	placeholder="Search..."
+>
+</search-modal-snippet>
+```
+
+For more details, refer to the [UI snippets documentation](/ai-search/configuration/embed-search-snippets/).

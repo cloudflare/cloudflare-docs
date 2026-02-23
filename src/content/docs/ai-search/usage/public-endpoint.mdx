@@ -7,52 +7,36 @@ sidebar:
 
 AI Search supports public endpoints that allow you to expose specific AI Search capabilities without requiring authentication. This enables you to share your AI Search functionality with external users or integrate it into public-facing applications.
 
-## Available public endpoints
-
 Each AI Search instance can optionally expose three public endpoints:
 
-- **`/chat/completion`** - OpenAI-compatible chat completion endpoint
-- **`/search`** - Vector search endpoint that returns relevant documents
 - **`/mcp`** - Model Context Protocol endpoint for AI agents
+- **`/chat/completions`** - OpenAI-compatible chat completion endpoint
+- **`/search`** - Search endpoint that returns relevant chunks
 
-## Enable public endpoints
+You can also use [UI snippets](/ai-search/configuration/embed-search-snippets/) to easily embed pre-built search and chat components on your website.
+
+## Prerequisite: Enable public endpoints
 
 To enable public endpoints for your AI Search instance:
 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Compute & AI** > **AI Search**.
+2. Go to **AI** > **AI Search**.
 3. Select your AI Search instance.
 4. Go to **Settings** > **Public Endpoints**.
-5. Toggle each endpoint on or off as needed.
+5. Toggle on **Public Endpoints** to enable the feature, then toggle each individual endpoint on or off as needed.
 
-For configuration options like rate limiting and CORS, see [Public endpoint configuration](/ai-search/configuration/public-endpoint/).
+For configuration options like rate limiting, CORS, and public URL format, see [Public endpoint configuration](/ai-search/configuration/public-endpoint/).
 
-## Public URL format
-
-When enabled, public endpoints are accessible at:
-
-```
-https://<hash>.search.ai.cloudflare.com/<endpoint>
-```
-
-For example:
-
-- `https://abc123.search.ai.cloudflare.com/chat/completion`
-- `https://abc123.search.ai.cloudflare.com/search`
-- `https://abc123.search.ai.cloudflare.com/mcp`
+## Endpoints
 
 ### MCP endpoint
 
 The Model Context Protocol (MCP) endpoint allows AI agents to discover and interact with your AI Search content in a structured way. This endpoint follows the [MCP specification](https://modelcontextprotocol.io/) and provides tools for querying your indexed content.
 
-#### Example MCP usage
-
-To use the MCP endpoint with an AI agent:
-
 ```bash
-# Query content using MCP
 curl https://abc123.search.ai.cloudflare.com/mcp \
   -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
   -d '{
     "jsonrpc": "2.0",
     "id": 2,
@@ -67,6 +51,46 @@ curl https://abc123.search.ai.cloudflare.com/mcp \
 ```
 
 The MCP endpoint is particularly useful for integrating with AI development tools like Claude Desktop, VS Code extensions, or custom AI agents that support the MCP protocol.
+
+You can customize the MCP tool description in the **Tool Description** field under **Settings** > **Public Endpoints**. For more details, see [Public endpoint configuration](/ai-search/configuration/public-endpoint/#tool-description).
+
+### Chat Completions endpoint
+
+The `/chat/completions` endpoint searches your data source and generates a response using the model and retrieved context. It uses the same OpenAI-compatible format as the [REST API](/ai-search/usage/rest-api/#chat-completions).
+
+```bash
+curl https://abc123.search.ai.cloudflare.com/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {
+        "content": "How do I configure AI Search?",
+        "role": "user"
+      }
+    ]
+  }'
+```
+
+For the full list of options, refer to the [Chat Completions API reference](/api/resources/ai_search/subresources/instances/methods/chat_completions/).
+
+### Search endpoint
+
+The `/search` endpoint returns relevant chunks from your data source without generating a response. It uses the same format as the [REST API](/ai-search/usage/rest-api/#search).
+
+```bash
+curl https://abc123.search.ai.cloudflare.com/search \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {
+        "content": "How do I configure AI Search?",
+        "role": "user"
+      }
+    ]
+  }'
+```
+
+For the full list of options, refer to the [Search API reference](/api/resources/ai_search/subresources/instances/methods/search/).
 
 ## Next steps
 

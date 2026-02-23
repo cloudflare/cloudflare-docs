@@ -7,6 +7,10 @@ entries:
     title: Public endpoint and snippets
     description: |-
       You can now expose your AI Search instance via a public endpoint and add snippets to show your search results.
+  - publish_date: "2026-02-23"
+    title: New REST API endpoints
+    description: |-
+      AI Search introduces new [REST API](/ai-search/usage/rest-api/) endpoints with an OpenAI-compatible message format. The previous AutoRAG API endpoints will continue working as expected for the time being. New features will only be added to the new API. We will provide at least 90 days notice before any end of life. See the [migration guide](/ai-search/how-to/migrate-from-autorag-api/) for instructions.
   - publish_date: "2026-02-09"
     title: Crawler user agent renamed
     description: |-
