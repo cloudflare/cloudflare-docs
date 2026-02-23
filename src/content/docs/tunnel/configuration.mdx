@@ -200,7 +200,11 @@ For the complete list of origin parameters, refer to [Origin configuration param
 
 ### Update origin parameters
 
-To update origin parameters for remotely-managed tunnels, use the [Cloudflare One dashboard](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/#update-origin-configuration) or the [API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/). For locally-managed tunnels, add the parameters to your [configuration file](/tunnel/other-tunnel-types/local-management/configuration-file/).
+To update origin parameters for remotely-managed tunnels, use the [Cloudflare One dashboard](https://one.dash.cloudflare.com) or the [API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/). For locally-managed tunnels, add the parameters to your [configuration file](/tunnel/other-tunnel-types/local-management/configuration-file/).
+
+To configure origin parameters in Cloudflare One:
+
+<Render file="tunnel/update-origin-configuration" product="cloudflare-one" />
 
 ## System requirements
 
@@ -210,31 +214,23 @@ To update origin parameters for remotely-managed tunnels, use the [Cloudflare On
 
 <Details header="Port configuration">
 
-<Tabs> <TabItem label="Linux">
+<Render file="tunnel/port-configuration" product="cloudflare-one" />
 
-```sh
-echo 'net.ipv4.ip_local_port_range = 11000 60999' | sudo tee /etc/sysctl.d/99-cloudflared.conf
-sudo sysctl -p /etc/sysctl.d/99-cloudflared.conf
-```
+</Details>
 
-</TabItem> <TabItem label="Windows">
+<Details header="ulimits (Linux and macOS)">
 
-```txt
-netsh int ipv4 set dynamicport tcp start=11000 num=50000
-netsh int ipv4 set dynamicport udp start=11000 num=50000
-netsh int ipv6 set dynamicport tcp start=11000 num=50000
-netsh int ipv6 set dynamicport udp start=11000 num=50000
-```
-
-</TabItem> </Tabs>
-
-**ulimits (Linux/macOS):** Set the open file descriptor limit to at least 70,000 with `ulimit -n 70000`. Configure persistently for your OS.
+<Render file="tunnel/ulimits" product="cloudflare-one" />
 
 </Details>
 
 <Details header="Capacity calculator">
 
-Use the [metrics endpoint](/tunnel/monitoring/#cloudflared-metrics) to measure `cloudflared_tcp_total_sessions` and `cloudflared_udp_total_sessions`, then input your values:
+To estimate tunnel capacity requirements for your deployment:
+1. Use the [metrics endpoint](/tunnel/monitoring/#cloudflared-metrics) to measure `cloudflared_tcp_total_sessions` and `cloudflared_udp_total_sessions`.
+2. Compute the average **TCP requests per second** by dividing `cloudflared_tcp_total_sessions` by total time.
+3. Compute the average **Non-DNS UDP requests per second** by dividing `cloudflared_udp_total_sessions` by total time.
+4. Input **TCP requests per second** and **Non-DNS UDP requests per second** into the calculator below. You can leave **Private DNS requests per second** as `0` unless you are using the tunnel for [private network access](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/).
 
 <TunnelCalculator />
 
@@ -244,9 +240,4 @@ To increase tunnel capacity, add identical hosts running `cloudflared` replicas.
 
 ## Cipher suites
 
-`cloudflared` uses the Go TLS library. All tunnel connections use TLS 1.3 and post-quantum encryption by default.
-
-| Protocol | Cipher suites                                                                                                                                                                                                                                                          |
-| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TLS 1.3  | `TLS_AES_128_GCM_SHA256`, `TLS_AES_256_GCM_SHA384`, `TLS_CHACHA20_POLY1305_SHA256`                                                                                                                                                                                     |
-| TLS 1.2  | `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`, `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`, `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`, `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`, `TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`, `TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256` |
+<Render file="tunnel/cipher-suites" product="cloudflare-one" />
