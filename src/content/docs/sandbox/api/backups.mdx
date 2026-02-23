@@ -127,7 +127,7 @@ The FUSE mount is lost when the sandbox sleeps or restarts. Re-restore from the 
 Use backups as checkpoints before risky operations.
 
 <TypeScriptExample>
-```
+```ts
 
 // Save checkpoint before risky operation
 const checkpoint = await sandbox.createBackup({ dir: '/workspace' });
