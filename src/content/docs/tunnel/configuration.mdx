@@ -160,7 +160,7 @@ Then reinstall the `cloudflared` service on all replicas using the new token.
 
 ## Run parameters
 
-These flags apply to the `cloudflared tunnel run` command. For remotely-managed tunnels, add them to the [tunnel service](#update-run-parameters). For locally-managed tunnels, add them to your [configuration file](/tunnel/other-tunnel-types/local-management/configuration-file/) as key/value pairs.
+These flags apply to the `cloudflared tunnel run` command. They control how the tunnel runs on your operating system.
 
 The most commonly used parameters:
 
@@ -177,13 +177,15 @@ For the complete list of run parameters, refer to [Tunnel run parameters](/cloud
 
 ### Update run parameters
 
-To modify how a remotely-managed tunnel runs on your OS, update the tunnel service with one or more [run parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/):
+To update run parameters for remotely-managed tunnels, add them to the tunnel service. For locally-managed tunnels, add the run parameters to your [configuration file](/tunnel/other-tunnel-types/local-management/configuration-file/) as key/value pairs.
+
+To update the tunnel service:
 
 <Render file="tunnel/update-run-parameters" product="cloudflare-one" />
 
 ## Origin parameters
 
-Origin configuration parameters control how `cloudflared` proxies traffic to your origin server. For remotely-managed tunnels, configure these in the dashboard. For locally-managed tunnels, add them to your [configuration file](/tunnel/other-tunnel-types/local-management/configuration-file/).
+Origin configuration parameters control how `cloudflared` proxies traffic to your origin server.
 
 The most commonly used parameters:
 
@@ -194,7 +196,11 @@ The most commonly used parameters:
 | [`httpHostHeader`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#httphostheader)     | `""`    | Override HTTP Host header                 |
 | [`connectTimeout`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#connecttimeout)     | `30s`   | TCP connection timeout to origin          |
 
-For the complete list of origin parameters, refer to [Origin parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/).
+For the complete list of origin parameters, refer to [Origin configuration parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/).
+
+### Update origin parameters
+
+To update origin parameters for remotely-managed tunnels, use the [Cloudflare One dashboard](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/#update-origin-configuration) or the [API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/). For locally-managed tunnels, add the parameters to your [configuration file](/tunnel/other-tunnel-types/local-management/configuration-file/).
 
 ## System requirements
 
