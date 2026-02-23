@@ -9,6 +9,8 @@ description: Get answers to commonly asked questions about the certificates you
 
 ---
 
+import { Render } from "~/components";
+
 Refer to this page for frequently asked questions about Cloudflare SSL/TLS certificate offerings and the CAs that Cloudflare partners with.
 
 ## General
@@ -29,6 +31,8 @@ Cloudflare certificates are prioritized by a combination of hostname specificity
 
 Cloudflare must decrypt traffic in order to cache and filter malicious traffic. Cloudflare either re-encrypts traffic or sends plain text traffic to the origin web server depending on your domain's [encryption mode](/ssl/origin-configuration/ssl-modes/).
 
+---
+
 ## Certificate authorities (CAs)
 
 ### Which certificate authorities does Cloudflare use?
@@ -39,23 +43,41 @@ Sectigo is only used for [backup certificates](/ssl/edge-certificates/backup-cer
 
 ### Are there any CA limitations I should know about?
 
-You can find a list of limitations for every CA in our pipeline in the [certificate authorities reference page](/ssl/reference/certificate-authorities/).
-
-### What clients are supported by the CAs that Cloudflare offers?
-
-In the [certificate authorities reference page](/ssl/reference/certificate-authorities/), you can find information about device and browser compatibility.
+You can find a list of limitations for every CA in our pipeline - as well as information about device and browser compatibility - in the [certificate authorities reference page](/ssl/reference/certificate-authorities/).
 
 ### I do not want to use one of the CAs that Cloudflare partners with. What can I do?
 
 If you are on a Business or Enterprise plan, you can [upload a certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) from the CA of your choice.
 
+### I am missing the CAs that Cloudflare uses in my trust store. What should I do?
+
+You can use Cloudflare [CFSSL trust store](https://github.com/cloudflare/cfssl_trust), which includes all of the CAs that are used by Cloudflare managed certificates.
+
+---
+
+## CAA records
+
+### What is CAA and how can I create one?
+
+<Render file="caa-records-definition" product="ssl" /> <br />
+
+For more details, refer to [Create CAA records](/ssl/edge-certificates/caa-records/).
+
+### How does Cloudflare evaluate CAA records?
+
+CAA records are evaluated by a CA, not by Cloudflare. For details, refer to [RFC 8659](https://www.rfc-editor.org/rfc/rfc8659.html#name-relevant-resource-record-se).
+
+Setting a CAA record to specify one or more particular CAs does not affect which CA Cloudflare uses to issue universal or advanced certificates for your domain. If you wish, you can specify CAs associated with Cloudflare certificates when [ordering an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/).
+
+### What are the dangers of setting CAA records?
+
+If you are part of a large organization or one where multiple parties are tasked with obtaining SSL certificates, [include CAA records](/ssl/edge-certificates/caa-records/) that allow issuance for all CAs applicable for your organization. Failure to do so can inadvertently block SSL issuance for other parts of your organization.
+
 ### What CAA records do I need in order to allow issuance from Cloudflare CAs?
 
 You can find CAA records associated with every Cloudflare CA in the [certificate authorities reference page](/ssl/reference/certificate-authorities/#caa-records). If you are using Cloudflare as your DNS provider, then the CAA records will be added on your behalf.
 
-### I am missing the CAs that Cloudflare uses in my trust store. What should I do?
-
-You can use Cloudflare [CFSSL trust store](https://github.com/cloudflare/cfssl_trust), which includes all of the CAs that are used by Cloudflare managed certificates.
+---
 
 ## Universal SSL
 
@@ -68,11 +90,3 @@ If you are on a Business or Enterprise plan, you can [upload a certificate](/ssl
 ### Does Cloudflare issue both RSA and ECDSA certificates for Universal certificates?
 
 Universal certificates on free zones only receive an ECDSA certificate. Paid zones receive an RSA and ECDSA certificate.
-
-## Advanced Certificate Manager
-
-### How can I choose which CA will be used for my certificates?
-
-When [ordering an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/), you can choose the CA through the UI or API.
-
-[Total TLS](/ssl/edge-certificates/additional-options/total-tls/) allows you to get full certificate coverage. When enabling Total TLS, you can choose the CA that will be used for all Total TLS certificates.
