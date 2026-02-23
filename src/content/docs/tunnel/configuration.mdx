@@ -230,7 +230,7 @@ To estimate tunnel capacity requirements for your deployment:
 1. Use the [metrics endpoint](/tunnel/monitoring/#cloudflared-metrics) to measure `cloudflared_tcp_total_sessions` and `cloudflared_udp_total_sessions`.
 2. Compute the average **TCP requests per second** by dividing `cloudflared_tcp_total_sessions` by total time.
 3. Compute the average **Non-DNS UDP requests per second** by dividing `cloudflared_udp_total_sessions` by total time.
-4. Input **TCP requests per second** and **Non-DNS UDP requests per second** into the calculator below. You can leave **Private DNS requests per second** as `0` unless you are using the tunnel for [private network access](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/).
+4. Input **TCP requests per second** and **Non-DNS UDP requests per second** into the calculator below. (You can leave **Private DNS requests per second** as `0` unless you are using the tunnel for [private network access](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/).)
 
 <TunnelCalculator />
 
