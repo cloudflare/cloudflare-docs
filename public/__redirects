@@ -1386,9 +1386,12 @@
 /ssl/reference/migration-guides/dcv-update/ /ssl/reference/migration-guides/ 301
 /ssl/reference/validation-backoff-schedule/ /ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
-/support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/edge-certificates/troubleshooting/caa-records/ 301
+/support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/faq/ 301
 /support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/ /ssl/troubleshooting/general-ssl-errors/ 301
 /support/ssl-tls/troubleshooting/you-have-reached-your-quota-for-the-requested-resource.-code-2005/ /ssl/edge-certificates/custom-certificates/troubleshooting/ 301
+/ssl/edge-certificates/troubleshooting/ca-faq/ /ssl/faq/ 301
+/ssl/edge-certificates/troubleshooting/caa-records/ /ssl/faq/ 301
+/ssl/troubleshooting/faq/ /ssl/faq/ 301
 
 # cloudflare for saas
 /ssl/ssl-for-saas/status-codes/custom-hostnames/ /cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/custom-hostnames/ 301
@@ -1492,7 +1495,7 @@
 /support/network/understanding-network-error-logging/ /network-error-logging/ 301
 /support/network/understanding-the-true-client-ip-header/ /network/true-client-ip-header/ 301
 /support/partners/partner-plugin-supportability/ /support/ 301
-/support/ssl-tls/faq-and-reference/ssl-faq/ /ssl/troubleshooting/faq/ 301
+/support/ssl-tls/faq-and-reference/ssl-faq/ /ssl/faq/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-bigcommerce/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/bigcommerce/ 301
 /support/third-party-software/content-management-system-cms/how-do-i-add-a-wordpress.com-custom-domain-mapping-site-to-cloudflare/ /support/third-party-software/content-management-system-cms/wordpresscom-and-cloudflare/ 301
 /support/third-party-software/content-management-system-cms/how-do-i-use-wordpress-multi-site-wpmu-with-cloudflare/ /automatic-platform-optimization/ 301
