@@ -2278,7 +2278,7 @@
 /cloudflare-one/tutorials/block-football-users/ /cloudflare-one/policies/gateway/http-policies/common-policies/#check-user-identity 301
 /cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/analytics/logs/gateway-logs/ 301
 /cloudflare-one/tutorials/many-cfd-one-tunnel/ /cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/ 301
-/cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/policies/gateway/initial-setup/dns/ 301
+/cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/traffic-policies/get-started/dns/ 301
 /cloudflare-one/tutorials/migrate-lb-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /cloudflare-one/tutorials/credentials-only/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/tutorials/user-diagnostics/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
@@ -2338,7 +2338,11 @@
 /cloudflare-one/policies/gateway/block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
 /cloudflare-one/policies/lists/ /cloudflare-one/reusable-components/lists/ 301
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
-/cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/traffic-policies/initial-setup/dns/ 301
+/cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/traffic-policies/get-started/dns/ 301
+/cloudflare-one/traffic-policies/initial-setup/ /cloudflare-one/traffic-policies/get-started/ 301
+/cloudflare-one/traffic-policies/initial-setup/dns/ /cloudflare-one/traffic-policies/get-started/dns/ 301
+/cloudflare-one/traffic-policies/initial-setup/http/ /cloudflare-one/traffic-policies/get-started/http/ 301
+/cloudflare-one/traffic-policies/initial-setup/network/ /cloudflare-one/traffic-policies/get-started/network/ 301
 
 # More specific redirects from nav revamp (before catch-alls)
 /cloudflare-one/identity/devices/access-integrations/tanium/ /cloudflare-one/reusable-components/posture-checks/warp-client-checks/tanium/ 301

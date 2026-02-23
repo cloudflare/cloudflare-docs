@@ -19,7 +19,7 @@ import {
 	APIRequest,
 } from "~/components";
 
-Secure Web Gateway allows you to inspect DNS traffic and control which websites users can visit.
+Secure Web Gateway allows you to inspect DNS traffic and control which websites users can visit. DNS filtering blocks threats at the earliest stage of a connection — before the device ever reaches the destination. Use DNS policies to block malware domains, phishing sites, or entire content categories across your organization.
 
 :::note
 For a more detailed guide to filtering DNS queries and other traffic for your organization, refer to the [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/concepts/) implementation guide.
@@ -27,17 +27,19 @@ For a more detailed guide to filtering DNS queries and other traffic for your or
 
 ## 1. Connect to Gateway
 
+You can filter DNS queries from individual devices (for example, employee laptops) or from entire network locations (for example, an office router). Choose the option that matches your deployment.
+
 ### Connect devices
 
 To filter DNS requests from an individual device such as a laptop or phone:
 
-1. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device.
+1. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device. WARP routes the device's DNS queries through Cloudflare so Gateway can inspect them.
 2. In the WARP client Settings, log in to your organization's <GlossaryTooltip term="team name">Zero Trust instance</GlossaryTooltip>.
-3. (Optional) If you want to display a [custom block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/), [install a Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
+3. (Optional) If you want to display a [custom block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) instead of a generic browser error when a request is blocked, [install a Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
 
 ### Connect DNS locations
 
-To filter DNS requests from a location such as an office or data center:
+To filter DNS requests from a network location such as an office or data center without installing software on each device:
 
 1. [Add the location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) to your Cloudflare One settings.
 2. On your router, browser, or OS, forward DNS queries to the address shown in the location setup UI.
@@ -47,7 +49,7 @@ To filter DNS requests from a location such as an office or data center:
 Gateway identifies locations differently depending on the DNS query protocol:
 
 - **IPv4 queries** match to the source IP address. Under **Networks** > **Resolvers & Proxies** > **DNS locations**, ensure that the **Source IPv4 Address** parameter is correct for the location you want to apply policies to.
-- **IPv6, DOT, or DOH queries** match to the unique DNS forwarding address assigned to the DNS location. Ensure that your DNS resolver is configured for the location you want to apply policies to.
+- **IPv6, DNS over TLS (DOT), or DNS over HTTPS (DOH) queries** match to the unique DNS forwarding address assigned to the DNS location. Ensure that your DNS resolver is configured for the location you want to apply policies to.
   :::
 
 ## 2. Verify device connectivity
@@ -62,7 +64,7 @@ To verify your device is connected to Cloudflare One:
 
 ## 3. Create your first DNS policy
 
-To create a new DNS policy:
+A DNS policy defines the traffic you want to match (for example, all queries to gambling sites) and the action to take (for example, block). To create a new DNS policy:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -122,4 +124,4 @@ For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/d
 
 ## 4. Add optional policies
 
-Refer to our list of [common DNS policies](/cloudflare-one/traffic-policies/dns-policies/common-policies) for other policies you may want to create.
+Refer to our list of [common DNS policies](/cloudflare-one/traffic-policies/dns-policies/common-policies) for other policies you may want to create. Common additions include blocking specific content categories, enabling SafeSearch, and restricting DNS queries to approved resolvers.

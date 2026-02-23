@@ -22,7 +22,7 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 
 - Microsoft Entra ID Premium P2 license
 - [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) add-on
-- [Gateway HTTP filtering](/cloudflare-one/traffic-policies/initial-setup/http/) enabled on your devices
+- [Gateway HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/) enabled on your devices
 - [npm](https://docs.npmjs.com/getting-started) installation
 - [Node.js](https://nodejs.org/en/) installation
 
@@ -89,21 +89,19 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 
    ```jsonc
    {
-     "$schema": "./node_modules/wrangler/config-schema.json",
-     "name": "risky-users",
-     "compatibility_date": "$today",
-     "main": "src/index.js",
-     "workers_dev": false,
-     "account_id": "<ACCOUNT-ID>",
-     "vars": {
-       "AZURE_AD_TENANT_ID": "<TENANT-ID>",
-       "AZURE_AD_CLIENT_ID": "<CLIENT-ID>"
-     },
-     "triggers": {
-       "crons": [
-         "* * * * *"
-       ]
-     }
+   	"$schema": "./node_modules/wrangler/config-schema.json",
+   	"name": "risky-users",
+   	"compatibility_date": "$today",
+   	"main": "src/index.js",
+   	"workers_dev": false,
+   	"account_id": "<ACCOUNT-ID>",
+   	"vars": {
+   		"AZURE_AD_TENANT_ID": "<TENANT-ID>",
+   		"AZURE_AD_CLIENT_ID": "<CLIENT-ID>",
+   	},
+   	"triggers": {
+   		"crons": ["* * * * *"],
+   	},
    }
    ```
 
