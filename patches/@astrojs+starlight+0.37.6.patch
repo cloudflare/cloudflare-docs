@@ -1,5 +1,5 @@
 diff --git a/node_modules/@astrojs/starlight/components/SidebarSublist.astro b/node_modules/@astrojs/starlight/components/SidebarSublist.astro
-index f90d79d..82ac8f0 100644
+index 457ab20..b2d4ae6 100644
 --- a/node_modules/@astrojs/starlight/components/SidebarSublist.astro
 +++ b/node_modules/@astrojs/starlight/components/SidebarSublist.astro
 @@ -4,6 +4,7 @@ import type { SidebarEntry } from '../utils/routing/types';
@@ -19,26 +19,8 @@ index f90d79d..82ac8f0 100644
  						{entry.badge && (
  							<Badge
  								variant={entry.badge.variant}
-diff --git a/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts b/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts
-index ca63d22..ebb1a17 100644
---- a/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts
-+++ b/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts
-@@ -22,7 +22,12 @@ export function shouldTransformFile(file: VFile, docsCollectionPath: string) {
- 	if (!file?.path) return false;
- 
- 	// If the document is not part of the Starlight docs collection, skip it.
--	if (!normalizePath(file.path).startsWith(docsCollectionPath)) return false;
-+	if (
-+		!normalizePath(file.path).startsWith(docsCollectionPath) &&
-+		!normalizePath(file.path).includes("/src/content/partials/") &&
-+		!normalizePath(file.path).includes("/src/content/changelog/")
-+	  )
-+		return false;
- 
- 	return true;
- }
 diff --git a/node_modules/@astrojs/starlight/user-components/Tabs.astro b/node_modules/@astrojs/starlight/user-components/Tabs.astro
-index d8fa647..3b6e872 100644
+index 66f1b2e..b52f3c9 100644
 --- a/node_modules/@astrojs/starlight/user-components/Tabs.astro
 +++ b/node_modules/@astrojs/starlight/user-components/Tabs.astro
 @@ -3,10 +3,11 @@ import Icon from './Icon.astro';
