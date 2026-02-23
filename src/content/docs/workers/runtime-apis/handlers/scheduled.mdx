@@ -106,29 +106,41 @@ You can switch on `controller.cron` to handle each schedule:
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
+async function syncData() {
+	await fetch("https://example.com/api/sync");
+}
+
+async function cleanupExpiredKeys(env) {
+	const list = await env.MY_KV.list();
+	for (const key of list.keys) {
+		if (key.expiration && key.expiration < Date.now() / 1000) {
+			await env.MY_KV.delete(key.name);
+		}
+	}
+}
+
+async function generateAndStoreReport(env) {
+	const report = await generateMonthlyReport(env);
+	await env.REPORTS_BUCKET.put(
+		`report-${Date.now()}.json`,
+		JSON.stringify(report),
+	);
+}
+
 export default {
 	async scheduled(controller, env, ctx) {
 		switch (controller.cron) {
 			case "0 * * * *":
 				// Runs every hour — fetch latest data from an external API
-				await fetch("https://example.com/api/sync");
+				ctx.waitUntil(syncData());
 				break;
 			case "0 0 * * *":
 				// Runs once a day at midnight — clean up expired KV entries
-				const list = await env.MY_KV.list();
-				for (const key of list.keys) {
-					if (key.expiration && key.expiration < Date.now() / 1000) {
-						await env.MY_KV.delete(key.name);
-					}
-				}
+				ctx.waitUntil(cleanupExpiredKeys(env));
 				break;
 			case "0 0 1 * *":
 				// Runs on the first of each month — generate a usage report
-				const report = await generateMonthlyReport(env);
-				await env.REPORTS_BUCKET.put(
-					`report-${Date.now()}.json`,
-					JSON.stringify(report),
-				);
+				ctx.waitUntil(generateAndStoreReport(env));
 				break;
 		}
 	},
@@ -143,6 +155,27 @@ interface Env {
 	REPORTS_BUCKET: R2Bucket;
 }
 
+async function syncData(): Promise<void> {
+	await fetch("https://example.com/api/sync");
+}
+
+async function cleanupExpiredKeys(env: Env): Promise<void> {
+	const list = await env.MY_KV.list();
+	for (const key of list.keys) {
+		if (key.expiration && key.expiration < Date.now() / 1000) {
+			await env.MY_KV.delete(key.name);
+		}
+	}
+}
+
+async function generateAndStoreReport(env: Env): Promise<void> {
+	const report = await generateMonthlyReport(env);
+	await env.REPORTS_BUCKET.put(
+		`report-${Date.now()}.json`,
+		JSON.stringify(report),
+	);
+}
+
 export default {
 	async scheduled(
 		controller: ScheduledController,
@@ -152,24 +185,15 @@ export default {
 		switch (controller.cron) {
 			case "0 * * * *":
 				// Runs every hour — fetch latest data from an external API
-				await fetch("https://example.com/api/sync");
+				ctx.waitUntil(syncData());
 				break;
 			case "0 0 * * *":
 				// Runs once a day at midnight — clean up expired KV entries
-				const list = await env.MY_KV.list();
-				for (const key of list.keys) {
-					if (key.expiration && key.expiration < Date.now() / 1000) {
-						await env.MY_KV.delete(key.name);
-					}
-				}
+				ctx.waitUntil(cleanupExpiredKeys(env));
 				break;
 			case "0 0 1 * *":
 				// Runs on the first of each month — generate a usage report
-				const report = await generateMonthlyReport(env);
-				await env.REPORTS_BUCKET.put(
-					`report-${Date.now()}.json`,
-					JSON.stringify(report),
-				);
+				ctx.waitUntil(generateAndStoreReport(env));
 				break;
 		}
 	},
