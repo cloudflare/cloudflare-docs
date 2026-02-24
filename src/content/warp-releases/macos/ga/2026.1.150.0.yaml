@@ -1,0 +1,14 @@
+releaseNotes: |-
+  This release contains minor fixes, improvements, and new features.
+
+  **Changes and improvements**
+  - Fixed an issue causing failure of the local network access exclusion feature when configured with a timeout of 0.
+  - Improvement for more accurate reporting of device colocation information in the Zero Trust dashboard.
+  - Fixed an issue with DNS server configuration failures that caused tunnel connection delays.
+  - Fixed an issue where misconfigured DEX HTTP tests prevented new registrations.
+  - Fixed an issue causing DNS requests to fail with clients in Traffic and DNS mode.
+version: 2026.1.150.0
+releaseDate: 2026-02-24T01:15:22.986Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.1.150.0
+packageSize: 115094691
+platformName: macOS
