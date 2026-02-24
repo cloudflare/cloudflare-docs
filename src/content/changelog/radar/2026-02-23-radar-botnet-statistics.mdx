@@ -1,0 +1,17 @@
+---
+title: Botnet Statistics in Cloudflare Radar
+description: New Botnet Statistics insights in Cloudflare Radar, providing AS rankings based on botnet threat feed activity
+products:
+  - radar
+date: 2026-02-23
+---
+
+[**Radar**](/radar/) introduces Botnet Statistics, providing visibility into Autonomous System rankings based on their presence in the [Cloudflare Botnet Threat Feed](/ddos-protection/botnet-threat-feed/).
+
+The new [`/entities/asns/botnet_threat_feed`](/api/resources/radar/subresources/entities/subresources/asns/methods/botnet_threat_feed/) endpoint returns a ranked list of ASNs with the following capabilities:
+
+- Rank ASNs by `OFFENSE_COUNT` (total mitigated HTTP requests from IPs within the AS, where each offense is a single mitigated HTTP request from a specific IP address) or `NUMBER_OF_OFFENDING_IPS` (number of distinct IPs observed originating botnet activity).
+- Filter by location or specific ASNs.
+- Compare rankings against a previous period (7d, 30d, etc.) to see how rankings have changed over time.
+
+Check out the [Botnet Statistics page](https://radar.cloudflare.com/security/botnet-statistics) on Radar.

@@ -92,6 +92,15 @@ Hovering over a link in the diagram reveals a tooltip with the connected ASNs, t
 [rpki]: https://blog.cloudflare.com/rpki-details/
 [tier-1]: https://en.wikipedia.org/wiki/Tier_1_network
 
+## Botnet statistics
+
+The Botnet Statistics dataset provides a ranked list of Autonomous Systems based on their presence in the [Cloudflare Botnet Threat Feed](/ddos-protection/botnet-threat-feed/). Rankings can be sorted by two metrics:
+
+- **Offense count**: Total number of mitigated HTTP requests attributed to IPs within the AS. Each offense represents a single mitigated HTTP request from a specific IP address.
+- **Originating IP address count**: Number of distinct IPs observed originating botnet activity within the AS.
+
+Data is generated daily from information collected the previous day.
+
 ## Certificates
 
 Encryption is a critical part of a safe Internet. SSL/TLS is the standard security technology for establishing an encrypted link between a client and a server.
@@ -228,6 +237,10 @@ Network-level DDoS attacks graphs are based on traffic measured in bytes.
 ## Post-quantum encryption adoption
 
 The Post-Quantum Encryption Adoption graph shows the share of HTTPS requests to Cloudflare that are encrypted with post-quantum (PQ) cryptography. Additional details about Cloudflare's support for PQ cryptography can be found at [Cloudflare Research](https://pq.cloudflareresearch.com/).
+
+## Post-quantum origin support
+
+The post-quantum origin support dataset provides insights into the TLS key exchange algorithms supported by scanned customer origin servers. Additional details about post-quantum cryptography between Cloudflare and origin servers can be found in the [PQC to your origin](/ssl/post-quantum-cryptography/pqc-to-origin/) documentation.
 
 ## Robots.txt
 

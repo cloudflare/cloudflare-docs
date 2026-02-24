@@ -3,6 +3,16 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-02-23"
+    title: Add Botnet Statistics and Post-Quantum endpoints
+    description: |-
+      * Added new [`/entities/asns/botnet_threat_feed`](/api/resources/radar/subresources/entities/subresources/asns/methods/botnet_threat_feed/) endpoint to retrieve AS rankings by botnet threat feed activity. Rankings can be sorted by:
+        * `OFFENSE_COUNT`: Total number of mitigated HTTP requests attributed to IPs within the AS. Each offense represents a single mitigated HTTP request from a specific IP address.
+        * `NUMBER_OF_OFFENDING_IPS`: Number of distinct IPs observed originating botnet activity within the AS.
+      * Added new [`Post-Quantum`](/api/resources/radar/subresources/post_quantum/) API:
+        * [`/post_quantum/tls/support`](/api/resources/radar/subresources/post_quantum/subresources/tls/methods/support/) - Tests whether a hostname or IP supports post-quantum TLS key exchange.
+        * [`/post_quantum/origin/summary/{dimension}`](/api/resources/radar/subresources/post_quantum/methods/summary/) - Returns origin post-quantum data summarized by key agreement algorithm.
+        * [`/post_quantum/origin/timeseries_groups/{dimension}`](/api/resources/radar/subresources/post_quantum/methods/timeseries_groups/) - Returns origin post-quantum timeseries data grouped by key agreement algorithm.
   - publish_date: "2026-02-12"
     title: Add content type dimension to AI Bots
     description: |-
