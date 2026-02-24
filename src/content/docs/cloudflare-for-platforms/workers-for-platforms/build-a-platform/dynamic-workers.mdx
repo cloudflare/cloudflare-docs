@@ -7,18 +7,25 @@ sidebar:
 
 import { WranglerConfig, Tabs, TabItem } from "~/components";
 
-Dynamic Workers let you load and execute user code at runtime using the [Worker Loader binding](/workers/runtime-apis/bindings/worker-loader/). This gives you the ability to customize every part of how code is stored, bundled, and loaded rather than using Cloudflare's upload APIs.
+:::note[Dynamic Worker Loading is in closed beta]
 
-Use dynamic Workers when you need to:
+The Worker Loader API is available in local development with Wrangler and workerd. But to run dynamic Workers on Cloudflare, you must [sign up for the closed beta](https://forms.gle/MoeDxE9wNiqdf8ri9).
 
-- **Generate code at runtime** - AI coding agents that create Workers on-the-fly
-- **Control the entire pipeline** - Custom bundling, validation, or transformation before execution
-- **Store code your way** - Keep user code in R2, KV, D1, or an external database
-- **Build code playgrounds** - Interactive environments where users write and run code instantly
+:::
+
+Dynamic Workers let you build a platform using your own tooling instead of Cloudflare's managed upload APIs. You load and execute user code at runtime using the [Worker Loader binding](/workers/runtime-apis/bindings/worker-loader/), giving you full control over how code is stored, bundled, validated, and loaded.
+
+This approach gives you more flexibility, but requires you to build and manage that infrastructure yourself. These docs show you how to implement:
+
+- Uploading and executing user Workers
+- Storing and serving static assets
+- Attaching bindings to user code
+- Versioning and preview URLs
+- Observability and logging
 
 ## Basic pattern
 
-Your worker fetches code from your storage and passes it to `env.LOADER.get()` via a callback:
+Your dispatcher Worker uses `env.LOADER.get()` to load and execute user code. The first argument is a cache key (typically a tenant or application ID), and the second is a callback that fetches the code:
 
 ```js
 export default {
@@ -40,7 +47,9 @@ export default {
 };
 ```
 
-The callback is only invoked if the worker is not already cached. Once loaded, subsequent requests use the cached worker until it is evicted or you request a different cache key.
+The cache key determines which Worker instance to load. If a Worker with that key is already warm, it executes immediately without invoking the callback. If not, the callback runs to fetch and load the code. Subsequent requests with the same key reuse the cached Worker until it is evicted.
+
+Use a consistent cache key for each user application to avoid reloading code on every request—most applications receive many requests, and keeping them warm significantly improves performance.
 
 ## Configure the Worker Loader binding
 
@@ -66,16 +75,14 @@ interface Env {
 
 ## Bundling source code with workers-builder
 
-When your users provide source files with npm dependencies (not pre-bundled code), you need to bundle them before they can run. The [workers-builder](https://github.com/danlapid/workers-builder) library handles this automatically.
+When users provide source files with npm dependencies, you need to bundle them before execution. The [workers-builder](https://github.com/danlapid/workers-builder) library handles this:
 
-### What workers-builder does
+1. Takes source files (TypeScript, JSX, etc.) with a `package.json`
+2. Fetches and installs npm dependencies from the registry
+3. Transforms TypeScript/JSX and bundles with esbuild
+4. Returns modules ready for the Worker Loader binding
 
-- Takes source files with `package.json` dependencies
-- Fetches packages from npm registry
-- Bundles everything with esbuild
-- Returns modules ready for the Worker Loader binding
-
-This is useful for AI coding agents that dynamically generate JavaScript with real npm dependencies.
+This is useful for AI coding agents that dynamically generate code or code playgrounds where users write code with npm dependencies.
 
 ### Installation
 
@@ -162,19 +169,31 @@ const { mainModule, modules } = await createWorker({ files });
 
 ### workers-builder options
 
-| Option       | Type                     | Default  | Description                    |
-| ------------ | ------------------------ | -------- | ------------------------------ |
-| `files`      | `Record<string, string>` | required | Source files (path to content) |
-| `entryPoint` | `string`                 | auto     | Override entry point detection |
-| `bundle`     | `boolean`                | `true`   | Bundle into single file        |
-| `minify`     | `boolean`                | `false`  | Minify output                  |
-| `sourcemap`  | `boolean`                | `false`  | Generate inline source maps    |
+| Option       | Type                     | Default                      | Description                                                       |
+| ------------ | ------------------------ | ---------------------------- | ----------------------------------------------------------------- |
+| `files`      | `Record<string, string>` | required                     | Source files (path to content)                                    |
+| `entryPoint` | `string`                 | auto                         | Override entry point detection                                    |
+| `bundle`     | `boolean`                | `true`                       | Bundle into single file                                           |
+| `externals`  | `string[]`               | `[]`                         | Modules to exclude from bundling (`cloudflare:*` always excluded) |
+| `minify`     | `boolean`                | `false`                      | Minify output                                                     |
+| `sourcemap`  | `boolean`                | `false`                      | Generate inline source maps                                       |
+| `registry`   | `string`                 | `https://registry.npmjs.org` | npm registry URL                                                  |
 
-### Entry point detection
+Entry point detection order (when `entryPoint` is not specified):
 
-workers-builder automatically detects the entry point in this order:
+1. `main` field in wrangler config
+2. `exports`, `module`, or `main` field in `package.json`
+3. Default paths: `src/index.ts`, `src/index.js`, `index.ts`, `index.js`
 
-1. `entryPoint` option (if provided)
-2. `main` field in wrangler config
-3. `exports`, `module`, or `main` field in `package.json`
-4. Default paths: `src/index.ts`, `src/index.js`, `index.ts`, `index.js`
+### Return value
+
+`createWorker()` returns an object with the following fields:
+
+| Field            | Type                     | Description                                    |
+| ---------------- | ------------------------ | ---------------------------------------------- |
+| `mainModule`     | `string`                 | Entry point path (for example, `src/index.js`) |
+| `modules`        | `Record<string, string>` | All bundled modules (path to code)             |
+| `wranglerConfig` | `object` (optional)      | Parsed from `wrangler.toml` if present         |
+| `warnings`       | `string[]` (optional)    | Any warnings during bundling                   |
+
+Pass `mainModule` and `modules` directly to the Worker Loader binding. Use `wranglerConfig` to extract `compatibilityDate` and `compatibilityFlags` if the user provided a wrangler configuration file.
