@@ -51,17 +51,15 @@ WAN transformation is not an all-or-nothing change. Most organizations follow an
 
 Start by replacing VPN concentrators with Zero Trust Network Access (ZTNA). Deploy the WARP client on user devices and use Cloudflare Access to enforce identity-based policies for application access. This step secures remote and hybrid workers without changing your existing network infrastructure.
 
-<Markdown text={`For more information, refer to [Cloudflare One](${props.zeroTrustUrl}).`} />
+For more information, refer to <a href="${props.zeroTrustUrl}">Cloudflare One</a>.
 
 ### 2. Connect your networks
 
 Set up site-to-site connectivity by establishing IPsec or GRE tunnels from your existing routers, deploying the Cloudflare One Appliance at branch locations, or using Cloudflare Network Interconnect for private connectivity. Your sites communicate through Cloudflare's network, and you manage routing through the dashboard or API.
 
-<Markdown text={`
-- [Get started](${props.getStartedUrl}) with Cloudflare WAN
-- Review [connectivity options](${props.connectivityOptionsUrl}) to choose the right on-ramp
-- Explore all available [on-ramps](${props.onRampsUrl})
-`} inline={false} />
+- <a href="${props.getStartedUrl}">Get started</a> with Cloudflare WAN
+- Review <a href="${props.connectivityOptionsUrl}">connectivity options</a> to choose the right on-ramp
+- Explore all available <a href="${props.onRampsUrl}">on-ramps</a>
 
 ### 3. Secure Internet egress
 
