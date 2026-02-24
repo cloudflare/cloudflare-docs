@@ -1,9 +1,10 @@
 ---
 pcx_content_type: faq
-title: FAQ
+title: SSL/TLS FAQ
 description: Get answers to commonly asked questions about the certificates you
   can obtain through Cloudflare and the CAs that Cloudflare partners with.
 sidebar:
+  label: FAQ
   order: 23
 ---
 
@@ -73,7 +74,7 @@ Setting a CAA record to specify one or more particular CAs does not affect which
 
 If you are part of a large organization or one where multiple parties are tasked with obtaining SSL certificates, [include CAA records](/ssl/edge-certificates/caa-records/) that allow issuance for all CAs applicable for your organization. Failure to do so can inadvertently block SSL issuance for other parts of your organization.
 
-### What CAA records do I need in order to allow issuance from Cloudflare CAs?
+### What CAA records do I need to allow issuance from Cloudflare CAs?
 
 You can find CAA records associated with every Cloudflare CA in the [certificate authorities reference page](/ssl/reference/certificate-authorities/#caa-records). If you are using Cloudflare as your DNS provider, then the CAA records will be added on your behalf.
 
