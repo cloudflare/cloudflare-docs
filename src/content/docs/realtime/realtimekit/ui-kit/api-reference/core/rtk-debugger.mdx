@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: rtk-debugger
+description: API reference for rtk-debugger component (Web Components (HTML) Library)
+---
+A troubleshooting component to identify and fix any issues in the meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-debugger></rtk-debugger>
+```
+
+### With Properties
+
+```html
+<rtk-debugger
+ size="md">
+</rtk-debugger>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-debugger");
+
+  el.meeting= meeting
+</script>
+```

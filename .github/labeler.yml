@@ -166,26 +166,26 @@ product:logs:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/logs/**
-product:magic-cloud-networking:
+product:multi-cloud-networking:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-cloud-networking/**
-product:magic-firewall:
+          - src/content/docs/multi-cloud-networking/**
+product:cloudflare-network-firewall:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-firewall/**
-product:magic-network-monitoring:
+          - src/content/docs/cloudflare-network-firewall/**
+product:network-flow:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-network-monitoring/**
+          - src/content/docs/network-flow/**
 product:magic-transit:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/magic-transit/**
-product:magic-wan:
+product:cloudflare-wan:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-wan/**
+          - src/content/docs/cloudflare-wan/**
 product:migration-guides:
   - changed-files:
       - any-glob-to-any-file:

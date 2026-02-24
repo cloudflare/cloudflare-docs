@@ -12,7 +12,7 @@ import ProductPills from "~/components/changelog/ProductPills.astro";
 
 const props = z
 	.object({
-		product: reference("products"),
+		product: reference("directory"),
 	})
 	.or(
 		z.object({
@@ -45,8 +45,8 @@ if ("product" in input) {
 } else {
 	rss = `/changelog/rss/${slug(input.area)}.xml`;
 
-	const products = await getCollection("products", (e) => {
-		return e.data.product.group === input.area && input.hideEntry !== e.id;
+	const products = await getCollection("directory", (e) => {
+		return e.data.entry.group === input.area && input.hideEntry !== e.id;
 	});
 
 	filter = (e) => {

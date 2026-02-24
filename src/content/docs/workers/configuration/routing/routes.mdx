@@ -183,6 +183,21 @@ If a route pattern hostname begins with `*`, then it matches the host and all su
 
 - `*.example.com/` matches `https://www.example.com/` but not `https://example.com/`.
 
+:::caution
+
+Because `*` matches zero or more of **any character** (not just subdomains), `*example.com` will also match hostnames that are not subdomains of `example.com`. If you only want to match `example.com` and its subdomains, use two separate routes (`example.com/*` and `*.example.com/*`) instead.
+
+:::
+
+The following examples illustrate the difference between `*example.com/*` and `*.example.com/*`:
+
+| Request URL | `*example.com/*` | `*.example.com/*` |
+|---|---|---|
+| `https://example.com/` | Matches | Does not match |
+| `https://www.example.com/path` | Matches | Matches |
+| `https://myexample.com/` | Matches | Does not match |
+| `https://not-example.com/` | Does not match | Does not match |
+
 #### Paths may optionally end with `*`
 
 If a route pattern path ends with `*`, then it matches all suffixes of that path.

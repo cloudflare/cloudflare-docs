@@ -1,0 +1,49 @@
+---
+pcx_content_type: navigation
+title: rtk-settings-audio
+description: API reference for rtk-settings-audio component (Web Components (HTML) Library)
+---
+A component which lets to manage your audio devices and audio preferences.
+ Emits `rtkStateUpdate` event with data for muting notification sounds:
+ ```ts
+ {
+  prefs: {
+    muteNotificationSounds: boolean
+  }
+ }
+ ```
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-settings-audio></rtk-settings-audio>
+```
+
+### With Properties
+
+```html
+<rtk-settings-audio
+ size="md">
+</rtk-settings-audio>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-settings-audio");
+
+  el.meeting= meeting
+</script>
+```

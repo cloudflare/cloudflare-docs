@@ -149,6 +149,68 @@ WARP uses [post-quantum cryptography](/ssl/post-quantum-cryptography/) to secure
 - `false` — Disables post-quantum key agreement.
 - `true` — Enables post-quantum key agreement for all traffic through the WARP tunnel.
 
+### `environment`
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All modes                     | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.9.558.0         |
+| macOS    | ✅           | 2025.9.558.0         |
+| Linux    | ✅           | 2025.9.558.0         |
+| iOS      | ✅           | 1.12.0               |
+| Android  | ✅           | 2.5.1                |
+| ChromeOS | ✅           | 2.5.1                |
+
+</Details>
+
+Configures the WARP client to connect to Cloudflare's FedRAMP High authorized environment.
+
+**Value Type:** `string`
+
+**Value:**
+
+- `normal` — (default) WARP connects to the standard API endpoints, IPs, and domains (like `<ACCOUNT_ID>.cloudflare-gateway.com`) and forwards traffic to Cloudflare data centers worldwide.
+- `fedramp_high` — WARP connects to FedRAMP-specific API endpoints, IPs, and domains (like `<ACCOUNT_ID>.fed.cloudflare-gateway.com`). Traffic is forwarded to FedRAMP High compliant data centers for processing. To configure the FedRAMP High environment, you must allow the [FedRAMP-specific endpoints, IPs, and domains](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/) through your firewall.
+
+When using [multiple configurations](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/switch-organizations/) for the same organization, all configurations must specify the same `environment` value. A single organization cannot operate in both the normal and FedRAMP High environments. For example, if your FedRAMP High organization has multiple MDM configurations (such as production and staging), each configuration for that organization must include `environment` set to `fedramp_high`:
+
+```xml
+<dict>
+  <key>configs</key>
+  <array>
+    <dict>
+      <key>organization</key>
+      <string>mycompany-gov</string>
+      <key>display_name</key>
+      <string>Production</string>
+      <key>environment</key>
+      <string>fedramp_high</string>
+    </dict>
+    <dict>
+      <key>organization</key>
+      <string>mycompany-gov</string>
+      <key>display_name</key>
+      <string>Staging</string>
+      <key>environment</key>
+      <string>fedramp_high</string>
+    </dict>
+    <dict>
+      <key>organization</key>
+      <string>test-org</string>
+      <key>display_name</key>
+      <string>Test</string>
+      <key>environment</key>
+      <string>normal</string>
+    </dict>
+  </array>
+</dict>
+```
+
 ### `external_emergency_signal_fingerprint`
 
 The SHA-256 fingerprint that WARP will use to validate the [`external_emergency_signal_url`](#external_emergency_signal_url) HTTPS endpoint. Refer to [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect) for details on how to extract this fingerprint.

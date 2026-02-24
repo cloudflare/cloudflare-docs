@@ -18,7 +18,7 @@ Define the `onRequest` method to handle HTTP requests to your agent:
 ```ts
 import { Agent } from "agents";
 
-export class APIAgent extends Agent<Env> {
+export class APIAgent extends Agent {
 	async onRequest(request: Request): Promise<Response> {
 		const url = new URL(request.url);
 
@@ -58,7 +58,7 @@ Create an SSE stream manually using `ReadableStream`:
 <TypeScriptExample>
 
 ```ts
-export class StreamAgent extends Agent<Env> {
+export class StreamAgent extends Agent {
 	async onRequest(request: Request): Promise<Response> {
 		const encoder = new TextEncoder();
 
@@ -115,18 +115,20 @@ The [AI SDK](https://sdk.vercel.ai/) provides built-in SSE streaming:
 ```ts
 import { Agent } from "agents";
 import { streamText } from "ai";
-import { createOpenAI } from "@ai-sdk/openai";
+import { createWorkersAI } from "workers-ai-provider";
+
+interface Env {
+	AI: Ai;
+}
 
 export class ChatAgent extends Agent<Env> {
 	async onRequest(request: Request): Promise<Response> {
 		const { prompt } = await request.json<{ prompt: string }>();
 
-		const openai = createOpenAI({
-			apiKey: this.env.OPENAI_API_KEY,
-		});
+		const workersai = createWorkersAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: openai("gpt-4o"),
+			model: workersai("@cf/zai-org/glm-4.7-flash"),
 			prompt: prompt,
 		});
 
@@ -148,7 +150,7 @@ SSE connections can be long-lived. Handle client disconnects gracefully:
 <TypeScriptExample>
 
 ```ts
-export class ResumeAgent extends Agent<Env> {
+export class ResumeAgent extends Agent {
 	async onRequest(request: Request): Promise<Response> {
 		const url = new URL(request.url);
 		const lastEventId = request.headers.get("Last-Event-ID");

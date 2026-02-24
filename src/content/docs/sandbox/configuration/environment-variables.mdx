@@ -5,7 +5,34 @@ sidebar:
   order: 3
 ---
 
+import { WranglerConfig } from "~/components";
+
 Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
+
+## SDK configuration variables
+
+These environment variables configure how the Sandbox SDK behaves. Set these as Worker `vars` in your `wrangler.jsonc` file. The SDK reads them from the Worker's environment bindings.
+
+### SANDBOX_TRANSPORT
+
+| | |
+|---|---|
+| **Type** | `"http"` \| `"websocket"` |
+| **Default** | `"http"` |
+
+Controls the transport protocol for SDK-to-container communication. WebSocket transport multiplexes all operations over a single persistent connection, avoiding [subrequest limits](/workers/platform/limits/#subrequests) when performing many SDK operations per request.
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"SANDBOX_TRANSPORT": "websocket"
+	},
+}
+```
+</WranglerConfig>
+
+See [Transport modes](/sandbox/configuration/transport/) for a complete guide including when to use each transport, performance considerations, and migration instructions.
 
 ## Three ways to set environment variables
 
@@ -155,6 +182,8 @@ wrangler secret put DATABASE_URL
 Then pass them to your sandbox:
 
 ```typescript
+import { getSandbox } from "@cloudflare/sandbox";
+
 interface Env {
 	Sandbox: DurableObjectNamespace;
 	OPENAI_API_KEY: string;
@@ -216,6 +245,10 @@ await Promise.all([
 ]);
 ```
 
+### Configure transport mode
+
+Set `SANDBOX_TRANSPORT` in your Worker's `vars` to switch between HTTP and WebSocket transport. See [Transport modes](/sandbox/configuration/transport/) for details on when and how to configure each transport.
+
 ### Bucket mounting credentials
 
 When mounting S3-compatible object storage, the SDK uses **s3fs-fuse** under the hood, which requires AWS-style credentials. For R2, generate API tokens from the Cloudflare dashboard and provide them using AWS environment variable names:
@@ -244,6 +277,8 @@ Bucket mounting requires production deployment. It does not work with `wrangler 
 **Mount buckets with automatic credential detection:**
 
 ```typescript
+import { getSandbox } from "@cloudflare/sandbox";
+
 interface Env {
 	Sandbox: DurableObjectNamespace;
 	AWS_ACCESS_KEY_ID: string;
@@ -312,6 +347,7 @@ await sandbox.exec("node app.js", {
 
 ## Related resources
 
+- [Transport modes](/sandbox/configuration/transport/) - Configure HTTP vs WebSocket transport
 - [Wrangler configuration](/sandbox/configuration/wrangler/) - Setting Worker-level environment
 - [Secrets](/workers/configuration/secrets/) - Managing sensitive data
 - [Sessions API](/sandbox/api/sessions/) - Session-level environment variables

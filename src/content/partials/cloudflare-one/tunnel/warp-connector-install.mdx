@@ -34,8 +34,8 @@ To install WARP Connector on a host machine:
     <Details header="Configure IP forwarding with iptables">
     If you are setting up WARP Connector on a host with iptables enabled, make sure that your iptables FORWARD chain includes rules to accept the desired traffic. For testing and troubleshooting purposes, you can set the default policy for the WARP interface to ACCEPT:
       ```sh
-      iptables -A FORWARD -i CloudflareWARP -J ACCEPT
-      iptables -A FORWARD -o CloudflareWARP -J ACCEPT
+      iptables -A FORWARD -i CloudflareWARP -j ACCEPT
+      iptables -A FORWARD -o CloudflareWARP -j ACCEPT
       ```
     </Details>
 

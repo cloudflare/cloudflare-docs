@@ -182,3 +182,19 @@ If this does not solve the issue, check if your framework is blocking the UI. Fr
 If you are still unable to send a message, please contact support.
 
 </Details>
+
+### Demo App
+
+<Details header="Can I use the Cloudflare hosted demo app or examples in my website as an iframe?">
+
+We strongly recommend against embedding the Cloudflare hosted demo app or examples as an iframe in your website, even if you pass authentication tokens via URL parameters.
+
+Instead, set up the default meeting UI in your own website by following the [UI Kit setup guide](/realtime/realtimekit/ui-kit/) or deploy the [RealtimeKit web examples](https://github.com/cloudflare/realtimekit-web-examples/) under your own domain. The effort required for either approach is minimal and provides significant benefits:
+
+- **Control**: You maintain full control over the user experience, structure, and interface.
+- **Stability**: Your implementation remains consistent and will not change overnight, protecting your product from sudden disruptions.
+- **Reliability**: You control when and how to upgrade, ensuring a stable experience for your users.
+
+The demo app and example applications may be updated at any time without prior notice.
+
+</Details>

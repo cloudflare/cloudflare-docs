@@ -41,11 +41,11 @@ flowchart TB
     dns3 -- Resolved by --> dns4
     dns2 -----> internet(["Internet"])
     dns4 -----> internet
-    dns4 ---> cloudflare["Private network services <br>(Cloudflare Tunnel, Magic WAN, WARP Connector)"]
+    dns4 ---> cloudflare["Private network services <br>(Cloudflare Tunnel, Cloudflare WAN, WARP Connector)"]
     http1 -- Do Not Inspect --> internet
     http1 -- Inspect --> http2
     http2 --> http3
-    http0 --> magic["Magic Firewall (Enterprise users only)"]
+    http0 --> magic["Cloudflare Network Firewall (Enterprise users only)"]
     magic --> egress1
     egress1 --> tcp["Check for origin availability (TCP SYN)"]
     tcp --> network1

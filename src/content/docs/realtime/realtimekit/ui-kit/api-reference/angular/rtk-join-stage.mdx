@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: rtk-join-stage
+description: API reference for rtk-join-stage component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `dataConfig` | `ModalDataConfig` | ✅ | - | Content Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-join-stage></rtk-join-stage>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-join-stage
+ [dataConfig]="modaldataconfig"
+ [meeting]="meeting"
+ size="md">
+</rtk-join-stage>
+```
+

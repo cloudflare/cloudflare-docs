@@ -59,6 +59,7 @@ The Price in Tokens column is equivalent to the Price in Neurons column - the di
 | @cf/openai/gpt-oss-20b                       | $0.200 per M input tokens <br/> $0.300 per M output tokens | 18182 neurons per M input tokens <br/> 27273 neurons per M output tokens  |
 | @cf/aisingapore/gemma-sea-lion-v4-27b-it     | $0.351 per M input tokens <br/> $0.555 per M output tokens | 31876 neurons per M input tokens <br/> 50488 neurons per M output tokens  |
 | @cf/ibm-granite/granite-4.0-h-micro          | $0.017 per M input tokens <br/> $0.112 per M output tokens | 1542 neurons per M input tokens <br/> 10158 neurons per M output tokens   |
+| @cf/zai-org/glm-4.7-flash                    | $0.060 per M input tokens <br/> $0.400 per M output tokens | 5500 neurons per M input tokens <br/> 36400 neurons per M output tokens   |
 
 ## Embeddings model pricing
 
@@ -73,13 +74,13 @@ The Price in Tokens column is equivalent to the Price in Neurons column - the di
 
 ## Image model pricing
 
-| Model                                 | Price in Tokens                                                                            | Price in Neurons                                                                                     |
-| ------------------------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| @cf/black-forest-labs/flux-1-schnell  | $0.0000528 per 512x512 tile <br/> $0.0001056 per step                                      | 4.80 neurons per 512x512 tile <br/> 9.60 neurons per step                                            |
-| @cf/leonardo/lucid-origin             | $0.006996 per 512x512 tile <br/> $0.000132 per step                                        | 636.00 neurons per 512x512 tile <br/> 12.00 neurons per step                                         |
-| @cf/leonardo/phoenix-1.0              | $0.005830 per 512x512 tile <br/> $0.000110 per step                                        | 530.00 neurons per 512x512 tile <br/> 10.00 neurons per step                                         |
-| @cf/black-forest-labs/flux-2-dev      | $0.00021 per input 512x512 tile, per step <br/> $0.00041 per output 512x512 tile, per step | 18.75 neurons per input 512x512 tile, per step <br/> 37.50 neurons per output 512x512 tile, per step |
-| @cf/black-forest-labs/flux-2-klein-4b | $0.000059 per input 512x512 tile <br/> $0.000287 per output 512x512 tile | 5.37 neurons per input 512x512 tile <br/> 26.05 neurons per output 512x512 tile |
+| Model                                 | Price in Tokens                                                                                | Price in Neurons                                                                                                        |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| @cf/black-forest-labs/flux-1-schnell  | $0.0000528 per 512x512 tile <br/> $0.0001056 per step                                          | 4.80 neurons per 512x512 tile <br/> 9.60 neurons per step                                                               |
+| @cf/leonardo/lucid-origin             | $0.006996 per 512x512 tile <br/> $0.000132 per step                                            | 636.00 neurons per 512x512 tile <br/> 12.00 neurons per step                                                            |
+| @cf/leonardo/phoenix-1.0              | $0.005830 per 512x512 tile <br/> $0.000110 per step                                            | 530.00 neurons per 512x512 tile <br/> 10.00 neurons per step                                                            |
+| @cf/black-forest-labs/flux-2-dev      | $0.00021 per input 512x512 tile, per step <br/> $0.00041 per output 512x512 tile, per step     | 18.75 neurons per input 512x512 tile, per step <br/> 37.50 neurons per output 512x512 tile, per step                    |
+| @cf/black-forest-labs/flux-2-klein-4b | $0.000059 per input 512x512 tile <br/> $0.000287 per output 512x512 tile                       | 5.37 neurons per input 512x512 tile <br/> 26.05 neurons per output 512x512 tile                                         |
 | @cf/black-forest-labs/flux-2-klein-9b | $0.015 per first MP (1024x1024) <br/> $0.002 per subsequent MP <br/> $0.002 per input image MP | 1363.64 neurons per first MP (1024x1024) <br/> 181.82 neurons per subsequent MP <br/> 181.82 neurons per input image MP |
 
 ## Audio model pricing

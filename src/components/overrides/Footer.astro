@@ -1,7 +1,9 @@
 ---
-import Default from "@astrojs/starlight/components/Footer.astro";
 import { Icon } from "@astrojs/starlight/components";
 import type { StarlightIcon } from "@astrojs/starlight/types";
+import EditLink from "@astrojs/starlight/components/EditLink.astro";
+import LastUpdated from "@astrojs/starlight/components/LastUpdated.astro";
+import Pagination from "@astrojs/starlight/components/Pagination.astro";
 
 import OneTrust from "../OneTrust.astro";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
@@ -82,77 +84,88 @@ if (
 }
 ---
 
-{
-	!homepage && showFeedback && (
-		<div class="feedback-prompt">
-			<FeedbackPrompt client:idle />
-		</div>
-	)
-}
-{!splash && <Default />}
-<div class="w-full">
-	<div class="grid grid-cols-2 gap-8 pt-6 pb-10 lg:grid-cols-5">
-		{
-			groups.map(([title, items]) => (
-				<ul class="flex w-full list-none flex-col gap-3 pl-0">
-					<li class="text-xs leading-5">
-						<strong>{title}</strong>
-					</li>
-					{items.map((link) => (
-						<li class="text-sm">
-							<a
-								href={link.href}
-								class="flex items-center gap-2 text-black! no-underline"
-							>
-								{"icon" in link && <Icon name={link.icon as StarlightIcon} />}
-								{link.text}
-							</a>
-						</li>
-					))}
-				</ul>
-			))
-		}
-	</div>
-	<div>
-		<ul
-			class="text-cl1-gray-4! dark:text-cl1-gray-7! flex list-inside flex-wrap items-center justify-center gap-3 gap-y-4 pl-0 text-xs"
-		>
-			<li class="list-none">© 2026 Cloudflare, Inc.</li>
+<footer class="sl-flex">
+	<div class="custom-footer-section w-full">
+		<div class="grid grid-cols-2 gap-8 pt-6 pb-10 lg:grid-cols-5">
 			{
-				links.map(([text, href]) => (
-					<li>
-						<a
-							href={href}
-							class="text-cl1-gray-4! dark:text-cl1-gray-7! no-underline"
-						>
-							{text}
-						</a>
-					</li>
+				groups.map(([title, items]) => (
+					<ul class="flex w-full list-none flex-col gap-3 pl-0">
+						<li class="text-xs leading-5">
+							<strong>{title}</strong>
+						</li>
+						{items.map((link) => (
+							<li class="text-sm">
+								<a
+									href={link.href}
+									class="flex items-center gap-2 text-black! no-underline"
+								>
+									{"icon" in link && <Icon name={link.icon as StarlightIcon} />}
+									{link.text}
+								</a>
+							</li>
+						))}
+					</ul>
 				))
 			}
-			{
-				isProduction && (
-					<li>
-						<OneTrust />
-					</li>
-				)
-			}
-		</ul>
+		</div>
+		<div>
+			<ul
+				class="text-cl1-gray-4! dark:text-cl1-gray-7! flex list-inside flex-wrap items-center justify-center gap-3 gap-y-4 pl-0 text-xs"
+			>
+				<li class="list-none">© 2026 Cloudflare, Inc.</li>
+				{
+					links.map(([text, href]) => (
+						<li>
+							<a
+								href={href}
+								class="text-cl1-gray-4! dark:text-cl1-gray-7! no-underline"
+							>
+								{text}
+							</a>
+						</li>
+					))
+				}
+				{
+					isProduction && (
+						<li>
+							<OneTrust />
+						</li>
+					)
+				}
+			</ul>
+		</div>
 	</div>
-</div>
+
+	{
+		!splash && (
+			<div class="starlight-footer-section">
+				<Pagination />
+				<div class="meta sl-flex">
+					<EditLink />
+					<LastUpdated />
+				</div>
+			</div>
+		)
+	}
+
+	{
+		!homepage && showFeedback && (
+			<div class="feedback-prompt">
+				<FeedbackPrompt client:idle />
+			</div>
+		)
+	}
+</footer>
 
 <style>
-	:global(footer:not(.DocSearch-Footer)) {
+	footer {
 		flex-direction: column-reverse !important;
 	}
 
-	:global(footer) {
-		.meta {
-			margin-top: 0 !important;
-		}
-	}
-
 	.feedback-prompt {
+		padding-top: 2rem;
+		margin-bottom: 2rem;
+
 		h2 {
 			color: var(--sl-color-white);
 			font-size: var(--sl-text-h5);
@@ -160,6 +173,23 @@ if (
 			line-height: var(--sl-line-height-headings);
 			margin-bottom: 0.5rem;
 		}
+	}
+
+	.starlight-footer-section {
+		padding-bottom: 2rem;
+
+		.meta {
+			margin-top: 2em;
+			gap: 0.75rem 3rem;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			font-size: var(--sl-text-sm);
+			color: var(--sl-color-gray-3);
+		}
+	}
+
+	.custom-footer-section {
+		padding-top: 2rem;
 	}
 
 	@media (min-width: 72rem) {

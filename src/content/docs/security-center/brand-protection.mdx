@@ -62,15 +62,20 @@ You can review abuse reports against your zones and any mitigations taken agains
 
 You can also **Request review** of most mitigations.
 
-## Logo queries
+## Logo search (AI-powered)
+
+Logo search uses computer vision to detect domains using your visual assets, even if the domain name does not contain your brand string.
 
 To set up a new logo query:
 
 1. Select **Monitor Logos** and select **Add logo**.
 3. Add a name for your query and upload your logo. Only the `.png`, `.jpeg`, and `.jpg` file extensions are supported.
-4. Select **Save logo**.
+4. Set the threshold: Set a match threshold (the minimum is 75%). A higher score ensures high-precision matches, while a lower score catches remixed or slightly altered versions of your logo.
+5. Select **Save logo**. The system will now scan newly detected infrastructure for visual matches.
 
 The browser will return to the **Monitored Logos** page, where you can access your query and configure notifications.
+
+
 
 ## Investigate a query
 

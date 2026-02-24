@@ -1,0 +1,33 @@
+---
+pcx_content_type: navigation
+title: rtk-livestream-player
+description: API reference for rtk-livestream-player component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-livestream-player></rtk-livestream-player>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-livestream-player
+ [meeting]="meeting"
+ size="md">
+</rtk-livestream-player>
+```
+

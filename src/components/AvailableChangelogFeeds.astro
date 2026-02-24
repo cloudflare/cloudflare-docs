@@ -13,14 +13,14 @@ const productsInChangelog = changelogs.flatMap((entry) =>
 	entry.data.products.map((product) => product.id),
 );
 
-const products = await getCollection("products", (entry) => {
+const directory = await getCollection("directory", (entry) => {
 	return productsInChangelog.includes(entry.id);
 });
 
-const productsByGroup = Object.entries(
+const directoryByGroup = Object.entries(
 	Object.groupBy(
-		products.filter((product) => Boolean(product.data.product.group)),
-		(product) => product.data.product.group,
+		directory.filter((entry) => Boolean(entry.data.entry.group)),
+		(entry) => entry.data.entry.group,
 	),
 ).sort();
 ---
@@ -42,7 +42,7 @@ const productsByGroup = Object.entries(
 </p>
 
 {
-	productsByGroup.map(([group, products]) => (
+	directoryByGroup.map(([group, entries]) => (
 		<>
 			<AnchorHeading depth={4} title={group} />
 			<p>
@@ -51,14 +51,12 @@ const productsByGroup = Object.entries(
 			</p>
 			<Details header="Included products">
 				<ul>
-					{products?.map((product) => (
+					{entries?.map((entry) => (
 						<li>
 							<p>
-								<a href={product.data.product.url}>
-									{product.data.product.title}
-								</a>
+								<a href={entry.data.entry.url}>{entry.data.entry.title}</a>
 							</p>
-							<RSSButton changelog={product.id} />
+							<RSSButton changelog={entry.id} />
 						</li>
 					))}
 				</ul>

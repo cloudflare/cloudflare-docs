@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-fullscreen-toggle
+description: API reference for rtk-fullscreen-toggle component (Angular Library)
+---
+A button which toggles full screen mode for any
+ existing `rtk-meeting` component in the DOM.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `targetElement` | `HTMLElement` | ✅ | - | Target Element to fullscreen |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-fullscreen-toggle></rtk-fullscreen-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-fullscreen-toggle
+ size="md"
+ [targetElement]="htmlelement"
+ variant="button">
+</rtk-fullscreen-toggle>
+```
+

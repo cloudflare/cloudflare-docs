@@ -22,13 +22,13 @@ package.json @cloudflare/content-engineering
 
 /src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/partials/agents/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
-/src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @cloudflare/pcx-technical-writing
-/src/content/docs/workers-ai/ @rita3ko @craigsdennis @mchenco @cloudflare/pcx-technical-writing
+/src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @cloudflare/pcx-technical-writing
+/src/content/docs/workers-ai/ @rita3ko @craigsdennis @mchenco @zeke @superhighfives @bfirsh @cloudflare/pcx-technical-writing
 /src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @mchenco @cloudflare/pcx-technical-writing
 /src/content/partials/vectorize/ @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
-/src/content/partials/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @cloudflare/pcx-technical-writing
-/src/content/release-notes/workers-ai.yaml @kathayl @mchenco @cloudflare/pcx-technical-writing
-/src/content/release-notes/ai-gateway.yaml @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @cloudflare/pcx-technical-writing
+/src/content/partials/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @cloudflare/pcx-technical-writing
+/src/content/release-notes/workers-ai.yaml @kathayl @mchenco @zeke @superhighfives @bfirsh @cloudflare/pcx-technical-writing
+/src/content/release-notes/ai-gateway.yaml @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @cloudflare/pcx-technical-writing
 /src/content/release-notes/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
 /src/content/docs/ai-search/ @rita3ko @irvinebroque @aninibread @cloudflare/pcx-technical-writing
 
@@ -150,7 +150,10 @@ package.json @cloudflare/content-engineering
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workflows/ @elithrar @celso @mia303 @jonesphillip @cloudflare/pcx-technical-writing
 /src/content/partials/workflows/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
-/src/content/docs/sandbox/ @elithrar @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @cloudflare/ai-agents @cloudflare/dev-plat-leads
+/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @cloudflare/ai-agents
+/src/content/docs/pipelines/ @Marcinthecloud @cmackenzie1 @oliy @garvit-gupta @sejoker @jonesphillip @elithrar @cloudflare/pcx-technical-writing
+/src/content/docs/r2-sql/  @Marcinthecloud @netgusto @sesteves @sejoker @laplab @jonesphillip @elithrar @jonathanc-n @cloudflare/pcx-technical-writing
+/src/content/docs/r2/data-catalog/ @Marcinthecloud @sejoker @jonesphillip @elithrar @laplab @vovacf201 @nagraham @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 
@@ -169,10 +172,10 @@ package.json @cloudflare/content-engineering
 # Magic products
 
 /src/content/docs/magic-transit/ @marciocloudflare @cloudflare/pcx-technical-writing
-/src/content/docs/magic-firewall/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
-/src/content/docs/magic-network-monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
-/src/content/docs/magic-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
-/src/content/docs/magic-cloud-networking/ @marciocloudflare @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-network-firewall/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/src/content/docs/network-flow/ @marciocloudflare @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
+/src/content/docs/multi-cloud-networking/ @marciocloudflare @cloudflare/pcx-technical-writing
 
 # Migration guides
 

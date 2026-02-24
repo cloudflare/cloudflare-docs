@@ -43,6 +43,17 @@ When connecting a repository to a Workers project, the Worker name in the Cloudf
 
 :::
 
+## Automatic project configuration
+
+When you connect a repository that does not have a Wrangler configuration file, [autoconfig](/workers/framework-guides/automatic-configuration/) runs to detect your framework and create a [pull request](/workers/ci-cd/builds/automatic-prs/) to configure your project for Cloudflare Workers.
+
+1. Autoconfig detects your framework and generates the necessary configuration
+2. A pull request is created in your repository with the necessary configuration changes
+3. A preview deployment is generated so you can test before merging
+4. Once you merge the PR, your project is ready for deployment
+
+For details about supported frameworks and what files are created, refer to [Deploy an existing project](/workers/framework-guides/automatic-configuration/). For details about the PRs created, refer to [Automatic pull requests](/workers/ci-cd/builds/automatic-prs/).
+
 ## View build and preview URL
 
 You can monitor a build's status and its build logs by navigating to **View build history** at the bottom of the **Deployments** tab of your Worker.

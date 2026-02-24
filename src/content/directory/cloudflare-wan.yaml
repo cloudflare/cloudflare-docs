@@ -1,0 +1,13 @@
+id: afi4WF
+name: Cloudflare WAN
+
+entry:
+  title: Cloudflare WAN
+  url: /cloudflare-wan/
+  group: Cloudflare One
+  additional_groups: [Network security]
+
+meta:
+  title: Cloudflare WAN docs
+  description: Replace legacy WAN and securely connect any traffic source to Cloudflare's network
+  author: "@cloudflare"

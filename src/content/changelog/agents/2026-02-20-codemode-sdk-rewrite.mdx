@@ -1,0 +1,75 @@
+---
+title: "@cloudflare/codemode v0.1.0: a new runtime agnostic modular architecture"
+description: "The Code Mode SDK has been rewritten with `createCodeTool()`, `DynamicWorkerExecutor`, and a new `Executor` interface that allows for Bring Your Own (BYO) sandbox."
+products:
+  - agents
+  - workers
+date: 2026-02-20
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+The [`@cloudflare/codemode`](https://www.npmjs.com/package/@cloudflare/codemode) package has been rewritten into a modular, runtime-agnostic SDK.
+
+[Code Mode](https://blog.cloudflare.com/code-mode/) enables LLMs to write and execute code that orchestrates your tools, instead of calling them one at a time. This can (and does) yield significant token savings, reduces context window pressure and improves overall model performance on a task.
+
+The new `Executor` interface is runtime agnostic and comes with a prebuilt `DynamicWorkerExecutor` to run generated code in a [Dynamic Worker Loader](/workers/runtime-apis/bindings/worker-loader/).
+
+## Breaking changes
+
+- Removed `experimental_codemode()` and `CodeModeProxy` — the package no longer owns an LLM call or model choice
+- New import path: `createCodeTool()` is now exported from `@cloudflare/codemode/ai`
+
+## New features
+
+- **`createCodeTool()`** — Returns a standard AI SDK `Tool` to use in your AI agents.
+- **`Executor` interface** — Minimal `execute(code, fns)` contract. Implement for any code sandboxing primitive or runtime.
+
+### `DynamicWorkerExecutor`
+
+Runs code in a [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/). It comes with the following features:
+
+- **Network isolation** — `fetch()` and `connect()` blocked by default (`globalOutbound: null`) when using `DynamicWorkerExecutor`
+- **Console capture** — `console.log/warn/error` captured and returned in `ExecuteResult.logs`
+- **Execution timeout** — Configurable via `timeout` option (default 30s)
+
+## Usage
+
+<TypeScriptExample>
+
+```ts
+import { createCodeTool } from "@cloudflare/codemode/ai";
+import { DynamicWorkerExecutor } from "@cloudflare/codemode";
+import { streamText } from "ai";
+
+const executor = new DynamicWorkerExecutor({ loader: env.LOADER });
+const codemode = createCodeTool({ tools: myTools, executor });
+
+const result = streamText({
+	model,
+	tools: { codemode },
+	messages,
+});
+```
+
+</TypeScriptExample>
+
+## Wrangler configuration
+
+<WranglerConfig>
+
+```jsonc
+{
+	"worker_loaders": [{ "binding": "LOADER" }],
+}
+```
+
+</WranglerConfig>
+
+See the [Code Mode documentation](/agents/api-reference/codemode/) for full API reference and examples.
+
+## Upgrade
+
+```sh
+npm i @cloudflare/codemode@latest
+```

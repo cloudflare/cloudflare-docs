@@ -6,17 +6,33 @@ sidebar:
 reviewed: 2020-09-03
 ---
 
-Direct creator uploads let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+Direct creator uploads let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients. You can implement direct creator uploads using either a [basic POST request](#basic-post-request) or the [tus protocol](#direct-creator-uploads-with-tus-protocol). Use this chart to decide which method to use:
 
-- If your video is a [basic upload](/stream/uploading-videos/direct-creator-uploads/#basic-uploads) under 200 MB and users do not need resumable uploads, generate a URL that accepts an HTTP post request.
+```mermaid
+flowchart LR
+accTitle: Direct creator uploads decision flow
+accDescr: Decision flow for choosing between basic POST uploads and tus protocol based on file size and connection reliability
 
-- If your video is over 200 MB or if you need to allow users to [resume interrupted uploads](/stream/uploading-videos/direct-creator-uploads/#resumable-uploads), generate a URL using the tus protocol.
+A{Is the video over 200 MB?}
+A -->|Yes| B[You must use the tus protocol]:::link
+A -->|No| C{Does the end user have a reliable connection?}
+C -->|Yes| D[Basic POST is recommended]:::link
+C -->|No| E[The tus protocol is optional, but recommended]:::link
 
-In either case, you must specify a maximum duration to reserve for the user's upload to ensure it can be accommodated within your available storage.
+classDef link text-decoration:underline,color:#F38020
 
-## Basic uploads
+click B "#direct-creator-uploads-with-tus-protocol" "Learn about tus protocol"
+click D "#basic-post-request" "See basic POST instructions"
+click E "#direct-creator-uploads-with-tus-protocol" "Learn about tus protocol"
+```
 
-Use this option if your users upload videos under 200 MB, and you do not need to allow resumable uploads.
+Whether you use basic `POST` or tus protocol, you must specify a maximum duration to reserve for the user's upload to ensure it can be accommodated within your available storage. This duration will be deducted from your account's available storage until the user's upload is received. Once the upload is processed, its actual duration will be counted and the remaining reservation will be relased. If the video errors or is not received before the link expires, the entire reservation will be released.
+
+## Basic POST request
+
+If your end user's video is under 200 MB and their connection is reliable, we recommend using this method. If your end user's connection is unreliable, we recommend using the [tus protocol](#direct-creator-uploads-with-tus-protocol) instead.
+
+To enable direct creator uploads with a `POST` request:
 
 1. Generate a unique, one-time upload URL using the [Direct upload API](/api/resources/stream/subresources/direct_upload/methods/create/).
 
@@ -55,11 +71,15 @@ curl --request POST \
 A successful upload will receive a `200` HTTP status code response. If the upload does not meet
 the upload constraints defined at time of creation or is larger than 200 MB in size, you will receive a `4xx` HTTP status code response.
 
-## Resumable uploads
+## Direct Creator Uploads with tus protocol
+
+If your end user's video is over 200 MB, you must use the tus protocol. Even if the file is under 200 MB, if the end user's connection is potentially unreliable, Cloudflare recommends using the tus protocol because it is resumable. For detailed information about tus protocol requirements, additional client examples, and upload options, refer to [Resumable and large files (tus)](/stream/uploading-videos/resumable-uploads/).
+
+To enable direct creator uploads with the tus protocol:
 
 1. Create your own API endpoint that returns an upload URL.
 
-The example below shows how to build a Worker to get a URL you can use to upload your video. The one-time upload URL is returned in the `Location` header of the response, not in the response body.
+The example below shows how to build a Worker to get a URL your end users can use to upload their video. The one-time upload URL is returned in the `Location` header of the response, not in the response body.
 
 ```javascript {23} title="Example API endpoint"
 export async function onRequest(context) {

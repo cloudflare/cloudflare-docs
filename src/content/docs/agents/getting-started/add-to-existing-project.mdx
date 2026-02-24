@@ -36,7 +36,7 @@ Create a new file for your agent (for example, `src/agents/counter.ts`):
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents";
+import { Agent, callable } from "agents";
 
 export type CounterState = {
 	count: number;
@@ -45,11 +45,13 @@ export type CounterState = {
 export class CounterAgent extends Agent<Env, CounterState> {
 	initialState: CounterState = { count: 0 };
 
+	@callable()
 	increment() {
 		this.setState({ count: this.state.count + 1 });
 		return this.state.count;
 	}
 
+	@callable()
 	decrement() {
 		this.setState({ count: this.state.count - 1 });
 		return this.state.count;
@@ -69,7 +71,7 @@ Add the Durable Object binding and migration:
 {
 	"name": "my-existing-project",
 	"main": "src/index.ts",
-	"compatibility_date": "2025-01-01",
+	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 
 	"durable_objects": {
@@ -112,7 +114,7 @@ export { CounterAgent } from "./agents/counter";
 // Your existing exports...
 export default {
 	// ...
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -143,7 +145,7 @@ export default {
 
 		return new Response("Not found", { status: 404 });
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -191,7 +193,7 @@ export default {
 
 		return new Response("Not found", { status: 404 });
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -210,28 +212,17 @@ Configure assets in the Wrangler configuration file:
 
 </WranglerConfig>
 
-## 6. Add TypeScript types
+## 6. Generate TypeScript types
 
-You can generate types automatically from your Wrangler configuration file:
+Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/#types) to generate a type definition file that matches your Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
+
+Re-run `wrangler types` whenever you add or rename a binding.
 
 ```sh
-npx wrangler types env.d.ts
+npx wrangler types
 ```
 
-This creates an `env.d.ts` file with all your bindings typed. Alternatively, you can manually update your `Env` type to include the agent namespace:
-
-```ts
-import type { CounterAgent } from "./agents/counter";
-
-interface Env {
-	// Your existing bindings
-	MY_KV: KVNamespace;
-	MY_DB: D1Database;
-
-	// Add agent bindings
-	CounterAgent: DurableObjectNamespace<CounterAgent>;
-}
-```
+This creates a type definition file with all your bindings typed, including your agent Durable Object namespaces. The `Agent` class defaults to using the generated `Env` type, so you do not need to pass it as a type parameter — `extends Agent` is sufficient unless you need to pass a second type parameter for state (for example, `Agent<Env, CounterState>`).
 
 Refer to [Configuration](/agents/api-reference/configuration/#generating-types) for more details on type generation.
 
@@ -367,7 +358,7 @@ export default {
 
 		// ... rest of routing
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -409,7 +400,7 @@ export default {
 		}
 		// ...
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
