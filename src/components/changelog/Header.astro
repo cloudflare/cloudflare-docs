@@ -1,34 +1,29 @@
 ---
 import { Image } from "astro:assets";
-import { z } from "astro:schema";
-import { getEntry, type CollectionEntry } from "astro:content";
-import { groups } from "~/util/directory";
+import { directory, directoryByGroup, groups } from "~/util/directory";
+import { changelogProductIds } from "~/util/changelog";
 
 import RSSButton from "~/components/RSSButton.astro";
 import ProductSelect from "~/components/changelog/ProductSelect";
 import HeroImage from "~/assets/images/changelog/hero.svg";
 
-type Props = z.input<typeof props>;
-
-const props = z.object({
-	notes: z.any().array().default([]),
-});
-
-const { notes } = props.parse(Astro.props);
-
-async function uniqueProducts(notes: Array<CollectionEntry<"changelog">>) {
-	const unique = [
-		...new Set(notes.flatMap((e) => e.data.products.map((p) => p.id))),
-	];
-
-	return Promise.all(
-		unique.map(async (product) => {
-			return getEntry("directory", product)!;
-		}),
-	);
+interface Props {
+	showProductSelect?: boolean;
 }
 
-const products = await uniqueProducts(notes);
+const { showProductSelect = true } = Astro.props;
+
+// Only show products and groups that have at least one visible changelog entry.
+const products = directory.filter(
+	(entry) => entry.data.entry.url && changelogProductIds.includes(entry.id),
+);
+
+const filteredGroups = groups.filter((group) => {
+	const groupProducts = directoryByGroup.find(([name]) => name === group)?.[1] ?? [];
+	return groupProducts.some((p) => changelogProductIds.includes(p.id));
+});
+
+const currentPath = Astro.url.pathname;
 ---
 
 <div
@@ -47,13 +42,16 @@ const products = await uniqueProducts(notes);
 				icon="right-caret"
 			/>
 		</p>
-		<div class="not-content">
-			{
-				products.length > 0 && (
-					<ProductSelect client:load products={products} groups={groups} />
-				)
-			}
-		</div>
+		{showProductSelect && (
+			<div class="not-content">
+				<ProductSelect
+					client:load
+					products={products}
+					groups={filteredGroups}
+					currentPath={currentPath}
+				/>
+			</div>
+		)}
 	</div>
 	<Image src={HeroImage} alt="hero image" height="240" class="mt-0!" />
 </div>

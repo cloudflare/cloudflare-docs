@@ -161,14 +161,8 @@ class MyAgent extends Agent {
 		);
 
 		if (result.state === "authenticating") {
-			// Option 1: Redirect the user
+			// Redirect the user to the OAuth authorization page
 			return Response.redirect(result.authUrl);
-
-			// Option 2: Return the URL for client-side redirect
-			return Response.json({
-				status: "needs_auth",
-				authUrl: result.authUrl,
-			});
 		}
 
 		return Response.json({ status: "connected", id: result.id });
@@ -345,14 +339,15 @@ To use MCP tools with the Vercel AI SDK, use `this.mcp.getAITools()` which conve
 
 ```ts
 import { generateText } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { createWorkersAI } from "workers-ai-provider";
 
-export class MyAgent extends Agent {
+export class MyAgent extends Agent<Env> {
 	async onRequest(request: Request) {
+		const workersai = createWorkersAI({ binding: this.env.AI });
 		const response = await generateText({
-			model: openai("gpt-4"),
+			model: workersai("@cf/zai-org/glm-4.7-flash"),
 			prompt: "What's the weather in San Francisco?",
-			tools: this.mcp.getAITools(), // Converts MCP tools to AI SDK format
+			tools: this.mcp.getAITools(),
 		});
 
 		return new Response(response.text);
@@ -633,26 +628,26 @@ The override is used for both new connections (`addMcpServer`) and restored conn
 import { Agent } from "agents";
 import type { AgentMcpOAuthProvider } from "agents";
 
-export class MyAgent extends Agent {
+export class MyAgent extends Agent<Env> {
 	createMcpOAuthProvider(callbackUrl: string): AgentMcpOAuthProvider {
+		const env = this.env;
 		return {
 			get redirectUrl() {
 				return callbackUrl;
 			},
 			get clientMetadata() {
 				return {
-					client_id: this.env.MCP_CLIENT_ID,
-					client_secret: this.env.MCP_CLIENT_SECRET,
+					client_id: env.MCP_CLIENT_ID,
+					client_secret: env.MCP_CLIENT_SECRET,
 					redirect_uris: [callbackUrl],
 				};
 			},
 			clientInformation() {
 				return {
-					client_id: this.env.MCP_CLIENT_ID,
-					client_secret: this.env.MCP_CLIENT_SECRET,
+					client_id: env.MCP_CLIENT_ID,
+					client_secret: env.MCP_CLIENT_SECRET,
 				};
 			},
-			// ... implement other AgentMcpOAuthProvider methods
 		};
 	}
 }
@@ -831,7 +826,7 @@ Use error detection utilities to handle connection errors:
 <TypeScriptExample>
 
 ```ts
-import { isUnauthorized, isTransportNotImplemented } from "agents/mcp";
+import { isUnauthorized, isTransportNotImplemented } from "agents";
 
 export class MyAgent extends Agent {
 	async onRequest(request: Request) {

@@ -41,6 +41,7 @@ For Universal certificates, Cloudflare controls the validity periods and certifi
 
 - Hostname on certificate can contain up to 10 levels of subdomains.
 - Duplicate certificate limit of [5 certificates](https://letsencrypt.org/docs/rate-limits/) per week.
+- Redsys[^1] is not compatible with Let's Encrypt certificates. If you use Redsys and find issues with Let's Encrypt certificates, order an advanced certificate or upload a custom certificate to use a different CA.
 
 #### Browser compatibility
 
@@ -137,3 +138,5 @@ The following table lists the CAA record content for each CA:
 | Google Trust Services | `pki.goog; cansignhttpexchanges=yes` |
 | SSL.com               | `ssl.com`                            |
 | Sectigo               | `sectigo.com`                        |
+
+[^1]: A payment gateway used with some ecommerce plugins.

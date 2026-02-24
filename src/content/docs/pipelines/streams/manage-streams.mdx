@@ -16,7 +16,7 @@ Learn how to:
 
 ## Create a stream
 
-Streams are made available to pipelines as SQL tables using the stream name (e.g., `SELECT * FROM my_stream`).
+Streams are made available to pipelines as SQL tables using the stream name (for example, `SELECT * FROM my_stream`).
 
 ### Dashboard
 
@@ -112,7 +112,7 @@ Example schema file:
 - `struct` - Nested objects with defined fields
 
 :::note
-Events that do not match the defined schema are accepted during ingestion but will be dropped during processing. Schema modifications are not supported after stream creation.
+Events that do not match the defined schema are accepted during ingestion but will be dropped during processing. To monitor dropped events and understand why they were dropped, query the [user error metrics](/pipelines/observability/metrics/#user-error-metrics) via GraphQL. Schema modifications are not supported after stream creation.
 :::
 
 ## View stream configuration
@@ -151,9 +151,9 @@ You can update certain HTTP ingest settings after stream creation. Schema modifi
 
     2. Select the stream you want to update.
 
-    3. In the **Settings** tab, navigate to **HTTP Ingest**.
+    3. In the **Settings** tab, go to **HTTP Ingest**.
 
-    4. To enable or disable HTTP ingestion, select **Enable** or **Disable**.
+    4. To turn on or turn off HTTP ingestion, select **Enable** or **Disable**.
 
     5. To update authentication and CORS settings, select **Edit** and modify.
 
@@ -162,7 +162,7 @@ You can update certain HTTP ingest settings after stream creation. Schema modifi
 </Steps>
 
 :::note
-For details on configuring authentication tokens and making authenticated requests, see [Writing to streams](/pipelines/streams/writing-to-streams/).
+For details on configuring authentication tokens and making authenticated requests, refer to [Writing to streams](/pipelines/streams/writing-to-streams/).
 :::
 
 ## Delete a stream
@@ -174,7 +174,7 @@ For details on configuring authentication tokens and making authenticated reques
 
     2. Select the stream you want to delete.
 
-    3. In the **Settings** tab, navigate to **General**, and select **Delete**.
+    3. In the **Settings** tab, go to **General**, and select **Delete**.
 
 </Steps>
 

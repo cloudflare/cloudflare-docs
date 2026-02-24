@@ -3,14 +3,9 @@ pcx_content_type: configuration
 title: Dynamic Worker Loaders
 head: []
 description: The Dynamic Worker Loader API, which allows dynamically spawning isolates that run arbitrary code.
-
 ---
 
-import {
-	Type,
-  MetaInfo,
-  WranglerConfig
-} from "~/components";
+import { Type, MetaInfo, WranglerConfig } from "~/components";
 
 :::note[Dynamic Worker Loading is in closed beta]
 
@@ -25,10 +20,19 @@ An isolate is like a lightweight container. [The Workers platform uses isolates 
 Isolates are much cheaper than containers. You can start an isolate in milliseconds, and it's fine to start one just to run a snippet of code and immediately throw away. There's no need to worry about pooling isolates or trying to reuse already-warm isolates, as you would need to do with containers.
 
 Worker Loaders also enable **sandboxing** of code, meaning that you can strictly limit what the code is allowed to do. In particular:
-* You can arrange to intercept or simply block all network requests made by the Worker within.
-* You can supply the sandboxed Worker with custom bindings to represent specific resources which it should be allowed to access.
+
+- You can arrange to intercept or simply block all network requests made by the Worker within.
+- You can supply the sandboxed Worker with custom bindings to represent specific resources which it should be allowed to access.
 
 With proper sandboxing configured, you can safely run code you do not trust in a dynamic isolate.
+
+## Codemode
+
+A primary use case for Dynamic Worker Loaders is [Codemode](/agents/api-reference/codemode/) in the [Agents SDK](/agents/). Codemode converts your tools into typed TypeScript APIs and gives the LLM a single "write code" tool. The generated code runs in an isolated Worker sandbox, which lets AI agents chain multiple tool calls in one execution and reduces round-trips through the model.
+
+Codemode works with both standard AI SDK tools and [MCP](/agents/model-context-protocol/) tools.
+
+## Basic usage
 
 A Worker Loader is a binding with just one method, `get()`, which loads an isolate. Example usage:
 
@@ -37,35 +41,35 @@ let id = "foo";
 
 // Get the isolate with the given ID, creating it if no such isolate exists yet.
 let worker = env.LOADER.get(id, async () => {
-  // If the isolate does not already exist, this callback is invoked to fetch
-  // the isolate's Worker code.
+	// If the isolate does not already exist, this callback is invoked to fetch
+	// the isolate's Worker code.
 
-  return {
-    compatibilityDate: "2025-06-01",
+	return {
+		compatibilityDate: "2025-06-01",
 
-    // Specify the worker's code (module files).
-    mainModule: "foo.js",
-    modules: {
-      "foo.js":
-        "export default {\n" +
-        "  fetch(req, env, ctx) { return new Response('Hello'); }\n" +
-        "}\n",
-    },
+		// Specify the worker's code (module files).
+		mainModule: "foo.js",
+		modules: {
+			"foo.js":
+				"export default {\n" +
+				"  fetch(req, env, ctx) { return new Response('Hello'); }\n" +
+				"}\n",
+		},
 
-    // Specify the dynamic Worker's environment (`env`). This is specified
-    // as a JavaScript object, exactly as you want it to appear to the
-    // child Worker. It can contain basic serializable types as well as
-    // Service Bindings (see below).
-    env: {
-      SOME_ENV_VAR: 123
-    },
+		// Specify the dynamic Worker's environment (`env`). This is specified
+		// as a JavaScript object, exactly as you want it to appear to the
+		// child Worker. It can contain basic serializable types as well as
+		// Service Bindings (see below).
+		env: {
+			SOME_ENV_VAR: 123,
+		},
 
-    // To block the worker from talking to the internet using `fetch()` or
-    // `connect()`, set `globalOutbound` to `null`. You can also set this
-    // to any service binding, to have calls be intercepted and redirected
-    // to that binding.
-    globalOutbound: null,
-  };
+		// To block the worker from talking to the internet using `fetch()` or
+		// `connect()`, set `globalOutbound` to `null`. You can also set this
+		// to any service binding, to have calls be intercepted and redirected
+		// to that binding.
+		globalOutbound: null,
+	};
 });
 
 // Now you can get the Worker's entrypoint and send requests to it.
@@ -75,7 +79,7 @@ await defaultEntrypoint.fetch("http://example.com");
 // You can get non-default entrypoints as well, and specify the
 // `ctx.props` value to be delivered to the entrypoint.
 let someEntrypoint = worker.getEntrypoint("SomeEntrypointClass", {
-  props: {someProp: 123}
+	props: { someProp: 123 },
 });
 ```
 
@@ -89,9 +93,9 @@ To add a dynamic worker loader binding to your worker, add it to your Wrangler c
 {
 	"worker_loaders": [
 		{
-			"binding": "LOADER"
-		}
-	]
+			"binding": "LOADER",
+		},
+	],
 }
 ```
 
@@ -101,7 +105,11 @@ To add a dynamic worker loader binding to your worker, add it to your Wrangler c
 
 ### `get`
 
-<code>get(id <Type text="string" />, getCodeCallback <Type text="() => Promise<WorkerCode>" />): <Type text="WorkerStub" /></code>
+<code>
+	get(id <Type text="string" />, getCodeCallback{" "}
+	<Type text="() => Promise<WorkerCode>" />
+	): <Type text="WorkerStub" />
+</code>
 
 Loads a Worker with the given ID, returning a `WorkerStub` which may be used to invoke the Worker.
 
@@ -143,12 +151,12 @@ A dictionary object mapping module names to their string contents. If the module
 
 A module's content can also be specified as an object, in order to specify its type independent from the name. The allowed objects are:
 
-* `{js: string}`: A JavaScript module, using ES modules syntax for imports and exports.
-* `{cjs: string}`: A CommonJS module, using `require()` syntax for imports.
-* `{py: string}`: A [Python module](/workers/languages/python/), but see the warning below.
-* `{text: string}`: An importable string value.
-* `{data: ArrayBuffer}`: An importable `ArrayBuffer` value.
-* `{json: object}`: An importable object. The value must be JSON-serializable. However, note that value is provided as a parsed object, and is delivered as a parsed object; neither side actually sees the JSON serialization.
+- `{js: string}`: A JavaScript module, using ES modules syntax for imports and exports.
+- `{cjs: string}`: A CommonJS module, using `require()` syntax for imports.
+- `{py: string}`: A [Python module](/workers/languages/python/), but see the warning below.
+- `{text: string}`: An importable string value.
+- `{data: ArrayBuffer}`: An importable `ArrayBuffer` value.
+- `{json: object}`: An importable object. The value must be JSON-serializable. However, note that value is provided as a parsed object, and is delivered as a parsed object; neither side actually sees the JSON serialization.
 
 :::caution[Warning]
 
@@ -174,27 +182,27 @@ For example:
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class Greeter extends WorkerEntrypoint {
-  fetch(request) {
-    return new Response(`Hello, ${this.ctx.props.name}!`);
-  }
+	fetch(request) {
+		return new Response(`Hello, ${this.ctx.props.name}!`);
+	}
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    let worker = env.LOADER.get("alice", () => {
-      return {
-        // Redirect the worker's global outbound to send all requests
-        // to the `Greeter` class, filling in `ctx.props.name` with
-        // the name "Alice", so that it always responds "Hello, Alice!".
-        globalOutbound: ctx.exports.Greeter({props: {name: "Alice"}}),
+	async fetch(request, env, ctx) {
+		let worker = env.LOADER.get("alice", () => {
+			return {
+				// Redirect the worker's global outbound to send all requests
+				// to the `Greeter` class, filling in `ctx.props.name` with
+				// the name "Alice", so that it always responds "Hello, Alice!".
+				globalOutbound: ctx.exports.Greeter({ props: { name: "Alice" } }),
 
-        // ... code ...
-      }
-    });
+				// ... code ...
+			};
+		});
 
-    return worker.getEntrypoint().fetch(request);
-  }
-}
+		return worker.getEntrypoint().fetch(request);
+	},
+};
 ```
 
 #### <code>env <Type text="object" /></code>
@@ -205,8 +213,8 @@ Using this, you can provide custom bindings to the Worker.
 
 `env` is serialized and transferred into the dynamic Worker, where it is used directly as the value of `env` there. It may contain:
 
-* [Structured clonable types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
-* [Service Bindings](/workers/runtime-apis/bindings/service-bindings), including [loopback bindings from `ctx.exports`](/workers/runtime-apis/context/#exports).
+- [Structured clonable types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
+- [Service Bindings](/workers/runtime-apis/bindings/service-bindings), including [loopback bindings from `ctx.exports`](/workers/runtime-apis/context/#exports).
 
 The second point is the key to creating custom bindings: you can define a binding with any arbitrary API, by defining a [`WorkerEntrypoint` class](/workers/runtime-apis/bindings/service-bindings/rpc) implementing an RPC API, and then giving it to the dynamic Worker as a Service Binding.
 
@@ -217,28 +225,28 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 
 // Implement a binding which can be called by the dynamic Worker.
 export class Greeter extends WorkerEntrypoint {
-  greet() {
-    return `Hello, ${this.ctx.props.name}!`;
-  }
+	greet() {
+		return `Hello, ${this.ctx.props.name}!`;
+	}
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    let worker = env.LOADER.get("alice", () => {
-      return {
-        env: {
-          // Provide a binding which has a method greet() which can be called
-          // to receive a greeting. The binding knows the Worker's name.
-          GREETER: ctx.exports.Greeter({props: {name: "Alice"}})
-        },
+	async fetch(request, env, ctx) {
+		let worker = env.LOADER.get("alice", () => {
+			return {
+				env: {
+					// Provide a binding which has a method greet() which can be called
+					// to receive a greeting. The binding knows the Worker's name.
+					GREETER: ctx.exports.Greeter({ props: { name: "Alice" } }),
+				},
 
-        // ... code ...
-      }
-    });
+				// ... code ...
+			};
+		});
 
-    return worker.getEntrypoint().fetch(request);
-  }
-}
+		return worker.getEntrypoint().fetch(request);
+	},
+};
 ```
 
 #### <code>tails <Type text="ServiceStub[]" /> Optional</code>
@@ -249,35 +257,35 @@ You may specify one or more [Tail Workers](/workers/observability/logs/tail-work
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export default {
-  async fetch(request, env, ctx) {
-    let worker = env.LOADER.get("alice", () => {
-      return {
-        // Send logs, errors, etc. to `LogTailer`. We pass `name` in the
-        // `ctx.props` so that `LogTailer` knows what generated the logs.
-        // (You can pass anything you want in `props`.)
-        tails: [ ctx.exports.LogTailer({props: {name: "alice"}}) ],
+	async fetch(request, env, ctx) {
+		let worker = env.LOADER.get("alice", () => {
+			return {
+				// Send logs, errors, etc. to `LogTailer`. We pass `name` in the
+				// `ctx.props` so that `LogTailer` knows what generated the logs.
+				// (You can pass anything you want in `props`.)
+				tails: [ctx.exports.LogTailer({ props: { name: "alice" } })],
 
-        // ... code ...
-      }
-    });
+				// ... code ...
+			};
+		});
 
-    return worker.getEntrypoint().fetch(request);
-  }
-}
+		return worker.getEntrypoint().fetch(request);
+	},
+};
 
 export class LogTailer extends WorkerEntrypoint {
-  async tail(events) {
-    let name = this.ctx.props.name;
+	async tail(events) {
+		let name = this.ctx.props.name;
 
-    // Send the logs off to our log endpoint, specifying the worker name in
-    // the URL.
-    //
-    // Note that `events` will always be an array of size 1 in this scenario,
-    // describing the event delivered to the dynamically-loaded Worker.
-    await fetch(`https://example.com/submit-logs/${name}`, {
-      method: "POST",
-      body: JSON.stringify(events),
-    });
-  }
+		// Send the logs off to our log endpoint, specifying the worker name in
+		// the URL.
+		//
+		// Note that `events` will always be an array of size 1 in this scenario,
+		// describing the event delivered to the dynamically-loaded Worker.
+		await fetch(`https://example.com/submit-logs/${name}`, {
+			method: "POST",
+			body: JSON.stringify(events),
+		});
+	}
 }
 ```

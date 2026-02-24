@@ -52,6 +52,46 @@ The Sandbox SDK is built on Cloudflare Containers. Your configuration requires t
 
 The minimal configuration shown above includes all required settings. For detailed configuration options, refer to the [Containers configuration documentation](/workers/wrangler/configuration/#containers).
 
+## Backup storage
+
+To use the [backup and restore API](/sandbox/api/backups/), you need an R2 bucket binding and presigned URL credentials. The container uploads and downloads backup archives directly to/from R2 using presigned URLs, which requires R2 API token credentials.
+
+### 1. Create the R2 bucket
+
+```sh
+npx wrangler r2 bucket create my-backup-bucket
+```
+
+### 2. Add the binding and environment variables
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"BACKUP_BUCKET_NAME": "my-backup-bucket",
+		"CLOUDFLARE_ACCOUNT_ID": "<YOUR_ACCOUNT_ID>",
+	},
+	"r2_buckets": [
+		{
+			"binding": "BACKUP_BUCKET",
+			"bucket_name": "my-backup-bucket",
+		},
+	],
+}
+```
+</WranglerConfig>
+
+### 3. Set R2 API credentials as secrets
+
+```sh
+npx wrangler secret put R2_ACCESS_KEY_ID
+npx wrangler secret put R2_SECRET_ACCESS_KEY
+```
+
+Create an R2 API token in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **R2** > **Overview** > **Manage R2 API Tokens**. The token needs **Object Read & Write** permissions for your backup bucket.
+
+The SDK uses these credentials to generate presigned URLs that allow the container to transfer backup archives directly to and from R2. For a complete setup walkthrough, refer to the [backup and restore guide](/sandbox/guides/backup-restore/).
+
 ## Troubleshooting
 
 ### Binding not found

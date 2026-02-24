@@ -70,7 +70,8 @@ After setting up destinations in the dashboard, configure your Worker to export 
 			// traces sample rate of 5%
 			"head_sampling_rate": 0.05,
 
-			// (optional disable traces in Cloudflare dashboard
+			// (optional) set to false to only export traces to your
+			// destination without persisting them in the Cloudflare dashboard
 			"persist": false
 		},
 		"logs": {
@@ -79,7 +80,8 @@ After setting up destinations in the dashboard, configure your Worker to export 
 			// logs sample rate of 60%
 			"head_sampling_rate": 0.6,
 
-			// (optional disable logs in Cloudflare dashboard
+			// (optional) set to false to only export logs to your
+			// destination without persisting them in the Cloudflare dashboard
 			"persist": false
 		}
 	}
@@ -87,6 +89,10 @@ After setting up destinations in the dashboard, configure your Worker to export 
 ```
 
 </WranglerConfig>
+
+:::note[`persist` and pricing]
+By default, `persist` is `true`, which means logs and traces are both exported to your destination and stored in the Cloudflare dashboard. Dashboard storage is billed [separately](/workers/observability/logs/workers-logs/#pricing). Set `persist` to `false` if you only need data in your external destination.
+:::
 
 Once you've configured your Wrangler configuration file, redeploy your Worker for new configurations to take effect. Note that it may take a few minutes for events to reach your destination.
 

@@ -297,7 +297,7 @@ describe("Cloudflare Docs", () => {
 		});
 		describe("/changelog/ entry content types", async () => {
 			const request = new Request(
-				"http://fakehost/changelog/2025-03-03-saml-oidc-fields-saml-transformations/",
+				"http://fakehost/changelog/post/2025-03-03-saml-oidc-fields-saml-transformations/",
 			);
 			const response = await SELF.fetch(request);
 			expect(response.status).toBe(200);

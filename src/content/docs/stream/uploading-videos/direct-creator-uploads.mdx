@@ -26,7 +26,13 @@ click D "#basic-post-request" "See basic POST instructions"
 click E "#direct-creator-uploads-with-tus-protocol" "Learn about tus protocol"
 ```
 
-Whether you use basic `POST` or tus protocol, you must specify a maximum duration to reserve for the user's upload to ensure it can be accommodated within your available storage. This duration will be deducted from your account's available storage until the user's upload is received. Once the upload is processed, its actual duration will be counted and the remaining reservation will be relased. If the video errors or is not received before the link expires, the entire reservation will be released.
+:::note[Billing considerations]
+
+Whether you use basic `POST` or tus protocol, you must specify a maximum duration to reserve for the user's upload to ensure it can be accommodated within your available storage. This duration will be deducted from your account's available storage until the user's upload is received. Once the upload is processed, its actual duration will be counted and the remaining reservation will be released. If the video errors or is not received before the link expires, the entire reservation will be released.
+
+For a detailed breakdown of pricing and example scenarios, refer to [Pricing](/stream/pricing/).
+
+:::
 
 ## Basic POST request
 
@@ -68,10 +74,10 @@ curl --request POST \
   https://upload.videodelivery.net/f65014bc6ff5419ea86e7972a047ba22
 ```
 
-A successful upload will receive a `200` HTTP status code response. If the upload does not meet
-the upload constraints defined at time of creation or is larger than 200 MB in size, you will receive a `4xx` HTTP status code response.
+A successful upload returns a `200` HTTP status code response. If the upload does not meet
+the upload constraints defined at time of creation or is larger than 200 MB in size, the response returns a `4xx` HTTP status code.
 
-## Direct Creator Uploads with tus protocol
+## Direct creator uploads with tus protocol
 
 If your end user's video is over 200 MB, you must use the tus protocol. Even if the file is under 200 MB, if the end user's connection is potentially unreliable, Cloudflare recommends using the tus protocol because it is resumable. For detailed information about tus protocol requirements, additional client examples, and upload options, refer to [Resumable and large files (tus)](/stream/uploading-videos/resumable-uploads/).
 
@@ -182,20 +188,15 @@ In the example below, the `Upload-Metadata` header is instructing Stream to only
 `'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls,expiry MjAyNC0wMi0yN1QwNzoyMDo1MFo='`
 
 `NjAw` is the base64 encoded value for "600" (or 10 minutes).
+
 `MjAyNC0wMi0yN1QwNzoyMDo1MFo=` is the base64 encoded value for "2024-02-27T07:20:50Z" (an RFC3339 format timestamp)
 
 ## Track upload progress
 
-After the creation of a unique one-time upload URL, you may wish to retain the unique identifier (`uid`) returned in the response to track the progress of a user's upload.
+After the creation of a unique one-time upload URL, you should retain the unique identifier (`uid`) returned in the response to track the progress of a user's upload.
 
-You can do that two ways:
+You can track upload progress in the following ways:
 
-- [Search for a video](/stream/manage-video-library/searching/) with the UID to check the status.
+- [Use the get video details API endpoint](/api/resources/stream/methods/get/) with the `uid`.
 
-- [Create a webhook subscription](/stream/manage-video-library/using-webhooks/) to receive notifications about the video status. These notifications include the video's UID.
-
-## Billing considerations
-
-Direct Creator Upload links count towards your storage limit even if your users have not yet uploaded video to this URL. If the link expires before it is used or the upload cannot be processed, the storage reservation will be released. Otherwise, once the upload is encoded, its true duration will be counted toward storage and the reservation will be released.
-
-For a detailed breakdown of pricing and example scenarios, refer to [Pricing](/stream/pricing/).
+- [Create a webhook subscription](/stream/manage-video-library/using-webhooks/) to receive notifications about the video status. These notifications include the `uid`.

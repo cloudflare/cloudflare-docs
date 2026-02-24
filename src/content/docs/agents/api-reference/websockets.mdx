@@ -186,10 +186,7 @@ Tag connections for easy filtering. Override `getConnectionTags()` to assign tag
 
 ```ts
 export class ChatAgent extends Agent {
-	getConnectionTags(
-		connection: Connection,
-		ctx: ConnectionContext,
-	): string[] {
+	getConnectionTags(connection: Connection, ctx: ConnectionContext): string[] {
 		const url = new URL(ctx.request.url);
 		const role = url.searchParams.get("role");
 
@@ -217,7 +214,7 @@ export class ChatAgent extends Agent {
 | ------------------- | ----------------------------------------- | -------------------------------------- |
 | `getConnections`    | `(tag?: string) => Iterable<Connection>`  | Get all connections, optionally by tag |
 | `getConnection`     | `(id: string) => Connection \| undefined` | Get connection by ID                   |
-| `getConnectionTags` | `(connection, ctx) => string[]`           | Override to tag connections             |
+| `getConnectionTags` | `(connection, ctx) => string[]`           | Override to tag connections            |
 | `broadcast`         | `(message, without?: string[]) => void`   | Send to all connections                |
 
 ## Handling binary data
