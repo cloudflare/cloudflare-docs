@@ -53,7 +53,8 @@ To disable IPv6 compatibility using the API, send a [`PATCH`](/api/resources/zon
 Even when IPv6 is disabled, domains may still receive IPv6 traffic (for example, via the Tor network). To completely disable all IPv6 traffic:
 
 - Turn off [**Onion Routing**](/network/onion-routing/).
-- Use a [WAF custom rule](/waf/custom-rules/create-dashboard/) to block `0:0:0:0:0:0:0:0/0` using the filter `ip.src in {::/0}`.
+- Use a [WAF custom rule](/waf/custom-rules/create-dashboard/) to block `0:0:0:0:0:0:0:0/0` using the condition `ip.src in {::/0}`.
+- Add `and cf.worker.upstream_zone == ""` to the rule above to avoid blocking Workers subrequests. Workers subrequests use IPv6 addresses, and this condition checks that the request does not come from a Worker script. For more information, refer to the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/reference/cf.worker.upstream_zone/) field documentation.
 
 :::
 

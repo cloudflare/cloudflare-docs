@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Scheduled Handler
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 ## Background
 
@@ -82,6 +82,64 @@ class Default(WorkerEntrypoint):
 
 - `ctx` object
   - An object containing the context associated with your Worker using ES modules format. Currently, this object just contains the `waitUntil` function.
+
+### Handle multiple cron triggers
+
+When you configure multiple [Cron Triggers](/workers/configuration/cron-triggers/) for a single Worker, each trigger invokes the same `scheduled()` handler. Use `controller.cron` to distinguish which schedule fired and run different logic for each.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"triggers": {
+		"crons": ["*/5 * * * *", "0 0 * * *"],
+	},
+}
+```
+
+</WranglerConfig>
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+	async scheduled(controller, env, ctx) {
+		switch (controller.cron) {
+			case "*/5 * * * *":
+				ctx.waitUntil(fetch("https://example.com/api/sync"));
+				break;
+			case "0 0 * * *":
+				ctx.waitUntil(env.MY_KV.put("last-cleanup", new Date().toISOString()));
+				break;
+		}
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+export default {
+	async scheduled(
+		controller: ScheduledController,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		switch (controller.cron) {
+			case "*/5 * * * *":
+				ctx.waitUntil(fetch("https://example.com/api/sync"));
+				break;
+			case "0 0 * * *":
+				ctx.waitUntil(env.MY_KV.put("last-cleanup", new Date().toISOString()));
+				break;
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
+The value of `controller.cron` is the exact cron expression string from your configuration. It must match character-for-character, including spacing.
 
 ### Methods
 

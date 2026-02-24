@@ -217,6 +217,10 @@ Use CNI when you need to meet security requirements that prohibit public Interne
 CNI requires an Enterprise plan and is available only in locations where Cloudflare has interconnect facilities.
 :::
 
+:::note[Important to know]
+CNI supports both Magic Transit (DDoS protection) and Cloudflare WAN (private networking). CNI also supports [BGP peering](/network-interconnect/get-started/) (beta) with the Cloudflare Virtual Network routing table for dynamic route exchange. When used with Magic Transit, cleaned inbound traffic always flows over CNI. Return traffic can either egress directly to the Internet (Direct Server Return, default) or route back through Cloudflare via [Magic Transit Egress](/magic-transit/reference/egress/).
+:::
+
 For detailed configuration, refer to the <a href={props.cniURL}>Cloudflare Network Interconnect documentation</a>.
 
 ---
@@ -320,7 +324,7 @@ Not all connectivity options work together in the same account. Review the follo
 | WARP client + Cloudflare WAN | Yes | WARP users can access Cloudflare WAN-connected sites. |
 | Cloudflare Tunnel + Cloudflare WAN | Yes | Avoid overlapping IP routes. Cloudflare Tunnel takes priority if the same CIDR is configured for both. |
 | GRE + IPsec | Yes | Use for redundancy or migration scenarios. |
-| CNI + GRE or IPsec | Yes | Use Internet tunnels as backup for CNI. |
+| CNI + GRE or IPsec | Yes | Use Internet-based GRE or IPsec tunnels as backup connectivity alongside CNI. |
 | WARP client + Cloudflare Tunnel + WARP Connector | Yes | Common pattern for remote access to private applications. All three work together. |
 | CNI + Cloudflare Tunnel | Conditional | `cloudflared` connects to multiple Cloudflare regions for redundancy. If CNI only advertises one region, the tunnel operates with reduced redundancy. Evaluate whether Cloudflare Tunnel is necessary if CNI already provides private connectivity. |
 
@@ -438,6 +442,7 @@ This pattern serves organizations with strict compliance requirements that prohi
 ## Related resources
 
 - [SASE reference architecture](/reference-architecture/architectures/sase/) - Guide to deploying Cloudflare One
+- [WAN transformation](/cloudflare-wan/wan-transformation/) - Plan your migration from legacy WAN to Cloudflare One
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [WARP client](/cloudflare-one/team-and-resources/devices/warp/)
 - [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)

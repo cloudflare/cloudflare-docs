@@ -54,11 +54,11 @@ export default {
     const exposed = await sandbox.exposePort(8000, { hostname });
 
     // 4. Preview URL is now available (public by default)
-    console.log('Server accessible at:', exposed.exposedAt);
+    console.log('Server accessible at:', exposed.url);
     // Production: https://8000-abc123.yourdomain.com
     // Local dev: http://localhost:8787/...
 
-    return Response.json({ url: exposed.exposedAt });
+    return Response.json({ url: exposed.url });
   }
 };
 ```
@@ -155,8 +155,8 @@ const frontend = await sandbox.exposePort(5173, {
 });
 
 console.log('Services:');
-console.log('- API:', api.exposedAt);
-console.log('- Frontend:', frontend.exposedAt);
+console.log('- API:', api.url);
+console.log('- Frontend:', frontend.url);
 ```
 </TypeScriptExample>
 
@@ -230,8 +230,8 @@ const api = await sandbox.exposePort(8080, { hostname, name: 'api' });
 const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
 
 return Response.json({
-  api: api.exposedAt,
-  frontend: frontend.exposedAt
+  api: api.url,
+  frontend: frontend.url
 });
 ```
 </TypeScriptExample>
@@ -247,7 +247,7 @@ const { ports, count } = await sandbox.getExposedPorts();
 console.log(`${count} ports currently exposed:`);
 
 for (const port of ports) {
-  console.log(`  Port ${port.port}: ${port.exposedAt}`);
+  console.log(`  Port ${port.port}: ${port.url}`);
   if (port.name) {
     console.log(`    Name: ${port.name}`);
   }
