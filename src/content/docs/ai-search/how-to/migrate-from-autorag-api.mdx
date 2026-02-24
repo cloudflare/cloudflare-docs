@@ -122,15 +122,10 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
 			"text": "Welcome to AI Search...",
 			"item": {
 				"key": "getting-started.md",
-				"timestamp": 1735689600,
-				"metadata": {
-					"title": "Getting Started",
-					"description": "Learn how to get started with AI Search."
-				}
+				"timestamp": 1735689600
 			},
 			"scoring_details": {
-				"vector_score": 0.45,
-				"reranking_score": 0.85
+				"vector_score": 0.85
 			}
 		}
 	]
@@ -145,13 +140,13 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
 
 ### Response format changes
 
-| Old format              | New format                                                  |
-| ----------------------- | ----------------------------------------------------------- |
-| `result.response`       | `choices[0].message.content`                                |
-| `result.data`           | `chunks`                                                    |
-| `data[].filename`       | `chunks[].item.key`                                         |
-| `data[].content[].text` | `chunks[].text`                                             |
-| No scoring breakdown    | `chunks[].scoring_details` with vector and reranking scores |
+| Old format              | New format                   |
+| ----------------------- | ---------------------------- |
+| `result.response`       | `choices[0].message.content` |
+| `result.data`           | `chunks`                     |
+| `data[].filename`       | `chunks[].item.key`          |
+| `data[].content[].text` | `chunks[].text`              |
+| No scoring breakdown    | `chunks[].scoring_details`   |
 
 ### Streaming behavior changes
 
@@ -237,15 +232,10 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
 				"text": "Welcome to AI Search...",
 				"item": {
 					"key": "getting-started.md",
-					"timestamp": 1735689600,
-					"metadata": {
-						"title": "Getting Started",
-						"description": "Learn how to get started with AI Search."
-					}
+					"timestamp": 1735689600
 				},
 				"scoring_details": {
-					"vector_score": 0.45,
-					"reranking_score": 0.85
+					"vector_score": 0.85
 				}
 			}
 		]
@@ -261,12 +251,12 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
 
 ### Response format changes
 
-| Old format              | New format                                                  |
-| ----------------------- | ----------------------------------------------------------- |
-| `result.data`           | `result.chunks`                                             |
-| `data[].filename`       | `chunks[].item.key`                                         |
-| `data[].content[].text` | `chunks[].text`                                             |
-| No scoring breakdown    | `chunks[].scoring_details` with vector and reranking scores |
+| Old format              | New format                 |
+| ----------------------- | -------------------------- |
+| `result.data`           | `result.chunks`            |
+| `data[].filename`       | `chunks[].item.key`        |
+| `data[].content[].text` | `chunks[].text`            |
+| No scoring breakdown    | `chunks[].scoring_details` |
 
 ## API references
 

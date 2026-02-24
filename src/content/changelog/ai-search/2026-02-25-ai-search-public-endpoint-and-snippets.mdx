@@ -1,51 +1,14 @@
 ---
-title: Public endpoints, MCP, and UI snippets
-description: Expose AI Search instances via public endpoints, connect to MCP clients, and embed search UI components in your website.
+title: AI Search UI snippets and MCP support
+description: Embed AI Search components in your website and connect AI agents via MCP.
 products:
   - ai-search
 date: 2026-02-25
 ---
 
-[AI Search](/ai-search/) now supports public endpoints, MCP, and UI snippets, making it easy to add search to your website or connect to AI agents without writing backend code.
+[AI Search](/ai-search/) now supports public endpoints, UI snippets, and MCP, making it easy to add search to your website or connect AI agents.
 
-## Public endpoints
-
-Public endpoints let you call AI Search without requiring authorization or API tokens. To enable, go to **AI** > **AI Search**, select an instance, and go to **Settings** and turn on **Public endpoint**.
-
-Once enabled, your instance is available at:
-
-```txt
-https://<hash>.search.ai.cloudflare.com
-```
-
-Example request:
-
-```javascript
-const response = await fetch(
-	"https://<hash>.search.ai.cloudflare.com/chat/completions",
-	{
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({
-			messages: [{ content: "How do I get started?", role: "user" }],
-		}),
-	},
-);
-
-const results = await response.json();
-```
-
-For more details, refer to the [public endpoint documentation](/ai-search/configuration/public-endpoint/).
-
-## MCP endpoint
-
-Your public endpoint also exposes an MCP server that AI agents can connect to. The MCP endpoint is available at:
-
-```txt
-https://<hash>.search.ai.cloudflare.com/mcp
-```
-
-Add this URL to your MCP client configuration to give AI agents access to search your content. For more details, refer to the [public endpoint documentation](/ai-search/usage/public-endpoint/#mcp).
+Public endpoints allow you to expose AI Search capabilities without requiring API authentication. To enable public endpoints, go to **AI** > **AI Search**, select your instance, and turn on **Public Endpoint** in **Settings**. For more details, refer to [Public endpoint configuration](/ai-search/configuration/public-endpoint/).
 
 ## UI snippets
 
@@ -58,14 +21,24 @@ To add a search modal to your page:
 ```html
 <script
 	type="module"
-	src="https://<hash>.search.ai.cloudflare.com/search-snippet.es.js"
+	src="https://<INSTANCE_ID>.search.ai.cloudflare.com/assets/v0.0.25/search-snippet.es.js"
 ></script>
 
 <search-modal-snippet
-	api-url="https://<hash>.search.ai.cloudflare.com/"
+	api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
 	placeholder="Search..."
 >
 </search-modal-snippet>
 ```
 
 For more details, refer to the [UI snippets documentation](/ai-search/configuration/embed-search-snippets/).
+
+## MCP
+
+The MCP endpoint allows AI agents to search your content via the Model Context Protocol. Connect your MCP client to:
+
+```txt
+https://<INSTANCE_ID>.search.ai.cloudflare.com/mcp
+```
+
+For more details, refer to the [MCP documentation](/ai-search/usage/mcp/).
