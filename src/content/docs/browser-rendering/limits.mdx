@@ -152,10 +152,4 @@ try {
 
 ### Error: `429 Browser time limit exceeded for today`
 
-This `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today` error indicates you have hit the daily browser limit on the Workers Free plan. [Workers Free plan accounts are limited](#workers-free) to 10 minutes of Browser Rendering usage per day. If you exceed that limit, you will receive a `429` error until the next UTC day.
-
-You can [increase your limits](#workers-paid) by upgrading to a Workers Paid plan on the **Workers plans** page of the Cloudflare dashboard:
-
-<DashButton url="/?to=/:account/workers/plans" />
-
-If you recently upgraded but still encounter the 10-minute per day limit, redeploy your Worker to ensure your usage is correctly associated with the new plan.
+<Render file="error-429-browser-time-limit" product="browser-rendering" />

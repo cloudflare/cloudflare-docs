@@ -12,74 +12,64 @@ import { Plan } from "~/components";
 This page provides a reference for error codes you may encounter when using Browser Rendering.
 
 
-
-
-
-
 ## Service-level errors
 
 Service-level errors occur when Browser Rendering cannot fulfill a request due to system availability, authentication, or resource constraints.
 
-| Error name | HTTP code | Internal code | How it appears | Description | Source |
-| --- | --- | --- | --- | --- | --- |
-| No browser available | `503` | - | `No browser available. Please try again in a few minutes.` | Browser Rendering cannot provision a browser instance. | [exceptions.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/exceptions.ts) |
-- Put further down list, per Sofia
-| Internal error | `500` | `2000` | `Internal Error` | An unexpected issue occurred on the Browser Rendering service. | [exceptions.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/exceptions.ts) |
-- Put further down list, per Sofia
-| Browser unavailable | `429` | - | `Browser connection lost. Please try again in a few minutes.` | The browser connection was lost. | [exceptions.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/exceptions.ts) |
-- This is rate limiting (not browser connection lost) per Sofia
-| Request entity too large | `413` | - | `Error: request entity too large` | The request body exceeds the maximum allowed size (50 MB for PDF endpoint). | [PDF endpoint docs](/browser-rendering/rest-api/pdf-endpoint/) |
-| Timeout | `408` | - | `Request timed out` | The request exceeded the allowed time limit. | [exceptions.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/exceptions.ts) |
-| Authentication error | `401` | `10000` | `Authentication failed` | Authentication credentials are invalid or missing. | [exceptions.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/exceptions.ts) |
-| Bad request | `400` | - | Varies by endpoint | The request is malformed or contains invalid parameters. | [Screenshot endpoint docs](/browser-rendering/rest-api/screenshot-endpoint/) |
-| Unprocessable entity | `422` | - | `422 Unprocessable Entity` | Browser Rendering could not complete the action because of an issue with the target site. | [FAQ](/browser-rendering/faq/) |
-| Invalid route | `400` | `7000` | `No route for that URI` | The API endpoint URL is invalid or malformed. | [GitHub Issue #10864](https://github.com/cloudflare/workers-sdk/issues/10864) |
-- Remove, per Sofia - not specific to our service
-| Invalid account identifier | `400` | `7003` | `Could not route to /accounts/{accountId}/workers/browser/fetch, perhaps your object identifier is invalid?` | The account ID in the API request is invalid. | [GitHub Issue #10864](https://github.com/cloudflare/workers-sdk/issues/10864) |
-- Remove, per Sofia - not specific to our service
+| Error | HTTP code | Internal code | Description | Recommended fix |
+| --- | --- | --- | --- | --- |
+| `Browser connection lost. Please try again in a few minutes.` | `429` | - | Rate limit exceeded. | Refer to [429 Too many requests](/browser-rendering/limits/#error-429-too-many-requests). |
+| `Browser time limit exceeded for today` | `429` | - | Daily browser time limit exceeded (Workers Free plan only: 10 minutes per day). | Refer to [429 Browser time limit exceeded](/browser-rendering/limits/#error-429-browser-time-limit-exceeded-for-today). |
+| `Error: request entity too large` | `413` | - | The request body exceeds the maximum allowed size (50 MB for PDF endpoint). | Reduce request payload size by hosting assets externally (such as on [R2](/r2/) or [Images](/images/)) and referencing via URLs instead of embedding them inline. Refer to [PDF endpoint request size limits](/browser-rendering/rest-api/pdf-endpoint/). |
+| `Request timed out` | `408` | - | The request exceeded the allowed time limit. | Increase timeout settings. Refer to [REST API timeouts](/browser-rendering/reference/timeouts/). |
+| `Authentication failed` | `401` | `10000` | Authentication credentials are invalid or missing. | Verify your API token exists and has `Browser Rendering - Edit` permissions. Refer to [REST API prerequisites](/browser-rendering/rest-api/#before-you-begin). |
+| Varies by endpoint | `400` | - | The request is malformed or contains invalid parameters. | |
+| `422 Unprocessable Entity` | `422` | - | Browser Rendering could not complete the action because of an issue with the target site. | |
+| `No browser available. Please try again in a few minutes.` | `503` | - | Browser Rendering cannot provision a browser instance. | |
+| `Internal Error` | `500` | `2000` | An unexpected issue occurred on the Browser Rendering service. | |
 
 ## Chrome network errors
 
-- Also see https://docs.newrelic.com/docs/synthetics/synthetic-monitoring/using-monitors/synthetic-monitoring-response-codes/ per Sofia
-
 Chrome network errors occur when the browser encounters issues loading the target website. These errors come directly from Chrome and use the `net::` prefix.
 
-| Error name | Internal code | How it appears | Description | Source |
-| --- | --- | --- | --- | --- |
-| Certificate error | `5000` | `net::ERR_CERT_INVALID`, `net::ERR_CERT_COMMON_NAME_INVALID` | Certificate or SSL error when attempting to load the page. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Address unreachable | `5001` | `net::ERR_ADDRESS_UNREACHABLE` | The address is unreachable. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Connection aborted | `5002` | `net::ERR_ABORTED` | The network connection was aborted. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Connection timeout | `5002` | `net::ERR_CONNECTION_TIMED_OUT`, `net::ERR_TIMED_OUT` | The connection timed out when browsing to the URL. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Too many redirects | `5003` | `net::ERR_TOO_MANY_REDIRECTS` | The page has too many redirects. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| HTTP2 error | `5004` | `net::ERR_HTTP2_PROTOCOL_ERROR` | An HTTP2 protocol error occurred. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| DNS error | `5005` | `net::ERR_NAME_NOT_RESOLVED`, `net::ERR_DNS_TIMED_OUT` | DNS resolution failed. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Connection closed | `5006` | `net::ERR_CONNECTION_CLOSED`, `net::ERR_CONNECTION_RESET`, `net::ERR_TUNNEL_CONNECTION_FAILED` | The network connection was closed. Can also happen due to DNS resolution failure. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Response code failure | `5007` | `net::ERR_HTTP_RESPONSE_CODE_FAILURE` | The network response code is not OK. The response body is empty. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Connection refused | `5008` | `net::ERR_CONNECTION_REFUSED` | The server refused the connection. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Network error | `5009` | `net::` errors | A general network error occurred when attempting to load the page. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Invalid URL | `5010` | `net::ERR_INVALID_URL`, `net::ERR_BLOCKED_BY_ADMINISTRATOR`, `net::ERR_FILE` | The URL is invalid or blocked. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Empty response | `5011` | `net::ERR_EMPTY_RESPONSE` | The server returned an empty response. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
+**Note from Sofia:** Also see https://docs.newrelic.com/docs/synthetics/synthetic-monitoring/using-monitors/synthetic-monitoring-response-codes/
+
+| Error | Internal code | Description | Recommended fix |
+| --- | --- | --- | --- |
+| `net::ERR_CERT_INVALID`, `net::ERR_CERT_COMMON_NAME_INVALID` | `5000` | Certificate or SSL error when attempting to load the page. | |
+| `net::ERR_ADDRESS_UNREACHABLE` | `5001` | The address is unreachable. | |
+| `net::ERR_ABORTED` | `5002` | The network connection was aborted. | |
+| `net::ERR_CONNECTION_TIMED_OUT`, `net::ERR_TIMED_OUT` | `5002` | The connection timed out when browsing to the URL. | |
+| `net::ERR_TOO_MANY_REDIRECTS` | `5003` | The page has too many redirects. | |
+| `net::ERR_HTTP2_PROTOCOL_ERROR` | `5004` | An HTTP2 protocol error occurred. | |
+| `net::ERR_NAME_NOT_RESOLVED`, `net::ERR_DNS_TIMED_OUT` | `5005` | DNS resolution failed. | |
+| `net::ERR_CONNECTION_CLOSED`, `net::ERR_CONNECTION_RESET`, `net::ERR_TUNNEL_CONNECTION_FAILED` | `5006` | The network connection was closed. Can also happen due to DNS resolution failure. | |
+| `net::ERR_HTTP_RESPONSE_CODE_FAILURE` | `5007` | The network response code is not OK. The response body is empty. | |
+| `net::ERR_CONNECTION_REFUSED` | `5008` | The server refused the connection. | |
+| `net::` errors | `5009` | A general network error occurred when attempting to load the page. | |
+| `net::ERR_INVALID_URL`, `net::ERR_BLOCKED_BY_ADMINISTRATOR`, `net::ERR_FILE` | `5010` | The URL is invalid or blocked. | |
+| `net::ERR_EMPTY_RESPONSE` | `5011` | The server returned an empty response. | |
 
 ## Browser automation errors
 
 Browser automation errors occur during browser operations when using Puppeteer or Playwright. These errors are related to the Chrome DevTools Protocol (CDP).
 
-| Error name | Internal code | How it appears | Description | Source |
-| --- | --- | --- | --- | --- |
-| Context destroyed | `6000` | `Execution context was destroyed`, `Navigating frame was detached` | The execution context was destroyed, most likely because of a navigation or page reload. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Target closed | `6001` | `TargetCloseError` | The target closed. This can happen due to user or site actions, or excessive memory consumption. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Timeout | `6002` | `TimeoutError`, `Navigation timeout`, `timed out`, `Waiting failed: .* exceeded` | A timeout was reached during a browser operation. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Page capture error | `6003` | `Page.captureScreenshot`, `Page.printToPDF`, `Page is too large`, `Unable to capture screenshot` | Failed to capture screenshot or generate PDF. The page may be too large or in an invalid state. | [errors.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/errors.ts) |
-| Page crashed | - | `Page crashed!` | The browser instance crashed, often due to memory issues or page complexity. | [Wiki incident reports](https://wiki.cfdata.org/display/~ppham/Browser+host+segfault+repro+steps) |
+| Error | Internal code | Description | Recommended fix |
+| --- | --- | --- | --- |
+| `Execution context was destroyed`, `Navigating frame was detached` | `6000` | The execution context was destroyed, most likely because of a navigation or page reload. | |
+| `TargetCloseError` | `6001` | The target closed. This can happen due to user or site actions, or excessive memory consumption. | |
+| `TimeoutError`, `Navigation timeout`, `timed out`, `Waiting failed: .* exceeded` | `6002` | A timeout was reached during a browser operation. | |
+| `Page.captureScreenshot`, `Page.printToPDF`, `Page is too large`, `Unable to capture screenshot` | `6003` | Failed to capture screenshot or generate PDF. The page may be too large or in an invalid state. | |
+| `Page crashed!` | - | The browser instance crashed, often due to memory issues or page complexity. | |
 
 ## Platform errors
 
 Platform errors occur at the Workers platform level before Browser Rendering code runs.
 
-| Error | How it appears | Description | Source |
-| --- | --- | --- | --- |
-| Module not found | `No such module 'cloudflare:browser'` | Browser Rendering is not enabled on your account. | [Wiki](https://wiki.cfdata.org/x/s19iTw) |
-| Missing browser binding | `Cannot read properties of undefined (reading 'fetch')` | The browser binding was not passed to `puppeteer.launch()` or `playwright.chromium.launch()`. | [FAQ](/browser-rendering/faq/) |
+| Error | Description | Recommended fix |
+| --- | --- | --- |
+| `No such module 'cloudflare:browser'` | Browser Rendering is not enabled on your account. | |
+| `Cannot read properties of undefined (reading 'fetch')` | The browser binding was not passed to `puppeteer.launch()` or `playwright.chromium.launch()`. | |
 
 ## Related resources
 
