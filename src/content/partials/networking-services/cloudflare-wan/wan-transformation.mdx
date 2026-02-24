@@ -7,7 +7,7 @@ params:
   - applianceUrl
 ---
 
-import { CardGrid, GlossaryTooltip, LinkTitleCard, Markdown } from "~/components";
+import { GlossaryTooltip } from "~/components";
 
 Traditional wide area networks (WANs) were designed for a world where applications ran in corporate data centers and employees worked from offices. These architectures rely on private circuits like Multiprotocol Label Switching (MPLS), hub-and-spoke routing through central data centers, and dedicated hardware at every branch.
 
@@ -51,15 +51,15 @@ WAN transformation is not an all-or-nothing change. Most organizations follow an
 
 Start by replacing VPN concentrators with Zero Trust Network Access (ZTNA). Deploy the WARP client on user devices and use Cloudflare Access to enforce identity-based policies for application access. This step secures remote and hybrid workers without changing your existing network infrastructure.
 
-For more information, refer to <a href="${props.zeroTrustUrl}">Cloudflare One</a>.
+For more information, refer to <a href={props.zeroTrustUrl}>Cloudflare One</a>.
 
 ### 2. Connect your networks
 
 Set up site-to-site connectivity by establishing IPsec or GRE tunnels from your existing routers, deploying the Cloudflare One Appliance at branch locations, or using Cloudflare Network Interconnect for private connectivity. Your sites communicate through Cloudflare's network, and you manage routing through the dashboard or API.
 
-- <a href="${props.getStartedUrl}">Get started</a> with Cloudflare WAN
-- Review <a href="${props.connectivityOptionsUrl}">connectivity options</a> to choose the right on-ramp
-- Explore all available <a href="${props.onRampsUrl}">on-ramps</a>
+- <a href={props.getStartedUrl}>Get started</a> with Cloudflare WAN
+- Review <a href={props.connectivityOptionsUrl}>connectivity options</a> to choose the right on-ramp
+- Explore all available <a href={props.onRampsUrl}>on-ramps</a>
 
 ### 3. Secure Internet egress
 
@@ -75,22 +75,7 @@ As Cloudflare handles routing and security in the cloud, you can begin decommiss
 
 ## Next steps
 
-<CardGrid>
-
-<LinkTitleCard title="Get started" href={props.getStartedUrl} icon="open-book">
-Set up Cloudflare WAN with the Cloudflare One Appliance or a third-party device.
-</LinkTitleCard>
-
-<LinkTitleCard title="Connectivity options" href={props.connectivityOptionsUrl} icon="puzzle">
-Compare all Cloudflare One connectivity options and choose the right combination for your deployment.
-</LinkTitleCard>
-
-<LinkTitleCard title="On-ramps" href={props.onRampsUrl} icon="seti:pipeline">
-Review the full list of supported on-ramps for connecting your networks.
-</LinkTitleCard>
-
-<LinkTitleCard title="SASE reference architecture" href="/reference-architecture/architectures/sase/" icon="pen">
-Deep dive into the architecture of Cloudflare One as a SASE platform.
-</LinkTitleCard>
-
-</CardGrid>
+- <a href={props.getStartedUrl}>Get started</a>: Set up Cloudflare WAN with the Cloudflare One Appliance or a third-party device.
+- <a href={props.connectivityOptionsUrl}>Connectivity options</a>: Compare all Cloudflare One connectivity options and choose the right combination for your deployment.
+- <a href={props.onRampsUrl}>On-ramps</a>: Review the full list of supported on-ramps for connecting your networks.
+- [SASE reference architecture](/reference-architecture/architectures/sase/): Explore the architecture of Cloudflare One as a SASE platform.
