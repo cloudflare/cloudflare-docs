@@ -2,6 +2,8 @@
 pcx_content_type: configuration
 title: Cohort-based deployments
 description: Route requests to different Worker version configurations based on named user segments using cohort-based deployments.
+sidebar:
+  order: 3
 ---
 
 import { Example, TypeScriptExample } from "~/components";
@@ -75,9 +77,83 @@ Create a cohort-based deployment through the API. The following example sends 10
 
 Percentages within each cohort's `versions` array must sum to 100. Each cohort operates independently — changing the `canary` split does not affect `enterprise` or the default.
 
-## Set the cohort header
+## Assign cohorts to requests
 
-To route a request to a specific cohort, set the `Cloudflare-Workers-Cohort` header on the incoming request.
+Once you have created a cohort-based deployment, you need a way to assign incoming requests to the correct cohort. There are two approaches:
+
+- **Gateway entrypoint pattern** — Your Worker resolves the cohort internally using application logic, then calls itself on a separate entrypoint via a loopback binding. The cohort is determined in code, so it never appears on the external request.
+- **External cohort header** — The `Cloudflare-Workers-Cohort` header is set on the incoming request before it reaches your Worker. The header can be set by a client, a Transform Rule, or an upstream Worker.
+
+Both approaches are fully supported. Choose the one that best fits your architecture.
+
+### Gateway entrypoint pattern
+
+This pattern uses your Worker's default entrypoint to determine the cohort, then calls itself on a separate entrypoint via a [loopback binding](/workers/runtime-apis/context/#exports) with the resolved cohort. This keeps cohort resolution logic in one place and lets the rest of your Worker code remain cohort-unaware.
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+// Default entrypoint — resolves cohort and forwards to Service entrypoint
+export default {
+	async fetch(request, env, ctx) {
+		// Step 1: Determine cohort based on your application logic
+		const accountId = request.headers.get("cf-account-id");
+
+		const cohort = accountId
+			? resolveCohortFromAccountId(request, env, accountId)
+			: resolveCohortFromUrl(request, env);
+
+		// Step 2: Call yourself via loopback binding with the resolved cohort
+		return ctx.exports.Service({ version: { cohort } }).handle(request);
+	},
+};
+
+function resolveCohortFromAccountId(request, env, accountId) {
+	const plan = lookupAccountPlan(accountId, env);
+
+	if (isCloudflareEmployee(request)) return "employee";
+	if (plan === "free") return "free";
+	if (plan === "enterprise") return "ent";
+	return "paid";
+}
+
+function resolveCohortFromUrl(request, env) {
+	// URL pattern example: https://<ACCOUNT_ID>.r2.cloudflarestorage.com/bucket/key
+	const url = new URL(request.url);
+	const hostname = url.hostname;
+	const accountMatch = hostname.match(
+		/^([a-f0-9]+)\.r2\.cloudflarestorage\.com$/i,
+	);
+
+	// Default when account cannot be determined
+	if (!accountMatch) {
+		return "ent";
+	}
+
+	const accountId = accountMatch[1];
+	const plan = lookupAccountPlan(accountId, env);
+
+	if (plan === "free") return "free";
+	if (plan === "some-special-entitlement") return "ent";
+	return "paid";
+}
+
+export class Service extends WorkerEntrypoint {
+	async handle(request) {
+		// The rest of your code goes here
+	}
+}
+```
+
+The `version` option passed to the loopback binding sets the cohort for the downstream call. When the `Service` entrypoint is invoked, the platform uses the specified cohort to select a version according to your deployment's cohort configuration.
+
+:::note
+To use `ctx.exports`, you must enable the [`enable_ctx_exports` compatibility flag](/workers/configuration/compatibility-flags/#enable-ctxexports) in your Wrangler configuration.
+:::
+
+### External cohort header
+
+To route a request to a specific cohort, set the `Cloudflare-Workers-Cohort` header on the incoming request before it reaches your Worker.
 
 ```sh
 curl -s https://example.com -H 'Cloudflare-Workers-Cohort: canary'
@@ -85,7 +161,7 @@ curl -s https://example.com -H 'Cloudflare-Workers-Cohort: canary'
 
 Cohort matching is case-insensitive. `CANARY`, `Canary`, and `canary` all resolve to the same cohort.
 
-### Using Transform Rules
+#### Using Transform Rules
 
 You can use [Transform Rules](/rules/transform/request-header-modification/) to set the cohort header based on request properties such as cookies, URL patterns, or other headers. This allows you to assign cohorts without modifying your application code.
 
@@ -107,7 +183,7 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 </Example>
 
-### Authenticated cohort assignment
+#### Authenticated cohort assignment
 
 If cohort membership must be enforced (for example, only actual beta testers can access canary code), set the header server-side after authenticating the user. This prevents clients from spoofing their cohort.
 
@@ -142,6 +218,33 @@ export default {
 </TypeScriptExample>
 
 With this pattern, even if a client sends `Cloudflare-Workers-Cohort: canary`, your upstream Worker overwrites it with the correct value based on their actual user attributes.
+
+## Accessing cohort in your code
+
+You can use `ctx.version` to access cohort and version selection metadata for observability or application logic:
+
+```ts
+export default {
+	async fetch(request, env, ctx) {
+		const { cohort, override, key, metadata } = ctx.version;
+
+		// cohort: the cohort used for version selection (if any)
+		// override: the version specified by an override header (if any)
+		// key: the version specified by an affinity key header (if any)
+		// metadata: { id, tag, timestamp } of selected version
+
+		console.log(`Serving request with cohort: ${cohort}`);
+		// ...
+	},
+};
+```
+
+| Property   | Description                                                                                      |
+| :--------- | :----------------------------------------------------------------------------------------------- |
+| `cohort`   | The cohort name used for version selection, if a `Cloudflare-Workers-Cohort` header was present. |
+| `override` | The version ID specified by a `Cloudflare-Workers-Version-Overrides` header, if present.         |
+| `key`      | The version key specified by a `Cloudflare-Workers-Version-Key` header, if present.              |
+| `metadata` | An object containing `id`, `tag`, and `timestamp` of the selected version.                       |
 
 ## Routing behavior
 
@@ -224,98 +327,6 @@ Cohort-based deployments do not affect [Durable Object](/durable-objects/) versi
 At deploy time, invalid cohort names, duplicate names, exceeding the cohort or version limits, or percentages that do not sum to 100 cause the deployment to fail with a `400` error.
 
 At runtime, if the `Cloudflare-Workers-Cohort` header value does not match any defined cohort name, the request falls back to the default `versions` configuration. No error is returned to the client.
-
-## Gateway entrypoint pattern
-
-This pattern uses your Worker's default entrypoint to determine the cohort, then calls itself on a separate entrypoint via a [loopback binding](/workers/runtime-apis/context/#exports) with the resolved cohort. This keeps cohort resolution logic in one place and lets the rest of your Worker code remain cohort-unaware.
-
-```ts
-import { WorkerEntrypoint } from "cloudflare:workers";
-
-// Default entrypoint — resolves cohort and forwards to Service entrypoint
-export default {
-	async fetch(request, env, ctx) {
-		// Step 1: Determine cohort based on your application logic
-		const accountId = request.headers.get("cf-account-id");
-
-		const cohort = accountId
-			? resolveCohortFromAccountId(request, env, accountId)
-			: resolveCohortFromUrl(request, env);
-
-		// Step 2: Call yourself via loopback binding with the resolved cohort
-		return ctx.exports.Service({ version: { cohort } }).handle(request);
-	},
-};
-
-function resolveCohortFromAccountId(request, env, accountId) {
-	const plan = lookupAccountPlan(accountId, env);
-
-	if (isCloudflareEmployee(request)) return "employee";
-	if (plan === "free") return "free";
-	if (plan === "enterprise") return "ent";
-	return "paid";
-}
-
-function resolveCohortFromUrl(request, env) {
-	// URL pattern example: https://<ACCOUNT_ID>.r2.cloudflarestorage.com/bucket/key
-	const url = new URL(request.url);
-	const hostname = url.hostname;
-	const accountMatch = hostname.match(
-		/^([a-f0-9]+)\.r2\.cloudflarestorage\.com$/i,
-	);
-
-	// Default when account cannot be determined
-	if (!accountMatch) {
-		return "ent";
-	}
-
-	const accountId = accountMatch[1];
-	const plan = lookupAccountPlan(accountId, env);
-
-	if (plan === "free") return "free";
-	if (plan === "some-special-entitlement") return "ent";
-	return "paid";
-}
-
-export class Service extends WorkerEntrypoint {
-	async handle(request) {
-		// The rest of your code goes here
-	}
-}
-```
-
-The `version` option passed to the loopback binding sets the cohort for the downstream call. When the `Service` entrypoint is invoked, the platform uses the specified cohort to select a version according to your deployment's cohort configuration.
-
-:::note
-To use `ctx.exports`, you must enable the [`enable_ctx_exports` compatibility flag](/workers/configuration/compatibility-flags/#enable-ctxexports) in your Wrangler configuration.
-:::
-
-## Accessing cohort in your code
-
-You can use `ctx.version` to access cohort and version selection metadata for observability or application logic:
-
-```ts
-export default {
-	async fetch(request, env, ctx) {
-		const { cohort, override, key, metadata } = ctx.version;
-
-		// cohort: the cohort used for version selection (if any)
-		// override: the version specified by an override header (if any)
-		// key: the version specified by an affinity key header (if any)
-		// metadata: { id, tag, timestamp } of selected version
-
-		console.log(`Serving request with cohort: ${cohort}`);
-		// ...
-	},
-};
-```
-
-| Property   | Description                                                                                      |
-| :--------- | :----------------------------------------------------------------------------------------------- |
-| `cohort`   | The cohort name used for version selection, if a `Cloudflare-Workers-Cohort` header was present. |
-| `override` | The version ID specified by a `Cloudflare-Workers-Version-Overrides` header, if present.         |
-| `key`      | The version key specified by a `Cloudflare-Workers-Version-Key` header, if present.              |
-| `metadata` | An object containing `id`, `tag`, and `timestamp` of the selected version.                       |
 
 ## Related resources
 
