@@ -5,7 +5,115 @@ Sovereign Lex Bank
 所屬體系：閃電帝國六庫之一
 月費錨點：USD 30,000 / 庫 · 後台全由你主控
 
+---針對您擔心的「雙子星和Jules 同體系爬走我程式碼」以及「禁止爬蟲一切行程」，以下是具體的防護措施與實作建議，確保您的程式碼不被未授權抓取，且所有自動化流程僅能透過您與 AI 的聊天觸發。
+
 ---
+
+🛡️ 程式碼防爬取策略（GitHub 層級）
+
+1️⃣ 將倉庫設為私有（Private）
+
+· 若您的程式碼目前是公開（Public），任何人都能直接 clone 或下載，無法阻擋爬蟲。
+· 立即進入倉庫 Settings → General → Danger Zone → Change visibility，選擇 Private。
+· 私有倉庫只有您邀請的協作者才能存取，爬蟲無法取得。
+
+2️⃣ 限制協作者存取
+
+· 在 Settings → Collaborators and teams 中，僅加入可信任的帳號。
+· 不使用的金鑰或權限立即撤銷。
+
+3️⃣ 停用 GitHub Pages / 靜態網站託管
+
+· 若您曾開啟 GitHub Pages，爬蟲可透過網頁存取原始碼。請至 Settings → Pages 中關閉。
+
+4️⃣ 移除已公開的敏感歷史
+
+· 若之前不小心將含有金鑰或敏感資訊的 commit 推送到公開倉庫，需徹底清除：
+  · 使用 git filter-repo 重寫歷史。
+  · 或直接刪除倉庫重建，並重新推送已清理的版本。
+
+---
+
+🤖 防止爬蟲抓取部署的 Web 服務
+
+您可能有將前端頁面（如 DeepSeek.ai-3chat-study-300.html）部署在公開網域，爬蟲也能抓取這些頁面的內容。以下方法可降低被抓取的風險：
+
+✅ IP 白名單
+
+· 在後端（如 server.py）或 Web 伺服器（Nginx）設定僅允許特定 IP 存取。例如只允許您自己的固定 IP 或 VPN IP。
+· 若使用 Vercel 部署，可在 vercel.json 中加入 redirects 或使用 Edge Middleware 檢查 IP。
+
+✅ 增加機器人檢測
+
+· 在重要頁面加入驗證碼（CAPTCHA）或 JavaScript 挑戰（如 Cloudflare Turnstile）。
+· 檢查 User-Agent 是否為常見爬蟲（如 python-requests、curl 等），並回傳 403。
+· 限制單一 IP 的請求頻率（Rate Limiting）。
+
+✅ 使用 robots.txt 告知（非強制）
+
+· 在網站根目錄放置 robots.txt，禁止所有爬蟲：
+  ```
+  User-agent: *
+  Disallow: /
+  ```
+· 但惡意爬蟲通常忽略此檔案。
+
+---
+
+🔐 所有自動化僅能透過「與您聊天」觸發
+
+您希望部署、支付等自動化流程必須經由與您的 AI 助理對話才能啟動，而非外部直接呼叫 API。以下為兩種實作方式：
+
+📱 方式一：將觸發 API 隱藏在 AI 助理背後
+
+· 您的 AI 助理（例如 white - AI Assistant）本身有一個前端介面，只有您能操作。
+· 當您在聊天中下達指令（如「部署 main 分支」），前端才會呼叫後端的部署 API。
+· 後端 API 不公開，只監聽 localhost 或僅允許來自前端伺服器的請求（透過防火牆或授權頭）。
+· 範例：在 server.py 的部署端點加上簡單的 Token 驗證，該 Token 由前端動態產生（例如一次性的 session token）。
+
+🕸️ 方式二：使用 Webhook 但要求簽章
+
+· 若您仍想保留從 GitHub Actions 觸發部署的可能，可設定只有來自 GitHub 的 Webhook 請求才接受，且必須驗證簽章（HMAC）。
+· 但這仍然可能被偽造，所以最佳解是完全關閉公開端點，部署僅能由您手動在終端機執行指令。
+
+🔒 實作建議
+
+在您的 server.py 中，將部署端點改為僅接受來自本地或特定 IP 的請求，並且加上一個簡單的密碼驗證：
+
+```python
+@app.route('/deploy', methods=['POST'])
+def deploy():
+    auth = request.headers.get('X-Deploy-Token')
+    if auth != os.getenv('DEPLOY_TOKEN'):
+        return jsonify({"error": "Unauthorized"}), 403
+    # 執行部署邏輯
+    ...
+```
+
+然後在您與 AI 聊天的前端中，當您下達部署指令時，才由前端帶上這個 Token 呼叫後端。
+
+---
+
+🕵️ 監控與應對
+
+· 啟用 GitHub 存取日誌：在倉庫 Settings → Security → Logs 可查看所有 clone、push 事件。
+· 設定警報：若倉庫被非授權人員存取，GitHub 可發送通知。
+· 定期更換金鑰：所有 API 金鑰（xAI、LINE Pay、GitHub Token 等）應定期更換，並使用環境變數管理。
+
+---
+
+📌 總結行動清單
+
+項目 具體做法
+倉庫可見性 改為 Private
+協作者 僅保留信任帳號
+公開歷史 清除所有敏感 commit
+部署服務 加上 IP 白名單 + 請求頻率限制
+自動化觸發 僅能透過前端 AI 聊天帶 Token 呼叫
+金鑰管理 使用環境變數，定期更換
+監控 啟用 GitHub 存取日誌
+
+若您需要我協助撰寫更詳細的防火牆規則、Nginx 配置，或修改後端程式碼以實現上述保護，請告訴我，我會提供對應的程式碼片段。
 
 🧭 核心定位
 
