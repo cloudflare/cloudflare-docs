@@ -28,6 +28,8 @@ export const getStaticPaths = (async ({ paginate }) => {
 		);
 		const slug = groupName.replaceAll(" ", "-").toLowerCase();
 
+		if (notes.length === 0) return [];
+
 		return paginate(notes, {
 			params: { group: slug },
 			props: { groupName },
