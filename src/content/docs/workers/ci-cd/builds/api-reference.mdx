@@ -18,22 +18,26 @@ To use the Builds API, you need an API token to authenticate your requests. The 
 
 Create your token at [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens) with the following permissions:
 
-| Permission | Access level | Why you need it |
-|------------|--------------|-----------------|
-| Workers Builds Configuration | Edit | Trigger builds, manage triggers, configure environment variables |
-| Workers Scripts | Read | Only needed for [one endpoint](#step-1-get-your-worker-tag) to retrieve your Worker's tag (documented as [`external_script_id`](#2-worker-tags-documented-as-external_script_id)) |
+| Permission                   | Access level | Why you need it                                                                                                                                                                   |
+| ---------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Workers Builds Configuration | Edit         | Trigger builds, manage triggers, configure environment variables                                                                                                                  |
+| Workers Scripts              | Read         | Only needed for [one endpoint](#step-1-get-your-worker-tag) to retrieve your Worker's tag (documented as [`external_script_id`](#2-worker-tags-documented-as-external_script_id)) |
 
 <Aside type="note">
-This API token is different from a **build token**. Build tokens are used by the build system to deploy your Worker. By default, Cloudflare automatically generates a build token for your account, but you can also [create your own](/workers/ci-cd/builds/configuration/#api-token-optional). The API token described above is what you use to call the Builds API itself.
+	This API token is different from a **build token**. Build tokens are used by
+	the build system to deploy your Worker. By default, Cloudflare automatically
+	generates a build token for your account, but you can also [create your
+	own](/workers/ci-cd/builds/configuration/#api-token-optional). The API token
+	described above is what you use to call the Builds API itself.
 </Aside>
 
 ### 2. Worker tags (documented as external_script_id)
 
 The Builds API identifies Workers by their **tag**, an immutable UUID assigned by Cloudflare. In API responses and parameters, this value appears as `external_script_id`.
 
-| Identifier | Example | Where it comes from |
-|------------|---------|---------------------|
-| Worker name (`id`) | `my-worker` | The name you gave your Worker |
+| Identifier                        | Example                            | Where it comes from                   |
+| --------------------------------- | ---------------------------------- | ------------------------------------- |
+| Worker name (`id`)                | `my-worker`                        | The name you gave your Worker         |
 | Worker tag (`external_script_id`) | `1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d` | Immutable UUID assigned by Cloudflare |
 
 Every Builds API endpoint that references a Worker requires the **tag**, not the name.
@@ -44,42 +48,31 @@ A **trigger** is a configuration that defines how your Worker gets built and dep
 
 **Trigger fields:**
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `trigger_name` | string | Display name for the trigger |
-| `build_command` | string | Command to build your project (for example, `npm run build`) |
-| `deploy_command` | string | Command to deploy your Worker (for example, `npx wrangler deploy`) |
-| `root_directory` | string | Path to your project root |
-| `branch_includes` | array | Branch patterns that trigger builds (for example, `["main"]` or `["*"]`) |
-| `branch_excludes` | array | Branch patterns to exclude |
-| `path_includes` | array | File path patterns that trigger builds |
-| `path_excludes` | array | File path patterns to ignore |
-| `build_caching_enabled` | boolean | Enable or disable build caching |
-| `environment_variables` | object | Build-time variables specific to this trigger |
+| Field                   | Type    | Description                                                              |
+| ----------------------- | ------- | ------------------------------------------------------------------------ |
+| `trigger_name`          | string  | Display name for the trigger                                             |
+| `build_command`         | string  | Command to build your project (for example, `npm run build`)             |
+| `deploy_command`        | string  | Command to deploy your Worker (for example, `npx wrangler deploy`)       |
+| `root_directory`        | string  | Path to your project root                                                |
+| `branch_includes`       | array   | Branch patterns that trigger builds (for example, `["main"]` or `["*"]`) |
+| `branch_excludes`       | array   | Branch patterns to exclude                                               |
+| `path_includes`         | array   | File path patterns that trigger builds                                   |
+| `path_excludes`         | array   | File path patterns to ignore                                             |
+| `build_caching_enabled` | boolean | Enable or disable build caching                                          |
+| `environment_variables` | object  | Build-time variables specific to this trigger                            |
 
 ## Workflow overview
 
 Most Builds API operations follow this pattern: first get your Worker's tag, then get the trigger UUID, then perform build operations.
 
-```txt
-┌─────────────────────────────────────────────────────────────────┐
-│ 1. Get Worker tag (from Workers Scripts API)                   │
-│    GET /workers/scripts → find your Worker → note the "tag"    │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 2. Get trigger UUID (using the Worker tag)                     │
-│    GET /builds/workers/{tag}/triggers → note "trigger_uuid"    │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 3. Do things with builds                                       │
-│    - Trigger a build: POST /builds/triggers/{trigger_uuid}/... │
-│    - List builds: GET /builds/workers/{tag}/builds             │
-│    - Get logs: GET /builds/builds/{build_uuid}/logs            │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A["1. Get Worker tag<br/><strong>GET /workers/scripts</strong><br/>Find your Worker and note the tag UUID"] --> B["2. Get trigger UUID<br/><strong>GET /builds/workers/&#123;tag&#125;/triggers</strong><br/>List triggers for your Worker and note trigger_uuid"]
+    B --> C{"3. Perform build operations"}
+    C --> D["Trigger a build<br/><strong>POST /builds/triggers/&#123;uuid&#125;/builds</strong>"]
+    C --> E["List builds<br/><strong>GET /builds/workers/&#123;tag&#125;/builds</strong>"]
+    C --> F["Get build logs<br/><strong>GET /builds/builds/&#123;uuid&#125;/logs</strong>"]
+    C --> G["Cancel a build<br/><strong>PUT /builds/builds/&#123;uuid&#125;/cancel</strong>"]
 ```
 
 ## Step 1: Get your Worker tag
@@ -154,10 +147,10 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/trigg
 
 You can specify either `branch` or `commit_hash`:
 
-| Field | Description |
-|-------|-------------|
-| `branch` | Git branch name to build (for example, `main`) |
-| `commit_hash` | Specific commit SHA to build |
+| Field         | Description                                    |
+| ------------- | ---------------------------------------------- |
+| `branch`      | Git branch name to build (for example, `main`) |
+| `commit_hash` | Specific commit SHA to build                   |
 
 The response includes the `build_uuid` which you can use to monitor the build.
 
@@ -176,6 +169,7 @@ The response includes `build_uuid` for each build, which you need for getting lo
 ### Get build logs
 
 Use the [`GET /builds/builds/{uuid}/logs`](/api/resources/workers_builds/subresources/builds/methods/get_logs/) endpoint. Get the `build_uuid` from:
+
 - [List builds](#list-builds-for-a-worker)
 - The response when [triggering a build](#trigger-a-manual-build)
 - [Get latest builds by script IDs](/api/resources/workers_builds/subresources/builds/methods/get_latest_by_script_ids/)
@@ -189,6 +183,7 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/build
 ### Cancel a running build
 
 Use the [`PUT /builds/builds/{uuid}/cancel`](/api/resources/workers_builds/subresources/builds/methods/cancel/) endpoint. Get the `build_uuid` from:
+
 - [List builds](#list-builds-for-a-worker)
 - The response when [triggering a build](#trigger-a-manual-build)
 - [Get latest builds by script IDs](/api/resources/workers_builds/subresources/builds/methods/get_latest_by_script_ids/)
@@ -220,7 +215,9 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/trigg
 Environment variables are set per trigger, meaning you can have different values for production and preview builds. For example, you might set `NODE_ENV=production` on your production trigger and `NODE_ENV=development` on your preview trigger. Refer to the [environment variables API reference](/api/resources/workers_builds/subresources/environment_variables/) for full endpoint details.
 
 <Aside type="note">
-These are **build-time** environment variables, available only during the build process. For runtime environment variables, refer to [Environment variables](/workers/configuration/environment-variables/).
+	These are **build-time** environment variables, available only during the
+	build process. For runtime environment variables, refer to [Environment
+	variables](/workers/configuration/environment-variables/).
 </Aside>
 
 ### List environment variables
@@ -294,43 +291,16 @@ The following examples show common use cases for the Builds API.
 
 This example walks through the complete process of connecting a GitHub repository to a Worker and setting up automated builds using only the API.
 
-```txt
-┌─────────────────────────────────────────────────────────────────┐
-│ 1. Get GitHub account and repo IDs                             │
-│    GET api.github.com/users/... → note account ID              │
-│    GET api.github.com/repos/... → note repo ID                 │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 2. Create repo connection                                      │
-│    PUT /builds/repos/connections → note "repo_connection_uuid" │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 3. Get Worker tag                                              │
-│    GET /workers/scripts → note "tag"                           │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 4. Create triggers                                             │
-│    POST /builds/triggers → create production trigger           │
-│    POST /builds/triggers → create preview trigger (optional)   │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 5. Set environment variables (optional)                        │
-│    PATCH /builds/triggers/{uuid}/environment_variables         │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 6. Trigger first build                                         │
-│    POST /builds/triggers/{uuid}/builds                         │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A["1. Get GitHub account and repo IDs<br/><strong>GET api.github.com/users/...</strong> → note account ID<br/><strong>GET api.github.com/repos/...</strong> → note repo ID"] --> B["2. Create repo connection<br/><strong>PUT /builds/repos/connections</strong><br/>Links your GitHub repo to Cloudflare<br/>Save the repo_connection_uuid"]
+    B --> C["3. Get Worker tag<br/><strong>GET /workers/scripts</strong><br/>Find your Worker and note the tag UUID"]
+    C --> D["4. Create triggers<br/><strong>POST /builds/triggers</strong>"]
+    D --> D1["Production trigger<br/>branch_includes: main<br/>deploy_command: wrangler deploy"]
+    D --> D2["Preview trigger (optional)<br/>branch_includes: *<br/>branch_excludes: main<br/>deploy_command: wrangler versions upload"]
+    D1 --> E["5. Set environment variables (optional)<br/><strong>PATCH /builds/triggers/&#123;uuid&#125;/environment_variables</strong><br/>Configure per-trigger build-time variables"]
+    D2 --> E
+    E --> F["6. Trigger first build<br/><strong>POST /builds/triggers/&#123;uuid&#125;/builds</strong><br/>Start your first production deployment"]
 ```
 
 #### Prerequisites
@@ -479,70 +449,57 @@ Your Worker is now connected to GitHub. Future pushes to `main` will automatical
 
 Redeploy your current active deployment to refresh build-time data. This is useful when you need to rebuild without code changes.
 
-```txt
-┌─────────────────────────────────────────────────────────────────┐
-│ 1. Get active deployment                                       │
-│    GET /workers/scripts/{name}/deployments → note "version_id" │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 2. Find the build for that version                             │
-│    GET /builds/builds?version_ids={id} → note trigger, branch  │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 3. Retrigger with same branch and commit                       │
-│    POST /builds/triggers/{uuid}/builds                         │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A["1. Get active deployment<br/><strong>GET /workers/scripts/&#123;name&#125;/deployments</strong><br/>Find the current live deployment<br/>and note the version_id"] --> B["2. Find the build for that version<br/><strong>GET /builds/builds?version_ids=&#123;id&#125;</strong><br/>Look up trigger_uuid, branch,<br/>and commit_hash from the original build"]
+    B --> C["3. Retrigger with same branch and commit<br/><strong>POST /builds/triggers/&#123;uuid&#125;/builds</strong><br/>Rebuild using the same trigger, branch,<br/>and commit_hash to refresh build-time data"]
 ```
 
 This script chains multiple API calls together:
 
 ```js
 async function redeploy() {
-  const accountId = "<ACCOUNT_ID>";
-  const workerName = "<WORKER_NAME>";
-  const apiToken = process.env.CF_API_TOKEN;
+	const accountId = "<ACCOUNT_ID>";
+	const workerName = "<WORKER_NAME>";
+	const apiToken = process.env.CF_API_TOKEN;
 
-  // Step 1: Get the active deployment's version ID
-  const deploymentsResponse = await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${workerName}/deployments`,
-    {
-      headers: { Authorization: `Bearer ${apiToken}` },
-    }
-  );
-  const deployments = await deploymentsResponse.json();
-  const versionId = deployments.result.deployments[0].versions[0].version_id;
+	// Step 1: Get the active deployment's version ID
+	const deploymentsResponse = await fetch(
+		`https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${workerName}/deployments`,
+		{
+			headers: { Authorization: `Bearer ${apiToken}` },
+		},
+	);
+	const deployments = await deploymentsResponse.json();
+	const versionId = deployments.result.deployments[0].versions[0].version_id;
 
-  // Step 2: Get the build that created this version
-  const buildsResponse = await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/${accountId}/builds/builds?version_ids=${versionId}`,
-    {
-      headers: { Authorization: `Bearer ${apiToken}` },
-    }
-  );
-  const buildsByVersion = await buildsResponse.json();
-  const build = buildsByVersion.result.builds[versionId];
+	// Step 2: Get the build that created this version
+	const buildsResponse = await fetch(
+		`https://api.cloudflare.com/client/v4/accounts/${accountId}/builds/builds?version_ids=${versionId}`,
+		{
+			headers: { Authorization: `Bearer ${apiToken}` },
+		},
+	);
+	const buildsByVersion = await buildsResponse.json();
+	const build = buildsByVersion.result.builds[versionId];
 
-  // Step 3: Retrigger using the same trigger, branch, and commit
-  await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/${accountId}/builds/triggers/${build.trigger.trigger_uuid}/builds`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        branch: build.build_trigger_metadata.branch,
-        commit_hash: build.build_trigger_metadata.commit_hash,
-      }),
-    }
-  );
+	// Step 3: Retrigger using the same trigger, branch, and commit
+	await fetch(
+		`https://api.cloudflare.com/client/v4/accounts/${accountId}/builds/triggers/${build.trigger.trigger_uuid}/builds`,
+		{
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${apiToken}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				branch: build.build_trigger_metadata.branch,
+				commit_hash: build.build_trigger_metadata.commit_hash,
+			}),
+		},
+	);
 
-  console.log("Redeploy triggered successfully");
+	console.log("Redeploy triggered successfully");
 }
 
 redeploy();
