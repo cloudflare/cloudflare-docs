@@ -69,7 +69,7 @@ npm install express
 const { hostname } = new URL(request.url);
 await sandbox.startProcess('python -m http.server 8000');
 const exposed = await sandbox.exposePort(8000, { hostname });
-console.log(exposed.exposedAt); // Public URL
+console.log(exposed.url); // Public URL
 ```
 
 :::note[Local development]
