@@ -15,7 +15,7 @@ import {
 	APIRequest,
 } from "~/components";
 
-This page covers the runtime configuration for `cloudflared` tunnels, including high availability, firewall rules, tokens, and all supported parameters.
+This page covers the runtime configuration for `cloudflared` tunnels, including high availability, firewall rules, tokens, and common parameters.
 
 ## Replicas and high availability
 
@@ -166,20 +166,18 @@ The most commonly used parameters:
 
 | Parameter       | Default           | Description                                              |
 | --------------- | ----------------- | -------------------------------------------------------- |
-| [`--loglevel`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#loglevel)    | `info`            | Log verbosity: `debug`, `info`, `warn`, `error`, `fatal` |
-| [`--logfile`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#logfile)     | stdout            | Path to write log output                                 |
-| [`--metrics`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#metrics)     | `127.0.0.1:2024x` | Prometheus metrics endpoint address                      |
-| [`--protocol`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol)    | `auto`            | Connection protocol: `auto`, `quic`, `http2`             |
-| [`--region`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#region)      | global            | Route through US-only data centers with `us`             |
-| [`--token`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#token)       | —                 | Tunnel token (remotely-managed tunnels)                  |
+| [`--loglevel`](/tunnel/advanced/run-parameters/#loglevel)    | `info`            | Log verbosity: `debug`, `info`, `warn`, `error`, `fatal` |
+| [`--logfile`](/tunnel/advanced/run-parameters/#logfile)     | stdout            | Path to write log output                                 |
+| [`--metrics`](/tunnel/advanced/run-parameters/#metrics)     | `127.0.0.1:2024x` | Prometheus metrics endpoint address                      |
+| [`--protocol`](/tunnel/advanced/run-parameters/#protocol)    | `auto`            | Connection protocol: `auto`, `quic`, `http2`             |
+| [`--region`](/tunnel/advanced/run-parameters/#region)      | global            | Route through US-only data centers with `us`             |
+| [`--token`](/tunnel/advanced/run-parameters/#token)       | —                 | Tunnel token (remotely-managed tunnels)                  |
 
-For the complete list of run parameters, refer to [Tunnel run parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/).
+For the complete list of run parameters, refer to [Run parameters](/tunnel/advanced/run-parameters/).
 
 ### Update run parameters
 
-To update run parameters for remotely-managed tunnels, add them to the tunnel service. For locally-managed tunnels, add the run parameters to your [configuration file](/tunnel/other-tunnel-types/local-management/configuration-file/) as key/value pairs.
-
-To update the tunnel service:
+To update run parameters, add them to the tunnel service:
 
 <Render file="tunnel/update-run-parameters" product="cloudflare-one" />
 
@@ -191,18 +189,16 @@ The most commonly used parameters:
 
 | Parameter                               | Default | Description                               |
 | --------------------------------------- | ------- | ----------------------------------------- |
-| [`originServerName`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#originservername) | `""`    | Hostname expected from origin certificate |
-| [`noTLSVerify`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#notlsverify)           | `false` | Disable TLS certificate verification      |
-| [`httpHostHeader`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#httphostheader)     | `""`    | Override HTTP Host header                 |
-| [`connectTimeout`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#connecttimeout)     | `30s`   | TCP connection timeout to origin          |
+| [`originServerName`](/tunnel/advanced/origin-parameters/#originservername) | `""`    | Hostname expected from origin certificate |
+| [`noTLSVerify`](/tunnel/advanced/origin-parameters/#notlsverify)           | `false` | Disable TLS certificate verification      |
+| [`httpHostHeader`](/tunnel/advanced/origin-parameters/#httphostheader)     | `""`    | Override HTTP Host header                 |
+| [`connectTimeout`](/tunnel/advanced/origin-parameters/#connecttimeout)     | `30s`   | TCP connection timeout to origin          |
 
-For the complete list of origin parameters, refer to [Origin configuration parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/).
+For the complete list of origin parameters, refer to [Origin parameters](/tunnel/advanced/origin-parameters/).
 
 ### Update origin parameters
 
-To update origin parameters for remotely-managed tunnels, use the [Cloudflare One dashboard](https://one.dash.cloudflare.com) or the [API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/). For locally-managed tunnels, add the parameters to your [configuration file](/tunnel/other-tunnel-types/local-management/configuration-file/).
-
-To configure origin parameters in Cloudflare One:
+To update origin parameters, use the [Cloudflare One dashboard](https://one.dash.cloudflare.com) or the [API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/):
 
 <Render file="tunnel/update-origin-configuration" product="cloudflare-one" />
 
@@ -237,7 +233,3 @@ To estimate tunnel capacity requirements for your deployment:
 To increase tunnel capacity, add identical hosts running `cloudflared` replicas.
 
 </Details>
-
-## Cipher suites
-
-<Render file="tunnel/cipher-suites" product="cloudflare-one" />
