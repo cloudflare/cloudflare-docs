@@ -131,9 +131,57 @@ describe("mermaid", () => {
 		expect(text).toMatchInlineSnapshot(`"<code>foo</code>"`);
 	});
 
-	test("transforms code with mermaid language into pre", async () => {
-		const text = await process("<code class='language-mermaid'>foo</code>");
+	test("renders valid mermaid code fence to SVG in container", async () => {
+		const text = await process(
+			"<pre><code class='language-mermaid'>graph TD\n  A[Start] --> B[End]</code></pre>",
+		);
 
-		expect(text).toMatchInlineSnapshot(`"<pre class="mermaid">foo</pre>"`);
+		expect(text).toContain('class="mermaid-container"');
+		expect(text).toContain('class="mermaid-diagram"');
+		expect(text).toContain("<svg");
+		expect(text).toContain("</svg>");
+	});
+
+	test("extracts accTitle into annotation footer and SVG title", async () => {
+		const text = await process(
+			"<pre><code class='language-mermaid'>graph TD\naccTitle: Test Title\n  A --> B</code></pre>",
+		);
+
+		expect(text).toContain('class="mermaid-annotation"');
+		expect(text).toContain("Test Title");
+		expect(text).toContain("<title");
+	});
+
+	test("no annotation footer without accTitle", async () => {
+		const text = await process(
+			"<pre><code class='language-mermaid'>graph TD\n  A --> B</code></pre>",
+		);
+
+		expect(text).not.toContain("mermaid-annotation");
+	});
+
+	test("falls back gracefully on invalid mermaid syntax", async () => {
+		const text = await process(
+			"<code class='language-mermaid'>not valid mermaid</code>",
+		);
+
+		expect(text).toContain("mermaid-error");
+	});
+
+	test("SVG output contains CSS variable references for theming", async () => {
+		const text = await process(
+			"<pre><code class='language-mermaid'>graph TD\n  A --> B</code></pre>",
+		);
+
+		expect(text).toContain("--mermaid-bg");
+		expect(text).toContain("--mermaid-fg");
+	});
+
+	test("stores original diagram text as data attribute", async () => {
+		const text = await process(
+			"<pre><code class='language-mermaid'>graph TD\n  A --> B</code></pre>",
+		);
+
+		expect(text).toContain("data-diagram");
 	});
 });

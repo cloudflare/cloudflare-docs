@@ -1,143 +1,138 @@
-import mermaid from "mermaid";
+/**
+ * Client-side fallback for legacy <pre class="mermaid"> blocks.
+ *
+ * Most diagrams (```mermaid code fences) are rendered at build time by
+ * the rehype plugin using beautiful-mermaid. This script ONLY handles
+ * the ~9 legacy <pre class="mermaid"> blocks that use JSX template
+ * expressions and cannot be processed at build time.
+ *
+ * Uses a dynamic import so beautiful-mermaid (~1.6MB with elkjs) is
+ * only fetched on pages that actually have legacy mermaid blocks.
+ */
 
 const diagrams = document.querySelectorAll<HTMLPreElement>("pre.mermaid");
 
-let init = false;
+if (diagrams.length > 0) {
+	/** Cloudflare-branded theme using beautiful-mermaid's enrichment model */
+	function getThemeOptions() {
+		const isLight =
+			document.documentElement.getAttribute("data-theme") === "light";
 
-// Get computed font family from CSS variable
-function getFontFamily(): string {
-	const computedStyle = getComputedStyle(document.documentElement);
-	const slFont = computedStyle.getPropertyValue("--__sl-font").trim();
-	return slFont || "system-ui, -apple-system, sans-serif";
-}
-
-// Create wrapper container with annotation
-function wrapDiagram(diagram: HTMLPreElement, title: string | null) {
-	// Skip if already wrapped
-	if (diagram.parentElement?.classList.contains("mermaid-container")) {
-		return;
+		return isLight
+			? {
+					bg: "#ffffff",
+					fg: "#1d1d1d",
+					accent: "#f6821f",
+					line: "#f6821f",
+					surface: "#fef1e6",
+					border: "#f6821f",
+					muted: "#999999",
+					transparent: true,
+					font: "Inter",
+				}
+			: {
+					bg: "#1d1d1d",
+					fg: "#f2f2f2",
+					accent: "#f6821f",
+					line: "#f6821f",
+					surface: "#482303",
+					border: "#f6821f",
+					muted: "#797979",
+					transparent: true,
+					font: "Inter",
+				};
 	}
 
-	// Create container
-	const container = document.createElement("div");
-	container.className = "mermaid-container";
-
-	// Wrap the diagram
-	diagram.parentNode?.insertBefore(container, diagram);
-	container.appendChild(diagram);
-
-	// Add annotation footer if title exists
-	if (title) {
-		const footer = document.createElement("div");
-		footer.className = "mermaid-annotation";
-
-		const titleSpan = document.createElement("span");
-		titleSpan.className = "mermaid-annotation-title";
-		titleSpan.textContent = title;
-
-		const logo = document.createElement("img");
-		logo.src = "/logo.svg";
-		logo.alt = "Cloudflare";
-		logo.className = "mermaid-annotation-logo";
-
-		footer.appendChild(titleSpan);
-		footer.appendChild(logo);
-		container.appendChild(footer);
+	/** Extract accTitle from mermaid source text */
+	function extractAccTitle(text: string): string | null {
+		const match = text.match(/^\s*accTitle:\s*(.+)/m);
+		return match ? match[1].trim() : null;
 	}
-}
 
-async function render() {
-	const isLight =
-		document.documentElement.getAttribute("data-theme") === "light";
-	const fontFamily = getFontFamily();
+	/** Strip trailing semicolons from diagram header */
+	function normalizeDiagram(text: string): string {
+		return text.replace(
+			/^(\s*(?:flowchart|graph|sequenceDiagram|stateDiagram(?:-v2)?|classDiagram|erDiagram)\b[^;\n]*);/m,
+			"$1",
+		);
+	}
 
-	// Custom theme variables for Cloudflare branding
-	const lightThemeVars = {
-		fontFamily,
-		primaryColor: "#fef1e6", // cl1-orange-9 (very light orange for node backgrounds)
-		primaryBorderColor: "#f6821f", // cl1-brand-orange
-		primaryTextColor: "#1d1d1d", // cl1-gray-0
-		secondaryColor: "#f2f2f2", // cl1-gray-9
-		secondaryBorderColor: "#999999", // cl1-gray-6
-		secondaryTextColor: "#1d1d1d", // cl1-gray-0
-		tertiaryColor: "#f2f2f2", // cl1-gray-9
-		tertiaryBorderColor: "#999999", // cl1-gray-6
-		tertiaryTextColor: "#1d1d1d", // cl1-gray-0
-		lineColor: "#f6821f", // cl1-brand-orange for arrows
-		textColor: "#1d1d1d", // cl1-gray-0
-		mainBkg: "#fef1e6", // cl1-orange-9
-		errorBkgColor: "#ffefee", // cl1-red-9
-		errorTextColor: "#3c0501", // cl1-red-0
-		edgeLabelBackground: "#ffffff", // white background for edge labels in light mode
-		labelBackground: "#ffffff", // white background for labels in light mode
-	};
-
-	const darkThemeVars = {
-		fontFamily,
-		primaryColor: "#482303", // cl1-orange-1 (dark orange for node backgrounds)
-		primaryBorderColor: "#f6821f", // cl1-brand-orange
-		primaryTextColor: "#f2f2f2", // cl1-gray-9
-		secondaryColor: "#313131", // cl1-gray-1
-		secondaryBorderColor: "#797979", // cl1-gray-5
-		secondaryTextColor: "#f2f2f2", // cl1-gray-9
-		tertiaryColor: "#313131", // cl1-gray-1
-		tertiaryBorderColor: "#797979", // cl1-gray-5
-		tertiaryTextColor: "#f2f2f2", // cl1-gray-9
-		lineColor: "#f6821f", // cl1-brand-orange for arrows
-		textColor: "#f2f2f2", // cl1-gray-9
-		mainBkg: "#482303", // cl1-orange-1
-		background: "#1d1d1d", // cl1-gray-0
-		errorBkgColor: "#3c0501", // cl1-red-0
-		errorTextColor: "#ffefee", // cl1-red-9
-		edgeLabelBackground: "#1d1d1d", // dark background for edge labels
-		labelBackground: "#1d1d1d", // dark background for labels
-	};
-
-	const themeVariables = isLight ? lightThemeVars : darkThemeVars;
-
-	for (const diagram of diagrams) {
-		if (!init) {
-			diagram.setAttribute("data-diagram", diagram.textContent as string);
+	/** Create wrapper container with annotation footer */
+	function wrapDiagram(diagram: HTMLPreElement, title: string | null) {
+		if (diagram.parentElement?.classList.contains("mermaid-container")) {
+			return;
 		}
 
-		const def = diagram.getAttribute("data-diagram") as string;
+		const container = document.createElement("div");
+		container.className = "mermaid-container";
 
-		// Initialize with base theme and custom variables
-		mermaid.initialize({
-			startOnLoad: false,
-			theme: "base",
-			themeVariables,
-			flowchart: {
-				htmlLabels: true,
-				useMaxWidth: true,
-			},
-		});
+		diagram.parentNode?.insertBefore(container, diagram);
+		container.appendChild(diagram);
 
-		await mermaid
-			.render(`mermaid-${crypto.randomUUID()}`, def)
-			.then(({ svg }) => {
-				diagram.innerHTML = svg;
+		if (title) {
+			const footer = document.createElement("div");
+			footer.className = "mermaid-annotation";
 
-				// Extract title from SVG for annotation
-				const svgElement = diagram.querySelector("svg");
-				const titleElement = svgElement?.querySelector("title");
-				const title = titleElement?.textContent?.trim() || null;
+			const titleSpan = document.createElement("span");
+			titleSpan.className = "mermaid-annotation-title";
+			titleSpan.textContent = title;
 
-				// Wrap diagram with container and annotation
-				wrapDiagram(diagram, title);
-			});
+			const logo = document.createElement("img");
+			logo.src = "/logo.svg";
+			logo.alt = "Cloudflare";
+			logo.className = "mermaid-annotation-logo";
 
-		diagram.setAttribute("data-processed", "true");
+			footer.appendChild(titleSpan);
+			footer.appendChild(logo);
+			container.appendChild(footer);
+		}
 	}
 
-	init = true;
+	// Dynamic import — only loads beautiful-mermaid on pages with legacy blocks
+	import("beautiful-mermaid").then(({ renderMermaidSVG }) => {
+		function render() {
+			const options = getThemeOptions();
+
+			for (const diagram of diagrams) {
+				const source =
+					diagram.getAttribute("data-diagram") || diagram.textContent || "";
+
+				// Store the original source on first render
+				if (!diagram.hasAttribute("data-diagram")) {
+					diagram.setAttribute("data-diagram", source);
+				}
+
+				const accTitle = extractAccTitle(source);
+				const normalized = normalizeDiagram(source);
+
+				try {
+					let svg = renderMermaidSVG(normalized, options);
+
+					// Strip Google Fonts @import (the page already loads its fonts)
+					svg = svg.replace(/\s*@import url\([^)]+\);\s*/g, "\n  ");
+
+					diagram.innerHTML = svg;
+					wrapDiagram(diagram, accTitle);
+					diagram.setAttribute("data-processed", "true");
+				} catch (error) {
+					console.warn(
+						"[mermaid] Failed to render diagram:",
+						error instanceof Error ? error.message : error,
+					);
+					diagram.classList.add("mermaid-error");
+					diagram.setAttribute("data-processed", "error");
+				}
+			}
+		}
+
+		// Observe theme changes and re-render (client-side diagrams need re-rendering
+		// because their colors are baked in, unlike build-time SVGs which use CSS vars)
+		const obs = new MutationObserver(() => render());
+		obs.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ["data-theme"],
+		});
+
+		render();
+	});
 }
-
-const obs = new MutationObserver(() => render());
-
-obs.observe(document.documentElement, {
-	attributes: true,
-	attributeFilter: ["data-theme"],
-});
-
-render();
