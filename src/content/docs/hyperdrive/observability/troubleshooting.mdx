@@ -68,7 +68,7 @@ If your queries are not being cached despite Hyperdrive having caching enabled, 
 
 **Function names in SQL comments**: Hyperdrive uses text-based pattern matching to detect uncacheable functions. References to function names like `NOW()` in SQL comments cause the query to be treated as uncacheable, even if the function is not actually called. Remove any references to uncacheable function names from your query text, including comments.
 
-**Driver configuration**: Your driver may be configured such that your queries are not cacheable by Hyperdrive. This may happen if you are using the [Postgres.js](https://github.com/porsager/postgres) driver with [`prepare: false`](https://github.com/porsager/postgres?tab=readme-ov-file#prepared-statements). To resolve this, enable prepared statements with `prepare: true`.
+- **Driver configuration**: Your driver may be configured such that your queries are not cacheable by Hyperdrive. This may happen if you are using the [Postgres.js](https://github.com/porsager/postgres) driver with [`prepare: false`](https://github.com/porsager/postgres?tab=readme-ov-file#prepared-statements). To resolve this, enable prepared statements with `prepare: true`.
 
 ### Driver errors
 
