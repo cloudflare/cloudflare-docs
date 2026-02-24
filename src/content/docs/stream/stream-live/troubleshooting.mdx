@@ -57,7 +57,7 @@ You can disable or enable a live input from the **Live inputs** list page or the
 
 To check or update the live input status via the API, use the `enabled` property:
 
-```bash title="Check if a live input is enabled"
+```bash
 curl -X GET \
 --header "Authorization: Bearer <API_TOKEN>" \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id}
@@ -65,7 +65,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{i
 
 If `enabled` is `false` in the response, update the live input to enable it:
 
-```bash title="Turn on a live input"
+```bash
 curl --request PUT \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
 --header "Authorization: Bearer <API_TOKEN>" \
