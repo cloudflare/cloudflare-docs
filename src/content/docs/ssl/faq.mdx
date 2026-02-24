@@ -11,6 +11,8 @@ import { Render } from "~/components";
 
 Refer to this page for frequently asked questions about Cloudflare SSL/TLS certificate offerings and the CAs that Cloudflare partners with.
 
+---
+
 ## General
 
 ### Does Cloudflare issue both RSA and ECDSA certificates?
@@ -41,15 +43,15 @@ Sectigo is only used for [backup certificates](/ssl/edge-certificates/backup-cer
 
 ### Are there any CA limitations I should know about?
 
-You can find a list of limitations for every CA in our pipeline - as well as information about device and browser compatibility - in the [certificate authorities reference page](/ssl/reference/certificate-authorities/).
+Refer to the [certificate authorities reference page](/ssl/reference/certificate-authorities/) for a list of limitations for every CA in our pipeline. There you can also find information about device and browser compatibility.
 
-### I do not want to use one of the CAs that Cloudflare partners with. What can I do?
+### I do not want to use the CAs that Cloudflare partners with. What can I do?
 
 If you are on a Business or Enterprise plan, you can [upload a certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) from the CA of your choice.
 
 ### I am missing the CAs that Cloudflare uses in my trust store. What should I do?
 
-You can use Cloudflare [CFSSL trust store](https://github.com/cloudflare/cfssl_trust), which includes all of the CAs that are used by Cloudflare managed certificates.
+You can use [CFSSL trust store](https://github.com/cloudflare/cfssl_trust), which includes all of the CAs that are used by Cloudflare managed certificates.
 
 ---
 
