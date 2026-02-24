@@ -31,6 +31,10 @@ Once you have [gathered the required data](/fundamentals/account/account-securit
 2. [Assign users and groups to the application](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-user-or-group-access-portal).
 3. After the users are assigned, navigate to **Provisioning** on the sidebar menu and select **Start Provisioning**.
 
+:::caution[Important]
+Groups provisioned via Entra ID will appear in Cloudflare without any roles assigned. You must assign a role (e.g. Minimal Account Access) immediately after a group is provisioned. If you do not assign a role, the group will remain role-less, which can block user logins.
+:::
+
 :::note
 To successfully synchronize the group details into Cloudflare the `User Principal Name` (of `Identity`) and `Email` (of `Contact Information`) fields of each user must be identical. Values are case-sensitive, and the User Principal Name can only contain alphanumeric characters. Learn more about [how to create, invite, and delete users](https://learn.microsoft.com/entra/fundamentals/how-to-create-delete-users).
 :::
