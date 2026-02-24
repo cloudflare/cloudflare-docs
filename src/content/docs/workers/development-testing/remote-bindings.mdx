@@ -152,6 +152,15 @@ The following example shows every binding type that supports `remote: true`, con
 			"remote": true,
 		},
 	],
+
+	// VPC Services (Workers VPC) — no local simulation
+	"vpc_services": [
+		{
+			"binding": "MY_VPC",
+			"service_id": "<YOUR_VPC_SERVICE_ID>",
+			"remote": true,
+		},
+	],
 }
 ```
 
@@ -313,6 +322,24 @@ Workers for Platforms users can configure `remote: true` in dispatch namespace b
 </WranglerConfig>
 
 This allows you to run your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dynamic-dispatch-worker) locally, while connecting it to your remote dispatch namespace binding. This allows you to test changes to your core dispatching logic against real, deployed [user Workers](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers).
+
+### [VPC Services](/workers-vpc/configuration/vpc-services/)
+
+VPC Services allow your Worker to connect to private APIs and services in external clouds (AWS, Azure, GCP, on-premise, etc.) through Cloudflare Tunnel. There is no local simulation for VPC Services — remote connections are required.
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+	"vpc_services": [
+		{
+			"binding": "MY_VPC",
+			"service_id": "<YOUR_VPC_SERVICE_ID>",
+			"remote": true
+		}
+	]
+}
+```
+</WranglerConfig>
 
 ## Unsupported remote bindings
 
