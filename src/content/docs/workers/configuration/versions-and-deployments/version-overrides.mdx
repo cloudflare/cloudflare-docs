@@ -53,3 +53,8 @@ Now test the new version with a version override before gradually progressing th
 ```sh
 curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
 ```
+
+## Related resources
+
+- [Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) — Learn how percentage-based traffic splitting works, including version affinity and observability.
+- [Cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-based-deployments/) — Route requests to different version configurations based on named user segments instead of a single percentage split.

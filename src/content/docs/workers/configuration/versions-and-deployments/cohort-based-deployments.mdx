@@ -157,21 +157,21 @@ The following constraints apply to cohort-based deployments.
 
 ### Naming rules
 
-| Rule | Detail |
-| :--- | :----- |
-| Allowed characters | Alphanumeric, hyphens (`-`), and underscores (`_`) |
-| Maximum length | 10 characters |
-| Case sensitivity | Case-insensitive (`CANARY` and `canary` resolve to the same cohort) |
-| Uniqueness | Each cohort name must be unique within a deployment |
+| Rule               | Detail                                                              |
+| :----------------- | :------------------------------------------------------------------ |
+| Allowed characters | Alphanumeric, hyphens (`-`), and underscores (`_`)                  |
+| Maximum length     | 10 characters                                                       |
+| Case sensitivity   | Case-insensitive (`CANARY` and `canary` resolve to the same cohort) |
+| Uniqueness         | Each cohort name must be unique within a deployment                 |
 
 Invalid or duplicate cohort names cause the deployment to fail with a `400` error.
 
 ### Deployment limits
 
-| Limit | Value |
-| :---- | :---- |
-| Maximum cohorts per deployment | 5 |
-| Maximum unique version IDs across default and all cohorts | 2 |
+| Limit                                                     | Value |
+| :-------------------------------------------------------- | :---- |
+| Maximum cohorts per deployment                            | 5     |
+| Maximum unique version IDs across default and all cohorts | 2     |
 
 The unique version limit means that you can use at most two distinct version IDs in a single deployment, but you can reference those same IDs in multiple cohorts.
 
@@ -224,3 +224,100 @@ Cohort-based deployments do not affect [Durable Object](/durable-objects/) versi
 At deploy time, invalid cohort names, duplicate names, exceeding the cohort or version limits, or percentages that do not sum to 100 cause the deployment to fail with a `400` error.
 
 At runtime, if the `Cloudflare-Workers-Cohort` header value does not match any defined cohort name, the request falls back to the default `versions` configuration. No error is returned to the client.
+
+## Gateway entrypoint pattern
+
+This pattern uses your Worker's default entrypoint to determine the cohort, then calls itself on a separate entrypoint via a [loopback binding](/workers/runtime-apis/context/#exports) with the resolved cohort. This keeps cohort resolution logic in one place and lets the rest of your Worker code remain cohort-unaware.
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+// Default entrypoint — resolves cohort and forwards to Service entrypoint
+export default {
+	async fetch(request, env, ctx) {
+		// Step 1: Determine cohort based on your application logic
+		const accountId = request.headers.get("cf-account-id");
+
+		const cohort = accountId
+			? resolveCohortFromAccountId(request, env, accountId)
+			: resolveCohortFromUrl(request, env);
+
+		// Step 2: Call yourself via loopback binding with the resolved cohort
+		return ctx.exports.Service({ version: { cohort } }).handle(request);
+	},
+};
+
+function resolveCohortFromAccountId(request, env, accountId) {
+	const plan = lookupAccountPlan(accountId, env);
+
+	if (isCloudflareEmployee(request)) return "employee";
+	if (plan === "free") return "free";
+	if (plan === "enterprise") return "ent";
+	return "paid";
+}
+
+function resolveCohortFromUrl(request, env) {
+	// URL pattern example: https://<ACCOUNT_ID>.r2.cloudflarestorage.com/bucket/key
+	const url = new URL(request.url);
+	const hostname = url.hostname;
+	const accountMatch = hostname.match(
+		/^([a-f0-9]+)\.r2\.cloudflarestorage\.com$/i,
+	);
+
+	// Default when account cannot be determined
+	if (!accountMatch) {
+		return "ent";
+	}
+
+	const accountId = accountMatch[1];
+	const plan = lookupAccountPlan(accountId, env);
+
+	if (plan === "free") return "free";
+	if (plan === "some-special-entitlement") return "ent";
+	return "paid";
+}
+
+export class Service extends WorkerEntrypoint {
+	async handle(request) {
+		// The rest of your code goes here
+	}
+}
+```
+
+The `version` option passed to the loopback binding sets the cohort for the downstream call. When the `Service` entrypoint is invoked, the platform uses the specified cohort to select a version according to your deployment's cohort configuration.
+
+:::note
+To use `ctx.exports`, you must enable the [`enable_ctx_exports` compatibility flag](/workers/configuration/compatibility-flags/#enable-ctxexports) in your Wrangler configuration.
+:::
+
+## Accessing cohort in your code
+
+You can use `ctx.version` to access cohort and version selection metadata for observability or application logic:
+
+```ts
+export default {
+	async fetch(request, env, ctx) {
+		const { cohort, override, key, metadata } = ctx.version;
+
+		// cohort: the cohort used for version selection (if any)
+		// override: the version specified by an override header (if any)
+		// key: the version specified by an affinity key header (if any)
+		// metadata: { id, tag, timestamp } of selected version
+
+		console.log(`Serving request with cohort: ${cohort}`);
+		// ...
+	},
+};
+```
+
+| Property   | Description                                                                                      |
+| :--------- | :----------------------------------------------------------------------------------------------- |
+| `cohort`   | The cohort name used for version selection, if a `Cloudflare-Workers-Cohort` header was present. |
+| `override` | The version ID specified by a `Cloudflare-Workers-Version-Overrides` header, if present.         |
+| `key`      | The version key specified by a `Cloudflare-Workers-Version-Key` header, if present.              |
+| `metadata` | An object containing `id`, `tag`, and `timestamp` of the selected version.                       |
+
+## Related resources
+
+- [Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) — Learn how percentage-based traffic splitting works, including version affinity, static assets handling, and Durable Objects behavior.
+- [Version overrides](/workers/configuration/versions-and-deployments/version-overrides/) — Send a specific request to a specific version of your Worker, bypassing percentage-based and cohort-based routing.
