@@ -63,6 +63,10 @@ await sandbox.restoreBackup(backup);
 You must configure a `BACKUP_BUCKET` R2 binding and R2 presigned URL credentials (`R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `CLOUDFLARE_ACCOUNT_ID`, `BACKUP_BUCKET_NAME`) in your `wrangler.jsonc` before using backup methods. Refer to the [Wrangler configuration](/sandbox/configuration/wrangler/) for binding setup.
 :::
 
+:::caution[Path permissions]
+The backup process uses `mksquashfs`, which must have read access to every file and subdirectory in the target path. If any file has restrictive permissions (for example, directories owned by a different user), the backup fails with a `BackupCreateError: mksquashfs failed: Could not create destination file: Permission denied` error. Run `chmod -R a+rX` on the target directory before backing up, or refer to the [path permissions guide](/sandbox/guides/backup-restore/#path-permissions) for other options.
+:::
+
 :::caution[Partial writes]
 Partially-written files may not be captured consistently. Only completed writes are guaranteed to be included in the backup.
 :::
