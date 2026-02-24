@@ -67,12 +67,12 @@ Most Builds API operations follow this pattern: first get your Worker's tag, the
 
 ```mermaid
 flowchart TD
-    A["1. Get Worker tag<br/><strong>GET /workers/scripts</strong><br/>Find your Worker and note the tag UUID"] --> B["2. Get trigger UUID<br/><strong>GET /builds/workers/&#123;tag&#125;/triggers</strong><br/>List triggers for your Worker and note trigger_uuid"]
-    B --> C{"3. Perform build operations"}
-    C --> D["Trigger a build<br/><strong>POST /builds/triggers/&#123;uuid&#125;/builds</strong>"]
-    C --> E["List builds<br/><strong>GET /builds/workers/&#123;tag&#125;/builds</strong>"]
-    C --> F["Get build logs<br/><strong>GET /builds/builds/&#123;uuid&#125;/logs</strong>"]
-    C --> G["Cancel a build<br/><strong>PUT /builds/builds/&#123;uuid&#125;/cancel</strong>"]
+    A["<strong>1. Get Worker tag</strong><br/>GET /workers/scripts"] --> B["<strong>2. Get trigger UUID</strong><br/>GET /builds/workers/&#123;worker_tag&#125;/triggers"]
+    B --> C{"<strong>3. Perform build operations</strong>"}
+    C --> D["<strong>Trigger a build</strong><br/>POST /builds/triggers/&#123;trigger_uuid&#125;/builds"]
+    C --> E["<strong>List builds</strong><br/>GET /builds/workers/&#123;worker_tag&#125;/builds"]
+    C --> F["<strong>Get build logs</strong><br/>GET /builds/builds/&#123;build_uuid&#125;/logs"]
+    C --> G["<strong>Cancel a build</strong><br/>PUT /builds/builds/&#123;build_uuid&#125;/cancel"]
 ```
 
 ## Step 1: Get your Worker tag
@@ -293,14 +293,14 @@ This example walks through the complete process of connecting a GitHub repositor
 
 ```mermaid
 flowchart TD
-    A["1. Get GitHub account and repo IDs<br/><strong>GET api.github.com/users/...</strong> → note account ID<br/><strong>GET api.github.com/repos/...</strong> → note repo ID"] --> B["2. Create repo connection<br/><strong>PUT /builds/repos/connections</strong><br/>Links your GitHub repo to Cloudflare<br/>Save the repo_connection_uuid"]
-    B --> C["3. Get Worker tag<br/><strong>GET /workers/scripts</strong><br/>Find your Worker and note the tag UUID"]
-    C --> D["4. Create triggers<br/><strong>POST /builds/triggers</strong>"]
-    D --> D1["Production trigger<br/>branch_includes: main<br/>deploy_command: wrangler deploy"]
-    D --> D2["Preview trigger (optional)<br/>branch_includes: *<br/>branch_excludes: main<br/>deploy_command: wrangler versions upload"]
-    D1 --> E["5. Set environment variables (optional)<br/><strong>PATCH /builds/triggers/&#123;uuid&#125;/environment_variables</strong><br/>Configure per-trigger build-time variables"]
+    A["<strong>1. Get GitHub account and repo IDs</strong><br/>GET api.github.com/users/... → note account ID<br/>GET api.github.com/repos/... → note repo ID"] --> B["<strong>2. Create repo connection</strong><br/>PUT /builds/repos/connections"]
+    B --> C["<strong>3. Get Worker tag</strong><br/>GET /workers/scripts"]
+    C --> D["<strong>4. Create triggers</strong><br/>POST /builds/triggers"]
+    D --> D1["<strong>Production trigger</strong><br/>branch_includes: main<br/>deploy_command: wrangler deploy"]
+    D --> D2["<strong>Preview trigger (optional)</strong><br/>branch_includes: *<br/>branch_excludes: main<br/>deploy_command: wrangler versions upload"]
+    D1 --> E["<strong>5. Set environment variables (optional)</strong><br/>PATCH /builds/triggers/&#123;trigger_uuid&#125;/environment_variables"]
     D2 --> E
-    E --> F["6. Trigger first build<br/><strong>POST /builds/triggers/&#123;uuid&#125;/builds</strong><br/>Start your first production deployment"]
+    E --> F["<strong>6. Trigger first build</strong><br/>POST /builds/triggers/&#123;trigger_uuid&#125;/builds"]
 ```
 
 #### Prerequisites
@@ -450,9 +450,9 @@ Your Worker is now connected to GitHub. Future pushes to `main` will automatical
 Redeploy your current active deployment to refresh build-time data. This is useful when you need to rebuild without code changes.
 
 ```mermaid
-flowchart TD
-    A["1. Get active deployment<br/><strong>GET /workers/scripts/&#123;name&#125;/deployments</strong><br/>Find the current live deployment<br/>and note the version_id"] --> B["2. Find the build for that version<br/><strong>GET /builds/builds?version_ids=&#123;id&#125;</strong><br/>Look up trigger_uuid, branch,<br/>and commit_hash from the original build"]
-    B --> C["3. Retrigger with same branch and commit<br/><strong>POST /builds/triggers/&#123;uuid&#125;/builds</strong><br/>Rebuild using the same trigger, branch,<br/>and commit_hash to refresh build-time data"]
+flowchart LR
+    A["<strong>1. Get active deployment</strong><br/>GET /workers/scripts/&#123;worker_name&#125;/deployments"] --> B["<strong>2. Find the build for that version</strong><br/>GET /builds/builds?version_ids=&#123;version_id&#125;"]
+    B --> C["<strong>3. Retrigger with same branch and commit</strong><br/>POST /builds/triggers/&#123;trigger_uuid&#125;/builds"]
 ```
 
 This script chains multiple API calls together:
