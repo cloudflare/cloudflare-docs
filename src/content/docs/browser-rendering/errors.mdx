@@ -11,6 +11,11 @@ import { Plan } from "~/components";
 
 This page provides a reference for error codes you may encounter when using Browser Rendering.
 
+
+
+
+
+
 ## Service-level errors
 
 Service-level errors occur when Browser Rendering cannot fulfill a request due to system availability, authentication, or resource constraints.
@@ -18,17 +23,24 @@ Service-level errors occur when Browser Rendering cannot fulfill a request due t
 | Error name | HTTP code | Internal code | How it appears | Description | Source |
 | --- | --- | --- | --- | --- | --- |
 | No browser available | `503` | - | `No browser available. Please try again in a few minutes.` | Browser Rendering cannot provision a browser instance. | [exceptions.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/exceptions.ts) |
+- Put further down list, per Sofia
 | Internal error | `500` | `2000` | `Internal Error` | An unexpected issue occurred on the Browser Rendering service. | [exceptions.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/exceptions.ts) |
+- Put further down list, per Sofia
 | Browser unavailable | `429` | - | `Browser connection lost. Please try again in a few minutes.` | The browser connection was lost. | [exceptions.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/exceptions.ts) |
+- This is rate limiting (not browser connection lost) per Sofia
 | Request entity too large | `413` | - | `Error: request entity too large` | The request body exceeds the maximum allowed size (50 MB for PDF endpoint). | [PDF endpoint docs](/browser-rendering/rest-api/pdf-endpoint/) |
 | Timeout | `408` | - | `Request timed out` | The request exceeded the allowed time limit. | [exceptions.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/exceptions.ts) |
 | Authentication error | `401` | `10000` | `Authentication failed` | Authentication credentials are invalid or missing. | [exceptions.ts](https://gitlab.cfdata.org/cloudflare/brapi/brapi-api-worker/-/blob/staging/workers/common/src/exceptions.ts) |
 | Bad request | `400` | - | Varies by endpoint | The request is malformed or contains invalid parameters. | [Screenshot endpoint docs](/browser-rendering/rest-api/screenshot-endpoint/) |
 | Unprocessable entity | `422` | - | `422 Unprocessable Entity` | Browser Rendering could not complete the action because of an issue with the target site. | [FAQ](/browser-rendering/faq/) |
 | Invalid route | `400` | `7000` | `No route for that URI` | The API endpoint URL is invalid or malformed. | [GitHub Issue #10864](https://github.com/cloudflare/workers-sdk/issues/10864) |
+- Remove, per Sofia - not specific to our service
 | Invalid account identifier | `400` | `7003` | `Could not route to /accounts/{accountId}/workers/browser/fetch, perhaps your object identifier is invalid?` | The account ID in the API request is invalid. | [GitHub Issue #10864](https://github.com/cloudflare/workers-sdk/issues/10864) |
+- Remove, per Sofia - not specific to our service
 
 ## Chrome network errors
+
+- Also see https://docs.newrelic.com/docs/synthetics/synthetic-monitoring/using-monitors/synthetic-monitoring-response-codes/ per Sofia
 
 Chrome network errors occur when the browser encounters issues loading the target website. These errors come directly from Chrome and use the `net::` prefix.
 
