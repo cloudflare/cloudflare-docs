@@ -28,14 +28,15 @@ export const getStaticPaths = (async () => {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-export const GET: APIRoute<Props> = async ({ props }) => {
+export const GET: APIRoute<Props> = async ({ props, url }) => {
+	const base = url.origin;
 	const { entry, pages } = props;
-	const { title, url } = entry.data.entry;
+	const { title, url: productUrl } = entry.data.entry;
 	const description = entry.data.meta?.description;
 
 	const pageLinks = pages
 		.map((e) => {
-			const line = `- [${e.data.title}](https://developers.cloudflare.com/${e.id}/index.md)`;
+			const line = `- [${e.data.title}](${base}/${e.id}/index.md)`;
 			return e.data.description ? line.concat(`: ${e.data.description}`) : line;
 		})
 		.join("\n");
@@ -45,9 +46,9 @@ export const GET: APIRoute<Props> = async ({ props }) => {
 
 		${description ?? ""}
 
-		> Use [${title} llms-full.txt](https://developers.cloudflare.com${url}llms-full.txt) for the complete ${title} documentation in a single file. That file is intended for offline indexing, bulk vectorization, or large-context models.
+		> Use [${title} llms-full.txt](${base}${productUrl}llms-full.txt) for the complete ${title} documentation in a single file. That file is intended for offline indexing, bulk vectorization, or large-context models.
 		>
-		> For other Cloudflare products, see the [Cloudflare documentation directory](https://developers.cloudflare.com/llms.txt).
+		> For other Cloudflare products, see the [Cloudflare documentation directory](${base}/llms.txt).
 
 		## ${title} documentation pages
 

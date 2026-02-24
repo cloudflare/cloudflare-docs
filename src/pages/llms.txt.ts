@@ -2,7 +2,8 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import dedent from "dedent";
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ url }) => {
+	const base = url.origin;
 	const directory = await getCollection("directory", (p) => {
 		return !!p.data.entry.group;
 	});
@@ -32,9 +33,9 @@ export const GET: APIRoute = async () => {
 	const markdown = dedent(`
 		# Cloudflare Developer Documentation
 
-		Cloudflare's platform spans developer tools, network security, application performance, Zero Trust, and more.
+		Explore guides and tutorials to start building on Cloudflare's platform.
 
-		> For the complete documentation archive in a single file, use the [Full Documentation Archive](https://developers.cloudflare.com/llms-full.txt). That file is intended for offline indexing, bulk vectorization, or large-context models.
+		> For the complete documentation archive in a single file, use the [Full Documentation Archive](${base}/llms-full.txt). That file is intended for offline indexing, bulk vectorization, or large-context models.
 		>
 		> For a specific product's full page index, follow that product's llms.txt link below.
 
@@ -45,7 +46,7 @@ export const GET: APIRoute = async () => {
 
 				${entries
 					?.map((entry) => {
-						const line = `- [${entry.data.entry.title}](https://developers.cloudflare.com/${entry.id}/llms.txt)`;
+						const line = `- [${entry.data.entry.title}](${base}/${entry.id}/llms.txt)`;
 						const description = entry.data.meta?.description;
 						return description ? line.concat(`: ${description}`) : line;
 					})
