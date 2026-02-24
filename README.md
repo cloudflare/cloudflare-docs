@@ -1,5 +1,142 @@
 Sovereign Lex Bank
+# 清除現有規則（謹慎操作，若遠端連線可能中斷，建議先備份）
+sudo iptables -F
+sudo iptables -X
+sudo iptables -t filter -F
 
+# 設定預設政策
+sudo iptables -P INPUT DROP
+sudo iptables -P FORWARD DROP
+sudo iptables -P OUTPUT ACCEPT
+
+# 允許已建立的連線
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# 允許本機 loopback
+sudo iptables -A INPUT -i lo -j ACCEPT
+
+# 允許 SSH (避免鎖住自己)
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+# 允許特定 IP 存取 80 與 443
+sudo iptables -A INPUT -s 203.0.113.50 -p tcp -m multiport --dports 80,443 -j ACCEPT
+
+# 若有其他需要允許的 IP，重複上指令
+sudo iptables -A INPUT -s 192.168.1.0/24 -p tcp -m multiport --dports 80,443 -j ACCEPT
+
+# 其餘 IP 存取 80/443 會被預設 DROP 阻擋
+
+# 儲存規則（依不同發行版而異，Ubuntu 可使用 iptables-persistent）
+sudo apt install iptables-persistent
+sudo netfilter-persistent save# 啟用 UFW
+sudo ufw enable
+
+# 預設政策：拒絕所有傳入連線，允許所有傳出
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# 允許 SSH (非常重要，否則可能鎖住自己)
+sudo ufw allow 22/tcp
+
+# 允許特定 IP 存取 HTTP/HTTPS
+sudo ufw allow from 203.0.113.50 to any port 80 proto tcp
+sudo ufw allow from 203.0.113.50 to any port 443 proto tcp
+
+# 若您需要從內部網路存取，也可加入
+sudo ufw allow from 192.168.1.0/24 to any port 80 proto tcp
+
+# 檢查規則
+sudo ufw status verboseALLOWED_IPS=203.0.113.50,192.168.1.100
+DEPLOY_TOKEN=your-very-secure-random-tokenimport os
+from flask import Flask, request, jsonify
+from functools import wraps
+
+app = Flask(__name__)
+
+# 從環境變數讀取設定
+ALLOWED_IPS = os.getenv('ALLOWED_IPS', '203.0.113.50').split(',')  # 可設多個 IP，用逗號分隔
+DEPLOY_TOKEN = os.getenv('DEPLOY_TOKEN', 'your-secure-token')      # 預設值僅供測試，正式應設為複雜字串
+
+def check_ip_and_token(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        # 1. IP 檢查
+        client_ip = request.remote_addr
+        if client_ip not in ALLOWED_IPS:
+            return jsonify({"error": "IP not allowed"}), 403
+
+        # 2. Token 檢查
+        token = request.headers.get('X-Deploy-Token')
+        if token != DEPLOY_TOKEN:
+            return jsonify({"error": "Invalid token"}), 403
+
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route('/deploy', methods=['POST'])
+@check_ip_and_token
+def deploy():
+    """觸發 GitHub 部署"""
+    # 此處放入您的部署邏輯，例如呼叫 os.system 或 subprocess
+    # 注意：避免使用 shell=True，防止注入
+    # 範例：僅記錄請求
+    print(f"Deploy triggered from IP: {request.remote_addr}")
+    return jsonify({"status": "deploy triggered"}), 200
+
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({"status": "healthy"}), 200
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)# /etc/nginx/sites-available/your-site.conf
+
+server {
+    listen 80;
+    server_name your-domain.com;
+
+    # 全域速率限制（可選）
+    limit_req_zone $binary_remote_addr zone=api_limit:10m rate=10r/m;
+    limit_req_status 429;
+
+    location / {
+        # 基本代理設定
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        # 1. IP 白名單（僅允許特定 IP 存取整個站點，可依需求調整）
+        # 若要僅限制特定路徑，請放在對應 location 內
+        allow 203.0.113.50;   # 您的固定 IP
+        allow 192.168.1.0/24; # 內部網路（可選）
+        deny all;             # 其餘全部拒絕
+    }
+
+    # 針對 /deploy 端點加強限制（IP 白名單已在上一層生效，此處可再加強）
+    location /deploy {
+        # 僅允許特定 IP（可重複，但上層已限制）
+        allow 203.0.113.50;
+        deny all;
+
+        # 套用速率限制
+        limit_req zone=api_limit burst=5 nodelay;
+
+        # 檢查 User-Agent（阻擋常見爬蟲）
+        if ($http_user_agent ~* (python-requests|curl|wget|scrapy|httpie|java|perl|ruby|go)) {
+            return 403;
+        }
+
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # 其他端點可照常開放（如健康檢查）
+    location /health {
+        allow all;
+        proxy_pass http://127.0.0.1:5000;
+    }
+}
 主權級法務與資訊秩序管理平台
 管理AI：LexAI（唯一AI控制）
 所屬體系：閃電帝國六庫之一
