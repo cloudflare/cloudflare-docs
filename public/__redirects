@@ -1387,11 +1387,11 @@
 /ssl/reference/migration-guides/dcv-update/ /ssl/reference/migration-guides/ 301
 /ssl/reference/validation-backoff-schedule/ /ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
-/support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/faq/ 301
+/support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/faq/#caa-records 301
 /support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/ /ssl/troubleshooting/general-ssl-errors/ 301
 /support/ssl-tls/troubleshooting/you-have-reached-your-quota-for-the-requested-resource.-code-2005/ /ssl/edge-certificates/custom-certificates/troubleshooting/ 301
 /ssl/edge-certificates/troubleshooting/ca-faq/ /ssl/faq/ 301
-/ssl/edge-certificates/troubleshooting/caa-records/ /ssl/faq/ 301
+/ssl/edge-certificates/troubleshooting/caa-records/ /ssl/faq/#caa-records 301
 /ssl/troubleshooting/faq/ /ssl/faq/ 301
 
 # cloudflare for saas
