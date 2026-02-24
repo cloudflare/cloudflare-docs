@@ -381,28 +381,23 @@ The `createBackup()` method uses `mksquashfs` to create a compressed archive of 
 - **Restrictive file modes** — Files with modes like `0600` or directories with `0700` that belong to a different user than the one running the backup process.
 - **Runtime-generated config directories** — Tools and applications often create configuration directories (such as `.cache`, `.config`, or tool-specific dotfiles) with restrictive permissions.
 
-### Fix permissions before backing up
+### Fix permissions at build time
 
-Ensure the backup process can read all files in the target directory. You can adjust permissions before creating a backup:
+The recommended approach is to set permissions in your Dockerfile so that every container starts with the correct access. This avoids running `chmod` at runtime before every backup:
 
-```ts
-// Fix permissions before backup
-await sandbox.exec("chmod -R a+rX /home/sandbox/.secret");
-const backup = await sandbox.createBackup({ dir: "/home/sandbox" });
+```dockerfile
+# Ensure the backup target directory is readable
+RUN mkdir -p /home/sandbox && chmod -R a+rX /home/sandbox
 ```
 
 The `a+rX` flag grants read access to all files and execute (traverse) access to all directories, without changing write permissions.
 
-### Back up a parent directory selectively
+### Fix permissions at runtime
 
-If you cannot change permissions on certain paths, back up a directory that does not contain restricted subdirectories, or remove the problematic paths first:
+If the restrictive permissions come from files created at runtime (for example, a tool that generates config files with `0600` mode), fix them before calling `createBackup()`:
 
 ```ts
-// Option 1: Back up only the directory you control
-const backup = await sandbox.createBackup({ dir: "/workspace" });
-
-// Option 2: Remove restricted paths before backup
-await sandbox.exec("rm -rf /home/sandbox/.secret/restricted-dir");
+await sandbox.exec("chmod -R a+rX /home/sandbox/.claude");
 const backup = await sandbox.createBackup({ dir: "/home/sandbox" });
 ```
 
