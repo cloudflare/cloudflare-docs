@@ -121,6 +121,7 @@ const use_cases: Array<Tag> = [
 	{ label: "Cookies" },
 	{ label: "CORS" },
 	{ label: "Debugging", variants: ["debug", "troubleshooting"] },
+	{ label: "DNS" },
 	{ label: "Forms" },
 	{ label: "Full stack", variants: ["full-stack"] },
 	{ label: "Geolocation" },
