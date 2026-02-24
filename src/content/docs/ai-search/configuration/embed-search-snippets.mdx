@@ -46,25 +46,16 @@ UI snippets connect to your AI Search instance through a public endpoint. You ne
 
 <Steps>
 
-1. Add the CDN script tag to your HTML file (for example, `index.html`):
+1. Add the script tag to your HTML file (for example, `index.html`). Replace `<INSTANCE_ID>` with your AI Search instance's public endpoint ID, which you can find in your AI Search instance's **Settings** > **Public Endpoint**.
 
    ```html
    <script
    	type="module"
-   	src="https://unpkg.com/@cloudflare/ai-search-snippet"
+   	src="https://<INSTANCE_ID>.search.ai.cloudflare.com/assets/v0.0.25/search-snippet.es.js"
    ></script>
    ```
 
-   You can also use jsDelivr:
-
-   ```html
-   <script
-   	type="module"
-   	src="https://cdn.jsdelivr.net/npm/@cloudflare/ai-search-snippet"
-   ></script>
-   ```
-
-2. Add a component with your `api-url`. Replace `<INSTANCE_ID>` with your AI Search instance's public endpoint ID, which you can find in your AI Search instance's **Settings** > **Public Endpoint**.
+2. Add a component with your `api-url`.
 
    ```html
    <search-bar-snippet
@@ -87,7 +78,7 @@ The following example shows a complete HTML page with a search bar. When a user 
 	<head>
 		<script
 			type="module"
-			src="https://unpkg.com/@cloudflare/ai-search-snippet"
+			src="https://<INSTANCE_ID>.search.ai.cloudflare.com/assets/v0.0.25/search-snippet.es.js"
 		></script>
 	</head>
 	<body>
