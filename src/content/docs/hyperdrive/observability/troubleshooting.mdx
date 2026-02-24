@@ -64,7 +64,7 @@ Hyperdrive may also encounter `ErrorResponse` wire protocol messages sent by you
 
 If your queries are not being cached despite Hyperdrive having caching enabled, check the following:
 
-**Stable or volatile PostgreSQL functions in your query**: Queries that contain PostgreSQL functions categorized as `STABLE` or `VOLATILE` are not cacheable. Common examples include `NOW()`, `CURRENT_TIMESTAMP`, `CURRENT_DATE`, `RANDOM()`, and `LASTVAL()`. To resolve this, move the function call to your application code and pass the result as a query parameter. For example, instead of `WHERE created_at > NOW()`, compute the timestamp in your Worker and pass it as a parameter: `WHERE created_at > $1`. Refer to [Query caching](/hyperdrive/concepts/query-caching/) for a full list of uncacheable functions.
+- **Stable or volatile PostgreSQL functions in your query**: Queries that contain PostgreSQL functions categorized as `STABLE` or `VOLATILE` are not cacheable. Common examples include `NOW()`, `CURRENT_TIMESTAMP`, `CURRENT_DATE`, `RANDOM()`, and `LASTVAL()`. To resolve this, move the function call to your application code and pass the result as a query parameter. For example, instead of `WHERE created_at > NOW()`, compute the timestamp in your Worker and pass it as a parameter: `WHERE created_at > $1`. Refer to [Query caching](/hyperdrive/concepts/query-caching/) for a full list of uncacheable functions.
 
 **Function names in SQL comments**: Hyperdrive uses text-based pattern matching to detect uncacheable functions. References to function names like `NOW()` in SQL comments cause the query to be treated as uncacheable, even if the function is not actually called. Remove any references to uncacheable function names from your query text, including comments.
 
