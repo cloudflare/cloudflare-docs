@@ -141,7 +141,7 @@ export default function ProductSelect({
 			value={selected}
 			styles={selectStyles}
 			components={{ Option: LinkOption }}
-			onChange={() => {}}
+			onChange={() => {}} // Navigation handled by <a> in LinkOption; no-op prevents react-select warnings
 		/>
 	);
 }
