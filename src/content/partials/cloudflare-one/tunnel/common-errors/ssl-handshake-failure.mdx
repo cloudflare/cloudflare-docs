@@ -1,0 +1,5 @@
+---
+{}
+---
+
+If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.

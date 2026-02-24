@@ -1,0 +1,14 @@
+---
+{}
+---
+
+This means that your `cloudflared access` client is unable to reach your `cloudflared tunnel` origin. To diagnose this, look at the `cloudflared tunnel` logs. A common root cause is that the `cloudflared tunnel` is unable to proxy to your origin (for example, because the ingress is misconfigured, the origin is down, or the origin HTTPS certificate cannot be validated by `cloudflared tunnel`). If `cloudflared tunnel` has no logs, it means Cloudflare's network is not able to route the websocket traffic to it.
+
+There are several possible root causes behind this error:
+
+- Your `cloudflared tunnel` is either not running or not connected to Cloudflare's network.
+- WebSockets are not [enabled](/network/websockets/#enable-websockets).
+- Your Cloudflare account has Universal SSL enabled but your SSL/TLS encryption mode is set to **Off (not secure)**. To resolve, go to **SSL/TLS** > **Overview** in the Cloudflare dashboard and set your SSL/TLS encryption mode to **Flexible**, **Full**, or **Full (strict)**.
+- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
+- Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access controls** > **Applications** and edit the application settings.
+- One or more [Workers routes](/workers/configuration/routing/routes/) are overlapping with the tunnel hostname, and the Workers do not properly handle the traffic. To resolve, either exclude your tunnel from the Worker route by not defining a route that includes the tunnel's hostname, or update your Worker to only handle specific paths and forward all other requests to the origin (for example, by using `return fetch(req)`).
