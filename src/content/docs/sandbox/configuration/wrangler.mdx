@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, PackageManagers } from "~/components";
 
 ## Minimal configuration
 
@@ -51,6 +51,18 @@ The Sandbox SDK is built on Cloudflare Containers. Your configuration requires t
 3. **migrations** - Initialize the Durable Object class
 
 The minimal configuration shown above includes all required settings. For detailed configuration options, refer to the [Containers configuration documentation](/workers/wrangler/configuration/#containers).
+
+## Deploy without Docker
+
+If you do not have Docker running locally but want to deploy Worker code changes without rebuilding the container image, pass `--containers-rollout=none` to the deploy command:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy --containers-rollout=none"
+/>
+
+This skips the container image build and push steps, deploying your Worker code while reusing the existing container image from a previous deployment. You must have deployed the container at least once with Docker before using this option.
 
 ## Troubleshooting
 
