@@ -12,7 +12,7 @@ This page provides general guidance on configuring `robots.txt` and sitemaps for
 Requests can be identified by the [automatic headers](/browser-rendering/reference/automatic-request-headers/) that Cloudflare attaches:
 
 - `cf-brapi-request-id` — Unique identifier for REST API requests
-- `Signature-agent` — Points to Cloudflare's bot verification keys
+- `Signature-agent` — Pointer to Cloudflare's bot verification keys
 
 Browser Rendering has a bot detection ID of `128292352`. Use this to create WAF rules that allow or block Browser Rendering traffic. For the default user agent and other identification details, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/).
 
