@@ -10,6 +10,8 @@ import {
 	DashButton,
 	Details,
 	Render,
+	TabItem,
+	Tabs,
 } from "~/components";
 
 Cloudflare Tunnel exposes logs, metrics, and diagnostic tools to help you monitor tunnel health and resolve issues.
@@ -52,13 +54,10 @@ Tunnel logs record all activity between `cloudflared` and the Cloudflare global 
 
 ### Remote log streaming
 
-You can stream real-time logs from a running tunnel without SSH access to the server. `cloudflared` must be installed on your local machine.
+You can stream real-time logs from a running tunnel without SSH access to the server.
 
-:::note
-Dashboard-based log streaming is available in the [Cloudflare One dashboard](https://one.dash.cloudflare.com/) under **Networks** > **Connectors** > **Cloudflare Tunnels**.
-:::
-
-To stream logs using the CLI:
+<Tabs>
+<TabItem label="CLI">
 
 <Render file="tunnel/view-logs-cli" product="cloudflare-one" />
 
@@ -75,8 +74,15 @@ To stream logs using the CLI:
 		loglevelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel"
 	}}
 />
-
 </Details>
+
+</TabItem>
+<TabItem label="Dashboard">
+
+<Render file="tunnel/view-logs-dashboard" product="cloudflare-one" />
+
+</TabItem>
+</Tabs>
 
 ## Metrics
 

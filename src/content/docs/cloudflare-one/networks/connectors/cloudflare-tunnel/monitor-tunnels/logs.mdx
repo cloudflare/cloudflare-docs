@@ -34,11 +34,7 @@ You can view real-time logs for a Cloudflare Tunnel via the dashboard or from an
 Tunnel log streams require [edit permissions](/fundamentals/manage-members/roles/) for Cloudflare Tunnel. Due to the sensitive nature of these logs, read-only roles (such as `Zero Trust Read Only`) do not have access.
 :::
 
-Dashboard log streams are only available for remotely-managed tunnels. To view logs from the dashboard:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels** and select a remotely-managed tunnel.
-2. In the sidebar, select the **Connector ID** for the `cloudflared` instance you want to view.
-3. Select **Begin log stream**.
+<Render file="tunnel/view-logs-dashboard" product="cloudflare-one" />
 
 ### CLI
 
