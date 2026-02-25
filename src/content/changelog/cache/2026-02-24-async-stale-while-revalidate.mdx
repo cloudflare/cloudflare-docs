@@ -6,7 +6,7 @@ products:
 date: 2026-02-24
 ---
 
-Cloudflare's [`stale-while-revalidate`](/cache/concepts/cache-control/#stale-while-revalidate) support is now fully asynchronous. Revalidation begins at expiry rather than waiting for the next visitor request. Stale content is served immediately while Cloudflare refreshes the asset in the background, and no visitor has to wait for an origin round-trip.
+Cloudflare's [`stale-while-revalidate`](/cache/concepts/cache-control/#revalidation) support is now fully asynchronous. Revalidation begins at expiry rather than waiting for the next visitor request. Stale content is served immediately while Cloudflare refreshes the asset in the background, and no visitor has to wait for an origin round-trip.
 
 `stale-while-revalidate` is a Cache-Control directive that allows Cloudflare to serve an expired cached asset while a fresh copy is fetched from the origin.
 
