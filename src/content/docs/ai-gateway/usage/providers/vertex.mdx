@@ -48,6 +48,18 @@ Use a specific regional endpoint like `us-central1` or `us-east4` rather than `g
 
 Authenticating with Vertex AI normally requires generating short-term credentials using the [Google Cloud SDKs](https://cloud.google.com/vertex-ai/docs/authentication) with a complicated setup, but AI Gateway simplifies this for you with multiple options.
 
+### Authentication methods comparison
+
+| Method                             | `cf-aig-authorization` header | `Authorization` header                | Region handling              |
+| ---------------------------------- | ----------------------------- | ------------------------------------- | ---------------------------- |
+| **BYOK (Recommended)**             | `Bearer {CF_AIG_TOKEN}`       | Not needed                            | Select in dashboard dropdown |
+| **Service account JSON in header** | `Bearer {CF_AIG_TOKEN}`       | Base64-encoded JSON with `region` key | Include `region` key in JSON |
+| **Direct access token**            | `Bearer {CF_AIG_TOKEN}`       | `Bearer {gcloud_access_token}`        | Included in URL path         |
+
+:::caution[Do not confuse the headers]
+`cf-aig-authorization` authenticates your request to AI Gateway. `Authorization` passes credentials to the upstream provider (Google). When using BYOK, you only need `cf-aig-authorization` because AI Gateway injects the stored Google credentials for you.
+:::
+
 ### Option 1: BYOK (Recommended)
 
 The recommended approach is to store your Google service account credentials using AI Gateway's [Bring Your Own Keys (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) feature. This keeps your credentials secure and out of your application code.
@@ -162,13 +174,21 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat
 
 ### Example with OpenAI SDK
 
-If not using BYOK, pass the service account JSON (with `region` key included) as the API key:
+If not using BYOK, pass the base64-encoded service account JSON (with `region` key included) as the API key:
 
 ```javascript
 import OpenAI from "openai";
 
+// Service account JSON must include "region" key when not using BYOK
+const serviceAccountJson = JSON.stringify({
+	type: "service_account",
+	project_id: "your-project-id",
+	// ... other fields from your downloaded JSON
+	region: "us-central1", // Required: add this to your service account JSON
+});
+
 const client = new OpenAI({
-	apiKey: "{service_account_json_with_region}",
+	apiKey: Buffer.from(serviceAccountJson).toString("base64"),
 	baseURL:
 		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
 	defaultHeaders: {
@@ -192,9 +212,12 @@ console.log(response.choices[0].message.content);
 ### Example with cURL
 
 ```bash
+# First, base64-encode your service account JSON (must include "region" key)
+SERVICE_ACCOUNT_BASE64=$(cat service-account.json | base64)
+
 curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions" \
     -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
-    -H "Authorization: Bearer {service_account_json_with_region}" \
+    -H "Authorization: Bearer $SERVICE_ACCOUNT_BASE64" \
     -H 'Content-Type: application/json' \
     -d '{
         "model": "google-vertex-ai/google/gemini-2.5-pro",
@@ -208,7 +231,7 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat
 ```
 
 :::note
-When not using BYOK, the service account JSON must include the `region` key. Refer to [Authenticating with Vertex AI](#authenticating-with-vertex-ai) for details.
+When not using BYOK, the service account JSON must include the `region` key and be base64-encoded. Refer to [Option 2: Service Account JSON in Header](#option-2-service-account-json-in-header) for the required JSON structure.
 :::
 
 ## Using Provider-Specific Endpoint
@@ -237,12 +260,15 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vert
 
 ### cURL with Service Account JSON
 
-If not using BYOK, pass the service account JSON (with `region` key included) in the Authorization header:
+If not using BYOK, pass the base64-encoded service account JSON (with `region` key included) in the Authorization header:
 
 ```bash
+# First, base64-encode your service account JSON (must include "region" key)
+SERVICE_ACCOUNT_BASE64=$(cat service-account.json | base64)
+
 curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-2.5-flash:generateContent" \
     -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
-    -H "Authorization: Bearer {service_account_json_with_region}" \
+    -H "Authorization: Bearer $SERVICE_ACCOUNT_BASE64" \
     -H 'Content-Type: application/json' \
     -d '{
         "contents": {
@@ -260,9 +286,22 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vert
 
 ### 401 UNAUTHENTICATED errors
 
-If you receive a `CREDENTIALS_MISSING` or `UNAUTHENTICATED` error from Google:
+If you receive a `CREDENTIALS_MISSING` or `UNAUTHENTICATED` error from Google, AI Gateway did not pass valid Google credentials to Vertex AI. Check the following:
 
-1. **Check your region**: Make sure you are using a specific regional endpoint (like `us-central1`) in your URL, not `global`. The `global` endpoint has limited model support.
-2. **Verify BYOK configuration**: If using BYOK, confirm that your service account JSON was saved correctly and the region was selected in the dashboard.
-3. **Check service account permissions**: Ensure your service account has the `Vertex AI User` role or equivalent permissions.
-4. **Verify the region key**: If passing service account JSON directly in the header (not using BYOK), make sure the JSON includes the `region` key matching your endpoint URL.
+1. **Verify header placement**: Make sure your Cloudflare token is in `cf-aig-authorization`, not `Authorization`. The `Authorization` header is reserved for provider credentials.
+
+2. **Check your URL path**: Confirm your request URL includes `/google-vertex-ai/` in the path. AI Gateway uses this to identify the provider and apply the correct stored credentials.
+
+3. **Verify BYOK key selection**: If you have multiple keys configured for Google Vertex AI, ensure either:
+   - You are using the key with alias `default`, or
+   - You include the `cf-aig-byok-alias` header with the correct alias name
+
+4. **Check your region**: Use a specific regional endpoint (like `us-central1`) in your URL, not `global`. The `global` endpoint has limited model support.
+
+5. **Verify BYOK configuration**: If using BYOK, confirm in the dashboard that:
+   - Your service account JSON was saved correctly
+   - A region was selected from the dropdown
+
+6. **Check service account permissions**: Ensure your service account has the `Vertex AI User` role or equivalent permissions in Google Cloud.
+
+7. **Verify the region key** (non-BYOK only): If passing service account JSON directly in the `Authorization` header, make sure the JSON includes the `region` key.
