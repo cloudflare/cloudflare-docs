@@ -10,9 +10,11 @@ date: 2026-02-25
 
 The new [`/entities/asns/botnet_threat_feed`](/api/resources/radar/subresources/entities/subresources/asns/methods/botnet_threat_feed/) endpoint returns a ranked list of ASNs with the following capabilities:
 
-- Rank ASNs by `OFFENSE_COUNT` (total mitigated HTTP requests from IPs within the AS, where each offense is a single mitigated HTTP request from a specific IP address) or `NUMBER_OF_OFFENDING_IPS` (number of distinct IPs observed originating botnet activity).
+- Rank ASNs by:
+	- `NUMBER_OF_OFFENDING_IPS` (number of distinct IPs observed originating botnet activity).
+  - `OFFENSE_COUNT` (total mitigated HTTP requests from IPs within the AS, where each offense is a single mitigated HTTP request from a specific IP address).
 - Filter by location or specific ASNs.
-- Compare rankings against a previous period (7d, 30d, etc.) to see how rankings have changed over time.
+- Compare rankings against a previous period using the compareDateRange filter (1d-364d or 1w-52w).
 
 ![Screenshot of the Botnet Statistics page showing AS rankings by originating IP address count and offense count](~/assets/images/radar/botnet-statistics.png)
 
