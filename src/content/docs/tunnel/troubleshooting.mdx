@@ -73,63 +73,10 @@ nc -vz -w 3 198.41.192.167 7844   # TCP
 | TCP succeeds, UDP fails  | UDP on port `7844` is blocked. `cloudflared` can only use `http2`. | Allow UDP on port `7844`, or do not force `quic` in your [protocol](/tunnel/configuration/#protocol) configuration.                                   |
 | Both fail                | Packets are being dropped between the host and Cloudflare.         | Allow all traffic over port `7844` on the local network firewall. If this does not resolve the issue, troubleshoot with your ISP or service provider. |
 
-### Get help
-
 If DNS or network tests fail, the problem is likely in your local environment. Debug with your administrator, ISP, or cloud provider.
 
 <Render
-	file="warp/support-ticket-best-practices"
-	product="cloudflare-one"
-	params={{ tunnelMode: true }}
-/>
-
-## Common errors
-
-If you do not see your issue below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/), view your [tunnel logs](/tunnel/monitoring/#logs), or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
-
-### I see `cloudflared service is already installed`.
-
-<Render
-	file="tunnel/common-errors/service-already-installed"
-	product="cloudflare-one"
-/>
-
-### I see `An A, AAAA, or CNAME record with that host already exists`.
-
-<Render
-	file="tunnel/common-errors/dns-record-already-exists"
-	product="cloudflare-one"
-/>
-
-### Tunnel credentials file doesn't exist or is not a file.
-
-<Render
-	file="tunnel/common-errors/credentials-file-not-found"
-	product="cloudflare-one"
-/>
-
-### My tunnel fails to authenticate.
-
-<Render
-	file="tunnel/common-errors/tunnel-fails-to-authenticate"
-	product="cloudflare-one"
-/>
-
-### I see an error: x509: certificate signed by unknown authority.
-
-<Render
-	file="tunnel/common-errors/x509-unknown-authority"
-	product="cloudflare-one"
-/>
-
-### I see an error 1033 when attempting to run a tunnel.
-
-<Render file="tunnel/common-errors/error-1033" product="cloudflare-one" />
-
-### I see a 502 Bad Gateway error when connecting to an HTTP or HTTPS application through tunnel.
-
-<Render
-	file="tunnel/common-errors/502-bad-gateway"
+	file="tunnel/common-errors"
 	product="cloudflare-one"
 	params={{
 		logsURL: "/tunnel/monitoring/#logs",
@@ -139,52 +86,14 @@ If you do not see your issue below, refer to the [troubleshooting FAQ](/cloudfla
 		originServerNameURL: "/tunnel/configuration/#originservername",
 		caPoolURL: "/tunnel/configuration/#capool",
 		noTLSVerifyURL: "/tunnel/configuration/#notlsverify",
-	}}
-/>
-
-### I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
-
-<Render
-	file="tunnel/common-errors/err-too-many-redirects"
-	product="cloudflare-one"
-	params={{ originServerNameURL: "/tunnel/configuration/#originservername" }}
-/>
-
-### `cloudflared access` shows an error `websocket: bad handshake`.
-
-<Render
-	file="tunnel/common-errors/websocket-bad-handshake"
-	product="cloudflare-one"
-/>
-
-### Tunnel connections fail with SSL error.
-
-<Render
-	file="tunnel/common-errors/ssl-handshake-failure"
-	product="cloudflare-one"
-/>
-
-### Tunnel connections fail with `Too many open files` error.
-
-<Render
-	file="tunnel/common-errors/too-many-open-files"
-	product="cloudflare-one"
-	params={{
-		logsURL: "/tunnel/monitoring/#logs",
 		ulimitsURL: "/tunnel/configuration/#ulimits",
 	}}
 />
 
-### I see `failed to sufficiently increase receive buffer size` in my cloudflared logs.
+## How do I contact support?
 
 <Render
-	file="tunnel/common-errors/receive-buffer-size"
+	file="warp/support-ticket-best-practices"
 	product="cloudflare-one"
-/>
-
-### Cloudflare Tunnel is buffering my streaming response instead of streaming it live.
-
-<Render
-	file="tunnel/common-errors/streaming-responses-buffered"
-	product="cloudflare-one"
+	params={{ tunnelMode: true }}
 />
