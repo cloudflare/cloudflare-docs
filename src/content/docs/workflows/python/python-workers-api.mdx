@@ -21,16 +21,13 @@ class MyWorkflow(WorkflowEntrypoint):
 
 ## WorkflowStep
 
-- <code>step.do(name=None, *, concurrent=False, config=None)</code> is a
-  decorator that allows you to define a step in a workflow.
+{/* prettier-ignore */}
+- <code>step.do(name=None, *, concurrent=False, config=None)</code> — a decorator that allows you to define a step in a workflow.
+  - `name` — an optional name for the step. If omitted, the function name (`func.__name__`) is used.
+  - `concurrent` — an optional boolean that indicates whether dependencies for this step can run concurrently.
+  - `config` — an optional [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/). This is passed as a Python dictionary and then type translated into a `WorkflowStepConfig` object.
 
-`name` is an optional name for the step. If omitted, the function name (`func.__name__`) is used.
-
-`concurrent` is an optional boolean that indicates whether dependencies for this step can run concurrently.
-
-`config` is an optional [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/). This is passed as a Python dictionary and then type translated into a `WorkflowStepConfig` object.
-
-All parameters except `name` are keyword-only.
+  All parameters except `name` are keyword-only.
 
 Dependencies are resolved implicitly by parameter name. If a step function parameter name matches a previously declared step function, its result is injected into the step.
 
@@ -60,22 +57,20 @@ Note that the decorator doesn't make the call to the step, it just returns a cal
 When returning state from a step, you must make sure that the returned value is serializable. Since steps run through an FFI layer, the returned value gets type translated via [FFI.](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.to_js)
 Refer to [Pyodide's documentation](https://pyodide.org/en/stable/usage/type-conversions.html#type-translations-pyproxy-to-js) regarding type conversions for more information.
 
+{/* prettier-ignore */}
 - <code>step.sleep(name, duration)</code>
-
-`name` is the name of the step.
-
-`duration` is the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
+  - `name` — the name of the step.
+  - `duration` — the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
 
 ```python
 async def run(self, event, step):
     await step.sleep("my-sleep-step", "10 seconds")
 ```
 
+{/* prettier-ignore */}
 - <code>step.sleep_until(name, timestamp)</code>
-
-`name` is the name of the step.
-
-`timestamp` is a `datetime.datetime` object or seconds from the Unix epoch to sleep the workflow instance until.
+  - `name` — the name of the step.
+  - `timestamp` — a `datetime.datetime` object or seconds from the Unix epoch to sleep the workflow instance until.
 
 ```python
 import datetime
@@ -84,13 +79,11 @@ async def run(self, event, step):
     await step.sleep_until("my-sleep-step", datetime.datetime.now() + datetime.timedelta(seconds=10))
 ```
 
+{/* prettier-ignore */}
 - <code>step.wait_for_event(name, event_type, timeout="24 hours")</code>
-
-`name` is the name of the step.
-
-`event_type` is the type of event to wait for.
-
-`timeout` is the timeout for the `wait_for_event` call. The default timeout is 24 hours.
+  - `name` — the name of the step.
+  - `event_type` — the type of event to wait for.
+  - `timeout` — the timeout for the `wait_for_event` call. The default timeout is 24 hours.
 
 ```python
 async def run(self, event, step):
