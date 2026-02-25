@@ -39,4 +39,4 @@ You can set multiple timers — as long as one is complete, the request will fir
 If you are not getting the expected output:
 - Try increasing `goToOptions.timeout` (up to 60 s).
 - If waiting for a specific element, use `waitForSelector`. Otherwise, use `goToOptions.waitUntil` set to `networkidle2` to ensure the page has finished loading dynamic content.
-- If you are getting a `422`, it may be the action itself (ex: taking a screenshot, extracting the html content) that takes a long time. Try increasing the `actionTimeout` instead.
+- If you receive a `422` error, refer to [422 Unprocessable Entity](/browser-rendering/faq/#error-422-unprocessable-entity).
