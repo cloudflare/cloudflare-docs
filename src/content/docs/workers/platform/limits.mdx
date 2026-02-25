@@ -322,10 +322,10 @@ If you require more than 1,000 routes or 1,000 routed zones per Worker, consider
 
 ## Cache API limits
 
-| Feature             | Workers Free | Workers Paid |
-| ------------------- | ------------ | ------------ |
-| Maximum object size | 512 MB       | 512 MB       |
-| Calls per request   | 50           | 1,000        |
+| Feature             | Workers Free | Workers Paid       |
+| ------------------- | ------------ | ------------------ |
+| Maximum object size | 512 MB       | 512 MB             |
+| Calls per request   | 50           | 10,000 (up to 10M) |
 
 Calls per request is the number of `put()`, `match()`, or `delete()` Cache API calls per request. This shares the same quota as subrequests (`fetch()`).
 
