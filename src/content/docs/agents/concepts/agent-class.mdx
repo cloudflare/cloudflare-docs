@@ -329,14 +329,14 @@ Schedules are stored in the `cf_agents_schedules` SQL table. Cron schedules auto
 
 ```ts
 class MyAgent extends Agent {
-	async onConnect() {
-		// Add an MCP server
-		await this.addMcpServer(
-			"GitHub",
-			"https://mcp.example.com/mcp",
-			"https://my-worker.example.workers.dev", // callback host for OAuth
-			"agents", // routing prefix
-		);
+	async onStart() {
+		// Add an HTTP MCP server (callbackHost only needed for OAuth servers)
+		await this.addMcpServer("GitHub", "https://mcp.github.com/mcp", {
+			callbackHost: "https://my-worker.example.workers.dev",
+		});
+
+		// Add an MCP server via RPC (Durable Object binding, no HTTP overhead)
+		await this.addMcpServer("internal-tools", this.env.MyMCP);
 	}
 }
 ```
