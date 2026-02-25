@@ -134,14 +134,16 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vert
     -H "Authorization: Bearer ya29.c.b0Aaekm1K..." \
     -H 'Content-Type: application/json' \
     -d '{
-        "contents": {
-          "role": "user",
-          "parts": [
-            {
-              "text": "Tell me more about Cloudflare"
-            }
-          ]
-        }
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tell me more about Cloudflare"
+              }
+            ]
+          }
+        ]
       }'
 ```
 
@@ -249,14 +251,16 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vert
     -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
     -H 'Content-Type: application/json' \
     -d '{
-        "contents": {
-          "role": "user",
-          "parts": [
-            {
-              "text": "Tell me more about Cloudflare"
-            }
-          ]
-        }
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tell me more about Cloudflare"
+              }
+            ]
+          }
+        ]
       }'
 ```
 
