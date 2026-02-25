@@ -294,7 +294,9 @@ If you receive a `CREDENTIALS_MISSING` or `UNAUTHENTICATED` error from Google, A
 
 1. **Verify header placement**: Make sure your Cloudflare token is in `cf-aig-authorization`, not `Authorization`. The `Authorization` header is reserved for provider credentials.
 
-2. **Check your URL path**: Confirm your request URL includes `/google-vertex-ai/` in the path. AI Gateway uses this to identify the provider and apply the correct stored credentials.
+2. **Check your configuration based on endpoint type**:
+   - **Provider-specific endpoints** (for example, `.../google-vertex-ai/v1/projects/...`): Confirm your request URL includes `/google-vertex-ai/` in the path. AI Gateway uses this to identify the provider and apply the correct stored credentials.
+   - **Unified `/compat/chat/completions` endpoint**: Confirm your `model` name starts with the `google-vertex-ai/` prefix (for example, `google-vertex-ai/gemini-2.5-flash`). AI Gateway uses this prefix to route the request to Vertex AI and select the correct stored credentials.
 
 3. **Verify BYOK key selection**: If you have multiple keys configured for Google Vertex AI, ensure either:
    - You are using the key with alias `default`, or
