@@ -1,0 +1,26 @@
+---
+title: Asynchronous stale-while-revalidate
+description: Stale-while-revalidate now returns stale content immediately while revalidation happens in the background, eliminating wait time for the first request that triggers revalidation.
+products:
+  - cache
+date: 2026-02-24
+---
+
+Cloudflare's [`stale-while-revalidate`](/cache/concepts/cache-control/#stale-while-revalidate) support is now fully asynchronous. Revalidation begins at expiry rather than waiting for the next visitor request. Stale content is served immediately while Cloudflare refreshes the asset in the background, and no visitor has to wait for an origin round-trip.
+
+`stale-while-revalidate` is a Cache-Control directive that allows Cloudflare to serve an expired cached asset while a fresh copy is fetched from the origin.
+
+Asynchronous revalidation brings:
+
+- **Lower latency**: The first visitor is no longer blocked while the asset is updated from the origin, providing a faster experience.
+- **Fresher content**: Assets are revalidated sooner, and visitors are more likely to receive up-to-date content.
+
+Note that your origin may see an increase in traffic due to revalidation on expiry. In addition, all revalidation cache statuses are now UPDATING or HIT instead of MISS or REVALIDATED.
+
+## Availability
+
+This change is live for all Free, Pro, and Business zones. Approximately 75% of Enterprise zones have been migrated, with the remaining zones rolling out throughout the quarter.
+
+## Get started
+
+To use this feature, make sure your origin includes the `stale-while-revalidate` directive in the `Cache-Control` header. Refer to the [Cache-Control documentation](/cache/concepts/cache-control/#stale-while-revalidate) for details.
