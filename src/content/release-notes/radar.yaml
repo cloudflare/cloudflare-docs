@@ -7,10 +7,10 @@ entries:
     title: Add RPKI ASPA deployment insights
     description: |-
       * Added new [`ASPA`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/) API endpoints:
-        * [`/bgp/rpki/aspa/snapshot`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/snapshot/) - Retrieves current or historical ASPA records.
-        * [`/bgp/rpki/aspa/changes`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/changes/) - Retrieves changes to ASPA records over time.
-        * [`/bgp/rpki/aspa/timeseries`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/timeseries/) - Retrieves ASPA object counts over time as a time-series.
-      * Added ASPA deployment trend and data entries widgets to the [global routing page](https://radar.cloudflare.com/routing).
+        * [`/bgp/rpki/aspa/snapshot`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/snapshot/) - Retrieves current or historical ASPA objects.
+        * [`/bgp/rpki/aspa/changes`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/changes/) - Retrieves changes to ASPA objects over time.
+        * [`/bgp/rpki/aspa/timeseries`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/timeseries/) - Retrieves ASPA object counts over time as a timeseries.
+      * Added ASPA deployment trend and objects count widgets to the [global routing page](https://radar.cloudflare.com/routing).
       * Added ASPA deployment rate widget to country and region routing pages.
       * Added ASPA-verified upstreams and change timeline to AS routing pages.
   - publish_date: "2026-02-12"
