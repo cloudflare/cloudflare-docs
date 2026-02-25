@@ -270,7 +270,7 @@ If not using BYOK, pass the base64-encoded service account JSON (with `region` k
 
 ```bash
 # First, base64-encode your service account JSON (must include "region" key) as a single line
-SERVICE_ACCOUNT_BASE64=$(cat service-account.json | base64 | tr -d '\n')
+SERVICE_ACCOUNT_BASE64=$(base64 < service-account.json | tr -d '\n')
 
 curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-2.5-flash:generateContent" \
     -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
