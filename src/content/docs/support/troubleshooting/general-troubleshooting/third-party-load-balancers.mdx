@@ -64,6 +64,15 @@ The recommended solution is to configure an F5 OneConnect profile with a single 
 2. Test this configuration in staging or test Virtual IP (VIP) first, as it changes how the F5 device behaves.
 3. The `/32` mask is critical for proper operation with Cloudflare.
 
+### Alternative: configure Cloudflare Load Balancing
+
+Instead of modifying your F5 configuration, it is possible to do load balancing completely with Cloudflare. Use [Cloudflare Load Balancing](/load-balancing/) with [session affinity](/load-balancing/understand-basics/session-affinity/) to handle session persistence at the Cloudflare global network:
+
+1. Enable session affinity when creating or editing your load balancer.
+2. Choose one of the following options:
+   - **By Cloudflare cookie only**: Sets a `__cflb` cookie to track the associated endpoint.
+   - **By Cloudflare cookie and Client IP fallback**: Sets a `__cflb` cookie, but also uses the client IP address when no session affinity cookie is provided.
+
 ---
 
 ## Related resources
