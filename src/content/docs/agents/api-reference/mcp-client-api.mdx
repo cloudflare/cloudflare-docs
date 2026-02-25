@@ -445,9 +445,10 @@ function Dashboard() {
 
 ### `addMcpServer()`
 
-Add a connection to an MCP server and make its tools available to your agent.
+Add a connection to an MCP server and make its tools available to your agent. If `addMcpServer` is called with a `serverName` that already has an active connection, the existing connection is returned instead of creating a duplicate. This makes it safe to call in `onStart()` without worrying about duplicate connections on restart.
 
 ```ts
+// HTTP transport (Streamable HTTP, SSE)
 async addMcpServer(
   serverName: string,
   url: string,
@@ -460,24 +461,31 @@ async addMcpServer(
       headers?: HeadersInit;
       type?: "sse" | "streamable-http" | "auto";
     };
-    retry?: {
-      maxAttempts?: number;
-      baseDelayMs?: number;
-      maxDelayMs?: number;
-    };
+    retry?: RetryOptions;
   }
 ): Promise<
   | { id: string; state: "authenticating"; authUrl: string }
   | { id: string; state: "ready" }
 >
+
+// RPC transport (Durable Object binding — no HTTP overhead)
+async addMcpServer(
+  serverName: string,
+  binding: DurableObjectNamespace,
+  options?: {
+    props?: Record<string, unknown>;
+    client?: ClientOptions;
+    retry?: RetryOptions;
+  }
+): Promise<{ id: string; state: "ready" }>
 ```
 
-#### Parameters
+#### Parameters (HTTP transport)
 
 - `serverName` (string, required) — Display name for the MCP server
 - `url` (string, required) — URL of the MCP server endpoint
 - `options` (object, optional) — Connection configuration:
-  - `callbackHost` — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
+  - `callbackHost` — Host for OAuth callback URL. Only needed for OAuth-authenticated servers. If omitted, automatically derived from the incoming request
   - `callbackPath` — Custom callback URL path that bypasses the default `/agents/{class}/{name}/callback` construction. **Required when `sendIdentityOnConnect` is `false`** to prevent leaking the instance name. When set, the callback URL becomes `{callbackHost}/{callbackPath}`. You must route this path to the agent instance via `getAgentByName`
   - `agentsPrefix` — URL prefix for OAuth callback path. Default: `"agents"`. Ignored when `callbackPath` is provided
   - `client` — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
@@ -485,6 +493,17 @@ async addMcpServer(
     - `headers` — Custom HTTP headers for authentication
     - `type` — Transport type: `"auto"` (default), `"streamable-http"`, or `"sse"`
   - `retry` — Retry options for connection and reconnection attempts. Persisted and used when restoring connections after hibernation or after OAuth completion. Default: 3 attempts, 500ms base delay, 5s max delay. Refer to [Retries](/agents/api-reference/retries/) for details on `RetryOptions`.
+
+#### Parameters (RPC transport)
+
+- `serverName` (string, required) — Display name for the MCP server
+- `binding` (`DurableObjectNamespace`, required) — The Durable Object binding for the `McpAgent` class
+- `options` (object, optional) — Connection configuration:
+  - `props` — Initialization data passed to the `McpAgent`'s `onStart(props)`. Use this to pass user context, configuration, or other data to the MCP server instance
+  - `client` — MCP client configuration options
+  - `retry` — Retry options for the connection
+
+RPC transport connects your Agent directly to an `McpAgent` via Durable Object bindings without HTTP overhead. Refer to [MCP Transport](/agents/model-context-protocol/transport/) for details on configuring RPC transport.
 
 #### Returns
 

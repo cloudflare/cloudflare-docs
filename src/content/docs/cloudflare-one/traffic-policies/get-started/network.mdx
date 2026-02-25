@@ -1,0 +1,64 @@
+---
+title: Network filtering
+pcx_content_type: how-to
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Set up network filtering
+---
+
+import { GlossaryTooltip, Render } from "~/components";
+
+Secure Web Gateway allows you to apply policies at the network level to control which websites and non-HTTP applications users can access. This is useful when you need to control traffic that is not web browsing — for example, blocking remote desktop connections or restricting file-transfer tools across your organization.
+
+Network policies inspect individual TCP and UDP packets (the low-level data units that carry all Internet traffic), which means you can filter traffic that [DNS](/cloudflare-one/traffic-policies/get-started/dns/) and [HTTP](/cloudflare-one/traffic-policies/get-started/http/) policies cannot reach. DNS policies only see domain lookups, and HTTP policies only see web requests — network policies go deeper and can catch protocols like SSH (remote terminal access), RDP (remote desktop), and custom applications running on non-standard ports.
+
+:::note
+For a more detailed guide to filtering network traffic and more for your organization, refer to the [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/concepts/) implementation guide.
+:::
+
+## 1. Connect to Gateway
+
+### Connect devices
+
+To filter network traffic from a device such as a laptop or phone:
+
+1. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device.
+2. In the WARP client Settings, log in to your organization's <GlossaryTooltip term="team name">Cloudflare One instance</GlossaryTooltip>.
+3. (Optional) If you want to display a [custom block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) when users are blocked, [install the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device. Without the certificate, blocked users will see a generic browser connection error instead of an informative page.
+4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP. The Gateway proxy is what routes your device's traffic through Cloudflare so network policies can inspect it — without it enabled, your policies will have no effect. Optionally, enable the UDP proxy to also inspect QUIC traffic (a newer protocol used by HTTP/3 connections) on port 443.
+
+### Connect private networks
+
+To filter traffic from private networks (internal corporate networks not exposed to the public Internet), refer to the [Cloudflare Tunnel guide](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+
+## 2. Verify device connectivity
+
+Verifying connectivity ensures that traffic from your device is actually flowing through Cloudflare before you build policies against it.
+
+To verify your device is connected to Cloudflare One:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
+2. Under **Log traffic activity**, enable activity logging for all Network logs. This tells Cloudflare to record network-level traffic so you can confirm your device appears in the logs.
+3. On your WARP-enabled device, open a browser and visit any website. This generates traffic that should appear in the logs.
+4. Determine the **Source IP** for your device (the public-facing address Cloudflare sees for your connection):
+   1. Open the WARP client settings.
+   2. Go to **Preferences** > **General**.
+   3. Note the **Public IP**. This is the same address that will appear as the Source IP in your network logs.
+5. In Cloudflare One, go to **Insights** > **Logs** > **Network logs**. Before building network policies, make sure you see network logs from the Source IP assigned to your device.
+
+If no logs appear after a few minutes, check two things: first, verify that the [Gateway proxy is turned on](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy). Second, confirm that the device is enrolled in your Zero Trust organization by checking the WARP client connection status.
+
+## 3. Create your first network policy
+
+A network policy has two parts: a matcher that selects which traffic to act on (for example, all packets destined for port 22, the default port for SSH) and an action that decides what to do with it (for example, block the connection).
+
+<Render
+	file="gateway/get-started/create-network-policy"
+	product="cloudflare-one"
+/>
+
+## 4. Add optional policies
+
+Refer to our list of [common network policies](/cloudflare-one/traffic-policies/network-policies/common-policies) for policies you may want to create. Common additions include blocking traffic to specific IP ranges, restricting access to non-standard ports (ports other than well-known ones like 80 for HTTP and 443 for HTTPS), and using protocol detection to identify applications like BitTorrent based on their traffic patterns rather than port numbers alone.

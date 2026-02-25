@@ -144,6 +144,7 @@ export default defineConfig({
 									"/http/resources/**",
 									"/llms.txt",
 									"/llms-full.txt",
+									"**/llms.txt",
 									"{props.*}",
 									"/",
 									"/glossary/",

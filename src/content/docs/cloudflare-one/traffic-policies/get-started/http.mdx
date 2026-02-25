@@ -1,0 +1,58 @@
+---
+title: HTTP filtering
+pcx_content_type: how-to
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Set up HTTP filtering
+learning_center:
+  title: What is URL filtering? | Web filtering
+  link: https://www.cloudflare.com/learning/access-management/what-is-url-filtering/
+---
+
+import { GlossaryTooltip, Render } from "~/components";
+
+Secure Web Gateway allows you to inspect HTTP traffic and control which websites users can visit. DNS filtering can only block or allow entire domains (for example, all of `dropbox.com`). HTTP filtering goes deeper — it inspects full URLs and request content, so you can block a specific page like `dropbox.com/shared-folder`, scan file uploads for sensitive data, or enforce acceptable use policies based on what users are actually doing on a site.
+
+:::note
+For a more detailed guide to filtering HTTP requests and other traffic for your organization, refer to the [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/concepts/) implementation guide.
+:::
+
+## 1. Connect to Gateway
+
+HTTP filtering requires three components working together: the WARP client routes device traffic through Cloudflare, a root certificate lets Gateway decrypt HTTPS traffic so it can inspect URLs and content, and the Gateway proxy enables Gateway to intercept and evaluate HTTP requests. Without the certificate, Gateway can only see the domain name — not the full URL or request body.
+
+To filter HTTP requests from a device:
+
+1. [Install the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
+2. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device.
+3. In the WARP client Settings, log in to your organization's <GlossaryTooltip term="team name">Cloudflare One instance</GlossaryTooltip>.
+4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP. Optionally, enable the UDP proxy to also inspect QUIC traffic on port 443 — this covers HTTP/3, a newer protocol some browsers use by default.
+5. To inspect HTTPS traffic, [enable TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#turn-on-tls-decryption). TLS decryption allows Gateway to read encrypted requests. Without it, Gateway can see that a user visited `example.com` but not which specific page or what they uploaded.
+6. (Optional) To scan file uploads and downloads for malware, [enable anti-virus scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/).
+
+## 2. Verify device connectivity
+
+To verify your device is connected to Cloudflare One and traffic is flowing through Gateway:
+
+<Render
+	file="gateway/verify-connectivity"
+	product="cloudflare-one"
+	params={{ one: "HTTP", two: "requests" }}
+/>
+
+After creating your first HTTP policy in the next step, you can test it by visiting a URL that your policy should block and confirming the request is denied.
+
+## 3. Create your first HTTP policy
+
+An HTTP policy defines which requests to match (for example, uploads to file-sharing sites) and the action to take (for example, block).
+
+<Render
+	file="gateway/get-started/create-http-policy"
+	product="cloudflare-one"
+/>
+
+## 4. Add optional policies
+
+Refer to our list of [common HTTP policies](/cloudflare-one/traffic-policies/http-policies/common-policies) for other policies you may want to create. Common additions include blocking file downloads by type, isolating risky websites in a [remote browser](/cloudflare-one/remote-browser-isolation/), and adding Do Not Inspect rules for applications that break under TLS decryption (for example, apps that use certificate pinning to enforce their own certificates). Do Not Inspect rules tell Gateway to skip decryption for specific destinations so those applications continue to work.
