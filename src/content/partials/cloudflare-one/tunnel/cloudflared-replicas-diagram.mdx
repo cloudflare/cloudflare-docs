@@ -7,8 +7,8 @@
 graph LR
     C((Cloudflare))
     subgraph E[Your network]
-        cf1["cloudflared <br> (Tunnel-1 replica)"]
-        cf2["cloudflared <br> (Tunnel-1 replica)"]
+        cf1["cloudflared <br> (Replica for tunnel-01)"]
+        cf2["cloudflared <br> (Replica for tunnel-01)"]
         S1[Application]
         cf1-->S1
         cf2-->S1
