@@ -1,0 +1,128 @@
+---
+pcx_content_type: tutorial
+difficulty: Beginner
+tags:
+  - AI
+title: Use Pruna P-video through AI Gateway
+description: Learn how to call prunaai/p-video on Replicate through Cloudflare AI Gateway
+---
+
+import { Render } from "~/components";
+
+This tutorial shows how to call the `prunaai/p-video` model on [Replicate](/ai-gateway/usage/providers/replicate/) through Cloudflare AI Gateway. You will route requests through AI Gateway to observe and control your AI requests with analytics, caching, rate limiting, and logging.
+
+## Prerequisites
+
+- A Cloudflare account with access to AI Gateway
+- A Replicate account with an API token
+
+## 1. Create a Replicate account and get an API token
+
+1. Go to [replicate.com](https://replicate.com/) and sign up for an account.
+2. Once logged in, go to [replicate.com/settings/api-tokens](https://replicate.com/account/api-tokens).
+3. Select **Create token** and give it a name.
+4. Copy the token and store it somewhere safe.
+
+## 2. Create an AI Gateway
+
+<Render file="create-gateway" product="ai-gateway" />
+
+Note your **Account ID** and **Gateway name** for use in later steps.
+
+To add authentication to your gateway, refer to [Authenticated Gateway](/ai-gateway/configuration/authentication/).
+
+## 3. Construct the gateway URL
+
+Replace the standard Replicate API base URL with the AI Gateway URL:
+
+```txt
+# Instead of:
+https://api.replicate.com/v1
+
+# Use:
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate
+```
+
+For example, if your account ID is `abc123` and your gateway is `my-gateway`:
+
+```txt
+https://gateway.ai.cloudflare.com/v1/abc123/my-gateway/replicate
+```
+
+## 4. Create a prediction
+
+Send a POST request to the `/replicate/predictions` endpoint. Specify the model using the `version` field in the request body:
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/my-gateway/replicate/predictions \
+  --header "Authorization: Bearer $REPLICATE_API_TOKEN" \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "version": "prunaai/p-video",
+    "input": {
+      "prompt": "A cat walking through a field of flowers in slow motion",
+      "duration": 5,
+      "aspect_ratio": "16:9",
+      "resolution": "720p",
+      "fps": 24
+    }
+  }'
+```
+
+- `Authorization` — your Replicate API token (authenticates with Replicate).
+- `cf-aig-authorization` — your Cloudflare API token (authenticates with AI Gateway).
+
+The response looks like:
+
+```json
+{
+  "id": "xyz789...",
+  "status": "starting",
+  "urls": {
+    "get": "https://api.replicate.com/v1/predictions/xyz789...",
+    "cancel": "https://api.replicate.com/v1/predictions/xyz789.../cancel"
+  }
+}
+```
+
+Save the prediction `id` from the response.
+
+## 5. Poll for the result
+
+Video generation is asynchronous. Poll the prediction status until it completes:
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/my-gateway/replicate/predictions/<PREDICTION_ID> \
+  --header "Authorization: Bearer $REPLICATE_API_TOKEN" \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+Keep polling until `status` is `succeeded` (or `failed`). When complete, the `output` field contains a URL to the generated video file.
+
+## 6. (Optional) Use the `Prefer: wait` header
+
+P-video predictions generally complete within 30 seconds. Because this is under Replicate's 60-second synchronous limit, you can use the `Prefer: wait` header to block until the prediction completes and avoid polling:
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/my-gateway/replicate/predictions \
+  --header "Authorization: Bearer $REPLICATE_API_TOKEN" \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --header "Prefer: wait" \
+  --data '{
+    "version": "prunaai/p-video",
+    "input": {
+      "prompt": "A cat walking through a field of flowers in slow motion",
+      "duration": 5,
+      "aspect_ratio": "16:9",
+      "resolution": "720p"
+    }
+  }'
+```
+
+:::note
+Video generation may exceed 60 seconds. If this happens, fall back to polling (step 5).
+:::
+
+For a full list of available input parameters, refer to the [prunaai/p-video model page](https://replicate.com/prunaai/p-video) on Replicate.
