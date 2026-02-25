@@ -5,7 +5,7 @@ sidebar:
   order: 8
 ---
 
-import { Stream } from "~/components";
+import { Details, Stream } from "~/components";
 
 Every organization needs a way to control what users can reach on the Internet — blocking malware sites, restricting risky applications, and deciding how traffic exits the corporate network. Think of traffic policies as a set of security checkpoints, each inspecting a different layer of your network traffic before it is allowed through.
 
@@ -13,12 +13,55 @@ Cloudflare Gateway, a [Secure Web Gateway](https://www.cloudflare.com/learning/a
 
 Gateway supports several policy types because network traffic can be inspected at different layers — from raw packets up to full HTTP requests. Each policy type gives you control at a specific layer:
 
-- **[Packet filtering](/cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/)** blocks threats based on packet attributes (properties of an individual network packet, such as source IP address or protocol) without needing user or session context.
-- **[DNS policies](/cloudflare-one/traffic-policies/dns-policies/)** inspect DNS queries. Use DNS policies to block entire domains or IP addresses from resolving (that is, prevent the domain name from being translated to an IP address so the site never loads). For more information on [DNS filtering](https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/), refer to the Cloudflare Learning Center.
-- **[Network policies](/cloudflare-one/traffic-policies/network-policies/)** inspect individual TCP, UDP, and GRE (Generic Routing Encapsulation) packets. Use network policies to block access to specific ports or non-HTTP services such as SSH and RDP.
-- **[HTTP policies](/cloudflare-one/traffic-policies/http-policies/)** inspect HTTP requests. Use HTTP policies to block specific URLs, not just the domain. For more information on [URL filtering](https://www.cloudflare.com/learning/access-management/what-is-url-filtering/), refer to the Cloudflare Learning Center.
-- **[Egress policies](/cloudflare-one/traffic-policies/egress-policies/)** control how traffic exits your network by assigning static IP addresses unique to your organization. Third-party services can use these IPs to identify your traffic.
-- **[Resolver policies](/cloudflare-one/traffic-policies/resolver-policies/)** route DNS queries to custom authoritative nameservers (the servers that hold the definitive DNS records for a domain) instead of the default Cloudflare resolver.
+<Details header="Packet filtering">
+
+**[Packet filtering](/cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/)** inspects raw network packets and blocks traffic based on properties like source IP address or protocol. It does not need to know who the user is or what session they belong to.
+
+Use packet filtering to drop unwanted traffic before it reaches any other policy.
+
+</Details>
+
+<Details header="DNS policies">
+
+**[DNS policies](/cloudflare-one/traffic-policies/dns-policies/)** check every DNS query your users make. When a query matches a policy rule, Gateway can block the domain from resolving — the site never loads because the domain name is never translated to an IP address.
+
+DNS policies act at the earliest stage of a connection, before any content is fetched. This makes them the fastest policy type to deploy and the broadest in scope. For more information on [DNS filtering](https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/), refer to the Cloudflare Learning Center.
+
+Use DNS policies to block malicious domains, restrict content categories, or prevent entire sites from loading. For full threat protection, pair DNS policies with HTTP policies — DNS blocks known bad domains, while HTTP catches threats hidden in allowed traffic.
+
+</Details>
+
+<Details header="Network policies">
+
+**[Network policies](/cloudflare-one/traffic-policies/network-policies/)** inspect individual TCP, UDP, and GRE packets. They can match on IP addresses, ports, protocols, and the server name sent at the start of an encrypted connection (Server Name Indication, or SNI).
+
+Use network policies to block access to specific ports or non-HTTP services such as SSH and RDP.
+
+</Details>
+
+<Details header="HTTP policies">
+
+**[HTTP policies](/cloudflare-one/traffic-policies/http-policies/)** inspect the full content of web requests — including URLs, headers, and uploaded or downloaded files. Gateway decrypts HTTPS traffic so it can examine what DNS and network policies cannot see.
+
+Use HTTP policies to block specific URLs, scan file uploads for sensitive data, block malware in downloads, and control which accounts users can sign in to — for example, allow your company Google Workspace account but block personal Gmail.
+
+</Details>
+
+<Details header="Egress policies">
+
+**[Egress policies](/cloudflare-one/traffic-policies/egress-policies/)** control how traffic leaves your network by assigning fixed IP addresses that belong to your organization. Third-party services can recognize these IPs as yours.
+
+Use egress policies to connect to partners or services that only allow traffic from a known list of IP addresses.
+
+</Details>
+
+<Details header="Resolver policies">
+
+**[Resolver policies](/cloudflare-one/traffic-policies/resolver-policies/)** send DNS queries to specific DNS servers instead of the default Cloudflare resolver.
+
+Use resolver policies to resolve private hostnames on your internal network, route queries to your own DNS servers for compliance, or reach internal resources while connected through Cloudflare One.
+
+</Details>
 
 :::note
 When creating or editing policies, it may take up to 60 seconds for that policy to be updated across all of Cloudflare's data centers.
