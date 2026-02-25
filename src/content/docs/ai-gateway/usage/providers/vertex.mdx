@@ -215,7 +215,7 @@ console.log(response.choices[0].message.content);
 
 ```bash
 # First, base64-encode your service account JSON (must include "region" key)
-SERVICE_ACCOUNT_BASE64=$(cat service-account.json | base64)
+SERVICE_ACCOUNT_BASE64=$(base64 < service-account.json | tr -d '\n')
 
 curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions" \
     -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
