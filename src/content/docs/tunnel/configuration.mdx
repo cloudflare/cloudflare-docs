@@ -106,8 +106,13 @@ The most commonly used parameters:
 | [`--region`](/tunnel/advanced/run-parameters/#region)      | global            | Route through US-only data centers with `us`             |
 | [`--token`](/tunnel/advanced/run-parameters/#token)       | —                 | Tunnel token (remotely-managed tunnels)                  |
 
-For the complete list of run parameters and setup instructions, refer to [Run parameters](/tunnel/advanced/run-parameters/).
+The following example shows how to manually run a tunnel with configuration flags:
 
+```sh
+cloudflared tunnel --loglevel info --logfile /var/log/cloudflared/cloudflared.log run --token <TOKEN VALUE>
+```
+
+For the complete list of run parameters and instructions on how to add them to a tunnel service, refer to [Run parameters](/tunnel/advanced/run-parameters/).
 
 ## Origin parameters
 

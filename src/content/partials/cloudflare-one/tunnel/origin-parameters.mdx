@@ -5,7 +5,7 @@ params:
   - validatingJwtURL
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, TabItem, Tabs } from "~/components";
 
 Origin parameters determine how `cloudflared` sends requests to the origin server of your [published application](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/).
 
@@ -13,7 +13,18 @@ Origin parameters determine how `cloudflared` sends requests to the origin serve
 
 This section describes how to update origin parameters for a <GlossaryTooltip term="remotely-managed tunnel">remotely-managed tunnel</GlossaryTooltip>. If you are using a <GlossaryTooltip term="locally-managed tunnel">locally-managed tunnel</GlossaryTooltip>, add these parameters to your <a href={props.configurationFileURL}>configuration file</a>.
 
-<Render file="tunnel/update-origin-parameters" product="cloudflare-one" />
+<Tabs>
+<TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
+2. Choose a tunnel and select **Edit**.
+3. Select the **Published application routes** tab.
+4. Choose an application and select **Edit**.
+5. Under **Additional application settings**, modify one or more origin parameters.
+6. Select **Save**.
+
+</TabItem>
+</Tabs>
 
 ## TLS settings
 
