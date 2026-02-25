@@ -192,7 +192,7 @@ const client = new OpenAI({
 	baseURL:
 		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
 	defaultHeaders: {
-		"cf-aig-authorization": "Bearer {CF_AIG_TOKEN}",
+		"cf-aig-authorization": `Bearer {cf_aig_token}`,
 	},
 });
 
