@@ -1,13 +1,19 @@
 ---
 params:
-  - updateOriginConfigURL
-  - locallyManagedTunnelURL
   - configurationFileURL
   - kubectlTutorialURL
   - validatingJwtURL
 ---
 
-Origin configuration parameters determine how `cloudflared` proxies traffic to your origin server. For a remotely-managed tunnel (created via the dashboard or API), configure these settings <a href={props.updateOriginConfigURL}>using the dashboard or API</a>. If you are using a <a href={props.locallyManagedTunnelURL}>locally-managed tunnel</a>, add these parameters to your <a href={props.configurationFileURL}>configuration file</a>.
+import { GlossaryTooltip, Render } from "~/components";
+
+Origin parameters determine how `cloudflared` sends requests to the origin server of your [published application](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/).
+
+## Update origin parameters
+
+This section describes how to update origin parameters for a <GlossaryTooltip term="remotely-managed tunnel">remotely-managed tunnel</GlossaryTooltip>. If you are using a <GlossaryTooltip term="locally-managed tunnel">locally-managed tunnel</GlossaryTooltip>, add these parameters to your <a href={props.configurationFileURL}>configuration file</a>.
+
+<Render file="tunnel/update-origin-parameters" product="cloudflare-one" />
 
 ## TLS settings
 
