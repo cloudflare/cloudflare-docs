@@ -2,7 +2,7 @@ import { JsonSchemaViewer } from "cf-json-schema-viz";
 import "cf-json-schema-viz/styles.css";
 
 interface Props {
-	schema: object;
+	schema: Record<string, unknown>;
 }
 
 export default function JsonSchemaViewerWrapper({ schema }: Props) {
