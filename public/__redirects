@@ -2395,7 +2395,6 @@
 /pages/framework-guides/nextjs/ssr/* /workers/framework-guides/web-apps/nextjs 301
 /*/index.html.md /:splat/index.md 301
 /1.1.1.1/other-ways-to-use-1.1.1.1/* /1.1.1.1/additional-options/:splat 301
-/api-next/* /api/:splat 301
 /changelog-next/* /changelog/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-rendering/rest-api/:splat 301
 /*/sitemap.xml /sitemap-index.xml 301
