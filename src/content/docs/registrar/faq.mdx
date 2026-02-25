@@ -11,14 +11,36 @@ import { DashButton } from "~/components";
 
 Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) to explore more resources.
 
+* [Domain management](#domain-management)
 * [Domain transfers](#domain-transfers)
 * [Domain registrations](#domain-registrations)
 * [Domain restoration](#domain-restoration)
 * [Domain deletions](#domain-deletions)
-* [Domain management](#domain-management)
 * [Billing](#billing)
 
+***
+
+## Domain management
+
+### Can I change my nameservers?
+
+No, all domains on Cloudflare Registrar use Cloudflare nameservers, so that we can protect and speed up your content or services.
+
+If you only need a subdomain to be on a different service provider, you can [delegate a subdomain](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/). Also, if you are on the Business or Enterprise plans, you have the option to set up [custom nameservers](/dns/nameservers/custom-nameservers/), which means you will be using Cloudflare nameservers but with custom-branded nameserver names.
+
+If you still need to use different nameservers, you will have to [move your domain to another Registrar](/registrar/account-options/transfer-out-from-cloudflare/).
+
+### How can I update my telephone number, email, name or address?
+
+You can update both your default contact information and any individual Registrant, Administrator, Technical or Billing contact for your domain registrations by following [Registrant contact updates](/registrar/account-options/domain-contact-updates/). Details that may be updated include name, email, address, organization and telephone number.
+
+***
+
 ## Domain transfers
+
+### What happens to my nameservers when I transfer my domain to Cloudflare?
+
+Cloudflare Registrar only supports transfers of domains that are active on a Cloudflare [full setup](/dns/zone-setups/full-setup/). Domains on Cloudflare use [nameservers assigned by Cloudflare](/dns/nameservers/nameserver-options/#assignment-method) to the associated account and those nameservers must remain in place for the domain to be Active.
 
 ### Why did my transfer fail?
 
@@ -33,11 +55,6 @@ ICANN requires that any transfer also extends the expiration date of your domain
 Whenever a domain is first registered, the registrant purchases control of that domain for some number of years — up to 10 years. For example, a domain registered on October 8, 2020 will have an expiration date of October 8th in some year between 2021 and 2030, depending on the amount of years originally purchased.
 
 Transferring a domain adds time to the current expiration date, unless your domain already has [10 years on the term](#if-i-registered-my-domain-for-10-years-at-another-registrar-will-i-gain-another-year-if-i-transfer-it-to-cloudflare).
-
-
-### What happens to my nameservers when I transfer my domain to Cloudflare?
-
-Cloudflare Registrar only supports transfers of domains that are active on a Cloudflare [full setup](/dns/zone-setups/full-setup/). Domains on Cloudflare use [nameservers assigned by Cloudflare](/dns/nameservers/nameserver-options/#assignment-method) to the associated account and those nameservers must remain in place for the domain to be Active.
 
 
 ### How can I see the status of my domain transfer?
@@ -76,9 +93,6 @@ If you enter an incorrect auth code (also referred to as authentication code or 
 
 
 No. A domain cannot have more than 10 years on the term. If you registered your domain for 10 years, you will get 10 years upon transferring it to Cloudflare.
-
-
-
 
 ***
 
@@ -203,22 +217,6 @@ The delete token is valid for 30 minutes. After the 30 minutes the code will exp
 If the domain is within 5 days of the initial registration, the domain will be immediately released by the registry and made available for re-registration. In this scenario the domain will be immediately removed from the registrar section of the account. You may need to refresh the page to force an update of the data.
 
 If the domain is more than 5 days old, it will enter the redemption period and will remain in account until the redemption period expires and the registry releases the domain.
-
-***
-
-## Domain management
-
-### How can I update my telephone number, email, name or address?
-
-You can update both your default contact information and any individual Registrant, Administrator, Technical or Billing contact for your domain registrations by following [Registrant contact updates](/registrar/account-options/domain-contact-updates/). Details that may be updated include name, email, address, organization and telephone number.
-
-### Can I change my nameservers?
-
-No, you must use Cloudflare nameservers for domains on Cloudflare Registrar.
-
-If you only need a subdomain to be on a different service provider, you can [delegate a subdomain](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/). Also, if you are on the Business or Enterprise plans, you have the option to set up [custom nameservers](/dns/nameservers/custom-nameservers/), which means you will be using Cloudflare nameservers but with custom-branded nameserver names.
-
-If you still need to use different nameservers, you will have to [move your domain to another Registrar](/registrar/account-options/transfer-out-from-cloudflare/).
 
 ***
 
