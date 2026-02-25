@@ -46,6 +46,16 @@ The [Google tag ID](https://support.google.com/analytics/answer/9539598?hl=en) c
 
 Now that you have authenticated into your Cloudflare account and configured GTM in first-party mode, your Google Tags will be loaded using `https://your-domain/measurement-path/...`and subsequent measurement requests will be served by Cloudflare.
 
+## Zone-level configuration
+
+Google tag gateway for advertisers is configured at the zone level. When you enable it for a zone (for example, `example.com`), it applies to all hostnames and subdomains within that zone, including custom hostnames. Currently, it is not possible to enable or disable the feature for individual subdomains independently.
+
+### Handle subdomain-specific logic with triggers
+
+If you need different tag behavior for specific subdomains (for example, only firing certain tags on `shop.example.com`), you can use [Google Tag Manager triggers](https://support.google.com/tagmanager/answer/7679316) to control when tags fire. For example, you can create a trigger condition like **Page Hostname** equals `shop.example.com` to restrict a tag to a specific subdomain.
+
+This approach lets you maintain a single zone-wide Google tag gateway configuration while still customizing tag behavior per subdomain.
+
 ## Related resources
 - [Google Developer Docs: Set up Google tag gateway for advertisers](https://developers.google.com/tag-platform/tag-manager/gateway/setup-guide?setup=auto)
 - [Google Help Center: Set up Google tag gateway for advertisers in the Google tag with Cloudflare](https://support.google.com/tagmanager/answer/16061406)
