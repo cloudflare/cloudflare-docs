@@ -1,158 +1,2568 @@
----
-title: Cloudflare Workers
-
-pcx_content_type: overview
-sidebar:
-  order: 1
-head:
-  - tag: title
-    content: Overview
----
-
-import { Description, RelatedProduct, LinkButton } from "~/components";
-
-<Description>
-	A serverless platform for building, deploying, and scaling apps across
-	[Cloudflare's global network](https://www.cloudflare.com/network/) with a
-	single command — no infrastructure to manage, no complex configuration
-</Description>
-
-With Cloudflare Workers, you can expect to:
-
-- Deliver fast performance with high reliability anywhere in the world
-- Build full-stack apps with your framework of choice, including [React](/workers/framework-guides/web-apps/react/), [Vue](/workers/framework-guides/web-apps/vue/), [Svelte](/workers/framework-guides/web-apps/sveltekit/), [Next](/workers/framework-guides/web-apps/nextjs/), [Astro](/workers/framework-guides/web-apps/astro/), [React Router](/workers/framework-guides/web-apps/react-router/), [and more](/workers/framework-guides/)
-- Use your preferred language, including [JavaScript](/workers/languages/javascript/), [TypeScript](/workers/languages/typescript/), [Python](/workers/languages/python/), [Rust](/workers/languages/rust/), [and more](/workers/runtime-apis/webassembly/)
-- Gain deep visibility and insight with built-in [observability](/workers/observability/logs/)
-- Get started for free and grow with flexible [pricing](/workers/platform/pricing/), affordable at any scale
-
-Get started with your first project:
-
-<LinkButton href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/templates">
-	Deploy a template
-</LinkButton>
-
-<LinkButton href="/workers/get-started/guide/" variant="minimal">
-	Deploy with Wrangler CLI
-</LinkButton>
-
----
-
-## Build with Workers
-
-<div>
-#### Front-end applications
-
-<span>Deploy [static assets](/workers/static-assets/) to Cloudflare's [CDN & cache](/cache/) for fast rendering</span>
-</div>
-
-<div>
-#### Back-end applications
-
-<span>Build APIs and connect to data stores with [Smart Placement](/workers/configuration/placement/) to optimize latency</span>
-</div>
-
-<div>
-#### Serverless AI inference
-
-<span>Run LLMs, generate images, and more with [Workers AI](/workers-ai/)</span>
-</div>
-
-<div>
-#### Background jobs
-
-<span>Schedule [cron jobs](/workers/configuration/cron-triggers/), run durable [Workflows](/workflows/), and integrate with [Queues](/queues/)</span>
-</div>
-
-<div>
-#### Observability & monitoring
-
-<span>Monitor performance, debug issues, and analyze traffic with [real-time logs](/workers/observability/logs/) and [analytics](/workers/observability/metrics-and-analytics/)</span>
-</div>
-
----
-
-## Integrate with Workers
-
-Connect to external services like databases, APIs, and storage via [Bindings](/workers/runtime-apis/bindings/), enabling functionality with just a few lines of code:
-
-**Storage**
-
-<RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
-
-Scalable stateful storage for real-time coordination.
-
-</RelatedProduct>
-
-<RelatedProduct header="D1" href="/d1/" product="d1">
-
-Serverless SQL database built for fast, global queries.
-
-</RelatedProduct>
-
-<RelatedProduct header="KV" href="/kv/" product="kv">
-
-Low-latency key-value storage for fast, edge-cached reads.
-
-</RelatedProduct>
-
-<RelatedProduct header="Queues" href="/queues/" product="queues">
-
-Guaranteed delivery with no charges for egress bandwidth.
-
-</RelatedProduct>
-
-<RelatedProduct header="Hyperdrive" href="/hyperdrive/" product="hyperdrive">
-
-Connect to your external database with accelerated queries, cached at the edge.
-
-</RelatedProduct>
-
-**Compute**
-
-<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
-
-Machine learning models powered by serverless GPUs.
-
-</RelatedProduct>
-
-<RelatedProduct header="Workflows" href="/workflows/" product="workflows">
-
-Durable, long-running operations with automatic retries.
-
-</RelatedProduct>
-
-<RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
-
-Vector database for AI-powered semantic search.
-
-</RelatedProduct>
-
-<RelatedProduct header="R2" href="/r2/" product="r2">
-
-Zero-egress object storage for cost-efficient data access.
-
-</RelatedProduct>
-
-<RelatedProduct header="Browser Rendering" href="/browser-rendering/" product="browser-rendering">
-
-Programmatic serverless browser instances.
-
-</RelatedProduct>
-
-**Media**
-
-<RelatedProduct header="Cache / CDN" href="/cache/" product="cache">
-
-Global caching for high-performance, low-latency delivery.
-
-</RelatedProduct>
-
-<RelatedProduct header="Images" href="/images/" product="images">
-
-Streamlined image infrastructure from a single API.
-
-</RelatedProduct>
-
----
-
-Want to connect with the Workers community? [Join our Discord](https://discord.cloudflare.com)
+// ignore_for_file: unused_element_parameter
+
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+// Required for Timer
+
+void main() {
+  runApp(
+    ChangeNotifierProvider<SistemaCentral>(
+      create: (BuildContext context) => SistemaCentral(),
+      builder: (BuildContext context, Widget? child) => const FlamingoApp(),
+    ),
+  );
+}
+
+class FlamingoApp extends StatelessWidget {
+  const FlamingoApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Sistema de Gestión',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.deepPurple,
+          foregroundColor: Colors.white,
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Colors.deepPurple,
+          foregroundColor: Colors.white,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.deepPurple,
+            foregroundColor: Colors.white,
+          ),
+        ),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+          floatingLabelStyle: TextStyle(color: Colors.deepPurple),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.deepPurple, width: 2),
+          ),
+        ),
+      ),
+      home: LoginSimulado(),
+    );
+  }
+}
+
+//////////////////////////////////////////////////////////
+// MODELOS
+//////////////////////////////////////////////////////////
+
+enum RolUsuario { agente, almacen, admin }
+
+class Usuario {
+  final String nombre;
+  final RolUsuario rol;
+  final String password;
+
+  Usuario({required this.nombre, required this.rol, required this.password});
+}
+
+class Producto {
+  final String codigo;
+  final String nombre;
+  double precio;
+  int stock;
+
+  Producto({
+    required this.codigo,
+    required this.nombre,
+    required this.precio,
+    required this.stock,
+  });
+}
+
+class OrderItem {
+  final String productCode;
+  final String productName;
+  int quantity;
+
+  OrderItem({required this.productCode, required this.productName, required this.quantity});
+}
+
+class PedidoDocumento {
+  final String id;
+  final String cliente;
+  final String agenteNombre;
+  String contenidoAgente; // The raw, editable "file" content from agent
+  String contenidoAlmacen; // The content marked by Almacén (✅/❌)
+  String estadoDocumento; // "Pendiente de Recepción (Impresora02)", "Enviado a Almacén", "Procesado (Completo)", "Procesado (Incompleto)"
+  String observacionAlmacen;
+  final DateTime fechaCreacion;
+  DateTime? fechaEnvioAlmacen; // When it was moved from Impresora02 queue to "sent to warehouse"
+  DateTime? fechaProcesamientoAlmacen;
+
+  PedidoDocumento({
+    required this.id,
+    required this.cliente,
+    required this.agenteNombre,
+    required this.contenidoAgente,
+    required this.fechaCreacion,
+    this.contenidoAlmacen = "", // Initialize as empty
+    this.estadoDocumento = "Pendiente de Recepción (Impresora02)", // Initial state when created by agent
+    this.observacionAlmacen = "",
+    this.fechaEnvioAlmacen,
+    this.fechaProcesamientoAlmacen,
+  });
+
+  // Constructor para copiar y modificar
+  PedidoDocumento copyWith({
+    String? id,
+    String? cliente,
+    String? agenteNombre,
+    String? contenidoAgente,
+    String? contenidoAlmacen,
+    String? estadoDocumento,
+    String? observacionAlmacen,
+    DateTime? fechaCreacion,
+    DateTime? fechaEnvioAlmacen,
+    DateTime? fechaProcesamientoAlmacen,
+  }) {
+    return PedidoDocumento(
+      id: id ?? this.id,
+      cliente: cliente ?? this.cliente,
+      agenteNombre: agenteNombre ?? this.agenteNombre,
+      contenidoAgente: contenidoAgente ?? this.contenidoAgente,
+      contenidoAlmacen: contenidoAlmacen ?? this.contenidoAlmacen,
+      estadoDocumento: estadoDocumento ?? this.estadoDocumento,
+      observacionAlmacen: observacionAlmacen ?? this.observacionAlmacen,
+      fechaCreacion: fechaCreacion ?? this.fechaCreacion,
+      fechaEnvioAlmacen: fechaEnvioAlmacen ?? this.fechaEnvioAlmacen,
+      fechaProcesamientoAlmacen: fechaProcesamientoAlmacen ?? this.fechaProcesamientoAlmacen,
+    );
+  }
+}
+
+class Notificacion {
+  final String mensaje;
+  final DateTime fecha;
+
+  Notificacion({
+    required this.mensaje,
+    required this.fecha,
+  });
+}
+
+class MensajeChat {
+  final String sender;
+  final String message;
+  final DateTime timestamp;
+
+  MensajeChat({
+    required this.sender,
+    required this.message,
+    required this.timestamp,
+  });
+}
+
+//////////////////////////////////////////////////////////
+// SISTEMA CENTRAL
+//////////////////////////////////////////////////////////
+
+class SistemaCentral extends ChangeNotifier {
+  List<Producto> inventario = <Producto>[
+    Producto(codigo: "CUA001", nombre: "Cuadernos A4", precio: 25.0, stock: 50),
+    Producto(codigo: "LAP002", nombre: "Lapiceros Azules", precio: 5.0, stock: 30),
+    Producto(codigo: "CAL003", nombre: "Calculadora Científica", precio: 120.0, stock: 15),
+    Producto(codigo: "RES004", nombre: "Resaltadores Pack x4", precio: 18.0, stock: 25),
+    Producto(codigo: "ENG005", nombre: "Engrapadora Pequeña", precio: 35.0, stock: 10),
+  ];
+
+  final Map<String, Usuario> _users = <String, Usuario>{
+    "Admin": Usuario(nombre: "Admin", rol: RolUsuario.admin, password: "Flamingo02"),
+    "Almacén": Usuario(nombre: "Almacén", rol: RolUsuario.almacen, password: "warehouse_pass"),
+    "V264": Usuario(nombre: "V264", rol: RolUsuario.agente, password: "agent_pass"),
+    "MIG": Usuario(nombre: "MIG", rol: RolUsuario.agente, password: "agent_pass"),
+    "PRC": Usuario(nombre: "PRC", rol: RolUsuario.agente, password: "agent_pass"),
+    "GAB": Usuario(nombre: "GAB", rol: RolUsuario.agente, password: "agent_pass"),
+  };
+
+  final Map<String, bool> _userImpresoraStates = <String, bool>{
+    "Admin": false,
+    "Almacén": false,
+    "V264": false,
+    "MIG": false,
+    "PRC": false,
+    "GAB": false,
+  };
+
+  bool getImpresoraState(String userName) => _userImpresoraStates[userName] ?? false;
+
+  void setImpresoraState(String userName, bool isEnabled) {
+    _userImpresoraStates[userName] = isEnabled;
+    notificaciones.insert(
+      0,
+      Notificacion(
+        mensaje: "'$userName' ha ${isEnabled ? 'activado' : 'desactivado'} su Impresora02.",
+        fecha: DateTime.now(),
+      ),
+    );
+    notifyListeners();
+  }
+
+  List<Usuario> get allUsers => _users.values.toList();
+  List<Usuario> get agents => _users.values.where((Usuario u) => u.rol == RolUsuario.agente).toList();
+  Usuario? getUser(String name) => _users[name];
+
+  void addUsuario(Usuario user) {
+    if (_users.containsKey(user.nombre)) {
+      return;
+    }
+    _users[user.nombre] = user;
+    _userImpresoraStates[user.nombre] = false; // Initialize Impresora02 state for new user
+    notificaciones.insert(
+      0,
+      Notificacion(
+        mensaje: "Nuevo usuario '${user.nombre}' (${user.rol.name}) registrado.",
+        fecha: DateTime.now(),
+      ),
+    );
+    notifyListeners();
+  }
+
+  void removeUsuario(String nombre) {
+    if (nombre == "Admin" || nombre == "Almacén") {
+      return;
+    }
+
+    if (_users.remove(nombre) != null) {
+      _privateChatMessages.remove(nombre);
+      _userImpresoraStates.remove(nombre); // Remove Impresora02 state
+      notificaciones.insert(
+        0,
+        Notificacion(
+          mensaje: "Usuario '$nombre' eliminado.",
+          fecha: DateTime.now(),
+        ),
+      );
+      documentosPedido.removeWhere((PedidoDocumento doc) => doc.agenteNombre == nombre);
+      _impresoraQueue.removeWhere((PedidoDocumento doc) => doc.agenteNombre == nombre);
+      notifyListeners();
+    }
+  }
+
+  void updateUsuarioPassword(String nombre, String newPassword) {
+    if (_users.containsKey(nombre)) {
+      final Usuario? oldUser = _users[nombre];
+      if (oldUser != null) {
+        _users[nombre] = Usuario(nombre: nombre, rol: oldUser.rol, password: newPassword);
+        notificaciones.insert(
+          0,
+          Notificacion(
+            mensaje: "Contraseña de usuario '$nombre' actualizada.",
+            fecha: DateTime.now(),
+          ),
+        );
+        notifyListeners();
+      }
+    }
+  }
+
+  List<PedidoDocumento> documentosPedido = <PedidoDocumento>[]; // Documents already received by warehouse
+  List<PedidoDocumento> _impresoraQueue = <PedidoDocumento>[]; // Documents pending reception by warehouse
+  List<PedidoDocumento> get impresoraQueue => _impresoraQueue;
+
+  int _nextPedidoDocumentoId = 1; // Starting from D001
+
+  List<Notificacion> notificaciones = <Notificacion>[
+    Notificacion(
+      mensaje: "Bienvenido al sistema.",
+      fecha: DateTime.now().subtract(const Duration(minutes: 5)),
+    ),
+  ];
+
+  List<MensajeChat> publicChatMessages = <MensajeChat>[
+    MensajeChat(
+      sender: "Almacén",
+      message: "Bienvenidos al chat público. ¡Esperamos sus consultas!",
+      timestamp: DateTime.now().subtract(const Duration(minutes: 10)),
+    ),
+  ];
+
+  final Map<String, List<MensajeChat>> _privateChatMessages = <String, List<MensajeChat>>{};
+
+  List<MensajeChat> getPrivateChatForAgent(String agentName) {
+    return _privateChatMessages[agentName] ?? <MensajeChat>[];
+  }
+
+  void addPublicChatMessage(String sender, String message) {
+    publicChatMessages.insert(0, MensajeChat(sender: sender, message: message, timestamp: DateTime.now()));
+    notifyListeners();
+  }
+
+  void addPrivateChatMessage(String chatAgentName, String sender, String message) {
+    _privateChatMessages.putIfAbsent(chatAgentName, () => <MensajeChat>[]).insert(0, MensajeChat(sender: sender, message: message, timestamp: DateTime.now()));
+    notificaciones.insert(0, Notificacion(mensaje: "Nuevo mensaje privado para '$chatAgentName' de '$sender'.", fecha: DateTime.now()));
+    notifyListeners();
+  }
+
+  Producto? getProductoByCodeOrName(String query) {
+    try {
+      return inventario.firstWhere(
+          (Producto p) => p.nombre.toLowerCase() == query.toLowerCase() || p.codigo.toLowerCase() == query.toLowerCase());
+    } catch (e) {
+      return null;
+    }
+  }
+
+  void addProducto(String codigo, String nombre, double precio, int stock) {
+    if (inventario.any((Producto p) =>
+        p.codigo.toLowerCase() == codigo.toLowerCase() ||
+        p.nombre.toLowerCase() == nombre.toLowerCase())) {
+      return;
+    }
+    inventario.add(Producto(codigo: codigo, nombre: nombre, precio: precio, stock: stock));
+    notificaciones.insert(
+      0,
+      Notificacion(
+        mensaje: "Nuevo producto '$nombre' (Código: $codigo) agregado al inventario.",
+        fecha: DateTime.now(),
+      ),
+    );
+    notifyListeners();
+  }
+
+  void updateProducto(String codigo, {double? newPrecio, int? newStock}) {
+    final int index = inventario.indexWhere((Producto p) => p.codigo == codigo);
+    if (index != -1) {
+      if (newPrecio != null) {
+        inventario[index].precio = newPrecio;
+      }
+      if (newStock != null) {
+        inventario[index].stock = newStock;
+      }
+      notificaciones.insert(
+        0,
+        Notificacion(
+          mensaje:
+              "Producto '${inventario[index].nombre}' (Código: $codigo) actualizado. Precio: \$${inventario[index].precio.toStringAsFixed(2)}, Stock: ${inventario[index].stock}.",
+          fecha: DateTime.now(),
+        ),
+      );
+      notifyListeners();
+    }
+  }
+
+  void deleteProducto(String codigo) {
+    final int initialLength = inventario.length;
+    inventario.removeWhere((Producto p) => p.codigo == codigo);
+    if (inventario.length < initialLength) {
+      notificaciones.insert(
+        0,
+        Notificacion(
+          mensaje: "Producto con código '$codigo' eliminado del inventario.",
+          fecha: DateTime.now(),
+        ),
+      );
+      notifyListeners();
+    }
+  }
+
+  void crearPedidoDocumento(String cliente, List<OrderItem> items, String agenteNombre) {
+    if (cliente.isEmpty || items.isEmpty || agenteNombre.isEmpty) return;
+    if (!getImpresoraState(agenteNombre)) {
+      // Should be checked in UI, but a safeguard
+      return;
+    }
+
+    final String newId = "D${_nextPedidoDocumentoId.toString().padLeft(3, '0')}";
+    _nextPedidoDocumentoId++;
+
+    final StringBuffer documentContentBuffer = StringBuffer();
+    documentContentBuffer.writeln("Pedido para Cliente: $cliente");
+    documentContentBuffer.writeln("Agente: $agenteNombre");
+    documentContentBuffer.writeln("Fecha: ${DateTime.now().toLocal().toString().split('.')[0]}");
+    documentContentBuffer.writeln("--- ITEMS ---");
+    for (final OrderItem item in items) {
+      final Producto productInInventory = inventario.firstWhere((Producto p) => p.codigo == item.productCode);
+      documentContentBuffer.writeln("- ${item.productName} (Código: ${item.productCode}) x ${item.quantity} unidades. Precio Unitario: \$${productInInventory.precio.toStringAsFixed(2)}");
+    }
+    documentContentBuffer.writeln("--- FIN DE PEDIDO ---");
+    final String contenidoAgente = documentContentBuffer.toString();
+
+    final PedidoDocumento newDocumento = PedidoDocumento(
+      id: newId,
+      cliente: cliente,
+      agenteNombre: agenteNombre,
+      contenidoAgente: contenidoAgente,
+      fechaCreacion: DateTime.now(),
+      estadoDocumento: "Pendiente de Recepción (Impresora02)", // New initial state
+      fechaEnvioAlmacen: null, // Not yet "sent to warehouse"
+    );
+    _impresoraQueue.insert(0, newDocumento); // Add to Impresora02 queue
+
+    notificaciones.insert(
+      0,
+      Notificacion(
+        mensaje:
+            "Pedido $newId para el cliente '$cliente' de '$agenteNombre' enviado a la cola de impresión (Impresora02).",
+        fecha: DateTime.now(),
+      ),
+    );
+
+    notifyListeners();
+  }
+
+  void receiveDocumentByAlmacen(String documentId) {
+    final int index = _impresoraQueue.indexWhere((PedidoDocumento d) => d.id == documentId);
+    if (index != -1) {
+      final PedidoDocumento doc = _impresoraQueue.removeAt(index);
+      final PedidoDocumento receivedDoc = doc.copyWith(
+        estadoDocumento: "Enviado a Almacén",
+        fechaEnvioAlmacen: DateTime.now(),
+      );
+      documentosPedido.insert(0, receivedDoc); // Move to documents for processing
+
+      // Notification for Almacén (general system log)
+      notificaciones.insert(
+        0,
+        Notificacion(
+          mensaje:
+              "Documento de pedido ${doc.id} de '${doc.agenteNombre}' para cliente '${doc.cliente}' ha sido recibido por Almacén (sim. Impresora02).",
+          fecha: DateTime.now(),
+        ),
+      );
+      // Specific notification for the agent
+      notificaciones.insert(
+        0,
+        Notificacion(
+          mensaje: "Tu pedido ${doc.id} para '${doc.cliente}' ha sido recibido por Almacén.",
+          fecha: DateTime.now(),
+        ),
+      );
+      notifyListeners();
+    }
+  }
+
+  void procesarPedidoDocumentoAlmacen(
+      String documentId, String contenidoMarcado, String estadoFinal, String observacion) {
+    final int index = documentosPedido.indexWhere((PedidoDocumento d) => d.id == documentId);
+    if (index != -1) {
+      final PedidoDocumento doc = documentosPedido[index];
+      documentosPedido[index] = doc.copyWith(
+        contenidoAlmacen: contenidoMarcado,
+        estadoDocumento: estadoFinal,
+        observacionAlmacen: observacion,
+        fechaProcesamientoAlmacen: DateTime.now(),
+      );
+
+      notificaciones.insert(
+        0,
+        Notificacion(
+          mensaje:
+              "Tu pedido ${doc.id} para '${doc.cliente}' ha sido procesado por Almacén ($estadoFinal). Observación: ${observacion.isNotEmpty ? observacion : 'Ninguna'}",
+          fecha: DateTime.now(),
+        ),
+      );
+      notifyListeners();
+    }
+  }
+
+  List<PedidoDocumento> getDocumentosPendientesAlmacen() {
+    return documentosPedido
+        .where((PedidoDocumento doc) => doc.estadoDocumento == "Enviado a Almacén")
+        .toList();
+  }
+
+  List<PedidoDocumento> getDocumentosByAgente(String agenteNombre) {
+    return documentosPedido
+        .where((PedidoDocumento doc) => doc.agenteNombre == agenteNombre)
+        .toList();
+  }
+}
+
+Color getEstadoDocumentoColor(String estado) {
+  switch (estado) {
+    case "Pendiente de Recepción (Impresora02)":
+      return Colors.blueGrey;
+    case "Enviado a Almacén":
+      return Colors.orange;
+    case "Procesado (Completo)":
+      return Colors.green;
+    case "Procesado (Incompleto)":
+      return Colors.red;
+    default:
+      return Colors.grey;
+  }
+}
+
+//////////////////////////////////////////////////////////
+// LOGIN SIMULADO
+//////////////////////////////////////////////////////////
+
+class LoginSimulado extends StatelessWidget {
+  LoginSimulado({super.key});
+
+  void _showPasswordDialog(BuildContext context, Usuario user) {
+    final TextEditingController passwordController = TextEditingController();
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text("Ingresar como ${user.nombre}"),
+          content: TextField(
+            controller: passwordController,
+            obscureText: true,
+            decoration: const InputDecoration(labelText: "Contraseña"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text("Cancelar"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final String enteredPassword = passwordController.text;
+                final SistemaCentral system =
+                    Provider.of<SistemaCentral>(dialogContext, listen: false);
+                final Usuario? latestUser =
+                    system.getUser(user.nombre);
+
+                if (latestUser != null && enteredPassword == latestUser.password) {
+                  Navigator.pop(dialogContext);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext _) => PantallaSegunRol(usuario: latestUser),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(dialogContext).showSnackBar(
+                    const SnackBar(content: Text("Contraseña incorrecta o usuario no encontrado.")),
+                  );
+                }
+              },
+              child: const Text("Ingresar"),
+            ),
+          ],
+        );
+      },
+    ).then((_) {
+      passwordController.dispose();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+    final List<Usuario> agents = sistema.agents;
+    final Usuario? adminUser = sistema.getUser("Admin");
+    final Usuario? almacenUser = sistema.getUser("Almacén");
+
+    return Scaffold(
+      appBar: AppBar(title: const Text("Seleccionar Rol")),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ...agents.map<Widget>((Usuario agent) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: ElevatedButton(
+                      onPressed: () => _showPasswordDialog(context, agent),
+                      child: Text("Entrar como Agente ${agent.nombre}"),
+                    ),
+                  )).toList(),
+              if (almacenUser != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: ElevatedButton(
+                    onPressed: () => _showPasswordDialog(context, almacenUser),
+                    child: const Text("Entrar como Almacén"),
+                  ),
+                ),
+              if (adminUser != null)
+                ElevatedButton(
+                  onPressed: () => _showPasswordDialog(context, adminUser),
+                  child: const Text("Entrar como Administrador"),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+//////////////////////////////////////////////////////////
+// CONTROL POR ROL
+//////////////////////////////////////////////////////////
+
+class PantallaSegunRol extends StatelessWidget {
+  final Usuario usuario;
+
+  const PantallaSegunRol({required this.usuario, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    switch (usuario.rol) {
+      case RolUsuario.agente:
+        return PanelAgente(usuario: usuario);
+      case RolUsuario.almacen:
+        return PanelAlmacen(usuario: usuario);
+      case RolUsuario.admin:
+        return PanelAdmin(usuario: usuario);
+    }
+  }
+}
+
+//////////////////////////////////////////////////////////
+// PANEL ALMACÉN
+//////////////////////////////////////////////////////////
+
+class PanelAlmacen extends StatefulWidget {
+  final Usuario usuario;
+
+  const PanelAlmacen({required this.usuario, super.key});
+
+  @override
+  State<PanelAlmacen> createState() => _PanelAlmacenState();
+}
+
+class _PanelAlmacenState extends State<PanelAlmacen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Panel Almacén - ${widget.usuario.nombre}"),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const <Tab>[
+            Tab(icon: Icon(Icons.print), text: "Recepción Impresora02"),
+            Tab(icon: Icon(Icons.list_alt), text: "Documentos de Pedido"),
+            Tab(icon: Icon(Icons.chat), text: "Chat"),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          _AlmacenImpresoraReceptionTab(usuario: widget.usuario),
+          _PedidoDocumentosAlmacenTab(usuario: widget.usuario),
+          _AlmacenChatView(usuario: widget.usuario),
+        ],
+      ),
+    );
+  }
+}
+
+class _AlmacenImpresoraReceptionTab extends StatelessWidget {
+  final Usuario usuario;
+  const _AlmacenImpresoraReceptionTab({required this.usuario, super.key});
+
+  void _receiveDocument(BuildContext context, String documentId) {
+    Provider.of<SistemaCentral>(context, listen: false).receiveDocumentByAlmacen(documentId);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Documento $documentId recibido de la Impresora02."),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+    final bool impresoraEnabled = sistema.getImpresoraState(usuario.nombre);
+    final List<PedidoDocumento> impresoraQueue = sistema.impresoraQueue;
+
+    return Column(
+      children: <Widget>[
+        Card(
+          margin: const EdgeInsets.all(16),
+          child: SwitchListTile(
+            title: const Text("Impresora02 del Almacén"),
+            subtitle: Text(
+              impresoraEnabled
+                  ? "Recepción de documentos de pedido activa."
+                  : "Recepción de documentos de pedido inactiva.",
+            ),
+            value: impresoraEnabled,
+            onChanged: (bool value) {
+              sistema.setImpresoraState(usuario.nombre, value);
+            },
+            secondary: const Icon(Icons.print),
+          ),
+        ),
+        if (!impresoraEnabled)
+          const Expanded(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  "Active la Impresora02 para recibir documentos de pedido enviados por los agentes.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey),
+                ),
+              ),
+            ),
+          )
+        else if (impresoraQueue.isEmpty)
+          const Expanded(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  "No hay documentos pendientes en la cola de recepción de Impresora02.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey),
+                ),
+              ),
+            ),
+          )
+        else
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: impresoraQueue.length,
+              itemBuilder: (BuildContext context, int index) {
+                final PedidoDocumento document = impresoraQueue[index];
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  elevation: 2,
+                  child: ListTile(
+                    leading: const Icon(Icons.print, color: Colors.blueGrey),
+                    title: Text("Pedido ${document.id} de ${document.agenteNombre}"),
+                    subtitle: Text("Cliente: ${document.cliente} - Estado: ${document.estadoDocumento}"),
+                    trailing: ElevatedButton(
+                      onPressed: () => _receiveDocument(context, document.id),
+                      child: const Text("Recibir"),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _PedidoDocumentosAlmacenTab extends StatefulWidget {
+  final Usuario usuario;
+
+  const _PedidoDocumentosAlmacenTab({required this.usuario, super.key});
+
+  @override
+  State<_PedidoDocumentosAlmacenTab> createState() => _PedidoDocumentosAlmacenTabState();
+}
+
+class _PedidoDocumentosAlmacenTabState extends State<_PedidoDocumentosAlmacenTab> {
+  // We still need to track processed documents to avoid repeated notifications on initial load
+  final Set<String> _notifiedDocumentIds = <String>{};
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context, listen: false);
+    final List<PedidoDocumento> pendingDocs = sistema.getDocumentosPendientesAlmacen();
+
+    final List<PedidoDocumento> newPendingDocs = pendingDocs
+        .where((PedidoDocumento doc) => !_notifiedDocumentIds.contains(doc.id))
+        .toList();
+
+    if (newPendingDocs.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                "¡NUEVO PEDIDO! Tienes ${newPendingDocs.length} documento(s) pendiente(s) de Almacén."),
+            duration: const Duration(seconds: 3),
+            backgroundColor: Colors.deepOrange,
+          ),
+        );
+        for (final PedidoDocumento doc in newPendingDocs) {
+          _notifiedDocumentIds.add(doc.id);
+        }
+      });
+    }
+  }
+
+  void _showProcessDocumentDialog(
+      BuildContext context, SistemaCentral sistema, PedidoDocumento document) {
+    final TextEditingController contentController =
+        TextEditingController(text: document.contenidoAgente);
+    final TextEditingController observationController = TextEditingController();
+
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) => AlertDialog(
+        title: Text("Procesar Pedido: ${document.id}"),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text("Cliente: ${document.cliente}"),
+              Text("Agente: ${document.agenteNombre}"),
+              const SizedBox(height: 10),
+              const Text("Contenido del Pedido (marque ✅ o ❌):",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 5),
+              TextField(
+                controller: contentController,
+                decoration: const InputDecoration(
+                  hintText: "Marque items con ✅ (completo) o ❌ (incompleto)",
+                ),
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
+              ),
+              const SizedBox(height: 10),
+              const Text("Observación para el Agente (si es incompleto):"),
+              TextField(
+                controller: observationController,
+                decoration: const InputDecoration(
+                  hintText: "Ej: 'Falta stock del item X'",
+                ),
+                maxLines: 3,
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text("Cancelar"),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () {
+              if (observationController.text.trim().isEmpty) {
+                ScaffoldMessenger.of(dialogContext).showSnackBar(
+                  const SnackBar(content: Text("La observación es obligatoria si el pedido es incompleto.")),
+                );
+                return;
+              }
+              sistema.procesarPedidoDocumentoAlmacen(document.id, contentController.text.trim(),
+                  "Procesado (Incompleto)", observationController.text.trim());
+              Navigator.pop(dialogContext);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Pedido ${document.id} marcado como INCOMPLETO.")),
+              );
+            },
+            child: const Text("Marcar Incompleto"),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+            onPressed: () {
+              sistema.procesarPedidoDocumentoAlmacen(
+                  document.id, contentController.text.trim(), "Procesado (Completo)", "");
+              Navigator.pop(dialogContext);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Pedido ${document.id} marcado como COMPLETO.")),
+              );
+            },
+            child: const Text("Marcar Completo"),
+          ),
+        ],
+      ),
+    ).then((_) {
+      contentController.dispose();
+      observationController.dispose();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+    final List<PedidoDocumento> documentosPendientes = sistema.getDocumentosPendientesAlmacen();
+
+    return documentosPendientes.isEmpty
+        ? const Center(
+            child: Text("No hay documentos de pedido pendientes para procesar.",
+                style: TextStyle(fontStyle: FontStyle.italic)),
+          )
+        : ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: documentosPendientes.length,
+            itemBuilder: (BuildContext context, int index) {
+              final PedidoDocumento document = documentosPendientes[index];
+
+              return Card(
+                margin: const EdgeInsets.only(bottom: 16),
+                elevation: 4,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Documento: ${document.id}",
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      Text("Cliente: ${document.cliente}", style: const TextStyle(fontSize: 16)),
+                      Text("Agente: ${document.agenteNombre}",
+                          style: const TextStyle(fontSize: 14, color: Colors.grey)),
+                      const SizedBox(height: 10),
+                      const Text("Contenido Original (simulación de impresión):",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.only(top: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: Colors.grey.shade300),
+                        ),
+                        child: Text(
+                          document.contenidoAgente,
+                          style: const TextStyle(fontFamily: 'monospace'),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        "Estado: ${document.estadoDocumento}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: getEstadoDocumentoColor(document.estadoDocumento),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          ),
+                          onPressed: () {
+                            _showProcessDocumentDialog(context, sistema, document);
+                          },
+                          icon: const Icon(Icons.edit_note),
+                          label: const Text("Procesar Documento"),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+  }
+}
+
+//////////////////////////////////////////////////////////
+// PANEL AGENTE
+//////////////////////////////////////////////////////////
+
+class PanelAgente extends StatefulWidget {
+  final Usuario usuario;
+
+  const PanelAgente({required this.usuario, super.key});
+
+  @override
+  State<PanelAgente> createState() => _PanelAgenteState();
+}
+
+class _PanelAgenteState extends State<PanelAgente> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    // Removed "Catálogo" and "Crear Pedido" tabs
+    _tabController = TabController(length: 5, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Panel Agente - ${widget.usuario.nombre}"),
+        bottom: TabBar(
+          controller: _tabController,
+          isScrollable: true,
+          tabs: const <Tab>[
+            Tab(icon: Icon(Icons.notifications), text: "Notificaciones"),
+            Tab(icon: Icon(Icons.print), text: "Impresora02"), // Renamed from Bluetooth
+            Tab(icon: Icon(Icons.list_alt), text: "Mis Pedidos"),
+            Tab(icon: Icon(Icons.public), text: "Chat Público"),
+            Tab(icon: Icon(Icons.chat), text: "Chat Privado"),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          _NotificacionesTab(usuario: widget.usuario),
+          _AgenteImpresoraPrintingTab(usuario: widget.usuario), // Renamed
+          _MisPedidoDocumentosTab(usuario: widget.usuario),
+          _PublicChatTab(usuario: widget.usuario),
+          _PrivateChatForAgentTab(usuario: widget.usuario),
+        ],
+      ),
+    );
+  }
+}
+
+class _AgenteImpresoraPrintingTab extends StatelessWidget {
+  final Usuario usuario;
+  const _AgenteImpresoraPrintingTab({required this.usuario, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+    final bool impresoraEnabled = sistema.getImpresoraState(usuario.nombre);
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Card(
+            margin: EdgeInsets.zero,
+            child: SwitchListTile(
+              title: const Text("Impresora02 del Agente"),
+              subtitle: Text(
+                impresoraEnabled
+                    ? "Conectado. Los pedidos se enviarán a la Impresora02 (simulada)."
+                    : "Desconectado. No se pueden enviar pedidos a la Impresora02.",
+              ),
+              value: impresoraEnabled,
+              onChanged: (bool value) {
+                sistema.setImpresoraState(usuario.nombre, value);
+              },
+              secondary: const Icon(Icons.print),
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            "Acerca de la Impresora02:",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "Esta función simula el envío de documentos de pedido a una Impresora02 "
+            "en el almacén. Cuando la Impresora02 del agente está activada, los pedidos creados "
+            "se \"imprimen\" y se colocan en una cola de recepción virtual en el sistema del almacén.",
+            style: TextStyle(fontSize: 14),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "Asegúrese de que su Impresora02 esté encendida antes de intentar enviar un nuevo pedido.",
+            style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NotificacionesTab extends StatelessWidget {
+  final Usuario usuario;
+  const _NotificacionesTab({required this.usuario, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: sistema.notificaciones.length,
+      itemBuilder: (BuildContext context, int index) {
+        final Notificacion noti = sistema.notificaciones[index];
+        
+        final bool isProcessedOrderNotification = noti.mensaje.contains("Tu pedido") && noti.mensaje.contains("procesado por Almacén");
+        final bool isReceivedOrderNotification = noti.mensaje.contains("Tu pedido") && noti.mensaje.contains("ha sido recibido por Almacén");
+
+        Color cardColor = Colors.white;
+        IconData iconData = Icons.info_outline;
+        Color iconColor = Colors.blue;
+        FontWeight fontWeight = FontWeight.normal;
+
+        if (isProcessedOrderNotification) {
+            cardColor = Colors.lightGreen.shade50;
+            iconData = Icons.check_circle;
+            iconColor = Colors.green;
+            fontWeight = FontWeight.bold;
+        } else if (isReceivedOrderNotification) {
+            cardColor = Colors.orange.shade50;
+            iconData = Icons.notification_important;
+            iconColor = Colors.orange;
+            fontWeight = FontWeight.bold;
+        }
+
+
+        return Card(
+          margin: const EdgeInsets.only(bottom: 8),
+          elevation: 2,
+          color: cardColor,
+          child: ListTile(
+            leading: Icon(
+                iconData,
+                color: iconColor,
+            ),
+            title: Text(noti.mensaje,
+                style: TextStyle(fontWeight: fontWeight)),
+            subtitle: Text(
+              "${noti.fecha.day}/${noti.fecha.month}/${noti.fecha.year} ${noti.fecha.hour}:${noti.fecha.minute.toString().padLeft(2, '0')}",
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// _CatalogoTab and _CrearPedidoDocumentoTab are no longer used in PanelAgente
+// and are removed as per requirements.
+
+// Retained for possible future use or reference if explicitly requested, but not part of Agent's UI anymore.
+// ignore: unused_element
+class _CatalogoTab extends StatelessWidget {
+  const _CatalogoTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: sistema.inventario.length,
+      itemBuilder: (BuildContext context, int index) {
+        final Producto producto = sistema.inventario[index];
+        return Card(
+          margin: const EdgeInsets.only(bottom: 8),
+          elevation: 2,
+          child: ListTile(
+            leading: const Icon(Icons.category, color: Colors.deepPurple),
+            title: Text(producto.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text(
+              "Código: ${producto.codigo} - Precio: \$${producto.precio.toStringAsFixed(2)} - Stock: ${producto.stock} unidades",
+            ),
+            trailing: Chip(
+              label: Text("Stock: ${producto.stock}"),
+              backgroundColor: producto.stock > 10 ? Colors.green.shade100 : Colors.red.shade100,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// Retained for possible future use or reference, but not part of Agent's UI anymore.
+class _CrearPedidoDocumentoTab extends StatefulWidget {
+  final Usuario usuario;
+
+  const _CrearPedidoDocumentoTab({required this.usuario, super.key});
+
+  @override
+  State<_CrearPedidoDocumentoTab> createState() => _CrearPedidoDocumentoTabState();
+}
+
+class _CrearPedidoDocumentoTabState extends State<_CrearPedidoDocumentoTab> {
+  final TextEditingController _clienteController = TextEditingController();
+  final Map<String, OrderItem> _currentOrderItems = <String, OrderItem>{};
+
+  @override
+  void dispose() {
+    _clienteController.dispose();
+    super.dispose();
+  }
+
+  void _addOrUpdateItemInOrder(Producto product, int quantity) {
+    setState(() {
+      _currentOrderItems[product.codigo] = OrderItem(
+        productCode: product.codigo,
+        productName: product.nombre,
+        quantity: quantity,
+      );
+    });
+  }
+
+  void _removeItemFromOrder(String productCode) {
+    setState(() {
+      _currentOrderItems.remove(productCode);
+    });
+  }
+
+  void _showAddProductToOrderDialog(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context, listen: false);
+    Producto? selectedProduct;
+    final TextEditingController quantityController = TextEditingController(text: "1");
+
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return StatefulBuilder(
+          builder: (BuildContext innerContext, void Function(void Function()) setInnerState) {
+            return AlertDialog(
+              title: const Text("Agregar Producto al Pedido"),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    DropdownButtonFormField<Producto>(
+                      decoration: const InputDecoration(labelText: "Producto"),
+                      initialValue: selectedProduct,
+                      items: sistema.inventario.map<DropdownMenuItem<Producto>>((Producto product) {
+                        return DropdownMenuItem<Producto>(
+                          value: product,
+                          child: Text("${product.nombre} (\$${product.precio.toStringAsFixed(2)})"),
+                        );
+                      }).toList(),
+                      onChanged: (Producto? newValue) {
+                        setInnerState(() {
+                          selectedProduct = newValue;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: quantityController,
+                      decoration: InputDecoration(
+                        labelText: "Cantidad",
+                        hintText: selectedProduct != null ? "Stock: ${selectedProduct!.stock}" : "",
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(innerContext),
+                  child: const Text("Cancelar"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    final int? quantity = int.tryParse(quantityController.text.trim());
+                    if (selectedProduct == null || quantity == null || quantity <= 0) {
+                      ScaffoldMessenger.of(innerContext).showSnackBar(
+                        const SnackBar(content: Text("Por favor, seleccione un producto y una cantidad válida.")),
+                      );
+                      return;
+                    }
+                    if (quantity > selectedProduct!.stock) {
+                      ScaffoldMessenger.of(innerContext).showSnackBar(
+                        SnackBar(content: Text("Cantidad excede el stock disponible (${selectedProduct!.stock}).")),
+                      );
+                      return;
+                    }
+                    _addOrUpdateItemInOrder(selectedProduct!, quantity);
+                    Navigator.pop(innerContext);
+                  },
+                  child: const Text("Agregar"),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    ).then((_) {
+      quantityController.dispose();
+    });
+  }
+
+  void _submitDocument() {
+    final String cliente = _clienteController.text.trim();
+    final List<OrderItem> items = _currentOrderItems.values.toList();
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context, listen: false);
+
+    if (!sistema.getImpresoraState(widget.usuario.nombre)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Debe activar la Impresora02 para enviar pedidos.")),
+      );
+      return;
+    }
+
+    if (cliente.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Por favor, ingrese el nombre del cliente.")),
+      );
+      return;
+    }
+    if (items.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("El pedido no puede estar vacío. Agregue al menos un producto.")),
+      );
+      return;
+    }
+
+    sistema.crearPedidoDocumento(cliente, items, widget.usuario.nombre);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+          content: Text("Pedido para $cliente enviado a la cola de impresión Impresora02.")),
+    );
+
+    _clienteController.clear();
+    setState(() {
+      _currentOrderItems.clear();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+    final bool impresoraEnabled = sistema.getImpresoraState(widget.usuario.nombre);
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            controller: _clienteController,
+            decoration: const InputDecoration(
+              labelText: "Nombre del Cliente",
+              prefixIcon: Icon(Icons.person),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const Text(
+                "Items del Pedido:",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              ElevatedButton.icon(
+                onPressed: () => _showAddProductToOrderDialog(context),
+                icon: const Icon(Icons.add_shopping_cart),
+                label: const Text("Agregar Producto"),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          _currentOrderItems.isEmpty
+              ? const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: Center(
+                      child: Text("No hay productos en el pedido. Agregue algunos.",
+                          style: TextStyle(fontStyle: FontStyle.italic))),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: _currentOrderItems.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final OrderItem item = _currentOrderItems.values.toList()[index];
+                    return Card(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      elevation: 1,
+                      child: ListTile(
+                        title: Text(item.productName),
+                        subtitle: Text("Código: ${item.productCode} - Cantidad: ${item.quantity}"),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => _removeItemFromOrder(item.productCode),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+          const SizedBox(height: 20),
+          Center(
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: impresoraEnabled ? Colors.deepPurple : Colors.grey,
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                textStyle: const TextStyle(fontSize: 18),
+              ),
+              onPressed: impresoraEnabled ? _submitDocument : null,
+              icon: const Icon(Icons.print),
+              label: const Text("Imprimir y Enviar a Almacén (Sim. Impresora02)"),
+            ),
+          ),
+          if (!impresoraEnabled)
+            const Padding(
+              padding: EdgeInsets.only(top: 8.0),
+              child: Center(
+                child: Text(
+                  "Active su Impresora02 para enviar el pedido.",
+                  style: TextStyle(color: Colors.red, fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+          const SizedBox(height: 10),
+          Center(
+            child: TextButton.icon(
+              onPressed: () {
+                setState(() {
+                  _currentOrderItems.clear();
+                  _clienteController.clear();
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Pedido actual limpiado.")),
+                );
+              },
+              icon: const Icon(Icons.clear_all),
+              label: const Text("Limpiar Pedido"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MisPedidoDocumentosTab extends StatelessWidget {
+  final Usuario usuario;
+
+  const _MisPedidoDocumentosTab({required this.usuario, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+    final List<PedidoDocumento> misDocumentos =
+        sistema.getDocumentosByAgente(usuario.nombre);
+
+    // Also include documents in the impresora queue that belong to this agent, but filter for status
+    final List<PedidoDocumento> docsInImpresoraQueue = sistema.impresoraQueue
+        .where((PedidoDocumento doc) => doc.agenteNombre == usuario.nombre)
+        .toList();
+
+    // Combine and sort by creation date, most recent first
+    final List<PedidoDocumento> allAgentDocuments = <PedidoDocumento>[
+      ...misDocumentos,
+      ...docsInImpresoraQueue
+    ];
+    allAgentDocuments.sort((PedidoDocumento a, PedidoDocumento b) => b.fechaCreacion.compareTo(a.fechaCreacion));
+
+
+    return allAgentDocuments.isEmpty
+        ? const Center(
+            child: Text("No has creado ningún documento de pedido aún.",
+                style: TextStyle(fontStyle: FontStyle.italic)),
+          )
+        : ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: allAgentDocuments.length,
+            itemBuilder: (BuildContext context, int index) {
+              final PedidoDocumento document = allAgentDocuments[index];
+              return Card(
+                margin: const EdgeInsets.only(bottom: 16),
+                elevation: 4,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Documento: ${document.id}",
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      Text("Cliente: ${document.cliente}", style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 10),
+                      const Text("Contenido Enviado (sim. de impresión):",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.only(top: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade50,
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: Colors.blue.shade200),
+                        ),
+                        child: Text(
+                          document.contenidoAgente,
+                          style: const TextStyle(fontFamily: 'monospace'),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Estado: ${document.estadoDocumento}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: getEstadoDocumentoColor(document.estadoDocumento),
+                        ),
+                      ),
+                      if (document.estadoDocumento.startsWith("Procesado") || document.estadoDocumento == "Enviado a Almacén") ...<Widget>[
+                        const SizedBox(height: 10),
+                        const Text("Respuesta de Almacén:",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.only(top: 4),
+                          decoration: BoxDecoration(
+                            color: document.estadoDocumento == "Procesado (Completo)"
+                                ? Colors.green.shade50
+                                : Colors.red.shade50,
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(
+                                color: document.estadoDocumento == "Procesado (Completo)"
+                                    ? Colors.green.shade200
+                                    : Colors.red.shade200),
+                          ),
+                          child: Text(
+                            document.contenidoAlmacen.isNotEmpty
+                                ? document.contenidoAlmacen
+                                : "Aún no procesado por almacén.",
+                            style: const TextStyle(fontFamily: 'monospace'),
+                          ),
+                        ),
+                        if (document.observacionAlmacen.isNotEmpty) ...<Widget>[
+                          const SizedBox(height: 8),
+                          Text(
+                            "Observación Almacén: ${document.observacionAlmacen}",
+                            style:
+                                const TextStyle(color: Colors.red, fontStyle: FontStyle.italic),
+                          ),
+                        ],
+                      ],
+                      if (document.fechaEnvioAlmacen != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            "Recibido en Almacén: ${document.fechaEnvioAlmacen!.day}/${document.fechaEnvioAlmacen!.month}/${document.fechaEnvioAlmacen!.year} ${document.fechaEnvioAlmacen!.hour}:${document.fechaEnvioAlmacen!.minute.toString().padLeft(2, '0')}",
+                            style: const TextStyle(fontSize: 12, color: Colors.grey),
+                          ),
+                        ),
+                      if (document.fechaProcesamientoAlmacen != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            "Procesado: ${document.fechaProcesamientoAlmacen!.day}/${document.fechaProcesamientoAlmacen!.month}/${document.fechaProcesamientoAlmacen!.year} ${document.fechaProcesamientoAlmacen!.hour}:${document.fechaProcesamientoAlmacen!.minute.toString().padLeft(2, '0')}",
+                            style: const TextStyle(fontSize: 12, color: Colors.grey),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+  }
+}
+
+class _ChatMessagesView extends StatelessWidget {
+  final Usuario usuario;
+  final List<MensajeChat> messages;
+  final ScrollController scrollController;
+
+  const _ChatMessagesView({
+    required this.usuario,
+    required this.messages,
+    required this.scrollController,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.minScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+
+    return ListView.builder(
+      reverse: true,
+      controller: scrollController,
+      padding: const EdgeInsets.all(8),
+      itemCount: messages.length,
+      itemBuilder: (BuildContext context, int index) {
+        final MensajeChat message = messages[index];
+        final bool isMe = message.sender == usuario.nombre;
+
+        return Align(
+          alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: isMe ? Colors.deepPurple.shade100 : Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  isMe ? "Tú" : message.sender,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 4),
+                Text(message.message),
+                const SizedBox(height: 4),
+                Text(
+                  "${message.timestamp.hour}:${message.timestamp.minute.toString().padLeft(2, '0')}",
+                  style: const TextStyle(fontSize: 10, color: Colors.black54),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _PublicChatTab extends StatefulWidget {
+  final Usuario usuario;
+
+  const _PublicChatTab({required this.usuario, super.key});
+
+  @override
+  State<_PublicChatTab> createState() => _PublicChatTabState();
+}
+
+class _PublicChatTabState extends State<_PublicChatTab> {
+  final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _sendMessage(BuildContext context) {
+    final String message = _messageController.text.trim();
+    if (message.isNotEmpty) {
+      Provider.of<SistemaCentral>(context, listen: false)
+          .addPublicChatMessage(widget.usuario.nombre, message);
+      _messageController.clear();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: _ChatMessagesView(
+            usuario: widget.usuario,
+            messages: sistema.publicChatMessages,
+            scrollController: _scrollController,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  controller: _messageController,
+                  decoration: InputDecoration(
+                    hintText: "Escribe un mensaje público...",
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  ),
+                  onSubmitted: (_) => _sendMessage(context),
+                ),
+              ),
+              const SizedBox(width: 8),
+              FloatingActionButton(
+                onPressed: () => _sendMessage(context),
+                mini: true,
+                heroTag: UniqueKey(),
+                child: const Icon(Icons.send),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PrivateChatForAgentTab extends StatefulWidget {
+  final Usuario usuario;
+
+  const _PrivateChatForAgentTab({required this.usuario, super.key});
+
+  @override
+  State<_PrivateChatForAgentTab> createState() => _PrivateChatForAgentTabState();
+}
+
+class _PrivateChatForAgentTabState extends State<_PrivateChatForAgentTab> {
+  final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _sendMessage(BuildContext context) {
+    final String message = _messageController.text.trim();
+    if (message.isNotEmpty) {
+      // Agents send private messages TO Almacén, not to themselves
+      Provider.of<SistemaCentral>(context, listen: false)
+          .addPrivateChatMessage("Almacén", widget.usuario.nombre, message);
+      _messageController.clear();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+    // Agent private chat is always with 'Almacén'
+    final List<MensajeChat> privateMessages = sistema.getPrivateChatForAgent("Almacén");
+
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: privateMessages.isEmpty
+              ? const Center(
+                  child: Text("Inicia una conversación privada con Almacén.",
+                      style: TextStyle(fontStyle: FontStyle.italic)),
+                )
+              : _ChatMessagesView(
+                  usuario: widget.usuario,
+                  messages: privateMessages,
+                  scrollController: _scrollController,
+                ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  controller: _messageController,
+                  decoration: InputDecoration(
+                    hintText: "Escribe un mensaje privado a Almacén...",
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  ),
+                  onSubmitted: (_) => _sendMessage(context),
+                ),
+              ),
+              const SizedBox(width: 8),
+              FloatingActionButton(
+                onPressed: () => _sendMessage(context),
+                mini: true,
+                heroTag: UniqueKey(),
+                child: const Icon(Icons.send),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+class _AlmacenChatView extends StatefulWidget {
+  final Usuario usuario;
+
+  const _AlmacenChatView({required this.usuario, super.key});
+
+  @override
+  State<_AlmacenChatView> createState() => _AlmacenChatViewState();
+}
+
+class _AlmacenChatViewState extends State<_AlmacenChatView> with SingleTickerProviderStateMixin {
+  late TabController _chatSubTabController;
+  String? _selectedAgentName;
+  final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _chatSubTabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _chatSubTabController.dispose();
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _sendPrivateMessage(BuildContext context) {
+    final String message = _messageController.text.trim();
+    if (_selectedAgentName == null || message.isEmpty) {
+      if (message.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("El mensaje no puede estar vacío.")),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Seleccione un agente para el chat privado.")),
+        );
+      }
+      return;
+    }
+    Provider.of<SistemaCentral>(context, listen: false)
+        .addPrivateChatMessage(_selectedAgentName!, widget.usuario.nombre, message);
+    _messageController.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+    final List<Usuario> agents = sistema.agents;
+
+    return Column(
+      children: <Widget>[
+        TabBar(
+          controller: _chatSubTabController,
+          tabs: const <Tab>[
+            Tab(icon: Icon(Icons.public), text: "Chat Público"),
+            Tab(icon: Icon(Icons.group), text: "Chats Privados"),
+          ],
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: _chatSubTabController,
+            children: <Widget>[
+              _PublicChatTab(usuario: widget.usuario),
+              Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(
+                        labelText: "Seleccionar Agente",
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      ),
+                      initialValue: _selectedAgentName,
+                      hint: const Text("Seleccione un agente para chatear"),
+                      items: agents.map<DropdownMenuItem<String>>((Usuario agent) {
+                        return DropdownMenuItem<String>(
+                          value: agent.nombre,
+                          child: Text(agent.nombre),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedAgentName = newValue;
+                          if (_scrollController.hasClients) {
+                            _scrollController.jumpTo(_scrollController.position.minScrollExtent);
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: _selectedAgentName == null
+                        ? const Center(
+                            child: Text("Por favor, seleccione un agente para ver el chat privado.",
+                                style: TextStyle(fontStyle: FontStyle.italic)),
+                          )
+                        : _ChatMessagesView(
+                            usuario: widget.usuario,
+                            messages: sistema.getPrivateChatForAgent(_selectedAgentName!),
+                            scrollController: _scrollController,
+                          ),
+                  ),
+                  if (_selectedAgentName != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: TextField(
+                              controller: _messageController,
+                              decoration: InputDecoration(
+                                hintText: "Mensaje para ${_selectedAgentName ?? ''}...",
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              ),
+                              onSubmitted: (_) => _sendPrivateMessage(context),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          FloatingActionButton(
+                            onPressed: () => _sendPrivateMessage(context),
+                            mini: true,
+                            heroTag: UniqueKey(),
+                            child: const Icon(Icons.send),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+//////////////////////////////////////////////////////////
+// PANEL ADMIN
+//////////////////////////////////////////////////////////
+
+class PanelAdmin extends StatefulWidget {
+  final Usuario usuario;
+
+  const PanelAdmin({required this.usuario, super.key});
+
+  @override
+  State<PanelAdmin> createState() => _PanelAdminState();
+}
+
+class _PanelAdminState extends State<PanelAdmin> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Panel Administrador - ${widget.usuario.nombre}"),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const <Tab>[
+            Tab(icon: Icon(Icons.inventory), text: "Inventario"),
+            Tab(icon: Icon(Icons.description), text: "Documentos Pedido"),
+            Tab(icon: Icon(Icons.people), text: "Gestión de Usuarios"),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          const _InventarioEditorTab(),
+          const _PedidoDocumentsAdminTab(),
+          _UserManagementTab(),
+        ],
+      ),
+    );
+  }
+}
+
+class _InventarioEditorTab extends StatefulWidget {
+  const _InventarioEditorTab({super.key});
+
+  @override
+  State<_InventarioEditorTab> createState() => _InventarioEditorTabState();
+}
+
+class _InventarioEditorTabState extends State<_InventarioEditorTab> {
+  final TextEditingController _addCodeController = TextEditingController();
+  final TextEditingController _addNameController = TextEditingController();
+  final TextEditingController _addPriceController = TextEditingController();
+  final TextEditingController _addStockController = TextEditingController();
+
+  @override
+  void dispose() {
+    _addCodeController.dispose();
+    _addNameController.dispose();
+    _addPriceController.dispose();
+    _addStockController.dispose();
+    super.dispose();
+  }
+
+  void _showAddProductDialog(BuildContext context) {
+    _addCodeController.clear();
+    _addNameController.clear();
+    _addPriceController.clear();
+    _addStockController.clear();
+
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text("Agregar Nuevo Producto"),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextField(
+                  controller: _addCodeController,
+                  decoration: const InputDecoration(labelText: "Código del Producto (Ej: CUA001)"),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _addNameController,
+                  decoration: const InputDecoration(labelText: "Nombre del Producto"),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _addPriceController,
+                  decoration: const InputDecoration(labelText: "Precio"),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _addStockController,
+                  decoration: const InputDecoration(labelText: "Stock Inicial"),
+                  keyboardType: TextInputType.number,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text("Cancelar"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final String code = _addCodeController.text.trim();
+                final String name = _addNameController.text.trim();
+                final double? price = double.tryParse(_addPriceController.text.trim());
+                final int? stock = int.tryParse(_addStockController.text.trim());
+
+                if (code.isEmpty || name.isEmpty || price == null || stock == null || price < 0 || stock < 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Por favor, ingrese datos válidos.")),
+                  );
+                  return;
+                }
+
+                final SistemaCentral sistema = Provider.of<SistemaCentral>(context, listen: false);
+                if (sistema.inventario.any(
+                    (Producto p) => p.codigo.toLowerCase() == code.toLowerCase())) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Ya existe un producto con este código.")),
+                  );
+                  return;
+                }
+                if (sistema.inventario.any(
+                    (Producto p) => p.nombre.toLowerCase() == name.toLowerCase())) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Ya existe un producto con este nombre.")),
+                  );
+                  return;
+                }
+
+                sistema.addProducto(code, name, price, stock);
+                Navigator.pop(dialogContext);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Producto '$name' (Código: $code) agregado con éxito.")),
+                );
+              },
+              child: const Text("Agregar"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showEditProductDialog(BuildContext context, Producto product) {
+    final TextEditingController editPriceController =
+        TextEditingController(text: product.precio.toStringAsFixed(2));
+    final TextEditingController editStockController =
+        TextEditingController(text: product.stock.toString());
+
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text("Editar Producto: ${product.nombre} (Código: ${product.codigo})"),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextField(
+                  controller: editPriceController,
+                  decoration: const InputDecoration(labelText: "Precio"),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: editStockController,
+                  decoration: const InputDecoration(labelText: "Stock"),
+                  keyboardType: TextInputType.number,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text("Cancelar"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final double? newPrice = double.tryParse(editPriceController.text.trim());
+                final int? newStock = int.tryParse(editStockController.text.trim());
+
+                if (newPrice == null || newStock == null || newPrice < 0 || newStock < 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Por favor, ingrese valores válidos.")),
+                  );
+                  return;
+                }
+
+                final SistemaCentral sistema = Provider.of<SistemaCentral>(context, listen: false);
+                sistema.updateProducto(product.codigo, newPrecio: newPrice, newStock: newStock);
+                Navigator.pop(dialogContext);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Producto '${product.nombre}' actualizado.")),
+                );
+              },
+              child: const Text("Guardar"),
+            ),
+          ],
+        );
+      },
+    ).then((_) {
+      editPriceController.dispose();
+      editStockController.dispose();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+
+    return Scaffold(
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: sistema.inventario.length,
+        itemBuilder: (BuildContext context, int index) {
+          final Producto producto = sistema.inventario[index];
+          return Card(
+            margin: const EdgeInsets.only(bottom: 8),
+            elevation: 2,
+            child: ListTile(
+              leading: const Icon(Icons.inventory, color: Colors.teal),
+              title: Text(producto.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: Text(
+                "Código: ${producto.codigo} - Precio: \$${producto.precio.toStringAsFixed(2)} - Stock: ${producto.stock}",
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.blue),
+                    tooltip: "Editar Producto",
+                    onPressed: () => _showEditProductDialog(context, producto),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    tooltip: "Eliminar Producto",
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext dialogContext) {
+                          return AlertDialog(
+                            title: const Text("Confirmar Eliminación"),
+                            content: Text(
+                                "¿Está seguro que desea eliminar ${producto.nombre} (Código: ${producto.codigo})?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(dialogContext),
+                                child: const Text("Cancelar"),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                                onPressed: () {
+                                  sistema.deleteProducto(producto.codigo);
+                                  Navigator.pop(dialogContext);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("Producto '${producto.nombre}' eliminado.")),
+                                  );
+                                },
+                                child: const Text("Eliminar"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showAddProductDialog(context),
+        icon: const Icon(Icons.add),
+        label: const Text("Agregar Producto"),
+      ),
+    );
+  }
+}
+
+class _PedidoDocumentsAdminTab extends StatelessWidget {
+  const _PedidoDocumentsAdminTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+
+    // Combine documents from main list and impresora queue for admin view
+    final List<PedidoDocumento> allDocuments = <PedidoDocumento>[
+      ...sistema.documentosPedido,
+      ...sistema.impresoraQueue
+    ];
+    allDocuments.sort((PedidoDocumento a, PedidoDocumento b) => b.fechaCreacion.compareTo(a.fechaCreacion));
+
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: <Widget>[
+        const Text(
+          "Documentos de Pedido Registrados:",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10),
+        ...allDocuments.map<Widget>(
+          (PedidoDocumento document) => Card(
+            margin: const EdgeInsets.only(bottom: 8),
+            elevation: 2,
+            child: ExpansionTile(
+              leading: Icon(
+                document.estadoDocumento == "Pendiente de Recepción (Impresora02)"
+                    ? Icons.print
+                    : document.estadoDocumento == "Enviado a Almacén"
+                        ? Icons.pending_actions
+                        : (document.estadoDocumento == "Procesado (Completo)" ? Icons.check_circle : Icons.cancel),
+                color: getEstadoDocumentoColor(document.estadoDocumento),
+              ),
+              title: Text("Documento ${document.id} - Cliente: ${document.cliente}"),
+              subtitle: Text("Agente: ${document.agenteNombre} - Estado: ${document.estadoDocumento}"),
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const Text("Contenido del Agente (sim. de impresión):", style: TextStyle(fontWeight: FontWeight.bold)),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.only(top: 4, bottom: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.blue.shade50,
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: Colors.blue.shade200),
+                          ),
+                          child: Text(
+                            document.contenidoAgente,
+                            style: const TextStyle(fontFamily: 'monospace'),
+                          ),
+                        ),
+                        const Text("Contenido Procesado (Almacén):",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.only(top: 4),
+                          decoration: BoxDecoration(
+                            color: document.estadoDocumento == "Procesado (Completo)"
+                                ? Colors.green.shade50
+                                : document.estadoDocumento == "Procesado (Incompleto)"
+                                    ? Colors.red.shade50
+                                    : Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(
+                                color: document.estadoDocumento == "Procesado (Completo)"
+                                    ? Colors.green.shade200
+                                    : document.estadoDocumento == "Procesado (Incompleto)"
+                                        ? Colors.red.shade200
+                                        : Colors.grey.shade200),
+                          ),
+                          child: Text(
+                            document.contenidoAlmacen.isNotEmpty ? document.contenidoAlmacen : "No procesado aún.",
+                            style: const TextStyle(fontFamily: 'monospace'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                if (document.observacionAlmacen.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Obs. Almacén: ${document.observacionAlmacen}",
+                        style: const TextStyle(color: Colors.red, fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                  ),
+                if (document.fechaEnvioAlmacen != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Recibido en Almacén: ${document.fechaEnvioAlmacen!.day}/${document.fechaEnvioAlmacen!.month}/${document.fechaEnvioAlmacen!.year} ${document.fechaEnvioAlmacen!.hour}:${document.fechaEnvioAlmacen!.minute.toString().padLeft(2, '0')}",
+                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ),
+                  ),
+                if (document.fechaProcesamientoAlmacen != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Procesado: ${document.fechaProcesamientoAlmacen!.day}/${document.fechaProcesamientoAlmacen!.month}/${document.fechaProcesamientoAlmacen!.year} ${document.fechaProcesamientoAlmacen!.hour}:${document.fechaProcesamientoAlmacen!.minute.toString().padLeft(2, '0')}",
+                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ),
+                  ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+        ).toList(),
+      ],
+    );
+  }
+}
+
+class _UserManagementTab extends StatefulWidget {
+  @override
+  State<_UserManagementTab> createState() => _UserManagementTabState();
+}
+
+class _UserManagementTabState extends State<_UserManagementTab> {
+  final TextEditingController _addAgentNameController = TextEditingController();
+  final TextEditingController _addAgentPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _addAgentNameController.dispose();
+    _addAgentPasswordController.dispose();
+    super.dispose();
+  }
+
+  void _showAddAgentDialog(BuildContext context) {
+    _addAgentNameController.clear();
+    _addAgentPasswordController.clear();
+
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text("Agregar Nuevo Agente"),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextField(
+                  controller: _addAgentNameController,
+                  decoration: const InputDecoration(labelText: "Nombre del Agente"),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _addAgentPasswordController,
+                  decoration: const InputDecoration(labelText: "Contraseña del Agente"),
+                  obscureText: true,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text("Cancelar"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final String name = _addAgentNameController.text.trim();
+                final String password = _addAgentPasswordController.text.trim();
+
+                if (name.isEmpty || password.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Nombre y contraseña no pueden estar vacíos.")),
+                  );
+                  return;
+                }
+
+                final SistemaCentral sistema = Provider.of<SistemaCentral>(context, listen: false);
+                if (sistema.getUser(name) != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Ya existe un usuario con el nombre '$name'.")),
+                  );
+                  return;
+                }
+
+                sistema.addUsuario(Usuario(nombre: name, rol: RolUsuario.agente, password: password));
+                Navigator.pop(dialogContext);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Agente '$name' agregado con éxito.")),
+                );
+              },
+              child: const Text("Agregar"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showEditPasswordDialog(BuildContext context, Usuario user) {
+    final TextEditingController passwordController = TextEditingController(text: user.password);
+
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text("Editar Contraseña de ${user.nombre}"),
+          content: TextField(
+            controller: passwordController,
+            obscureText: true,
+            decoration: const InputDecoration(labelText: "Nueva Contraseña"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text("Cancelar"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final String newPassword = passwordController.text.trim();
+                if (newPassword.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("La contraseña no puede estar vacía.")),
+                  );
+                  return;
+                }
+                Provider.of<SistemaCentral>(context, listen: false)
+                    .updateUsuarioPassword(user.nombre, newPassword);
+                Navigator.pop(dialogContext);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Contraseña de '${user.nombre}' actualizada.")),
+                );
+              },
+              child: const Text("Guardar"),
+            ),
+          ],
+        );
+      },
+    ).then((_) {
+      passwordController.dispose();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final SistemaCentral sistema = Provider.of<SistemaCentral>(context);
+    final List<Usuario> allUsers = sistema.allUsers;
+
+    return Scaffold(
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: allUsers.length,
+        itemBuilder: (BuildContext context, int index) {
+          final Usuario user = allUsers[index];
+          return Card(
+            margin: const EdgeInsets.only(bottom: 8),
+            elevation: 2,
+            child: ListTile(
+              leading: Icon(
+                user.rol == RolUsuario.admin
+                    ? Icons.admin_panel_settings
+                    : user.rol == RolUsuario.almacen
+                        ? Icons.warehouse
+                        : Icons.person,
+                color: user.rol == RolUsuario.admin
+                    ? Colors.red
+                    : user.rol == RolUsuario.almacen
+                        ? Colors.brown
+                        : Colors.blue,
+              ),
+              title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: Text("Rol: ${user.rol.name}"),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.vpn_key, color: Colors.orange),
+                    tooltip: "Editar Contraseña",
+                    onPressed: () => _showEditPasswordDialog(context, user),
+                  ),
+                  if (user.rol == RolUsuario.agente)
+                    IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      tooltip: "Eliminar Agente",
+                      onPressed: () {
+                        showDialog<void>(
+                          context: context,
+                          builder: (BuildContext dialogContext) {
+                            return AlertDialog(
+                              title: const Text("Confirmar Eliminación"),
+                              content: Text("¿Está seguro que desea eliminar al agente ${user.nombre}?"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(dialogContext),
+                                  child: const Text("Cancelar"),
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                                  onPressed: () {
+                                    sistema.removeUsuario(user.nombre);
+                                    Navigator.pop(dialogContext);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("Agente '${user.nombre}' eliminado.")),
+                                    );
+                                  },
+                                  child: const Text("Eliminar"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showAddAgentDialog(context),
+        icon: const Icon(Icons.person_add),
+        label: const Text("Agregar Agente"),
+      ),
+    );
+  }
+}
