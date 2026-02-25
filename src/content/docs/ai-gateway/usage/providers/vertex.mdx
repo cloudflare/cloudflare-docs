@@ -273,14 +273,16 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vert
     -H "Authorization: Bearer $SERVICE_ACCOUNT_BASE64" \
     -H 'Content-Type: application/json' \
     -d '{
-        "contents": {
-          "role": "user",
-          "parts": [
-            {
-              "text": "Tell me more about Cloudflare"
-            }
-          ]
-        }
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tell me more about Cloudflare"
+              }
+            ]
+          }
+        ]
       }'
 ```
 
