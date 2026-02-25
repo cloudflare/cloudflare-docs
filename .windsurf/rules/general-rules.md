@@ -30,6 +30,9 @@ This code would only be rendered if the page has a magicWord variable set to "ha
 - When you use JSX fragments to conditionally render a block of code, be aware that you will probably need to use the <Markdown /> component to properly render content that is not a single sentence.
 - Only use the <Markdown /> component in JSX conditionals, and only if needed.
 - Do not duplicate content when creating ternary or binary conditions.
+- Before writing new content, search `src/content/partials/` for existing partials that cover the same concept. Use `<Render>` instead of rewriting.
+- Before defining a term inline, check `src/content/glossary/` for an existing entry. Use `<GlossaryTooltip>` instead.
+- Before creating a new page, search `src/content/docs/` for existing pages on the same topic. Link instead of duplicating.
 - When adding a variable to a link, use HTML instead of Markdown.
 - Whenever something is not clear, ask the user for more input.
 

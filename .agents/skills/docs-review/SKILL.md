@@ -161,6 +161,7 @@ See `references/content-rules.md` for the full checklist. Quick reference:
 | Config blocks            | Must use `WranglerConfig` component with TOML input                                                  |
 | Code correctness         | For type checking, API usage, and binding patterns, load the `code-review` skill                     |
 | Accuracy                 | Claims must be substantiated — link to sources of truth, do not explain inline what other docs cover |
+| Content overlap          | Check for duplicate pages, partials, glossary terms — see `references/content-reuse-rules.md`      |
 
 ### 3. Assess What to Flag
 

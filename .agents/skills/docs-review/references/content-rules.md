@@ -76,3 +76,14 @@ These checks are docs-specific (which component to use). For deeper code correct
 | Nested tabs (tabs inside tabs)                         | Restructure into separate headings                |
 
 To verify API behavior, types, or config fields, use the same sources as the `code-review` skill: `node_modules/@cloudflare/workers-types/index.d.ts` for APIs and `node_modules/wrangler/config-schema.json` for config. Read these files directly — do not rely on pre-training.
+
+## Content Reuse
+
+| Check                                                    | Action                                                          |
+| -------------------------------------------------------- | --------------------------------------------------------------- |
+| New page duplicates an existing page in the same product | Flag HIGH — link to the existing page instead                   |
+| Content rewrites what a partial already covers           | Flag MEDIUM — use `<Render file="..." product="..." />`         |
+| Term defined inline that exists in the glossary          | Flag MEDIUM — use `<GlossaryTooltip term="...">`                |
+| Content explains a feature owned by another product      | Flag LOW — cross-link instead of rewriting                      |
+
+For the full search methodology and decision table, see `references/content-reuse-rules.md`.
