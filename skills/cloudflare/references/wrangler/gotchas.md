@@ -132,7 +132,7 @@ const worker = await startWorker({
 | Workers Assets files | 20,000 | Max number of files |
 | Script size (compressed) | 1 MB | Free, 10 MB paid |
 | CPU time | 10-50ms | Free, 50-500ms paid |
-| Subrequest limit | 50 | Free, 1000 paid |
+| Subrequest limit | 50 | Free, 10,000 paid |
 
 ## Troubleshooting
 

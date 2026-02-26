@@ -68,7 +68,7 @@
 | Executions per day | 100k | Unlimited | Daily execution limit |
 | Concurrent instances | 25 | 10k | Maximum concurrent workflows; waiting state excluded |
 | Queued instances | 100k | 1M | Maximum queued workflow instances |
-| Subrequests per step | 50 | 1,000 | Maximum outbound requests per step |
+| Subrequests per instance | 50 | 10,000 (default), up to 10M | Maximum outbound requests per workflow instance |
 | State retention | 3 days | 30 days | How long completed instances kept |
 | Step timeout default | 10 min | 10 min | Per attempt |
 | waitForEvent timeout default | 24h | 24h | Maximum 365 days |
