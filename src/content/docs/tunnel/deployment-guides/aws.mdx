@@ -32,12 +32,11 @@ This guide covers how to connect an Amazon Web Services (AWS) EC2 instance to Cl
 ## 3. Publish an application
 
 1. Under **Routes**, select **Add route** > **Published application**.
-2. Enter a hostname (for example, `app.example.com`).
+2. Enter a hostname (for example, `hellocloudflare.<your-domain>.com`).
 3. Under **Service**, enter `http://localhost:80`.
 4. Select **Add route**.
 
 To test, open a browser and go to the hostname you configured. You should see your web server's page.
-
 
 :::note[Looking for private network access?]
 To connect to your EC2 instance via private IP using the WARP client, refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).

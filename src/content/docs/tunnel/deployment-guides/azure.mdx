@@ -8,6 +8,8 @@ head:
     content: Deploy cloudflared in Azure
 ---
 
+import { Render } from "~/components";
+
 This guide covers how to connect an Azure Virtual Machine to Cloudflare using `cloudflared` and publish a web application through a Cloudflare Tunnel.
 
 ### Prerequisites
@@ -16,26 +18,11 @@ This guide covers how to connect an Azure Virtual Machine to Cloudflare using `c
 
 ## 1. Create a Virtual Machine
 
-1. In the Azure portal, go to **Virtual Machines** > **Create** > **Azure virtual machine**.
-2. Select a **Resource group** or create a new one.
-3. Enter a name for the VM and select a region.
-4. For **Image**, select _Ubuntu Server 24.04 LTS_.
-5. For **Size**, select an appropriate size (for example, _Standard_B1s_).
-6. Under **Administrator account**, select **SSH public key** and enter your key pair.
-7. Under **Inbound port rules**, allow SSH (`22`).
-8. Select **Review + create**, then **Create**.
-9. Once the VM is running, copy its **Public IP address** from the VM overview page.
-10. SSH into the instance:
-
-    ```sh
-    ssh -i "your-key.pem" azureuser@<PUBLIC_IP>
-    ```
-
-11. Start a web server on port `80` (or use your own application):
-
-    ```sh
-    sudo apt update && sudo apt -y install apache2
-    ```
+<Render
+	file="tunnel/deploy-azure-vm"
+	product="cloudflare-one"
+	params={{ product: "tunnel" }}
+/>
 
 ## 2. Create a tunnel
 
@@ -49,13 +36,11 @@ This guide covers how to connect an Azure Virtual Machine to Cloudflare using `c
 ## 3. Publish an application
 
 1. Under **Routes**, select **Add route** > **Published application**.
-2. Enter a hostname (for example, `app.example.com`).
+2. Enter a hostname (for example, `hellocloudflare.<your-domain>.com`).
 3. Under **Service**, enter `http://localhost:80`.
 4. Select **Add route**.
 
-To test, open a browser and go to the hostname you configured. You should see the Apache default page.
-
-You can optionally add [Cloudflare Access](/tunnel/integrations/#cloudflare-access) to control who can reach the service.
+To test, open a browser and go to the hostname you configured. You should see the **Hello Cloudflare!** test page.
 
 :::note[Looking for private network access?]
 To connect to your Azure VM via private IP using the WARP client, refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
@@ -63,10 +48,8 @@ To connect to your Azure VM via private IP using the WARP client, refer to the [
 
 ## Firewall configuration
 
-To secure your Azure VM, configure your [Network Security Group (NSG)](https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview) to deny all inbound traffic and allow only outbound traffic to the [Cloudflare Tunnel IP addresses](/tunnel/configuration/#required-ports). Delete all inbound rules except SSH (if needed) and keep only the relevant outbound rules.
-
-:::note
-If you delete the inbound rule for port `22`, you will be unable to SSH back into the VM.
-:::
-
-After configuring your NSG, verify the application is still accessible through the tunnel hostname. Direct access to the Azure public IP should no longer work.
+<Render
+	file="tunnel/deploy-azure-firewall"
+	product="cloudflare-one"
+	params={{ product: "tunnel" }}
+/>
