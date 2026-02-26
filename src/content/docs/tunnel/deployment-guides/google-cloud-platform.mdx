@@ -5,6 +5,8 @@ sidebar:
   order: 5
 ---
 
+import { Render } from "~/components";
+
 This guide covers how to connect a Google Cloud Platform (GCP) virtual machine to Cloudflare using `cloudflared` and publish a web application through a Cloudflare Tunnel.
 
 ### Prerequisites
@@ -14,21 +16,7 @@ This guide covers how to connect a Google Cloud Platform (GCP) virtual machine t
 
 ## 1. Create a VM instance
 
-1. In your [Google Cloud Console](https://console.cloud.google.com/), go to **Compute Engine** > **VM instances**.
-2. Select **Create instance**.
-3. Choose your desired specifications (for example, e2-micro with Debian GNU/Linux 12).
-4. Under **Advanced options** > **Management** > **Automation**, add a startup script for your application. For testing:
-
-   ```bash
-   #!/bin/bash
-   apt update && apt -y install apache2
-   cat <<EOF > /var/www/html/index.html
-   <html><body><h1>Hello Cloudflare!</h1></body></html>
-   EOF
-   ```
-
-5. Select **Create**.
-6. Verify the server is running by visiting `http://<EXTERNAL_IP>` in a browser.
+<Render file="tunnel/deploy-gcp-vm" product="cloudflare-one" />
 
 ## 2. Create a tunnel
 
@@ -56,10 +44,8 @@ To connect to your VM via private IP using the WARP client, refer to the [Cloudf
 
 ## Firewall configuration
 
-To secure your VM, [configure your VPC firewall rules](https://cloud.google.com/firewall/docs/using-firewalls) to deny all ingress traffic and allow only egress traffic to the [Cloudflare Tunnel IP addresses](/tunnel/configuration/#required-ports). GCP denies ingress by [default](https://cloud.google.com/firewall/docs/firewalls#default_firewall_rules), so delete all ingress rules and keep only the relevant egress rules.
-
-:::note
-If you delete the default `allow-ssh` rule, you will be unable to SSH back into the VM.
-:::
-
-After configuring your firewall, verify the application is still accessible through the tunnel hostname. Direct access to the VM external IP should no longer work.
+<Render
+	file="tunnel/deploy-gcp-firewall"
+	product="cloudflare-one"
+	params={{ product: "tunnel" }}
+/>
