@@ -1,5 +1,0 @@
----
-{}
----
-
-Proxied traffic through Cloudflare Tunnel is buffered by default unless the origin server includes the `Content-Type: text/event-stream` response header. This header tells `cloudflared` to stream data as it arrives instead of buffering the entire response.

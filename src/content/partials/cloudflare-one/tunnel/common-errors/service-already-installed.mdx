@@ -1,5 +1,0 @@
----
-{}
----
-
-If you see this error when installing a remotely-managed tunnel, ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, add additional routes to your existing tunnel. Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.

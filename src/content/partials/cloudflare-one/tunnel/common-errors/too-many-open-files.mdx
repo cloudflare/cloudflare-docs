@@ -1,7 +1,0 @@
----
-params:
-  - logsURL
-  - ulimitsURL
----
-
-If your <a href={props.logsURL}>Cloudflare Tunnel logs</a> return a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to <a href={props.ulimitsURL}>configure ulimit settings</a> on the machine running `cloudflared`.
