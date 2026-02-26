@@ -4,19 +4,19 @@ difficulty: Beginner
 tags:
   - AI
 title: Use Pruna P-video through AI Gateway
-description: Learn how to call prunaai/p-video on Replicate through Cloudflare AI Gateway
+description: Learn how to call prunaai/p-video on Replicate through AI Gateway
 ---
 
 import { Render } from "~/components";
 
-This tutorial shows how to call the `prunaai/p-video` model on [Replicate](/ai-gateway/usage/providers/replicate/) through Cloudflare AI Gateway. You will route requests through AI Gateway to observe and control your AI requests with analytics, caching, rate limiting, and logging.
+This tutorial shows how to call the `prunaai/p-video` model on [Replicate](/ai-gateway/usage/providers/replicate/) through AI Gateway.
 
 ## Prerequisites
 
-- A Cloudflare account with access to AI Gateway
-- A Replicate account with an API token
+- A [Cloudflare account](https://cloudflare.com/sign-up)
+- A [Replicate account](https://replicate.com/) with an API token
 
-## 1. Create a Replicate account and get an API token
+## 1. Get a Replicate API token
 
 1. Go to [replicate.com](https://replicate.com/) and sign up for an account.
 2. Once logged in, go to [replicate.com/settings/api-tokens](https://replicate.com/account/api-tokens).
@@ -72,7 +72,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate/pr
 ```
 
 - `Authorization` — your Replicate API token (authenticates with Replicate).
-- `cf-aig-authorization` — your Cloudflare API token (authenticates with AI Gateway).
+- `cf-aig-authorization` — your Cloudflare API token (for authenticated gateways).
 - `Prefer: wait` — blocks until the prediction completes instead of returning immediately.
 
 For a full list of available input parameters, refer to the [prunaai/p-video model page](https://replicate.com/prunaai/p-video) on Replicate.
