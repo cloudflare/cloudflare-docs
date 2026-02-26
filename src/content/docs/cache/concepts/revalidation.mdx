@@ -9,7 +9,7 @@ pcx_content_type: concept
 When a cached asset expires, Cloudflare uses the [`stale-while-revalidate`](/cache/concepts/cache-control/#revalidation) directive in `Cache-Control` to determine whether it can continue serving the stale asset while fetching a fresh copy from the origin. If the directive is present and the asset is within the allowed staleness window, Cloudflare serves the expired content to visitors and revalidates in the background. By using headers like `If-Modified-Since` and `ETag`, Cloudflare validates content without fully re-fetching it, reducing origin traffic.
 
 :::note
-Asynchronous `stale-while-revalidate` is live for all Free, Pro, and Business zones. Enterprise zones are actively being migrated.
+Asynchronous `stale-while-revalidate` is live for all Free, Pro, and Business zones. Enterprise zones are actively being migrated. The previous synchronous behavior is described in [Synchronous revalidation](#synchronous-revalidation-legacy).
 :::
 
 ## Asynchronous revalidation
@@ -22,11 +22,15 @@ Note that your origin may see an increase in revalidation traffic because revali
 
 ## Synchronous revalidation (legacy)
 
-Previously, `stale-while-revalidate` blocked on the first request that arrived after a cached asset expired. That first request was held until the origin responded, and was served with a [MISS](/cache/concepts/cache-responses/#miss) or [REVALIDATED](/cache/concepts/cache-responses/#revalidated) status. Any other requests that arrived during this time for the same asset in the same cache location were served stale with the [UPDATING](/cache/concepts/cache-responses/#updating) status.
+:::note
+Synchronous revalidation refers to a previous implementation that is only available to a subset of Enterprise zones that have not been migrated yet. All other zones use [asynchronous revalidation](#asynchronous-revalidation).
+:::
 
-For example, if 1,000 requests arrived simultaneously for an expired asset, one request would go to the origin while the other 999 were served stale from cache. The first visitor experienced higher latency because they had to wait for the origin round-trip.
+With synchronous revalidation (a legacy implementation), `stale-while-revalidate` blocks on the first request that arrives after a cached asset expired. That first request is held until the origin responds, and is served with a [MISS](/cache/concepts/cache-responses/#miss) or [REVALIDATED](/cache/concepts/cache-responses/#revalidated) status. Any other requests that arrive during this time for the same asset in the same cache location are served stale with the [UPDATING](/cache/concepts/cache-responses/#updating) status.
 
-With asynchronous revalidation, all 1,000 requests are served from cache immediately and no visitor is blocked.
+For example, if 1,000 requests arrive simultaneously for an expired asset in this previous implementation, one request goes to the origin while the other 999 are served stale from cache. The first visitor experiences higher latency because they have to wait for the origin round-trip.
+
+On the other hand, with [asynchronous revalidation](#asynchronous-revalidation) all 1,000 requests are served from cache immediately and no visitor is blocked.
 
 ## Controlling stale behavior
 
