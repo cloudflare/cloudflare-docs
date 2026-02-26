@@ -1,0 +1,179 @@
+---
+pcx_content_type: configuration
+title: Scheduler
+head: []
+description: Use the scheduler.wait() API to pause execution for a specified duration without blocking other work in Cloudflare Workers.
+---
+
+import { TypeScriptExample } from "~/components";
+
+The global `scheduler` object provides scheduling APIs for use within Cloudflare Workers. Its primary method, `scheduler.wait()`, offers a Promise-based alternative to `setTimeout()` for delaying execution.
+
+`scheduler.wait()` is part of the [WICG Scheduling APIs proposal](https://github.com/nicolo-ribaudo/tc39-proposal-await-dictionary#schedulerwait).
+
+## scheduler.wait()
+
+`scheduler.wait()` returns a `Promise` that resolves after the specified number of milliseconds. It is the `await`-able equivalent of `setTimeout()`.
+
+```ts
+await scheduler.wait(delay);
+await scheduler.wait(delay, options);
+```
+
+### Parameters
+
+- `delay` number
+  - The number of milliseconds to wait before the returned Promise resolves.
+
+- `options` object optional
+  - Optional configuration.
+  - `signal` AbortSignal
+    - An [`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal). If the signal is aborted before the delay elapses, the returned Promise rejects with an `AbortError`.
+
+### Return type
+
+- `Promise<void>` — Resolves after `delay` milliseconds.
+
+## Behavior
+
+`scheduler.wait()` does **not** block the main thread. It yields control and allows other asynchronous work to proceed while waiting. Internally, it is equivalent to:
+
+```ts
+await new Promise((resolve) => setTimeout(resolve, delay));
+```
+
+The key difference is ergonomic — `scheduler.wait()` is cleaner, directly `await`-able, and supports cancellation through an `AbortSignal`.
+
+Like all timers in Workers, `scheduler.wait()` is only available inside the [request context](/workers/runtime-apis/request/#the-request-context).
+
+## Examples
+
+### Basic delay
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Wait for 1 second before responding
+		await scheduler.wait(1000);
+		return new Response("Delayed response");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### Retry with exponential backoff
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const maxAttempts = 3;
+		const baseBackoffMs = 100;
+		const maxBackoffMs = 5000;
+
+		for (let attempt = 0; attempt < maxAttempts; attempt++) {
+			try {
+				const response = await fetch("https://example.com/api");
+				if (response.ok) {
+					return response;
+				}
+			} catch (e) {
+				// Transient error, will retry
+			}
+
+			const backoffMs = Math.min(
+				maxBackoffMs,
+				baseBackoffMs * Math.random() * Math.pow(2, attempt),
+			);
+			await scheduler.wait(backoffMs);
+		}
+
+		return new Response("Service unavailable", { status: 503 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### Cancellable wait with AbortSignal
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const controller = new AbortController();
+
+		// Cancel the wait after 2 seconds
+		setTimeout(() => controller.abort(), 2000);
+
+		try {
+			// Attempt to wait for 10 seconds, but abort after 2
+			await scheduler.wait(10000, { signal: controller.signal });
+			return new Response("Waited the full 10 seconds");
+		} catch (e) {
+			if (e instanceof DOMException && e.name === "AbortError") {
+				return new Response("Wait was cancelled early");
+			}
+			throw e;
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### Use with the incoming request signal
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const { readable, writable } = new IdentityTransformStream();
+		ctx.waitUntil(sendPing(writable, request.signal));
+		return new Response(readable, {
+			headers: { "Content-Type": "text/plain" },
+		});
+	},
+} satisfies ExportedHandler<Env>;
+
+async function sendPing(
+	writable: WritableStream,
+	signal: AbortSignal,
+): Promise<void> {
+	const writer = writable.getWriter();
+	const encoder = new TextEncoder();
+
+	try {
+		while (!signal.aborted) {
+			await writer.write(encoder.encode("ping\r\n"));
+			await scheduler.wait(1000, { signal });
+		}
+	} catch {
+		// Client disconnected
+	} finally {
+		await writer.close();
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Comparison with setTimeout
+
+| Feature                | `scheduler.wait()` | `setTimeout()`         |
+| ---------------------- | ------------------ | ---------------------- |
+| Returns a Promise      | Yes                | No                     |
+| Directly `await`-able  | Yes                | No (requires wrapping) |
+| Supports `AbortSignal` | Yes                | No                     |
+| Blocks the main thread | No                 | No                     |
+
+## Related resources
+
+- [Timers (Node.js compatibility)](/workers/runtime-apis/nodejs/timers/) — Node.js-compatible timer APIs.
+- [Web standards — Timers](/workers/runtime-apis/web-standards/) — `setTimeout()`, `setInterval()`, and related timer APIs.
