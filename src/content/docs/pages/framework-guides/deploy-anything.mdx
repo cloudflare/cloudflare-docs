@@ -17,17 +17,21 @@ Cloudflare supports deploying any static HTML website to Cloudflare Pages. If yo
 
 <div>
 
-| Configuration option     | Value              |
-| ------------------------ | ------------------ |
-| Production branch        | `main`             |
-| Build command (optional) | `exit 0`           |
-| Build output directory   | `<YOUR_BUILD_DIR>` |
+| Configuration option   | Value              |
+| ---------------------- | ------------------ |
+| Production branch      | `main`             |
+| Build command          | `exit 0`           |
+| Build output directory | `<YOUR_BUILD_DIR>` |
 
 </div>
 
-Unlike many of the framework guides, the build command and build output directory for your site are going to be completely custom. If you are not using a preset and do not need to build your site, use `exit 0` as your **Build command**. Cloudflare recommends using `exit 0` as your **Build command** to access features such as Pages Functions. The **Build output directory** is where your application's content lives.
+Unlike many of the framework guides, the build command and build output directory for your site are going to be completely custom.
 
-After configuring your site, you can begin your first deploy. Your custom build command (if provided) will run, and Pages will deploy your static site.
+Set the **Build command** to `exit 0`. While the build command field is not strictly required, Cloudflare recommends using `exit 0` as your **Build command** to access features such as [Pages Functions](/pages/functions/).
+
+Set the **Build output directory** to the directory that contains your site's static files. For example, if your HTML files are at the root of your repository, use `/` (or `.`). If they are in a subdirectory such as `public/` or `dist/`, provide that path instead.
+
+After you have configured your site, select **Save and Deploy** to begin your first deploy. Your custom build command will run, and Pages will deploy your static site.
 
 :::note
 
