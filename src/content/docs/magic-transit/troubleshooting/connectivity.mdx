@@ -94,13 +94,24 @@ If your tunnels are healthy at the relevant data center but you still experience
 
 ## 3. Gather information for support
 
-If you have worked through this guide and cannot resolve the issue, contact [Cloudflare support](https://dash.cloudflare.com/?to=/:account/support) with:
+If you have worked through this guide and cannot resolve the issue, gather the following information before contacting Cloudflare support.
 
-1. **Account ID** and **tunnel name(s)** affected.
-2. **Timestamps** (in UTC) of when the issue started.
-3. **Traceroute output** from your source network to your Magic Transit prefix.
-4. **Dashboard screenshots** showing tunnel health at the relevant data center.
-5. **Description of impact** — what traffic is affected and how.
+### Required information
+
+1. **Account ID** and **tunnel name(s)** affected
+2. **Timestamps** (in UTC) when the issue started
+3. **Ingress data center** you identified (airport code, for example `LHR`, `IAD`)
+4. **Symptoms observed:**
+   - Whether user traffic is affected or only health check alerts fired
+   - Which tunnels and data centers show degraded or down status
+   - Whether the issue is intermittent or persistent
+
+### Helpful diagnostic data
+
+- **Traceroute output** from your source network to your Magic Transit prefix
+- **Dashboard screenshots** showing tunnel health at the relevant data center
+- **Distributed traceroutes** using tools like [ping.pe](https://ping.pe) to test reachability from multiple global locations
+- **Packet captures** from your router if traffic loss is confirmed
 
 ## Related resources
 
