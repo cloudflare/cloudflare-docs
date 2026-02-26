@@ -14,7 +14,7 @@ This page provides a reference for error codes you may encounter when using Brow
 
 ## Service-level errors
 
-Service-level errors occur when Browser Rendering cannot fulfill a request due to system availability, authentication, or resource constraints.
+Service-level errors occur when Browser Rendering cannot fulfill a request due to system availability, authentication, or resource constraints. These errors apply to both the [REST API](/browser-rendering/rest-api/) and [Workers Bindings](/browser-rendering/workers-bindings/).
 
 | HTTP code | Internal code | Error | Description | Recommended fix |
 | --- | --- | --- | --- | --- |
@@ -22,7 +22,7 @@ Service-level errors occur when Browser Rendering cannot fulfill a request due t
 | `401` | `10000` | `Authentication failed` | Authentication credentials are invalid or missing. | Verify your API token exists and has `Browser Rendering - Edit` permissions. Refer to [REST API prerequisites](/browser-rendering/rest-api/#before-you-begin). |
 | `408` | - | `Request timed out` | The request exceeded the allowed time limit. | Increase timeout settings. Refer to [REST API timeouts](/browser-rendering/reference/timeouts/). |
 | `413` | - | `Error: request entity too large` | The request body exceeds the maximum allowed size (50 MB for PDF endpoint). | Reduce request payload size by hosting assets externally (such as on [R2](/r2/) or [Images](/images/)) and referencing via URLs instead of embedding them inline. Refer to [PDF endpoint request size limits](/browser-rendering/rest-api/pdf-endpoint/). |
-| `422` | - | `Unprocessable Entity` | Browser Rendering could not complete the action because of an issue with the target site. | Review timeout settings and target site requirements. Refer to [422 Unprocessable Entity](/browser-rendering/faq/#error-422-unprocessable-entity). |
+| `422` | - | `Unprocessable Entity` | Browser Rendering could not complete the action because of an issue with the target site. | Refer to [422 Unprocessable Entity](/browser-rendering/faq/#error-422-unprocessable-entity). |
 | `429` | - | `Browser connection lost. Please try again in a few minutes.` | Rate limit exceeded. | Refer to [429 Too many requests](/browser-rendering/limits/#error-429-too-many-requests). |
 | `429` | - | `Browser time limit exceeded for today` | Daily browser time limit exceeded (Workers Free plan only: 10 minutes per day). | Refer to [429 Browser time limit exceeded](/browser-rendering/limits/#error-429-browser-time-limit-exceeded-for-today). |
 | `500` | `2000` | `Internal Error` | An unexpected issue occurred on the Browser Rendering service. | Retry your request. If the issue persists, check [Cloudflare Status](https://www.cloudflarestatus.com) or [contact Cloudflare Support](/support/contacting-cloudflare-support/). |
@@ -41,7 +41,7 @@ Chrome network errors occur when the browser encounters issues loading the targe
 | `5003` | `net::ERR_TOO_MANY_REDIRECTS` | The page has too many redirects. | If you control the site, fix the redirect configuration. |
 | `5004` | `net::ERR_HTTP2_PROTOCOL_ERROR` | HTTP/2 protocol error. | If you control the site, check server HTTP/2 configuration. |
 | `5005` | `net::ERR_NAME_NOT_RESOLVED`, `net::ERR_DNS_TIMED_OUT` | DNS resolution failed. | Verify the domain exists and DNS records are configured correctly. Check for typos in the URL. |
-| `5006` | `net::ERR_CONNECTION_CLOSED`, `net::ERR_CONNECTION_RESET`, `net::ERR_TUNNEL_CONNECTION_FAILED` | The network connection was closed. Can also happen due to DNS resolution failure. | Verify the target site is operational and network connectivity is stable. Check DNS records if the issue persists. |
+| `5006` | `net::ERR_CONNECTION_CLOSED`, `net::ERR_CONNECTION_RESET`, `net::ERR_TUNNEL_CONNECTION_FAILED` | The network connection was closed. Can also happen due to DNS resolution failure or bot/WAF blocking. | Verify the target site is operational and not blocking automated requests. Check if the site has WAF or bot protection rules that may be blocking Browser Rendering. Also verify DNS records if the issue persists. |
 | `5007` | `net::ERR_HTTP_RESPONSE_CODE_FAILURE` | HTTP error with empty response body. | If you control the site, check server error page configuration. |
 | `5008` | `net::ERR_CONNECTION_REFUSED` | The server refused the connection. | Verify the web service is running and accessible. |
 | `5009` | `net::` errors | A general network error occurred when attempting to load the page. | Review the specific error message for details. Verify the target site is accessible and network connectivity is stable. |
@@ -50,7 +50,7 @@ Chrome network errors occur when the browser encounters issues loading the targe
 
 ## Browser automation errors
 
-Browser automation errors occur during browser operations when using Puppeteer or Playwright. These errors are related to the Chrome DevTools Protocol (CDP).
+Browser automation errors occur during browser operations when using [Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/). These errors are related to the Chrome DevTools Protocol (CDP).
 
 | Internal code | Error | Description | Recommended fix |
 | --- | --- | --- | --- |
@@ -62,12 +62,12 @@ Browser automation errors occur during browser operations when using Puppeteer o
 
 ## Platform errors
 
-Platform errors occur at the Workers platform level before Browser Rendering code runs.
+Platform errors occur at the [Workers platform](/workers/) level before Browser Rendering code runs.
 
 | Error | Description | Recommended fix |
 | --- | --- | --- |
-| `Cannot read properties of undefined (reading 'fetch')` | The browser binding was not passed to `puppeteer.launch()` or `playwright.chromium.launch()`. | Pass your browser binding to `puppeteer.launch()` or `playwright.chromium.launch()`. |
-| `No such module 'cloudflare:browser'` | Browser Rendering is not enabled on your account. | [Enable Browser Rendering](/browser-rendering/get-started/) by creating a browser binding in your Worker configuration. |
+| `Cannot read properties of undefined (reading 'fetch')` | The [browser binding](/browser-rendering/workers-bindings/#create-a-browser-binding) was not passed to `puppeteer.launch()` or `playwright.chromium.launch()`. | Pass your browser binding to `puppeteer.launch()` or `playwright.chromium.launch()`. |
+| `No such module 'cloudflare:browser'` | Browser Rendering is not enabled on your account. | [Enable Browser Rendering](/browser-rendering/get-started/) by creating a [browser binding](/browser-rendering/workers-bindings/#create-a-browser-binding) in your Worker configuration. |
 
 ## Related resources
 
