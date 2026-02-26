@@ -1,11 +1,11 @@
 ---
 title: Secure access to SaaS applications with SASE
 pcx_content_type: reference-architecture-diagram
-products: [access, browser-isolation, gateway]
+products: [access, browser-isolation, casb, dlp, gateway]
 sidebar:
   order: 1
   label: Secure access to SaaS applications
-reviewed: 2024-12-17
+reviewed: 2026-02-26
 description: >-
   Cloudflare's SASE platform offers the ability to bring a more Zero Trust orientated approach to securing SaaS applications. Centralized policies, based on device posture, identity attributes and granular network location can be applied across one or many Saas applications.
 ---
@@ -30,26 +30,44 @@ Cloudflare's SASE platform offers the ability to bring a more Zero Trust orienta
 
 The diagram below shows how Cloudflare sits between your users, devices and networks that require access to any SaaS application. The two main services proving security capabilities are:
 
-- [Zero Trust Network Access](/cloudflare-one/access-controls/policies/). Allows Cloudflare to become an identity proxy, so that you can easily enable authentication with a wide variety of identity providers to a single SaaS application. This service also incorporates the ability to evaluate access based on device posture and network location.
+- [Zero Trust Network Access](/cloudflare-one/access-controls/policies/). Allows Cloudflare to become an identity proxy, so that you can easily enable authentication with a wide variety of identity providers to a single SaaS application. This service also incorporates the ability to evaluate access based on device posture and network location. [Reusable policies](/cloudflare-one/access-controls/policies/policy-management/) allow the same policy to be applied across multiple SaaS applications, simplifying management at scale.
 - [Secure Web Gateway](/cloudflare-one/traffic-policies/). Once all traffic to access the SaaS application flows through our gateway, HTTPS connections are terminated at Cloudflare and you have the ability to inspect the data flowing to and from the SaaS application. This allows you to block sensitive data from being exported to insecure locations.
 
 ![Figure 1: Only traffic that has passed the Cloudflare network and relevant policies is authorized to access the SaaS application.](~/assets/images/reference-architecture/secure-access-to-saas-applications-with-sase/figure1.svg "Figure 1: Only traffic that has passed the Cloudflare network and relevant policies is authorized to access the SaaS application.")
 
-The above diagram shows the variety of ways in which traffic can on-ramp to Cloudflare, where the ZNTA service ensures authentication and the Secure Web Gateway filters both inbound and outbound traffic to/from the SaaS application.
+The above diagram shows the variety of ways in which traffic can on-ramp to Cloudflare, where the ZTNA service ensures authentication and the Secure Web Gateway filters both inbound and outbound traffic to/from the SaaS application.
 
 1. Initial requests to the SaaS application are redirected to Cloudflare as part of SSO flow. ZTNA service authenticates users against existing identity providers.
 2. A user, authenticated or not, is denied access to the SaaS application if their traffic is not sourced from Cloudflare.
-3. A user on a non-managed device can use browser isolation, where the browser accessing the SaaS application runs on a Cloudflare server, and the results of the rendered page are securely delivered to a user's local browser.
+3. A user on a non-managed device can use [browser isolation](/cloudflare-one/remote-browser-isolation/), where the browser accessing the SaaS application runs on a Cloudflare server, and the results of the rendered page are securely delivered to a user's local browser. Isolation policies can enforce granular [data protection controls](/cloudflare-one/remote-browser-isolation/isolation-policies/#policy-settings) such as restricting clipboard copy/paste, blocking file downloads and uploads, disabling printing, and preventing keyboard input. This allows unmanaged users to view SaaS application content while preventing data exfiltration. DLP profiles can also be applied within isolated sessions, enabling policies such as blocking downloads of files that contain sensitive data from within the isolated SaaS application. All user actions within isolated sessions, including copy, paste, download, upload, and print attempts, can be [logged via Logpush](/cloudflare-one/remote-browser-isolation/isolation-policies/#logging) for compliance and audit purposes.
 4. A managed device is connected to Cloudflare using a secure tunnel and therefore all communication from device to SaaS application is filtered and secured.
    1. Cloudflare agent device posture can also be incorporated into authorizing traffic from these devices.
 5. A device connected to a local network, where all Internet traffic is routed to Cloudflare via a secure IPsec tunnel to Cloudflare, also ensures all traffic from network to SaaS application is filtered and secured.
 6. Traffic then passes through our secure web gateway, where DNS and HTTP policies can be applied to traffic.
-   1. HTTP policies allow the examination of the data being both uploaded and downloaded from the SaaS application using DLP profiles.
-7. Traffic egresses Cloudflare with a specific IP. The SaaS application is configured to allow all traffic coming from that address.
+   1. HTTP policies allow the examination of the data being both uploaded and downloaded from the SaaS application using [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/). These profiles support predefined detections (such as credit card numbers, social security numbers, and source code), custom patterns, exact data match, and document fingerprinting. For example, a policy could prevent credit card numbers from being downloaded from Salesforce. The [Body Phase selector](/cloudflare-one/traffic-policies/http-policies/#body-phase) can target upload or download traffic specifically, reducing false positives. [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/granular-controls/) can further restrict specific operations within SaaS applications, such as blocking file uploads while allowing downloads, or preventing file sharing in collaboration tools.
+7. An [egress policy](/cloudflare-one/traffic-policies/egress-policies/) assigns a dedicated egress IP for the traffic to a specific SaaS application. Traffic egresses Cloudflare with a specific IP address that is unique to the organization, which can be added to the SaaS application's IP allow list. Egress policies can also be defined by [hostname or domain](/cloudflare-one/traffic-policies/egress-policies/#selectors), allowing more granular control over which traffic receives a dedicated egress IP.
 
 :::note[XDR platform integrations]
 When integrating with an XDR platform such as Crowdstrike, Sentinel One or Microsoft Intune, device posture is also available for any authenticated user because Cloudflare matches the identity with the user in the XDR system and device posture information is evaluated.
 :::
+
+## Extending security beyond access control
+
+While the architecture above focuses on controlling who can access a SaaS application and filtering data as it flows through Cloudflare, a comprehensive approach to SaaS security also needs to address data already stored within the application.
+
+Cloudflare's [Cloud Access Security Broker (CASB)](/cloudflare-one/cloud-and-saas-findings/) integrates with SaaS applications — including [Salesforce](/cloudflare-one/integrations/cloud-and-saas/salesforce/) — through their APIs to continuously scan for security risks. This includes detecting misconfigurations such as overly permissive sharing settings, identifying publicly accessible files, flagging inactive user accounts, and spotting unauthorized third-party app integrations. When combined with DLP profiles, CASB can also detect sensitive data stored within files in supported SaaS applications like Google Drive, Microsoft 365, Box, and Dropbox.
+
+This API-based approach complements the inline traffic inspection described above: the Secure Web Gateway protects data in transit, while CASB protects data at rest within the SaaS application itself.
+
+Additionally, when all user traffic is routed through Cloudflare, [Shadow IT reports](/cloudflare-one/insights/analytics/shadow-it-discovery/) are generated showing which SaaS applications employees are accessing, including unapproved ones. IT teams can review these reports and decide whether to allow, block, or adopt each discovered application. The [Application Library](/cloudflare-one/team-and-resources/app-library/) provides a consolidated view across Gateway, Access, and CASB, including automated risk assessments for discovered applications.
+
+For SaaS applications that support it, Cloudflare Gateway can also enforce [tenant control](/cloudflare-one/traffic-policies/http-policies/tenant-control/) by injecting custom HTTP headers that restrict users to only the corporate tenant. This prevents employees from authenticating into personal or unauthorized tenants of the same SaaS application, reducing the risk of data leakage to unmanaged accounts.
+
+As organizations adopt generative AI tools such as ChatGPT, Gemini, and Claude, the same SASE architecture applies to securing these SaaS applications. Cloudflare's [AI prompt protection](/cloudflare-one/data-loss-prevention/dlp-policies/ai-prompt-protection/) can detect and classify the content of prompts and responses, enabling policies that prevent sensitive data from being shared with AI tools. Combined with Shadow IT discovery, Gateway policies, and DLP profiles, organizations can enforce consistent security controls across both traditional SaaS applications and AI-powered tools.
+
+For organizations with compliance or incident response requirements, Cloudflare supports [forensic copies of HTTP requests to Logpush](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/), allowing entire request and response payloads that match Gateway policies to be exported to a storage destination for investigation and audit purposes.
+
+Organizations can also leverage [user risk scoring](/cloudflare-one/team-and-resources/users/risk-score/) to detect risky user behaviors such as impossible travel, unusually high DLP policy triggers, or threats detected by endpoint protection providers. Risk scores can be incorporated into Access and Gateway policies to dynamically restrict access to SaaS applications when a user's behavior indicates elevated risk.
 
 ## Example policy
 
@@ -104,6 +122,10 @@ Cloudflare's SASE platform allows organizations to centralize security policy fo
 
 ## Related Resources
 
+- [Using a zero trust framework to secure SaaS applications](/reference-architecture/design-guides/zero-trust-for-saas/)
 - [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/)
+- [Cloudflare SASE with CrowdStrike](/reference-architecture/architectures/cloudflare-sase-with-crowdstrike/)
+- [Cloudflare SASE with SentinelOne](/reference-architecture/architectures/cloudflare-sase-with-sentinelone/)
 - [Designing ZTNA access policies for Cloudflare Access](/reference-architecture/design-guides/designing-ztna-access-policies/)
+- [Best practices for securing generative AI with SASE](https://blog.cloudflare.com/best-practices-sase-for-ai/)
 - [Access to private apps without having to deploy client agents](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/)
