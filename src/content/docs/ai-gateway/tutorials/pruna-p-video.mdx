@@ -9,7 +9,7 @@ description: Learn how to call prunaai/p-video on Replicate through AI Gateway
 
 import { Render } from "~/components";
 
-This tutorial shows how to call the `prunaai/p-video` model on [Replicate](/ai-gateway/usage/providers/replicate/) through AI Gateway.
+This tutorial shows how to call the [Pruna's P-video](https://replicate.com/prunaai/p-video) model on [Replicate](/ai-gateway/usage/providers/replicate/) through AI Gateway.
 
 ## Prerequisites
 
@@ -75,7 +75,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate/pr
 - `cf-aig-authorization` — your Cloudflare API token (for authenticated gateways).
 - `Prefer: wait` — blocks until the prediction completes instead of returning immediately.
 
-For a full list of available input parameters, refer to the [prunaai/p-video model page](https://replicate.com/prunaai/p-video) on Replicate.
+For a full list of available input parameters, check out the [prunaai/p-video model page](https://replicate.com/prunaai/p-video) on Replicate.
 
 When the prediction completes, the response includes the `output` field with a URL to the generated video file.
 
@@ -122,3 +122,11 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate/pr
 ```
 
 Keep polling until `status` is `succeeded` (or `failed`). When complete, the `output` field contains a URL to the generated video file.
+
+## Next steps
+
+From here you can: 
+
+- Use [logging](/ai-gateway/observability/logging/) to monitor requests and debug issues.
+- Set up [rate limiting](/ai-gateway/features/rate-limiting/) to control usage.
+- Use other models on Replicate or our other [supported providers](/ai-gateway/usage/providers/) through AI Gateway.
