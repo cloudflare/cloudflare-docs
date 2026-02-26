@@ -8,6 +8,8 @@ head:
     content: Deploy cloudflared in AWS
 ---
 
+import { Render } from "~/components";
+
 This guide covers how to connect an Amazon Web Services (AWS) EC2 instance to Cloudflare using `cloudflared` and publish a web application through a Cloudflare Tunnel.
 
 ### Prerequisites
@@ -16,24 +18,7 @@ This guide covers how to connect an Amazon Web Services (AWS) EC2 instance to Cl
 
 ## 1. Create an EC2 instance
 
-1. From the AWS console, go to **Compute** > **EC2** > **Instances**.
-2. Select **Launch instance**.
-3. Choose an AMI (for example, _Ubuntu Server 24.04 LTS_) and instance type (for example, _t2.micro_).
-4. In **Key pair (login)**, create or select a key pair for SSH access.
-5. In **Network settings**, create a security group that allows SSH from your IP and HTTP/HTTPS from the internet.
-6. Select **Launch instance**.
-7. Once the instance is running, copy its **Public IPv4 DNS** from the Instances summary page.
-8. SSH into the instance:
-
-   ```sh
-   ssh -i "YourKeyPair.pem" ubuntu@<PUBLIC_DNS>
-   ```
-
-9. Start a web server on port `80` (or use your own application):
-
-   ```sh
-   sudo apt update && sudo apt -y install apache2
-   ```
+<Render file="tunnel/deploy-aws-ec2-instance" product="cloudflare-one" />
 
 ## 2. Create a tunnel
 
@@ -53,7 +38,6 @@ This guide covers how to connect an Amazon Web Services (AWS) EC2 instance to Cl
 
 To test, open a browser and go to the hostname you configured. You should see your web server's page.
 
-You can optionally add [Cloudflare Access](/tunnel/integrations/#cloudflare-access) to control who can reach the service.
 
 :::note[Looking for private network access?]
 To connect to your EC2 instance via private IP using the WARP client, refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
@@ -61,10 +45,8 @@ To connect to your EC2 instance via private IP using the WARP client, refer to t
 
 ## Firewall configuration
 
-To secure your AWS instance, configure your [Security Group rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html) to deny all inbound traffic and allow only outbound traffic to the [Cloudflare Tunnel IP addresses](/tunnel/configuration/#required-ports). Delete all inbound rules except SSH (if needed) and keep only the relevant outbound rules.
-
-:::note
-If you delete the inbound rule for port `22`, you will be unable to SSH back into the instance.
-:::
-
-After configuring your security group, verify the application is still accessible through the tunnel hostname. Direct access to the EC2 public IP should no longer work.
+<Render
+	file="tunnel/deploy-aws-firewall"
+	product="cloudflare-one"
+	params={{ product: "tunnel" }}
+/>
