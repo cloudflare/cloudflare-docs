@@ -34,12 +34,11 @@ accTitle: Connectivity troubleshooting flowchart
 accDescr: A decision tree to determine whether a degraded tunnel alert is affecting your traffic.
 
 A["You received a tunnel<br>health alert"] --> B{"Is your traffic<br>affected?"}
-B -- "Yes, I have<br>connectivity issues" --> C["Identify your ingress<br>data center"]
+B -- "Yes, I have<br>connectivity issues" --> C["Identify your ingress<br>data center and check<br>tunnel health there"]
 B -- "No, traffic<br>flows normally" --> D{"Does the alert match<br>a data center carrying<br>your traffic?"}
 D -- "No" --> E["No action required.<br>The degraded tunnel is in<br>a data center not serving<br>your traffic."]
 D -- "Yes" --> C
-C --> F["Check tunnel health<br>at that data center"]
-F --> G{"Are tunnels healthy<br>at your ingress<br>data center?"}
+C --> G{"Are tunnels healthy<br>at your ingress<br>data center?"}
 G -- "Yes" --> H["The issue is not<br>tunnel-related. Check<br>Cloudflare Status and<br>your origin network."]
 G -- "No" --> I["Tunnels at your ingress<br>data center are unhealthy.<br>Refer to Troubleshoot<br>tunnel health."]
 ```
@@ -68,18 +67,7 @@ In this example, `lhr` indicates that traffic enters Cloudflare at the London (H
 
 ### Use the Cloudflare dashboard
 
-You can also identify which data centers handle your traffic by checking the **Average ingress traffic** column on the **Connector health** page. Data centers with traffic volume are actively routing your traffic.
-
-1. Go to the **Network health** page.
-
-	<DashButton url="/?to=/:account/networking-insights/health" />
-
-2. Select the **Connector health** tab.
-3. Look at the **Average ingress traffic** column. Data centers with non-zero traffic values are actively routing traffic for your network.
-
-## 2. Check tunnel health at that data center
-
-After you identify the data center, check the health of tunnels at that specific location.
+You can also identify which data centers handle your traffic by checking traffic volume on the **Connector health** page. Data centers showing traffic are actively routing your traffic.
 
 1. Go to the **Network health** page.
 
@@ -87,16 +75,16 @@ After you identify the data center, check the health of tunnels at that specific
 
 2. Select the **Connector health** tab.
 3. Select the tunnel you want to inspect.
-4. In the tunnel detail view, review the health status per data center. Focus on the data center you identified in [step 1](#1-identify-your-ingress-data-center).
-
-If the tunnels at your ingress data center are healthy, a degraded tunnel at a different data center is not the cause of your connectivity issue.
+4. In the tunnel detail view, look for data centers that show traffic volume. These are the data centers actively routing traffic for your network.
+5. Review the health status for those data centers. If the tunnels are healthy at data centers that carry your traffic, a degraded tunnel at a different data center is not the cause of your connectivity issue.
 
 :::note[Ask Stephen]
 1. Are there specific dashboard views or filters that help customers narrow down tunnel health to a specific data center? If so, we should document the exact steps here.
-2. Does this type of troubleshooting also apply to Cloudflare WAN customers? The 2025 supportability recap mentions WAN IPsec tunnel degradation as a top issue, and support runbooks point WAN tunnel troubleshooting back to the MT guide. If so, we should convert this page to a shared partial and render it from both products.
+2. What is the exact column name that shows traffic volume per data center in the tunnel detail view? The existing docs reference a "Traffic volume (1 hour)" column, but we need to confirm the current label.
+3. Does this type of troubleshooting also apply to Cloudflare WAN customers? The 2025 supportability recap mentions WAN IPsec tunnel degradation as a top issue, and support runbooks point WAN tunnel troubleshooting back to the MT guide. If so, we should convert this page to a shared partial and render it from both products.
 :::
 
-## 3. Correlate with Cloudflare status
+## 2. Correlate with Cloudflare status
 
 If your tunnels are healthy at the relevant data center but you still experience connectivity issues, check for broader platform issues.
 
@@ -104,7 +92,7 @@ If your tunnels are healthy at the relevant data center but you still experience
 2. Look for any active incidents or maintenance at the data center you identified.
 3. Check for incidents affecting Magic Transit specifically.
 
-## 4. Gather information for support
+## 3. Gather information for support
 
 If you have worked through this guide and cannot resolve the issue, contact [Cloudflare support](https://dash.cloudflare.com/?to=/:account/support) with:
 
