@@ -294,7 +294,7 @@ const starlightPageProps = {
 	<h2 id="Parameters">Parameters</h2>
 	<p><span class="text-red-500">*</span> indicates a required field</p>
 	<h3 id="Input">Input</h3>
-	<JsonSchemaViewer schema={model.schema.input} client:visible />
+	<JsonSchemaViewer schema={model.schema.input} client:only="react" />
 
 	<h3 id="Output">Output</h3>
 	{
@@ -309,7 +309,7 @@ const starlightPageProps = {
 				</p>
 			</>
 		) : (
-			<JsonSchemaViewer schema={model.schema.output} client:visible />
+			<JsonSchemaViewer schema={model.schema.output} client:only="react" />
 		)
 	}
 
