@@ -14,11 +14,9 @@ Asynchronous `stale-while-revalidate` is live for all Free, Pro, and Business zo
 
 ## Asynchronous revalidation
 
-Revalidation is fully asynchronous. When a cached asset reaches its TTL expiry and `stale-while-revalidate` is set, Cloudflare begins revalidating the asset with the origin immediately at expiry rather than waiting for the next visitor request. All visitor requests that arrive during revalidation are served from cache with a [HIT](/cache/concepts/cache-responses/#hit) or [UPDATING](/cache/concepts/cache-responses/#updating) status. No request is blocked waiting for the origin to respond.
+Revalidation is fully asynchronous. When a cached asset expires and `stale-while-revalidate` is set, the first request that arrives after expiry triggers revalidation in the background. That request immediately receives stale content with an [UPDATING](/cache/concepts/cache-responses/#updating) status instead of blocking until the origin responds. All following requests also receive stale content with an `UPDATING` status until the origin responds. Once revalidation completes, subsequent requests receive fresh content with a [HIT](/cache/concepts/cache-responses/#hit) status.
 
 If the stale content is still valid, Cloudflare sets a new TTL. If the content has changed, the origin provides fresh content to replace the old.
-
-Note that your origin may see an increase in revalidation traffic because revalidation now starts at expiry rather than on the next request.
 
 ## Synchronous revalidation (legacy)
 
