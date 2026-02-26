@@ -42,7 +42,12 @@ It is possible that your domain is protected by DNSSEC. If so, [turn off DNSSEC]
       <Render file="dns-nxdomain-warning" product="dns" />
 
    2. If you find any missing records, [manually add](/dns/manage-dns-records/how-to/create-dns-records/) those records.
-   3. Depending on your site setup, you may want to adjust the [proxy status](/dns/proxy-status/) for certain `A`, `AAAA`, or `CNAME` records.
+   3. Depending on your site setup, you may want to adjust the <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxy status</GlossaryTooltip> for certain `A`, `AAAA`, or `CNAME` records.
+
+      :::note[Review CNAME records]
+	    In general, CNAME records being used to verify your domain for third-party services should not be proxied. For details, refer to [Proxied CNAME records](/dns/proxy-status/#cname-records).
+	    :::
+
    4. Select **Continue**.
 
 ## 2. Update nameservers
@@ -55,7 +60,7 @@ It is possible that your domain is protected by DNSSEC. If so, [turn off DNSSEC]
 
 ## 3. Complete SSL/TLS setup
 
-To prevent insecure connections and visitor browser errors, review your [SSL/TLS certificates](/ssl/get-started/). Many Cloudflare services will automatically protect and speed up your web traffic after your nameservers are updated and your DNS records are <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied</GlossaryTooltip>.
+To prevent insecure connections and visitor browser errors, review your [SSL/TLS certificates](/ssl/get-started/). Many Cloudflare services will automatically protect and speed up your web traffic after your nameservers are updated and your DNS records are proxied. For further guidance, refer to [Proxy status](/dns/proxy-status/).
 
 If you encounter unexpected results when changing your nameservers, refer to the [DNS Full Setup troubleshooting](/dns/zone-setups/full-setup/troubleshooting/).
 
