@@ -49,15 +49,16 @@ For example, if your account ID is `abc123` and your gateway is `my-gateway`:
 https://gateway.ai.cloudflare.com/v1/abc123/my-gateway/replicate
 ```
 
-## 4. Create a prediction
+## 4. Generate a video
 
-Send a POST request to the `/replicate/predictions` endpoint. Specify the model using the `version` field in the request body:
+P-video predictions generally complete within 30 seconds. Because this is under Replicate's 60-second synchronous limit, you can use the `Prefer: wait` header to send a request and get the result in a single call:
 
 ```bash
-curl https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/my-gateway/replicate/predictions \
-  --header "Authorization: Bearer $REPLICATE_API_TOKEN" \
-  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate/predictions \
+  --header "Authorization: Bearer {replicate_api_token}" \
+  --header "cf-aig-authorization: Bearer {cloudflare_api_token}" \
   --header "Content-Type: application/json" \
+  --header "Prefer: wait" \
   --data '{
     "version": "prunaai/p-video",
     "input": {
@@ -72,8 +73,34 @@ curl https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/my-gateway/repl
 
 - `Authorization` — your Replicate API token (authenticates with Replicate).
 - `cf-aig-authorization` — your Cloudflare API token (authenticates with AI Gateway).
+- `Prefer: wait` — blocks until the prediction completes instead of returning immediately.
 
-The response looks like:
+For a full list of available input parameters, refer to the [prunaai/p-video model page](https://replicate.com/prunaai/p-video) on Replicate.
+
+When the prediction completes, the response includes the `output` field with a URL to the generated video file.
+
+## 5. (Optional) Use async polling for longer requests
+
+If your request may exceed 60 seconds (for example, with longer durations or higher resolutions), use async mode instead. Send the request without the `Prefer: wait` header:
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate/predictions \
+  --header "Authorization: Bearer {replicate_api_token}" \
+  --header "cf-aig-authorization: Bearer {cloudflare_api_token}" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "version": "prunaai/p-video",
+    "input": {
+      "prompt": "A cat walking through a field of flowers in slow motion",
+      "duration": 5,
+      "aspect_ratio": "16:9",
+      "resolution": "720p",
+      "fps": 24
+    }
+  }'
+```
+
+The response includes a prediction `id`:
 
 ```json
 {
@@ -86,43 +113,12 @@ The response looks like:
 }
 ```
 
-Save the prediction `id` from the response.
-
-## 5. Poll for the result
-
-Video generation is asynchronous. Poll the prediction status until it completes:
+Poll the prediction status until it completes:
 
 ```bash
-curl https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/my-gateway/replicate/predictions/<PREDICTION_ID> \
-  --header "Authorization: Bearer $REPLICATE_API_TOKEN" \
-  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate/predictions/{prediction_id} \
+  --header "Authorization: Bearer {replicate_api_token}" \
+  --header "cf-aig-authorization: Bearer {cloudflare_api_token}"
 ```
 
 Keep polling until `status` is `succeeded` (or `failed`). When complete, the `output` field contains a URL to the generated video file.
-
-## 6. (Optional) Use the `Prefer: wait` header
-
-P-video predictions generally complete within 30 seconds. Because this is under Replicate's 60-second synchronous limit, you can use the `Prefer: wait` header to block until the prediction completes and avoid polling:
-
-```bash
-curl https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/my-gateway/replicate/predictions \
-  --header "Authorization: Bearer $REPLICATE_API_TOKEN" \
-  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "Content-Type: application/json" \
-  --header "Prefer: wait" \
-  --data '{
-    "version": "prunaai/p-video",
-    "input": {
-      "prompt": "A cat walking through a field of flowers in slow motion",
-      "duration": 5,
-      "aspect_ratio": "16:9",
-      "resolution": "720p"
-    }
-  }'
-```
-
-:::note
-Video generation may exceed 60 seconds. If this happens, fall back to polling (step 5).
-:::
-
-For a full list of available input parameters, refer to the [prunaai/p-video model page](https://replicate.com/prunaai/p-video) on Replicate.
