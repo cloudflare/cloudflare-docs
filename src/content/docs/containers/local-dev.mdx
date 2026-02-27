@@ -94,6 +94,8 @@ To resolve this, you can either:
 
   :::note
   The above Dockerfile snippet is an example. Depending on your base image, the commands to install certificates may differ (for example, Alpine uses `apk add ca-certificates` and a different certificate path).
+
+  This snippet will store the certificate into the image. This is only recommended for local development, do not share your certificate or any images that contain it.
   :::
 
   Wrangler invokes Docker automatically when you run `wrangler dev` or `wrangler deploy`, so if you need to pass build secrets, you will need to build and push the image manually using `wrangler containers images push`.
