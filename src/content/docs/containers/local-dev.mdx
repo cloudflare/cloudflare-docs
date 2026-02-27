@@ -83,13 +83,17 @@ If you are running Cloudflare WARP or a VPN that performs TLS inspection, HTTPS 
 To resolve this, you can either:
 
 - Disable WARP or your VPN while running `wrangler dev` or `wrangler deploy`, then re-enable it afterwards.
-- Add the certificate to your Docker build context. Cloudflare WARP exposes its certificate via the `NODE_EXTRA_CA_CERTS` and `SSL_CERT_FILE` environment variables on your host machine. You can pass the certificate into your Docker build as an environment variable, so that it is available during the build without being baked into the final image:
+- Add the certificate to your Docker build context. Cloudflare WARP exposes its certificate via the `NODE_EXTRA_CA_CERTS` and `SSL_CERT_FILE` environment variables on your host machine. You can pass the certificate into your Docker build as an environment variable, so that it is available during the build without being baked into the final image.
 
   ```dockerfile
-RUN if [ -n "$SSL_CERT_FILE" ]; then \
-    cp "$SSL_CERT_FILE" /usr/local/share/ca-certificates/Custom_CA.crt && \
-    update-ca-certificates; \
-    fi
+  RUN if [ -n "$SSL_CERT_FILE" ]; then \
+      cp "$SSL_CERT_FILE" /usr/local/share/ca-certificates/Custom_CA.crt && \
+      update-ca-certificates; \
+      fi
   ```
+
+  :::note
+  The above Dockerfile snippet is an example. Depending on your base image, the commands to install certificates may differ (for example, Alpine uses `apk add ca-certificates` and a different certificate path).
+  :::
 
   Wrangler invokes Docker automatically when you run `wrangler dev` or `wrangler deploy`, so if you need to pass build secrets, you will need to build and push the image manually using `wrangler containers images push`.
