@@ -69,13 +69,13 @@ index f50c208..5309557 100644
  		}
  	}
 diff --git a/node_modules/@astrojs/starlight-docsearch/index.ts b/node_modules/@astrojs/starlight-docsearch/index.ts
-index e8cc7e5..6c88e07 100644
+index c727d17..79a6a7f 100644
 --- a/node_modules/@astrojs/starlight-docsearch/index.ts
 +++ b/node_modules/@astrojs/starlight-docsearch/index.ts
-@@ -43,6 +43,18 @@ const DocSearchConfigSchema = z
+@@ -50,6 +50,18 @@ const DocSearchConfigSchema = z
  		 * @see https://www.algolia.com/doc/api-reference/search-api-parameters/
  		 */
- 		searchParameters: z.custom<SearchOptions>(),
+ 		searchParameters: z.custom<SearchOptions>().optional(),
 +		/**
 +		 * Configuration for keyboard shortcuts that trigger the DocSearch modal.
 +		 * @see https://docsearch.algolia.com/docs/api/#keyboardshortcuts
@@ -89,5 +89,5 @@ index e8cc7e5..6c88e07 100644
 +			})
 +			.optional(),
  	})
- 	.strict()
  	.or(
+ 		z.strictObject({
