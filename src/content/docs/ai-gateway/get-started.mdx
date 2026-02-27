@@ -36,17 +36,24 @@ Use `default` as your gateway ID in the endpoint URL:
 https://gateway.ai.cloudflare.com/v1/{account_id}/default/{provider}/{endpoint}
 ```
 
-For example, to send a request to Workers AI through AI Gateway:
+For example, to send a chat completion request through AI Gateway:
 
 ```bash
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/default/workers-ai/@cf/meta/llama-3.1-8b-instruct \
-  --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
-  --header 'Authorization: Bearer {CF_API_TOKEN}' \
+curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default/compat/chat/completions \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header 'Content-Type: application/json' \
-  --data '{"prompt": "What is Cloudflare?"}'
+  --data '{
+    "model": "workers-ai/@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
 ```
 
-The `cf-aig-authorization` header authenticates your request with AI Gateway. The `Authorization` header authenticates with Workers AI using your Cloudflare API token.
+The `cf-aig-authorization` header authenticates your request with AI Gateway.
 
 :::note
 The default gateway is created with [authentication](/ai-gateway/configuration/authentication/) turned on, so the `cf-aig-authorization` header is required for all requests. For more details on how the default gateway works, refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway).
