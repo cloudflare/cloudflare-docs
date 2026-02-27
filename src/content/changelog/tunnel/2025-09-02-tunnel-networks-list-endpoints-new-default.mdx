@@ -2,12 +2,13 @@
 title: Cloudflare Tunnel and Networks API will no longer return deleted resources by default starting December 1, 2025
 description: The is_deleted parameter for specific Cloudflare Tunnel and Zero Trust Networks list API endpoints will default to false. To retrieve deleted resources, you must explicitly set this parameter to true.
 products:
-     - cloudflare-one
+  - tunnel
+  - cloudflare-tunnel-sase
 hidden: false
 date: 2025-09-02
 ---
 
-Starting **December 1, 2025**, list endpoints for the [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/) and [Zero Trust Networks API](/api/resources/zero_trust/subresources/networks/) will no longer return deleted tunnels, routes, subnets and virtual networks by default. This change makes the API behavior more intuitive by only returning active resources unless otherwise specified. 
+Starting **December 1, 2025**, list endpoints for the [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/) and [Zero Trust Networks API](/api/resources/zero_trust/subresources/networks/) will no longer return deleted tunnels, routes, subnets and virtual networks by default. This change makes the API behavior more intuitive by only returning active resources unless otherwise specified.
 
 No action is required if you already explicitly set `is_deleted=false` or if you only need to list active resources.
 
