@@ -11,6 +11,30 @@ You have several different options for managing an AI Gateway.
 
 ## Create gateway
 
+### Default gateway
+
+AI Gateway supports a special gateway ID called `default`. The first time you send an authenticated request to a gateway with the ID `default`, AI Gateway automatically creates it for you. No manual setup is required.
+
+The request that triggers auto-creation must include a valid `cf-aig-authorization` header or be made through a [Workers binding](/ai-gateway/integrations/aig-workers-ai-binding/). An unauthenticated request to a `default` gateway that does not yet exist does not create the gateway.
+
+The auto-created default gateway uses the following settings:
+
+| Setting | Default value |
+| --- | --- |
+| Authentication | On |
+| Log collection | On |
+| Caching | Disabled (TTL of 0) |
+| Rate limiting | Off |
+| Logpush | Off |
+
+After creation, you can edit the default gateway settings like any other gateway. If you delete the default gateway, sending a new authenticated request to the `default` gateway ID auto-creates it again.
+
+:::note
+The gateway ID `default` is reserved. You cannot create a gateway with a different ID and give it auto-creation behavior. Only the ID `default` supports this.
+:::
+
+### Create a gateway manually
+
 <Render file="create-gateway" product="ai-gateway" />
 
 ## Edit gateway
