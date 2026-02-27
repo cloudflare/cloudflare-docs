@@ -1729,7 +1729,7 @@
 /waf/change-log/2025-07-14/ /changelog/post/2025-07-14-waf-release/ 301
 /waf/change-log/2025-07-21/ /changelog/post/2025-07-21-waf-release/ 301
 /waf/change-log/2025-07-21-emergency/ /changelog/post/2025-07-21-emergency/ 301
-/waf/change-log/historical/ /waf/change-log/historical-2019/ 301
+/waf/change-log/historical/ /waf/change-log/historical-2022/ 301
 /waf/change-log/managed-rulesets/ /waf/change-log/ 301
 /waf/custom-rules/manage-dashboard/ /waf/custom-rules/create-dashboard/ 301
 /waf/security-analytics/ /waf/analytics/security-analytics/ 301
@@ -1754,6 +1754,10 @@
 /changelog/post/2024-11-04-new-table-in-security-analytics-and-security-events/ /waf/change-log/historical-2024/#2024-11-04 301
 /changelog/post/2024-08-29-fixed-occasional-attack-score-mismatches/ /waf/change-log/historical-2024/#2024-08-29 301
 /changelog/post/2024-05-23-improved-detection-capabilities/ /waf/change-log/historical-2024/#2024-05-23 301
+/waf/change-log/historical-2018/ /waf/change-log/ 301
+/waf/change-log/historical-2019/ /waf/change-log/ 301
+/waf/change-log/historical-2020/ /waf/change-log/ 301
+/waf/change-log/historical-2021/ /waf/change-log/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
@@ -2547,9 +2551,9 @@
 /waf/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
 /waf/security-events/* /waf/analytics/security-events/:splat 301
-/waf/change-log/2019-* /waf/change-log/historical-2019/ 301
-/waf/change-log/2020-* /waf/change-log/historical-2020/ 301
-/waf/change-log/2021-* /waf/change-log/historical-2021/ 301
+/waf/change-log/2019-* /waf/change-log/ 301
+/waf/change-log/2020-* /waf/change-log/ 301
+/waf/change-log/2021-* /waf/change-log/ 301
 /waf/change-log/2022-* /waf/change-log/historical-2022/ 301
 /waf/change-log/2023-* /waf/change-log/historical-2023/ 301
 /waf/change-log/2024-* /waf/change-log/historical-2024/ 301
