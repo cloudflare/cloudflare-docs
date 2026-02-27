@@ -25,24 +25,30 @@ To complete the following procedure, you will need to:
 
 ## 1. Create a VM instance in GCP
 
-<Render file="tunnel/deploy-gcp-vm" product="cloudflare-one" />
+<Render
+	file="tunnel/deployment-guides/deploy-gcp-vm"
+	product="cloudflare-one"
+/>
 
 ## 2. Create a Cloudflare Tunnel
 
 <Render
-	file="tunnel/cloud-create-tunnel"
+	file="tunnel/deployment-guides/cloud-create-tunnel"
 	product="cloudflare-one"
 	params={{ one: "GCP VM", two: "gcp" }}
 />
 
 ## 3. Connect using a public hostname
 
-<Render file="tunnel/cloud-public-hostname" product="cloudflare-one" />
+<Render
+	file="tunnel/deployment-guides/cloud-public-hostname"
+	product="cloudflare-one"
+/>
 
 ## 4. Connect using a private IP
 
 <Render
-	file="tunnel/cloud-private-ip"
+	file="tunnel/deployment-guides/cloud-private-ip"
 	product="cloudflare-one"
 	params={{
 		networkName: "VPC network",
@@ -56,7 +62,7 @@ To complete the following procedure, you will need to:
 ## Firewall configuration
 
 <Render
-	file="tunnel/deploy-gcp-firewall"
+	file="tunnel/deployment-guides/deploy-gcp-firewall"
 	product="cloudflare-one"
 	params={{ product: "cloudflare-one" }}
 />
