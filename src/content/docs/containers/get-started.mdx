@@ -49,10 +49,6 @@ The build and push usually take the longest on the first deploy. Subsequent depl
 are faster, because they [reuse cached image layers](https://docs.docker.com/build/cache/).
 
 :::note
-If you are running Cloudflare WARP or a VPN that performs TLS inspection, HTTPS requests during the Docker build may fail with SSL or certificate errors. You can resolve this by disabling WARP or your VPN while deploying, or by adding the certificate to your build context. Refer to [SSL errors with Cloudflare WARP or a VPN](/containers/local-dev/#ssl-errors-with-cloudflare-warp-or-a-vpn) for details.
-:::
-
-:::note
 After you deploy your Worker for the first time, you will need to wait several minutes until
 it is ready to receive requests. Unlike Workers, Containers take a few minutes to be provisioned.
 During this time, requests are sent to the Worker, but calls to the Container will error.
