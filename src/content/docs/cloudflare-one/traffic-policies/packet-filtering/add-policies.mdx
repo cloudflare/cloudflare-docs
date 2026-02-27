@@ -5,24 +5,22 @@ sidebar:
   order: 3
 ---
 
-import { DashButton } from "~/components";
+A root ruleset is the top-level container that holds all your firewall policies. You can check for an existing root ruleset from the dashboard or via the [Account rulesets API](/api/resources/rulesets/methods/list/). If you are a new Magic Transit customer, you may not have a root ruleset created for your account. To view examples for root rulesets, review the [Cloudflare Network Firewall Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/magic_firewall_ruleset).
 
-You can check for an existing root ruleset from the dashboard or via the [Account rulesets API](/api/resources/rulesets/methods/list/). If you are a new Magic Transit customer, you may not have a root ruleset created for your account. To view examples for root rulesets, review the [Cloudflare Network Firewall Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/magic_firewall_ruleset).
-
-By default, you can create a maximum of 200 policies. We recommend you create lists of IP addresses to reference within policies to streamline policy management.
+By default, you can create a maximum of 200 policies. Contact your account team to request a higher limit if needed. We recommend you create lists of IP addresses to reference within policies to streamline policy management.
 
 ## Add a policy
 
 1. In the [Cloudflare One](https://one.dash.cloudflare.com) dashboard, go to **Firewall policies** > **Custom policies**.
 2. Select **Add a policy**.
-3. Fill out the information for your new policy. All existing policies apply to IPv4. You can use a [Managed IP List](/waf/tools/lists/managed-lists/#managed-ip-lists) when populating the **Value**.
+3. Fill out the information for your new policy. All existing policies apply to IPv4 traffic only. You can use a [Managed IP List](/waf/tools/lists/managed-lists/#managed-ip-lists) when populating the **Value**.
 4. When you are done, select **Add new policy**.
 
 ## Create a disabled policy
 
 When you add a new policy, the policy is **Enabled** by default.
 
-To create a **Disabled** policy, follow the steps in [Add a policy](#add-a-policy) above and toggle **Enabled** to off. When a policy is in the disabled state, the policy will not perform the action until is set to **Enabled**.
+To create a **Disabled** policy, follow the steps in [Add a policy](#add-a-policy) above and toggle **Enabled** to off. When a policy is in the disabled state, the policy will not perform the action until it is set to **Enabled**.
 
 To disable an existing policy, from the **Custom policies** tab, set the **Enabled** toggle to off.
 
@@ -44,7 +42,7 @@ Below, you can find examples of how to use the API to perform certain actions.
 
 :::caution[Warning]
 
-The examples on this page all use the `https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets` endpoint. This endpoint is intended to create policies from scratch and **might overwrite existing policies**.
+The examples on this page all use the `https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets` endpoint. This endpoint creates policies from scratch and **will replace all existing policies in the ruleset**.
 
 If you have a ruleset already deployed, consider using the `https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules` endpoint instead.
 
@@ -54,7 +52,7 @@ Refer to [Add a rule to a ruleset](/ruleset-engine/rulesets-api/add-rule/) and [
 
 ### Skip action
 
-The example below blocks all TCP ports, but allows one port (`8080`) by using the skip action.
+A skip action tells the firewall to stop evaluating the current ruleset for matching traffic, effectively allowing it through. Rules in a ruleset evaluate in order from top to bottom. In the example below, the skip rule must appear before the block rule so that matching traffic (port `8080`) is allowed through before the catch-all block applies.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
