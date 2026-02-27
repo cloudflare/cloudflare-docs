@@ -74,11 +74,11 @@ You can identify which data centers handle your traffic by using **Network Analy
 
 1. Go to the **Network Analytics** page.
 
-	<DashButton url="/?to=/:account/network-analytics/all-traffic" />
+	<DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/transport-analytics" />
 
-2. Filter traffic by your source IP addresses to isolate your traffic.
-3. Under **Packets summary**, select the three-dot menu to expand the view options and select **Source data center**.
-4. The data center column shows which Cloudflare data centers are handling your traffic.
+2. Select **Add filter** and filter traffic by your source IP addresses to isolate your traffic.
+3. Under **Packets summary**, select the **Source data center** tab. If the tab is not visible, select the three-dot menu (`...`) to reveal additional view options and select **Source data center**.
+4. Review the per-data-center traffic breakdown to identify which Cloudflare data centers are handling your traffic.
 5. Cross-reference these data centers with the tunnel health status on the [**Connector health** page]({props.checkHealthDashLink}). If tunnels are healthy at the data centers carrying your traffic, a degraded tunnel alert for a different data center is not the cause of your connectivity issue.
 
 ## 2. Correlate with Cloudflare status
