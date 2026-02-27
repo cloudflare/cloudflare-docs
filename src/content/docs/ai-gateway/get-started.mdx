@@ -19,16 +19,16 @@ import CodeSnippets from "~/components/ai-gateway/code-examples.astro";
 
 In this guide, you will learn how to set up and use your first AI Gateway.
 
-## 1. Get your account ID and authentication token
+## Get your account ID and authentication token
 
 Before making requests, you need two things:
 
 1. Your **Account ID** — find it in the [Cloudflare dashboard](/fundamentals/account/find-account-and-zone-ids/).
 2. A **Cloudflare API token** — [create an API token](/fundamentals/api/get-started/create-token/) with `AI Gateway - Read`, `AI Gateway - Edit`, and `Workers AI - Read` permissions.
 
-## 2. Send your first request
+## Send your first request
 
-AI Gateway supports a special gateway ID called `default`. The first time you send an authenticated request to a gateway with the ID `default`, AI Gateway automatically creates it for you. Refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway) for more details.
+AI Gateway can automatically create a gateway for you. When you use `default` as a gateway ID and no gateway with that ID exists in your account, AI Gateway creates it on the first authenticated request. Refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway) for more details.
 
 Use `default` as your gateway ID in the endpoint URL:
 
@@ -60,7 +60,7 @@ You can also create gateways manually with a custom name and configuration throu
 
 </Details>
 
-## 3. Authenticate with your AI provider
+## Provider authentication
 
 Authenticate with your upstream AI provider using one of the following options:
 
@@ -68,7 +68,7 @@ Authenticate with your upstream AI provider using one of the following options:
 - **BYOK (Store Keys):** Store your own provider API Keys with Cloudflare, and AI Gateway will include them at runtime. Refer to [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
 - **Request headers:** Include your provider API Key in the request headers as you normally would (for example, `Authorization: Bearer <OPENAI_API_KEY>`).
 
-## 4. Choose an integration option
+## Integration options
 
 ### Unified API Endpoint
 
