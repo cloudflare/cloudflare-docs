@@ -50,5 +50,8 @@ To connect to your EC2 instance via private IP using the WARP client, refer to t
 <Render
 	file="tunnel/deployment-guides/deploy-aws-firewall"
 	product="cloudflare-one"
-	params={{ product: "tunnel" }}
+	params={{
+		tunnelFirewallURL: "/tunnel/configuration/#required-ports",
+		hostnameAnchor: "#3-publish-an-application",
+	}}
 />
