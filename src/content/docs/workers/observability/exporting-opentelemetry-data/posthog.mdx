@@ -58,7 +58,7 @@ Now you'll create a destination in the Cloudflare dashboard that points to PostH
 3. Configure your logs destination:
    - **Destination Name**: `posthog-logs` (or any descriptive name)
    - **Destination Type**: Select **Logs**
-    - PostHog does not support importing Cloudflare traces at this time.
+     - PostHog does not support importing Cloudflare traces at this time.
    - **OTLP Endpoint**: Your PostHog logs endpoint (e.g., `https://us.i.posthog.com/i/v1/logs` or `https://eu.i.posthog.com/i/v1/logs`)
    - **Custom Headers**: Add the authentication header:
      - Header name: `Authorization`
@@ -73,7 +73,7 @@ With your destination created in the Cloudflare dashboard, update your Worker's 
 
 <WranglerConfig>
 
-```json
+```jsonc
 {
   "observability": {
     "logs": {
