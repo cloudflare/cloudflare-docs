@@ -38,7 +38,7 @@ cloudflare-docs/
 │   └── fetch-skills.ts     # Downloads skills.tar.gz from middlecache, extracts to skills/
 ├── skills/                 # Agent Skills served at /.well-known/skills/ — GENERATED, do not edit
 │                           # Fetched from https://middlecache.ced.cloudflare.com/v1/cloudflare-skills/skills.tar.gz
-│                           # by bin/fetch-skills.js, which runs automatically via prebuild/predev hooks.
+│                           # by bin/fetch-skills.ts, which runs automatically via prebuild/predev hooks.
 │                           # skills/ is in .gitignore and is NOT committed to the repository.
 ├── astro.config.ts         # Astro + Starlight configuration
 ├── ec.config.mjs           # Expressive Code (syntax highlighting) configuration
