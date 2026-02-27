@@ -4,7 +4,7 @@ url: set-up-access-policies
 title: Set up Cloudflare Access policies for your tunnel
 description: "Learn how to set up access policies using Cloudflare Access to verify the identity of every user."
 products:
-  - access, tunnel
+  - access, cloudflare-tunnel
 pcx_content_type: video
 thumbnail:
   url: https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/263d599b-8576-4be3-933c-3b0dd54c0a00/public
