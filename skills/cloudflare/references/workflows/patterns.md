@@ -5,12 +5,12 @@
 ```typescript
 export class ImageProcessingWorkflow extends WorkflowEntrypoint<Env, Params> {
   async run(event, step) {
-    const imageData = await step.do('fetch', async () => (await this.env.BUCKET.get(event.params.imageKey)).arrayBuffer());
+    const imageData = await step.do('fetch', async () => (await this.env.BUCKET.get(event.payload.imageKey)).arrayBuffer());
     const description = await step.do('generate description', async () => 
       await this.env.AI.run('@cf/llava-hf/llava-1.5-7b-hf', {image: Array.from(new Uint8Array(imageData)), prompt: 'Describe this image', max_tokens: 50})
     );
     await step.waitForEvent('await approval', { event: 'approved', timeout: '24h' });
-    await step.do('publish', async () => await this.env.BUCKET.put(`public/${event.params.imageKey}`, imageData));
+    await step.do('publish', async () => await this.env.BUCKET.put(`public/${event.payload.imageKey}`, imageData));
   }
 }
 ```
@@ -20,13 +20,13 @@ export class ImageProcessingWorkflow extends WorkflowEntrypoint<Env, Params> {
 ```typescript
 export class UserLifecycleWorkflow extends WorkflowEntrypoint<Env, Params> {
   async run(event, step) {
-    await step.do('welcome email', async () => await sendEmail(event.params.email, 'Welcome!'));
+    await step.do('welcome email', async () => await sendEmail(event.payload.email, 'Welcome!'));
     await step.sleep('trial period', '7 days');
     const hasConverted = await step.do('check conversion', async () => {
-      const user = await this.env.DB.prepare('SELECT subscription_status FROM users WHERE id = ?').bind(event.params.userId).first();
+      const user = await this.env.DB.prepare('SELECT subscription_status FROM users WHERE id = ?').bind(event.payload.userId).first();
       return user.subscription_status === 'active';
     });
-    if (!hasConverted) await step.do('trial expiration email', async () => await sendEmail(event.params.email, 'Trial ending'));
+    if (!hasConverted) await step.do('trial expiration email', async () => await sendEmail(event.payload.email, 'Trial ending'));
   }
 }
 ```
@@ -37,7 +37,7 @@ export class UserLifecycleWorkflow extends WorkflowEntrypoint<Env, Params> {
 export class DataPipelineWorkflow extends WorkflowEntrypoint<Env, Params> {
   async run(event, step) {
     const rawData = await step.do('extract', {retries: { limit: 10, delay: '30s', backoff: 'exponential' }}, async () => {
-      const res = await fetch(event.params.sourceUrl);
+      const res = await fetch(event.payload.sourceUrl);
       if (!res.ok) throw new Error('Fetch failed');
       return res.json();
     });
@@ -66,7 +66,7 @@ export class DataPipelineWorkflow extends WorkflowEntrypoint<Env, Params> {
 ```typescript
 export class ApprovalWorkflow extends WorkflowEntrypoint<Env, Params> {
   async run(event, step) {
-    await step.do('create approval', async () => await this.env.DB.prepare('INSERT INTO approvals (id, user_id, status) VALUES (?, ?, ?)').bind(event.instanceId, event.params.userId, 'pending').run());
+    await step.do('create approval', async () => await this.env.DB.prepare('INSERT INTO approvals (id, user_id, status) VALUES (?, ?, ?)').bind(event.instanceId, event.payload.userId, 'pending').run());
     try {
       const approval = await step.waitForEvent<{ approved: boolean }>('wait for approval', { event: 'approval-response', timeout: '48h' });
       if (approval.approved) { await step.do('process approval', async () => {}); } 

@@ -123,7 +123,7 @@ See [frameworks.md](./frameworks.md) for full patterns
 | Response size | Unlimited | Supports streaming |
 | CPU time (standard) | 10ms | Standard Workers |
 | CPU time (unbound) | 30ms | Unbound Workers |
-| Subrequests | 1000 | Per request |
+| Subrequests | 10,000 | Per request |
 | KV reads | 1000 | Per request |
 | KV write size | 25 MB | Maximum per write |
 | Environment size | 5 MB | Total size of env bindings |

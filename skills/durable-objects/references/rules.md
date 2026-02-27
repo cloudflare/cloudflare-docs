@@ -73,7 +73,7 @@ const row = this.ctx.storage.sql.exec<{ count: number }>(
 
 ### Migrations
 
-Use `PRAGMA user_version` for schema versioning:
+**Note:** `PRAGMA user_version` is **not supported** in Durable Objects SQLite storage. Use a `_sql_schema_migrations` table instead:
 
 ```typescript
 constructor(ctx: DurableObjectState, env: Env) {
@@ -81,26 +81,35 @@ constructor(ctx: DurableObjectState, env: Env) {
   ctx.blockConcurrencyWhile(async () => this.migrate());
 }
 
-private async migrate() {
-  const version = this.ctx.storage.sql
-    .exec<{ user_version: number }>("PRAGMA user_version")
-    .one().user_version;
+private migrate() {
+  this.ctx.storage.sql.exec(`
+    CREATE TABLE IF NOT EXISTS _sql_schema_migrations (
+      id INTEGER PRIMARY KEY,
+      applied_at TEXT NOT NULL DEFAULT (datetime('now'))
+    )
+  `);
 
-  if (version < 1) {
+  const currentVersion = this.ctx.storage.sql
+    .exec<{ version: number }>("SELECT COALESCE(MAX(id), 0) as version FROM _sql_schema_migrations")
+    .one().version;
+
+  if (currentVersion < 1) {
     this.ctx.storage.sql.exec(`
       CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY, data TEXT);
       CREATE INDEX IF NOT EXISTS idx_items_data ON items(data);
-      PRAGMA user_version = 1;
+      INSERT INTO _sql_schema_migrations (id) VALUES (1);
     `);
   }
-  if (version < 2) {
+  if (currentVersion < 2) {
     this.ctx.storage.sql.exec(`
       ALTER TABLE items ADD COLUMN created_at INTEGER;
-      PRAGMA user_version = 2;
+      INSERT INTO _sql_schema_migrations (id) VALUES (2);
     `);
   }
 }
 ```
+
+For production apps, consider [`durable-utils`](https://github.com/lambrospetrou/durable-utils#sqlite-schema-migrations) — provides a `SQLSchemaMigrations` class that tracks executed migrations both in memory and in storage. Also see [`@cloudflare/actors` storage utilities](https://github.com/cloudflare/actors/blob/main/packages/storage/src/sql-schema-migrations.ts) — a reference implementation of the same pattern used by the Cloudflare Actors framework.
 
 ### State Types
 

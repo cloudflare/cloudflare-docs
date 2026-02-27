@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 Hyperdrive automatically caches all cacheable queries executed against your database when query caching is turned on, reducing the need to go back to your database (incurring latency and database load) for every query which can be especially useful for popular queries. Query caching is enabled by default.
 
@@ -18,44 +18,86 @@ Besides determining the difference between a `SELECT` and an `INSERT`, Hyperdriv
 For example, a read query that populates the front page of a news site would be cached:
 
 <Tabs>
-	<TabItem label="PostgreSQL">
+<TabItem label="PostgreSQL">
+
 ```sql
--- Cacheable
-SELECT * FROM articles WHERE DATE(published_time) =
-CURRENT_DATE() ORDER BY published_time DESC LIMIT 50
+-- Cacheable: uses a parameterized date value instead of CURRENT_DATE
+SELECT * FROM articles WHERE DATE(published_time) = $1
+ORDER BY published_time DESC LIMIT 50
 ```
+
 </TabItem>
 <TabItem label="MySQL">
+
 ```sql
--- Cacheable
-SELECT * FROM articles WHERE DATE(published_time) =
-CURDATE() ORDER BY published_time DESC LIMIT 50
+-- Cacheable: uses a parameterized date value instead of CURDATE()
+SELECT * FROM articles WHERE DATE(published_time) = ?
+ORDER BY published_time DESC LIMIT 50
 ```
+
 </TabItem>
 </Tabs>
 
-Mutating queries (including `INSERT`, `UPSERT`, or `CREATE TABLE`) and queries that use [functions designated as `volatile` by PostgreSQL](https://www.postgresql.org/docs/current/xfunc-volatility.html) are not cached:
+Mutating queries (including `INSERT`, `UPSERT`, or `CREATE TABLE`) and queries that use functions designated as [`volatile`](https://www.postgresql.org/docs/current/xfunc-volatility.html) or [`stable`](https://www.postgresql.org/docs/current/xfunc-volatility.html) by PostgreSQL are not cached:
 
 <Tabs>
   <TabItem label="PostgreSQL">
     ```sql
-    -- Not cached
+    -- Not cached: mutating queries
     INSERT INTO users(id, name, email) VALUES(555, 'Matt', 'hello@example.com');
 
+    -- Not cached: LASTVAL() is a volatile function
     SELECT LASTVAL(), * FROM articles LIMIT 50;
+
+    -- Not cached: NOW() is a stable function
+    SELECT * FROM events WHERE created_at > NOW() - INTERVAL '1 hour';
     ```
 
   </TabItem>
   <TabItem label="MySQL">
     ```sql
-    -- Not cached
+    -- Not cached: mutating queries
     INSERT INTO users(id, name, email) VALUES(555, 'Thomas', 'hello@example.com');
 
+    -- Not cached: LAST_INSERT_ID() is a volatile function
     SELECT LAST_INSERT_ID(), * FROM articles LIMIT 50;
+
+    -- Not cached: NOW() returns a non-deterministic value
+    SELECT * FROM events WHERE created_at > NOW() - INTERVAL 1 HOUR;
     ```
 
   </TabItem>
 </Tabs>
+
+Common PostgreSQL functions that are **not cacheable** include:
+
+| Function            | PostgreSQL volatility category | Cached |
+| ------------------- | ------------------------------ | ------ |
+| `NOW()`             | STABLE                         | No     |
+| `CURRENT_TIMESTAMP` | STABLE                         | No     |
+| `CURRENT_DATE`      | STABLE                         | No     |
+| `CURRENT_TIME`      | STABLE                         | No     |
+| `LOCALTIME`         | STABLE                         | No     |
+| `LOCALTIMESTAMP`    | STABLE                         | No     |
+| `TIMEOFDAY()`       | VOLATILE                       | No     |
+| `RANDOM()`          | VOLATILE                       | No     |
+| `LASTVAL()`         | VOLATILE                       | No     |
+| `TXID_CURRENT()`    | STABLE                         | No     |
+
+Only functions designated as `IMMUTABLE` by PostgreSQL (functions whose return value never changes for the same inputs) are compatible with Hyperdrive caching. If your query uses a `STABLE` or `VOLATILE` function, move the function call to your application code and pass the resulting value as a query parameter instead.
+
+:::caution[Function detection is text-based]
+Hyperdrive uses text-based pattern matching to detect uncacheable functions in your queries. This means that even references to function names inside SQL comments will cause the query to be marked as uncacheable.
+
+For example, the following query would **not** be cached because `NOW()` appears in the comment:
+
+```sql
+-- We removed NOW() to keep this query cacheable
+SELECT * FROM api_keys WHERE hash = $1 AND deleted = false;
+```
+
+Avoid referencing uncacheable function names anywhere in your query text, including comments.
+:::
 
 ## Default cache settings
 
@@ -129,24 +171,27 @@ export default {
 
 The Wrangler configuration remains the same both for PostgreSQL and MySQL.
 
-```jsonc title="wrangler.jsonc"
+<WranglerConfig>
+
+```jsonc
+{
+	"hyperdrive": [
 		{
-			// Rest of file
-			"hyperdrive": [
-				{
-					"binding": "HYPERDRIVE",
-					"id": "<YOUR_HYPERDRIVE_CACHE_ENABLED_CONFIGURATION_ID>"
-				},
-				{
-					"binding": "HYPERDRIVE_CACHE_DISABLED",
-					"id": "<YOUR_HYPERDRIVE_CACHE_DISABLED_CONFIGURATION_ID>"
-				}
-			]
-		}
-		```
+			"binding": "HYPERDRIVE",
+			"id": "<YOUR_HYPERDRIVE_CACHE_ENABLED_CONFIGURATION_ID>",
+		},
+		{
+			"binding": "HYPERDRIVE_CACHE_DISABLED",
+			"id": "<YOUR_HYPERDRIVE_CACHE_DISABLED_CONFIGURATION_ID>",
+		},
+	],
+}
+```
+
+</WranglerConfig>
 
 ## Next steps
 
-- Learn more about [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/).
-- Learn how to [Connect to PostgreSQL](/hyperdrive/examples/connect-to-postgres/) from Hyperdrive.
-- Review [Troubleshooting common issues](/hyperdrive/observability/troubleshooting/) when connecting a database to Hyperdrive.
+- For more information, refer to [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/).
+- To connect to PostgreSQL, refer to [Connect to PostgreSQL](/hyperdrive/examples/connect-to-postgres/).
+- For troubleshooting guidance, refer to [Troubleshoot and debug](/hyperdrive/observability/troubleshooting/).

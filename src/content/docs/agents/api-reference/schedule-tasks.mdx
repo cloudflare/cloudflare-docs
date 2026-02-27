@@ -277,7 +277,7 @@ Retrieve a scheduled task by its ID:
 <TypeScriptExample>
 
 ```ts
-const schedule = await this.getSchedule(scheduleId);
+const schedule = this.getSchedule(scheduleId);
 
 if (schedule) {
 	console.log(
@@ -668,7 +668,8 @@ Use Workflows when:
 async schedule<T>(
   when: Date | string | number,
   callback: keyof this,
-  payload?: T
+  payload?: T,
+  options?: { retry?: RetryOptions }
 ): Promise<Schedule<T>>
 ```
 
@@ -679,6 +680,7 @@ Schedule a task for future execution.
 - `when` - When to execute: `number` (seconds delay), `Date` (specific time), or `string` (cron expression)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details.
 
 **Returns:** A `Schedule` object with the task details
 
@@ -694,7 +696,8 @@ Tasks that set a callback for a method that does not exist will throw an excepti
 async scheduleEvery<T>(
   intervalSeconds: number,
   callback: keyof this,
-  payload?: T
+  payload?: T,
+  options?: { retry?: RetryOptions }
 ): Promise<Schedule<T>>
 ```
 
@@ -705,6 +708,7 @@ Schedule a task to run repeatedly at a fixed interval.
 - `intervalSeconds` - Number of seconds between executions (must be greater than 0)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details.
 
 **Returns:** A `Schedule` object with `type: "interval"`
 

@@ -143,7 +143,7 @@ const secureSocket = socket.startTls();
 
 ## Handle errors
 
-To handle errors when creating a new TCP socket, reading from a socket, or writing to a socket, wrap these calls inside [`try/catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) statement blocks. The following example opens a connection to Google.com, initiates a HTTP request, and returns the response. If this fails and throws an exception, it returns a `500` response:
+To handle errors when creating a new TCP socket, reading from a socket, or writing to a socket, wrap these calls inside [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) statement blocks. The following example opens a connection to Google.com, initiates a HTTP request, and returns the response. If this fails and throws an exception, it returns a [`500`](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-500/) response:
 
 ```typescript
 import { connect } from 'cloudflare:sockets';

@@ -144,6 +144,7 @@ export default defineConfig({
 									"/http/resources/**",
 									"/llms.txt",
 									"/llms-full.txt",
+									"**/llms.txt",
 									"{props.*}",
 									"/",
 									"/glossary/",
@@ -160,6 +161,7 @@ export default defineConfig({
 									"/style-guide/index.md",
 									"/style-guide/fixtures/markdown/index.md",
 									"/videos/**",
+									"/search/**",
 								],
 							}),
 						]

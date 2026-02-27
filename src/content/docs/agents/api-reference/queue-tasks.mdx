@@ -84,7 +84,7 @@ dequeue(id: string): void
 
 ```ts
 // Remove a specific task
-await agent.dequeue("abc123def");
+agent.dequeue("abc123def");
 ```
 
 </TypeScriptExample>
@@ -103,7 +103,7 @@ dequeueAll(): void
 
 ```ts
 // Clear the entire queue
-await agent.dequeueAll();
+agent.dequeueAll();
 ```
 
 </TypeScriptExample>
@@ -126,7 +126,7 @@ dequeueAllByCallback(callback: string): void
 
 ```ts
 // Remove all email processing tasks
-await agent.dequeueAllByCallback("processEmail");
+agent.dequeueAllByCallback("processEmail");
 ```
 
 </TypeScriptExample>
@@ -152,7 +152,7 @@ The payload is automatically parsed from JSON before being returned.
 <TypeScriptExample>
 
 ```ts
-const task = await agent.getQueue("abc123def");
+const task = agent.getQueue("abc123def");
 if (task) {
 	console.log(`Task callback: ${task.callback}`);
 	console.log(`Task payload:`, task.payload);
@@ -184,7 +184,7 @@ This method fetches all queue items and filters them in memory by parsing each p
 
 ```ts
 // Find all tasks for a specific user
-const userTasks = await agent.getQueues("userId", "12345");
+const userTasks = agent.getQueues("userId", "12345");
 ```
 
 </TypeScriptExample>

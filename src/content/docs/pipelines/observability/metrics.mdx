@@ -13,7 +13,7 @@ The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/
 
 ### Operator metrics
 
-Pipelines export the below metrics within the `AccountPipelinesOperatorAdaptiveGroups` dataset. These metrics track data read and processed by pipeline operators.
+Pipelines export the below metrics within the `pipelinesOperatorAdaptiveGroups` dataset. These metrics track data read and processed by pipeline operators.
 
 | Metric        | GraphQL Field Name | Description                                                                                               |
 | ------------- | ------------------ | --------------------------------------------------------------------------------------------------------- |
@@ -23,7 +23,7 @@ Pipelines export the below metrics within the `AccountPipelinesOperatorAdaptiveG
 
 For a detailed breakdown of why events were dropped (including specific error types like `missing_field`, `type_mismatch`, `parse_failure`, and `null_value`), refer to [User error metrics](#user-error-metrics).
 
-The `AccountPipelinesOperatorAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+The `pipelinesOperatorAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
 
 - `pipelineId` - ID of the pipeline
 - `streamId` - ID of the source stream
@@ -33,7 +33,7 @@ The `AccountPipelinesOperatorAdaptiveGroups` dataset provides the following dime
 
 ### Sink metrics
 
-Pipelines export the below metrics within the `AccountPipelinesSinkAdaptiveGroups` dataset. These metrics track data delivery to sinks.
+Pipelines export the below metrics within the `pipelinesSinkAdaptiveGroups` dataset. These metrics track data delivery to sinks.
 
 | Metric                     | GraphQL Field Name         | Description                                                  |
 | -------------------------- | -------------------------- | ------------------------------------------------------------ |
@@ -43,7 +43,7 @@ Pipelines export the below metrics within the `AccountPipelinesSinkAdaptiveGroup
 | Row Groups Written         | `rowGroupsWritten`         | Number of row groups written (for Parquet files)             |
 | Uncompressed Bytes Written | `uncompressedBytesWritten` | Total number of bytes written before compression             |
 
-The `AccountPipelinesSinkAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+The `pipelinesSinkAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
 
 - `pipelineId` - ID of the pipeline
 - `sinkId` - ID of the destination sink
@@ -53,13 +53,13 @@ The `AccountPipelinesSinkAdaptiveGroups` dataset provides the following dimensio
 
 ### User error metrics
 
-Pipelines track events that are dropped during processing due to deserialization errors. When a structured stream receives events that do not match its defined schema, those events are accepted during ingestion but dropped during processing. The `AccountPipelinesUserErrorsAdaptiveGroups` dataset provides visibility into these dropped events, telling you which events were dropped and why. You can explore the full schema of this dataset using GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
+Pipelines track events that are dropped during processing due to deserialization errors. When a structured stream receives events that do not match its defined schema, those events are accepted during ingestion but dropped during processing. The `pipelinesUserErrorsAdaptiveGroups` dataset provides visibility into these dropped events, telling you which events were dropped and why. You can explore the full schema of this dataset using GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
 
 | Metric | GraphQL Field Name | Description                             |
 | ------ | ------------------ | --------------------------------------- |
 | Count  | `count`            | Number of events that failed validation |
 
-The `AccountPipelinesUserErrorsAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+The `pipelinesUserErrorsAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
 
 - `pipelineId` - ID of the pipeline
 - `errorFamily` - Category of the error (for example, `deserialization`)
@@ -112,7 +112,7 @@ query PipelineOperatorMetrics(
 ) {
 	viewer {
 		accounts(filter: { accountTag: $accountTag }) {
-			accountPipelinesOperatorAdaptiveGroups(
+			pipelinesOperatorAdaptiveGroups(
 				limit: 10000
 				filter: {
 					pipelineId: $pipelineId
@@ -146,7 +146,7 @@ query PipelineSinkMetrics(
 ) {
 	viewer {
 		accounts(filter: { accountTag: $accountTag }) {
-			accountPipelinesSinkAdaptiveGroups(
+			pipelinesSinkAdaptiveGroups(
 				limit: 10000
 				filter: {
 					pipelineId: $pipelineId
