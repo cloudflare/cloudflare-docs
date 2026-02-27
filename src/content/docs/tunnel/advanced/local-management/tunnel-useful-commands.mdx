@@ -5,33 +5,18 @@ sidebar:
   order: 6
 ---
 
-This page lists the most commonly used commands for managing local tunnels.
+import { Render } from "~/components";
 
-To view all CLI commands, refer to the CLI help text in your terminal. For example, to view all options for the `cloudflared tunnel` subcommand, type `cloudflared tunnel help`.
-
-## Manage tunnels
-
-| Command                                                                   | Description                                                                                                                                                                |
-| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `cloudflared tunnel login`                                                | Prompts a browser window where you can authenticate your tunnel to your Cloudflare account.                                                                                |
-| `cloudflared tunnel list`                                                 | Displays all active tunnels, their creation time, and associated connections. Use the `-d` flag to include deleted tunnels.                                                |
-| `cloudflared tunnel create <NAME or UUID>`                                | Creates a tunnel, registers it with the Cloudflare edge, and generates a credential file to run this tunnel.                                                               |
-| `cloudflared tunnel route dns <NAME or UUID> <hostname>`                  | Creates a DNS CNAME record that points to the tunnel.                                                                                                                      |
-| `cloudflared tunnel --config path/config.yaml run <NAME or UUID>`         | Runs a tunnel, creating highly available connections between your server and the Cloudflare edge.                                                                          |
-| `cloudflared tunnel info <NAME or UUID>`                                  | Displays details about the active connectors for a given tunnel.                                                                                                           |
-| `cloudflared tunnel cleanup <NAME or UUID>`                               | Deletes connections for tunnels with the given UUIDs or names. This is useful if `cloudflared` was not shut down gracefully (for example, if a `kill` command was issued). |
-| `cloudflared tunnel cleanup --connector-id <CONNECTOR-ID> <NAME or UUID>` | Disconnects and deletes a [cloudflared replica](/tunnel/configuration/#replicas-and-high-availability) with the given connector ID.                                        |
-| `cloudflared tunnel delete <NAME or UUID>`                                | Deletes tunnels with the given name or UUID. A tunnel cannot be deleted if it has active connections. Use the `-f` flag to delete unconditionally.                         |
-| `cloudflared tail <UUID>`                                                 | Start a session to livestream logs from a specific tunnel. For more information, refer to [Tunnel logs](/tunnel/monitoring/#logs).                                         |
-
-:::note
-For private network routing commands (`tunnel route ip`, `tunnel vnet`), refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
-:::
-
-## Manage `cloudflared`
-
-| Command               | Description                                                                                                                                                                                                       |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `cloudflared update`  | Looks for a new version on the official download server. If a new version exists, updates the agent binary and quits. For more information, refer to [Update cloudflared](/tunnel/downloads/update-cloudflared/). |
-| `cloudflared version` | Prints the `cloudflared` version number and build date.                                                                                                                                                           |
-| `cloudflared help`    | Shows a list of all top-level commands for `cloudflared`.                                                                                                                                                         |
+<Render
+	file="tunnel/locally-managed/useful-commands"
+	product="cloudflare-one"
+	params={{
+		replicasURL: "/tunnel/configuration/#replicas-and-high-availability",
+		logsURL: "/tunnel/monitoring/#logs",
+		updateURL: "/tunnel/downloads/update-cloudflared/",
+		loadBalancerPoolURL:
+			"/tunnel/routing/#add-a-tunnel-to-a-load-balancer-pool",
+		publishedApplicationURL:
+			"/tunnel/other-tunnel-types/local-management/configuration-file/#file-structure-for-published-applications",
+	}}
+/>
