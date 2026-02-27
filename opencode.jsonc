@@ -28,7 +28,7 @@
 						"temperature": 1.0,
 						"top_p": 0.95,
 						"max_tokens": 64000,
-						"parallel_tool_calls": false,
+						"parallel_tool_calls": true,
 					},
 				},
 			},
