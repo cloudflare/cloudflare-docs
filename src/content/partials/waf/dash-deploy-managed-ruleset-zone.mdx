@@ -8,33 +8,7 @@ import { Tabs, TabItem, Steps, DashButton, Markdown } from "~/components";
 import { Image } from "astro:assets";
 import managedRulesTabImg from "~/assets/images/waf/waf-managed-rules-tab.png";
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-{/* prettier-ignore-start */}
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
-2. Go to **Security** > **WAF** > **Managed rules** tab.
-
-3. { props.rulesetName ? (
-     <>
-       <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to <strong>{props.rulesetName}</strong>.</p>
-     </>
-   ) : (
-     <>
-       <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to a managed ruleset.</p>
-
-       <Image src={managedRulesTabImg} alt="Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There are two managed rulesets already deployed, and one managed ruleset available for deployment." />
-     </>
-   )}
-
-{/* prettier-ignore-end */}
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -62,6 +36,32 @@ import managedRulesTabImg from "~/assets/images/waf/waf-managed-rules-tab.png";
 4. Review the deployment settings. Edit the scope, if necessary, to apply the ruleset to a subset of the incoming requests, or configure any custom settings (also known as overrides).
 
 5. Select **Save**.
+
+{/* prettier-ignore-end */}
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+{/* prettier-ignore-start */}
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **Security** > **WAF** > **Managed rules** tab.
+
+3. { props.rulesetName ? (
+     <>
+       <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to <strong>{props.rulesetName}</strong>.</p>
+     </>
+   ) : (
+     <>
+       <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to a managed ruleset.</p>
+
+       <Image src={managedRulesTabImg} alt="Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There are two managed rulesets already deployed, and one managed ruleset available for deployment." />
+     </>
+   )}
 
 {/* prettier-ignore-end */}
 

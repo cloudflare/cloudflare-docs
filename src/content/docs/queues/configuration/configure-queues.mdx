@@ -51,10 +51,17 @@ To produce to a queue, set up a binding in your Wrangler file. These options sho
 
 <WranglerConfig>
 
-```toml
-[[queues.producers]]
-  queue = "my-queue"
-  binding = "MY_QUEUE"
+```jsonc
+{
+	"queues": {
+		"producers": [
+			{
+				"queue": "my-queue",
+				"binding": "MY_QUEUE"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -79,13 +86,20 @@ To consume messages from one or more queues, set up a binding in your Wrangler f
 
 <WranglerConfig>
 
-```toml
-[[queues.consumers]]
-  queue = "my-queue"
-  max_batch_size = 10
-  max_batch_timeout = 30
-  max_retries = 10
-  dead_letter_queue = "my-queue-dlq"
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				"queue": "my-queue",
+				"max_batch_size": 10,
+				"max_batch_timeout": 30,
+				"max_retries": 10,
+				"dead_letter_queue": "my-queue-dlq"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>

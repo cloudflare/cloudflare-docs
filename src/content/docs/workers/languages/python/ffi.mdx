@@ -27,11 +27,16 @@ For example, to access a [KV](/kv) namespace from a Python Worker, you would dec
 
 <WranglerConfig>
 
-```toml
-main = "./src/index.py"
-kv_namespaces = [
-  { binding = "FOO", id = "<YOUR_KV_NAMESPACE_ID>" }
-]
+```jsonc
+{
+	"main": "./src/index.py",
+	"kv_namespaces": [
+		{
+			"binding": "FOO",
+			"id": "<YOUR_KV_NAMESPACE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

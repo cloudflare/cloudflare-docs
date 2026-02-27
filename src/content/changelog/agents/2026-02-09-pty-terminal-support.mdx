@@ -1,0 +1,66 @@
+---
+title: Interactive browser terminals in Sandboxes
+description: The Sandbox SDK now supports proxying WebSocket connections to container PTY sessions, enabling browser-based terminal UIs with output buffering, reconnection, and multiple isolated terminals per sandbox.
+products:
+  - agents
+date: 2026-02-09
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [Sandbox SDK](https://github.com/cloudflare/sandbox-sdk) now supports PTY (pseudo-terminal) passthrough, enabling browser-based terminal UIs to connect to sandbox shells via WebSocket.
+
+## `sandbox.terminal(request)`
+
+The new `terminal()` method proxies a WebSocket upgrade to the container's PTY endpoint, with output buffering for replay on reconnect.
+
+<TypeScriptExample>
+
+```ts
+// Worker: proxy WebSocket to container terminal
+return sandbox.terminal(request, { cols: 80, rows: 24 });
+```
+
+</TypeScriptExample>
+
+## Multiple terminals per sandbox
+
+Each session can have its own terminal with an isolated working directory and environment, so users can run separate shells side-by-side in the same container.
+
+<TypeScriptExample>
+
+```ts
+// Multiple isolated terminals in the same sandbox
+const dev = await sandbox.getSession("dev");
+return dev.terminal(request);
+```
+
+</TypeScriptExample>
+
+## xterm.js addon
+
+The new `@cloudflare/sandbox/xterm` export provides a `SandboxAddon` for [xterm.js](https://xtermjs.org/) with automatic reconnection (exponential backoff + jitter), buffered output replay, and resize forwarding.
+
+<TypeScriptExample>
+
+```ts
+import { SandboxAddon } from "@cloudflare/sandbox/xterm";
+
+const addon = new SandboxAddon({
+	getWebSocketUrl: ({ sandboxId, origin }) =>
+		`${origin}/ws/terminal?id=${sandboxId}`,
+	onStateChange: (state, error) => updateUI(state),
+});
+terminal.loadAddon(addon);
+addon.connect({ sandboxId: "my-sandbox" });
+```
+
+</TypeScriptExample>
+
+### Upgrade
+
+To update to the latest version:
+
+```sh
+npm i @cloudflare/sandbox@latest
+```

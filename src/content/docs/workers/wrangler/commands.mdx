@@ -50,6 +50,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler's authorization for accessing your account.
+- [`auth token`](#auth-token) - Retrieve your current authentication token or credentials.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`versions`](#versions) - Retrieve details for recent versions.
 - [`deployments`](#deployments) - Retrieve details for recent deployments.
@@ -261,6 +262,10 @@ None of the options for this command are required. Many of these options can be 
 
 Deploy your Worker to Cloudflare.
 
+When you run `wrangler deploy` in a project directory without a Wrangler configuration file, Wrangler will [automatically detect your framework](/workers/framework-guides/automatic-configuration/) and configure your project for Cloudflare Workers. This command will prompt you to confirm the detected settings before applying changes. Confirm that you would like to proceed, and your project will be configured and deployed.
+
+To configure your project without deploying, use [`wrangler setup`](#setup) instead.
+
 ```txt
 wrangler deploy [<PATH>] [OPTIONS]
 ```
@@ -340,6 +345,12 @@ None of the options for this command are required. Also, many can be set in your
   - Defaults to `gradual`, where the default rollout is 10% then 100% of instances.
 - `--strict` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Turns on strict mode for the deployment command, meaning that the command will be more defensive and prevent deployments which could introduce potential issues. In particular, this mode prevents deployments if the deployment would potentially override remote settings in non-interactive environments.
+- `--tag` <Type text="string" /> <MetaInfo text="optional" />
+  - A tag for this Worker version. Matches the behavior of `wrangler versions upload --tag`.
+- `--message` <Type text="string" /> <MetaInfo text="optional" />
+  - A descriptive message for this Worker version and deployment. Matches the behavior of `wrangler versions upload --message`. The message is also applied to the deployment.
+- `--yes` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Skip confirmation prompts and run [automatic project configuration](/workers/framework-guides/automatic-configuration/) non-interactively using detected settings. Only applicable when no Wrangler configuration file exists in your project.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -381,6 +392,8 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 ---
 
 <WranglerCommand command="setup" headingLevel={2} />
+
+This command configures your project for Cloudflare Workers without deploying. It performs the same [automatic project configuration](/workers/framework-guides/automatic-configuration/) as `wrangler deploy`, but does not deploy. This is useful when you want to review the generated configuration before deploying.
 
 ---
 
@@ -723,6 +736,43 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 
 ---
 
+## `auth`
+
+### `auth token`
+
+Retrieve your current authentication token or credentials for use with other tools and scripts.
+
+```txt
+wrangler auth token [OPTIONS]
+```
+
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON with token type information. This also enables retrieving API key/email credentials.
+
+The command returns whichever authentication method is currently configured, in the following order of precedence:
+- API token from `CLOUDFLARE_API_TOKEN` environment variable
+- API key/email from `CLOUDFLARE_API_KEY` and `CLOUDFLARE_EMAIL` environment variables (requires `--json` flag, since this method uses two values instead of a single token)
+- OAuth token from `wrangler login` (automatically refreshed if expired)
+
+When using `--json`, the output includes the token type:
+
+```jsonc
+// API token
+{ "type": "api_token", "token": "..." }
+
+// OAuth token
+{ "type": "oauth", "token": "..." }
+
+// API key/email (only available with --json)
+{ "type": "api_key", "key": "...", "email": "..." }
+```
+
+An error is returned if no authentication method is available, or if API key/email is configured without `--json`.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+---
+
 <WranglerCommand command="whoami" />
 
 ---
@@ -858,10 +908,15 @@ You can then add this certificate as a [binding](/workers/runtime-apis/bindings/
 
 <WranglerConfig>
 
-```toml
-mtls_certificates = [
-  { binding = "MY_CERT", certificate_id = "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d" }
-]
+```jsonc
+{
+	"mtls_certificates": [
+		{
+			"binding": "MY_CERT",
+			"certificate_id": "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

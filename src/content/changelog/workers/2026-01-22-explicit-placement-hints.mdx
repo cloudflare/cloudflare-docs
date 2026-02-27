@@ -10,7 +10,7 @@ import { WranglerConfig } from "~/components";
 
 You can now configure Workers to run close to infrastructure in legacy cloud regions to minimize latency to existing services and databases. This is most useful when your Worker makes multiple round trips.
 
-To [set a placement hint](/workers/configuration/smart-placement/#use-placement-hints), set the `placement.region` property in your Wrangler configuration file:
+To [set a placement hint](/workers/configuration/placement/#use-placement-hints), set the `placement.region` property in your Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -52,7 +52,7 @@ If your existing infrastructure is not in these cloud providers, expose it to pl
 
 </WranglerConfig>
 
-This is an extension of [Smart Placement](/workers/configuration/smart-placement/#use-smart-placement), which automatically places your Workers closer to back-end APIs based on measured latency. When you do not know the location of your back-end APIs or have multiple back-end APIs, set `mode: "smart"`:
+This is an extension of [Smart Placement](/workers/configuration/placement/#use-smart-placement), which automatically places your Workers closer to back-end APIs based on measured latency. When you do not know the location of your back-end APIs or have multiple back-end APIs, set `mode: "smart"`:
 
 <WranglerConfig>
 

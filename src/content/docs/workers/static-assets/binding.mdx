@@ -30,10 +30,15 @@ The folder of static assets to be served. For many frameworks, this is the `./pu
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-worker"
-compatibility_date = "2024-09-19"
-assets = { directory = "./public/" }
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "./public/",
+	},
+}
 ```
 
 </WranglerConfig>
@@ -67,16 +72,20 @@ Controls whether to invoke the Worker script regardless of a request which would
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-worker"
-compatibility_date = "2024-09-19"
-main = "src/index.ts"
- # The following configuration unconditionally invokes the Worker script at
- # `src/index.ts`, which can programatically fetch assets via the ASSETS binding
-[assets]
-directory = "./public/"
-binding = "ASSETS"
-run_worker_first = true
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"main": "src/index.ts",
+	// The following configuration unconditionally invokes the Worker script at
+	// `src/index.ts`, which can programatically fetch assets via the ASSETS binding
+	"assets": {
+		"directory": "./public/",
+		"binding": "ASSETS",
+		"run_worker_first": true,
+	},
+}
 ```
 
 </WranglerConfig>
@@ -111,20 +120,25 @@ The order in which the patterns are listed is not significant.
 
 In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
 
+Common uses for `run_worker_first` include authentication checks, A/B testing, and [injecting bootstrap data into your SPA shell](/workers/examples/spa-shell/).
+
 ## `binding`
 
 Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-worker"
-main = "./src/index.js"
-compatibility_date = "2024-09-19"
-
-[assets]
-directory = "./public/"
-binding = "ASSETS"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"main": "./src/index.js",
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "./public/",
+		"binding": "ASSETS",
+	},
+}
 ```
 
 </WranglerConfig>
@@ -145,7 +159,11 @@ In the example above, assets would be available through `env.ASSETS`.
 
 **Example**
 
-Your dynamic code can make new, or forward incoming requests to your project's static assets using the assets binding. For example, `env.ASSETS.fetch(request)`, `env.ASSETS.fetch(new URL('https://assets.local/my-file'))` or `env.ASSETS.fetch('https://assets.local/my-file')`.
+Your dynamic code can make new, or forward incoming requests to your project's static assets using the assets binding. For example, `env.ASSETS.fetch(request)`, `env.ASSETS.fetch(new URL('https://assets.local/my-file'))` or `env.ASSETS.fetch('https://assets.local/my-file')`. The hostname used in the URL (for example, `assets.local`) is not meaningful — any valid hostname will work. Only the URL pathname is used to match assets.
+
+:::note
+If you need to fetch assets from within an [RPC method](/workers/runtime-apis/rpc/#fetching-static-assets) (where there is no incoming `request`), construct a URL using any hostname — for example, `this.env.ASSETS.fetch(new Request('https://assets.local/path/to/asset'))`.
+:::
 
 Take the following example that configures a Worker script to return a response under all requests headed for `/api/`. Otherwise, the Worker script will pass the incoming request through to the asset binding. In this case, because a Worker script is only invoked when the requested route has not matched any static assets, this will always evaluate [`not_found_handling`](/workers/static-assets/#routing-behavior) behavior.
 
@@ -194,7 +212,7 @@ For the various static asset routing configuration options, refer to [Routing](/
 
 ## Smart Placement
 
-[Smart Placement](/workers/configuration/smart-placement/) can be used to place a Worker's code close to your back-end infrastructure. Smart Placement will only have an effect if you specified a `main`, pointing to your Worker code.
+[Smart Placement](/workers/configuration/placement/) can be used to place a Worker's code close to your back-end infrastructure. Smart Placement will only have an effect if you specified a `main`, pointing to your Worker code.
 
 ### Smart Placement with Worker Code First
 
@@ -202,7 +220,7 @@ If you desire to run your [Worker code ahead of assets](/workers/static-assets/r
 
 Use Smart Placement with `run_worker_first=true` when you need to integrate with other backend services, authenticate requests before serving any assets, or if your want to make modifications to your assets before serving them.
 
-If you want some assets served as quickly as possible to the user, but others to be served behind a smart-placed Worker, considering splitting your app into multiple Workers and [using service bindings to connect them](/workers/configuration/smart-placement/#best-practices).
+If you want some assets served as quickly as possible to the user, but others to be served behind a smart-placed Worker, considering splitting your app into multiple Workers and [using service bindings to connect them](/workers/configuration/placement/#multiple-workers).
 
 ### Smart Placement with Assets First
 

@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-clock
+description: API reference for rtk-clock component (Web Components (HTML) Library)
+---
+Shows the time elapsed in a meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-clock></rtk-clock>
+```
+
+### With Properties
+
+```html
+<rtk-clock
+ size="md">
+</rtk-clock>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-clock");
+
+  el.meeting= meeting
+</script>
+```

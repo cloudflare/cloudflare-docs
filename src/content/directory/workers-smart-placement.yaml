@@ -1,0 +1,12 @@
+id: dPEFvo
+name: workers-smart-placement
+
+entry:
+  title: Placement
+  url: /workers/configuration/smart-placement/
+  show: false
+
+meta:
+  title: Cloudflare Placement docs
+  description: Placement lets you control where your Worker runs, reducing latency by running it closer to your back-end infrastructure rather than the end user.
+  author: "@cloudflare"

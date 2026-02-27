@@ -1,0 +1,47 @@
+---
+pcx_content_type: navigation
+title: rtk-meeting
+description: API reference for rtk-meeting component (Angular Library)
+---
+A single component which renders an entire meeting UI.
+ It loads your preset and renders the UI based on it.
+ With this component, you don't have to handle all the states,
+ dialogs and other smaller bits of managing the application.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `applyDesignSystem` | `boolean` | ✅ | - | Whether to apply the design system on the document root from config |
+| `config` | `UIConfig` | ✅ | - | UI Config |
+| `gridLayout` | `GridLayout1` | ✅ | - | Grid layout |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `leaveOnUnmount` | `boolean` | ✅ | - | Whether participant should leave when this component gets unmounted |
+| `loadConfigFromPreset` | `boolean` | ✅ | - | Whether to load config from preset |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `mode` | `MeetingMode` | ✅ | - | Fill type |
+| `overrides` | `Overrides` | ❌ | `defaultOverrides` | UI Kit Overrides |
+| `showSetupScreen` | `boolean` | ✅ | - | Whether to show setup screen or not |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-meeting></rtk-meeting>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-meeting
+ [applyDesignSystem]="true"
+ [config]="defaultUiConfig"
+ [gridLayout]="gridlayout1">
+</rtk-meeting>
+```
+

@@ -1,0 +1,12 @@
+id: tr7etC
+name: owasp-ruleset
+
+entry:
+  title: Cloudflare OWASP Core Ruleset
+  url: /waf/managed-rules/reference/owasp-core-ruleset/
+  show: false
+
+meta:
+  title: Cloudflare OWASP Core Ruleset docs
+  description: The Cloudflare OWASP Core Ruleset is Cloudflare's implementation of the OWASP ModSecurity Core Rule Set, designed to calculate a threat score and execute an action based on that score.
+  author: "@cloudflare"

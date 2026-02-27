@@ -7,19 +7,25 @@ sidebar:
 
 import { Tabs, TabItem } from "~/components";
 
-To manage your [security.txt](https://en.wikipedia.org/wiki/Security.txt) file via the Cloudflare dashboard:
+You can manage your [security.txt](https://en.wikipedia.org/wiki/Security.txt) file via the dashboard or the [API](/api/resources/security_txt/).
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+:::note
+When using the API, the preferred languages field name is `preferred_languages` (snake_case). For example: `"preferred_languages": "en, de"`.
+:::
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and domain.
-2. Go to **Security** > **Settings**.
-3. Next to **Enable Security.txt**, select **Edit Security.txt**.
+To manage your security.txt file via the Cloudflare dashboard:
 
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Web application exploits**.
 3. Under **Security.txt** > **Configurations**, select the edit icon.
+
+</TabItem> <TabItem label="Old dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and domain.
+2. Go to **Security** > **Settings**.
+3. Next to **Enable Security.txt**, select **Edit Security.txt**.
 
 </TabItem> </Tabs>
 

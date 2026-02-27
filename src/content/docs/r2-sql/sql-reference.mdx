@@ -19,7 +19,7 @@ This page documents the R2 SQL syntax based on the currently supported grammar i
 ## Query Syntax
 
 ```sql
-SELECT column_list | aggregation_function
+SELECT column_list | aggregation_function | approximate_function
 FROM table_name
 WHERE conditions --optional
 [GROUP BY column_list]
@@ -104,7 +104,7 @@ GROUP BY column_list
 
 ### Supported Functions
 
-- **COUNT(*)**: Counts total rows **note**: only `*` is supported
+- **COUNT(\*)**: Counts total rows **note**: only `*` is supported
 - **SUM(column)**: Sums numeric values
 - **AVG(column)**: Calculates average of numeric values
 - **MIN(column)**: Finds minimum value
@@ -138,6 +138,88 @@ SELECT department, COUNT(*) AS total FROM my_namespace.sales_data GROUP BY depar
 
 -- Invalid: COUNT column name
 SELECT COUNT(department) FROM my_namespace.sales_data
+```
+
+---
+
+## Approximate Aggregation Functions
+
+Approximate aggregation functions produce statistically estimated results while using significantly less memory and compute than their exact counterparts. On large datasets, approximate functions can return results orders of magnitude faster than equivalent exact aggregations such as `COUNT(DISTINCT ...)`, typically with an average relative error of only a few percent.
+
+Use approximate functions when you are analyzing large datasets and an approximate result is acceptable — for example, understanding traffic distributions, identifying top values, or estimating cardinality across high-volume tables. Use exact aggregation functions when precise results are required, such as for billing or compliance reporting.
+
+### Syntax
+
+```sql
+SELECT approximate_function(column_name [, ...])
+FROM table_name
+[WHERE conditions]
+[GROUP BY column_list]
+```
+
+### Supported Functions
+
+- **APPROX_PERCENTILE_CONT(column, percentile)**: Uses a t-digests algorithm to return the approximate value at the given percentile. The `percentile` parameter must be between `0.0` and `1.0` inclusive. Works on integer and decimal columns.
+- **APPROX_PERCENTILE_CONT_WITH_WEIGHT(column, weight, percentile)**: Uses a t-digests algorithm to return the approximate percentile weighted by the `weight` column. The `percentile` parameter must be between `0.0` and `1.0` inclusive. Works on integer and decimal columns.
+- **APPROX_MEDIAN(column)**: Uses a t-digests algorithm to return the approximate median value. Equivalent to `APPROX_PERCENTILE_CONT(column, 0.5)`. Works on integer and decimal columns.
+- **APPROX_DISTINCT(column)**: Uses HyperLogLog to return the approximate number of distinct values in a column. Works on any column type.
+- **APPROX_TOP_K(column, k)**: Uses a filtered space-saving algorithm to return the `k` most frequent values in a column along with their approximate counts. The `k` parameter must be a positive integer. Returns a JSON array of `\{"value", "count"\}` objects. Works on string columns.
+
+### Examples
+
+```sql
+-- Approximate percentiles on a numeric column
+SELECT approx_percentile_cont(total_amount, 0.25),
+       approx_percentile_cont(total_amount, 0.5),
+       approx_percentile_cont(total_amount, 0.75)
+FROM my_namespace.sales_data
+
+-- Percentile with GROUP BY
+SELECT department, approx_percentile_cont(total_amount, 0.5)
+FROM my_namespace.sales_data
+GROUP BY department
+
+-- Weighted percentile (rows weighted by quantity)
+SELECT approx_percentile_cont_with_weight(unit_price, quantity, 0.5)
+FROM my_namespace.sales_data
+
+-- Approximate median
+SELECT department, approx_median(total_amount)
+FROM my_namespace.sales_data
+GROUP BY department
+
+-- Approximate distinct count
+SELECT approx_distinct(customer_id)
+FROM my_namespace.sales_data
+
+-- Multiple distinct counts in one query
+SELECT approx_distinct(department),
+       approx_distinct(region),
+       approx_distinct(customer_id)
+FROM my_namespace.sales_data
+
+-- Top-k most frequent values
+SELECT approx_top_k(department, 3)
+FROM my_namespace.sales_data
+
+-- Combine approximate and standard aggregations
+SELECT COUNT(*),
+       SUM(total_amount),
+       AVG(total_amount),
+       approx_percentile_cont(total_amount, 0.5)
+FROM my_namespace.sales_data
+
+-- With WHERE filter
+SELECT approx_median(total_amount),
+       approx_distinct(customer_id)
+FROM my_namespace.sales_data
+WHERE region = 'North'
+
+-- Invalid: percentile out of range
+SELECT approx_percentile_cont(total_amount, 1.5) FROM my_namespace.sales_data
+
+-- Invalid: k must be positive
+SELECT approx_top_k(department, 0) FROM my_namespace.sales_data
 ```
 
 ---

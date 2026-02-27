@@ -25,7 +25,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | HTTP/3 (with QUIC)                         | ⚫️             | ✘                 | ⚫️                        |
 | Image Resizing                             | ✅              | ✅ [^6]           | 🚧 [^1]                    |
 | Load Balancing                             | ✅              | ✅                | 🚧 [^1]                    |
-| Network Error Logging (NEL)                | ⚫️              | ⚫️                 | ✘                         |
+| Network Error Logging (NEL)                | ⚫️             | ⚫️               | ✘                          |
 | Onion Routing                              | ✘               | ✘                 | ✘                          |
 | Orange-to-Orange (O2O)                     | ✘               | ✘                 | ✘                          |
 | Stream Delivery                            | ✅              | ✅                | ✅                         |
@@ -67,12 +67,12 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Cloudflare D1                  | ⚫️             | ⚫️               | 🚧 [^40]                   |
 | Durable Objects                | ⚫️             | ✅ [^7]           | 🚧 [^1]                    |
 | Email Routing                  | ⚫️             | ⚫️               | ✅                         |
-| Firewall for AI                | ✘              | ✘                | ✘                          |
-| Remote MCP Server              | ✅ [^44]        | ✅ [^45]           | 🚧 [^1]                   |
+| Firewall for AI                | ✘               | ✘                 | ✘                          |
+| Remote MCP Server              | ✅ [^44]        | ✅ [^45]          | 🚧 [^1]                    |
 | R2                             | ✅ [^27]        | ✅ [^8]           | ✅ [^28]                   |
 | Smart Placement                | ⚫️             | ✘                 | ✘                          |
 | Stream                         | ⚫️             | ✘                 | 🚧 [^1]                    |
-| Vectorize                      | ⚫️             | ✘                 | ✘                    			 |
+| Vectorize                      | ⚫️             | ✘                 | ✘                          |
 | Workers (deployed on a Zone)   | ✅              | ✅                | 🚧 [^41]                   |
 | Workers AI                     | ⚫️             | ✘                 | ✅                         |
 | Workers KV                     | ⚫️             | ✘                 | ✅ [^34]                   |
@@ -83,15 +83,15 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 ## Network Services
 
-| Product                  | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| ------------------------ | --------------- | ----------------- | -------------------------- |
-| Argo Smart Routing       | ✅              | ✘ [^9]            | ✘ [^10]                    |
-| Static IP/BYOIP          | ⚫️             | ✅ [^26]          | ⚫️                        |
-| Magic Firewall           | ⚫️             | ⚫️               | ✅                         |
-| Magic Network Monitoring | ⚫️             | ⚫️               | 🚧 [^1]                    |
-| Magic Transit            | ⚫️             | ⚫️               | ✅                         |
-| Magic WAN                | ⚫️             | ⚫️               | ✅                         |
-| Spectrum                 | ✅              | ✅ [^42]          | ✅                         |
+| Product                     | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| --------------------------- | --------------- | ----------------- | -------------------------- |
+| Argo Smart Routing          | ✅              | ✘ [^9]            | ✘ [^10]                    |
+| Static IP/BYOIP             | ⚫️             | ✅ [^26]          | ⚫️                        |
+| Cloudflare Network Firewall | ⚫️             | ⚫️               | ✅                         |
+| Network Flow                | ⚫️             | ⚫️               | 🚧 [^1]                    |
+| Magic Transit               | ⚫️             | ⚫️               | ✅                         |
+| Cloudflare WAN              | ⚫️             | ⚫️               | ✅                         |
+| Spectrum                    | ✅              | ✅ [^42]          | ✅                         |
 
 ---
 
@@ -107,15 +107,16 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 ## Zero Trust
 
-| Product           | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| ----------------- | --------------- | ----------------- | -------------------------- |
-| Access            | 🚧 [^14]        | 🚧 [^15]          | ✅ [^16]                   |
-| Browser Isolation | ⚫️             | 🚧 [^17]          | ✅                         |
-| CASB              | ⚫️             | ⚫️               | ✘                          |
-| Cloudflare Tunnel | ⚫️             | 🚧 [^18]          | ⚫️                        |
-| DLP               | ⚫️ [^19]       | ⚫️ [^19]         | 🚧 [^31]                   |
-| Gateway           | 🚧 [^20]        | 🚧 [^21]          | 🚧 [^22]                   |
-| WARP              | ⚫️             | ⚫️               | 🚧 [^1]                    |
+| Product            | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| ------------------ | --------------- | ----------------- | -------------------------- |
+| Access             | 🚧 [^14]        | 🚧 [^15]          | ✅ [^16]                   |
+| Browser Isolation  | ⚫️             | 🚧 [^17]          | ✅                         |
+| CASB               | ⚫️             | ⚫️               | ✘                          |
+| Cloudflare Tunnel  | ⚫️             | 🚧 [^18]          | ⚫️                        |
+| Digital Experience | ⚫️             | ⚫️               | 🚧 [^49]                   |
+| DLP                | ⚫️ [^19]       | ⚫️ [^19]         | 🚧 [^31]                   |
+| Gateway            | 🚧 [^20]        | 🚧 [^21]          | 🚧 [^22]                   |
+| WARP               | ⚫️             | ⚫️               | 🚧 [^1]                    |
 
 [^1]: Logs / Analytics not available outside US region when using Customer Metadata Boundary.
 
@@ -206,3 +207,5 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^47]: Only R2 Custom Domains are supported.
 
 [^48]: The following are exceptions and are supported: AI Gateway Analytics (GraphQL Analytics datasets) and Logs (Logpush), R2 Dashboard Metrics & Analytics, Workers AI GraphQL Analytics datasets like aiInferenceAdaptive.
+
+[^49]: Digital Experience supports Cloudflare's [Customer Metadata Boundary](/data-localization/metadata-boundary/get-started) only for the 'EU' (European Union) option

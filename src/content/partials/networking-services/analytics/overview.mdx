@@ -15,7 +15,7 @@ Use these options to gather information at the start of your troubleshooting wor
 
 <Markdown
 	text={`
-		${props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels" ? "- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)" : ""}
+		${props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN" ? "- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)" : ""}
 		- Analyze network traffic over time in [Network Analytics](#network-analytics)
 		- Perform more detailed troubleshooting with:
 		  - [Traceroutes](#traceroutes)
@@ -24,14 +24,14 @@ Use these options to gather information at the start of your troubleshooting wor
 	inline={false}
 />
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
 		<AnchorHeading title="Network overview (beta)" depth={2} slug="network-overview-beta" />
 		<Markdown
 		text={`
-		Network overview (beta) shows the connectivity status and traffic analytics for all Magic WAN sites. Use it when you receive an alert, start troubleshooting, or perform routine monitoring.
+		Network overview (beta) shows the connectivity status and traffic analytics for all Cloudflare WAN sites. Use it when you receive an alert, start troubleshooting, or perform routine monitoring.
 
-		For details, refer to [${props.magicWord === "WAN Tunnels" ? "Network health" : "Network overview (beta)"}](${props.siteAnalyticsURL}).
+		For details, refer to [${props.magicWord === "CF1 Cloudflare WAN" ? "Network health" : "Network overview (beta)"}](${props.siteAnalyticsURL}).
 		`}
 		inline={false}
 		/>
@@ -55,7 +55,7 @@ For details, refer to <a href={props.traceRoutes}>Traceroutes</a>.
 
 Packet captures allow you to analyze the raw packet data your network sends to and receives from Cloudflare's network.
 
-For details, refer to [packet captures](/magic-firewall/packet-captures/).
+For details, refer to [packet captures](/cloudflare-network-firewall/packet-captures/).
 
 ## Query analytics with GraphQL
 

@@ -32,21 +32,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
   <tbody>
     <tr>
       <td>
-        <strong>Interactive Challenge</strong><br />
-        <br />
-        API value:<br />
-        <code>challenge</code>
-      </td>
-      <td>
-        <p>Useful for ensuring that the visitor accessing the site is human, not automated.</p>
-        <p>The client that made the request must pass an interactive challenge.</p>
-        <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
-      </td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td>
-        <strong>JS Challenge</strong><br />
+        <strong>Non-Interactive Challenge</strong><br />
         <br />
         API value:<br />
         <code>js_challenge</code>
@@ -57,7 +43,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
           however, are free to satisfy the challenge automatically.
         </p>
         <p>
-          The client that made the request must pass a Cloudflare JavaScript Challenge before
+          The client that made the request must pass a non-interactive Cloudflare challenge before
           proceeding.
         </p>
         <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
@@ -77,9 +63,23 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
           Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from the following actions based on specific criteria:
         </p>
         <ul>
-          <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
+          <li>Show a non-interactive challenge page.</li>
           <li>Show a custom interactive challenge (such as click a button).</li>
         </ul>
+      </td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Interactive Challenge</strong><br />
+        <br />
+        API value:<br />
+        <code>challenge</code>
+      </td>
+      <td>
+        <p>Useful for ensuring that the visitor accessing the site is human, not automated.</p>
+        <p>The client that made the request must pass an interactive challenge.</p>
+        <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
       </td>
       <td>Yes</td>
     </tr>

@@ -1,0 +1,12 @@
+id: gkfbyw
+name: Snippets
+
+entry:
+  title: Snippets
+  group: Application performance
+  url: /rules/snippets/
+  show: false
+
+meta:
+  title: Cloudflare Snippets docs
+  author: "@cloudflare"

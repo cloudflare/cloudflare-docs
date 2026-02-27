@@ -1,0 +1,46 @@
+---
+pcx_content_type: navigation
+title: RtkMoreToggle
+description: API reference for RtkMoreToggle component (React Library)
+---
+A button which toggles visibility of a more menu.
+ When clicked it emits a `rtkStateUpdate` event with the data:
+ ```ts
+ { activeMoreMenu: boolean; }
+ ```
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMoreToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkMoreToggle />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMoreToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkMoreToggle
+      size="md"
+    />
+  );
+}
+```
+

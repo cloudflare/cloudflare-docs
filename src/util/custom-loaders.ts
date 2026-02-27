@@ -5,7 +5,49 @@ import { file } from "astro/loaders";
 
 import { fileURLToPath } from "node:url";
 import fs from "fs";
-import { dirname } from "path";
+import { dirname, join } from "path";
+
+import * as z from "zod";
+
+/**
+ * downloadToDotTempIfNotPresent is a convenience function for handling downloads to a .tmp directory
+ * within the source repo
+ *
+ * @param url - source URL
+ * @param dotTmpDestination - path relative to .tmp/ as destination for downloaded file
+ */
+
+export async function downloadToDotTempIfNotPresent(
+	url: string,
+	dotTmpDestination: string,
+) {
+	const source = z.string().url().parse(url);
+	const relativeDestination = z
+		.string()
+		.refine((val) => !val.includes("\\"), {
+			message: "dotTmpDestination paths should only contain forward slashes.",
+		})
+		.refine((val) => !val.startsWith("/"), {
+			message: "dotTmpDestination must be a relative path.",
+		})
+		.parse(dotTmpDestination);
+
+	const destinationParts = relativeDestination.split("/");
+	const universalRelativeDestination = join(...destinationParts);
+
+	const dotTmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
+
+	const destination = join(dotTmpPath, universalRelativeDestination);
+
+	if (!fs.existsSync(destination)) {
+		fs.mkdirSync(dirname(destination), { recursive: true });
+
+		const response = await fetch(source);
+		const content = await response.text();
+
+		fs.writeFileSync(destination, content);
+	}
+}
 
 /**
  * middlecache loader expects a middlecache path
@@ -14,15 +56,9 @@ import { dirname } from "path";
  * @param options - Additional options { url: override middlecache base url, parser: custom parser }
  */
 
-type MiddlecacheOptions = {
-	url?: string;
-	parser?: (
-		text: string,
-	) =>
-		| Record<string, Record<string, unknown>>
-		| Array<Record<string, unknown>>
-		| Record<string, string | null>;
-};
+type FileOptions = Parameters<typeof file>[1];
+// extend the file loader options with an optional url to override the default middlecache base url
+type MiddlecacheOptions = FileOptions & { url?: string };
 
 export function middlecacheLoader(
 	path: string,
@@ -34,25 +70,16 @@ export function middlecacheLoader(
 			let middlecacheBaseUrl = "https://middlecache.ced.cloudflare.com/";
 			if (options.url) middlecacheBaseUrl = options.url;
 
-			const tmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
+			context.logger.debug(
+				`Remote to local load from: ${middlecacheBaseUrl}${path}`,
+			);
+			await downloadToDotTempIfNotPresent(
+				`${middlecacheBaseUrl}${path}`,
+				`middlecache/${path}`,
+			);
 
-			const destination = `${tmpPath}/middlecache/${path}`;
+			const fileLoader = file(`.tmp/middlecache/${path}`, options as any);
 
-			context.logger.debug(`Remote to local load from: ${destination}`);
-
-			if (!fs.existsSync(destination)) {
-				fs.mkdirSync(dirname(destination), { recursive: true });
-
-				context.logger.debug(`Download of ${path} starting...`);
-
-				const response = await fetch(middlecacheBaseUrl + path);
-				const content = await response.text();
-
-				fs.writeFileSync(destination, content);
-				context.logger.debug(`Download of ${path} completed.`);
-			}
-
-			const fileLoader = file(destination, options as any);
 			// re-use all the functionality of the built-in file loader
 			return await fileLoader.load(context);
 		},

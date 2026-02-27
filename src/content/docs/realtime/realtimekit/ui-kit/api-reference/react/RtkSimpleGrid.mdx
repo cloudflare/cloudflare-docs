@@ -1,0 +1,49 @@
+---
+pcx_content_type: navigation
+title: RtkSimpleGrid
+description: API reference for RtkSimpleGrid component (React Library)
+---
+A grid component which renders only the participants in a simple grid.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `aspectRatio` | `string` | ✅ | - | Aspect Ratio of participant tile  Format: `width:height` |
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `gap` | `number` | ✅ | - | Gap between participant tiles |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participants` | `Peer[]` | ✅ | - | Participants |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSimpleGrid } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkSimpleGrid />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSimpleGrid } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkSimpleGrid
+      aspectRatio="example"
+      gap={42}
+      meeting={meeting}
+    />
+  );
+}
+```
+

@@ -11,7 +11,7 @@ head:
 
 import { GlossaryTooltip } from "~/components"
 
-When you have a <GlossaryTooltip term="partial setup" link="/dns/zone-setups/partial-setup/">partial zone</GlossaryTooltip>, Cloudflare handles DNS records a bit differently from full zones in order to internally resolve the origin server where proxied HTTP requests are sent to.
+When you have a partial zone (<GlossaryTooltip term="CNAME setup" link="/dns/zone-setups/partial-setup/">CNAME setup</GlossaryTooltip>), Cloudflare handles DNS records a bit differently from primary zones (full setup) in order to internally resolve the origin server where proxied HTTP requests are sent to.
 
 ## Records within the same zone
 
@@ -63,9 +63,9 @@ When you avoid this situation - meaning you do not have the **target** of the CN
 
 ## Records pointing to a partial zone within the same account
 
-You could also [create a CNAME record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) in a zone (partial or full setup) that points to a record in another partial zone within your account.
+You could also [create a CNAME record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) in a zone (partial or full) that points to a record in another partial zone within your account.
 
-In this case, Cloudflare will always resolve the CNAME target based on the value at your authoritative DNS provider of the partial target zone.
+In this case, Cloudflare will always resolve the CNAME target based on the value at your authoritative DNS provider of the CNAME target zone.
 
 ```mermaid
     flowchart TD
@@ -90,7 +90,7 @@ In this case, Cloudflare will always resolve the CNAME target based on the value
 
 Considering the following scenario:
 
-- The target zone (Cloudflare zone 2 in this example) is a partial zone and the DNS record on the partial is proxied.
+- The target zone (Cloudflare zone 2 in this example) is a partial zone and the DNS record on the partial zone is proxied.
 - The DNS record on the authoritative DNS server points to `cdn.cloudflare.net`
 
 If such setup is in place, the subdomain (`www.partialzone.com` in this example) will resolve to a Cloudflare proxy IP, which will ultimately result in an error. Consider using [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) and [Orange-to-Orange](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) setup instead.

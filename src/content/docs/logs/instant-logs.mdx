@@ -115,7 +115,7 @@ Once connected to the websocket, you will receive messages of line-delimited JSO
 Now that you have a connection to Cloudflare's websocket and are receiving logs from Cloudflare's global network, you can start slicing and dicing the logs. A handy tool for this is [Angle Grinder](https://github.com/rcoh/angle-grinder). Angle Grinder lets you apply filtering, transformations and aggregations on stdin with first class JSON support. For example, to get the number of visitors from each country you can sum the number of events by the `ClientCountry` field.
 
 ```bash
-awebsocat wss://logs.cloudflare.com/instant-logs/ws/sessions/<SESSION_ID> | agrind '* | json | sum(sampleInterval) by ClientCountry'
+websocat wss://logs.cloudflare.com/instant-logs/ws/sessions/<SESSION_ID> | agrind '* | json | sum(sampleInterval) by ClientCountry'
 ```
 
 Response:

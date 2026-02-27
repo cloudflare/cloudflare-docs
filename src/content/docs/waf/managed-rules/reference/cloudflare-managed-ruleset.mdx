@@ -8,7 +8,7 @@ sidebar:
 import { Render, Tabs, TabItem, Markdown } from "~/components";
 
 export const availableActions =
-	"The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Interactive Challenge_.";
+	"The available actions are: _Block_, _Log_, _Non-Interactive Challenge_, _Managed Challenge_, and _Interactive Challenge_.";
 
 Created by the Cloudflare security team, this ruleset provides fast and effective protection for all of your applications. The ruleset is updated frequently to cover new vulnerabilities and reduce false positives.
 
@@ -103,10 +103,10 @@ You can configure (or override) the following Cloudflare Managed Ruleset setting
 
 Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard), do the following to configure individual ruleset rules in the dashboard:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Render
-	file="managed-rules-browse-zone"
+	file="managed-rules-browse-zone-new-nav"
 	product="waf"
 	params={{
 		rulesetName: "Cloudflare Managed Ruleset",
@@ -121,10 +121,10 @@ Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard
 	}}
 />
 
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+</TabItem> <TabItem label="Old dashboard">
 
 <Render
-	file="managed-rules-browse-zone-new-nav"
+	file="managed-rules-browse-zone"
 	product="waf"
 	params={{
 		rulesetName: "Cloudflare Managed Ruleset",

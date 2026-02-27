@@ -61,6 +61,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs
 		"allowedOrigins": null,
 		"hideLiveViewerCount": false
 	},
+	"enabled": true,
 	"deleteRecordingAfterDays": null,
 	"preferLowLatency": false
 }
@@ -69,6 +70,9 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs
 #### Optional API parameters
 
 [API Reference Docs for `/live_inputs`](/api/resources/stream/subresources/live_inputs/methods/create/)
+
+- `enabled` boolean default: `true`
+  - Controls whether the live input accepts incoming broadcasts. When set to `false`, the live input will reject any incoming RTMPS or SRT connections. Use this property to programmatically end creator broadcasts or prevent new broadcasts from starting on a specific input.
 
 - `preferLowLatency` boolean default: `false` <InlineBadge preset="beta" />
   - When set to true, this live input will be enabled for the beta Low-Latency HLS pipeline. The Stream built-in player will automatically use LL-HLS when possible. (Recording `mode` property must also be set to `automatic`.)

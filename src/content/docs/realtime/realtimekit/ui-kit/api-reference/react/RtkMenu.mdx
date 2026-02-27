@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: RtkMenu
+description: API reference for RtkMenu component (React Library)
+---
+A menu component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `offset` | `number` | ✅ | - | Offset in px |
+| `placement` | `Placement` | ✅ | - | Placement of menu |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMenu } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkMenu />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMenu } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkMenu
+      offset={42}
+      placement={placement}
+      size="md"
+    />
+  );
+}
+```
+

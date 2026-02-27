@@ -92,7 +92,7 @@ For example, to wait for billing webhook:
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// Other steps in your Workflow
-		let event = await step.waitForEvent<IncomingStripeWebhook>(
+		let stripeEvent = await step.waitForEvent<IncomingStripeWebhook>(
 			"receive invoice paid webhook from Stripe",
 			{ type: "stripe-webhook", timeout: "1 hour" },
 		);
@@ -223,13 +223,13 @@ export class MyWorkflow extends WorkflowEntrypoint {
     // Pass your type as a type parameter to WorkflowEvent
     // The 'payload' property will have the type of your parameter.
     async run(event: WorkflowEvent<YourEventType>, step: WorkflowStep) {
-        let state = step.do("my first step", async () => {
+        let state = await step.do("my first step", async () => {
           // Access your properties via event.payload
           let userEmail = event.payload.userEmail
           let createdTimestamp = event.payload.createdTimestamp
         })
 
-        step.do("my second step", async () => { /* your code here */ )
+        await step.do("my second step", async () => { /* your code here */ })
     }
 }
 ```

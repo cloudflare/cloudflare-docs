@@ -22,6 +22,8 @@ import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
 import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
 import { createSitemapLastmodSerializer } from "./sitemap.serializer.ts";
 
+import skills from "astro-skills";
+
 async function autogenSections() {
 	const sections = (
 		await readdir("./src/content/docs/", {
@@ -142,6 +144,7 @@ export default defineConfig({
 									"/http/resources/**",
 									"/llms.txt",
 									"/llms-full.txt",
+									"**/llms.txt",
 									"{props.*}",
 									"/",
 									"/glossary/",
@@ -157,6 +160,7 @@ export default defineConfig({
 									"/markdown.zip",
 									"/style-guide/index.md",
 									"/style-guide/fixtures/markdown/index.md",
+									"/search/**",
 								],
 							}),
 						]
@@ -177,6 +181,7 @@ export default defineConfig({
 			lastUpdated: true,
 			markdown: {
 				headingLinks: false,
+				processedDirs: ["./src/content/partials/", "./src/content/changelog/"],
 			},
 			routeMiddleware: "./src/plugins/starlight/route-data.ts",
 			disable404Route: true,
@@ -198,6 +203,7 @@ export default defineConfig({
 			serialize: createSitemapLastmodSerializer(),
 		}),
 		react(),
+		skills(),
 	],
 	vite: {
 		resolve: {

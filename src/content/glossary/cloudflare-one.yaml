@@ -17,10 +17,6 @@ entries:
     general_definition: |-
       a login screen shown to users when they connect to a public Wi-Fi. Captive portals typically occur in places such as airports, cafes, and hotels.
 
-  - term: CGNAT IP
-    general_definition: |-
-      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device in **Team & Resources** > **Devices** > **Virtual IPv4/IPv6**.
-
   - term: cloudflared
     general_definition: |-
       the software powering Cloudflare Tunnel. It runs on origin servers to connect applications or private networks to Cloudflare.
@@ -284,6 +280,10 @@ entries:
   - term: WARP client
     general_definition: |-
       an application that connects corporate devices to Cloudflare for private network access, advanced web filtering, and other security functions.
+
+  - term: WARP CGNAT IP
+    general_definition: |-
+      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range.
 
   - term: WARP Connector
     general_definition: |-

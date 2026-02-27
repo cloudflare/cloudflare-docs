@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 When an SSL certificate is deployed to Cloudflare's global network, it may be augmented with intermediate and root certificates to assist the user agent in finding a chain to a publicly trusted root.
 
 You can control the mechanics of how certificates are bundled by specifying a bundling methodology.
@@ -36,15 +38,6 @@ The related value for the `bundle_method` parameter when using the [API](/api/re
 
 ### User-defined
 
-User-defined allows you to paste your own certificate chain and present that bundle to clients. You must specify any intermediates you wish to use, followed by the leaf. If you are using a self-signed certificate (not recommended), you must use this mode.
+User-defined allows you to paste your own certificate chain and present that bundle to clients. If you are using a self-signed certificate (not recommended), you must use this mode.
 
-The related value for the `bundle_method` parameter when using the [API](/api/resources/custom_certificates/methods/create/) is `force`. The order and format of the chain should look like the following:
-
-```txt
------BEGIN CERTIFICATE-----
-<intermediate>
------END CERTIFICATE-----
------BEGIN CERTIFICATE-----
-<leaf>
------END CERTIFICATE-----
-```
+The related value for the `bundle_method` parameter when using the [API](/api/resources/custom_certificates/methods/create/) is `force`.

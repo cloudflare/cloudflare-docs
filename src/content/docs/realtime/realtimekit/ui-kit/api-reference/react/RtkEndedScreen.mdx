@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: RtkEndedScreen
+description: API reference for RtkEndedScreen component (React Library)
+---
+A screen which shows a meeting has ended.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Global states |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | Global states |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkEndedScreen } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkEndedScreen />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkEndedScreen } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkEndedScreen
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

@@ -1,0 +1,43 @@
+---
+title: "No config? No problem. Just `wrangler deploy`"
+description: Automatic project configuration is now the default behavior of wrangler deploy, with support for automatic pull requests in the Cloudflare dashboard.
+products:
+  - workers
+date: 2026-02-25
+---
+
+You can now deploy any existing project to Cloudflare Workers — even without a Wrangler configuration file — and `wrangler deploy` will _just work_.
+
+Starting with Wrangler **4.68.0**, running [`wrangler deploy`](/workers/wrangler/commands/#deploy) [automatically configures your project](/workers/framework-guides/automatic-configuration/) by detecting your framework, installing required adapters, and deploying it to Cloudflare Workers.
+
+### Using Wrangler locally
+
+```sh
+npx wrangler deploy
+```
+
+When you run `wrangler deploy` in a project without a configuration file, Wrangler:
+
+1. Detects your framework from `package.json`
+2. Prompts you to confirm the detected settings
+3. Installs any required adapters
+4. Generates a `wrangler.jsonc` [configuration file](/workers/wrangler/configuration/)
+5. Deploys your project to Cloudflare Workers
+
+You can also use [`wrangler setup`](/workers/wrangler/commands/#setup) to configure without deploying, or pass [`--yes`](/workers/wrangler/commands/#deploy) to skip prompts.
+
+### Using the Cloudflare dashboard
+
+![Automatic configuration pull request created by Workers Builds](~/assets/images/workers/ci-cd/builds/automatic-pr.png)
+
+When you connect a repository through the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create), a [pull request is generated](/workers/ci-cd/builds/automatic-prs/) for you with all necessary files, and a [preview deployment](/workers/configuration/previews/) to check before merging.
+
+:::note
+A pull request is only generated when your deploy command is `npx wrangler deploy`. If you use a custom deploy command, automatic configuration still runs but a PR is not created.
+:::
+
+## Background
+
+In December 2025, we [introduced automatic configuration](/changelog/2025-12-16-wrangler-autoconfig/) as an experimental feature. It is now generally available and the default behavior.
+
+If you have questions or run into issues, join the [GitHub discussion](https://github.com/cloudflare/workers-sdk/discussions/11667).

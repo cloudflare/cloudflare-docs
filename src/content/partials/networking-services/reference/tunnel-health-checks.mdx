@@ -19,7 +19,7 @@ A tunnel health check probe comes from Cloudflare to the tunnel origin, then ret
 	file="tunnel-health/health-checks-compatible-cmb-eu"
 	product="networking-services"
 	params={{
-		productName: props.magicWord === "Magic Transit" ? "Magic Transit" : "Magic WAN"
+		productName: props.magicWord === "Magic Transit" ? "Magic Transit" : "Cloudflare WAN"
 	}}
 />
 
@@ -124,6 +124,8 @@ To avoid control plane policies enforced by the origin network, you can set tunn
 
 ```mermaid
 flowchart TB
+accTitle: Bidirectional request style
+accDescr: Shows the flow of a bidirectional request-style tunnel health check probe and response between Cloudflare and the origin.
    subgraph Tunnel Healthcheck Probe
    cloudflare(Cloudflare) --- bare_echo_request([ICMP Echo Request])
    bare_echo_request --> tunnel[Tunnel]
@@ -150,6 +152,8 @@ flowchart TB
 
 ```mermaid
 flowchart TB
+accTitle: Bidirectional reply style
+accDescr: Shows the flow of a bidirectional reply-style tunnel health check probe and response between Cloudflare and the origin.
    subgraph Tunnel Healthcheck Probe
    cloudflare(Cloudflare) --- bare_echo_probe([ICMP Echo Reply])
    bare_echo_probe --> tunnel[Tunnel]
@@ -176,6 +180,8 @@ flowchart TB
 
 ```mermaid
 flowchart TB
+accTitle: Unidirectional echo request
+accDescr: Shows the flow of a unidirectional echo request health check from Cloudflare to the origin and back.
    cloudflare(Cloudflare) --- bare_echo_probe([ICMP Echo Request])
    bare_echo_probe --> tunnel[Tunnel]
    tunnel --- encapsulated_echo_probe([Tunnel Protocol < ICMP Echo Request >])
@@ -193,6 +199,8 @@ flowchart TB
 
 ```mermaid
 flowchart TB
+accTitle: Unidirectional echo reply
+accDescr: Shows the flow of a unidirectional echo reply health check from Cloudflare to the origin and back.
    cloudflare(Cloudflare) --- bare_echo_probe([ICMP Echo Reply])
    bare_echo_probe --> tunnel[Tunnel]
    tunnel --- encapsulated_echo_probe([Tunnel Protocol < ICMP Echo Reply >])
@@ -212,8 +220,8 @@ flowchart TB
 	file="icmp-mfirewall"
 	product="networking-services"
 	params={{
-		mFirewallName: "Magic Firewall rules",
-		mFirewallURL: "/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks"
+		mFirewallName: "Cloudflare Network Firewall rules",
+		mFirewallURL: "/cloudflare-network-firewall/about/ruleset-logic/#cloudflare-network-firewall-rules-and-magic-transit-endpoint-health-checks"
 	}}
 	/>
 

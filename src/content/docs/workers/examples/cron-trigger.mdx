@@ -9,13 +9,8 @@ title: Setting Cron Triggers
 sidebar:
   order: 1001
 description: Set a Cron Trigger for your Worker.
+reviewed: 2021-08-10
 ---
-
-If you want to get started quickly, click on the button below.
-
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/cron-trigger)
-
-This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
 
 import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
@@ -99,13 +94,17 @@ If you are deploying with Wrangler, set the cron syntax (once per hour as shown 
 
 <WranglerConfig>
 
-```toml
-name = "worker"
-
-# ...
-
-[triggers]
-crons = ["0 * * * *"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker",
+	// ...
+	"triggers": {
+		"crons": [
+			"0 * * * *"
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -114,9 +113,18 @@ You also can set a different Cron Trigger for each [environment](/workers/wrangl
 
 <WranglerConfig>
 
-```toml
-[env.dev.triggers]
-crons = ["0 * * * *"]
+```jsonc
+{
+	"env": {
+		"dev": {
+			"triggers": {
+				"crons": [
+					"0 * * * *"
+				]
+			}
+		}
+	}
+}
 ```
 
 </WranglerConfig>
