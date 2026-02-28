@@ -18,7 +18,7 @@ Gateway [Protocol Detection](/cloudflare-one/traffic-policies/network-policies/p
 | LDAP         | Lightweight Directory Access Protocol               |
 | NTP          | Network Time Protocol                               |
 
-These protocols join the existing set of detected protocols (HTTP, SSH, TLS, DCE/RPC, MQTT, TPKT, and DNP3) and can be used with the _Detected Protocol_ selector in [Network policies](/cloudflare-one/traffic-policies/network-policies/) to identify and filter traffic based on the application-layer protocol, without relying on port-based identification.
+These protocols join the existing set of detected protocols (HTTP, HTTP2, SSH, TLS, DCERPC, MQTT, and TPKT) and can be used with the _Detected Protocol_ selector in [Network policies](/cloudflare-one/traffic-policies/network-policies/) to identify and filter traffic based on the application-layer protocol, without relying on port-based identification.
 
 If protocol detection is enabled on your account, these protocols will automatically be logged when detected in your Gateway network traffic.
 
