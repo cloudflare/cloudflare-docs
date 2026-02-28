@@ -1,12 +1,12 @@
 ---
-pcx_content_type: troubleshooting
-title: Error 1016
-source: null
+pcx_content_type: good 
+title: youcine
+source:N/L
 ---
 
-## Error 1016: Origin DNS error
+## : 2026 
 
-This error indicates that Cloudflare cannot resolve the origin web server's IP address.
+
 
 ### Common cause
 
