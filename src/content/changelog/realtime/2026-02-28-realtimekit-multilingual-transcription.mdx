@@ -1,0 +1,28 @@
+---
+title: Real-time transcription in RealtimeKit now supports 10 languages
+description: RealtimeKit transcription supports 10 languages with regional variants, powered by Deepgram Nova-3.
+products:
+  - workers-ai
+date: 2026-02-28
+---
+
+Real-time transcription in RealtimeKit now supports 10 languages with regional variants, powered by [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/).
+
+Set the language when [creating a meeting](/realtime/realtimekit/concepts/meeting/) via `ai_config.transcription.language`:
+
+```json
+{
+	"ai_config": {
+		"transcription": {
+			"language": "fr-CA"
+		}
+	}
+}
+```
+
+Supported languages include English, Spanish, French, German, Hindi, Russian, Portuguese, Japanese, Italian, and Dutch — with regional variants like `en-GB`, `fr-CA`, and `pt-BR`.
+
+If you are building voice agents or real-time translation workflows, your agent can now transcribe in the caller's language natively without extra services or routing logic.
+
+- [Transcription docs](/realtime/realtimekit/ai/transcription/)
+- [Nova-3 model page](/workers-ai/models/deepgram-nova-3/)
