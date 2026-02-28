@@ -15,21 +15,24 @@ import { Render } from "~/components";
 ## Default metrics server address
 
 <Render
-  file="tunnel/metrics-default-address"
-  product="cloudflare-one"
-  params={{
-    logsURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/"
-  }}
+	file="tunnel/metrics-default-address"
+	product="cloudflare-one"
+	params={{
+		logsURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/",
+	}}
 />
 
 ## Configure the metrics server address
 
 <Render
-  file="tunnel/metrics-configure-address"
-  product="cloudflare-one"
-  params={{
-    updateRunParametersURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#add-run-parameters-to-tunnel-service"
-  }}
+	file="tunnel/metrics-configure-address"
+	product="cloudflare-one"
+	params={{
+		updateRunParametersURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#add-run-parameters-to-tunnel-service",
+		grafanaTutorialURL: "/cloudflare-one/tutorials/grafana/",
+	}}
 />
 
 ## Available metrics

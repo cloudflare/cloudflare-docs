@@ -43,13 +43,15 @@ Tunnel logs record all activity between `cloudflared` and the Cloudflare global 
 ### Server-side logs
 
 <Render
-  file="tunnel/view-logs-on-server"
-  product="cloudflare-one"
-  params={{
-    loglevelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel",
-    logfileURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#logfile",
-    runParametersURL: "/tunnel/configuration/#update-run-parameters"
-  }}
+	file="tunnel/view-logs-on-server"
+	product="cloudflare-one"
+	params={{
+		loglevelURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel",
+		logfileURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#logfile",
+		runParametersURL: "/tunnel/configuration/#update-run-parameters",
+	}}
 />
 
 ### Remote log streaming
@@ -62,18 +64,19 @@ You can stream real-time logs from a running tunnel without SSH access to the se
 <Render file="tunnel/view-logs-cli" product="cloudflare-one" />
 
 3. If you are running multiple [replicas](/tunnel/configuration/#replicas-and-high-availability), specify which replica to stream logs from:
-	```sh
-	cloudflared tail --connector-id <REPLICA ID> <UUID>
-	```
+   ```sh
+   cloudflared tail --connector-id <REPLICA ID> <UUID>
+   ```
 
 <Details header="Log filtering options">
-<Render
-	file="tunnel/filter-logs"
-	product="cloudflare-one"
-	params={{
-		loglevelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel"
-	}}
-/>
+	<Render
+		file="tunnel/filter-logs"
+		product="cloudflare-one"
+		params={{
+			loglevelURL:
+				"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel",
+		}}
+	/>
 </Details>
 
 </TabItem>
@@ -91,21 +94,22 @@ You can stream real-time logs from a running tunnel without SSH access to the se
 ### Default metrics server address
 
 <Render
-  file="tunnel/metrics-default-address"
-  product="cloudflare-one"
-  params={{
-    logsURL: "#server-side-logs"
-  }}
+	file="tunnel/metrics-default-address"
+	product="cloudflare-one"
+	params={{
+		logsURL: "#server-side-logs",
+	}}
 />
 
 ### Configure a custom address
 
 <Render
-  file="tunnel/metrics-configure-address"
-  product="cloudflare-one"
-  params={{
-    updateRunParametersURL: "/tunnel/configuration/#update-run-parameters"
-  }}
+	file="tunnel/metrics-configure-address"
+	product="cloudflare-one"
+	params={{
+		updateRunParametersURL: "/tunnel/configuration/#update-run-parameters",
+		grafanaTutorialURL: "/tunnel/tutorials/grafana/",
+	}}
 />
 
 <Details header="cloudflared metrics">
@@ -133,22 +137,22 @@ Cloudflare Tunnel generates diagnostic reports that collect data from a single `
 ### Generate diagnostics
 
 <Render
-  file="tunnel/diag-host-environment"
-  product="cloudflare-one"
-  params={{
-    metricsURL: "#configure-a-custom-address"
-  }}
+	file="tunnel/diag-host-environment"
+	product="cloudflare-one"
+	params={{
+		metricsURL: "#configure-a-custom-address",
+	}}
 />
 
 <Details header="Docker diagnostics">
 
 <Render
-  file="tunnel/diag-docker"
-  product="cloudflare-one"
-  params={{
-    metricsURL: "#metrics",
-    defaultMetricsURL: "#default-metrics-server-address"
-  }}
+	file="tunnel/diag-docker"
+	product="cloudflare-one"
+	params={{
+		metricsURL: "#metrics",
+		defaultMetricsURL: "#default-metrics-server-address",
+	}}
 />
 
 </Details>
@@ -156,12 +160,12 @@ Cloudflare Tunnel generates diagnostic reports that collect data from a single `
 <Details header="Kubernetes diagnostics">
 
 <Render
-  file="tunnel/diag-kubernetes"
-  product="cloudflare-one"
-  params={{
-    metricsURL: "#metrics",
-    defaultMetricsURL: "#default-metrics-server-address"
-  }}
+	file="tunnel/diag-kubernetes"
+	product="cloudflare-one"
+	params={{
+		metricsURL: "#metrics",
+		defaultMetricsURL: "#default-metrics-server-address",
+	}}
 />
 
 </Details>
@@ -169,12 +173,12 @@ Cloudflare Tunnel generates diagnostic reports that collect data from a single `
 ### Diagnostic file contents
 
 <Render
-  file="tunnel/tunnel-diag-file"
-  product="cloudflare-one"
-  params={{
-    runParametersURL: "/tunnel/advanced/run-parameters/",
-    logsURL: "#logs",
-    metricsURL: "#metrics",
-    loglevelURL: "#server-side-logs"
-  }}
+	file="tunnel/tunnel-diag-file"
+	product="cloudflare-one"
+	params={{
+		runParametersURL: "/tunnel/advanced/run-parameters/",
+		logsURL: "#logs",
+		metricsURL: "#metrics",
+		loglevelURL: "#server-side-logs",
+	}}
 />
