@@ -1,6 +1,6 @@
 ---
-title: Using AI Models
-pcx_content_type: concept
+title: Using AI models
+pcx_content_type: reference
 tags:
   - AI
 sidebar:
@@ -9,33 +9,47 @@ sidebar:
 
 import {
 	AnchorHeading,
+	Details,
+	LinkCard,
 	MetaInfo,
 	Render,
+	Tabs,
+	TabItem,
 	Type,
 	TypeScriptExample,
 	WranglerConfig,
 	PackageManagers,
 } from "~/components";
 
-Agents can call AI models from any provider. [Workers AI](/workers-ai/) is built in and requires no API keys. You can also use [OpenAI](https://platform.openai.com/docs/quickstart?language=javascript), [Anthropic](https://docs.anthropic.com/en/api/client-sdks#typescript), [Google Gemini](https://ai.google.dev/gemini-api/docs/openai), or any service that exposes an OpenAI-compatible API.
+The Agents SDK is **model and provider agnostic**. Your agent can call any LLM from any provider — there is no lock-in. The SDK itself does not contain an AI client; you bring whatever provider library you prefer and call models from any method inside your agent.
 
-The [AI SDK](https://sdk.vercel.ai/docs/introduction) provides a unified interface across all of these providers, and is what `AIChatAgent` and the starter template use under the hood. You can also use the model routing features in [AI Gateway](/ai-gateway/) to route across providers, eval responses, and manage rate limits.
+There are three ways to connect your agent to AI models:
 
-## Calling AI Models
+| Approach                                                | When to use it                                                                              | API keys required                         |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| [AI SDK](#ai-sdk) (recommended)                         | Unified interface across many providers with streaming, tool calling, and structured output | Depends on provider (none for Workers AI) |
+| [Workers AI binding](#workers-ai)                       | Direct Cloudflare binding — zero config, no API keys                                        | No                                        |
+| [Bring your own client](#bring-your-own-client-library) | Use any provider's native SDK (OpenAI, Anthropic, Google, etc.) directly                    | Yes (except Workers AI)                   |
 
-You can call models from any method within an Agent, including from HTTP requests using the [`onRequest`](/agents/api-reference/agents-api/) handler, when a [scheduled task](/agents/api-reference/schedule-tasks/) runs, when handling a WebSocket message in the [`onMessage`](/agents/api-reference/websockets/) handler, or from any of your own methods.
+All three approaches work anywhere inside your agent — in `onRequest`, `onMessage`, `onChatMessage`, scheduled tasks, or your own methods.
 
-Agents can call AI models on their own — autonomously — and can handle long-running responses that take minutes (or longer) to respond in full. If a client disconnects mid-stream, the Agent keeps running and can catch the client up when it reconnects.
+## AI SDK
 
-### Streaming over WebSockets {/* long-running-model-requests */}
+The [AI SDK](https://ai-sdk.dev) provides a unified interface for text generation, streaming, tool calling, and structured output. It works with [every major provider](https://ai-sdk.dev/providers) through swappable adapters, and is what `AIChatAgent` and the starter template use under the hood.
 
-Modern reasoning models can take some time to both generate a response _and_ stream the response back to the client. Instead of buffering the entire response, you can stream it back over [WebSockets](/agents/api-reference/websockets/).
+Because the AI SDK abstracts the provider, you can switch models by changing a single import and one line of configuration — your agent logic stays the same.
+
+### Workers AI (via AI SDK)
+
+No API keys required. Uses the Cloudflare `AI` binding directly.
+
+<PackageManagers pkg="ai workers-ai-provider" />
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { Agent } from "agents";
-import { streamText } from "ai";
+import { generateText } from "ai";
 import { createWorkersAI } from "workers-ai-provider";
 
 interface Env {
@@ -43,33 +57,172 @@ interface Env {
 }
 
 export class MyAgent extends Agent<Env> {
-	async onConnect(connection: Connection, ctx: ConnectionContext) {
-		//
-	}
+	async onRequest(request: Request): Promise<Response> {
+		const workersai = createWorkersAI({ binding: this.env.AI });
 
+		const { text } = await generateText({
+			model: workersai("@cf/meta/llama-4-scout-17b-16e-instruct"),
+			prompt: "Explain how Cloudflare Workers work in two sentences.",
+		});
+
+		return Response.json({ response: text });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Add the `ai` binding to your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+[ai]
+binding = "AI"
+```
+
+</WranglerConfig>
+
+### OpenAI (via AI SDK)
+
+<PackageManagers pkg="ai @ai-sdk/openai" />
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { generateText } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
+
+interface Env {
+	OPENAI_API_KEY: string;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
+
+		const { text } = await generateText({
+			model: openai("gpt-4.1"),
+			prompt: "Explain how Cloudflare Workers work in two sentences.",
+		});
+
+		return Response.json({ response: text });
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Anthropic (via AI SDK)
+
+<PackageManagers pkg="ai @ai-sdk/anthropic" />
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { generateText } from "ai";
+import { createAnthropic } from "@ai-sdk/anthropic";
+
+interface Env {
+	ANTHROPIC_API_KEY: string;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		const anthropic = createAnthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
+
+		const { text } = await generateText({
+			model: anthropic("claude-sonnet-4-20250514"),
+			prompt: "Explain how Cloudflare Workers work in two sentences.",
+		});
+
+		return Response.json({ response: text });
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Google Gemini (via AI SDK)
+
+<PackageManagers pkg="ai @ai-sdk/google" />
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { generateText } from "ai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+
+interface Env {
+	GOOGLE_API_KEY: string;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		const google = createGoogleGenerativeAI({
+			apiKey: this.env.GOOGLE_API_KEY,
+		});
+
+		const { text } = await generateText({
+			model: google("gemini-2.5-flash"),
+			prompt: "Explain how Cloudflare Workers work in two sentences.",
+		});
+
+		return Response.json({ response: text });
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Other AI SDK providers
+
+The AI SDK has adapters for [many more providers](https://ai-sdk.dev/providers), including:
+
+- [Mistral](https://ai-sdk.dev/providers/ai-sdk-providers/mistral) (`@ai-sdk/mistral`)
+- [Amazon Bedrock](https://ai-sdk.dev/providers/ai-sdk-providers/amazon-bedrock) (`@ai-sdk/amazon-bedrock`)
+- [Azure OpenAI](https://ai-sdk.dev/providers/ai-sdk-providers/azure) (`@ai-sdk/azure`)
+- [Groq](https://ai-sdk.dev/providers/ai-sdk-providers/groq) (`@ai-sdk/groq`)
+- [xAI Grok](https://ai-sdk.dev/providers/ai-sdk-providers/xai) (`@ai-sdk/xai`)
+- [Cohere](https://ai-sdk.dev/providers/ai-sdk-providers/cohere) (`@ai-sdk/cohere`)
+- [Fireworks](https://ai-sdk.dev/providers/ai-sdk-providers/fireworks) (`@ai-sdk/fireworks`)
+- [DeepSeek](https://ai-sdk.dev/providers/ai-sdk-providers/deepseek) (`@ai-sdk/deepseek`)
+
+Every adapter follows the same interface — install the package, create the provider, and pass the model to `generateText`, `streamText`, or `generateObject`.
+
+### Streaming with the AI SDK
+
+Use `streamText` to stream responses back to the client. This is especially important for reasoning models that take time to generate.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { streamText } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
+
+interface Env {
+	OPENAI_API_KEY: string;
+}
+
+export class MyAgent extends Agent<Env> {
 	async onMessage(connection: Connection, message: WSMessage) {
-		let msg = JSON.parse(message);
-		await this.queryReasoningModel(connection, msg.prompt);
-	}
+		const { prompt } = JSON.parse(message as string);
+		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
 
-	async queryReasoningModel(connection: Connection, userPrompt: string) {
-		try {
-			const workersai = createWorkersAI({ binding: this.env.AI });
-			const result = streamText({
-				model: workersai("@cf/zai-org/glm-4.7-flash"),
-				prompt: userPrompt,
-			});
+		const result = streamText({
+			model: openai("gpt-4.1"),
+			prompt,
+		});
 
-			for await (const chunk of result.textStream) {
-				if (chunk) {
-					connection.send(JSON.stringify({ type: "chunk", content: chunk }));
-				}
-			}
-
-			connection.send(JSON.stringify({ type: "done" }));
-		} catch (error) {
-			connection.send(JSON.stringify({ type: "error", error: error }));
+		for await (const chunk of result.textStream) {
+			connection.send(JSON.stringify({ type: "chunk", content: chunk }));
 		}
+
+		connection.send(JSON.stringify({ type: "done" }));
 	}
 }
 ```
@@ -78,11 +231,98 @@ export class MyAgent extends Agent<Env> {
 
 You can also persist AI model responses back to [Agent state](/agents/api-reference/store-and-sync-state/) using `this.setState`. If a user disconnects, read the message history back and send it to the user when they reconnect.
 
+### Switching providers in AIChatAgent
+
+`AIChatAgent` uses the AI SDK internally. To change the model your chat agent uses, update the provider in `onChatMessage` — the client code does not need to change.
+
+<Tabs>
+<TabItem label="Workers AI">
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { streamText, convertToModelMessages } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+
+export class ChatAgent extends AIChatAgent {
+	async onChatMessage() {
+		const workersai = createWorkersAI({ binding: this.env.AI });
+		const result = streamText({
+			model: workersai("@cf/meta/llama-4-scout-17b-16e-instruct"),
+			messages: await convertToModelMessages(this.messages),
+		});
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TabItem>
+<TabItem label="OpenAI">
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { streamText, convertToModelMessages } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
+
+export class ChatAgent extends AIChatAgent {
+	async onChatMessage() {
+		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
+		const result = streamText({
+			model: openai("gpt-4.1"),
+			messages: await convertToModelMessages(this.messages),
+		});
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TabItem>
+<TabItem label="Anthropic">
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { streamText, convertToModelMessages } from "ai";
+import { createAnthropic } from "@ai-sdk/anthropic";
+
+export class ChatAgent extends AIChatAgent {
+	async onChatMessage() {
+		const anthropic = createAnthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
+		const result = streamText({
+			model: anthropic("claude-sonnet-4-20250514"),
+			messages: await convertToModelMessages(this.messages),
+		});
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TabItem>
+<TabItem label="Google Gemini">
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { streamText, convertToModelMessages } from "ai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+
+export class ChatAgent extends AIChatAgent {
+	async onChatMessage() {
+		const google = createGoogleGenerativeAI({
+			apiKey: this.env.GOOGLE_API_KEY,
+		});
+		const result = streamText({
+			model: google("gemini-2.5-flash"),
+			messages: await convertToModelMessages(this.messages),
+		});
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TabItem>
+</Tabs>
+
 ## Workers AI
 
-You can use [any of the models available in Workers AI](/workers-ai/models/) within your Agent by [configuring a binding](/workers-ai/configuration/bindings/). No API keys are required.
-
-Workers AI supports streaming responses by setting `stream: true`. Use streaming to avoid buffering and delaying responses, especially for larger models or reasoning models.
+You can use [Workers AI](/workers-ai/) directly through the `AI` binding without the AI SDK. This gives you access to [all models available in Workers AI](/workers-ai/models/) with no API keys or external dependencies.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -96,7 +336,7 @@ interface Env {
 export class MyAgent extends Agent<Env> {
 	async onRequest(request: Request) {
 		const stream = await this.env.AI.run(
-			"@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+			"@cf/meta/llama-4-scout-17b-16e-instruct",
 			{
 				prompt: "Build me a Cloudflare Worker that returns JSON.",
 				stream: true,
@@ -116,19 +356,16 @@ Your Wrangler configuration needs an `ai` binding:
 
 <WranglerConfig>
 
-```jsonc
-{
-	"ai": {
-		"binding": "AI",
-	},
-}
+```toml
+[ai]
+binding = "AI"
 ```
 
 </WranglerConfig>
 
-### Model routing
+### Model routing with AI Gateway
 
-You can use [AI Gateway](/ai-gateway/) directly from an Agent by specifying a [`gateway` configuration](/ai-gateway/usage/providers/workersai/) when calling the AI binding. Model routing lets you route requests across providers based on availability, rate limits, or cost budgets.
+You can use [AI Gateway](/ai-gateway/) directly from an Agent by specifying a [`gateway` configuration](/ai-gateway/usage/providers/workersai/) when calling the AI binding. AI Gateway lets you route requests across providers, cache responses, set rate limits, and manage cost budgets.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -142,7 +379,7 @@ interface Env {
 export class MyAgent extends Agent<Env> {
 	async onRequest(request: Request) {
 		const response = await this.env.AI.run(
-			"@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+			"@cf/meta/llama-4-scout-17b-16e-instruct",
 			{
 				prompt: "Build me a Cloudflare Worker that returns JSON.",
 			},
@@ -162,84 +399,15 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-The `ai` binding in your Wrangler configuration is shared across both Workers AI and AI Gateway.
-
-<WranglerConfig>
-
-```jsonc
-{
-	"ai": {
-		"binding": "AI",
-	},
-}
-```
-
-</WranglerConfig>
-
 Visit the [AI Gateway documentation](/ai-gateway/) to learn how to configure a gateway and retrieve a gateway ID.
 
-## AI SDK
+## Bring your own client library
 
-The [AI SDK](https://sdk.vercel.ai/docs/introduction) provides a unified API for text generation, tool calling, structured responses, and more. It works with any provider that has an AI SDK adapter, including Workers AI via [`workers-ai-provider`](https://www.npmjs.com/package/workers-ai-provider).
+You are not limited to the AI SDK or Workers AI. You can use **any HTTP-based AI client library** that works in a JavaScript runtime. This includes the native SDKs from OpenAI, Anthropic, Google, and any service that exposes an OpenAI-compatible API.
 
-<PackageManagers pkg="ai workers-ai-provider" />
+### OpenAI SDK
 
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { Agent } from "agents";
-import { generateText } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
-
-interface Env {
-	AI: Ai;
-}
-
-export class MyAgent extends Agent<Env> {
-	async onRequest(request: Request): Promise<Response> {
-		const workersai = createWorkersAI({ binding: this.env.AI });
-		const { text } = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
-			prompt: "Build me an AI agent on Cloudflare Workers",
-		});
-
-		return Response.json({ modelResponse: text });
-	}
-}
-```
-
-</TypeScriptExample>
-
-You can swap the provider to use OpenAI, Anthropic, or any other AI SDK-compatible adapter:
-
-<PackageManagers pkg="ai @ai-sdk/openai" />
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { Agent } from "agents";
-import { generateText } from "ai";
-import { openai } from "@ai-sdk/openai";
-
-export class MyAgent extends Agent {
-	async onRequest(request: Request): Promise<Response> {
-		const { text } = await generateText({
-			model: openai("gpt-4o"),
-			prompt: "Build me an AI agent on Cloudflare Workers",
-		});
-
-		return Response.json({ modelResponse: text });
-	}
-}
-```
-
-</TypeScriptExample>
-
-## OpenAI-compatible endpoints
-
-Agents can call models across any service that supports the OpenAI API. For example, you can use the OpenAI SDK to call one of [Google's Gemini models](https://ai.google.dev/gemini-api/docs/openai#node.js) directly from your Agent.
-
-Agents can stream responses back over HTTP using Server-Sent Events (SSE) from within an `onRequest` handler, or by using the native [WebSocket API](/agents/api-reference/websockets/) to stream responses back to a client.
+<PackageManagers pkg="openai" />
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -247,39 +415,215 @@ Agents can stream responses back over HTTP using Server-Sent Events (SSE) from w
 import { Agent } from "agents";
 import { OpenAI } from "openai";
 
-export class MyAgent extends Agent {
+interface Env {
+	OPENAI_API_KEY: string;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		const client = new OpenAI({ apiKey: this.env.OPENAI_API_KEY });
+
+		const completion = await client.chat.completions.create({
+			model: "gpt-4.1",
+			messages: [
+				{ role: "user", content: "Explain how Cloudflare Workers work." },
+			],
+		});
+
+		return Response.json({ response: completion.choices[0].message.content });
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Anthropic SDK
+
+<PackageManagers pkg="@anthropic-ai/sdk" />
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import Anthropic from "@anthropic-ai/sdk";
+
+interface Env {
+	ANTHROPIC_API_KEY: string;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		const client = new Anthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
+
+		const message = await client.messages.create({
+			model: "claude-sonnet-4-20250514",
+			max_tokens: 1024,
+			messages: [
+				{ role: "user", content: "Explain how Cloudflare Workers work." },
+			],
+		});
+
+		return Response.json({ response: message.content });
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Google Gemini (via OpenAI-compatible API)
+
+Google's Gemini models expose an [OpenAI-compatible endpoint](https://ai.google.dev/gemini-api/docs/openai). You can use the `openai` npm package with a custom `baseURL` to call Gemini without installing a separate SDK.
+
+<PackageManagers pkg="openai" />
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { OpenAI } from "openai";
+
+interface Env {
+	GEMINI_API_KEY: string;
+}
+
+export class MyAgent extends Agent<Env> {
 	async onRequest(request: Request): Promise<Response> {
 		const client = new OpenAI({
 			apiKey: this.env.GEMINI_API_KEY,
 			baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
 		});
 
-		let { readable, writable } = new TransformStream();
-		let writer = writable.getWriter();
-		const textEncoder = new TextEncoder();
+		const completion = await client.chat.completions.create({
+			model: "gemini-2.5-flash",
+			messages: [
+				{ role: "user", content: "Explain how Cloudflare Workers work." },
+			],
+		});
 
-		this.ctx.waitUntil(
-			(async () => {
-				const stream = await client.chat.completions.create({
-					model: "gemini-2.0-flash",
-					messages: [
-						{ role: "user", content: "Write me a Cloudflare Worker." },
-					],
-					stream: true,
-				});
-
-				for await (const part of stream) {
-					writer.write(
-						textEncoder.encode(part.choices[0]?.delta?.content || ""),
-					);
-				}
-				writer.close();
-			})(),
-		);
-
-		return new Response(readable);
+		return Response.json({ response: completion.choices[0].message.content });
 	}
 }
 ```
 
 </TypeScriptExample>
+
+### Any OpenAI-compatible endpoint
+
+Many providers (Groq, Together, Fireworks, Ollama, LM Studio, and others) expose OpenAI-compatible APIs. Point the OpenAI SDK at their base URL:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { OpenAI } from "openai";
+
+interface Env {
+	PROVIDER_API_KEY: string;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		const client = new OpenAI({
+			apiKey: this.env.PROVIDER_API_KEY,
+			baseURL: "https://api.your-provider.com/v1/",
+		});
+
+		const completion = await client.chat.completions.create({
+			model: "your-model-name",
+			messages: [
+				{ role: "user", content: "Explain how Cloudflare Workers work." },
+			],
+		});
+
+		return Response.json({ response: completion.choices[0].message.content });
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Streaming with native SDKs
+
+All major provider SDKs support streaming. Here is an example that streams an OpenAI response over a WebSocket connection:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { OpenAI } from "openai";
+
+interface Env {
+	OPENAI_API_KEY: string;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onMessage(connection: Connection, message: WSMessage) {
+		const { prompt } = JSON.parse(message as string);
+		const client = new OpenAI({ apiKey: this.env.OPENAI_API_KEY });
+
+		const stream = await client.chat.completions.create({
+			model: "gpt-4.1",
+			messages: [{ role: "user", content: prompt }],
+			stream: true,
+		});
+
+		for await (const part of stream) {
+			const content = part.choices[0]?.delta?.content;
+			if (content) {
+				connection.send(JSON.stringify({ type: "chunk", content }));
+			}
+		}
+
+		connection.send(JSON.stringify({ type: "done" }));
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Storing API keys
+
+Store API keys as [secrets](/workers/configuration/secrets/) — never hard-code them in your source code. Use `npx wrangler secret put` to set a secret:
+
+```sh
+npx wrangler secret put OPENAI_API_KEY
+```
+
+Then access the secret on `this.env` inside your agent:
+
+```ts
+const client = new OpenAI({ apiKey: this.env.OPENAI_API_KEY });
+```
+
+For local development, create a `.dev.vars` file in your project root:
+
+```txt
+OPENAI_API_KEY=sk-your-key-here
+ANTHROPIC_API_KEY=sk-ant-your-key-here
+```
+
+## Next steps
+
+<LinkCard
+	title="Calling LLMs"
+	href="/agents/concepts/calling-llms/"
+	description="Patterns for stateful LLM calls — context from state, surviving disconnections, autonomous calls, and multi-model pipelines."
+/>
+
+<LinkCard
+	title="Chat agents"
+	href="/agents/api-reference/chat-agents/"
+	description="AIChatAgent handles message persistence, resumable streaming, and tools automatically."
+/>
+
+<LinkCard
+	title="AI Gateway"
+	href="/ai-gateway/"
+	description="Route requests across providers, cache responses, set rate limits, and manage cost budgets."
+/>
+
+<LinkCard
+	title="Workers AI models"
+	href="/workers-ai/models/"
+	description="Browse all models available through the Workers AI binding."
+/>

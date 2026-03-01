@@ -7,11 +7,11 @@ sidebar:
   order: 6
 ---
 
-import { TypeScriptExample, LinkCard } from "~/components";
+import { TypeScriptExample, LinkCard, Tabs, TabItem } from "~/components";
 
 Agents change how you work with LLMs. In a stateless Worker, every request starts from scratch — you reconstruct context, call a model, return the response, and forget everything. An Agent keeps state between calls, stays connected to clients over WebSocket, and can call models on its own schedule without a user present.
 
-This page covers the patterns that become possible when your LLM calls happen inside a stateful Agent. For provider setup and code examples, refer to [Using AI Models](/agents/api-reference/using-ai-models/).
+The Agents SDK is model and provider agnostic — you can use Workers AI, OpenAI, Anthropic, Google Gemini, or any other provider. The patterns on this page work with any model. For provider setup and code examples, refer to [Using AI Models](/agents/api-reference/using-ai-models/).
 
 ## State as context
 
@@ -48,22 +48,22 @@ This means the client does not need to send the full conversation on every messa
 
 Reasoning models like DeepSeek R1 or GLM-4 can take 30 seconds to several minutes to respond. In a stateless request-response architecture, the client must stay connected the entire time. If the connection drops, the response is lost.
 
-An Agent keeps running after the client disconnects. When the response arrives, the Agent can persist it to state and deliver it when the client reconnects — even hours or days later.
+An Agent keeps running after the client disconnects. When the response arrives, the Agent can persist it to state and deliver it when the client reconnects — even hours or days later. This works with any provider — the example below uses OpenAI, but you can substitute any AI SDK-compatible model.
 
 <TypeScriptExample>
 
 ```ts
 import { Agent } from "agents";
 import { streamText } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createOpenAI } from "@ai-sdk/openai";
 
 export class MyAgent extends Agent<Env> {
 	async onMessage(connection: Connection, message: WSMessage) {
 		const { prompt } = JSON.parse(message as string);
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
 
 		const result = streamText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: openai("gpt-4.1"),
 			prompt,
 		});
 
@@ -118,7 +118,7 @@ export class DigestAgent extends Agent<Env> {
 
 ## Multi-model pipelines
 
-Because an Agent maintains state across calls, you can chain multiple models in a single method — using a fast model for classification, a reasoning model for planning, and an embedding model for retrieval — without losing context between steps.
+Because an Agent maintains state across calls, you can chain multiple models in a single method — using a fast model for classification, a reasoning model for planning, and an embedding model for retrieval — without losing context between steps. You can even mix providers in a single pipeline, using the best model for each step.
 
 <TypeScriptExample>
 
@@ -126,24 +126,29 @@ Because an Agent maintains state across calls, you can chain multiple models in 
 import { Agent } from "agents";
 import { generateText, embed } from "ai";
 import { createWorkersAI } from "workers-ai-provider";
+import { createAnthropic } from "@ai-sdk/anthropic";
 
 export class TriageAgent extends Agent<Env> {
 	async triage(ticket: string) {
 		const workersai = createWorkersAI({ binding: this.env.AI });
+		const anthropic = createAnthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
 
+		// Step 1: Fast classification with Workers AI (no API key needed)
 		const { text: category } = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: workersai("@cf/meta/llama-4-scout-17b-16e-instruct"),
 			prompt: `Classify this support ticket into one of: billing, technical, account. Ticket: ${ticket}`,
 		});
 
+		// Step 2: Embed the ticket for vector search with Workers AI
 		const { embedding } = await embed({
 			model: workersai("@cf/baai/bge-base-en-v1.5"),
 			value: ticket,
 		});
 		const similar = await this.env.VECTOR_DB.query(embedding, { topK: 5 });
 
+		// Step 3: Draft a response with Anthropic for higher quality output
 		const { text: response } = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: anthropic("claude-sonnet-4-20250514"),
 			prompt: `Draft a response for this ${category} ticket. Similar resolved tickets: ${JSON.stringify(similar)}. Ticket: ${ticket}`,
 		});
 
@@ -157,7 +162,7 @@ export class TriageAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-Each intermediate result stays in the Agent's memory for the duration of the method, and the final result is persisted to SQL for future reference.
+Each intermediate result stays in the Agent's memory for the duration of the method, and the final result is persisted to SQL for future reference. Mixing providers like this lets you optimize for cost and quality — use a free Workers AI model for simple classification and a more capable model for complex generation.
 
 ## Caching and cost control
 

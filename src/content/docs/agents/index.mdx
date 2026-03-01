@@ -34,7 +34,7 @@ Each agent runs on a [Durable Object](/durable-objects/) — a stateful micro-se
 
 ### Get started
 
-Three commands to a running agent. No API keys required — the starter uses [Workers AI](/workers-ai/) by default.
+Three commands to a running agent. The starter uses [Workers AI](/workers-ai/) by default (no API keys required), but the Agents SDK is **model and provider agnostic** — you can use [OpenAI, Anthropic, Google Gemini, or any other AI provider](/agents/api-reference/using-ai-models/).
 
 ```sh
 npx create-cloudflare@latest --template cloudflare/agents-starter
@@ -42,7 +42,7 @@ cd agents-starter && npm install
 npm run dev
 ```
 
-The starter includes streaming AI chat, server-side and client-side tools, human-in-the-loop approval, and task scheduling — a foundation you can build on or tear apart. You can also swap in [OpenAI, Anthropic, Google Gemini, or any other provider](/agents/api-reference/using-ai-models/).
+The starter includes streaming AI chat, server-side and client-side tools, human-in-the-loop approval, and task scheduling — a foundation you can build on or tear apart. Swap the model in one line to use any provider.
 
 <LinkCard
 	title="Build a chat agent"
@@ -60,7 +60,7 @@ The starter includes streaming AI chat, server-side and client-side tools, human
 
 - **Remember everything** — Every agent has a built-in [SQL database](/agents/api-reference/store-and-sync-state/) and key-value state that syncs to connected clients in real-time. State survives restarts, deploys, and hibernation.
 - **Build AI chat** — [`AIChatAgent`](/agents/api-reference/chat-agents/) gives you streaming AI chat with automatic message persistence, resumable streams, and tool support. Pair it with the [`useAgentChat`](/agents/api-reference/chat-agents/) React hook to build chat UIs in minutes.
-- **Think with any model** — Call [any AI model](/agents/api-reference/using-ai-models/) — Workers AI, OpenAI, Anthropic, Gemini — and stream responses over [WebSockets](/agents/api-reference/websockets/) or [Server-Sent Events](/agents/api-reference/http-sse/). Long-running reasoning models that take minutes to respond work out of the box.
+- **Think with any model** — The SDK is provider agnostic. Call [any AI model](/agents/api-reference/using-ai-models/) — Workers AI, OpenAI, Anthropic, Google Gemini, Mistral, or any OpenAI-compatible endpoint — and stream responses over [WebSockets](/agents/api-reference/websockets/) or [Server-Sent Events](/agents/api-reference/http-sse/). Bring your own provider library or use the [AI SDK](https://ai-sdk.dev) for a unified interface.
 - **Use and serve tools** — Define server-side tools, client-side tools that run in the browser, and [human-in-the-loop](/agents/concepts/human-in-the-loop/) approval flows. Expose your agent's tools to other agents and LLMs via [MCP](/agents/api-reference/mcp-agent-api/).
 - **Act on their own** — [Schedule tasks](/agents/api-reference/schedule-tasks/) on a delay, at a specific time, or on a cron. Agents can wake themselves up, do work, and go back to sleep — without a user present.
 - **Browse the web** — Spin up [headless browsers](/agents/api-reference/browse-the-web/) to scrape, screenshot, and interact with web pages.
