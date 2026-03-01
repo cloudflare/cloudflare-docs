@@ -63,7 +63,7 @@ export class MyAgent extends Agent<Env> {
 		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
 
 		const result = streamText({
-			model: openai("gpt-4.1"),
+			model: openai("gpt-5.2"),
 			prompt,
 		});
 
@@ -148,7 +148,7 @@ export class TriageAgent extends Agent<Env> {
 
 		// Step 3: Draft a response with Anthropic for higher quality output
 		const { text: response } = await generateText({
-			model: anthropic("claude-sonnet-4-5"),
+			model: anthropic("claude-sonnet-4-6"),
 			prompt: `Draft a response for this ${category} ticket. Similar resolved tickets: ${JSON.stringify(similar)}. Ticket: ${ticket}`,
 		});
 

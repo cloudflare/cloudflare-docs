@@ -103,7 +103,7 @@ export class MyAgent extends Agent<Env> {
 		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
 
 		const { text } = await generateText({
-			model: openai("gpt-4.1"),
+			model: openai("gpt-5.2"),
 			prompt: "Explain how Cloudflare Workers work in two sentences.",
 		});
 
@@ -134,7 +134,7 @@ export class MyAgent extends Agent<Env> {
 		const anthropic = createAnthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
 
 		const { text } = await generateText({
-			model: anthropic("claude-sonnet-4-5"),
+			model: anthropic("claude-sonnet-4-6"),
 			prompt: "Explain how Cloudflare Workers work in two sentences.",
 		});
 
@@ -167,7 +167,7 @@ export class MyAgent extends Agent<Env> {
 		});
 
 		const { text } = await generateText({
-			model: google("gemini-2.5-flash"),
+			model: google("gemini-3-flash"),
 			prompt: "Explain how Cloudflare Workers work in two sentences.",
 		});
 
@@ -218,7 +218,7 @@ export class MyAgent extends Agent<Env> {
 		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
 
 		const result = streamText({
-			model: openai("gpt-4.1"),
+			model: openai("gpt-5.2"),
 			prompt,
 		});
 
@@ -254,7 +254,7 @@ export class MyAgent extends Agent<Env> {
 		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
 
 		const result = streamText({
-			model: openai("gpt-4.1"),
+			model: openai("gpt-5.2"),
 			prompt,
 		});
 
@@ -313,7 +313,7 @@ export class ChatAgent extends AIChatAgent<Env> {
 	async onChatMessage() {
 		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
 		const result = streamText({
-			model: openai("gpt-4.1"),
+			model: openai("gpt-5.2"),
 			messages: await convertToModelMessages(this.messages),
 		});
 		return result.toUIMessageStreamResponse();
@@ -337,7 +337,7 @@ export class ChatAgent extends AIChatAgent<Env> {
 	async onChatMessage() {
 		const anthropic = createAnthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
 		const result = streamText({
-			model: anthropic("claude-sonnet-4-5"),
+			model: anthropic("claude-sonnet-4-6"),
 			messages: await convertToModelMessages(this.messages),
 		});
 		return result.toUIMessageStreamResponse();
@@ -363,7 +363,7 @@ export class ChatAgent extends AIChatAgent<Env> {
 			apiKey: this.env.GOOGLE_API_KEY,
 		});
 		const result = streamText({
-			model: google("gemini-2.5-flash"),
+			model: google("gemini-3-flash"),
 			messages: await convertToModelMessages(this.messages),
 		});
 		return result.toUIMessageStreamResponse();
@@ -478,7 +478,7 @@ export class MyAgent extends Agent<Env> {
 		const client = new OpenAI({ apiKey: this.env.OPENAI_API_KEY });
 
 		const completion = await client.chat.completions.create({
-			model: "gpt-4.1",
+			model: "gpt-5.2",
 			messages: [
 				{ role: "user", content: "Explain how Cloudflare Workers work." },
 			],
@@ -510,7 +510,7 @@ export class MyAgent extends Agent<Env> {
 		const client = new Anthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
 
 		const message = await client.messages.create({
-			model: "claude-sonnet-4-5",
+			model: "claude-sonnet-4-6",
 			max_tokens: 1024,
 			messages: [
 				{ role: "user", content: "Explain how Cloudflare Workers work." },
@@ -548,7 +548,7 @@ export class MyAgent extends Agent<Env> {
 		});
 
 		const completion = await client.chat.completions.create({
-			model: "gemini-2.5-flash",
+			model: "gemini-3-flash",
 			messages: [
 				{ role: "user", content: "Explain how Cloudflare Workers work." },
 			],
@@ -616,7 +616,7 @@ export class MyAgent extends Agent<Env> {
 		const client = new OpenAI({ apiKey: this.env.OPENAI_API_KEY });
 
 		const stream = await client.chat.completions.create({
-			model: "gpt-4.1",
+			model: "gpt-5.2",
 			messages: [{ role: "user", content: prompt }],
 			stream: true,
 		});
