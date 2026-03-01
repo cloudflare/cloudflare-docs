@@ -48,22 +48,22 @@ This means the client does not need to send the full conversation on every messa
 
 Reasoning models like DeepSeek R1 or GLM-4 can take 30 seconds to several minutes to respond. In a stateless request-response architecture, the client must stay connected the entire time. If the connection drops, the response is lost.
 
-An Agent keeps running after the client disconnects. When the response arrives, the Agent can persist it to state and deliver it when the client reconnects — even hours or days later. This works with any provider — the example below uses OpenAI, but you can substitute any AI SDK-compatible model.
+An Agent keeps running after the client disconnects. When the response arrives, the Agent can persist it to state and deliver it when the client reconnects — even hours or days later.
 
 <TypeScriptExample>
 
 ```ts
 import { Agent } from "agents";
 import { streamText } from "ai";
-import { createOpenAI } from "@ai-sdk/openai";
+import { createWorkersAI } from "workers-ai-provider";
 
 export class MyAgent extends Agent<Env> {
 	async onMessage(connection: Connection, message: WSMessage) {
 		const { prompt } = JSON.parse(message as string);
-		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
+		const workersai = createWorkersAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: openai("gpt-5.2"),
+			model: workersai("@cf/meta/llama-4-scout-17b-16e-instruct"),
 			prompt,
 		});
 
