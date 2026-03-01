@@ -148,7 +148,7 @@ export class TriageAgent extends Agent<Env> {
 
 		// Step 3: Draft a response with Anthropic for higher quality output
 		const { text: response } = await generateText({
-			model: anthropic("claude-sonnet-4-20250514"),
+			model: anthropic("claude-sonnet-4-5"),
 			prompt: `Draft a response for this ${category} ticket. Similar resolved tickets: ${JSON.stringify(similar)}. Ticket: ${ticket}`,
 		});
 

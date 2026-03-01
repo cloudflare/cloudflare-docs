@@ -134,7 +134,7 @@ export class MyAgent extends Agent<Env> {
 		const anthropic = createAnthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
 
 		const { text } = await generateText({
-			model: anthropic("claude-sonnet-4-20250514"),
+			model: anthropic("claude-sonnet-4-5"),
 			prompt: "Explain how Cloudflare Workers work in two sentences.",
 		});
 
@@ -195,12 +195,16 @@ Every adapter follows the same interface — install the package, create the pro
 
 ### Streaming with the AI SDK
 
-Use `streamText` to stream responses back to the client. This is especially important for reasoning models that take time to generate.
+**Streaming is fully supported and recommended** for all AI model calls. Use `streamText` from the AI SDK to stream responses in real-time — over WebSockets, HTTP Server-Sent Events (SSE), or through `AIChatAgent` (which handles streaming automatically).
+
+#### Streaming over WebSocket
+
+Stream text chunks directly to a connected client over WebSocket using `result.textStream`:
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents";
+import { Agent, type Connection, type WSMessage } from "agents";
 import { streamText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 
@@ -229,11 +233,45 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
+#### Streaming over HTTP (Server-Sent Events)
+
+Return a streaming response from `onRequest` using `toTextStreamResponse()`. This returns a standard SSE response that any HTTP client can consume:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { streamText } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
+
+interface Env {
+	OPENAI_API_KEY: string;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		const { prompt } = await request.json<{ prompt: string }>();
+		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
+
+		const result = streamText({
+			model: openai("gpt-4.1"),
+			prompt,
+		});
+
+		return result.toTextStreamResponse();
+	}
+}
+```
+
+</TypeScriptExample>
+
+For more details on SSE patterns, refer to [HTTP and Server-Sent Events](/agents/api-reference/http-sse/).
+
 You can also persist AI model responses back to [Agent state](/agents/api-reference/store-and-sync-state/) using `this.setState`. If a user disconnects, read the message history back and send it to the user when they reconnect.
 
 ### Switching providers in AIChatAgent
 
-`AIChatAgent` uses the AI SDK internally. To change the model your chat agent uses, update the provider in `onChatMessage` — the client code does not need to change.
+`AIChatAgent` uses the AI SDK internally. To change the model your chat agent uses, update the provider in `onChatMessage` — the client code does not need to change. `AIChatAgent` handles message persistence, resumable streaming, and WebSocket delivery automatically. You return a streaming `Response` from `onChatMessage` and the framework handles the rest.
 
 <Tabs>
 <TabItem label="Workers AI">
@@ -243,7 +281,11 @@ import { AIChatAgent } from "@cloudflare/ai-chat";
 import { streamText, convertToModelMessages } from "ai";
 import { createWorkersAI } from "workers-ai-provider";
 
-export class ChatAgent extends AIChatAgent {
+interface Env {
+	AI: Ai;
+}
+
+export class ChatAgent extends AIChatAgent<Env> {
 	async onChatMessage() {
 		const workersai = createWorkersAI({ binding: this.env.AI });
 		const result = streamText({
@@ -263,7 +305,11 @@ import { AIChatAgent } from "@cloudflare/ai-chat";
 import { streamText, convertToModelMessages } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 
-export class ChatAgent extends AIChatAgent {
+interface Env {
+	OPENAI_API_KEY: string;
+}
+
+export class ChatAgent extends AIChatAgent<Env> {
 	async onChatMessage() {
 		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
 		const result = streamText({
@@ -283,11 +329,15 @@ import { AIChatAgent } from "@cloudflare/ai-chat";
 import { streamText, convertToModelMessages } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 
-export class ChatAgent extends AIChatAgent {
+interface Env {
+	ANTHROPIC_API_KEY: string;
+}
+
+export class ChatAgent extends AIChatAgent<Env> {
 	async onChatMessage() {
 		const anthropic = createAnthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
 		const result = streamText({
-			model: anthropic("claude-sonnet-4-20250514"),
+			model: anthropic("claude-sonnet-4-5"),
 			messages: await convertToModelMessages(this.messages),
 		});
 		return result.toUIMessageStreamResponse();
@@ -303,7 +353,11 @@ import { AIChatAgent } from "@cloudflare/ai-chat";
 import { streamText, convertToModelMessages } from "ai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
-export class ChatAgent extends AIChatAgent {
+interface Env {
+	GOOGLE_API_KEY: string;
+}
+
+export class ChatAgent extends AIChatAgent<Env> {
 	async onChatMessage() {
 		const google = createGoogleGenerativeAI({
 			apiKey: this.env.GOOGLE_API_KEY,
@@ -456,7 +510,7 @@ export class MyAgent extends Agent<Env> {
 		const client = new Anthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
 
 		const message = await client.messages.create({
-			model: "claude-sonnet-4-20250514",
+			model: "claude-sonnet-4-5",
 			max_tokens: 1024,
 			messages: [
 				{ role: "user", content: "Explain how Cloudflare Workers work." },
@@ -549,7 +603,7 @@ All major provider SDKs support streaming. Here is an example that streams an Op
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents";
+import { Agent, type Connection, type WSMessage } from "agents";
 import { OpenAI } from "openai";
 
 interface Env {
