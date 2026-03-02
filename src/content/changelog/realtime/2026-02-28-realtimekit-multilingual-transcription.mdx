@@ -1,12 +1,12 @@
 ---
-title: Real-time transcription in RealtimeKit now supports 10 languages
-description: RealtimeKit transcription supports 10 languages with regional variants, powered by Deepgram Nova-3 running on Workers AI.
+title: Real-time transcription in RealtimeKit now supports 16 languages
+description: RealtimeKit transcription supports 16 languages powered by Deepgram Nova-3 running on Workers AI.
 products:
   - workers-ai
 date: 2026-02-28
 ---
 
-Real-time transcription in RealtimeKit now supports 10 languages with regional variants, powered by [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/) running on [Workers AI](/workers-ai/).
+Real-time transcription in RealtimeKit now supports 16 languages, powered by [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/) running on [Workers AI](/workers-ai/).
 
 During a meeting, participant audio is routed through [AI Gateway](/ai-gateway/) to Nova-3 on Workers AI — so transcription runs on Cloudflare's network end-to-end, reducing latency compared to routing through external speech-to-text services.
 
@@ -16,13 +16,13 @@ Set the language when [creating a meeting](/realtime/realtimekit/concepts/meetin
 {
 	"ai_config": {
 		"transcription": {
-			"language": "fr-CA"
+			"language": "es"
 		}
 	}
 }
 ```
 
-Supported languages include English, Spanish, French, German, Hindi, Russian, Portuguese, Japanese, Italian, and Dutch — with regional variants like `en-GB`, `fr-CA`, and `pt-BR`.
+Supported language codes: `en-US`, `en-IN`, `es`, `fr`, `de`, `hi`, `ru`, `pt`, `pt-BR`, `it`, `nl`, `sv`, `pl`, `el`, `tr`, `ro`, `ko`, `id`, and `multi` for automatic language detection.
 
 If you are building voice agents or real-time translation workflows, your agent can now transcribe in the caller's language natively — no extra services or routing logic needed.
 

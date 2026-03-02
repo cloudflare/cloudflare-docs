@@ -2,19 +2,21 @@
 {}
 ---
 
-Nova-3 supports the following language codes for real-time transcription:
+Nova-3 supports the following languages. Refer to the [Deepgram Nova-3 documentation](https://developers.deepgram.com/docs/models-languages-overview#nova-3) for the complete list of language codes and regional variants.
 
-| Language   | Codes                                             |
-| ---------- | ------------------------------------------------- |
+| Language   | Codes                                              |
+| ---------- | -------------------------------------------------- |
 | English    | `en`, `en-US`, `en-AU`, `en-GB`, `en-IN`, `en-NZ` |
-| Spanish    | `es`, `es-419`                                    |
-| French     | `fr`, `fr-CA`                                     |
-| German     | `de`, `de-CH`                                     |
-| Hindi      | `hi`                                              |
-| Russian    | `ru`                                              |
-| Portuguese | `pt`, `pt-BR`, `pt-PT`                            |
-| Japanese   | `ja`                                              |
-| Italian    | `it`                                              |
-| Dutch      | `nl`                                              |
+| Spanish    | `es`, `es-419`                                     |
+| French     | `fr`, `fr-CA`                                      |
+| German     | `de`, `de-CH`                                      |
+| Hindi      | `hi`                                               |
+| Russian    | `ru`                                               |
+| Portuguese | `pt`, `pt-BR`, `pt-PT`                             |
+| Japanese   | `ja`                                               |
+| Italian    | `it`                                               |
+| Dutch      | `nl`                                               |
 
-If no language is specified, the model defaults to `en-US`. The model uses automatic language detection, which means it will attempt to identify the spoken language. For best accuracy, explicitly set the language code matching your audio.
+Nova-3 also supports 40+ additional languages including Arabic, Korean, Turkish, Polish, Romanian, Indonesian, and many more. Use `multi` for automatic multilingual detection across the 10 languages listed above.
+
+If no language is specified, the model defaults to `en`. For best accuracy, explicitly set the language code matching your audio.
