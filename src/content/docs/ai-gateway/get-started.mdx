@@ -45,7 +45,9 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default
   }'
 ```
 
-AI Gateway automatically creates a gateway for you on the first request. The `cf-aig-authorization` header authenticates your request.
+:::note
+AI Gateway automatically creates a gateway for you on the first request. The gateway is created with [authentication](/ai-gateway/configuration/authentication/) turned on, so the `cf-aig-authorization` header is required for all requests. For more details on how the default gateway works, refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway).
+:::
 
 <Details header="Create a gateway manually">
 
