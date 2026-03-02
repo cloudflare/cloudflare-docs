@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import { Render } from "~/components";
+
 RealtimeKit provides two transcription modes powered by Cloudflare Workers AI:
 
 | Mode             | Model                                                                | Use Case                       |
@@ -54,22 +56,9 @@ Pass `ai_config.transcription` when [creating a meeting](/realtime/realtimekit/c
 
 ### Supported languages
 
-RealtimeKit supports the following language codes for real-time transcription, powered by [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/) on Workers AI.
+Real-time transcription is powered by [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/) on Workers AI.
 
-| Language   | Code(s)       |
-| ---------- | ------------- |
-| English    | `en-US`       |
-| Spanish    | `es`          |
-| French     | `fr`          |
-| German     | `de`          |
-| Hindi      | `hi`          |
-| Russian    | `ru`          |
-| Portuguese | `pt`, `pt-BR` |
-| Italian    | `it`          |
-| Dutch      | `nl`          |
-| Multi      | `multi`       |
-
-Use `multi` for automatic language detection across all of the languages listed above. If no language is specified, the default is `en-US`.
+<Render file="nova-3-supported-languages" product="workers-ai" />
 
 ### Consume transcripts
 
