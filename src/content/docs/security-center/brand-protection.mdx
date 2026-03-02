@@ -10,9 +10,10 @@ import { AvailableNotifications, Render, DashButton } from "~/components";
 <Render file="brand-protection-definition" product="security-center" />
 
 :::note[User permission]
-Access to Brand Protection is managed through [Cloudflare RBAC](/fundamentals/setup/manage-members/roles/). 
+Access to Brand Protection is managed through [Cloudflare RBAC](/fundamentals/manage-members/roles/).
 
 Only users with the following roles can access and configure Brand Protection:
+
 - Super Admin
 - Admin
 - Brand Protection (custom role)
@@ -55,9 +56,9 @@ Logo search uses computer vision to detect domains using your visual assets, eve
 To set up a new logo query:
 
 1. Select **Monitor Logos** and select **Add logo**.
-3. Add a name for your query and upload your logo. Only the `.png`, `.jpeg`, and `.jpg` file extensions are supported.
-4. Set the threshold: Set a match threshold (the minimum is 75%). A higher score ensures high-precision matches, while a lower score catches remixed or slightly altered versions of your logo.
-5. Select **Save logo**. The system will now scan newly detected infrastructure for visual matches.
+2. Add a name for your query and upload your logo. Only the `.png`, `.jpeg`, and `.jpg` file extensions are supported.
+3. Set the threshold: Set a match threshold (the minimum is 75%). A higher score ensures high-precision matches, while a lower score catches remixed or slightly altered versions of your logo.
+4. Select **Save logo**. The system will now scan newly detected infrastructure for visual matches.
 
 The browser will return to the **Monitored Logos** page, where you can access your query and configure notifications.
 
@@ -87,14 +88,15 @@ To submit abuse reports directly from the dashboard:
 1. In the Cloudflare dashboard, go to the **Brand Protection** page.
 
    <DashButton url="/?to=/:account/security-center/brand-protection" />
+
 2. Go to **Monitor Strings**, select the query you want to report.
 3. Select **Report to Cloudflare**.
 4. Fill in the details to submit an abuse report.
 5. Select **Submit**.
 
 To view abuse reports, in the Cloudflare dashboard, go to the **Abuse Reports** page.
-   
-   <DashButton url="/?to=/:account/abuse-reports" />
+
+<DashButton url="/?to=/:account/abuse-reports" />
 
 You can review abuse reports against your zones and any mitigations taken against reports in response.
 
