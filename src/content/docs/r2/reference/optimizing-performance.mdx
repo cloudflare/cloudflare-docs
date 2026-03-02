@@ -1,54 +1,55 @@
 ---
-title: Optimizing performance
-pcx_content_type: concept
-sidebar:
+title: Optimizing performance  
+pcx_content_type: concept  
+sidebar:  
   order: 8
+
 ---
 
-import { LinkCard } from "~/components";
+import { LinkCard } from "\~/components";
 
 Your applications can achieve thousands of requests per second when reading and writing from R2, with multiple options to scale further.
 
 ## Performance and scaling
 
-R2 provides multiple ways to scale your application's throughput. When accessing R2 directly via the S3 API or Workers API, each bucket supports approximately 20,000 read requests per second (GET, HEAD) and 4,000 write requests per second (PUT, POST, COPY, DELETE). Note that writing to the same key concurrently is limited to 1 request per second. R2's performance will continue to improve as we iterate on the underlying infrastructure.
+R2 provides multiple ways to scale your application's throughput. When accessing R2 directly via the [S3 API](/r2/api/s3/) or [Workers API](/r2/api/workers/), each bucket supports approximately X,000 read requests/sec (GET, HEAD) and X,000 write requests/sec (PUT, POST, COPY, DELETE). Note that writing to the same key concurrently is [limited to 1 request/sec](/r2/platform/limits/). R2's performance will continue to improve as we iterate on the underlying infrastructure.
 
-You can scale beyond these rates by distributing requests across multiple buckets or enabling caching for read-heavy workloads.
+You can scale beyond these rates by distributing requests across multiple buckets or enabling caching for read-heavy workloads. 
 
-## Distributing requests across buckets
+### Distributing requests across buckets
 
-Each bucket has independent throughput limits, so spreading requests across buckets increases your aggregate capacity.
+Each bucket has independent throughput limits, so spreading requests across buckets increases your aggregate capacity. 
 
-For example, with 10 buckets, on aggregate your application can achieve about 200,000 read requests per second (10 buckets × 20,000 requests per second), and 40,000 write requests per second (10 buckets × 4,000 requests per second).
+Since each bucket has independent throughput limits, your aggregate capacity can scale linearly with the number of buckets. For example, with 10 buckets you can achieve approximately X0,000 reads/sec and X0,000 writes/sec.
 
-By default, R2 allows up to 1 million buckets per account. [Fill out this form](TODO) if you require a higher limit.
+By default, R2 allows up to 1 million buckets per account. Please complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) if you require a higher limit.
 
-## Caching with custom domains
+### Caching with custom domains
 
-For read-heavy workloads serving frequently accessed objects, using a custom domain with Cloudflare's cache enabled can significantly increase read throughput. Cached requests are served from Cloudflare's edge network, distributing load across the network instead of requests going directly to your bucket.
+For read-heavy workloads serving frequently accessed objects, using a [custom domain](/r2/buckets/public-buckets/#custom-domains) with [Cloudflare's cache](/cache/) enabled can significantly [increase read throughput](/r2/how-r2-works/#performance). Cached requests are served from Cloudflare's edge network, distributing load across the network instead of requests going directly to your bucket.
 
-Note that custom domains only support read operations, and you cannot write to R2 through a custom domain. Enabling a custom domain makes your bucket publicly accessible via that domain. You can add access controls to restrict access.
+Note that custom domains only support read operations, and you cannot write to R2 through a custom domain. Enabling a custom domain makes your bucket publicly accessible via that domain. You can add [access controls](/r2/buckets/public-buckets/#access-control) to restrict access.
 
 ## Rate limiting on r2.dev
 
-The r2.dev subdomain is rate limited and intended for development and testing purposes only. Production workloads should use the S3 API, Workers API, or a custom domain. Refer to [Limits](/r2/platform/limits/) for more details.
+The `r2.dev` subdomain is rate limited and intended for development and testing purposes only. Production workloads should use the [S3 API](/r2/api/s3/), [Workers API](/r2/api/workers/), or a [custom domain](/r2/buckets/public-buckets/#custom-domains). Refer to [Limits](/r2/platform/limits/#rate-limiting-on-managed-public-buckets-through-r2dev) for more details.
 
 ## Learn more
 
-<LinkCard
-	title="How R2 works"
-	href="/r2/how-r2-works/"
-	description="Learn about R2's architecture and how data is read and written."
+<LinkCard  
+	title="How R2 works"  
+	href="/r2/how-r2-works/"  
+	description="Learn about R2's architecture and how data is read and written."  
 />
 
-<LinkCard
-	title="Limits"
-	href="/r2/platform/limits/"
-	description="View R2's limits for buckets, objects, and operations."
+<LinkCard  
+	title="Limits"  
+	href="/r2/platform/limits/"  
+	description="View R2's limits for buckets, objects, and operations."  
 />
 
-<LinkCard
-	title="Data location"
-	href="/r2/reference/data-location/"
-	description="Learn how R2 determines where data is stored."
+<LinkCard  
+	title="Data location"  
+	href="/r2/reference/data-location/"  
+	description="Learn how R2 determines where data is stored."  
 />
