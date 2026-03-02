@@ -134,7 +134,7 @@ const use_cases: Array<Tag> = [
 	{ label: "Playback" },
 	{ label: "Prisma ORM" },
 	{ label: "Privacy" },
-	{ label: "Private Networks" },
+	{ label: "Private networks" },
 	{ label: "Redirects", variants: ["redirect"] },
 	{ label: "Request modification", variants: ["request"] },
 	{ label: "Response modification", variants: ["response"] },
