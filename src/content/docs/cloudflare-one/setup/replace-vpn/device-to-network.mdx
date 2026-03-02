@@ -172,8 +172,8 @@ This deny-by-default approach ensures that new resources on your private network
 
 You now have a working Device to network setup. To harden this deployment for production:
 
-- **Add a tunnel replica** — Deploy `cloudflared` on a second host for high availability. Refer to [Tunnel availability and failover](/cloudflare-one/networks/connectors/cloudflare-tunnel/high-availability/).
+- **Add a tunnel replica** — Deploy `cloudflared` on a second host for high availability. Refer to [Tunnel availability and failover](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/).
 - **Deploy WARP at scale** — Use MDM tools (Intune, JAMF) to deploy the WARP client across your device fleet. Refer to [Managed deployment](/cloudflare-one/team-and-resources/devices/warp/deployment/).
-- **Configure private DNS** — Resolve internal hostnames (not just IPs) through the tunnel. Refer to [Private DNS](/cloudflare-one/networks/dns/private-dns/).
-- **Enable TLS inspection** — Inspect HTTPS traffic for threats and data loss. Refer to [TLS decryption](/cloudflare-one/traffic-policies/gateway-inspection/).
+- **Configure private DNS** — Resolve internal hostnames (not just IPs) through the tunnel. Refer to [Private DNS](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/private-dns/).
+- **Enable TLS inspection** — Inspect HTTPS traffic for threats and data loss. Refer to [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
 - **Build comprehensive policies** — The [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/) covers advanced policy design, posture checks, and multi-site deployments in depth.
