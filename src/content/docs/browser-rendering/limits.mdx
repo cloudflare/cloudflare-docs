@@ -90,11 +90,11 @@ Rate limits are enforced with a fixed per-second fill rate, not as a burst allow
 | Workers Free | 6 requests/min   | 1 request every 10 seconds |
 | Workers Paid | 180 requests/min | 3 requests/second          |
 
-If you exceed the rate limit, the API responds with HTTP status code `429 Too many requests` and includes a `Retry-After` header specifying how many seconds to wait before retrying.
+If you exceed the rate limit, the API responds with HTTP status code `429 Rate limit exceeded.` and includes a `Retry-After` header specifying how many seconds to wait before retrying.
 
-### Error: `429 Too many requests`
+### Error: `429 Rate limit exceeded.`
 
-When you make too many requests in a short period of time, Browser Rendering will respond with HTTP status code `429 Too many requests`. You can view your account's rate limits in the [Workers Free](#workers-free) and [Workers Paid](#workers-paid) sections above.
+When you make too many requests in a short period of time, Browser Rendering will respond with HTTP status code `429 Rate limit exceeded.` You can view your account's rate limits in the [Workers Free](#workers-free) and [Workers Paid](#workers-paid) sections above.
 
 The example below demonstrates how to handle rate limiting gracefully by reading the `Retry-After` value and retrying the request after that delay.
 
