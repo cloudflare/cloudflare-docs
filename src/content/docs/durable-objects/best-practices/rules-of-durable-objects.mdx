@@ -1410,7 +1410,7 @@ export class Subscription extends DurableObject<Env> {
 
 ### Clean up storage with `deleteAll()`
 
-To fully clear a Durable Object's storage, call `deleteAll()`. Simply deleting individual keys or dropping tables is not sufficient, as some internal metadata may remain. If you have alarms set, delete those first.
+To fully clear a Durable Object's storage, call `deleteAll()`. Simply deleting individual keys or dropping tables is not sufficient, as some internal metadata may remain. Workers with a compatibility date before [2026-02-24](/workers/configuration/compatibility-flags/#delete-all-deletes-alarms) and an alarm set should delete the alarm first with `deleteAlarm()`.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -1422,10 +1422,8 @@ export interface Env {
 
 export class ChatRoom extends DurableObject<Env> {
 	async clearStorage() {
-		// If you have an alarm set, delete it first
-		await this.ctx.storage.deleteAlarm();
 
-		// Delete all storage
+		// Delete all storage, including any set alarm
 		await this.ctx.storage.deleteAll();
 
 		// The Durable Object instance still exists, but with empty storage

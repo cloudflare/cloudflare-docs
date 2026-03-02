@@ -262,6 +262,10 @@ None of the options for this command are required. Many of these options can be 
 
 Deploy your Worker to Cloudflare.
 
+When you run `wrangler deploy` in a project directory without a Wrangler configuration file, Wrangler will [automatically detect your framework](/workers/framework-guides/automatic-configuration/) and configure your project for Cloudflare Workers. This command will prompt you to confirm the detected settings before applying changes. Confirm that you would like to proceed, and your project will be configured and deployed.
+
+To configure your project without deploying, use [`wrangler setup`](#setup) instead.
+
 ```txt
 wrangler deploy [<PATH>] [OPTIONS]
 ```
@@ -345,6 +349,8 @@ None of the options for this command are required. Also, many can be set in your
   - A tag for this Worker version. Matches the behavior of `wrangler versions upload --tag`.
 - `--message` <Type text="string" /> <MetaInfo text="optional" />
   - A descriptive message for this Worker version and deployment. Matches the behavior of `wrangler versions upload --message`. The message is also applied to the deployment.
+- `--yes` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Skip confirmation prompts and run [automatic project configuration](/workers/framework-guides/automatic-configuration/) non-interactively using detected settings. Only applicable when no Wrangler configuration file exists in your project.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -386,6 +392,8 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 ---
 
 <WranglerCommand command="setup" headingLevel={2} />
+
+This command configures your project for Cloudflare Workers without deploying. It performs the same [automatic project configuration](/workers/framework-guides/automatic-configuration/) as `wrangler deploy`, but does not deploy. This is useful when you want to review the generated configuration before deploying.
 
 ---
 

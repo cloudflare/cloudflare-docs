@@ -429,7 +429,7 @@ Isolating web applications and applying policies to risky websites helps organiz
 
 #### Agentless DNS Filtering
 
-Another option for securing traffic via the Cloudflare network is to configure the device to forward DNS traffic to Cloudflare to be inspected and filtered. First [DNS locations](/cloudflare-one/traffic-policies/initial-setup/dns/#connect-dns-locations) are created which allow policies to be applied based on different network locations. They can be determined either by the source IP address for the request or you can use "[DNS over TLS](https://www.cloudflare.com/learning/dns/dns-over-tls/)" or "[DNS over HTTPS](https://www.cloudflare.com/learning/dns/dns-over-tls/)".
+Another option for securing traffic via the Cloudflare network is to configure the device to forward DNS traffic to Cloudflare to be inspected and filtered. First [DNS locations](/cloudflare-one/traffic-policies/get-started/dns/#connect-dns-locations) are created which allow policies to be applied based on different network locations. They can be determined either by the source IP address for the request or you can use "[DNS over TLS](https://www.cloudflare.com/learning/dns/dns-over-tls/)" or "[DNS over HTTPS](https://www.cloudflare.com/learning/dns/dns-over-tls/)".
 
 When using source IP addresses, either the device will need to be told which DNS servers to use, or the local DNS server on the network the device is connected to needs to forward all DNS queries to Cloudflare. For DNS over TLS or HTTPS support, the devices need to be configured and support varies. Our recommendation is to use DNS over HTTPS which has wider operating system support.
 
@@ -687,7 +687,7 @@ It's worth noting that many of the capabilities described in this document can b
 | Topic                     | Content                                                                                                                                                                           |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Cloudflare Tunnels        | [Understanding Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) - [Open source repository for `cloudflared`](https://github.com/cloudflare/cloudflared) |
-| WAN as a Service          | [Cloudflare WAN documentation](/cloudflare-wan/)                                                                                                                                  |
+| WAN as a Service          | [Cloudflare WAN documentation](/cloudflare-wan/) - [WAN transformation](/cloudflare-one/networks/connectors/cloudflare-wan/wan-transformation/)                                   |
 | Secure Web Gateway        | [How to build Gateway policies](/cloudflare-one/traffic-policies/)                                                                                                                |
 | Zero Trust Network Access | [How to build Access policies](/cloudflare-one/access-controls/policies/)                                                                                                         |
 | Remote Browser Isolation  | [Understanding browser isolation](/cloudflare-one/remote-browser-isolation/)                                                                                                      |

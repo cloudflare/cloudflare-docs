@@ -765,7 +765,7 @@
 /fundamentals/subscriptions-and-billing/troubleshooting-failed-payments/ /billing/troubleshoot-failed-payments/ 301
 /fundamentals/subscriptions-and-billing/understand-invoices/ /billing/invoices/ 301
 /fundamentals/subscriptions-and-billing/update-billing-info/ /billing/update-billing-info/ 301
-/fundamentals/changelog/ /changelog/?product=fundamentals 301
+/fundamentals/changelog/ /changelog/product/fundamentals/ 301
 /fundamentals/reference-architecture/ /reference-architecture/ 301
 /fundamentals/subscriptions-and-billing/cancel-subscription/ /billing/cancel-subscription/ 301
 /fundamentals/subscriptions-and-billing/change-plan/ /billing/change-plan/ 301
@@ -797,17 +797,17 @@
 /fundamentals/account/account-security/login-and-account-issues/ /fundamentals/user-profiles/change-password-or-email/ 301
 /fundamentals/account/delete-account/ /fundamentals/user-profiles/delete-account/ 301
 /fundamentals/account/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/ 301
-/changelog/fundamentals/terraform/2025-02-03-terraform-v5-provider/ /changelog/2025-02-03-terraform-v5-provider/ 301
-/changelog/fundamentals/2025-03-21-resource-force-replacement-bug/ /changelog/2025-03-21-resource-force-replacement-bug/ 301
-/changelog/fundamentals/2025-03-21-sensitive-values-redacted/ /changelog/2025-03-21-sensitive-values-redacted/ 301
-/changelog/fundamentals/2025-05-06-terraform-v5.4.0-provider/ /changelog/2025-05-06-terraform-v540-provider/ 301
-/changelog/fundamentals/2025-05-19-terraform-v5.5.0-provider/ /changelog/2025-05-19-terraform-v550-provider/ 301
-/changelog/fundamentals/2025-06-17-terraform-v5.6.0-provider/ /changelog/2025-06-17-terraform-v560-provider/ 301
-/changelog/fundamentals/2025-07-11-terraform-v5.7.0-provider/ /changelog/2025-07-11-terraform-v570-provider/ 301
-/changelog/fundamentals/2025-08-01-terraform-v5.8.2-provider/ /changelog/2025-08-01-terraform-v582-provider/ 301
-/changelog/fundamentals/2025-08-15-terraform-v5.8.4-provider/ /changelog/2025-08-15-terraform-v584-provider/ 301
-/changelog/fundamentals/2025-08-29-terrform-v5.9-provider/ /changelog/2025-08-29-terrform-v59-provider/ 301
-/changelog/2025-01-20-terraform-v5160-provider/ /changelog/2026-01-20-terraform-v5160-provider/ 301
+/changelog/fundamentals/terraform/2025-02-03-terraform-v5-provider/ /changelog/post/2025-02-03-terraform-v5-provider/ 301
+/changelog/fundamentals/2025-03-21-resource-force-replacement-bug/ /changelog/post/2025-03-21-resource-force-replacement-bug/ 301
+/changelog/fundamentals/2025-03-21-sensitive-values-redacted/ /changelog/post/2025-03-21-sensitive-values-redacted/ 301
+/changelog/fundamentals/2025-05-06-terraform-v5.4.0-provider/ /changelog/post/2025-05-06-terraform-v540-provider/ 301
+/changelog/fundamentals/2025-05-19-terraform-v5.5.0-provider/ /changelog/post/2025-05-19-terraform-v550-provider/ 301
+/changelog/fundamentals/2025-06-17-terraform-v5.6.0-provider/ /changelog/post/2025-06-17-terraform-v560-provider/ 301
+/changelog/fundamentals/2025-07-11-terraform-v5.7.0-provider/ /changelog/post/2025-07-11-terraform-v570-provider/ 301
+/changelog/fundamentals/2025-08-01-terraform-v5.8.2-provider/ /changelog/post/2025-08-01-terraform-v582-provider/ 301
+/changelog/fundamentals/2025-08-15-terraform-v5.8.4-provider/ /changelog/post/2025-08-15-terraform-v584-provider/ 301
+/changelog/fundamentals/2025-08-29-terrform-v5.9-provider/ /changelog/post/2025-08-29-terrform-v59-provider/ 301
+/changelog/2025-01-20-terraform-v5160-provider/ /changelog/post/2026-01-20-terraform-v5160-provider/ 301
 
 # google tag
 /google-tag-first-party-mode/ /google-tag-gateway/ 301
@@ -1380,15 +1380,19 @@
 /ssl/edge-certificates/disable-weak-cipher-suites/ /ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/ 301
 /ssl/edge-certificates/http-strict-transport-security/ /ssl/edge-certificates/additional-options/http-strict-transport-security/ 301
 /ssl/edge-certificates/uploading/ /ssl/edge-certificates/custom-certificates/uploading/ 301
+/ssl/edge-certificates/troubleshooting/ /ssl/troubleshooting/ 301
 /ssl/reference/cipher-suites/custom-certificates/ /ssl/edge-certificates/custom-certificates/#certificate-packs 301
 /ssl/reference/cipher-suites/matching-on-origin/ /ssl/origin-configuration/cipher-suites/#match-on-origin 301
 /ssl/reference/migration-guides/lets-encrypt-chain/ /ssl/reference/certificate-authorities/#lets-encrypt 301
 /ssl/reference/migration-guides/dcv-update/ /ssl/reference/migration-guides/ 301
 /ssl/reference/validation-backoff-schedule/ /ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
-/support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/edge-certificates/troubleshooting/caa-records/ 301
+/support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/faq/#caa-records 301
 /support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/ /ssl/troubleshooting/general-ssl-errors/ 301
 /support/ssl-tls/troubleshooting/you-have-reached-your-quota-for-the-requested-resource.-code-2005/ /ssl/edge-certificates/custom-certificates/troubleshooting/ 301
+/ssl/edge-certificates/troubleshooting/ca-faq/ /ssl/faq/ 301
+/ssl/edge-certificates/troubleshooting/caa-records/ /ssl/faq/#caa-records 301
+/ssl/troubleshooting/faq/ /ssl/faq/ 301
 
 # cloudflare for saas
 /ssl/ssl-for-saas/status-codes/custom-hostnames/ /cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/custom-hostnames/ 301
@@ -1492,7 +1496,7 @@
 /support/network/understanding-network-error-logging/ /network-error-logging/ 301
 /support/network/understanding-the-true-client-ip-header/ /network/true-client-ip-header/ 301
 /support/partners/partner-plugin-supportability/ /support/ 301
-/support/ssl-tls/faq-and-reference/ssl-faq/ /ssl/troubleshooting/faq/ 301
+/support/ssl-tls/faq-and-reference/ssl-faq/ /ssl/faq/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-bigcommerce/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/bigcommerce/ 301
 /support/third-party-software/content-management-system-cms/how-do-i-add-a-wordpress.com-custom-domain-mapping-site-to-cloudflare/ /support/third-party-software/content-management-system-cms/wordpresscom-and-cloudflare/ 301
 /support/third-party-software/content-management-system-cms/how-do-i-use-wordpress-multi-site-wpmu-with-cloudflare/ /automatic-platform-optimization/ 301
@@ -1699,33 +1703,33 @@
 /support/firewall/tools/ /waf/ 301
 /support/firewall/tools/configuring-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/ 301
 /support/firewall/tools/troubleshooting-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/troubleshooting/ 301
-/waf/change-log/2025-01-06/ /changelog/2025-01-06-waf-release/ 301
-/waf/change-log/2025-01-13/ /changelog/2025-01-13-waf-release/ 301
-/waf/change-log/2025-01-21/ /changelog/2025-01-21-waf-release/ 301
-/waf/change-log/2025-02-11/ /changelog/2025-02-11-waf-release/ 301
-/waf/change-log/2025-02-18/ /changelog/2025-02-18-waf-release/ 301
-/waf/change-log/2025-02-24/ /changelog/2025-02-24-waf-release/ 301
-/waf/change-log/2025-03-03/ /changelog/2025-03-03-waf-release/ 301
-/waf/change-log/2025-03-10/ /changelog/2025-03-10-waf-release/ 301
-/waf/change-log/2025-03-11-emergency/ /changelog/2025-03-11-emergency-waf-release/ 301
-/waf/change-log/2025-03-17/ /changelog/2025-03-17-waf-release/ 301
-/waf/change-log/2025-03-19-emergency/ /changelog/2025-03-19-emergency-waf-release/ 301
-/waf/change-log/2025-03-22-emergency/ /changelog/2025-03-22-emergency-waf-release/ 301
-/waf/change-log/2025-04-02/ /changelog/2025-04-02-waf-release/ 301
-/waf/change-log/2025-04-14/ /changelog/2025-04-14-waf-release/ 301
-/waf/change-log/2025-04-22/ /changelog/2025-04-22-waf-release/ 301
-/waf/change-log/2025-04-26-emergency/ /changelog/2025-04-26-emergency-waf-release/ 301
-/waf/change-log/2025-05-05/ /changelog/2025-05-05-waf-release/ 301
-/waf/change-log/2025-05-19/ /changelog/2025-05-19-waf-release/ 301
-/waf/change-log/2025-05-27/ /changelog/2025-05-27-waf-release/ 301
-/waf/change-log/2025-06-02/ /changelog/2025-06-02-waf-release/ 301
-/waf/change-log/2025-06-09/ /changelog/2025-06-09-waf-release/ 301
-/waf/change-log/2025-06-16/ /changelog/2025-06-16-waf-release/ 301
-/waf/change-log/2025-07-07/ /changelog/2025-07-07-waf-release/ 301
-/waf/change-log/2025-07-14/ /changelog/2025-07-14-waf-release/ 301
-/waf/change-log/2025-07-21/ /changelog/2025-07-21-waf-release/ 301
-/waf/change-log/2025-07-21-emergency/ /changelog/2025-07-21-emergency/ 301
-/waf/change-log/historical/ /waf/change-log/historical-2019/ 301
+/waf/change-log/2025-01-06/ /changelog/post/2025-01-06-waf-release/ 301
+/waf/change-log/2025-01-13/ /changelog/post/2025-01-13-waf-release/ 301
+/waf/change-log/2025-01-21/ /changelog/post/2025-01-21-waf-release/ 301
+/waf/change-log/2025-02-11/ /changelog/post/2025-02-11-waf-release/ 301
+/waf/change-log/2025-02-18/ /changelog/post/2025-02-18-waf-release/ 301
+/waf/change-log/2025-02-24/ /changelog/post/2025-02-24-waf-release/ 301
+/waf/change-log/2025-03-03/ /changelog/post/2025-03-03-waf-release/ 301
+/waf/change-log/2025-03-10/ /changelog/post/2025-03-10-waf-release/ 301
+/waf/change-log/2025-03-11-emergency/ /changelog/post/2025-03-11-emergency-waf-release/ 301
+/waf/change-log/2025-03-17/ /changelog/post/2025-03-17-waf-release/ 301
+/waf/change-log/2025-03-19-emergency/ /changelog/post/2025-03-19-emergency-waf-release/ 301
+/waf/change-log/2025-03-22-emergency/ /changelog/post/2025-03-22-emergency-waf-release/ 301
+/waf/change-log/2025-04-02/ /changelog/post/2025-04-02-waf-release/ 301
+/waf/change-log/2025-04-14/ /changelog/post/2025-04-14-waf-release/ 301
+/waf/change-log/2025-04-22/ /changelog/post/2025-04-22-waf-release/ 301
+/waf/change-log/2025-04-26-emergency/ /changelog/post/2025-04-26-emergency-waf-release/ 301
+/waf/change-log/2025-05-05/ /changelog/post/2025-05-05-waf-release/ 301
+/waf/change-log/2025-05-19/ /changelog/post/2025-05-19-waf-release/ 301
+/waf/change-log/2025-05-27/ /changelog/post/2025-05-27-waf-release/ 301
+/waf/change-log/2025-06-02/ /changelog/post/2025-06-02-waf-release/ 301
+/waf/change-log/2025-06-09/ /changelog/post/2025-06-09-waf-release/ 301
+/waf/change-log/2025-06-16/ /changelog/post/2025-06-16-waf-release/ 301
+/waf/change-log/2025-07-07/ /changelog/post/2025-07-07-waf-release/ 301
+/waf/change-log/2025-07-14/ /changelog/post/2025-07-14-waf-release/ 301
+/waf/change-log/2025-07-21/ /changelog/post/2025-07-21-waf-release/ 301
+/waf/change-log/2025-07-21-emergency/ /changelog/post/2025-07-21-emergency/ 301
+/waf/change-log/historical/ /waf/change-log/historical-2022/ 301
 /waf/change-log/managed-rulesets/ /waf/change-log/ 301
 /waf/custom-rules/manage-dashboard/ /waf/custom-rules/create-dashboard/ 301
 /waf/security-analytics/ /waf/analytics/security-analytics/ 301
@@ -1744,6 +1748,16 @@
 /waf/reference/migration-guides/waf-managed-rules-migration/ /waf/reference/legacy/old-waf-managed-rules/upgrade/ 301
 /waf/reference/migration-guides/firewall-rules-to-custom-rules/ /waf/reference/legacy/firewall-rules-upgrade/ 301
 /waf/managed-rules/handle-false-positives/ /waf/managed-rules/troubleshooting/ 301
+/changelog/post/2024-12-18-improved-vpn-managed-list/ /waf/change-log/historical-2024/#2024-12-18 301
+/changelog/post/2024-12-10-change-order-of-list-items-in-ip-lists/ /waf/change-log/historical-2024/#2024-12-10 301
+/changelog/post/2024-11-14-security-events-pagination/ /waf/change-log/historical-2024/#2024-11-14 301
+/changelog/post/2024-11-04-new-table-in-security-analytics-and-security-events/ /waf/change-log/historical-2024/#2024-11-04 301
+/changelog/post/2024-08-29-fixed-occasional-attack-score-mismatches/ /waf/change-log/historical-2024/#2024-08-29 301
+/changelog/post/2024-05-23-improved-detection-capabilities/ /waf/change-log/historical-2024/#2024-05-23 301
+/waf/change-log/historical-2018/ /waf/change-log/ 301
+/waf/change-log/historical-2019/ /waf/change-log/ 301
+/waf/change-log/historical-2020/ /waf/change-log/ 301
+/waf/change-log/historical-2021/ /waf/change-log/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
@@ -2278,7 +2292,7 @@
 /cloudflare-one/tutorials/block-football-users/ /cloudflare-one/policies/gateway/http-policies/common-policies/#check-user-identity 301
 /cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/analytics/logs/gateway-logs/ 301
 /cloudflare-one/tutorials/many-cfd-one-tunnel/ /cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/ 301
-/cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/policies/gateway/initial-setup/dns/ 301
+/cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/traffic-policies/get-started/dns/ 301
 /cloudflare-one/tutorials/migrate-lb-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /cloudflare-one/tutorials/credentials-only/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/tutorials/user-diagnostics/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
@@ -2338,7 +2352,11 @@
 /cloudflare-one/policies/gateway/block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
 /cloudflare-one/policies/lists/ /cloudflare-one/reusable-components/lists/ 301
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
-/cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/traffic-policies/initial-setup/dns/ 301
+/cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/traffic-policies/get-started/dns/ 301
+/cloudflare-one/traffic-policies/initial-setup/ /cloudflare-one/traffic-policies/get-started/ 301
+/cloudflare-one/traffic-policies/initial-setup/dns/ /cloudflare-one/traffic-policies/get-started/dns/ 301
+/cloudflare-one/traffic-policies/initial-setup/http/ /cloudflare-one/traffic-policies/get-started/http/ 301
+/cloudflare-one/traffic-policies/initial-setup/network/ /cloudflare-one/traffic-policies/get-started/network/ 301
 
 # More specific redirects from nav revamp (before catch-alls)
 /cloudflare-one/identity/devices/access-integrations/tanium/ /cloudflare-one/reusable-components/posture-checks/warp-client-checks/tanium/ 301
@@ -2391,8 +2409,7 @@
 /pages/framework-guides/nextjs/ssr/* /workers/framework-guides/web-apps/nextjs 301
 /*/index.html.md /:splat/index.md 301
 /1.1.1.1/other-ways-to-use-1.1.1.1/* /1.1.1.1/additional-options/:splat 301
-/api-next/* /api/:splat 301
-/changelog-next/* /changelog/:splat 301
+/changelog-next/* /changelog/post/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-rendering/rest-api/:splat 301
 /*/sitemap.xml /sitemap-index.xml 301
 /api-security/* /api-shield/:splat 301
@@ -2534,9 +2551,9 @@
 /waf/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
 /waf/security-events/* /waf/analytics/security-events/:splat 301
-/waf/change-log/2019-* /waf/change-log/historical-2019/ 301
-/waf/change-log/2020-* /waf/change-log/historical-2020/ 301
-/waf/change-log/2021-* /waf/change-log/historical-2021/ 301
+/waf/change-log/2019-* /waf/change-log/ 301
+/waf/change-log/2020-* /waf/change-log/ 301
+/waf/change-log/2021-* /waf/change-log/ 301
 /waf/change-log/2022-* /waf/change-log/historical-2022/ 301
 /waf/change-log/2023-* /waf/change-log/historical-2023/ 301
 /waf/change-log/2024-* /waf/change-log/historical-2024/ 301
@@ -2579,3 +2596,9 @@
 
 # Network Flow (formerly Magic Network Monitoring)
 /magic-network-monitoring/* /network-flow/:splat 301
+
+# Changelog (individual entry route moved to /post/)
+/changelog/2024-* /changelog/post/2024-:splat 301
+/changelog/2025-* /changelog/post/2025-:splat 301
+/changelog/2026-* /changelog/post/2026-:splat 301
+

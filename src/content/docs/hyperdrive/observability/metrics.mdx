@@ -7,7 +7,7 @@ sidebar:
 
 import { DashButton } from "~/components";
 
-Hyperdrive exposes analytics that allow you to inspect query volume, query latency and cache ratios size across all and/or each Hyperdrive configuration in your account.
+Hyperdrive exposes analytics that allow you to inspect query volume, query latency, and cache hit ratios for each Hyperdrive configuration in your account.
 
 ## Metrics
 
@@ -23,6 +23,8 @@ Hyperdrive currently exports the below metrics as part of the `hyperdriveQueries
 | Query Latency      | `queryLatency`      | The time (in milliseconds) required to query (and receive results) from your database, as measured from your Hyperdrive connection pool(s).                                                                       |
 | Event Status       | `eventStatus`       | Whether a query responded successfully (`complete`) or failed (`error`).                                                                                                                                          |
 
+The `volatile` cache status indicates the query contains a PostgreSQL function categorized as `STABLE` or `VOLATILE` (for example, `NOW()`, `RANDOM()`). Refer to [Query caching](/hyperdrive/concepts/query-caching/) for details on which functions affect cacheability.
+
 Metrics can be queried (and are retained) for the past 31 days.
 
 ## View metrics in the dashboard
@@ -32,6 +34,7 @@ Per-database analytics for Hyperdrive are available in the Cloudflare dashboard.
 1. In the Cloudflare dashboard, go to the **Hyperdrive** page.
 
    <DashButton url="/?to=/:account/workers/hyperdrive" />
+
 2. Select an existing Hyperdrive configuration.
 3. Select the **Metrics** tab.
 
@@ -41,7 +44,7 @@ You can optionally select a time window to query. This defaults to the last 24 h
 
 You can programmatically query analytics for your Hyperdrive configurations via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same datasets as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
 
-Hyperdrives's GraphQL datasets require an `accountTag` filter with your Cloudflare account ID. Hyperdrive exposes the `hyperdriveQueriesAdaptiveGroups` dataset.
+Hyperdrive's GraphQL datasets require an `accountTag` filter with your Cloudflare account ID. Hyperdrive exposes the `hyperdriveQueriesAdaptiveGroups` dataset.
 
 ## Write GraphQL queries
 

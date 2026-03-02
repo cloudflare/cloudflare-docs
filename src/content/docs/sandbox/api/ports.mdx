@@ -180,14 +180,14 @@ Get information about all currently exposed ports.
 const response = await sandbox.getExposedPorts(): Promise<GetExposedPortsResponse>
 ```
 
-**Returns**: `Promise<GetExposedPortsResponse>` with `ports` array (containing `port`, `exposedAt`, `name`)
+**Returns**: `Promise<GetExposedPortsResponse>` with `ports` array (containing `port`, `url`, `name`)
 
 <TypeScriptExample>
 ```
 const { ports } = await sandbox.getExposedPorts();
 
 for (const port of ports) {
-  console.log(`${port.name || port.port}: ${port.exposedAt}`);
+  console.log(`${port.name || port.port}: ${port.url}`);
 }
 ```
 </TypeScriptExample>

@@ -8,6 +8,7 @@ description: Create a React Router application and deploy it to Cloudflare Worke
 ---
 
 import {
+	AutoconfigDiagram,
 	Render,
 	PackageManagers,
 	Steps,
@@ -32,6 +33,24 @@ import {
 SPA mode and prerendering are not currently supported when using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 If you wish to use React Router in an SPA then we recommend starting with the [React template](/workers/framework-guides/web-apps/react/) and using React Router [as a library](https://reactrouter.com/start/data/installation).
 :::
+
+:::tip[Already have a React Router project?]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect React Router, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="React Router"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: "build/server/index.js" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: build/client" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+	]}
+/>
 
 ## What is React Router?
 

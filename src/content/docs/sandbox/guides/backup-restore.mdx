@@ -333,7 +333,7 @@ await sandbox.restoreBackup(backup);
 
 ## Handle errors
 
-Backup and restore operations can throw specific errors. Wrap calls in try/catch blocks:
+Backup and restore operations can throw specific errors. Wrap calls in [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) blocks:
 
 <TypeScriptExample>
 
@@ -370,6 +370,46 @@ try {
 ```
 
 </TypeScriptExample>
+
+## Path permissions
+
+The `createBackup()` method uses `mksquashfs` to create a compressed archive of the target directory. This process must be able to read every file and subdirectory within the path you are backing up. If any file or directory has restrictive permissions that prevent the archiver from reading it, the backup fails with a `BackupCreateError` and a "Permission denied" message.
+
+### Common causes
+
+- **Directories owned by other users** — If the target directory contains subdirectories created by a different user or process (for example, `/home/sandbox/.claude`), the archiver may not have read access.
+- **Restrictive file modes** — Files with modes like `0600` or directories with `0700` that belong to a different user than the one running the backup process.
+- **Runtime-generated config directories** — Tools and applications often create configuration directories (such as `.cache`, `.config`, or tool-specific dotfiles) with restrictive permissions.
+
+### Fix permissions at build time
+
+The recommended approach is to set permissions in your Dockerfile so that every container starts with the correct access. This avoids running `chmod` at runtime before every backup:
+
+```dockerfile
+# Ensure the backup target directory is readable
+RUN mkdir -p /home/sandbox && chmod -R a+rX /home/sandbox
+```
+
+The `a+rX` flag grants read access to all files and execute (traverse) access to all directories, without changing write permissions.
+
+### Fix permissions at runtime
+
+If the restrictive permissions come from files created at runtime (for example, a tool that generates config files with `0600` mode), fix them before calling `createBackup()`:
+
+```ts
+await sandbox.exec("chmod -R a+rX /home/sandbox/.claude");
+const backup = await sandbox.createBackup({ dir: "/home/sandbox" });
+```
+
+### Example error
+
+If the backup encounters a permission issue, you will see an error like:
+
+```txt
+BackupCreateError: mksquashfs failed: Could not create destination file: Permission denied
+```
+
+This means `mksquashfs` could not read one or more files inside the directory you passed to `createBackup()`. Check the permissions of all files and subdirectories within that path.
 
 ## Best practices
 

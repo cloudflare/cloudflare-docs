@@ -75,3 +75,27 @@ This retry logic should be handled for you if you are using the [containers pack
 ### Socket configuration - `internal error`
 
 If you see an opaque `internal error` when attempting to connect to your container, you may need to set the `DOCKER_HOST` environment variable to the socket path your container engine is listening on. Wrangler or Vite will attempt to automatically find the correct socket to use to communicate with your container engine, but if that does not work, you may have to set this environment variable to the appropriate socket path.
+
+### SSL errors with Cloudflare WARP or a VPN
+
+If you are running Cloudflare WARP or a VPN that performs TLS inspection, HTTPS requests made during the Docker build process may fail with SSL or certificate errors. This happens because the VPN intercepts HTTPS traffic and re-signs it with its own certificate authority, which Docker does not trust by default.
+
+To resolve this, you can either:
+
+- Disable WARP or your VPN while running `wrangler dev` or `wrangler deploy`, then re-enable it afterwards.
+- Add the certificate to your Docker build context. Cloudflare WARP exposes its certificate via the `NODE_EXTRA_CA_CERTS` and `SSL_CERT_FILE` environment variables on your host machine. You can pass the certificate into your Docker build as an environment variable, so that it is available during the build without being baked into the final image.
+
+  ```dockerfile
+  RUN if [ -n "$SSL_CERT_FILE" ]; then \
+      cp "$SSL_CERT_FILE" /usr/local/share/ca-certificates/Custom_CA.crt && \
+      update-ca-certificates; \
+      fi
+  ```
+
+  :::note
+  The above Dockerfile snippet is an example. Depending on your base image, the commands to install certificates may differ (for example, Alpine uses `apk add ca-certificates` and a different certificate path).
+
+  This snippet will store the certificate into the image. Depending on whether your production environment needs the certificate, you may choose to do this only during development or use it in production too.
+  :::
+
+  Wrangler invokes Docker automatically when you run `wrangler dev` or `wrangler deploy`, so if you need to pass build secrets, you will need to build and push the image manually using `wrangler containers images push`.

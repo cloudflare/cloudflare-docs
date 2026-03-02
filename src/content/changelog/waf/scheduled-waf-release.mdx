@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2026-02-16
-description: WAF managed ruleset changes scheduled for 2026-02-16
-date: 2026-02-10
+title: WAF Release - Scheduled changes for 2026-03-02
+description: WAF managed ruleset changes scheduled for 2026-03-02
+date: 2026-02-25
 scheduled: true
 ---
 
@@ -21,26 +21,37 @@ import { RuleID } from "~/components";
   </thead>
   <tbody>
     <tr>
-      <td>2026-02-10</td>
-      <td>2026-02-16</td>
+      <td>2026-02-25</td>
+      <td>2026-03-02</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="a219dd28a0694faea0f942d4b0089874" />
+        <RuleID id="0f282f3c89614779966faf52966ec6b1" />
       </td>
-      <td>Zimbra - Local File Inclusion - CVE:CVE-2025-68645</td>
+      <td>SmarterMail - Arbitrary File Upload - CVE-2025-52691</td>
       <td>This is a new detection. </td>
    </tr>
     <tr>
-      <td>2026-02-10</td>
-      <td>2026-02-16</td>
+      <td>2026-02-25</td>
+      <td>2026-03-02</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="b10164cf42ab47b7ab274b9573b09f52" />
+        <RuleID id="35978af68e374a059e397bf5ee964a8c" />
       </td>
-      <td>Vite - WASM Import Path Traversal - CVE:CVE-2025-31125</td>
+      <td>SmarterMail - Authentication Bypass - CVE-2026-23760</td>
       <td>This is a new detection.</td>
    </tr> 
-  </tbody>
+   <tr>
+      <td>2026-02-25</td>
+      <td>2026-03-02</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="4bb099bcd71141d4a35c1aa675b64d99" />
+      </td>
+      <td>Command Injection - Nslookup - Beta</td>
+      <td>This rule will be merged into the original rule  "Command Injection - Nslookup" (ID: <RuleID id="f4a310393c564d50bd585601b090ba9a" />)</td>
+   </tr> 
+</tbody>
 </table>
