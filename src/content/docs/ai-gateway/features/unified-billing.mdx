@@ -54,7 +54,7 @@ Call any supported provider without passing an API Key. The request will automat
 For example, you can use the Unified API:
 
 ```bash
-curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/default/compat/chat/completions \
   --header 'cf-aig-authorization: Bearer {CLOUDFLARE_TOKEN}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -67,6 +67,8 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/comp
     ]
   }'
 ```
+
+The `default` gateway is created automatically on your first request. Replace `default` with a specific gateway ID if you have already created one.
 
 ### Spend limits
 

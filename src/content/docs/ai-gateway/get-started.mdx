@@ -28,15 +28,7 @@ Before making requests, you need two things:
 
 ## Send your first request
 
-AI Gateway can automatically create a default gateway for you on the first authenticated request. Refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway) for more details.
-
-Use `default` as your gateway ID in the endpoint URL:
-
-```txt
-https://gateway.ai.cloudflare.com/v1/{account_id}/default/{provider}/{endpoint}
-```
-
-For example, to send a chat completion request through AI Gateway:
+Run the following command to make your first request through AI Gateway:
 
 ```bash
 curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default/compat/chat/completions \
@@ -53,11 +45,7 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default
   }'
 ```
 
-The `cf-aig-authorization` header authenticates your request with AI Gateway.
-
-:::note
-The default gateway is created with [authentication](/ai-gateway/configuration/authentication/) turned on, so the `cf-aig-authorization` header is required for all requests. For more details on how the default gateway works, refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway).
-:::
+AI Gateway automatically creates a gateway for you on the first request. The `cf-aig-authorization` header authenticates your request.
 
 <Details header="Create a gateway manually">
 
