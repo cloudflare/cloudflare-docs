@@ -36,7 +36,7 @@ Chrome network errors occur when the browser encounters issues loading the targe
 | --- | --- | --- | --- |
 | `5000` | `net::ERR_CERT_INVALID`, `net::ERR_CERT_COMMON_NAME_INVALID` | Certificate or SSL error. | Verify the target site has a valid SSL certificate with correct hostname. |
 | `5001` | `net::ERR_ADDRESS_UNREACHABLE` | The address is unreachable. | Check if the domain exists or if the site is blocked by firewalls or network policies. |
-| `5002` | `net::ERR_ABORTED` | The network connection was aborted. | Review and adjust timeout settings. Refer to [REST API timeouts](/browser-rendering/reference/timeouts/). |
+| `5002` | `net::ERR_ABORTED` | The network connection was aborted. | Check if the site is blocked by firewalls or network policies. |
 | `5002` | `net::ERR_CONNECTION_TIMED_OUT`, `net::ERR_TIMED_OUT` | The connection timed out. | Verify the target site is responding and not experiencing performance issues. |
 | `5003` | `net::ERR_TOO_MANY_REDIRECTS` | The page has too many redirects. | If you control the site, fix the redirect configuration. |
 | `5004` | `net::ERR_HTTP2_PROTOCOL_ERROR` | HTTP/2 protocol error. | If you control the site, check server HTTP/2 configuration. |
