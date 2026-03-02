@@ -36,7 +36,7 @@ npx wrangler vectorize create your-index-name --dimensions=NUM_DIMENSIONS --metr
 To create an index that can accept vector embeddings from Worker's AI's [`@cf/baai/bge-base-en-v1.5`](/workers-ai/models/#text-embeddings) embedding model, which outputs vectors with 768 dimensions, use the following command:
 
 ```sh
-npx wrangler vectorize create your-index-name --dimensions=768 --metric=cosine
+npx wrangler vectorize create your-docs --dimensions=768 --metric=cosine
 ```
 
 ### HTTP API
