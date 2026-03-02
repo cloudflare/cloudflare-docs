@@ -9,6 +9,8 @@ import { downloadToDotTempIfNotPresent } from "../src/util/custom-loaders";
 const MIDDLECACHE_BASE_URL = "https://middlecache.ced.cloudflare.com/";
 const SKILLS_MIDDLECACHE_PATH = "v1/cloudflare-skills/skills.tar.gz";
 const SKILLS_DOT_TMP_PATH = `middlecache/${SKILLS_MIDDLECACHE_PATH}`;
+const MANIFEST_MIDDLECACHE_PATH = "v1/cloudflare-skills/skills-manifest.json";
+const MANIFEST_DOT_TMP_PATH = `middlecache/${MANIFEST_MIDDLECACHE_PATH}`;
 const SKILLS_DIR = "./skills";
 
 // --soft: warn and continue on failure instead of exiting non-zero.
@@ -41,10 +43,16 @@ if (fs.existsSync(SKILLS_DIR) && !force) {
 console.log("Fetching Cloudflare Skills from middlecache");
 
 try {
-	await downloadToDotTempIfNotPresent(
-		`${MIDDLECACHE_BASE_URL}${SKILLS_MIDDLECACHE_PATH}`,
-		SKILLS_DOT_TMP_PATH,
-	);
+	await Promise.all([
+		downloadToDotTempIfNotPresent(
+			`${MIDDLECACHE_BASE_URL}${SKILLS_MIDDLECACHE_PATH}`,
+			SKILLS_DOT_TMP_PATH,
+		),
+		downloadToDotTempIfNotPresent(
+			`${MIDDLECACHE_BASE_URL}${MANIFEST_MIDDLECACHE_PATH}`,
+			MANIFEST_DOT_TMP_PATH,
+		),
+	]);
 } catch (err) {
 	fail(`fetch failed: ${err}`);
 }
