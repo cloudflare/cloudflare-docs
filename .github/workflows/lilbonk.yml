@@ -9,7 +9,7 @@ on:
     types: [submitted]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.event.issue.number || github.ref }}
+  group: bonk-${{ github.event.pull_request.number || github.event.issue.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
