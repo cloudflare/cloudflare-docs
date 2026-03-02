@@ -40,3 +40,4 @@ CLAUDE.md
 .cursor/
 .github/prompts/
 .github/agents/
+agents/
