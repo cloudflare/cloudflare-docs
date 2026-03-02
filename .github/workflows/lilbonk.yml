@@ -9,6 +9,7 @@ on:
     types: [submitted]
 
 concurrency:
+  # intentionally hardcoded so that all Bonk workflows coexist peacefully
   group: bonk-${{ github.event.pull_request.number || github.event.issue.number || github.ref }}
   cancel-in-progress: false
 
