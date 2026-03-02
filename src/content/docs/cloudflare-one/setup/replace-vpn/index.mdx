@@ -1,0 +1,63 @@
+---
+pcx_content_type: navigation
+title: Replace your VPN
+sidebar:
+  order: 1
+description: Choose a VPN replacement scenario based on how your users and networks need to connect through Cloudflare Zero Trust.
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Cloudflare Zero Trust replaces traditional VPNs by routing private traffic through Cloudflare's global network. How you set this up depends on what needs to connect to what.
+
+Choose the scenario that matches your use case:
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Device to network"
+	href="/cloudflare-one/setup/replace-vpn/device-to-network/"
+	icon="laptop"
+>
+	Connect remote users running the WARP client to private networks and
+	applications behind a Cloudflare Tunnel. This is the most common VPN
+	replacement scenario.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Network to network"
+	href="/cloudflare-one/setup/replace-vpn/network-to-network/"
+	icon="seti:db"
+>
+	Connect two or more office networks, data centers, or cloud VPCs to each other
+	through Cloudflare. Supports bidirectional, server-initiated traffic between
+	sites.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Device to device"
+	href="/cloudflare-one/setup/replace-vpn/device-to-device/"
+	icon="seti:shell"
+>
+	Enable direct peer-to-peer connectivity between devices running the WARP
+	client, without requiring a tunnel or dedicated network infrastructure.
+</LinkTitleCard>
+
+</CardGrid>
+
+<Details header="Which scenario do I need?">
+
+Most organizations start with **Device to network** — it covers the classic VPN use case where remote employees need to reach internal applications, databases, and services on a private network.
+
+Choose **Network to network** if you need to connect entire office or data center networks to each other — for example, so servers in one site can initiate connections to servers in another site (Active Directory replication, SCCM, VoIP/SIP).
+
+Choose **Device to device** if you need peer-to-peer connectivity between individual devices (for example, a developer SSHing directly into a colleague's machine) without routing through a central network.
+
+You can combine multiple scenarios. For example, you might use Device to network for remote access and Network to network for site-to-site connectivity between offices.
+
+</Details>
+
+:::note
+
+For a comprehensive, multi-week deployment guide that covers advanced configuration, policy design, and production best practices, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
+:::

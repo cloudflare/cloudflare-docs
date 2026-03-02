@@ -1,0 +1,62 @@
+---
+pcx_content_type: get-started
+title: "Device to device"
+sidebar:
+  order: 3
+  label: Device to device
+description: Enable direct peer-to-peer connectivity between devices running the WARP client without requiring tunnels or dedicated network infrastructure.
+products:
+  - cloudflare-one
+---
+
+import { Details } from "~/components";
+
+:::caution[Draft]
+This page is a work in progress. Section headings represent the planned structure. Full content will be added in a future update.
+:::
+
+This quick-start walks you through enabling direct device-to-device (peer-to-peer) connectivity using the WARP client. This allows any enrolled device to reach any other enrolled device by its WARP virtual IP address — useful for developer workflows, remote troubleshooting, and ad-hoc connections.
+
+## How it works
+
+When WARP-to-WARP is enabled, each enrolled device receives a virtual IP address from Cloudflare's CGNAT range (`100.96.0.0/12`). Devices can connect to each other using these virtual IPs. Traffic flows through Cloudflare's network, where identity and network policies are applied.
+
+```txt
+Device A (WARP) ↔ Cloudflare global network ↔ Device B (WARP)
+```
+
+No tunnels or dedicated servers are required — only the WARP client on each device.
+
+## Prerequisites
+
+<!-- TODO: Cloudflare account, Zero Trust org, WARP client installed on all participating devices, device enrollment configured -->
+
+## Step 1: Turn on WARP-to-WARP connectivity
+
+<!-- TODO: Steps from warp-to-warp.mdx — Team & Resources > Devices > Management > enable WARP to WARP -->
+
+## Step 2: Configure Split Tunnels for CGNAT range
+
+<!-- TODO: Add 100.96.0.0/12 to Include list (or remove from Exclude list) in Split Tunnel settings -->
+
+## Step 3: Install WARP on participating devices
+
+<!-- TODO: Download, install, enroll with team name — link to shared install steps -->
+
+## Step 4: (Recommended) Create access policies
+
+<!-- TODO: Gateway network policies to control which devices/users can communicate peer-to-peer -->
+
+## Verify connectivity
+
+<!-- TODO: Find device virtual IPs, test connectivity with ping/SSH, check Gateway logs -->
+
+## Troubleshoot
+
+<!-- TODO: Common issues from warp-to-warp.mdx: Windows firewall blocks inbound from 100.96.0.0/12, Split Tunnel misconfiguration -->
+
+## Next steps
+
+- For the current reference documentation on WARP-to-WARP, refer to [Peer-to-peer connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/).
+- To also connect devices to a central private network, combine this with [Device to network](/cloudflare-one/setup/replace-vpn/device-to-network/).
+- For production hardening and policy design, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).

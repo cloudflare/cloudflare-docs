@@ -1,0 +1,179 @@
+---
+pcx_content_type: get-started
+title: "Device to network"
+sidebar:
+  order: 1
+  label: Device to network
+description: Connect remote users to private networks and applications by deploying the WARP client on devices and creating a Cloudflare Tunnel to your network.
+products:
+  - cloudflare-one
+---
+
+import { Details, Render, Tabs, TabItem } from "~/components";
+
+This quick-start walks you through connecting remote users to private network resources — the most common VPN replacement scenario. By the end, your users will be able to securely access internal applications, databases, and services through Cloudflare's network instead of a traditional VPN.
+
+## How it works
+
+Traffic flows from user devices through the WARP client to Cloudflare's global network, then through a Cloudflare Tunnel into your private network. Cloudflare applies identity-based access policies at the network edge, so only authorized users can reach internal resources.
+
+```txt
+User device (WARP) → Cloudflare global network → Cloudflare Tunnel → Private network
+```
+
+Unlike a VPN, this approach does not require inbound firewall rules on your network — the tunnel creates an outbound-only connection from your infrastructure to Cloudflare.
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up) with a [Zero Trust organization](/cloudflare-one/setup/)
+- A private network with applications or services you want to make available to remote users
+- A host server on the private network (Linux, macOS, Windows, or Docker) that can run the `cloudflared` daemon
+- A test device (Windows, macOS, Linux, iOS, or Android) that can run the [WARP client](/cloudflare-one/team-and-resources/devices/warp/download-warp/)
+
+## Step 1: Configure an identity provider
+
+An identity provider (IdP) lets Cloudflare verify user identity before granting access to private resources. You can use your existing IdP (such as Okta, Microsoft Entra ID, or Google Workspace) or use Cloudflare's built-in one-time PIN (OTP) for testing.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+2. Select **Add new identity provider**.
+3. Select your identity provider and follow the configuration steps shown in the side panel.
+4. Select **Save**.
+
+:::note
+One-time PIN is enabled by default and works without any additional configuration. This is useful for initial testing, but you should configure a corporate IdP before deploying to production.
+:::
+
+## Step 2: Create a Cloudflare Tunnel
+
+A Cloudflare Tunnel creates an encrypted, outbound-only connection from your private network to Cloudflare. You do not need to open any inbound ports or configure firewall rules.
+
+1. In Cloudflare One, go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
+2. Select **Create a tunnel**.
+3. Choose **Cloudflared** as the connector type and select **Next**.
+4. Enter a name for your tunnel (for example, `headquarters-vpn` or `aws-vpc-prod`).
+5. Select **Save tunnel**.
+6. Under **Choose an environment**, select the operating system of your host server, then copy the install command.
+7. Run the command on your host server. Once `cloudflared` connects, you will see a connector appear in the dashboard.
+8. Select **Next**.
+
+### Route your private network
+
+9. Select the **CIDR** tab.
+10. Enter the IP/CIDR range of your private network (for example, `10.0.0.0/8` or `192.168.1.0/24`).
+11. Select **Save tunnel**.
+
+Your tunnel is now running and routing traffic for the specified CIDR range.
+
+<Details header="Best practices for tunnel deployment">
+
+- **Name tunnels descriptively** ��� use names that reflect the network or environment (for example, `prod-east-vpc`, `staging-dc2`).
+- **Run a replica for availability** — deploy `cloudflared` on a second host in the same network to ensure connectivity if one host goes down. Both instances share the same tunnel token.
+- **Separate production and staging** — use different tunnels for different environments to limit blast radius.
+- **Keep cloudflared updated** — enable automatic updates or include `cloudflared` in your patch management process.
+
+</Details>
+
+## Step 3: Set up device enrollment
+
+Device enrollment controls which users can register their devices with your Zero Trust organization.
+
+1. In Cloudflare One, go to **Team & Resources** > **Devices** > **Device profiles** > **Management**.
+2. Under **Device enrollment** > **Device enrollment permissions**, select **Manage**.
+3. In the **Policies** tab, create an Access policy that defines who can enroll devices. For example:
+   - **Rule action:** Allow
+   - **Include:** Emails ending in `@example.com`
+4. In the **Login methods** tab, select the identity providers users can authenticate with.
+5. Select **Save**.
+
+## Step 4: Configure Split Tunnels
+
+By default, the WARP client excludes private IP ranges (RFC 1918) from the tunnel. You need to update Split Tunnel settings so that traffic destined for your private network routes through Cloudflare.
+
+1. In Cloudflare One, go to **Team & Resources** > **Devices** > **Device profiles** > **General profiles**.
+2. Select the **Default** profile and select **Edit**.
+3. Go to the **Split Tunnels** setting. The default mode is **Exclude IPs and domains**.
+4. Find and remove the entry that contains your private network's CIDR range. For example, if your network uses `10.0.0.0/8`, remove the `10.0.0.0/8` entry.
+5. If your network only uses a portion of that range, re-add the unused portions. For example, if your network is `10.1.0.0/16`, remove `10.0.0.0/8` and add back `10.0.0.0/16`, `10.2.0.0/15`, `10.4.0.0/14`, and so on for the unused ranges.
+
+:::note
+A Split Tunnel calculator is available in the dashboard to help you compute the correct entries when splitting a CIDR range.
+:::
+
+## Step 5: Install WARP on a test device
+
+1. [Download the WARP client](/cloudflare-one/team-and-resources/devices/warp/download-warp/) on your test device.
+2. Open the WARP client.
+3. Go to **Settings** > **Account** (or **Preferences** > **Account** on desktop).
+4. Select **Login with Cloudflare Zero Trust**.
+5. Enter your organization's team name (the one you chose during [Zero Trust setup](/cloudflare-one/setup/)).
+6. Authenticate with your identity provider.
+7. The WARP client should show as **Connected**.
+
+## Step 6: (Recommended) Enable the Gateway proxy
+
+The Gateway proxy allows Cloudflare to inspect and apply policies to TCP/UDP traffic flowing between WARP devices and your private network.
+
+1. In Cloudflare One, go to **Traffic policies** > **Traffic settings**.
+2. Under **Proxy and inspection**, turn on **Allow Secure Web Gateway to proxy traffic**.
+3. Select **TCP**.
+4. (Recommended) Select **UDP** if you have internal DNS resolvers or UDP-based services.
+5. (Recommended) Select **ICMP** to allow diagnostic tools such as `ping` and `traceroute`.
+
+## Step 7: (Recommended) Create access policies
+
+Without policies, any enrolled device can reach any IP in the routed CIDR range. Create Gateway network policies to control access:
+
+1. In Cloudflare One, go to **Traffic policies** > **Gateway** > **Network**.
+2. Create a catch-all **Block** policy for your private network's CIDR range. This blocks all traffic by default.
+3. Create higher-priority **Allow** policies for specific applications or user groups. For example:
+   - Allow users in the `Engineering` IdP group to reach `10.0.5.0/24` (development servers)
+   - Allow users in the `Finance` IdP group to reach `10.0.10.50` on port `443` (finance application)
+
+This deny-by-default approach ensures that new resources on your private network are not accidentally exposed.
+
+## Verify connectivity
+
+1. On your test device, make sure the WARP client shows **Connected**.
+2. Try to reach a known resource on your private network (for example, `http://10.0.1.100` or `ssh 10.0.1.50`).
+3. In Cloudflare One, go to **Insights** > **Logs** > **Gateway** > **Network** to verify that the traffic appears in the logs.
+4. (Optional) Visit `https://help.teams.cloudflare.com/` from your test device. The page should confirm that your network is fully protected and show Gateway Proxy as enabled.
+
+## Troubleshoot
+
+<Details header="WARP client does not connect">
+
+- Verify that the team name entered in the WARP client matches your Zero Trust organization's team name.
+- Check that the user's email matches the device enrollment policy.
+- If you use a third-party firewall or TLS inspection tool, make sure it does not block traffic to Cloudflare's WARP endpoints (`162.159.137.105`, `162.159.138.105`).
+
+</Details>
+
+<Details header="Cannot reach private network resources">
+
+- Confirm that the tunnel is running and healthy in **Networks** > **Connectors** > **Cloudflare Tunnels**.
+- Verify that the CIDR route configured on the tunnel matches the IP range of the resources you are trying to reach.
+- Check Split Tunnel settings — the private IP range must not be in the Exclude list.
+- Verify that the device's local IP address does not overlap with the tunnel's CIDR range. If it does, reconfigure your local network or tighten the Split Tunnel configuration.
+- Check Gateway network policies — a Block policy may be preventing the connection.
+
+</Details>
+
+<Details header="Traffic does not appear in Gateway logs">
+
+- Confirm the Gateway proxy is turned on in **Traffic policies** > **Traffic settings**.
+- Make sure at least **TCP** is selected under proxy protocols.
+- Verify that activity logging is enabled under **Traffic policies** > **Traffic settings** > **Log traffic activity**.
+
+</Details>
+
+## Next steps
+
+You now have a working Device to network setup. To harden this deployment for production:
+
+- **Add a tunnel replica** — Deploy `cloudflared` on a second host for high availability. Refer to [Tunnel availability and failover](/cloudflare-one/networks/connectors/cloudflare-tunnel/high-availability/).
+- **Deploy WARP at scale** — Use MDM tools (Intune, JAMF) to deploy the WARP client across your device fleet. Refer to [Managed deployment](/cloudflare-one/team-and-resources/devices/warp/deployment/).
+- **Configure private DNS** — Resolve internal hostnames (not just IPs) through the tunnel. Refer to [Private DNS](/cloudflare-one/networks/dns/private-dns/).
+- **Enable TLS inspection** — Inspect HTTPS traffic for threats and data loss. Refer to [TLS decryption](/cloudflare-one/traffic-policies/gateway-inspection/).
+- **Build comprehensive policies** — The [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/) covers advanced policy design, posture checks, and multi-site deployments in depth.
