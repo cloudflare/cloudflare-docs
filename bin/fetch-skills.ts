@@ -2,9 +2,13 @@
 
 import { spawn } from "child_process";
 import fs from "fs";
+import { join } from "path";
 
-const SKILLS_URL =
-	"https://middlecache.ced.cloudflare.com/v1/cloudflare-skills/skills.tar.gz";
+import { downloadToDotTempIfNotPresent } from "../src/util/custom-loaders";
+
+const MIDDLECACHE_BASE_URL = "https://middlecache.ced.cloudflare.com/";
+const SKILLS_MIDDLECACHE_PATH = "v1/cloudflare-skills/skills.tar.gz";
+const SKILLS_DOT_TMP_PATH = `middlecache/${SKILLS_MIDDLECACHE_PATH}`;
 const SKILLS_DIR = "./skills";
 
 // --soft: warn and continue on failure instead of exiting non-zero.
@@ -36,40 +40,29 @@ if (fs.existsSync(SKILLS_DIR) && !force) {
 
 console.log("Fetching Cloudflare Skills from middlecache");
 
-let res!: Response;
 try {
-	res = await fetch(SKILLS_URL);
+	await downloadToDotTempIfNotPresent(
+		`${MIDDLECACHE_BASE_URL}${SKILLS_MIDDLECACHE_PATH}`,
+		SKILLS_DOT_TMP_PATH,
+	);
 } catch (err) {
 	fail(`fetch failed: ${err}`);
 }
 
-if (!res.ok) {
-	fail(`fetch failed: ${res.status} ${res.statusText}`);
-}
+const tarballPath = join(".tmp", ...SKILLS_DOT_TMP_PATH.split("/"));
 
 // Remove existing skills/ directory so stale Cloudflare Skills don't accumulate
 fs.rmSync(SKILLS_DIR, { recursive: true, force: true });
 fs.mkdirSync(SKILLS_DIR, { recursive: true });
 
-// Pipe the response body directly into tar, extracting the skills/ subdirectory.
+// Extract the tarball from .tmp/ into ./skills/.
 // The archive contains skills/<skill-name>/... so we strip the leading "skills/"
 // component and extract into SKILLS_DIR.
-const tar = spawn("tar", ["--strip-components=1", "-xz", "-C", SKILLS_DIR], {
-	stdio: ["pipe", "inherit", "inherit"],
-});
-
-const reader = res.body!.getReader();
-
-const pump = async (): Promise<void> => {
-	while (true) {
-		const { done, value } = await reader.read();
-		if (done) break;
-		tar.stdin!.write(value);
-	}
-	tar.stdin!.end();
-};
-
-await pump();
+const tar = spawn(
+	"tar",
+	["--strip-components=1", "-xz", "-C", SKILLS_DIR, "-f", tarballPath],
+	{ stdio: "inherit" },
+);
 
 const exitCode = await new Promise<number | null>((resolve) =>
 	tar.on("close", resolve),

@@ -43,9 +43,8 @@ export async function downloadToDotTempIfNotPresent(
 		fs.mkdirSync(dirname(destination), { recursive: true });
 
 		const response = await fetch(source);
-		const content = await response.text();
-
-		fs.writeFileSync(destination, content);
+		const buffer = await response.arrayBuffer();
+		fs.writeFileSync(destination, new Uint8Array(buffer));
 	}
 }
 
