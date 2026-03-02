@@ -276,6 +276,7 @@
 /browser-rendering/platform/pricing/ /browser-rendering/pricing/ 301
 /browser-rendering/platform/browser-close-reasons/ /browser-rendering/reference/browser-close-reasons/ 301
 /browser-rendering/platform/stagehand/ /browser-rendering/stagehand/ 301
+/browser-rendering/reference/supported-fonts/#use-your-own-custom-font /browser-rendering/features/custom-fonts/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
