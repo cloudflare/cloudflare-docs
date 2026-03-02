@@ -1,4 +1,4 @@
-name: Bonk
+name: Lil Bonk
 
 on:
   issue_comment:
