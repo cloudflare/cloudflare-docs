@@ -31,6 +31,20 @@ const apiHost = env.API_HOST;
 See the [Environment variables and secrets](/workers/development-testing/environment-variables/) page for more information on how to use `.env` files in local development.
 :::
 
+## Ignoring `.env` files
+
+If you have `.env` files managed by other tools (such as Vite) that should not be loaded by Wrangler, you can add a `# WRANGLER_IGNORE` comment anywhere in the file. Wrangler will skip loading any `.env` file that contains this comment.
+
+This applies to `.env`, `.env.local`, `.env.<environment>`, and `.env.<environment>.local` files.
+
+Example `.env` file that will be ignored by Wrangler:
+
+```ini title=".env"
+# WRANGLER_IGNORE
+API_KEY=secret
+CLOUDFLARE_API_TOKEN=<token-not-detected-by-wrangler>
+```
+
 ## Supported environment variables
 
 Wrangler supports the following environment variables:
