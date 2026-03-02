@@ -24,15 +24,16 @@ const stream = await sandbox.watch(path: string, options?: WatchOptions): Promis
 - `path` - Absolute path or relative to `/workspace` (for example, `/app/src` or `src`)
 - `options` (optional):
   - `recursive` - Watch subdirectories recursively (default: `true`)
-  - `include` - Glob patterns to include (for example, `['*.ts', '*.js']`)
-  - `exclude` - Glob patterns to exclude (default: `['.git', 'node_modules', '.DS_Store']`)
+  - `include` - Glob patterns to include (for example, `['*.ts', '*.js']`). Cannot be used together with `exclude`.
+  - `exclude` - Glob patterns to exclude (default: `['.git', 'node_modules', '.DS_Store']`). Cannot be used together with `include`.
+  - `sessionId` - Session to run the watch in (if omitted, the default session is used)
 
 **Returns**: `Promise<ReadableStream<Uint8Array>>` — an SSE stream of `FileWatchSSEEvent` objects
 
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 const stream = await sandbox.watch("/workspace/src", {
@@ -40,7 +41,12 @@ const stream = await sandbox.watch("/workspace/src", {
   include: ["*.ts", "*.js"],
 });
 
-for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+const controller = new AbortController();
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(
+  stream,
+  controller.signal,
+)) {
   switch (event.type) {
     case "watching":
       console.log(`Watch established on ${event.path} (id: ${event.watchId})`);
@@ -56,6 +62,9 @@ for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
       break;
   }
 }
+
+// Cancel the watch by aborting — cleans up the watcher server-side
+controller.abort();
 ```
 
 </TypeScriptExample>
@@ -126,10 +135,48 @@ Configuration options for watching directories.
 interface WatchOptions {
 	/** Watch subdirectories recursively (default: true) */
 	recursive?: boolean;
-	/** Glob patterns to include (e.g., ['*.ts', '*.js']) */
+	/** Glob patterns to include. Cannot be used together with `exclude`. */
 	include?: string[];
-	/** Glob patterns to exclude (default: ['.git', 'node_modules', '.DS_Store']) */
+	/** Glob patterns to exclude. Cannot be used together with `include`. Default: ['.git', 'node_modules', '.DS_Store'] */
 	exclude?: string[];
+	/** Session to run the watch in. If omitted, the default session is used. */
+	sessionId?: string;
+}
+```
+
+:::caution[Mutual exclusivity]
+`include` and `exclude` cannot be used together. Use `include` to allowlist patterns, or `exclude` to blocklist patterns. Requests that specify both are rejected with a validation error.
+:::
+
+### `parseSSEStream()`
+
+Converts a `ReadableStream<Uint8Array>` into a typed `AsyncGenerator` of events. Accepts an optional `AbortSignal` to cancel the stream.
+
+```ts
+function parseSSEStream<T>(
+	stream: ReadableStream<Uint8Array>,
+	signal?: AbortSignal,
+): AsyncGenerator<T>;
+```
+
+**Parameters**:
+
+- `stream` — The SSE stream returned by `watch()`
+- `signal` (optional) — An `AbortSignal` to cancel the stream. When aborted, the reader is cancelled which propagates cleanup to the server.
+
+Aborting the signal is the recommended way to stop a watch from outside the consuming loop:
+
+```ts
+const controller = new AbortController();
+
+// Cancel after 60 seconds
+setTimeout(() => controller.abort(), 60_000);
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(
+	stream,
+	controller.signal,
+)) {
+	// process events
 }
 ```
 
@@ -146,6 +193,10 @@ The `include` and `exclude` options accept a limited set of glob tokens for pred
 Character classes (`[abc]`), brace expansion (`{a,b}`), and backslash escapes are not supported. Patterns containing these tokens are rejected with a validation error.
 
 ## Notes
+
+:::note[Deterministic readiness]
+`watch()` blocks until the filesystem watcher is established on the server. When the promise resolves, the watcher is active and you can immediately perform filesystem actions that depend on the watch being in place.
+:::
 
 :::note[Container lifecycle]
 File watchers are automatically stopped when the sandbox container sleeps or is destroyed. You do not need to manually cancel the stream on container shutdown.

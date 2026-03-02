@@ -19,7 +19,7 @@ Start by watching a directory for any changes:
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 const stream = await sandbox.watch("/workspace/src");
@@ -56,7 +56,7 @@ Use `include` patterns to watch only specific file types:
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 // Only watch TypeScript and JavaScript files
@@ -88,7 +88,7 @@ Use `exclude` patterns to skip certain directories or files:
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 const stream = await sandbox.watch("/workspace", {
@@ -123,7 +123,7 @@ Trigger builds automatically when source files are modified:
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 const stream = await sandbox.watch("/workspace/src", {
@@ -162,7 +162,7 @@ Re-run tests when test files are modified:
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 const stream = await sandbox.watch("/workspace/tests", {
@@ -187,7 +187,7 @@ Re-index only changed files instead of rescanning an entire directory tree:
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 const stream = await sandbox.watch("/workspace/docs", {
@@ -222,7 +222,7 @@ Extract event processing into a reusable function that handles stream lifecycle:
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 async function watchFiles(
@@ -271,7 +271,7 @@ Avoid excessive operations by collecting changes before processing:
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 const stream = await sandbox.watch("/workspace/src");
@@ -307,7 +307,7 @@ Watch only the top level of a directory, without descending into subdirectories:
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 // Only watch root-level config files
@@ -328,12 +328,46 @@ for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
 
 ## Stop a watch
 
-The stream ends naturally when the container sleeps or shuts down. To stop a watch early, cancel the stream reader or use an `AbortController` on the underlying fetch (if applicable). Breaking out of the `for await` loop also cancels the stream:
+The stream ends naturally when the container sleeps or shuts down. There are two ways to stop a watch early:
+
+### Use an AbortController
+
+Pass an `AbortSignal` to `parseSSEStream`. Aborting the signal cancels the stream reader, which propagates cleanup to the server. This is the recommended approach when you need to cancel the watch from outside the consuming loop:
 
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace/src");
+const controller = new AbortController();
+
+// Cancel after 60 seconds
+setTimeout(() => controller.abort(), 60_000);
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(
+  stream,
+  controller.signal,
+)) {
+  if (event.type === "event") {
+    console.log(`${event.eventType}: ${event.path}`);
+  }
+}
+
+console.log("Watch stopped");
+```
+
+</TypeScriptExample>
+
+### Break out of the loop
+
+Breaking out of the `for await` loop also cancels the stream:
+
+<TypeScriptExample>
+
+```
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 const stream = await sandbox.watch("/workspace/src");
@@ -360,26 +394,28 @@ console.log("Watch stopped");
 
 ### Use server-side filtering
 
-Filter with `include` and `exclude` patterns rather than filtering events in JavaScript. Server-side filtering happens at the inotify level, which reduces the number of events sent over the network:
+Filter with `include` or `exclude` patterns rather than filtering events in JavaScript. Server-side filtering happens at the inotify level, which reduces the number of events sent over the network.
+
+:::note
+`include` and `exclude` are mutually exclusive. Use one or the other, not both. If you need to watch specific file types while ignoring certain directories, use `include` patterns that match the files you want.
+:::
 
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 // Efficient: filtering happens at the inotify level
-const stream = await sandbox.watch("/workspace", {
+const stream = await sandbox.watch("/workspace/src", {
   include: ["*.ts"],
-  exclude: ["node_modules"],
 });
 
 // Less efficient: all events are sent and then filtered in JavaScript
-const stream2 = await sandbox.watch("/workspace");
+const stream2 = await sandbox.watch("/workspace/src");
 for await (const event of parseSSEStream<FileWatchSSEEvent>(stream2)) {
   if (event.type === "event") {
     if (!event.path.endsWith(".ts")) continue;
-    if (event.path.includes("node_modules")) continue;
     // Handle event
   }
 }
@@ -394,7 +430,7 @@ Errors in your event handler do not stop the watch stream. Wrap handler logic in
 <TypeScriptExample>
 
 ```
-import { parseSSEStream } from "@cloudflare/sandbox/sse-parser";
+import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 const stream = await sandbox.watch("/workspace/src");
