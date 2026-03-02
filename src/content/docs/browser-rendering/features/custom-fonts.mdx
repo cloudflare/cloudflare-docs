@@ -1,15 +1,27 @@
 ---
 pcx_content_type: how-to
 title: Custom fonts
+description: Learn how to add custom fonts to Browser Rendering for use in screenshots and PDFs.
 sidebar:
   order: 1
 ---
 
 import { Tabs, TabItem } from "~/components";
 
-Browser Rendering supports custom fonts, allowing you to inject any font into the page at render time using `addStyleTag`. You can load fonts from an external URL or embed them directly as a Base64 string, giving you full control over typography in your screenshots and PDFs. For a list of pre-installed fonts, refer to [Supported fonts](/browser-rendering/reference/supported-fonts/).
+Browser Rendering uses a managed Chromium environment that includes a [standard set of pre-installed fonts](/browser-rendering/reference/supported-fonts/). When you generate a screenshot or PDF, text is rendered using the fonts available in this environment. If your page specifies a font that is not pre-installed, Chromium will automatically fall back to a similar supported font.
+
+If you need a specific font that is not pre-installed, you can inject it into the page at render time. You can load fonts from an external URL or embed them directly as a Base64 string.
+
+How you add a custom font depends on how you are using Browser Rendering:
+
+- If you use a [Workers binding](/browser-rendering/workers-bindings/) with [Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/), refer to the [Workers binding](#workers-binding) section.
+- If you use the [REST API](/browser-rendering/rest-api/), refer to the [REST API](#rest-api) section.
 
 ## Workers binding
+
+Use `addStyleTag` to inject a `@font-face` rule into the page before capturing your screenshot or PDF. You can load the font file from a CDN URL or embed it as a Base64-encoded string.
+
+### From a CDN URL
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 Example with [Puppeteer](/browser-rendering/puppeteer/) and a CDN source:
@@ -57,9 +69,12 @@ await page.addStyleTag({
 
 </TabItem> </Tabs>
 
+### Base64-encoded
+
+The following examples use [Playwright](/browser-rendering/playwright/), but this method works the same way with [Puppeteer](/browser-rendering/puppeteer/).
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-Example with [Playwright](/browser-rendering/playwright/) and a Base64 encoded data source:
+Example with a Base64-encoded data source:
 
 ```js
 const browser = await playwright.launch(env.MYBROWSER);
@@ -81,7 +96,7 @@ await page.addStyleTag({
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-Example with [Playwright](/browser-rendering/playwright/) and a Base64 encoded data source:
+Example with a Base64-encoded data source:
 
 ```ts
 const browser = await playwright.launch(env.MYBROWSER);
@@ -108,7 +123,7 @@ await page.addStyleTag({
 
 When using the [REST API](/browser-rendering/rest-api/), you can load custom fonts by including the `addStyleTag` parameter in your request body. This works with both the [screenshot](/browser-rendering/rest-api/screenshot-endpoint/) and [PDF](/browser-rendering/rest-api/pdf-endpoint/) endpoints.
 
-Example with a CDN-hosted font:
+### From a CDN URL
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
@@ -125,7 +140,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "screenshot.png"
 ```
 
-Example with a Base64-encoded font:
+### Base64-encoded
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
