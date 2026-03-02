@@ -27,39 +27,39 @@ Site A (WARP Connector) ↔ Cloudflare global network ↔ Site B (WARP Connector
 
 ## When to use WARP Connector vs. Cloudflare WAN
 
-<!-- TODO: Decision table comparing WARP Connector (software, Linux only, L3-L4) vs. Cloudflare WAN (GRE/IPsec, any router, L3) -->
+{/* TODO: Decision table comparing WARP Connector (software, Linux only, L3-L4) vs. Cloudflare WAN (GRE/IPsec, any router, L3) */}
 
 ## Prerequisites
 
-<!-- TODO: Cloudflare account, Zero Trust org, Linux host server at each site, network CIDR ranges for each site -->
+{/* TODO: Cloudflare account, Zero Trust org, Linux host server at each site, network CIDR ranges for each site */}
 
 ## Step 1: Install the first WARP Connector
 
-<!-- TODO: Steps from site-to-site.mdx — create device profile, install WARP Connector on Linux host, authenticate -->
+{/* TODO: Steps from site-to-site.mdx — create device profile, install WARP Connector on Linux host, authenticate */}
 
 ## Step 2: Route traffic between the first site and Cloudflare
 
-<!-- TODO: Configure Split Tunnels on the WARP Connector device profile to include the remote site's CIDR -->
+{/* TODO: Configure Split Tunnels on the WARP Connector device profile to include the remote site's CIDR */}
 
 ## Step 3: Configure routing on the local network
 
-<!-- TODO: Three gateway options from site-to-site.mdx: WARP Connector as default gateway, static route on router, policy-based routing -->
+{/* TODO: Three gateway options from site-to-site.mdx: WARP Connector as default gateway, static route on router, policy-based routing */}
 
 ## Step 4: Install the second WARP Connector
 
-<!-- TODO: Repeat for second site -->
+{/* TODO: Repeat for second site */}
 
 ## Step 5: Create access policies
 
-<!-- TODO: Gateway network policies to control inter-site traffic -->
+{/* TODO: Gateway network policies to control inter-site traffic */}
 
 ## Verify connectivity
 
-<!-- TODO: Test bidirectional connectivity between sites, check Gateway logs -->
+{/* TODO: Test bidirectional connectivity between sites, check Gateway logs */}
 
 ## Troubleshoot
 
-<!-- TODO: Common issues: Split Tunnel misconfiguration, overlapping CIDRs, gateway routing issues -->
+{/* TODO: Common issues: Split Tunnel misconfiguration, overlapping CIDRs, gateway routing issues */}
 
 ## Next steps
 
