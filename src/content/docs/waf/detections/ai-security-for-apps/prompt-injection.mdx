@@ -10,7 +10,7 @@ sidebar:
 
 import { GlossaryTooltip, Details } from "~/components";
 
-Firewall for AI detects <GlossaryTooltip term="prompt injection">prompt injection</GlossaryTooltip> attacks — prompts intentionally designed to subvert the intended behavior of your LLM as specified by the developer. When a prompt injection attempt is detected, Firewall for AI assigns a score that you can use in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to take action.
+AI Security for Apps detects <GlossaryTooltip term="prompt injection">prompt injection</GlossaryTooltip> attacks — prompts intentionally designed to subvert the intended behavior of your LLM as specified by the developer. When a prompt injection attempt is detected, AI Security for Apps assigns a score that you can use in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to take action.
 
 ## Scoring system
 
@@ -91,4 +91,4 @@ To find the right threshold for your traffic:
 4. If you see attacks getting through, raise the threshold (for example, `lt 50`).
 5. Once confident, change the action to **Block**.
 
-You can also use [log mode](/waf/detections/firewall-for-ai/log-mode-vs-production-mode/) with payload logging during this tuning phase to see the actual prompt content alongside scores.
+You can also use [log mode](/waf/detections/ai-security-for-apps/log-mode-vs-production-mode/) with payload logging during this tuning phase to see the actual prompt content alongside scores.

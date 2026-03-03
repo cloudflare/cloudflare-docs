@@ -9,13 +9,13 @@ sidebar:
 
 import { Steps } from "~/components";
 
-Firewall for AI can operate in two distinct modes. Understanding the trade-offs between them helps you choose the right approach for your stage of deployment.
+AI Security for Apps can operate in two distinct modes. Understanding the trade-offs between them helps you choose the right approach for your stage of deployment.
 
 ## Comparison
 
 | Feature | Production mode | Log mode |
 | --- | --- | --- |
-| **How it works** | You write WAF [custom rules](/waf/custom-rules/) using Firewall for AI detection fields | You enable the **Cloudflare Firewall for AI Managed Ruleset** with pre-built rules |
+| **How it works** | You write WAF [custom rules](/waf/custom-rules/) using AI Security for Apps detection fields | You enable the **Cloudflare AI Security for Apps Managed Ruleset** with pre-built rules |
 | **Prompt logging** | No — only request metadata is logged | Yes — the full request body is logged (encrypted via [payload logging](/waf/managed-rules/payload-logging/)) |
 | **Response logging** | No — use [AI Gateway](/ai-gateway/) if response visibility is required | No — same limitation |
 | **Policy flexibility** | Full — combine injection scores, PII categories, bot scores, custom topics, and more | Limited — three fixed rules (PII detected, unsafe topic detected, prompt injection detected) with no score-based or subcategory logic |
@@ -24,7 +24,7 @@ Firewall for AI can operate in two distinct modes. Understanding the trade-offs 
 
 ## Production mode
 
-Production mode is the standard operating mode. You enable Firewall for AI and create [custom rules](/waf/custom-rules/) using the [detection fields](/waf/detections/firewall-for-ai/fields/) it populates. This gives you full control over:
+Production mode is the standard operating mode. You enable AI Security for Apps and create [custom rules](/waf/custom-rules/) using the [detection fields](/waf/detections/ai-security-for-apps/fields/) it populates. This gives you full control over:
 
 - **Which detections trigger an action.** For example, block only when `cf.llm.prompt.injection_score` is below 30, rather than blocking any detection.
 - **Which PII categories matter.** For example, block `CREDIT_CARD` but only log `EMAIL_ADDRESS`.
@@ -38,7 +38,7 @@ Example production rule expression:<br/>
 
 ## Log mode
 
-Log mode uses the **Cloudflare Firewall for AI Managed Ruleset** — a pre-built ruleset that logs the full request body alongside detection results. This mode is designed for **evaluation and tuning** rather than production enforcement.
+Log mode uses the **Cloudflare AI Security for Apps Managed Ruleset** — a pre-built ruleset that logs the full request body alongside detection results. This mode is designed for **evaluation and tuning** rather than production enforcement.
 
 In log mode:
 
@@ -48,9 +48,9 @@ In log mode:
 
 **When to use log mode:**
 
-- During initial deployment, to understand what Firewall for AI detects on your traffic before enforcing actions.
+- During initial deployment, to understand what AI Security for Apps detects on your traffic before enforcing actions.
 - When tuning score thresholds — review logged prompts alongside their scores to determine appropriate thresholds.
-- When validating that [custom topic](/waf/detections/firewall-for-ai/custom-topics/) definitions are working as expected.
+- When validating that [custom topic](/waf/detections/ai-security-for-apps/custom-topics/) definitions are working as expected.
 
 :::caution
 Because the managed ruleset uses broad, binary detection logic (detected/not detected), it is likely too aggressive for production traffic. Without score-based thresholds, expect a higher rate of false positives if the action is set to Block.
@@ -60,7 +60,7 @@ Because the managed ruleset uses broad, binary detection logic (detected/not det
 
 <Steps>
 
-1. **Start in log mode.** Enable the Firewall for AI Managed Ruleset with the action set to **Log**. Configure [payload logging](/waf/managed-rules/payload-logging/) so you can view prompts alongside detection results.
+1. **Start in log mode.** Enable the AI Security for Apps Managed Ruleset with the action set to **Log**. Configure [payload logging](/waf/managed-rules/payload-logging/) so you can view prompts alongside detection results.
 
 2. **Review detections in Security Analytics.** Filter on events from the managed ruleset. Decrypt payloads and review the prompts that triggered detections. Note the scores to understand where to set thresholds.
 

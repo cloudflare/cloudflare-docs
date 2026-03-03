@@ -7,11 +7,11 @@ sidebar:
   order: 8
 ---
 
-Firewall for AI provides an estimated token count for each incoming LLM prompt. This lets you monitor prompt sizes, set limits on overly long prompts, and track token usage across your AI endpoints.
+AI Security for Apps provides an estimated token count for each incoming LLM prompt. This lets you monitor prompt sizes, set limits on overly long prompts, and track token usage across your AI endpoints.
 
 ## How it works
 
-When Firewall for AI processes a request to a `cf-llm` labeled endpoint, it calculates an approximate token count for the prompt content. The result is available in the `cf.llm.prompt.token_count` field, which you can reference in rule expressions and view in analytics.
+When AI Security for Apps processes a request to a `cf-llm` labeled endpoint, it calculates an approximate token count for the prompt content. The result is available in the `cf.llm.prompt.token_count` field, which you can reference in rule expressions and view in analytics.
 
 :::caution
 The token count is an **estimate**. It uses a general-purpose tokenizer and will not exactly match the token count reported by your LLM provider. Different models use different tokenizers — GPT-4, Claude, Llama, and others all tokenize text differently. Use this field for relative thresholds and anomaly detection, not as a precise measurement for billing or model-specific token budgets.

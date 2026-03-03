@@ -10,14 +10,14 @@ sidebar:
 
 import { Tabs, TabItem, Details, Steps } from "~/components";
 
-Firewall for AI can detect when an LLM prompt touches on unsafe or unwanted subjects. There are two layers of topic detection:
+AI Security for Apps can detect when an LLM prompt touches on unsafe or unwanted subjects. There are two layers of topic detection:
 
 - **Default unsafe topics** — A built-in set of safety categories that detect harmful content such as violent crimes, hate speech, and sexual content.
 - **Custom topics** — Topics you define to match your organization's specific policies, such as "competitors" or "financial advice".
 
 ## Default unsafe topics
 
-When Firewall for AI is enabled, it automatically evaluates prompts against a set of default unsafe topic categories and populates two fields:
+When AI Security for Apps is enabled, it automatically evaluates prompts against a set of default unsafe topic categories and populates two fields:
 
 - [`cf.llm.prompt.unsafe_topic_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/) — `true` if any unsafe topic was found.
 - [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) — an array of the specific categories detected.
@@ -72,7 +72,7 @@ The default categories are:
 
 ## Custom topics
 
-Custom topic detection lets you define your own topics and Firewall for AI will score each prompt against them. You can then use these scores in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to block, challenge, or log matching requests.
+Custom topic detection lets you define your own topics and AI Security for Apps will score each prompt against them. You can then use these scores in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to block, challenge, or log matching requests.
 
 This capability uses a zero-shot classification model that evaluates prompts at runtime. No model training is required.
 
@@ -81,9 +81,9 @@ This capability uses a zero-shot classification model that evaluates prompts at 
 1. You define a list of up to **20 custom topics** via the dashboard or API.
 2. Each topic consists of a **label** (used in rule expressions and analytics) and a **topic string** (the descriptive text the model uses to classify prompts).
 3. When a request arrives at a `cf-llm` labeled endpoint, the model evaluates the prompt against all defined topics and returns a **relevance score** for each.
-4. Scores are written to the [`cf.llm.prompt.custom_topic_categories`](/waf/detections/firewall-for-ai/fields/) map field.
+4. Scores are written to the [`cf.llm.prompt.custom_topic_categories`](/waf/detections/ai-security-for-apps/fields/) map field.
 
-Scores follow the same convention as other Firewall for AI scores: **lower values indicate higher relevance** (1 = highly relevant, 99 = not relevant).
+Scores follow the same convention as other AI Security for Apps scores: **lower values indicate higher relevance** (1 = highly relevant, 99 = not relevant).
 
 ### Define custom topics
 
@@ -92,7 +92,7 @@ Scores follow the same convention as other Firewall for AI scores: **lower value
 <Steps>
 
 1. In the Cloudflare dashboard, go to the **Settings** page under Security.
-2. Under **Firewall for AI**, find the **Custom Topics** section and select **Manage topics**.
+2. Under **AI Security for Apps**, find the **Custom Topics** section and select **Manage topics**.
 3. Add a topic by providing:
    - **Label**: A short identifier used in rule expressions (for example, `competitors`).
    - **Topic**: A descriptive English text string the model uses for classification (for example, `competitor products and services`).

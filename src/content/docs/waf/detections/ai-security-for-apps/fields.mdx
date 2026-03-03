@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Firewall for AI fields
+title: AI Security for Apps fields
 tags:
   - AI
 sidebar:
@@ -10,7 +10,7 @@ sidebar:
 
 import { Type } from "~/components";
 
-When enabled, Firewall for AI populates the following fields:
+When enabled, AI Security for Apps populates the following fields:
 
 | Field                                                                                                             | Description                                                                                                                                                                                                                              |
 | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -20,7 +20,7 @@ When enabled, Firewall for AI populates the following fields:
 | LLM Unsafe topic detected <br/> [`cf.llm.prompt.unsafe_topic_detected`][4] <br/> <Type text="Boolean"/>           | Indicates whether the incoming request includes any unsafe topic category in the LLM prompt.                                                                                                                                             |
 | LLM Unsafe topic categories <br/> [`cf.llm.prompt.unsafe_topic_categories`][5] <br/> <Type text="Array<String>"/> | Array of string values with the type of unsafe topics detected in the LLM prompt.<br/>[Category list](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/)                                            |
 | LLM Injection score <br/> [`cf.llm.prompt.injection_score`][6] <br/> <Type text="Number"/>                        | A score from 1–99 that represents the likelihood that the LLM prompt in the request is trying to perform a prompt injection attack. Lower scores indicate higher risk.                                                                   |
-| LLM Custom topic categories <br/> [`cf.llm.prompt.custom_topic_categories`][7] <br/> <Type text="Map<String, Number>"/> | A map of custom topic labels to relevance scores (1–99). Lower scores indicate the prompt is more relevant to that topic. Only populated when [custom topics](/waf/detections/firewall-for-ai/unsafe-topics/#custom-topics) are configured. |
+| LLM Custom topic categories <br/> [`cf.llm.prompt.custom_topic_categories`][7] <br/> <Type text="Map<String, Number>"/> | A map of custom topic labels to relevance scores (1–99). Lower scores indicate the prompt is more relevant to that topic. Only populated when [custom topics](/waf/detections/ai-security-for-apps/unsafe-topics/#custom-topics) are configured. |
 
 [1]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/
 [2]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/
