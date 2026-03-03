@@ -8,6 +8,7 @@ description: Create a SvelteKit application and deploy it to Cloudflare Workers 
 ---
 
 import {
+	AutoconfigDiagram,
 	Badge,
 	Description,
 	InlineBadge,
@@ -16,6 +17,25 @@ import {
 } from "~/components";
 
 In this guide, you will create a new [SvelteKit](https://svelte.dev/docs/kit/introduction) application and deploy to Cloudflare Workers.
+
+:::tip[Already have a SvelteKit project?]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect SvelteKit, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="SvelteKit"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: ".svelte-kit/cloudflare/_worker.js" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: .svelte-kit/cloudflare" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+		{ label: "adapter", file: "svelte.config.js", value: "@sveltejs/adapter-cloudflare" },
+	]}
+/>
 
 ## 1. Set up a new project
 

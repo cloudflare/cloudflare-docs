@@ -24,8 +24,8 @@ If you are on a Workers Free plan and you want to increase your limits, upgrade 
 | Browser hours                                            | 10 minutes per day |
 | Concurrent browsers per account (Workers Bindings only) [^1]  | 3 per account   |
 | New browser instances (Workers Bindings only) | 3 per minute    |
-| Browser timeout                                           | 60 seconds [^2]  |
-| Total requests (REST API only)                    | 6 per minute    |
+| Browser timeout                                          | 60 seconds [^2]  |
+| Total requests (REST API only) [^3]                      | 6 per minute (1 every 10 seconds)   |
 
 ## Workers Paid
 
@@ -38,14 +38,16 @@ If you are on a Workers Paid plan and you want to increase your limits beyond th
 | Browser hours                                            | No limit  ([See pricing](/browser-rendering/pricing/))      |
 | Concurrent browsers per account  (Workers Bindings only) [^1] | 30 per account ([See pricing](/browser-rendering/pricing/)) |
 | New browser instances per minute (Workers Bindings only) | 30 per minute   |
-| Browser timeout                                           | 60 seconds [^2] |
-| Total requests per min (REST API only)                   | 180 per minute  |
+| Browser timeout                                          | 60 seconds [^2] |
+| Total requests per min (REST API only) [^3]              | 180 per minute (3 per second)  |
 
 [^1]: Browsers close upon task completion or sixty seconds of inactivity (if you do not [extend your browser timeout](#can-i-increase-the-browser-timeout)). Therefore, in practice, many workflows do not require a high number of concurrent browsers.
 
 [^2]: By default, a browser will time out after 60 seconds of inactivity. You can extend this to up to 10 minutes using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). Call `browser.close()` to release the browser instance immediately.
 
-## Limits FAQ & troubleshooting
+[^3]: Enforced with a fixed per-second fill rate, not as a burst allowance. This means you cannot send all your requests at once. The API expects them to be spread evenly over the minute. If you exceed the limit, refer to [troubleshooting the `429 Too many requests` error](#error-429-too-many-requests).
+
+## FAQ
 
 <Render file="manage-concurrency-faq" product="browser-rendering" />
 
@@ -79,18 +81,7 @@ You can monitor your usage and view session close reasons in the Cloudflare dash
 
 Refer to [Browser close reasons](/browser-rendering/reference/browser-close-reasons/) for more information.
 
-## Rate limits and errors
-
-### Understanding rate limits
-
-Rate limits are enforced with a fixed per-second fill rate, not as a burst allowance. This means you cannot send all your requests at once — the API expects them to be spread evenly over the minute.
-
-| Plan         | Rate limit       | Per-second equivalent      |
-| ------------ | ---------------- | -------------------------- |
-| Workers Free | 6 requests/min   | 1 request every 10 seconds |
-| Workers Paid | 180 requests/min | 3 requests/second          |
-
-If you exceed the rate limit, the API responds with HTTP status code `429 Too many requests` and includes a `Retry-After` header specifying how many seconds to wait before retrying.
+## Troubleshooting
 
 ### Error: `429 Too many requests`
 
@@ -119,7 +110,7 @@ await new Promise(resolve => setTimeout(resolve, retryAfter \* 1000));
 
 }
 
-````
+```
 
 </TabItem> <TabItem label="Workers Bindings">
 
@@ -146,7 +137,7 @@ try {
 		const browser = await puppeteer.launch(env.MYBROWSER);
 	}
 }
-````
+```
 
 </TabItem> </Tabs>
 

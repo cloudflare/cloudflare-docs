@@ -191,7 +191,7 @@ npx wrangler pages dev -- npm run dev
 | **Redirects** | 2,100 (2k static + 100 dynamic) | Same |
 | **Header Rules** | 100 | 100 |
 | **Route Rules** | 100 | 100 |
-| **Subrequests** | 50/request | 1,000/request (Workers Paid) |
+| **Subrequests** | 50/request | 10,000/request (Workers Paid) |
 
 **Notes**:
 - Functions use Workers runtime; Workers Paid plan increases limits

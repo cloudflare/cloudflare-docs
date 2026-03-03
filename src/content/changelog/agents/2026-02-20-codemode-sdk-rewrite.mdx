@@ -11,7 +11,7 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 The [`@cloudflare/codemode`](https://www.npmjs.com/package/@cloudflare/codemode) package has been rewritten into a modular, runtime-agnostic SDK.
 
-[Code Mode](https://blog.cloudflare.com/code-mode/) enables LLMs to write and execute TypeScript that orchestrates your tools, instead of calling them one at a time. This can (and does) yield significant token savings, reduces context window pressure and improves overall model performance on a task.
+[Code Mode](https://blog.cloudflare.com/code-mode/) enables LLMs to write and execute code that orchestrates your tools, instead of calling them one at a time. This can (and does) yield significant token savings, reduces context window pressure and improves overall model performance on a task.
 
 The new `Executor` interface is runtime agnostic and comes with a prebuilt `DynamicWorkerExecutor` to run generated code in a [Dynamic Worker Loader](/workers/runtime-apis/bindings/worker-loader/).
 
@@ -26,6 +26,7 @@ The new `Executor` interface is runtime agnostic and comes with a prebuilt `Dyna
 - **`Executor` interface** — Minimal `execute(code, fns)` contract. Implement for any code sandboxing primitive or runtime.
 
 ### `DynamicWorkerExecutor`
+
 Runs code in a [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/). It comes with the following features:
 
 - **Network isolation** — `fetch()` and `connect()` blocked by default (`globalOutbound: null`) when using `DynamicWorkerExecutor`

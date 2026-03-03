@@ -7,7 +7,7 @@ head:
 
 ---
 
-import { FeatureTable, Render, DashButton } from "~/components"
+import { FeatureTable, GlossaryTooltip, Render, DashButton } from "~/components"
 
 Cloudflare respects the origin web server’s cache headers in the following order unless an [Edge Cache TTL cache rule](/cache/how-to/cache-rules/settings/#edge-ttl) overrides the headers. Refer to the [Edge TTL](/cache/how-to/configure-cache-status-code/#edge-ttl) section for details on default TTL behavior.
 
@@ -35,6 +35,12 @@ Clients can send range requests to be served from the cache using the `Range` he
 
  - If the origin response includes a `Content-Length` header, then the specified byte range will be returned with an [HTTP 206](/support/troubleshooting/http-status-codes/2xx-success/#206-partial-content) response.
  - If the origin response does not include the `Content-Length` header, the cache will return the full content with an HTTP 200 response.
+
+## Request collapsing
+
+When multiple requests arrive simultaneously at a single Cloudflare data center for the same asset that is not in cache (a cache miss), Cloudflare uses a <GlossaryTooltip term="cache lock">cache lock</GlossaryTooltip> to avoid sending duplicate requests to your origin. Only the first request is forwarded to the origin to fetch the asset. The remaining requests wait for the first request to complete, after which the response is [streamed](https://blog.cloudflare.com/introducing-concurrent-streaming-acceleration/) to all waiting requests.
+
+The cache lock ensures that Cloudflare only sends one request at a time to the origin for a given asset from a single location in Cloudflare's network, preventing the origin from receiving excessive traffic.
 
 ## Default cached file extensions
 

@@ -1,0 +1,18 @@
+---
+pcx_content_type: troubleshooting
+title: Error 501
+source: null
+---
+
+## Error 501: not implemented
+
+Cloudflare Workers returns a `501` error when a request uses an HTTP method that is not supported by the Workers Runtime.
+
+### Common causes
+
+- A client sent a request to a Workers script using a custom or non-standard HTTP method (methods outside of `GET`, `POST`, `PUT`, etc.).
+- A typo in the HTTP method (for example, `POT` instead of `POST`).
+
+### Resolution
+
+- Update the client to use a valid, standard [HTTP request method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods).

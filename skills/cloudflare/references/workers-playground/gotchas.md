@@ -68,7 +68,7 @@ try { ... } catch (e) {
 |----------|------|------|
 | CPU time | 10ms | 50ms |
 | Memory | 128 MB | 128 MB |
-| Subrequests | 50 | 1000 |
+| Subrequests | 50 | 10,000 |
 
 ## Browser Support
 

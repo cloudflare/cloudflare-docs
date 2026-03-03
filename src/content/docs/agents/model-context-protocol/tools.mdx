@@ -1,35 +1,208 @@
 ---
 pcx_content_type: concept
 title: Tools
+tags:
+  - MCP
 sidebar:
   order: 2
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
-Model Context Protocol (MCP) tools are functions that a [MCP Server](/agents/model-context-protocol) provides and MCP clients can call.
+MCP tools are functions that an [MCP server](/agents/model-context-protocol/) exposes for clients to call. When an LLM decides it needs to take an action — look up data, run a calculation, call an API — it invokes a tool. The MCP server executes the tool and returns the result.
 
-When you build MCP Servers with the `agents` package, you can define tools the [same way as shown in the `@modelcontextprotocol/sdk` package's examples](https://github.com/modelcontextprotocol/typescript-sdk?tab=readme-ov-file#tools).
+Tools are defined using the `@modelcontextprotocol/sdk` package. The Agents SDK handles transport and lifecycle; the tool definitions are the same regardless of whether you use [`createMcpHandler`](/agents/api-reference/mcp-handler-api/) or [`McpAgent`](/agents/api-reference/mcp-agent-api/).
 
-For example, the following code from [this example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-server) defines a simple MCP server that adds two numbers together:
+## Defining tools
+
+Use `server.tool()` to register a tool on an `McpServer` instance. Each tool has a name, a description (used by the LLM to decide when to call it), an input schema defined with [Zod](https://zod.dev), and a handler function.
 
 <TypeScriptExample>
-```ts title="src/index.ts"
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
+
+```ts
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+
+function createServer() {
+	const server = new McpServer({ name: "Math", version: "1.0.0" });
+
+	server.tool(
+		"add",
+		"Add two numbers together",
+		{ a: z.number(), b: z.number() },
+		async ({ a, b }) => ({
+			content: [{ type: "text", text: String(a + b) }],
+		}),
+	);
+
+	return server;
+}
+```
+
+</TypeScriptExample>
+
+The tool handler receives the validated input and must return an object with a `content` array. Each content item has a `type` (typically `"text"`) and the corresponding data.
+
+## Tool results
+
+Tool results are returned as an array of content parts. The most common type is `text`, but you can also return images and embedded resources.
+
+<TypeScriptExample>
+
+```ts
+server.tool(
+	"lookup",
+	"Look up a user by ID",
+	{ userId: z.string() },
+	async ({ userId }) => {
+		const user = await db.getUser(userId);
+
+		if (!user) {
+			return {
+				isError: true,
+				content: [{ type: "text", text: `User ${userId} not found` }],
+			};
+		}
+
+		return {
+			content: [{ type: "text", text: JSON.stringify(user, null, 2) }],
+		};
+	},
+);
+```
+
+</TypeScriptExample>
+
+Set `isError: true` to signal that the tool call failed. The LLM receives the error message and can decide how to proceed.
+
+## Tool descriptions
+
+The `description` parameter is critical — it is what the LLM reads to decide whether and when to call your tool. Write descriptions that are:
+
+- **Specific** about what the tool does: "Get the current weather for a city" is better than "Weather tool"
+- **Clear about inputs**: "Requires a city name as a string" helps the LLM format the call correctly
+- **Honest about limitations**: "Only supports US cities" prevents the LLM from calling it with unsupported inputs
+
+## Input validation with Zod
+
+Tool inputs are defined as Zod schemas and validated automatically before the handler runs. Use Zod's `.describe()` method to give the LLM context about each parameter.
+
+<TypeScriptExample>
+
+```ts
+server.tool(
+	"search",
+	"Search for documents by query",
+	{
+		query: z.string().describe("The search query"),
+		limit: z
+			.number()
+			.min(1)
+			.max(100)
+			.default(10)
+			.describe("Maximum number of results to return"),
+		category: z
+			.enum(["docs", "blog", "api"])
+			.optional()
+			.describe("Filter by content category"),
+	},
+	async ({ query, limit, category }) => {
+		const results = await searchIndex(query, { limit, category });
+		return {
+			content: [{ type: "text", text: JSON.stringify(results) }],
+		};
+	},
+);
+```
+
+</TypeScriptExample>
+
+## Using tools with `createMcpHandler`
+
+For stateless MCP servers, define tools inside a factory function and pass the server to [`createMcpHandler`](/agents/api-reference/mcp-handler-api/):
+
+<TypeScriptExample>
+
+```ts
+import { createMcpHandler } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+
+function createServer() {
+	const server = new McpServer({ name: "My Tools", version: "1.0.0" });
+
+	server.tool("ping", "Check if the server is alive", {}, async () => ({
+		content: [{ type: "text", text: "pong" }],
+	}));
+
+	return server;
+}
+
+export default {
+	fetch: (request: Request, env: Env, ctx: ExecutionContext) => {
+		const server = createServer();
+		return createMcpHandler(server)(request, env, ctx);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Using tools with `McpAgent`
+
+For stateful MCP servers, define tools in the `init()` method of an [`McpAgent`](/agents/api-reference/mcp-agent-api/). Tools have access to the agent instance via `this`, which means they can read and write state.
+
+<TypeScriptExample>
+
+```ts
 import { McpAgent } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
 export class MyMCP extends McpAgent {
-	server = new McpServer({ name: "Demo", version: "1.0.0" });
+	server = new McpServer({ name: "Stateful Tools", version: "1.0.0" });
+
 	async init() {
 		this.server.tool(
-			"add",
-			{ a: z.number(), b: z.number() },
-			async ({ a, b }) => ({
-				content: [{ type: "text", text: String(a + b) }],
-			}),
+			"incrementCounter",
+			"Increment and return a counter",
+			{},
+			async () => {
+				const count = (this.state?.count ?? 0) + 1;
+				this.setState({ count });
+				return {
+					content: [{ type: "text", text: `Counter: ${count}` }],
+				};
+			},
 		);
 	}
 }
 ```
+
 </TypeScriptExample>
+
+## Next steps
+
+<LinkCard
+	title="Build a remote MCP server"
+	href="/agents/guides/remote-mcp-server/"
+	description="Step-by-step guide to deploying an MCP server on Cloudflare."
+/>
+
+<LinkCard
+	title="createMcpHandler API"
+	href="/agents/api-reference/mcp-handler-api/"
+	description="Reference for stateless MCP servers."
+/>
+
+<LinkCard
+	title="McpAgent API"
+	href="/agents/api-reference/mcp-agent-api/"
+	description="Reference for stateful MCP servers."
+/>
+
+<LinkCard
+	title="MCP authorization"
+	href="/agents/model-context-protocol/authorization/"
+	description="Add OAuth authentication to your MCP server."
+/>

@@ -7,14 +7,14 @@ sidebar:
 
 RealtimeKit provides two transcription modes powered by Cloudflare Workers AI:
 
-| Mode | Model | Use Case |
-|------|-------|----------|
-| **Real-time** | [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/) | Live captions during meeting |
+| Mode             | Model                                                                | Use Case                       |
+| ---------------- | -------------------------------------------------------------------- | ------------------------------ |
+| **Real-time**    | [Deepgram Nova-3](/workers-ai/models/nova-3/)                        | Live captions during meeting   |
 | **Post-meeting** | [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) | Accurate offline transcription |
 
 ## Real-time transcription
 
-Streams transcripts to participants as they speak using [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/) via Cloudflare AI Gateway.
+Streams transcripts to participants as they speak using [Deepgram Nova-3](/workers-ai/models/nova-3/) via Cloudflare AI Gateway.
 
 ### Enable via preset
 
@@ -22,8 +22,8 @@ Set `transcription_enabled: true` in the participant's [preset](/realtime/realti
 
 ```json
 {
-  "name": "webinar_host",
-  "transcription_enabled": true
+	"name": "webinar_host",
+	"transcription_enabled": true
 }
 ```
 
@@ -35,26 +35,26 @@ Pass `ai_config.transcription` when [creating a meeting](/realtime/realtimekit/c
 
 ```json
 {
-  "title": "Team Standup",
-  "ai_config": {
-    "transcription": {
-      "language": "en-US",
-      "keywords": ["RealtimeKit", "Cloudflare"],
-      "profanity_filter": false
-    }
-  }
+	"title": "Team Standup",
+	"ai_config": {
+		"transcription": {
+			"language": "en-US",
+			"keywords": ["RealtimeKit", "Cloudflare"],
+			"profanity_filter": false
+		}
+	}
 }
 ```
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `language` | string | `en-US` | Language code for transcription |
-| `keywords` | string[] | `[]` | Terms to boost recognition (names, jargon) |
-| `profanity_filter` | boolean | `false` | Filter offensive language |
+| Option             | Type     | Default | Description                                |
+| ------------------ | -------- | ------- | ------------------------------------------ |
+| `language`         | string   | `en-US` | Language code for transcription            |
+| `keywords`         | string[] | `[]`    | Terms to boost recognition (names, jargon) |
+| `profanity_filter` | boolean  | `false` | Filter offensive language                  |
 
 ### Supported languages
 
-Supports all languages available in [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/)
+Supports all languages available in [Deepgram Nova-3](/workers-ai/models/nova-3/)
 
 ### Consume transcripts
 
@@ -66,13 +66,13 @@ const transcripts = meeting.ai.transcripts;
 
 // Listen for new transcripts
 meeting.ai.on("transcript", (data) => {
-  if (data.isPartialTranscript) {
-    // Interim result - speaker still talking
-    updateLiveCaption(data.peerId, data.transcript);
-  } else {
-    // Final result
-    appendToHistory(data);
-  }
+	if (data.isPartialTranscript) {
+		// Interim result - speaker still talking
+		updateLiveCaption(data.peerId, data.transcript);
+	} else {
+		// Final result
+		appendToHistory(data);
+	}
 });
 ```
 
@@ -80,23 +80,23 @@ meeting.ai.on("transcript", (data) => {
 
 ```json
 {
-  "id": "1a2b3c4d-5678-90ab-cdef-1234567890ab",
-  "name": "Alice",
-  "peerId": "4f5g6h7i-8j9k-0lmn-opqr-1234567890st",
-  "userId": "uvwxyz-1234-5678-90ab-cdefghijklmn",
-  "customParticipantId": "abc123xyz",
-  "transcript": "Hello everyone",
-  "isPartialTranscript": false,
-  "date": "2024-08-07T10:15:30.000Z"
+	"id": "1a2b3c4d-5678-90ab-cdef-1234567890ab",
+	"name": "Alice",
+	"peerId": "4f5g6h7i-8j9k-0lmn-opqr-1234567890st",
+	"userId": "uvwxyz-1234-5678-90ab-cdefghijklmn",
+	"customParticipantId": "abc123xyz",
+	"transcript": "Hello everyone",
+	"isPartialTranscript": false,
+	"date": "2024-08-07T10:15:30.000Z"
 }
 ```
 
-| Field | Description |
-|-------|-------------|
+| Field                 | Description                                        |
+| --------------------- | -------------------------------------------------- |
 | `isPartialTranscript` | `true` = interim (still speaking), `false` = final |
-| `peerId` | Changes if participant rejoins |
-| `userId` | Persistent participant ID |
-| `customParticipantId` | Your custom ID from Add Participant API |
+| `peerId`              | Changes if participant rejoins                     |
+| `userId`              | Persistent participant ID                          |
+| `customParticipantId` | Your custom ID from Add Participant API            |
 
 ---
 
@@ -114,12 +114,12 @@ Supports all languages in [Whisper Large v3 Turbo](/workers-ai/models/whisper-la
 
 ### Output formats
 
-| Format | Use Case |
-|--------|----------|
-| **CSV** | Spreadsheets, data analysis |
-| **SRT** | Video subtitle files |
-| **VTT** | Web video captions (`<track>` element) |
-| **JSON** | Programmatic access |
+| Format   | Use Case                               |
+| -------- | -------------------------------------- |
+| **CSV**  | Spreadsheets, data analysis            |
+| **SRT**  | Video subtitle files                   |
+| **VTT**  | Web video captions (`<track>` element) |
+| **JSON** | Programmatic access                    |
 
 #### CSV example
 
@@ -133,17 +133,17 @@ Timestamp,Participant ID,User ID,Custom Participant ID,Participant Name,Transcri
 
 ```json
 [
-  {
-    "startTime": 0,
-    "endTime": 2.5,
-    "sentence": "Hello everyone",
-    "peerData": {
-      "id": "peer-123",
-      "userId": "user-456",
-      "displayName": "Alice",
-      "cpi": "cust-789"
-    }
-  }
+	{
+		"startTime": 0,
+		"endTime": 2.5,
+		"sentence": "Hello everyone",
+		"peerData": {
+			"id": "peer-123",
+			"userId": "user-456",
+			"displayName": "Alice",
+			"cpi": "cust-789"
+		}
+	}
 ]
 ```
 
@@ -155,11 +155,11 @@ Configure `meeting.transcript` event in [webhooks](/api/resources/realtime_kit/s
 
 ```json
 {
-  "event": "meeting.transcript",
-  "meetingId": "meeting-123",
-  "sessionId": "session-456",
-  "transcriptDownloadUrl": "https://...",
-  "transcriptDownloadUrlExpiry": "2024-08-14T10:15:30.000Z"
+	"event": "meeting.transcript",
+	"meetingId": "meeting-123",
+	"sessionId": "session-456",
+	"transcriptDownloadUrl": "https://...",
+	"transcriptDownloadUrlExpiry": "2024-08-14T10:15:30.000Z"
 }
 ```
 

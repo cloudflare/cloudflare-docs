@@ -63,3 +63,4 @@ All SDKs are Stainless-generated from OpenAPI spec (consistent APIs).
 - [Cloudflare API Docs](https://developers.cloudflare.com/api/)
 - [Bindings Reference](../bindings/) - Workers runtime bindings (preferred over REST API)
 - [Wrangler Reference](../wrangler/) - CLI tool for Cloudflare development
+- [GraphQL Analytics API Reference](../graphql-api/) - Analytics data via GraphQL (separate endpoint from REST API)

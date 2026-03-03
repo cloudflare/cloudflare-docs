@@ -17,29 +17,29 @@ This guide will show you options for how to start using your remote MCP server w
 
 The [`@modelcontextprotocol/inspector` package](https://github.com/modelcontextprotocol/inspector) is a visual testing tool for MCP servers.
 
-1. Open a terminal and run the following command:
+1.  Open a terminal and run the following command:
 
-		```sh
-		npx @modelcontextprotocol/inspector
-		```
+        ```sh
+        npx @modelcontextprotocol/inspector
+        ```
 
-		```sh output
-		🚀 MCP Inspector is up and running at:
-			http://localhost:5173/?MCP_PROXY_AUTH_TOKEN=46ab..cd3
+        ```sh output
+        🚀 MCP Inspector is up and running at:
+        	http://localhost:5173/?MCP_PROXY_AUTH_TOKEN=46ab..cd3
 
-		🌐 Opening browser...
-		```
+        🌐 Opening browser...
+        ```
 
-		The MCP inspector will launch in your web browser. You can also launch it manually by opening a browser and going to `https://localhost:<PORT>`. Check the command output for the local port where MCP Inspector is running. In this example, the MCP server is served on port `5173`.
+        The MCP Inspector will launch in your web browser. You can also launch it manually by opening a browser and going to `http://localhost:<PORT>`. Check the command output for the local port where MCP Inspector is running. In this example, MCP Inspector is served on port `5173`.
 
-2. In the MCP inspector, enter the URL of your MCP server (for example, `http://localhost:8788/mcp`). Select **Connect**.
+2.  In the MCP inspector, enter the URL of your MCP server (for example, `http://localhost:8788/mcp`). Select **Connect**.
 
-	You can connect to an MCP server running on your local machine or a remote MCP server running on Cloudflare.
+    You can connect to an MCP server running on your local machine or a remote MCP server running on Cloudflare.
 
-3. If your server requires authentication, the connection will fail. To authenticate:
-	1. In MCP Inspector, select **Open Auth settings**.
-	2. Select **Quick OAuth Flow**.
-	3. Once you have authenticated with the OAuth provider, you will be redirected back to MCP Inspector. Select **Connect**.
+3.  If your server requires authentication, the connection will fail. To authenticate:
+    1. In MCP Inspector, select **Open Auth settings**.
+    2. Select **Quick OAuth Flow**.
+    3. Once you have authenticated with the OAuth provider, you will be redirected back to MCP Inspector. Select **Connect**.
 
 You should see the **List tools** button, which will list the tools that your MCP server exposes.
 
@@ -49,7 +49,7 @@ Visit the [Workers AI Playground](https://playground.ai.cloudflare.com/), enter 
 
 ## Connect your remote MCP server to Claude Desktop via a local proxy
 
-Even though [Claude Desktop](https://claude.ai/download) doesn't yet support remote MCP clients, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect it to your remote MCP server. This lets you to test what an interaction with your remote MCP server will be like with a real-world MCP client.
+You can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop to your remote MCP server. This lets you test what an interaction with your remote MCP server will be like with a real-world MCP client.
 
 1. Open Claude Desktop and navigate to Settings -> Developer -> Edit Config. This opens the configuration file that controls which MCP servers Claude can access.
 2. Replace the content with a configuration like this:

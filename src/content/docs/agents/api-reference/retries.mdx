@@ -130,11 +130,7 @@ const data = await this.retry(
 		maxAttempts: 5,
 		shouldRetry: (err, nextAttempt) => {
 			// Do not retry 4xx client errors — our request is wrong
-			if (
-				err instanceof HttpError &&
-				err.status >= 400 &&
-				err.status < 500
-			) {
+			if (err instanceof HttpError && err.status >= 400 && err.status < 500) {
 				return false;
 			}
 			return true; // retry everything else (5xx, network errors, etc.)
@@ -153,9 +149,14 @@ Pass retry options when creating a schedule:
 
 ```ts
 // Retry up to 5 times if the callback fails
-await this.schedule("processTask", 60, { taskId: "123" }, {
-	retry: { maxAttempts: 5 },
-});
+await this.schedule(
+	"processTask",
+	60,
+	{ taskId: "123" },
+	{
+		retry: { maxAttempts: 5 },
+	},
+);
 
 // Retry with custom backoff
 await this.schedule(
@@ -172,14 +173,24 @@ await this.schedule(
 );
 
 // Cron with retries
-await this.schedule("0 8 * * *", "dailyDigest", {}, {
-	retry: { maxAttempts: 3 },
-});
+await this.schedule(
+	"0 8 * * *",
+	"dailyDigest",
+	{},
+	{
+		retry: { maxAttempts: 3 },
+	},
+);
 
 // Interval with retries
-await this.scheduleEvery(30, "poll", { source: "api" }, {
-	retry: { maxAttempts: 5, baseDelayMs: 200 },
-});
+await this.scheduleEvery(
+	30,
+	"poll",
+	{ source: "api" },
+	{
+		retry: { maxAttempts: 5, baseDelayMs: 200 },
+	},
+);
 ```
 
 </TypeScriptExample>
@@ -193,9 +204,13 @@ Pass retry options when adding a task to the queue:
 <TypeScriptExample>
 
 ```ts
-await this.queue("sendEmail", { to: "user@example.com" }, {
-	retry: { maxAttempts: 5 },
-});
+await this.queue(
+	"sendEmail",
+	{ to: "user@example.com" },
+	{
+		retry: { maxAttempts: 5 },
+	},
+);
 
 await this.queue("processWebhook", webhookData, {
 	retry: {
@@ -223,9 +238,14 @@ await this.queue("sendEmail", data, {
 });
 
 // Throws immediately: "retry.baseDelayMs must be > 0"
-await this.schedule(60, "process", {}, {
-	retry: { baseDelayMs: -100 },
-});
+await this.schedule(
+	60,
+	"process",
+	{},
+	{
+		retry: { baseDelayMs: -100 },
+	},
+);
 
 // Throws immediately: "retry.maxAttempts must be an integer"
 await this.retry(() => fetch(url), { maxAttempts: 2.5 });
@@ -303,9 +323,14 @@ To disable retries for a specific task, set `maxAttempts: 1`:
 <TypeScriptExample>
 
 ```ts
-await this.schedule(60, "oneShot", {}, {
-	retry: { maxAttempts: 1 },
-});
+await this.schedule(
+	60,
+	"oneShot",
+	{},
+	{
+		retry: { maxAttempts: 1 },
+	},
+);
 ```
 
 </TypeScriptExample>

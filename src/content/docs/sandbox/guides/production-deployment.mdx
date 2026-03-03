@@ -87,7 +87,7 @@ const sandbox = getSandbox(env.Sandbox, 'test-sandbox');
 await sandbox.startProcess('python -m http.server 8080');
 const exposed = await sandbox.exposePort(8080, { hostname });
 
-console.log(exposed.exposedAt);
+console.log(exposed.url);
 // https://8080-test-sandbox.yourdomain.com
 ```
 

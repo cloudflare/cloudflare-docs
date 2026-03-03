@@ -188,7 +188,7 @@ console.log('Params:', params);
 | CPU Time | 10ms/req | 30ms/req |
 | Memory | 128MB | 128MB |
 | Script Size | 1MB | 10MB |
-| Subrequests | 50/req | 1,000/req |
+| Subrequests | 50/req | 10,000/req |
 | Deployments | 500/month | 5,000/month |
 
 **Tip**: Hitting CPU limit? Optimize hot paths or upgrade to Workers Paid plan.

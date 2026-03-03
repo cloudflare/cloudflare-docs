@@ -144,6 +144,7 @@ export default defineConfig({
 									"/http/resources/**",
 									"/llms.txt",
 									"/llms-full.txt",
+									"**/llms.txt",
 									"{props.*}",
 									"/",
 									"/glossary/",
@@ -159,6 +160,8 @@ export default defineConfig({
 									"/markdown.zip",
 									"/style-guide/index.md",
 									"/style-guide/fixtures/markdown/index.md",
+									"/videos/**",
+									"/search/**",
 								],
 							}),
 						]
@@ -179,6 +182,7 @@ export default defineConfig({
 			lastUpdated: true,
 			markdown: {
 				headingLinks: false,
+				processedDirs: ["./src/content/partials/", "./src/content/changelog/"],
 			},
 			routeMiddleware: "./src/plugins/starlight/route-data.ts",
 			disable404Route: true,

@@ -7,9 +7,9 @@ sidebar:
   order: 12
 ---
 
-import { Render, TypeScriptExample, LinkCard } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
-The `createMcpHandler` function creates a fetch handler to serve your [MCP server](/agents/model-context-protocol/). You can use it as an alternative to the [`McpAgent`](/agents/api-reference/mcp-agent-api) class when you don't need the deprecated SSE transport.
+The `createMcpHandler` function creates a fetch handler to serve your [MCP server](/agents/model-context-protocol/). Use it when you want a stateless MCP server that runs in a plain Worker (no Durable Object). For stateful MCP servers that persist state across requests, use the [`McpAgent`](/agents/api-reference/mcp-agent-api) class instead.
 
 It uses an implementation of the MCP Transport interface, `WorkerTransport`, built on top of web standards, which conforms to the [streamable-http](https://modelcontextprotocol.io/specification/draft/basic/transports/#streamable-http) transport specification.
 
@@ -191,6 +191,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 const STATE_KEY = "mcp-transport-state";
 
+type State = { counter: number };
+
 export class MyStatefulMcpAgent extends Agent<Env, State> {
 	server = new McpServer({
 		name: "Stateful MCP Server",
@@ -201,18 +203,18 @@ export class MyStatefulMcpAgent extends Agent<Env, State> {
 		sessionIdGenerator: () => this.name,
 		storage: {
 			get: () => {
-				return this.ctx.storage.kv.get<TransportState>(STATE_KEY);
+				return this.ctx.storage.get<TransportState>(STATE_KEY);
 			},
 			set: (state: TransportState) => {
-				this.ctx.storage.kv.put<TransportState>(STATE_KEY, state);
+				this.ctx.storage.put(STATE_KEY, state);
 			},
 		},
 	});
 
-	async onMcpRequest(request: Request) {
+	async onRequest(request: Request) {
 		return createMcpHandler(this.server, {
 			transport: this.transport,
-		})(request, this.env, {} as ExecutionContext);
+		})(request, this.env, this.ctx as unknown as ExecutionContext);
 	}
 }
 ```
@@ -236,7 +238,7 @@ export default {
 		const agent = await getAgentByName(env.MyStatefulMcpAgent, sessionId);
 
 		// Route the MCP request to the agent
-		return await agent.onMcpRequest(request);
+		return await agent.onRequest(request);
 	},
 } satisfies ExportedHandler<Env>;
 ```
@@ -257,11 +259,11 @@ The MCP SDK 1.26.0 introduces a breaking change for stateless MCP servers that a
 
 ### Who is affected?
 
-| Server Type | Affected? | Action Required |
-|-------------|-----------|-----------------|
-| Stateful servers using `Agent`/Durable Object | No | No changes needed |
-| Stateless servers using `createMcpHandler` | Yes | Create new `McpServer` per request |
-| Stateless servers using raw SDK transport | Yes | Create new `McpServer` and transport per request |
+| Server Type                                   | Affected? | Action Required                                  |
+| --------------------------------------------- | --------- | ------------------------------------------------ |
+| Stateful servers using `Agent`/Durable Object | No        | No changes needed                                |
+| Stateless servers using `createMcpHandler`    | Yes       | Create new `McpServer` per request               |
+| Stateless servers using raw SDK transport     | Yes       | Create new `McpServer` and transport per request |
 
 ### Why is this necessary?
 
@@ -524,14 +526,13 @@ interface TransportState {
 <TypeScriptExample>
 
 ```ts
+// Inside an Agent or Durable Object class method:
 const transport = new WorkerTransport({
 	storage: {
 		get: async () => {
-			// Retrieve state from Durable Object storage
 			return await this.ctx.storage.get<TransportState>("mcp-state");
 		},
 		set: async (state) => {
-			// Persist state to Durable Object storage
 			await this.ctx.storage.put("mcp-state", state);
 		},
 	},
@@ -552,7 +553,7 @@ interface McpAuthContext {
 
 ### getMcpAuthContext
 
-Retrieve the current authentication context within an MCP tool handler. This returns user information that was populated by the OAuth provider. Note that if using `McpAgent`, this information is accessable directly on `this.props` instead.
+Retrieve the current authentication context within an MCP tool handler. This returns user information that was populated by the OAuth provider. Note that if using `McpAgent`, this information is accessible directly on `this.props` instead.
 
 ```ts
 import { getMcpAuthContext } from "agents/mcp";
@@ -566,23 +567,26 @@ function getMcpAuthContext(): McpAuthContext | undefined;
 import { getMcpAuthContext } from "agents/mcp";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
-const server = new McpServer({ name: "Auth Server", version: "1.0.0" });
+function createServer() {
+	const server = new McpServer({ name: "Auth Server", version: "1.0.0" });
 
-server.tool("getProfile", "Get the current user's profile", {}, async () => {
-	// Access user info automatically populated by OAuth provider
-	const auth = getMcpAuthContext();
-	const username = auth?.props?.username as string | undefined;
-	const email = auth?.props?.email as string | undefined;
+	server.tool("getProfile", "Get the current user's profile", {}, async () => {
+		const auth = getMcpAuthContext();
+		const username = auth?.props?.username as string | undefined;
+		const email = auth?.props?.email as string | undefined;
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: `User: ${username ?? "anonymous"}, Email: ${email ?? "none"}`,
-			},
-		],
-	};
-});
+		return {
+			content: [
+				{
+					type: "text",
+					text: `User: ${username ?? "anonymous"}, Email: ${email ?? "none"}`,
+				},
+			],
+		};
+	});
+
+	return server;
+}
 ```
 
 </TypeScriptExample>

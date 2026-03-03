@@ -1,0 +1,241 @@
+---
+title: Backups
+pcx_content_type: concept
+sidebar:
+  order: 5
+---
+
+import { TypeScriptExample } from "~/components";
+
+Create point-in-time snapshots of sandbox directories and restore them with copy-on-write overlays.
+
+## Methods
+
+### `createBackup()`
+
+Create a point-in-time snapshot of a directory and upload it to R2 storage.
+
+```ts
+await sandbox.createBackup(options: BackupOptions): Promise<DirectoryBackup>
+```
+
+**Parameters**:
+
+- `options` - Backup configuration (see [`BackupOptions`](#backupoptions)):
+  - `dir` (required) - Absolute path to the directory to back up (for example, `"/workspace"`)
+  - `name` (optional) - Human-readable name for the backup. Maximum 256 characters, no control characters.
+  - `ttl` (optional) - Time-to-live in seconds until the backup expires. Default: `259200` (3 days). Must be a positive number.
+
+**Returns**: `Promise<DirectoryBackup>` containing:
+
+- `id` - Unique backup identifier (UUID)
+- `dir` - Directory that was backed up
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+// Create a backup of /workspace
+const backup = await sandbox.createBackup({ dir: "/workspace" });
+
+// Later, restore the backup
+await sandbox.restoreBackup(backup);
+```
+
+</TypeScriptExample>
+
+**How it works**:
+
+1. The container creates a compressed squashfs archive from the directory.
+2. The container uploads the archive directly to R2 using a presigned URL.
+3. Metadata is stored alongside the archive in R2.
+4. The local archive is cleaned up.
+
+**Throws**:
+
+- `InvalidBackupConfigError` - If `dir` is not absolute, contains `..`, the `BACKUP_BUCKET` binding is missing, or the R2 presigned URL credentials are not configured
+- `BackupCreateError` - If the container fails to create the archive or the upload to R2 fails
+
+:::note[R2 binding and credentials required]
+You must configure a `BACKUP_BUCKET` R2 binding and R2 presigned URL credentials (`R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `CLOUDFLARE_ACCOUNT_ID`, `BACKUP_BUCKET_NAME`) in your `wrangler.jsonc` before using backup methods. Refer to the [Wrangler configuration](/sandbox/configuration/wrangler/) for binding setup.
+:::
+
+:::caution[Path permissions]
+The backup process uses `mksquashfs`, which must have read access to every file and subdirectory in the target path. If any file has restrictive permissions (for example, directories owned by a different user), the backup fails with a `BackupCreateError: mksquashfs failed: Could not create destination file: Permission denied` error. Run `chmod -R a+rX` on the target directory before backing up, or refer to the [path permissions guide](/sandbox/guides/backup-restore/#path-permissions) for other options.
+:::
+
+:::caution[Partial writes]
+Partially-written files may not be captured consistently. Only completed writes are guaranteed to be included in the backup.
+:::
+
+---
+
+### `restoreBackup()`
+
+Restore a previously created backup into a directory using FUSE overlayfs (copy-on-write).
+
+```ts
+await sandbox.restoreBackup(backup: DirectoryBackup): Promise<RestoreBackupResult>
+```
+
+**Parameters**:
+
+- `backup` - The backup handle returned by `createBackup()`. Contains `id` and `dir`. (see [`DirectoryBackup`](#directorybackup))
+
+**Returns**: `Promise<RestoreBackupResult>` containing:
+
+- `success` - Whether the restore succeeded
+- `dir` - Directory that was restored
+- `id` - Backup ID that was restored
+
+<TypeScriptExample>
+
+```ts
+// Create a named backup with 24-hour TTL
+const backup = await sandbox.createBackup({
+	dir: "/workspace",
+	name: "before-refactor",
+	ttl: 86400,
+});
+
+// Store the handle for later use
+await env.KV.put(`backup:${userId}`, JSON.stringify(backup));
+```
+
+</TypeScriptExample>
+
+**How it works**:
+
+1. Metadata is downloaded from R2 and the TTL is checked. If expired, an error is thrown (with a 60-second buffer).
+2. The container downloads the archive directly from R2 using a presigned URL.
+3. The container mounts the squashfs archive with FUSE overlayfs.
+
+**Throws**:
+
+- `InvalidBackupConfigError` - If `backup.id` is missing or not a valid UUID, or `backup.dir` is invalid
+- `BackupNotFoundError` - If the backup metadata or archive is not found in R2
+- `BackupExpiredError` - If the backup TTL has elapsed
+- `BackupRestoreError` - If the container fails to restore
+
+:::note[Copy-on-write]
+Restore uses copy-on-write semantics. The backup is mounted as a read-only lower layer, and new writes go to a writable upper layer. The backup can be restored into a different directory than the original.
+:::
+
+:::caution[Ephemeral mount]
+The FUSE mount is lost when the sandbox sleeps or restarts. Re-restore from the backup handle to recover. Stop processes writing to the target directory before restoring.
+:::
+
+## Usage patterns
+
+### Checkpoint and restore
+
+Use backups as checkpoints before risky operations.
+
+<TypeScriptExample>
+
+```ts
+// Save checkpoint before risky operation
+const checkpoint = await sandbox.createBackup({ dir: "/workspace" });
+
+try {
+	await sandbox.exec("npm install some-experimental-package");
+	await sandbox.exec("npm run build");
+} catch (error) {
+	// Restore to the checkpoint if something goes wrong
+	await sandbox.restoreBackup(checkpoint);
+}
+```
+
+</TypeScriptExample>
+
+### Error handling
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+try {
+	const backup = await sandbox.createBackup({ dir: "/workspace" });
+	console.log(`Backup created: ${backup.id}`);
+} catch (error) {
+	if (error.code === "INVALID_BACKUP_CONFIG") {
+		console.error("Configuration error:", error.message);
+	} else if (error.code === "BACKUP_CREATE_FAILED") {
+		console.error("Backup failed:", error.message);
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Behavior
+
+- Concurrent backup and restore operations on the same sandbox are automatically serialized.
+- The returned `DirectoryBackup` handle is serializable — store it in KV, D1, or Durable Object storage.
+- Overlapping backups are independent. Restoring a parent directory overwrites subdirectory mounts.
+
+### TTL enforcement
+
+The `ttl` value controls when a backup is considered expired. The SDK enforces this at **restore time only** — when you call `restoreBackup()`, the SDK reads the backup metadata from R2 and checks whether the TTL has elapsed. If it has, the restore is rejected with a `BACKUP_EXPIRED` error.
+
+The TTL does **not** automatically delete objects from R2. Expired backup archives and metadata remain in your R2 bucket until you delete them. To automatically clean up expired objects, configure an [R2 object lifecycle rule](/r2/buckets/object-lifecycles/) on your backup bucket. Without a lifecycle rule, expired backups continue to consume R2 storage.
+
+## Types
+
+### `BackupOptions`
+
+```ts
+interface BackupOptions {
+	dir: string;
+	name?: string;
+	ttl?: number;
+}
+```
+
+**Fields**:
+
+- `dir` (required) - Absolute path to the directory to back up
+- `name` (optional) - Human-readable backup name. Maximum 256 characters, no control characters.
+- `ttl` (optional) - Time-to-live in seconds. Default: `259200` (3 days). Must be a positive number.
+
+### `DirectoryBackup`
+
+```ts
+interface DirectoryBackup {
+	readonly id: string;
+	readonly dir: string;
+}
+```
+
+**Fields**:
+
+- `id` - Unique backup identifier (UUID)
+- `dir` - Directory that was backed up
+
+### `RestoreBackupResult`
+
+```ts
+interface RestoreBackupResult {
+	success: boolean;
+	dir: string;
+	id: string;
+}
+```
+
+**Fields**:
+
+- `success` - Whether the restore succeeded
+- `dir` - Directory that was restored
+- `id` - Backup ID that was restored
+
+## Related resources
+
+- [Storage API](/sandbox/api/storage/) - Mount S3-compatible buckets
+- [Files API](/sandbox/api/files/) - Read and write files
+- [Wrangler configuration](/sandbox/configuration/wrangler/) - Configure bindings

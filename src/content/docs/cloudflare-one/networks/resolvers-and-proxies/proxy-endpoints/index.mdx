@@ -472,9 +472,15 @@ Authorization endpoints do not support plaintext HTTP traffic unless the traffic
 
 #### Referer header traffic
 
-Traffic with a referer HTTP header matching the domain of a recently logged in user from the same source IP will be allowed through and logged with a non-identity email address.
+Traffic with a referer HTTP header matching the domain of a recently logged in user from the same source IP will be allowed through and logged with the following non-identity email address:
 
-This issue occurs because browsers will not tag HTTP sub-requests with the identity cookie used to verify user authentication. If you would like to filter this traffic, you can set up an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block all traffic matching the non-identity email address.
+```txt
+auth-proxy-non-identity@<your-team-name>.cloudflareaccess.com
+```
+
+Where `<your-team-name>` is your [team name](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name).
+
+This occurs because browsers do not tag HTTP sub-requests with the identity cookie used to verify user authentication. If you would like to filter this traffic, you can set up an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block or allow all traffic matching the `auth-proxy-non-identity@<your-team-name>.cloudflareaccess.com` email address.
 
 ### Traffic limitations
 

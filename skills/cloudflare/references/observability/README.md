@@ -85,3 +85,4 @@ Load files in this order based on task:
 - [Cloudflare Workers Docs](https://developers.cloudflare.com/workers/)
 - [Analytics Engine Docs](https://developers.cloudflare.com/analytics/analytics-engine/)
 - [Workers Traces Docs](https://developers.cloudflare.com/workers/observability/traces/)
+- [GraphQL Analytics API Reference](../graphql-api/) - Query Workers metrics, HTTP analytics, and 70+ other datasets via GraphQL
