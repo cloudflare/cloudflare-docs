@@ -6,6 +6,8 @@ sidebar:
   label: Offlabel
 ---
 
+import { Render } from "~/components";
+
 Offlabel is an Enterprise-only feature that removes Cloudflare branding and logo from Turnstile widgets. When enabled, widgets display without any visual references to Cloudflare, allowing for a seamless integration with your brand identity.
 
 When Offlabel is enabled:
@@ -59,6 +61,14 @@ Confirm Offlabel is enabled by checking your widget configuration.
     ```
 
 The response will include `"offlabel": true` when the feature is active.
+
+### Link to Cloudflare's Turnstile Privacy Policy
+
+<Render
+	file="privacy-policy"
+	product="turnstile"
+	params={{ one: "Offlabel", two: "Alternatively, you must configure the widget to display a link to Cloudflare's privacy policy in [SETTINGS TITLE]." }}
+/>
 
 ---
 
