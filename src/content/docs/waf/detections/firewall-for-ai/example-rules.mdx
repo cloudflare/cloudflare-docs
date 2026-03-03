@@ -7,24 +7,9 @@ sidebar:
   order: 7
 ---
 
-## Block requests with specific PII category in LLM prompt
+## Return a custom error when a user asks about violent or hateful content
 
-The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt that tries to obtain PII of a specific [category](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/):
-
-- **When incoming requests match**:
-
-  | Field              | Operator | Value         |
-  | ------------------ | -------- | ------------- |
-  | LLM PII Categories | is in    | `Credit Card` |
-
-  If you use the Expression Editor, enter the following expression:<br />
-  `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD"}))`
-
-- **Action**: _Block_
-
-## Block requests with specific unsafe content categories in LLM prompt
-
-The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt containing unsafe content of specific [categories](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/):
+A customer support chatbot should not engage with prompts about violent crimes or hate speech. This [custom rule](/waf/custom-rules/create-dashboard/) blocks the request and returns a JSON response that your application can parse and display to the user.
 
 - **When incoming requests match**:
 
@@ -36,18 +21,48 @@ The following example [custom rule](/waf/custom-rules/create-dashboard/) will bl
   `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
 
 - **Action**: _Block_
+- **With response type**: Custom JSON
+- **Response body**:
+  ```json
+  { "error": "content_policy", "message": "Your message could not be processed because it touches on a topic outside this assistant's scope. Please rephrase your question." }
+  ```
 
-## Block requests with prompt injection attempt in LLM prompt
+Your application can check for a non-200 response and display the `message` field to the user, keeping the experience conversational instead of showing a raw block page.
 
-The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an [injection score](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/) below `20`. Using a low injection score value in the rule helps avoid false positives.
+## Block prompt injection attempts from automated sources outside your country
+
+This rule combines Firewall for AI's [injection score](/waf/detections/firewall-for-ai/prompt-injection/) with [Bot Management](/bots/get-started/) and the request's country to focus on high-confidence attacks from automated sources. This layered approach significantly reduces false positives compared to using any single signal alone.
 
 - **When incoming requests match**:
 
-  | Field               | Operator  | Value |
-  | ------------------- | --------- | ----- |
-  | LLM Injection score | less than | `20`  |
-
   If you use the Expression Editor, enter the following expression:<br />
-  `(cf.llm.prompt.injection_score < 20)`
+  `(cf.llm.prompt.injection_score lt 25 and cf.bot_management.score lt 10 and ip.geoip.country ne "US")`
 
 - **Action**: _Block_
+
+The rule targets requests that are simultaneously:
+1. Likely prompt injection attempts (score below 25).
+2. Coming from automated tooling, not a real browser (bot score below 10).
+3. Originating from outside the US — adjust the country code to match where your users are.
+
+Any single signal might produce false positives on its own. Together, they identify a pattern strongly associated with automated prompt injection attacks.
+
+## Allow financial PII only from your internal network
+
+A financial services application legitimately handles credit card and bank account numbers from internal agents, but should block those PII types from external users. This rule uses the request's [ASN](/ruleset-engine/rules-language/fields/reference/ip.geoip.asnum/) to distinguish internal traffic from public traffic.
+
+- **When incoming requests match**:
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD" "US_BANK_NUMBER" "IBAN_CODE"}) and ip.geoip.asnum ne 13335)`
+
+  Replace `13335` with your organization's ASN.
+
+- **Action**: _Block_
+- **With response type**: Custom JSON
+- **Response body**:
+  ```json
+  { "error": "pii_blocked", "message": "Financial account information cannot be submitted from external networks. If you are an internal agent, connect to the corporate network and try again." }
+  ```
+
+Internal agents on your corporate network (identified by ASN) can submit financial PII to the AI assistant as part of their workflow, while external users are blocked. You could further refine this by combining with [Access](/cloudflare-one/policies/access/) service tokens or [mTLS](/ssl/client-certificates/) for stronger identity verification.
