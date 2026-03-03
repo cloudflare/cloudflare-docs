@@ -32,35 +32,35 @@ const stream = await sandbox.watch(path: string, options?: WatchOptions): Promis
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
 const stream = await sandbox.watch("/workspace/src", {
-  recursive: true,
-  include: ["*.ts", "*.js"],
+	recursive: true,
+	include: ["*.ts", "*.js"],
 });
 
 const controller = new AbortController();
 
 for await (const event of parseSSEStream<FileWatchSSEEvent>(
-  stream,
-  controller.signal,
+	stream,
+	controller.signal,
 )) {
-  switch (event.type) {
-    case "watching":
-      console.log(`Watch established on ${event.path} (id: ${event.watchId})`);
-      break;
-    case "event":
-      console.log(`${event.eventType}: ${event.path}`);
-      break;
-    case "error":
-      console.error(`Watch error: ${event.error}`);
-      break;
-    case "stopped":
-      console.log(`Watch stopped: ${event.reason}`);
-      break;
-  }
+	switch (event.type) {
+		case "watching":
+			console.log(`Watch established on ${event.path} (id: ${event.watchId})`);
+			break;
+		case "event":
+			console.log(`${event.eventType}: ${event.path}`);
+			break;
+		case "error":
+			console.error(`Watch error: ${event.error}`);
+			break;
+		case "stopped":
+			console.log(`Watch stopped: ${event.reason}`);
+			break;
+	}
 }
 
 // Cancel the watch by aborting — cleans up the watcher server-side

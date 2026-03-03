@@ -18,7 +18,7 @@ Start by watching a directory for any changes:
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -55,7 +55,7 @@ Use `include` patterns to watch only specific file types:
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -87,7 +87,7 @@ Use `exclude` patterns to skip certain directories or files:
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -122,7 +122,7 @@ Trigger builds automatically when source files are modified:
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -161,7 +161,7 @@ Re-run tests when test files are modified:
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -186,7 +186,7 @@ Re-index only changed files instead of rescanning an entire directory tree:
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -221,7 +221,7 @@ Extract event processing into a reusable function that handles stream lifecycle:
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -270,7 +270,7 @@ Avoid excessive operations by collecting changes before processing:
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -306,7 +306,7 @@ Watch only the top level of a directory, without descending into subdirectories:
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -336,7 +336,7 @@ Pass an `AbortSignal` to `parseSSEStream`. Aborting the signal cancels the strea
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -366,7 +366,7 @@ Breaking out of the `for await` loop also cancels the stream:
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -402,7 +402,7 @@ Filter with `include` or `exclude` patterns rather than filtering events in Java
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -429,7 +429,7 @@ Errors in your event handler do not stop the watch stream. Wrap handler logic in
 
 <TypeScriptExample>
 
-```
+```ts
 import { parseSSEStream } from "@cloudflare/sandbox";
 import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
 
@@ -459,7 +459,7 @@ Watching a non-existent path returns an error. Verify the path exists before sta
 
 <TypeScriptExample>
 
-```
+```ts
 const watchPath = "/workspace/src";
 const result = await sandbox.exists(watchPath);
 
