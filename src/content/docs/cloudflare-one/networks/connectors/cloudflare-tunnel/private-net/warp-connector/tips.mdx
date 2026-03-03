@@ -17,12 +17,13 @@ For Google Cloud Project (GCP) deployments, [enable IP forwarding](https://cloud
 ### AWS
 
 For Amazon Web Services (AWS) deployments:
+
 - Stop [source/destination checking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) on the EC2 instance where you installed WARP Connector.
 - In your [subnet route table](https://docs.aws.amazon.com/vpc/latest/userguide/subnet-route-tables.html), route all IPv4 traffic to the EC2 instance where you installed WARP Connector. For example:
 
-		| Destination | Target |
-		| ----------- | ------ |
-		| `0.0.0.0/0` | `eni-11223344556677889` |
+      | Destination | Target |
+      | ----------- | ------ |
+      | `0.0.0.0/0` | `eni-11223344556677889` |
 
 ## Source IPs for Cloudflare services
 
@@ -35,8 +36,13 @@ WARP Connector and [`cloudflared`](/cloudflare-one/networks/connectors/cloudflar
 By design, WARP Connector captures all outbound traffic and routes it through Cloudflare's network. This prevents `cloudflared` from making its own [required outbound connections](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation) to Cloudflare, causing the tunnel to fail with connection timeouts.
 
 To allow `cloudflared` to connect, use [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to explicitly exclude the [Cloudflare Tunnel destinations](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) from the WARP tunnel. For example, if you are using Split Tunnels in **Exclude** mode, add the following hostnames (or their corresponding IP ranges) to your Split Tunnel exclusion list:
-	- `region1.v2.argotunnel.com`
-	- `region2.v2.argotunnel.com`
+
+- `region1.v2.argotunnel.com`
+- `region2.v2.argotunnel.com`
+- `us-region1.v2.argotunnel.com` (US region only)
+- `us-region2.v2.argotunnel.com` (US region only)
+- `fed-region1.v2.argotunnel.com` (FedRAMP High only)
+- `fed-region2.v2.argotunnel.com` (FedRAMP High only)
 
 :::note
 Split Tunnels is the only supported method of running both connectors on one machine. Due to its low-level integration with the kernel networking stack, WARP Connector will override any routing configurations made by commands such as `ip route add` and `iptables`.
@@ -47,6 +53,7 @@ Split Tunnels is the only supported method of running both connectors on one mac
 To ensure reliable network performance, it is important to understand the requirements for [Maximum Transmission Unit (MTU)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) and [Maximum Segment Size (MSS)](https://www.cloudflare.com/learning/network-layer/what-is-mss/) when using WARP Connector. An incorrect configuration can lead to performance degradation or packet loss.
 
 WARP Connector uses encapsulation to route traffic, which adds extra headers and bytes to each [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/). This is especially critical for traffic from your private network (on-ramped via WARP Connector) to a remote WARP client. This traffic flow is encapsulated twice:
+
 1. By the WARP Connector on your Linux host.
 2. Again by Cloudflare before being delivered to the off-ramp.
 
@@ -61,7 +68,7 @@ Cloudflare then tries to encapsulate this 1,460-byte packet to send to the WARP 
 
 ### Recommendations
 
-To ensure reliable connectivity for all traffic types, especially legacy UDP applications, the most effective solution is to configure the MTU on your source devices (such as servers, cameras, or other devices on your private network) to 1,280 bytes. 
+To ensure reliable connectivity for all traffic types, especially legacy UDP applications, the most effective solution is to configure the MTU on your source devices (such as servers, cameras, or other devices on your private network) to 1,280 bytes.
 
 This ensures the original packet is small enough to be encapsulated and delivered without being fragmented or dropped.
 
