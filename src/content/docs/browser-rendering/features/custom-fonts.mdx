@@ -14,10 +14,10 @@ If you need a specific font that is not pre-installed, you can inject it into th
 
 How you add a custom font depends on how you are using Browser Rendering:
 
-- If you use a [Workers binding](/browser-rendering/workers-bindings/) with [Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/), refer to the [Workers binding](#workers-binding) section.
-- If you use the [REST API](/browser-rendering/rest-api/), refer to the [REST API](#rest-api) section.
+- If you are using [Workers Bindings](/browser-rendering/workers-bindings/) with [Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/), refer to the [Workers Bindings](#workers-bindings) section.
+- If you are using the [REST API](/browser-rendering/rest-api/), refer to the [REST API](#rest-api) section.
 
-## Workers binding
+## Workers Bindings
 
 Use `addStyleTag` to inject a `@font-face` rule into the page before capturing your screenshot or PDF. You can load the font file from a CDN URL or embed it as a Base64-encoded string.
 
