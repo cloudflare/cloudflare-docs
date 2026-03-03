@@ -4,4 +4,34 @@
 	"experimental": {
 		"continue_loop_on_deny": true,
 	},
+	"provider": {
+		"cloudflare-ai-gateway": {
+			"models": {
+				"workers-ai/@cf/moonshotai/kimi-k2.5": {
+					"name": "Kimi K2.5",
+					"attachment": true,
+					"reasoning": true,
+					"tool_call": true,
+					"temperature": true,
+					"interleaved": {
+						"field": "reasoning_content",
+					},
+					"modalities": {
+						"input": ["text", "image"],
+						"output": ["text"],
+					},
+					"limit": {
+						"context": 256000,
+						"output": 64000,
+					},
+					"options": {
+						"temperature": 1.0,
+						"top_p": 0.95,
+						"max_tokens": 64000,
+						"parallel_tool_calls": true,
+					},
+				},
+			},
+		},
+	},
 }

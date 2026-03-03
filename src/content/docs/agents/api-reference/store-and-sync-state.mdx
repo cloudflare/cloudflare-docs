@@ -365,7 +365,7 @@ function GameUI() {
   const agent = useAgent({
     agent: "game-agent",
     name: "room-123",
-    onStateChanged: (state, source) => {
+    onStateUpdate: (state, source) => {
       console.log("State updated:", state);
     }
   });
@@ -394,7 +394,7 @@ import { AgentClient } from "agents/client";
 const client = new AgentClient({
 	agent: "game-agent",
 	name: "room-123",
-	onStateChanged: (state) => {
+	onStateUpdate: (state) => {
 		document.getElementById("score").textContent = state.score;
 	},
 });

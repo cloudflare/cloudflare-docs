@@ -54,8 +54,8 @@ Call any supported provider without passing an API Key. The request will automat
 For example, you can use the Unified API:
 
 ```bash
-curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
-  --header 'cf-aig-authorization: Bearer {CLOUDFLARE_TOKEN}' \
+curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default/compat/chat/completions \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header 'Content-Type: application/json' \
   --data '{
     "model": "google-ai-studio/gemini-2.5-pro",
@@ -67,6 +67,8 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/comp
     ]
   }'
 ```
+
+The `default` gateway is created automatically on your first request. Replace `default` with a specific gateway ID if you have already created one.
 
 ### Spend limits
 
@@ -113,8 +115,8 @@ To set ZDR as the default for Unified Billing using the API:
 Use the `cf-aig-zdr` header to override the gateway default for a single Unified Billing request. Set it to `true` to force ZDR, or `false` to disable ZDR for the request.
 
 ```bash title="Unified Billing request with ZDR"
-curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header 'cf-aig-authorization: Bearer {CLOUDFLARE_TOKEN}' \
+curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/{gateway_id}/openai/chat/completions \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header 'Content-Type: application/json' \
   --header 'cf-aig-zdr: true' \
   --data '{

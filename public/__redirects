@@ -596,6 +596,7 @@
 /fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/manage-members/ 301
 /fundamentals/account-and-billing/members/roles/ /fundamentals/manage-members/roles/ 301
 /fundamentals/basic-tasks/basic-features/ /fundamentals/concepts/ 301
+/fundamentals/basic-tasks/ /fundamentals/performance/ 301
 /fundamentals/get-started/cdn/ /fundamentals/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/reference/policies-compliances/cloudflare-cookies/ 301
@@ -2028,6 +2029,7 @@
 /workers-ai/models/text-classification/ /workers-ai/models/#text-classification 301
 /workers-ai/models/image-classification/ /workers-ai/models/#image-classification 301
 /workers-ai/models/openchat_3.5-awq/ /workers-ai/models/ 301
+/workers-ai/models/deepgram-nova-3/ /workers-ai/models/nova-3/ 301
 /workers-ai/platform/bindings/ /workers-ai/configuration/bindings/ 301
 /workers-ai/get-started/local-dev-setup/ /workers-ai/get-started/workers-wrangler/ 301
 /workers-ai/configuration/function-calling/ /workers-ai/features/function-calling/ 301
