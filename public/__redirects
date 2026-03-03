@@ -1641,6 +1641,7 @@
 
 # r2 sql
 /r2-sql/platform/wrangler-commands/ /r2-sql/reference/wrangler-commands/ 301
+/r2-sql/sql-reference/limitations/ /r2-sql/reference/limitations-best-practices/ 301
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 # tenant

@@ -489,6 +489,16 @@ FROM my_namespace.sales_data
 LIMIT 1
 ```
 
+#### array_element
+
+Returns the element at a given index (1-indexed). Equivalent to bracket-notation access (`arr[idx]`).
+
+```sql
+SELECT array_element(make_array(10, 20, 30), 2) AS second_val
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
 ### Convert arrays
 
 #### array_to_string
