@@ -43,3 +43,9 @@ jobs:
           path: |
             node_modules/.astro/assets
           key: static
+      - name: Notify Google Chat on failure
+        if: failure()
+        run: |
+          curl -X POST "${{ secrets.CED_TEAM_ALERTS_CHANNEL_WEBHOOK }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"text\": \"❌ *Publish Production* workflow failed.\nActor: ${{ github.actor }}\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>\"}"
