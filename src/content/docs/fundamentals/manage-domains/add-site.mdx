@@ -8,7 +8,7 @@ import { DashButton, GlossaryTooltip, Render, Stream, Details } from "~/componen
 
 After you onboard your domain, Cloudflare will act as the [reverse proxy](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy) and [DNS provider](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-dns-provider) for your site.
 
-This guide applies to existing domains that were purchased from another provider, and will use a [full DNS setup](/dns/zone-setups/full-setup), which is the most common configuration. To set this up, you will have to complete a few steps at Cloudflare, but also update some settings at your domain registrar [^1], and at your previous DNS provider (if you were using one).
+This guide applies to existing domains that were purchased from another provider, and will use a [full DNS setup](/dns/zone-setups/full-setup), which is the most common configuration. To set this up, you will have to complete a few steps at Cloudflare, but also update some settings at your domain registrar[^1], and at your previous DNS provider (if you were using one).
 
 :::tip[Cloudflare Registrar]
 If you need a new domain, you can [buy one from Cloudflare](/registrar/get-started/register-domain/) without markup fees. We will complete the rest of this setup for you.
@@ -34,7 +34,7 @@ If you need a new domain, you can [buy one from Cloudflare](/registrar/get-start
    :::note
    If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
 
-   Cloudflare requires your apex domain to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat).
+   Cloudflare requires your apex domain to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat). For instance, `example.com` is valid but `level2.example.com`[^2] or `example.home` are not.
    :::
 
 4. Select a [plan](https://www.cloudflare.com/plans/#compare-features).
@@ -76,3 +76,4 @@ If you encounter unexpected results when changing your nameservers, refer to the
 - Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 
 [^1]: The provider you purchased your domain from.
+[^2]: Enterprise customers can onboard these using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
