@@ -14,7 +14,7 @@ For Magic Transit egress traffic, consider the following:
 - Network Firewall rules apply to both Magic Transit ingress and egress traffic passing through Cloudflare.
 - If you have a "default drop" catchall rule (a final rule that blocks all traffic not matched by earlier rules) for ingress traffic, you must add an earlier rule to permit traffic sourced from your Magic Transit prefix with the destination as **any** to allow outbound egress traffic.
 
-For example, place the following allow rule before any default-drop catchall rule:
+   For example, place the following allow rule before any default-drop catchall rule:
 
-**Match**: `ip.src in {<YOUR_MAGIC_TRANSIT_PREFIX>}` <br/>
-**Action**: Allow
+   **Match**: `ip.src in {<YOUR_MAGIC_TRANSIT_PREFIX>}` <br/>
+   **Action**: Allow
