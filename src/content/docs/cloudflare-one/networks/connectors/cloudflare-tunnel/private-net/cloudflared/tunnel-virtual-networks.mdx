@@ -43,7 +43,7 @@ Here are a few scenarios where virtual networks may prove useful:
 
 ## Create a virtual network
 
-The following example demonstrates how to add two overlapping IP routes to Cloudflare (`10.128.0.1/32` staging and `10.128.0.1/32` production).
+In this example, "private network" refers to a distinct environment (such as staging or production) that has its own overlapping IP address space (`10.128.0.1/32` staging and `10.128.0.1/32` production). If your environments use non-overlapping IPs, you do not need a separate tunnel for each. Instead, you can add multiple routes to a single tunnel.
 
 <Tabs>
   <TabItem label="Dashboard">
@@ -57,7 +57,7 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
          2. Select **Create virtual network**.
          3. Name your virtual network `staging-vnet` and select **Save**.
          4. Repeat Steps 1a-1d to create another virtual network called `production-vnet`.
-      2. Create a Cloudflare Tunnel for each private network:
+      2. Create a Cloudflare Tunnel for each private network with overlapping IPs (one tunnel per isolated environment, for example staging and production):
          1. Go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
          2. Select **Create a tunnel**.
          3. Name your tunnel `Staging tunnel` and select **Save tunnel**.
@@ -93,7 +93,7 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
     		}
     		```
 
-    	3. Create a Cloudflare Tunnel for each private network:
+    	3. Create a Cloudflare Tunnel for each private network with overlapping IPs (one tunnel per isolated environment, for example staging and production):
     		```tf
     		resource "cloudflare_zero_trust_tunnel_cloudflared" "staging_tunnel" {
     			account_id = var.cloudflare_account_id
@@ -136,7 +136,7 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
   <TabItem label="Locally-managed tunnels">
       To route overlapping IPs over virtual networks for [locally-managed tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/):
 
-      1. Create a tunnel for each private network:
+      1. Create a Cloudflare Tunnel for each private network with overlapping IPs (one tunnel per isolated environment, for example staging and production):
 
          1. Within your staging environment, authenticate `cloudflared`:
 

@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-02-26"
+    title: "New tutorial: Generate OG images for Astro sites"
+    description: |-
+      * Added a new tutorial on how to [generate OG images for Astro sites](/browser-rendering/how-to/og-images-astro/) using Browser Rendering. The tutorial walks through creating an Astro template, using Browser Rendering to screenshot it as a PNG, and serving the generated images.
   - publish_date: "2026-02-24"
     title: "Documentation updates for robots.txt and sitemaps"
     description: |-

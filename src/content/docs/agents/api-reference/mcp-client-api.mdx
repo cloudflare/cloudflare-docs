@@ -61,15 +61,15 @@ Connections persist in the agent's [SQL storage](/agents/api-reference/store-and
 
 ## Adding MCP servers
 
-Use `addMcpServer()` to connect to an MCP server:
+Use `addMcpServer()` to connect to an MCP server. For non-OAuth servers, no options are needed:
 
 <TypeScriptExample>
 
 ```ts
-// Simple connection
+// Non-OAuth server — no options required
 await this.addMcpServer("notion", "https://mcp.notion.so/mcp");
 
-// With explicit callback host
+// OAuth server — provide callbackHost for the OAuth redirect flow
 await this.addMcpServer("github", "https://mcp.github.com/mcp", {
 	callbackHost: "https://my-worker.workers.dev",
 });
@@ -118,6 +118,17 @@ await this.addMcpServer("internal", "https://internal-mcp.example.com/mcp", {
 ```
 
 </TypeScriptExample>
+
+### URL security
+
+MCP server URLs are validated before connection to prevent Server-Side Request Forgery (SSRF). The following URL targets are blocked:
+
+- Private/internal IP ranges (RFC 1918: `10.x`, `172.16-31.x`, `192.168.x`)
+- Loopback addresses (`127.x`, `::1`)
+- Link-local addresses (`169.254.x`, `fe80::`)
+- Cloud metadata endpoints (`169.254.169.254`)
+
+If you need to connect to an internal MCP server, use the [RPC transport](/agents/model-context-protocol/transport/) with a Durable Object binding instead of HTTP.
 
 ### Return value
 
@@ -445,7 +456,13 @@ function Dashboard() {
 
 ### `addMcpServer()`
 
-Add a connection to an MCP server and make its tools available to your agent. If `addMcpServer` is called with a `serverName` that already has an active connection, the existing connection is returned instead of creating a duplicate. This makes it safe to call in `onStart()` without worrying about duplicate connections on restart.
+Add a connection to an MCP server and make its tools available to your agent.
+
+Calling `addMcpServer` is idempotent when both the server name **and** URL match an existing active connection — the existing connection is returned without creating a duplicate. This makes it safe to call in `onStart()` without worrying about duplicate connections on restart.
+
+If you call `addMcpServer` with the same name but a **different** URL, a new connection is created. Both connections remain active and their tools are merged in `getAITools()`. To replace a server, call `removeMcpServer(oldId)` first.
+
+URLs are normalized before comparison (trailing slashes, default ports, and hostname case are handled), so `https://MCP.Example.com` and `https://mcp.example.com/` are treated as the same URL.
 
 ```ts
 // HTTP transport (Streamable HTTP, SSE)
@@ -811,6 +828,22 @@ type MCPDiscoverResult = {
   error?: string;
 }
 ```
+
+#### `this.mcp.waitForConnections()`
+
+Wait for all in-flight MCP connection and discovery operations to settle. This is useful when you need `this.mcp.getAITools()` to return the full set of tools immediately after the agent wakes from hibernation.
+
+```ts
+// Wait indefinitely
+await this.mcp.waitForConnections();
+
+// Wait with a timeout (milliseconds)
+await this.mcp.waitForConnections({ timeout: 10_000 });
+```
+
+:::note
+`AIChatAgent` calls this automatically via its [`waitForMcpConnections`](/agents/api-reference/chat-agents/#waitformcpconnections) property (defaults to `{ timeout: 10_000 }`). You only need `waitForConnections()` directly when using `Agent` with MCP, or when you want finer control inside `onChatMessage`.
+:::
 
 #### `this.mcp.closeConnection()`
 

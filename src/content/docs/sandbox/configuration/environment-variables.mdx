@@ -27,7 +27,7 @@ Controls the transport protocol for SDK-to-container communication. WebSocket tr
 {
 	"vars": {
 		"SANDBOX_TRANSPORT": "websocket"
-	},
+	}
 }
 ```
 </WranglerConfig>
@@ -183,9 +183,10 @@ Then pass them to your sandbox:
 
 ```typescript
 import { getSandbox } from "@cloudflare/sandbox";
+export { Sandbox } from "@cloudflare/sandbox";
 
 interface Env {
-	Sandbox: DurableObjectNamespace;
+	Sandbox: DurableObjectNamespace<Sandbox>;
 	OPENAI_API_KEY: string;
 	DATABASE_URL: string;
 }
@@ -278,9 +279,10 @@ Bucket mounting requires production deployment. It does not work with `wrangler 
 
 ```typescript
 import { getSandbox } from "@cloudflare/sandbox";
+export { Sandbox } from "@cloudflare/sandbox";
 
 interface Env {
-	Sandbox: DurableObjectNamespace;
+	Sandbox: DurableObjectNamespace<Sandbox>;
 	AWS_ACCESS_KEY_ID: string;
 	AWS_SECRET_ACCESS_KEY: string;
 }

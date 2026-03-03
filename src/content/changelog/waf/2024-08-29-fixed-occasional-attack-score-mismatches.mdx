@@ -1,7 +1,0 @@
----
-title: Fixed occasional attack score mismatches
-description: Fixed mismatches between WAF attack score and subscores.
-date: 2024-08-29
----
-
-Fixed an issue causing score mismatches between the global [WAF attack score](/waf/detections/attack-score/) and subscores. In certain cases, subscores were higher (not an attack) than expected while the global attack score was lower than expected (attack), leading to false positives.

@@ -3,6 +3,15 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-02-27"
+    title: Add Post-Quantum and Key Transparency insights
+    description: |-
+      * Added new [`Post-Quantum`](/api/resources/radar/subresources/post_quantum/) API:
+        * [`/post_quantum/tls/support`](/api/resources/radar/subresources/post_quantum/subresources/tls/methods/support/) - Tests whether a host supports post-quantum TLS key exchange.
+        * [`/post_quantum/origin/summary/{dimension}`](/api/resources/radar/subresources/post_quantum/methods/summary/) - Returns origin post-quantum data summarized by key agreement algorithm.
+        * [`/post_quantum/origin/timeseries_groups/{dimension}`](/api/resources/radar/subresources/post_quantum/methods/timeseries_groups/) - Returns origin post-quantum timeseries data grouped by key agreement algorithm.
+      * Launched [Post-Quantum Encryption](https://radar.cloudflare.com/post-quantum) page.
+      * Launched [Key Transparency](https://radar.cloudflare.com/key-transparency) page.
   - publish_date: "2026-02-25"
     title: Add RPKI ASPA deployment insights
     description: |-
@@ -28,7 +37,6 @@ entries:
       * Added new dimension `client_type` to the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API.
         * Added new **HTML page requests by client type graph** to the [AI Insights page](https://radar.cloudflare.com/ai-insights#html-page-requests-by-client-type).
   - publish_date: "2025-11-24"
-
     title: Add HTTP origins insights
     description: |-
       * Added new [`Origins`](/api/resources/radar/subresources/origins/) API.
