@@ -70,7 +70,7 @@ export default {
 	async fetch(request: Request, env: Env) {
 		const response = await env.AI.gateway("default").run({
 			provider: "compat",
-			endpoint: "chat/completion",
+			endpoint: "chat/completions",
 			headers: {},
 			query: {
 				model: "dynamic/<your-dynamic-route-name>",
