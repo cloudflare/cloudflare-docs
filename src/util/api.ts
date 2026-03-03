@@ -3,6 +3,7 @@ import type { OpenAPI } from "openapi-types";
 
 const COMMIT = "d51d7022ca04ef08b25c40b13792d43061f196ec";
 let schema: OpenAPI.Document | undefined;
+let test: string;
 
 export const getSchema = async () => {
 	if (!schema) {
