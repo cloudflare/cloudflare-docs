@@ -248,6 +248,10 @@ export class Service extends WorkerEntrypoint {
 
 The loopback call (`ctx.exports.Service(...)`) goes back through the platform's version routing system. The platform sees the cohort and selects the correct version of the `Service` class based on your deployment configuration.
 
+:::note[Loopback calls without a cohort are version-locked]
+If you call `ctx.exports.Service()` **without** passing `version: \{ cohort \}`, the platform routes to the same version the caller is already running — not the default configuration. This is version-locking behavior. You must explicitly pass a cohort to get cohort-based routing through the loopback binding.
+:::
+
 :::note
 The default `fetch` handler always runs the latest deployed version and is **not** subject to cohort-based version routing. Only the code in the `Service` entrypoint (and anything it calls) is gradually deployed. Keep your `fetch` handler minimal -- ideally just authentication and cohort resolution.
 :::
@@ -306,11 +310,13 @@ export default {
 
 | Property | Type | Description |
 |---|---|---|
-| `cohort` | `string \| undefined` | The cohort name used for version selection, if a matching `Cloudflare-Workers-Cohort` header was present. |
-| `override` | `string \| undefined` | The version ID specified by a `Cloudflare-Workers-Version-Overrides` header, if present. |
+| `cohort` | `string \| undefined` | The matched cohort name, if a valid `Cloudflare-Workers-Cohort` header matched a defined cohort. Populated even if a version override took precedence over cohort-based routing. `undefined` if the header was missing, invalid, or did not match any defined cohort. |
+| `override` | `string \| undefined` | The matched version ID from a `Cloudflare-Workers-Version-Overrides` header, if it matched a version ID in the deployment. `undefined` if the header was missing or did not match. |
 | `key` | `string \| undefined` | The version key from a `Cloudflare-Workers-Version-Key` header, if present. |
 | `reason` | `string` | How the version was selected: `override`, `versionKey`, or `random`. |
 | `metadata` | `object` | An object containing `id` (version ID), `tag` (version tag), and `timestamp` (creation time) of the selected version. |
+
+When none of cohort, key, or override are specified (or none match), `ctx.version` is an empty object (`{}`).
 
 :::caution[Avoid branching on cohort in application logic]
 Do not use `ctx.version.cohort` to implement feature flags or change application behavior per cohort. Cohort-based deployments control which **version** of your code runs -- the code itself should behave the same regardless of cohort. If you write `if (cohort === "enterprise") \{ ... \}`, that logic will not be exercised by the new version until the new version reaches that cohort, defeating the purpose of gradual rollout.
