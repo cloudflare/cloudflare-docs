@@ -93,19 +93,21 @@ You can use risk scores to control access to applications protected by [Cloudfla
 
 To add a risk score requirement to an Access policy:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
 2. Select an application and go to **Policies**.
 3. Create or edit a policy.
 4. Add a rule with the **User Risk Score** selector.
 5. Select the risk level threshold (Low, Medium, or High).
 6. Save the policy.
 
-### Block high-risk users
+### Example: Block high-risk users
 
-To prevent users with elevated risk scores from accessing sensitive applications:
+To prevent users with elevated risk scores from accessing sensitive applications, create a policy with the following configuration:
 
-1. Create an Allow policy that includes your user group.
-2. Add an Exclude rule with **User Risk Score** set to **High**.
+| Action | Rule type | Selector        | Value                 |
+| ------ | --------- | --------------- | --------------------- |
+| Allow  | Include   | Emails Ending In | `@example.com`       |
+|        | Exclude   | User Risk Score | `High`                |
 
 Users with a High risk score will be blocked, while users with Low or Medium scores can access the application.
 
