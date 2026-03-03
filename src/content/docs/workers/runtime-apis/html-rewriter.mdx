@@ -135,46 +135,50 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 #### Methods
 
-- <code>getAttribute(namestring)</code> : string | null - Returns the value for
-  a given attribute name on the element, or `null` if it is not found.
+{/* prettier-ignore-start */}
 
-- <code>hasAttribute(namestring)</code> : boolean - Returns a boolean indicating
-  whether an attribute exists on the element.
+- <code>getAttribute(namestring)</code> : string | null
+  - Returns the value for a given attribute name on the element, or `null` if it is not found.
 
-- <code>setAttribute(namestring, valuestring)</code> : Element - Sets an
-  attribute to a provided value, creating the attribute if it does not exist.
+- <code>hasAttribute(namestring)</code> : boolean
+  - Returns a boolean indicating whether an attribute exists on the element.
 
-- <code>removeAttribute(namestring)</code> : Element - Removes the attribute.
+- <code>setAttribute(namestring, valuestring)</code> : Element
+  - Sets an attribute to a provided value, creating the attribute if it does not exist.
 
-- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Inserts content before the element.
+- <code>removeAttribute(namestring)</code> : Element
+  - Removes the attribute.
+
+- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Inserts content before the element.
 
   <Render file="content_and_contentoptions" product="workers" />
 
-- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Inserts content right after the element.
+- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Inserts content right after the element.
 
-- <code>prepend(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Inserts content right after the start tag of the element.
+- <code>prepend(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Inserts content right after the start tag of the element.
 
-- <code>append(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Inserts content right before the end tag of the element.
+- <code>append(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Inserts content right before the end tag of the element.
 
-- <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Removes the element and inserts content in place of it.
+- <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Removes the element and inserts content in place of it.
 
-- <code>
-  	setInnerContent(contentContent, contentOptionsContentOptionsoptional)
-  </code>
-  : Element - Replaces content of the element.
+- <code>setInnerContent(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Replaces content of the element.
 
-- <code>remove()</code> : Element - Removes the element with all its content.
+- <code>remove()</code> : Element
+  - Removes the element with all its content.
 
-- <code>removeAndKeepContent()</code> : Element - Removes the start tag and end
-  tag of the element but keeps its inner content intact.
+- <code>removeAndKeepContent()</code> : Element
+  - Removes the start tag and end tag of the element but keeps its inner content intact.
 
 - `onEndTag(handlerFunction<void>)` : void
   - Registers a handler that is invoked when the end tag of the element is reached.
+
+{/* prettier-ignore-end */}
 
 ### EndTag
 
@@ -187,21 +191,26 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 
 #### Methods
 
-- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  EndTag - Inserts content right before the end tag.
+{/* prettier-ignore-start */}
 
-- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  EndTag - Inserts content right after the end tag.
+- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> : EndTag
+  - Inserts content right before the end tag.
+
+- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> : EndTag
+  - Inserts content right after the end tag.
 
   <Render file="content_and_contentoptions" product="workers" />
 
-- <code>remove()</code> : EndTag - Removes the element with all its content.
+- <code>remove()</code> : EndTag
+  - Removes the element with all its content.
+
+{/* prettier-ignore-end */}
 
 ### Text chunks
 
 Since Cloudflare performs zero-copy streaming parsing, text chunks are not the same thing as text nodes in the lexical tree. A lexical tree text node can be represented by multiple chunks, as they arrive over the wire from the origin.
 
-Consider the following markup: `<div>Hey. How are you?</div>`. It is possible that the Workers script will not receive the entire text node from the origin at once; instead, the `text` element handler will be invoked for each received part of the text node. For example, the handler might be invoked with `“Hey. How ”,` then `“are you?”`. When the last chunk arrives, the text’s `lastInTextNode` property will be set to `true`. Developers should make sure to concatenate these chunks together.
+Consider the following markup: `<div>Hey. How are you?</div>`. It is possible that the Workers script will not receive the entire text node from the origin at once; instead, the `text` element handler will be invoked for each received part of the text node. For example, the handler might be invoked with `"Hey. How "`, then `"are you?"`. When the last chunk arrives, the text's `lastInTextNode` property will be set to `true`. Developers should make sure to concatenate these chunks together.
 
 #### Properties
 
@@ -216,18 +225,23 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 #### Methods
 
-- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Inserts content before the element.
+{/* prettier-ignore-start */}
+
+- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Inserts content before the element.
 
   <Render file="content_and_contentoptions" product="workers" />
 
-- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Inserts content right after the element.
+- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Inserts content right after the element.
 
-- <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Removes the element and inserts content in place of it.
+- <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Removes the element and inserts content in place of it.
 
-- <code>remove()</code> : Element - Removes the element with all its content.
+- <code>remove()</code> : Element
+  - Removes the element with all its content.
+
+{/* prettier-ignore-end */}
 
 ### Comments
 
@@ -247,26 +261,31 @@ class ElementHandler {
   - Indicates whether the element has been removed or replaced by one of the previous handlers.
 
 - `comment.text` string
-  - The text of the comment. This property can be assigned different values, to modify comment’s text.
+  - The text of the comment. This property can be assigned different values, to modify comment's text.
 
 #### Methods
 
-- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Inserts content before the element.
+{/* prettier-ignore-start */}
+
+- <code>before(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Inserts content before the element.
 
   <Render file="content_and_contentoptions" product="workers" />
 
-- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Inserts content right after the element.
+- <code>after(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Inserts content right after the element.
 
-- <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
-  Element - Removes the element and inserts content in place of it.
+- <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> : Element
+  - Removes the element and inserts content in place of it.
 
-- <code>remove()</code> : Element - Removes the element with all its content.
+- <code>remove()</code> : Element
+  - Removes the element with all its content.
+
+{/* prettier-ignore-end */}
 
 ### Doctype
 
-The `doctype` function on a document handler allows developers to query a document’s [doctype](https://developer.mozilla.org/en-US/docs/Glossary/Doctype).
+The `doctype` function on a document handler allows developers to query a document's [doctype](https://developer.mozilla.org/en-US/docs/Glossary/Doctype).
 
 ```js
 class DocumentHandler {
@@ -302,10 +321,14 @@ class DocumentHandler {
 
 #### Methods
 
-- <code>append(contentContent, contentOptionsContentOptionsoptional)</code> :
-  DocumentEnd - Inserts content after the end of the document.
+{/* prettier-ignore-start */}
+
+- <code>append(contentContent, contentOptionsContentOptionsoptional)</code> : DocumentEnd
+  - Inserts content after the end of the document.
 
   <Render file="content_and_contentoptions" product="workers" />
+
+{/* prettier-ignore-end */}
 
 ---
 
