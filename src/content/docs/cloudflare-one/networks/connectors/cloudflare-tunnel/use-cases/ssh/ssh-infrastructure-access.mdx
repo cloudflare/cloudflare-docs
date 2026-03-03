@@ -55,13 +55,14 @@ To connect your devices to Cloudflare:
 
 ## 6. (Recommended) Configure network policies
 
-Traffic from the WARP client to your infrastructure targets is filtered by both [Gateway network policies](/cloudflare-one/traffic-policies/initial-setup/network/) and the application-specific Access policies.
+Traffic from the WARP client to your infrastructure targets is filtered by both [Gateway network policies](/cloudflare-one/traffic-policies/get-started/network/) and the application-specific Access policies.
 
 ### Catch-all block policy
 
-<Render file="tunnel/catch-all-policy" product="cloudflare-one"/>
+<Render file="tunnel/catch-all-policy" product="cloudflare-one" />
 
 ### Allow Access infrastructure targets
+
 <Render
 	file="access/modify-gateway-policy-precedence"
 	product="cloudflare-one"

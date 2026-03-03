@@ -121,11 +121,11 @@ export default {
     const sandbox = getSandbox(env.Sandbox, 'echo-service');
 
     // Expose the port to get preview URL
-    const { exposedAt } = await sandbox.exposePort(8080, { hostname });
+    const { url } = await sandbox.exposePort(8080, { hostname });
 
     // Return URL to clients
     if (request.url.includes('/ws-url')) {
-      return Response.json({ url: exposedAt.replace('https', 'wss') });
+      return Response.json({ url: url.replace('https', 'wss') });
     }
 
     return new Response('Not found', { status: 404 });

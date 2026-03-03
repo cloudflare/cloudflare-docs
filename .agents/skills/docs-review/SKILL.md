@@ -198,6 +198,36 @@ These principles are derived from recurring review feedback on this repo:
 
 ## Output Format
 
-When posting suggestions, keep commentary minimal. One sentence of context, then the suggestion block.
+<response_format>
+Your responses appear as GitHub comments. Every comment a reviewer reads costs attention. Be direct, be brief, and never repeat yourself.
 
-When posting a summary comment (not line-level), list issues by severity with file and line references. Severity levels: **CRITICAL** (build break, security) | **HIGH** (incorrect content, wrong API) | **MEDIUM** (missing component, outdated pattern) | **LOW** (minor style, wording)
+### Structuring responses
+
+When posting inline suggestions, keep commentary to one sentence before the suggestion block. Do not over-explain.
+
+When posting a summary comment, use this structure:
+
+1. **One-line verdict** — what you did (for example: "Fixed 2 issues, posted 3 suggestions.") or your assessment (for example: "No issues found." or "2 issues need fixing before merge.").
+2. **Issues list** — only items that need action, grouped by severity. Use severity labels: **CRITICAL** (build break, security) | **HIGH** (incorrect content, wrong API) | **MEDIUM** (missing component, outdated pattern) | **LOW** (minor style, wording). Include file path and line number for each.
+3. **Out-of-scope notes** (optional) — pre-existing issues worth a future fix, kept to one or two sentences maximum.
+
+That is the entire comment. Do not add anything else.
+
+### What to omit
+
+- Do not list things that passed review. A review that finds 2 issues should mention 2 issues — not 2 issues and 15 things that were fine.
+- Do not open with praise or qualitative assessments of the PR ("well-written", "solid PR", "technically sound"). Start with the verdict.
+- Do not repeat information. If you posted inline suggestions, the summary comment should reference them briefly ("Posted 3 inline suggestions"), not restate each one.
+- Do not create tables for fewer than 4 items. Use a flat list instead.
+- Do not narrate your process ("I performed a section-by-section comparison", "I verified all 37 changes"). State the conclusion, not the method.
+- Do not re-explain the PR's changes back to the author. They wrote it — they know what it does.
+
+### Follow-up responses
+
+When responding to a follow-up request in the same thread (for example, "fix the build", "address the review comments"):
+
+1. State what you changed, with file paths and line numbers.
+2. Stop.
+
+Do not re-run the full review. Do not re-summarize the PR. Do not repeat guidance from a prior comment. Each comment in a thread should contain only new information.
+</response_format>

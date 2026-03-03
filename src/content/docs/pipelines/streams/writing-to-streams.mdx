@@ -43,22 +43,47 @@ Sends an array of JSON-serializable records to the stream. Returns a Promise tha
 ```typescript
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const event = {
-			user_id: "12345",
-			event_type: "purchase",
-			product_id: "widget-001",
-			amount: 29.99
-		};
+		const events = await request.json<Record<string, unknown>[]>();
 
-    	await env.STREAM.send([event]);
+		await env.STREAM.send(events);
 
-    	return new Response('Event sent');
-    },
-
+		return new Response("Events sent");
+	},
 } satisfies ExportedHandler<Env>;
-
 ```
 </TypeScriptExample>
+
+### Typed pipeline bindings
+
+When a stream has a defined schema, running `wrangler types` generates schema-specific TypeScript types for your pipeline bindings. Instead of the generic `Pipeline<PipelineRecord>`, your bindings get a named record type with full autocomplete and compile-time type checking. Refer to the [`wrangler types` documentation](/workers/wrangler/commands/#types) to learn more.
+
+#### Generated types
+
+After running `wrangler types`, the generated `worker-configuration.d.ts` file contains a named record type inside the `Cloudflare` namespace. The type name is derived from the stream name (not the binding name), converted to PascalCase with a `Record` suffix.
+
+Below is an example of what generated types look like in `worker-configuration.d.ts` for a stream named `ecommerce_stream`:
+
+```typescript
+declare namespace Cloudflare {
+	type EcommerceStreamRecord = {
+		user_id: string;
+		event_type: string;
+		product_id?: string;
+		amount?: number;
+	};
+	interface Env {
+		STREAM: import("cloudflare:pipelines").Pipeline<Cloudflare.EcommerceStreamRecord>;
+	}
+}
+```
+
+#### Fallback behavior
+
+`wrangler types` falls back to the generic `Pipeline<PipelineRecord>` type in the following scenarios:
+
+- **Not authenticated**: Run `wrangler login` to enable typed pipeline bindings.
+- **Stream not found**: The stream ID in your Wrangler configuration does not match an existing stream.
+- **Unstructured stream**: The stream was created without a schema.
 
 ## Send via HTTP
 
@@ -67,17 +92,16 @@ Each stream provides an optional HTTP endpoint for ingesting data from external 
 ### Endpoint format
 
 HTTP endpoints follow this format:
-```
 
+```txt
 https://{stream-id}.ingest.cloudflare.com
-
-````
+```
 
 Find your stream's endpoint URL in the Cloudflare dashboard under **Pipelines** > **Streams** or using the Wrangler CLI:
 
 ```bash
 npx wrangler pipelines streams get <STREAM_ID>
-````
+```
 
 ### Making requests
 
@@ -116,4 +140,4 @@ Streams handle validation differently based on their configuration:
 - **Structured streams**: Events must match the defined schema fields and types.
 - **Unstructured streams**: Accept any valid JSON structure. Data is stored in a single `value` column.
 
-For structured streams, ensure your events match the schema definition. Invalid events will be accepted but dropped, so validate your data before sending to avoid dropped events.
+For structured streams, ensure your events match the schema definition. Invalid events will be accepted but dropped, so validate your data before sending to avoid dropped events. When using Worker bindings, run `wrangler types` to generate [typed pipeline bindings](#typed-pipeline-bindings) that catch schema violations at compile time. You can also query the [user error metrics](/pipelines/observability/metrics/#user-error-metrics) to monitor dropped events and diagnose schema validation issues.

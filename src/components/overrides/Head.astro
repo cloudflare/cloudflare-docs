@@ -122,6 +122,12 @@ if (
 
 	if (existingOpenGraphTag !== -1) {
 		head[existingOpenGraphTag].attrs!.content = frontmatter.description;
+	} else {
+		// og:description not added by Starlight; add it explicitly
+		metaTags.push({
+			property: "og:description",
+			content: frontmatter.description as string,
+		});
 	}
 
 	metaTags.push({

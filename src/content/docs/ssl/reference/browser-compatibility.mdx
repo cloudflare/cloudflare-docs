@@ -46,3 +46,9 @@ If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), [p
 :::caution
 Both HTTP/2 and HTTP/3 configurations also require that you have an SSL/TLS certificate served by Cloudflare. This means that disabling Universal SSL, for example, could impact this behavior.
 :::
+
+## OCSP and HTTP versions
+
+Cloudflare's OCSP implementation uses HTTP/1.1 by default for plain HTTP connections.
+
+For HTTPS connections, the client automatically attempts to use HTTP/2 if the server supports it through the TLS ALPN (Application-Layer Protocol Negotiation) extension. If HTTP/2 is not available or supported by the server, it will fall back to HTTP/1.1.

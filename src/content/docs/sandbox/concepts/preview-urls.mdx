@@ -20,7 +20,7 @@ const exposed = await sandbox.exposePort(8000, { hostname });
 
 console.log(exposed.url);
 // Production: https://8000-sandbox-id-abc123random4567.yourdomain.com
-// Local dev: http://localhost:8787/...
+// Local dev: http://8000-sandbox-id-abc123random4567.localhost:{port}/
 ```
 
 ## URL Format
@@ -28,9 +28,9 @@ console.log(exposed.url);
 **Production**: `https://{port}-{sandbox-id}-{token}.yourdomain.com`
 
 - With auto-generated token: `https://8080-abc123-random16chars12.yourdomain.com`
-- With custom token: `https://8080-abc123-my-api-v1.yourdomain.com`
+- With custom token: `https://8080-abc123-my_api_v1.yourdomain.com`
 
-**Local development**: `http://localhost:8787/...`
+**Local development**: `http://{port}-{sandbox-id}-{token}.localhost:{dev-server-port}`
 
 ## Token Types
 
@@ -52,15 +52,15 @@ For production deployments or shared URLs, specify a custom token to maintain co
 ```typescript
 const stable = await sandbox.exposePort(8000, { 
   hostname, 
-  token: 'api-v1' 
+  token: 'api_v1' 
 });
-// https://8000-sandbox-id-api-v1.yourdomain.com
+// https://8000-sandbox-id-api_v1.yourdomain.com
 // Same URL every time ✓
 ```
 
 **Token requirements:**
 - 1-16 characters long
-- Lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (_) only
+- Lowercase letters (a-z), numbers (0-9), and underscores (_) only
 - Must be unique within each sandbox
 
 **Use cases for custom tokens:**

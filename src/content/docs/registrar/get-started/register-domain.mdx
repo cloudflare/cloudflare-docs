@@ -8,9 +8,13 @@ sidebar:
 
 import { DashButton } from "~/components";
 
+
 ## Prerequisites and restrictions
 
-* Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups/)).
+:::note[Cloudflare nameservers]
+All domains acquired via Cloudflare Registrar use Cloudflare nameservers, automatically [protecting and speeding up](/fundamentals/concepts/how-cloudflare-works/) your content or services. You will not be able to change to another DNS provider's nameservers while using Cloudflare Registrar.
+:::
+
 * Cloudflare Registrar does not currently support internationalized domain names (IDNs), also known as Unicode.
 * You must have a [verified account email address](/fundamentals/user-profiles/verify-email-address/), to transfer or register domains.
 

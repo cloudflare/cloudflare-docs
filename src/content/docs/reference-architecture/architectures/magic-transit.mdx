@@ -29,9 +29,9 @@ To build a stronger baseline understanding of Cloudflare, we recommend the follo
 Those who read this reference architecture will learn:
 
 - How Cloudflare Magic Transit protects your network infrastructure from denial of service attacks (DDoS)
-- How to architecture Magic Transit into your existing network infrastructure
+- How to architect Magic Transit into your existing network infrastructure
 
-## What Is Magic Transit?
+## What is Magic Transit?
 
 Protecting network infrastructure from DDoS attacks demands a unique combination of strength and speed. Volumetric attacks can easily overwhelm hardware boxes and their bandwidth-constrained Internet links. And most cloud-based solutions redirect traffic to centralized scrubbing centers, which impacts network performance significantly.
 
@@ -55,9 +55,9 @@ This works because while the tunnel endpoint is technically bound to an IP addre
 
 In the event of a network outage or other issues, tunnels fail over automatically — with no impact to a customer’s network performance.
 
-## Deployment Architectures for Magic Transit
+## Deployment architectures for Magic Transit
 
-### Default Configuration (Ingress Only, Direct Server Return)
+### Default configuration (ingress only, direct server return)
 
 By default, Magic Transit processes traffic in the ingress direction only (from the Internet to the customer network). The server return traffic back to the clients is routed by the customer's DC edge router via its uplinks to the Internet/ISP based on the edge router’s default routing table. This server return traffic will not transit through Cloudflare via tunnels. This is referred to as Direct Server Return (DSR).
 
@@ -81,7 +81,7 @@ The network diagram in Figure 2 illustrates such a Magic Transit setup, and the 
 
 **Note:** The smallest IP prefix size (i.e. with the longest IP subnet mask) that most ISPs accept in each other's BGP advertisements is /24; e.g. x.x.x.0/24 or y.y.y.0/23 are okay, but z.z.z.0/25 is not. Therefore, the smallest IP prefix size Cloudflare Magic Transit can advertise on behalf of the customers is /24.
 
-### Magic Transit With Egress Option Enabled
+### Magic Transit with egress option enabled
 
 When Magic Transit is deployed with the Egress option enabled, egress traffic from the customer's network flows over the Cloudflare network as well. This deployment option provides symmetry to the traffic flow, where both client-to-server and server-return traffic flow through the Cloudflare network. This implementation provides added security and reliability to the server-return traffic, as afforded by the Cloudflare network.
 
@@ -97,7 +97,7 @@ It is worth noting that for customers who bring their own public IP addresses ([
 
 To accomplish this, the IP tunnels that on-ramps to Magic Transit are configured between the cloud providers' VPCs and the Cloudflare network. With the Magic Transit Egress option, both directions of client-server traffic would flow through these tunnels. The BYOIP addresses in the tunneled packets are hidden behind the outer tunnel endpoint IP addresses and the tunnel header, making them "invisible" to the underlying cloud provider network elements between the VPCs and the Cloudflare network.
 
-### Magic Transit Over Cloudflare Network Interconnect (CNI)
+### Magic Transit over Cloudflare Network Interconnect (CNI)
 
 [Cloudflare Network Interconnect (CNI)](/network-interconnect/) allows customers to connect their network infrastructure directly to Cloudflare – bypassing the public Internet – for a more reliable, performant, and secure experience.
 
@@ -117,7 +117,7 @@ When the Magic Transit Egress option is enabled and utilized, the server return 
 
 ![Figure 5: Reference Configuration of Magic Transit Over CNI with Egress Option Enabled](~/assets/images/reference-architecture/magic-transit-ref-arch-diagrams/magic-transit-ref-arch-5.png "Figure 5: Reference Configuration of Magic Transit Over CNI with Egress Option Enabled")
 
-### Magic Transit Protecting Public Cloud-Hosted Services
+### Magic Transit protecting public cloud-hosted services
 
 Magic Transit protects services hosted on-premise and in the cloud. This use case illustrates the configuration for a cloud-hosted deployment.
 
@@ -149,7 +149,7 @@ _Note: Labels in this image may reflect a previous product name._
 
 - The Magic Transit service protects and routes external-facing front-end client-server traffic. The Cloudflare WAN service protects and routes enterprise internal traffic such as that of internal applications, back-end database sync, and branch-to-DC and branch-to-branch traffic.
 
-### Cloudflare Network Firewall: Control and Filter Unwanted Traffic Before It Reaches the Enterprise Network
+### Cloudflare Network Firewall: control and filter unwanted traffic before it reaches the enterprise network
 
 While Magic Transit protects customers' services from DDoS attacks, many network administrators want to be able to control and block other unwanted or potentially malicious traffic. [Cloudflare Network Firewall](/cloudflare-network-firewall/) enforces consistent network security policies across the entire customer WAN, including headquarters, branch offices, and virtual private clouds, and allows customers to deploy fine-grained filtering rules globally in seconds — all from a common dashboard.
 
@@ -161,9 +161,9 @@ _Note: Labels in this image may reflect a previous product name._
 
 In Cloudflare Network Firewall rules, administrators can match and filter network traffic not only based on the typical 5-tuple (source/destination IP, source/destination port, protocol) information carried in the IP packet header but also other packet information such as IP packet length, IP header length, TTL, etc. In addition, geographical information such as the name of the Cloudflare data center/colo, the region, and the country the data centers are located in can also be used in configuring Network Firewall rules (geo-blocking).
 
-For further details on Cloudflare Network Firewall and its configuration, please refer to this [blog post](https://blog.cloudflare.com/introducing-magic-firewall/) and our [developer docs](/cloudflare-network-firewall/).
+For further details on Cloudflare Network Firewall and its configuration, refer to [Introducing Magic Firewall](https://blog.cloudflare.com/introducing-magic-firewall/) and [Cloudflare Network Firewall documentation](/cloudflare-network-firewall/).
 
-## A Note on Always-On and On-Demand Deployments
+## A note on always-on and on-demand deployments
 
 A cloud DDoS mitigation service provider can monitor traffic for threats at all times (the always-on deployment model) or reroute traffic only when an attack is detected (on-demand). This decision affects response time and time-to-mitigation. In some cases, it also has repercussions for latency.
 
@@ -189,4 +189,4 @@ Cloudflare offers comprehensive network services to connect and protect on-premi
 
 - In addition to protecting and routing traffic for external-facing services of an enterprise (i.e. north-south Internet-routable traffic), customers can connect and protect east-west “intra-enterprise” internal traffic using Cloudflare WAN.
 
-If you would like to learn more about Magic Transit, Cloudflare WAN, or Cloudflare Network Firewall, please [reach out](https://www.cloudflare.com/magic-transit/) to us for a demo.
+If you would like to learn more about Magic Transit, Cloudflare WAN, or Cloudflare Network Firewall, [contact us for a demo](https://www.cloudflare.com/magic-transit/).
