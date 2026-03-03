@@ -39,6 +39,14 @@ Technical writing often prioritizes precision over clarity: jargon without conte
 
 **Accuracy is non-negotiable:** Simplification means clearer language, not reduced precision. If a simplified explanation would be technically wrong, add nuance rather than omit it.
 
+**Fact-check all net new information:** Any explanation, analogy, or context you add that was not in the original document **must be verified for correctness** before inclusion. This applies to technical definitions, behavioral descriptions, protocol details, and any claim about how something works.
+
+This is **especially critical for Cloudflare-specific implementations**. Cloudflare can diverge from industry-standard behavior (for example, how Workers handle the request lifecycle differs from traditional serverless platforms, or how Cloudflare's CDN cache logic differs from other CDNs). Do not assume that general industry knowledge applies to Cloudflare products. When adding commentary about Cloudflare-specific behavior:
+
+1. **Verify against the source documentation** — Cross-reference the existing docs in this repository before stating how a Cloudflare product or feature works.
+2. **Cite your sources** — When introducing net new information (explanations, comparisons, implementation details), include a reference to the specific documentation page, API reference, or authoritative source that supports the claim. Use inline links or footnotes.
+3. **Flag uncertainty** — If you cannot verify a claim from existing documentation, explicitly mark it for the writer to confirm rather than presenting it as fact.
+
 **Tone:** Clear, direct, professional. Not condescending, not overly casual, not hyperbolic. Never use "simply," "just," "obviously," "clearly," "as everyone knows," or "it's easy to."
 
 ## When to Use Me
@@ -269,6 +277,6 @@ Line-numbered recommendations for further improvements:
 
 ## References
 
-- **Content type detection criteria:** `resources/content-type-guide.md`
-- **Before/after pattern templates:** `resources/pattern-library.md`
+- **Content type detection criteria:** `references/content-type-guide.md`
+- **Before/after pattern templates:** `references/pattern-library.md`
 - **Full examples:** `EXAMPLES_REFERENCE.md`
