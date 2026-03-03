@@ -46,7 +46,7 @@ To run a SQL query, run the [`r2 sql query` command](/workers/wrangler/commands/
 npx wrangler r2 sql query <WAREHOUSE> "SELECT * FROM namespace.table_name limit 10;"
 ```
 
-For a full list of supported sql commands, refer to the [R2 SQL reference page](/r2-sql/sql-reference).
+For a full list of supported SQL commands, refer to the [R2 SQL reference](/r2-sql/sql-reference/).
 
 ## Query via API
 
@@ -64,7 +64,7 @@ curl -X POST \
 
 The API requires an API token with the appropriate permissions in the Authorization header. Refer to [Authentication](#authentication) for details on creating a token.
 
-For a full list of supported sql commands, refer to the [R2 SQL reference page](/r2-sql/sql-reference).
+For a full list of supported SQL commands, refer to the [R2 SQL reference](/r2-sql/sql-reference/).
 
 ## Authentication
 
@@ -96,18 +96,18 @@ To create an API token programmatically for use with R2 SQL, you'll need to spec
 			"com.cloudflare.edge.r2.bucket.4793d734c0b8e484dfc37ec392b5fa8a_eu_my-eu-bucket": "*"
 		},
 		"permission_groups": [
-      {
-        "id": "f45430d92e2b4a6cb9f94f2594c141b8",
-        "name": "Workers R2 SQL Read"
-      },
-      {
-        "id": "d229766a2f7f4d299f20eaa8c9b1fde9",
-        "name": "Workers R2 Data Catalog Write"
-      },
-      {
-        "id": "bf7481a1826f439697cb59a20b22293e",
-        "name": "Workers R2 Storage Write"
-      }
+			{
+				"id": "f45430d92e2b4a6cb9f94f2594c141b8",
+				"name": "Workers R2 SQL Read"
+			},
+			{
+				"id": "d229766a2f7f4d299f20eaa8c9b1fde9",
+				"name": "Workers R2 Data Catalog Write"
+			},
+			{
+				"id": "bf7481a1826f439697cb59a20b22293e",
+				"name": "Workers R2 Storage Write"
+			}
 		]
 	}
 ]
