@@ -1,0 +1,202 @@
+---
+pcx_content_type: how-to
+title: Unsafe and custom topics
+tags:
+  - AI
+sidebar:
+  order: 4
+  label: Unsafe & custom topics
+---
+
+import { Tabs, TabItem, Details, Steps } from "~/components";
+
+Firewall for AI can detect when an LLM prompt touches on unsafe or unwanted subjects. There are two layers of topic detection:
+
+- **Default unsafe topics** — A built-in set of safety categories that detect harmful content such as violent crimes, hate speech, and sexual content.
+- **Custom topics** — Topics you define to match your organization's specific policies, such as "competitors" or "financial advice".
+
+## Default unsafe topics
+
+When Firewall for AI is enabled, it automatically evaluates prompts against a set of default unsafe topic categories and populates two fields:
+
+- [`cf.llm.prompt.unsafe_topic_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/) — `true` if any unsafe topic was found.
+- [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) — an array of the specific categories detected.
+
+The default categories are:
+
+| Category | Description |
+| --- | --- |
+| `S1` | Violent crimes |
+| `S2` | Non-violent crimes |
+| `S3` | Sex-related crimes |
+| `S4` | Child sexual exploitation |
+| `S5` | Defamation |
+| `S6` | Specialized advice |
+| `S7` | Privacy |
+| `S8` | Intellectual property |
+| `S9` | Indiscriminate weapons |
+| `S10` | Hate |
+| `S11` | Suicide and self-harm |
+| `S12` | Sexual content |
+| `S13` | Elections |
+
+### Example rules — default unsafe topics
+
+**Block any prompt with unsafe content:**
+
+- **When incoming requests match**:
+
+  | Field | Operator | Value |
+  | --- | --- | --- |
+  | LLM Unsafe topic detected | equals | True |
+
+  If you use the Expression Editor, enter the following expression:<br/>
+  `(cf.llm.prompt.unsafe_topic_detected)`
+
+- **Action**: _Block_
+
+**Block only specific unsafe categories:**
+
+- **When incoming requests match**:
+
+  | Field | Operator | Value |
+  | --- | --- | --- |
+  | LLM Unsafe topic categories | is in | `S1: Violent Crimes` `S10: Hate` |
+
+  If you use the Expression Editor, enter the following expression:<br/>
+  `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
+
+- **Action**: _Block_
+
+---
+
+## Custom topics
+
+Custom topic detection lets you define your own topics and Firewall for AI will score each prompt against them. You can then use these scores in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to block, challenge, or log matching requests.
+
+This capability uses a zero-shot classification model that evaluates prompts at runtime. No model training is required.
+
+### How custom topics work
+
+1. You define a list of up to **20 custom topics** via the dashboard or API.
+2. Each topic consists of a **label** (used in rule expressions and analytics) and a **topic string** (the descriptive text the model uses to classify prompts).
+3. When a request arrives at a `cf-llm` labeled endpoint, the model evaluates the prompt against all defined topics and returns a **relevance score** for each.
+4. Scores are written to the [`cf.llm.prompt.custom_topic_categories`](/waf/detections/firewall-for-ai/fields/) map field.
+
+Scores follow the same convention as other Firewall for AI scores: **lower values indicate higher relevance** (1 = highly relevant, 99 = not relevant).
+
+### Define custom topics
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Settings** page under Security.
+2. Under **Firewall for AI**, find the **Custom Topics** section and select **Manage topics**.
+3. Add a topic by providing:
+   - **Label**: A short identifier used in rule expressions (for example, `competitors`).
+   - **Topic**: A descriptive English text string the model uses for classification (for example, `competitor products and services`).
+4. Select **Save**.
+
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+Update your custom topics list using a `PUT` request:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom_topics" \
+--request PUT \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--json '{
+  "topics": [
+    { "label": "competitors", "topic": "competitor products and services" },
+    { "label": "finance", "topic": "financial advice and investment recommendations" },
+    { "label": "hr-internal", "topic": "internal HR policies and employee matters" }
+  ]
+}'
+```
+
+Retrieve your current topics:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom_topics" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+</TabItem> </Tabs>
+
+### Constraints
+
+| Parameter | Limit |
+| --- | --- |
+| Maximum number of topics | 20 |
+| Topic string length | 2–50 printable ASCII characters |
+| Label length | 2–20 characters |
+| Label format | Lowercase letters, numbers, and hyphens (`-`) only |
+
+### Example rules — custom topics
+
+**Block prompts highly relevant to competitors:**
+
+- **When incoming requests match**:
+
+  If you use the Expression Editor, enter the following expression:<br/>
+  `(cf.llm.prompt.custom_topic_categories["competitors"] lt 30)`
+
+- **Action**: _Block_
+
+**Log prompts related to financial advice:**
+
+`(cf.llm.prompt.custom_topic_categories["finance"] lt 40)`
+
+**Combine custom topics with other detections:**
+
+`(cf.llm.prompt.custom_topic_categories["competitors"] lt 30 or cf.llm.prompt.pii_detected)`
+
+---
+
+## Best practices for defining custom topics
+
+The quality of custom topic detection depends on how you write your topic strings. The underlying model is a zero-shot classifier — it compares the semantic meaning of the prompt against your topic string.
+
+### Be specific, not vague
+
+Overly broad topics match too many prompts (high false positives). Overly narrow topics miss relevant prompts (high false negatives).
+
+| Quality | Topic string | Why |
+| --- | --- | --- |
+| Good | `competitor products and services` | Specific enough to capture competitor mentions without matching general product discussion |
+| Good | `cryptocurrency financial advice` | Targets a well-defined intersection of two concepts |
+| Too broad | `technology` | Will match almost any technical prompt |
+| Too broad | `bad things` | Semantically vague — the model cannot determine what you consider "bad" |
+| Too narrow | `Acme Corp pricing page` | So specific that only near-exact mentions will score highly |
+
+### Use descriptive phrases, not single keywords
+
+A topic string like `finance` is less effective than `financial advice and investment recommendations`. More descriptive phrases give the model better signal.
+
+### Avoid semantically overlapping topics
+
+If you define topics that mean nearly the same thing — for example, `financial advice` and `investment guidance` — both will score similarly on the same prompts, consuming two of your 20-topic budget without adding detection value. Consolidate overlapping concepts into a single topic.
+
+### Think about intent, not just keywords
+
+The model performs semantic classification, not keyword matching. A topic string of `competitor products and services` will detect prompts that discuss competing products even if they do not mention any competitor by name. Conversely, it will not match a prompt that incidentally contains the word "competitor" in an unrelated context.
+
+### Test and iterate
+
+After defining your topics, send test prompts and review the scores in [Security Analytics](/waf/analytics/security-analytics/). Adjust topic strings as needed:
+
+- If a topic is matching too broadly, make the topic string more specific.
+- If a topic is not matching prompts you expect it to catch, broaden or rephrase the topic string.
+
+### Example custom topics
+
+| Label | Topic string | Use case |
+| --- | --- | --- |
+| `competitors` | `competitor products and services` | Prevent your chatbot from discussing rival offerings |
+| `legal-advice` | `legal counsel and regulatory compliance guidance` | Block prompts that solicit legal advice from your AI |
+| `student-data` | `student academic records and personal information` | EdTech — prevent discussion of individual student data |
+| `exec-internal` | `internal executive decisions and leadership changes` | Prevent discussion of sensitive internal matters |
+| `crypto-advice` | `cryptocurrency trading and investment recommendations` | FinTech — block prompts seeking crypto investment tips |

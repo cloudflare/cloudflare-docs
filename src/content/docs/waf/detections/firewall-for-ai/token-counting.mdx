@@ -1,0 +1,52 @@
+---
+pcx_content_type: concept
+title: Token counting
+tags:
+  - AI
+sidebar:
+  order: 8
+---
+
+Firewall for AI provides an estimated token count for each incoming LLM prompt. This lets you monitor prompt sizes, set limits on overly long prompts, and track token usage across your AI endpoints.
+
+## How it works
+
+When Firewall for AI processes a request to a `cf-llm` labeled endpoint, it calculates an approximate token count for the prompt content. The result is available in the `cf.llm.prompt.token_count` field, which you can reference in rule expressions and view in analytics.
+
+:::caution
+The token count is an **estimate**. It uses a general-purpose tokenizer and will not exactly match the token count reported by your LLM provider. Different models use different tokenizers — GPT-4, Claude, Llama, and others all tokenize text differently. Use this field for relative thresholds and anomaly detection, not as a precise measurement for billing or model-specific token budgets.
+:::
+
+## Use cases
+
+### Block oversized prompts
+
+Set a hard threshold to block prompts that exceed a certain estimated token count. This prevents unexpectedly large inputs from reaching your model.
+
+- **When incoming requests match**:
+
+  If you use the Expression Editor, enter the following expression:<br/>
+  `(cf.llm.prompt.token_count gt 4000)`
+
+- **Action**: _Block_
+
+### Rate limit large prompts
+
+Create a [rate limiting rule](/waf/rate-limiting-rules/) that restricts the number of large prompts a single client can send within a time window. This helps prevent abuse where attackers send excessively long prompts to consume model resources.
+
+Expression:<br/>
+`(cf.llm.prompt.token_count gt 2000)`
+
+Set the rate to, for example, 10 requests per minute per IP, with an action of Block or Challenge.
+
+### Combine token count with other detections
+
+Target large prompts that also show signs of prompt injection — a common pattern where attackers pad injection attempts with long context:
+
+`(cf.llm.prompt.token_count gt 3000 and cf.llm.prompt.injection_score lt 50)`
+
+## Important considerations
+
+- **Estimate only.** The token count is a general approximation. Actual token consumption at your model may differ depending on the model's tokenizer.
+- **Input tokens only.** The token count reflects the incoming prompt. It does not estimate output or response tokens.
+- **JSON structure included.** The token count is calculated on the raw request body, which includes the full JSON payload (keys, formatting, etc.). If your prompt is nested within a larger JSON structure, the count includes overhead from that structure.

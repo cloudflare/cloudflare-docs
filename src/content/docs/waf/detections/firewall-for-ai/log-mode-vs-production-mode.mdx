@@ -1,0 +1,77 @@
+---
+pcx_content_type: concept
+title: Log mode vs. production mode
+tags:
+  - AI
+sidebar:
+  order: 9
+---
+
+import { Steps } from "~/components";
+
+Firewall for AI can operate in two distinct modes. Understanding the trade-offs between them helps you choose the right approach for your stage of deployment.
+
+## Comparison
+
+| Feature | Production mode | Log mode |
+| --- | --- | --- |
+| **How it works** | You write WAF [custom rules](/waf/custom-rules/) using Firewall for AI detection fields | You enable the **Cloudflare Firewall for AI Managed Ruleset** with pre-built rules |
+| **Prompt logging** | No — only request metadata is logged | Yes — the full request body is logged (encrypted via [payload logging](/waf/managed-rules/payload-logging/)) |
+| **Response logging** | No — use [AI Gateway](/ai-gateway/) if response visibility is required | No — same limitation |
+| **Policy flexibility** | Full — combine injection scores, PII categories, bot scores, custom topics, and more | Limited — three fixed rules (PII detected, unsafe topic detected, prompt injection detected) with no score-based or subcategory logic |
+| **Blocking behavior** | Customizable — issue custom responses including custom JSON | Default WAF block page only |
+| **Best for** | Production traffic with granular control | Evaluation and testing — correlate prompts with detection results to tune thresholds |
+
+## Production mode
+
+Production mode is the standard operating mode. You enable Firewall for AI and create [custom rules](/waf/custom-rules/) using the [detection fields](/waf/detections/firewall-for-ai/fields/) it populates. This gives you full control over:
+
+- **Which detections trigger an action.** For example, block only when `cf.llm.prompt.injection_score` is below 30, rather than blocking any detection.
+- **Which PII categories matter.** For example, block `CREDIT_CARD` but only log `EMAIL_ADDRESS`.
+- **Combining signals.** For example, block when both PII is detected and the bot score is low.
+- **Custom responses.** Return a JSON error message to your application instead of the default WAF block page.
+
+Example production rule expression:<br/>
+`(cf.llm.prompt.injection_score lt 30 and cf.bot_management.score lt 20)`
+
+**Limitation:** In production mode, the prompt text is not logged. You can see detection metadata (scores, categories) in [Security Analytics](/waf/analytics/security-analytics/), but not the actual prompt content.
+
+## Log mode
+
+Log mode uses the **Cloudflare Firewall for AI Managed Ruleset** — a pre-built ruleset that logs the full request body alongside detection results. This mode is designed for **evaluation and tuning** rather than production enforcement.
+
+In log mode:
+
+- The managed ruleset fires on three broad conditions: PII detected, unsafe topic detected, and prompt injection detected.
+- The entire request body is logged using [payload logging](/waf/managed-rules/payload-logging/) (encrypted — you must configure a key pair to decrypt payloads).
+- You can correlate specific prompts with their detection scores to understand how the model classifies your traffic.
+
+**When to use log mode:**
+
+- During initial deployment, to understand what Firewall for AI detects on your traffic before enforcing actions.
+- When tuning score thresholds — review logged prompts alongside their scores to determine appropriate thresholds.
+- When validating that [custom topic](/waf/detections/firewall-for-ai/custom-topics/) definitions are working as expected.
+
+:::caution
+Because the managed ruleset uses broad, binary detection logic (detected/not detected), it is likely too aggressive for production traffic. Without score-based thresholds, expect a higher rate of false positives if the action is set to Block.
+:::
+
+## Recommended workflow
+
+<Steps>
+
+1. **Start in log mode.** Enable the Firewall for AI Managed Ruleset with the action set to **Log**. Configure [payload logging](/waf/managed-rules/payload-logging/) so you can view prompts alongside detection results.
+
+2. **Review detections in Security Analytics.** Filter on events from the managed ruleset. Decrypt payloads and review the prompts that triggered detections. Note the scores to understand where to set thresholds.
+
+3. **Build production rules.** Based on your analysis, [create custom rules](/waf/custom-rules/create-dashboard/) with appropriate score thresholds and PII category filters.
+
+4. **Disable log mode.** Once your production rules are deployed and validated, disable the managed ruleset or keep it on Log as ongoing monitoring.
+
+5. **Monitor and iterate.** Continuously review detection events in [Security Analytics](/waf/analytics/security-analytics/) and adjust thresholds as your traffic patterns evolve.
+
+</Steps>
+
+:::note
+You can run both modes simultaneously during a transition period. The managed ruleset (log mode) operates in the managed rules phase, while your custom rules operate in the custom rules phase. Custom rules are evaluated before managed rules — if a custom rule blocks a request, it will not reach the managed ruleset. During evaluation, consider setting your custom rules to **Log** as well.
+:::

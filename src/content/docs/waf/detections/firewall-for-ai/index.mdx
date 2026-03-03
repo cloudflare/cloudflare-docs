@@ -34,7 +34,17 @@ Cloudflare will populate the existing [Firewall for AI fields](/waf/detections/f
 
 ## Availability
 
-Firewall for AI is available in closed beta to Enterprise customers proxying traffic containing LLM prompts through Cloudflare. Contact your account team to get access.
+Firewall for AI capabilities vary by Cloudflare plan:
+
+| Capability | Free | Pro | Business | Enterprise |
+| --- | --- | --- | --- |--- |
+| **LLM endpoint discovery** — automatically identify AI-powered endpoints across your web properties | Yes | Yes | Yes | Yes |
+| **AI detection fields** — PII detection, prompt injection scoring, unsafe topic detection, custom topics | No | No | No | Yes |
+| **Rules based on detections** — create custom rules or rate limiting rules using Firewall for AI fields | No | No | No | Yes |
+
+To enable AI detection fields, contact your account team or [Cloudflare Sales](https://www.cloudflare.com/plans/enterprise/contact/).
+
+Firewall for AI is built into the Cloudflare [Web Application Firewall (WAF)](/waf/) — the WAF must be enabled on your zone before detection fields can be populated and used in rule expressions.
 
 ## More resources
 
