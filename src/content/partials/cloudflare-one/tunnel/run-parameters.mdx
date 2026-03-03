@@ -9,7 +9,7 @@ params:
   - faqURL
 ---
 
-import { GlossaryTooltip, TabItem, Tabs } from "~/components";
+import { GlossaryTooltip, Render, TabItem, Tabs } from "~/components";
 
 This page lists the configuration flags for the `cloudflared tunnel run` command. For a <GlossaryTooltip term="remotely-managed tunnel">remotely-managed tunnel</GlossaryTooltip>, add these flags to the [tunnel service](#add-run-parameters-to-tunnel-service). If you are using a <GlossaryTooltip term="locally-managed tunnel">locally-managed tunnel</GlossaryTooltip>, add these flags to your <a href={props.configurationFileURL}>configuration file</a> as key/value pairs.
 
@@ -53,11 +53,12 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
 
 4. To verify the new configuration, check the service status:
 
-	```sh
-	sudo systemctl status cloudflared
-	```
-	```sh output
-	● cloudflared.service - cloudflared
+   ```sh
+   sudo systemctl status cloudflared
+   ```
+
+   ```sh output
+   ● cloudflared.service - cloudflared
      Loaded: loaded (/etc/systemd/system/cloudflared.service; enabled; preset: enabled)
      Active: active (running) since Wed 2024-10-09 20:02:59 UTC; 2s ago
    Main PID: 2157 (cloudflared)
@@ -66,7 +67,7 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
         CPU: 136ms
      CGroup: /system.slice/cloudflared.service
              └─2157 /usr/bin/cloudflared tunnel --loglevel info --logfile /var/log/cloudflared/cloudflared.log run --token eyJhIjoi...
-	```
+   ```
 
 </TabItem> <TabItem label="macOS">
 
@@ -212,8 +213,8 @@ Specifies the verbosity of logging for the local `cloudflared` instance. Availab
 
 ### `metrics`
 
-| Syntax                                                      | Default                                                                                          | Environment Variable |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------- |
+| Syntax                                                      | Default                                                | Environment Variable |
+| ----------------------------------------------------------- | ------------------------------------------------------ | -------------------- |
 | `cloudflared tunnel --metrics <IP:PORT> run <UUID or NAME>` | Refer to <a href={props.metricsURL}>Tunnel metrics</a> | `TUNNEL_METRICS`     |
 
 Exposes a Prometheus endpoint on the specified IP address and port, which you can then query for <a href={props.usageMetricsURL}>usage metrics</a>.
