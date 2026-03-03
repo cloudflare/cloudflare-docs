@@ -2628,7 +2628,7 @@
 /tunnel/monitor-tunnels/* /tunnel/monitoring/ 301
 /tunnel/troubleshoot/common-errors/ /tunnel/troubleshooting/#common-errors 301
 /tunnel/troubleshoot/diag-logs/ /tunnel/monitoring/#diagnostic-logs 301
-/tunnel/troubleshoot/connectivity-prechecks/ /tunnel/troubleshooting/#connectivity-pre-checks 301
+/tunnel/troubleshoot/connectivity-prechecks/ /tunnel/troubleshooting/#connection-errors 301
 /tunnel/troubleshoot/* /tunnel/troubleshooting/ 301
 /tunnel/downloads/license/ https://github.com/cloudflare/cloudflared/blob/master/LICENSE 301
 /tunnel/downloads/copyrights/ https://github.com/cloudflare/cloudflared 301
