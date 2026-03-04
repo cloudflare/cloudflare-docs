@@ -82,8 +82,8 @@ Specifies the verbosity of logging for the local `cloudflared` instance. Availab
 
 ## `metrics`
 
-| Syntax                                                      | Default                                                                                          | Environment Variable |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------- |
+| Syntax                                                      | Default                                                                                                   | Environment Variable |
+| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | -------------------- |
 | `cloudflared tunnel --metrics <IP:PORT> run <UUID or NAME>` | Refer to [Tunnel metrics](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/) | `TUNNEL_METRICS`     |
 
 Exposes a Prometheus endpoint on the specified IP address and port, which you can then query for [usage metrics](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/).
@@ -152,6 +152,10 @@ The `auto` value will automatically configure the `quic` protocol. If `cloudflar
 Allows you to choose the regions to which connections are established. Currently the only available value is `us`, which routes all connections through data centers in the United States. Omit or leave empty to connect to the global region.
 
 When the region is set to `us`, `cloudflared` uses different US-specific hostnames and IPs. Refer to [Tunnel with firewall](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#region-us) for details.
+
+:::note
+For [FedRAMP High](https://www.cloudflare.com/cloudflare-for-government/) environments, the [tunnel token](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/) determines routing to FedRAMP data centers automatically — no `--region` flag is required. Refer to [Tunnel with firewall](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#region-fedramp-high) for the FedRAMP-specific endpoints your firewall must allow.
+:::
 
 ## `retries`
 
