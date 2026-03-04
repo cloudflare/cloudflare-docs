@@ -27,6 +27,12 @@ Active DNSSEC at your current registrar will block the transfer. Disable DNSSEC 
 
 Authorization codes typically expire within 5-14 days depending on your registrar. If your code is rejected, request a fresh one from your current registrar. Check for trailing spaces or line breaks when copy-pasting the code. Some registrars issue a new code each time one is requested, which invalidates the previous code.
 
+## Authorization code expired before you could use it
+
+Cloudflare does not ask for your authorization code until your domain is added and active on Cloudflare. If you requested the code before updating your nameservers, it may expire while you wait for the zone to become active. Authorization codes typically expire within 5-14 days depending on the registrar.
+
+To avoid this, wait until your domain shows **Active** status in the Cloudflare dashboard before requesting an authorization code from your current registrar. If your code has already expired, request a new one.
+
 ## Zone is not active on Cloudflare
 
 You cannot enter an authorization code until your domain shows **Active** status in the Cloudflare dashboard. If the zone is still **Pending**, verify that you updated nameservers correctly at your current registrar and wait up to 24 hours.
