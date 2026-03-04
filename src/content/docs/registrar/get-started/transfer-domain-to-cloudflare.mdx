@@ -197,42 +197,6 @@ You can check the status of your transfer on the **Transfer Domains** page in th
 
 ---
 
-## Troubleshoot transfer issues
-
-If your transfer is stuck, failing, or taking longer than expected, check the following common causes.
-
-### Domain is still locked
-
-If `clientTransferProhibited` appears in your domain WHOIS or RDAP output, the domain is still locked. Unlock it at your current registrar.
-
-If you already unlocked the domain but WHOIS still shows it as locked, allow up to 5 hours for the change to propagate. Some registrars may take up to 24 hours. Some registrars have multiple lock types (domain lock, transfer lock, privacy lock) that must each be disabled separately. If your registrar dashboard shows unlocked but WHOIS disagrees, contact your current registrar directly.
-
-### DNSSEC is still active
-
-Active DNSSEC at your current registrar will block the transfer. Disable DNSSEC and wait for the DS record TTL to expire (usually 24 hours) before retrying. Refer to the [Disable DNSSEC](/registrar/get-started/transfer-domain-to-cloudflare/#disable-dnssec) section.
-
-### Authorization code is invalid or expired
-
-Authorization codes typically expire within 5-14 days depending on your registrar. If your code is rejected, request a fresh one from your current registrar. Check for trailing spaces or line breaks when copy-pasting the code. Some registrars issue a new code each time one is requested, which invalidates the previous code.
-
-### Zone is not active on Cloudflare
-
-You cannot enter an authorization code until your domain shows **Active** status in the Cloudflare dashboard. If the zone is still **Pending**, verify that you updated nameservers correctly at your current registrar and wait up to 24 hours.
-
-### Domain was recently registered or transferred
-
-ICANN rules prohibit transfers within 60 days of registration or a previous transfer. Check the domain creation date and last transfer date in WHOIS.
-
-### Domain is in a restricted status
-
-Domains with a status of `clientHold`, `serverHold`, `redemptionPeriod`, or `pendingDelete` cannot be transferred. Resolve the issue with your current registrar before retrying.
-
-### Payment failed during transfer
-
-If your payment method was declined after submitting the authorization code, the transfer may be in a partially started state. Update your payment method in your Cloudflare billing settings and check the [Transfer Domains](https://dash.cloudflare.com/?to=/:account/registrar/transfer) page for the current status.
-
-### Transfer is taking too long
-
-Domain transfers typically take 3-5 business days. Some TLDs (such as `.mx`) can take up to 10 days. You can speed up the process by approving the transfer at your current registrar when you receive the confirmation email. If the transfer has been stuck beyond these timeframes with no identifiable issue, contact your current registrar to confirm there are no holds or restrictions on their end.
+If your transfer is stuck or failing, refer to [Troubleshoot failed domain transfers](/registrar/troubleshooting/).
 
 <Render file="next-steps" product="registrar" />
