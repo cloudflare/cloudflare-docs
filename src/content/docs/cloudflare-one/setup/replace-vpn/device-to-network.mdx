@@ -9,11 +9,11 @@ products:
   - cloudflare-one
 ---
 
-Connect a remote device to a private network so your users can securely access internal applications and services from anywhere. This guide follows the same steps as the **Get Started** onboarding wizard in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+Connect a remote device to a private network so your users can securely access internal applications and services from anywhere, without the security risks and performance bottlenecks of a traditional VPN. This guide follows the same steps as the **Get Started** onboarding wizard in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
 
 ## How it works
 
-A Cloudflare Tunnel connects your private network to Cloudflare through an outbound-only connection. The WARP client on each user device routes traffic through Cloudflare and into the tunnel, so users can reach internal resources from anywhere.
+A Cloudflare Tunnel connects your private network to Cloudflare through an outbound-only connection. No open inbound ports or firewall changes are required. The [WARP client](/cloudflare-one/team-and-resources/devices/warp/) on each user device routes traffic through Cloudflare and into the tunnel, so users can reach internal resources from anywhere.
 
 ## Prerequisites
 
@@ -33,14 +33,18 @@ Cloudflare Tunnel establishes an outbound connection between your resources and 
 
 ## Step 2: Set your Tunnel's IP range
 
-Add the IP range of your private network to the tunnel. Your tunnel accepts traffic to this range from devices enrolled in your Zero Trust organization.
+Add the IP range of your private network to the tunnel. This defines which internal resources your remote users can reach. Your tunnel accepts traffic to this range from devices enrolled in your Zero Trust organization.
 
 1. Enter your IP range (for example, `10.0.1.0/24`).
 2. Select **Continue**.
 
+:::note
+If you are not sure of your IP range, check your router or network settings. Common private network ranges include `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`.
+:::
+
 ## Step 3: Deploy your Tunnel
 
-Install `cloudflared` on a device in your private network and run the tunnel.
+Install the `cloudflared` connector on a device in your private network and run the tunnel. This software creates the secure connection between your network and Cloudflare.
 
 1. Select your device's operating system.
 2. Copy the install command displayed in the dashboard. For macOS, the command looks similar to:
@@ -56,7 +60,7 @@ Install `cloudflared` on a device in your private network and run the tunnel.
 
 ## Step 4: Enroll your devices
 
-Enrollment permissions determine who can connect devices to the resources you put behind Zero Trust. Enter an email and download the WARP client on devices you want to reach your private network.
+Device enrollment controls which users can connect their devices to your private network through Cloudflare. In this step, you register your first device by providing an email address and installing the WARP client.
 
 1. Enter the email you want to use to enroll your first device.
 2. Select your device's operating system.
@@ -73,7 +77,7 @@ On your device, complete the WARP installation wizard. Then connect WARP to your
 
 1. Open the WARP client. On macOS, select the Cloudflare icon in your status bar.
 2. Go to **Preferences** > **Account** > **Login to Cloudflare Zero Trust**.
-3. Enter your team name when prompted. The dashboard displays your team name on this screen for easy reference.
+3. Enter your team name when prompted. Your team name is the unique identifier for your Zero Trust organization and was set when the organization was created. The dashboard displays your team name on this screen for easy reference.
 4. Complete the authentication steps.
 5. The WARP client should show as **Connected**.
 6. Select **Continue** in the dashboard.
@@ -88,9 +92,9 @@ Try reaching a resource on your private network (for example, `http://10.0.1.100
 
 After verifying your connection, the dashboard suggests these next steps:
 
-- **Set up Gateway policies** — Add a DNS policy that targets the domain list for your application, then create a network policy that targets its IP list. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
-- **Create an Access application** — Add your private network as a self-hosted Access application for more granular access and identity control. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
-- **Explore more with Zero Trust** — Review your tunnel, policies, and connected devices in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+- **Set up Gateway policies**: Add a DNS policy that targets the domain list for your application, then create a network policy that targets its IP list. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
+- **Create an Access application**: Add your private network as a self-hosted Access application for more granular access and identity control. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
+- **Explore more with Zero Trust**: Review your tunnel, policies, and connected devices in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
 
 For in-depth guidance on policy design, device posture checks, and multi-site deployments, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
 
@@ -98,5 +102,5 @@ For in-depth guidance on policy design, device posture checks, and multi-site de
 
 If you have issues connecting, refer to these resources:
 
-- [Troubleshoot WARP](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/) — resolve WARP client connection and enrollment issues.
-- [Troubleshoot tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/) — diagnose tunnel connectivity and routing problems.
+- [Troubleshoot WARP](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/): resolve WARP client connection and enrollment issues.
+- [Troubleshoot tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/): diagnose tunnel connectivity and routing problems.
