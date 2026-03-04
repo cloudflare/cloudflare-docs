@@ -1,27 +1,25 @@
 ---
-title: "R2 SQL now supports over 180 new scalar functions, expressions, and complex types"
+title: R2 SQL now supports over 190 new functions, expressions, and complex types
 description: Query Iceberg tables with CASE expressions, column aliases, scalar functions, statistical aggregates, and full struct/array/map support.
 products:
   - r2-sql
 date: 2026-03-04
 ---
 
-R2 SQL now supports a significantly expanded SQL grammar. You can write expressive analytical queries using CASE expressions, column aliases, arithmetic in WHERE and SELECT clauses, new scalar functions, and full access to struct, array, and map column types.
+R2 SQL now supports an expanded SQL grammar so you can write richer analytical queries without exporting data. This release adds CASE expressions, column aliases, arithmetic in clauses, 163 scalar functions, 33 aggregate functions, and full struct/array/map access.
 
-## What's new
+## Highlights
 
 - **Column aliases** — `SELECT col AS alias` now works in all clauses
 - **CASE expressions** — conditional logic directly in SQL (searched and simple forms)
-- **New scalar functions** — math, string, datetime, regex, crypto, encoding, and type inspection
-- **Statistical aggregate functions** — In addition to basic (COUNT, SUM, AVG, MIN, MAX) and approximate (percentiles, median, distinct, top-k) functions, R2 SQL now supports statistical (variance, stddev, correlation, regression), bitwise, boolean, and positional functions
-- **Complex types** - query struct fields with bracket notation, use 46 array functions, and extract map keys/values
-- **Full expression support** — arithmetic, string concatenation, type casting (CAST, TRY_CAST, `::` shorthand), and EXTRACT in SELECT, WHERE, GROUP BY, HAVING, and ORDER BY
+- **Scalar functions** — 163 new functions across math, string, datetime, regex, crypto, encoding, and type inspection categories
+- **Aggregate functions** — statistical (variance, stddev, correlation, regression), bitwise, boolean, and positional aggregates join the existing basic and approximate functions
+- **Complex types** — query struct fields with bracket notation, use 46 array functions, and extract map keys/values
+- **Full expression support** — arithmetic, type casting (`CAST`, `TRY_CAST`, `::` shorthand), and `EXTRACT` in SELECT, WHERE, GROUP BY, HAVING, and ORDER BY
 
 ## Examples
 
-### Classify and analyze with CASE, statistical functions, and approximate aggregates
-
-Combine CASE expressions with `stddev`, `approx_percentile_cont`, and `approx_distinct` to build tiered queries:
+### CASE expressions with statistical aggregates
 
 ```sql
 SELECT source,
@@ -30,53 +28,32 @@ SELECT source,
         WHEN AVG(price) > 10 THEN 'mid-tier'
         ELSE 'budget'
     END AS tier,
-    COUNT(*) AS total_items,
-    round(AVG(price), 2) AS avg_price,
     round(stddev(price), 2) AS price_volatility,
-    approx_percentile_cont(price, 0.95) AS p95_price,
-    approx_distinct(product_id) AS unique_products
+    approx_percentile_cont(price, 0.95) AS p95_price
 FROM my_namespace.sales_data
-WHERE price IS NOT NULL AND price > 0
 GROUP BY source
-ORDER BY avg_price DESC
 ```
 
-### Query struct, array, and map columns
-
-Access nested struct fields with bracket notation, search arrays with `array_has`, classify rows with CASE, and join array elements into strings with `array_to_string`:
+### Struct and array access
 
 ```sql
 SELECT product_name,
-    array_length(tags) AS tag_count,
-    array_to_string(tags, ', ') AS tag_list,
     pricing['price'] AS price,
-    CASE
-        WHEN array_has(tags, 'Action') AND array_has(tags, 'RPG') THEN 'Action RPG'
-        WHEN array_has(tags, 'Strategy') THEN 'Strategy'
-        ELSE 'Other'
-    END AS category
+    array_to_string(tags, ', ') AS tag_list
 FROM my_namespace.products
-WHERE array_length(tags) >= 4
-    AND pricing['price'] > 20
+WHERE array_has(tags, 'Action')
 ORDER BY pricing['price'] DESC
 LIMIT 10
 ```
 
-### Time-series analysis with date_trunc, correlation, and approximate distinct
-
-Bin timestamps into months, compute the Pearson correlation between two columns, and count unique values:
+### Time-series binning with correlation
 
 ```sql
 SELECT date_trunc('month', sale_timestamp) AS month,
     COUNT(*) AS transactions,
-    round(AVG(total_amount), 2) AS avg_amount,
-    round(corr(CAST(quantity AS DOUBLE), total_amount), 4) AS qty_amount_corr,
-    approx_distinct(customer_id) AS unique_customers
+    round(corr(CAST(quantity AS DOUBLE), total_amount), 4) AS qty_amount_corr
 FROM my_namespace.sales_data
-WHERE sale_timestamp BETWEEN '2025-01-01T00:00:00Z' AND '2025-12-31T23:59:59Z'
-    AND total_amount IS NOT NULL
 GROUP BY date_trunc('month', sale_timestamp)
-HAVING COUNT(*) > 100
 ORDER BY month
 ```
 
