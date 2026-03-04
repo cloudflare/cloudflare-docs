@@ -20,7 +20,7 @@ import {
 [Source IP proxy endpoints](#source-ip-endpoint) are only available on Enterprise plans.
 :::
 
-Proxy endpoints allow you to apply Gateway policies without installing a client on your devices. By configuring a Proxy Auto-Configuration (PAC) file at the browser level, you can route traffic through Gateway for filtering and policy enforcement. Cloudflare supports configuring two types of proxy endpoints: identity-based [authorization endpoints](#authorization-endpoint) and [source IP proxy endpoints](#source-ip-endpoint).
+Proxy endpoints allow you to apply Gateway policies without installing a client on your devices. By configuring a [Proxy Auto-Configuration (PAC) file](#what-is-a-pac-file) at the browser level, you can route traffic through Gateway for filtering and policy enforcement. Cloudflare supports configuring two types of proxy endpoints: identity-based [authorization endpoints](#authorization-endpoint) and [source IP proxy endpoints](#source-ip-endpoint).
 
 :::note
 For the best experience and deepest visibility, Cloudflare recommends using the [WARP client](/cloudflare-one/team-and-resources/devices/warp/). Use proxy endpoints when installing a device client is not feasible for your environment.
@@ -33,6 +33,8 @@ Proxy endpoints are designed for environments where deploying the WARP client is
 - **Virtual desktops (VDI)**: Users log into a virtual machine and use a browser to reach the Internet.
 - **Compliance-restricted endpoints**: Environments where you are legally or technically prohibited from installing software on the endpoint.
 - **Legacy SWG migration**: Organizations transitioning from legacy Secure Web Gateways that use PAC files.
+
+### What is a PAC file
 
 <GlossaryDefinition term="PAC file" prepend="A PAC file is " />
 
@@ -48,13 +50,13 @@ PAC files offer several advantages:
 PAC files require user interaction. Authorization endpoints require users to log in through [Cloudflare Access](/cloudflare-one/access-controls/policies/). PAC files do not currently support username/password, mTLS, or Kerberos authorization. Support for additional authentication methods is planned for future releases.
 :::
 
-## Types of proxy endpoints
+### Types of proxy endpoints
 
 Cloudflare One offers two types of proxy endpoints, each with different authorization methods.
 
 Once you create a proxy endpoint, you cannot change its type. If you need a different authorization method, you must create a new proxy endpoint.
 
-### Authorization endpoint <Badge text="Beta" variant="caution" />
+#### Authorization endpoint <Badge text="Beta" variant="caution" />
 
 Authorization endpoints use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to provide Zero Trust authorization. Users must authenticate through an identity provider and pass Access policies before they can use the proxy endpoint.
 
@@ -65,7 +67,7 @@ Use authorization endpoints when:
 - Your organization requires login through identity providers (such as Okta, Microsoft Entra ID, or Google Workspace)
 - You need granular control over who can access the proxy
 
-### Source IP endpoint
+#### Source IP endpoint
 
 Source IP endpoints authorize traffic based on the originating IP address. Only traffic from pre-configured IP addresses can use the proxy endpoint.
 
