@@ -1853,7 +1853,7 @@
 					"ent": "Yes"
 				},
 				"g_fw_for_ai": {
-					"title": "AI Security for Apps (beta)",
+					"title": "AI Security for Apps",
 					"summary": "Enterprise-only",
 					"link": "/waf/detections/ai-security-for-apps/",
 					"free": "No",
