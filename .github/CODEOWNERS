@@ -4,7 +4,7 @@
 
 # More dev-specific files
 
-/.github/ @cloudflare/content-engineering @kodster28 @mvvmm @colbywhitedev @adutton
+/.github/ @cloudflare/content-engineering @kodster28 @mvvmm @colbywhite @ahaywood
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing @kodster28
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing @kodster28
 /src/components/ @cloudflare/content-engineering @kodster28

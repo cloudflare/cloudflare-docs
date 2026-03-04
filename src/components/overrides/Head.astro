@@ -32,8 +32,12 @@ const shouldChatbotDeprioritize =
 
 // if not a top-level page, add metadata values from src/content/directory/ entries
 if (currentSection) {
-	// if entry for directory, grab and proceed
-	let product = await getEntry("directory", currentSection);
+	// For changelog pages there is no directory entry for "changelog" itself; skip
+	// the lookup to avoid spurious "Entry directory → changelog was not found" warnings.
+	// The actual product is resolved below from frontmatter.products[0].
+	let product = currentSection !== "changelog"
+		? await getEntry("directory", currentSection)
+		: undefined;
 	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
 	if (currentSection === "changelog") {
 		const products = frontmatter.products;

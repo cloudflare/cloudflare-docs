@@ -51,6 +51,23 @@ This is **especially critical for Cloudflare-specific implementations**. Cloudfl
 
 ## When to Use Me
 
+Use this skill for content that targets a broad or mixed audience — not every review needs it.
+
+**Good candidates:**
+
+- **Security and networking docs** (e.g. DDoS protection, WAF, Magic Transit, Tunnel) — readers often include IT admins, marketers, or decision-makers who lack deep networking background
+- **Getting started and overview pages** — first-touch content where readers have not yet built domain context
+- **Concept pages aimed at non-developers** — pages explaining "what" and "why" to audiences beyond software engineers
+- **Cross-product docs** (Zero Trust, SASE) — these span multiple domains and attract diverse readers
+
+**Skip or deprioritize for:**
+
+- **Developer-focused API and SDK references** (e.g. Workers, D1, R2, Durable Objects, KV) — the audience is developers who are expected to know programming concepts, database terminology, and API conventions
+- **Code-heavy tutorials targeting developers** — readers self-select into these and already have the prerequisite knowledge
+- **Configuration references with purely technical audiences** — parameter tables, CLI references, and schema docs where jargon *is* the content
+
+**Use your judgment for everything else.** Ask: "Would a reasonable reader of this page already know these terms?" If yes, this skill adds little value. On the other hand, if the following are true, this skill could provide significant value.
+
 - Content assumes too much prior knowledge
 - Jargon and acronyms are not explained
 - Documentation jumps to "how" without explaining "why"
