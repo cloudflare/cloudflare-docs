@@ -17,6 +17,7 @@ An Access policy consists of an **Action** as well as rules which determine the 
 - [Actions](#actions)
 - [Rule types](#rule-types)
 - [Selectors](#selectors)
+- [Connection context](#connection-context)
 
 ## Actions
 
@@ -165,6 +166,19 @@ Non-identity attributes are polled continuously, meaning they are-evaluated with
 of initial sign on and when reissuing the SaaS session. Once the user has
 authenticated to the SaaS app, session management falls solely within the
 purview of the SaaS app.
+
+## Connection context
+
+Connection context settings allow you to control how users interact with an application after they have been granted access. While [selectors](#selectors) determine who can access an application, connection context settings determine what actions users can take during their session.
+
+Connection context is configured per policy, allowing you to grant different permissions to different groups of users. For example, you could allow full-time employees to copy data from a remote RDP session while restricting contractors to read-only access.
+
+The available connection context settings depend on the application type:
+
+| Application type | Available settings |
+| --- | --- |
+| [Infrastructure (SSH)](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) | Allowed UNIX usernames |
+| [Browser-based RDP](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-browser/#clipboard-controls) | Clipboard controls (copy/paste restrictions) |
 
 ## Order of execution
 

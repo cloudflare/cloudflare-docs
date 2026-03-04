@@ -1,7 +1,6 @@
 ---
 import { z } from "astro:schema";
-import { Code } from "@astrojs/starlight/components";
-import Details from "~/components/Details.astro";
+import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
 
 type Props = z.infer<typeof props>;
 
@@ -62,14 +61,14 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 `;
 ---
 
-<Details header="Workers - Returning a data URI - TypeScript" open>
-	<Code code={workerReturningDataURI} lang="ts" />
-</Details>
-
-<Details header="Workers - Returning an image - TypeScript" open>
-	<Code code={workerReturningImage} lang="ts" />
-</Details>
-
-<Details header="curl" open>
-	<Code code={curl} lang="sh" />
-</Details>
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="Worker (Data URI)" icon="seti:typescript">
+		<Code code={workerReturningDataURI} lang="ts" />
+	</TabItem>
+	<TabItem label="Worker (Image)" icon="seti:typescript">
+		<Code code={workerReturningImage} lang="ts" />
+	</TabItem>
+	<TabItem label="curl" icon="seti:shell">
+		<Code code={curl} lang="sh" />
+	</TabItem>
+</Tabs>

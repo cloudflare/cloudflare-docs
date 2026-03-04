@@ -84,6 +84,22 @@ When using the [US region](/cloudflare-one/networks/connectors/cloudflare-tunnel
 | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | ------------------------ |
 | `198.41.219.1` `198.41.219.2` `198.41.219.3` `198.41.219.4` `198.41.219.5` `198.41.219.6` `198.41.219.7` `198.41.219.8` `198.41.219.9` `198.41.219.10` | `2606:4700:a9::1` `2606:4700:a9::2` `2606:4700:a9::3` `2606:4700:a9::4` `2606:4700:a9::5` `2606:4700:a9::6` `2606:4700:a9::7` `2606:4700:a9::8` `2606:4700:a9::9` `2606:4700:a9::10` | 7844 | TCP/UDP (`http2`/`quic`) |
 
+### Region FedRAMP High
+
+When deploying `cloudflared` in a [FedRAMP High](https://www.cloudflare.com/cloudflare-for-government/) environment, `cloudflared` automatically routes to FedRAMP data centers based on the [tunnel token](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/). Ensure your firewall allows outbound connections to these FedRAMP-specific destinations on port `7844` (TCP/UDP).
+
+#### `fed-region1.v2.argotunnel.com`
+
+| IPv4                                                                                                                                                             | IPv6                                                                                                                                                                                 | Port | Protocols                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | ------------------------ |
+| `162.159.234.1` `162.159.234.2` `162.159.234.3` `162.159.234.4` `162.159.234.5` `162.159.234.6` `162.159.234.7` `162.159.234.8` `162.159.234.9` `162.159.234.10` | `2a06:98c1:4d::1` `2a06:98c1:4d::2` `2a06:98c1:4d::3` `2a06:98c1:4d::4` `2a06:98c1:4d::5` `2a06:98c1:4d::6` `2a06:98c1:4d::7` `2a06:98c1:4d::8` `2a06:98c1:4d::9` `2a06:98c1:4d::10` | 7844 | TCP/UDP (`http2`/`quic`) |
+
+#### `fed-region2.v2.argotunnel.com`
+
+| IPv4                                                                                                                                                   | IPv6                                                                                                                                                                                 | Port | Protocols                |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | ------------------------ |
+| `172.64.234.1` `172.64.234.2` `172.64.234.3` `172.64.234.4` `172.64.234.5` `172.64.234.6` `172.64.234.7` `172.64.234.8` `172.64.234.9` `172.64.234.10` | `2606:4700:f6::1` `2606:4700:f6::2` `2606:4700:f6::3` `2606:4700:f6::4` `2606:4700:f6::5` `2606:4700:f6::6` `2606:4700:f6::7` `2606:4700:f6::8` `2606:4700:f6::9` `2606:4700:f6::10` | 7844 | TCP/UDP (`http2`/`quic`) |
+
 ### Optional
 
 Opening port `443` enables some optional features. Failure to allow these connections may prompt a log error, but `cloudflared` will still run correctly.
@@ -130,8 +146,8 @@ Allows `cloudflared` to report [post-quantum key exchange](https://blog.cloudfla
 
 #### `cfd-features.argotunnel.com`
 
-| IPv4           | IPv6           | Port | Protocols    |
-| -------------- | -------------- | ---- | ------------ |
+| IPv4           | IPv6           | Port           | Protocols      |
+| -------------- | -------------- | -------------- | -------------- |
 | Not applicable | Not applicable | Not applicable | Not applicable |
 
 Performing a DNS query for a `TXT` record to this hostname allows `cloudflared` to determine which version of [UDP datagram](/changelog/2025-07-15-udp-improvements/) to use when connecting via the `quic` protocol. If your firewall filters egress DNS queries by FQDN, you may need to allow queries for this domain to ensure optimal `quic` performance.
@@ -190,10 +206,10 @@ Alternatively, you may use operating system (OS)-level firewall rules to block a
 
 8. By default, rules you add via the `iptables` command are stored only in memory and do not persist on reboot. There are many different ways to save and reload your firewall rules, depending on your Linux distribution. For example, on Debian you can use the [`iptables-persistent`](https://packages.debian.org/sid/iptables-persistent) package:
 
-	```sh
-	sudo apt install iptables-persistent
-	sudo netfilter-persistent save
-	```
+   ```sh
+   sudo apt install iptables-persistent
+   sudo netfilter-persistent save
+   ```
 
 ## Test connectivity
 

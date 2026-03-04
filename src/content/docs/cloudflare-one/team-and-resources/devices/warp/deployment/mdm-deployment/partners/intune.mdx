@@ -26,12 +26,15 @@ To deploy WARP on Windows using Intune:
 9. In the **Name** field, we recommend entering the version number of the package being uploaded.
 10. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
 11. In the **Command-line arguments** field, enter a valid installation command. For example:
-   ```txt
-   /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
-   ```
-   Refer to [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument. You can change these parameters at any time by pushing a new [MDM file](#update-mdm-parameters).
-12. Select **Next**.
-13. Add the users or groups who require Cloudflare WARP and select **Next**.
+
+    ```txt
+    /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
+    ```
+
+    Refer to [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument. You can change these parameters at any time by pushing a new [MDM file](#update-mdm-parameters).
+		
+12. Select **Next**. 
+13. Add the users or groups who require Cloudflare WARP and select **Next**. 
 14. Review your configuration and select **Create**.
 
 Intune is now configured to deploy the WARP client.
@@ -135,7 +138,11 @@ Deploy configuration profiles (steps 1, 2, and 3) before the WARP application (s
 
 #### 1.1 Download user-side certificate
 
-<Render file="intune-download-certificate" product="cloudflare-one" params={{ os: "macOS" }} />
+<Render
+	file="intune-download-certificate"
+	product="cloudflare-one"
+	params={{ os: "macOS" }}
+/>
 
 #### 1.2 Upload user-side certificate to Intune
 
@@ -194,9 +201,10 @@ Before deploying WARP, you need to allow its system extensions.
    ```bash
    codesign -dv --verbose=4 /Applications/Cloudflare\ WARP.app 2>&1 | grep Identifier
    ```
+
    Expected output:
 
-   ```output
+   ```txt
    Identifier=com.cloudflare.1dot1dot1dot1.macos
    TeamIdentifier=68WVV388M8
    ```
@@ -341,7 +349,11 @@ The following steps outline how to deploy the Cloudflare One Agent (WARP client)
 
 #### 1.1 Download user-side certificate
 
-<Render file="intune-download-certificate" product="cloudflare-one" params={{ os: "iOS" }} />
+<Render
+	file="intune-download-certificate"
+	product="cloudflare-one"
+	params={{ os: "iOS" }}
+/>
 
 #### 1.2 Upload user-side certificate to Intune
 
@@ -379,11 +391,11 @@ Sharing this certificate with Intune automates the installation of this certific
 
 4. Select **Search the App Store** and search for the [Cloudflare One Agent](/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios). After you have found the Cloudflare One Agent, select it and select **Select** to continue.
 
-	:::caution[Add the right app]
+   :::caution[Add the right app]
 
-	Make sure to add the [Cloudflare One Agent](/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios) application. Do not add the 1.1.1.1 app.
+   Make sure to add the [Cloudflare One Agent](/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios) application. Do not add the 1.1.1.1 app.
 
-	:::
+   :::
 
 5. The fields in **App information** will be filled in automatically. Select **Next** to continue.
 
@@ -403,24 +415,24 @@ By completing this step, you deliver the WARP client to targeted iOS devices, ei
 
 4. In **Settings**, select _Enter XML data_ and copy and paste the following:
 
-	```xml
-	<dict>
-		<key>organization</key>
-		<string>YOUR_TEAM_NAME_HERE</string>
-		<key>auto_connect</key>
-		<integer>1</integer>
-	</dict>
-	```
+   ```xml
+   <dict>
+   	<key>organization</key>
+   	<string>YOUR_TEAM_NAME_HERE</string>
+   	<key>auto_connect</key>
+   	<integer>1</integer>
+   </dict>
+   ```
 
-	Replace `YOUR_TEAM_NAME_HERE` with your [team name](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name). Review the definitions of the above parameters in the [Parameters documentation](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
+   Replace `YOUR_TEAM_NAME_HERE` with your [team name](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name). Review the definitions of the above parameters in the [Parameters documentation](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
 
-	:::tip[Successfuly complete your registration]
+   :::tip[Successfuly complete your registration]
 
-	You should set the [`auto_connect`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#auto_connect) parameter to `1` to ensure the WARP client auto-connects to Cloudflare. If you set this parameter to `0` or exclude it, the client will not auto-connect, and registration will not complete successfully.
+   You should set the [`auto_connect`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#auto_connect) parameter to `1` to ensure the WARP client auto-connects to Cloudflare. If you set this parameter to `0` or exclude it, the client will not auto-connect, and registration will not complete successfully.
 
-	If you do not include this parameter, registration will not be complete without manual intervention by the user. Manual intervention requires opening the WARP application and attempting to connect.
+   If you do not include this parameter, registration will not be complete without manual intervention by the user. Manual intervention requires opening the WARP application and attempting to connect.
 
-	:::
+   :::
 
 5. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. Select **Next**.
 

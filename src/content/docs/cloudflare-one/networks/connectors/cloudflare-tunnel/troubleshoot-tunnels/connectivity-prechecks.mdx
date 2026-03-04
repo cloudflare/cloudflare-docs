@@ -25,7 +25,7 @@ This guide is structured as follows:
 
 You must have:
 
-- A host machine connected to the Internet where you plan to run `cloudflared`. The tests must run from the same environment where `cloudflared` will run (same network, same firewall path).  
+- A host machine connected to the Internet where you plan to run `cloudflared`. The tests must run from the same environment where `cloudflared` will run (same network, same firewall path).
 
 - A terminal session with permission to run `dig` and `nc` (netcat), or similar software.
 
@@ -45,7 +45,7 @@ Cloudflare Tunnel errors can originate from the environment (for example, DNS or
 
 ## 2. DNS test with dig
 
-Cloudflare Tunnel requires outbound connectivity to `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com` (or to the equivalent `us-region1` and `us-region2` endpoints when using only the [US region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#region-us)).  
+Cloudflare Tunnel requires outbound connectivity to `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com` (or to the equivalent `us-region1` and `us-region2` endpoints when using the [US region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#region-us), or `fed-region1` and `fed-region2` when using the [FedRAMP High region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#region-fedramp-high)).
 
 For a successful and healthy deployment, `cloudflared` should have [four active replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) with connectivity to both regions (that is, both `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com`, or both `us-region1` and `us-region2`).
 
@@ -214,6 +214,85 @@ us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::10
 ```
 
 </TabItem>
+<TabItem label="FedRAMP High region">
+
+```sh
+dig A fed-region1.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+fed-region1.v2.argotunnel.com. 300 IN	A	162.159.234.1
+fed-region1.v2.argotunnel.com. 300 IN	A	162.159.234.2
+fed-region1.v2.argotunnel.com. 300 IN	A	162.159.234.3
+fed-region1.v2.argotunnel.com. 300 IN	A	162.159.234.4
+fed-region1.v2.argotunnel.com. 300 IN	A	162.159.234.5
+fed-region1.v2.argotunnel.com. 300 IN	A	162.159.234.6
+fed-region1.v2.argotunnel.com. 300 IN	A	162.159.234.7
+fed-region1.v2.argotunnel.com. 300 IN	A	162.159.234.8
+fed-region1.v2.argotunnel.com. 300 IN	A	162.159.234.9
+fed-region1.v2.argotunnel.com. 300 IN	A	162.159.234.10
+...
+```
+
+```sh
+dig AAAA fed-region1.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+fed-region1.v2.argotunnel.com. 300 IN	AAAA	2a06:98c1:4d::1
+fed-region1.v2.argotunnel.com. 300 IN	AAAA	2a06:98c1:4d::2
+fed-region1.v2.argotunnel.com. 300 IN	AAAA	2a06:98c1:4d::3
+fed-region1.v2.argotunnel.com. 300 IN	AAAA	2a06:98c1:4d::4
+fed-region1.v2.argotunnel.com. 300 IN	AAAA	2a06:98c1:4d::5
+fed-region1.v2.argotunnel.com. 300 IN	AAAA	2a06:98c1:4d::6
+fed-region1.v2.argotunnel.com. 300 IN	AAAA	2a06:98c1:4d::7
+fed-region1.v2.argotunnel.com. 300 IN	AAAA	2a06:98c1:4d::8
+fed-region1.v2.argotunnel.com. 300 IN	AAAA	2a06:98c1:4d::9
+fed-region1.v2.argotunnel.com. 300 IN	AAAA	2a06:98c1:4d::10
+...
+```
+
+```sh
+dig A fed-region2.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+fed-region2.v2.argotunnel.com. 300 IN	A	172.64.234.1
+fed-region2.v2.argotunnel.com. 300 IN	A	172.64.234.2
+fed-region2.v2.argotunnel.com. 300 IN	A	172.64.234.3
+fed-region2.v2.argotunnel.com. 300 IN	A	172.64.234.4
+fed-region2.v2.argotunnel.com. 300 IN	A	172.64.234.5
+fed-region2.v2.argotunnel.com. 300 IN	A	172.64.234.6
+fed-region2.v2.argotunnel.com. 300 IN	A	172.64.234.7
+fed-region2.v2.argotunnel.com. 300 IN	A	172.64.234.8
+fed-region2.v2.argotunnel.com. 300 IN	A	172.64.234.9
+fed-region2.v2.argotunnel.com. 300 IN	A	172.64.234.10
+...
+```
+
+```sh
+dig AAAA fed-region2.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+fed-region2.v2.argotunnel.com. 300 IN	AAAA	2606:4700:f6::1
+fed-region2.v2.argotunnel.com. 300 IN	AAAA	2606:4700:f6::2
+fed-region2.v2.argotunnel.com. 300 IN	AAAA	2606:4700:f6::3
+fed-region2.v2.argotunnel.com. 300 IN	AAAA	2606:4700:f6::4
+fed-region2.v2.argotunnel.com. 300 IN	AAAA	2606:4700:f6::5
+fed-region2.v2.argotunnel.com. 300 IN	AAAA	2606:4700:f6::6
+fed-region2.v2.argotunnel.com. 300 IN	AAAA	2606:4700:f6::7
+fed-region2.v2.argotunnel.com. 300 IN	AAAA	2606:4700:f6::8
+fed-region2.v2.argotunnel.com. 300 IN	AAAA	2606:4700:f6::9
+fed-region2.v2.argotunnel.com. 300 IN	AAAA	2606:4700:f6::10
+...
+```
+
+</TabItem>
 </Tabs>
 
 The `ANSWER SECTION` should include the expected IP addresses for Cloudflare Tunnel endpoints.
@@ -231,6 +310,7 @@ If your original `dig` response is empty or does not match the documented IPs, t
 ```sh
 dig A region1.v2.argotunnel.com @1.1.1.1
 ```
+
 #### If only `1.1.1.1` works
 
 If `1.1.1.1` returns the correct IPs, but your original resolver does not, your local DNS resolver is misconfigured or blocked.
@@ -326,4 +406,8 @@ To resolve: Allow all traffic over port `7844` on the local network firewall. If
 
 If either DNS or network test failed, it will likely be a problem in your local environment. You will need to debug with your administrator, ISP or cloud provider. If you believe the issue is with Cloudflare, please provide detailed information when contacting support.
 
-<Render file="warp/support-ticket-best-practices" product="cloudflare-one" params={{ tunnelMode: true }} />
+<Render
+	file="warp/support-ticket-best-practices"
+	product="cloudflare-one"
+	params={{ tunnelMode: true }}
+/>

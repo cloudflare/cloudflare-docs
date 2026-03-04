@@ -76,11 +76,7 @@ const topCards = [
 			{ text: "Workers AI", href: "/workers-ai/" },
 			{ text: "Vectorize", href: "/vectorize/" },
 			{ text: "AI Gateway", href: "/ai-gateway/" },
-			{
-				text: "AI Playground",
-				href: "https://playground.ai.cloudflare.com/",
-				target: "_blank",
-			},
+			{ text: "AI Agents", href: "/agents/" },
 		],
 		cta: {
 			text: "View all AI products",
@@ -219,7 +215,6 @@ const recommendedSection = {
 							<li>
 								<a
 									href={link.href}
-									target={link.target}
 									class="hover:text-accent! dark:text-accent-high! text-black! dark:hover:text-black!"
 								>
 									{link.text}

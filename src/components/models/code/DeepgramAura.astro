@@ -1,7 +1,6 @@
 ---
 import { z } from "astro:schema";
-import { Code } from "@astrojs/starlight/components";
-import Details from "~/components/Details.astro";
+import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
 
 type Props = z.infer<typeof props>;
 
@@ -37,12 +36,11 @@ curl --request POST \
 `;
 ---
 
-<>
-	<Details header="Worker" open>
-		<Code code={worker} lang="ts" />
-	</Details>
-
-	<Details header="curl" open>
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript" icon="seti:typescript">
+		<Code code={worker} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="curl" icon="seti:shell">
 		<Code code={curl} lang="sh" />
-	</Details>
-</>
+	</TabItem>
+</Tabs>
