@@ -137,11 +137,9 @@ wrangler containers registries delete [DOMAIN] [OPTIONS]
 Generate temporary credentials to push or pull images from the Cloudflare managed registry.
 
 ```txt
-wrangler containers registries credentials <DOMAIN> [OPTIONS]
+wrangler containers registries credentials [OPTIONS]
 ```
 
-- `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
-  - Domain to get credentials for. Must be `registry.cloudflare.com`.
 - `--push` <Type text="boolean" /> <MetaInfo text="optional" />
   - Generate credentials with push permission.
 - `--pull` <Type text="boolean" /> <MetaInfo text="optional" />
