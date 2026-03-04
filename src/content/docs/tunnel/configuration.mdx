@@ -22,7 +22,7 @@ When you run a tunnel, `cloudflared` establishes four outbound-only, [post-quant
 
 A replica is an additional `cloudflared` instance that points to the same tunnel. Each replica creates four new connections, providing additional ingress points to your origin. You can run up to 25 replicas (100 connections) per tunnel. Traffic routes to the geographically closest replica.
 
-<Render file="tunnel/cloudflared-replicas-diagram" product="cloudflare-one" />
+<Render file="tunnel/availability/cloudflared-replicas-diagram" product="cloudflare-one" />
 
 ### Deploy a replica
 
@@ -57,12 +57,12 @@ For intelligent traffic steering, failover logic, or health alerts, use [Cloudfl
 
 ### Required ports
 
-<Render file="tunnel/firewall-required-ports" product="cloudflare-one" />
+<Render file="tunnel/firewall/required-ports" product="cloudflare-one" />
 
 <Details header="US region IPs">
 
 <Render
-	file="tunnel/firewall-us-region-ports"
+	file="tunnel/firewall/us-region-ports"
 	product="cloudflare-one"
 	params={{ regionURL: "#region" }}
 />
@@ -71,25 +71,17 @@ For intelligent traffic steering, failover logic, or health alerts, use [Cloudfl
 
 <Details header="FedRAMP High IPs">
 
-When using `cloudflared` in a [FedRAMP High](https://www.cloudflare.com/cloudflare-for-government/) environment, allow outbound connections to these destinations instead.
-
-#### `fed-region1.v2.argotunnel.com`
-
-| IPv4                                                                                                                                                             | Port | Protocols                |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- | ------------------------ |
-| `162.159.234.1` `162.159.234.2` `162.159.234.3` `162.159.234.4` `162.159.234.5` `162.159.234.6` `162.159.234.7` `162.159.234.8` `162.159.234.9` `162.159.234.10` | 7844 | TCP/UDP (`http2`/`quic`) |
-
-#### `fed-region2.v2.argotunnel.com`
-
-| IPv4                                                                                                                                                   | Port | Protocols                |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | ------------------------ |
-| `172.64.234.1` `172.64.234.2` `172.64.234.3` `172.64.234.4` `172.64.234.5` `172.64.234.6` `172.64.234.7` `172.64.234.8` `172.64.234.9` `172.64.234.10` | 7844 | TCP/UDP (`http2`/`quic`) |
+<Render
+	file="tunnel/firewall/fedramp-high-ports"
+	product="cloudflare-one"
+	params={{ tunnelTokenURL: "/tunnel/advanced/tunnel-tokens/" }}
+/>
 
 </Details>
 
 <Details header="SNI-enforcing firewalls">
 
-<Render file="tunnel/firewall-sni-hostnames" product="cloudflare-one" />
+<Render file="tunnel/firewall/sni-hostnames" product="cloudflare-one" />
 
 </Details>
 

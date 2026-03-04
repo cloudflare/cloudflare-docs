@@ -15,7 +15,7 @@ Tunnel logs record all activity between a `cloudflared` instance and Cloudflare'
 ## View logs on the server
 
 <Render
-  file="tunnel/view-logs-on-server"
+  file="tunnel/logs/view-logs-on-server"
   product="cloudflare-one"
   params={{
     loglevelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel",
@@ -34,18 +34,18 @@ You can view real-time logs for a Cloudflare Tunnel via the dashboard or from an
 Tunnel log streams require [edit permissions](/fundamentals/manage-members/roles/) for Cloudflare Tunnel. Due to the sensitive nature of these logs, read-only roles (such as `Zero Trust Read Only`) do not have access.
 :::
 
-<Render file="tunnel/view-logs-dashboard" product="cloudflare-one" />
+<Render file="tunnel/logs/view-logs-dashboard" product="cloudflare-one" />
 
 ### CLI
 
 The `cloudflared` daemon can stream logs from any tunnel in your account to the local command line. `cloudflared` must be installed on both your local machine and the origin server.
 
-<Render file="tunnel/view-logs-cli" product="cloudflare-one" />
+<Render file="tunnel/logs/view-logs-cli" product="cloudflare-one" />
 
 #### Filter logs
 
 <Render
-  file="tunnel/filter-logs"
+  file="tunnel/logs/filter-logs"
   product="cloudflare-one"
   params={{
     loglevelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel"

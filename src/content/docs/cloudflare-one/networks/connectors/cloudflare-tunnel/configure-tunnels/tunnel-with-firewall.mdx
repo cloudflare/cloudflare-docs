@@ -26,34 +26,26 @@ Ensure port `7844` is allowed for both TCP and UDP protocols (for `http2` and `q
 
 `cloudflared` connects to Cloudflare's global network on port `7844`. To use Cloudflare Tunnel, your firewall must allow outbound connections to the following destinations on port `7844` (via UDP if using the `quic` protocol or TCP if using the `http2` protocol).
 
-<Render file="tunnel/firewall-required-ports" product="cloudflare-one" />
+<Render file="tunnel/firewall/required-ports" product="cloudflare-one" />
 
 #### SNI-enforcing firewalls
-<Render file="tunnel/firewall-sni-hostnames" product="cloudflare-one" />
+<Render file="tunnel/firewall/sni-hostnames" product="cloudflare-one" />
 
 ### Region US
 
 <Render
-  file="tunnel/firewall-us-region-ports"
+  file="tunnel/firewall/us-region-ports"
   product="cloudflare-one"
   params={{ regionURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region" }}
 />
 
 ### Region FedRAMP High
 
-When deploying `cloudflared` in a [FedRAMP High](https://www.cloudflare.com/cloudflare-for-government/) environment, `cloudflared` automatically routes to FedRAMP data centers based on the [tunnel token](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/). Ensure your firewall allows outbound connections to these FedRAMP-specific destinations on port `7844` (TCP/UDP).
-
-#### `fed-region1.v2.argotunnel.com`
-
-| IPv4                                                                                                                                                             | IPv6                                                                                                                                                                                 | Port | Protocols                |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | ------------------------ |
-| `162.159.234.1` `162.159.234.2` `162.159.234.3` `162.159.234.4` `162.159.234.5` `162.159.234.6` `162.159.234.7` `162.159.234.8` `162.159.234.9` `162.159.234.10` | `2a06:98c1:4d::1` `2a06:98c1:4d::2` `2a06:98c1:4d::3` `2a06:98c1:4d::4` `2a06:98c1:4d::5` `2a06:98c1:4d::6` `2a06:98c1:4d::7` `2a06:98c1:4d::8` `2a06:98c1:4d::9` `2a06:98c1:4d::10` | 7844 | TCP/UDP (`http2`/`quic`) |
-
-#### `fed-region2.v2.argotunnel.com`
-
-| IPv4                                                                                                                                                   | IPv6                                                                                                                                                                                 | Port | Protocols                |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | ------------------------ |
-| `172.64.234.1` `172.64.234.2` `172.64.234.3` `172.64.234.4` `172.64.234.5` `172.64.234.6` `172.64.234.7` `172.64.234.8` `172.64.234.9` `172.64.234.10` | `2606:4700:f6::1` `2606:4700:f6::2` `2606:4700:f6::3` `2606:4700:f6::4` `2606:4700:f6::5` `2606:4700:f6::6` `2606:4700:f6::7` `2606:4700:f6::8` `2606:4700:f6::9` `2606:4700:f6::10` | 7844 | TCP/UDP (`http2`/`quic`) |
+<Render
+  file="tunnel/firewall/fedramp-high-ports"
+  product="cloudflare-one"
+  params={{ tunnelTokenURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/" }}
+/>
 
 ### Optional
 

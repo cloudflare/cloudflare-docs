@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, TabItem, Tabs, TunnelCalculator } from "~/components";
 
-Our connector, `cloudflared`, was designed to be lightweight and flexible enough to be effectively deployed on Raspberry Pi, your laptop or a server in a data center. <Render file="tunnel/tunnel-capacity-intro" product="cloudflare-one" />
+Our connector, `cloudflared`, was designed to be lightweight and flexible enough to be effectively deployed on Raspberry Pi, your laptop or a server in a data center. <Render file="tunnel/availability/tunnel-capacity-intro" product="cloudflare-one" />
 
 ## Recommendations
 
@@ -26,7 +26,7 @@ When `cloudflared` receives a request from a WARP device, it uses the ports on t
 - `cloudflared` should be deployed on a dedicated host machine. This model is typically appropriate, but there may be serverless or clustered workflows where a dedicated host is not possible.
 - The host machine should allocate 50,000 ports to be available for use by the `cloudflared` service. The remaining ports are reserved for system administrative processes.
 
-<Render file="tunnel/port-configuration" product="cloudflare-one" />
+<Render file="tunnel/availability/port-configuration" product="cloudflare-one" />
 
 ### Private DNS
 
@@ -34,7 +34,7 @@ DNS queries utilize [more system resources](#estimated-throughput) compared to T
 
 ### ulimits
 
-<Render file="tunnel/ulimits" product="cloudflare-one" />
+<Render file="tunnel/availability/ulimits" product="cloudflare-one" />
 
 ## Estimated throughput
 

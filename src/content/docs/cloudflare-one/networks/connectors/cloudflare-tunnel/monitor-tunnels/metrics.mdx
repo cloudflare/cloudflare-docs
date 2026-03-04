@@ -10,12 +10,12 @@ head:
 
 import { Render } from "~/components";
 
-<Render file="tunnel/metrics-intro" product="cloudflare-one" />
+<Render file="tunnel/metrics/intro" product="cloudflare-one" />
 
 ## Default metrics server address
 
 <Render
-	file="tunnel/metrics-default-address"
+	file="tunnel/metrics/default-address"
 	product="cloudflare-one"
 	params={{
 		logsURL:
@@ -26,7 +26,7 @@ import { Render } from "~/components";
 ## Configure the metrics server address
 
 <Render
-	file="tunnel/metrics-configure-address"
+	file="tunnel/metrics/configure-address"
 	product="cloudflare-one"
 	params={{
 		updateRunParametersURL:
@@ -39,12 +39,12 @@ import { Render } from "~/components";
 
 ### cloudflared metrics
 
-<Render file="tunnel/metrics-cloudflared" product="cloudflare-one" />
+<Render file="tunnel/metrics/cloudflared" product="cloudflare-one" />
 
 ### Prometheus metrics
 
-<Render file="tunnel/metrics-prometheus" product="cloudflare-one" />
+<Render file="tunnel/metrics/prometheus" product="cloudflare-one" />
 
 ### Go runtime metrics
 
-<Render file="tunnel/metrics-go-runtime" product="cloudflare-one" />
+<Render file="tunnel/metrics/go-runtime" product="cloudflare-one" />
