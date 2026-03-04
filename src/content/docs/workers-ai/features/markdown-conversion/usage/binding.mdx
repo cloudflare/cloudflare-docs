@@ -29,88 +29,7 @@ binding = "AI" # i.e. available in your Worker on env.AI
 
 </WranglerConfig>
 
-## Methods
-
-### async env.AI.toMarkdown()
-
-Takes a document or list of documents in different formats and converts them to Markdown.
-
-#### Parameter
-
-- <code>files</code>: <Type text="MarkdownDocument | MarkdownDocument[]" />- an instance of or an array of
-  `MarkdownDocument`s.
-
-- <code>conversionOptions</code>: <Type text="ConversionOptions" />- options that control how conversion happens. See [Conversion Options](/workers-ai/features/markdown-conversion/conversion-options/) for further details.
-
-#### Return values
-
-- <code>results</code>: <Type text="Promise<ConversionResult | ConversionResult[]>" />- An instance of or an array of
-  `ConversionResult`s.
-
-#### `MarkdownDocument` definition
-
-- `name` <Type text="string" />
-
-  - Name of the document to convert.
-
-- `blob` <Type text="Blob" />
-
-  - A new [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob) object with the document content.
-
-#### `ConversionResult` definition
-
-- `id` <Type text="string" />
-
-  - ID associated to this object.
-
-- `name` <Type text="string" />
-
-  - Name of the converted document. Matches the input name.
-
-- `format` <Type text="'markdown' | 'error'" />
-
-  - The format of this `ConversionResult` object
-
-- `mimetype` <Type text="string" />
-
-  - The detected [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types) of the document.
-
-- `tokens` <Type text="number" />
-
-  - The estimated number of tokens of the converted document. Only present if `format` is equal to `markdown`.
-
-- `data` <Type text="string" />
-
-  - The content of the converted document in Markdown format. Only present if `format` is equal to `markdown`.
-
-- `error` <Type text="string" />
-
-  - The error message explaining why this conversion failed. Only present if `format` is equal to `error`.
-
-### async env.AI.toMarkdown().transform()
-
-This method is similar to `env.AI.toMarkdown` except that it is exposed through a new handle. It takes the same arguments and returns the same values.
-
-### async env.AI.toMarkdown().supported()
-
-Returns a list of file formats that are currently supported for markdown conversion. See [Supported formats](/workers-ai/features/markdown-conversion/supported-formats/) for the full list of file formats that can be converted into Markdown.
-
-#### Return values
-
-- <code>results</code>: <Type text="SupportedFormat[]" />- An array of all formats supported for markdown conversion.
-
-#### `SupportedFormat` definition
-
-- `extension` <Type text="string" />
-
-  - Extension of files in this format.
-
-- `mimeType` <Type text="string" />
-
-  - The [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types) of files of this format
-
-
-## Example
+## Examples
 
 ### Converting files
 
@@ -128,7 +47,6 @@ export default {
 		const cat = await env.R2.get("cat.jpeg");
 
 		return Response.json(
-			// env.AI.toMarkdown().transform(...) would return the same result
 			await env.AI.toMarkdown([
 				{
 					name: "somatosensory.pdf",
@@ -148,29 +66,6 @@ export default {
 };
 ```
 
-This is the result:
-
-```json
-[
-	{
-		"id": "...",
-		"name": "somatosensory.pdf",
-		"mimeType": "application/pdf",
-		"format": "markdown",
-		"tokens": 0,
-		"data": "# somatosensory.pdf\n## Metadata\n- PDFFormatVersion=1.4\n- IsLinearized=false\n- IsAcroFormPresent=false\n- IsXFAPresent=false\n- IsCollectionPresent=false\n- IsSignaturesPresent=false\n- Producer=Prince 20150210 (www.princexml.com)\n- Title=Anatomy of the Somatosensory System\n\n## Contents\n### Page 1\nThis is a sample document to showcase..."
-	},
-	{
-		"id": "...",
-		"name": "cat.jpeg",
-		"mimeType": "image/jpeg",
-		"format": "markdown",
-		"tokens": 0,
-		"data": "The image is a close-up photograph of Grumpy Cat, a cat with a distinctive grumpy expression and piercing blue eyes. The cat has a brown face with a white stripe down its nose, and its ears are pointed upright. Its fur is light brown and darker around the face, with a pink nose and mouth. The cat's eyes are blue and slanted downward, giving it a perpetually grumpy appearance. The background is blurred, but it appears to be a dark brown color. Overall, the image is a humorous and iconic representation of the popular internet meme character, Grumpy Cat. The cat's facial expression and posture convey a sense of displeasure or annoyance, making it a relatable and entertaining image for many people."
-	}
-]
-```
-
 ### Getting supported file formats
 
 ```typescript
@@ -178,25 +73,99 @@ import { Env } from "./env";
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		return Response.json(
-			await env.AI.toMarkdown().supported(),
-		);
+		return Response.json(await env.AI.toMarkdown().supported());
 	},
 };
 ```
 
-results in
+## Methods
 
-```json
-[
-	{
-		"extension": ".pdf",
-		"mimeType": "application/pdf",
-	},
-	{
-		"extension": ".jpeg",
-		"mimeType": "image/jpeg",
-	},
-	...
-]
+### async env.AI.toMarkdown()
+
+Takes a document or list of documents in different formats and converts them to Markdown.
+
+```typescript
+const result = await env.AI.toMarkdown({
+	name: "document.pdf",
+	blob: new Blob([...]),
+});
 ```
+
+#### Parameter
+
+- <code>files</code>: <Type text="MarkdownDocument | MarkdownDocument[]" />- an
+  instance of or an array of `MarkdownDocument`s.
+
+- <code>conversionOptions</code>: <Type text="ConversionOptions" />- options
+  that control how conversion happens. See [Conversion
+  Options](/workers-ai/features/markdown-conversion/conversion-options/) for
+  further details.
+
+#### Return values
+
+- <code>results</code>:
+  <Type text="Promise<ConversionResult | ConversionResult[]>" />- An instance of
+  or an array of `ConversionResult`s.
+
+#### `MarkdownDocument` definition
+
+- `name` <Type text="string" />
+  - Name of the document to convert.
+
+- `blob` <Type text="Blob" />
+  - A new [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob) object with the document content.
+
+#### `ConversionResult` definition
+
+- `id` <Type text="string" />
+  - ID associated to this object.
+
+- `name` <Type text="string" />
+  - Name of the converted document. Matches the input name.
+
+- `format` <Type text="'markdown' | 'error'" />
+  - The format of this `ConversionResult` object
+
+- `mimetype` <Type text="string" />
+  - The detected [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types) of the document.
+
+- `tokens` <Type text="number" />
+  - The estimated number of tokens of the converted document. Only present if `format` is equal to `markdown`.
+
+- `data` <Type text="string" />
+  - The content of the converted document in Markdown format. Only present if `format` is equal to `markdown`.
+
+- `error` <Type text="string" />
+  - The error message explaining why this conversion failed. Only present if `format` is equal to `error`.
+
+### async env.AI.toMarkdown().transform()
+
+This method is similar to `env.AI.toMarkdown` except that it is exposed through a new handle. It takes the same arguments and returns the same values.
+
+```typescript
+const result = await env.AI.toMarkdown().transform({
+	name: "document.pdf",
+	blob: new Blob([...]),
+});
+```
+
+### async env.AI.toMarkdown().supported()
+
+Returns a list of file formats that are currently supported for markdown conversion. See [Supported formats](/workers-ai/features/markdown-conversion/supported-formats/) for the full list of file formats that can be converted into Markdown.
+
+```typescript
+const formats = await env.AI.toMarkdown().supported();
+```
+
+#### Return values
+
+- <code>results</code>: <Type text="SupportedFormat[]" />- An array of all
+  formats supported for markdown conversion.
+
+#### `SupportedFormat` definition
+
+- `extension` <Type text="string" />
+  - Extension of files in this format.
+
+- `mimeType` <Type text="string" />
+  - The [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types) of files of this format
