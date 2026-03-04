@@ -1372,6 +1372,34 @@ entries:
 
       Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
 
+  - name: cf.llm.prompt.token_count
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: An estimated token count for the LLM prompt in the request.
+    description: |-
+      The count is calculated using a general-purpose tokenizer and may not exactly match the count reported by your LLM provider.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
+    example_block: |-
+      # Matches requests where the estimated token count exceeds 4000:
+      (cf.llm.prompt.token_count gt 4000)
+
+  - name: cf.llm.prompt.custom_topic_categories
+    data_type: Map<Number>
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: A map of custom topic labels to relevance scores (1–99) for the LLM prompt in the request.
+    description: |-
+      Lower scores indicate the prompt is more relevant to that topic. Only populated when [custom topics](/waf/detections/ai-security-for-apps/fields/unsafe-topics/#custom-topics) are configured.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
+    example_block: |-
+      # Matches requests where the prompt is highly relevant to the "competitors" custom topic:
+      (cf.llm.prompt.custom_topic_categories["competitors"] lt 30)
+
   - name: cf.worker.upstream_zone
     data_type: String
     categories: [Request]
