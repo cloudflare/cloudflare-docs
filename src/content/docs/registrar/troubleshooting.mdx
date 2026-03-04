@@ -29,13 +29,9 @@ Authorization codes typically expire within 5-14 days depending on your registra
 
 ## Cannot find where to enter your authorization code
 
-Unlike some registrars, Cloudflare does not allow you to submit an authorization code upfront. You must first [add your domain](/fundamentals/manage-domains/add-site/) to Cloudflare, [update your nameservers](/dns/nameservers/update-nameservers/), and wait for the zone to show **Active** status in the Cloudflare dashboard. Only then will the [Transfer Domains](https://dash.cloudflare.com/?to=/:account/registrar/transfer) page allow you to enter your code.
+Unlike some registrars, Cloudflare does not allow you to submit an authorization code upfront. Cloudflare requires your domain to be active on its network first so that your site benefits from Cloudflare performance and security features from the moment the transfer begins. You must first [add your domain](/fundamentals/manage-domains/add-site/) to Cloudflare, [update your nameservers](/dns/nameservers/update-nameservers/), and wait for the zone to show **Active** status in the Cloudflare dashboard. Only then will the [Transfer Domains](https://dash.cloudflare.com/?to=/:account/registrar/transfer) page allow you to enter your code.
 
-If you already have an authorization code, keep in mind that most codes expire within 5-14 days depending on the registrar. If your code expires while you wait for the zone to activate, request a new one from your current registrar before proceeding.
-
-## Zone is not active on Cloudflare
-
-You cannot enter an authorization code until your domain shows **Active** status in the Cloudflare dashboard. If the zone is still **Pending**, verify that you updated nameservers correctly at your current registrar and wait up to 24 hours.
+If your zone is still **Pending**, verify that you updated nameservers correctly at your current registrar and wait up to 24 hours. If you already have an authorization code, keep in mind that most codes expire within 5-14 days depending on the registrar. If your code expires while you wait for the zone to activate, request a new one from your current registrar before proceeding.
 
 ## Transfer rejected
 
