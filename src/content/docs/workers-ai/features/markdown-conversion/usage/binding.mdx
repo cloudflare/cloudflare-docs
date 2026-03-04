@@ -88,7 +88,7 @@ Takes a document or list of documents in different formats and converts them to 
 ```typescript
 const result = await env.AI.toMarkdown({
 	name: "document.pdf",
-	blob: new Blob([...]),
+	blob: new Blob([documentBuffer]),
 });
 ```
 
@@ -150,7 +150,7 @@ This method is similar to `env.AI.toMarkdown` except that it is exposed through 
 ```typescript
 const result = await env.AI.toMarkdown().transform({
 	name: "document.pdf",
-	blob: new Blob([...]),
+	blob: new Blob([documentBuffer]),
 });
 ```
 
