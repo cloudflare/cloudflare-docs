@@ -13,7 +13,7 @@ Connect a remote device to a private network so your users can securely access i
 
 ## How it works
 
-A Cloudflare Tunnel connects your private network to Cloudflare through an outbound-only connection. No open inbound ports or firewall changes are required. The [WARP client](/cloudflare-one/team-and-resources/devices/warp/) on each user device routes traffic through Cloudflare and into the tunnel, so users can reach internal resources from anywhere.
+[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) is a network connector that creates an outbound-only connection between your private network and Cloudflare. No open inbound ports or firewall changes are required. The [WARP client](/cloudflare-one/team-and-resources/devices/warp/) is a device agent that you install on each user's device. It routes traffic through Cloudflare and into the tunnel, so users can reach internal resources from anywhere.
 
 ## Prerequisites
 
@@ -73,11 +73,11 @@ You can manage device enrollment permissions later in **Team & Resources** > **D
 
 ## Step 5: Complete WARP setup
 
-On your device, complete the WARP installation wizard. Then connect WARP to your Zero Trust organization.
+On your device, complete the WARP installation wizard. Then connect WARP to your Zero Trust organization. For comprehensive OS-specific instructions, refer to [Manual deployment](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/).
 
-1. Open the WARP client. On macOS, select the Cloudflare icon in your status bar.
+1. Open the WARP client. On macOS, select the Cloudflare icon in your status bar. On Windows, select the Cloudflare icon in your system tray.
 2. Go to **Preferences** > **Account** > **Login to Cloudflare Zero Trust**.
-3. Enter your team name when prompted. Your team name is the unique identifier for your Zero Trust organization and was set when the organization was created. The dashboard displays your team name on this screen for easy reference.
+3. Enter your team name when prompted. Your team name is the unique identifier for your Zero Trust organization and was set when the organization was created. The dashboard displays your team name on this screen for easy reference. To find or change your team name, go to **Settings** > **Team name** and select **Edit**.
 4. Complete the authentication steps.
 5. The WARP client should show as **Connected**.
 6. Select **Continue** in the dashboard.
@@ -90,10 +90,10 @@ Try reaching a resource on your private network (for example, `http://10.0.1.100
 
 ## Recommended next steps
 
-After verifying your connection, the dashboard suggests these next steps:
+After verifying your connection, consider securing your private network with policies and access controls:
 
-- **Set up Gateway policies**: Add a DNS policy that targets the domain list for your application, then create a network policy that targets its IP list. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
-- **Create an Access application**: Add your private network as a self-hosted Access application for more granular access and identity control. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
+- **Set up Gateway policies**: By default, all enrolled devices can reach your entire private network. Gateway policies let you inspect traffic and control access based on user identity and device posture. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
+- **Create an Access application**: Restrict access to specific applications or hostnames on your private network with identity-based rules. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
 - **Explore more with Zero Trust**: Review your tunnel, policies, and connected devices in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
 
 For in-depth guidance on policy design, device posture checks, and multi-site deployments, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
