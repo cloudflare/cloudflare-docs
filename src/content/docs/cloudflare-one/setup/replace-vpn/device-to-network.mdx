@@ -46,16 +46,18 @@ If you are not sure of your IP range, check your router or network settings. Com
 
 Install the `cloudflared` connector on a device in your private network and run the tunnel. This software creates the secure connection between your network and Cloudflare.
 
-1. Select your device's operating system.
-2. Copy the install command displayed in the dashboard. For macOS, the command looks similar to:
+1. Select your device's operating system and architecture.
+2. Copy the install command and run it on your device. For Windows, open Command Prompt as an administrator. For all other operating systems, use a terminal window.
+
+   For macOS, the command looks similar to:
 
    ```sh
    brew install cloudflared && sudo cloudflared service install <YOUR_TUNNEL_TOKEN>
    ```
 
-   For Windows, open Command Prompt as an administrator. For Linux and macOS, use a terminal window.
+   For Windows and Linux, the dashboard provides a download link and install command for your selected architecture. For more download options, refer to [Downloads](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/).
 
-3. Run the command on your device. After `cloudflared` connects, the dashboard confirms the tunnel is active.
+3. After `cloudflared` connects, the dashboard confirms the tunnel is active.
 4. Select **Continue**.
 
 ## Step 4: Enroll your devices
