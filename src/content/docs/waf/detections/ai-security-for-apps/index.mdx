@@ -22,13 +22,13 @@ import {
 	Render,
 } from "~/components";
 
-AI Security for Apps is a detection that can help protect your services powered by <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) against abuse. This model-agnostic detection currently helps you do the following:
+AI Security for Apps offers a series of detections that can help protect apps and agents powered by <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) against abuse. This model-agnostic detection module helps you do the following:
 
-- Prevent data leaks of personally identifiable information (PII) — for example, phone numbers, email addresses, social security numbers, and credit card numbers.
-- Detect and moderate unsafe or harmful prompts – for example, prompts potentially related to violent crimes.
-- Detect prompts intentionally designed to subvert the intended behavior of the LLM as specified by the developer – for example, <GlossaryTooltip term="prompt injection">prompt injection</GlossaryTooltip> attacks.
+- Prevent personally identifiable information (PII) from leaking — for example, phone numbers, email addresses, social security numbers, and credit card numbers.
+- Detect and moderate unsafe or harmful prompts – for example, prompts potentially related to violent crimes, hate speech, or any unsafe topic you define.
+- Detect prompts intentionally designed to subvert the intended behavior of the LLM – for example, <GlossaryTooltip term="prompt injection">prompt injection</GlossaryTooltip> attacks.
 
-When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model. Currently, the detection only handles requests with a JSON content type (`application/json`).
+When enabled, the detection module runs on incoming traffic, searching for any LLM prompts attempting to exploit the model. Today, the detection only handles requests with a JSON content type (`application/json`).
 
 Cloudflare will populate the existing [AI Security for Apps fields](/waf/detections/ai-security-for-apps/fields/) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
 
@@ -40,7 +40,6 @@ AI Security for Apps capabilities vary by Cloudflare plan:
 | --- | --- | --- | --- |--- |
 | **LLM endpoint discovery** — automatically identify AI-powered endpoints across your web properties | Yes | Yes | Yes | Yes |
 | **AI detection fields** — PII detection, prompt injection scoring, unsafe topic detection, custom topics | No | No | No | Yes |
-| **Rules based on detections** — create custom rules or rate limiting rules using AI Security for Apps fields | No | No | No | Yes |
 
 To enable AI detection fields, contact your account team or [Cloudflare Sales](https://www.cloudflare.com/plans/enterprise/contact/).
 

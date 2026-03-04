@@ -4,7 +4,7 @@ title: Token counting
 tags:
   - AI
 sidebar:
-  order: 8
+  order: 4
 ---
 
 AI Security for Apps provides an estimated token count for each incoming LLM prompt. This lets you monitor prompt sizes, set limits on overly long prompts, and track token usage across your AI endpoints.
@@ -49,4 +49,4 @@ Target large prompts that also show signs of prompt injection — a common patte
 
 - **Estimate only.** The token count is a general approximation. Actual token consumption at your model may differ depending on the model's tokenizer.
 - **Input tokens only.** The token count reflects the incoming prompt. It does not estimate output or response tokens.
-- **JSON structure included.** The token count is calculated on the raw request body, which includes the full JSON payload (keys, formatting, etc.). If your prompt is nested within a larger JSON structure, the count includes overhead from that structure.
+- **Extracted prompt only.** The token count is calculated on the prompt text extracted from the request body. Cloudflare extracts the prompt using a set of known JSON paths for major LLM providers. If we are unable to extract the prompt, then we fallback to the full request body. In these situations, token count will reflect the full request body.

@@ -4,7 +4,7 @@ title: Example mitigation rules
 tags:
   - AI
 sidebar:
-  order: 7
+  order: 8
 ---
 
 ## Return a custom error when a user asks about violent or hateful content
@@ -31,7 +31,7 @@ Your application can check for a non-200 response and display the `message` fiel
 
 ## Block prompt injection attempts from automated sources outside your country
 
-This rule combines AI Security for Apps's [injection score](/waf/detections/ai-security-for-apps/prompt-injection/) with [Bot Management](/bots/get-started/) and the request's country to focus on high-confidence attacks from automated sources. This layered approach significantly reduces false positives compared to using any single signal alone.
+This rule combines AI Security for Apps's [injection score](/waf/detections/ai-security-for-apps/fields/prompt-injection/) with [Bot Management](/bots/get-started/) and the request's country to focus on high-confidence attacks from automated sources. This layered approach significantly reduces false positives compared to using any single signal alone.
 
 - **When incoming requests match**:
 

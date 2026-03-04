@@ -1,13 +1,13 @@
 ---
 pcx_content_type: concept
-title: Log mode vs. production mode
+title: Enabling log mode
 tags:
   - AI
 sidebar:
   order: 9
 ---
 
-import { Steps } from "~/components";
+import { Steps, Tabs, TabItem, DashButton } from "~/components";
 
 AI Security for Apps can operate in two distinct modes. Understanding the trade-offs between them helps you choose the right approach for your stage of deployment.
 
@@ -15,7 +15,7 @@ AI Security for Apps can operate in two distinct modes. Understanding the trade-
 
 | Feature | Production mode | Log mode |
 | --- | --- | --- |
-| **How it works** | You write WAF [custom rules](/waf/custom-rules/) using AI Security for Apps detection fields | You enable the **Cloudflare AI Security for Apps Managed Ruleset** with pre-built rules |
+| **How it works** | You write WAF [custom rules](/waf/custom-rules/) using AI Security for Apps detection fields | You enable the **AI Security Log Mode Ruleset** with pre-built rules |
 | **Prompt logging** | No — only request metadata is logged | Yes — the full request body is logged (encrypted via [payload logging](/waf/managed-rules/payload-logging/)) |
 | **Response logging** | No — use [AI Gateway](/ai-gateway/) if response visibility is required | No — same limitation |
 | **Policy flexibility** | Full — combine injection scores, PII categories, bot scores, custom topics, and more | Limited — three fixed rules (PII detected, unsafe topic detected, prompt injection detected) with no score-based or subcategory logic |
@@ -38,7 +38,7 @@ Example production rule expression:<br/>
 
 ## Log mode
 
-Log mode uses the **Cloudflare AI Security for Apps Managed Ruleset** — a pre-built ruleset that logs the full request body alongside detection results. This mode is designed for **evaluation and tuning** rather than production enforcement.
+Log mode uses the **AI Security Log Mode Ruleset** — a pre-built ruleset that logs the full request body alongside detection results. This mode is designed for **evaluation and tuning** rather than production enforcement.
 
 In log mode:
 
@@ -52,6 +52,48 @@ In log mode:
 - When tuning score thresholds — review logged prompts alongside their scores to determine appropriate thresholds.
 - When validating that [custom topic](/waf/detections/ai-security-for-apps/custom-topics/) definitions are working as expected.
 
+### Enable log mode
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Settings** page under Security.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. Under **AI Security for Apps**, find the **Managed Ruleset** section.
+3. Enable the **AI Security Log Mode Ruleset**.
+4. Set the action to **Log**.
+5. (Recommended) Configure [payload logging](/waf/managed-rules/payload-logging/) so you can decrypt and view the full prompt content alongside detection results.
+
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+Enable the managed ruleset using a `PUT` request:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/rulesets/phases/http_request_firewall_managed/entrypoint" \
+--request PUT \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--json '{
+  "rules": [
+    {
+      "action": "execute",
+      "action_parameters": {
+        "id": "<MANAGED_RULESET_ID>"
+      },
+      "expression": "true"
+    }
+  ]
+}'
+```
+
+To set individual rule actions to **Log**, override the rules within the managed ruleset using `action_parameters.overrides`.
+
+</TabItem> </Tabs>
+
 :::caution
 Because the managed ruleset uses broad, binary detection logic (detected/not detected), it is likely too aggressive for production traffic. Without score-based thresholds, expect a higher rate of false positives if the action is set to Block.
 :::
@@ -60,7 +102,7 @@ Because the managed ruleset uses broad, binary detection logic (detected/not det
 
 <Steps>
 
-1. **Start in log mode.** Enable the AI Security for Apps Managed Ruleset with the action set to **Log**. Configure [payload logging](/waf/managed-rules/payload-logging/) so you can view prompts alongside detection results.
+1. **Start in log mode.** Enable the AI Security Log Mode Ruleset with the action set to **Log**. Configure [payload logging](/waf/managed-rules/payload-logging/) so you can view prompts alongside detection results.
 
 2. **Review detections in Security Analytics.** Filter on events from the managed ruleset. Decrypt payloads and review the prompts that triggered detections. Note the scores to understand where to set thresholds.
 

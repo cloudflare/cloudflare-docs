@@ -4,7 +4,7 @@ title: Unsafe and custom topics
 tags:
   - AI
 sidebar:
-  order: 4
+  order: 2
   label: Unsafe & custom topics
 ---
 
@@ -102,7 +102,7 @@ Scores follow the same convention as other AI Security for Apps scores: **lower 
 
 </TabItem> <TabItem label="API">
 
-Update your custom topics list using a `PUT` request:
+Update your custom topics list using a `PUT` request. This **replaces your entire topic list** — include all topics you want to keep, not just new ones:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom_topics" \
@@ -160,21 +160,21 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom
 
 The quality of custom topic detection depends on how you write your topic strings. The underlying model is a zero-shot classifier — it compares the semantic meaning of the prompt against your topic string.
 
-### Be specific, not vague
+### Be specific, and avoid vague topics
 
 Overly broad topics match too many prompts (high false positives). Overly narrow topics miss relevant prompts (high false negatives).
 
 | Quality | Topic string | Why |
 | --- | --- | --- |
-| Good | `competitor products and services` | Specific enough to capture competitor mentions without matching general product discussion |
-| Good | `cryptocurrency financial advice` | Targets a well-defined intersection of two concepts |
+| Good | `Acme Corp products and pricing` | Names a specific competitor — catches prompts discussing that company's offerings |
+| Good | `securities trading and investment recommendations` | Targets a well-defined intersection of two concepts |
+| Too narrow | `Acme Corp pricing page URL` | So specific that only near-exact mentions will score highly |
 | Too broad | `technology` | Will match almost any technical prompt |
 | Too broad | `bad things` | Semantically vague — the model cannot determine what you consider "bad" |
-| Too narrow | `Acme Corp pricing page` | So specific that only near-exact mentions will score highly |
 
 ### Use descriptive phrases, not single keywords
 
-A topic string like `finance` is less effective than `financial advice and investment recommendations`. More descriptive phrases give the model better signal.
+A topic string like `finance` is less effective than `securities trading and investment recommendations`. More descriptive phrases give the model better signal and help prevent false positives.
 
 ### Avoid semantically overlapping topics
 
@@ -182,7 +182,7 @@ If you define topics that mean nearly the same thing — for example, `financial
 
 ### Think about intent, not just keywords
 
-The model performs semantic classification, not keyword matching. A topic string of `competitor products and services` will detect prompts that discuss competing products even if they do not mention any competitor by name. Conversely, it will not match a prompt that incidentally contains the word "competitor" in an unrelated context.
+The model performs semantic classification, not keyword matching. A topic string of `competitor products and services` will detect prompts that discuss competing products even if they do not mention any competitor by name.
 
 ### Test and iterate
 
