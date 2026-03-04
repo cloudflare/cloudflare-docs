@@ -82,8 +82,8 @@ To verify API behavior, types, or config fields, use the same sources as the `co
 | Check                                                    | Action                                                          |
 | -------------------------------------------------------- | --------------------------------------------------------------- |
 | New page duplicates an existing page in the same product | Flag HIGH — link to the existing page instead                   |
+| Page title very similar to an existing page              | Flag HIGH — likely duplicate, verify before proceeding          |
 | Content rewrites what a partial already covers           | Flag MEDIUM — use `<Render file="..." product="..." />`         |
 | Term defined inline that exists in the glossary          | Flag MEDIUM — use `<GlossaryTooltip term="...">`                |
+| Prerequisite steps that look generic                     | Flag LOW — search `src/content/partials/` for existing partial  |
 | Content explains a feature owned by another product      | Flag LOW — cross-link instead of rewriting                      |
-
-For the full search methodology and decision table, see `references/content-reuse-rules.md`.
