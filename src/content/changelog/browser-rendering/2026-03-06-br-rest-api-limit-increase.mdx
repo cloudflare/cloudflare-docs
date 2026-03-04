@@ -6,13 +6,14 @@ products:
 date: 2026-03-06
 ---
 
-![Browser Rendering REST API rate limit increased from 3 to 10 requests per second](~/assets/images/changelog/browser-rendering/rest-api-limit-increase.png)
+import { Image } from "astro:assets";
+import restApiLimitIncrease from "~/assets/images/changelog/browser-rendering/rest-api-limit-increase.png";
 
-The [Browser Rendering](/browser-rendering/) [REST API](/browser-rendering/rest-api/) rate limit for Workers Paid plans has been increased from 3 requests per second (180/min) to **10 requests per second (600/min)**.
+[Browser Rendering](/browser-rendering/) REST API rate limits for Workers Paid plans have been increased from 3 requests per second (180/min) to **10 requests per second (600/min)**. No action is needed to benefit from the higher limit.
 
-This applies to all REST API endpoints. No action is needed to benefit from the higher limit.
+<Image src={restApiLimitIncrease} alt="Browser Rendering REST API rate limit increased from 3 to 10 requests per second" width="300" height="126" />
 
-If you were previously hitting 429 errors on the REST API, your requests will now go through at the higher rate.
+If you were previously hitting 429 errors on the [REST API](/browser-rendering/rest-api/), your requests will now go through at the higher rate.
 
 Increases to concurrent browser and new browser limits are also coming soon! Stay tuned.
 
