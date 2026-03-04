@@ -284,6 +284,10 @@ Allows you to choose the regions to which connections are established. Currently
 
 When the region is set to `us`, `cloudflared` uses different US-specific hostnames and IPs. Refer to <a href={props.tunnelWithFirewallURL}>Tunnel with firewall</a> for details.
 
+:::note
+For [FedRAMP High](https://www.cloudflare.com/cloudflare-for-government/) environments, the tunnel token determines routing to FedRAMP data centers automatically — no `--region` flag is required. Refer to <a href={props.tunnelWithFirewallURL + "#region-fedramp-high"}>Tunnel with firewall</a> for the FedRAMP-specific endpoints your firewall must allow.
+:::
+
 ### `retries`
 
 | Syntax                                                    | Default | Environment Variable |

@@ -1,16 +1,16 @@
 ---
-title: Streamlined clientless access for private applications
+title: Streamlined clientless browser isolation for private applications
 description: A new setting simplifies clientless access for self-hosted applications with private destinations.
 date: 2026-02-17
 products:
   - access
 ---
 
-A new **Allow clientless access** setting makes it easier to enable access to private self-hosted applications without a device client.
+A new **Allow clientless access** setting makes it easier to connect users without a device client to internal applications, without using public DNS.
 
 ![Allow clientless access setting in the Cloudflare One dashboard](~/assets/images/changelog/access/allow-clientless-access.png)
 
-Previously, to provide clientless access to a private hostname or IP, you had to create a separate [bookmark application](/cloudflare-one/access-controls/applications/bookmarks/) pointing to a prefixed [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) URL (for example, `https://<your-teamname>.cloudflareaccess.com/browser/https://10.0.0.1/`). This bookmark was visible to all users in the App Launcher, regardless of whether they had access to the underlying application.
+Previously, to provide clientless access to a private hostname or IP without a [published application](/cloudflare-one/networks/routes/#add-a-published-application-route), you had to create a separate [bookmark application](/cloudflare-one/access-controls/applications/bookmarks/) pointing to a prefixed [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) URL (for example, `https://<your-teamname>.cloudflareaccess.com/browser/https://10.0.0.1/`). This bookmark was visible to all users in the App Launcher, regardless of whether they had access to the underlying application.
 
 Now, you can manage clientless access directly within your [private self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/). When  **Allow clientless access** is turned on, users who pass your Access application policies will see a tile in their App Launcher pointing to the prefixed URL. Users must have [remote browser permissions](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) to open the link.
 
