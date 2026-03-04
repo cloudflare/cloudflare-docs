@@ -73,6 +73,14 @@ List all Workers that match a tag filter. Use `tag:yes` to include or `tag:no` t
 	parameters={{ tags: "production:yes" }}
 />
 
+You can also use `limit` (integer, max 1000) to control results per page and `cursor` (string) for pagination. When the response contains a non-empty cursor, pass it as the `cursor` parameter to fetch the next page.
+
+<APIRequest
+    method="GET"
+    path="/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts"
+    parameters={{ limit: 100 }}
+/>
+
 ### Delete Workers by tag
 
 Delete all Workers matching a tag filter. Use this to bulk delete Workers when a customer leaves your platform.
