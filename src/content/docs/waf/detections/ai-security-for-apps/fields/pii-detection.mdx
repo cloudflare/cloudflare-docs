@@ -22,7 +22,9 @@ When AI Security for Apps is enabled and a request arrives at a `cf-llm` labeled
 - [`cf.llm.prompt.pii_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/) — `true` if any PII was found.
 - [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) — an array of the specific PII types found.
 
-The detection is based on [Presidio](https://microsoft.github.io/presidio/supported_entities/), a data protection and de-identification SDK. It recognizes the following categories:
+The detection is based on [Presidio](https://microsoft.github.io/presidio/supported_entities/), a data protection and de-identification SDK. Refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) for the full list of recognized categories.
+
+<Details header="Supported PII categories">
 
 | Category | Description |
 | --- | --- |
@@ -66,6 +68,8 @@ The detection is based on [Presidio](https://microsoft.github.io/presidio/suppor
 | `IN_PASSPORT` | Indian passport number |
 | `FI_PERSONAL_IDENTITY_CODE` | Finnish personal identity code |
 
+</Details>
+
 ### Example rules — fuzzy detection
 
 **Block any request containing PII:**
@@ -76,7 +80,7 @@ The detection is based on [Presidio](https://microsoft.github.io/presidio/suppor
   | --- | --- | --- |
   | LLM PII Detected | equals | True |
 
-  If you use the Expression Editor, enter the following expression:<br/>
+  In the dashboard rule builder, select **LLM PII Detected** from the field dropdown. If you use the Expression Editor, enter the following expression:<br/>
   `(cf.llm.prompt.pii_detected)`
 
 - **Action**: _Block_
@@ -89,7 +93,7 @@ The detection is based on [Presidio](https://microsoft.github.io/presidio/suppor
   | --- | --- | --- |
   | LLM PII Categories | is in | `Credit Card` |
 
-  If you use the Expression Editor, enter the following expression:<br/>
+  In the dashboard rule builder, select **LLM PII Categories** from the field dropdown. If you use the Expression Editor, enter the following expression:<br/>
   `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD"}))`
 
 - **Action**: _Block_
@@ -154,7 +158,8 @@ Expression when using the editor:<br/>
 
 ### Considerations for regex rules
 
-- **Body size limit.** The `http.request.body.raw` field inspects up to the first 128 KB of the request body.
+- **Plan requirement.** Regex operators (`matches` and `~`) require a Business or Enterprise plan.
+- **Body size limit.** The `http.request.body.raw` field inspects a limited portion of the request body. The exact limit [varies by plan](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/).
 - **JSON payloads.** The raw body includes the full JSON structure. Your regex should account for the fact that the prompt text is nested inside a JSON string.
 - **Performance.** Complex regex patterns with excessive backtracking can impact rule evaluation time. Keep patterns as specific as possible.
 
