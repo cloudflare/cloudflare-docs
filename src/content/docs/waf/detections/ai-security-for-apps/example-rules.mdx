@@ -23,7 +23,7 @@ A customer support chatbot should not engage with prompts about violent crimes o
 - **Action**: _Block_
 - **With response type**: Custom JSON
 - **Response body**:
-  ```json
+  ```txt
   { "error": "content_policy", "message": "Your message could not be processed because it touches on a topic outside this assistant's scope. Please rephrase your question." }
   ```
 
@@ -41,6 +41,7 @@ This rule combines AI Security for Apps's [injection score](/waf/detections/ai-s
 - **Action**: _Block_
 
 The rule targets requests that are simultaneously:
+
 1. Likely prompt injection attempts (score below 25).
 2. Coming from automated tooling, not a real browser (bot score below 10).
 3. Originating from outside the US — adjust the country code to match where your users are.
@@ -61,8 +62,8 @@ A financial services application legitimately handles credit card and bank accou
 - **Action**: _Block_
 - **With response type**: Custom JSON
 - **Response body**:
-  ```json
+  ```txt
   { "error": "pii_blocked", "message": "Financial account information cannot be submitted from external networks. If you are an internal agent, connect to the corporate network and try again." }
   ```
 
-Internal agents on your corporate network (identified by ASN) can submit financial PII to the AI assistant as part of their workflow, while external users are blocked. You could further refine this by combining with [Access](/cloudflare-one/policies/access/) service tokens or [mTLS](/ssl/client-certificates/) for stronger identity verification.
+Internal agents on your corporate network (identified by ASN) can submit financial PII to the AI assistant as part of their workflow, while external users are blocked. You could further refine this by combining with [Access](/cloudflare-one/access-controls/policies/) service tokens or [mTLS](/ssl/client-certificates/) for stronger identity verification.
