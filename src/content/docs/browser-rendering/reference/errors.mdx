@@ -15,10 +15,10 @@ Service-level errors occur when Browser Rendering cannot fulfill a request due t
 
 | HTTP code | Internal code | Error | Description | Recommended fix |
 | --- | --- | --- | --- | --- |
-| `400` | - | `Bad Request` | The request is malformed or contains invalid parameters. | Refer to the [REST API documentation](/browser-rendering/rest-api/). |
+| `400` | - | `Bad Request` | The request is malformed or contains invalid parameters. | Refer to the [REST API documentation](/browser-rendering/rest-api/) for the specific endpoint you are using and check the required parameters. |
 | `401` | `10000` | `Authentication failed` | Authentication credentials are invalid or missing. | Verify your API token exists and has `Browser Rendering - Edit` permissions. Refer to [REST API prerequisites](/browser-rendering/rest-api/#before-you-begin). |
 | `408` | - | `Request timed out` | The request exceeded the allowed time limit. | Increase timeout settings. Refer to [REST API timeouts](/browser-rendering/reference/timeouts/). |
-| `413` | - | `Error: request entity too large` | The request body exceeds the maximum allowed size (50 MB for PDF endpoint). | Reduce request payload size by hosting assets externally (such as on [R2](/r2/) or [Images](/images/)) and referencing via URLs instead of embedding them inline. Refer to [PDF endpoint request size limits](/browser-rendering/rest-api/pdf-endpoint/). |
+| `413` | - | `Error: request entity too large` | The request body exceeds the maximum allowed size (50 MB for PDF endpoint). | Reduce request payload size by hosting assets externally (such as on [R2](/r2/) or [Images](/images/)) and referencing via URLs instead of embedding them inline. Refer to [PDF endpoint request size limits](/browser-rendering/rest-api/pdf-endpoint/#convert-custom-html-to-pdf). |
 | `422` | - | `Unprocessable Entity` | Browser Rendering could not complete the action because of an issue with the target site. | Refer to [422 Unprocessable Entity](/browser-rendering/faq/#error-422-unprocessable-entity). |
 | `429` | - | `Rate limit exceeded.` | You have exceeded the [rate limit](/browser-rendering/limits/#understanding-rate-limits) for your plan. | Refer to [429 Rate limit exceeded](/browser-rendering/limits/#error-429-rate-limit-exceeded). |
 | `429` | - | `Browser time limit exceeded for today` | Daily browser time limit exceeded (10 minutes a day on the Workers Free plan). | Refer to [429 Browser time limit exceeded](/browser-rendering/limits/#error-429-browser-time-limit-exceeded-for-today). |
@@ -51,10 +51,10 @@ Browser automation errors occur during browser operations when using [Puppeteer]
 
 | Internal code | Error | Description | Recommended fix |
 | --- | --- | --- | --- |
-| `6000` | `Execution context was destroyed`, `Navigating frame was detached` | The execution context was destroyed, most likely because of a navigation or page reload. | Add [wait conditions](/browser-rendering/reference/timeouts/) or retry logic to handle navigation timing. |
+| `6000` | `Execution context was destroyed`, `Navigating frame was detached` | The execution context was destroyed, most likely because of a navigation or page reload. | Add [wait conditions](/browser-rendering/reference/timeouts/) or [retry logic](/workers/observability/errors/) to handle navigation timing. |
 | `6001` | `TargetCloseError` | The target closed due to user or site actions, or excessive memory consumption. | Check if the site calls `window.close()` or consumes excessive memory. Refer to [browser close reasons](/browser-rendering/reference/browser-close-reasons/). |
 | `6002` | `TimeoutError`, `Navigation timeout`, `timed out`, `Waiting failed: .* exceeded` | A timeout was reached during a browser operation. | Increase the relevant [timeout settings](/browser-rendering/reference/timeouts/) for your operation (page load, element wait, or action timeout). |
-| `6003` | `Page.captureScreenshot`, `Page.printToPDF`, `Page is too large`, `Unable to capture screenshot` | Failed to capture screenshot or generate PDF. The page may be too large or in an invalid state. | Reduce page size, simplify content, or adjust [screenshot](/browser-rendering/rest-api/screenshot-endpoint/) or [PDF](/browser-rendering/rest-api/pdf-endpoint/) parameters. |
+| `6003` | `Page.captureScreenshot`, `Page.printToPDF`, `Page is too large`, `Unable to capture screenshot` | Failed to capture screenshot or generate PDF. The page may be too large or in an invalid state. | Reduce page size, simplify content, or adjust [screenshot](/browser-rendering/rest-api/screenshot-endpoint/#advanced-usage) or [PDF](/browser-rendering/rest-api/pdf-endpoint/#advanced-usage) parameters. |
 | - | `Page crashed!` | The browser instance crashed, often due to memory issues or page complexity. | Reduce page complexity, limit heavy JavaScript, or simplify the page to lower memory consumption. |
 
 ## Platform errors
