@@ -13,14 +13,14 @@ AI Security for Apps can operate in two distinct modes. Understanding the trade-
 
 ## Comparison
 
-| Feature | Production mode | Log mode |
-| --- | --- | --- |
-| **How it works** | You write WAF [custom rules](/waf/custom-rules/) using AI Security for Apps detection fields | You enable the **AI Security Log Mode Ruleset** with pre-built rules |
-| **Prompt logging** | No — only request metadata is logged | Yes — the full request body is logged (encrypted via [payload logging](/waf/managed-rules/payload-logging/)) |
-| **Response logging** | No — use [AI Gateway](/ai-gateway/) if response visibility is required | No — same limitation |
-| **Policy flexibility** | Full — combine injection scores, PII categories, bot scores, custom topics, and more | Limited — three fixed rules (PII detected, unsafe topic detected, prompt injection detected) with no score-based or subcategory logic |
-| **Blocking behavior** | Customizable — issue custom responses including custom JSON | Default WAF block page only |
-| **Best for** | Production traffic with granular control | Evaluation and testing — correlate prompts with detection results to tune thresholds |
+| Feature                | Production mode                                                                              | Log mode                                                                                                                              |
+| ---------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **How it works**       | You write WAF [custom rules](/waf/custom-rules/) using AI Security for Apps detection fields | You enable the **AI Security Log Mode Ruleset** with pre-built rules                                                                  |
+| **Prompt logging**     | No — only request metadata is logged                                                         | Yes — the full request body is logged (encrypted via [payload logging](/waf/managed-rules/payload-logging/))                          |
+| **Response logging**   | No — use [AI Gateway](/ai-gateway/) if response visibility is required                       | No — same limitation                                                                                                                  |
+| **Policy flexibility** | Full — combine injection scores, PII categories, bot scores, custom topics, and more         | Limited — three fixed rules (PII detected, unsafe topic detected, prompt injection detected) with no score-based or subcategory logic |
+| **Blocking behavior**  | Customizable — issue custom responses including custom JSON                                  | Default WAF block page only                                                                                                           |
+| **Best for**           | Production traffic with granular control                                                     | Evaluation and testing — correlate prompts with detection results to tune thresholds                                                  |
 
 ## Production mode
 
@@ -50,7 +50,7 @@ In log mode:
 
 - During initial deployment, to understand what AI Security for Apps detects on your traffic before enforcing actions.
 - When tuning score thresholds — review logged prompts alongside their scores to determine appropriate thresholds.
-- When validating that [custom topic](/waf/detections/ai-security-for-apps/custom-topics/) definitions are working as expected.
+- When validating that [custom topic](/waf/detections/ai-security-for-apps/fields/unsafe-topics/#custom-topics) definitions are working as expected.
 
 ### Enable log mode
 
