@@ -25,6 +25,8 @@ await sandbox.createBackup(options: BackupOptions): Promise<DirectoryBackup>
   - `dir` (required) - Absolute path to the directory to back up (for example, `"/workspace"`)
   - `name` (optional) - Human-readable name for the backup. Maximum 256 characters, no control characters.
   - `ttl` (optional) - Time-to-live in seconds until the backup expires. Default: `259200` (3 days). Must be a positive number.
+  - `exclude` (optional) - Array of file or directory patterns to exclude from the backup. Patterns are passed to `mksquashfs -ef` (one pattern per line). Common examples: `node_modules`, `.git`, `dist`, `*.log`. Must not contain control characters.
+  - `excludeDefaults` (optional) - When `true`, adds a default set of exclude patterns for common dependency and build directories: `node_modules`, `.git`, `dist`, `build`, `.next`, `.turbo`, `.cache`. Default: `false`.
 
 **Returns**: `Promise<DirectoryBackup>` containing:
 
@@ -56,7 +58,7 @@ await sandbox.restoreBackup(backup);
 
 **Throws**:
 
-- `InvalidBackupConfigError` - If `dir` is not absolute, contains `..`, the `BACKUP_BUCKET` binding is missing, or the R2 presigned URL credentials are not configured
+- `InvalidBackupConfigError` - If `dir` is not absolute, contains `..`, the `BACKUP_BUCKET` binding is missing, the R2 presigned URL credentials are not configured, `exclude` contains non-string values or strings with control characters, or `excludeDefaults` is not a boolean
 - `BackupCreateError` - If the container fails to create the archive or the upload to R2 fails
 
 :::note[R2 binding and credentials required]
@@ -195,6 +197,8 @@ interface BackupOptions {
 	dir: string;
 	name?: string;
 	ttl?: number;
+	exclude?: string[];
+	excludeDefaults?: boolean;
 }
 ```
 
@@ -203,6 +207,8 @@ interface BackupOptions {
 - `dir` (required) - Absolute path to the directory to back up
 - `name` (optional) - Human-readable backup name. Maximum 256 characters, no control characters.
 - `ttl` (optional) - Time-to-live in seconds. Default: `259200` (3 days). Must be a positive number.
+- `exclude` (optional) - Array of file or directory patterns to exclude from the backup archive. Patterns are passed directly to `mksquashfs` via `-ef` (one pattern per line). Common examples: `node_modules`, `.git`, `dist`, `*.log`. Must not contain control characters.
+- `excludeDefaults` (optional) - When `true`, prepends a default set of exclude patterns for common dependency and build directories: `node_modules`, `.git`, `dist`, `build`, `.next`, `.turbo`, `.cache`. Custom `exclude` patterns are appended after the defaults. Default: `false`.
 
 ### `DirectoryBackup`
 

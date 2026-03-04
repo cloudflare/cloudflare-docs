@@ -96,6 +96,66 @@ console.log(`Backup created: ${backup.id}`);
 
 The SDK creates a compressed squashfs archive of the directory and uploads it directly to your R2 bucket using a presigned URL.
 
+## Exclude files from backups
+
+By default, `createBackup()` includes every file and subdirectory in the target path. Use the `exclude` and `excludeDefaults` options to skip files you do not need in the archive, such as dependency directories and build output. This reduces archive size and speeds up both backup and restore operations.
+
+### Use default excludes
+
+Set `excludeDefaults: true` to skip common dependency and build directories automatically. The default exclude list is: `node_modules`, `.git`, `dist`, `build`, `.next`, `.turbo`, `.cache`.
+
+<TypeScriptExample>
+
+```ts
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+const backup = await sandbox.createBackup({
+	dir: "/workspace",
+	excludeDefaults: true,
+});
+```
+
+</TypeScriptExample>
+
+### Specify custom exclude patterns
+
+Use the `exclude` option to provide your own list of patterns. Patterns are passed to `mksquashfs -ef` (one pattern per line):
+
+<TypeScriptExample>
+
+```ts
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+const backup = await sandbox.createBackup({
+	dir: "/workspace",
+	exclude: ["node_modules", "*.log", ".env"],
+});
+```
+
+</TypeScriptExample>
+
+### Combine defaults with custom patterns
+
+You can use both options together. The default patterns are applied first, followed by your custom patterns:
+
+<TypeScriptExample>
+
+```ts
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+const backup = await sandbox.createBackup({
+	dir: "/workspace",
+	excludeDefaults: true,
+	exclude: ["*.log", "tmp", "coverage"],
+});
+```
+
+</TypeScriptExample>
+
+:::note
+Exclude patterns must not contain control characters. The `exclude` option must be an array of strings, and `excludeDefaults` must be a boolean. Invalid values throw an `InvalidBackupConfigError`.
+:::
+
 ## Restore a backup
 
 Use `restoreBackup()` to restore a directory from a backup:
@@ -415,6 +475,7 @@ This means `mksquashfs` could not read one or more files inside the directory yo
 
 - **Stop writes before restoring** - Stop processes writing to the target directory before calling `restoreBackup()`
 - **Use checkpoints** - Create backups before risky operations like package installations or migrations
+- **Exclude unnecessary files** - Use `excludeDefaults: true` or the `exclude` option to skip dependency and build directories, reducing archive size and speeding up backup and restore operations
 - **Set appropriate TTLs** - Use short TTLs for temporary checkpoints and longer TTLs for persistent snapshots
 - **Store handles externally** - Persist `DirectoryBackup` handles to KV, D1, or Durable Object storage for cross-request access
 - **Configure R2 lifecycle rules** - Set up [object lifecycle rules](/r2/buckets/object-lifecycles/) to automatically delete expired backups from R2, since TTL is only enforced at restore time
