@@ -1,0 +1,83 @@
+---
+title: "R2 SQL now supports 163 scalar functions, expressions, and complex types"
+description: Query Iceberg tables with CASE expressions, column aliases, 163 scalar functions, statistical aggregates, and full struct/array/map support.
+products:
+  - r2-sql
+date: 2026-03-04
+---
+
+R2 SQL now supports a significantly expanded SQL grammar. You can write expressive analytical queries using CASE expressions, column aliases, arithmetic in WHERE and SELECT, 163 scalar functions across 8 categories, and full access to struct, array, and map column types.
+
+## What is new
+
+- **Column aliases** — `SELECT col AS alias` now works in all clauses
+- **CASE expressions** — conditional logic directly in SQL (searched and simple forms)
+- **163 scalar functions** — math, string, datetime, regex, crypto, encoding, and type inspection
+- **33 aggregate functions** — basic (COUNT, SUM, AVG, MIN, MAX), approximate (percentiles, median, distinct, top-k), statistical (variance, stddev, correlation, regression), bitwise, boolean, and positional
+- **Complex types** ��� query struct fields with bracket notation, use 46 array functions, and extract map keys/values
+- **Full expression support** — arithmetic, string concatenation, type casting (CAST, TRY_CAST, `::` shorthand), and EXTRACT in SELECT, WHERE, GROUP BY, HAVING, and ORDER BY
+
+## Examples
+
+### Classify and analyze with CASE, statistical functions, and approximate aggregates
+
+Combine CASE expressions with `stddev`, `approx_percentile_cont`, and `approx_distinct` to build tiered analytics in a single query:
+
+```sql
+SELECT source,
+    CASE
+        WHEN AVG(price) > 30 THEN 'premium'
+        WHEN AVG(price) > 10 THEN 'mid-tier'
+        ELSE 'budget'
+    END AS tier,
+    COUNT(*) AS total_items,
+    round(AVG(price), 2) AS avg_price,
+    round(stddev(price), 2) AS price_volatility,
+    approx_percentile_cont(price, 0.95) AS p95_price,
+    approx_distinct(product_id) AS unique_products
+FROM my_namespace.sales_data
+WHERE price IS NOT NULL AND price > 0
+GROUP BY source
+ORDER BY avg_price DESC
+```
+
+### Query struct, array, and map columns
+
+Access nested struct fields with bracket notation, search arrays with `array_has`, classify rows with CASE, and join array elements into strings with `array_to_string`:
+
+```sql
+SELECT product_name,
+    array_length(tags) AS tag_count,
+    array_to_string(tags, ', ') AS tag_list,
+    pricing['price'] AS price,
+    CASE
+        WHEN array_has(tags, 'Action') AND array_has(tags, 'RPG') THEN 'Action RPG'
+        WHEN array_has(tags, 'Strategy') THEN 'Strategy'
+        ELSE 'Other'
+    END AS category
+FROM my_namespace.products
+WHERE array_length(tags) >= 4
+    AND pricing['price'] > 20
+ORDER BY pricing['price'] DESC
+LIMIT 10
+```
+
+### Time-series analysis with date_trunc, correlation, and approximate distinct
+
+Bin timestamps into months, compute the Pearson correlation between two columns, and count unique values — all in one pass:
+
+```sql
+SELECT date_trunc('month', sale_timestamp) AS month,
+    COUNT(*) AS transactions,
+    round(AVG(total_amount), 2) AS avg_amount,
+    round(corr(CAST(quantity AS DOUBLE), total_amount), 4) AS qty_amount_corr,
+    approx_distinct(customer_id) AS unique_customers
+FROM my_namespace.sales_data
+WHERE sale_timestamp BETWEEN '2025-01-01T00:00:00Z' AND '2025-12-31T23:59:59Z'
+    AND total_amount IS NOT NULL
+GROUP BY date_trunc('month', sale_timestamp)
+HAVING COUNT(*) > 100
+ORDER BY month
+```
+
+For the full function reference and syntax details, refer to the [SQL reference](/r2-sql/sql-reference/). For limitations and best practices, refer to [Limitations and best practices](/r2-sql/reference/limitations-best-practices/).
