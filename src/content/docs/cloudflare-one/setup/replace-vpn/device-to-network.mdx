@@ -9,36 +9,31 @@ products:
   - cloudflare-one
 ---
 
-import { Details } from "~/components";
-
 Connect a remote device to a private network so your users can securely access internal applications and services from anywhere. This guide follows the same steps as the **Get Started** onboarding wizard in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
-
-**Steps:** 6 | **Estimated time:** 10 minutes
 
 ## How it works
 
-You will deploy a network connector (Cloudflare Tunnel) and the WARP device agent to establish a Zero Trust private network configuration that your devices can connect to from anywhere.
+A Cloudflare Tunnel connects your private network to Cloudflare through an outbound-only connection. The WARP client on each user device routes traffic through Cloudflare and into the tunnel, so users can reach internal resources from anywhere.
 
-```txt
-Device agent (WARP) → Cloudflare → cloudflared → Private network (for example, 192.168.0.220)
-```
+## Prerequisites
 
-**You will need:**
-
-- A Linux, Windows, or macOS device currently connected to your private network. This is where you will install Tunnel software.
-- A Linux, Windows, or macOS device you or another user can reach your private network from. This is where you will install WARP.
+- A Linux, Windows, or macOS device on your private network to run the tunnel.
+- A Linux, Windows, or macOS device to install the WARP client on.
 
 ## Step 1: Assign a Tunnel
 
 Cloudflare Tunnel establishes an outbound connection between your resources and Cloudflare. This is how new devices can reach your private network. You can install Tunnel on any Windows, Mac, or Linux device currently in your private network.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), select **Get Started** and then select **Replace my client-based or site-to-site VPN** > **Device to network**.
-2. On the **Assign a Tunnel** screen, use the dropdown to choose an existing tunnel or create a new one.
-3. Select **Continue**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), select the **Get Started** tab.
+2. For **Replace my client-based or site-to-site VPN**, select **Get started**.
+3. For **Device to network**, select **Continue**.
+4. On the **Connect a remote device to a private network** screen, select **Continue**.
+5. On the **Assign a Tunnel** screen, use the dropdown to choose an existing tunnel or create a new one.
+6. Select **Continue**.
 
 ## Step 2: Set your Tunnel's IP range
 
-Add the IP range of your private network to the tunnel. Your Tunnel will accept traffic to this range from devices enrolled in your Zero Trust organization.
+Add the IP range of your private network to the tunnel. Your tunnel accepts traffic to this range from devices enrolled in your Zero Trust organization.
 
 1. Enter your IP range (for example, `10.0.1.0/24`).
 2. Select **Continue**.
@@ -48,15 +43,15 @@ Add the IP range of your private network to the tunnel. Your Tunnel will accept 
 Install `cloudflared` on a device in your private network and run the tunnel.
 
 1. Select your device's operating system.
-2. Copy the install command displayed in the dashboard. For macOS, the command will look similar to:
+2. Copy the install command displayed in the dashboard. For macOS, the command looks similar to:
 
    ```sh
-   brew install cloudflared && sudo cloudflared service install eyJhIjoiZj...
+   brew install cloudflared && sudo cloudflared service install <YOUR_TUNNEL_TOKEN>
    ```
 
    For Windows, open Command Prompt as an administrator. For Linux and macOS, use a terminal window.
 
-3. Run the command on your device. After `cloudflared` connects, the dashboard will confirm the tunnel is active.
+3. Run the command on your device. After `cloudflared` connects, the dashboard confirms the tunnel is active.
 4. Select **Continue**.
 
 ## Step 4: Enroll your devices
@@ -85,7 +80,7 @@ On your device, complete the WARP installation wizard. Then connect WARP to your
 
 ## Step 6: Verify your connection
 
-The dashboard will confirm that you are securely connected. You have established remote access between your device and your private network resources.
+The dashboard confirms that you are securely connected. You now have remote access between your device and your private network resources.
 
 Try reaching a resource on your private network (for example, `http://10.0.1.100` or `ssh 10.0.1.50`) to verify connectivity.
 
@@ -93,26 +88,15 @@ Try reaching a resource on your private network (for example, `http://10.0.1.100
 
 After verifying your connection, the dashboard suggests these next steps:
 
-- **Set up Gateway policies** — Add a DNS policy that targets the domain list for your application, then create a network policy that targets its IP list. Go to **Traffic policies** > **Gateway** in the dashboard.
-- **Create an Access application** — Add your private network as a self-hosted Access application for more granular access and identity control.
-- **Explore more with Zero Trust** — View your created application, policy, and Tunnel. Then configure and manage more with Zero Trust.
+- **Set up Gateway policies** — Add a DNS policy that targets the domain list for your application, then create a network policy that targets its IP list. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
+- **Create an Access application** — Add your private network as a self-hosted Access application for more granular access and identity control. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
+- **Explore more with Zero Trust** — Review your tunnel, policies, and connected devices in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
 
 For in-depth guidance on policy design, device posture checks, and multi-site deployments, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
 
 ## Troubleshoot
 
-<Details header="WARP client does not connect">
+If you have issues connecting, refer to these resources:
 
-- Verify that the team name entered in the WARP client matches your Zero Trust organization's team name.
-- Check that the user's email matches the device enrollment policy.
-- If you use a third-party firewall or TLS inspection tool, make sure it does not block traffic to Cloudflare's WARP endpoints (`162.159.137.105`, `162.159.138.105`).
-
-</Details>
-
-<Details header="Cannot reach private network resources">
-
-- Confirm that the tunnel is running and healthy in **Networks** > **Connectors** > **Cloudflare Tunnels**.
-- Verify that the IP range configured on the tunnel matches the resources you are trying to reach.
-- Check that your device's local IP address does not overlap with the tunnel's IP range.
-
-</Details>
+- [Troubleshoot WARP](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/) — resolve WARP client connection and enrollment issues.
+- [Troubleshoot tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/) — diagnose tunnel connectivity and routing problems.
