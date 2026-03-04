@@ -77,9 +77,15 @@ Refer to [Block AI bots](/bots/additional-configurations/block-ai-bots/).
 You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/security-analytics/).
 :::
 
-### Deploy default templates
+### Deploy custom rule templates
 
-Cloudflare has [default templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) for definite bots, which have a [bot score](/bots/concepts/bot-score/) of 1, and likely bots which have a bot score of 2 to 29. In our templates, Cloudflare recommends to allow verified bots such as Google SEO Crawler and access to cached static resources.
+The **Security Settings** toggles you configured above already provide baseline protection against definitely automated and likely automated traffic. 
+
+If you need additional control, such as path-specific protection, custom score thresholds, or combining bot score with other fields, Cloudflare provides [rule templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) to get started.
+
+:::note
+Custom rules created from these templates execute before the built-in managed rules configured in **Security Settings**. For more details on this execution order, refer to [WAF custom rules](/bots/get-started/super-bot-fight-mode/#waf-custom-rules) in the Super Bot Fight Mode documentation.
+:::
 
 - [Definite Bots template](https://dash.cloudflare.com/?to=/:account/:zone:/security/security-rules/custom-rules/create?template=Definitely%20Bots): Targets malicious bot traffic while ignoring verified bots and routes delivering static content.
 
