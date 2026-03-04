@@ -1,0 +1,98 @@
+---
+title: Errors
+pcx_content_type: reference
+sidebar:
+  order: 9
+---
+
+This page provides a reference for error codes you may encounter when using Cloudflare Images. When image operations fail, the response body contains an error message explaining the reason, as well as the `Cf-Resized` header containing `err=code`.
+
+## Client configuration errors
+
+| Error code | HTTP status | Description |
+| --- | --- | --- |
+| `9401` | 400 | Missing or invalid resizing parameters: test options |
+| `9401` | 400 | Could not resize the image: test settings error |
+| `9401` | 403 | Transformation origin is not in allowed origins list |
+| `9424` | 400 | Missing or invalid HTTP request parameters |
+| `9432` | 400 | Bad request: bad request |
+
+## Origin and network errors
+
+| Error code | HTTP status | Description |
+| --- | --- | --- |
+| `9402` | 502 | Could not fetch the image |
+| `9402` | 413 | Could not fetch the image — file too large |
+| `9404` | 404 | Could not fetch the image — the server returned HTTP error 404 Not Found |
+| `9406` | 403 | Could not fetch the image - invalid URL |
+| `9407` | 523 | Could not fetch the image - invalid URL: resolver error |
+| `9408` | 408 | Could not fetch the image — the server returned HTTP error 408 Request Timeout |
+| `9419` | 403 | Requested image URL has invalid suffix or is not allowed |
+| `9420` | 415 | Original image has unsupported format |
+| `9420` | 400 | Redirection to an invalid URL |
+| `9421` | 400 | Too many redirects |
+| `9504` | 522 | Could not fetch the image - request timed out |
+| `9504` | 524 | Could not fetch the image - download timed out |
+| `9505` | 502 | Could not fetch the image |
+| `9509` | 502 | Could not fetch the image — the server returned HTTP error 502 Bad Gateway |
+| `9510` | 523 | Could not fetch the image |
+| `9518` | 502 | Internal connection error |
+| `9519` | 502 | Could not fetch the image — the server returned HTTP error 400 Bad Request |
+
+## Processing errors
+
+| Error code | HTTP status | Description |
+| --- | --- | --- |
+| `9403` | 508 | Requested resized version of an already-resized image |
+| `9412` | 415 | Conversion between SVG and raster formats is not supported |
+| `9412` | 415 | Could not resize the image: The HEIC format is not supported, and there are no plans to support it. You must convert HEIC files to one of the supported formats (e.g. JPEG or PNG) before uploading them. |
+| `9412` | 415 | Could not resize the image: The TIFF format is not supported. You must convert TIFF files to one of the supported formats (e.g. JPEG or PNG) before uploading them. |
+| `9412` | 415 | Could not resize the image: AVIF input is not enabled for this account. |
+| `9412` | 415 | Could not resize the image: The requested file is not an image. Please make sure the server always serves an image (e.g. not an error page, or a login page) |
+| `9413` | 403 | Could not resize the image: The image enlarged too much: 1000×10000, but maximum dimension allowed is 5000 |
+| `9413` | 403 | Could not resize the image: The image has width or height of size 0 |
+| `9413` | 403 | Could not resize the image: The animation is too large. Animation resolution is 100×100, and at this size the maximum number of animation frames allowed is 0 (total area of all frames together must be less than 500000). |
+| `9413` | 403 | Could not resize the image: Output format rejected |
+| `9416` | 422 | Could not resize the image: error occurred while downloading the image |
+| `9520` | 415 | Original image has unsupported format |
+
+## Quota and billing errors
+
+| Error code | HTTP status | Description |
+| --- | --- | --- |
+| `9422` | 429 | Free unique transformations by account has been exhausted |
+| `9423` | 403 | Free transformation is rejected |
+| `9425` | 403 | Image access denied: test access denied |
+| `9426` | 403 | The URL of imagedelivery.net has invalid text part |
+| `9427` | 403 | Image access denied with incorrect account id |
+| `9429` | 403 | Flexible variants are not enabled for the account |
+| `9430` | 403 | Images Binding access denied: binding denied |
+| `9431` | 404 | Not found |
+| `9432` | 400 | Bad request: bad request |
+
+## Internal errors
+
+| Error code | HTTP status | Description |
+| --- | --- | --- |
+| `9516` | 500 | Could not resize the image: error during encoding: encode error |
+| `9516` | 422 | Could not resize the image: error during decoding: decode error |
+| `9522` | 503 | Could not resize the image: internal error while processing the image |
+| `9522` | 503 | The service in this colo is too busy |
+| `9522` | 504 | The service in this colo was too busy |
+| `9522` | 503 | Error happened during redirecting resizing request via router |
+| `9523` | 422 | Could not resize the image: error occurred while downloading the image |
+| `9523` | 500 | Could not resize the image: internal error while processing the image |
+| `9523` | 500 | Internal error. This isn't supposed to happen, please reach out to customer support with error id: a2f76fe7-f70e-4e6f-a7df-cf2108c3e89c |
+| `9523` | 500 | Internal error. This isn't supposed to happen, please reach out to customer support with error id: 61a8d760-976a-4a0f-a914-b1cd5dc0868b |
+| `9527` | 503 | Could not resize the image: internal error while processing the image |
+| `9527` | 503 | The service in this colo is busy and can't handle large images right now |
+| `9528` | 502 | Could not resize the image: operation aborted |
+| `9528` | 502 | Request aborted |
+| `9529` | 504 | The image is too large to process or the service is too busy |
+
+---
+
+## Related resources
+
+- [Troubleshooting](/images/reference/troubleshooting/)
+- [Supported formats and limitations](/images/transform-images/)
