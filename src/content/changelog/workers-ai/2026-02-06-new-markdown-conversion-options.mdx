@@ -1,0 +1,31 @@
+---
+title: 'Workers AI Markdown Conversion: new conversion options & embedded content conversion'
+description: You can now control parts of the markdown conversion process, allowing you to specify if embedded content should be converted as well
+date: 2026-02-06
+---
+
+Users can now control more aspects of the conversion process when using the Workers AI [Markdown Conversion](/workers-ai/features/markdown-conversion/) service.
+
+By passing a `conversionOptions` object in your request, you can control how conversion is handled for different types of files.
+
+You can use the [`env.AI`](/workers-ai/features/markdown-conversion/usage/binding/) binding:
+
+```typescript
+// env.AI.toMarkdown().transform(..., { ... }) works the same
+await env.AI.toMarkdown(..., {
+    conversionOptions: { ... }
+});
+```
+
+Or call the REST API:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown \
+  -H 'Authorization: Bearer {API_TOKEN}' \
+  -F 'files=@index.html' \
+  -F 'conversionOptions={ ... }'
+```
+
+to control how conversion happens.
+
+Learn more about the new conversion options in the [Markdown Conversion documentation](/workers-ai/features/markdown-conversion/).

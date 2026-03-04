@@ -1,0 +1,83 @@
+---
+title: Conversion Options
+pcx_content_type: how-to
+sidebar:
+  order: 5
+---
+
+Usually, only a file's **text** content will be converted. For some formats, this might be just the text, while for others some semantic information (like headings and lists) can be retrieved and output as part of the final conversion.
+
+To further extend the capabilities of the conversion process, several options can be passed to the service to control how to convert files.
+
+## Available options
+
+### Images
+
+```typescript
+{
+  image?: {
+    descriptionLanguage?: 'en' | 'it' | 'de' | 'es' | 'fr' | 'pt';
+  }
+}
+```
+
+- `descriptionLanguage`: controls the language to which images will get converted to.
+
+:::caution
+
+This option works on a _best-effort_ basis: it is not guaranteed that the resulting text will be in the desired language.
+
+:::
+
+### HTML
+
+```typescript
+{
+  html?: {
+    hostname?: string;
+    cssSelector?: string;
+  }
+}
+```
+- `hostname`: string to use as a host when resolving relative links inside the HTML.
+
+- `cssSelector`: string containing a CSS selector pattern to pick specific elements from your HTML. See [how HTML is processed](/workers-ai/features/markdown-conversion/how-it-works/#html) for more details.
+
+### PDF
+
+```typescript
+{
+  pdf?: {
+    metadata?: boolean;
+  }
+}
+```
+
+- `metadata`: Previously, all converted PDF files always included metadata information when converted. This options allows you to opt-out of this behavior.
+## Examples
+
+### Binding
+
+To configure custom options, pass a `conversionOptions` object inside the second argument of the binding call, like this:
+
+```typescript
+await env.AI.toMarkdown(..., {
+  conversionOptions: { 
+    html: { ... },
+    pdf: { ... },
+    ...
+   }
+})
+```
+
+### REST API
+
+Since the REST API uses file uploads, the request's `Content-Type` will be `multipart/form-data`. As such, include a new form field with your stringified object as a value:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown \
+  -X POST \
+  -H 'Authorization: Bearer {API_TOKEN}' \
+  ...
+  -F 'conversionOptions={ "html": { ... }, ... }'
+```
