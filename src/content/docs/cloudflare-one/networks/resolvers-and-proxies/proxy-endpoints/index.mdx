@@ -340,18 +340,7 @@ To test your configuration, create an [HTTP policy](/cloudflare-one/traffic-poli
 
 You can now use the Proxy Endpoint selector in [network](/cloudflare-one/traffic-policies/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/traffic-policies/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
 
-## 5. View logs and analytics
-
-Proxy endpoint traffic is logged in the following locations:
-
-- **Authentication logs**: When users authenticate through an authorization endpoint, login events appear in your [Access logs](/cloudflare-one/insights/logs/).
-- **Traffic logs**: HTTP and network traffic proxied through the endpoint appears in [Gateway logs](/cloudflare-one/insights/logs/gateway-logs/), with the specific proxy endpoint indicated.
-
-### Billing
-
-Each user who authenticates through an authorization proxy endpoint occupies a [Gateway seat](/cloudflare-one/team-and-resources/users/seat-management/), the same as a user connected through the WARP client.
-
-## 6. (Optional) Configure firewall
+## 5. (Optional) Configure firewall
 
 You may need to configure your organization's firewall to allow your users to connect to a proxy endpoint. Depending on your firewall, you will need to create a rule using either your proxy endpoint's domain or IP addresses.
 
@@ -485,6 +474,17 @@ You can modify proxy endpoint settings after creation.
 3. Select the three dots, then select **Configure**.
 4. Update the endpoint name or modify the allowed source IP addresses.
 5. Select **Save**.
+
+## Logs
+
+Proxy endpoint traffic is logged in the following locations:
+
+- **Authentication logs**: When users authenticate through an authorization endpoint, login events appear in your [Access logs](/cloudflare-one/insights/logs/).
+- **Traffic logs**: HTTP and network traffic proxied through the endpoint appears in [Gateway logs](/cloudflare-one/insights/logs/gateway-logs/), with the specific proxy endpoint indicated.
+
+## Billing
+
+Each user who authenticates through an authorization proxy endpoint occupies a [Gateway seat](/cloudflare-one/team-and-resources/users/seat-management/), the same as a user connected through the WARP client.
 
 ## Limitations
 
