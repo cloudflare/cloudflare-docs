@@ -66,17 +66,7 @@ Refer to the [Disable DNSSEC](/registrar/get-started/transfer-domain-to-cloudfla
 
 Most domains can be transferred with WHOIS privacy enabled. If you experience issues with your transfer, check with your current registrar to confirm WHOIS privacy is not blocking it.
 
-### 5. Request an authorization code
-
-Your new registrar needs to confirm with your old registrar that the transfer flow is authorized. To do that, your old registrar will provide an authorization code to you.
-
-:::note
-This code is often referred to as an authorization code, auth code, authinfo code, or transfer code. You will need to input that code to complete your transfer to Cloudflare. Cloudflare will use it to confirm the transfer is authentic.
-:::
-
-You do not need the authorization code right away. Cloudflare requires your domain to be added and active on Cloudflare before you can enter the code (see step 6). You will not enter it until [step 8](/registrar/get-started/transfer-domain-to-cloudflare/#8-input-your-authorization-code). Some authorization codes expire within 5-14 days depending on the registrar, so you may want to wait until your zone is active before requesting one.
-
-### 6. Add your domain to Cloudflare and activate the zone
+### 5. Add your domain to Cloudflare and activate the zone
 
 Unlike most registrars, Cloudflare requires your domain to be added and active on Cloudflare **before** you can enter your authorization code and begin the transfer. This ensures your site is protected by Cloudflare performance and security features from the moment the transfer begins. You cannot skip this step.
 
@@ -91,7 +81,7 @@ You cannot enter your authorization code or proceed with the transfer until your
 
 If your zone has been pending for more than 24 hours, verify that you updated the nameservers correctly at your current registrar.
 
-### 7. Initiate your transfer to Cloudflare
+### 6. Initiate your transfer to Cloudflare
 
 From your Cloudflare Account Home, go to the **Transfer Domains** page.
 
@@ -134,7 +124,17 @@ Sites can be unavailable to transfer for a few reasons, including:
 
 <Render file="email-verification" product="registrar" />
 
-### 8. Input your authorization code
+### 7. Request an authorization code from your current registrar
+
+Go back to your current registrar and request an authorization code for your domain. This code is also referred to as an auth code, authinfo code, or transfer code. Cloudflare will use it to confirm the transfer is authentic.
+
+:::note
+Unlike other registrars, Cloudflare does not accept your authorization code upfront. You can only enter it after your domain is active on Cloudflare (step 5) and you have initiated the transfer (step 6). Request the code now so you have it ready for the next step.
+:::
+
+Some authorization codes expire within 5-14 days depending on the registrar. Some registrars issue a new code each time one is requested, which invalidates the previous code.
+
+### 8. Input your authorization code in the Cloudflare dashboard
 
 In the next page, input the authorization code for each domain you are transferring. You also need to unlock each domain so that Cloudflare can process your request. For more information, refer to the instructions provided by your [current registrar on how to transfer your domain](/registrar/get-started/transfer-domain-to-cloudflare/#set-up-a-domain-transfer).
 
@@ -171,7 +171,7 @@ The workaround is to transfer your domain to another registrar first, wait 60 da
 1. **Get your authorization code from the website builder.** Each platform has a different process. Refer to your platform documentation for instructions on transferring your domain away.
 2. **Transfer to another registrar** that allows nameserver changes. Enter the authorization code there and complete the transfer. This usually takes 3-5 days.
 3. **Update nameservers to Cloudflare.** Once the domain is at the new registrar, update the nameservers to Cloudflare. You can use all of Cloudflare features (CDN, DNS, security) immediately after this step.
-4. **Transfer to Cloudflare Registrar after 60 days.** ICANN requires a 60-day wait between transfers. After that period, initiate the transfer to Cloudflare from the [Transfer Domains](/registrar/get-started/transfer-domain-to-cloudflare/#7-initiate-your-transfer-to-cloudflare) page.
+4. **Transfer to Cloudflare Registrar after 60 days.** ICANN requires a 60-day wait between transfers. After that period, initiate the transfer to Cloudflare from the [Transfer Domains](/registrar/get-started/transfer-domain-to-cloudflare/#6-initiate-your-transfer-to-cloudflare) page.
 
 :::note
 Each transfer adds one year to your domain registration. You will pay the other registrar for the first transfer, and Cloudflare for the second. These are not redundant charges — each extends your registration.
