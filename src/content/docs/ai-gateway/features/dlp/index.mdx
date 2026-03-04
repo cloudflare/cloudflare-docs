@@ -64,7 +64,7 @@ AI Gateway DLP uses the same [detection profiles](/cloudflare-one/data-loss-prev
 
 Key differences from Cloudflare One Gateway DLP:
 
-- **No Gateway proxy or TLS decryption required** - AI Gateway inspects traffic directly as an AI proxy, so you do not need to set up [Gateway HTTP filtering](/cloudflare-one/traffic-policies/initial-setup/http/) or [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+- **No Gateway proxy or TLS decryption required** - AI Gateway inspects traffic directly as an AI proxy, so you do not need to set up [Gateway HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/) or [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
 - **Separate policy management** - DLP policies for AI Gateway are configured per gateway in the AI Gateway dashboard, not in Cloudflare One traffic policies.
 - **Separate logs** - DLP events for AI Gateway appear in [AI Gateway logs](/ai-gateway/observability/logging/), not in Cloudflare One HTTP request logs.
 - **Shared profiles** - DLP detection profiles (predefined and custom) are shared across both products. Changes to a profile apply everywhere it is used.
