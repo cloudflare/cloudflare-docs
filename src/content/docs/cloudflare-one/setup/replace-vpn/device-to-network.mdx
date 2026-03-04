@@ -44,7 +44,7 @@ If you are not sure of your IP range, check your router or network settings. Com
 
 ## Step 3: Deploy your Tunnel
 
-Install the `cloudflared` connector on a device in your private network and run the tunnel. This software creates the secure connection between your network and Cloudflare.
+Install the `cloudflared` connector on a device in your private network and run the tunnel. This service creates the secure connection between your network and Cloudflare.
 
 1. Select your device's operating system and architecture.
 2. Copy the install command and run it on your device. For Windows, open Command Prompt as an administrator. For all other operating systems, use a terminal window.
@@ -79,7 +79,12 @@ On your device, complete the WARP installation wizard. Then connect WARP to your
 
 1. Open the WARP client. On macOS, select the Cloudflare icon in your status bar. On Windows, select the Cloudflare icon in your system tray.
 2. Go to **Preferences** > **Account** > **Login to Cloudflare Zero Trust**.
-3. Enter your team name when prompted. Your team name is the unique identifier for your Zero Trust organization and was set when the organization was created. The dashboard displays your team name on this screen for easy reference. To find or change your team name, go to **Settings** > **Team name** and select **Edit**.
+3. Enter your team name when prompted. Your team name is the unique identifier for your Zero Trust organization and was set when the organization was created. The dashboard displays your team name on this screen for easy reference.
+
+   :::note
+   To find or change your team name, go to **Settings** > **Team name** and select **Edit**.
+   :::
+
 4. Complete the authentication steps.
 5. The WARP client should show as **Connected**.
 6. Select **Continue** in the dashboard.
@@ -88,7 +93,7 @@ On your device, complete the WARP installation wizard. Then connect WARP to your
 
 The dashboard confirms that you are securely connected. You now have remote access between your device and your private network resources.
 
-Try reaching a resource on your private network (for example, `http://10.0.1.100` or `ssh 10.0.1.50`) to verify connectivity.
+To verify connectivity, try reaching a resource on your private network (for example, `http://10.0.1.100` or `ssh 10.0.1.50`).
 
 ## Recommended next steps
 
