@@ -1,8 +1,10 @@
 ---
 title: New conversion options for Markdown Conversion
 description: Control how images, HTML, and PDFs are processed when converting to Markdown
-date: 2026-03-05
+date: 2026-03-04
 ---
+
+import { Badge, MetaInfo, Render, TypeScriptExample } from "~/components";
 
 You can now customize how the [Markdown Conversion](/workers-ai/features/markdown-conversion/) service processes different file types by passing a `conversionOptions` object.
 
@@ -13,6 +15,9 @@ Available options:
 - **PDF**: Exclude metadata from the output
 
 Use the [`env.AI`](/workers-ai/features/markdown-conversion/usage/binding/) binding:
+
+<TypeScriptExample>
+
 
 ```typescript
 await env.AI.toMarkdown(
@@ -25,6 +30,8 @@ await env.AI.toMarkdown(
 	},
 );
 ```
+
+</TypeScriptExample>
 
 Or call the REST API:
 

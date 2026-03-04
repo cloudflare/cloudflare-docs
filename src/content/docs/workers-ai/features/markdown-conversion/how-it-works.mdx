@@ -46,6 +46,6 @@ Afterwards:
 
 - Metadata is extracted. This can be removed from the final result. Refer to [Conversion Options](/workers-ai/features/markdown-conversion/conversion-options/#pdf) for more details.
 - Each page is parsed in sequence.
-- We try to obtain a `StructTree` object from the PDF file. This data structure is a tree of tagged elements that make up the PDFs contents, as specified by [ISO 14289 (PDF/UA)](https://www.iso.org/standard/64599.html).
+- We try to obtain a `StructTree` object from the PDF file. This data structure is a tree of tagged elements that make up the PDF contents, as specified by [ISO 14289 (PDF/UA)](https://www.iso.org/standard/64599.html).
 - If none is obtained, we extract the text of the page _as-is_ and return it.
-- If we manage to obtain a `StructTree`, we traverse its contents to build a semantic Markdown representation of its contents.
+- If we manage to obtain a `StructTree`, we traverse its nodes to build a semantic Markdown representation of its contents.

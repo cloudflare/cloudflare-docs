@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { WranglerConfig, Type } from "~/components";
+import { WranglerConfig, Type, TypeScriptExample } from "~/components";
 
 Cloudflare’s serverless platform allows you to run code at the edge to build full-stack applications with [Workers](/workers/). A [binding](/workers/runtime-apis/bindings/) enables your Worker or Pages Function to interact with resources on the Cloudflare Developer Platform.
 
@@ -25,6 +25,8 @@ binding = "AI" # i.e. available in your Worker on env.AI
 ### Converting files
 
 In this example, we fetch a PDF document and an image from R2 and feed them both to `env.AI.toMarkdown`. The result is a list of converted documents. Workers AI models are used automatically to detect and summarize the image.
+
+<TypeScriptExample>
 
 ```typescript
 import { Env } from "./env";
@@ -57,7 +59,11 @@ export default {
 };
 ```
 
+</TypeScriptExample>
+
 ### Getting supported file formats
+
+<TypeScriptExample>
 
 ```typescript
 import { Env } from "./env";
@@ -69,11 +75,15 @@ export default {
 };
 ```
 
+</TypeScriptExample>
+
 ## Methods
 
 ### async env.AI.toMarkdown()
 
 Takes a document or list of documents in different formats and converts them to Markdown.
+
+<TypeScriptExample>
 
 ```typescript
 const result = await env.AI.toMarkdown({
@@ -81,6 +91,8 @@ const result = await env.AI.toMarkdown({
 	blob: new Blob([...]),
 });
 ```
+
+</TypeScriptExample>
 
 #### Parameter
 
@@ -133,6 +145,8 @@ const result = await env.AI.toMarkdown({
 
 This method is similar to `env.AI.toMarkdown` except that it is exposed through a new handle. It takes the same arguments and returns the same values.
 
+<TypeScriptExample>
+
 ```typescript
 const result = await env.AI.toMarkdown().transform({
 	name: "document.pdf",
@@ -140,13 +154,19 @@ const result = await env.AI.toMarkdown().transform({
 });
 ```
 
+</TypeScriptExample>
+
 ### async env.AI.toMarkdown().supported()
 
 Returns a list of file formats that are currently supported for markdown conversion. See [Supported formats](/workers-ai/features/markdown-conversion/supported-formats/) for the full list of file formats that can be converted into Markdown.
 
+<TypeScriptExample>
+
 ```typescript
 const formats = await env.AI.toMarkdown().supported();
 ```
+
+</TypeScriptExample>
 
 #### Return values
 
