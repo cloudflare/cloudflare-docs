@@ -11,8 +11,8 @@ import { Details } from "~/components";
 
 AI Security for Apps (formerly Firewall for AI) can detect personally identifiable information (PII) in incoming LLM prompts. There are two approaches to PII detection, and you can use them together for layered protection:
 
-- **Fuzzy detection (AI-powered)** — AI Security for Apps uses an AI model to identify common PII types in the prompt content. This approach catches PII even when it appears in natural language or unexpected formats.
-- **Exact detection (regex)** — You write a WAF custom rule with a regular expression on the raw request body. This approach is ideal for organization-specific identifiers with a known, predictable format.
+- [Fuzzy detection (AI-powered)](#fuzzy-pii-detection) — AI Security for Apps uses an AI model to identify common PII types in the prompt content. This approach catches PII even when it appears in natural language or unexpected formats.
+- [Exact detection (regex)](#exact-pii-detection-regex) — You write a WAF custom rule with a regular expression on the raw request body. This approach is ideal for organization-specific identifiers with a known, predictable format.
 
 ## Fuzzy PII detection
 
@@ -81,7 +81,7 @@ Instead, build rules against `cf.llm.prompt.pii_categories` and list only the ca
 
 ### Example rules — fuzzy detection
 
-**Block any request containing PII:**
+#### Block any request containing PII
 
 - **When incoming requests match**:
 
@@ -89,12 +89,12 @@ Instead, build rules against `cf.llm.prompt.pii_categories` and list only the ca
   | ---------------- | -------- | ----- |
   | LLM PII Detected | equals   | True  |
 
-  In the dashboard rule builder, select **LLM PII Detected** from the field dropdown. If you use the Expression Editor, enter the following expression:<br/>
+  Expression when using the editor:<br/>
   `(cf.llm.prompt.pii_detected)`
 
 - **Action**: _Block_
 
-**Block only specific PII categories:**
+#### Block only specific PII categories
 
 - **When incoming requests match**:
 
@@ -102,30 +102,30 @@ Instead, build rules against `cf.llm.prompt.pii_categories` and list only the ca
   | ------------------ | -------- | ------------- |
   | LLM PII Categories | is in    | `Credit Card` |
 
-  In the dashboard rule builder, select **LLM PII Categories** from the field dropdown. If you use the Expression Editor, enter the following expression:<br/>
+  Expression when using the editor:<br/>
   `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD"}))`
 
 - **Action**: _Block_
 
-**Log email addresses but block credit cards and SSNs:**
+#### Log email addresses but block credit cards and SSNs
 
 Create two [custom rules](/waf/custom-rules/create-dashboard/):
 
-1. A rule with action _Block_:<br/>
+1. A rule with action _Block_ and the following expression:<br/>
    `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD" "US_SSN"}))`
 
-2. A rule with action _Log_:<br/>
+2. A rule with action _Log_ and the following expression:<br/>
    `(any(cf.llm.prompt.pii_categories[*] in {"EMAIL_ADDRESS"}))`
 
 ## Exact PII detection (regex)
 
-If you need to detect **custom PII formats** specific to your organization — such as internal employee IDs, patient record numbers, or proprietary account identifiers — you can create a WAF [custom rule](/waf/custom-rules/) using a regex match on [`http.request.body.raw`](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/).
+If you need to detect **custom PII formats** specific to your organization — such as internal employee IDs, patient record numbers, or proprietary account identifiers — you can create a WAF [custom rule](/waf/custom-rules/) using a regex match on the raw body ([`http.request.body.raw`](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/) field).
 
 This approach complements fuzzy detection by covering formats the AI model does not natively recognize.
 
-### Example: detect a custom employee ID
+### Example: Detect employee IDs
 
-Suppose your organization uses employee IDs in the format `EMP-` followed by exactly six digits (for example, `EMP-482910`).
+In the following example, an organization uses employee IDs in the format `EMP-` followed by exactly six digits (for example, `EMP-482910`).
 
 [Create a custom rule](/waf/custom-rules/create-dashboard/) with the following configuration:
 
@@ -135,7 +135,7 @@ Suppose your organization uses employee IDs in the format `EMP-` followed by exa
   | ---------------- | ------------- | -------------- |
   | Raw request body | matches regex | `EMP-[0-9]{6}` |
 
-  If you use the Expression Editor, enter the following expression:<br/>
+  Expression when using the editor:<br/>
   `(http.request.body.raw matches "EMP-[0-9]{6}")`
 
 - **Action**: _Block_
@@ -167,14 +167,14 @@ Expression when using the editor:<br/>
 
 ### Considerations for regex rules
 
-- **Plan requirement.** Regex operators (`matches` and `~`) require a Business or Enterprise plan.
+- **Cloudflare Plan requirement.** Regex operators (`matches` and `~`) require a Business or Enterprise plan.
 - **Body size limit.** The `http.request.body.raw` field inspects a limited portion of the request body. The exact limit [varies by plan](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/).
 - **JSON payloads.** The raw body includes the full JSON structure. Your regex should account for the fact that the prompt text is nested inside a JSON string.
-- **Performance.** Complex regex patterns with excessive backtracking can impact rule evaluation time. Keep patterns as specific as possible.
+- **Performance.** Complex regex patterns can impact rule evaluation time. Keep patterns as specific as possible.
 
 ## Combine both approaches
 
-Use fuzzy and exact detection together for layered protection:
+You can use fuzzy and exact detection together for layered protection:
 
 `(cf.llm.prompt.pii_detected or http.request.body.raw matches "EMP-[0-9]{6}")`
 
