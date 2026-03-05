@@ -1,7 +1,11 @@
-.sidebar-content {
+.sidebar-nav-scroll {
 	scrollbar-gutter: stable;
-	gap: 0.5rem;
-	padding: 1rem 0.5rem 1rem 1.5rem;
+	padding: 0 0.5rem 1rem 1.5rem;
+}
+
+.sidebar-content {
+	gap: 0;
+	padding: 0;
 
 	.large {
 		font-weight: unset;
@@ -78,7 +82,6 @@
 }
 
 :root[data-theme="dark"] {
-	--sl-color-bg-nav: var(--color-cl1-gray-0);
 	--sl-color-bg-sidebar: var(--color-cl1-gray-0);
 	--sl-color-sidebar-active: var(--color-cl1-blue-7);
 	--sl-color-sidebar-hover: var(--color-cl1-gray-2);
