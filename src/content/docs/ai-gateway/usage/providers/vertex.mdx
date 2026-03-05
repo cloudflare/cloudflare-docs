@@ -292,26 +292,18 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vert
 
 ## Troubleshooting
 
-### 401 UNAUTHENTICATED errors
+For general AI Gateway troubleshooting, refer to [Troubleshooting](/ai-gateway/reference/troubleshooting/).
 
-If you receive a `CREDENTIALS_MISSING` or `UNAUTHENTICATED` error from Google, AI Gateway did not pass valid Google credentials to Vertex AI. Check the following:
+### 401 Unauthenticated errors
 
-1. **Verify header placement**: Make sure your Cloudflare token is in `cf-aig-authorization`, not `Authorization`. The `Authorization` header is reserved for provider credentials.
+If you receive a `CREDENTIALS_MISSING` or `UNAUTHENTICATED` error from Google, check the following Vertex AI-specific issues:
 
-2. **Check your configuration based on endpoint type**:
-   - **Provider-specific endpoints** (for example, `.../google-vertex-ai/v1/projects/...`): Confirm your request URL includes `/google-vertex-ai/` in the path. AI Gateway uses this to identify the provider and apply the correct stored credentials.
-   - **Unified `/compat/chat/completions` endpoint**: Confirm your `model` name starts with the `google-vertex-ai/` prefix (for example, `google-vertex-ai/google/gemini-2.5-flash`). AI Gateway uses this prefix to route the request to Vertex AI and select the correct stored credentials.
+1. **Check your region**: Use a specific regional endpoint (like `us-central1`) in your URL, not `global`. The `global` endpoint has limited model support.
 
-3. **Verify BYOK key selection**: If you have multiple keys configured for Google Vertex AI, ensure either:
-   - You are using the key with alias `default`, or
-   - You include the `cf-aig-byok-alias` header with the correct alias name
-
-4. **Check your region**: Use a specific regional endpoint (like `us-central1`) in your URL, not `global`. The `global` endpoint has limited model support.
-
-5. **Verify BYOK configuration**: If using BYOK, confirm in the dashboard that:
+2. **Verify BYOK configuration**: If using BYOK, confirm in the dashboard that:
    - Your service account JSON was saved correctly
    - A region was selected from the dropdown
 
-6. **Check service account permissions**: Ensure your service account has the `Vertex AI User` role or equivalent permissions in Google Cloud.
+3. **Check service account permissions**: Ensure your service account has the `Vertex AI User` role or equivalent permissions in Google Cloud.
 
-7. **Verify the region key** (non-BYOK only): If passing service account JSON directly in the `Authorization` header, make sure the JSON includes the `region` key.
+4. **Verify the region key** (non-BYOK only): If passing service account JSON directly in the `Authorization` header, make sure the JSON includes the `region` key.
