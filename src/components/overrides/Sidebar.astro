@@ -7,42 +7,57 @@ import { lookupProductTitle } from "~/util/sidebar";
 const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 ---
 
-<div class="sidebar-product-header">
-	<a
-		href={"/" + product + "/"}
-		class="flex items-center gap-2 px-1 no-underline"
+<div class="sidebar-sticky-header">
+	<div class="sidebar-product-header">
+		<a
+			href={"/" + product + "/"}
+			class="flex items-center gap-2 px-1 no-underline"
+		>
+			<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
+			<span class="text-xl text-black">
+				<strong>
+					{lookupProductTitle(product, module)}
+				</strong>
+			</span>
+		</a>
+	</div>
+
+	<!-- Search Input -->
+	<div class="relative">
+		<input
+			type="text"
+			id="sidebar-search"
+			placeholder="Search sidebar..."
+			class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 pr-10 text-sm text-gray-900 placeholder-gray-500 transition-colors duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:focus:border-orange-500 dark:focus:ring-orange-500"
+		/>
+		<div class="sidebar-search-icon"></div>
+	</div>
+
+	<!-- No Results Message -->
+	<div
+		id="sidebar-no-results"
+		class="hidden p-4 text-center text-sm text-gray-500 dark:text-gray-400"
 	>
-		<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
-		<span class="text-xl text-black">
-			<strong>
-				{lookupProductTitle(product, module)}
-			</strong>
-		</span>
-	</a>
+		No results found. Try a different search term, or use our <button
+			id="global-search-link"
+			class="font-inherit cursor-pointer border-none bg-transparent p-0 text-blue-500 underline hover:no-underline dark:text-orange-500"
+			>global search</button
+		>.
+	</div>
 </div>
 
-<!-- Search Input -->
-<div class="relative">
-	<input
-		type="text"
-		id="sidebar-search"
-		placeholder="Search sidebar..."
-		class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 pr-10 text-sm text-gray-900 placeholder-gray-500 transition-colors duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:focus:border-orange-500 dark:focus:ring-orange-500"
-	/>
-	<div class="sidebar-search-icon"></div>
-</div>
-
-<!-- No Results Message -->
-<div
-	id="sidebar-no-results"
-	class="hidden p-4 text-center text-sm text-gray-500 dark:text-gray-400"
->
-	No results found. Try a different search term, or use our <button
-		id="global-search-link"
-		class="font-inherit cursor-pointer border-none bg-transparent p-0 text-blue-500 underline hover:no-underline dark:text-orange-500"
-		>global search</button
-	>.
-</div>
+<!-- Hoist the sticky header out of .sidebar-content (the flex scroll container)
+     and prepend it directly into #starlight__sidebar (.sidebar-pane) so that
+     it is a sibling — not a child — of the scrolling element. -->
+<script is:inline>
+	(function () {
+		const header = document.querySelector(".sidebar-sticky-header");
+		const pane = document.getElementById("starlight__sidebar");
+		if (header && pane && header.parentElement !== pane) {
+			pane.insertBefore(header, pane.firstChild);
+		}
+	})();
+</script>
 
 <Default><slot /></Default>
 
@@ -50,7 +65,20 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	import { track } from "~/util/zaraz";
 	import { openGlobalSearch } from "~/util/search";
 
+	// Ensure the sticky header is a direct child of #starlight__sidebar
+	// (not inside .sidebar-content) so it is not part of the scroll container.
+	// The is:inline script above handles initial placement; this covers re-renders.
+	function hoistStickyHeader() {
+		const header = document.querySelector(".sidebar-sticky-header");
+		const pane = document.getElementById("starlight__sidebar");
+		if (header && pane && header.parentElement !== pane) {
+			pane.insertBefore(header, pane.firstChild);
+		}
+	}
+
 	function initSidebarSearch() {
+		hoistStickyHeader();
+
 		const searchInput = document.getElementById(
 			"sidebar-search",
 		) as HTMLInputElement;
@@ -316,16 +344,38 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	}
 
 	:root {
+		/* Hoist the sticky header out of the flex/scroll container:
+		   - #starlight__sidebar becomes a flex column (was just overflow-y:auto)
+		   - .sidebar-sticky-header is a static flex child at the top — never scrolls
+		   - .sidebar-content takes the remaining height and scrolls independently */
+		#starlight__sidebar {
+			display: flex !important;
+			flex-direction: column !important;
+			overflow: hidden !important;
+		}
+
+		.sidebar-sticky-header {
+			flex-shrink: 0;
+			/* Match .sidebar-pane: black on mobile, sidebar bg on desktop */
+			background-color: var(--sl-color-black);
+			padding: 1rem var(--sl-sidebar-pad-x) 0.75rem;
+
+			@media (min-width: 50rem) {
+				background-color: var(--sl-color-bg-sidebar);
+			}
+		}
+
 		.sidebar-product-header {
-			position: sticky;
-			top: 0;
-			z-index: 10;
-			background-color: var(--sl-color-bg-sidebar);
-			padding-top: 0.25rem;
 			padding-bottom: 0.75rem;
 		}
 
 		.sidebar-content {
+			flex: 1 !important;
+			overflow-y: auto !important;
+			/* Top padding is now provided by the header above */
+			padding-top: 0 !important;
+			min-height: 0 !important;
+
 			--sl-color-hairline-light: #cacaca !important;
 
 			& > * {
