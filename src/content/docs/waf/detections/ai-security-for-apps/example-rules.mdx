@@ -35,7 +35,7 @@ This rule combines AI Security for Apps's [injection score](/waf/detections/ai-s
 
 - **When incoming requests match**:
 
-  If you use the Expression Editor, enter the following expression:<br />
+  Enter the following expression in the editor:<br />
   `(cf.llm.prompt.injection_score lt 25 and cf.bot_management.score lt 10 and ip.geoip.country ne "US")`
 
 - **Action**: _Block_
@@ -54,7 +54,7 @@ A financial services application legitimately handles credit card and bank accou
 
 - **When incoming requests match**:
 
-  If you use the Expression Editor, enter the following expression:<br />
+  Enter the following expression in the editor:<br />
   `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD" "US_BANK_NUMBER" "IBAN_CODE"}) and ip.geoip.asnum ne 13335)`
 
   Replace `13335` with your organization's ASN.
