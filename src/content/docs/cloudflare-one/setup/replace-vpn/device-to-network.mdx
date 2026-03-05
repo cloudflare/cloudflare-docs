@@ -9,14 +9,28 @@ products:
   - cloudflare-one
 ---
 
-Connect a remote device to a private network so your users can securely access internal applications and services from anywhere, without the security risks and performance bottlenecks of a traditional VPN. This guide follows the same steps as the **Get Started** onboarding wizard in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+import { GlossaryTooltip } from "~/components";
+
+Connect a remote device to a private network so your users can securely access internal applications and services from anywhere, without the security risks and performance bottlenecks of a traditional VPN.
+
+To explore other connection scenarios, refer to [Replace your VPN](/cloudflare-one/setup/replace-vpn/).
+
+This guide follows the same steps as the **Get Started** onboarding wizard in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
 
 ## How it works
 
-[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) is a network connector that creates an outbound-only connection between your private network and Cloudflare. No open inbound ports or firewall changes are required. The [WARP client](/cloudflare-one/team-and-resources/devices/warp/) is a device agent that you install on each user's device. It routes traffic through Cloudflare and into the tunnel, so users can reach internal resources from anywhere.
+<GlossaryTooltip term="Cloudflare Tunnel">
+	[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
+</GlossaryTooltip>
+is a network connector that creates an outbound-only connection between your
+private network and Cloudflare. No open inbound ports or firewall changes are
+required.
+
+The <GlossaryTooltip term="WARP client">[WARP client](/cloudflare-one/team-and-resources/devices/warp/)</GlossaryTooltip> is an app that you install on each user's device. It routes traffic through Cloudflare and into the tunnel, so users can reach internal resources from anywhere.
 
 ## Prerequisites
 
+- A Cloudflare account with a Zero Trust organization. If you have not set this up, refer to [Get started](/cloudflare-one/setup/).
 - A Linux, Windows, or macOS device on your private network to run the tunnel.
 - A Linux, Windows, or macOS device to install the WARP client on.
 
@@ -99,11 +113,11 @@ To verify connectivity, try reaching a resource on your private network (for exa
 
 After verifying your connection, consider securing your private network with policies and access controls:
 
-- **Set up Gateway policies**: By default, all enrolled devices can reach your entire private network. Gateway policies let you inspect traffic and control access based on user identity and device posture. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
+- **Set up Gateway policies**: By default, all enrolled devices can reach your entire private network. Gateway policies let you inspect traffic and control access based on user identity and network attributes. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
 - **Create an Access application**: Restrict access to specific applications or hostnames on your private network with identity-based rules. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
 - **Explore more with Zero Trust**: Review your tunnel, policies, and connected devices in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
 
-For in-depth guidance on policy design, device posture checks, and multi-site deployments, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
+For in-depth guidance on policy design and device posture checks, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
 
 ## Troubleshoot
 
