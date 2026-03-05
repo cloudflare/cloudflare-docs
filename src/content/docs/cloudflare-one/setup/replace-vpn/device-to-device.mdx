@@ -1,0 +1,95 @@
+---
+pcx_content_type: get-started
+title: "Device to device"
+sidebar:
+  order: 2
+  label: Device to device
+description: Create a secure peer-to-peer connection between two devices using the WARP client and Cloudflare's network.
+products:
+  - cloudflare-one
+---
+
+Create a secure connection between two devices so they can communicate directly through Cloudflare's network, without needing to be on the same physical network. This guide follows the same steps as the **Get Started** onboarding wizard in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+
+## How it works
+
+The [WARP client](/cloudflare-one/team-and-resources/devices/warp/) is a device agent that you install on each device you want to connect. When enrolled in your Zero Trust organization, each device is assigned a [virtual IP address](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/). Devices use these virtual IPs to communicate with each other through Cloudflare's network over TCP, UDP, and ICMP protocols. These virtual IPs are only addressable from within your Zero Trust organization, so devices outside your account cannot reach them. No tunnel infrastructure or network configuration is required. The connection works as an overlay network that spans across physical network boundaries without disrupting existing traffic patterns.
+
+## Prerequisites
+
+- Two Linux, Windows, macOS, Android, or iOS devices you want to connect together.
+
+## Step 1: Enroll your first device
+
+Device enrollment controls which users can connect their devices to your organization through Cloudflare. In this step, you register your first device by providing an email address and installing the WARP client.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), select the **Get Started** tab.
+2. For **Replace my client-based or site-to-site VPN**, select **Get started**.
+3. For **Device to device**, select **Continue**.
+4. On the **Create a device mesh on Cloudflare's network** screen, select **Continue**.
+5. Enter the email you want to use to enroll your first device.
+6. Select your device's operating system.
+7. Select **Download to continue** to download the WARP client, or copy the download link to send to a different device.
+8. Select **Continue**.
+
+:::note
+You can manage device enrollment permissions later in **Team & Resources** > **Devices**.
+:::
+
+## Step 2: Complete WARP setup
+
+On your first device, complete the WARP installation wizard. Then connect WARP to your Zero Trust organization. For comprehensive OS-specific instructions, refer to [Manual deployment](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/).
+
+1. Open the WARP client. On macOS, select the Cloudflare icon in your status bar. On Windows, select the Cloudflare icon in your system tray.
+2. Go to **Preferences** > **Account** > **Login to Cloudflare Zero Trust**.
+3. Enter your team name when prompted. Your team name is the unique identifier for your Zero Trust organization and was set when the organization was created. The dashboard displays your team name on this screen for easy reference.
+
+   :::note
+   To find or change your team name, go to **Settings** > **Team name** and select **Edit**.
+   :::
+
+4. Complete the authentication steps.
+5. The WARP client should show as **Connected**.
+6. Select **Continue** in the dashboard.
+
+## Step 3: Enroll and set up your second device
+
+Install WARP on your second device and enroll it in the same Zero Trust organization. Both devices need to be enrolled for the peer-to-peer connection to work.
+
+1. Select the operating system of your second device.
+2. Copy the download link and send it to your second device, or select **Download to continue** if you are on that device.
+3. Install the WARP client and complete the setup wizard on your second device.
+4. Open the WARP client and go to **Preferences** > **Account** > **Login to Cloudflare Zero Trust**.
+5. Enter the same team name you used in the previous step.
+6. Complete the authentication steps.
+7. The WARP client should show as **Connected** on the second device.
+8. Select **Continue** in the dashboard.
+
+## Step 4: Verify your connection
+
+The dashboard confirms that your devices can securely communicate. Both devices are now connected through Cloudflare's network using their assigned virtual IPs.
+
+To verify connectivity, find the virtual IP of one device and try reaching it from the other. You can find a device's virtual IP in the WARP client under **Preferences** or in the Cloudflare One dashboard under **Team & Resources** > **Devices**. For example, try pinging the other device:
+
+```sh
+ping 100.96.0.5
+```
+
+For more information on virtual IP addresses, refer to [Peer-to-peer connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/).
+
+## Recommended next steps
+
+After verifying your connection, consider securing your device mesh with policies and access controls:
+
+- **Set up Gateway policies**: By default, all enrolled devices can reach each other over the virtual IP space. Gateway policies let you inspect traffic and control access based on user identity and device posture. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
+- **Create an Access application**: Restrict access to specific services running on your devices with identity-based rules. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
+- **Explore more with Zero Trust**: Review your policies and connected devices in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+
+For in-depth guidance on policy design, device posture checks, and multi-site deployments, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
+
+## Troubleshoot
+
+If you have issues connecting, refer to these resources:
+
+- [Troubleshoot WARP](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/): resolve WARP client connection and enrollment issues.
+- [Peer-to-peer connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/): review WARP-to-WARP setup details, split tunnel configuration, and firewall requirements.
