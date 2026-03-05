@@ -1,14 +1,10 @@
-.sidebar-nav-scroll {
-	flex: 1;
-	overflow-y: auto;
-	min-height: 0;
+.sidebar-pane {
 	scrollbar-gutter: stable;
-	padding: 0 0.5rem 1rem 1.5rem;
 }
 
 .sidebar-content {
 	gap: 0;
-	padding: 0;
+	padding: 0 1.5rem 1rem;
 
 	.large {
 		font-weight: unset;

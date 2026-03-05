@@ -43,9 +43,7 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	</div>
 </div>
 
-<div class="sidebar-nav-scroll">
-	<Default><slot /></Default>
-</div>
+<Default><slot /></Default>
 
 <script>
 	import { track } from "~/util/zaraz";
@@ -317,26 +315,31 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	}
 
 	:root {
-		/* .sidebar-content is the flex column containing both our header and the
-		   nav scroll wrapper. Stop it from scrolling; only .sidebar-nav-scroll scrolls. */
+		/* Sticky header: position: sticky works because .sidebar-pane (overflow-y: auto)
+		   is the scroll container, and we remove min-height: max-content from
+		   .sidebar-content so the containing block height is bounded by the viewport. */
 		.sidebar-header {
+			position: sticky;
+			top: 0;
+			z-index: 1;
 			display: flex;
 			flex-direction: column;
 			gap: 0.5rem;
 			background-color: var(--sl-color-black);
-			padding: 1rem 1.5rem;
+			padding-top: 1rem;
+			padding-bottom: 1rem;
 
 			@media (min-width: 50rem) {
 				background-color: var(--sl-color-bg-sidebar);
 			}
 		}
 
-		/* Stop .sidebar-content from scrolling — .sidebar-nav-scroll handles it */
+		/* Override Starlight's height: 100% / min-height: max-content.
+		   Let .sidebar-content size to its content so sticky has the full
+		   scroll range to work within, not just one viewport height. */
 		.sidebar-content {
-			overflow: hidden !important;
+			height: auto !important;
 			min-height: 0 !important;
-			padding-top: 0 !important;
-			padding-bottom: 0 !important;
 
 			--sl-color-hairline-light: #cacaca !important;
 
