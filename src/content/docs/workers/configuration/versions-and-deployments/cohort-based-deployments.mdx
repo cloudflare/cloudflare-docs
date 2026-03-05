@@ -45,7 +45,7 @@ When a request arrives, the system selects a version in two steps:
 **Step 1 -- Select the version configuration.**
 
 1. If the request has a `Cloudflare-Workers-Version-Overrides` header that matches a version ID present anywhere in the deployment (default or any cohort), that version is used immediately. No further routing applies. Refer to [Version overrides](/workers/configuration/versions-and-deployments/version-overrides/).
-2. If the request has a `Cloudflare-Workers-Cohort` header that matches a defined cohort name, that cohort's `versions` array is used.
+2. If the request has a `Cloudflare-Workers-Cohort` header that matches a defined cohort name, that cohort's `versions` array is used. This header is set by trusted sources such as [Transform Rules](#transform-rules), the [gateway entrypoint pattern](#gateway-entrypoint-pattern), or [service bindings](/workers/runtime-apis/bindings/service-bindings/) -- not by external HTTP clients directly.
 3. Otherwise, the default `versions` array is used.
 
 **Step 2 -- Select a version within the chosen configuration.**
@@ -99,13 +99,82 @@ Percentages within each cohort's `versions` array must sum to 100. Each cohort o
 
 ## Assign requests to cohorts
 
-Defining cohorts in your deployment configuration only sets up the version splits. You still need a way to assign incoming requests to the correct cohort. There are three approaches, ordered from simplest to most flexible:
+Defining cohorts in your deployment configuration only sets up the version splits. You still need a way to assign incoming requests to the correct cohort. There are two approaches:
 
 | Approach | Requires Worker code? | Use when |
 |---|---|---|
-| [Transform Rules](#transform-rules) | No | You can determine cohort from request properties (geo, cookie, header, URL) |
-| [External cohort header](#external-cohort-header) | No (client or upstream sets header) | Clients or upstream services already know the cohort |
 | [Gateway entrypoint pattern](#gateway-entrypoint-pattern) | Yes | You need custom logic like JWT verification, database lookups, or API calls to determine cohort |
+| [Transform Rules](#transform-rules) | No | You can determine cohort from request properties (geo, cookie, header, URL) |
+
+### Gateway entrypoint pattern
+
+Use this pattern when you need custom application logic to determine the cohort -- for example, verifying JWTs, querying a database, or calling an external auth service -- and you want to keep all the logic in a single Worker rather than deploying a separate upstream Worker.
+
+This pattern splits your Worker into two entry points:
+
+1. **Default `fetch` handler** -- receives the raw request, determines the cohort, and forwards to the service entrypoint via a [loopback binding](/workers/runtime-apis/context/#exports).
+2. **Service entrypoint** -- contains your business logic. This is the code that gets gradually deployed across cohorts.
+
+<TypeScriptExample>
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+// Default entrypoint -- resolves cohort, not gradually deployed
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+    // Determine cohort using your application logic
+    const token = request.headers.get("Authorization");
+    const user = await verifyToken(token, env);
+
+    let cohort = "default";
+    if (user.isEmployee) cohort = "employee";
+    else if (user.plan === "enterprise") cohort = "ent";
+    else if (user.plan === "free") cohort = "free";
+
+    // Forward to Service entrypoint with resolved cohort
+    return ctx.exports.Service({ version: { cohort } }).handle(request);
+  },
+};
+
+// Service entrypoint -- your business logic, gradually deployed per cohort
+export class Service extends WorkerEntrypoint {
+  async handle(request: Request) {
+    // This code is version-routed based on the cohort resolved above.
+    // Implement your business logic here.
+    return new Response("OK");
+  }
+}
+```
+
+</TypeScriptExample>
+
+The loopback call (`ctx.exports.Service(...)`) goes back through the platform's version routing system. The platform sees the cohort and selects the correct version of the `Service` class based on your deployment configuration.
+
+There are a few important behaviors to keep in mind when using this pattern:
+
+- **Loopback calls without a cohort are version-locked.** If you call `ctx.exports.Service()` without passing `version: \{ cohort \}`, the platform routes to the same version the caller is already running — not the default configuration. You must explicitly pass a cohort to get cohort-based routing.
+- **The `fetch` handler is not version-routed.** It always runs the latest deployed version. Only the `Service` entrypoint (and anything it calls) is gradually deployed across cohorts. Keep your `fetch` handler minimal — ideally just authentication and cohort resolution.
+- **`ctx.exports` requires a compatibility flag.** You must enable the [`enable_ctx_exports` compatibility flag](/workers/configuration/compatibility-flags/#enable-ctxexports) in your Wrangler configuration.
+
+#### How it works
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Router
+    participant fetch as fetch() handler
+    participant Service as Service entrypoint
+
+    Client->>Router: HTTP request (no cohort)
+    Router->>fetch: No cohort — runs latest version
+    fetch->>fetch: Verify auth, resolve cohort = "ent"
+    fetch->>Router: ctx.exports.Service<br/>with cohort "ent"
+    Router->>Service: Select version per<br/>"ent" cohort config
+    Service->>Client: Response
+```
+
+This all happens within a single request. The client sends one request and receives one response.
 
 ### Transform Rules
 
@@ -155,144 +224,6 @@ http.request.headers["x-user-plan"][0] eq "enterprise"
 **Header name:** `Cloudflare-Workers-Cohort`
 
 **Value:** `ent`
-
-### External cohort header
-
-Set the `Cloudflare-Workers-Cohort` header directly on the request. This can be done by the client, by an upstream proxy, or by another Worker.
-
-```sh
-curl -s https://example.com -H 'Cloudflare-Workers-Cohort: canary'
-```
-
-Cohort matching is case-insensitive. `CANARY`, `Canary`, and `canary` all resolve to the same cohort.
-
-:::caution[Security consideration]
-Any HTTP client can set this header. If cohort membership determines access to different features or service tiers, do not rely on the client-set header alone. Use [Transform Rules](#transform-rules) (which overwrite client-set headers), an [authenticated upstream Worker](#authenticated-upstream-worker), or the [gateway entrypoint pattern](#gateway-entrypoint-pattern) instead.
-:::
-
-#### Authenticated upstream Worker
-
-If cohort membership must be enforced -- for example, only verified beta testers should access canary code -- use an upstream Worker that authenticates the user and sets the header before forwarding to the target Worker:
-
-<TypeScriptExample>
-
-```ts
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    // 1. Authenticate the user
-    const user = await authenticateUser(request);
-
-    // 2. Determine cohort from trusted user data
-    let cohort = "default";
-    if (user.isEmployee) cohort = "employee";
-    else if (user.isBetaTester) cohort = "canary";
-    else if (user.plan === "enterprise") cohort = "ent";
-
-    // 3. Overwrite any client-set header and forward
-    const modifiedRequest = new Request(request, {
-      headers: new Headers(request.headers),
-    });
-    modifiedRequest.headers.set("Cloudflare-Workers-Cohort", cohort);
-
-    return env.DOWNSTREAM_SERVICE.fetch(modifiedRequest);
-  },
-};
-```
-
-</TypeScriptExample>
-
-This pattern overwrites any client-set cohort header, ensuring cohort assignment is based on verified user data.
-
-### Gateway entrypoint pattern
-
-Use this pattern when you need custom application logic to determine the cohort -- for example, verifying JWTs, querying a database, or calling an external auth service -- and you want to keep all the logic in a single Worker rather than deploying a separate upstream Worker.
-
-This pattern splits your Worker into two entry points:
-
-1. **Default `fetch` handler** -- receives the raw request, determines the cohort, and forwards to the service entrypoint via a [loopback binding](/workers/runtime-apis/context/#exports).
-2. **Service entrypoint** -- contains your business logic. This is the code that gets gradually deployed across cohorts.
-
-<TypeScriptExample>
-
-```ts
-import { WorkerEntrypoint } from "cloudflare:workers";
-
-// Default entrypoint -- resolves cohort, not gradually deployed
-export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-    // Determine cohort using your application logic
-    const token = request.headers.get("Authorization");
-    const user = await verifyToken(token, env);
-
-    let cohort = "default";
-    if (user.isEmployee) cohort = "employee";
-    else if (user.plan === "enterprise") cohort = "ent";
-    else if (user.plan === "free") cohort = "free";
-
-    // Forward to Service entrypoint with resolved cohort
-    return ctx.exports.Service({ version: { cohort } }).handle(request);
-  },
-};
-
-// Service entrypoint -- your business logic, gradually deployed per cohort
-export class Service extends WorkerEntrypoint {
-  async handle(request: Request) {
-    // This code is version-routed based on the cohort resolved above.
-    // Implement your business logic here.
-    return new Response("OK");
-  }
-}
-```
-
-</TypeScriptExample>
-
-The loopback call (`ctx.exports.Service(...)`) goes back through the platform's version routing system. The platform sees the cohort and selects the correct version of the `Service` class based on your deployment configuration.
-
-:::note[Loopback calls without a cohort are version-locked]
-If you call `ctx.exports.Service()` **without** passing `version: \{ cohort \}`, the platform routes to the same version the caller is already running — not the default configuration. This is version-locking behavior. You must explicitly pass a cohort to get cohort-based routing through the loopback binding.
-:::
-
-:::note
-The default `fetch` handler always runs the latest deployed version and is **not** subject to cohort-based version routing. Only the code in the `Service` entrypoint (and anything it calls) is gradually deployed. Keep your `fetch` handler minimal -- ideally just authentication and cohort resolution.
-:::
-
-:::note
-To use `ctx.exports`, you must enable the [`enable_ctx_exports` compatibility flag](/workers/configuration/compatibility-flags/#enable-ctxexports) in your Wrangler configuration.
-:::
-
-#### How it works
-
-```txt
-Request arrives
-    |
-    v
-+-----------------------------------------------+
-| Router: no cohort info yet                    |
-| -> runs default fetch handler (latest version)|
-+-----------------------------------------------+
-    |
-    v
-+-----------------------------------------------+
-| fetch() handler:                              |
-|  - verifies auth token                        |
-|  - determines cohort = "ent"                  |
-|  - calls ctx.exports.Service({                |
-|      version: { cohort: "ent" }               |
-|    }).handle(request)                         |
-+-----------------------------------------------+
-    |
-    v
-+-----------------------------------------------+
-| Router: cohort = "ent"                        |
-| -> selects version per "ent" cohort config    |
-| -> runs Service.handle() on selected version  |
-+-----------------------------------------------+
-    |
-    v
-Response returned to client
-```
-
-This all happens within a single request. The client sends one request and receives one response.
 
 ## Accessing version metadata in your code
 
