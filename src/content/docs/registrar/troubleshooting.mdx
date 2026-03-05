@@ -55,8 +55,9 @@ Domain registries enforce maximum registration periods. Because every transfer a
 **Common reasons for rejection:**
 
 - Your domain already has 9 or more years of registration remaining. Adding one year would exceed the 10-year limit (or 5-year limit for `.co`).
-- Your domain was transferred or renewed within 45 days of its expiration date. In this case, the registry may not add the extra year, even if the transfer itself succeeds.
+- Your domain was renewed after expiring and then transferred within 45 days of the original expiration date. In this case, the registry may not add the extra year. For example, if `example.com` expires on December 10, you renew it on December 20 (extending it to December 20 of the following year), and then transfer to Cloudflare on December 30 — the transfer is within 45 days of the original expiration, so the registry may not add an additional year. Your expiration date would remain December 20 of the following year, meaning you effectively paid twice for the same year. If this happens, you are entitled to request a refund from your previous registrar under ICANN rules.
 - Your domain does not meet a TLD-specific minimum. For example, `.ai` domains require a minimum 2-year registration for transfers.
+- `.uk` domains do not receive an additional year when transferred.
 
 **What you can do:**
 
@@ -87,6 +88,15 @@ If your payment method was declined after submitting the authorization code, the
 ## Transfer is taking too long
 
 Domain transfers typically take 3-5 business days. Some TLDs (such as `.mx`) can take up to 10 days. You can speed up the process by approving the transfer at your current registrar when you receive the confirmation email. If the transfer has been stuck beyond these timeframes with no identifiable issue, contact your current registrar to confirm there are no holds or restrictions on their end.
+
+## Domain not available for transfer
+
+Your domain may not appear on the [Transfer Domains](https://dash.cloudflare.com/?to=/:account/registrar/transfer) page if:
+
+- You have not [added your domain](/fundamentals/manage-domains/add-site/) to your Cloudflare account, or it is still in **Pending** status. Your domain must be **Active** before you can transfer it.
+- The domain was registered or previously transferred in the last 60 days (ICANN requirement).
+- Cloudflare does not support the TLD.
+- The domain has a status that blocks transfers (such as `serverHold` or `pendingDelete`). Refer to [Domain is in a restricted status](#domain-is-in-a-restricted-status) for details.
 
 ## Cannot update nameservers at your current registrar
 

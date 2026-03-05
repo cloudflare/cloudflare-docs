@@ -12,10 +12,10 @@ import { DashButton, Details, Render } from "~/components";
 Transferring a domain moves your registration from your current registrar to Cloudflare.
 
 - **Active work:** About 30 minutes.
-- **Total time:** Usually 3-5 business days, because your current registrar has up to 5 days to release the domain and changes to your domain settings take time to take effect across the internet.
+- **Total time:** Around 5 business days. Your current registrar has up to 5 days to release the domain and DNS changes take time to propagate.
 - **Cost:** One year of registration at Cloudflare's at-cost price, added to your current expiration date.
 
-Before you can transfer, you must [add your domain to Cloudflare](#1-add-your-domain-to-cloudflare) and update your nameservers. Only then can you enter an authorization code and start the transfer. This is because Cloudflare applies performance and security features to your site before the transfer begins.
+Before you can transfer, you must first [add your domain to Cloudflare](#1-add-your-domain-to-cloudflare).
 
 :::note
 If your domain is registered with a website builder platform (such as Block, Shopify, Squarespace, or Wix), you may not be able to change nameservers while the domain is registered there. Refer to [Transfer from website builders](#transfer-from-website-builders) for the recommended workaround, or [Troubleshoot failed domain transfers](/registrar/troubleshooting/) if you are running into issues.
@@ -32,23 +32,15 @@ Confirm the following before you start:
 - Your domain was registered at least 60 days ago and has not been transferred in the last 60 days (ICANN requirement).
 - You have not changed your registrant name, organization, or email address in the last 60 days. Under ICANN rules, changes to these fields trigger a 60-day transfer lock. Some registrars let you opt out of this lock during the change, but not all do.
 - Your account at your current registrar is active. If your domain has expired, renew it at your current registrar first.
+
+:::note
+If your domain recently expired and you renewed it, wait at least 45 days after the original expiration date before transferring. Otherwise, the registry may not add the extra year. For details, refer to [Why did my domain's expiration date change?](/registrar/faq/#my-domains-registration-was-not-extended-by-one-year-after-transferring-to-cloudflare).
+:::
+
 - Your domain uses only standard characters (letters, numbers, hyphens). Cloudflare does not support domains with non-Latin characters (for example, `例え.jp`).
 - If you are transferring a `.us` domain, refer to [Additional requirements for .US domains](/registrar/top-level-domains/us-domains/).
 - If you are transferring multiple domains, notify your bank to prevent fraud alerts on multiple charges.
-
-Cloudflare Registrar requires your domain to use Cloudflare for [authoritative DNS](/dns/zone-setups/full-setup/) (full setup). You cannot use another DNS provider while registered with Cloudflare.
-
-</Details>
-
-<Details header="Restrictions" id="restrictions">
-
-If your domain appears as available for transfer in the Cloudflare dashboard, these restrictions have already been checked.
-
-For reference, domains with any of the following statuses cannot be transferred: `serverHold`, `serverTransferProhibited`, `pendingDelete`, `pendingTransfer`, or `RedemptionPeriod`. Domains that are locked (`clientTransferProhibited`) will not appear as available for transfer until you unlock them at your current registrar.
-
-:::caution
-If you renew an expired domain and then transfer it within 45 days of the original expiration date, the registry may not add the extra year. Refer to [Registration limits and the one-year extension](#enter-your-authorization-code-and-confirm-payment) for details.
-:::
+- Cloudflare Registrar requires your domain to use Cloudflare for [authoritative DNS](/dns/zone-setups/full-setup/) (full setup). You cannot use another DNS provider while registered with Cloudflare.
 
 </Details>
 
@@ -95,7 +87,7 @@ Each registrar has a different interface for updating nameservers. These links e
 
 Wait for your domain status to change from **Pending** to **Active**. This usually takes a few minutes but can take up to 24 hours.
 
-:::caution
+:::note
 You cannot proceed with the transfer until your domain shows **Active** status. The Transfer Domains page will not let you enter an authorization code while the zone is still **Pending**.
 :::
 
@@ -129,8 +121,6 @@ Authorization codes expire within 5-14 days depending on the registrar. Some reg
 
 **In the Cloudflare dashboard:**
 
-Go to the **Transfer Domains** page.
-
 <DashButton url="/?to=/:account/registrar/transfer" />
 
 Select your domain and enter the authorization code. The page will show the transfer price, which includes a one-year registration extension from your current expiration date. This is an ICANN requirement — every transfer extends your registration by one year.
@@ -141,44 +131,7 @@ If you do not have a payment method on file, add one before proceeding.
 Verify your payment method is valid before submitting. A payment failure after submitting the authorization code can leave the transfer in a partially started state.
 :::
 
-<Details header="Registration limits and the one-year extension">
-
-Every domain transfer adds one year to your registration. However, domain registries enforce maximum registration periods, which can cause a transfer to be rejected or the extra year to not be added.
-
-**Maximum registration periods:**
-
-- Most TLDs (such as `.com`, `.net`, `.org`) allow up to 10 years of registration.
-- `.co` domains have a maximum registration period of 5 years.
-
-**When a transfer may be rejected:**
-
-- Your domain already has 9 or more years of registration remaining, and adding one year would exceed the 10-year limit (or the 5-year limit for `.co`).
-- Your domain was renewed after expiring and then transferred within 45 days of the original expiration date. In this case, the registry may not add the extra year. For example, if `example.com` expires on December 10, you renew it on December 20 (extending it to December 20 of the following year), and then transfer to Cloudflare on December 30 — the transfer is within 45 days of the original expiration, so the registry may not add an additional year. Your expiration date would remain December 20 of the following year, meaning you effectively paid twice for the same year. If this happens, you are entitled to request a refund from your previous registrar under ICANN rules.
-
-**TLD-specific requirements:**
-
-- `.ai` domains require a minimum 2-year registration for transfers.
-- `.uk` domains do not receive an additional year when transferred.
-
-**What you can do if your transfer is rejected:**
-
-- If your domain has too many years remaining, wait until the total registration period (current time remaining plus one year) would not exceed the maximum — 10 years for most TLDs, or 5 years for `.co`. For example, a `.com` domain with 9 years and 6 months remaining cannot be transferred until at least 6 months have passed.
-- If your domain is near expiration, renew it at your current registrar first, then transfer after the renewal is confirmed.
-
-For more details, refer to [Transfer rejected due to registration limits](/registrar/troubleshooting/#transfer-rejected-due-to-registration-limits).
-
-</Details>
-
-<Details header="Why is my domain not available for transfer?">
-
-Your domain may not appear on the Transfer Domains page if:
-
-- You have not [added your domain](/fundamentals/manage-domains/add-site/) to your Cloudflare account, or it is still in **Pending** status.
-- The domain was registered or previously transferred in the last 60 days.
-- Cloudflare does not support the TLD.
-- The domain has a status that does not allow transfers (such as `serverHold` or `pendingDelete`).
-
-</Details>
+For information about registration limits and the one-year extension, refer to [Transfer rejected due to registration limits](/registrar/troubleshooting/#transfer-rejected-due-to-registration-limits).
 
 ### Confirm your contact information
 
@@ -198,7 +151,7 @@ After entering the contact information, agree to the domain registration terms o
 
 After you submit the transfer, Cloudflare will begin processing it and send a Form of Authorization (FOA) email to the registrant if the information is available in the public WHOIS database.
 
-Your current registrar will also email you to confirm the transfer request. Most registrars include a link to approve the transfer. Selecting that link speeds up the process. If you do not act on the email, most registrars will release the domain after 5 business days. Some TLDs (such as `.mx`) can take up to 10 business days. You can also approve the transfer from within your current registrar dashboard.
+Your current registrar will email you confirming the transfer or asking for your approval. Afterwards, most registrars process it within 5 business days (but some TLDs, such as `.mx`, can take up to 10 business days).
 
 :::note
 Registrants transferring a `.us` domain will always receive a FOA email.
