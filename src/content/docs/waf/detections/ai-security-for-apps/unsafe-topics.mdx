@@ -25,10 +25,13 @@ AI Security for Apps (formerly Firewall for AI) can detect when an LLM prompt to
 
 When AI Security for Apps is enabled, it automatically evaluates prompts against a set of default unsafe topic categories and populates two fields:
 
-- [`cf.llm.prompt.unsafe_topic_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/) — `true` if any unsafe topic was found.
-- [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) — an array of the specific categories detected.
+- **LLM Unsafe topic detected** ([`cf.llm.prompt.unsafe_topic_detected`][1]) — `true` if any unsafe topic was found.
+- **LLM Unsafe topic categories** ([`cf.llm.prompt.unsafe_topic_categories`][2]) — An array of the specific categories detected.
 
-The default categories are:
+[1]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/
+[2]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/
+
+<Details header="Default PII categories">
 
 | Category | Description               |
 | -------- | ------------------------- |
@@ -46,6 +49,8 @@ The default categories are:
 | `S12`    | Sexual content            |
 | `S13`    | Elections                 |
 | `S14`    | Code interpreter abuse    |
+
+</Details>
 
 ### Example rules — default unsafe topics
 
@@ -85,7 +90,7 @@ This capability uses a <GlossaryTooltip term="zero-shot classification model">ze
 
 ### How custom topics work
 
-1. You define a list of custom topics via the dashboard or API (up to 20 topics). Each topic consists of:
+1. You define a list of up to 20 custom topics via the dashboard or API. Each topic consists of:
    - A label — Used in rule expressions and analytics
    - A topic string — the descriptive text the model uses to classify prompts
 2. When a request arrives at a `cf-llm` labeled endpoint, the model evaluates the prompt against all defined topic strings and returns a relevance score for each.

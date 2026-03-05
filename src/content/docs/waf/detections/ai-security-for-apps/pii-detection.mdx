@@ -18,8 +18,11 @@ AI Security for Apps (formerly Firewall for AI) can detect personally identifiab
 
 When AI Security for Apps is enabled and a request arrives at a `cf-llm` labeled endpoint, it scans the prompt for PII and populates two fields:
 
-- [`cf.llm.prompt.pii_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/) — `true` if any PII was found.
-- [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) — an array of the specific PII types found.
+- **LLM PII detected** ([`cf.llm.prompt.pii_detected`][1]) — `true` if any PII was found.
+- **LLM PII categories** ([`cf.llm.prompt.pii_categories`][2]) — An array of the specific PII types found.
+
+[1]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/
+[2]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/
 
 The detection is based on [Presidio](https://microsoft.github.io/presidio/supported_entities/), a data protection and de-identification SDK. Refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) for the full list of recognized categories.
 
