@@ -1,0 +1,127 @@
+---
+title: DNS filtering
+pcx_content_type: how-to
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Set up DNS filtering
+learning_center:
+  title: What is DNS filtering? | Secure DNS servers
+  link: https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/
+---
+
+import {
+	GlossaryTooltip,
+	Render,
+	Tabs,
+	TabItem,
+	APIRequest,
+} from "~/components";
+
+Secure Web Gateway allows you to inspect DNS traffic — the queries your devices make to translate domain names like `example.com` into IP addresses — and control which websites users can visit. Because every connection starts with a DNS lookup, DNS filtering blocks threats at the earliest stage of a connection, before the device ever reaches the destination. Use DNS policies to block malware domains, phishing sites, or entire content categories across your organization.
+
+:::note
+For a more detailed guide to filtering DNS queries and other traffic for your organization, refer to the [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/concepts/) implementation guide.
+:::
+
+## 1. Connect to Gateway
+
+You can filter DNS queries from individual devices (for example, employee laptops) or from entire network locations (for example, an office router). Choose the option that matches your deployment.
+
+### Connect devices
+
+To filter DNS requests from an individual device such as a laptop or phone:
+
+1. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device. WARP is a lightweight agent that routes the device's DNS queries through Cloudflare so Gateway can inspect and filter them.
+2. In the WARP client, open **Settings** and log in to your organization's <GlossaryTooltip term="team name">Zero Trust instance</GlossaryTooltip>. This tells WARP which Gateway policies to enforce.
+3. (Optional) If you want to display a [custom block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) instead of a generic browser error when a request is blocked, [install a Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
+
+### Connect DNS locations
+
+To filter DNS requests from a network location such as an office or data center without installing software on each device:
+
+1. [Add the location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) to your Cloudflare One settings. A DNS location represents a network (such as an office) whose DNS queries you want to filter.
+2. On your router, browser, or OS, change the DNS server setting to point to the Cloudflare address shown in the location setup UI. This forwards all DNS queries from that network through Gateway.
+
+:::note
+
+Gateway uses different methods to identify which location a query comes from, depending on the protocol:
+
+- **IPv4 queries** — Gateway matches the query to a location based on the source IP address of your network. Under **Networks** > **Resolvers & Proxies** > **DNS locations**, verify that the **Source IPv4 Address** matches the public IP of the network you want to protect.
+- **IPv6, DNS over TLS (DOT), or DNS over HTTPS (DOH) queries** — Because these protocols may obscure the source IP, Gateway instead matches queries using the unique DNS forwarding address assigned to each location. Make sure your resolver is configured with the correct forwarding address for the location you want policies to apply to.
+  :::
+
+## 2. Verify device connectivity
+
+To confirm that your device's DNS queries are flowing through Gateway:
+
+<Render
+	file="gateway/verify-connectivity"
+	product="cloudflare-one"
+	params={{ one: "DNS", two: "queries" }}
+/>
+
+## 3. Create your first DNS policy
+
+A DNS policy has two parts: a **traffic condition** that defines which queries to match (for example, all queries to gambling sites) and an **action** that defines what to do with matching queries (for example, block them). To create a new DNS policy:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies**.
+2. In the **DNS** tab, select **Add a policy**.
+3. Name the policy.
+4. Under **Traffic**, use the condition builder to define which DNS queries this policy applies to. Select a selector (such as **Security Categories**), an operator (such as **in**), and one or more values.
+5. Choose an **Action** to take when traffic matches the condition. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories):
+   <Render
+   	file="gateway/policies/block-security-categories"
+   	product="cloudflare-one"
+   />
+6. Select **Create policy**.
+
+</TabItem>
+
+<TabItem label="API">
+
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+
+   | Type    | Item       | Permission |
+   | ------- | ---------- | ---------- |
+   | Account | Zero Trust | Edit       |
+
+2. (Optional) Configure your API environment variables to include your [account ID](/fundamentals/account/find-account-and-zone-ids/) and API token.
+3. Send a `POST` request to the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint. For example, the following request creates a policy that blocks all default [security categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories). The numeric IDs in the `traffic` field (such as `68`, `178`, `80`) correspond to Cloudflare's predefined security threat categories — refer to [domain categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories) for the full mapping. The `precedence` field controls evaluation order when multiple policies match (`0` means this policy is evaluated first).
+
+   <APIRequest
+   	path="/accounts/{account_id}/gateway/rules"
+   	method="POST"
+   	json={{
+   		name: "Block security threats",
+   		description: "Block all default Cloudflare DNS security categories",
+   		precedence: 0,
+   		enabled: true,
+   		action: "block",
+   		filters: ["dns"],
+   		traffic:
+   			"any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
+   		identity: "",
+   	}}
+   />
+
+   ```sh output
+   {
+   	 "success": true,
+   	 "errors": [],
+   	 "messages": []
+   }
+   ```
+
+   The API will respond with a summary of the policy and the result of your request.
+
+</TabItem> </Tabs>
+
+For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/).
+
+## 4. Add optional policies
+
+Once your first policy is active, refer to [common DNS policies](/cloudflare-one/traffic-policies/dns-policies/common-policies) for other policies you may want to add. Common additions include blocking specific content categories (such as social media or streaming), enabling SafeSearch on search engines, and restricting DNS queries so devices can only use resolvers that you have approved.

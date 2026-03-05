@@ -7,7 +7,11 @@ sidebar:
 
 import { PackageManagers } from "~/components";
 
-If you have a video over 200 MB, we recommend using the [tus protocol](https://tus.io/) for resumable file uploads. A resumable upload ensures that the upload can be interrupted and resumed without uploading the previous data again.
+If you need to upload a video that is over 200 MB, you must use the [tus protocol](https://tus.io/). Even if the video is under 200 MB, if your connection is potentially unreliable, Cloudflare recommends using the tus protocol because it is resumable. A resumable upload ensures that the upload can be interrupted and resumed without uploading the previous data again.
+
+To use the tus protocol with end user videos, refer to [Direct Creator Uploads with tus](/stream/uploading-videos/direct-creator-uploads/#direct-creator-uploads-with-tus-protocol).
+
+If your video is under 200 MB and your connection is reliable, you can use a basic `POST` request instead. For direct API uploads using your API token, refer to [Upload via link](/stream/uploading-videos/upload-video-file/). For end user uploads, refer to [Basic POST request for Direct Creator Uploads](/stream/uploading-videos/direct-creator-uploads/#basic-post-request).
 
 ## Requirements
 

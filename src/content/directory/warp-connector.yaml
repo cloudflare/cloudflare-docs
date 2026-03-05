@@ -3,7 +3,7 @@ name: warp-connector
 
 entry:
   title: WARP Connector
-  url: /cloudflare-one/connections/connect-networks/private-net/warp-connector/
+  url: /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/
   show: false
 
 meta:

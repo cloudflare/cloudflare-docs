@@ -31,7 +31,7 @@ The local port associated with the log.
 
 Type: `string`
 
-The log message.
+The log message. IKEv2 ciphersuite is logged here for handshake messages.
 
 ## RemoteIP
 

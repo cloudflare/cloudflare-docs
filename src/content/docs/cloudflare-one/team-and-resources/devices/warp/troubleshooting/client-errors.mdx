@@ -92,7 +92,7 @@ On macOS, you may see `mDNSResponder` instead of the specific application name -
 
 Below is a non-exhaustive list of third-party software that are known to cause `mDNSResponder` to bind to port `53`. Rather than try to stop `mDNSResponder`, you should either configure the third-party software so that they no longer use port `53`, or temporarily disable them before connecting to WARP.
 
-- **Docker**: [Turn off kernel networking for UDP](https://github.com/docker/for-mac/issues/7008#issuecomment-1746653802) in Docker.
+- **Docker**: [Turn off kernel networking for UDP](https://github.com/docker/for-mac/issues/7008#issuecomment-1746653802) in Docker. Alternatively, uncheck **Start Docker Desktop when you sign in to your computer** under [**Settings** > **General**](https://docs.docker.com/desktop/settings-and-maintenance/settings/#general). Disabling the automatic startup process will prevent Docker from binding to port `53` before WARP.
 - **Internet Sharing feature**: To disable Internet Sharing:
   1. On macOS, go to **System Settings** > **General** > **Sharing**.
   2. Turn off **Internet Sharing**.

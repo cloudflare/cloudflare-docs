@@ -19,10 +19,10 @@ Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint
 ## Endpoint URL
 
 ```txt
-https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions
+https://gateway.ai.cloudflare.com/v1/{account_id}/default/compat/chat/completions
 ```
 
-Replace `{account_id}` and `{gateway_id}` with your Cloudflare account and gateway IDs.
+Replace `{account_id}` with your Cloudflare account ID. The `default` gateway is created automatically on your first request — no setup needed. You can also replace `default` with a specific gateway ID if you have already created one.
 
 ## Parameters
 

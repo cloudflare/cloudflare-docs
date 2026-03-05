@@ -1,0 +1,82 @@
+---
+import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+import ProductPills from "~/components/changelog/ProductPills.astro";
+import { Steps } from "~/components";
+import { format } from "date-fns";
+
+interface Props {
+	entries: CollectionEntry<"changelog">[];
+}
+
+const { entries } = Astro.props;
+---
+
+{
+	entries.map(async (entry) => {
+		const date = format(entry.data.date, "MMM dd, yyyy");
+		const { Content } = await render(entry);
+
+		return (
+			<div class="mt-0! sm:flex">
+				<time
+					datetime={entry.data.date.toISOString()}
+					class="text-xs leading-6 font-bold whitespace-nowrap sm:pr-4 sm:text-right"
+				>
+					{date}
+				</time>
+				<Steps>
+					<ol class="mt-0! overflow-x-auto">
+						<li class="pb-16!">
+							<div>
+								<h3 class="leading-none">
+									<a
+										href={`/changelog/post/${entry.id}/`}
+										class="mb-4 text-black! no-underline hover:underline"
+									>
+										{entry.data.title}
+									</a>
+								</h3>
+								<ProductPills products={entry.data.products} />
+							</div>
+							<Content />
+						</li>
+					</ol>
+				</Steps>
+			</div>
+		);
+	})
+}
+
+<style>
+	:root {
+		.sl-container {
+			--sl-content-width: 50rem !important;
+			margin-inline: auto !important;
+		}
+
+		.feedback-prompt-content {
+			display: none !important;
+		}
+
+		#footer-links {
+			justify-content: center;
+		}
+	}
+
+	.sl-steps {
+		--bullet-size: 24px !important;
+
+		& > li {
+			padding-inline-start: calc(var(--bullet-size) + 2.5rem) !important;
+
+			&::before {
+				content: "•" !important;
+				font-size: calc(var(--bullet-size) * 2) !important;
+				line-height: calc(var(--bullet-size) / 1.5) !important;
+				color: var(--orange-accent-200) !important;
+			}
+		}
+	}
+</style>

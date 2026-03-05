@@ -80,9 +80,8 @@ Turning on [IP geolocation](/network/ip-geolocation/) will send a `cf-ipcountry`
 
 #### Encoding of non-ASCII header values
 
-Cloudflare always converts non-ASCII characters to UTF-8 (using hexadecimal character representation) in HTTP request and response header values. This applies to location headers added by the **Add visitor location headers** managed transform.
+Cloudflare always converts non-ASCII characters to UTF-8 in HTTP request and response header values. This applies to location headers added by the **Add visitor location headers** managed transform.
 
-For example, the header value `São Paulo` would be encoded as `S\u00c3\u00a3o Paulo`.
 
 ### Add "True-Client-IP" header
 

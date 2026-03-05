@@ -156,3 +156,17 @@ openssl s_client -connect example.com:443 -servername example.com version
 ## Kaspersky Antivirus
 
 To avoid SSL errors with the Cloudflare dashboard when using Kaspersky Antivirus, allow `dash.cloudflare.com` in Kaspersky.
+
+---
+
+## Certificate Approval renewal email
+
+### Symptom
+
+When clicking `Approve Certificate` on a Certificate Approval renewal email, you get the following error message:
+
+`An error occurred while attempting to validate your domain. Please try again later or contact support for assistance.`
+
+### Resolution
+
+Check the status of the certificate on the [Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/:zone/ssl-tls). If the status is `Active`, you can disregard this email and the error message.

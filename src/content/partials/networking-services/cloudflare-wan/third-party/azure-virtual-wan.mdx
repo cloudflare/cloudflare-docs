@@ -100,7 +100,7 @@ When connecting your Azure vHub VPN Gateway to Cloudflare WAN, you need to creat
 2. Make sure you have the following settings:
    1. **Interface address**: Add the upper IP address within the first `/31` subnet selected in step 4 of the Start Azure Configuration section. Refer to <a href={props.tunnelEndpointsUrl}>Tunnel endpoints</a> for more details.
    2. **Customer endpoint**: The first public IP associated with your Azure VPN Gateway. For example, `40.xxx.xxx.xxx`.
-   3. **Cloudflare endpoint**: Use the Cloudflare anycast address you have received from your account team. This will also be the IP address corresponding to the VPN Site in Azure. For example, `162.xxx.xxx.xxx`.
+   3. **Cloudflare endpoint**: Use one of the Cloudflare anycast addresses assigned to your account, available in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space). This will also be the IP address corresponding to the VPN Site in Azure. For example, `162.xxx.xxx.xxx`.
    4. **Health check rate**: Medium (default).
    5. **Health check type**: Reply (default).
    6. **Health check direction**: Bidirectional (default).

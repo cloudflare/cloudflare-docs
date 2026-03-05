@@ -60,9 +60,17 @@ Hyperdrive may also encounter `ErrorResponse` wire protocol messages sent by you
 | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `Uncaught Error: No such module "node:<module>"` | Your Cloudflare Workers project or a library that it imports is trying to access a Node module that is not available. | Enable [Node.js compatibility](/workers/runtime-apis/nodejs/) for your Cloudflare Workers project to maximize compatibility. |
 
-### Driver errors
+### Uncached queries
 
-If your queries are not getting cached despite Hyperdrive having caching enabled, your driver may be configured such that your queries are not cacheable by Hyperdrive. This may happen if you are using the [Postgres.js](https://github.com/porsager/postgres) driver with [`prepare: false:`](https://github.com/porsager/postgres?tab=readme-ov-file#prepared-statements). To resolve this, enable prepared statements with `prepare: true`.
+If your queries are not being cached despite Hyperdrive having caching enabled, check the following:
+
+- **Stable or volatile PostgreSQL functions in your query**: Queries that contain PostgreSQL functions categorized as `STABLE` or `VOLATILE` are not cacheable. Common examples include `NOW()`, `CURRENT_TIMESTAMP`, `CURRENT_DATE`, `RANDOM()`, and `LASTVAL()`. To resolve this, move the function call to your application code and pass the result as a query parameter. For example, instead of `WHERE created_at > NOW()`, compute the timestamp in your Worker and pass it as a parameter: `WHERE created_at > $1`. Refer to [Query caching](/hyperdrive/concepts/query-caching/) for a full list of uncacheable functions.
+
+**Function names in SQL comments**: Hyperdrive uses text-based pattern matching to detect uncacheable functions. References to function names like `NOW()` in SQL comments cause the query to be treated as uncacheable, even if the function is not actually called. Remove any references to uncacheable function names from your query text, including comments.
+
+- **Driver configuration**: Your driver may be configured such that your queries are not cacheable by Hyperdrive. This may happen if you are using the [Postgres.js](https://github.com/porsager/postgres) driver with [`prepare: false`](https://github.com/porsager/postgres?tab=readme-ov-file#prepared-statements). To resolve this, enable prepared statements with `prepare: true`.
+
+### Driver errors
 
 | Error Message                                    | Details                                                                                                               | Recommended fixes                                                                                                            |
 | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |

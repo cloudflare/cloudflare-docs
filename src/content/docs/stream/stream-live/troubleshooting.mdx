@@ -46,3 +46,28 @@ If your live stream is buffering, freezing, experiencing latency issues, or havi
 	The upload-to-duration ratio is a measurement of how long it takes to upload a part of the stream compared to how long that part would take to play. A ratio of less than 100% means that the stream is uploading at least as fast as it would take to play, so most users should not experience buffering or freezing. A ratio of 100% or more means that your video is uploading slower than it would take to play, so it is likely that most users will experience buffering and freezing.
 	</Details>
 </Steps>
+
+## Connection rejected or unable to connect
+
+If your broadcast software shows a connection error or the stream fails to start, verify that the live input is enabled. A live input that is _disabled_ will reject all incoming connections.
+
+You can disable or enable a live input from the **Live inputs** list page or the live input detail page in the Dashboard.
+
+<DashButton url="/?to=/:account/stream/inputs" />
+
+To check or update the live input status via the API, use the `enabled` property:
+
+```bash
+curl -X GET \
+--header "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id}
+```
+
+If `enabled` is `false` in the response, update the live input to enable it:
+
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{"enabled": true}'
+```

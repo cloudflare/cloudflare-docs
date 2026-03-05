@@ -92,11 +92,11 @@ Cloudflare provides a SANs wildcard certificate with all paid plans, and a SNI w
 
 If you don't know what this means, navigate to the **Overview** tab of the **SSL/TLS** app in your Cloudflare dashboard. Select *Flexible* mode to serve your site over HTTPS to all public visitors.
 
-Once the certificate status changes to **• Active Certificate**, incoming traffic will be served to your site over HTTPS (e.g., visitors will see HTTPS prefixed to your domain name in the browser bar).
+Once the certificate status changes to **• Active Certificate**, incoming traffic will be served to your site over HTTPS. Visitors will see HTTPS prefixed to your domain name in the browser bar.
 
 ### Step 4b - Force all traffic over HTTPS
 
-To ensure all traffic to your site is encrypted, Cloudflare lets you force an automatic HTTPS redirect.  To configure this, consult: [How do I redirect all visitors to HTTPS/SSL?](/ssl/troubleshooting/faq/#how-do-i-redirect-all-visitors-to-httpsssl)
+To ensure all traffic to your site is encrypted, Cloudflare lets you force an automatic HTTPS redirect. To configure this, refer to [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/).
 
 You can then use a cURL command to verify that all requests are being forced over HTTPS.
 

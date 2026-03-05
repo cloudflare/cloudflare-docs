@@ -115,6 +115,24 @@ Use these attributes to control crawling behavior:
 | `<changefreq>` | Expected change frequency     | Use when `<lastmod>` is not available. Values: `always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `never`. |
 | `<priority>`   | Relative importance (0.0-1.0) | Set higher values for important pages. AI Search indexes pages in priority order.                                   |
 
+You can also use a Sitemap Index to bundle other, domain specific sitemaps:
+
+```xml title="sitemap-index.xml"
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://www.example.com/sitemap-blog.xml</loc>
+    <lastmod>2024-08-15T10:00:00+00:00</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.example.com/sitemap-docs.xml</loc>
+    <lastmod>2024-08-10T12:00:00+00:00</lastmod>
+  </sitemap>
+</sitemapindex>
+```
+
+When parsing a Sitemap Index, AI Search collects all child sitemaps and then crawls them recursively, collecting all relevant URLs present in your sitemaps.
+
 ### Recommendations
 
 - **Include `<lastmod>`** on all URLs to enable efficient change detection during syncs.
@@ -146,9 +164,9 @@ If you have Security rules configured to block bot activity, you can add a rule 
 
 You can configure parsing options during onboarding or in your instance settings under **Parser options**.
 
-### Sitemap
+### Specific sitemap
 
-By default, AI Search crawls all sitemaps listed in your `robots.txt` in the order they appear (top to bottom). If you do not want the crawler to index everything, you can specify a single sitemap URL to limit which pages are crawled.
+By default, AI Search crawls all sitemaps listed in your `robots.txt` in the order they appear (top to bottom). If you do not want the crawler to index everything, you can specify a single sitemap URL to limit which pages are crawled. You can add up to 5 specific sitemaps.
 
 ### Rendering mode
 
@@ -157,7 +175,7 @@ You can choose how pages are parsed during crawling:
 - **Static sites**: Downloads the raw HTML for each page.
 - **Rendered sites**: Loads pages with a headless browser and downloads the fully rendered version, including dynamic JavaScript content. Note that the [Browser Rendering](/browser-rendering/pricing/) limits and billing apply.
 
-## Access protected content
+## Extra headers for access protected content
 
 If your website has pages behind authentication or are only visible to logged-in users, you can configure custom HTTP headers to allow the AI Search crawler to access this protected content. You can add up to five custom HTTP headers to the requests AI Search sends when crawling your site.
 

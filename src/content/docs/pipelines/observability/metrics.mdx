@@ -13,7 +13,7 @@ The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/
 
 ### Operator metrics
 
-Pipelines export the below metrics within the `AccountPipelinesOperatorAdaptiveGroups` dataset. These metrics track data read and processed by pipeline operators.
+Pipelines export the below metrics within the `pipelinesOperatorAdaptiveGroups` dataset. These metrics track data read and processed by pipeline operators.
 
 | Metric        | GraphQL Field Name | Description                                                                                               |
 | ------------- | ------------------ | --------------------------------------------------------------------------------------------------------- |
@@ -21,7 +21,9 @@ Pipelines export the below metrics within the `AccountPipelinesOperatorAdaptiveG
 | Records In    | `recordsIn`        | Total number of records read by the pipeline (filter by `streamId_neq: ""` to get data read from streams) |
 | Decode Errors | `decodeErrors`     | Number of messages that could not be deserialized in the stream schema                                    |
 
-The `AccountPipelinesOperatorAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+For a detailed breakdown of why events were dropped (including specific error types like `missing_field`, `type_mismatch`, `parse_failure`, and `null_value`), refer to [User error metrics](#user-error-metrics).
+
+The `pipelinesOperatorAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
 
 - `pipelineId` - ID of the pipeline
 - `streamId` - ID of the source stream
@@ -31,7 +33,7 @@ The `AccountPipelinesOperatorAdaptiveGroups` dataset provides the following dime
 
 ### Sink metrics
 
-Pipelines export the below metrics within the `AccountPipelinesSinkAdaptiveGroups` dataset. These metrics track data delivery to sinks.
+Pipelines export the below metrics within the `pipelinesSinkAdaptiveGroups` dataset. These metrics track data delivery to sinks.
 
 | Metric                     | GraphQL Field Name         | Description                                                  |
 | -------------------------- | -------------------------- | ------------------------------------------------------------ |
@@ -41,7 +43,7 @@ Pipelines export the below metrics within the `AccountPipelinesSinkAdaptiveGroup
 | Row Groups Written         | `rowGroupsWritten`         | Number of row groups written (for Parquet files)             |
 | Uncompressed Bytes Written | `uncompressedBytesWritten` | Total number of bytes written before compression             |
 
-The `AccountPipelinesSinkAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+The `pipelinesSinkAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
 
 - `pipelineId` - ID of the pipeline
 - `sinkId` - ID of the destination sink
@@ -49,14 +51,45 @@ The `AccountPipelinesSinkAdaptiveGroups` dataset provides the following dimensio
 - `date` - Timestamp of the operation, truncated to the start of a day
 - `datetimeHour` - Timestamp of the operation, truncated to the start of an hour
 
-## View metrics in the dashboard
+### User error metrics
+
+Pipelines track events that are dropped during processing due to deserialization errors. When a structured stream receives events that do not match its defined schema, those events are accepted during ingestion but dropped during processing. The `pipelinesUserErrorsAdaptiveGroups` dataset provides visibility into these dropped events, telling you which events were dropped and why. You can explore the full schema of this dataset using GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
+
+| Metric | GraphQL Field Name | Description                             |
+| ------ | ------------------ | --------------------------------------- |
+| Count  | `count`            | Number of events that failed validation |
+
+The `pipelinesUserErrorsAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+
+- `pipelineId` - ID of the pipeline
+- `errorFamily` - Category of the error (for example, `deserialization`)
+- `errorType` - Specific error type within the family
+- `date` - Date of the error, truncated to start of day
+- `datetime` - Timestamp of the error
+- `datetimeHour` - Timestamp of the error, truncated to the start of an hour
+- `datetimeMinute` - Timestamp of the error, truncated to the start of a minute
+
+#### Known error types
+
+| Error family      | Error type      | Description                                                                                                  |
+| ----------------- | --------------- | ------------------------------------------------------------------------------------------------------------ |
+| `deserialization` | `missing_field` | A required field defined in the stream schema was not present in the event                                   |
+| `deserialization` | `type_mismatch` | A field value did not match the expected type in the schema (for example, string sent where number expected) |
+| `deserialization` | `parse_failure` | The event could not be parsed as valid JSON, or a field value could not be parsed into the expected type     |
+| `deserialization` | `null_value`    | A required field was present but had a null value                                                            |
+
+:::note
+To prevent incorrect data from being ingested in the first place, consider using [typed pipeline bindings](/pipelines/streams/writing-to-streams/#typed-pipeline-bindings) to catch schema violations at compile time.
+:::
+
+## View metrics and errors in the dashboard
 
 Per-pipeline analytics are available in the Cloudflare dashboard. To view current and historical metrics for a pipeline:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **Pipelines** > **Pipelines**.
 3. Select a pipeline.
-4. Go to the **Metrics** tab to view its metrics.
+4. Go to the **Metrics** tab to view its metrics or **Errors** tab to view dropped events.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 
@@ -72,14 +105,14 @@ This query returns the total bytes and records read by a pipeline from streams, 
 
 ```graphql graphql-api-explorer
 query PipelineOperatorMetrics(
-	$accountTag: string!
-	$pipelineId: string!
+	$accountTag: String!
+	$pipelineId: String!
 	$datetimeStart: Time!
 	$datetimeEnd: Time!
 ) {
 	viewer {
 		accounts(filter: { accountTag: $accountTag }) {
-			accountPipelinesOperatorAdaptiveGroups(
+			pipelinesOperatorAdaptiveGroups(
 				limit: 10000
 				filter: {
 					pipelineId: $pipelineId
@@ -105,15 +138,15 @@ This query returns detailed metrics about data written to a specific sink, inclu
 
 ```graphql graphql-api-explorer
 query PipelineSinkMetrics(
-	$accountTag: string!
-	$pipelineId: string!
-	$sinkId: string!
+	$accountTag: String!
+	$pipelineId: String!
+	$sinkId: String!
 	$datetimeStart: Time!
 	$datetimeEnd: Time!
 ) {
 	viewer {
 		accounts(filter: { accountTag: $accountTag }) {
-			accountPipelinesSinkAdaptiveGroups(
+			pipelinesSinkAdaptiveGroups(
 				limit: 10000
 				filter: {
 					pipelineId: $pipelineId
@@ -134,3 +167,126 @@ query PipelineSinkMetrics(
 	}
 }
 ```
+
+### Query dropped event errors
+
+This query returns a summary of events that were dropped due to schema validation failures, grouped by error type and ordered by frequency.
+
+```graphql graphql-api-explorer
+query GetPipelineUserErrors(
+	$accountTag: String!
+	$pipelineId: String!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			pipelinesUserErrorsAdaptiveGroups(
+				limit: 100
+				filter: {
+					pipelineId: $pipelineId
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+				orderBy: [count_DESC]
+			) {
+				count
+				dimensions {
+					date
+					errorFamily
+					errorType
+				}
+			}
+		}
+	}
+}
+```
+
+Example response:
+
+```json
+{
+	"data": {
+		"viewer": {
+			"accounts": [
+				{
+					"pipelinesUserErrorsAdaptiveGroups": [
+						{
+							"count": 679,
+							"dimensions": {
+								"date": "2026-02-19",
+								"errorFamily": "deserialization",
+								"errorType": "missing_field"
+							}
+						},
+						{
+							"count": 392,
+							"dimensions": {
+								"date": "2026-02-19",
+								"errorFamily": "deserialization",
+								"errorType": "type_mismatch"
+							}
+						},
+						{
+							"count": 363,
+							"dimensions": {
+								"date": "2026-02-19",
+								"errorFamily": "deserialization",
+								"errorType": "parse_failure"
+							}
+						},
+						{
+							"count": 44,
+							"dimensions": {
+								"date": "2026-02-19",
+								"errorFamily": "deserialization",
+								"errorType": "null_value"
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"errors": null
+}
+```
+
+You can filter by a specific error type by adding `errorType` to the filter:
+
+```graphql
+pipelinesUserErrorsAdaptiveGroups(
+	limit: 100
+	filter: {
+		pipelineId: $pipelineId
+		datetime_geq: $datetimeStart
+		datetime_leq: $datetimeEnd
+		errorType: "type_mismatch"
+	}
+	orderBy: [count_DESC]
+)
+```
+
+To query errors across all pipelines on an account, omit the `pipelineId` filter and include `pipelineId` in the dimensions:
+
+```graphql
+pipelinesUserErrorsAdaptiveGroups(
+	limit: 100
+	filter: {
+		datetime_geq: $datetimeStart
+		datetime_leq: $datetimeEnd
+	}
+	orderBy: [count_DESC]
+) {
+	count
+	dimensions {
+		pipelineId
+		errorFamily
+		errorType
+	}
+}
+```
+
+:::note
+In addition to `pipelinesUserErrorsAdaptiveGroups`, you can also query the `pipelinesUserErrorsAdaptive` dataset, which provides detailed error descriptions within the last 24 hours. Be aware that querying this dataset may return a large volume of data if your pipeline processes many events.
+:::

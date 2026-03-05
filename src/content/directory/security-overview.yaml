@@ -1,0 +1,13 @@
+id: ev9bei
+name: Security Overview
+
+entry:
+  title: Security Overview
+  group: Application security
+  url: /security/overview/
+  show: false
+
+meta:
+  title: Cloudflare Security Overview docs
+  description: Identify security action items and review the security posture of your domain
+  author: "@cloudflare"

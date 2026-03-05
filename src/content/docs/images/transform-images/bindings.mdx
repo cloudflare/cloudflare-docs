@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, TypeScriptExample } from "~/components";
 
 A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Images](/images/transform-images/transform-via-workers/), [R2 buckets](/r2/buckets/), or [KV Namespaces](/kv/concepts/kv-namespaces/).
 
@@ -61,33 +61,39 @@ Within your Worker code, you can interact with this binding by using `env.IMAGES
 
 For example, to draw a resized watermark on an image:
 
+<TypeScriptExample>
+
 ```ts
 // Fetch the watermark from Workers Assets, R2, KV etc
-const watermark: ReadableStream = ...
+const watermark: ReadableStream = getWatermarkStream();
 
 // Fetch the main image
-const image: ReadableStream = ...
+const image: ReadableStream = getImageStream();
 
 const response = (
-  await env.IMAGES.input(image)
-    .draw(
-        env.IMAGES.input(watermark)
-          .transform({ width: 32, height: 32}),
-        { bottom: 32, right: 32 }
-    )
-    .output({ format: "image/avif" })
-).response()
+	await env.IMAGES.input(image)
+		.draw(env.IMAGES.input(watermark).transform({ width: 32, height: 32 }), {
+			bottom: 32,
+			right: 32,
+		})
+		.output({ format: "image/avif" })
+).response();
 
 return response;
 ```
+
+</TypeScriptExample>
 
 ### `.output()`
 
 - You must define [a supported format](/images/transform-images/#supported-output-formats) such as AVIF, WebP, or JPEG for the [transformed image](/images/transform-images/).
 - This is required since there is no default format to fallback to.
 - [Image quality](/images/transform-images/transform-via-url/#quality) can be altered by specifying `quality` on a 1-100 scale.
+- [Animation preservation](/images/transform-images/transform-via-url/#anim) can be controlled with the `anim` parameter. Set `anim: false` to reduce animations to still images.
 
 For example, to rotate, resize, and blur an image, then output the image as AVIF:
+
+<TypeScriptExample>
 
 ```ts
 const info = await env.IMAGES.info(stream);
@@ -106,6 +112,8 @@ const response = (
 
 return response;
 ```
+
+</TypeScriptExample>
 
 ### `.info()`
 

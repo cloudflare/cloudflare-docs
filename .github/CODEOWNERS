@@ -4,7 +4,7 @@
 
 # More dev-specific files
 
-/.github/ @cloudflare/content-engineering @kodster28
+/.github/ @cloudflare/content-engineering @kodster28 @mvvmm @colbywhite @ahaywood
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing @kodster28
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing @kodster28
 /src/components/ @cloudflare/content-engineering @kodster28
@@ -69,6 +69,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/cloud-and-saas-findings/ @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/traffic-policies/ @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/remote-browser-isolation/ @deadlypants1973 @cloudflare/pcx-technical-writing
@@ -172,13 +173,9 @@ package.json @cloudflare/content-engineering
 # Magic products
 
 /src/content/docs/magic-transit/ @marciocloudflare @cloudflare/pcx-technical-writing
-/src/content/docs/magic-firewall/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-network-firewall/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
-/src/content/docs/magic-network-monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/network-flow/ @marciocloudflare @cloudflare/pcx-technical-writing
-/src/content/docs/magic-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
-/src/content/docs/magic-cloud-networking/ @marciocloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/multi-cloud-networking/ @marciocloudflare @cloudflare/pcx-technical-writing
 
 # Migration guides

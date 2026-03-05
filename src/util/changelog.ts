@@ -119,6 +119,16 @@ export async function getChangelogs({
 	return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
 
+// Pre-computed set of all product IDs that have at least one visible changelog
+// entry. Used by Header to scope the filter dropdown consistently across all pages.
+export const changelogProductIds: string[] = [
+	...new Set(
+		(await getChangelogs({ filter: (e) => !e.data.hidden })).flatMap((e) =>
+			e.data.products.map((p) => p.id),
+		),
+	),
+];
+
 type GetRSSItemsOptions = {
 	/**
 	 * An array of changelog entries from the `getChangelogs({})` function.
@@ -179,7 +189,7 @@ export async function getRSSItems({
 				description: content,
 				pubDate: date,
 				categories: productTitles,
-				link: `/changelog/${note.id}/`,
+				link: `/changelog/post/${note.id}/`,
 				customData: `<product>${productTitles.at(0)}</product>`,
 			};
 		}),

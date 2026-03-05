@@ -1,0 +1,102 @@
+---
+pcx_content_type: how-to
+title: Terraform
+sidebar:
+  order: 7
+head:
+  - tag: title
+    content: Deploy Tunnels with Terraform
+description: Learn how to deploy a Cloudflare Tunnel using Terraform and our
+  lightweight server-side daemon, cloudflared.
+---
+
+import { Render } from "~/components";
+
+[Terraform](https://www.terraform.io/) is an infrastructure as code tool that lets you define and manage your tunnels alongside other infrastructure. This guide deploys:
+
+- A GCP virtual machine that runs a web server
+- A Cloudflare Tunnel that makes the server available over the Internet
+- (Optional) A Cloudflare Access policy that defines who can connect
+
+## Prerequisites
+
+- [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)
+- [A zone on Cloudflare](/fundamentals/manage-domains/add-site/)
+
+## 1. Install Terraform
+
+Refer to the [Terraform installation guide](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) for your operating system.
+
+## 2. Install the gcloud CLI
+
+1. [Install the gcloud CLI](https://cloud.google.com/sdk/docs/install) so that Terraform can interact with your GCP account.
+
+2. Authenticate with the CLI by running:
+
+   ```sh
+   gcloud auth application-default login
+   ```
+
+## 3. Create a Cloudflare API token
+
+[Create an API token](/fundamentals/api/get-started/create-token/) so that Terraform can interact with your Cloudflare account. At minimum, your token should include the following permissions:
+
+| Type    | Item                      | Permission |
+| ------- | ------------------------- | ---------- |
+| Account | Cloudflare Tunnel         | Edit       |
+| Account | Access: Apps and Policies | Edit       |
+| Zone    | DNS                       | Edit       |
+
+## 4. Create a configuration directory
+
+<Render file="terraform/config-directory" product="cloudflare-one" />
+
+## 5. Create Terraform configuration files
+
+### Define input variables
+
+<Render file="terraform/input-variables" product="cloudflare-one" />
+
+### Assign values to the variables
+
+<Render file="terraform/variable-values" product="cloudflare-one" />
+
+### Configure Terraform providers
+
+<Render file="terraform/providers" product="cloudflare-one" />
+
+### Configure Cloudflare resources
+
+<Render file="terraform/cloudflare-resources" product="cloudflare-one" />
+
+### Configure GCP resources
+
+<Render file="terraform/gcp-resources" product="cloudflare-one" />
+
+### Create a startup script
+
+
+<Render file="terraform/startup-script" product="cloudflare-one" />
+
+## 6. Deploy Terraform
+
+<Render file="terraform/deploy-terraform" product="cloudflare-one" />
+
+It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Networking** > **Tunnels**.
+
+:::note[Remove Terraform resources]
+
+If you need to roll back the configuration, run `terraform destroy` to delete everything created through Terraform. Both `terraform apply` and `terraform destroy` prompt for user input before applying the changes. To run without requiring user input, you can add the `-auto-approve` flag to the command.
+:::
+
+## 7. Test the connection
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels** and verify that your tunnel is **Active**.
+
+2. (Optional) If you configured Access, go to **Security** > **Access** > **Applications** and verify that your Cloudflare email is allowed by the Access policy.
+
+3. From any device, open a browser and go to `http_app.<CLOUDFLARE_ZONE>` (for example, `http_app.example.com`).
+
+   If you configured Access, you will see the Access login page. Log in with your Cloudflare email.
+
+4. You should see the HTTPBin homepage, confirming that your tunnel is routing traffic correctly.

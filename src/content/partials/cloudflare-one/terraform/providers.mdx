@@ -1,0 +1,54 @@
+---
+{}
+---
+
+import { Tabs, TabItem, Render } from "~/components";
+
+You will need to declare the [providers](https://registry.terraform.io/browse/providers) used to provision the infrastructure.
+
+1.  In your configuration directory, create a `.tf` file:
+
+    ```sh
+    touch providers.tf
+    ```
+
+2.  Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
+
+        <Tabs syncKey="dashPlusAPI">
+        <TabItem label="Terraform (v5)">
+
+        <Render file="terraform/providers-v5" product="cloudflare-one" />
+
+        </TabItem>
+        <TabItem label="Terraform (v4)">
+
+        ```tf
+        terraform {
+        	required_providers {
+        		cloudflare = {
+        			source = "cloudflare/cloudflare"
+        			version = ">= 4.40.0, < 5.0.0"
+        		}
+        		google = {
+        			source = "hashicorp/google"
+        		}
+        		random = {
+        			source = "hashicorp/random"
+        		}
+        	}
+        	required_version = ">= 1.2"
+        }
+
+        # Providers
+        provider "cloudflare" {
+        	api_token    = var.cloudflare_token
+        }
+        provider "google" {
+        	project    = var.gcp_project_id
+        }
+        provider "random" {
+        }
+        ```
+
+        </TabItem>
+        </Tabs>
