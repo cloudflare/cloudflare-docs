@@ -20,7 +20,7 @@ Expose services running in your sandbox via public preview URLs. See [Preview UR
 Route incoming HTTP and WebSocket requests to the correct sandbox container. Call this at the top of your Worker's `fetch` handler, before any application logic, so that it intercepts and forwards preview URL requests automatically.
 
 ```ts
-const response = await proxyToSandbox(request: Request, env: Env): Promise<Response | null>
+proxyToSandbox(request: Request, env: Env): Promise<Response | null>
 ```
 
 **Parameters**:
