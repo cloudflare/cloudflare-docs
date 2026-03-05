@@ -216,15 +216,10 @@ Add `<meta>` tags using either the `name` or `property` attribute:
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Built-in fields (auto-extracted without schema) -->
 		<meta name="title" content="Getting Started Guide" />
 		<meta name="description" content="Learn how to set up the application" />
-
-		<!-- Open Graph tags (also auto-extracted) -->
 		<meta property="og:title" content="Getting Started Guide" />
 		<meta property="og:image" content="https://example.com/og-image.png" />
-
-		<!-- Custom metadata fields (must be defined in schema) -->
 		<meta name="category" content="documentation" />
 		<meta name="version" content="2.5" />
 		<meta name="is_public" content="true" />
@@ -235,9 +230,9 @@ Add `<meta>` tags using either the `name` or `property` attribute:
 </html>
 ```
 
-### Built-in fields
+### Recognized fields
 
-The following fields are automatically extracted without defining them in your schema:
+For the following fields, AI Search knows which meta tags to extract from. You must still define these in your schema to enable extraction.
 
 | Field         | Source                                                            |
 | ------------- | ----------------------------------------------------------------- |
@@ -245,7 +240,7 @@ The following fields are automatically extracted without defining them in your s
 | `description` | `<meta name="description">` or `<meta property="og:description">` |
 | `image`       | `<meta property="og:image">`                                      |
 
-Standard meta tags take precedence over Open Graph tags when both are present.
+When both a standard meta tag and an Open Graph tag are present, the standard meta tag takes precedence.
 
 ### How metadata extraction works
 
