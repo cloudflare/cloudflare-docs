@@ -11,6 +11,25 @@ description: Learn how to use Cloudflare Trace in the dashboard and with the API
 
 import { GlossaryTooltip, DashButton, Steps } from "~/components";
 
+## When to use Trace
+
+Use **Trace** when you need to test **what would happen** with a simulated request:
+
+- Testing configuration changes before deploying to production
+- Understanding why a rule did not trigger as expected
+- Seeing the exact evaluation order of your Cloudflare rules
+- Simulating requests from different geolocations, User-Agents, or bot scores
+- Debugging rule logic without sending real traffic
+
+Use **[Log Explorer](/log-explorer/)** when you need to investigate **what actually happened** with real production traffic:
+
+- Analyzing historical production traffic
+- Investigating security incidents after they occur
+- Searching for patterns across thousands of requests
+- Monitoring trends over time with dashboards
+
+**Key difference**: Trace simulates "what-if" scenarios; Log Explorer shows actual historical traffic.
+
 ## Use Trace in the dashboard
 
 ### 1. Configure one or more Cloudflare products

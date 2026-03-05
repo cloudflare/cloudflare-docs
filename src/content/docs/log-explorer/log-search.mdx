@@ -9,6 +9,25 @@ import { TabItem, Tabs, Render, DashButton } from "~/components";
 
 Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare dashboard or API, giving you visibility into your logs without the need to forward them to third-party services. Logs are stored on Cloudflare's global network using the R2 object storage platform and can be queried via the dashboard or SQL API.
 
+## When to use Log Explorer
+
+Use **Log Explorer** when you need to investigate **what actually happened** with real production traffic:
+
+- Analyzing historical data and trends
+- Investigating security incidents after they occur
+- Searching for patterns across thousands of requests
+- Monitoring application performance over time
+- Providing forensic evidence to support teams
+
+Use **[Trace](/rules/trace-request/)** when you need to test **what would happen** with a simulated request:
+
+- Understanding why a rule did not trigger as expected
+- Testing configuration changes before deployment
+- Seeing the evaluation order of your rules
+- Simulating requests from different geolocations or conditions
+
+**Key difference**: Log Explorer shows actual traffic; Trace shows simulated "what-if" scenarios.
+
 ## Use Log Explorer
 
 You can filter and view your logs via the Cloudflare dashboard or the API.
