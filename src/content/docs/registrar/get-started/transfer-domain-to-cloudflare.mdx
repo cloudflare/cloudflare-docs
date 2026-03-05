@@ -9,9 +9,13 @@ description: >-
 
 import { DashButton, Details, Render } from "~/components";
 
-Transferring a domain moves your registration from your current registrar to Cloudflare. The process takes about 30 minutes of active work, but the full transfer usually takes 3-5 business days to complete because your current registrar has up to 5 days to release the domain, and changes to your domain settings take time to take effect across the internet. Each transfer adds one year to your domain registration at Cloudflare's at-cost price.
+Transferring a domain moves your registration from your current registrar to Cloudflare.
 
-**Cloudflare works differently from most registrars.** You cannot enter an authorization code right away. Instead, Cloudflare requires you to add your domain and point your nameservers to Cloudflare first, so your site benefits from Cloudflare performance and security features from the moment the transfer begins. This is covered in [step 1](#1-add-your-domain-to-cloudflare) below.
+- **Active work:** About 30 minutes.
+- **Total time:** Usually 3-5 business days, because your current registrar has up to 5 days to release the domain and changes to your domain settings take time to take effect across the internet.
+- **Cost:** One year of registration at Cloudflare's at-cost price, added to your current expiration date.
+
+Before you can transfer, you must [add your domain to Cloudflare](#1-add-your-domain-to-cloudflare) and update your nameservers. Only then can you enter an authorization code and start the transfer. This is because Cloudflare applies performance and security features to your site before the transfer begins.
 
 :::note
 If your domain is registered with a website builder platform (such as Block, Shopify, Squarespace, or Wix), you may not be able to change nameservers while the domain is registered there. Refer to [Transfer from website builders](#transfer-from-website-builders) for the recommended workaround, or [Troubleshoot failed domain transfers](/registrar/troubleshooting/) if you are running into issues.
@@ -28,7 +32,7 @@ Confirm the following before you start:
 - Your domain was registered at least 60 days ago and has not been transferred in the last 60 days (ICANN requirement).
 - You have not changed your registrant name, organization, or email address in the last 60 days. Under ICANN rules, changes to these fields trigger a 60-day transfer lock. Some registrars let you opt out of this lock during the change, but not all do.
 - Your account at your current registrar is active. If your domain has expired, renew it at your current registrar first.
-- Your domain is not an internationalized domain name (IDN). Cloudflare does not currently support IDNs.
+- Your domain uses only standard characters (letters, numbers, hyphens). Cloudflare does not support domains with non-Latin characters (for example, `例え.jp`).
 - If you are transferring a `.us` domain, refer to [Additional requirements for .US domains](/registrar/top-level-domains/us-domains/).
 - If you are transferring multiple domains, notify your bank to prevent fraud alerts on multiple charges.
 
@@ -38,9 +42,9 @@ Cloudflare Registrar requires your domain to use Cloudflare for [authoritative D
 
 <Details header="Restrictions" id="restrictions">
 
-Domains with any of the following statuses cannot be transferred: `serverHold`, `serverTransferProhibited`, `pendingDelete`, `pendingTransfer`, or `RedemptionPeriod`. Domains that are locked (`clientTransferProhibited`) will not appear as available for transfer until you unlock them at your current registrar.
-
 If your domain appears as available for transfer in the Cloudflare dashboard, these restrictions have already been checked.
+
+For reference, domains with any of the following statuses cannot be transferred: `serverHold`, `serverTransferProhibited`, `pendingDelete`, `pendingTransfer`, or `RedemptionPeriod`. Domains that are locked (`clientTransferProhibited`) will not appear as available for transfer until you unlock them at your current registrar.
 
 :::caution
 If you renew an expired domain and then transfer it within 45 days of the original expiration date, the registry may not add the extra year. Refer to [Registration limits and the one-year extension](#enter-your-authorization-code-and-confirm-payment) for details.
@@ -52,7 +56,7 @@ If you renew an expired domain and then transfer it within 45 days of the origin
 
 ## 1. Add your domain to Cloudflare
 
-Before you can transfer your registration, your domain must be active on Cloudflare. This is what allows Cloudflare to protect your site with performance and security features during and after the transfer. You will not be able to enter an authorization code or proceed with the transfer until this step is complete.
+Before you can transfer your registration, your domain must be [active on Cloudflare](/dns/zone-setups/full-setup/). This is what allows Cloudflare to protect your site with performance and security features during and after the transfer. You will not be able to enter an authorization code or proceed with the transfer until this step is complete.
 
 ### Disable DNSSEC
 
@@ -60,43 +64,17 @@ If DNSSEC is enabled at your current registrar, disable it before you change nam
 
 **At your current registrar:**
 
-1. Check your domain settings for DNSSEC or DS records. If there are none, DNSSEC is not active and you can skip to [Add your domain](#add-your-domain).
+1. Check your domain settings for DNSSEC or DS records. If there are none, DNSSEC is not active and you can skip to [Add your domain](#add-your-domain-and-update-your-nameservers).
 2. Remove or disable DNSSEC (sometimes labeled "DS records").
 3. Wait at least 24 hours for the change to propagate before changing nameservers.
 
-<Details header="DNSSEC instructions for specific registrars">
-
-This is not an exhaustive list, but the following links may be helpful:
-
-- [DNSimple](https://support.dnsimple.com/articles/cloudflare-ds-record/)
-- [DreamHost](https://help.dreamhost.com/hc/en-us/articles/219539467)
-- [Dynadot](https://www.dynadot.com/help/question/set-DNSSEC)
-- [Enom](https://support.enom.com/support/solutions/articles/201000065386)
-- [Gandi](https://docs.gandi.net/en/domain_names/advanced_users/dnssec.html)
-- [GoDaddy](https://www.godaddy.com/help/add-a-ds-record-23865)
-- [Hover](https://support.hover.com/support/solutions/articles/201000064716)
-- [Name.com](https://www.name.com/support/articles/205439058-managing-dnssec)
-- [Namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/9722/2232/managing-dnssec-for-domains-pointed-to-custom-dns/)
-- [Squarespace](https://support.squarespace.com/hc/articles/4404183898125-Nameservers-and-DNSSEC-for-Squarespace-managed-domains#toc-dnssec)
-- [Porkbun](https://kb.porkbun.com/article/93-how-to-install-dnssec) (do not fill out **keyData**)
-
-</Details>
+<Render file="dnssec-providers" product="dns" />
 
 After your transfer completes, you can re-enable DNSSEC through Cloudflare with one click. Refer to [Enable DNSSEC](/dns/dnssec/#1-activate-dnssec-in-cloudflare).
 
-### Add your domain
+### Add your domain and update your nameservers
 
-**In the Cloudflare dashboard:**
-
-1. [Add your domain](/fundamentals/manage-domains/add-site/) to your Cloudflare account.
-2. [Review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records). Cloudflare scans for common records automatically, but the scan is not guaranteed to find all existing records. Compare the results against your current DNS configuration to avoid downtime.
-3. Cloudflare will assign you two nameservers (for example, `ada.ns.cloudflare.com` and `paul.ns.cloudflare.com`).
-
-### Update your nameservers
-
-**At your current registrar:**
-
-[Update your domain nameservers](/dns/nameservers/update-nameservers/) to the Cloudflare nameservers assigned in the previous step.
+Follow the steps in [Set up Cloudflare DNS](/dns/zone-setups/full-setup/setup/) to add your domain, review your DNS records, and get your assigned nameservers. Then [update the nameservers](/dns/nameservers/update-nameservers/) at your current registrar to the ones Cloudflare assigned.
 
 <Details header="Nameserver instructions for popular registrars">
 
@@ -133,7 +111,7 @@ Once your domain is active on Cloudflare, you can transfer the registration. Thi
 
 **At your current registrar:**
 
-Registrars apply a lock (sometimes called registrar lock, domain lock, or transfer lock) to prevent unauthorized transfers. In WHOIS, this appears as `clientTransferProhibited`. Remove this lock so Cloudflare can process the transfer.
+Remove the lock on your domain so Cloudflare can process the transfer. Most registrars apply a lock by default (sometimes called registrar lock, domain lock, or transfer lock) to prevent unauthorized transfers. In WHOIS, this appears as `clientTransferProhibited`.
 
 :::note
 Some registrars have multiple lock types (domain lock, transfer lock, privacy lock) that must each be disabled separately. If your domain still shows as locked after you have disabled one, check for additional lock settings.
@@ -175,7 +153,7 @@ Every domain transfer adds one year to your registration. However, domain regist
 **When a transfer may be rejected:**
 
 - Your domain already has 9 or more years of registration remaining, and adding one year would exceed the 10-year limit (or the 5-year limit for `.co`).
-- Your domain was renewed after expiring and then transferred within 45 days of the original expiration date. In this case, the registry may not add the extra year.
+- Your domain was renewed after expiring and then transferred within 45 days of the original expiration date. In this case, the registry may not add the extra year. For example, if `example.com` expires on December 10, you renew it on December 20 (extending it to December 20 of the following year), and then transfer to Cloudflare on December 30 — the transfer is within 45 days of the original expiration, so the registry may not add an additional year. Your expiration date would remain December 20 of the following year, meaning you effectively paid twice for the same year. If this happens, you are entitled to request a refund from your previous registrar under ICANN rules.
 
 **TLD-specific requirements:**
 
