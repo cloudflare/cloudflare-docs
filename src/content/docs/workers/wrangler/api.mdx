@@ -306,6 +306,22 @@ const platform = await getPlatformProxy(options);
 
       - `remoteBindings` Enables `getPlatformProxy` to connect to [remote bindings](/workers/development-testing/#remote-bindings).
 
+    - `populateProcessEnv` boolean
+
+      When `true`, `process.env` is populated with environment variables and secrets from your Wrangler configuration and `.env` files. This mirrors the behavior of workerd with the [`nodejs_compat_populate_process_env`](/workers/configuration/compatibility-flags/#enable-auto-populating-processenv) compatibility flag.
+
+      - `true`: Always populate `process.env`
+
+      - `false`: Never populate `process.env`
+
+      - `undefined` (default): Follows the same rules as workerd:
+
+        - Enabled when `nodejs_compat` is set AND either `compatibility_date` is `2025-04-01` or later, OR `nodejs_compat_populate_process_env` flag is explicitly set
+
+        - Disabled when `nodejs_compat_do_not_populate_process_env` flag is set
+
+      JSON binding values are stringified when added to `process.env`. Original `process.env` values are restored when `dispose()` is called.
+
 ### Return Type
 
 `getPlatformProxy()` returns a `Promise` resolving to an object containing the following fields.
@@ -329,8 +345,7 @@ const platform = await getPlatformProxy(options);
   - For the time being, all cache operations do nothing. A more accurate emulation will be made available soon.
 
 - `dispose()` () => `Promise<void>`
-
-  - Terminates the underlying `workerd` process.
+  - Terminates the underlying `workerd` process and restores any original `process.env` values that were overwritten if `populateProcessEnv` was enabled.
   - Call this after the platform proxy is no longer required by the program. If you are running a long running process (such as a dev server) that can indefinitely make use of the proxy, you do not need to call this function.
 
 ### Usage
@@ -364,6 +379,23 @@ console.log(`MY_VARIABLE = ${env.MY_VARIABLE}`);
 ```
 
 This will print the following output: `MY_VARIABLE = test`.
+
+#### `process.env` population
+
+When `populateProcessEnv` is enabled (either explicitly or via compatibility settings), you can also access text and JSON bindings through `process.env`:
+
+```js
+import { getPlatformProxy } from "wrangler";
+
+const { env, dispose } = await getPlatformProxy({
+	populateProcessEnv: true,
+});
+
+console.log(process.env.MY_VARIABLE); // prints: "test"
+
+// Clean up and restore original process.env values
+await dispose();
+```
 
 ### Supported bindings
 
