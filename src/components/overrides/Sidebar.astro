@@ -49,20 +49,7 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	import { track } from "~/util/zaraz";
 	import { openGlobalSearch } from "~/util/search";
 
-	// Ensure the sticky header is a direct child of #starlight__sidebar
-	// (not inside .sidebar-content) so it is not part of the scroll container.
-	// The is:inline script above handles initial placement; this covers re-renders.
-	function hoistStickyHeader() {
-		const header = document.querySelector(".sidebar-sticky-header");
-		const pane = document.getElementById("starlight__sidebar");
-		if (header && pane && header.parentElement !== pane) {
-			pane.insertBefore(header, pane.firstChild);
-		}
-	}
-
 	function initSidebarSearch() {
-		hoistStickyHeader();
-
 		const searchInput = document.getElementById(
 			"sidebar-search",
 		) as HTMLInputElement;
