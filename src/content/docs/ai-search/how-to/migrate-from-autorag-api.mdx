@@ -258,6 +258,86 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
 | `data[].content[].text` | `chunks[].text`            |
 | No scoring breakdown    | `chunks[].scoring_details` |
 
+## Filter format
+
+The new AI Search REST API uses Vectorize-style metadata filtering, which differs from the AutoRAG API format. For full documentation of the old format, refer to [AutoRAG API filter format](/ai-search/autorag-filter-format/).
+
+### Operator mapping
+
+| AutoRAG API | AI Search API       |
+| ----------- | ------------------- |
+| `eq`        | `$eq` (or implicit) |
+| `ne`        | `$ne`               |
+| `gt`        | `$gt`               |
+| `gte`       | `$gte`              |
+| `lt`        | `$lt`               |
+| `lte`       | `$lte`              |
+| —           | `$in` (new)         |
+| —           | `$nin` (new)        |
+
+### Examples
+
+#### Simple filter
+
+**Before (AutoRAG API):**
+
+```js
+filters: {
+  type: "eq",
+  key: "folder",
+  value: "customer-a/"
+}
+```
+
+**After (AI Search API):**
+
+```json
+{ "folder": "customer-a/" }
+```
+
+#### Compound filter (AND)
+
+**Before (AutoRAG API):**
+
+```js
+filters: {
+  type: "and",
+  filters: [
+    { type: "eq", key: "folder", value: "customer-a/" },
+    { type: "gte", key: "timestamp", value: "1735689600000" }
+  ]
+}
+```
+
+**After (AI Search API):**
+
+```json
+{
+	"folder": "customer-a/",
+	"timestamp": { "$gte": 1735689600 }
+}
+```
+
+#### "Starts with" filter
+
+**Before (AutoRAG API):**
+
+```js
+filters: {
+  type: "and",
+  filters: [
+    { type: "gt", key: "folder", value: "customer-a//" },
+    { type: "lte", key: "folder", value: "customer-a/z" }
+  ]
+}
+```
+
+**After (AI Search API):**
+
+```json
+{ "folder": { "$gte": "customer-a/", "$lt": "customer-a0" } }
+```
+
 ## API references
 
 - [REST API documentation](/ai-search/usage/rest-api/)
