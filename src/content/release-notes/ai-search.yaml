@@ -19,6 +19,10 @@ entries:
     title: New REST API endpoints
     description: |-
       AI Search introduces new [REST API](/ai-search/usage/rest-api/) endpoints for search that use an OpenAI-compatible format. You can use the familiar `messages` array structure that works with existing OpenAI SDKs and tools. The previous AutoRAG API endpoints will continue working as expected for the time being. New features will only be added to the new API. We will provide at least 90 days notice before any end of life. See the [migration guide](/ai-search/how-to/migrate-from-autorag-api/) for instructions.
+  - publish_date: "2026-03-06"
+    title: New AI Search Workers binding
+    description: |-
+      The new `env.AI.aiSearch()` binding provides a cleaner API for AI Search operations with account-level and instance-level methods. Requires `@cloudflare/workers-types` version 4.20260304.0 or later for TypeScript types and `wrangler` version 4.68.1 or later for local development. The previous `env.AI.autorag()` binding continues to work.
   - publish_date: "2026-02-09"
     title: Crawler user agent renamed
     description: |-

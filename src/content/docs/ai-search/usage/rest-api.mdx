@@ -5,6 +5,7 @@ sidebar:
   order: 2
 ---
 
+import { LinkCard } from "@astrojs/starlight/components";
 import { Render, MetaInfo, Type, DashButton } from "~/components";
 
 This guide explains how to use the AI Search REST API to query your AI Search instance.
@@ -92,3 +93,11 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
 ### Response
 
 <Render file="search-response" product="ai-search" />
+
+## Related
+
+<LinkCard
+	title="Instances API"
+	description="Programmatically create, list, or delete AI Search instances."
+	href="/ai-search/instances-api/"
+/>

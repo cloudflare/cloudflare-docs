@@ -1,0 +1,128 @@
+---
+{}
+---
+
+import { MetaInfo, Type } from "~/components";
+
+`id` <Type text="string" /> <MetaInfo text="required" />
+
+The unique identifier for the AI Search instance. Must be 1-32 characters and match the pattern `^[a-z0-9_]+(?:-[a-z0-9_]+)*$`.
+
+`type` <Type text="string" /> <MetaInfo text="required" />
+
+The type of data source. Valid values: `r2`, `web-crawler`.
+
+`source` <Type text="string" /> <MetaInfo text="required" />
+
+The data source location. For `r2` type, this is the R2 bucket name. For `web-crawler` type, this is the website domain.
+
+`source_params` <Type text="object" /> <MetaInfo text="optional" />
+
+Additional parameters for the data source.
+
+- `prefix` <Type text="string" /> <MetaInfo text="optional" />
+  - For R2 sources, limits indexing to objects with this key prefix.
+
+- `r2_jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction for the R2 bucket, for example `eu`.
+
+- `include_items` <Type text="array" /> <MetaInfo text="optional" />
+  - Glob patterns for paths to include in indexing. For example: `["/blog/**", "/docs/**/*.html"]`.
+
+- `exclude_items` <Type text="array" /> <MetaInfo text="optional" />
+  - Glob patterns for paths to exclude from indexing. For example: `["/admin/**", "/private/**"]`.
+
+- `web_crawler` <Type text="object" /> <MetaInfo text="optional" />
+  - Configuration for web crawler sources.
+
+  - `parse_type` <Type text="string" /> <MetaInfo text="optional" />
+    - The parsing method. Valid value: `sitemap`.
+
+  - `parse_options` <Type text="object" /> <MetaInfo text="optional" />
+    - `include_headers` <Type text="object" /> <MetaInfo text="optional" />
+      - Custom HTTP headers to include when crawling.
+
+    - `include_images` <Type text="boolean" /> <MetaInfo text="optional" />
+      - Whether to include images in the index.
+
+    - `specific_sitemaps` <Type text="array" /> <MetaInfo text="optional" />
+      - Specific sitemap URLs to crawl. For example: `["https://example.com/sitemap.xml"]`.
+
+    - `use_browser_rendering` <Type text="boolean" /> <MetaInfo text="optional" />
+      - Use browser rendering to crawl JavaScript-rendered pages.
+
+  - `store_options` <Type text="object" /> <MetaInfo text="optional" />
+    - `storage_type` <Type text="string" /> <MetaInfo text="optional" />
+      - The storage type. Valid value: `r2`.
+
+    - `storage_id` <Type text="string" /> <MetaInfo text="optional" />
+      - The storage bucket ID.
+
+    - `r2_jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+      - The jurisdiction for the storage bucket.
+
+`token_id` <Type text="string" /> <MetaInfo text="optional" />
+
+The UUID of the [service API token](/ai-search/configuration/service-api-token/) to use for this instance. Only required if you have never created an AI Search instance before. Refer to the [API get started guide](/ai-search/get-started/api/) for how to create and register a service token.
+
+`ai_gateway_id` <Type text="string" /> <MetaInfo text="optional" />
+
+The AI Gateway ID to route requests through for logging and analytics.
+
+`embedding_model` <Type text="string" /> <MetaInfo text="optional" />
+
+The embedding model to use for vectorizing content.
+
+`ai_search_model` <Type text="string" /> <MetaInfo text="optional" />
+
+The text-generation model to use for generating responses.
+
+`rewrite_query` <Type text="boolean" /> <MetaInfo text="optional" />
+
+Enable query rewriting to improve retrieval accuracy. Defaults to `false`.
+
+`reranking` <Type text="boolean" /> <MetaInfo text="optional" />
+
+Enable reranking to reorder retrieved results by semantic relevance. Defaults to `false`.
+
+`reranking_model` <Type text="string" /> <MetaInfo text="optional" />
+
+The reranking model to use. Valid value: `@cf/baai/bge-reranker-base`.
+
+`chunk_size` <Type text="number" /> <MetaInfo text="optional" />
+
+The size of chunks when splitting documents. Minimum value: `64`.
+
+`chunk_overlap` <Type text="number" /> <MetaInfo text="optional" />
+
+The overlap between chunks. Minimum value: `0`.
+
+`max_num_results` <Type text="number" /> <MetaInfo text="optional" />
+
+The default maximum number of results to return. Minimum value: `1`.
+
+`score_threshold` <Type text="number" /> <MetaInfo text="optional" />
+
+The default minimum score threshold for results. Minimum value: `0`.
+
+`cache` <Type text="boolean" /> <MetaInfo text="optional" />
+
+Enable response caching. Defaults to `true`.
+
+`cache_threshold` <Type text="string" /> <MetaInfo text="optional" />
+
+The cache matching threshold. Valid value: `super_strict_match`.
+
+`custom_metadata` <Type text="array" /> <MetaInfo text="optional" />
+
+Custom metadata fields to extract and index from documents.
+
+- `field_name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the metadata field.
+
+- `data_type` <Type text="string" /> <MetaInfo text="required" />
+  - The data type of the field. Valid value: `text`.
+
+`enable` <Type text="boolean" /> <MetaInfo text="optional" />
+
+Whether the instance is enabled. Defaults to `true`.

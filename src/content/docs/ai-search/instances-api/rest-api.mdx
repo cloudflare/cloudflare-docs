@@ -1,0 +1,82 @@
+---
+pcx_content_type: reference
+title: REST API
+sidebar:
+  order: 2
+---
+
+Use the AI Search REST API to programmatically manage instances and indexing jobs.
+
+## Authentication
+
+All requests require an API token with AI Search edit permissions. Include the token in the `Authorization` header:
+
+```txt
+Authorization: Bearer <API_TOKEN>
+```
+
+### Create an API token
+
+1. In the Cloudflare dashboard, go to **My Profile** > **API Tokens**.
+2. Select **Create Token**.
+3. Select **Create Custom Token**.
+4. Enter a **Token name**, for example `AI Search Manager`.
+5. Under **Permissions**, select **Account** > **AI Search** > **Edit**.
+6. Select **Continue to summary**, then select **Create Token**.
+7. Copy and save the token value.
+
+## Instance endpoints
+
+Manage AI Search instances in your account.
+
+| Description                                                                           | Method   | Endpoint                                          |
+| ------------------------------------------------------------------------------------- | -------- | ------------------------------------------------- |
+| [List all instances](/api/resources/ai_search/subresources/instances/methods/list/)   | `GET`    | `/accounts/{account_id}/ai-search/instances`      |
+| [Create an instance](/api/resources/ai_search/subresources/instances/methods/create/) | `POST`   | `/accounts/{account_id}/ai-search/instances`      |
+| [Get an instance](/api/resources/ai_search/subresources/instances/methods/read/)      | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}` |
+| [Update an instance](/api/resources/ai_search/subresources/instances/methods/update/) | `PUT`    | `/accounts/{account_id}/ai-search/instances/{id}` |
+| [Delete an instance](/api/resources/ai_search/subresources/instances/methods/delete/) | `DELETE` | `/accounts/{account_id}/ai-search/instances/{id}` |
+
+### Example: Create an instance
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/instances" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "docs-search",
+    "type": "web-crawler",
+    "source": "example.com"
+  }'
+```
+
+## Jobs endpoints
+
+Trigger and monitor [sync jobs](/ai-search/configuration/indexing/#jobs) that scan your data source and index new or updated content.
+
+| Description                                                                                        | Method | Endpoint                                                             |
+| -------------------------------------------------------------------------------------------------- | ------ | -------------------------------------------------------------------- |
+| [List jobs](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/list/)       | `GET`  | `/accounts/{account_id}/ai-search/instances/{id}/jobs`               |
+| [Create a job](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/create/)  | `POST` | `/accounts/{account_id}/ai-search/instances/{id}/jobs`               |
+| [Get job details](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/read/) | `GET`  | `/accounts/{account_id}/ai-search/instances/{id}/jobs/{job_id}`      |
+| [List job logs](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/logs/)   | `GET`  | `/accounts/{account_id}/ai-search/instances/{id}/jobs/{job_id}/logs` |
+
+### Example: Trigger a sync job and check status
+
+Create a new indexing job:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/instances/$INSTANCE_ID/jobs" \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+Check the job status:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/instances/$INSTANCE_ID/jobs/$JOB_ID" \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+## API reference
+
+For complete API specifications including all parameters and response fields, refer to the [AI Search API reference](/api/resources/ai_search/).

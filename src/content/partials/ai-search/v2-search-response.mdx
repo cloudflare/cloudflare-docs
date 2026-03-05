@@ -1,0 +1,54 @@
+---
+{}
+---
+
+```json
+{
+	"search_query": "How do I configure caching?",
+	"chunks": [
+		{
+			"id": "chunk-001",
+			"type": "text",
+			"score": 0.85,
+			"text": "To configure caching, set the cache parameter to true in your instance configuration.",
+			"item": {
+				"key": "docs/configuration/caching.md",
+				"timestamp": 1709568000,
+				"metadata": {
+					"title": "Caching Configuration",
+					"section": "configuration"
+				}
+			}
+		},
+		{
+			"id": "chunk-002",
+			"type": "text",
+			"score": 0.78,
+			"text": "Cache thresholds control how strictly queries must match cached responses.",
+			"item": {
+				"key": "docs/configuration/cache-options.md",
+				"timestamp": 1709481600,
+				"metadata": {
+					"title": "Cache Options",
+					"section": "configuration"
+				}
+			}
+		}
+	]
+}
+```
+
+The response contains the following fields:
+
+| Field                     | Type   | Description                                                                          |
+| ------------------------- | ------ | ------------------------------------------------------------------------------------ |
+| `search_query`            | string | The query used for the search, which may be rewritten if query rewriting is enabled. |
+| `chunks`                  | array  | An array of matching content chunks.                                                 |
+| `chunks[].id`             | string | The unique identifier for the chunk.                                                 |
+| `chunks[].type`           | string | The type of content, typically `text`.                                               |
+| `chunks[].score`          | number | The overall match score between 0 and 1.                                             |
+| `chunks[].text`           | string | The text content of the chunk.                                                       |
+| `chunks[].item`           | object | Information about the source item.                                                   |
+| `chunks[].item.key`       | string | The file path or URL of the source document.                                         |
+| `chunks[].item.timestamp` | number | Unix timestamp of when the item was last modified.                                   |
+| `chunks[].item.metadata`  | object | Custom metadata associated with the source item.                                     |
