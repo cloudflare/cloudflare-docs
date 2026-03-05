@@ -167,7 +167,7 @@ export class MyAgent extends Agent<Env, State> {
 Errors surface in two ways depending on how the write was attempted:
 
 - **Client-side `setState()`** — the server sends a `cf_agent_state_error` message. Handle it with the `onStateUpdateError` callback.
-- **`@callable()` methods** — the RPC call rejects with an error. Handle it with a `try`/`catch` around `agent.call()`.
+- **`@callable()` methods** — the RPC call rejects with an error. Handle it with a [try/catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) around `agent.call()`.
 
 :::note
 `onStateUpdateError` also fires when `validateStateChange` rejects a client-originated state update (with the message `"State update rejected"`). This makes the callback useful for handling any rejected state write, not just readonly errors.
