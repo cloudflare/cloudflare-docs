@@ -4,7 +4,7 @@ title: Unsafe and custom topics
 tags:
   - AI
 sidebar:
-  order: 2
+  order: 4
   label: Unsafe & custom topics
 ---
 
@@ -24,22 +24,22 @@ When AI Security for Apps is enabled, it automatically evaluates prompts against
 
 The default categories are:
 
-| Category | Description |
-| --- | --- |
-| `S1` | Violent crimes |
-| `S2` | Non-violent crimes |
-| `S3` | Sex-related crimes |
-| `S4` | Child sexual exploitation |
-| `S5` | Defamation |
-| `S6` | Specialized advice |
-| `S7` | Privacy |
-| `S8` | Intellectual property |
-| `S9` | Indiscriminate weapons |
-| `S10` | Hate |
-| `S11` | Suicide and self-harm |
-| `S12` | Sexual content |
-| `S13` | Elections |
-| `S14` | Code interpreter abuse |
+| Category | Description               |
+| -------- | ------------------------- |
+| `S1`     | Violent crimes            |
+| `S2`     | Non-violent crimes        |
+| `S3`     | Sex-related crimes        |
+| `S4`     | Child sexual exploitation |
+| `S5`     | Defamation                |
+| `S6`     | Specialized advice        |
+| `S7`     | Privacy                   |
+| `S8`     | Intellectual property     |
+| `S9`     | Indiscriminate weapons    |
+| `S10`    | Hate                      |
+| `S11`    | Suicide and self-harm     |
+| `S12`    | Sexual content            |
+| `S13`    | Elections                 |
+| `S14`    | Code interpreter abuse    |
 
 ### Example rules — default unsafe topics
 
@@ -47,9 +47,9 @@ The default categories are:
 
 - **When incoming requests match**:
 
-  | Field | Operator | Value |
-  | --- | --- | --- |
-  | LLM Unsafe topic detected | equals | True |
+  | Field                     | Operator | Value |
+  | ------------------------- | -------- | ----- |
+  | LLM Unsafe topic detected | equals   | True  |
 
   If you use the Expression Editor, enter the following expression:<br/>
   `(cf.llm.prompt.unsafe_topic_detected)`
@@ -60,9 +60,9 @@ The default categories are:
 
 - **When incoming requests match**:
 
-  | Field | Operator | Value |
-  | --- | --- | --- |
-  | LLM Unsafe topic categories | is in | `S1: Violent Crimes` `S10: Hate` |
+  | Field                       | Operator | Value                            |
+  | --------------------------- | -------- | -------------------------------- |
+  | LLM Unsafe topic categories | is in    | `S1: Violent Crimes` `S10: Hate` |
 
   If you use the Expression Editor, enter the following expression:<br/>
   `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
@@ -79,10 +79,10 @@ This capability uses a zero-shot classification model that evaluates prompts at 
 
 ### How custom topics work
 
-1. You define a list of up to **20 custom topics** via the dashboard or API.
+1. You define a list of up to 20 custom topics via the dashboard or API.
 2. Each topic consists of a **label** (used in rule expressions and analytics) and a **topic string** (the descriptive text the model uses to classify prompts).
-3. When a request arrives at a `cf-llm` labeled endpoint, the model evaluates the prompt against all defined **topic strings** and returns a **relevance score** for each.
-4. Scores are written to the [`cf.llm.prompt.custom_topic_categories`](/waf/detections/ai-security-for-apps/fields/) map field, keyed by **label**. You use labels — not topic strings — in rule expressions and analytics.
+3. When a request arrives at a `cf-llm` labeled endpoint, the model evaluates the prompt against all defined topic strings and returns a relevance score for each.
+4. Scores are written to the [`cf.llm.prompt.custom_topic_categories`](/waf/detections/ai-security-for-apps/fields/) map field, keyed by label. You use labels — not topic strings — in rule expressions and analytics.
 
 Scores follow the same convention as other AI Security for Apps scores: **lower values indicate higher relevance** (1 = highly relevant, 99 = not relevant).
 
@@ -129,12 +129,12 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom
 
 ### Constraints
 
-| Parameter | Limit |
-| --- | --- |
-| Maximum number of topics | 20 |
-| Topic string length | 2–50 printable ASCII characters |
-| Label length | 2–20 characters |
-| Label format | Lowercase letters, numbers, and hyphens (`-`) only |
+| Parameter                | Limit                                              |
+| ------------------------ | -------------------------------------------------- |
+| Maximum number of topics | 20                                                 |
+| Topic string length      | 2–50 printable ASCII characters                    |
+| Label length             | 2–20 characters                                    |
+| Label format             | Lowercase letters, numbers, and hyphens (`-`) only |
 
 ### Example rules — custom topics
 
@@ -169,13 +169,13 @@ The quality of custom topic detection depends on how you write your topic string
 
 Overly broad topics match too many prompts (high false positives). Overly narrow topics miss relevant prompts (high false negatives).
 
-| Quality | Topic string | Why |
-| --- | --- | --- |
-| Good | `Acme Corp products and pricing` | Names a specific competitor — catches prompts discussing that company's offerings |
-| Good | `securities trading and investment recommendations` | Targets a well-defined intersection of two concepts |
-| Too narrow | `Acme Corp pricing page URL` | So specific that only near-exact mentions will score highly |
-| Too broad | `technology` | Will match almost any technical prompt |
-| Too broad | `bad things` | Semantically vague — the model cannot determine what you consider "bad" |
+| Quality    | Topic string                                        | Why                                                                               |
+| ---------- | --------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Good       | `Acme Corp products and pricing`                    | Names a specific competitor — catches prompts discussing that company's offerings |
+| Good       | `securities trading and investment recommendations` | Targets a well-defined intersection of two concepts                               |
+| Too narrow | `Acme Corp pricing page URL`                        | So specific that only near-exact mentions will score highly                       |
+| Too broad  | `technology`                                        | Will match almost any technical prompt                                            |
+| Too broad  | `bad things`                                        | Semantically vague — the model cannot determine what you consider "bad"           |
 
 ### Use descriptive phrases, not single keywords
 
@@ -189,26 +189,26 @@ If you define topics that mean nearly the same thing — for example, `financial
 
 The model performs semantic classification, not keyword matching. A topic string of `Acme Corp products and pricing` will detect requests that discuss that competitor's offerings even if they do not mention the company by name — for example, a prompt like _"How does your pricing compare to the leading alternative?"_ can still score highly.
 
-This also means you should **phrase topics as action-oriented verb phrases** that capture what the user is _doing_, not just the subject they mention. Descriptions that capture intent are significantly more discriminating — especially on borderline or ambiguous text.
+This also means you should phrase topics as action-oriented verb phrases that capture what the user is doing, not just the subject they mention. Descriptions that capture intent are significantly more discriminating — especially on borderline or ambiguous text.
 
 For example, compare these two topic strings against two very different prompts:
 
-| Topic string | _"I read an article about tax deductions"_ | _"What stocks should I buy to retire in 10 years?"_ |
-| --- | --- | --- |
-| `financial advice` | Medium relevance (false positive) | High relevance |
-| `asking for financial advice` | No relevance (correct) | High relevance |
+| Topic string                  | "I read an article about tax deductions" | "What stocks should I buy to retire in 10 years?" |
+| ----------------------------- | ---------------------------------------- | ------------------------------------------------- |
+| `financial advice`            | Medium relevance (false positive)        | High relevance                                    |
+| `asking for financial advice` | No relevance (correct)                   | High relevance                                    |
 
-The noun-phrase version (`financial advice`) returns a false positive on the passive text because the prompt merely _mentions_ the subject. The verb-phrase version (`asking for financial advice`) correctly ignores passive mentions and only matches when the user is actively seeking advice.
+The noun-phrase version (`financial advice`) returns a false positive on the passive text because the prompt merely mentions the subject. The verb-phrase version (`asking for financial advice`) correctly ignores passive mentions and only matches when the user is actively seeking advice.
 
 **Recommended phrasing styles:**
 
-| Style | Example |
-| --- | --- |
-| Noun phrase | `investment advice` |
-| Verb phrase (recommended) | `asking for investment advice` |
-| Sentence-like | `a user seeking financial guidance` |
+| Style                     | Example                             |
+| ------------------------- | ----------------------------------- |
+| Noun phrase               | `investment advice`                 |
+| Verb phrase (recommended) | `asking for investment advice`      |
+| Sentence-like             | `a user seeking financial guidance` |
 
-For most use cases, a **3–6 word verb phrase** is the best trade-off between precision and coverage.
+For most use cases, a 3–6 word verb phrase is the best trade-off between precision and coverage.
 
 ### Test and iterate
 
@@ -219,10 +219,10 @@ After defining your topics, send test prompts and review the scores in [Security
 
 ### Example custom topics
 
-| Label | Topic string | Use case |
-| --- | --- | --- |
-| `competitors` | `asking about Acme Corp products and pricing` | Prevent your chatbot from discussing a specific rival's offerings |
-| `legal-advice` | `asking for legal counsel or regulatory compliance guidance` | Block prompts that solicit legal advice from your AI |
-| `student-data` | `requesting student personal information or academic records` | EdTech — prevent discussion of individual student data |
-| `exec-internal` | `discussing internal executive decisions or leadership changes` | Prevent discussion of sensitive internal matters |
-| `crypto-advice` | `asking for cryptocurrency trading or investment recommendations` | FinTech — block prompts seeking crypto investment tips |
+| Label           | Topic string                                                      | Use case                                                          |
+| --------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `competitors`   | `asking about Acme Corp products and pricing`                     | Prevent your chatbot from discussing a specific rival's offerings |
+| `legal-advice`  | `asking for legal counsel or regulatory compliance guidance`      | Block prompts that solicit legal advice from your AI              |
+| `student-data`  | `requesting student personal information or academic records`     | EdTech — prevent discussion of individual student data            |
+| `exec-internal` | `discussing internal executive decisions or leadership changes`   | Prevent discussion of sensitive internal matters                  |
+| `crypto-advice` | `asking for cryptocurrency trading or investment recommendations` | FinTech — block prompts seeking crypto investment tips            |

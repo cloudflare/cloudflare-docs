@@ -1393,7 +1393,7 @@ entries:
     plan_info_label: Enterprise
     summary: A map of custom topic labels to relevance scores (1–99) for the LLM prompt in the request.
     description: |-
-      Lower scores indicate the prompt is more relevant to that topic. Only populated when [custom topics](/waf/detections/ai-security-for-apps/fields/unsafe-topics/#custom-topics) are configured.
+      Lower scores indicate the prompt is more relevant to that topic. Only populated when [custom topics](/waf/detections/ai-security-for-apps/unsafe-topics/#custom-topics) are configured.
 
       Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
     example_block: |-

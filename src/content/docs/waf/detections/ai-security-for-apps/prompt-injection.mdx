@@ -4,7 +4,7 @@ title: Prompt injection detection
 tags:
   - AI
 sidebar:
-  order: 3
+  order: 5
   label: Prompt injection
 ---
 
@@ -18,11 +18,11 @@ Prompt injection detection uses a **score-based system** rather than a binary de
 
 The score ranges from **1 to 99**:
 
-| Score range | Meaning |
-| --- | --- |
-| **1–19** | High likelihood of prompt injection — the prompt strongly resembles known injection patterns |
-| **20–49** | Moderate likelihood — the prompt has some characteristics of an injection attempt |
-| **50–99** | Low likelihood — the prompt appears to be normal, non-malicious input |
+| Score range | Meaning                                                                                      |
+| ----------- | -------------------------------------------------------------------------------------------- |
+| **1–19**    | High likelihood of prompt injection — the prompt strongly resembles known injection patterns |
+| **20–49**   | Moderate likelihood — the prompt has some characteristics of an injection attempt            |
+| **50–99**   | Low likelihood — the prompt appears to be normal, non-malicious input                        |
 
 :::note
 **Lower scores indicate higher risk.** This is the opposite of what you might intuitively expect. A score of `1` means the prompt is very likely an injection attempt; a score of `99` means it is very likely safe.
@@ -44,9 +44,9 @@ The score gives you flexibility to set thresholds that match your risk tolerance
 
 - **When incoming requests match**:
 
-  | Field | Operator | Value |
-  | --- | --- | --- |
-  | LLM Injection score | less than | `20` |
+  | Field               | Operator  | Value |
+  | ------------------- | --------- | ----- |
+  | LLM Injection score | less than | `20`  |
 
   If you use the Expression Editor, enter the following expression:<br/>
   `(cf.llm.prompt.injection_score lt 20)`
