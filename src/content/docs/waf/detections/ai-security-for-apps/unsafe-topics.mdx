@@ -7,12 +7,19 @@ sidebar:
   order: 4
 ---
 
-import { Tabs, TabItem, Details, Steps } from "~/components";
+import {
+	Tabs,
+	TabItem,
+	Details,
+	Steps,
+	DashButton,
+	GlossaryTooltip,
+} from "~/components";
 
 AI Security for Apps (formerly Firewall for AI) can detect when an LLM prompt touches on unsafe or unwanted subjects. There are two layers of topic detection:
 
-- **Default unsafe topics** — A built-in set of safety categories that detect harmful content such as violent crimes, hate speech, and sexual content.
-- **Custom topics** — Topics you define to match your organization's specific policies, such as "competitors" or "financial advice".
+- [Default unsafe topics](#default-unsafe-topics) — A built-in set of safety categories that detect harmful content such as violent crimes, hate speech, and sexual content.
+- [Custom topics](#custom-topics) — Topics you define to match your organization's specific policies, such as "competitors" or "financial advice".
 
 ## Default unsafe topics
 
@@ -42,7 +49,7 @@ The default categories are:
 
 ### Example rules — default unsafe topics
 
-**Block any prompt with unsafe content:**
+#### Block any prompt with unsafe content
 
 - **When incoming requests match**:
 
@@ -50,12 +57,12 @@ The default categories are:
   | ------------------------- | -------- | ----- |
   | LLM Unsafe topic detected | equals   | True  |
 
-  If you use the Expression Editor, enter the following expression:<br/>
+  Expression when using the editor:<br/>
   `(cf.llm.prompt.unsafe_topic_detected)`
 
 - **Action**: _Block_
 
-**Block only specific unsafe categories:**
+#### Block only specific unsafe categories
 
 - **When incoming requests match**:
 
@@ -63,7 +70,7 @@ The default categories are:
   | --------------------------- | -------- | -------------------------------- |
   | LLM Unsafe topic categories | is in    | `S1: Violent Crimes` `S10: Hate` |
 
-  If you use the Expression Editor, enter the following expression:<br/>
+  Expression when using the editor:<br/>
   `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
 
 - **Action**: _Block_
@@ -78,20 +85,24 @@ This capability uses a zero-shot classification model that evaluates prompts at 
 
 ### How custom topics work
 
-1. You define a list of up to 20 custom topics via the dashboard or API.
-2. Each topic consists of a **label** (used in rule expressions and analytics) and a **topic string** (the descriptive text the model uses to classify prompts).
-3. When a request arrives at a `cf-llm` labeled endpoint, the model evaluates the prompt against all defined topic strings and returns a relevance score for each.
-4. Scores are written to the [`cf.llm.prompt.custom_topic_categories`](/waf/detections/ai-security-for-apps/fields/) map field, keyed by label. You use labels — not topic strings — in rule expressions and analytics.
+1. You define a list of custom topics via the dashboard or API (up to 20 topics). Each topic consists of:
+   - A label — Used in rule expressions and analytics
+   - A topic string — the descriptive text the model uses to classify prompts
+2. When a request arrives at a `cf-llm` labeled endpoint, the model evaluates the prompt against all defined topic strings and returns a relevance score for each.
+3. Scores are written to the [`cf.llm.prompt.custom_topic_categories`](/waf/detections/ai-security-for-apps/fields/) map field, keyed by label. You use labels — not topic strings — in rule expressions and analytics.
 
-Scores follow the same convention as other AI Security for Apps scores: **lower values indicate higher relevance** (1 = highly relevant, 99 = not relevant).
+Scores follow the same convention as other AI Security for Apps scores, where lower values indicate higher relevance (1 = highly relevant, 99 = not relevant).
 
 ### Define custom topics
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Steps>
 
-1. In the Cloudflare dashboard, go to the **Settings** page under Security.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
 2. Under **AI Security for Apps**, find the **Custom Topics** section and select **Manage topics**.
 3. Add a topic by providing:
    - **Label**: A short identifier used in rule expressions (for example, `competitors`).
@@ -102,7 +113,7 @@ Scores follow the same convention as other AI Security for Apps scores: **lower 
 
 </TabItem> <TabItem label="API">
 
-Update your custom topics list using a `PUT` request. This **replaces your entire topic list** — include all topics you want to keep, not just new ones:
+Update your custom topics list using a `PUT` request:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom_topics" \
@@ -117,7 +128,11 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom
 }'
 ```
 
-Retrieve your current topics:
+:::caution
+This request replaces your entire topic list — include all topics you want to keep, not just new topics.
+:::
+
+To retrieve your current topics use a `GET` request:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom_topics" \
@@ -137,21 +152,27 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom
 
 ### Example rules — custom topics
 
-**Block prompts highly relevant to competitors:**
+#### Block prompts highly relevant to competitors
 
 - **When incoming requests match**:
 
-  If you use the Expression Editor, enter the following expression:<br/>
+  Enter the following expression in the editor:<br/>
   `(cf.llm.prompt.custom_topic_categories["competitors"] lt 30)`
 
 - **Action**: _Block_
 
-**Log prompts related to financial advice:**
+#### Log prompts related to financial advice
 
-`(cf.llm.prompt.custom_topic_categories["finance"] lt 40)`
+- **When incoming requests match**:
 
-**Combine custom topics with other detections:**
+  Enter the following expression in the editor:<br/>
+  `(cf.llm.prompt.custom_topic_categories["finance"] lt 40)`
 
+- **Action**: _Log_
+
+#### Combine custom topics with other detections
+
+Example expression:<br/>
 `(cf.llm.prompt.custom_topic_categories["competitors"] lt 30 or cf.llm.prompt.pii_detected)`
 
 :::caution
@@ -162,7 +183,7 @@ If you reference a label that has not been defined, the map lookup returns `nil`
 
 ## Best practices for defining custom topics
 
-The quality of custom topic detection depends on how you write your topic strings. The underlying model is a zero-shot classifier — it compares the semantic meaning of the prompt against your topic string.
+The quality of custom topic detection depends on how you write your topic strings. The underlying model is a <GlossaryTooltip term="zero-shot classification model">zero-shot classifier</GlossaryTooltip> — it compares the semantic meaning of the prompt against your topic string.
 
 ### Be specific, and avoid vague topics
 
@@ -176,7 +197,7 @@ Overly broad topics match too many prompts (high false positives). Overly narrow
 | Too broad  | `technology`                                        | Will match almost any technical prompt                                            |
 | Too broad  | `bad things`                                        | Semantically vague — the model cannot determine what you consider "bad"           |
 
-### Use descriptive phrases, not single keywords
+### Use descriptive phrases instead of single keywords
 
 A topic string like `finance` is less effective than `securities trading and investment recommendations`. More descriptive phrases give the model better signal and help prevent false positives.
 
@@ -184,7 +205,7 @@ A topic string like `finance` is less effective than `securities trading and inv
 
 If you define topics that mean nearly the same thing — for example, `financial advice` and `investment guidance` — both will score similarly on the same prompts, consuming two of your 20-topic budget without adding detection value. Consolidate overlapping concepts into a single topic.
 
-### Think about intent, not just keywords
+### Think about intent and not just keywords
 
 The model performs semantic classification, not keyword matching. A topic string of `Acme Corp products and pricing` will detect requests that discuss that competitor's offerings even if they do not mention the company by name — for example, a prompt like _"How does your pricing compare to the leading alternative?"_ can still score highly.
 
