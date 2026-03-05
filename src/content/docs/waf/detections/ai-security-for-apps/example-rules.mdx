@@ -17,7 +17,7 @@ A customer support chatbot should not engage with prompts about violent crimes o
   | --------------------------- | -------- | -------------------------------- |
   | LLM Unsafe topic categories | is in    | `S1: Violent Crimes` `S10: Hate` |
 
-  If you use the Expression Editor, enter the following expression:<br />
+  Expression when using the editor:<br />
   `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
 
 - **Action**: _Block_
