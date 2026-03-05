@@ -11,7 +11,7 @@ AI Security for Apps (formerly Firewall for AI) provides an estimated token coun
 
 ## How token counting works
 
-When AI Security for Apps processes a request to a `cf-llm` labeled endpoint, it calculates an approximate token count for the prompt content. The result is available in the `cf.llm.prompt.token_count` field, which you can reference in rule expressions and view in analytics.
+When AI Security for Apps processes a request to a `cf-llm` labeled endpoint, it calculates an approximate token count for the prompt content. The result is available in the **LLM Token count** ([`cf.llm.prompt.token_count`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.token_count/)) field, which you can reference in rule expressions and view in analytics.
 
 :::note
 **The token count is an estimate.** It uses a general-purpose tokenizer and will not exactly match the token count reported by your LLM provider. Different models use different tokenizers — GPT-4, Claude, Llama, and others all tokenize text differently. Use this field for relative thresholds and anomaly detection, not as a precise measurement for billing or model-specific token budgets.
@@ -41,8 +41,9 @@ Set the rate to, for example, 10 requests per minute per IP, with an action of _
 
 ### Combine token count with other detections
 
-Target large prompts that also show signs of prompt injection — a common pattern where attackers pad injection attempts with long context:
+Target large prompts that also show signs of prompt injection — a common pattern where attackers pad injection attempts with long context.
 
+Example rule expression:<br/>
 `(cf.llm.prompt.token_count gt 3000 and cf.llm.prompt.injection_score lt 50)`
 
 ## Important considerations
