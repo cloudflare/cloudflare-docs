@@ -331,12 +331,6 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 			}
 		}
 
-		.sidebar-nav-scroll {
-			flex: 1;
-			overflow-y: auto;
-			min-height: 0;
-		}
-
 		/* Stop .sidebar-content from scrolling — .sidebar-nav-scroll handles it */
 		.sidebar-content {
 			overflow: hidden !important;

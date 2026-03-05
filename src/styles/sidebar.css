@@ -1,4 +1,7 @@
 .sidebar-nav-scroll {
+	flex: 1;
+	overflow-y: auto;
+	min-height: 0;
 	scrollbar-gutter: stable;
 	padding: 0 0.5rem 1rem 1.5rem;
 }
