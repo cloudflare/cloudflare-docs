@@ -6,6 +6,30 @@ sidebar:
   label: Limitations
 ---
 
+## Automatic rule bypasses
+
+Trace does not show when rules are automatically bypassed by Cloudflare for operational reasons. The following bypasses occur but will not appear in trace results:
+
+### Certificate validation (DCV)
+
+When SSL/TLS certificates managed by Cloudflare are in `pending_validation` status with valid DCV tokens, the following security features are automatically disabled on specific paths:
+
+**Affected paths:**
+- `/.well-known/pki-validation/`
+- `/.well-known/acme-challenge/`
+
+**Bypassed features:**
+- Custom rules (WAF custom rules)
+- Managed Rules
+
+This automatic bypass ensures certificate authorities can validate domain ownership without interference from security rules. If you are troubleshooting why a rule did not trigger, check if the request path matches these patterns.
+
+Refer to [Why are some rules bypassed?](/waf/troubleshooting/faq/#why-are-some-rules-bypassed-when-i-did-not-create-an-exception) for more details.
+
+---
+
+## Unsupported features
+
 Trace currently does not support:
 
 - Hostnames using [Data Localization Suite](/data-localization/)
