@@ -18,7 +18,7 @@ After [creating your Cloudflare Tunnel](/cloudflare-one/networks/connectors/clou
 For production deployments, consider the following steps:
 
 - [Deploy replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/deploy-replicas/) - Run multiple `cloudflared` instances for redundancy.
-- [Configure logging](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#loglevel) - Set appropriate log levels for monitoring and troubleshooting.
+- [Configure logging](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel) - Set appropriate log levels for monitoring and troubleshooting.
 - [Review system requirements](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/) - Ensure your infrastructure meets performance needs.
 - [Configure firewall rules](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) - Implement egress-only traffic patterns for security.
 
@@ -38,7 +38,7 @@ Maximize tunnel uptime with:
 
 - [Multiple replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas) - Deploy `cloudflared` across different hosts.
 - [Health alerts](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/) - Get notified when your tunnel is degraded or goes down.
-- [Health metrics](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#metrics) - Monitor tunnel resource usage to identify potential bottlenecks.
+- [Health metrics](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#metrics) - Monitor tunnel resource usage to identify potential bottlenecks.
 - [Load balancing](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflare-load-balancers/) - Distribute traffic across tunnel connections.
 - [Automatic failover](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) - Leverage built-in connection redundancy.
 

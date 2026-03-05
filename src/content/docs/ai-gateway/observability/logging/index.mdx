@@ -7,7 +7,7 @@ import { Render } from "~/components";
 
 Logging is a fundamental building block for application development. Logs provide insights during the early stages of development and are often critical to understanding issues occurring in production.
 
-Your AI Gateway dashboard shows logs of individual requests, including the user prompt, model response, provider, timestamp, request status, token usage, cost, and duration. These logs persist, giving you the flexibility to store them for your preferred duration and do more with valuable request data.
+Your AI Gateway dashboard shows logs of individual requests, including the user prompt, model response, provider, timestamp, request status, token usage, cost, and duration. When [DLP](/ai-gateway/features/dlp/) policies are configured, logs for requests that trigger a DLP match also include the DLP action taken (Flag or Block), matched policy IDs, matched profile IDs, and the specific detection entries that were triggered. These logs persist, giving you the flexibility to store them for your preferred duration and do more with valuable request data.
 
 By default, each gateway can store up to 10 million logs. You can customize this limit per gateway in your gateway settings to align with your specific requirements. If your storage limit is reached, new logs will stop being saved. To continue saving logs, you must delete older logs to free up space for new logs.
 To learn more about your plan limits, refer to [Limits](/ai-gateway/reference/limits/).
@@ -47,9 +47,18 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 '
 ```
 
+## DLP fields in logs
+
+When [Data Loss Prevention (DLP)](/ai-gateway/features/dlp/) policies are enabled on a gateway, log entries for requests that trigger a DLP policy match include additional fields:
+
+<Render file="dlp-log-fields" product="ai-gateway" />
+
+These fields are available both in the dashboard log viewer and through the [Logs API](/api/resources/ai_gateway/subresources/logs/methods/list/). You can filter logs by **DLP Action** in the dashboard to view only flagged or blocked requests. For more details on DLP monitoring, refer to [Monitor DLP events](/ai-gateway/features/dlp/set-up-dlp/#monitor-dlp-events).
+
 ## Managing log storage
 
 To manage your log storage effectively, you can:
+
 - Set Storage Limits: Configure a limit on the number of logs stored per gateway in your gateway settings to ensure you only pay for what you need.
 - Enable Automatic Log Deletion: Activate the Automatic Log Deletion feature in your gateway settings to automatically delete the oldest logs once the log limit you've set or the default storage limit of 10 million logs is reached. This ensures new logs are always saved without manual intervention.
 
@@ -82,6 +91,7 @@ See full list of available filters and their descriptions below:
 | Metadata Value  | equals, does not equal                                       | specific metadata values.                 |
 | Log ID          | equals, does not equal                                       | a specific Log ID.                        |
 | Event ID        | equals, does not equal                                       | a specific Event ID.                      |
+| DLP Action      | FLAG, BLOCK                                                  | the DLP action taken on the request.      |
 
 ### API deletion
 

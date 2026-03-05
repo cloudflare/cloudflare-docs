@@ -1,0 +1,141 @@
+---
+title: Configuration
+pcx_content_type: reference
+sidebar:
+  order: 4
+---
+
+import {
+	DashButton,
+	Details,
+	Render,
+	Tabs,
+	TabItem,
+	TunnelCalculator,
+} from "~/components";
+
+This page covers the most common configuration options for `cloudflared` tunnels, including high availability, firewall rules, and runtime parameters.
+
+## Replicas and high availability
+
+When you run a tunnel, `cloudflared` establishes four outbound-only, [post-quantum encrypted](/ssl/post-quantum-cryptography/) connections to at least two distinct Cloudflare data centers. If any connection, server, or data center goes offline, your resources remain available.
+
+A replica is an additional `cloudflared` instance that points to the same tunnel. Each replica creates four new connections, providing additional ingress points to your origin. You can run up to 25 replicas (100 connections) per tunnel. Traffic routes to the geographically closest replica.
+
+<Render file="tunnel/availability/cloudflared-replicas-diagram" product="cloudflare-one" />
+
+### Deploy a replica
+
+<Tabs>
+<TabItem label="Dashboard">
+
+To deploy a replica for a remotely-managed tunnel:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
+2. Select your tunnel.
+3. Select **Add a replica**.
+4. Select the operating system of the host where you want to deploy a replica.
+5. Copy the installation command and run it on the host.
+
+</TabItem>
+
+<TabItem label="CLI">
+To deploy a replica for a [locally-managed tunnel](/tunnel/advanced/local-management/), run `cloudflared tunnel run <NAME>` on an additional host using the same [tunnel credentials](/tunnel/advanced/local-management/tunnel-permissions/).
+</TabItem>
+
+</Tabs>
+:::note
+For intelligent traffic steering, failover logic, or health alerts, use [Cloudflare Load Balancing](/tunnel/routing/#load-balancing) instead of replicas.
+:::
+
+## Firewall rules
+
+`cloudflared` connects outbound to Cloudflare on port `7844`. Your firewall must allow egress to the following destinations. Block all ingress traffic for a positive security model — only the services in your tunnel configuration will be exposed.
+
+### Required ports
+
+<Render file="tunnel/firewall/required-ports" product="cloudflare-one" />
+
+<Details header="US region IPs">
+
+<Render
+	file="tunnel/firewall/us-region-ports"
+	product="cloudflare-one"
+	params={{ regionURL: "#region" }}
+/>
+
+</Details>
+
+<Details header="FedRAMP High IPs">
+
+<Render
+	file="tunnel/firewall/fedramp-high-ports"
+	product="cloudflare-one"
+	params={{ tunnelTokenURL: "/tunnel/advanced/tunnel-tokens/" }}
+/>
+
+</Details>
+
+<Details header="SNI-enforcing firewalls">
+
+<Render file="tunnel/firewall/sni-hostnames" product="cloudflare-one" />
+
+</Details>
+
+<Details header="Optional port 443 destinations">
+
+Opening port `443` enables optional features like software auto-updates and Access JWT validation. `cloudflared` runs correctly without these connections.
+
+| Destination                             | Purpose                                   |
+| --------------------------------------- | ----------------------------------------- |
+| `api.cloudflare.com`                    | Software update checks                    |
+| `update.argotunnel.com`                 | Software update checks                    |
+| `github.com`                            | Download latest release                   |
+| `<team-name>.cloudflareaccess.com`      | Access JWT validation (if Access enabled) |
+| `pqtunnels.cloudflareresearch.com`      | Post-quantum error reporting              |
+| `cfd-features.argotunnel.com` (DNS TXT) | UDP datagram version negotiation          |
+
+</Details>
+
+To verify your firewall allows tunnel traffic, refer to [Connection errors](/tunnel/troubleshooting/#connection-errors).
+
+## Run parameters
+
+These flags apply to the `cloudflared tunnel run` command. They control how the tunnel runs on your operating system.
+
+The most commonly used parameters:
+
+| Parameter                                                 | Default           | Description                                              |
+| --------------------------------------------------------- | ----------------- | -------------------------------------------------------- |
+| [`--loglevel`](/tunnel/advanced/run-parameters/#loglevel) | `info`            | Log verbosity: `debug`, `info`, `warn`, `error`, `fatal` |
+| [`--logfile`](/tunnel/advanced/run-parameters/#logfile)   | stdout            | Path to write log output                                 |
+| [`--metrics`](/tunnel/advanced/run-parameters/#metrics)   | `127.0.0.1:2024x` | Prometheus metrics endpoint address                      |
+| [`--protocol`](/tunnel/advanced/run-parameters/#protocol) | `auto`            | Connection protocol: `auto`, `quic`, `http2`             |
+| [`--region`](/tunnel/advanced/run-parameters/#region)     | global            | Route through US-only data centers with `us`             |
+| [`--token`](/tunnel/advanced/run-parameters/#token)       | —                 | Tunnel token (remotely-managed tunnels)                  |
+
+The following example shows how to manually run a tunnel with configuration flags:
+
+```sh
+cloudflared tunnel --loglevel info --logfile /var/log/cloudflared/cloudflared.log run --token <TOKEN VALUE>
+```
+
+For the complete list of run parameters and instructions on how to add them to a tunnel service, refer to [Run parameters](/tunnel/advanced/run-parameters/).
+
+## Origin parameters
+
+Origin configuration parameters control how `cloudflared` proxies traffic to your origin server.
+
+The most commonly used parameters:
+
+| Parameter                                                                  | Default | Description                               |
+| -------------------------------------------------------------------------- | ------- | ----------------------------------------- |
+| [`originServerName`](/tunnel/advanced/origin-parameters/#originservername) | `""`    | Hostname expected from origin certificate |
+| [`noTLSVerify`](/tunnel/advanced/origin-parameters/#notlsverify)           | `false` | Disable TLS certificate verification      |
+| [`httpHostHeader`](/tunnel/advanced/origin-parameters/#httphostheader)     | `""`    | Override HTTP Host header                 |
+| [`connectTimeout`](/tunnel/advanced/origin-parameters/#connecttimeout)     | `30s`   | TCP connection timeout to origin          |
+
+For the complete list of origin parameters and setup instructions, refer to [Origin parameters](/tunnel/advanced/origin-parameters/).

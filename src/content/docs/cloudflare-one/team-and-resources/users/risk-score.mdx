@@ -86,3 +86,28 @@ You can change the risk level for a behavior at any time.
 2. Select the risk behavior you want to modify.
 3. In the drop-down menu, choose your desired risk level.
 4. Select **Save**.
+
+## Use risk scores in Access policies
+
+You can use risk scores to control access to applications protected by [Cloudflare Access](/cloudflare-one/access-controls/). This enables adaptive access control that responds to changes in user behavior.
+
+To add a risk score requirement to an Access policy:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Policies*.
+2. Create a new policy or select an existing policy to edit.
+3. Add a rule with the _User Risk Score_ selector.
+4. For **Value**, select the risk level threshold (Low, Medium, or High).
+5. Save the policy.
+
+### Example: Block high-risk users
+
+To prevent users with elevated risk scores from accessing sensitive applications, create a policy with the following configuration:
+
+| Action | Rule type | Selector        | Value                 |
+| ------ | --------- | --------------- | --------------------- |
+| Allow  | Include   | Emails Ending In | `@example.com`       |
+|        | Exclude   | User Risk Score | _High_                |
+
+Users with a High risk score will be blocked, while users with Low or Medium scores can access the application.
+
+For more information on Access policies, refer to [Access policies](/cloudflare-one/access-controls/policies/).

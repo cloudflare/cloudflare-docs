@@ -20,6 +20,11 @@ const component = frontmatter.styleGuide?.component;
 
 const slug = Astro.locals.starlightRoute.entry.slug;
 
+// Currently the officially sanctioned way to alter behaviour on specific routes
+// https://starlight.astro.build/guides/overriding-components/#only-override-on-specific-pages
+const hideTitle = Astro.locals.starlightRoute.hideTitle;
+const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
+
 const breadcrumbProps: Record<string, any> = {
 	crumbs: [
 		{
@@ -31,46 +36,43 @@ const breadcrumbProps: Record<string, any> = {
 	id: "breadcrumbs",
 };
 
-const segments = slug.split("/");
+if (!hideBreadcrumbs) {
+	const segments = slug.split("/");
 
-for (let i = 0; i < segments.length; i++) {
-	if (i === 0) {
-		const entry = await getEntry("directory", segments[0]);
+	for (let i = 0; i < segments.length; i++) {
+		if (i === 0) {
+			const entry = await getEntry("directory", segments[0]);
 
-		let title = segments[0];
+			let title = segments[0];
+			if (entry) {
+				title = entry.data.entry.title;
+			}
+
+			breadcrumbProps.crumbs.push({
+				text: title,
+				href: `/${segments[0]}/`,
+			});
+
+			continue;
+		}
+
+		let path = segments.slice(0, i + 1).join("/");
+
+		const entry = await getEntry("docs", path);
+
+		let title = segments[i];
 		if (entry) {
-			title = entry.data.entry.title;
+			title = entry.data.title;
+		} else {
+			continue;
 		}
 
 		breadcrumbProps.crumbs.push({
 			text: title,
-			href: `/${segments[0]}/`,
+			href: `/${path}/`,
 		});
-
-		continue;
 	}
-
-	let path = segments.slice(0, i + 1).join("/");
-
-	const entry = await getEntry("docs", path);
-
-	let title = segments[i];
-	if (entry) {
-		title = entry.data.title;
-	} else {
-		continue;
-	}
-
-	breadcrumbProps.crumbs.push({
-		text: title,
-		href: `/${path}/`,
-	});
 }
-
-// Currently the officially sanctioned way to alter behaviour on specific routes
-// https://starlight.astro.build/guides/overriding-components/#only-override-on-specific-pages
-const hideTitle = Astro.locals.starlightRoute.hideTitle;
-const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 ---
 
 <div class="flex items-center justify-between">

@@ -1,0 +1,16 @@
+---
+params:
+  - loglevelURL
+---
+
+You can filter logs by event type (`--event`), event level (`--level`), or sampling rate (`-sampling`) to reduce the volume of logs streamed from the origin. This helps mitigate the performance impact on the origin, especially when the origin is normally under high load. For example:
+
+```sh
+cloudflared tail --level debug <UUID>
+```
+
+| Flag         | Description                                                                                                                                                                                           | Allowed values                            | Default value |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------------- |
+| `--event`    | Filter by the type of event / request.                                                                                                                                                                | `cloudflared`, `http`, `tcp`, `udp`       | All events    |
+| `--level`    | Return logs at this level and above. Works independently of the <a href={props.loglevelURL}>`--loglevel`</a> setting on the server. | `debug`, `info`, `warn`, `error`, `fatal` | `debug`       |
+| `--sampling` | Sample a fraction of the total logs.                                                                                                                                                                  | Number from `0.0` to `1.0`                | `1.0`         |

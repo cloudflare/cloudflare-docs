@@ -41,7 +41,10 @@ This page lists the default account limits for rules, applications, fields, and 
 | DNS locations                             | 250   |
 | Source IP CIDRs per DNS location          | 1,500 |
 | Concurrent streams for HTTP/2 connections | 256   |
-| Proxy endpoints                           | 500   |
+| PAC files (Standard users)                | 50    |
+| PAC files (Enterprise users)              | 1,000 |
+| Proxy endpoints (Standard users)          | 50    |
+| Proxy endpoints (Enterprise users)        | 500   |
 | Source IP CIDRs per proxy endpoint        | 2,000 |
 | Lists                                     | 100   |
 | Entries per list (Standard users)         | 1,000 |
@@ -52,13 +55,7 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## Data Loss Prevention (DLP)
 
-| Feature                                  | Limit     |
-| ---------------------------------------- | --------- |
-| Custom entries                           | 25        |
-| Exact Data Match cells per spreadsheet   | 100,000   |
-| Custom Wordlist keywords per spreadsheet | 200       |
-| Custom Wordlist keywords per account     | 1,000     |
-| Dataset cells per account                | 1,000,000 |
+<Render file="data-loss-prevention/dlp-limits-table" product="cloudflare-one" />
 
 ## Cloudflare Tunnel
 
@@ -105,4 +102,4 @@ This page lists the default account limits for rules, applications, fields, and 
 | -------------------------------------------------------------------------- | ------ |
 | Characters per device profile expression                                   | 10,000 |
 | Combined Split Tunnel and Local Domain Fallback entries per device profile | 1,000  |
-| Device IP profiles per account 										  									 | 30     |
+| Device IP profiles per account                                             | 30     |

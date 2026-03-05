@@ -8,77 +8,100 @@ description: Monitor files and directories in real-time to build responsive deve
 
 import { TypeScriptExample } from "~/components";
 
-This guide shows you how to monitor filesystem changes in real-time using the Sandbox SDK's file watching capabilities. File watching is essential for building development tools, automated workflows, and responsive applications that react to file system changes.
+This guide shows you how to monitor filesystem changes in real-time using the Sandbox SDK's file watching API. File watching is useful for building development tools, automated workflows, and applications that react to file changes as they happen.
+
+The `watch()` method returns an SSE (Server-Sent Events) stream that you consume with `parseSSEStream()`. Each event in the stream describes a filesystem change.
 
 ## Basic file watching
 
 Start by watching a directory for any changes:
 
 <TypeScriptExample>
-```
-const watcher = await sandbox.watch('/workspace/src', {
-  onEvent: (event) => {
-    console.log(`${event.type} event: ${event.path}`);
-    console.log(`Is directory: ${event.isDirectory}`);
-  },
-  onError: (error) => {
-    console.error('Watch failed:', error.message);
-  }
-});
 
-// Always clean up when done
-process.on('exit', () => watcher.stop());
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace/src");
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	if (event.type === "event") {
+		console.log(`${event.eventType}: ${event.path}`);
+		console.log(`Is directory: ${event.isDirectory}`);
+	}
+}
 ```
+
 </TypeScriptExample>
 
-The watcher will detect four types of events:
-- **create** - Files or directories created
-- **modify** - File content or attributes changed  
-- **delete** - Files or directories removed
-- **rename** - Files or directories moved/renamed
+The stream emits four lifecycle event types:
+
+- **`watching`** — Watch established, includes the `watchId`
+- **`event`** — A filesystem change occurred
+- **`error`** — The watch encountered an error
+- **`stopped`** — The watch was stopped
+
+Filesystem change events (`event.eventType`) include:
+
+- **`create`** — File or directory was created
+- **`modify`** — File content changed
+- **`delete`** — File or directory was removed
+- **`move_from`** / **`move_to`** — File or directory was moved or renamed
+- **`attrib`** — File attributes changed (permissions, timestamps)
 
 ## Filter by file type
 
 Use `include` patterns to watch only specific file types:
 
 <TypeScriptExample>
-```
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
 // Only watch TypeScript and JavaScript files
-const watcher = await sandbox.watch('/workspace/src', {
-  include: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-  onEvent: (event) => {
-    console.log(`${event.type}: ${event.path}`);
-  }
+const stream = await sandbox.watch("/workspace/src", {
+	include: ["*.ts", "*.tsx", "*.js", "*.jsx"],
 });
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	if (event.type === "event") {
+		console.log(`${event.eventType}: ${event.path}`);
+	}
+}
 ```
+
 </TypeScriptExample>
 
 Common include patterns:
-- `*.ts` - TypeScript files
-- `*.js` - JavaScript files  
-- `*.json` - JSON configuration files
-- `*.md` - Markdown documentation
-- `package*.json` - Package files specifically
+
+- `*.ts` — TypeScript files
+- `*.js` — JavaScript files
+- `*.json` — JSON configuration files
+- `*.md` — Markdown documentation
+- `package*.json` — Package files specifically
 
 ## Exclude directories
 
-Use `exclude` patterns to ignore certain directories or files:
+Use `exclude` patterns to skip certain directories or files:
 
 <TypeScriptExample>
-```
-const watcher = await sandbox.watch('/workspace', {
-  exclude: [
-    'node_modules',    // Dependencies
-    'dist',           // Build output  
-    '*.log',          // Log files
-    '.git',           // Git metadata (excluded by default)
-    '*.tmp'           // Temporary files
-  ],
-  onEvent: (event) => {
-    console.log(`Change detected: ${event.path}`);
-  }
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace", {
+	exclude: ["node_modules", "dist", "*.log", ".git", "*.tmp"],
 });
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	if (event.type === "event") {
+		console.log(`Change detected: ${event.path}`);
+	}
+}
 ```
+
 </TypeScriptExample>
 
 :::note[Default exclusions]
@@ -87,312 +110,376 @@ The following patterns are excluded by default: `.git`, `node_modules`, `.DS_Sto
 
 ## Build responsive development tools
 
-### Auto-restarting development server
-
-Build a development server that automatically restarts when source files change:
-
-<TypeScriptExample>
-```
-let serverProcess: { stop: () => Promise<void> } | null = null;
-
-async function startServer() {
-  if (serverProcess) {
-    await serverProcess.stop();
-  }
-  
-  console.log('Starting development server...');
-  serverProcess = await sandbox.startProcess('npm run dev', {
-    onOutput: (stream, data) => {
-      console.log(`[server] ${data}`);
-    }
-  });
-}
-
-const watcher = await sandbox.watch('/workspace/src', {
-  include: ['*.ts', '*.js', '*.json'],
-  onEvent: async (event) => {
-    if (event.type === 'modify') {
-      console.log(`Detected change in ${event.path}, restarting server...`);
-      await startServer();
-    }
-  }
-});
-
-// Initial server start
-await startServer();
-```
-</TypeScriptExample>
-
-### Auto-building on changes
+### Auto-rebuild on changes
 
 Trigger builds automatically when source files are modified:
 
 <TypeScriptExample>
-```
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace/src", {
+	include: ["*.ts", "*.tsx"],
+});
+
 let buildInProgress = false;
 
-const watcher = await sandbox.watch('/workspace/src', {
-  include: ['*.ts', '*.tsx'],
-  onEvent: async (event) => {
-    if (event.type === 'modify' && !buildInProgress) {
-      buildInProgress = true;
-      console.log('Building TypeScript project...');
-      
-      try {
-        const result = await sandbox.exec('npm run build');
-        if (result.success) {
-          console.log('Build completed successfully');
-        } else {
-          console.error('Build failed:', result.stderr);
-        }
-      } catch (error) {
-        console.error('Build error:', error);
-      } finally {
-        buildInProgress = false;
-      }
-    }
-  }
-});
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	if (
+		event.type === "event" &&
+		event.eventType === "modify" &&
+		!buildInProgress
+	) {
+		buildInProgress = true;
+		console.log(`File changed: ${event.path}, rebuilding...`);
+
+		try {
+			const result = await sandbox.exec("npm run build");
+			if (result.success) {
+				console.log("Build completed successfully");
+			} else {
+				console.error("Build failed:", result.stderr);
+			}
+		} catch (error) {
+			console.error("Build error:", error);
+		} finally {
+			buildInProgress = false;
+		}
+	}
+}
 ```
+
 </TypeScriptExample>
 
-### Live documentation updates
+### Auto-run tests on change
 
-Watch documentation files and rebuild docs when they change:
+Re-run tests when test files are modified:
 
 <TypeScriptExample>
-```
-const watcher = await sandbox.watch('/workspace/docs', {
-  include: ['*.md', '*.mdx'],
-  onEvent: async (event) => {
-    if (event.type === 'modify') {
-      console.log(`Documentation updated: ${event.path}`);
-      
-      // Rebuild documentation site
-      const result = await sandbox.exec('npm run build:docs');
-      if (result.success) {
-        console.log('Documentation rebuilt');
-      }
-    }
-  }
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace/tests", {
+	include: ["*.test.ts", "*.spec.ts"],
 });
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	if (event.type === "event" && event.eventType === "modify") {
+		console.log(`Test file changed: ${event.path}`);
+		const result = await sandbox.exec(`npm test -- ${event.path}`);
+		console.log(result.success ? "Tests passed" : "Tests failed");
+	}
+}
 ```
+
+</TypeScriptExample>
+
+### Incremental indexing
+
+Re-index only changed files instead of rescanning an entire directory tree:
+
+<TypeScriptExample>
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace/docs", {
+	include: ["*.md", "*.mdx"],
+});
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	if (event.type === "event") {
+		switch (event.eventType) {
+			case "create":
+			case "modify":
+				console.log(`Indexing ${event.path}...`);
+				await indexFile(event.path);
+				break;
+			case "delete":
+				console.log(`Removing ${event.path} from index...`);
+				await removeFromIndex(event.path);
+				break;
+		}
+	}
+}
+```
+
 </TypeScriptExample>
 
 ## Advanced patterns
 
+### Process events with a helper function
+
+Extract event processing into a reusable function that handles stream lifecycle:
+
+<TypeScriptExample>
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+async function watchFiles(
+	sandbox: any,
+	path: string,
+	options: { include?: string[]; exclude?: string[] },
+	handler: (
+		eventType: string,
+		filePath: string,
+		isDirectory: boolean,
+	) => Promise<void>,
+) {
+	const stream = await sandbox.watch(path, options);
+
+	for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+		switch (event.type) {
+			case "watching":
+				console.log(`Watching ${event.path}`);
+				break;
+			case "event":
+				await handler(event.eventType, event.path, event.isDirectory);
+				break;
+			case "error":
+				console.error(`Watch error: ${event.error}`);
+				break;
+			case "stopped":
+				console.log(`Watch stopped: ${event.reason}`);
+				return;
+		}
+	}
+}
+
+// Usage
+await watchFiles(
+	sandbox,
+	"/workspace/src",
+	{ include: ["*.ts"] },
+	async (eventType, filePath) => {
+		console.log(`${eventType}: ${filePath}`);
+	},
+);
+```
+
+</TypeScriptExample>
+
 ### Debounced file operations
 
-Avoid excessive operations by debouncing rapid file changes:
+Avoid excessive operations by collecting changes before processing:
 
 <TypeScriptExample>
-```
-let debounceTimeout: NodeJS.Timeout | null = null;
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace/src");
 const changedFiles = new Set<string>();
+let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
-const watcher = await sandbox.watch('/workspace/src', {
-  onEvent: (event) => {
-    changedFiles.add(event.path);
-    
-    // Clear existing timeout
-    if (debounceTimeout) {
-      clearTimeout(debounceTimeout);
-    }
-    
-    // Set new timeout to process changes
-    debounceTimeout = setTimeout(async () => {
-      console.log(`Processing ${changedFiles.size} changed files...`);
-      
-      // Process all accumulated changes
-      for (const filePath of changedFiles) {
-        await processFile(filePath);
-      }
-      
-      changedFiles.clear();
-      debounceTimeout = null;
-    }, 1000); // Wait 1 second after last change
-  }
-});
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	if (event.type === "event") {
+		changedFiles.add(event.path);
 
-async function processFile(filePath: string) {
-  // Your file processing logic
-  console.log(`Processing ${filePath}`);
+		if (debounceTimeout) {
+			clearTimeout(debounceTimeout);
+		}
+
+		debounceTimeout = setTimeout(async () => {
+			console.log(`Processing ${changedFiles.size} changed files...`);
+			for (const filePath of changedFiles) {
+				await processFile(filePath);
+			}
+			changedFiles.clear();
+			debounceTimeout = null;
+		}, 1000);
+	}
 }
 ```
+
 </TypeScriptExample>
 
-### Multi-directory watching
+### Watch with non-recursive mode
 
-Watch multiple directories with different configurations:
+Watch only the top level of a directory, without descending into subdirectories:
 
 <TypeScriptExample>
-```
-// Watch source code for builds
-const srcWatcher = await sandbox.watch('/workspace/src', {
-  include: ['*.ts', '*.tsx'],
-  onEvent: async (event) => {
-    if (event.type === 'modify') {
-      await sandbox.exec('npm run build:src');
-    }
-  }
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+// Only watch root-level config files
+const stream = await sandbox.watch("/workspace", {
+	include: ["package.json", "tsconfig.json", "vite.config.ts"],
+	recursive: false,
 });
 
-// Watch tests for test runs
-const testWatcher = await sandbox.watch('/workspace/tests', {
-  include: ['*.test.ts', '*.spec.ts'],
-  onEvent: async (event) => {
-    if (event.type === 'modify') {
-      await sandbox.exec(`npm test -- ${event.path}`);
-    }
-  }
-});
-
-// Watch config files for full rebuilds
-const configWatcher = await sandbox.watch('/workspace', {
-  include: ['package.json', 'tsconfig.json', 'vite.config.ts'],
-  recursive: false, // Only watch root level
-  onEvent: async (event) => {
-    console.log('Configuration changed, rebuilding project...');
-    await sandbox.exec('npm run build');
-  }
-});
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	if (event.type === "event") {
+		console.log("Configuration changed, rebuilding project...");
+		await sandbox.exec("npm run build");
+	}
+}
 ```
+
 </TypeScriptExample>
 
-### Graceful shutdown
+## Stop a watch
 
-Use AbortSignal for clean shutdown handling:
+The stream ends naturally when the container sleeps or shuts down. There are two ways to stop a watch early:
+
+### Use an AbortController
+
+Pass an `AbortSignal` to `parseSSEStream`. Aborting the signal cancels the stream reader, which propagates cleanup to the server. This is the recommended approach when you need to cancel the watch from outside the consuming loop:
 
 <TypeScriptExample>
-```
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace/src");
 const controller = new AbortController();
 
-const watcher = await sandbox.watch('/workspace/src', {
-  signal: controller.signal,
-  onEvent: (event) => {
-    console.log(`Event: ${event.type} - ${event.path}`);
-  },
-  onError: (error) => {
-    if (error.name === 'AbortError') {
-      console.log('Watch cancelled gracefully');
-    } else {
-      console.error('Watch error:', error);
-    }
-  }
-});
+// Cancel after 60 seconds
+setTimeout(() => controller.abort(), 60_000);
 
-// Handle shutdown signals
-process.on('SIGINT', () => {
-  console.log('Shutting down file watcher...');
-  controller.abort();
-});
+for await (const event of parseSSEStream<FileWatchSSEEvent>(
+	stream,
+	controller.signal,
+)) {
+	if (event.type === "event") {
+		console.log(`${event.eventType}: ${event.path}`);
+	}
+}
+
+console.log("Watch stopped");
 ```
+
+</TypeScriptExample>
+
+### Break out of the loop
+
+Breaking out of the `for await` loop also cancels the stream:
+
+<TypeScriptExample>
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace/src");
+let eventCount = 0;
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	if (event.type === "event") {
+		console.log(`${event.eventType}: ${event.path}`);
+		eventCount++;
+
+		// Stop after 100 events
+		if (eventCount >= 100) {
+			break; // Breaking out of the loop cancels the stream
+		}
+	}
+}
+
+console.log("Watch stopped");
+```
+
 </TypeScriptExample>
 
 ## Best practices
 
-### Resource management
+### Use server-side filtering
 
-Always stop watchers to prevent resource leaks:
+Filter with `include` or `exclude` patterns rather than filtering events in JavaScript. Server-side filtering happens at the inotify level, which reduces the number of events sent over the network.
+
+:::note
+`include` and `exclude` are mutually exclusive. Use one or the other, not both. If you need to watch specific file types while ignoring certain directories, use `include` patterns that match the files you want.
+:::
 
 <TypeScriptExample>
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+// Efficient: filtering happens at the inotify level
+const stream = await sandbox.watch("/workspace/src", {
+	include: ["*.ts"],
+});
+
+// Less efficient: all events are sent and then filtered in JavaScript
+const stream2 = await sandbox.watch("/workspace/src");
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream2)) {
+	if (event.type === "event") {
+		if (!event.path.endsWith(".ts")) continue;
+		// Handle event
+	}
+}
 ```
-const watchers: Array<{ stop: () => Promise<void> }> = [];
 
-// Create watchers
-const srcWatcher = await sandbox.watch('/workspace/src', options);
-const testWatcher = await sandbox.watch('/workspace/tests', options);
-watchers.push(srcWatcher, testWatcher);
+</TypeScriptExample>
 
-// Clean shutdown
-async function shutdown() {
-  console.log('Stopping all watchers...');
-  await Promise.all(watchers.map(w => w.stop()));
-  console.log('All watchers stopped');
+### Handle errors in event processing
+
+Errors in your event handler do not stop the watch stream. Wrap handler logic in try/catch to prevent unhandled exceptions:
+
+<TypeScriptExample>
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace/src");
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	if (event.type === "event") {
+		try {
+			await handleFileChange(event.eventType, event.path);
+		} catch (error) {
+			console.error(
+				`Failed to handle ${event.eventType} for ${event.path}:`,
+				error,
+			);
+			// Continue processing events
+		}
+	}
+
+	if (event.type === "error") {
+		console.error("Watch error:", event.error);
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Ensure directories exist before watching
+
+Watching a non-existent path returns an error. Verify the path exists before starting a watch:
+
+<TypeScriptExample>
+
+```ts
+const watchPath = "/workspace/src";
+const result = await sandbox.exists(watchPath);
+
+if (!result.exists) {
+	await sandbox.mkdir(watchPath, { recursive: true });
 }
 
-process.on('exit', shutdown);
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
-```
-</TypeScriptExample>
-
-### Error handling
-
-Implement robust error handling for production use:
-
-<TypeScriptExample>
-```
-const watcher = await sandbox.watch('/workspace/src', {
-  onEvent: async (event) => {
-    try {
-      await handleFileChange(event);
-    } catch (error) {
-      console.error(`Failed to handle ${event.type} event for ${event.path}:`, error);
-      // Don't let errors stop the watcher
-    }
-  },
-  onError: async (error) => {
-    console.error('Watch system error:', error);
-    
-    // Attempt to restart watcher on critical errors
-    if (error.message.includes('inotify')) {
-      console.log('Attempting to restart file watcher...');
-      await watcher.stop();
-      // Recreate watcher with same options
-    }
-  }
+const stream = await sandbox.watch(watchPath, {
+	include: ["*.ts"],
 });
 ```
-</TypeScriptExample>
 
-### Performance optimization
-
-For high-frequency changes, use server-side filtering:
-
-<TypeScriptExample>
-```
-// Efficient - filtering happens at kernel/inotify level
-const watcher = await sandbox.watch('/workspace', {
-  include: ['*.ts'],           // Only TypeScript files
-  exclude: ['node_modules']    // Skip dependencies
-});
-
-// Less efficient - all events sent to JavaScript
-const watcher2 = await sandbox.watch('/workspace', {
-  onEvent: (event) => {
-    if (!event.path.endsWith('.ts')) return;
-    if (event.path.includes('node_modules')) return;
-    // Handle event
-  }
-});
-```
 </TypeScriptExample>
 
 ## Troubleshooting
-
-### Path not found errors
-
-Ensure directories exist before watching them:
-
-<TypeScriptExample>
-```
-const watchPath = '/workspace/src';
-
-// Check if path exists first
-try {
-  const exists = await sandbox.readDir(watchPath);
-  const watcher = await sandbox.watch(watchPath, options);
-} catch (error) {
-  if (error.message.includes('not found')) {
-    console.log(`Creating directory ${watchPath}...`);
-    await sandbox.exec(`mkdir -p ${watchPath}`);
-    // Now start watching
-    const watcher = await sandbox.watch(watchPath, options);
-  }
-}
-```
-</TypeScriptExample>
 
 ### High CPU usage
 
@@ -401,14 +488,19 @@ If watching large directories causes performance issues:
 1. Use specific `include` patterns instead of watching everything
 2. Exclude large directories like `node_modules` and `dist`
 3. Watch specific subdirectories instead of the entire project
-4. Use non-recursive watching for shallow monitoring
+4. Use `recursive: false` for shallow monitoring
+
+### Path not found errors
+
+All paths must exist and resolve to within `/workspace`. Relative paths are resolved from `/workspace`.
 
 :::note[Container lifecycle]
-File watchers are automatically stopped when the sandbox sleeps or shuts down. They will restart when the sandbox wakes up, but you may need to re-establish them in your application logic.
+File watchers are automatically stopped when the sandbox sleeps or shuts down. If the sandbox wakes up, you must re-establish watches in your application logic.
 :::
 
 ## Related resources
 
-- [File Watching API reference](/sandbox/api/file-watching/) - Complete API documentation
-- [Manage files guide](/sandbox/guides/manage-files/) - File operations
-- [Background processes guide](/sandbox/guides/background-processes/) - Long-running processes
+- [File Watching API reference](/sandbox/api/file-watching/) — Complete API documentation and types
+- [Manage files guide](/sandbox/guides/manage-files/) — File operations
+- [Background processes guide](/sandbox/guides/background-processes/) — Long-running processes
+- [Stream output guide](/sandbox/guides/streaming-output/) — Real-time output handling
