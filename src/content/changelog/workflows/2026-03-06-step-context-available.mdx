@@ -1,0 +1,21 @@
+---
+title: Workflows now supports step context in production & local development
+description: Cloudflare Workflows, our durable execution engine, now supports step context in production & local development
+products:
+  - workflows
+  - workers
+date: 2026-03-03 12:00:00 UTC
+---
+
+Cloudflare Workflows allows you to configure specific retry logic for each step in your workflow execution. Now, you can access **which** retry attempt is currently executing for calls to `step.do()`:
+
+```ts
+await step.do("my-step", async (ctx) => {
+	// ctx.attempt is 1 on first try, 2 on first retry, etc.
+	console.log(`Attempt ${ctx.attempt}`);
+});
+```
+
+You can use the step context for improved logging & observability, progressive backoff, or conditional logic in your workflow definition.
+
+Note that the current attempt number is 1-indexed. For more information on retry behavior, refer to [Sleeping and Retrying](/workflows/build/sleeping-and-retrying/).
