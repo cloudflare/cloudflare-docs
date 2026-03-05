@@ -92,11 +92,11 @@ This capability uses a <GlossaryTooltip term="zero-shot classification model">ze
 
 1. You define a list of up to 20 custom topics via the dashboard or API. Each topic consists of:
    - A label — Used in rule expressions and analytics
-   - A topic string — the descriptive text the model uses to classify prompts
+   - A topic string — The descriptive text the model uses to classify prompts
 2. When a request arrives at a `cf-llm` labeled endpoint, the model evaluates the prompt against all defined topic strings and returns a relevance score for each.
 3. Scores are written to the [`cf.llm.prompt.custom_topic_categories`](/waf/detections/ai-security-for-apps/fields/) map field, keyed by label. You use labels — not topic strings — in rule expressions and analytics.
 
-Scores follow the same convention as other AI Security for Apps scores, where lower values indicate higher relevance (1 = highly relevant, 99 = not relevant).
+Scores follow the same convention as other AI Security for Apps scores, where lower values indicate higher relevance (`1` = highly relevant, `99` = not relevant).
 
 ### Define custom topics
 
@@ -194,13 +194,13 @@ The quality of custom topic detection depends on how you write your topic string
 
 Overly broad topics match too many prompts (high false positives). Overly narrow topics miss relevant prompts (high false negatives).
 
-| Quality    | Topic string                                        | Why                                                                               |
-| ---------- | --------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Good       | `Acme Corp products and pricing`                    | Names a specific competitor — catches prompts discussing that company's offerings |
-| Good       | `securities trading and investment recommendations` | Targets a well-defined intersection of two concepts                               |
-| Too narrow | `Acme Corp pricing page URL`                        | So specific that only near-exact mentions will score highly                       |
-| Too broad  | `technology`                                        | Will match almost any technical prompt                                            |
-| Too broad  | `bad things`                                        | Semantically vague — the model cannot determine what you consider "bad"           |
+| Quality    | Topic string                                        | Why                                                                                |
+| ---------- | --------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Good       | `Acme Corp products and pricing`                    | Names a specific competitor — catches prompts discussing that company's offerings. |
+| Good       | `securities trading and investment recommendations` | Targets a well-defined intersection of two concepts.                               |
+| Too narrow | `Acme Corp pricing page URL`                        | So specific that only near-exact mentions will score highly.                       |
+| Too broad  | `technology`                                        | Will match almost any technical prompt.                                            |
+| Too broad  | `bad things`                                        | Semantically vague — the model cannot determine what you consider bad.             |
 
 ### Use descriptive phrases instead of single keywords
 

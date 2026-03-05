@@ -15,15 +15,15 @@ When a prompt injection attempt is detected, AI Security for Apps assigns a scor
 
 ## Scoring system
 
-Prompt injection detection uses a score-based system rather than a binary detected/not-detected result. The score is written to the [`cf.llm.prompt.injection_score`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/) field.
+Prompt injection detection uses a score-based system rather than a binary detected/not-detected result. The score is written to the **LLM Injection score** ([`cf.llm.prompt.injection_score`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/)) field.
 
-The score ranges from **1 to 99**:
+The score ranges from 1 to 99:
 
-| Score range | Meaning                                                                                      |
-| ----------- | -------------------------------------------------------------------------------------------- |
-| **1–19**    | High likelihood of prompt injection — the prompt strongly resembles known injection patterns |
-| **20–49**   | Moderate likelihood — the prompt has some characteristics of an injection attempt            |
-| **50–99**   | Low likelihood — the prompt appears to be normal, non-malicious input                        |
+| Score range | Meaning                                                                                       |
+| :---------: | --------------------------------------------------------------------------------------------- |
+|    1–19     | High likelihood of prompt injection — the prompt strongly resembles known injection patterns. |
+|    20–49    | Moderate likelihood — the prompt has some characteristics of an injection attempt.            |
+|    50–99    | Low likelihood — the prompt appears to be normal, non-malicious input.                        |
 
 :::note[Lower scores indicate higher risk]
 This is the opposite of what you might intuitively expect. A score of `1` means the prompt is very likely an injection attempt; a score of `99` means it is very likely safe.
