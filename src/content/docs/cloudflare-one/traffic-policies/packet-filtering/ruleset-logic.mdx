@@ -7,7 +7,7 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components";
 
-Cloudflare's DDoS protection (automatic distributed denial-of-service mitigation) runs before your firewall rules and operates independently. Even if your firewall allows certain traffic, DDoS protection may still block it. The two systems cannot override each other.
+Cloudflare Network Firewall rules are performed after Cloudflare's DDoS mitigations have been applied. The two systems are independent, and therefore, permitting traffic inside Cloudflare Network Firewall does not allow it within our DDoS mitigations. Traffic can still be blocked by DDoS mitigations that are applied first in the flow through Cloudflare's systems.
 
 By default, Cloudflare Network Firewall policies allow all traffic until explicitly blocked by a rule. If no policy is configured, all traffic is permitted after DDoS mitigations have been applied.
 
@@ -15,7 +15,7 @@ By default, Cloudflare Network Firewall policies allow all traffic until explici
 
 You have two options for configuring a security policy:
 
-- Enforce a positive security model (also called "default deny") — block everything, then create allow rules for specific required traffic.
+- Enforce a positive security model, which blocks everything and creates allow rules for specific required traffic.
 - Begin with a minimal ruleset to block specific traffic and, by default, everything else is permitted.
 
 Traffic is matched in order of the configured rules. As soon as traffic is matched by an enabled rule, it is no longer validated against the later rules. Disabled rules are skipped entirely — traffic is not evaluated against them. In the dashboard under **Traffic policies** > **Firewall policies**, rule order begins from the top and flows down your list of rules.
@@ -26,7 +26,7 @@ For best practices when configuring your security policy, refer to [Best practic
 
 ## Packet filtering policies and Magic Transit endpoint health checks
 
-Cloudflare-sourced traffic is also subject to the Cloudflare Network Firewall rules you configure. If you block all ICMP traffic, you will also block Cloudflare's <GlossaryTooltip term="tunnel health-check" link="/magic-transit/reference/tunnel-health-checks/#endpoint-health-checks">endpoint health checks</GlossaryTooltip>. If health checks are blocked, Cloudflare may consider your tunnels unhealthy and stop routing traffic to them. When blocking ICMP traffic, ensure your rules first allow ICMP sourced from Cloudflare public IPs to your prefix endpoint IPs before applying a block ICMP rule.
+Cloudflare-sourced traffic is also subject to the Cloudflare Network Firewall rules you configure. If you block all ICMP traffic, you will also block Cloudflare's <GlossaryTooltip term="tunnel health-check" link="/magic-transit/reference/tunnel-health-checks/#endpoint-health-checks">endpoint health checks</GlossaryTooltip>. When blocking ICMP traffic, ensure your rules first allow ICMP sourced from Cloudflare public IPs to your prefix endpoint IPs before applying a block ICMP rule.
 
 For a list of Cloudflare's public IPs, refer to [IP Ranges](https://www.cloudflare.com/ips/).
 
@@ -38,7 +38,9 @@ Traffic is processed in two phases: first against your Custom rules, then agains
 
 The Custom phase is a set of rules you define and control. You can customize the expression, order, and actions of these rules.
 
-You can also add a rule in the Custom phase to override the behavior of a rule in the Managed phase. For instance, you could add a Custom rule to change a Managed rule's action from "block" to "log" for traffic you want to monitor before enforcing.
+Cloudflare Network Firewall evaluates custom policies before managed policies in the order of precedence. Therefore, if traffic meets the conditions from a custom policy first, that is the action Cloudflare Network Firewall will take.
+
+The actions available for a custom rule are **Block** or **Skip** (allow).
 
 ### Managed phase ruleset
 
