@@ -103,8 +103,6 @@ await step.do("my-step", async (ctx) => {
 });
 ```
 
-Step context is supported in production and local development.
-
 ## Force a Workflow instance to fail
 
 You can also force a Workflow instance to fail and _not_ retry by throwing a `NonRetryableError` from within the step.
