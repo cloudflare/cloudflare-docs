@@ -9,35 +9,30 @@ sidebar:
     label: AI Security for Apps
 ---
 
-import {
-	GlossaryTooltip,
-	Tabs,
-	TabItem,
-	Details,
-	Steps,
-	Type,
-	DashButton,
-	Render,
-} from "~/components";
+import { GlossaryTooltip } from "~/components";
 
 AI Security for Apps offers a series of detections that can help protect apps and agents powered by <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) against abuse. This model-agnostic detection module helps you do the following:
 
-- Prevent personally identifiable information (PII) from leaking — for example, phone numbers, email addresses, social security numbers, and credit card numbers.
-- Detect and moderate unsafe or harmful prompts – for example, prompts potentially related to violent crimes, hate speech, or any unsafe topic you define.
-- Detect prompts intentionally designed to subvert the intended behavior of the LLM – for example, <GlossaryTooltip term="prompt injection">prompt injection</GlossaryTooltip> attacks.
+{/* prettier-ignore-start */}
 
-When enabled, the detection module runs on incoming traffic, searching for any LLM prompts attempting to exploit the model. Today, the detection only handles requests with a JSON content type (`application/json`).
+- PII detection — Prevent personally identifiable information (PII) from leaking. For example, phone numbers, email addresses, social security numbers, and credit card numbers.
+- Unsafe and custom topic detection — For example, detect prompts potentially related to violent crimes, hate speech, or any unsafe topic you define.
+- <GlossaryTooltip term="prompt injection">Prompt injection</GlossaryTooltip> detection — Detect prompts intentionally designed to subvert the intended behavior of your LLM as specified by the developer.
 
-Cloudflare will populate the existing [AI Security for Apps fields](/waf/detections/ai-security-for-apps/fields/) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
+{/* prettier-ignore-end */}
+
+When enabled, the detection module runs on incoming traffic, searching for any LLM prompts attempting to exploit the model. Currently, the detection only handles requests with a JSON content type (`application/json`).
+
+Cloudflare will populate [AI detection fields](/waf/detections/ai-security-for-apps/fields/) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
 
 ## Availability
 
 AI Security for Apps capabilities vary by Cloudflare plan:
 
-| Capability | Free | Pro | Business | Enterprise |
-| --- | --- | --- | --- |--- |
-| **LLM endpoint discovery** — automatically identify AI-powered endpoints across your web properties | Yes | Yes | Yes | Yes |
-| **AI detection fields** — PII detection, prompt injection scoring, unsafe topic detection, custom topics | No | No | No | Yes |
+| Capability                                                                                               | Free | Pro | Business | Enterprise |
+| -------------------------------------------------------------------------------------------------------- | ---- | --- | -------- | ---------- |
+| **LLM endpoint discovery** — automatically identify AI-powered endpoints across your web properties      | Yes  | Yes | Yes      | Yes        |
+| **AI detection fields** — PII detection, prompt injection scoring, unsafe topic detection, custom topics | No   | No  | No       | Yes        |
 
 To enable AI detection fields, contact your account team.
 
