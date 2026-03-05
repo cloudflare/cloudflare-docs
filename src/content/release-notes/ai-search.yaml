@@ -3,6 +3,10 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-03-05"
+    title: Increased limits for files and instances
+    description: |-
+      AI Search now supports up to 1,000,000 files per instance (previously 100,000) and 50 instances per account (previously 10). Existing instances automatically benefit from the new limits.
   - publish_date: "2026-02-09"
     title: Crawler user agent renamed
     description: |-
