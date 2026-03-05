@@ -5,7 +5,9 @@ sidebar:
   order: 9
 ---
 
-This page provides a reference for error codes you may encounter when using Cloudflare Images. When image operations fail, the response body contains an error message explaining the reason, as well as the `Cf-Resized` header containing `err=code`.
+This page provides a reference for error codes you may encounter when using Cloudflare Images. For [image transformation](/images/transform-images/) errors, the response body contains an error message explaining the reason, as well as the `Cf-Resized` header containing `err=code`.
+
+For general Images troubleshooting, refer to [Troubleshooting](/images/reference/troubleshooting/).
 
 ## Client configuration errors
 
@@ -13,7 +15,7 @@ This page provides a reference for error codes you may encounter when using Clou
 | --- | --- | --- |
 | `9401` | 400 | Missing or invalid resizing parameters: test options |
 | `9401` | 400 | Could not resize the image: test settings error |
-| `9401` | 403 | Transformation origin is not in allowed origins list |
+| `9401` | 403 | Transformation origin is not in [allowed origins list](/images/transform-images/sources/) |
 | `9424` | 400 | Missing or invalid HTTP request parameters |
 | `9432` | 400 | Bad request: bad request |
 
@@ -43,7 +45,7 @@ This page provides a reference for error codes you may encounter when using Clou
 
 | Error code | HTTP status | Description |
 | --- | --- | --- |
-| `9403` | 508 | Requested resized version of an already-resized image |
+| `9403` | 508 | Requested resized version of an [already-resized image](/images/transform-images/transform-via-workers/#prevent-request-loops) |
 | `9412` | 415 | Conversion between SVG and raster formats is not supported |
 | `9412` | 415 | Could not resize the image: The HEIC format is not supported, and there are no plans to support it. You must convert HEIC files to one of the supported formats (e.g. JPEG or PNG) before uploading them. |
 | `9412` | 415 | Could not resize the image: The TIFF format is not supported. You must convert TIFF files to one of the supported formats (e.g. JPEG or PNG) before uploading them. |
@@ -65,8 +67,8 @@ This page provides a reference for error codes you may encounter when using Clou
 | `9425` | 403 | Image access denied: test access denied |
 | `9426` | 403 | The URL of imagedelivery.net has invalid text part |
 | `9427` | 403 | Image access denied with incorrect account id |
-| `9429` | 403 | Flexible variants are not enabled for the account |
-| `9430` | 403 | Images Binding access denied: binding denied |
+| `9429` | 403 | [Flexible variants](/images/manage-images/enable-flexible-variants/) are not enabled for the account |
+| `9430` | 403 | [Images Binding](/images/transform-images/bindings/) access denied: binding denied |
 | `9431` | 404 | Not found |
 | `9432` | 400 | Bad request: bad request |
 
