@@ -50,12 +50,12 @@ Any single signal might produce false positives on its own. Together, they ident
 
 ## Allow financial PII only from your internal network
 
-A financial services application legitimately handles credit card and bank account numbers from internal agents, but should block those PII types from external users. This rule uses the request's [ASN](/ruleset-engine/rules-language/fields/reference/ip.geoip.asnum/) to distinguish internal traffic from public traffic.
+A financial services application legitimately handles credit card and bank account numbers from internal agents, but should block those PII types from external users. This rule uses the request's [autonomous system number (ASN)](/ruleset-engine/rules-language/fields/reference/ip.src.asnum/) to distinguish internal traffic from public traffic.
 
 - **When incoming requests match**:
 
   Enter the following expression in the editor:<br />
-  `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD" "US_BANK_NUMBER" "IBAN_CODE"}) and ip.geoip.asnum ne 13335)`
+  `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD" "US_BANK_NUMBER" "IBAN_CODE"}) and ip.src.asnum ne 13335)`
 
   Replace `13335` with your organization's ASN.
 

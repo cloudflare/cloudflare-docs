@@ -49,4 +49,4 @@ Target large prompts that also show signs of prompt injection — a common patte
 
 - **Estimate only.** The token count is a general approximation. Actual token consumption at your model may differ depending on the model's tokenizer.
 - **Input tokens only.** The token count reflects the incoming prompt. It does not estimate output or response tokens.
-- **Extracted prompt only.** The token count is calculated on the prompt text extracted from the request body. Cloudflare extracts the prompt using a set of known JSON paths for major LLM providers. If we are unable to extract the prompt, then we fallback to the full request body. In these situations, token count will reflect the full request body.
+- **Extracted prompt only.** The token count is calculated on the prompt text extracted from the request body. Cloudflare extracts the prompt using a set of known JSON paths for major LLM providers. When the prompt cannot be extracted, Cloudflare uses the full request body as a fallback. In these situations, token count will reflect the full request body.
