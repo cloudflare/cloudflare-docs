@@ -1,9 +1,10 @@
 ---
 pcx_content_type: concept
-title: Enable log mode
+title: Log mode versus production mode
 tags:
   - AI
 sidebar:
+  label: Log mode vs production mode
   order: 9
 ---
 
@@ -34,7 +35,9 @@ Production mode is the standard operating mode. You enable AI Security for Apps 
 Example production rule expression:<br/>
 `(cf.llm.prompt.injection_score lt 30 and cf.bot_management.score lt 20)`
 
-**Limitation:** In production mode, the prompt text is not logged. You can see detection metadata (scores, categories) in [Security Analytics](/waf/analytics/security-analytics/), but not the actual prompt content.
+:::note[Limitation]
+In production mode, the prompt text is not logged. You can see detection metadata (scores, categories) in [Security Analytics](/waf/analytics/security-analytics/), but not the actual prompt content.
+:::
 
 ## Log mode
 
@@ -95,7 +98,7 @@ To set individual rule actions to **Log**, override the rules within the managed
 </TabItem> </Tabs>
 
 :::caution
-Because the managed ruleset uses broad, binary detection logic (detected/not detected), it is likely too aggressive for production traffic. Without score-based thresholds, expect a higher rate of false positives if the action is set to Block.
+Since the managed ruleset uses broad, binary detection logic (detected/not detected), it can be too aggressive for production traffic. Without score-based thresholds, you should expect a higher rate of false positives if the action is set to _Block_.
 :::
 
 ## Recommended workflow
@@ -115,5 +118,5 @@ Because the managed ruleset uses broad, binary detection logic (detected/not det
 </Steps>
 
 :::note
-You can run both modes simultaneously during a transition period. The managed ruleset (log mode) operates in the managed rules phase, while your custom rules operate in the custom rules phase. Custom rules are evaluated before managed rules — if a custom rule blocks a request, it will not reach the managed ruleset. During evaluation, consider setting your custom rules to **Log** as well.
+You can run both modes simultaneously during a transition period. The managed ruleset (log mode) operates in the managed rules phase, while your custom rules operate in the custom rules phase. Custom rules are evaluated before managed rules — if a custom rule blocks a request, it will not reach the managed ruleset. During evaluation, consider setting your custom rules to _Log_ as well.
 :::
