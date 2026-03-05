@@ -39,6 +39,8 @@ Technical writing often prioritizes precision over clarity: jargon without conte
 
 **Accuracy is non-negotiable:** Simplification means clearer language, not reduced precision. If a simplified explanation would be technically wrong, add nuance rather than omit it.
 
+**Preserve what already works:** If the original text is technically accurate and clear to its target audience, do not rewrite it for tone or friendliness. Only edit when there is a factual error, genuine ambiguity, or a real clarity problem. Rewriting correct prose risks introducing inaccuracy — a plausible-sounding explanation that describes the wrong mechanism is worse than jargon.
+
 **Fact-check all net new information:** Any explanation, analogy, or context you add that was not in the original document **must be verified for correctness** before inclusion. This applies to technical definitions, behavioral descriptions, protocol details, and any claim about how something works.
 
 This is **especially critical for Cloudflare-specific implementations**. Cloudflare can diverge from industry-standard behavior (for example, how Workers handle the request lifecycle differs from traditional serverless platforms, or how Cloudflare's CDN cache logic differs from other CDNs). Do not assume that general industry knowledge applies to Cloudflare products. When adding commentary about Cloudflare-specific behavior:
@@ -192,6 +194,15 @@ Then I ask: **What would you like to do next?**
 - **Yes** if: "why" is missing, use cases are absent, common misunderstandings are not addressed
 - **No** if: original is already clear, addition would pad without value, reader can infer from context
 
+**Should I spell out a consequence or implication?**
+
+- **No** if the target audience can infer the consequence from the stated cause. For example, "blocking health checks" does not need "which means Cloudflare may consider your tunnels unhealthy" for a networking audience. Trust domain expertise.
+- **Yes** only if the consequence is non-obvious, counterintuitive, or the audience genuinely lacks the domain knowledge to connect the dots.
+
+**Should I add synonyms or aliases for a term?**
+
+- **No.** One inline definition is enough. Do not pile on "also called X" aliases when the definition already explains the concept through its behavior. Define terms by what they do, not by listing alternative names.
+
 **Should I remove content?**
 
 - **Rarely.** Only if genuinely redundant or tangential. Never remove caveats, accuracy qualifiers, or security warnings.
@@ -211,6 +222,48 @@ Before finalizing, verify:
 - [ ] Original structure preserved (not reorganized)
 - [ ] 1-2 examples max per concept
 - [ ] Diagrams left untouched
+- [ ] Already-correct prose left untouched (not rewritten for tone)
+- [ ] No consequence chains the audience can infer
+- [ ] No synonym glosses when behavior-based definitions exist
+- [ ] No rhetorical questions (examples stated as examples)
+- [ ] Every simplification describes the correct mechanism
+- [ ] Register matches the existing documentation voice
+
+## Anti-patterns to avoid
+
+These are patterns that feel like improvements but consistently make documentation worse. They were identified from human review of AI-generated edits.
+
+**1. Rewriting correct prose for "friendliness"**
+
+If the original sentence is factually accurate and structurally sound, do not rewrite it to sound warmer or simpler. Rewrites introduce risk of mechanical inaccuracy. Only touch sentences that have a concrete problem (wrong fact, ambiguous referent, undefined term, broken logic).
+
+**2. Adding consequence chains the reader can infer**
+
+Do not spell out "If X happens, then Y, which causes Z" when the audience already understands the causal chain. Example: telling a network engineer that blocked health checks cause tunnels to go unhealthy is stating the obvious. Ask: "Would a reasonable reader of this page already know this consequence?" If yes, omit it.
+
+**3. Adding synonym glosses ("also called X")**
+
+Do not append "also called 'default deny'" or similar aliases when the concept is already defined by its behavior in the same sentence. One definition is enough. Synonym stacking clutters without adding understanding.
+
+**4. Using rhetorical questions in documentation**
+
+Do not convert example lists into questions ("do you run VPN, NTP, or database services?"). State examples as examples. Documentation is not a conversation.
+
+**5. Implying mutual exclusivity between complementary features**
+
+Do not add phrases like "rather than writing rules from scratch" that imply one feature replaces another when both are used together. When two features complement each other, cross-reference them instead of contrasting them.
+
+**6. Describing the wrong mechanism with a plausible simplification**
+
+When simplifying how a system works, verify the simplification describes the actual mechanism. For example, saying "a Custom rule can change a Managed rule's action" is wrong if Custom rules actually take precedence due to evaluation order. A plausible-sounding but mechanically incorrect explanation is worse than the original jargon.
+
+**7. Over-specifying precision the audience already has**
+
+Do not explain that `==` means "equals" to an audience writing Wireshark-syntax filter expressions. Calibrate the level of inline definition to the actual audience of the page, not to a hypothetical beginner.
+
+**8. Using casual register in formal docs**
+
+"Let you" is too casual for Cloudflare docs. Use "allow you to" or state the action directly. Match the existing voice of the documentation, not a conversational ideal.
 
 ## Edge Cases
 
