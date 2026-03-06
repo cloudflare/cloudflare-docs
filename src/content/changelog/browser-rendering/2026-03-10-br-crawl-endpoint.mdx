@@ -6,9 +6,9 @@ products:
 date: 2026-03-10
 ---
 
-You can now crawl an entire website with a single API call using [Browser Rendering](/browser-rendering/)'s new [`/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/), now available in open beta. Submit a starting URL and the endpoint automatically discovers linked pages, renders them in a headless browser, and returns content as HTML, Markdown, or structured JSON.
+You can now crawl an entire website with a single API call using [Browser Rendering](/browser-rendering/)'s new [`/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/), available in open beta. Submit a starting URL and the endpoint automatically discovers linked pages, renders them in a headless browser, and returns content as HTML, Markdown, or structured JSON.
 
-Crawl jobs run asynchronously. You submit a URL, receive a job ID, and check back for results as pages are processed:
+Crawl jobs run asynchronously. You submit a URL, receive a job ID, and check back for results as pages are processed. Here is how it works:
 
 ```sh
 # Initiate a crawl
@@ -31,8 +31,9 @@ Key features:
 - **Automatic page discovery** - Discovers URLs from sitemaps, page links, or both
 - **Incremental crawling** - Use `modifiedSince` and `maxAge` to skip pages that haven't changed or were recently fetched, saving time and cost on repeated crawls
 - **Static mode** - Set `render: false` to fetch static HTML without spinning up a browser, for faster crawling of static sites
-- **Well-behaved bot** - Honors `robots.txt` directives including `crawl-delay`
+- **Well-behaved bot** - Honors `robots.txt` directives, including `crawl-delay`
 
 Available on both the Workers Free and Paid plans.
 
-To get started, refer to the [crawl endpoint documentation](/browser-rendering/rest-api/crawl-endpoint/). If you are setting up your own site to be crawled, review the [robots.txt and sitemaps best practices](/browser-rendering/reference/robots-txt/).
+To get started, refer to the [crawl endpoint documentation](/browser-rendering/rest-api/crawl-endpoint/). 
+If you are setting up your own site to be crawled, review the [robots.txt and sitemaps best practices](/browser-rendering/reference/robots-txt/).
