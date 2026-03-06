@@ -158,15 +158,17 @@ To perform resizing and optimizations, the Worker must be able to fetch the orig
 You must detect which requests must go directly to the origin server. When the `image-resizing` string is present in the `Via` header, it means that it is a request coming from another Worker and should be directed to the origin server:
 
 ```js
-addEventListener("fetch", event => {
-  // If this request is coming from image resizing worker,
-  // avoid causing an infinite loop by resizing it again:
-  if (/image-resizing/.test(event.request.headers.get("via"))) {
-    return fetch(event.request)
-  }
+export default {
+	async fetch(request) {
+		// If this request is coming from image resizing worker,
+		// avoid causing an infinite loop by resizing it again:
+		if (/image-resizing/.test(request.headers.get("via"))) {
+			return fetch(request);
+		}
 
-  // Now you can safely use image resizing here
-}
+		// Now you can safely use image resizing here
+	},
+};
 ```
 
 ## Lack of preview in the dashboard
@@ -192,7 +194,7 @@ if (response.ok || response.redirected) {
 	// fetch() may respond with status 304
 	return response;
 } else {
-	return response.redirect(imageURL, 307);
+	return Response.redirect(imageURL, 307);
 }
 ```
 
@@ -232,11 +234,11 @@ export default {
 		if (url.searchParams.has("fit"))
 			options.cf.image.fit = url.searchParams.get("fit");
 		if (url.searchParams.has("width"))
-			options.cf.image.width = url.searchParams.get("width");
+			options.cf.image.width = parseInt(url.searchParams.get("width"), 10);
 		if (url.searchParams.has("height"))
-			options.cf.image.height = url.searchParams.get("height");
+			options.cf.image.height = parseInt(url.searchParams.get("height"), 10);
 		if (url.searchParams.has("quality"))
-			options.cf.image.quality = url.searchParams.get("quality");
+			options.cf.image.quality = parseInt(url.searchParams.get("quality"), 10);
 
 		// Your Worker is responsible for automatic format negotiation. Check the Accept header.
 		const accept = request.headers.get("Accept");

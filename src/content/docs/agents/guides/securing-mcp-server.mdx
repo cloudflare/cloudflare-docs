@@ -27,7 +27,8 @@ export default new OAuthProvider({
 	authorizeEndpoint: "/authorize",
 	tokenEndpoint: "/token",
 	clientRegistrationEndpoint: "/register",
-	apiHandlers: { "/mcp": MyMCP.serve("/mcp") },
+	apiRoute: "/mcp",
+	apiHandler: MyMCP.serve("/mcp"),
 	defaultHandler: AuthHandler,
 });
 ```

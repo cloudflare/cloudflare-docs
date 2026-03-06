@@ -31,7 +31,7 @@ class MyWorkflow(WorkflowEntrypoint):
 For example, a Workflow may be defined as:
 
 ```python
-from workers import Response, WorkflowEntrypoint
+from workers import Response, WorkflowEntrypoint, WorkerEntrypoint
 
 class PythonWorkflowStarter(WorkflowEntrypoint):
     async def run(self, event, step):
@@ -49,9 +49,10 @@ class PythonWorkflowStarter(WorkflowEntrypoint):
         await step_1()
         await step_2()
 
-async def on_fetch(request, env):
-    await env.MY_WORKFLOW.create()
-    return Response("Hello world!")
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        await self.env.MY_WORKFLOW.create()
+        return Response("Hello world!")
 ```
 
 You must add both `python_workflows` and `python_workers` compatibility flags to your Wrangler configuration file.
@@ -64,7 +65,6 @@ You must add both `python_workflows` and `python_workers` compatibility flags to
 	"main": "src/entry.py",
 	"compatibility_flags": [
 		"python_workers",
-		"experimental",
 		"python_workflows"
 	],
 	"compatibility_date": "$today",

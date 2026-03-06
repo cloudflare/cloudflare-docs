@@ -14,13 +14,3 @@ sidebar:
 | 1000 class errors                         | 1000 class error pages are displayed when a domain’s configuration, security settings, or origin setup prevents Cloudflare from completing a request. For more information, refer to [Cloudflare 1xxx errors](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/). | `1000_errors`       |
 | Managed challenge / I'm Under Attack Mode | Presents different types of challenges to a visitor depending on the nature of their request and your security settings. This page returns a `403` status code. For more information, refer to [Under Attack mode](/fundamentals/reference/under-attack-mode/).                    | `managed_challenge` |
 | Rate limiting block                       | Displayed to visitors when they have been blocked by a [rate limiting rule](/waf/rate-limiting-rules/). This page returns a `429` status code.                                                                                                                                     | `ratelimit_block`   |
-
-The following error page types will only be shown in the Cloudflare dashboard if you have customized their error pages in the past:
-
-| Page type             | API identifier    |
-| --------------------- | ----------------- |
-| Interactive Challenge | `basic_challenge` |
-| JavaScript Challenge  | `under_attack`    |
-| WAF Challenge         | `waf_challenge`   |
-
-These types of challenges are being discouraged in favor of managed challenges. Refer to [Interstitial Challenge Pages](/cloudflare-challenges/challenge-types/challenge-pages/) for more information.

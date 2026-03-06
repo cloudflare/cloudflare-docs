@@ -23,6 +23,7 @@ const props = z
 		z.object({
 			hideEntry: z.string().optional(),
 			scheduled: z.boolean().default(false),
+			numberOfEntries: z.number().int().positive().optional(),
 		}),
 	);
 
@@ -54,7 +55,11 @@ if ("product" in input) {
 	};
 }
 
-const changelogs = await getChangelogs({ filter });
+const allChangelogs = await getChangelogs({ filter });
+const changelogs =
+	input.numberOfEntries !== undefined
+		? allChangelogs.slice(0, input.numberOfEntries)
+		: allChangelogs;
 ---
 
 <RSSButton href={rss} />

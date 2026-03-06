@@ -218,6 +218,56 @@ Vectorize is currently only available on the Workers paid plan.
 
 <Render file="vectorize-pricing" product="vectorize" />
 
+## R2
+
+R2 charges based on the total volume of data stored, along with two classes of operations on that data:
+
+1. **Class A operations** which are more expensive and tend to mutate state.
+2. **Class B operations** which tend to read existing state.
+
+There are no charges for egress bandwidth.
+
+|                                    | Free                        | Standard storage         | Infrequent Access storage |
+| ---------------------------------- | --------------------------- | ------------------------ | ------------------------- |
+| Storage                            | 10 GB-month / month         | $0.015 / GB-month        | $0.01 / GB-month          |
+| Class A Operations                 | 1 million requests / month  | $4.50 / million requests | $9.00 / million requests  |
+| Class B Operations                 | 10 million requests / month | $0.36 / million requests | $0.90 / million requests  |
+| Data Retrieval (processing)        | None                        | None                     | $0.01 / GB                |
+| Egress (data transfer to Internet) | Free                        | Free                     | Free                      |
+
+:::note[R2 documentation]
+
+To learn more about R2 pricing, including billing examples, refer to [R2 Pricing](/r2/pricing/).
+
+:::
+
+## Containers
+
+Containers are billed for every 10ms that they are actively running at the following rates, with included monthly usage as part of the $5 USD per month [Workers Paid plan](/workers/platform/pricing/):
+
+|                  | Memory                                                                  | CPU                                                                | Disk                                                           |
+| ---------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------- |
+| **Free**         | N/A                                                                     | N/A                                                                | N/A                                                            |
+| **Workers Paid** | 25 GiB-hours/month included <br/> +$0.0000025 per additional GiB-second | 375 vCPU-minutes/month <br/>+ $0.000020 per additional vCPU-second | 200 GB-hours/month <br/> +$0.00000007 per additional GB-second |
+
+You only pay for what you use — charges start when a request is sent to the container or when it is manually started. Charges stop after the container instance goes to sleep, which can happen automatically after a timeout.
+
+### Network Egress
+
+Egress from Containers is priced at the following rates:
+
+| Region                 | Price per GB | Included Allotment per month |
+| ---------------------- | ------------ | ---------------------------- |
+| North America & Europe | $0.025       | 1 TB                         |
+| Oceania, Korea, Taiwan | $0.05        | 500 GB                       |
+| Everywhere Else        | $0.04        | 500 GB                       |
+
+:::note[Containers documentation]
+
+To learn more about Containers pricing, refer to [Containers Pricing](/containers/pricing/).
+
+:::
+
 ## Service bindings
 
 Requests made from your Worker to another worker via a [Service Binding](/workers/runtime-apis/bindings/service-bindings/) do not incur additional request fees. This allows you to split apart functionality into multiple Workers, without incurring additional costs.

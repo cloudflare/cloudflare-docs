@@ -1,0 +1,23 @@
+---
+title: deleteAll() now deletes Durable Object alarm
+description: Clean up a Durable Object's storage with a single API call.
+products:
+  - durable-objects
+  - workers
+date: 2026-02-24
+---
+
+`deleteAll()` now deletes a Durable Object alarm in addition to stored data for Workers with a compatibility date of `2026-02-24` or later. This change simplifies clearing a Durable Object's storage with a single API call.
+
+Previously, `deleteAll()` only deleted user-stored data for an object. Alarm usage stores metadata in an object's storage, which required a separate `deleteAlarm()` call to fully clean up all storage for an object. The `deleteAll()` change applies to both KV-backed and SQLite-backed Durable Objects.
+
+```js
+// Before: two API calls required to clear all storage
+await this.ctx.storage.deleteAlarm();
+await this.ctx.storage.deleteAll();
+
+// Now: a single call clears both data and the alarm
+await this.ctx.storage.deleteAll();
+```
+
+For more information, refer to the [Storage API documentation](/durable-objects/api/sqlite-storage-api/#deleteall).

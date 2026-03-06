@@ -15,6 +15,7 @@ import {
 	LinkTitleCard,
 	Plan,
 	RelatedProduct,
+	Render,
 	AstroIcon,
 } from "~/components";
 
@@ -40,6 +41,10 @@ Programmatically load and fully render dynamic webpages or raw HTML and capture 
 - [HTML elements](/browser-rendering/rest-api/scrape-endpoint/)
 - [Structured data](/browser-rendering/rest-api/json-endpoint/)
 
+## Integration methods
+
+<Render file="integration-methods" product="browser-rendering" />
+
 ## Key features
 
 - **Scale to thousands of browsers**: Instant access to a global pool of browsers with low cold-start time, ideal for high-volume screenshot generation, data extraction, or automation at scale
@@ -47,21 +52,6 @@ Programmatically load and fully render dynamic webpages or raw HTML and capture 
 - **Easy to integrate**: [REST APIs](/browser-rendering/rest-api/) for common actions, while [Puppeteer](/browser-rendering/puppeteer/) and [Playwright](/browser-rendering/playwright/) provide familiar automation libraries for complex workflows
 - **Session management**: [Reuse browser sessions](/browser-rendering/workers-bindings/reuse-sessions/) across requests to improve performance and reduce cold-start overhead
 - **Flexible pricing**: Pay only for browser time used with generous free tier ([view pricing](/browser-rendering/pricing/))
-
-## Integration methods
-
-- **[REST API](/browser-rendering/rest-api/)**: Simple HTTP endpoints for stateless tasks like screenshots, PDFs, and scraping.
-- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Full browser automation within Workers using [Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), or [Stagehand](/browser-rendering/stagehand/).
-
-| Use case | Recommended | Why |
-| --- | --- | --- |
-| Simple screenshot, PDF, or scrape | [REST API](/browser-rendering/rest-api/) | No code deployment; single HTTP request |
-| Browser automation | [Playwright](/browser-rendering/playwright/) | Full control with built-in tracing and assertions |
-| Porting existing scripts | [Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/) | Minimal code changes from standard libraries |
-| AI-powered data extraction | [JSON endpoint](/browser-rendering/rest-api/json-endpoint/) | Structured data via natural language prompts |
-| AI agent browsing | [Playwright MCP](/browser-rendering/playwright/playwright-mcp/) | LLMs control browsers via MCP |
-| Resilient scraping | [Stagehand](/browser-rendering/stagehand/) | AI finds elements by intent, not selectors |
-
 
 ## Related products
 

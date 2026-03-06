@@ -3,6 +3,22 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-03-04"
+    title: "Increased REST API rate limits"
+    description: |-
+      * Increased [REST API rate limits](/browser-rendering/limits/#workers-paid) for Workers Paid plans from 180 requests per minute (3 per second) to 600 requests per minute (10 per second). No action is needed to benefit from the higher limits.
+  - publish_date: "2026-02-26"
+    title: "New tutorial: Generate OG images for Astro sites"
+    description: |-
+      * Added a new tutorial on how to [generate OG images for Astro sites](/browser-rendering/how-to/og-images-astro/) using Browser Rendering. The tutorial walks through creating an Astro template, using Browser Rendering to screenshot it as a PNG, and serving the generated images.
+  - publish_date: "2026-02-24"
+    title: "Documentation updates for robots.txt and sitemaps"
+    description: |-
+      * Added [robots.txt and sitemaps reference page](/browser-rendering/reference/robots-txt/) with guidance on configuring robots.txt and sitemaps for sites accessed by Browser Rendering, including sitemap index files and caching headers.
+  - publish_date: "2026-02-18"
+    title: "@cloudflare/playwright v1.1.1 released"
+    description: |-
+      * Released version 1.1.1 of [`@cloudflare/playwright`](https://github.com/cloudflare/playwright/releases/tag/v1.1.1), which includes a bug fix that resolves a chunking issue that could occur when generating large PDFs. Upgrade to this version to avoid this issue.
   - publish_date: "2026-02-03"
     title: "@cloudflare/puppeteer v1.0.6 released"
     description: |-

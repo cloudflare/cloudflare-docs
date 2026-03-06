@@ -7,13 +7,31 @@ tags: ["full-stack"]
 description: Create a Vike application and deploy it to Cloudflare Workers
 ---
 
-import { Steps, PackageManagers } from "~/components";
+import { AutoconfigDiagram, Steps, PackageManagers } from "~/components";
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 You can deploy your [Vike](https://vike.dev) app to Cloudflare using the Vike extension [`vike-photon`](https://vike.dev/vike-photon).
 
 All app types (SSR/SPA/SSG) are supported.
 
+
+:::tip[Already have a Vike project?]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect Vike, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="Vike"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: "dist/server/index.js" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: dist/client" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+	]}
+/>
 
 ## What is Vike?
 

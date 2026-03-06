@@ -3,7 +3,8 @@ pcx_content_type: reference
 title: Browser Isolation with firewall
 sidebar:
   order: 8
-
+tags:
+  - UDP
 ---
 
 If your organization uses a firewall or other policies to restrict Internet traffic, you may need to make a few changes to allow Browser Isolation to connect.
@@ -16,13 +17,13 @@ Isolated pages are served by the remoting client. This client communicates to Cl
 
 The remoting client provides static assets and API endpoints. For Browser Isolation to function, you must allow:
 
-* HTTPS traffic to `*.browser.run` on port `443`
+- HTTPS traffic to `*.browser.run` on port `443`
 
 #### Clientless Web Isolation
 
 Users connecting through Clientless Web Isolation also require connectivity to Cloudflare Access. For users to connect to Access, you must allow:
 
-* HTTPS traffic to `https://<team-name>.cloudflareaccess.com` on port `443`
+- HTTPS traffic to `https://<team-name>.cloudflareaccess.com` on port `443`
 
 ### WebRTC channel
 

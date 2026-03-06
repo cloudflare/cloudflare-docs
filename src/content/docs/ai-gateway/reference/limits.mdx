@@ -9,6 +9,8 @@ import { Render } from "~/components";
 
 The following limits apply to gateway configurations, logs, and related features in Cloudflare's platform.
 
+## Gateway and log limits
+
 | Feature                                                               | Limit                               |
 | --------------------------------------------------------------------- | ----------------------------------- |
 | [Cacheable request size](/ai-gateway/features/caching/)               | 25 MB per request                   |
@@ -38,5 +40,14 @@ Cleanup](/ai-gateway/observability/logging/#auto-log-cleanup) for more details
 on how to automatically delete logs.
 
 <sup>3</sup> Logs larger than 10 MB will not be stored.
+
+## DLP limits
+
+[DLP](/ai-gateway/features/dlp/) for AI Gateway uses shared [Cloudflare One DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/). The following limits apply to DLP profiles and detection entries at the account level:
+
+<Render file="data-loss-prevention/dlp-limits-table" product="cloudflare-one" />
+
+DLP profiles are shared with Cloudflare One and are not coupled to individual gateways. You can apply the same DLP profiles across multiple gateways without additional profile limits. There is no separate limit on the number of DLP policies per gateway.
+
 
 <Render file="limits-increase" product="ai-gateway" />

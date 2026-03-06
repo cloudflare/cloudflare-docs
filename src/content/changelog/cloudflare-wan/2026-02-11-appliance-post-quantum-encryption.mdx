@@ -1,0 +1,15 @@
+---
+title: Post-quantum encryption support for Cloudflare One Appliance
+description: Hybrid ML-KEM protects appliance traffic against harvest-now, decrypt-later attacks
+date: 2026-02-11
+products:
+  - cloudflare-one
+---
+
+Cloudflare One Appliance version 2026.2.0 adds [post-quantum encryption](/ssl/post-quantum-cryptography/) support using hybrid ML-KEM (Module-Lattice-Based Key-Encapsulation Mechanism).
+
+The appliance now uses TLS 1.3 with hybrid ML-KEM for its connection to the Cloudflare edge. During the TLS handshake, the appliance and the edge share a symmetric secret over the TLS connection and inject it into the ESP layer of IPsec. This protects IPsec data plane traffic against harvest-now, decrypt-later attacks.
+
+This upgrade deploys automatically to all appliances during their configured interrupt windows with no manual action required.
+
+For more information, refer to [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/).

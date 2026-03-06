@@ -1,0 +1,15 @@
+---
+title: Quick Editor devtools replaced with log viewer
+description: The Workers Quick Editor devtools inspector has been deprecated and replaced with a lightweight log viewer.
+products:
+  - workers
+date: 2026-02-16
+---
+
+Cloudflare has deprecated the Workers Quick Editor dev tools inspector and replaced it with a lightweight log viewer.
+
+This aligns our logging with `wrangler tail` and gives us the opportunity to focus our efforts on bringing benefits from the work we have invested in observability, which would not be possible otherwise.
+
+We have made improvements to this logging viewer based on your feedback such that you can log object and array types, and easily clear the list of logs. This does not include class instances. Limitations are documented in the [Workers Playground docs](/workers/playground/).
+
+If you do need to develop your Worker with a remote inspector, you can still do this using Wrangler locally. Cloning a project from your quick editor to your computer for local development can be done with the `wrangler init --from-dash` command. For more information, refer to [Wrangler commands](/workers/wrangler/commands/#init).

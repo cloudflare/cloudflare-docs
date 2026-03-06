@@ -1,0 +1,76 @@
+---
+title: Tunnel tokens
+pcx_content_type: reference
+sidebar:
+  order: 4
+---
+
+import {
+	DashButton,
+	Details,
+	GlossaryTooltip,
+	Render,
+	Tabs,
+	TabItem,
+	APIRequest,
+} from "~/components";
+
+A <GlossaryTooltip term="remotely-managed tunnel">remotely-managed tunnel</GlossaryTooltip> only requires a token to run. Anyone with the token can run the tunnel.
+
+## Get the token
+
+To get the token for a remotely-managed tunnel:
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
+2. Select your tunnel.
+3. Select **Add a replica**.
+3. Copy the `cloudflared` installation command into a text editor (do not run the command). The token is the `eyJ...` string.
+
+</TabItem>
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/token"
+	method="GET"
+/>
+
+</TabItem>
+</Tabs>
+
+## Rotate a token
+
+Rotate tokens regularly to reduce the risk of compromise. For tunnels with multiple [replicas](/tunnel/configuration/#replicas-and-high-availability), rotate outside working hours and update replicas in batches.
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
+2. Select your tunnel.
+3. Select **Rotate token**.
+	After rotating the token, `cloudflared` cannot establish new connections with the old token. Existing connectors remain active until restarted.
+4. Select **Add replica** and copy the new `cloudflared` installation command.
+5. On each replica, reinstall the `cloudflared` service using the new token:
+
+	```sh
+	sudo cloudflared service uninstall
+	sudo cloudflared service install <NEW_TOKEN>
+	```
+
+<Details header="Rotate a compromised token">
+
+If your tunnel token is compromised, immediately [rotate the token](#rotate-a-token), then force-disconnect all existing connections:
+
+<APIRequest
+	path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/connections"
+	method="DELETE"
+/>
+
+Then reinstall the `cloudflared` service on all replicas using the new token.
+
+</Details>

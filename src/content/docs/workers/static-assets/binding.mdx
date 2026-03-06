@@ -36,8 +36,8 @@ The folder of static assets to be served. For many frameworks, this is the `./pu
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"assets": {
-		"directory": "./public/"
-	}
+		"directory": "./public/",
+	},
 }
 ```
 
@@ -83,8 +83,8 @@ Controls whether to invoke the Worker script regardless of a request which would
 	"assets": {
 		"directory": "./public/",
 		"binding": "ASSETS",
-		"run_worker_first": true
-	}
+		"run_worker_first": true,
+	},
 }
 ```
 
@@ -120,6 +120,8 @@ The order in which the patterns are listed is not significant.
 
 In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
 
+Common uses for `run_worker_first` include authentication checks, A/B testing, and [injecting bootstrap data into your SPA shell](/workers/examples/spa-shell/).
+
 ## `binding`
 
 Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
@@ -134,8 +136,8 @@ Configuring the optional [binding](/workers/runtime-apis/bindings) gives you acc
 	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./public/",
-		"binding": "ASSETS"
-	}
+		"binding": "ASSETS",
+	},
 }
 ```
 

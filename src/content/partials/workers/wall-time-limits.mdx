@@ -1,0 +1,18 @@
+---
+{}
+---
+
+## Wall time limits by invocation type
+
+Wall time (also called wall-clock time) is the total elapsed time from the start to end of an invocation, including time spent waiting on network requests, I/O, and other asynchronous operations. This is distinct from [CPU time](/workers/platform/limits/#cpu-time), which only measures time the CPU spends actively executing your code.
+
+The following table summarizes the wall time limits for different types of Worker invocations across the developer platform:
+
+| Invocation type                                                    | Wall time limit | Details                                                                                                                                                                                                           |
+| ------------------------------------------------------------------ | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Incoming HTTP request                                              | Unlimited       | No hard limit while the client remains connected. When the client disconnects, tasks are canceled unless you call [`waitUntil()`](/workers/runtime-apis/handlers/fetch/) to extend execution by up to 30 seconds. |
+| [Cron Triggers](/workers/configuration/cron-triggers/)             | 15 minutes      | Scheduled Workers have a maximum wall time of 15 minutes per invocation.                                                                                                                                          |
+| [Queue consumers](/queues/configuration/javascript-apis/#consumer) | 15 minutes      | Each consumer invocation has a maximum wall time of 15 minutes.                                                                                                                                                   |
+| [Durable Object alarm handlers](/durable-objects/api/alarms/)      | 15 minutes      | Alarm handler invocations have a maximum wall time of 15 minutes.                                                                                                                                                 |
+| [Durable Objects](/durable-objects/) (RPC / HTTP)                  | Unlimited       | No hard limit while the caller stays connected to the Durable Object.                                                                                                                                             |
+| [Workflows](/workflows/) (per step)                                | Unlimited       | Each step can run for an unlimited wall time. Individual steps are subject to the configured [CPU time limit](/workers/platform/limits/#cpu-time).                                                                |

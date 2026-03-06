@@ -1,0 +1,184 @@
+---
+title: Monitoring
+pcx_content_type: reference
+sidebar:
+  order: 5
+---
+
+import {
+	AvailableNotifications,
+	DashButton,
+	Details,
+	Render,
+	TabItem,
+	Tabs,
+} from "~/components";
+
+Cloudflare Tunnel exposes logs, metrics, and diagnostic tools to help you monitor tunnel health and resolve issues.
+
+## Tunnel health
+
+You can check your tunnel connection status in the [Cloudflare dashboard](https://dash.cloudflare.com/) by going to **Networking** > **Tunnels**, or by running `cloudflared tunnel list`.
+
+<DashButton url="/?to=/:account/tunnels" />
+
+<Render file="tunnel/tunnel-status" product="cloudflare-one" />
+
+:::note[Tunnel status scope]
+The tunnel status only reflects the connection between `cloudflared` and the Cloudflare network. It does not indicate whether `cloudflared` can reach your internal services. A tunnel can appear **Healthy** while users are unable to connect to an application.
+:::
+
+### Notifications
+
+Administrators can receive alerts when tunnels change health or deployment status. Notifications can be delivered by email, webhook, or third-party services.
+
+To configure tunnel notifications, refer to [Create a notification](/notifications/get-started/#create-a-notification).
+
+<AvailableNotifications product="Tunnel" />
+
+## Logs
+
+Tunnel logs record all activity between `cloudflared` and the Cloudflare global network, and all activity between `cloudflared` and your origin server.
+
+### Server-side logs
+
+<Render
+	file="tunnel/logs/view-logs-on-server"
+	product="cloudflare-one"
+	params={{
+		loglevelURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel",
+		logfileURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#logfile",
+		runParametersURL: "/tunnel/configuration/#update-run-parameters",
+	}}
+/>
+
+### Remote log streaming
+
+You can stream real-time logs from a running tunnel without SSH access to the server.
+
+<Tabs>
+<TabItem label="CLI">
+
+<Render file="tunnel/logs/view-logs-cli" product="cloudflare-one" />
+
+3. If you are running multiple [replicas](/tunnel/configuration/#replicas-and-high-availability), specify which replica to stream logs from:
+   ```sh
+   cloudflared tail --connector-id <REPLICA ID> <UUID>
+   ```
+
+<Details header="Log filtering options">
+	<Render
+		file="tunnel/logs/filter-logs"
+		product="cloudflare-one"
+		params={{
+			loglevelURL:
+				"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel",
+		}}
+	/>
+</Details>
+
+</TabItem>
+<TabItem label="Dashboard">
+
+<Render file="tunnel/logs/view-logs-dashboard" product="cloudflare-one" />
+
+</TabItem>
+</Tabs>
+
+## Metrics
+
+<Render file="tunnel/metrics/intro" product="cloudflare-one" />
+
+### Default metrics server address
+
+<Render
+	file="tunnel/metrics/default-address"
+	product="cloudflare-one"
+	params={{
+		logsURL: "#server-side-logs",
+	}}
+/>
+
+### Configure a custom address
+
+<Render
+	file="tunnel/metrics/configure-address"
+	product="cloudflare-one"
+	params={{
+		updateRunParametersURL: "/tunnel/configuration/#update-run-parameters",
+		grafanaTutorialURL: "/tunnel/tutorials/grafana/",
+	}}
+/>
+
+<Details header="cloudflared metrics">
+
+<Render file="tunnel/metrics/cloudflared" product="cloudflare-one" />
+
+</Details>
+
+<Details header="Prometheus metrics">
+
+<Render file="tunnel/metrics/prometheus" product="cloudflare-one" />
+
+</Details>
+
+<Details header="Go runtime metrics">
+
+<Render file="tunnel/metrics/go-runtime" product="cloudflare-one" />
+
+</Details>
+
+## Diagnostic logs
+
+Cloudflare Tunnel generates diagnostic reports that collect data from a single `cloudflared` instance running on the local machine. This requires `cloudflared` version 2024.12.2 or later.
+
+### Generate diagnostics
+
+<Render
+	file="tunnel/diagnostics/host-environment"
+	product="cloudflare-one"
+	params={{
+		metricsURL: "#configure-a-custom-address",
+	}}
+/>
+
+<Details header="Docker diagnostics">
+
+<Render
+	file="tunnel/diagnostics/docker"
+	product="cloudflare-one"
+	params={{
+		metricsURL: "#metrics",
+		defaultMetricsURL: "#default-metrics-server-address",
+	}}
+/>
+
+</Details>
+
+<Details header="Kubernetes diagnostics">
+
+<Render
+	file="tunnel/diagnostics/kubernetes"
+	product="cloudflare-one"
+	params={{
+		metricsURL: "#metrics",
+		defaultMetricsURL: "#default-metrics-server-address",
+	}}
+/>
+
+</Details>
+
+### Diagnostic file contents
+
+<Render
+	file="tunnel/diagnostics/tunnel-diag-file"
+	product="cloudflare-one"
+	params={{
+		runParametersURL: "/tunnel/advanced/run-parameters/",
+		logsURL: "#logs",
+		metricsURL: "#metrics",
+		loglevelURL: "#server-side-logs",
+	}}
+/>

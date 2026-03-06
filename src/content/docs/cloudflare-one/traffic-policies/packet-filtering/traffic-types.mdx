@@ -7,8 +7,14 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components";
 
-Cloudflare Network Firewall enables you to allow or block traffic on a variety of packet characteristics, such as source and destination IP, source and destination port, protocol, packet length, and <GlossaryTooltip term="bit field matching">bit field match</GlossaryTooltip>.
+Cloudflare Network Firewall enables you to allow or block traffic on a variety of packet characteristics, including:
 
-Cloudflare Network Firewall supports layers three and four — network and transport — protocols such as TCP, UDP, and ICMP. Any type of layer three or four protocols can go through Cloudflare Network Firewall and then be matched on those protocols.
+- **Source and destination IP** — the sender's and receiver's IP addresses
+- **Source and destination port** — the numeric port identifying the specific service (for example, port 80 for HTTP)
+- **Protocol** — the communication method, such as TCP or UDP
+- **Packet length** — the size of the packet in bytes
+- **<GlossaryTooltip term="bit field matching">Bit field match</GlossaryTooltip>** — inspect individual flags within packet headers
 
-To view the list of available fields, refer to [Cloudflare Network Firewall fields](/cloudflare-network-firewall/reference/network-firewall-fields/).
+Cloudflare Network Firewall operates at OSI layers 3 and 4 — the network layer (IP addressing and routing) and transport layer (port-based connections). It supports protocols such as TCP (reliable, ordered connections), UDP (fast, connectionless messages), and ICMP (network diagnostic messages like ping). You can write rules against any layer 3 or 4 protocol, not only TCP and UDP.
+
+To see the full list of fields you can use when writing filter expressions, refer to [Cloudflare Network Firewall fields](/cloudflare-network-firewall/reference/network-firewall-fields/).

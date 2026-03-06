@@ -1,0 +1,19 @@
+---
+title: Hyperdrive no longer caches queries using STABLE PostgreSQL functions
+description: Hyperdrive marks queries containing STABLE PostgreSQL functions as uncacheable, preventing stale cached results.
+products:
+  - hyperdrive
+date: 2026-02-23
+---
+
+Hyperdrive now treats queries containing PostgreSQL `STABLE` functions as uncacheable, in addition to `VOLATILE` functions.
+
+Previously, only functions [that PostgreSQL categorizes](https://www.postgresql.org/docs/current/xfunc-volatility.html) as `VOLATILE` (for example, `RANDOM()`, `LASTVAL()`) were detected as uncacheable. `STABLE` functions (for example, `NOW()`, `CURRENT_TIMESTAMP`, `CURRENT_DATE`) were incorrectly allowed to be cached.
+
+Because `STABLE` functions can return different results across different SQL statements within the same transaction, caching their results could serve stale or incorrect data. This change aligns Hyperdrive's caching behavior with PostgreSQL's function volatility semantics.
+
+If your queries use `STABLE` functions, and you were relying on them being cached, move the function call to your application code and pass the result as a query parameter. For example, instead of `WHERE created_at > NOW()`, compute the timestamp in your Worker and pass it as `WHERE created_at > $1`.
+
+Hyperdrive uses text-based pattern matching to detect uncacheable functions. References to function names like `NOW()` in SQL comments also cause the query to be marked as uncacheable.
+
+For more information, refer to [Query caching](/hyperdrive/concepts/query-caching/) and [Troubleshoot and debug](/hyperdrive/observability/troubleshooting/).

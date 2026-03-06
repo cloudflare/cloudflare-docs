@@ -8,6 +8,7 @@ description: Create an Astro application and deploy it to Cloudflare Workers wit
 ---
 
 import {
+	AutoconfigDiagram,
 	Badge,
 	Details,
 	Steps,
@@ -72,6 +73,29 @@ Astro is also framework-agnostic, and supports every major UI framework, includi
   </Steps>
 
 ## Deploy an existing Astro project on Workers
+
+:::tip[Automatic configuration]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect Astro, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="Astro"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: "dist/_worker.js/index.js" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: ./dist, binding: ASSETS" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+		{ label: "adapter", file: "astro.config.mjs", value: "@astrojs/cloudflare" },
+	]}
+/>
+
+## Manual configuration
+
+If you prefer to configure your project manually, follow the steps below.
 
 ### If you have a static site
 

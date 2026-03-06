@@ -1,5 +1,4 @@
 ---
-
 summary: Set common security headers (X-XSS-Protection, X-Frame-Options,
   X-Content-Type-Options, Permissions-Policy, Referrer-Policy,
   Strict-Transport-Security, Content-Security-Policy).
@@ -27,6 +26,8 @@ If you want to get started quickly, click on the button below.
 This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
 
 import { TabItem, Tabs } from "~/components";
+
+To inject CSP nonces into inline `<script>` tags using HTMLRewriter, refer to this [CSP nonce example](/workers/examples/spa-shell/#add-csp-nonces).
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -336,15 +337,15 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono';
-import { secureHeaders } from 'hono/secure-headers';
+import { Hono } from "hono";
+import { secureHeaders } from "hono/secure-headers";
 
 const app = new Hono();
 app.use(secureHeaders());
 
 // Handle all other requests by passing through to origin
-app.all('*', async (c) => {
-  return fetch(c.req.raw);
+app.all("*", async (c) => {
+	return fetch(c.req.raw);
 });
 
 export default app;

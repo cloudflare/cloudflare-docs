@@ -12,18 +12,21 @@ type ProductAvailability = z.infer<typeof productAvailabilitySchema>;
 const productAvailabilityCollectionConfig: CollectionConfig<
 	typeof productAvailabilitySchema
 > = {
-	loader: middlecacheLoader("v1/products/availability_certification.json", {
-		parser: (fileContent: string) => {
-			const data = JSON.parse(fileContent);
-			const lookup: Record<string, ProductAvailability> = {};
+	loader: middlecacheLoader(
+		"v1/products/reconciled-availability-certification.json",
+		{
+			parser: (fileContent: string) => {
+				const data = JSON.parse(fileContent);
+				const lookup: Record<string, ProductAvailability> = {};
 
-			for (const item of data) {
-				lookup[item.name] = { availability: item.availability };
-			}
+				for (const item of data) {
+					lookup[item.id] = { availability: item.availability };
+				}
 
-			return lookup;
+				return lookup;
+			},
 		},
-	}),
+	),
 	schema: productAvailabilitySchema,
 };
 
