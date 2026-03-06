@@ -24,12 +24,14 @@ curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
-The endpoint supports a range of options to fine-tune how pages are discovered and processed:
+Key features:
 
-- Choose how URLs are discovered: from sitemaps, page links, or both
-- Control scope with crawl depth, page limits, and wildcard patterns to include or exclude specific URL paths
-- Use `modifiedSince` and `maxAge` to skip pages that haven't changed or were recently fetched, saving time and cost on repeated crawls
-- Inspect skipped URLs and the reason each was skipped (robots.txt, out of scope, pattern mismatch) to debug scope and access issues
+- **Output formats** - Return crawled content as HTML, Markdown, or structured JSON (powered by [Workers AI](/workers-ai/))
+- **Crawl scope controls** - Configure crawl depth, page limits, and wildcard patterns to include or exclude specific URL paths
+- **Automatic page discovery** - Discovers URLs from sitemaps, page links, or both
+- **Incremental crawling** - Use `modifiedSince` and `maxAge` to skip pages that haven't changed or were recently fetched, saving time and cost on repeated crawls
+- **Static mode** - Set `render: false` to fetch static HTML without spinning up a browser, for faster crawling of static sites
+- **Well-behaved bot** - Honors `robots.txt` directives including `crawl-delay`
 
 Available on both the Workers Free and Paid plans.
 
