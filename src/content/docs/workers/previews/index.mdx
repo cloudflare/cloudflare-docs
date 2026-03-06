@@ -18,9 +18,9 @@ import {
 	InlineBadge,
 } from "~/components";
 
-A Preview is an isolated copy of your Worker running on its own URL that you use to test changes before deploying to production. A Worker can have many Previews running at the same time, each isolated from each other. Each Preview runs with its own bindings, environment variables, and secrets, so your preview traffic never touches your production data.
+A **Preview** is an isolated copy of your Worker that runs on its own URL, so you can test changes before deploying to production. A Worker can have many Previews running at the same time, each isolated from each other. Each Preview runs with its own [bindings](/workers/runtime-apis/bindings/), environment variables, and secrets, so your preview traffic never touches your production data.
 
-Previews are created automatically when you push to any branch other than your tracked branch (usually `main`), or manually with `wrangler preview`.
+Previews are created automatically when you push to any branch other than your tracked branch (usually `main`), or manually with `wrangler preview`. For a deeper look at how Previews and their Deployments are structured, refer to [Previews API](/workers/previews/api/).
 
 ## Quick start
 
@@ -42,17 +42,17 @@ git checkout -b new-feature
 wrangler preview
 ```
 
-Wrangler builds your code locally and deploys it as a Preview. It prints a **Preview URL** and a **Deployment URL** to your terminal.
+Wrangler builds your code locally and deploys it as a Preview. It prints a **[Preview URL](#preview-urls-and-deployment-urls)** and a **[Deployment URL](#preview-urls-and-deployment-urls)** to your terminal.
 
 ---
 
 ## Set up Previews
 
-Previews use their own bindings, environment variables, and secrets -- separate from your production Worker settings. Before creating your first Preview, you need to configure what resources and environment variables Previews should use.
+Previews use their own bindings, environment variables, and secrets -- separate from your production Worker settings. Before creating your first Preview, you need to configure what resources and environment variables Previews should use. These are called **[Preview Defaults](/workers/previews/api/#preview-defaults)** -- a template of starting values that every new Preview inherits automatically.
 
 ### From the dashboard
 
-Go to your Worker > **Settings**, and you will see a banner for setting up your default Preview settings. This walks you through the bindings, environment variables, and observability settings you want every Preview to start with. This is the fastest way to get your whole team set up -- anyone who creates a Preview (manually or by pushing a branch) gets the same configuration without needing to specify it themselves.
+Go to your Worker > **Settings**, and you will see a banner for setting up your default Preview settings. This walks you through the bindings, environment variables, and [observability](#observability-and-logging) settings you want every Preview to start with. This is the fastest way to get your whole team set up -- anyone who creates a Preview (manually or by pushing a branch) gets the same configuration without needing to specify it themselves.
 
 ### From code
 
@@ -86,7 +86,7 @@ When you configure settings in both the dashboard and the Wrangler configuration
 
 ## Deploy a Preview
 
-You can deploy a Preview automatically every time you push to a branch using Workers Builds, or manually from the command line with `wrangler preview`.
+You can deploy a Preview automatically every time you push to a branch using [Workers Builds](/workers/ci-cd/builds/), or manually from the command line with `wrangler preview`.
 
 ### Automate with Workers Builds
 
@@ -98,12 +98,12 @@ Connect a GitHub or GitLab repository, and Cloudflare deploys a Preview for you 
 
 When you push to `main`, Cloudflare builds and deploys your Worker to production using your top-level Wrangler configuration -- your production bindings, environment variables, and secrets. When you push to any other branch, Cloudflare deploys a Preview using your Preview settings instead.
 
-The first push to a branch creates a new Preview. Each subsequent push creates a new deployment within that Preview -- an immutable snapshot of your code at that point. This means you can always go back and inspect or compare any previous deployment, even after pushing new changes.
+The first push to a branch creates a new Preview. Each subsequent push creates a new **[Preview Deployment](/workers/previews/api/#preview-deployment)** within that Preview -- an immutable snapshot of your code at that point. This means you can always go back and inspect or compare any previous deployment, even after pushing new changes.
 
 A bot comments on your pull request with:
 
-- A link to the **Preview URL** (which always serves the latest deployment)
-- A **Deployment URL** (which points to that exact snapshot)
+- A link to the **[Preview URL](#preview-urls-and-deployment-urls)** (which always serves the latest deployment)
+- A **[Deployment URL](#preview-urls-and-deployment-urls)** (which points to that exact snapshot)
 - A link to the build logs
 
 ### Deploy manually with Wrangler
@@ -128,7 +128,7 @@ Use this for ad-hoc testing, external CI/CD pipelines, or when you are not using
 
 ## Preview URLs and Deployment URLs
 
-When you deploy a Preview, Cloudflare generates two URLs:
+When you deploy a Preview, Cloudflare generates two URLs. For the full URL patterns across `workers.dev`, `cloudflare.app`, and custom domains, refer to [URL structure](/workers/previews/api/#url-structure).
 
 - **Preview URL** -- always serves the latest deployment. When you push new code, the Preview URL points to the new deployment automatically. Share this with teammates when you want them to always see your latest changes.
 
@@ -165,7 +165,7 @@ preview_urls = true
 
 ## Use a custom domain for Previews
 
-You can serve Previews from your own custom domain instead of (or in addition to) `workers.dev`. When you enable Previews on a custom domain, Cloudflare creates a wildcard DNS record and adds a wildcard SAN to the domain's certificate to cover all Preview subdomains.
+You can serve Previews from your own **custom domain** instead of (or in addition to) `workers.dev`. When you enable Previews on a custom domain, Cloudflare creates a wildcard DNS record and adds a wildcard SAN to the domain's certificate to cover all Preview subdomains. For more details, refer to [Custom domains](/workers/previews/api/#custom-domains).
 
 | URL type   | Example                             |
 | ---------- | ----------------------------------- |
@@ -225,13 +225,13 @@ Each Preview runs its own observability and logging settings, independent of you
 - Enable [Logpush](/workers/observability/logpush/) to send a Preview's logs to your own storage for debugging.
 - Attach [Tail Workers](/workers/observability/logs/tail-workers/) to a Preview to pipe its logs into a custom analysis pipeline.
 
-Configure these in the dashboard under **Workers & Pages** > your Worker > **Settings** > **Preview Defaults**, and Cloudflare applies them to every Preview created for that Worker.
+Configure these in the dashboard under **Workers & Pages** > your Worker > **Settings** > **Preview Defaults**, and Cloudflare applies them to every Preview created for that Worker. For details on how observability settings are structured, refer to the [Preview object](/workers/previews/api/#preview-object).
 
 ---
 
 ## Limits and lifecycle
 
-- Previews do not count against the account-level Worker limit (100 free / 500 paid). They have a separate limit: **1,000** for free plans, **10,000** for paid plans.
+- Previews do not count against the account-level Worker limit (100 free / 500 paid). They have a separate limit: **1,000** for Free plans, **10,000** for Paid plans.
 - If you hit the limit, creating a new Preview automatically deletes the least-recently-deployed existing Preview to make room.
 - Previews are automatically deleted after a TTL since their last deployment.
 - Previews cannot be addressed by user-managed triggers (routes, cron triggers, queues). They are reachable only through their auto-generated URLs and custom-domain wildcard URLs.

@@ -10,7 +10,7 @@ description: Understand the Previews data model and use the API to manage Previe
 
 import { Details } from "~/components";
 
-This guide walks you through the Workers Previews API from the ground up. It assumes you can make authenticated requests to the Cloudflare API and that you already have a production Worker deployed.
+This guide walks you through the Workers Previews API from the ground up. For a higher-level introduction to what Previews are and how to get started, refer to the [Previews overview](/workers/previews/). This page assumes you can make authenticated requests to the Cloudflare API and that you already have a production Worker deployed.
 
 Every endpoint below lives under a common base path:
 
@@ -68,7 +68,7 @@ Anywhere the API accepts a `{preview_id}` path parameter, you can pass any of th
 
 ### What a Preview contains vs. what a Deployment contains
 
-The Previews API splits configuration into two layers: the **Preview layer** and the **Deployment layer**.
+The Previews API splits configuration into two layers: the **Preview layer** and the **Deployment layer**. Understanding this split is key to working with the API.
 
 The **Preview layer** holds settings that apply across all of a Preview's Deployments: observability, log routing (`logpush`, `tail_consumers`), and organizational metadata (`tags`). These persist for the lifetime of the Preview regardless of how many Deployments you create.
 
@@ -195,7 +195,7 @@ The Deployment object represents the Deployment layer. Here is its full shape:
 
 ## Preview Defaults
 
-Your production Worker can store a property called `preview_defaults`. It is a template of starting values that Cloudflare applies whenever you create a new Preview or Deployment. It is not a standalone API resource -- you read and write it through the existing Worker endpoints (`PUT` or `PATCH` on `/workers/workers/{worker_id}`).
+Your production Worker can store a property called **`preview_defaults`**. It is a template of starting values that Cloudflare applies whenever you create a new Preview or Deployment. It is not a standalone API resource -- you read and write it through the existing Worker endpoints (`PUT` or `PATCH` on `/workers/workers/{worker_id}`). You can also configure these from the dashboard or your Wrangler configuration file -- refer to [Set up Previews](/workers/previews/#set-up-previews) for a walkthrough.
 
 `preview_defaults` carries values for both layers:
 
@@ -317,13 +317,13 @@ Previews and Deployments each receive automatically assigned URLs. The format de
 | Preview    | `{slug}.{worker}.cloudflare.app`     | `feature-auth.my-worker.cloudflare.app` |
 | Deployment | `{short_id}.{worker}.cloudflare.app` | `f498jo.my-worker.cloudflare.app`       |
 
-A Preview URL always points to the latest Deployment. A Deployment URL always points to that exact immutable Deployment.
+A **Preview URL** always points to the latest Deployment. A **Deployment URL** always points to that exact immutable Deployment. For a quick summary of both URL types, refer to [Preview URLs and Deployment URLs](/workers/previews/#preview-urls-and-deployment-urls).
 
-These URLs appear in the read-only `urls` field on both the Preview and Deployment objects.
+These URLs appear in the read-only `urls` field on both the [Preview object](#preview-object) and [Deployment object](#deployment-object).
 
 ### Custom domains
 
-You can route Previews through your own domain by enabling `previews_enabled` on a Worker custom domain:
+You can route Previews through your own domain by enabling `previews_enabled` on a Worker custom domain. For Wrangler configuration and dashboard instructions, refer to [Use a custom domain for Previews](/workers/previews/#use-a-custom-domain-for-previews).
 
 ```bash
 curl -X PUT \
@@ -359,7 +359,7 @@ Both `production_enabled` and `previews_enabled` are optional and default to `tr
 
 ### Set Preview Defaults
 
-Use the existing Worker endpoints. Include `preview_defaults` in the body:
+Use the existing Worker endpoints. Include `preview_defaults` in the body. Refer to [Preview Defaults](#preview-defaults) for how these values merge with individual Preview and Deployment requests.
 
 ```txt
 PUT   /workers/workers/{worker_id}
@@ -525,7 +525,7 @@ DELETE /{deployment_id}
 
 ### 1. Set Preview Defaults on your Worker
 
-This is a one-time setup step. You are patching the parent Worker, not creating a new resource.
+This is a one-time setup step. You are patching the parent Worker, not creating a new resource. You can also do this from the dashboard or Wrangler -- refer to [Set up Previews](/workers/previews/#set-up-previews).
 
 ```bash
 curl -X PATCH \
@@ -557,7 +557,7 @@ curl -X POST \
   }'
 ```
 
-The response includes the Preview's `id`, `slug` (`feature-auth`), and `urls`. The `observability` setting comes from `preview_defaults` because you did not override it.
+The response includes the Preview's `id`, `slug` (`feature-auth`), and `urls`. The `observability` setting comes from `preview_defaults` because you did not override it. Refer to [How defaults merge](#how-defaults-merge) for details on this behavior.
 
 ### 3. Create a Preview Deployment
 
