@@ -66,14 +66,15 @@ Private Load Balancer IPs are virtual addresses allocated to [Private Network Lo
 
 ## WARP Split Tunnel configuration
 
-If your deployment includes WARP devices, ensure that the reserved IP ranges required by your deployment are routed through WARP [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/). Configuration depends on whether your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude IPs and domains** or **Include IPs and domains**.
+For deployments that use the [WARP client](/cloudflare-one/team-and-resources/devices/warp/), ensure that the [reserved IP ranges](#ipv4-ranges) required by your deployment route through [WARP Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to Cloudflare. Configuration depends on whether your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude IPs and domains** or **Include IPs and domains**.
 
 ### Exclude mode (default)
-In **Exclude IPs and domains** mode, the CGNAT range (`100.64.0.0/10`) is excluded from WARP routing by default. You must delete the reserved IP ranges from your Split Tunnels list, or the associated features will stop working.
 
-Cloudflare recommends [adding back the IPs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use CGNAT address space.
+In **Exclude IPs and domains** mode, the CGNAT range (`100.64.0.0/10`) is excluded from WARP routing by default. You must delete the [reserved IP ranges](#ipv4-ranges) from your Split Tunnels exclude list, or the associated features will stop working.
 
-  Use the calculator below to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if you use WARP-to-WARP connectivity (`100.96.0.0/12`) and Gateway initial resolved IPs (`100.80.0.0/16`),
+Cloudflare recommends adding back the IPs that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use CGNAT address space.
+
+You can use the calculator below to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if your deployment requires [Gateway initial resolved IPs](#gateway-initial-resolved-ips) (`100.80.0.0/16`) and [WARP device IPs](#warp-device-ips) (`100.96.0.0/12`), delete `100.64.0.0/10` from Split Tunnels and add back `100.64.0.0/12`, `100.81.0.0/16`, `100.82.0.0/15`, `100.84.0.0/14`, `100.88.0.0/13`, and `100.112.0.0/12`.
 
   <SubtractIPCalculator
     client:load
@@ -85,4 +86,4 @@ Cloudflare recommends [adding back the IPs](/cloudflare-one/networks/connectors/
 
 ### Include mode
 
-In **Include IPs and domains** mode, only traffic for the included routes is sent to Cloudflare. You must explicitly add the reserved IP ranges that your deployment depends on. For example, if you use WARP-to-WARP connectivity, include `100.96.0.0/12` (or your [custom device IP subnet](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/)).
+In **Include IPs and domains** mode, only traffic for the included routes is sent to Cloudflare. You must explicitly add the reserved IP ranges that your deployment depends on. For example, if you use [hostname routing or egress policy host selectors](#gateway-initial-resolved-ips), add `100.80.0.0/16` to your Split Tunnels include list.
