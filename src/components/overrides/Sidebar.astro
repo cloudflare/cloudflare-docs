@@ -356,6 +356,20 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 					}
 				}
 
+				/* Style parent navigation items that contain the current page */
+				details:has(a[aria-current="page"]) > summary,
+				details:has(a[aria-current="page"]) > summary * {
+					color: var(--sl-color-accent-high) !important;
+					font-weight: 600 !important;
+				}
+
+				/* Override to keep caret default color */
+				details:has(a[aria-current="page"]) > summary svg,
+				details:has(a[aria-current="page"]) > summary .caret,
+				details:has(a[aria-current="page"]) > summary [class*="caret"] {
+					fill: var(--sl-color-gray-3) !important;
+				}
+
 				summary {
 					padding: 0.1375em var(--sl-sidebar-item-padding-inline) !important;
 				}
