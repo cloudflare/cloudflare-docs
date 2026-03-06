@@ -3,8 +3,7 @@ pcx_content_type: reference
 title: Previews API
 sidebar:
   order: 2
-  badge:
-    text: Beta
+
 description: Understand the Previews data model and use the API to manage Previews and Deployments programmatically.
 ---
 
@@ -26,15 +25,15 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/workers
 
 #### Preview
 
-A **Preview** is a fully functional Worker that Cloudflare creates as a child of your production Worker. It runs on the same infrastructure, supports the same bindings, and handles traffic the same way -- but it operates in complete isolation. Requests to a Preview never touch your production Worker's data or configuration.
+A **Preview** is a fully functional Worker that Cloudflare creates as a child of your production Worker. It runs on the same infrastructure, supports the same [bindings](/workers/runtime-apis/bindings/), and handles traffic the same way — but it operates in complete isolation. Requests to a Preview never touch your production Worker's data or configuration.
 
-Every Preview belongs to exactly one parent Worker. You can create as many Previews as you need -- one per feature branch, one per teammate, or one for every pull request.
+Every Preview belongs to exactly one parent Worker. You can create as many Previews as you need — one per feature branch, one per teammate, or one for every pull request.
 
 #### Preview Deployment
 
 A **Preview Deployment** is an immutable version of your Worker code, bindings, and configuration. It belongs to a single Preview and cannot be modified after creation.
 
-A Preview can have many Deployments, but it only serves traffic from one at a time. Creating a new Deployment automatically makes it the active one -- 100% of the Preview's traffic switches to it immediately. There is no gradual rollout.
+A Preview can have many Deployments, but it only serves traffic from one at a time. Creating a new Deployment automatically makes it the active one — 100% of the Preview's traffic switches to it immediately. There is no gradual rollout.
 
 Together, Previews and their Deployments form a hierarchy:
 
@@ -72,9 +71,9 @@ The Previews API splits configuration into two layers: the **Preview layer** and
 
 The **Preview layer** holds settings that apply across all of a Preview's Deployments: observability, log routing (`logpush`, `tail_consumers`), and organizational metadata (`tags`). These persist for the lifetime of the Preview regardless of how many Deployments you create.
 
-Each **Deployment** holds settings that are locked in at creation time and never change -- your Worker code (`main_module`, `modules`), `bindings`, `compatibility_date`, `compatibility_flags`, `limits`, `placement`, `assets`, `migrations`, and `annotations`.
+Each **Deployment** holds settings that are locked in at creation time and never change — your Worker code (`main_module`, `modules`), `bindings`, `compatibility_date`, `compatibility_flags`, `limits`, `placement`, `assets`, `migrations`, and `annotations`.
 
-This split matters because everything downstream -- Preview Defaults, the merge behavior, and which endpoints accept which fields -- follows from it.
+This split matters because everything downstream — Preview Defaults, the merge behavior, and which endpoints accept which fields — follows from it.
 
 ---
 
@@ -171,31 +170,31 @@ The Deployment object represents the Deployment layer. Here is its full shape:
 }
 ```
 
-| Field                 | Description                                                                                                                                                                     |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                  | UUID assigned at creation.                                                                                                                                                      |
-| `number`              | Sequential deployment number starting from 1.                                                                                                                                   |
-| `startup_time_ms`     | Time in milliseconds the Worker took to start up.                                                                                                                               |
-| `main_module`         | Name of the entry-point module (the one that exports a `fetch` handler).                                                                                                        |
-| `modules`             | Array of code and sourcemap content. Each entry has `name`, `content_type`, and `content_base64`. Only included in responses when you pass `?include=modules`.                  |
-| `bindings`            | KV namespaces, D1 databases, secrets, plain-text vars, service bindings, and so on.                                                                                             |
-| `compatibility_date`  | The [compatibility date](/workers/configuration/compatibility-dates/) for runtime behavior.                                                                                     |
-| `compatibility_flags` | Array of [compatibility flags](/workers/configuration/compatibility-dates/).                                                                                                    |
-| `limits`              | Runtime resource limits, for example `{ "cpu_ms": 50 }`.                                                                                                                        |
-| `placement`           | [Smart placement](/workers/configuration/smart-placement/) configuration.                                                                                                       |
-| `usage_model`         | Deprecated. One of `standard`, `bundled`, `unbound`.                                                                                                                            |
-| `assets`              | Static asset configuration (`html_handling`, `not_found_handling`, `run_worker_first`).                                                                                         |
-| `migrations`          | [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/). Applied when the Deployment is created.                                                    |
-| `annotations`         | Metadata: `workers/message` (human-readable, max 100 chars), `workers/tag` (for example, a semver string, max 25 chars), `workers/triggered_by` (read-only, set by the system). |
-| `urls`                | Read-only. The routable URLs that always point to this exact Deployment.                                                                                                        |
-| `source`              | Read-only. The client that created the Deployment (for example, `wrangler`, `api`).                                                                                             |
-| `created_on`          | Read-only. When the Deployment was created.                                                                                                                                     |
+| Field                 | Description                                                                                                                                                                                |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`                  | UUID assigned at creation.                                                                                                                                                                 |
+| `number`              | Sequential deployment number starting from 1.                                                                                                                                              |
+| `startup_time_ms`     | Time in milliseconds the Worker took to start up.                                                                                                                                          |
+| `main_module`         | Name of the entry-point module (the one that exports a `fetch` handler).                                                                                                                   |
+| `modules`             | Array of code and sourcemap content. Each entry has `name`, `content_type`, and `content_base64`. Only included in responses when you pass `?include=modules`.                             |
+| `bindings`            | [KV namespaces](/kv/), [D1 databases](/d1/), [secrets](/workers/configuration/secrets/), plain-text vars, [service bindings](/workers/runtime-apis/bindings/service-bindings/), and so on. |
+| `compatibility_date`  | The [compatibility date](/workers/configuration/compatibility-dates/) for runtime behavior.                                                                                                |
+| `compatibility_flags` | Array of [compatibility flags](/workers/configuration/compatibility-dates/).                                                                                                               |
+| `limits`              | Runtime resource limits, for example `{ "cpu_ms": 50 }`.                                                                                                                                   |
+| `placement`           | [Smart placement](/workers/configuration/smart-placement/) configuration.                                                                                                                  |
+| `usage_model`         | Deprecated. One of `standard`, `bundled`, `unbound`.                                                                                                                                       |
+| `assets`              | Static asset configuration (`html_handling`, `not_found_handling`, `run_worker_first`).                                                                                                    |
+| `migrations`          | [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/). Applied when the Deployment is created.                                                               |
+| `annotations`         | Metadata: `workers/message` (human-readable, max 100 chars), `workers/tag` (for example, a semver string, max 25 chars), `workers/triggered_by` (read-only, set by the system).            |
+| `urls`                | Read-only. The routable URLs that always point to this exact Deployment.                                                                                                                   |
+| `source`              | Read-only. The client that created the Deployment (for example, `wrangler`, `api`).                                                                                                        |
+| `created_on`          | Read-only. When the Deployment was created.                                                                                                                                                |
 
 ---
 
 ## Preview Defaults
 
-Your production Worker can store a property called **`preview_defaults`**. It is a template of starting values that Cloudflare applies whenever you create a new Preview or Deployment. It is not a standalone API resource -- you read and write it through the existing Worker endpoints (`PUT` or `PATCH` on `/workers/workers/{worker_id}`). You can also configure these from the dashboard or your Wrangler configuration file -- refer to [Set up Previews](/workers/previews/#set-up-previews) for a walkthrough.
+Your production Worker can store a property called **`preview_defaults`**. It is a template of starting values that Cloudflare applies whenever you create a new Preview or Deployment. It is not a standalone API resource — you read and write it through the existing Worker endpoints (`PUT` or `PATCH` on `/workers/workers/{worker_id}`). You can also configure these from the dashboard or your Wrangler configuration file — refer to [Set up Previews](/workers/previews/#set-up-previews) for a walkthrough.
 
 `preview_defaults` carries values for both layers:
 
@@ -247,8 +246,6 @@ final created resource    <-- what you get back
 Your request body wins for any field it provides. Fields absent from your request body fall back to `preview_defaults`. Fields absent from both get schema defaults (for example, `logpush: false`) or are omitted.
 
 To skip the merge entirely and use only your request body, pass `?ignore_defaults=true`. This is supported on **Create Preview**, **Update Preview (PUT)**, and **Create Deployment**.
-
-### Worked example
 
 <Details header="Worked example: creating a Preview and Deployment with defaults">
 
@@ -366,7 +363,7 @@ PUT   /workers/workers/{worker_id}
 PATCH /workers/workers/{worker_id}
 ```
 
-Example (`PATCH` -- only touches `preview_defaults`, leaves everything else unchanged):
+Example (`PATCH` — only touches `preview_defaults`, leaves everything else unchanged):
 
 ```bash
 curl -X PATCH \
@@ -525,7 +522,7 @@ DELETE /{deployment_id}
 
 ### 1. Set Preview Defaults on your Worker
 
-This is a one-time setup step. You are patching the parent Worker, not creating a new resource. You can also do this from the dashboard or Wrangler -- refer to [Set up Previews](/workers/previews/#set-up-previews).
+This is a one-time setup step. You are patching the parent Worker, not creating a new resource. You can also do this from the dashboard or Wrangler — refer to [Set up Previews](/workers/previews/#set-up-previews).
 
 ```bash
 curl -X PATCH \
