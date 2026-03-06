@@ -49,7 +49,6 @@
 /waf/change-log/index.xml /changelog/rss/waf.xml 301
 /waf/change-log/general-updates/ /waf/change-log/changelog/ 301
 /waf/change-log/general-updates/index.xml /changelog/rss/waf.xml 301
-/waf/change-log/changelog/index.xml /changelog/rss/waf.xml 301
 ## area changelog feeds
 
 /fundamentals/reference/changelog/performance/index.xml /changelog/rss/application-performance.xml 301
