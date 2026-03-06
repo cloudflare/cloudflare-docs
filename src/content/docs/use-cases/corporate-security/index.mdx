@@ -1,0 +1,116 @@
+---
+pcx_content_type: use-case
+title: Corporate security
+head:
+  - tag: title
+    content: Corporate security · Use cases
+sidebar:
+  order: 7
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+Protect employees, devices, and data with Zero Trust access, secure web gateway, and email security.
+
+## Overview
+
+Modern enterprises need to secure a distributed workforce accessing applications from anywhere. Traditional perimeter-based security is no longer sufficient. Cloudflare One provides a complete SASE platform to protect users, devices, and data without sacrificing performance.
+
+### Common challenges
+
+- **Remote workforce** - Employees access applications from untrusted networks
+- **VPN limitations** - Legacy VPNs are slow, complex, and provide excessive access
+- **Phishing attacks** - Email remains the primary vector for security breaches
+- **Data loss** - Sensitive data can leak through web, email, and SaaS applications
+- **Shadow IT** - Employees use unsanctioned applications without visibility
+
+## Recommended solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Access" href="/cloudflare-one/policies/access/" icon="cloudflare-one">
+
+Replace VPNs with Zero Trust access to internal applications.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Gateway" href="/cloudflare-one/policies/gateway/" icon="cloudflare-one">
+
+Secure web browsing with DNS filtering, HTTP inspection, and DLP.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="WARP" href="/cloudflare-one/connections/connect-devices/warp/" icon="cloudflare-one">
+
+Connect devices to Cloudflare with a lightweight agent.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Email Security" href="/email-security/" icon="email-security">
+
+Protect against phishing, BEC, and malware delivered via email.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Browser Isolation" href="/cloudflare-one/policies/browser-isolation/" icon="cloudflare-one">
+
+Execute web content in isolated browsers to prevent threats.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="CASB" href="/cloudflare-one/applications/scan-apps/" icon="cloudflare-one">
+
+Discover and secure SaaS applications with API-driven scanning.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## Architecture patterns
+
+### Zero Trust access
+
+Replace VPNs with identity-aware application access:
+
+1. **Access** authenticates users against your identity provider
+2. **Tunnel** connects applications without exposing them to the internet
+3. **Device posture** checks ensure only compliant devices connect
+
+### Secure web gateway
+
+Protect users from internet threats:
+
+1. **WARP** routes device traffic through Cloudflare
+2. **Gateway** applies DNS and HTTP policies
+3. **Browser Isolation** renders risky content safely
+
+### Email security
+
+Defend against phishing and email-based attacks:
+
+1. **Email Security** scans inbound messages for threats
+2. **Link isolation** protects users who click suspicious links
+3. **DMARC Management** prevents domain spoofing
+
+## Getting started
+
+### Learning paths
+
+Structured guidance for deploying Zero Trust:
+
+- [Secure your Internet traffic](/learning-paths/secure-internet-traffic/)
+- [Replace your VPN](/learning-paths/replace-vpn/)
+- [Secure your email](/learning-paths/secure-your-email/)
+
+### Related documentation
+
+- [Cloudflare One overview](/cloudflare-one/)
+- [Access policies](/cloudflare-one/policies/access/)
+- [Gateway policies](/cloudflare-one/policies/gateway/)
+- [Email Security setup](/email-security/deployment/)
+
+## Customer examples
+
+Explore how enterprises secure their organizations with Cloudflare:
+
+- [Zero Trust case studies](https://www.cloudflare.com/case-studies/?product=Cloudflare%20One)

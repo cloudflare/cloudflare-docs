@@ -1,0 +1,396 @@
+---
+pcx_content_type: use-case
+title: Media and streaming
+head:
+  - tag: title
+    content: Media and streaming · Use cases
+sidebar:
+  order: 5
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Deliver video, images, and rich media at scale with encoding, optimization, and global distribution.
+
+## Overview
+
+Media-heavy applications require specialized infrastructure for encoding, storage, and delivery. Whether you are building a video platform, image-centric application, or content-rich website, Cloudflare provides end-to-end solutions for media workflows.
+
+### Common challenges
+
+- **Encoding complexity** - Supporting multiple formats, resolutions, and codecs
+- **Storage costs** - Large media files are expensive to store and transfer
+- **Delivery performance** - Users expect instant playback and fast image loads
+- **Bandwidth costs** - Egress fees can dominate infrastructure spending
+- **Content protection** - Preventing unauthorized access and hotlinking
+
+## Recommended solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Stream" href="/stream/" icon="stream">
+
+Upload, encode, store, and deliver video with adaptive bitrate streaming.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Images" href="/images/" icon="images">
+
+Transform, optimize, and deliver images at scale with on-the-fly resizing.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="R2" href="/r2/" icon="r2">
+
+Store media files with zero egress fees and S3-compatible API.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="CDN" href="/cache/" icon="cache">
+
+Cache and deliver media content from edge locations worldwide.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Workers" href="/workers/" icon="workers">
+
+Build custom media processing pipelines and delivery logic.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Calls" href="/calls/" icon="calls">
+
+Add real-time video and audio communication to your application.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## Architecture patterns
+
+### Video platform
+
+Build a complete video hosting and delivery solution:
+
+1. **Stream** handles upload, encoding, and adaptive bitrate delivery
+2. **Stream Live** enables live streaming with automatic recording
+3. **Access controls** protect content with signed URLs and token authentication
+
+### Image optimization pipeline
+
+Serve optimized images without pre-generating variants:
+
+1. **Images** transforms images on-the-fly based on URL parameters
+2. **R2** stores original high-resolution images
+3. **Workers** applies custom logic for format selection and caching
+
+### User-generated content
+
+Handle media uploads from users at scale:
+
+1. **R2** receives uploads directly via presigned URLs
+2. **Workers** validates and processes uploaded content
+3. **Stream** or **Images** optimizes media for delivery
+
+---
+
+## Getting started
+
+Expand each section below for detailed setup instructions. Each section is self-contained so you can follow along without leaving this page.
+
+### Cloudflare Stream
+
+Stream provides end-to-end video infrastructure including upload, encoding, storage, and delivery.
+
+<Details header="Set up Cloudflare Stream">
+
+#### Step 1: Enable Stream
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Stream** > **Videos**.
+3. If this is your first time using Stream, you will be prompted to enable the service.
+
+#### Step 2: Upload a video
+
+**Option A: Dashboard upload**
+
+1. Go to **Stream** > **Videos**.
+2. Select **Upload** and choose a video file from your computer.
+3. Wait for the video to finish processing (encoding happens automatically).
+
+**Option B: API upload**
+
+```sh
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream" \
+  -H "Authorization: Bearer {api_token}" \
+  -F "file=@/path/to/video.mp4"
+```
+
+#### Step 3: Embed the video
+
+Once processing is complete, get the embed code:
+
+```html
+<iframe
+  src="https://customer-{code}.cloudflarestream.com/{video_id}/iframe"
+  style="border: none; width: 100%; height: 100%; position: absolute;"
+  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+  allowfullscreen="true"
+></iframe>
+```
+
+Or use the Stream Player SDK for more control:
+
+```html
+<stream src="{video_id}" controls></stream>
+<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/sdk.latest.js"></script>
+```
+
+#### Step 4: Secure your videos (optional)
+
+Enable signed URLs to prevent unauthorized access:
+
+1. Go to **Stream** > **Videos** > select your video.
+2. Select **Settings** > **Access Control**.
+3. Enable **Require signed URLs**.
+4. Generate tokens server-side using your API credentials.
+
+</Details>
+
+For the complete guide, refer to [Stream get started](/stream/get-started/).
+
+### Cloudflare Images
+
+Images provides on-the-fly image transformation, optimization, and delivery.
+
+<Details header="Set up Cloudflare Images">
+
+#### Step 1: Enable Images
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Images** > **Overview**.
+3. If this is your first time using Images, you will be prompted to enable the service.
+
+#### Step 2: Upload images
+
+**Option A: Dashboard upload**
+
+1. Go to **Images** > **Images**.
+2. Select **Upload** and choose image files from your computer.
+
+**Option B: API upload**
+
+```sh
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1" \
+  -H "Authorization: Bearer {api_token}" \
+  -F "file=@/path/to/image.jpg"
+```
+
+#### Step 3: Create variants
+
+Variants define how images are transformed (size, format, quality):
+
+1. Go to **Images** > **Variants**.
+2. Select **Add a variant**.
+3. Configure the variant settings:
+   - **Name**: `thumbnail`
+   - **Width**: 200
+   - **Height**: 200
+   - **Fit**: `cover`
+
+#### Step 4: Serve images
+
+Use the image delivery URL with your variant:
+
+```txt
+https://imagedelivery.net/{account_hash}/{image_id}/{variant_name}
+```
+
+Example:
+```txt
+https://imagedelivery.net/abc123/my-image-id/thumbnail
+```
+
+#### Step 5: Enable transformations on your domain (optional)
+
+Transform images on-the-fly using URL parameters:
+
+```txt
+https://example.com/cdn-cgi/image/width=400,quality=80,format=auto/images/photo.jpg
+```
+
+Supported parameters:
+- `width`, `height` - Resize dimensions
+- `fit` - `scale-down`, `contain`, `cover`, `crop`, `pad`
+- `quality` - 1-100 (default 85)
+- `format` - `auto`, `webp`, `avif`, `json`
+
+</Details>
+
+For the complete guide, refer to [Images get started](/images/get-started/).
+
+### R2 for media storage
+
+R2 provides S3-compatible object storage with zero egress fees.
+
+<Details header="Set up R2 for media storage">
+
+#### Step 1: Create a bucket
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **R2** > **Overview**.
+3. Select **Create bucket**.
+4. Enter a bucket name (for example, `media-storage`) and select a location hint.
+
+#### Step 2: Configure public access (optional)
+
+To serve files publicly:
+
+1. Go to your bucket > **Settings**.
+2. Under **Public access**, select **Allow Access**.
+3. Connect a custom domain or use the R2.dev subdomain.
+
+#### Step 3: Upload files
+
+**Option A: Dashboard upload**
+
+1. Go to your bucket > **Objects**.
+2. Select **Upload** and choose files.
+
+**Option B: S3-compatible API**
+
+Generate API credentials:
+1. Go to **R2** > **Overview** > **Manage R2 API Tokens**.
+2. Create a token with read/write permissions.
+
+Use any S3-compatible client:
+
+```sh
+aws s3 cp video.mp4 s3://media-storage/ \
+  --endpoint-url https://{account_id}.r2.cloudflarestorage.com
+```
+
+#### Step 4: Generate presigned URLs for uploads
+
+Allow users to upload directly to R2:
+
+```js
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
+const client = new S3Client({
+  region: "auto",
+  endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: {
+    accessKeyId: R2_ACCESS_KEY_ID,
+    secretAccessKey: R2_SECRET_ACCESS_KEY,
+  },
+});
+
+const command = new PutObjectCommand({
+  Bucket: "media-storage",
+  Key: "uploads/user-video.mp4",
+});
+
+const presignedUrl = await getSignedUrl(client, command, { expiresIn: 3600 });
+```
+
+</Details>
+
+For the complete guide, refer to [R2 get started](/r2/get-started/).
+
+### Cloudflare Calls
+
+Calls enables real-time video and audio communication in your application.
+
+<Details header="Set up Cloudflare Calls">
+
+#### Step 1: Enable Calls
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Calls**.
+3. Select **Create an app** and enter a name.
+
+#### Step 2: Get your credentials
+
+After creating an app, note your:
+- **App ID**
+- **App Secret**
+
+#### Step 3: Create a session
+
+Use the API to create a new session:
+
+```sh
+curl -X POST "https://rtc.live.cloudflare.com/v1/apps/{app_id}/sessions/new" \
+  -H "Authorization: Bearer {app_secret}" \
+  -H "Content-Type: application/json"
+```
+
+#### Step 4: Add tracks
+
+Push audio/video tracks to the session:
+
+```js
+// Client-side: Get user media
+const stream = await navigator.mediaDevices.getUserMedia({
+  video: true,
+  audio: true
+});
+
+// Create peer connection and add tracks
+const pc = new RTCPeerConnection();
+stream.getTracks().forEach(track => pc.addTrack(track, stream));
+
+// Exchange SDP with Cloudflare Calls API
+const offer = await pc.createOffer();
+await pc.setLocalDescription(offer);
+
+// Send offer to your server, which forwards to Calls API
+```
+
+#### Step 5: Pull tracks
+
+Receive tracks from other participants:
+
+```js
+// Subscribe to remote tracks via Calls API
+// Set remote description from API response
+await pc.setRemoteDescription(answer);
+
+// Handle incoming tracks
+pc.ontrack = (event) => {
+  const remoteVideo = document.getElementById("remote-video");
+  remoteVideo.srcObject = event.streams[0];
+};
+```
+
+</Details>
+
+For the complete guide, refer to [Calls documentation](/calls/).
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="Stream documentation" href="/stream/" icon="stream">
+
+Complete documentation for video upload, encoding, and delivery.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Images documentation" href="/images/" icon="images">
+
+Complete documentation for image optimization and transformation.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Media case studies" href="https://www.cloudflare.com/case-studies/?industry=Media%20%26%20Entertainment" icon="open-book">
+
+Explore how media companies use Cloudflare.
+
+</LinkTitleCard>
+
+</CardGrid>

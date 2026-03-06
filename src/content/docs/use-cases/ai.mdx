@@ -1,52 +1,310 @@
 ---
-pcx_content_type: overview
-title: Build AI Applications
+pcx_content_type: use-case
+title: AI applications
 head:
   - tag: title
-    content: Build AI Applications · Use cases
+    content: AI applications · Use cases
+sidebar:
+  order: 2
 ---
 
-import { ExternalResources, ResourcesBySelector, YouTube } from "~/components";
+import { CardGrid, LinkTitleCard, YouTube } from "~/components";
 
-Build and deploy ambitious AI applications to Cloudflare's global network.
+Build and deploy ambitious AI applications to Cloudflare's global network with inference at the edge, vector databases, model gateways, and more.
 
 <YouTube id="uv1Cz_BDFmo" />
 
-## Reference architectures
+## Overview
 
-Diagrams, design patterns, and detailed best practices to help you generate solutions with Cloudflare products.
+AI applications present unique infrastructure challenges: unpredictable inference costs, latency-sensitive user experiences, and the need to work with multiple model providers. Cloudflare provides a complete platform for building AI applications that are fast, cost-effective, and globally distributed.
 
-<ResourcesBySelector
-	tags={["AI"]}
-	types={[
-		"reference-architecture",
-		"design-guide",
-		"reference-architecture-diagram",
-	]}
-/>
+### Common challenges
 
-## Demo apps
+- **Inference costs** - GPU compute is expensive and usage can be unpredictable
+- **Latency** - Users expect real-time responses from AI features
+- **Vendor lock-in** - Switching between model providers requires code changes
+- **Observability** - Tracking usage, costs, and performance across models
+- **Data locality** - Keeping user data close to where it is processed
 
-<ExternalResources tags={["AI"]} type="apps" />
+## Recommended solutions
 
-## Tutorials
+<CardGrid>
 
-Step-by-step guides to help you build and learn.
+<LinkTitleCard title="Workers AI" href="/workers-ai/" icon="workers">
 
-<ResourcesBySelector tags={["AI"]} types={["tutorial"]} />
+Run inference on Cloudflare's global network with pay-per-use pricing and no cold starts.
 
-## Customer spotlights
+</LinkTitleCard>
 
-Explore case studies on [AI companies building on Cloudflare](https://workers.cloudflare.com/built-with/collections/ai-workers/).
+<LinkTitleCard title="AI Gateway" href="/ai-gateway/" icon="ai-gateway">
 
-## Code examples
+Proxy requests to any AI provider with caching, rate limiting, and unified analytics.
 
-Examples ready to copy and paste.
+</LinkTitleCard>
 
-<ResourcesBySelector tags={["AI"]} types={["example"]} />
+<LinkTitleCard title="Vectorize" href="/vectorize/" icon="vectorize">
 
-:::note
+Store and query vector embeddings for semantic search and RAG applications.
 
-Cloudflare also offers detailed code examples for various [AI models](/workers-ai/models/) and [Model providers](/ai-gateway/usage/providers/).
+</LinkTitleCard>
 
-:::
+<LinkTitleCard title="Workers" href="/workers/" icon="workers">
+
+Build the application logic that orchestrates AI workflows at the edge.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="D1" href="/d1/" icon="d1">
+
+Store application data, conversation history, and metadata alongside your AI logic.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="R2" href="/r2/" icon="r2">
+
+Store large files, training data, and generated assets with zero egress fees.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## Architecture patterns
+
+### Retrieval Augmented Generation (RAG)
+
+Combine vector search with LLM inference to ground responses in your own data:
+
+1. **Vectorize** stores embeddings of your knowledge base
+2. **Workers** receives user queries and searches for relevant context
+3. **Workers AI** or **AI Gateway** generates responses using retrieved context
+
+### Multi-provider AI gateway
+
+Use AI Gateway to route requests across providers while maintaining a single interface:
+
+1. **AI Gateway** proxies requests to OpenAI, Anthropic, or Workers AI
+2. Built-in caching reduces costs for repeated queries
+3. Unified logging and analytics across all providers
+
+### Real-time AI features
+
+Deploy low-latency AI features directly at the edge:
+
+1. **Workers** handles requests at the nearest Cloudflare location
+2. **Workers AI** runs inference without round-trips to origin servers
+3. **KV** or **D1** caches results and stores session state
+
+---
+
+## Getting started
+
+This section provides inline quick start steps for each core AI product. Follow these steps to get up and running quickly, then refer to the linked documentation for more details.
+
+### Step 1: Set up Workers AI
+
+Workers AI lets you run inference directly on Cloudflare's network.
+
+1. Create a new Worker project:
+   ```sh
+   npm create cloudflare@latest my-ai-app -- --template hello-world
+   cd my-ai-app
+   ```
+
+2. Add the Workers AI binding to your `wrangler.toml`:
+   ```toml
+   [ai]
+   binding = "AI"
+   ```
+
+3. Update your Worker code to run inference:
+   ```js
+   export default {
+     async fetch(request, env) {
+       const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+         prompt: "What is Cloudflare Workers AI?"
+       });
+       return new Response(JSON.stringify(response));
+     }
+   };
+   ```
+
+4. Deploy your Worker:
+   ```sh
+   npx wrangler deploy
+   ```
+
+For the complete guide, refer to [Workers AI get started](/workers-ai/get-started/).
+
+### Step 2: Add AI Gateway for observability and caching
+
+AI Gateway provides a unified interface to multiple AI providers with built-in caching and analytics.
+
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select **AI** > **AI Gateway**.
+
+2. Select **Create Gateway** and enter a name (for example, `my-ai-gateway`).
+
+3. Update your application to route requests through AI Gateway:
+   ```txt
+   https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/openai
+   ```
+
+4. Replace your direct OpenAI calls with the gateway URL:
+   ```js
+   const response = await fetch(
+     "https://gateway.ai.cloudflare.com/v1/YOUR_ACCOUNT_ID/my-ai-gateway/openai/chat/completions",
+     {
+       method: "POST",
+       headers: {
+         "Authorization": "Bearer YOUR_OPENAI_KEY",
+         "Content-Type": "application/json"
+       },
+       body: JSON.stringify({
+         model: "gpt-4",
+         messages: [{ role: "user", content: "Hello!" }]
+       })
+     }
+   );
+   ```
+
+For the complete guide, refer to [AI Gateway get started](/ai-gateway/get-started/).
+
+### Step 3: Add Vectorize for RAG applications
+
+Vectorize stores vector embeddings for semantic search and retrieval-augmented generation.
+
+1. Create a Vectorize index:
+   ```sh
+   npx wrangler vectorize create my-index --dimensions=768 --metric=cosine
+   ```
+
+2. Add the Vectorize binding to your `wrangler.toml`:
+   ```toml
+   [[vectorize]]
+   binding = "VECTORIZE"
+   index_name = "my-index"
+   ```
+
+3. Insert vectors into your index:
+   ```js
+   const vectors = [
+     { id: "doc1", values: [0.1, 0.2, ...], metadata: { text: "Document content" } }
+   ];
+   await env.VECTORIZE.upsert(vectors);
+   ```
+
+4. Query for similar vectors:
+   ```js
+   const queryVector = [0.1, 0.2, ...]; // Your query embedding
+   const results = await env.VECTORIZE.query(queryVector, { topK: 5 });
+   ```
+
+For the complete guide, refer to [Vectorize get started](/vectorize/get-started/).
+
+### Step 4: Store data with D1
+
+D1 provides serverless SQL storage for conversation history, user data, and application state.
+
+1. Create a D1 database:
+   ```sh
+   npx wrangler d1 create my-ai-db
+   ```
+
+2. Add the D1 binding to your `wrangler.toml`:
+   ```toml
+   [[d1_databases]]
+   binding = "DB"
+   database_name = "my-ai-db"
+   database_id = "YOUR_DATABASE_ID"
+   ```
+
+3. Create tables and query data:
+   ```js
+   // Create a conversations table
+   await env.DB.exec(`
+     CREATE TABLE IF NOT EXISTS conversations (
+       id INTEGER PRIMARY KEY,
+       user_id TEXT,
+       message TEXT,
+       response TEXT,
+       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+     )
+   `);
+
+   // Store a conversation
+   await env.DB.prepare(
+     "INSERT INTO conversations (user_id, message, response) VALUES (?, ?, ?)"
+   ).bind(userId, userMessage, aiResponse).run();
+   ```
+
+For the complete guide, refer to [D1 get started](/d1/get-started/).
+
+---
+
+## Example: Complete RAG application
+
+Combine all the products to build a retrieval-augmented generation application:
+
+```js
+export default {
+  async fetch(request, env) {
+    const { query } = await request.json();
+
+    // 1. Generate embedding for the query
+    const embedding = await env.AI.run("@cf/baai/bge-base-en-v1.5", {
+      text: query
+    });
+
+    // 2. Search for relevant documents
+    const results = await env.VECTORIZE.query(embedding.data[0], {
+      topK: 3,
+      returnMetadata: true
+    });
+
+    // 3. Build context from retrieved documents
+    const context = results.matches
+      .map(match => match.metadata.text)
+      .join("\n\n");
+
+    // 4. Generate response with context
+    const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+      messages: [
+        { role: "system", content: `Use this context to answer: ${context}` },
+        { role: "user", content: query }
+      ]
+    });
+
+    // 5. Store the interaction
+    await env.DB.prepare(
+      "INSERT INTO conversations (message, response) VALUES (?, ?)"
+    ).bind(query, response.response).run();
+
+    return Response.json({ answer: response.response });
+  }
+};
+```
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="Workers AI models" href="/workers-ai/models/" icon="workers">
+
+Browse available models for text generation, embeddings, image generation, and more.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="AI Gateway providers" href="/ai-gateway/usage/providers/" icon="ai-gateway">
+
+Connect to OpenAI, Anthropic, Google AI, and other providers through AI Gateway.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="AI case studies" href="https://workers.cloudflare.com/built-with/collections/ai-workers/" icon="open-book">
+
+Explore how companies are building AI applications on Cloudflare.
+
+</LinkTitleCard>
+
+</CardGrid>

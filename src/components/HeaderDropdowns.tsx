@@ -20,6 +20,11 @@ const links = [
 ];
 
 const dropdowns = Object.entries({
+	Resources: [
+		{ label: "Use cases", href: "/use-cases/" },
+		{ label: "Reference architectures", href: "/reference-architecture/" },
+		{ label: "Learning paths", href: "/learning-paths/" },
+	],
 	Help: [
 		{ label: "Help center", href: "https://support.cloudflare.com/" },
 		{ label: "Cloudflare status", href: "https://www.cloudflarestatus.com/" },

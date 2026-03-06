@@ -1,0 +1,173 @@
+---
+pcx_content_type: use-case
+title: SaaS platforms
+head:
+  - tag: title
+    content: SaaS platforms · Use cases
+sidebar:
+  order: 4
+---
+
+import { CardGrid, LinkTitleCard, Render } from "~/components";
+
+Build multi-tenant platforms with custom domains, isolated compute, and per-customer configuration.
+
+## Overview
+
+SaaS platforms face unique challenges: supporting custom domains for customers, isolating tenant data and compute, and scaling infrastructure as your customer base grows. Cloudflare for Platforms provides the building blocks to extend Cloudflare's capabilities to your own customers.
+
+### Common challenges
+
+- **Custom domains** - Customers want to use their own domains with your service
+- **SSL certificates** - Managing certificates for thousands of customer domains
+- **Tenant isolation** - Keeping customer data and compute separate
+- **Per-tenant configuration** - Different settings, rules, and limits per customer
+- **White-labeling** - Allowing customers to brand the experience as their own
+
+## Recommended solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Cloudflare for Platforms" href="/cloudflare-for-platforms/" icon="cloudflare-for-platforms">
+
+Extend Cloudflare's network to your customers with custom hostnames and per-tenant configuration.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Workers for Platforms" href="/cloudflare-for-platforms/workers-for-platforms/" icon="workers">
+
+Let customers deploy their own code on your platform with isolated execution.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="SSL for SaaS" href="/cloudflare-for-platforms/cloudflare-for-saas/" icon="ssl">
+
+Automatically provision and manage SSL certificates for customer domains.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
+
+Coordinate state and provide strong consistency for multi-tenant applications.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="D1" href="/d1/" icon="d1">
+
+Store tenant data with per-database isolation and global replication.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="R2" href="/r2/" icon="r2">
+
+Store customer files and assets with zero egress fees.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## Architecture patterns
+
+### Custom domains for SaaS
+
+Allow customers to use their own domains with your platform:
+
+1. **SSL for SaaS** provisions certificates automatically when customers add domains
+2. **Custom Hostnames** route traffic from customer domains to your application
+3. **Workers** applies per-tenant logic based on the incoming hostname
+
+### Programmable platforms
+
+Let customers extend your platform with their own code:
+
+1. **Workers for Platforms** provides isolated execution environments per tenant
+2. **Dispatch namespaces** route requests to the correct customer Worker
+3. **Tail Workers** capture logs and analytics across all tenant code
+
+### Multi-tenant data architecture
+
+Isolate and manage data across customers:
+
+1. **D1** databases per tenant for complete data isolation
+2. **Durable Objects** coordinate real-time state within tenant boundaries
+3. **R2** buckets with per-tenant prefixes or separate buckets
+
+---
+
+## Getting started
+
+This section uses content from the official Cloudflare documentation to guide you through setting up SSL for SaaS. The content below is kept in sync with the source documentation.
+
+### Step 1: Prerequisites
+
+<Render file="get-started-prereqs" product="cloudflare-for-platforms" />
+
+For the complete prerequisites guide, refer to [SSL for SaaS prerequisites](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/).
+
+### Step 2: Set up fallback origin
+
+<Render file="get-started-fallback-origin" product="cloudflare-for-platforms" />
+
+For more details on fallback origins, refer to [Fallback origin configuration](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-2---create-fallback-origin-and-cname-target).
+
+### Step 3: Create custom hostnames
+
+<Render file="create-custom-hostname" product="cloudflare-for-platforms" />
+
+For the complete guide, refer to [Create custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/).
+
+### Step 4: Verify hostname status
+
+<Render file="get-started-check-statuses" product="cloudflare-for-platforms" />
+
+For troubleshooting hostname issues, refer to [Hostname validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/).
+
+---
+
+## Next steps
+
+After setting up SSL for SaaS, consider these additional capabilities:
+
+### Workers for Platforms
+
+Let your customers deploy their own code on your platform:
+
+1. [Create a dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#1-create-a-dispatch-namespace)
+2. [Upload customer Workers](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-upload-a-user-worker)
+3. [Route requests to customer Workers](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#4-route-to-the-user-worker)
+
+For the complete guide, refer to [Workers for Platforms get started](/cloudflare-for-platforms/workers-for-platforms/get-started/).
+
+### Per-tenant data isolation
+
+Store customer data with appropriate isolation:
+
+- **D1** - Create separate databases per tenant for complete isolation. Refer to [D1 get started](/d1/get-started/).
+- **R2** - Use bucket prefixes or separate buckets per tenant. Refer to [R2 get started](/r2/get-started/).
+- **Durable Objects** - Coordinate real-time state within tenant boundaries. Refer to [Durable Objects get started](/durable-objects/get-started/).
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="SSL for SaaS documentation" href="/cloudflare-for-platforms/cloudflare-for-saas/" icon="ssl">
+
+Complete documentation for managing custom hostnames and certificates.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Workers for Platforms" href="/cloudflare-for-platforms/workers-for-platforms/" icon="workers">
+
+Let customers deploy their own code on your platform.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="SaaS case studies" href="https://www.cloudflare.com/case-studies/?industry=SaaS" icon="open-book">
+
+Explore how SaaS companies build on Cloudflare.
+
+</LinkTitleCard>
+
+</CardGrid>

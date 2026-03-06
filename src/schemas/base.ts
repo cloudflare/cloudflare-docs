@@ -32,6 +32,7 @@ export const baseSchema = ({ image }: SchemaContext) =>
 				z.literal("release-notes"),
 				z.literal("troubleshooting"),
 				z.literal("tutorial"),
+				z.literal("use-case"),
 				z.literal("video"),
 			])
 			.catch((ctx) => ctx.input)

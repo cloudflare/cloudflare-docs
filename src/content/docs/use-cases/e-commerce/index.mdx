@@ -1,0 +1,434 @@
+---
+pcx_content_type: use-case
+title: E-commerce
+head:
+  - tag: title
+    content: E-commerce · Use cases
+sidebar:
+  order: 3
+---
+
+import { CardGrid, Details, LinkTitleCard, Render, Steps } from "~/components";
+
+Secure and accelerate online storefronts with caching, bot protection, and global content delivery.
+
+## Overview
+
+E-commerce applications require exceptional performance, security, and reliability. Slow page loads directly impact conversion rates, while bot attacks can scrape pricing data, deplete inventory, and commit fraud. Cloudflare provides a comprehensive platform to protect and accelerate your online store from day one through scale.
+
+This guide walks you through the Cloudflare solutions available at each stage of building, protecting, and optimizing your e-commerce website.
+
+---
+
+## Stage 1: Foundation - Domain and DNS
+
+Every e-commerce site starts with a domain. Cloudflare provides the foundation for fast, secure DNS resolution.
+
+### Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Registrar" href="/registrar/" icon="registrar">
+
+Register domains at cost with built-in privacy protection and no markup fees.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="DNS" href="/dns/" icon="dns">
+
+Authoritative DNS with global anycast network for fast resolution worldwide.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+### What you get
+
+- **Fast DNS resolution** - Cloudflare's global network resolves DNS queries from the nearest location
+- **DDoS protection** - DNS infrastructure is protected against volumetric attacks
+- **DNSSEC** - Cryptographic signatures prevent DNS spoofing
+- **Easy management** - Single dashboard for domains, DNS, and all Cloudflare services
+
+### Get started
+
+1. [Register a new domain](/registrar/get-started/register-domain/) or [transfer an existing domain](/registrar/get-started/transfer-domain-to-cloudflare/)
+2. [Add your site to Cloudflare](/fundamentals/setup/add-site/)
+3. [Enable DNSSEC](/dns/dnssec/)
+
+---
+
+## Stage 2: Security - Protect your store
+
+Before driving traffic to your store, establish security controls to protect against attacks and fraud.
+
+### Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="SSL/TLS" href="/ssl/" icon="ssl">
+
+Encrypt all traffic with free, automatic SSL certificates.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Application Security" href="/waf/" icon="waf">
+
+Block SQL injection, XSS, and other application attacks with managed rulesets.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="DDoS Protection" href="/ddos-protection/" icon="ddos-protection">
+
+Automatic mitigation of volumetric and application-layer DDoS attacks.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Bot Management" href="/bots/" icon="bots">
+
+Detect and block credential stuffing, inventory hoarding, and scraping bots.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Turnstile" href="/turnstile/" icon="turnstile">
+
+Protect checkout, login, and registration forms without frustrating CAPTCHAs.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Page Shield" href="/page-shield/" icon="page-shield">
+
+Monitor and control third-party scripts to prevent Magecart-style attacks.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+### What you get
+
+- **PCI DSS compliance support** - TLS encryption and Application Security help meet payment security requirements
+- **Credential stuffing protection** - Bot Management blocks automated login attacks
+- **Payment form security** - Turnstile protects checkout without adding friction
+- **Supply chain protection** - Page Shield detects malicious scripts injected by compromised third parties
+
+### Security configuration
+
+<Details header="Recommended Application Security rules for e-commerce">
+
+Enable these managed rulesets in your Application Security configuration:
+
+- **Cloudflare Managed Ruleset** - Core protection against OWASP Top 10
+- **Cloudflare OWASP Core Ruleset** - Additional coverage for common vulnerabilities
+- **Exposed Credentials Check** - Alerts when users attempt to use breached passwords
+
+Create custom rules for e-commerce-specific protection:
+
+- Rate limit login attempts to prevent brute force attacks
+- Block requests to admin paths from non-allowlisted IPs
+- Challenge requests to checkout endpoints with suspicious characteristics
+
+</Details>
+
+<Details header="Bot Management for e-commerce">
+
+Configure Bot Management to address common e-commerce threats:
+
+| Threat | Bot Management action |
+|--------|----------------------|
+| Inventory hoarding | Challenge or block bots on add-to-cart endpoints |
+| Price scraping | Rate limit or challenge product page requests |
+| Credential stuffing | Block automated login attempts |
+| Gift card cracking | Challenge gift card balance check endpoints |
+| Fake account creation | Require Turnstile on registration forms |
+
+</Details>
+
+### Get started
+
+1. [Enable SSL/TLS](/ssl/get-started/)
+2. [Configure Application Security managed rules](/waf/managed-rules/deploy-zone-dashboard/)
+3. [Set up Bot Management](/bots/get-started/)
+4. [Add Turnstile to forms](/turnstile/get-started/)
+5. [Enable Page Shield](/page-shield/get-started/)
+
+---
+
+## Stage 3: Performance - Accelerate your store
+
+Fast page loads directly impact conversion rates. Cloudflare accelerates every aspect of your storefront.
+
+### Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="CDN / Cache" href="/cache/" icon="cache">
+
+Cache static and dynamic content at edge locations worldwide.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Images" href="/images/" icon="images">
+
+Optimize, resize, and deliver product images in modern formats.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Speed" href="/speed/" icon="speed">
+
+Automatic optimizations for HTML, CSS, JavaScript, and fonts.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Argo Smart Routing" href="/argo-smart-routing/" icon="argo-smart-routing">
+
+Route traffic through the fastest paths across Cloudflare's network.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Zaraz" href="/zaraz/" icon="zaraz">
+
+Load third-party tools without blocking page rendering.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Workers" href="/workers/" icon="workers">
+
+Run custom logic at the edge for personalization and A/B testing.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+### What you get
+
+- **Faster page loads** - Cache product pages, images, and assets at 300+ edge locations
+- **Optimized images** - Automatically serve WebP/AVIF in the right size for each device
+- **Reduced origin load** - Edge caching handles the majority of requests
+- **Third-party script control** - Zaraz loads analytics and marketing tags without blocking rendering
+- **Edge personalization** - Workers can customize content without origin round-trips
+
+### Performance configuration
+
+<Details header="Cache strategy for e-commerce">
+
+E-commerce sites have a mix of static and dynamic content. Configure caching appropriately:
+
+| Content type | Cache strategy |
+|--------------|----------------|
+| Product images | Cache for 1 year with versioned URLs |
+| CSS/JS assets | Cache for 1 year with versioned URLs |
+| Product pages | Cache for 1 hour, purge on inventory changes |
+| Category pages | Cache for 15 minutes |
+| Cart/checkout | Do not cache (bypass cache) |
+| Search results | Cache for 5 minutes with query string |
+
+Use [Cache Rules](/cache/how-to/cache-rules/) to implement these strategies.
+
+</Details>
+
+<Details header="Image optimization for product catalogs">
+
+Configure Cloudflare Images for your product catalog:
+
+1. **Resize on-the-fly** - Serve thumbnails, product cards, and full-size images from a single source
+2. **Format conversion** - Automatically serve WebP or AVIF to supported browsers
+3. **Quality optimization** - Balance file size and visual quality per use case
+4. **Lazy loading** - Defer off-screen images to improve initial page load
+
+Example transformation URL:
+```txt
+https://example.com/cdn-cgi/image/width=400,quality=80,format=auto/products/shoe-123.jpg
+```
+
+</Details>
+
+### Get started
+
+1. [Configure cache rules](/cache/how-to/cache-rules/)
+2. [Set up Cloudflare Images](/images/get-started/)
+3. [Enable Speed optimizations](/speed/optimization/)
+4. [Configure Zaraz](/zaraz/get-started/)
+
+---
+
+## Stage 4: Reliability - Handle traffic at scale
+
+E-commerce traffic is unpredictable. Flash sales, seasonal peaks, and viral moments can overwhelm infrastructure. Cloudflare ensures your store stays online.
+
+### Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Load Balancing" href="/load-balancing/" icon="load-balancing">
+
+Distribute traffic across origins with health checks and automatic failover.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Waiting Room" href="/waiting-room/" icon="waiting-room">
+
+Queue visitors during traffic spikes to protect your origin servers.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Cache Reserve" href="/cache/advanced-configuration/cache-reserve/" icon="cache">
+
+Persistent cache storage ensures content survives origin outages.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Health Checks" href="/health-checks/" icon="health-checks">
+
+Monitor origin health and get alerts before customers are impacted.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+### What you get
+
+- **Zero-downtime deployments** - Load balancing enables blue-green deployments
+- **Flash sale readiness** - Waiting Room queues excess traffic fairly
+- **Origin protection** - Cache Reserve serves content even if your origin is down
+- **Proactive monitoring** - Health checks alert you to issues before they impact customers
+
+### Reliability configuration
+
+<Details header="Load balancing for e-commerce">
+
+Configure load balancing for high availability:
+
+1. **Multiple origins** - Deploy your application across multiple servers or regions
+2. **Health checks** - Monitor origin health with HTTP checks to critical endpoints
+3. **Failover** - Automatically route traffic away from unhealthy origins
+4. **Geographic steering** - Route customers to the nearest origin for lower latency
+
+Example health check configuration:
+- **Endpoint**: `/health` or `/api/status`
+- **Interval**: 60 seconds
+- **Timeout**: 5 seconds
+- **Retries**: 2
+- **Expected codes**: 200
+
+</Details>
+
+<Details header="Waiting Room for flash sales">
+
+Configure Waiting Room before high-traffic events:
+
+1. **Set capacity** - Define how many active users your origin can handle
+2. **Customize the queue page** - Brand the waiting experience with your logo and messaging
+3. **Configure queue behavior** - Choose FIFO (first-in-first-out) or random selection
+4. **Set session duration** - Define how long users can shop before returning to the queue
+
+Best practices:
+- Test your Waiting Room before the event
+- Set capacity conservatively (you can increase during the event)
+- Communicate expected wait times to customers
+- Monitor queue length and adjust capacity as needed
+
+</Details>
+
+### Get started
+
+1. [Set up Load Balancing](/load-balancing/get-started/)
+2. [Configure Waiting Room](/waiting-room/get-started/)
+3. [Enable Cache Reserve](/cache/advanced-configuration/cache-reserve/)
+4. [Create Health Checks](/health-checks/get-started/)
+
+---
+
+## Stage 5: Analytics and Observability
+
+Understand your traffic, identify issues, and optimize your store with Cloudflare analytics.
+
+### Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Web Analytics" href="/web-analytics/" icon="web-analytics">
+
+Privacy-first analytics without cookies or tracking scripts.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Logs" href="/logs/" icon="logs">
+
+Export detailed request logs to your SIEM or data warehouse.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Security Analytics" href="/waf/analytics/" icon="waf">
+
+Analyze security events and fine-tune your Application Security configuration.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+### What you get
+
+- **Real user metrics** - Core Web Vitals and performance data from actual visitors
+- **Security visibility** - Understand attack patterns and bot activity
+- **Compliance logging** - Export logs for audit trails and forensic analysis
+- **Business insights** - Traffic patterns, geographic distribution, and device breakdown
+
+### Get started
+
+1. [Enable Web Analytics](/web-analytics/get-started/)
+2. [Configure Logpush](/logs/get-started/)
+3. [Review Security Analytics](/waf/analytics/)
+
+---
+
+## Complete e-commerce architecture
+
+When you combine all stages, your e-commerce architecture looks like this:
+
+```
+Customer Request
+       │
+       ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Cloudflare Edge                          │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │    DNS      │  │   SSL/TLS   │  │   DDoS Protection   │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │  App Sec    │  │    Bots     │  │     Waiting Room    │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │    Cache    │  │   Images    │  │      Workers        │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │                   Load Balancing                        ││
+│  └─────────────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+       │
+       ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Your Origin                              │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │  Web Server │  │  Database   │  │   Payment Gateway   │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="Reference architectures" href="/reference-architecture/" icon="open-book">
+
+Detailed diagrams and design patterns for e-commerce deployments.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Case studies" href="https://www.cloudflare.com/case-studies/?industry=Ecommerce%20%26%20Retail" icon="open-book">
+
+Learn how other e-commerce companies use Cloudflare.
+
+</LinkTitleCard>
+
+</CardGrid>
