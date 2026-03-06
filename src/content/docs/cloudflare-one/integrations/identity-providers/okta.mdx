@@ -69,15 +69,17 @@ To set up the Okta integration using the Okta Integration Network (OIN) App Cata
 
 7. From the application view, go to the **Sign On** tab.
 
-8. Scroll down to **OpenID ConnectID Token** and select **Edit**.
+8. Scroll down to **Token claims** and select **Show legacy configuration** > **Edit**.
 
    ![Configuring the Groups claim filter in Okta](~/assets/images/cloudflare-one/identity/okta/okta-2.png)
 
-9. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
 
-   :::note
-   Groups managed outside of Okta (for example, Microsoft Entra ID or Google groups) may require different regex values. For more information, refer to the Okta documentation on [Groups Claims](https://support.okta.com/help/s/article/Why-isnt-my-Groups-claim-returning-Active-Directory-groups) and [OpenID Connect Claims](https://support.okta.com/help/s/article/Can-we-retrieve-both-Active-Directory-and-Okta-groups-in-OpenID-Connect-claims).
-   :::
+9. Set **Groups claim filter** to _Matches regex_ and its value to `.*`.
+
+:::note[Token claim expressions]
+- Groups managed outside of Okta (for example, Microsoft Entra ID or Google groups) may require different regex values. For more information, refer to the Okta documentation on [Groups Claims](https://support.okta.com/help/s/article/Why-isnt-my-Groups-claim-returning-Active-Directory-groups) and [OpenID Connect Claims](https://support.okta.com/help/s/article/Can-we-retrieve-both-Active-Directory-and-Okta-groups-in-OpenID-Connect-claims).
+- To configure more complex expressions, refer to Okta's [token claims documentation](https://help.okta.com/okta_help.htm?type=oie&locale=en&id=federated-claims-overview).
+:::
 
 10. In the **General** tab, copy the **Client ID** and **Client secret**.
 

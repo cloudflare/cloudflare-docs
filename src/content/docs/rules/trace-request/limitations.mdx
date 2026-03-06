@@ -6,6 +6,18 @@ sidebar:
   label: Limitations
 ---
 
+## Automatic rule bypasses
+
+Trace does not display rules that are automatically bypassed for operational reasons. 
+
+For example, when SSL/TLS certificates are in `pending_validation` status, security rules are automatically disabled for domain control validation (DCV) paths like `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`. These bypasses will not appear in trace results.
+
+For more information, refer to [Why are some rules bypassed?](/waf/troubleshooting/faq/#why-are-some-rules-bypassed-when-i-did-not-create-an-exception) in the WAF documentation.
+
+---
+
+## Unsupported features
+
 Trace currently does not support:
 
 - Hostnames using [Data Localization Suite](/data-localization/)

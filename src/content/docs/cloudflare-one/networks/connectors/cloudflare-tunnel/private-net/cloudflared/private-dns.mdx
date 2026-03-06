@@ -30,7 +30,7 @@ To resolve private DNS queries:
 
 4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP and UDP.
 
-5. Finally, ensure that your tunnel uses QUIC as the default [transport protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol). This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries.
+5. Finally, ensure that your tunnel uses QUIC as the default [transport protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#protocol). This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries.
 
 The WARP client will now send DNS queries to your internal DNS resolver for resolution. To learn more, refer to [How the WARP client handles DNS requests](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
 

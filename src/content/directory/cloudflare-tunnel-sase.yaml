@@ -1,0 +1,10 @@
+id: tUn3lSASE
+name: Cloudflare Tunnel for SASE
+
+entry:
+  title: Cloudflare Tunnel for SASE
+  group: Cloudflare One
+  url: /cloudflare-one/networks/connectors/cloudflare-tunnel/
+
+meta:
+  description: Connect private networks and resources to Cloudflare One

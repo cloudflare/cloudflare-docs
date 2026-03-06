@@ -7,13 +7,17 @@ sidebar:
 
 import { DashButton } from "~/components";
 
-With [managed rulesets](/ruleset-engine/managed-rulesets/), you can quickly deploy rules maintained by Cloudflare, and you can use Cloudflare Network Firewall to control which rules are enabled.
+With [managed rulesets](/ruleset-engine/managed-rulesets/), you can quickly deploy pre-built firewall rules maintained by Cloudflare. You use Cloudflare Network Firewall to control which managed rules are enabled.
 
-:::note[Note:]
-Before you can begin using managed rulesets with Cloudflare Network Firewall, your account must first be entitled to use managed rulesets. Contact your account team for access.
+In addition to enabling managed rulesets, you can also add and enable custom policies. Refer to [add policies](/cloudflare-one/traffic-policies/packet-filtering/add-policies/).
+
+:::note
+Before you can use managed rulesets with Cloudflare Network Firewall, your account must have managed rulesets enabled. Contact your account team to request access.
 :::
 
-To enable or disable a rule, you can specify which properties should be overridden. The overrides occur in the Managed phase, root kind ruleset. Currently, you can only have one rule in the root ruleset, but a single rule can contain multiple overrides.
+To enable or disable a rule, you specify which properties should be overridden. Overrides are configured in the root ruleset of the Managed phase (the top-level ruleset that controls which managed rules are active). This root ruleset can contain only one rule, but that single rule can include multiple overrides for different managed rules.
+
+Cloudflare recommends starting with the `action` set to `log` to evaluate impact before switching to block.
 
 You have multiple options for enabling rules:
 
@@ -27,7 +31,7 @@ You have multiple options for enabling rules:
 
 To create a managed ruleset, you must first build a request with the following:
 
-- `managed_ruleset_id`: The ID of the Managed phase Managed kind ruleset that contains the rule you want to enable.
+- `managed_ruleset_id`: The ID of the Managed phase Managed kind ruleset that contains the rule you want to enable. To find this ID, list available managed rulesets using `GET /accounts/{account_id}/rulesets?kind=managed&phase=magic_transit_managed`.
 - `managed_rule_id`: The ID of the rule you want to enable.
 
 Additionally, you need the properties you want to override. The properties you can override include:
@@ -73,7 +77,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets
 
 ### 2. Patch a Managed phase Managed kind ruleset
 
-To ensure a root kind ruleset only contains one rule, patch the rule to enable new managed rules.
+Because the root ruleset can only contain one rule, you must PATCH that existing rule (rather than adding new rules) when you want to enable additional managed rules.
 
 Building off the example from the previous step, the example below enables a category to select multiple rules instead of a single rule. The category will be set to `log` mode, which means the rule can produce logs but will not accept or drop packets.
 
@@ -113,7 +117,7 @@ To enable the complete ruleset or enable all rules, send the request below.
 
 ```bash title="Example request to enable all rules"
 curl --request PATCH \
-https://api.cloudflare.com/client/v4/accounts/{account_id}{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{

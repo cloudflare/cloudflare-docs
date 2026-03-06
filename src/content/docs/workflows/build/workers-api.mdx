@@ -112,9 +112,13 @@ More information about the limits imposed on Workflow can be found in the [Workf
 
 :::
 
-- <code>step.waitForEvent(name: string, options: ): Promise&lt;void&gt;</code>
-  - `name` - the name of the step.
-  - `options` - an object with properties for `type` (up to 100 characters [^1]), which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
+- <code>step.waitForEvent(name: string, options: ): Promise&lt;void&gt;</code>-
+  `name` - the name of the step. - `options` - an object with properties for
+  `type` (up to 100 characters [^1]), which determines which event type this
+  `waitForEvent` call will match on when calling `instance.sendEvent`, and an
+  optional `timeout` property, which defines how long the `waitForEvent` call
+  will block for before throwing a timeout exception. The default timeout is 24
+  hours.
 
 <TypeScriptExample>
 
@@ -152,6 +156,28 @@ export type WorkflowStepConfig = {
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
+## Workflow step limits
+
+Each workflow on Workers Paid supports 10,000 steps by default. You can increase this up to 25,000 steps by configuring `steps` within the `limits` property of your Workflow definition in your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+[[workflows]]
+name = "my-workflow"
+binding = "MY_WORKFLOW"
+class_name = "MyWorkflow"
+
+[workflows.limits]
+steps = 25_000
+```
+
+</WranglerConfig>
+
+`step.sleep` does not count towards the maximum steps limit.
+
+Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workflow limits](/workflows/reference/limits/) for more information.
+
 ## NonRetryableError
 
 {/* prettier-ignore */}
@@ -182,9 +208,9 @@ For example, to bind to a Workflow called `workflows-starter` and to make it ava
 			// binding name env.MY_WORKFLOW
 			"binding": "MY_WORKFLOW",
 			// this is class that extends the Workflow class in src/index.ts
-			"class_name": "MyWorkflow"
-		}
-	]
+			"class_name": "MyWorkflow",
+		},
+	],
 }
 ```
 
@@ -220,9 +246,9 @@ For example, if your Workflow is defined in a Worker script named `billing-worke
 			"class_name": "MyWorkflow",
 			// the script name where the Workflow is defined.
 			// required if the Workflow is defined in another script.
-			"script_name": "billing-worker"
-		}
-	]
+			"script_name": "billing-worker",
+		},
+	],
 }
 ```
 
@@ -455,8 +481,10 @@ Terminate a Workflow instance.
 
 [Send an event](/workflows/build/events-and-parameters/) to a running Workflow instance.
 
-- <code>sendEvent(): Promise&lt;void&gt;</code>
-  - `options` - the event `type` (up to 100 characters [^1]) and `payload` to send to the Workflow instance. The `type` must match the `type` in the corresponding `waitForEvent` call in your Workflow.
+- <code>sendEvent(): Promise&lt;void&gt;</code>- `options` - the event `type`
+  (up to 100 characters [^1]) and `payload` to send to the Workflow instance.
+  The `type` must match the `type` in the corresponding `waitForEvent` call in
+  your Workflow.
 
 Return `void` on success; throws an exception if the Workflow is not running or is an errored state.
 
@@ -505,9 +533,9 @@ type InstanceStatus = {
 		| "waiting" // instance is hibernating and waiting for sleep or event to finish
 		| "waitingForPause" // instance is finishing the current work to pause
 		| "unknown";
-	error?: { 
-		name: string,
-		message: string 
+	error?: {
+		name: string;
+		message: string;
 	};
 	output?: unknown;
 };

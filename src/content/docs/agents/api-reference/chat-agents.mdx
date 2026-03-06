@@ -213,13 +213,17 @@ export class ChatAgent extends AIChatAgent {
 }
 ```
 
-**Accessing custom body data**:
+**Accessing custom body data and request ID**:
 
 ```ts
 export class ChatAgent extends AIChatAgent {
 	async onChatMessage(_onFinish, options) {
 		const { timezone, userId } = options?.body ?? {};
 		// Use these values in your LLM call or business logic
+
+		// options.requestId — unique identifier for this chat request,
+		// useful for logging and correlating events
+		console.log("Request ID:", options?.requestId);
 	}
 }
 ```
@@ -268,6 +272,36 @@ export class ChatAgent extends AIChatAgent {
 ```
 
 </TypeScriptExample>
+
+### `waitForMcpConnections`
+
+Controls whether `AIChatAgent` waits for MCP server connections to settle before calling `onChatMessage`. This ensures `this.mcp.getAITools()` returns the full set of tools, especially after Durable Object hibernation when connections are being restored in the background.
+
+| Value                  | Behavior                                      |
+| ---------------------- | --------------------------------------------- |
+| `{ timeout: 10_000 }` | Wait up to 10 seconds (default)               |
+| `{ timeout: N }`      | Wait up to `N` milliseconds                   |
+| `true`                 | Wait indefinitely until all connections ready  |
+| `false`                | Do not wait (old behavior before 0.2.0)        |
+
+<TypeScriptExample>
+
+```ts
+export class ChatAgent extends AIChatAgent {
+	// Default — waits up to 10 seconds
+	// waitForMcpConnections = { timeout: 10_000 };
+
+	// Wait forever
+	waitForMcpConnections = true;
+
+	// Disable waiting
+	waitForMcpConnections = false;
+}
+```
+
+</TypeScriptExample>
+
+For lower-level control, call `this.mcp.waitForConnections()` directly inside your `onChatMessage` instead.
 
 ### `persistMessages` and `saveMessages`
 
@@ -549,6 +583,29 @@ const { messages, addToolApprovalResponse } = useAgentChat({ agent });
 ```
 
 </TypeScriptExample>
+
+#### Custom denial messages with `addToolOutput`
+
+When a user rejects a tool, `addToolApprovalResponse({ id, approved: false })` sets the tool state to `output-denied` with a generic message. To give the LLM a more specific reason for the denial, use `addToolOutput` with `state: "output-error"` instead:
+
+<TypeScriptExample>
+
+```ts
+const { addToolOutput } = useAgentChat({ agent });
+
+// Reject with a custom error message
+addToolOutput({
+	toolCallId: part.toolCallId,
+	state: "output-error",
+	errorText: "User declined: insufficient budget for this quarter",
+});
+```
+
+</TypeScriptExample>
+
+This sends a `tool_result` to the LLM with your custom error text, so it can respond appropriately (for example, suggest an alternative or ask clarifying questions).
+
+`addToolApprovalResponse` (with `approved: false`) auto-continues the conversation when `autoContinueAfterToolResult` is enabled (the default). `addToolOutput` with `state: "output-error"` does **not** auto-continue — call `sendMessage()` afterward if you want the LLM to respond to the error.
 
 For more patterns, refer to [Human-in-the-loop](/agents/concepts/human-in-the-loop/).
 

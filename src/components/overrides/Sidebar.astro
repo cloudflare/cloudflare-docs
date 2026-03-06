@@ -7,32 +7,40 @@ import { lookupProductTitle } from "~/util/sidebar";
 const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 ---
 
-<a href={"/" + product + "/"} class="flex items-center gap-2 px-1 no-underline">
-	<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
-	<span class="text-xl text-black">
-		<strong>
-			{lookupProductTitle(product, module)}
-		</strong>
-	</span>
-</a>
+<div class="sidebar-header">
+	<div class="sidebar-product-title px-1">
+		<a href={"/" + product + "/"} class="flex items-center gap-2 no-underline">
+			<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
+			<span class="text-xl text-black">
+				<strong>
+					{lookupProductTitle(product, module)}
+				</strong>
+			</span>
+		</a>
+	</div>
 
-<!-- Search Input -->
-<div class="relative">
-	<input
-		type="text"
-		id="sidebar-search"
-		placeholder="Search sidebar..."
-		class="w-full px-3 py-2 pr-10 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-orange-500 dark:focus:border-orange-500 transition-colors duration-200"
-	/>
-	<div class="sidebar-search-icon"></div>
-</div>
+	<!-- Search Input -->
+	<div class="relative">
+		<input
+			type="text"
+			id="sidebar-search"
+			placeholder="Search sidebar..."
+			class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 pr-10 text-sm text-gray-900 placeholder-gray-500 transition-colors duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:focus:border-orange-500 dark:focus:ring-orange-500"
+		/>
+		<div class="sidebar-search-icon"></div>
+	</div>
 
-<!-- No Results Message -->
-<div
-	id="sidebar-no-results"
-	class="text-sm text-gray-500 dark:text-gray-400 text-center p-4 hidden"
->
-	No results found. Try a different search term, or use our <button id="global-search-link" class="text-blue-500 dark:text-orange-500 underline hover:no-underline cursor-pointer bg-transparent border-none p-0 font-inherit">global search</button>.
+	<!-- No Results Message -->
+	<div
+		id="sidebar-no-results"
+		class="hidden p-4 text-center text-sm text-gray-500 dark:text-gray-400"
+	>
+		No results found. Try a different search term, or use our <button
+			id="global-search-link"
+			class="font-inherit cursor-pointer border-none bg-transparent p-0 text-blue-500 underline hover:no-underline dark:text-orange-500"
+			>global search</button
+		>.
+	</div>
 </div>
 
 <Default><slot /></Default>
@@ -42,40 +50,51 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	import { openGlobalSearch } from "~/util/search";
 
 	function initSidebarSearch() {
-		const searchInput = document.getElementById('sidebar-search') as HTMLInputElement;
-		const noResultsMessage = document.getElementById('sidebar-no-results') as HTMLElement;
-		const globalSearchLink = document.getElementById('global-search-link') as HTMLButtonElement;
-		const sidebarContent = document.querySelector('.sidebar-content');
+		const searchInput = document.getElementById(
+			"sidebar-search",
+		) as HTMLInputElement;
+		const noResultsMessage = document.getElementById(
+			"sidebar-no-results",
+		) as HTMLElement;
+		const globalSearchLink = document.getElementById(
+			"global-search-link",
+		) as HTMLButtonElement;
+		const sidebarContent = document.querySelector(".sidebar-content");
 
-		if (!searchInput || !sidebarContent || !noResultsMessage || !globalSearchLink) return;
+		if (
+			!searchInput ||
+			!sidebarContent ||
+			!noResultsMessage ||
+			!globalSearchLink
+		)
+			return;
 
 		const originalState: Map<Element, boolean> = new Map();
 
 		// Store original state of details elements
 		function storeOriginalState() {
 			if (originalState.size === 0) {
-				const detailsElements = sidebarContent!.querySelectorAll('details');
-				detailsElements.forEach(details => {
+				const detailsElements = sidebarContent!.querySelectorAll("details");
+				detailsElements.forEach((details) => {
 					originalState.set(details, details.open);
 				});
 			}
 		}
 
-
 		// Check if text matches all search terms (for multi-word searches)
 		function matchesAllTerms(text: string, searchTerms: string[]): boolean {
 			const lowerText = text.toLowerCase();
-			return searchTerms.every(term => lowerText.includes(term));
+			return searchTerms.every((term) => lowerText.includes(term));
 		}
 
 		// Show only direct children of a folder (not recursive)
 		function showDirectChildren(details: HTMLDetailsElement) {
 			details.open = true;
-			const directList = details.querySelector(':scope > ul');
+			const directList = details.querySelector(":scope > ul");
 			if (directList) {
-				const directChildren = directList.querySelectorAll(':scope > li');
-				directChildren.forEach(child => {
-					(child as HTMLElement).style.display = '';
+				const directChildren = directList.querySelectorAll(":scope > li");
+				directChildren.forEach((child) => {
+					(child as HTMLElement).style.display = "";
 				});
 			}
 		}
@@ -84,10 +103,10 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		function showParentChain(element: Element) {
 			let parent = element.parentElement;
 			while (parent && parent !== sidebarContent) {
-				if (parent.tagName === 'LI') {
-					(parent as HTMLElement).style.display = '';
+				if (parent.tagName === "LI") {
+					(parent as HTMLElement).style.display = "";
 				}
-				if (parent.tagName === 'DETAILS') {
+				if (parent.tagName === "DETAILS") {
 					(parent as HTMLDetailsElement).open = true;
 				}
 				parent = parent.parentElement;
@@ -96,18 +115,18 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 
 		// Filter sidebar items based on search query
 		function filterSidebarItems(query: string) {
-			const items = sidebarContent!.querySelectorAll('li');
-			const detailsElements = sidebarContent!.querySelectorAll('details');
+			const items = sidebarContent!.querySelectorAll("li");
+			const detailsElements = sidebarContent!.querySelectorAll("details");
 			track("use sidebar search", { query: query });
 
 			if (!query.trim()) {
 				// Reset to original state
-				items.forEach(item => {
-					(item as HTMLElement).style.display = '';
+				items.forEach((item) => {
+					(item as HTMLElement).style.display = "";
 				});
 
 				// Restore original details state
-				detailsElements.forEach(details => {
+				detailsElements.forEach((details) => {
 					const originalOpen = originalState.get(details);
 					if (originalOpen !== undefined) {
 						(details as HTMLDetailsElement).open = originalOpen;
@@ -115,19 +134,22 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 				});
 
 				// Hide no results message
-				noResultsMessage.classList.add('hidden');
+				noResultsMessage.classList.add("hidden");
 
 				return;
 			}
 
 			// Split search query into terms for more precise matching
-			const searchTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 0);
+			const searchTerms = query
+				.toLowerCase()
+				.split(/\s+/)
+				.filter((term) => term.length > 0);
 
 			// First, hide all items and close all details
-			items.forEach(item => {
-				(item as HTMLElement).style.display = 'none';
+			items.forEach((item) => {
+				(item as HTMLElement).style.display = "none";
 			});
-			detailsElements.forEach(details => {
+			detailsElements.forEach((details) => {
 				(details as HTMLDetailsElement).open = false;
 			});
 
@@ -135,16 +157,16 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 			const matchedItems = new Set<Element>();
 
 			// 1. Check for folder/subfolder matches first (highest priority)
-			detailsElements.forEach(details => {
-				const summary = details.querySelector('summary');
+			detailsElements.forEach((details) => {
+				const summary = details.querySelector("summary");
 				if (summary) {
-					const summaryText = summary.textContent || '';
+					const summaryText = summary.textContent || "";
 
 					if (matchesAllTerms(summaryText, searchTerms)) {
 						// This is a folder match - show the folder and its direct children
-						const parentLi = details.closest('li');
+						const parentLi = details.closest("li");
 						if (parentLi && !matchedItems.has(parentLi)) {
-							(parentLi as HTMLElement).style.display = '';
+							(parentLi as HTMLElement).style.display = "";
 							showDirectChildren(details);
 							showParentChain(parentLi);
 							matchedItems.add(parentLi);
@@ -154,21 +176,21 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 			});
 
 			// 2. Check for specific page matches (show page + parent chain)
-			items.forEach(item => {
+			items.forEach((item) => {
 				if (matchedItems.has(item)) return; // Skip if already matched as folder
 
-				const link = item.querySelector('a');
-				const summary = item.querySelector('summary');
+				const link = item.querySelector("a");
+				const summary = item.querySelector("summary");
 
 				// Skip if this is a folder (has summary) - those are handled above
 				if (summary) return;
 
 				if (link) {
-					const linkText = link.textContent || '';
+					const linkText = link.textContent || "";
 
 					if (matchesAllTerms(linkText, searchTerms)) {
 						// This is a specific page match - show page + parent chain
-						(item as HTMLElement).style.display = '';
+						(item as HTMLElement).style.display = "";
 						showParentChain(item);
 						matchedItems.add(item);
 					}
@@ -177,24 +199,27 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 
 			// 3. Fallback: if no exact matches, show partial matches (less specific)
 			if (matchedItems.size === 0) {
-				items.forEach(item => {
-					const textContent = item.textContent?.toLowerCase() || '';
-					const link = item.querySelector('a');
-					const linkText = link?.textContent?.toLowerCase() || '';
-					const summary = item.querySelector('summary');
-					const summaryText = summary?.textContent?.toLowerCase() || '';
+				items.forEach((item) => {
+					const textContent = item.textContent?.toLowerCase() || "";
+					const link = item.querySelector("a");
+					const linkText = link?.textContent?.toLowerCase() || "";
+					const summary = item.querySelector("summary");
+					const summaryText = summary?.textContent?.toLowerCase() || "";
 
 					// Check if any search term is found (partial matching)
-					const hasPartialMatch = searchTerms.some(term =>
-						textContent.includes(term) || linkText.includes(term) || summaryText.includes(term)
+					const hasPartialMatch = searchTerms.some(
+						(term) =>
+							textContent.includes(term) ||
+							linkText.includes(term) ||
+							summaryText.includes(term),
 					);
 
 					if (hasPartialMatch) {
-						(item as HTMLElement).style.display = '';
+						(item as HTMLElement).style.display = "";
 
 						// If it's a folder, show direct children only
 						if (summary) {
-							const details = item.querySelector('details');
+							const details = item.querySelector("details");
 							if (details) {
 								showDirectChildren(details);
 							}
@@ -208,29 +233,29 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 
 			// Show/hide no results message based on matches
 			if (matchedItems.size === 0) {
-				noResultsMessage.classList.remove('hidden');
+				noResultsMessage.classList.remove("hidden");
 			} else {
-				noResultsMessage.classList.add('hidden');
+				noResultsMessage.classList.add("hidden");
 			}
 		}
 
 		// Event listeners
-		searchInput.addEventListener('input', (e) => {
+		searchInput.addEventListener("input", (e) => {
 			storeOriginalState();
 			const query = (e.target as HTMLInputElement).value;
 			filterSidebarItems(query);
 		});
 
 		// Clear search on Escape key
-		searchInput.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') {
-				searchInput.value = '';
-				filterSidebarItems('');
+		searchInput.addEventListener("keydown", (e) => {
+			if (e.key === "Escape") {
+				searchInput.value = "";
+				filterSidebarItems("");
 			}
 		});
 
 		// Global search link click handler
-		globalSearchLink.addEventListener('click', () => {
+		globalSearchLink.addEventListener("click", () => {
 			const currentQuery = searchInput.value.trim();
 			if (currentQuery) {
 				openGlobalSearch(currentQuery);
@@ -263,8 +288,8 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	}
 
 	// Initialize when DOM is loaded
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', initSidebarSearch);
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initSidebarSearch);
 	} else {
 		initSidebarSearch();
 	}
@@ -290,7 +315,32 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	}
 
 	:root {
+		/* Sticky header: position: sticky works because .sidebar-pane (overflow-y: auto)
+		   is the scroll container, and we remove min-height: max-content from
+		   .sidebar-content so the containing block height is bounded by the viewport. */
+		.sidebar-header {
+			position: sticky;
+			top: 0;
+			z-index: 1;
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			background-color: var(--sl-color-black);
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+
+			@media (min-width: 50rem) {
+				background-color: var(--sl-color-bg-sidebar);
+			}
+		}
+
+		/* Override Starlight's height: 100% / min-height: max-content.
+		   Let .sidebar-content size to its content so sticky has the full
+		   scroll range to work within, not just one viewport height. */
 		.sidebar-content {
+			height: auto !important;
+			min-height: 0 !important;
+
 			--sl-color-hairline-light: #cacaca !important;
 
 			& > * {

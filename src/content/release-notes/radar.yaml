@@ -3,6 +3,13 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-03-06"
+    title: Add region filtering and AS/location dimensions to API
+    description: |-
+      * Added region filtering across all location-aware pages, including continents, geographic subregions, political regions (EU, ASEAN, African Union), and US Census regions/divisions.
+      * Added traffic volume insights by top autonomous systems and countries/territories.
+      * Added AS and location dimensions to the [`HTTP`](/api/resources/radar/subresources/http/), [`DNS`](/api/resources/radar/subresources/dns/), and [`NetFlows`](/api/resources/radar/subresources/netflows/) APIs.
+      * Added breadcrumb navigation.
   - publish_date: "2026-02-27"
     title: Add Post-Quantum and Key Transparency insights
     description: |-

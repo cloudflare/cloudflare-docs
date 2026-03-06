@@ -6,7 +6,7 @@ sidebar:
   label: Browser-based RDP
 ---
 
-import { Render, GlossaryTooltip, Details } from "~/components";
+import { Render, GlossaryTooltip, Details, Tabs, TabItem, APIRequest } from "~/components";
 
 Users can connect to an RDP server without installing an RDP client or the [WARP client](/cloudflare-one/team-and-resources/devices/warp/) on their device. Browser-based RDP leverages [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), which creates a secure, outbound-only connection from your RDP server to Cloudflare's global network. Setup involves running the `cloudflared` daemon on the RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
 
@@ -109,29 +109,30 @@ The DNS record does not need to point to an active destination IP address or hos
 
 12. <Render file="access/add-access-policies" product="cloudflare-one" />
 
-
 	<Render file="access/self-hosted-app/browser-rendering-policies" product="cloudflare-one" />
 
-13. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "rdp" }}/>
+13. (Optional) In your Access policy, configure [clipboard controls](#clipboard-controls) to restrict copy and paste actions between the user's local machine and the browser-based RDP session.
 
-14. Select **Next**.
+14. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "rdp" }}/>
 
-15. (Recommended) Turn on **Show application in App Launcher** and configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application. The App Launcher allows users to view the Windows servers that they can access using browser-based RDP. Without the App Launcher, users will need to know each target's direct URL.
+15. Select **Next**.
+
+16. (Recommended) Turn on **Show application in App Launcher** and configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application. The App Launcher allows users to view the Windows servers that they can access using browser-based RDP. Without the App Launcher, users will need to know each target's direct URL.
 
         :::note
         Ensure that users match an Allow rule in your [App Launcher policies](/cloudflare-one/access-controls/access-settings/app-launcher/#enable-the-app-launcher).
         :::
 
-16. <Render file="access/access-block-page" product="cloudflare-one" />
+17. <Render file="access/access-block-page" product="cloudflare-one" />
 
-17. Select **Next**.
+18. Select **Next**.
 
-18. <Render
+19. <Render
     	file="access/self-hosted-app/advanced-settings"
     	product="cloudflare-one"
     />
 
-19. Select **Save**.
+20. Select **Save**.
 
 ## 5. (Recommended) Modify order of precedence in Gateway
 
@@ -168,10 +169,103 @@ To connect to a Windows machine over RDP:
    :::
 
 4. Select the port that you want to connect to. The port selection screen only appears if the Access application allows RDP traffic on multiple ports (for example, port `3389` and port `65321`).
-5. (Optional) In your browser settings, allow the Access application to access the clipboard. Clipboard permissions grant the ability to copy or paste text between the local machine and the remote Windows machine.
+5. (Optional) In your browser settings, allow the Access application to access the clipboard. Clipboard access is subject to [policy restrictions](#configure-clipboard-controls) configured by your administrator.
 6. Enter your Windows username and password. For more information on how to format your username, refer to [User identifier formats](#user-identifier-formats).
 
 You now have access to the remote Windows desktop.
+
+## Clipboard controls
+
+Clipboard controls allow you to restrict whether users can copy or paste text between their local machine and the browser-based RDP session. They are are configured per policy within your Access application. You can configure different clipboard permissions for different groups of users by creating multiple policies.
+
+### Default behavior
+
+- **New policies**: Clipboard access is denied by default. You must explicitly allow clipboard actions.
+- **Existing applications**: Access applications for browser-based RDP created before this feature was available retain full clipboard access to preserve backward compatibility.
+
+### Available settings
+
+For each Access policy, you can choose one of the following clipboard control options:
+
+| Setting | Description |
+| --- | --- |
+| _Client to remote RDP session allowed_ | Users can copy and paste text from their local client into the browser-based RDP session. |
+| _Remote RDP session to client allowed_ | Users can copy and paste text from the browser-based RDP session to their local client. |
+| _Both directions allowed_ | Users can copy and paste text between the browser-based RDP session and their local client. |
+| _Off_ | Users are not allowed to copy and paste text between the browser-based RDP session and their local client. |
+
+When a user attempts a restricted clipboard action, the clipboard content is replaced with a message informing them that the action is not allowed.
+
+### Configure clipboard controls
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
+2. Locate your browser-based RDP application and select **Configure**.
+3. Select the **Policies** tab.
+4. Create a new policy or select an existing policy to edit.
+5. Expand **Connection context**.
+6. Under **RDP data flow control**, choose a **Text clipboard control** setting. Refer to [Available settings](#available-settings) for setting descriptions.
+7. Select **Save policy**.
+
+</TabItem>
+<TabItem label="API">
+
+When [creating or updating an Access policy](/api/resources/zero_trust/subresources/access/subresources/policies/) for an RDP application, configure the allowed copy/paste formats in each direction. For example, the following policy allows users to copy text from their local client into the browser-based RDP session, but blocks copying content out of the RDP session.
+
+<APIRequest
+	path="/accounts/{account_id}/access/policies"
+	method="POST"
+	json={{
+		name: "Allow engineers with restricted clipboard",
+		decision: "allow",
+		include: [
+			{
+				email_domain: {
+					domain: "example.com",
+				},
+			},
+		],
+		connection_rules: {
+			rdp: {
+				allowed_clipboard_local_to_remote_formats: ["text"],
+				allowed_clipboard_remote_to_local_formats: [],
+			},
+		},
+	}}
+/>
+
+</TabItem>
+<TabItem label="Terraform">
+
+Using the `connection_rules` attribute within a [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource, configure the allowed copy/paste formats in each direction. For example, the following policy allows users to copy text from their local client into the browser-based RDP session, but blocks copying content out of the RDP session.
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "rdp-policy" {
+	account_id = var.cloudflare_account_id
+	name       = "Allow engineers with restricted clipboard"
+	decision   = "allow"
+
+	include = [
+		{
+			email_domain = {
+				domain = "example.com"
+			}
+		}
+	]
+
+	connection_rules = {
+		rdp = {
+			allowed_clipboard_local_to_remote_formats = ["text"]
+			allowed_clipboard_remote_to_local_formats = []
+		}
+	}
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## Compatibility
 
@@ -263,7 +357,7 @@ The login flow differs slightly when using an Microsoft Entra ID-bound username:
 - **WARP authentication**: Since browser-based RDP traffic does not go through the WARP client, users cannot use their [WARP session identity](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-access) to authenticate.
 - **Audio over RDP**: Users cannot use their microphone and speaker to interact with the remote machine.
 - **Clipboard size limit**: Data copied between the local machine and the browser-based RDP session may not exceed 500 KB.
-- **Clipboard controls**: Admins do not have the ability to restrict copy/paste actions between the remote machine and the user's local clipboard.
-- **File transfers**: Users cannot copy/paste files from their local machine to the remote machine and vice versa.
+- **Clipboard data types**: Clipboard controls only support text data. Image and file clipboard transfers are not supported.
+- **File transfers**: Users cannot transfer files from their local machine to the remote machine and vice versa.
 - **Print to local printer**: Users cannot print information from their browser-based RDP session to a printer in their local network.
 - **Network Level Authentication for Entra-joined accounts**: Browser-based RDP does not support PKU2U authentication which is required for [Network Level Authentication (NLA)](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remotepc/remote-desktop-allow-access#why-allow-connections-only-with-network-level-authentication) with Entra-joined accounts. Connecting to Entra-joined accounts requires disabling enforcement of NLA on the remote Windows machine. You can disable NLA from **Settings** > **System** > **Remote Desktop**, or use the Local Group Policy Editor to disable **Require user authentication for remote connections by using Network Level Authentication**.

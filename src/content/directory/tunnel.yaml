@@ -1,0 +1,14 @@
+id: rUdNKP
+name: Cloudflare Tunnel
+
+entry:
+  title: Cloudflare Tunnel
+  group: Core platform
+  additional_groups:
+    - Network security
+    - Application security
+    - Developer platform
+  url: /tunnel/
+
+meta:
+  description: Connect your origin servers, APIs, and services to Cloudflare without a publicly routable IP address

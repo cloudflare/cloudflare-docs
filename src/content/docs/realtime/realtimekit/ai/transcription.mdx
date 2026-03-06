@@ -11,12 +11,16 @@ RealtimeKit provides two transcription modes powered by Cloudflare Workers AI:
 
 | Mode             | Model                                                                | Use Case                       |
 | ---------------- | -------------------------------------------------------------------- | ------------------------------ |
+<<<<<<< opencode/issue28666-20260227222438
 | **Real-time**    | [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/)               | Live captions during meeting   |
+=======
+| **Real-time**    | [Deepgram Nova-3](/workers-ai/models/nova-3/)                        | Live captions during meeting   |
+>>>>>>> production
 | **Post-meeting** | [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) | Accurate offline transcription |
 
 ## Real-time transcription
 
-Streams transcripts to participants as they speak using [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/) via Cloudflare AI Gateway.
+Streams transcripts to participants as they speak using [Deepgram Nova-3](/workers-ai/models/nova-3/) via Cloudflare AI Gateway.
 
 ### Enable via preset
 
@@ -56,9 +60,13 @@ Pass `ai_config.transcription` when [creating a meeting](/realtime/realtimekit/c
 
 ### Supported languages
 
+<<<<<<< opencode/issue28666-20260227222438
 Real-time transcription is powered by [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/) on Workers AI.
 
 <Render file="nova-3-supported-languages" product="workers-ai" />
+=======
+Supports all languages available in [Deepgram Nova-3](/workers-ai/models/nova-3/)
+>>>>>>> production
 
 ### Consume transcripts
 
