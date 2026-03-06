@@ -146,6 +146,79 @@ Workers Builds posts both URLs as a comment on your pull request. `wrangler prev
 
 ---
 
+## Enable or disable Preview URLs
+
+You control whether Preview URLs are active through the `previews_enabled` setting on your Worker's subdomain configuration. By default, `previews_enabled` follows the state of your `workers.dev` subdomain -- if you disable your `workers.dev` route, Preview URLs are also disabled unless you explicitly enable them.
+
+You can toggle this through the dashboard, the API, or your Wrangler configuration file:
+
+<WranglerConfig>
+
+```toml
+# Explicitly enable Preview URLs
+preview_urls = true
+```
+
+</WranglerConfig>
+
+For step-by-step instructions, refer to [Toggle Preview URLs](/workers/configuration/routing/workers-dev/).
+
+---
+
+## Use a custom domain for Previews
+
+You can serve Previews from your own custom domain instead of (or in addition to) `workers.dev`. When you enable Previews on a custom domain, Cloudflare creates a wildcard DNS record and adds a wildcard SAN to the domain's certificate to cover all Preview subdomains.
+
+| URL type   | Example                             |
+| ---------- | ----------------------------------- |
+| Production | `app.example.com`                   |
+| Preview    | `my-feature.app.example.com`        |
+| Deployment | `f498jo-my-feature.app.example.com` |
+
+To enable Previews on a custom domain via the API, set `previews_enabled` to `true`:
+
+```bash
+curl -X PUT \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/domains" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "zone_id": "<ZONE_ID>",
+    "hostname": "app.example.com",
+    "service": "my-worker",
+    "previews_enabled": true
+  }'
+```
+
+Or in your Wrangler configuration file:
+
+<WranglerConfig>
+
+```toml
+[[routes]]
+pattern = "app.example.com"
+custom_domain = true
+previews_enabled = true
+```
+
+</WranglerConfig>
+
+You can also disable production routing on a custom domain while keeping Previews active by setting `production_enabled` to `false` -- this serves only Preview traffic on that domain.
+
+---
+
+## Secure access to Previews
+
+To restrict who can access your Preview URLs, you can enable [Cloudflare Access](/cloudflare-one/access-controls/policies/) with a single click in your Worker's settings. This protects both Preview URLs and Deployment URLs.
+
+1. Go to **Workers & Pages** > your Worker > **Settings** > **Domains & Routes**.
+2. For Preview URLs, select **Enable Cloudflare Access**.
+3. Optionally, select **Manage Cloudflare Access** to configure which users, groups, or email addresses are authorized.
+
+For more information on configuring access policies, refer to [Access policies](/cloudflare-one/access-controls/policies/).
+
+---
+
 ## Observability and logging
 
 Each Preview runs its own observability and logging settings, independent of your production Worker. This means you can:
