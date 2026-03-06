@@ -17,11 +17,11 @@ Traffic passing through Cloudflare's network is evaluated by several independent
 
 Each system operates independently. Traffic blocked by an earlier system never reaches later systems for evaluation.
 
-<Aside type="caution">
+:::caution
 	Creating an allow rule in Network Firewall does **not** bypass DDoS
 	protection. If traffic is blocked by Advanced TCP Protection or DDoS managed
 	rules, you must configure bypasses in those systems separately.
-</Aside>
+:::
 
 To diagnose blocked traffic, use [Network Analytics](/analytics/network-analytics/) to identify which system is blocking the traffic and why. If Network Analytics does not provide enough information, you can use packet captures for deeper analysis.
 
