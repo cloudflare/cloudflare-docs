@@ -1,0 +1,168 @@
+---
+pcx_content_type: overview
+title: Previews
+sidebar:
+  order: 7
+  badge:
+    text: Beta
+description: Deploy isolated copies of your Worker to test changes before deploying to production.
+---
+
+import {
+	Render,
+	WranglerConfig,
+	Details,
+	PackageManagers,
+	Tabs,
+	TabItem,
+	InlineBadge,
+} from "~/components";
+
+A Preview is an isolated copy of your Worker running on its own URL that you use to test changes before deploying to production. A Worker can have many Previews running at the same time, each isolated from each other. Each Preview runs with its own bindings, environment variables, and secrets, so your preview traffic never touches your production data.
+
+Previews are created automatically when you push to any branch other than your tracked branch (usually `main`), or manually with `wrangler preview`.
+
+## Quick start
+
+1. Create a new project:
+
+```bash
+npm create cloudflare@latest -- my-app --framework=astro --git --no-deploy -y
+```
+
+2. Create a feature branch:
+
+```bash
+git checkout -b new-feature
+```
+
+3. Deploy a Preview:
+
+```bash
+wrangler preview
+```
+
+Wrangler builds your code locally and deploys it as a Preview. It prints a **Preview URL** and a **Deployment URL** to your terminal.
+
+---
+
+## Set up Previews
+
+Previews use their own bindings, environment variables, and secrets -- separate from your production Worker settings. Before creating your first Preview, you need to configure what resources and environment variables Previews should use.
+
+### From the dashboard
+
+Go to your Worker > **Settings**, and you will see a banner for setting up your default Preview settings. This walks you through the bindings, environment variables, and observability settings you want every Preview to start with. This is the fastest way to get your whole team set up -- anyone who creates a Preview (manually or by pushing a branch) gets the same configuration without needing to specify it themselves.
+
+### From code
+
+Add a `previews` block to your Wrangler configuration file to specify bindings and environment variables that apply when you run `wrangler preview`. This is useful when you want Preview configuration checked into Git alongside your Worker code, or when you are working through a coding agent.
+
+<WranglerConfig>
+
+```toml
+# Top-level configuration is treated as production configuration
+name = "my-worker"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "prod-kv-id"
+
+[previews]
+vars = { ENVIRONMENT = "preview" }
+
+[[previews.kv_namespaces]]
+binding = "MY_KV"
+id = "preview-kv-id"
+```
+
+</WranglerConfig>
+
+When you configure settings in both the dashboard and the Wrangler configuration file, values from your Wrangler file take precedence for that deployment. Settings configured in the dashboard still apply to anything not overridden -- including Previews created by teammates or by automated builds triggered from Git pushes.
+
+---
+
+## Deploy a Preview
+
+You can deploy a Preview automatically every time you push to a branch using Workers Builds, or manually from the command line with `wrangler preview`.
+
+### Automate with Workers Builds
+
+Connect a GitHub or GitLab repository, and Cloudflare deploys a Preview for you every time you push to a branch.
+
+1. Go to **Workers & Pages** > your Worker > **Settings** > **Builds**.
+2. Connect your repository.
+3. Set your tracked branch (usually `main`).
+
+When you push to `main`, Cloudflare builds and deploys your Worker to production using your top-level Wrangler configuration -- your production bindings, environment variables, and secrets. When you push to any other branch, Cloudflare deploys a Preview using your Preview settings instead.
+
+The first push to a branch creates a new Preview. Each subsequent push creates a new deployment within that Preview -- an immutable snapshot of your code at that point. This means you can always go back and inspect or compare any previous deployment, even after pushing new changes.
+
+A bot comments on your pull request with:
+
+- A link to the **Preview URL** (which always serves the latest deployment)
+- A **Deployment URL** (which points to that exact snapshot)
+- A link to the build logs
+
+### Deploy manually with Wrangler
+
+Run `wrangler preview` from your project directory to build your code locally and deploy it as a Preview:
+
+```bash
+wrangler preview
+```
+
+By default, Wrangler names the Preview after your current Git branch. You can also provide a name explicitly:
+
+```bash
+wrangler preview --name my-feature
+```
+
+If a Preview with that name does not exist yet, Wrangler creates it. If it already exists, Wrangler creates a new deployment within it. Each time you run `wrangler preview`, Wrangler prints the Preview URL and Deployment URL to your terminal.
+
+Use this for ad-hoc testing, external CI/CD pipelines, or when you are not using a Git-based workflow.
+
+---
+
+## Preview URLs and Deployment URLs
+
+When you deploy a Preview, Cloudflare generates two URLs:
+
+- **Preview URL** -- always serves the latest deployment. When you push new code, the Preview URL points to the new deployment automatically. Share this with teammates when you want them to always see your latest changes.
+
+  ```txt
+  https://my-feature-my-worker.my-account.workers.dev
+  ```
+
+- **Deployment URL** -- points to one specific deployment and never changes, even after you push newer code. Use this to pin to an exact version -- for example, to compare two deployments side by side or to link to the exact build that a reviewer approved.
+
+  ```txt
+  https://f498jo-my-worker.my-account.workers.dev
+  ```
+
+Workers Builds posts both URLs as a comment on your pull request. `wrangler preview` prints both to your terminal.
+
+---
+
+## Observability and logging
+
+Each Preview runs its own observability and logging settings, independent of your production Worker. This means you can:
+
+- Set full sampling (`head_sampling_rate: 1`) on a Preview to capture every request during testing, without increasing log volume on your production Worker.
+- Enable [Logpush](/workers/observability/logpush/) to send a Preview's logs to your own storage for debugging.
+- Attach [Tail Workers](/workers/observability/logs/tail-workers/) to a Preview to pipe its logs into a custom analysis pipeline.
+
+Configure these in the dashboard under **Workers & Pages** > your Worker > **Settings** > **Preview Defaults**, and Cloudflare applies them to every Preview created for that Worker.
+
+---
+
+## Limits and lifecycle
+
+- Previews do not count against the account-level Worker limit (100 free / 500 paid). They have a separate limit: **1,000** for free plans, **10,000** for paid plans.
+- If you hit the limit, creating a new Preview automatically deletes the least-recently-deployed existing Preview to make room.
+- Previews are automatically deleted after a TTL since their last deployment.
+- Previews cannot be addressed by user-managed triggers (routes, cron triggers, queues). They are reachable only through their auto-generated URLs and custom-domain wildcard URLs.
+- [Service bindings](/workers/runtime-apis/bindings/service-bindings/) on a Preview always target the production instance of the bound Worker. You cannot point a service binding at another Preview.
+- Previews cannot be gradually deployed. All other runtime features -- [Durable Objects](/durable-objects/), observability, [placement](/workers/configuration/smart-placement/), [Tail Workers](/workers/observability/logs/tail-workers/) -- are supported.
