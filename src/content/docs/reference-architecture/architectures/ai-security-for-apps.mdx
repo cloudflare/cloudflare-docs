@@ -3,7 +3,7 @@ title: AI Security for Apps Reference Architecture
 pcx_content_type: reference-architecture
 products: [analytics, api-shield, security, security-overview, waf]
 sidebar:
-  order: 1
+  order: 5
   label: AI Security for Apps
 description: This article highlights how Cloudflare's AI Security for Apps complements Cloudflare WAF by providing an AI protection layer for detecting and mitigating threats to AI-powered applications.
 reviewed: 2026-03-06
@@ -110,7 +110,7 @@ Cloudflare conducts heuristic checks to identify LLM traffic and respective endp
 
 For example, LLM endpoints mostly need more than 1 second to respond, while the majority of other endpoints take less than 1 second. We know that [80% of LLM endpoints have an effective bitrate operating at slower than 4 KB/s](https://blog.cloudflare.com/take-control-of-public-ai-application-security-with-cloudflare-firewall-for-ai/).
 
-Based on the traffic data across Cloudflare's global network, we know there are other traffic patterns that can also operate at this bitrate, and we filter these false positives out. Ex: (1) GraphQL endpoints, (2) device heartbeat or health check, (3) generators (for QR codes, one time passwords, invoices, etc.)
+Based on the traffic data across Cloudflare's global network, we know there are other traffic patterns that can also operate at this bitrate, and we filter these false positives out. Ex: 1) GraphQL endpoints, 2) device heartbeat or health check, 3) generators (for QR codes, one time passwords, invoices, etc.)
 
 ![Chart showing the low bitrate of most LLM traffic](~/assets/images/reference-architecture/ai-security-for-apps/fig08-llm-traffic-bitrate.png "Figure 8: LLM traffic has a bitrate of less than 4 KB/s")
 
@@ -174,7 +174,7 @@ The powerful analytics capabilities allow users to jump to immediate threats lik
 
 ![How to filter logs in the Cloudflare dashboard based on an AI-specific threat - "Credit Card"](~/assets/images/reference-architecture/ai-security-for-apps/fig17-filtering-logs.png "Figure 17: Filtering logs based on AI-specific threats")
 
-Within discovered endpoints, under the **Endpoints tab** and within **Security** > **Web assets**, users can also easily filter on the `cf-llm` label for discovered LLM-specific endpoints as shown below.
+Within discovered endpoints, under the **Endpoints** tab and within **Security** > **Web assets**, users can also easily filter on the `cf-llm` label for discovered LLM-specific endpoints as shown below.
 
 Here, the power of the Cloudflare platform and cross-product integration is on full display. Not only are the respective discovered LLM endpoints labeled with `cf-llm`, but [Cloudflare API Security capabilities has also automatically attached managed risk labels](/api-shield/management-and-monitoring/endpoint-labels/) of `cf-risk-missing-auth` and `cf-risk-missing-schema`, signifying identified risks associated with the respective endpoint.
 
