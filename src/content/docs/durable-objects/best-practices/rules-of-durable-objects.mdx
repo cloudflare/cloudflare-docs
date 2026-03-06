@@ -1076,7 +1076,7 @@ export default {
 
 ### Handle errors and use exception boundaries
 
-Uncaught exceptions in a Durable Object can leave it in an unknown state and may cause the runtime to terminate the instance. Wrap risky operations in try/catch blocks, and handle errors appropriately.
+Uncaught exceptions in a Durable Object can leave it in an unknown state and may cause the runtime to terminate the instance. Wrap risky operations in [try/catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) blocks, and handle errors appropriately.
 
 <TypeScriptExample filename="index.ts">
 ```ts
