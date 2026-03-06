@@ -97,8 +97,8 @@ To find the right threshold for your traffic:
 
 1. Start with a _Log_ action at a moderate threshold (for example, less than `40`).
 2. Review the logged events in [Security Analytics](/waf/analytics/security-analytics/) — examine the prompts that triggered the rule and their scores.
-3. If you see false positives (legitimate prompts being flagged), lower the threshold (for example, less than `25`).
-4. If you see attacks getting through, raise the threshold (for example, less than `50`).
+3. If you find false positives (legitimate prompts being flagged), lower the threshold (for example, less than `25`).
+4. If you find attacks getting through, raise the threshold (for example, less than `50`).
 5. Once confident, change the action to _Block_.
 
 You can also use [log mode](/waf/detections/ai-security-for-apps/log-mode-vs-production-mode/#log-mode) with payload logging during this tuning phase to see the actual prompt content alongside scores.
