@@ -1,0 +1,72 @@
+---
+pcx_content_type: get-started
+title: Get started
+sidebar:
+  order: 2
+description: Set up Cloudflare Zero Trust for your organization. Choose a use case to get started with a guided quick-start.
+---
+
+import { CardGrid, LinkTitleCard, Render } from "~/components";
+
+Set up Cloudflare Zero Trust to protect your users, devices, and networks. Complete the prerequisites below, then choose a use case to get started.
+
+## Prerequisites
+
+Before you begin any use case, you need a Cloudflare account and a Zero Trust organization.
+
+### 1. Create a Cloudflare account
+
+Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up) and enable two-factor authentication.
+
+### 2. Create a Zero Trust organization
+
+<Render file="choose-team-name" product="cloudflare-one" />
+
+## What would you like to do?
+
+These use cases match the guided onboarding in the [Cloudflare One dashboard](https://one.dash.cloudflare.com). To follow along in the dashboard, select **Get Started**.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Replace your VPN"
+	href="/cloudflare-one/setup/replace-vpn/"
+	icon="seti:db"
+>
+	Give remote users, offices, and devices secure access to private networks and
+	applications without a traditional VPN.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Secure private apps without a client"
+	href="/learning-paths/clientless-access/concepts/"
+	icon="laptop"
+>
+	Provide browser-based access to internal web applications, SSH servers, and
+	RDP sessions without installing software on user devices.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Filter DNS to block threats"
+	href="/cloudflare-one/traffic-policies/initial-setup/dns/"
+	icon="magnifier"
+>
+	Set up DNS filtering to block malware, phishing, and unwanted content across
+	your network in minutes.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Secure web traffic from threats"
+	href="/learning-paths/secure-internet-traffic/concepts/"
+	icon="seti:lock"
+>
+	Inspect and filter all Internet-bound traffic from your users to block
+	threats, enforce acceptable use policies, and prevent data loss.
+</LinkTitleCard>
+
+</CardGrid>
+
+:::note
+
+For in-depth deployment guides that cover policy design and advanced configuration, refer to [Implementation guides](/cloudflare-one/implementation-guides/).
+:::
