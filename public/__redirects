@@ -2247,6 +2247,7 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/connections/connect-networks/downloads/system-requirements/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/lb/ /cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/ 301
+/cloudflare-one/networks/routes/ /cloudflare-one/networks/routes/add-routes/ 301
 /cloudflare-one/tutorials/vnc-client-in-browser/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/vnc-browser-rendering/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules 301
 /cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
