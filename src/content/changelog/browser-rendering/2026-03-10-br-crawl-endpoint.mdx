@@ -1,0 +1,36 @@
+---
+title: "Browser Rendering: Crawl entire websites with a single API call"
+description: "Browser Rendering's new /crawl endpoint lets you submit a starting URL and automatically discover, render, and return content from an entire website as HTML, Markdown, or structured JSON."
+products:
+  - browser-rendering
+date: 2026-03-10
+---
+
+You can now crawl an entire website with a single API call using [Browser Rendering](/browser-rendering/)'s new [`/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/), now available in open beta. Submit a starting URL and the endpoint automatically discovers linked pages, renders them in a headless browser, and returns content as HTML, Markdown, or structured JSON.
+
+Crawl jobs run asynchronously. You submit a URL, receive a job ID, and check back for results as pages are processed:
+
+```sh
+# Initiate a crawl
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://developers.cloudflare.com/workers/"
+  }'
+
+# Check results
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN'
+```
+
+The endpoint supports a range of options to fine-tune how pages are discovered and processed:
+
+- Choose how URLs are discovered: from sitemaps, page links, or both
+- Control scope with crawl depth, page limits, and wildcard patterns to include or exclude specific URL paths
+- Use `modifiedSince` and `maxAge` to skip pages that haven't changed or were recently fetched, saving time and cost on repeated crawls
+- Inspect skipped URLs and the reason each was skipped (robots.txt, out of scope, pattern mismatch) to debug scope and access issues
+
+Available on both the Workers Free and Paid plans.
+
+To get started, refer to the [crawl endpoint documentation](/browser-rendering/rest-api/crawl-endpoint/). If you are setting up your own site to be crawled, review the [robots.txt and sitemaps best practices](/browser-rendering/reference/robots-txt/).
