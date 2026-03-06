@@ -293,9 +293,6 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	} else {
 		initSidebarSearch();
 	}
-
-	// Re-initialize on navigation (for SPA-like behavior)
-	initSidebarSearch();
 </script>
 
 <style is:global>
