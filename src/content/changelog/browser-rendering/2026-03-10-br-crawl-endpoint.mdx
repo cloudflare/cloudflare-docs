@@ -20,8 +20,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
   }'
 
 # Check results
-curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
-  -H 'Authorization: Bearer YOUR_API_TOKEN'
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/{job_id}' \
+  -H 'Authorization: Bearer <apiToken>'
 ```
 
 Key features:
