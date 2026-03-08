@@ -1,0 +1,205 @@
+---
+title: Outbound Workers
+pcx_content_type: concept
+sidebar:
+  order: 50
+description: Intercept and control outbound HTTP from containers using Workers.
+---
+
+import { TypeScriptExample, Render } from "~/components";
+
+Outbound Workers are Workers that intercept HTTP requests made by your container. They act as programmable egress proxies, running on the same machine as the container with access to all Workers bindings.
+
+Use outbound Workers to:
+
+- Inject credentials or headers without exposing secrets to untrusted code
+- Log or audit outbound requests
+- Restrict which methods or domains are allowed
+- Route requests to internal Workers bindings (KV, R2, Durable Objects, etc.)
+- Swap egress policies at runtime
+
+:::note[TLS support coming soon]
+Outbound Workers currently intercept HTTP traffic only. HTTPS interception requires a platform-managed certificate authority to decrypt and re-encrypt traffic. This is in progress and will be documented when available. Until then, to force all traffic through an outbound Worker, you can set `enableInternet: false` and use `outbound`
+to intercept all traffic, and optionally upgrade to TLS from inside the Worker.
+:::
+
+## Define an outbound handler
+
+Use `outbound` to intercept all outbound HTTP traffic regardless of destination:
+
+```js
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	static outbound = (request, env, ctx) => {
+		if (request.method !== "GET") {
+			console.log(`Blocked ${request.method} to ${request.url}`);
+			return new Response("Method Not Allowed", { status: 405 });
+		}
+		return fetch(request);
+	};
+}
+```
+
+Use `outboundByHost` to map specific domain names or IP addresses to handler functions:
+
+```js
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	static outboundByHost = {
+		"api.internal.example.com": async (request, env, ctx) => {
+			const headers = new Headers(request.headers);
+			headers.set("x-auth-token", env.SECRET);
+			return fetch(new Request(request, { headers }));
+		},
+	};
+}
+```
+
+Any HTTP request from the container to `api.internal.example.com` is routed through the handler. The secret is injected by the Worker — the container code never has access to it.
+
+<Render file="outbound-by-host-dns-note" product="containers" />
+
+If you define both, `outboundByHost` handlers take precedence over the catch-all `outbound` handler.
+
+## Use Workers bindings in handlers
+
+Outbound Workers have full access to your Worker's bindings. This lets you route container traffic to internal platform resources without managing API credentials.
+
+```js
+export class MyContainer extends Container {
+	static outboundByHost = {
+		"my.kv": async (request, env, ctx) => {
+			const url = new URL(request.url);
+			const key = url.pathname.slice(1);
+			const value = await env.KV.get(key);
+			return new Response(value);
+		},
+		"my.r2": async (request, env, ctx) => {
+			const url = new URL(request.url);
+			// Scope access to this container's ID
+			const path = `${ctx.containerId}${url.pathname}`;
+			const object = await env.R2.get(path);
+			return new Response(object?.body ?? null, { status: object ? 200 : 404 });
+		},
+	};
+}
+```
+
+The container calls `http://my.kv/some-key` and the outbound handler resolves it using the KV binding. No credentials leave the Worker.
+
+## Apply per-instance rules
+
+The `ctx` argument exposes `containerId`, which lets you apply different rules per sandbox or container instance.
+
+```js
+"api.internal.example.com": async (request, env, ctx) => {
+  const authKey = await env.KEYS.get(ctx.containerId);
+  if (!authKey) {
+    return new Response("Forbidden", { status: 403 });
+  }
+  const headers = new Headers(request.headers);
+  headers.set("x-auth-token", authKey);
+  return fetch(new Request(request, { headers }));
+},
+```
+
+## Change policies at runtime
+
+Use `outboundHandlers` to define named egress policies, then swap them at runtime using `setOutboundHandler()`. Each policy accepts a `params` object so you can configure behavior from code.
+
+```js
+export class MyContainer extends Container {
+	static outboundHandlers = {
+		allowHosts: async (request, env, ctx) => {
+			const url = new URL(request.url);
+			if (ctx.params.allowedHostnames.includes(url.hostname)) {
+				return fetch(request);
+			}
+			return new Response("Forbidden", { status: 403 });
+		},
+
+		blockAll: async () => {
+			return new Response("Forbidden", { status: 403 });
+		},
+	};
+}
+```
+
+Apply policies programmatically from your Worker:
+
+```js
+async setUpContainer(req, env) {
+  const container = await env.MY_CONTAINER.getByName("my-instance");
+
+  // Allow package registries during setup
+  await container.setOutboundHandler("allowHosts", {
+    allowedHostnames: ["registry.npmjs.org", "github.com"],
+  });
+
+  await container.exec("npm install");
+
+  // Lock down egress once dependencies are installed
+  await container.setOutboundHandler("blockAll");
+}
+```
+
+You can also manage `outboundByHost` rules on a running instance:
+
+```js
+// Set a handler for a specific host
+await container.setOutboundByHost("api.example.com", "myHandler");
+
+// Set handlers for multiple hosts at once
+await container.setOutboundByHosts({
+	"api.example.com": "myHandler",
+	"cdn.example.com": "allowAll",
+});
+
+// Remove a host-specific handler (falls back to outbound catch-all, if set)
+await container.removeOutboundByHost("api.example.com");
+```
+
+## Low-level API
+
+To configure outbound interception directly on `ctx.container`, use `interceptOutboundHttp` for a specific IP or CIDR range, or `interceptAllOutboundHttp` for all traffic. Both accept a `WorkerEntrypoint`.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class MyOutboundWorker extends WorkerEntrypoint {
+	fetch(request) {
+		// Inspect, modify, or deny the request
+		return fetch(request);
+	}
+}
+
+// Inside your Container DurableObject
+this.ctx.container.start({ enableInternet: false });
+const worker = this.ctx.exports.MyOutboundWorker();
+await this.ctx.container.interceptAllOutboundHttp(worker);
+```
+
+You can call these methods before or after starting the container, and even while connections are open. In-flight TCP connections pick up the new handler automatically — no connections are dropped.
+
+```js
+// Intercept a specific CIDR range
+await this.ctx.container.interceptOutboundHttp("203.0.113.0/24", worker);
+
+// Update the handler while the container is running
+const updated = this.ctx.exports.MyOutboundWorker({
+	props: { phase: "post-install" },
+});
+await this.ctx.container.interceptOutboundHttp("203.0.113.0/24", updated);
+```
+
+## Local development
+
+`wrangler dev` supports outbound interception. A sidecar process ([`proxy-everything`](https://github.com/cloudflare/proxy-everything)) is spawned inside the container's network namespace. It applies `TPROXY` rules to route matching traffic to the local Workerd instance, mirroring production behavior.
+
+## Related resources
+
+- [Outbound Workers for Sandboxes](/sandbox/guides/outbound-workers/) — Sandbox SDK API for outbound handlers
+- [Environment variables and secrets](/containers/platform-details/environment-variables/) — Store credentials for use in handlers
+- [Durable Object interface](/durable-objects/api/container/) — Full `ctx.container` API reference
