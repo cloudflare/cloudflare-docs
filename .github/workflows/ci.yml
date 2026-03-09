@@ -10,17 +10,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  compile:
-    name: Compiles
-    runs-on: ubuntu-latest
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: "npm"
+          node-version: 22.x
+          cache: npm
+
       - run: |
           FILES=$(
             find src/content \
@@ -57,21 +62,11 @@ jobs:
 
       - run: npm run check
 
-      - uses: reviewdog/action-eslint@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review
-          fail_level: error
-          filter_mode: nofilter
-
-      - run: npm run format:core:check
-      ## TODO: content formatting checks
       - run: npm run build
+        name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_LINK_CHECK: true
-
-      - run: npm run check:worker
 
       - uses: actions/cache/save@v4
         with:
@@ -80,15 +75,110 @@ jobs:
             node_modules/.astro/data-store.json
           key: astro-cache-${{ github.run_id }}
 
-      - name: Check - Validate redirects (infinite loops, sources with fragment)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+  validate:
+    name: Validate
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - run: npm ci
+
+      - uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          fail_level: error
+          filter_mode: nofilter
+
+      - run: npm run format:core:check
+
+      - name: Validate redirects
         run: npx tsm bin/validate-redirects.ts
 
       - name: Tests
         run: npm run test
 
+  notify:
+    name: Notify
+    needs: [build, validate]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - run: npm ci
+
       - name: Post PR CI failure comment
-        if: always()
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx tsx bin/post-pr-ci-failure-comment/index.ts
+
+  deploy:
+    name: Deploy Preview
+    needs: build
+    if: github.repository == 'cloudflare/cloudflare-docs'
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - run: npm ci
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy to Cloudflare Workers
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          SHORT_SHA="${{ github.event.pull_request.head.sha }}"
+          SHORT_SHA="${SHORT_SHA:0:8}"
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          BRANCH_SLUG=$(echo "$BRANCH" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
+
+          npx wrangler deploy --dispatch-namespace preview-deployments --name $SHORT_SHA
+          npx wrangler deploy --dispatch-namespace preview-deployments --name $BRANCH_SLUG
+
+      - name: Post preview URL on PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx bin/post-preview-url-comment/index.ts
+        continue-on-error: true
