@@ -1,4 +1,4 @@
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import { reference, type SchemaContext } from "astro:content";
 
 import { sidebar, SidebarIconSchema } from "./types/sidebar";

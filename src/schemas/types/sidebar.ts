@@ -6,7 +6,7 @@
  * https://github.com/withastro/starlight/blob/main/packages/starlight/schema.ts
  */
 
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import type { AstroBuiltinAttributes } from "astro";
 import type { HTMLAttributes } from "astro/types";
 

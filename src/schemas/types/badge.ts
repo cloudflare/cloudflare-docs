@@ -1,5 +1,5 @@
 // Vendored from https://github.com/withastro/starlight/blob/a171a996b842f1fdb37a0bdbb2c9d86e1073e1a4/packages/starlight/schemas/badge.ts#
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
 const badgeBaseSchema = z.object({
 	variant: z
