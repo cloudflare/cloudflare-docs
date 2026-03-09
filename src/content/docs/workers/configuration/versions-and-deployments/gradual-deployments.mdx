@@ -124,9 +124,25 @@ To do this without producing errors, a version of the Worker which does not depe
 
 When using gradual deployments, you may want to attribute Workers invocations to a specific version in order to get visibility into the impact of deploying new versions.
 
+### Workers Logs
+
+If you have [Workers Logs](/workers/observability/logs/workers-logs/) enabled, every invocation is automatically tagged with a `scriptVersion` object containing the version ID that handled the request. You can view this in the [Workers Observability dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/) without any additional setup.
+
+Each log entry includes a `$workers.scriptVersion.id` field, which you can use to filter, group, and compare invocations across versions. For Durable Object invocations, each log entry also includes `$workers.durableObjectId` and `$workers.entrypoint`, allowing you to see which specific Durable Object instance handled a request and which version it was running.
+
+To enable Workers Logs, add the following to your Wrangler configuration:
+
+```json
+{
+  "observability": {
+    "enabled": true
+  }
+}
+```
+
 ### Logpush
 
-A new `ScriptVersion` object is available in [Workers Logpush](/workers/observability/logs/logpush/). `ScriptVersion` can only be added through the Logpush API right now. Sample API call:
+For long-term log retention or integration with external monitoring tools, you can use [Workers Logpush](/workers/observability/logs/logpush/). A `ScriptVersion` object is available in the `workers_trace_events` dataset. `ScriptVersion` can only be added through the Logpush API right now. Sample API call:
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs' \
@@ -155,7 +171,7 @@ scriptVersion: {
 
 ### Runtime binding
 
-Use the [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to access version ID or version tag in your Worker.
+Use the [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to access version ID or version tag in your Worker. This allows you to include version information in your application's own responses or logs.
 
 ## Limits
 
