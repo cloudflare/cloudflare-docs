@@ -87,6 +87,9 @@ export default defineConfig({
 			},
 		},
 	},
+	build: {
+		concurrency: 4,
+	},
 	experimental: {
 		contentIntellisense: true,
 	},
