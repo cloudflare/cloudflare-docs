@@ -3,7 +3,7 @@ import starlight from "@astrojs/starlight";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
-// import starlightLinksValidator from "starlight-links-validator";
+import starlightLinksValidator from "starlight-links-validator";
 import starlightScrollToTop from "starlight-scroll-to-top";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
@@ -60,8 +60,8 @@ async function autogenStyles() {
 const sidebar = await autogenSections();
 const customCss = await autogenStyles();
 
-// const RUN_LINK_CHECK =
-// 	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
+const RUN_LINK_CHECK =
+	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
 
 // https://astro.build/config
 export default defineConfig({
@@ -132,45 +132,40 @@ export default defineConfig({
 			customCss,
 			pagination: false,
 			plugins: [
-				// starlight-links-validator is disabled because it deletes
-				// data-store.json at build start, defeating content layer caching.
-				// TODO: Re-enable once the plugin supports cached builds, or
-				// replace with a post-build link checker.
-				//
-				// ...(RUN_LINK_CHECK
-				// 	? [
-				// 			starlightLinksValidator({
-				// 				errorOnInvalidHashes: false,
-				// 				errorOnLocalLinks: false,
-				// 				exclude: [
-				// 					"/api/",
-				// 					"/api/**",
-				// 					"/changelog/**",
-				// 					"/http/resources/**",
-				// 					"/llms.txt",
-				// 					"/llms-full.txt",
-				// 					"**/llms.txt",
-				// 					"{props.*}",
-				// 					"/",
-				// 					"/glossary/",
-				// 					"/directory/",
-				// 					"/rules/snippets/examples/?operation=*",
-				// 					"/rules/transform/examples/?operation=*",
-				// 					"/ruleset-engine/rules-language/fields/reference/**",
-				// 					"/workers/examples/?languages=*",
-				// 					"/workers/examples/?tags=*",
-				// 					"/workers/llms-full.txt",
-				// 					"/workers-ai/models/**",
-				// 					"**index.md",
-				// 					"/markdown.zip",
-				// 					"/style-guide/index.md",
-				// 					"/style-guide/fixtures/markdown/index.md",
-				// 					"/videos/**",
-				// 					"/search/**",
-				// 				],
-				// 			}),
-				// 		]
-				// 	: []),
+				...(RUN_LINK_CHECK
+					? [
+							starlightLinksValidator({
+								errorOnInvalidHashes: false,
+								errorOnLocalLinks: false,
+								exclude: [
+									"/api/",
+									"/api/**",
+									"/changelog/**",
+									"/http/resources/**",
+									"/llms.txt",
+									"/llms-full.txt",
+									"**/llms.txt",
+									"{props.*}",
+									"/",
+									"/glossary/",
+									"/directory/",
+									"/rules/snippets/examples/?operation=*",
+									"/rules/transform/examples/?operation=*",
+									"/ruleset-engine/rules-language/fields/reference/**",
+									"/workers/examples/?languages=*",
+									"/workers/examples/?tags=*",
+									"/workers/llms-full.txt",
+									"/workers-ai/models/**",
+									"**index.md",
+									"/markdown.zip",
+									"/style-guide/index.md",
+									"/style-guide/fixtures/markdown/index.md",
+									"/videos/**",
+									"/search/**",
+								],
+							}),
+						]
+					: []),
 				starlightDocSearch({
 					clientOptionsModule: "./src/plugins/docsearch/index.ts",
 				}),

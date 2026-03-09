@@ -12,7 +12,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       pull-requests: write
@@ -51,7 +51,6 @@ jobs:
           path: |
             node_modules/.astro/assets
             node_modules/.astro/data-store.json
-            node_modules/.vite
           key: astro-cache-${{ github.run_id }}
           restore-keys: |
             astro-cache-
@@ -61,17 +60,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: npm run check
+
       - run: npm run build
         name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_LINK_CHECK: true
 
       - uses: actions/cache/save@v4
         with:
           path: |
             node_modules/.astro/assets
             node_modules/.astro/data-store.json
-            node_modules/.vite
           key: astro-cache-${{ github.run_id }}
 
       - uses: actions/upload-artifact@v4
@@ -102,8 +103,6 @@ jobs:
         with:
           name: dist
           path: dist
-
-      - run: npm run check
 
       - uses: reviewdog/action-eslint@v1
         with:
@@ -150,7 +149,7 @@ jobs:
     name: Deploy Preview
     needs: build
     if: github.repository == 'cloudflare/cloudflare-docs'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       pull-requests: write

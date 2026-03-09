@@ -7,7 +7,7 @@ on:
 jobs:
   publish:
     name: Production
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
     steps:
@@ -24,7 +24,6 @@ jobs:
           path: |
             node_modules/.astro/assets
             node_modules/.astro/data-store.json
-            node_modules/.vite
           key: astro-cache-${{ github.run_id }}
           restore-keys: |
             astro-cache-
@@ -47,7 +46,6 @@ jobs:
           path: |
             node_modules/.astro/assets
             node_modules/.astro/data-store.json
-            node_modules/.vite
           key: astro-cache-${{ github.run_id }}
       - name: Notify Google Chat on failure
         if: failure()
