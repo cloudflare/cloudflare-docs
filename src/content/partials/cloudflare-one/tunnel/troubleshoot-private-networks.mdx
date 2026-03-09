@@ -12,7 +12,7 @@ The WARP client GUI should display `Connected` and `Your Internet is protected`.
 
 <div class="medium-img">
 
-![WARP client GUI when connected to Cloudflare](~/assets/images/cloudflare-one/connections/warp-connected.png)
+![Cloudflare One client GUI when connected to Cloudflare](~/assets/images/cloudflare-one/connections/warp-connected.png)
 
 </div>
 
@@ -57,8 +57,9 @@ Determine whether the user is matching any policy, or if they are matching a pol
    4. In the results, select a log and note its **Policy Name** value.
 2. Go to **Traffic policies** > **Firewall policies** and compare the [order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/) of the matched policy versus the expected policy.
 3. Compare the Gateway log values with the expected policy criteria.
+   - If the mismatched value is related to identity, [check the user registry](/cloudflare-one/team-and-resources/users/users/) and verify the values that are passed to Gateway from your IdP. Cloudflare updates the registry when the user enrolls in the WARP client. If the user's identity is outdated, ask the user to re-authenticate the client (**Profile** > **Account information** > **Re-authenticate**)[^1].
 
-   - If the mismatched value is related to identity, [check the user registry](/cloudflare-one/team-and-resources/users/users/) and verify the values that are passed to Gateway from your IdP. Cloudflare updates the registry when the user enrolls in the WARP client. If the user's identity is outdated, ask the user to re-authenticate WARP (**Preferences** > **Account** > **Re-Authenticate Session**).
+[^1]: In WARP version 2026.1 and earlier, select **Preferences** > **Account** > **Re-Authenticate Session**.
 
    - If the mismatched value is related to device posture, [view posture check results](/cloudflare-one/reusable-components/posture-checks/#2-verify-device-posture-checks) for the user's device. Verify that the device passes the posture checks configured in the policy.
 
