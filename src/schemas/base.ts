@@ -15,11 +15,14 @@ export const baseSchema = ({ image }: SchemaContext) =>
 				z.literal("changelog"),
 				z.literal("changelog-entry"),
 				z.literal("configuration"),
+				z.literal("content"),
 				z.literal("concept"),
 				z.literal("design-guide"),
 				z.literal("example"),
 				z.literal("faq"),
+				z.literal("FAQ"),
 				z.literal("get-started"),
+				z.literal("glossary"),
 				z.literal("how-to"),
 				z.literal("integration-guide"),
 				z.literal("implementation-guide"),
@@ -34,7 +37,6 @@ export const baseSchema = ({ image }: SchemaContext) =>
 				z.literal("tutorial"),
 				z.literal("video"),
 			])
-			.catch((ctx) => ctx.input)
 			.optional()
 			.describe(
 				"The purpose of the page, and defined through specific pages in [Content strategy](/style-guide/documentation-content-strategy/content-types/).",
@@ -55,10 +57,10 @@ export const baseSchema = ({ image }: SchemaContext) =>
 		difficulty: z
 			.union([
 				z.literal("Beginner"),
+				z.literal("Medium"),
 				z.literal("Intermediate"),
 				z.literal("Advanced"),
 			])
-			.catch((ctx) => ctx.input)
 			.optional()
 			.describe(
 				"Difficulty is displayed as a column in the [ListTutorials component](/style-guide/components/list-tutorials/).",
