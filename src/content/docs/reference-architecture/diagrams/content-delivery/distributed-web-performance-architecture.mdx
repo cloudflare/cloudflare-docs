@@ -85,7 +85,7 @@ The performance journey begins at the client’s device. Device hardware, [brows
 
 ![Figure 2: Smart Shield Advanced network diagram showing Argo Smart Routing, Tiered Cache, Cache Reserve, Connection Reuse, Dedicated Egress IPs, and Load Balancing across multiple Points of Presence.](~/assets/images/smart-shield/network-diagram.png "Figure 2: Smart Shield Advanced network diagram")
 
-### 2. Cloudflare Edge (Network & Optimization)
+### 2. Network and optimization (Cloudflare edge)
 
 Once the request reaches the edge, Cloudflare processes and optimizes the content before it is served or fetched from the cache.
 
@@ -97,7 +97,7 @@ Once the request reaches the edge, Cloudflare processes and optimizes the conten
 
 ![Figure 3: Data flow for network and content optimization showing Traffic Handling, Programmatic Customization, Content Optimization, and Font and Tag Optimization.](~/assets/images/reference-architecture/distributed-web-performance-architecture/data-flow-network-content-optimization.jpg "Figure 3: Data flow – network and content optimization")
 
-### 3. Cloudflare Edge (Tiered Cache / Storage)
+### 3. Tiered Cache and Storage (Cloudflare edge)
 
 Cloudflare can be organized into a specific topology. This layer handles content retention and retrieval. It acts as a shield for the origin and a high-speed store for the client.
 
