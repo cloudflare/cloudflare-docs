@@ -34,6 +34,31 @@ Controls the transport protocol for SDK-to-container communication. WebSocket tr
 
 See [Transport modes](/sandbox/configuration/transport/) for a complete guide including when to use each transport, performance considerations, and migration instructions.
 
+### COMMAND_TIMEOUT_MS
+
+| | |
+|---|---|
+| **Type** | `number` (milliseconds) |
+| **Default** | None (no timeout) |
+
+Sets a global default timeout for every `exec()` call. When set, any command that exceeds this duration raises an error on the caller side and closes the connection.
+
+Per-command `timeout` on `exec()` and session-level `commandTimeoutMs` on [`createSession()`](/sandbox/api/sessions/#createsession) both override this value. For more details on timeout precedence, refer to [Execute commands - Timeouts](/sandbox/guides/execute-commands/#timeouts).
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"COMMAND_TIMEOUT_MS": "30000"
+	}
+}
+```
+</WranglerConfig>
+
+:::note
+A timeout does not kill the underlying process. It only terminates the connection to the caller. The process continues running until the session is deleted or the sandbox is destroyed.
+:::
+
 ## Three ways to set environment variables
 
 The Sandbox SDK provides three methods for setting environment variables, each suited for different use cases:
@@ -127,7 +152,7 @@ await sandbox.setEnvVars({
 	// Set new values
 	API_KEY: 'new-key',
 	DATABASE_URL: env.DATABASE_URL,
-	
+
 	// Unset variables (removes them from the environment)
 	OLD_API_KEY: undefined,
 	TEMP_TOKEN: null
