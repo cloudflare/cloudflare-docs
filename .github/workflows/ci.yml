@@ -12,7 +12,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04-arm
     permissions:
       contents: read
       pull-requests: write
@@ -150,7 +150,7 @@ jobs:
     name: Deploy Preview
     needs: build
     if: github.repository == 'cloudflare/cloudflare-docs'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04-arm
     permissions:
       contents: read
       pull-requests: write
