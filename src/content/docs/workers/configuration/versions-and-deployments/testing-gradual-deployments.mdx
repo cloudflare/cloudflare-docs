@@ -1,0 +1,280 @@
+---
+pcx_content_type: tutorial
+title: "Testing gradual deployments with Durable Objects"
+description: Walk through a hands-on experiment to observe how gradual deployments assign versions to Durable Object instances.
+sidebar:
+  order: 3
+difficulty: Intermediate
+---
+
+import { WranglerConfig, TypeScriptExample } from "~/components";
+
+This tutorial walks you through a hands-on experiment to observe how [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) assign versions to [Durable Object](/durable-objects/) instances. By the end, you will see that:
+
+- Each Durable Object instance is assigned to exactly one version per deployment.
+- The assignment is deterministic and sticky — the same instance stays on the same version until you create a new deployment.
+- The Worker handling an HTTP request can be on a different version than the Durable Object it calls.
+
+## Prerequisites
+
+- A Cloudflare account with Workers and Durable Objects enabled.
+- [Wrangler](/workers/wrangler/install-and-update/) installed (version 3.40.0 or later).
+- [Node.js](https://nodejs.org/) version 20 or later.
+
+## 1. Create the project
+
+Create a new Worker project:
+
+```sh
+npm create cloudflare@latest gradual-deploy-test -- --type=hello-world
+```
+
+Change into the project directory:
+
+```sh
+cd gradual-deploy-test
+```
+
+## 2. Add a Durable Object class
+
+Create a file at `src/version-tracker.ts` with a simple Durable Object class that reports which version it is running on using the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/):
+
+<TypeScriptExample filename="src/version-tracker.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class VersionTracker extends DurableObject<Env> {
+  private requestCount: number = 0;
+
+  async getInfo() {
+    this.requestCount++;
+    return {
+      id: this.ctx.id.toString(),
+      requestCount: this.requestCount,
+      versionId: this.env.CF_VERSION_METADATA?.id ?? "unknown",
+      versionTag: this.env.CF_VERSION_METADATA?.tag ?? "unknown",
+    };
+  }
+}
+```
+
+</TypeScriptExample>
+
+## 3. Configure Wrangler
+
+Update your Wrangler configuration to include the Durable Object binding, a migration, and the version metadata binding:
+
+<WranglerConfig>
+
+```toml
+name = "gradual-deploy-test"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[observability]
+enabled = true
+
+[durable_objects]
+bindings = [
+  { name = "VERSION_TRACKER", class_name = "VersionTracker" }
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["VersionTracker"]
+
+[version_metadata]
+binding = "CF_VERSION_METADATA"
+```
+
+</WranglerConfig>
+
+## 4. Add routes to query Durable Object versions
+
+Replace the contents of `src/index.ts` with the following. This creates API routes that let you query individual Durable Object instances or all of them at once, and each response includes version information:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export { VersionTracker } from "./version-tracker";
+
+const DO_NAMES = ["foo", "bar", "baz", "qux", "quux"];
+
+export default {
+  async fetch(request, env): Promise<Response> {
+    const url = new URL(request.url);
+
+    // GET /do/all — query all DO instances
+    if (url.pathname === "/do/all") {
+      const results: Record<string, unknown> = {};
+      for (const name of DO_NAMES) {
+        const stub = env.VERSION_TRACKER.get(env.VERSION_TRACKER.idFromName(name));
+        results[name] = await stub.getInfo();
+      }
+      return Response.json({
+        workerVersionId: env.CF_VERSION_METADATA?.id ?? "unknown",
+        instances: results,
+      });
+    }
+
+    // GET /do/:name — query a single DO instance
+    if (url.pathname.startsWith("/do/")) {
+      const name = url.pathname.slice(4);
+      if (name) {
+        const stub = env.VERSION_TRACKER.get(env.VERSION_TRACKER.idFromName(name));
+        return Response.json({
+          workerVersionId: env.CF_VERSION_METADATA?.id ?? "unknown",
+          instanceName: name,
+          instance: await stub.getInfo(),
+        });
+      }
+    }
+
+    // GET /version — show only the Worker's version
+    if (url.pathname === "/version") {
+      return Response.json({
+        workerVersionId: env.CF_VERSION_METADATA?.id ?? "unknown",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    return new Response("Gradual deployment test. Try /do/all, /do/:name, or /version");
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## 5. Deploy Version A
+
+Deploy the Worker. This becomes Version A — your baseline:
+
+```sh
+npx wrangler deploy
+```
+
+Note the **Version ID** in the output. Then verify all instances are on the same version:
+
+```sh
+curl -s https://gradual-deploy-test.<YOUR_SUBDOMAIN>.workers.dev/do/all | jq .
+```
+
+All 5 instances should report the same `versionId`.
+
+## 6. Make a code change and upload Version B
+
+Make a small change so you can tell versions apart. For example, in `src/version-tracker.ts`, add a `codeVersion` field to the return value of `getInfo()`:
+
+```ts
+return {
+  id: this.ctx.id.toString(),
+  requestCount: this.requestCount,
+  versionId: this.env.CF_VERSION_METADATA?.id ?? "unknown",
+  versionTag: this.env.CF_VERSION_METADATA?.tag ?? "unknown",
+  codeVersion: "B",
+};
+```
+
+Upload without deploying:
+
+```sh
+npx wrangler versions upload
+```
+
+Note the new **Version ID** from the output. Verify nothing changed — all instances should still be on Version A:
+
+```sh
+curl -s https://gradual-deploy-test.<YOUR_SUBDOMAIN>.workers.dev/do/all | jq .
+```
+
+## 7. Create a gradual deployment
+
+Split traffic 50/50 between Version A and Version B. Replace the version IDs with your own:
+
+```sh
+npx wrangler versions deploy <VERSION_B_ID>@50% <VERSION_A_ID>@50% -y
+```
+
+:::note
+You can also run `npx wrangler versions deploy` without arguments to use the interactive prompt, where you select versions with SPACE and confirm with ENTER.
+:::
+
+## 8. Observe the version split
+
+```sh
+curl -s https://gradual-deploy-test.<YOUR_SUBDOMAIN>.workers.dev/do/all | jq .
+```
+
+You should see a mix:
+
+- Some instances will have `"codeVersion": "B"` and the new `versionId` — these are on Version B.
+- Other instances will not have a `codeVersion` field and will have the original `versionId` — these are still on Version A.
+
+### Verify it is sticky
+
+Run the same command again:
+
+```sh
+curl -s https://gradual-deploy-test.<YOUR_SUBDOMAIN>.workers.dev/do/all | jq .
+```
+
+The exact same instances will be on the exact same versions. The assignment does not change between requests.
+
+### Observe that the Worker version and the Durable Object version are independent
+
+In the response, compare the top-level `workerVersionId` (which version of the Worker handled the HTTP request) with each instance's `versionId` (which version the Durable Object is running). These can differ — a Version A Worker can call a Version B Durable Object and vice versa.
+
+Run the command multiple times. The top-level `workerVersionId` may change between requests (since the Worker is split per-request), but each Durable Object's `versionId` stays the same.
+
+## 9. Change the percentages
+
+Shift more traffic to Version B:
+
+```sh
+npx wrangler versions deploy <VERSION_B_ID>@80% <VERSION_A_ID>@20% -y
+```
+
+Then observe again:
+
+```sh
+curl -s https://gradual-deploy-test.<YOUR_SUBDOMAIN>.workers.dev/do/all | jq .
+```
+
+More instances will now be on Version B. Instances that were already on Version B will stay on Version B — they do not revert.
+
+## 10. Complete the deployment
+
+Deploy Version B at 100%:
+
+```sh
+npx wrangler versions deploy <VERSION_B_ID>@100% -y
+```
+
+Verify all instances are now on Version B:
+
+```sh
+curl -s https://gradual-deploy-test.<YOUR_SUBDOMAIN>.workers.dev/do/all | jq .
+```
+
+## Key takeaways
+
+| Behavior | Regular Workers | Durable Objects |
+| :--- | :--- | :--- |
+| Traffic split granularity | Per-request | Per-instance |
+| Assignment changes between requests | Yes (probabilistic) | No (sticky until redeployment) |
+| Version determined by | Random per-request probability | Hash of the Durable Object ID |
+| Can you control which instance gets which version | N/A | No — the platform decides based on the ID hash |
+
+## Observing versions in the dashboard
+
+You do not need custom code to see version information. If you have [Workers Logs](/workers/observability/logs/workers-logs/) enabled (`"observability": { "enabled": true }` in your Wrangler configuration), every invocation is automatically tagged with version metadata.
+
+In the [Workers Observability dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/), each Durable Object invocation log entry includes:
+
+- `$workers.scriptVersion.id` — the version running the Durable Object.
+- `$workers.durableObjectId` — the unique ID of the Durable Object instance.
+- `$workers.entrypoint` — the Durable Object class name.
+- `$workers.event.rpcMethod` — the method that was called.
+
+You can use these fields to filter and group invocations by version to monitor the impact of your gradual deployment.
