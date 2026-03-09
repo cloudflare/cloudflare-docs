@@ -1,4 +1,3 @@
-// @ts-ignore - Staying on Vitest v3.2.x per Astro 6 requirements (deprecation warnings expected)
 import { defineWorkspace, defineProject } from "vitest/config";
 import { defineWorkersProject } from "@cloudflare/vitest-pool-workers/config";
 import { getViteConfig } from "astro/config";
