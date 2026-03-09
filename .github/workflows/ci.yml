@@ -25,7 +25,10 @@ jobs:
         with:
           path: |
             node_modules/.astro/assets
-          key: static
+            node_modules/.astro/data-store.json
+          key: astro-cache-${{ hashFiles('astro.config.ts', 'src/content.config.ts', 'package-lock.json') }}
+          restore-keys: |
+            astro-cache-
 
       - run: |
           FILES=$(
@@ -74,7 +77,8 @@ jobs:
         with:
           path: |
             node_modules/.astro/assets
-          key: static
+            node_modules/.astro/data-store.json
+          key: astro-cache-${{ hashFiles('astro.config.ts', 'src/content.config.ts', 'package-lock.json') }}
 
       - name: Check - Validate redirects (infinite loops, sources with fragment)
         run: npx tsm bin/validate-redirects.ts

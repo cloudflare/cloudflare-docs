@@ -23,7 +23,10 @@ jobs:
         with:
           path: |
             node_modules/.astro/assets
-          key: static
+            node_modules/.astro/data-store.json
+          key: astro-cache-${{ hashFiles('astro.config.ts', 'src/content.config.ts', 'package-lock.json') }}
+          restore-keys: |
+            astro-cache-
       - run: npm run build
         name: Build
         env:
@@ -42,7 +45,8 @@ jobs:
         with:
           path: |
             node_modules/.astro/assets
-          key: static
+            node_modules/.astro/data-store.json
+          key: astro-cache-${{ hashFiles('astro.config.ts', 'src/content.config.ts', 'package-lock.json') }}
       - name: Notify Google Chat on failure
         if: failure()
         run: |
