@@ -5,11 +5,13 @@
 > - Starlight beta: [withastro/starlight#3644]
 > - Astro Docs example: [withastro/docs#13230]
 > - [Astro migration guide]
+> - [Zod 4 migration guide]
 > - [Cloudflare adapter migration guide]
 
 [withastro/starlight#3644]: https://github.com/withastro/starlight/pull/3644
 [withastro/docs#13230]: https://github.com/withastro/docs/pull/13230
-[Astro Migration guide]: https://v6.docs.astro.build/en/migration-guide/
+[Astro Migration guide]: https://v6.docs.astro.build/en/guides/upgrade-to/v6/
+[Zod 4 migration guide]: https://zod.dev/v4/changelog
 [Cloudflare adapter migration guide]: https://v6.docs.astro.build/en/guides/integrations-guide/cloudflare/#upgrading-to-v13-and-astro-6
 [STARLIGHT_CUSTOMIZATIONS.md]: ./STARLIGHT_CUSTOMIZATIONS.md
 

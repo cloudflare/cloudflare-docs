@@ -35,7 +35,7 @@
 		"@actions/github": "6.0.1",
 		"@apidevtools/swagger-parser": "12.0.0",
 		"@astrojs/check": "0.9.7-beta.1",
-		"@astrojs/react": "5.0.0-beta.3",
+		"@astrojs/react": "5.0.0-beta.4",
 		"@astrojs/rss": "4.0.15-beta.4",
 		"@astrojs/sitemap": "3.6.1-beta.3",
 		"@astrojs/starlight": "https://pkg.pr.new/@astrojs/starlight@3644",
@@ -63,7 +63,7 @@
 		"@types/react-dom": "19.0.4",
 		"@typescript-eslint/parser": "8.44.0",
 		"algoliasearch": "5.37.0",
-		"astro": "6.0.0-beta.15",
+		"astro": "6.0.0-beta.20",
 		"astro-breadcrumbs": "3.3.1",
 		"astro-icon": "1.1.5",
 		"astro-live-code": "0.0.6",
@@ -144,6 +144,11 @@
 		"vite-tsconfig-paths": "5.1.4",
 		"vitest": "3.2.4",
 		"wrangler": "4.58.0"
+	},
+	"overrides": {
+		"astro-breadcrumbs": {
+			"astro": "$astro"
+		}
 	},
 	"engines": {
 		"npm": "10.9.4",
