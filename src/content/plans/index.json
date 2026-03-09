@@ -615,21 +615,13 @@
 					"biz": "No",
 					"ent": "Yes"
 				},
-				"t_open_proxies_list": {
-					"title": "Managed IP List: Cloudflare Open Proxies",
+				"t_managed_ip_lists": {
+					"title": "Managed IP Lists",
 					"link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
 					"ent": "Yes"
-				},
-				"u_all_managed_ip_lists": {
-					"title": "All Managed IP Lists",
-					"link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "With separate add-on"
 				}
 			}
 		}
