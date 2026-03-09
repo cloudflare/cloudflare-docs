@@ -33,7 +33,7 @@ WARP Connector is currently Linux-only. For more details on requirements and lim
 
 ## Step 1: Define a network segment
 
-A network segment identifies the IP range (the block of IP addresses assigned to your network) of a private network you want to connect. For each segment, the wizard automatically creates a WARP Connector and configures the routes that tell Cloudflare how to reach your network.
+A network segment identifies the IP range of a private network you want to connect. For each segment, the wizard automatically creates a WARP Connector and configures the routes that tell Cloudflare how to reach your network.
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), select the **Get Started** tab.
 2. For **Replace my client-based or site-to-site VPN**, select **Get started**.
@@ -44,7 +44,7 @@ A network segment identifies the IP range (the block of IP addresses assigned to
 7. Select **Continue**.
 
 :::note
-Enter an IPv4 range (for example, addresses starting with `10.x.x.x`, `172.16.x.x`, or `192.168.x.x`). WARP Connector does not currently support IPv6 routes. If you are not sure of your network's IP range, check your router or network settings. Common private network ranges include `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`.
+WARP Connector does not currently support IPv6 routes. Enter an IPv4 range. If you are not sure of your network's IP range, check your router or network settings.
 :::
 
 ## Step 2: Deploy first connector
