@@ -13,6 +13,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-22.04
+    outputs:
+      link_check_failed: ${{ steps.check_link_result.outputs.failed }}
     permissions:
       contents: read
       pull-requests: write
@@ -50,7 +52,6 @@ jobs:
         with:
           path: |
             node_modules/.astro/assets
-            node_modules/.astro/data-store.json
           key: astro-cache-${{ github.run_id }}
           restore-keys: |
             astro-cache-
@@ -62,17 +63,38 @@ jobs:
 
       - run: npm run check
 
+      # The starlight-links-validator plugin runs in astro:build:done, which fires
+      # AFTER all pages have been written to dist/. If link validation fails, the
+      # build exits non-zero but dist/ is complete. We use continue-on-error so the
+      # job succeeds (allowing deploy + validate to run), then check the outcome below.
       - run: npm run build
+        id: build_step
         name: Build
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_LINK_CHECK: true
+
+      # Distinguish between "link check failed" (dist/ exists) and "real build failure" (no dist/).
+      # If the build produced no output, we must fail the job immediately.
+      - name: Check build result
+        id: check_link_result
+        run: |
+          if [ ! -d dist ] || [ -z "$(ls -A dist)" ]; then
+            echo "Build failed before producing output — this is a real build error, not a link check failure."
+            exit 1
+          fi
+          if [ "${{ steps.build_step.outcome }}" = "failure" ]; then
+            echo "failed=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::Build succeeded but link validation failed. Preview will still be deployed."
+          else
+            echo "failed=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - uses: actions/cache/save@v4
         with:
           path: |
             node_modules/.astro/assets
-            node_modules/.astro/data-store.json
           key: astro-cache-${{ github.run_id }}
 
       - uses: actions/upload-artifact@v4
@@ -118,6 +140,12 @@ jobs:
 
       - name: Tests
         run: npm run test
+
+      - name: Link validation
+        if: needs.build.outputs.link_check_failed == 'true'
+        run: |
+          echo "::error::starlight-links-validator found broken internal links during the build. See the Build job logs for details."
+          exit 1
 
   notify:
     name: Notify
