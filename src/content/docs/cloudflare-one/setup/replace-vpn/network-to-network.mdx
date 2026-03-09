@@ -1,0 +1,115 @@
+---
+pcx_content_type: get-started
+title: "Network to network"
+sidebar:
+  order: 3
+  label: Network to network
+description: Connect two private networks using WARP Connectors and Cloudflare's network.
+products:
+  - cloudflare-one
+---
+
+import { InlineBadge } from "~/components";
+
+Connect two separate private networks so devices on each network can communicate bidirectionally through Cloudflare. This is useful when you need to link office locations, data centers, or cloud environments so servers and services on one network can reach the other, for example for database replication or cross-site administration.
+
+To explore other connection scenarios, refer to [Replace your VPN](/cloudflare-one/setup/replace-vpn/).
+
+This guide follows the same steps as the **Get Started** onboarding wizard in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+
+## How it works
+
+[WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) <InlineBadge preset="beta" /> is a lightweight service that you install on a Linux device in each network. It acts as a gateway for the network, sending traffic to Cloudflare and receiving traffic back on behalf of all devices in the network. Other devices on the network do not need to install any software.
+
+With a WARP Connector deployed in each network, devices on either side can reach devices on the other. Cloudflare applies your security policies before forwarding traffic to the destination network.
+
+## Prerequisites
+
+- A Cloudflare account with a Zero Trust organization. If you have not set this up, refer to [Get started](/cloudflare-one/setup/).
+- A Linux device or virtual machine on your first private network. This is where you install your first WARP Connector.
+- A second Linux device or virtual machine on a separate private network. This is where you install your second WARP Connector.
+
+:::note
+WARP Connector is currently Linux-only. For more details on requirements and limitations, refer to [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
+:::
+
+## Step 1: Define a network segment
+
+A network segment identifies the IP range of a private network you want to connect. For each segment, the wizard automatically creates a WARP Connector and configures the routes that tell Cloudflare how to reach your network.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), select the **Get Started** tab.
+2. For **Replace my client-based or site-to-site VPN**, select **Get started**.
+3. For **Network to network**, select **Continue**.
+4. On the **Route traffic between private networks** screen, select **Continue**.
+5. Enter the IP range of your first network segment (for example, `10.0.0.0/24`).
+6. Enter a name for this network segment (for example, `office-a`).
+7. Select **Continue**.
+
+:::note
+Enter an IPv4 range. WARP Connector does not currently support IPv6 routes. If you are not sure of your network's IP range, check your router or network settings. Common private network ranges include `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`.
+:::
+
+## Step 2: Deploy first connector
+
+Install the WARP Connector on a Linux device in your first network segment. The dashboard generates commands specific to your operating system.
+
+1. Select your device's operating system from the dropdown.
+2. Copy and run the commands shown in the dashboard on your Linux device. The dashboard provides three sets of commands:
+   1. **Install WARP**: Sets up the package repository and installs the `cloudflare-warp` package.
+   2. **Enable IP forwarding**: Allows the device to forward traffic between networks.
+   3. **Run the WARP Connector with token**: Registers the connector with your Cloudflare account and connects it.
+
+   :::caution
+   Running the connector token command causes remote connections to the device to drop. If you are managing the device over SSH, your session may disconnect. You can reconnect after the command completes.
+   :::
+
+3. After the connector deploys, the dashboard confirms your network segment is active.
+4. Select **Continue**.
+
+## Step 3: Define a second segment
+
+Repeat the same process as [Step 1](#step-1-define-a-network-segment) for your second network. The IP range must be different and non-overlapping (for example, `10.0.1.0/24` if your first segment is `10.0.0.0/24`).
+
+## Step 4: Deploy second connector
+
+Repeat the same process as [Step 2](#step-2-deploy-first-connector) on a Linux device in your second network segment. After the connector deploys, the dashboard confirms both segments are active.
+
+## Step 5: Forward device traffic
+
+If the WARP Connector is installed on your network's router (the device that serves as the default gateway), other devices on the network automatically send traffic through it. No additional configuration is needed, and you can skip this step.
+
+If the WARP Connector is installed on a different device, other devices on the network need a static route so they know to send cross-network traffic to the WARP Connector device. The wizard generates OS-specific commands to add these routes.
+
+1. Select the operating system of the device you want to configure.
+2. Select the tunnel you want to route traffic through.
+3. Copy and run the generated command on the target device.
+4. Repeat for additional devices as needed, or select **Continue** to proceed to the final step.
+
+For more details on routing options, refer to [WARP Connector site-to-site](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/#4-route-traffic-from-subnet-to-warp-connector).
+
+## Step 6: Verify your connection
+
+The dashboard confirms that your connectors can reach devices in the opposite network segment. Devices on both networks can now communicate through Cloudflare.
+
+To verify connectivity, try reaching a device on the opposite network (for example, `ping 10.0.1.100` from a device on your first network).
+
+## Recommended next steps
+
+After verifying your connection, consider securing your connected networks with policies and access controls:
+
+- **Set up Gateway policies**: By default, all traffic between your network segments flows through Cloudflare without restriction. Gateway policies let you scan, filter, and log traffic between your networks. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/), [Network policies](/cloudflare-one/traffic-policies/network-policies/), and [HTTP policies](/cloudflare-one/traffic-policies/http-policies/).
+- **Create an Access application**: Restrict access to specific destinations with identity-based rules. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
+- **Create a device profile**: Customize WARP Connector settings for your connectors, such as which traffic routes through Cloudflare and which stays local. For more information, refer to [WARP Connector site-to-site](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/).
+- **Explore more with Zero Trust**: Review your connectors, policies, and routes in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+
+For in-depth guidance on policy design and device posture checks, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
+
+## Troubleshoot
+
+If you have issues connecting, try these steps:
+
+- **WARP Connector not connecting**: Verify that your firewall allows inbound and outbound traffic over the [WARP ports and IPs](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/). Run `warp-cli status` on the connector device to check its connection state.
+- **IP forwarding not persisting after reboot**: The wizard enables IP forwarding with `sysctl`, but the setting may not persist. To make it permanent, add `net.ipv4.ip_forward = 1` to `/etc/sysctl.d/99-warp-svc.conf` and run `sudo sysctl -p /etc/sysctl.d/99-warp-svc.conf`.
+- **SSH drops during connector install**: The WARP Connector immediately routes traffic through Cloudflare when activated, which can disrupt existing SSH sessions. Reconnect after the command completes, or add your local IP to the [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude list before deploying.
+- [WARP Connector tips](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/tips/): review common configuration tips and troubleshooting strategies.
+- [Troubleshoot tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/): diagnose tunnel connectivity and routing problems.
