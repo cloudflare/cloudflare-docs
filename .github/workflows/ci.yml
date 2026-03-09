@@ -99,6 +99,11 @@ jobs:
 
       - run: npm ci
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
       - uses: reviewdog/action-eslint@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
