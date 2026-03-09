@@ -145,9 +145,6 @@
 		"vitest": "3.2.4",
 		"wrangler": "4.58.0"
 	},
-	"overrides": {
-		"vite": "npm:rolldown-vite@6.3.21"
-	},
 	"engines": {
 		"npm": "10.9.4",
 		"node": "22.x"
