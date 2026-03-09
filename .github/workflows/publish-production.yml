@@ -24,7 +24,7 @@ jobs:
           path: |
             node_modules/.astro/assets
             node_modules/.astro/data-store.json
-          key: astro-cache-${{ hashFiles('astro.config.ts', 'src/content.config.ts', 'package-lock.json') }}
+          key: astro-cache-${{ github.run_id }}
           restore-keys: |
             astro-cache-
       - run: npm run build
@@ -46,7 +46,7 @@ jobs:
           path: |
             node_modules/.astro/assets
             node_modules/.astro/data-store.json
-          key: astro-cache-${{ hashFiles('astro.config.ts', 'src/content.config.ts', 'package-lock.json') }}
+          key: astro-cache-${{ github.run_id }}
       - name: Notify Google Chat on failure
         if: failure()
         run: |
