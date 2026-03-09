@@ -8,6 +8,8 @@ sidebar:
   order: 4
 ---
 
+import { DashButton } from "~/components";
+
 Rate limiting policies (beta) allow you to set maximum traffic thresholds - measured in packets or bits per second — for incoming traffic destined for your network as it arrives at specific Cloudflare data centers. When traffic to a location exceeds your defined limit, the policy takes action.
 
 This guide walks you through creating a policy that matches incoming packets and triggers when the traffic rate exceeds your configured threshold.
