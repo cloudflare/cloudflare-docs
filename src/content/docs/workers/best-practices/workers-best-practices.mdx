@@ -741,7 +741,7 @@ For more information, refer to [Workers errors](/workers/observability/errors/#c
 
 ### Always await or waitUntil your Promises
 
-A `Promise` that is not `await`ed, `return`ed, or passed to `ctx.waitUntil()` is a floating promise. Floating promises cause silent bugs: dropped results, swallowed errors, and unfinished work. The Workers runtime may terminate your isolate before a floating promise completes.
+A `Promise` that is not `await`ed, `return`ed, or passed to `ctx.waitUntil()` is a floating promise. Floating promises cause silent bugs: dropped results, swallowed errors, and unfinished work. The [Workers runtime](/learning-paths/workers/concepts/workers-concepts/#runtime) may terminate your isolate before a floating promise completes.
 
 Enable the `no-floating-promises` lint rule to catch these at development time. If you use ESLint, enable [`@typescript-eslint/no-floating-promises`](https://typescript-eslint.io/rules/no-floating-promises/). If you use oxlint, enable [`typescript/no-floating-promises`](https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-floating-promises.html).
 
@@ -795,7 +795,7 @@ export default {
 
 ### Use Web Crypto for secure token generation
 
-The Workers runtime provides the [Web Crypto API](/workers/runtime-apis/web-crypto/) for cryptographic operations. Use `crypto.randomUUID()` for unique identifiers and `crypto.getRandomValues()` for random bytes. Never use `Math.random()` for anything security-sensitive. It is not cryptographically secure.
+The [Workers runtime](/learning-paths/workers/concepts/workers-concepts/#runtime) provides the [Web Crypto API](/workers/runtime-apis/web-crypto/) for cryptographic operations. Use `crypto.randomUUID()` for unique identifiers and `crypto.getRandomValues()` for random bytes. Never use `Math.random()` for anything security-sensitive. It is not cryptographically secure.
 
 Node.js [`node:crypto`](/workers/runtime-apis/nodejs/crypto/) is also fully supported when `nodejs_compat` is enabled, so you can use whichever API you or your libraries prefer.
 
@@ -910,7 +910,7 @@ async function handleRequest(request: Request, env: Env): Promise<object> {
 
 ### Test with @cloudflare/vitest-pool-workers
 
-The [`@cloudflare/vitest-pool-workers`](/workers/testing/vitest-integration/) package runs your tests inside the Workers runtime, giving you access to real bindings (KV, R2, D1, Durable Objects) during tests. This catches issues that Node.js-based tests miss, like unsupported APIs or missing compatibility flags.
+The [`@cloudflare/vitest-pool-workers`](/workers/testing/vitest-integration/) package runs your tests inside the [Workers runtime](/learning-paths/workers/concepts/workers-concepts/#runtime), giving you access to real bindings (KV, R2, D1, Durable Objects) during tests. This catches issues that Node.js-based tests miss, like unsupported APIs or missing compatibility flags.
 
 One known pitfall: the Vitest pool automatically injects `nodejs_compat`, so tests pass even if your Wrangler configuration does not have the flag. Always confirm your `wrangler.jsonc` includes `nodejs_compat` if your code depends on Node.js built-in modules.
 
