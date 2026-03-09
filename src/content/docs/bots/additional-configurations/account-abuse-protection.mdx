@@ -1,0 +1,134 @@
+---
+pcx_content_type: Concept
+title: Account Abuse Protection (Early Access)
+sidebar:
+  order: 4
+  label: Account Abuse Protection
+  badge:
+    text: Early Access
+    variant: note
+
+---
+
+import { Description, DashButton } from "~/components"
+
+<Description>
+
+Identify and mitigate attacks on your customer and user accounts.
+</Description>
+
+Fraud detection allows you to detect and mitigate account abuse among your traffic, specifically bulk account creation and account takeover attacks. You can use fraud signals to [update or create new rules](/waf/custom-rules/) for suspicious account activity, or pass signals to their origins to integrate into authentication and authorization systems. 
+
+## Availability
+
+Account Abuse Protection is available in Early Access for any [Bot Management Enterprise](/bots/get-started/bot-management) customer. You can use these features at no additional cost for a limited period until Account Abuse Protection is generally available.
+
+---
+
+## Concepts
+
+### User ID
+
+User ID is a cryptographically hashed, per-zone identifier that customers can use in [Security Analytics](/waf/analytics/security-analytics/), [Security Rules](/waf/custom-rules/), and [Managed Transforms](/rules/transform/managed-transforms/reference/). With access to User ID, website owners can:
+
+- Find the details on a specific user's characteristics and activity patterns.  
+- Mitigate traffic based on the user, such as blocking a user with historically suspicious activity.  
+- Combine fields to see when accounts are being targeted with leaked credentials.  
+- Review network patterns or signals associated with specific users.
+
+:::note[Data Privacy]
+User profiling was created with privacy in mind. Its design and engineering align without privacy and compliance programs and contain technical controls that protect the privacy of users. User IDs are created by encrypting the primary credentials your users use to access your applications. 
+
+Other Cloudflare customers cannot access your user profiles. They are unique to your zone. 
+:::
+
+### Ephemeral IDs
+
+Customers using Cloudflare Turnstile can utilize ephemeral IDs for fraud detection. 
+
+Refer to [Fraud detection with ephemeral IDs](/turnstile/tutorials/fraud-detection-with-ephemeral-ids/) for more information.
+
+### Account Takeover Detection
+
+Cloudflare Bot Management includes dedicated detection IDs for account takeover attacks. Refer to [Account takeover detections](/bots/additional-configurations/detection-ids/account-takeover-detections/) for more information.
+
+---
+
+## Get started
+
+### Prerequisites
+
+Fraud detections require various configurations and settings to be enabled to properly identify suspicious behavior. 
+
+#### Security Settings
+
+- User ID: Cloudflare encrypts or hashes your user IDs to better understand typical user traffic patterns across your applications. Enabling Cloudflare to create user ID mappings to your users will allow you to receive account takeover and bulk account creation detections. 
+
+#### Eligible traffic 
+
+Cloudflare automatically identifies certain login and signup traffic on your applications and runs these detections without any additional configurations. 
+
+- Signups: Cloudflare automatically monitors traffic on endpoints that match common signup endpoints
+- Login: Cloudflare automatically monitors traffic on endpoints that match common login endpoints
+
+You may have additional endpoints that Cloudflare cannot automatically detect. To help us better map your traffic, [apply `cf-log-in` and `cf-sign-up` labels to your login and signup endpoints](/api-shield/management-and-monitoring/endpoint-labels/), respectively.
+
+:::note
+Cloudflare recommends enabling [Leaked credentials detection](/waf/detections/leaked-credentials/) to help identify compromised credentials across your users.   
+:::
+
+### Detections
+
+Fraud detections focus on account abuse attacks such as account takeover, bulk account creation, and credential quality. These detections run on all eligible traffic and can be used across [Cloudflare Rules](/rules/) to log, challenge, and/or block requests to your signup and login endpoints. 
+
+#### Account creation
+
+Disposable Email Checks detect when users sign up with throwaway email addresses commonly used for promotion abuse and fake account creation. These disposable email services allow attackers to create thousands of unique accounts without maintaining real infrastructure. 
+
+You can use the following binary field as you build rules to enforce security preferences, choosing to block all disposable emails outright, or perhaps issue a [challenge](https://developers.cloudflare.com/cloudflare-challenges/challenge-types/) to anyone attempting to create an account with a disposable email. 
+
+#### Suspicious emails
+
+Cloudflare analyzes the components of an email used during signup to help identify suspicious patterns. Refer to [prerequisites](#prerequisites) to ensure your traffic is eligible for detections. 
+
+Cloudflare does not store email addresses during this analysis. All detections processed without any storage or caching. 
+
+| Detection tag | Description |
+| --- | --- |
+| `cf.fraud_detection.disposable_email` | Identifies emails with domains that are commonly found in lists of temporary or disposable email services. |
+| `cf.fraud.email_risk` | Analyzes the randomness of characters in an email username and top level domain. <br />High risk emails indicate high entropy, while medium and low risk emails indicate less randomness in the string of characters. |
+
+### Mitigations
+
+The following fraud detection fields can be used in Security Rules to help identify and mitigate suspicious traffic. 
+
+#### Security Rules
+
+The following fields can be used in new and existing Security Rules.
+
+| Field | Description | Values |
+| --- | --- | --- |
+| `cf.fraud_detection.dispoable_domain` | Flags whether a domain for a given email is included in a known list of temporary email providers. | `True` or `False` |
+| `cf.fraud.email_risk` | Measures risk of email based on randomness of characters in the username and domain. | `Low` represents low risk due to reduced randomness and simple emails. <br />`Medium` represents medium risk based on larger strings with slightly more randomness. <br />`High` represents high risk based on larger and random character strings. <br />`Unknown` |
+
+#### Other Rules
+
+Fraud detection data can also be used in Request Header [Transform Rules](/rules/transform/managed-transforms/) to pass information down to the origin. 
+
+#### LogPush
+
+Fraud detection fields are available to be added to existing or new [LogPush](/logs/logpush/) jobs.
+
+---
+
+## Analytics
+
+You can find Fraud data and detections in Security analytics, where you can see top User IDs. 
+
+<DashButton url="/?to=/:account/security-center/analytics" />
+
+Fraud fields can be used as filters to make pinpointing suspicious patterns in your traffic easier. 
+
+The new User ID field within Security analytics also provides Fraud customers with data that can help review detections and patterns by individual users rather than requests. 
+
+You can review user level aggregations for IPs and IP Counts, Events, Locations, and Browsers. A user level profile also provides a quick way to review the latest events associated with a user so that you can identify anomalies. 
