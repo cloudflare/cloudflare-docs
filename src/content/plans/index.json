@@ -1902,11 +1902,10 @@
 				"z_custom_rulesets_account": {
 					"title": "Account-level custom rulesets",
 					"link": "/waf/account/custom-rulesets/",
-					"summary": "Enterprise with add-on",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Yes"
 				}
 			}
 		},
