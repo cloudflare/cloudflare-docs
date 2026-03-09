@@ -11,32 +11,7 @@ export const baseSchema = ({ image }: SchemaContext) =>
 				"A `src` path to the image that you want to use as a custom preview image for social sharing.",
 			),
 		pcx_content_type: z
-			.union([
-				z.literal("changelog"),
-				z.literal("changelog-entry"),
-				z.literal("configuration"),
-				z.literal("content"),
-				z.literal("concept"),
-				z.literal("design-guide"),
-				z.literal("example"),
-				z.literal("faq"),
-				z.literal("FAQ"),
-				z.literal("get-started"),
-				z.literal("glossary"),
-				z.literal("how-to"),
-				z.literal("integration-guide"),
-				z.literal("implementation-guide"),
-				z.literal("learning-unit"),
-				z.literal("navigation"),
-				z.literal("overview"),
-				z.literal("reference"),
-				z.literal("reference-architecture"),
-				z.literal("reference-architecture-diagram"),
-				z.literal("release-notes"),
-				z.literal("troubleshooting"),
-				z.literal("tutorial"),
-				z.literal("video"),
-			])
+			.string()
 			.optional()
 			.describe(
 				"The purpose of the page, and defined through specific pages in [Content strategy](/style-guide/documentation-content-strategy/content-types/).",
@@ -55,12 +30,7 @@ export const baseSchema = ({ image }: SchemaContext) =>
 				"Path to another page in our docs or elsewhere. Used to add a crosslink entry to the lefthand navigation sidebar.",
 			),
 		difficulty: z
-			.union([
-				z.literal("Beginner"),
-				z.literal("Medium"),
-				z.literal("Intermediate"),
-				z.literal("Advanced"),
-			])
+			.string()
 			.optional()
 			.describe(
 				"Difficulty is displayed as a column in the [ListTutorials component](/style-guide/components/list-tutorials/).",
