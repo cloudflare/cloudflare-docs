@@ -25,7 +25,7 @@ Understand how {props.productName} health checks and traffic routing work:
 - Traffic enters Cloudflare at the data center closest to the source (anycast routing).
 - A degraded tunnel in a data center that is not handling your traffic has no impact on your connectivity.
 
-If you are experiencing actual tunnel health issues (tunnels flapping, all tunnels down, or IPsec errors), refer to [Troubleshoot tunnel health]({props.tunnelHealthLink}) instead.
+If you are experiencing actual tunnel health issues (tunnels flapping, all tunnels down, or IPsec errors), refer to <a href={props.tunnelHealthLink}>Troubleshoot tunnel health</a> instead.
 
 ## Diagnostic flowchart
 
@@ -79,7 +79,7 @@ You can identify which data centers handle your traffic by using **Network Analy
 2. Select **Add filter** and filter traffic by your source IP addresses to isolate your traffic.
 3. Under **Packets summary**, select the **Source data center** tab. If the tab is not visible, select the three-dot menu (`...`) to reveal additional view options and select **Source data center**.
 4. Review the per-data-center traffic breakdown to identify which Cloudflare data centers are handling your traffic.
-5. Cross-reference these data centers with the tunnel health status on the [**Connector health** page]({props.checkHealthDashLink}). If tunnels are healthy at the data centers carrying your traffic, a degraded tunnel alert for a different data center is not the cause of your connectivity issue.
+5. Cross-reference these data centers with the tunnel health status on the <a href={props.checkHealthDashLink}><strong>Connector health</strong> page</a>. If tunnels are healthy at the data centers carrying your traffic, a degraded tunnel alert for a different data center is not the cause of your connectivity issue.
 
 ## 2. Correlate with Cloudflare status
 
@@ -112,8 +112,8 @@ If you have worked through this guide and cannot resolve the issue, gather the f
 
 ## Related resources
 
-- [Troubleshoot tunnel health]({props.tunnelHealthLink}): Resolve common tunnel health issues (flapping, IPsec errors, stateful firewall drops).
-- [Troubleshoot routing and BGP]({props.routingBgpLink}): Diagnose routing and BGP issues that affect traffic delivery.
-- [Check tunnel health in the dashboard]({props.checkHealthDashLink}): Monitor tunnel status per data center.
-- [Tunnel health checks]({props.tunnelHealthChecksLink}): Technical details on how health checks work.
-- [Network Analytics]({props.networkAnalyticsLink}): Analyze traffic patterns over time.
+- <a href={props.tunnelHealthLink}>Troubleshoot tunnel health</a>: Resolve common tunnel health issues (flapping, IPsec errors, stateful firewall drops).
+- <a href={props.routingBgpLink}>Troubleshoot routing and BGP</a>: Diagnose routing and BGP issues that affect traffic delivery.
+- <a href={props.checkHealthDashLink}>Check tunnel health in the dashboard</a>: Monitor tunnel status per data center.
+- <a href={props.tunnelHealthChecksLink}>Tunnel health checks</a>: Technical details on how health checks work.
+- <a href={props.networkAnalyticsLink}>Network Analytics</a>: Analyze traffic patterns over time.
