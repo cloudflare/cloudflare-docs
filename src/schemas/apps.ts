@@ -3,7 +3,7 @@ import { z } from "astro/zod";
 export const appsSchema = z
 	.object({
 		id: z.string(),
-		link: z.string().url(),
+		link: z.url(),
 		description: z.string(),
 		tags: z.string().array().optional(),
 		products: z.string().array(),
