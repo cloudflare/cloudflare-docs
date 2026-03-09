@@ -19,9 +19,7 @@ This guide follows the same steps as the **Get Started** onboarding wizard in th
 
 ## How it works
 
-[WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) <InlineBadge preset="beta" /> is a network connector that you install on a Linux device in each network. It acts as a gateway for the network, sending traffic to Cloudflare and receiving traffic back on behalf of all devices in the network. Other devices on the network do not need to install any software.
-
-With a WARP Connector deployed in each network, devices on either side can reach devices on the other. Cloudflare applies your security policies before forwarding traffic to the destination network.
+[WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) <InlineBadge preset="beta" /> is a network connector that you install on a single Linux device in each network. That device handles traffic for the entire network: it sends outbound traffic to Cloudflare and receives inbound traffic back, then passes it to the right device on the network. Because of this, other devices on the network do not need to install any software.
 
 ## Prerequisites
 
