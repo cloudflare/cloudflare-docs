@@ -5,8 +5,8 @@ import { sidebar, SidebarIconSchema } from "./types/sidebar";
 
 export const baseSchema = ({ image }: SchemaContext) =>
 	z.object({
-		preview_image: image()
-			.optional()
+		preview_image: z
+			.optional(image())
 			.describe(
 				"A `src` path to the image that you want to use as a custom preview image for social sharing.",
 			),
