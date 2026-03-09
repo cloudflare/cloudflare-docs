@@ -26,13 +26,12 @@ describe("WranglerCLI", () => {
 			.toThrowErrorMatchingInlineSnapshot(`
 			[ZodError: [
 			  {
-			    "code": "invalid_type",
 			    "expected": "string",
-			    "received": "undefined",
+			    "code": "invalid_type",
 			    "path": [
 			      "command"
 			    ],
-			    "message": "Required"
+			    "message": "Invalid input: expected string, received undefined"
 			  }
 			]]
 		`);
