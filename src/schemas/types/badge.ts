@@ -16,11 +16,10 @@ const i18nBadgeSchema = badgeBaseSchema.extend({
 	text: z.union([z.string(), z.record(z.string(), z.string())]),
 });
 
-export const BadgeComponentSchema = badgeSchema
-	.extend({
-		size: z.enum(["small", "medium", "large"]).default("small"),
-	})
-	.passthrough();
+export const BadgeComponentSchema = z.looseObject({
+	...badgeSchema.shape,
+	size: z.enum(["small", "medium", "large"]).default("small"),
+});
 
 export type BadgeComponentProps = z.input<typeof BadgeComponentSchema>;
 
