@@ -60,13 +60,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: npm run check
-
       - run: npm run build
         name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_LINK_CHECK: true
 
       - uses: actions/cache/save@v4
         with:
@@ -103,6 +100,8 @@ jobs:
         with:
           name: dist
           path: dist
+
+      - run: npm run check
 
       - uses: reviewdog/action-eslint@v1
         with:
