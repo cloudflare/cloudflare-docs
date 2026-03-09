@@ -7,8 +7,6 @@
  */
 
 import { z } from "astro/zod";
-import type { AstroBuiltinAttributes } from "astro";
-import type { HTMLAttributes } from "astro/types";
 
 /**
  * From https://github.com/withastro/starlight/blob/main/packages/starlight/schemas/badge.ts
@@ -17,9 +15,7 @@ import type { HTMLAttributes } from "astro/types";
 const linkHTMLAttributesSchema = z.record(
 	z.string(),
 	z.union([z.string(), z.number(), z.boolean(), z.undefined()]),
-) as z.Schema<
-	Omit<HTMLAttributes<"a">, keyof AstroBuiltinAttributes | "children">
->;
+);
 
 const SidebarLinkItemHTMLAttributesSchema = () =>
 	linkHTMLAttributesSchema.prefault({});
