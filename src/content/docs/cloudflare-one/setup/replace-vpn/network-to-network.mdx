@@ -109,6 +109,5 @@ For in-depth guidance on policy design and device posture checks, refer to the [
 If you have issues connecting, try these steps:
 
 - **WARP Connector not connecting**: Verify that your firewall allows inbound and outbound traffic over the [WARP ports and IPs](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/). Run `warp-cli status` on the connector device to check its connection state.
-- **IP forwarding not persisting after reboot**: The wizard enables IP forwarding with `sysctl`, but the setting may not persist. To make it permanent, add `net.ipv4.ip_forward = 1` to `/etc/sysctl.d/99-warp-svc.conf` and run `sudo sysctl -p /etc/sysctl.d/99-warp-svc.conf`.
 - [WARP Connector tips](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/tips/): review common configuration tips and troubleshooting strategies.
 - [Troubleshoot tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/): diagnose tunnel connectivity and routing problems.
