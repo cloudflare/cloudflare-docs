@@ -9,13 +9,19 @@ import AnchorHeading from "./AnchorHeading.astro";
 import Details from "./Details.astro";
 
 const fullSchema = baseSchema({
-	// @ts-expect-error Normally passed in by Astro but we are using the schema standalone.
+	// @ts-expect-error Normally passed in by Astro, but we are using the schema standalone.
 	image: () => z.function(),
 });
 
-// Override properties that JSON schema isn't going to understand.
+// Override properties that JSON schema isn't going to understand because they're Astro-specific
 const shape = {
 	...fullSchema.shape,
+	preview_image: z
+		.string()
+		.optional()
+		.describe(
+			"A `src` path to the image that you want to use as a custom preview image for social sharing.",
+		),
 	products: z
 		.array(z.string())
 		.default([])
