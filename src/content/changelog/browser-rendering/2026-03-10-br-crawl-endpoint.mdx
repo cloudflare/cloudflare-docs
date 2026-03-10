@@ -6,9 +6,9 @@ products:
 date: 2026-03-10
 ---
 
-You can now crawl an entire website with a single API call using [Browser Rendering](/browser-rendering/)'s new [`/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/), available in open beta. Submit a starting URL and the endpoint automatically discovers linked pages, renders them in a headless browser, and returns content as HTML, Markdown, or structured JSON.
+You can now crawl an entire website with a single API call using [Browser Rendering](/browser-rendering/)'s new [`/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/), available in open beta. Submit a starting URL, and pages are automatically discovered, rendered in a headless browser, and returned in multiple formats, including HTML, Markdown, and structured JSON. This is great for training models, building RAG pipelines, and researching or monitoring content across a site.
 
-Crawl jobs run asynchronously. You submit a URL, receive a job ID, and check back for results as pages are processed. Here is how it works:
+Crawl jobs run asynchronously. You submit a URL, receive a job ID, and check back for results as pages are processed.
 
 ```sh
 # Initiate a crawl
@@ -26,7 +26,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-
 
 Key features:
 
-- **Output formats** - Return crawled content as HTML, Markdown, or structured JSON (powered by [Workers AI](/workers-ai/))
+- **Multiple output formats** - Return crawled content as HTML, Markdown, and structured JSON (powered by [Workers AI](/workers-ai/))
 - **Crawl scope controls** - Configure crawl depth, page limits, and wildcard patterns to include or exclude specific URL paths
 - **Automatic page discovery** - Discovers URLs from sitemaps, page links, or both
 - **Incremental crawling** - Use `modifiedSince` and `maxAge` to skip pages that haven't changed or were recently fetched, saving time and cost on repeated crawls
