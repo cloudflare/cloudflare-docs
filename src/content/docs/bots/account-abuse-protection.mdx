@@ -10,7 +10,7 @@ sidebar:
 
 ---
 
-import { Description, DashButton, Steps } from "~/components"
+import { Render, Description, DashButton, Steps } from "~/components"
 
 <Description>
 
@@ -21,7 +21,7 @@ Fraud detection allows you to detect and mitigate account abuse among your traff
 
 ## Availability
 
-Account Abuse Protection is available in Early Access for any [Bot Management Enterprise](/bots/get-started/bot-management) customer. You can use these features at no additional cost for a limited period until Account Abuse Protection is generally available.
+Account Abuse Protection is available in Early Access for any [Bot Management Enterprise](/bots/get-started/bot-management) customer. You can use these features at no additional cost for a limited period until it is generally available.
 
 ---
 
@@ -29,12 +29,13 @@ Account Abuse Protection is available in Early Access for any [Bot Management En
 
 ### User ID
 
-User ID is a cryptographically hashed, per-zone identifier that customers can use in [Security Analytics](/waf/analytics/security-analytics/), [Security Rules](/waf/custom-rules/), and [Managed Transforms](/rules/transform/managed-transforms/reference/). With access to User ID, website owners can:
+User ID is a cryptographically hashed, per-zone identifier that customers can use in [Security Analytics](/waf/analytics/security-analytics/), [Security Rules](/waf/custom-rules/), and [Managed Transforms](/rules/transform/managed-transforms/reference/). With access to hashed User ID, website owners can:
 
+- Review which users have the most activity on your website.
 - Find the details on a specific user's characteristics and activity patterns.  
 - Mitigate traffic based on the user, such as blocking a user with historically suspicious activity.  
 - Combine fields to see when accounts are being targeted with leaked credentials.  
-- Review network patterns or signals associated with specific users.
+- Manage network patterns or signals associated with specific users.
 
 :::note[Data privacy]
 User profiling was created with privacy in mind. Its design and engineering align without privacy and compliance programs and contain technical controls that protect the privacy of users. Hashed User IDs are created by encrypting the primary credentials your users use to access your applications. 
@@ -82,14 +83,20 @@ Fraud detections requires the following configurations and settings to be enable
 
 #### Eligible traffic 
 
-Cloudflare automatically identifies certain login and signup traffic on your applications and runs these detections without any additional configurations. 
+Cloudflare automatically identifies certain login and sign up traffic on your applications and runs these detections without any additional configurations. 
 
-- Signups: Cloudflare automatically monitors traffic on endpoints that match common signup endpoints.
+- Sign ups: Cloudflare automatically monitors traffic on endpoints that match common sign up endpoints.
 - Login: Cloudflare automatically monitors traffic on endpoints that match common login endpoints.
 
-You may have additional endpoints that Cloudflare cannot automatically detect. To help us better map your traffic, [apply `cf-log-in` and `cf-sign-up` labels to your login and signup endpoints](/api-shield/management-and-monitoring/endpoint-labels/), respectively.
+Verify that your endpoints are properly labeled to ensure Cloudflare can detect and monitor them correctly.
 
-:::note
+<Render 
+  file="endpoint-label-warning" 
+  product="bots"
+  params={{ one: "or sign up" }} 
+/>
+
+:::tip[Enhanced with leaked credential detections]
 Cloudflare also recommends enabling [Leaked credentials detection](/waf/detections/leaked-credentials/) to help identify compromised credentials across your users.
 :::
 
@@ -97,7 +104,7 @@ Cloudflare also recommends enabling [Leaked credentials detection](/waf/detectio
 
 ### Detections
 
-Fraud detections focus on account abuse attacks such as account takeover, bulk account creation, and credential quality. These detections run on all eligible traffic and can be used across [Cloudflare Rules](/rules/) to log, challenge, and/or block requests to your signup and login endpoints. 
+Fraud detections focus on account abuse attacks such as account takeover, bulk account creation, and credential quality. These detections run on all eligible traffic and can be used across [Cloudflare Rules](/rules/) to log, challenge, and/or block requests to your sign up and login endpoints. 
 
 #### Account creation
 
@@ -107,7 +114,7 @@ You can use the following binary field as you build rules to enforce security pr
 
 #### Suspicious emails
 
-Cloudflare analyzes the components of an email used during signup to help identify suspicious patterns. Refer to [prerequisites](#prerequisites) to ensure your traffic is eligible for detections. 
+Cloudflare analyzes the components of an email used during sign up to help identify suspicious patterns. Refer to [prerequisites](#prerequisites) to ensure your traffic is eligible for detections. 
 
 Cloudflare does not store email addresses during this analysis. All detections processed without any storage or caching. 
 
@@ -149,6 +156,6 @@ You can find Fraud data and detections in Security Analytics, where you can see 
 
 Fraud fields can be used as filters to identify suspicious patterns in your traffic. 
 
-The User ID field within Security Analytics also provides Fraud customers with data that can help review detections and patterns per individual users rather than requests. You can review user level aggregations for IPs and IP counts, event types (login or sign up), locations, devices, and browsers. 
+The hashed User ID field within Security Analytics also provides Fraud customers with data that can help review detections and patterns per individual users rather than requests. You can review user level aggregations for IPs and IP counts, event types (login or sign up), locations, devices, and browsers. 
 
-A user level profile also provides a quick way to review the latest events associated with a user so that you can identify any anomalies and create a custom rule to block or challenge that user.
+A user level profile also provides a quick way to review the latest events associated with a user so that you can identify any anomalies and create a custom rule to log, block, or challenge that user.
