@@ -20,12 +20,22 @@ Refer to the table below for a comparison between the two files and the purposes
 | **File type**           | `.pem`                                                                       | `.json`                                                   |
 | **Stored in**           | <a href={props.defaultDirectoryURL}>Default directory</a>                    | <a href={props.defaultDirectoryURL}>Default directory</a> |
 | **Issued when running** | `cloudflared tunnel login`                                                   | `cloudflared tunnel create <NAME>`                        |
-| **Valid for**           | At least 10 years, and the service token it contains is valid until revoked  | Does not expire                                           |
+| **Valid for**           | At least 10 years, and the service token it contains is valid until [revoked](#revoke-account-certificate)  | Does not expire                                           |
 | **Needed to**           | Manage tunnels (for example, create, route, delete and list tunnels)         | Run a tunnel. Create a config file.                       |
 
 ## Tunnel ownership
 
 Tunnel ownership is bound to the Cloudflare account for which the `cert.pem` file was issued upon authenticating `cloudflared`. If a user in a Cloudflare account creates a tunnel, any other user in the same account who has access to the `cert.pem` file for the account can delete, list, or otherwise manage tunnels within it.
+
+## Revoke account certificate
+
+Your account certificate (`cert.pem`) contains an API token which authorizes `cloudflared` to manage tunnels in your Cloudflare account. To revoke the account certificate, delete the API token associated with your tunnel:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **My Profile** > **API Tokens**.
+2. Find the **Cloudflare Tunnel API Token** or **Argo Tunnel API Token** for your zone and account.
+3. Select the three dots > **Delete**.
+
+Once this token is deleted, `cloudflared` can no longer use the old `cert.pem` file to read or edit tunnels in your account. To generate a new token and `cert.pem` file, run `cloudflared tunnel login`.
 
 ## Account-scoped roles
 

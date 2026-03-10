@@ -12,10 +12,6 @@ import { GlossaryTooltip, DashButton } from "~/components";
 
 ## Stream
 
-### What formats and quality levels are delivered through Cloudflare Stream?
-
-Cloudflare decides on which bitrate, resolution, and codec is best for you. We deliver all videos to industry standard H264 codec. We use a few different adaptive streaming levels from 360p to 1080p to ensure smooth streaming for your audience watching on different devices and bandwidth constraints.
-
 ### Can I download original video files from Stream?
 
 You cannot download the _exact_ input file that you uploaded. However, depending on your use case, you can use the [Downloadable Videos](/stream/viewing-videos/download-videos/) feature to get encoded MP4s for use cases like offline viewing.
@@ -42,54 +38,9 @@ Uploads over these limits will receive a [429 (Too Many Requests)](/support/trou
 
 Yes. Stream videos can be embedded on any domain, even domains not on Cloudflare.
 
-### What input file formats are supported?
-
-Users can upload video in the following file formats:
-
-MP4, MKV, MOV, AVI, FLV, MPEG-2 TS, MPEG-2 PS, MXF, LXF, GXF, 3GP, WebM, MPG, QuickTime
-
 ### Does Stream support High Dynamic Range (HDR) video content?
 
 When HDR videos are uploaded to Stream, they are re-encoded and delivered in SDR format, to ensure compatibility with the widest range of viewing devices.
-
-### What frame rates (FPS) are supported?
-
-Cloudflare Stream supports video file uploads for any FPS, however videos will be re-encoded for 70 FPS playback. If the original video file has a frame rate lower than 70 FPS, Stream will re-encode at the original frame rate.
-
-If the frame rate is variable we will drop frames (for example if there are more than 1 frames within 1/30 seconds, we will drop the extra frames within that period).
-
-### What browsers does Stream work on?
-
-You can embed the Stream player on the following platforms:
-
-<table-wrap>
-
-| Browser | Version                             |
-| ------- | ----------------------------------- |
-| Chrome  | Supported since Chrome version 88+  |
-| Firefox | Supported since Firefox version 87+ |
-| Edge    | Supported since Edge 89+            |
-| Safari  | Supported since Safari version 14+  |
-| Opera   | Supported since Opera version 75+   |
-
-</table-wrap>
-
-:::note[Note]
-
-Cloudflare Stream is not available on Chromium, as Chromium does not support H.264 videos.
-
-:::
-
-<table-wrap>
-
-| Mobile Platform       | Version                                                                  |
-| --------------------- | ------------------------------------------------------------------------ |
-| Chrome on Android     | Supported on Chrome 90                                                   |
-| UC Browser on Android | Supported on version 12.12+                                              |
-| Samsung Internet      | Supported on 13+                                                         |
-| Safari on iOS         | Supported on iOS 13.4+. Speed selector supported when not in fullscreen. |
-
-</table-wrap>
 
 ### What are the recommended upload settings for video uploads?
 

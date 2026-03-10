@@ -14,58 +14,17 @@ When an error code is marked with `***`, it means that the remaining numbers can
 
 | Error Code | Description                      | Retry | Troubleshooting                                                                      |
 | ---------- | -------------------------------- | ----- | ------------------------------------------------------------------------------------ |
-| `100010`   | Widget initialization failed     | No    | Reload page. If persistent, it indicates an automated device.                        |
-| `100020`   | Multiple initialization attempts | No    | Clear the existing widget before creating new one.                                   |
-| `100030`   | Invalid widget state             | No    | Reset widget with `turnstile.reset()`.                                               |
-| `102010`   | Invalid challenge response       | Yes   | Retry the challenge.                                                                 |
-| `102020`   | Network timeout during challenge | Yes   | Check internet connection and retry.                                                 |
-| `102030`   | Corrupted challenge data         | Yes   | Clear browser cache and retry.                                                       |
-| `103010`   | Browser compatibility issue      | Yes   | Refer to [supported browsers](/cloudflare-challenges/reference/supported-browsers/). |
-| `103020`   | JavaScript execution error       | Yes   | Ensure JavaScript is enabled.                                                        |
-| `103030`   | Browser extension interference   | Yes   | Disable extensions temporarily.                                                      |
-| `104010`   | Invalid widget configuration     | Yes   | Check widget parameters.                                                             |
-| `104020`   | Missing required parameters      | Yes   | Ensure all required options are provided.                                            |
-| `104030`   | Parameter type mismatch          | Yes   | Verify parameter data types.                                                         |
-| `105010`   | Deprecated API method            | No    | Update to the current API version.                                                   |
-| `105020`   | Invalid API configuration        | No    | Review [client-side configurations](/turnstile/get-started/client-side-rendering/).  |
-| `105030`   | Unsupported feature usage        | No    | Check feature availability.                                                          |
-| `106010`   | Generic parameter error          | Yes   | Review all widget parameters.                                                        |
-| `106020`   | Parameter validation failed      | Yes   | Check parameter format and values.                                                   |
 | `110100`   | Invalid sitekey                  | No    | Verify the sitekey in [Cloudflare dashboard](https://dash.cloudflare.com/).          |
 | `110110`   | Sitekey not found                | No    | Check sitekey spelling and dashboard configuration.                                  |
-| `110200`   | Domain not authorized            | No    | Add current domain in Hostname Management                                            |
-| `110420`   | Rate limiting active             | No    | Wait before retrying, review rate limits                                             |
-| `110430`   | Account suspended                | No    | Contact Cloudflare support.                                                          |
-| `110500`   | Browser not supported            | No    | Refer to [supported browsers](/cloudflare-challenges/reference/supported-browsers/). |
-| `110510`   | Feature not available            | No    | Check your account plan and feature availability.                                    |
-| `120010`   | Script loading failed            | Yes   | Check your internet connection and content blockers.                                 |
-| `120020`   | Resource timeout                 | Yes   | Retry after checking network stability                                               |
-| `120030`   | CDN unavailable                  | Yes   | Wait and retry. Check your firewall settings                                         |
-| `200010`   | Widget already rendered          | No    | Reset existing widget before re-rendering.                                           |
-| `200100`   | Widget not found                 | No    | Ensure the container element exists.                                                 |
-| `200500`   | Widget state error               | Yes   | Reset widget with `turnstile.reset()`.                                               |
-| `300*`     | Generic challenge failure        | No    | Bot behavior detected. Refer to [troubleshooting](#troubleshooting).                 |
-| `400020`   | Invalid widget size              | No    | Use valid size: `normal`, `compact`, `flexible`.                                                 |
-| `400030`   | Invalid appearance               | No    | Use valid appearance: `always`, `execute`, `interaction-only`.                       |
-| `400040`   | Invalid theme                    | No    | Use valid theme: `light`, `dark`, `auto`.                                            |
-| `600*`     | Generic challenge failure        | No    | Bot behavior detected. Refer to [troubleshooting](#troubleshooting).                 |
-
-## Error families
-
-| Family   | Category                         | Cause                          |
-| -------- | -------------------------------- | ------------------------------ |
-| `100***` | Initialization problems          | Page reload needed.            |
-| `102***` | Invalid parameters (network)     | Network or browser issues.     |
-| `103***` | Invalid parameters (browser)     | Browser compatibility issues.  |
-| `104***` | Invalid parameters (client-side) | Client validation failures.    |
-| `105***` | API compatibility                | Implementation error.          |
-| `106***` | Invalid parameters (general)     | Parameter validation failures. |
-| `110***` | Configuration issues             | Setup problems.                |
-| `120***` | Network or loading issues        | Connection problems.           |
-| `200***` | Widget issues                    | Widget state problems.         |
-| `300***` | Generic Challenge failure        | Bot detection.                 |
-| `400***` | Client configuration             | Invalid options.               |
-| `600***` | Generic Challenge failure        | Bot detection.                 |
+| `110200`   | Domain not authorized            | No    | Add current domain in Hostname Management.                                           |
+| `110600`   | Challenge timed out              | Yes   | The visitor's clock may be wrong, or the challenge took too long.                    |
+| `110620`   | Interaction timed out            | Yes   | The visitor did not interact with the widget in time. Reset with `turnstile.reset()`. |
+| `200100`   | Clock or cache problem           | No    | The visitor's clock is wrong or the challenge was cached by an intermediary.          |
+| `200500`   | Iframe load error                | Yes   | The Turnstile iframe could not load. Check if `challenges.cloudflare.com` is blocked. |
+| `300*`     | Generic challenge failure        | Yes   | Bot behavior detected. Refer to [troubleshooting](#troubleshooting).                 |
+| `400020`   | Invalid sitekey                  | No    | Verify the sitekey in [Cloudflare dashboard](https://dash.cloudflare.com/).          |
+| `400070`   | Sitekey disabled                 | No    | The sitekey is disabled. Check the [Cloudflare dashboard](https://dash.cloudflare.com/). |
+| `600*`     | Generic challenge failure        | Yes   | Bot behavior detected. Refer to [troubleshooting](#troubleshooting).                 |
 
 ---
 
@@ -77,6 +36,6 @@ You can troubleshoot these error codes using the following recommendations:
 
 :::caution[Error code `401`]
 
-Turnstile may occasionally generate a `401` Unauthorized error in your browser console during a security check. This is not typically a problem with your implementation. This error often occurs when the widget attempts to request a [Private Access Token](/cloudflare-challenges/reference/private-access-tokens/) that your device or browser does not support yet. 
+Turnstile may occasionally generate a `401` Unauthorized error in your browser console during a security check. This is not typically a problem with your implementation. This error often occurs when the widget attempts to request a [Private Access Token](/cloudflare-challenges/reference/private-access-tokens/) that your device or browser does not support yet.
 
 You can generally safely ignore the `401` error, as it is an expected part of Turnstile's underlying Challenge Platform workflow. If the widget is successfully resolving and you are receiving a token, no action is required.

@@ -3,6 +3,12 @@ link: "/realtime/realtimekit/release-notes/android-core/"
 productName: RealtimeKit Android Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-03-06"
+    title: RealtimeKit Android Core 1.6.2
+    description: |-
+      **Fixes**
+      
+      - Avoid crash when using Ktor versions 3.4.0 and above
   - publish_date: "2026-02-06"
     title: RealtimeKit Android Core 1.6.1
     description: |-

@@ -82,6 +82,50 @@ Not yet. Local development currently has the following limitation(s):
 
 <Render file="remote-binding-note" product="workers" />
 
+### How do I render authenticated pages using the REST API?
+
+If the page you are rendering requires authentication, you can pass credentials using one of the following methods. These parameters work with all [REST API](/browser-rendering/rest-api/) endpoints.
+
+HTTP Basic Auth:
+
+```json
+{
+  "authenticate": {
+    "username": "user",
+    "password": "pass"
+  }
+}
+```
+
+Cookie-based authentication:
+
+```json
+{
+  "cookies": [
+    {
+      "name": "session_id",
+      "value": "abc123",
+      "domain": "example.com",
+      "path": "/",
+      "secure": true,
+      "httpOnly": true
+    }
+  ]
+}
+```
+
+Token-based authentication:
+
+```json
+{
+  "setExtraHTTPHeaders": {
+    "Authorization": "Bearer your-token"
+  }
+}
+```
+
+For complete working examples of all three methods, refer to [Capture a screenshot of an authenticated page](/browser-rendering/rest-api/screenshot-endpoint/#capture-a-screenshot-of-an-authenticated-page).
+
 ### Will Browser Rendering be detected by Bot Management?
 
 Yes, Browser Rendering requests are always identified as bot traffic by Cloudflare. Cloudflare does not enforce bot protection by default — that is the customer's choice.
