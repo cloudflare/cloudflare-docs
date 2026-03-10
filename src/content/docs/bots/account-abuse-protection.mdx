@@ -10,7 +10,7 @@ sidebar:
 
 ---
 
-import { Description, DashButton } from "~/components"
+import { Description, DashButton, Steps } from "~/components"
 
 <Description>
 
@@ -37,10 +37,24 @@ User ID is a cryptographically hashed, per-zone identifier that customers can us
 - Review network patterns or signals associated with specific users.
 
 :::note[Data privacy]
-User profiling was created with privacy in mind. Its design and engineering align without privacy and compliance programs and contain technical controls that protect the privacy of users. User IDs are created by encrypting the primary credentials your users use to access your applications. 
+User profiling was created with privacy in mind. Its design and engineering align without privacy and compliance programs and contain technical controls that protect the privacy of users. Hashed User IDs are created by encrypting the primary credentials your users use to access your applications. 
 
 Other Cloudflare customers cannot access your user profiles. They are unique to your zone. 
 :::
+
+User ID is enabled by default in the Cloudflare dashboard.
+
+To edit or disable the setting:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+    <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. Filter by **Fraud**.
+3. Go to **User ID**.
+4. Turn **User ID** on or off.
+</Steps>
 
 ### Ephemeral IDs
 
@@ -48,7 +62,7 @@ Customers using Cloudflare [Turnstile](/turnstile/) can utilize ephemeral IDs fo
 
 Refer to [Fraud detection with ephemeral IDs](/turnstile/tutorials/fraud-detection-with-ephemeral-ids/) for more information.
 
-### Account Takeover Detection
+### Account takeover detections
 
 Cloudflare Bot Management includes dedicated detection IDs for account takeover attacks. 
 
@@ -64,7 +78,7 @@ Fraud detections requires the following configurations and settings to be enable
 
 #### Security Settings
 
-- User ID: Cloudflare encrypts or hashes your user IDs to better understand typical user traffic patterns across your applications. Enabling Cloudflare to create user ID mappings to your users will allow you to receive account takeover and bulk account creation detections. 
+- User ID: Cloudflare encrypts or hashes your user IDs to better understand typical user traffic patterns across your applications. Enabling Cloudflare to create hashed user ID mappings to your users will allow you to receive account takeover and bulk account creation detections. 
 
 #### Eligible traffic 
 
@@ -106,7 +120,7 @@ Cloudflare does not store email addresses during this analysis. All detections p
 
 ### Mitigations
 
-The following fraud detection fields can be used in Security Rules to help identify and mitigate suspicious traffic. 
+The following Fraud detection fields can be used in Security Rules to help identify and mitigate suspicious traffic. 
 
 #### Security Rules
 
@@ -129,12 +143,12 @@ You can add Fraud detection fields to existing or new [LogPush](/logs/logpush/) 
 
 ## Analytics
 
-You can find Fraud data and detections in Security analytics, where you can see top User IDs. 
+You can find Fraud data and detections in Security Analytics, where you can see top User IDs. 
 
-<DashButton url="/?to=/:account/security-center/analytics" />
+<DashButton url="/?to=/:account/:zone/security/analytics" />
 
 Fraud fields can be used as filters to identify suspicious patterns in your traffic. 
 
-The new User ID field within Security analytics also provides Fraud customers with data that can help review detections and patterns by individual users rather than requests. 
+The User ID field within Security Analytics also provides Fraud customers with data that can help review detections and patterns per individual users rather than requests. You can review user level aggregations for IPs and IP counts, event types (login or sign up), locations, devices, and browsers. 
 
-You can review user level aggregations for IPs and IP Counts, Events, Locations, and Browsers. A user level profile also provides a quick way to review the latest events associated with a user so that you can identify anomalies. 
+A user level profile also provides a quick way to review the latest events associated with a user so that you can identify any anomalies and create a custom rule to block or challenge that user.
