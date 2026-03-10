@@ -13,30 +13,30 @@ When planning your private network addressing and configuring [Split Tunnel](/cl
 
 ## IPv4 ranges
 
-| Name                                                    | Default CIDR     | Configurable |
-| ------------------------------------------------------- | ---------------- | ------------ |
-| [Cloudflare source IPs](#cloudflare-source-ips)         | `100.64.0.0/12`  | Yes          |
-| [Gateway initial resolved IPs](#gateway-initial-resolved-ips)   | `100.80.0.0/16`  | No           |
-| [WARP device IPs](#warp-device-ips)                     | `100.96.0.0/12`  | Yes          |
-| [Private Load Balancer IPs](#private-load-balancer-ips) | `100.112.0.0/16` | No           |
+| Name                                                          | Default CIDR     | Configurable |
+| ------------------------------------------------------------- | ---------------- | ------------ |
+| [Cloudflare source IPs](#cloudflare-source-ips)               | `100.64.0.0/12`  | Yes          |
+| [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `100.80.0.0/16`  | No           |
+| [WARP device IPs](#warp-device-ips)                           | `100.96.0.0/12`  | Yes          |
+| [Private Load Balancer IPs](#private-load-balancer-ips)       | `100.112.0.0/16` | No           |
 
 ## IPv6 ranges
 
-| Name                                                  | Default CIDR               | Configurable |
-| ----------------------------------------------------- | -------------------------- | ------------ |
-| [WARP device IPs](#warp-device-ips)                   | `2606:4700:0cf1:1000::/64` | No           |
+| Name                                                          | Default CIDR               | Configurable |
+| ------------------------------------------------------------- | -------------------------- | ------------ |
+| [WARP device IPs](#warp-device-ips)                           | `2606:4700:0cf1:1000::/64` | No           |
 | [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `2606:4700:0cf1:4000::/64` | No           |
-| [Cloudflare source IPs](#cloudflare-source-ips)       | `2606:4700:0cf1:5000::/64` | No           |
+| [Cloudflare source IPs](#cloudflare-source-ips)               | `2606:4700:0cf1:5000::/64` | No           |
 
 ## Cloudflare source IPs
 
-Cloudflare source IPs are the source addresses used when a Cloudflare service sends traffic to your private networks. The following services use this range:
+Cloudflare source IPs are the source addresses used when a Cloudflare service sends traffic to your private networks. This range applies to customers using [Unified Routing (beta)](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta). Examples of requests that are sourced from this range include:
 
-- [Load Balancing](/load-balancing/) — when a private Load Balancer distributes traffic to private endpoints.
-- [Gateway](/cloudflare-one/traffic-policies/) — when Gateway proxies traffic to private origins.
-- [Browser Isolation](/cloudflare-one/remote-browser-isolation/) — when isolated browser sessions connect to private applications.
+- [Load Balancing](/load-balancing/monitors/) — health check requests to private endpoints
+- [Gateway DNS resolver](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/) — DNS resolution for private hostnames
+- [Cloudflare Workers](/workers/) — requests from Workers to private origins
 
-The default IPv4 range is `100.64.0.0/12`. You can change this to a different `/12` CIDR to avoid conflicts with your existing IP address management plan. For configuration instructions, refer to [Configure Cloudflare source IPs](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-cloudflare-source-ips/).
+The default IPv4 range is `100.64.0.0/12`. You can change this to a different `/12` CIDR to avoid conflicts with your existing IP address management plan. For more information on affected services and configuration instructions, refer to [Configure Cloudflare source IPs](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-cloudflare-source-ips/).
 
 ## Gateway initial resolved IPs
 
@@ -76,13 +76,13 @@ Cloudflare recommends adding back the IPs that are not explicitly used for Cloud
 
 You can use the calculator below to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if your deployment requires [Gateway initial resolved IPs](#gateway-initial-resolved-ips) (`100.80.0.0/16`) and [WARP device IPs](#warp-device-ips) (`100.96.0.0/12`), delete `100.64.0.0/10` from Split Tunnels and add back `100.64.0.0/12`, `100.81.0.0/16`, `100.82.0.0/15`, `100.84.0.0/14`, `100.88.0.0/13`, and `100.112.0.0/12`.
 
-  <SubtractIPCalculator
-    client:load
-    defaults={{
-      base: "100.64.0.0/10",
-      exclude: ["100.80.0.0/16", "100.96.0.0/12"]
-    }}
-  />
+<SubtractIPCalculator
+	client:load
+	defaults={{
+		base: "100.64.0.0/10",
+		exclude: ["100.80.0.0/16", "100.96.0.0/12"],
+	}}
+/>
 
 ### Include mode
 
