@@ -28,7 +28,11 @@ Use `outbound` to intercept all outbound HTTP traffic regardless of destination:
 
 <TypeScriptExample>
 ```ts
-import { Sandbox } from "@cloudflare/sandbox";
+import { Sandbox, ContainerProxy } from "@cloudflare/sandbox";
+import type { OutboundHandlerContext } from "@cloudflare/sandbox";
+
+// ContainerProxy must be exported from your Worker for outbound interception to work
+export { ContainerProxy };
 
 export class MySandbox extends Sandbox {
   static outbound = (request: Request, env: Env, ctx: OutboundHandlerContext) => {
@@ -125,10 +129,11 @@ Use `outboundHandlers` to define named egress policies. Call `setOutboundHandler
 <TypeScriptExample>
 ```ts
 import { Sandbox, getSandbox } from "@cloudflare/sandbox";
+import type { OutboundHandlerContext } from "@cloudflare/sandbox";
 
 export class MySandbox extends Sandbox {
   static outboundHandlers = {
-    allowHosts: async (request: Request, env: Env, ctx: { allowedHostnames: string[] }) => {
+    allowHosts: async (request: Request, env: Env, ctx: OutboundHandlerContext) => {
       const url = new URL(request.url);
       if (ctx.params.allowedHostnames.includes(url.hostname)) {
         return fetch(request);
@@ -139,8 +144,7 @@ export class MySandbox extends Sandbox {
     blockAll: async () => {
       return new Response("Forbidden", { status: 403 });
     },
-
-};
+  };
 }
 
 export default {
@@ -158,8 +162,7 @@ export default {
     await sandbox.exec("node user-script.js");
 
     return new Response("Done");
-
-},
+  },
 };
 
 ```
@@ -176,4 +179,3 @@ In local development, `wrangler dev` mirrors this behavior using a sidecar proce
 - [Outbound Workers for Containers](/containers/platform-details/outbound-workers/) — Low-level `ctx.container` API
 - [Sandbox options](/sandbox/configuration/sandbox-options/) — Configure sandbox behavior
 - [Environment variables](/sandbox/configuration/environment-variables/) — Store secrets for use in handlers
-```
