@@ -184,7 +184,7 @@ await sandbox.writeFile('/data/results.json', JSON.stringify(results));
 </TypeScriptExample>
 
 :::note
-You can use an environment variable to toggle `localBucket` between local development and production. Set `LOCAL_DEV` in your Wrangler configuration using `vars` for local development, then reference it in your code:
+You can use an environment variable to toggle `localBucket` between local development and production. Set an environment variable such as `LOCAL_DEV` in your Wrangler configuration using `vars` for local development, then reference it in your code:
 
 ```typescript
 await sandbox.mountBucket('MY_BUCKET', '/data', {
