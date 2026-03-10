@@ -78,7 +78,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 ```
 
 :::note
-When both `cf-aig-collect-log: false` and `cf-aig-collect-log-payload: false` are set, the entire log entry (including metadata) is skipped. Use `cf-aig-collect-log-payload: false` on its own if you only want to suppress payload storage while retaining metadata logs.
+If `cf-aig-collect-log` is set to `false`, the entire log entry (including metadata) is skipped regardless of the `cf-aig-collect-log-payload` value. Use `cf-aig-collect-log-payload: false` on its own if you only want to suppress payload storage while retaining metadata logs.
 :::
 
 ## DLP fields in logs
