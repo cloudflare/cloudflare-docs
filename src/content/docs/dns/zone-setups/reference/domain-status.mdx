@@ -98,10 +98,8 @@ You can also [manually remove](/fundamentals/manage-domains/remove-domain/) your
 
 Your zone has been archived. Cloudflare still responds to DNS queries for deleted zones on the assigned Cloudflare nameserver IPs (for non-deleted DNS records) and you can re-add the domain to Cloudflare by following the [regular onboarding flow](/fundamentals/manage-domains/add-site/).
 
-:::caution[New nameserver assignment]
-When you re-add a previously deleted domain, Cloudflare assigns a **new nameserver pair**. This is a security measure to prevent domain hijacking. The nameservers from the previous setup will not work.
-
-After re-adding the domain, check the assigned nameservers in the Cloudflare dashboard and [update your registrar](/dns/nameservers/update-nameservers/) accordingly. If the old nameservers remain at your registrar, the domain will show as **Pending Nameserver Update** and will not activate.
+:::caution
+When you re-add a previously deleted domain, Cloudflare assigns a new nameserver pair as a security measure. The nameservers from the previous setup will not work. You must [update your registrar](/dns/nameservers/update-nameservers/) with the new nameservers, or the domain will remain in a **Pending Nameserver Update** status.
 :::
 
 After being deleted for seven days, zones are automatically [purged](#purged).

@@ -52,20 +52,16 @@ If that is the case, when setting up your zone in Cloudflare or opting for a dif
 
 ## Restricted nameserver management
 
-Some providers act as registrars but do not allow you to change nameservers. If your domain registrar or hosting platform does not expose nameserver settings, you have two options:
+Some providers act as registrars but do not expose nameserver settings. If you cannot change nameservers at your registrar or hosting platform, you can either:
 
-- **Transfer your domain** to a registrar that allows full nameserver management, such as [Cloudflare Registrar](/registrar/) or another registrar of your choice. After the transfer completes, update your nameservers to Cloudflare.
-- **Use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/)** instead of a primary (full) setup. A CNAME setup does not require nameserver changes. This option is available on Business and Enterprise plans.
+- Transfer your domain to a registrar that allows nameserver management, such as [Cloudflare Registrar](/registrar/).
+- Use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/) instead, which does not require nameserver changes. This option is available on Business and Enterprise plans.
 
 ### Platforms that already use Cloudflare
 
-Some platforms — such as Shopify and GoHighLevel — pre-configure domains with their own Cloudflare nameserver pair through partner programs (for example, [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) or Orange-to-Orange). When you add the same domain to your own Cloudflare account, Cloudflare assigns a different nameserver pair that conflicts with the platform configuration.
+Platforms like Shopify and GoHighLevel pre-configure domains with their own Cloudflare nameserver pair through partner programs such as [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/). Adding the same domain to your own Cloudflare account assigns a different nameserver pair, which creates a conflict.
 
-In this case, use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/) to avoid the nameserver conflict. A CNAME setup lets you proxy traffic through your own Cloudflare account without changing the nameservers at the registrar.
-
-:::note
-For provider-specific DNS guidance, refer to [Vendor-specific DNS records](/dns/manage-dns-records/reference/vendor-specific-records/).
-:::
+Use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/) to proxy traffic through your own account without changing the nameservers at the registrar. For provider-specific guidance, refer to [Vendor-specific DNS records](/dns/manage-dns-records/reference/vendor-specific-records/).
 
 ## Further guidance
 
