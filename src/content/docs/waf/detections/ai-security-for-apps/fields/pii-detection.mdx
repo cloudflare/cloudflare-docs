@@ -24,6 +24,10 @@ When AI Security for Apps is enabled and a request arrives at a `cf-llm` labeled
 
 The detection is based on [Presidio](https://microsoft.github.io/presidio/supported_entities/), a data protection and de-identification SDK. Refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) for the full list of recognized categories.
 
+:::note[Detecting PII in responses]
+AI Security for Apps PII detection runs on **incoming requests** (prompts) only. If you also need to detect PII in LLM **responses**, you can use [Sensitive Data Detection](/waf/managed-rules/sensitive-data-detection/) to scan response bodies for patterns like credit card numbers, Social Security numbers, and API keys. Sensitive Data Detection logs matches, but does not block responses. Use it alongside request-side rules for layered visibility.
+:::
+
 <Details header="Supported PII categories">
 
 | Category | Description |
@@ -69,6 +73,12 @@ The detection is based on [Presidio](https://microsoft.github.io/presidio/suppor
 | `FI_PERSONAL_IDENTITY_CODE` | Finnish personal identity code |
 
 </Details>
+
+### Be specific to reduce false positives
+
+The blanket `cf.llm.prompt.pii_detected` field returns `true` when _any_ PII category is detected — including broad categories like `PERSON`, `DATE_TIME`, and `LOCATION` that frequently appear in normal conversation. Blocking on this field alone will produce a high false-positive rate for most applications.
+
+Instead, **build rules against `cf.llm.prompt.pii_categories` and list only the categories that matter for your use case.** For example, a customer-support chatbot may need to block credit card numbers and SSNs but can safely ignore person names and dates. Start with the narrowest set of categories, monitor matches in [Security Analytics](/waf/analytics/security-analytics/), and expand only as needed.
 
 ### Example rules — fuzzy detection
 
