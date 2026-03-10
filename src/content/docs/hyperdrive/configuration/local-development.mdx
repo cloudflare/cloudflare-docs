@@ -10,7 +10,7 @@ import { WranglerConfig } from "~/components";
 Hyperdrive can be used when developing and testing your Workers locally. [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, provides two options for local development:
 
 - **`wrangler dev`** (default): Runs your Worker code locally on your machine. You configure a `localConnectionString` to connect directly to a database (either local or remote). Hyperdrive query caching does not take effect in this mode.
-- **`wrangler dev --remote`**: Runs your Worker on Cloudflare's using your deployed Hyperdrive configuration. This is useful for testing with Hyperdrive's connection pooling and query caching enabled.
+- **`wrangler dev --remote`**: Runs your Worker on Cloudflare's edge using your deployed Hyperdrive configuration. This is useful for testing with Hyperdrive's connection pooling and query caching enabled.
 
 ## Use `wrangler dev`
 
@@ -47,6 +47,19 @@ For example, to set the connection string for a local database:
 export CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE="postgres://user:password@localhost:5432/databasename"
 npx wrangler dev
 ```
+
+### Configure with environment file
+Similar to using an environment variable we will allow for setting the same variable format
+`CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>`
+within a environment variable file such as `.env` or `.dev.vars` or `.dev.vars.<env>`.
+
+For example, to set the connection string for a local database: <br/>
+
+```ini title=".dev.vars"
+CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE="postgres://user:password@localhost:5432/databasename"
+```
+
+Setting with a environment variable file will have higher precedence and override any environment variable set on your machine.
 
 ### Configure in Wrangler configuration file
 
