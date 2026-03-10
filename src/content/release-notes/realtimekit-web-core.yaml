@@ -3,6 +3,21 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-03-10"
+    title: RealtimeKit Web Core 1.2.5
+    description: |-
+      **Compatibility:** Works best with RealtimeKit Web UI Kit 1.1.1 or later.
+
+      **Enhancements**
+
+      - Implemented retry limits for ICE connection failures to prevent indefinite connection attempts and improve reliability.
+      - Improved error handling for room join operations to provide more descriptive and actionable error messages.
+      - Room join errors are now thrown consistently when network connectivity is blocked by firewalls or when TURN servers are unreachable.
+
+      **Fixes**
+
+      - Fixed an issue in Connected Meetings where peer IDs were not regenerated when switching between rooms. Peer IDs are now correctly assigned per room session.
+
   - publish_date: "2026-01-30"
     title: RealtimeKit Web Core 1.2.4
     description: |-
