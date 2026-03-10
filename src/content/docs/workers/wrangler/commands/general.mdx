@@ -1,10 +1,9 @@
 ---
 pcx_content_type: reference
-title: Commands
-head:
-  - tag: title
-    content: Commands - Wrangler
-description: Create, develop, and deploy your Cloudflare Workers with Wrangler commands.
+title: General commands
+description: General Wrangler commands for developing, deploying, and managing Workers.
+sidebar:
+  order: 1
 ---
 
 import {
@@ -13,104 +12,18 @@ import {
 	Render,
 	Type,
 	MetaInfo,
-	WranglerConfig,
 	WranglerCommand,
 	WranglerNamespace,
 	PackageManagers,
 	DashButton,
 } from "~/components";
 
-Wrangler offers a number of commands to manage your Cloudflare Workers.
-
-- [`docs`](#docs) - Open this page in your default browser.
-- [`init`](#init) - Create a new project from a variety of web frameworks and templates.
-- [`complete`](#complete) - Generate shell completion scripts for Wrangler commands.
-- [`containers`](#containers) - Interact with Containers.
-- [`d1`](#d1) - Interact with D1.
-- [`vectorize`](#vectorize) - Interact with Vectorize indexes.
-- [`hyperdrive`](#hyperdrive) - Manage your Hyperdrives.
-- [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
-- [`dev`](#dev) - Start a local server for developing your Worker.
-- [`delete`](#delete) - Delete your Worker from Cloudflare.
-- [`kv namespace`](#kv-namespace) - Manage Workers KV namespaces.
-- [`kv key`](#kv-key) - Manage key-value pairs within a Workers KV namespace.
-- [`kv bulk`](#kv-bulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
-- [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
-- [`r2 object`](#r2-object) - Manage Workers R2 objects.
-- [`r2 sql`](#r2-sql) - Query tables in R2 Data Catalog with R2 SQL.
-- [`setup`](#setup) - Configure your framework for Cloudflare automatically.
-- [`secret`](#secret) - Manage the secret variables for a Worker.
-- [`secret bulk`](#secret-bulk) - Manage multiple secret variables for a Worker.
-- [`secrets-store secret`](#secrets-store-secret) - Manage account secrets within a secrets store.
-- [`secrets-store store`](#secrets-store-store) - Manage your store within secrets store.
-- [`workflows`](#workflows) - Manage and configure Workflows.
-- [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
-- [`pages`](#pages) - Configure Cloudflare Pages.
-- [`pipelines`](#pipelines) - Configure Cloudflare Pipelines.
-- [`queues`](#queues) - Configure Workers Queues.
-- [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
-- [`logout`](#logout) - Remove Wrangler's authorization for accessing your account.
-- [`auth token`](#auth-token) - Retrieve your current authentication token or credentials.
-- [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
-- [`versions`](#versions) - Retrieve details for recent versions.
-- [`deployments`](#deployments) - Retrieve details for recent deployments.
-- [`rollback`](#rollback) - Rollback to a recent deployment.
-- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace).
-- [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
-- [`cert`](#cert) - Manage certificates used for mTLS and Certificate Authority (CA) chain connections.
-- [`types`](#types) - Generate types from bindings and module rules in configuration.
-- [`telemetry`](#telemetry) - Configure whether Wrangler can collect anonymous usage data.
-- [`check`](#check) - Validate your Worker.
-
-:::note
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-:::
-
----
-
-## How to run Wrangler commands
-
-This page provides a reference for Wrangler commands.
-
-```txt
-wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager.
-
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="<COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]"
-/>
-
-You can add Wrangler commands that you use often as scripts in your project's `package.json` file:
-
-```json
-{
-  ...
-  "scripts": {
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev"
-  }
-  ...
-}
-```
-
-You can then run them using your package manager of choice:
-
-<PackageManagers type="run" args="deploy" />
-
----
+Learn about general Wrangler commands for developing, deploying, and managing Workers and other pieces of the Cloudflare developer platform.
 
 <WranglerCommand
 	command="docs"
 	description="Open the Cloudflare developer documentation in your default browser."
 />
-
----
 
 ## `init`
 
@@ -129,36 +42,6 @@ wrangler init [<NAME>] [OPTIONS]
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
-
----
-
-## `containers`
-
-Interact with Cloudflare's Container Platform.
-
-<Render file="wrangler-commands/containers" product="workers" />
-
-## `d1`
-
-Interact with Cloudflare's D1 service.
-
-<WranglerNamespace namespace="d1" headingLevel={3} />
-
----
-
-## `hyperdrive`
-
-Manage [Hyperdrive](/hyperdrive/) database configurations.
-
-<WranglerNamespace namespace="hyperdrive" headingLevel={3} />
-
----
-
-## `vectorize`
-
-Interact with a [Vectorize](/vectorize/) vector database.
-
-<WranglerNamespace namespace="vectorize" headingLevel={3} />
 
 ---
 
@@ -377,20 +260,6 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 
 ---
 
-<Render file="wrangler-commands/kv" product="workers" />
-
----
-
-<Render file="wrangler-commands/r2" product="workers" />
-
----
-
-## r2 SQL
-
-<Render file="wrangler-commands/r2-sql" product="workers" />
-
----
-
 <WranglerCommand command="setup" headingLevel={2} />
 
 This command configures your project for Cloudflare Workers without deploying. It performs the same [automatic project configuration](/workers/framework-guides/automatic-configuration/) as `wrangler deploy`, but does not deploy. This is useful when you want to review the generated configuration before deploying.
@@ -401,7 +270,7 @@ This command configures your project for Cloudflare Workers without deploying. I
 
 Manage the secret variables for a Worker.
 
-This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#versions-secret-put) commands.
+This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/general/#versions-secret-put) commands.
 
 <WranglerCommand command="secret put" headingLevel={3} />
 
@@ -471,116 +340,7 @@ Finished processing secrets JSON file:
 🚨 1 secrets failed to upload
 ```
 
-## `secrets-store secret`
-
-With the release of [Secrets Store](/secrets-store/) in open beta, you can use the following commands to manage your account secrets.
-
-:::note[`--remote` option]
-In order to interact with Secrets Store in production, you should append `--remote` to your command. Without it, your command will default to [local development mode](/workers/development-testing/).
-:::
-
-<WranglerCommand command="secrets-store secret create" headingLevel={3} />
-
-The following is an example of using the `create` command to create an account-level secret.
-
-```sh
-npx wrangler secrets-store secret create 8f7a1cdced6342c18d223ece462fd88d --name ServiceA_key-1 --scopes workers --remote
-```
-
-```sh output
-✓ Enter a secret value: › ***
-
-🔐 Creating secret... (Name: ServiceA_key-1, Value: REDACTED, Scopes: workers, Comment: undefined)
-✓ Select an account: › My account
-✅ Created secret! (ID: 13bc7498c6374a4e9d13be091c3c65f1)
-```
-
-<WranglerCommand command="secrets-store secret update" headingLevel={3} />
-
-<WranglerCommand command="secrets-store secret duplicate" headingLevel={3} />
-
-<WranglerCommand command="secrets-store secret get" headingLevel={3} />
-
-The following is an example with the expected output:
-
-```sh
-npx wrangler secrets-store secret get 8f7a1cdced6342c18d223ece462fd88d --secret-id 13bc7498c6374a4e9d13be091c3c65f1 --remote
-```
-
-```sh output
-🔐 Getting secret... (ID: 13bc7498c6374a4e9d13be091c3c65f1)
-✓ Select an account: › My account
-| Name                        | ID                                  | StoreID                             | Comment | Scopes  | Status  | Created                | Modified               |
-|-----------------------------|-------------------------------------|-------------------------------------|---------|---------|---------|------------------------|------------------------|
-| ServiceA_key-1          | 13bc7498c6374a4e9d13be091c3c65f1    | 8f7a1cdced6342c18d223ece462fd88d    |         | workers | active  | 4/9/2025, 10:06:01 PM  | 4/15/2025, 09:13:05 AM |
-```
-
-<WranglerCommand command="secrets-store secret delete" headingLevel={3} />
-
-<WranglerCommand command="secrets-store secret list" headingLevel={3} />
-
-## `secrets-store store`
-
-Use the following commands to manage your store.
-
-:::note[Store limitation]
-[Secrets Store](/secrets-store/) is in open beta. Currently, you can only have one store per Cloudflare account.
-:::
-
-<WranglerCommand command="secrets-store store create" headingLevel={3} />
-
-The following is an example of using the `create` command to create a store.
-
-```sh
-npx wrangler secrets-store store create default --remote
-```
-
-```sh output
-🔐 Creating store... (Name: default)
-✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
-```
-
-<WranglerCommand command="secrets-store store delete" headingLevel={3} />
-
-The following is an example of using the `delete` command to delete a store.
-
-```sh
-npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211 --remote
-```
-
-```sh output
-🔐 Deleting store... (Name: d2dafaeac9434de2b6d08b292ce08211)
-✅ Deleted store! (ID: d2dafaeac9434de2b6d08b292ce08211)
-```
-
-<WranglerCommand command="secrets-store store list" headingLevel={3} />
-
-The following is an example of using the `list` command to list stores.
-
-```sh
-npx wrangler secrets-store store list --remote
-```
-
-```sh output
-🔐 Listing stores...
-┌─────────┬──────────────────────────────────┬──────────────────────────────────┬──────────────────────┬──────────────────────┐
-│ Name    │ ID                               │ AccountID                        │ Created              │ Modified             │
-├─────────┼──────────────────────────────────┼──────────────────────────────────┼──────────────────────┼──────────────────────┤
-│ default │ 8876bad33f164462bf0743fe8adf98f4 │ REDACTED │ 4/9/2025, 1:11:48 PM  │ 4/9/2025, 1:11:48 PM │
-└─────────┴──────────────────────────────────┴──────────────────────────────────┴──────────────────────┴──────────────────────┘
-```
-
-## `workflows`
-
-:::note
-
-The `wrangler workflows` command requires Wrangler version `3.83.0` or greater. Use `npx wrangler@latest` to always use the latest Wrangler version when invoking commands.
-
-:::
-
-Manage and configure [Workflows](/workflows/).
-
-<WranglerNamespace namespace="workflows" headingLevel={3} />
+---
 
 <WranglerCommand command="tail" />
 
@@ -594,38 +354,6 @@ It may take up to 1 minute (60 seconds) for a tail to exit sampling mode after a
 :::
 
 If sampling persists after using options to filter messages, consider using [instant logs](https://developers.cloudflare.com/logs/instant-logs/).
-
----
-
-## `pages`
-
-Configure Cloudflare Pages.
-
-<WranglerNamespace namespace="pages" headingLevel={3} />
-
-{/* :::note[Deployment tail]
-Filtering with `--ip self` will allow tailing your deployed Functions beyond the normal request per second limits.
-:::
-
-:::[Deploy]
-Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `--project-name` argument, you will be prompted to enter a project name in your terminal after you run the command.
-::: \*/}
-
----
-
-## `pipelines`
-
-Manage your [Pipelines](/pipelines/).
-
-<WranglerNamespace namespace="pipelines" headingLevel={3} />
-
----
-
-## `queues`
-
-Manage your Workers [Queues](/queues/) configurations.
-
-<WranglerNamespace namespace="queues" headingLevel={3} />
 
 ---
 
@@ -750,6 +478,7 @@ wrangler auth token [OPTIONS]
   - Return output as JSON with token type information. This also enables retrieving API key/email credentials.
 
 The command returns whichever authentication method is currently configured, in the following order of precedence:
+
 - API token from `CLOUDFLARE_API_TOKEN` environment variable
 - API key/email from `CLOUDFLARE_API_KEY` and `CLOUDFLARE_EMAIL` environment variables (requires `--json` flag, since this method uses two values instead of a single token)
 - OAuth token from `wrangler login` (automatically refreshed if expired)
@@ -860,183 +589,6 @@ wrangler rollback [<VERSION_ID>] [OPTIONS]
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
-
----
-
-## dispatch namespace
-
-<WranglerCommand command="dispatch-namespace list" headingLevel={3} />
-
-<WranglerCommand command="dispatch-namespace get" headingLevel={3} />
-
-<WranglerCommand command="dispatch-namespace create" headingLevel={3} />
-
-<WranglerCommand command="dispatch-namespace delete" headingLevel={3} />
-
-:::note
-
-You must delete all user Workers in the dispatch namespace before it can be deleted.
-:::
-
-<WranglerCommand command="dispatch-namespace rename" headingLevel={3} />
-
----
-
-## `mtls-certificate`
-
-Manage client certificates used for mTLS connections in subrequests.
-
-These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/bindings/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
-
-<WranglerCommand command="mtls-certificate upload" headingLevel={3} />
-
-The following is an example of using the `upload` command to upload an mTLS certificate.
-
-```sh
-npx wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-origin-cert
-```
-
-```sh output
-Uploading mTLS Certificate my-origin-cert...
-Success! Uploaded mTLS Certificate my-origin-cert
-ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
-Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
-Expires: 1/01/2025
-```
-
-You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your [Wrangler configuration file](/workers/wrangler/configuration/):
-
-<WranglerConfig>
-
-```jsonc
-{
-	"mtls_certificates": [
-		{
-			"binding": "MY_CERT",
-			"certificate_id": "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d"
-		}
-	]
-}
-```
-
-</WranglerConfig>
-
-Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
-
-<WranglerCommand command="mtls-certificate list" headingLevel={3} />
-
-The following is an example of using the `list` command to upload an mTLS certificate.
-
-```sh
-npx wrangler mtls-certificate list
-```
-
-```sh output
-ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
-Name: my-origin-cert
-Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
-Created on: 1/01/2023
-Expires: 1/01/2025
-
-ID: c5d004d1-8312-402c-b8ed-6194328d5cbe
-Issuer: CN=another-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
-Created on: 1/01/2023
-Expires: 1/01/2025
-```
-
-<WranglerCommand command="mtls-certificate delete" headingLevel={3} />
-
-The following is an example of using the `delete` command to delete an mTLS certificate.
-
-```sh
-npx wrangler mtls-certificate delete --id 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
-```
-
-```sh output
-Are you sure you want to delete certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d (my-origin-cert)? [y/n]
-yes
-Deleting certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d...
-Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
-```
-
----
-
-## `cert`
-
-Manage mTLS client certificates and Certificate Authority (CA) chain certificates used for secured connections.
-
-These certificates can be used in Hyperdrive configurations, enabling them to present the certificate when connecting to an origin database that requires client authentication (mTLS) or a custom Certificate Authority (CA).
-
-<WranglerCommand command="cert upload mtls-certificate" headingLevel={3} />
-
-The following is an example of using the `upload` command to upload an mTLS certificate.
-
-```sh
-npx wrangler cert upload --cert cert.pem --key key.pem --name my-origin-cert
-```
-
-```sh output
-Uploading mTLS Certificate my-origin-cert...
-Success! Uploaded mTLS Certificate my-origin-cert
-ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
-Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
-Expires: 1/01/2025
-```
-
-Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
-
-<WranglerCommand command="cert upload certificate-authority" headingLevel={3} />
-
-The following is an example of using the `upload` command to upload an CA certificate.
-
-```sh
-npx wrangler cert upload certificate-authority --ca-cert server-ca-chain.pem --name SERVER_CA_CHAIN
-
-```
-
-```sh output
-Uploading CA Certificate SERVER_CA_CHAIN...
-Success! Uploaded CA Certificate SERVER_CA_CHAIN
-ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
-Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
-Expires: 1/01/2025
-```
-
-<WranglerCommand command="cert list" headingLevel={3} />
-
-The following is an example of using the `list` command to upload an mTLS or CA certificate.
-
-```sh
-npx wrangler cert list
-```
-
-```sh output
-ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
-Name: my-origin-cert
-Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
-Created on: 1/01/2023
-Expires: 1/01/2025
-
-ID: c5d004d1-8312-402c-b8ed-6194328d5cbe
-Issuer: CN=another-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
-Created on: 1/01/2023
-Expires: 1/01/2025
-```
-
-<WranglerCommand command="cert delete" headingLevel={3} />
-
-The following is an example of using the `delete` command to delete an mTLS or CA certificate.
-
-```sh
-npx wrangler cert delete --id 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
-```
-
-```sh output
-Are you sure you want to delete certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d (my-origin-cert)? [y/n]
-yes
-Deleting certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d...
-Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
-```
 
 ---
 

@@ -28,6 +28,7 @@ import MelottsCode from "~/components/models/code/MelottsCode.astro";
 import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
 import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 
+import Render from "~/components/Render.astro";
 import { authorData } from "~/components/models/data";
 import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
 import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
@@ -159,6 +160,8 @@ if (model.name.includes("@cf/openai/gpt-oss")) {
 
 const author = (authorData as any)[model.name.split("/")[1]];
 
+const hasSupportedLanguages = model.name === "@cf/deepgram/nova-3";
+
 // Strong type coercion needed due to Starlight's component override for hideTitle
 const starlightPageProps = {
 	frontmatter: {
@@ -167,6 +170,9 @@ const starlightPageProps = {
 		pcx_content_type: "reference",
 	},
 	headings: [
+		hasSupportedLanguages
+			? { depth: 2, slug: "supported-languages", text: "Supported languages" }
+			: false,
 		hasPlayground
 			? { depth: 2, slug: "Playground", text: "Playground" }
 			: false,
@@ -261,6 +267,15 @@ const starlightPageProps = {
 					</ul>
 				</p>
 			</Aside>
+		)
+	}
+
+	{
+		hasSupportedLanguages && (
+			<>
+				<h2 id="supported-languages">Supported languages</h2>
+				<Render file="nova-3-supported-languages" product="workers-ai" />
+			</>
 		)
 	}
 

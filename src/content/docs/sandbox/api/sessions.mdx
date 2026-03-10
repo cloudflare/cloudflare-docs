@@ -29,6 +29,7 @@ const session = await sandbox.createSession(options?: SessionOptions): Promise<E
   - `id` - Custom session ID (auto-generated if not provided)
   - `env` - Environment variables for this session: `Record<string, string | undefined>`
   - `cwd` - Working directory (default: `"/workspace"`)
+  - `commandTimeoutMs` - Maximum time in milliseconds that any command in this session can run before timing out. Individual commands can override this with the `timeout` option on `exec()`.
 
 **Returns**: `Promise<ExecutionSession>` with all sandbox methods bound to this session
 
@@ -56,6 +57,16 @@ const [prodResult, testResult] = await Promise.all([
   prodSession.exec('npm run build'),
   testSession.exec('npm run build')
 ]);
+
+// Session with a default command timeout
+const session = await sandbox.createSession({
+  commandTimeoutMs: 5000 // 5s timeout for all commands
+});
+
+await session.exec('sleep 10'); // Times out after 5s
+
+// Per-command timeout overrides session-level timeout
+await session.exec('sleep 10', { timeout: 3000 }); // Times out after 3s
 ```
 </TypeScriptExample>
 
