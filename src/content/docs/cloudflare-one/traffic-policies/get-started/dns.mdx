@@ -35,8 +35,8 @@ You can filter DNS queries from individual devices (for example, employee laptop
 
 To filter DNS requests from an individual device such as a laptop or phone:
 
-1. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device. WARP is a lightweight agent that routes the device's DNS queries through Cloudflare so Gateway can inspect and filter them.
-2. In the WARP client, open **Settings** and log in to your organization's <GlossaryTooltip term="team name">Zero Trust instance</GlossaryTooltip>. This tells WARP which Gateway policies to enforce.
+1. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/download-warp/) on your device. WARP is a lightweight agent that routes the device's DNS queries through Cloudflare so Gateway can inspect and filter them.
+2. [Enroll the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) in your organization's <GlossaryTooltip term="team name">Zero Trust instance</GlossaryTooltip> [^1]. This tells WARP which Gateway policies to enforce.
 3. (Optional) If you want to display a [custom block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) instead of a generic browser error when a request is blocked, [install a Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
 
 ### Connect DNS locations

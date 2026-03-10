@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Details, Badge, Render } from "~/components";
+import { Details, Badge, Render, Tabs, TabItem } from "~/components";
 
 Captive portals are used by public Wi-Fi networks (such as airports, coffee shops, and hotels) to make a user agree to their Terms of Service or provide payment before allowing access to the Internet. When a user connects to the Wi-Fi, the captive portal blocks all HTTPS traffic until the user completes a captive portal login flow in their browser. This prevents the WARP client from connecting to Cloudflare. At the same time, WARP creates [firewall rules](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) on the device to send all traffic to Cloudflare. The user is therefore unable to access the captive portal login screen unless they temporarily disable WARP.
 
@@ -74,10 +74,16 @@ Captive portal logs are used by Cloudflare Support to troubleshoot WARP captive 
 
 To get captive portal logs:
 
+<Tabs>
+<TabItem label="Version 2026.1 and earlier">
+
 1. Open the WARP client.
 2. Go to **Settings** (gear icon) > **Preferences** > **Advanced**.
 3. Select **Collect Captive Portal Diag**.
 4. The WARP client will ask if the device is connected (or attempting to connect) to the Wi-Fi network that is causing issues. Select **Yes** to confirm.
+
+</TabItem>
+</Tabs>
 
 :::note[macOS limitation]
 On macOS, [**Automatically join this network**](https://support.apple.com/guide/mac-help/wi-fi-settings-on-mac-mh11935/mac) should be enabled on the Wi-Fi network that is causing issues. This setting is enabled by default. If manually disabled, the captive portal diagnostic will fail to capture meaningful data and the device will not automatically reconnect to this network.
