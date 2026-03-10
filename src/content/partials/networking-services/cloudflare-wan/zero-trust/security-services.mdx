@@ -19,7 +19,7 @@ Cloudflare WAN carries three types of traffic, and different security services a
 
 ### Cloudflare Network Firewall
 
-[Cloudflare Network Firewall]({props.networkFirewallURL}) provides packet-level filtering at layers 3 and 4. You define allow or block rules based on IP addresses, ports, and protocols.
+<a href={props.networkFirewallURL}>Cloudflare Network Firewall</a> provides packet-level filtering at layers 3 and 4. You define allow or block rules based on IP addresses, ports, and protocols.
 
 - **Applies to**: inbound, outbound, and east-west traffic
 - **Included with**: Cloudflare WAN by default
@@ -38,7 +38,7 @@ HTTP inspection requires TLS decryption and a Cloudflare root certificate instal
 
 - **Applies to**: outbound and east-west traffic
 
-Gateway is the most comprehensive inspection layer for WAN traffic. For detailed setup instructions, refer to [Connect to Cloudflare Gateway with Cloudflare WAN]({props.gatewaySetupURL}).
+Gateway provides the deepest inspection for WAN traffic, covering DNS, network, and HTTP layers. For detailed setup instructions, refer to <a href={props.gatewaySetupURL}>Connect to Cloudflare Gateway with Cloudflare WAN</a>.
 
 ### Browser Isolation
 
@@ -99,7 +99,7 @@ This means you can layer multiple security services on the same traffic flow wit
 
 ## Next steps
 
-- [Connect to Cloudflare Gateway with Cloudflare WAN]({props.gatewaySetupURL}): Detailed setup guide for Gateway integration with WAN traffic.
-- [Cloudflare Network Firewall]({props.networkFirewallURL}): Configure packet-level filtering rules.
+- <a href={props.gatewaySetupURL}>Connect to Cloudflare Gateway with Cloudflare WAN</a>: Detailed setup guide for Gateway integration with WAN traffic.
+- <a href={props.networkFirewallURL}>Cloudflare Network Firewall</a>: Configure packet-level filtering rules.
 - [SASE reference architecture](/reference-architecture/architectures/sase/): Explore the full architecture of Cloudflare One as a SASE platform.
-- [WAN transformation]({props.wanTransformationURL}): Plan your migration from traditional WAN to Cloudflare.
+- <a href={props.wanTransformationURL}>WAN transformation</a>: Plan your migration from traditional WAN to Cloudflare.
