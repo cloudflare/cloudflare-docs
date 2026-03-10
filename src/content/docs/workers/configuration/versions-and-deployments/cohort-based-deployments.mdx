@@ -271,9 +271,161 @@ If Worker A does not pass a cohort, Worker B falls back to its default version c
 
 ## Durable Objects
 
+### Current behavior
+
 :::warning
-Cohort-based deployments do not affect [Durable Object](/durable-objects/) version routing. Durable Objects ignore the `Cloudflare-Workers-Cohort` header and follow the standard [gradual deployments behavior for Durable Objects](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects).
+Cohort-based deployments do not currently affect [Durable Object](/durable-objects/) version routing. Durable Objects ignore the `Cloudflare-Workers-Cohort` header and follow the standard [gradual deployments behavior for Durable Objects](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects).
 :::
+
+With [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects), each Durable Object instance is assigned a version based on a hash of its unique ID and the deployment percentages. The assignment is deterministic and sticky -- the same instance stays on the same version until a new deployment is created. However, you have no control over which instances get which version.
+
+```txt
+Deployment: Version A @ 60%, Version B @ 40%
+
+DO Namespace: USER_DO
+┌──────────────────────────────────┬──────────────────────┐
+│  Version A (60%)                 │  Version B (40%)     │
+│  ┌──────┐ ┌──────┐ ┌──────┐    │  ┌──────┐ ┌──────┐  │
+│  │alice │ │carol │ │eve   │    │  │ bob  │ │dave  │  │
+│  └──────┘ └──────┘ └──────┘    │  └──────┘ └──────┘  │
+│                                  │                      │
+│  Assigned by: hash(DO ID)        │                      │
+│  You cannot choose.              │                      │
+└──────────────────────────────────┴──────────────────────┘
+```
+
+This means you cannot say "I want all paid users' Durable Objects on the new version." The hash decides, and a high-value customer's Durable Object might end up on the untested version.
+
+### Planned: Cohort-based version routing for Durable Objects
+
+:::note
+The following describes planned behavior that is not yet available. The API and behavior may change before release.
+:::
+
+Cohort-based deployments for Durable Objects will let you control which instances run which version based on your business logic. Instead of a random hash deciding, your Worker code explicitly assigns a cohort when obtaining a stub to a Durable Object instance.
+
+#### How it will work
+
+Your deployment configuration maps cohorts to versions, the same as for stateless Workers:
+
+```txt
+Deployment config:
+  cohort "free"    → Version A (stable)
+  cohort "paid"    → Version B (new features)
+  default (null)   → Version A
+```
+
+Your Worker passes the cohort at `.get()` time -- when obtaining a [stub](/durable-objects/best-practices/access-durable-objects-from-a-worker/#2-create-durable-object-stubs) to a Durable Object, not when making an RPC call on it:
+
+```ts
+export default {
+  async fetch(request: Request, env: Env) {
+    const userId = getUserId(request);
+    const plan = getUserPlan(request); // "free" or "paid"
+
+    const id = env.USER_DO.idFromName(userId);
+
+    // Pass the cohort when getting the stub
+    const stub = env.USER_DO.get(id, {
+      version: { cohort: plan }
+    });
+
+    // Make the RPC call -- no cohort here, the version is already decided
+    const result = await stub.getProfile();
+    return Response.json(result);
+  },
+};
+```
+
+The Durable Object sees its cohort at runtime:
+
+```ts
+export class UserDO extends DurableObject {
+  async getProfile() {
+    const myCohort = this.ctx.version.cohort;   // "free" or "paid"
+    const myVersion = this.env.CF_VERSION_METADATA.id; // version UUID
+
+    return {
+      cohort: myCohort,
+      version: myVersion,
+    };
+  }
+}
+```
+
+#### Version locking
+
+A Durable Object instance locks to the version of the cohort it was instantiated with. If a subsequent request passes a different cohort, the instance stays on its original version. This prevents the Durable Object from flipping between code versions mid-lifetime, which would risk data corruption.
+
+```txt
+Request 1: get(bobId, { version: { cohort: "paid" } })
+→ bob starts on Version B, cohort "paid" is saved
+
+Request 2: get(bobId, { version: { cohort: "free" } })
+→ bob is ALREADY RUNNING on "paid" / Version B
+→ the "free" hint is ignored
+→ bob stays on Version B (no reset, no flapping)
+```
+
+#### Sticky across evictions
+
+The cohort will be persisted so that when a Durable Object is [evicted](/durable-objects/concepts/durable-object-lifecycle/) from memory (due to inactivity or server maintenance) and later reinstantiated, it returns to the same cohort and version.
+
+```txt
+1. bob starts with cohort "paid" → Version B
+   Cohort "paid" is persisted.
+
+2. bob is evicted (idle overnight).
+   Stored data and cohort persist.
+
+3. New request arrives for bob.
+   System reads persisted cohort → "paid"
+   → bob reinstantiates on Version B ✅
+
+4. bob has a scheduled alarm that fires.
+   No incoming request, no caller cohort.
+   System reads persisted cohort → "paid"
+   → bob runs on Version B ✅
+```
+
+This means not every caller needs to know the correct cohort. Once a Durable Object's cohort is set, it sticks until you change it or create a new deployment.
+
+#### Cohort is optional
+
+If you do not pass a cohort, the Durable Object uses the default version selection -- the same behavior as standard gradual deployments. Existing code that does not pass a cohort will continue to work without changes.
+
+```ts
+// No cohort -- uses default version selection (hash-based)
+const stub = env.USER_DO.get(id);
+
+// With cohort -- uses cohort-based version selection
+const stub = env.USER_DO.get(id, { version: { cohort: "paid" } });
+```
+
+#### Why this matters
+
+The key difference from gradual deployments is the type of control you get over version assignment:
+
+```txt
+Gradual deployments (today):
+  "Roughly 40% of my DO instances will run the new code."
+  "I do not know which ones. The hash decides."
+
+Cohort-based deployments (planned):
+  "All paid users' DOs run the new code."
+  "All free users' DOs stay on the stable code."
+  "I decide, based on my business logic, and it sticks."
+```
+
+With gradual deployments, you have **statistical** control -- "approximately this percentage." With cohort-based deployments, you have **semantic** control -- "these specific user segments." You can start with your lowest-risk instances, verify everything works, then move higher-value instances over deliberately.
+
+| | Gradual deployments | Cohort-based deployments |
+|---|---|---|
+| Who decides the version | hash of DO ID | Your Worker code via `.get()` |
+| You choose which instances get new code | No | Yes |
+| Sticky across evictions | Yes (hash is deterministic) | Yes (cohort is persisted) |
+| Survives alarms | Yes | Yes |
+| Use case | "Roll out to 10% of instances" | "Free users get stable, paid users get new" |
 
 ## Observability
 
