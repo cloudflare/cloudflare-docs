@@ -54,12 +54,13 @@ If that is the case, when setting up your zone in Cloudflare or opting for a dif
 
 Some providers act as registrars but do not expose nameserver settings. If you cannot change nameservers at your registrar or hosting platform, you can either:
 
-- Transfer your domain to a registrar that allows nameserver management, such as [Cloudflare Registrar](/registrar/).
-- Use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/) instead, which does not require nameserver changes. This option is available on Business and Enterprise plans.
+- Transfer your domain to a registrar that allows nameserver management.
+- Transfer your domain to Cloudflare Registrar. All domains on [Cloudflare Registrar](/registrar/) automatically use Cloudflare nameservers.
+- Use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/) instead. This option does not require nameserver changes and is available on Business and Enterprise plans.
 
 ### Platforms that already use Cloudflare
 
-Platforms like Shopify and GoHighLevel pre-configure domains with their own Cloudflare nameserver pair through partner programs such as [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/). Adding the same domain to your own Cloudflare account assigns a different nameserver pair, which creates a conflict.
+Platforms like Shopify and GoHighLevel pre-configure domains with their own Cloudflare nameserver pair through partner programs. Adding the same domain to your own Cloudflare account assigns a different nameserver pair, which creates a conflict.
 
 Use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/) to proxy traffic through your own account without changing the nameservers at the registrar. For provider-specific guidance, refer to [Vendor-specific DNS records](/dns/manage-dns-records/reference/vendor-specific-records/).
 
