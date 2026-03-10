@@ -19,7 +19,7 @@ entries:
         - `On you device` → `On your device`
         - `Grant acess` → `Grant access`
       - Fixed default language pack keys:
-        - `ai.chat.summerise` → `ai.chat.summarise`
+        - `ai.chat.summerise` → `ai.chat.summarize`
         - `date.yesteday` → `date.yesterday`
 
   - publish_date: "2026-01-30"
