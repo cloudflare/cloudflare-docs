@@ -69,6 +69,12 @@ You can prevent this by enforcing the [`no-floating-promises` eslint rule](https
 
 If a WebSocket is missing the proper code to close its server-side connection, the Workers runtime will throw a `script will never generate a response` error. In the example below, the `'close'` event from the client is not properly handled by calling `server.close()`, and the error is thrown. In order to avoid this, ensure that the WebSocket's server-side connection is properly closed via an event listener or other server-side logic.
 
+:::note
+
+With the [`web_socket_auto_reply_to_close`](/workers/configuration/compatibility-flags/#websocket-auto-reply-to-close) compatibility flag (enabled by default on compatibility dates on or after `2026-04-07`), the runtime automatically completes the WebSocket close handshake. This specific error scenario is less likely to occur because the runtime handles the close for you. The example below applies to Workers on older compatibility dates.
+
+:::
+
 ```js null {10}
 async function handleRequest(request) {
 	let webSocketPair = new WebSocketPair();

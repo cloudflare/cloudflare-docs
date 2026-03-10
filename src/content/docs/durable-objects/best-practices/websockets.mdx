@@ -100,7 +100,8 @@ export class WebSocketHibernationServer extends DurableObject {
 	}
 
 	async webSocketClose(ws, code, reason, wasClean) {
-		// Calling close() on the server completes the WebSocket close handshake
+		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+		// auto-replies to Close frames. Calling close() is safe but no longer required.
 		ws.close(code, reason);
 	}
 }
@@ -148,7 +149,8 @@ export class WebSocketHibernationServer extends DurableObject {
 		reason: string,
 		wasClean: boolean,
 	) {
-		// Calling close() on the server completes the WebSocket close handshake
+		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+		// auto-replies to Close frames. Calling close() is safe but no longer required.
 		ws.close(code, reason);
 	}
 }
@@ -190,7 +192,8 @@ self.ctx = state
         )
 
     async def webSocketClose(self, ws, code, reason, was_clean):
-        # Calling close() on the server completes the WebSocket close handshake
+        # With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+        # auto-replies to Close frames. Calling close() is safe but no longer required.
         ws.close(code, reason)
 
 ````
@@ -380,6 +383,8 @@ export class WebSocketServer extends DurableObject<Env> {
 	async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
 		const state = ws.deserializeAttachment() as ConnectionState;
 		console.log(`${state.orderId} disconnected`);
+		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+		// auto-replies to Close frames. Calling close() is safe but no longer required.
 		ws.close(code, reason);
 	}
 }
@@ -562,7 +567,9 @@ export class WebSocketServer extends DurableObject {
 			);
 		});
 
-		// If the client closes the connection, the runtime will close the connection too.
+		// When the client closes the connection, clean up the server side.
+		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+		// auto-replies to Close frames. Calling close() is safe but no longer required.
 		server.addEventListener("close", (cls) => {
 			this.currentlyConnectedWebSockets -= 1;
 			server.close(cls.code, "Durable Object is closing WebSocket");
@@ -606,7 +613,9 @@ export class WebSocketServer extends DurableObject {
 			);
 		});
 
-		// If the client closes the connection, the runtime will close the connection too.
+		// When the client closes the connection, clean up the server side.
+		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+		// auto-replies to Close frames. Calling close() is safe but no longer required.
 		server.addEventListener("close", (cls: CloseEvent) => {
 			this.currentlyConnectedWebSockets -= 1;
 			server.close(cls.code, "Durable Object is closing WebSocket");
@@ -651,7 +660,9 @@ self.currently_connected_websockets = 0
 
         server.addEventListener("message", create_proxy(on_message))
 
-        # If the client closes the connection, the runtime will close the connection too.
+        # When the client closes the connection, clean up the server side.
+        # With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+        # auto-replies to Close frames. Calling close() is safe but no longer required.
         def on_close(event):
             self.currently_connected_websockets -= 1
             server.close(event.code, "Durable Object is closing WebSocket")
