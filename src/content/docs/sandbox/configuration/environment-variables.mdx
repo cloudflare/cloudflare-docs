@@ -296,10 +296,6 @@ wrangler secret put AWS_SECRET_ACCESS_KEY
 # Paste your R2 Secret Access Key
 ```
 
-:::caution[Production only]
-Bucket mounting requires production deployment. It does not work with `wrangler dev` due to FUSE support limitations. See [Mount buckets guide](/sandbox/guides/mount-buckets/) for details.
-:::
-
 **Mount buckets with automatic credential detection:**
 
 ```typescript
