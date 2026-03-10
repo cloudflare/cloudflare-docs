@@ -27,7 +27,7 @@ When AI Security for Apps is enabled and a request arrives at a `cf-llm` labeled
 The detection is based on [Presidio](https://microsoft.github.io/presidio/supported_entities/), a data protection and de-identification SDK. Refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) for the full list of recognized categories.
 
 :::note[Detecting PII in responses]
-AI Security for Apps PII detection runs on incoming requests (prompts) only. If you also need to detect PII in LLM responses, you can use [Sensitive Data Detection](/waf/managed-rules/sensitive-data-detection/) to scan response bodies for patterns like credit card numbers, Social Security numbers, and API keys. Sensitive Data Detection logs matches, but does not block responses. Use it alongside request-side rules for layered visibility.
+AI Security for Apps PII detection runs on incoming requests (prompts) only. If you also need to detect PII in LLM responses, you can use [Sensitive Data Detection](/waf/managed-rules/reference/sensitive-data-detection/) to scan response bodies for patterns like credit card numbers, Social Security numbers, and API keys. Sensitive Data Detection logs matches, but does not block responses. Use it alongside request-side rules for layered visibility.
 :::
 
 <Details header="Supported PII categories">
