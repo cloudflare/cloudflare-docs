@@ -24,12 +24,12 @@ By default, WARP excludes traffic bound for [RFC 1918 space](https://datatracker
 				client:load
 				defaults={{
 					base: "172.16.0.0/12",
-					exclude: ["172.31.0.0/16", `172.28.0.0/15`]
+					subtract: ["172.31.0.0/16", `172.28.0.0/15`]
 				}}
 			/>
 		<Details header="Calculator instructions" open = {true}>
 		1. In **Base CIDR**, enter the RFC 1918 range that you deleted from Split Tunnels.
-		2. In **Excluded CIDRs**, enter the IP/CIDR range used by your <Markdown text={props.one}/>.
+		2. In **Subtracted CIDRs**, enter the IP/CIDR range used by your <Markdown text={props.one}/>.
 		3. Re-add the calculator results to your Split Tunnel Exclude mode list.
 		</Details>
 
