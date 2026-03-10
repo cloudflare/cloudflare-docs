@@ -18,7 +18,7 @@ When planning your private network addressing and configuring [Split Tunnel](/cl
 | [Cloudflare source IPs](#cloudflare-source-ips)               | `100.64.0.0/12`  | Yes          |
 | [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `100.80.0.0/16`  | No           |
 | [WARP device IPs](#warp-device-ips)                           | `100.96.0.0/12`  | Yes          |
-| [Private Load Balancer IPs](#private-load-balancer-ips)       | `100.112.0.0/16` | No           |
+| [Private Load Balancer IPs](#private-load-balancer-ips)       | `100.112.0.0/16` | Yes          |
 
 ## IPv6 ranges
 
@@ -63,7 +63,7 @@ The default IPv4 range is `100.96.0.0/12`. If this range conflicts with services
 
 ## Private Load Balancer IPs
 
-Private Load Balancer IPs are virtual addresses allocated to [Private Network Load Balancers](/load-balancing/private-network/). Each private load balancer receives a `/32` address from the `100.112.0.0/16` range, which serves as the load balancer's virtual IP for traffic distribution to private endpoints. This range is not configurable.
+Private Load Balancer IPs are virtual addresses allocated to [Private Network Load Balancers](/load-balancing/private-network/). Each private load balancer receives a `/32` address from the `100.112.0.0/16` range by default, which serves as the load balancer's virtual IP for traffic distribution to private endpoints. Alternatively, you can configure a custom [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) `/32` address for each load balancer.
 
 ## WARP Split Tunnel configuration
 
