@@ -9,7 +9,7 @@ import { Details, InlineBadge, Render } from "~/components";
 
 DNS policies let you control which websites and services your users can reach by inspecting their DNS queries — the lookups that translate domain names into IP addresses. Because DNS policies act at the lookup stage, they work across all protocols and applications, not just web browsers.
 
-When a user makes a DNS request, [Gateway](/cloudflare-one/policies/gateway/) matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Allow or Override policy, the user's client receives an address based on DNS resolution from Cloudflare's public DNS resolver (1.1.1.1). You can also use a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) to redirect DNS requests to a custom server.
+When a user makes a DNS request, [Gateway](/cloudflare-one/traffic-policies/) matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Allow or Override policy, the user's client receives an address based on DNS resolution from Cloudflare's public DNS resolver (1.1.1.1). You can also use a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) to redirect DNS requests to a custom server.
 
 A DNS policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
