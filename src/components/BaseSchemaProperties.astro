@@ -8,10 +8,23 @@ import MetaInfo from "./MetaInfo.astro";
 import AnchorHeading from "./AnchorHeading.astro";
 import Details from "./Details.astro";
 
-const schema = baseSchema({
+const fullSchema = baseSchema({
 	// @ts-expect-error Normally passed in by Astro but we are using the schema standalone.
 	image: () => z.function(),
 });
+
+// Override properties that JSON schema isn't going to understand.
+const shape = {
+	...fullSchema.shape,
+	products: z
+		.array(z.string())
+		.default([])
+		.describe(
+			"The names of related directory entries (according to their file name in `src/content/directory`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
+		),
+};
+
+const schema = z.object(shape);
 
 // Convert to JSON Schema
 const jsonSchema = z.toJSONSchema(schema, {
@@ -82,8 +95,7 @@ function getEnumValues(property: unknown): string[] | null {
 			if (isObject(option)) {
 				if (option.const !== undefined) {
 					literals.push(String(option.const));
-				}
-				else if (option.enum && Array.isArray(option.enum)) {
+				} else if (option.enum && Array.isArray(option.enum)) {
 					literals.push(...option.enum.map(String));
 				}
 			}
@@ -106,9 +118,10 @@ function getDescription(property: unknown): string | null {
 }
 
 // Get properties from the JSON Schema
-const properties = isObject(jsonSchema) && isObject(jsonSchema.properties)
-	? jsonSchema.properties
-	: {};
+const properties =
+	isObject(jsonSchema) && isObject(jsonSchema.properties)
+		? jsonSchema.properties
+		: {};
 
 const required = isObject(jsonSchema) ? jsonSchema.required : [];
 ---
