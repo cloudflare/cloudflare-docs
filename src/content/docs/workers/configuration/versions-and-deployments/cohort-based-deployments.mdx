@@ -106,20 +106,20 @@ npx wrangler deployments status
 The output includes the default version split and each cohort's configuration:
 
 ```txt
-Created:     2026-03-09T18:35:09.591Z
-Author:      yomna@cloudflare.com
-Source:      Unknown (deployment)
+Created:     2025-01-15T12:00:00.000Z
+Author:      user@example.com
+Source:      Wrangler
 Message:     Canary at 50%, employees on new version
-Version(s):  (100%) abc123-stable-version
-                 Created:  2026-03-09T18:25:13.361Z
+Version(s):  (100%) <STABLE_VERSION_ID>
+                 Created:  2025-01-14T10:00:00.000Z
                      Tag:  -
                  Message:  -
 
 Cohort(s):   canary:
-                 (50%) abc123-stable-version
-                 (50%) def456-new-version
+                 (50%) <STABLE_VERSION_ID>
+                 (50%) <NEW_VERSION_ID>
              employee:
-                 (100%) def456-new-version
+                 (100%) <NEW_VERSION_ID>
 ```
 
 #### 4. Progress or complete the deployment
@@ -175,12 +175,13 @@ Percentages within each cohort's `versions` array must sum to 100. Each cohort o
 
 ## Assign requests to cohorts
 
-Defining cohorts in your deployment configuration only sets up the version splits. You still need a way to assign incoming requests to the correct cohort. There are two approaches:
+Defining cohorts in your deployment configuration only sets up the version splits. You still need a way to assign incoming requests to the correct cohort. There are three approaches:
 
 | Approach | Requires Worker code? | Use when |
 |---|---|---|
 | [Gateway entrypoint pattern](#gateway-entrypoint-pattern) | Yes | You need custom logic like JWT verification, database lookups, or API calls to determine cohort |
 | [Transform Rules](#transform-rules) | No | You can determine cohort from request properties (geo, cookie, header, URL) |
+| [Service bindings](#service-bindings-and-cohort-propagation) | Yes | An upstream Worker already knows the cohort and needs to pass it to a downstream Worker |
 
 ### Gateway entrypoint pattern
 
@@ -254,52 +255,67 @@ This all happens within a single request. The client sends one request and recei
 
 ### Transform Rules
 
-Use [Transform Rules](/rules/transform/request-header-modification/) to set the `Cloudflare-Workers-Cohort` header based on request properties without writing any Worker code. This is the simplest approach when cohort membership can be derived from information already in the request.
+You can use [Transform Rules](/rules/transform/request-header-modification/) to set the cohort header based on request properties such as cookies, URL patterns, or other headers. This allows you to assign cohorts without modifying your application code.
 
 #### Example: Cohort from a cookie
 
 If your application sets a `cohort` cookie on users (for example, during login or signup), you can extract it with a Transform Rule:
 
-**Expression Editor:**
+<Example>
+
+Text in **Expression Editor**:
+
 ```txt
 http.cookie contains "cohort="
 ```
 
-**Operation:** Set dynamic
+Selected operation under **Modify request header**: _Set dynamic_
 
-**Header name:** `Cloudflare-Workers-Cohort`
+**Header name**: `Cloudflare-Workers-Cohort`
 
-**Value:** `regex_replace(http.cookie, ".*cohort=([^;]+).*", "$\{1\}")`
+**Value**: `regex_replace(http.cookie, ".*cohort=([^;]+).*", "$\{1\}")`
+
+</Example>
 
 #### Example: Cohort from geography
 
 Route users from specific countries to a canary cohort:
 
-**Expression Editor:**
+<Example>
+
+Text in **Expression Editor**:
+
 ```txt
 ip.geoip.country in {"US" "CA" "GB"}
 ```
 
-**Operation:** Set static
+Selected operation under **Modify request header**: _Set static_
 
-**Header name:** `Cloudflare-Workers-Cohort`
+**Header name**: `Cloudflare-Workers-Cohort`
 
-**Value:** `canary`
+**Value**: `canary`
+
+</Example>
 
 #### Example: Cohort from a request header
 
 If an upstream service (like an API gateway or CDN) already attaches user metadata to headers:
 
-**Expression Editor:**
+<Example>
+
+Text in **Expression Editor**:
+
 ```txt
 http.request.headers["x-user-plan"][0] eq "enterprise"
 ```
 
-**Operation:** Set static
+Selected operation under **Modify request header**: _Set static_
 
-**Header name:** `Cloudflare-Workers-Cohort`
+**Header name**: `Cloudflare-Workers-Cohort`
 
-**Value:** `ent`
+**Value**: `ent`
+
+</Example>
 
 ## Accessing version metadata in your code
 
@@ -356,20 +372,16 @@ Cohort-based deployments do not currently affect [Durable Object](/durable-objec
 With [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects), each Durable Object instance is assigned a version based on a hash of its unique ID and the deployment percentages. The assignment is deterministic and sticky -- the same instance stays on the same version until a new deployment is created. However, you have no control over which instances get which version.
 
 ```mermaid
-block-beta
-  columns 2
-  block:vA["Version A (60%)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"]:2
+flowchart TB
+  subgraph vA ["Version A (60%)"]
     alice["alice"]
     carol["carol"]
     eve["eve"]
   end
-  block:vB["Version B (40%)"]:2
+  subgraph vB ["Version B (40%)"]
     bob["bob"]
     dave["dave"]
   end
-
-  style vA fill:#d4edda,stroke:#28a745
-  style vB fill:#cce5ff,stroke:#0366d6
 ```
 
 Version assignment is based on `hash(DO ID)`. You cannot choose which instances get which version.
