@@ -3,6 +3,10 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2026-03-06"
+    title: Deepgram Nova-3 now supports 10 languages with regional variants
+    description: |-
+      - [`@cf/deepgram/nova-3`](/workers-ai/models/nova-3/) now supports 10 languages with regional variants for real-time transcription. Supported languages include English, Spanish, French, German, Hindi, Russian, Portuguese, Japanese, Italian, and Dutch — with regional variants like `en-GB`, `fr-CA`, and `pt-BR`.
   - publish_date: "2026-02-17"
     title: Chat Completions API support for gpt-oss models and tool calling improvements
     description: |-

@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: how-to
 title: Transfer your domain to Cloudflare
 sidebar:
   order: 2
@@ -9,31 +9,68 @@ description: >-
 
 import { DashButton, Details, Render } from "~/components";
 
-Transferring your domain to Cloudflare tells your registry that a different registrar can now set those authoritative records for you. The relationship is based on trust. Registries only trust one registrar at any given time to make changes on your behalf.
+Transferring a domain moves your registration from your current registrar to Cloudflare.
 
-Transferring a domain to a new registrar informs the registry that they should instead trust that new registrar to modify information. The process requires some action steps at your new and previous registrar. Each registrar handles transfers a bit differently, but in general, they follow a pattern based on rules set by ICANN, the organization responsible for regulating domain registration.
+- **Active work:** About 30 minutes.
+- **Total time:** Around 5 business days. Your current registrar has up to 5 days to release the domain and DNS changes take time to propagate.
+- **Cost:** One year of registration at Cloudflare's at-cost price, added to your current expiration date.
 
-Most domain transfers add one additional year to your current registration term. After the transfer, your domain registration will be set to auto-renew by default.
+Before you can transfer, you must first [add your domain to Cloudflare](#1-add-your-domain-to-cloudflare).
 
-This page contains generic instructions on how to transfer your domain to Cloudflare from most registrars.
-
----
-
-<Render file="requirements" product="registrar" />
-
----
-
-<Render file="before-you-begin" product="registrar" />
+:::note
+You cannot [enter an authorization code](/registrar/troubleshooting/#cannot-find-where-to-enter-your-authorization-code) until your domain is active on Cloudflare. If your domain is registered with a website builder platform (such as Block, Shopify, Squarespace, or Wix), you may not be able to change nameservers while the domain is registered there. Refer to [Transfer from website builders](#transfer-from-website-builders) for the recommended workaround, or [Troubleshoot failed domain transfers](/registrar/troubleshooting/) if you are running into issues.
+:::
 
 ---
 
-<Render file="restrictions" product="registrar" />
+<Details header="Before you begin">
+
+Confirm the following before you start:
+
+- You have a [Cloudflare account](/fundamentals/account/create-account/) with a [verified email address](/fundamentals/user-profiles/verify-email-address/).
+- Your Cloudflare account has a valid payment method on file.
+- Your domain was registered at least 60 days ago and has not been transferred in the last 60 days (ICANN requirement).
+- You have not changed your registrant name, organization, or email address in the last 60 days. Under ICANN rules, changes to these fields trigger a 60-day transfer lock. Some registrars let you opt out of this lock during the change, but not all do.
+- Your account at your current registrar is active. If your domain has expired, renew it at your current registrar first.
+
+:::note
+If your domain recently expired and you renewed it, wait at least 45 days after the original expiration date before transferring. Otherwise, the registry may not add the extra year. For details, refer to [Why did my domain's expiration date change?](/registrar/faq/#my-domains-registration-was-not-extended-by-one-year-after-transferring-to-cloudflare).
+:::
+
+- Your domain uses only standard characters (letters, numbers, hyphens). Cloudflare does not support domains with non-Latin characters (for example, `例え.jp`).
+- If you are transferring a `.us` domain, refer to [Additional requirements for .US domains](/registrar/top-level-domains/us-domains/).
+- If you are transferring multiple domains, notify your bank to prevent fraud alerts on multiple charges.
+- Cloudflare Registrar requires your domain to use Cloudflare for [authoritative DNS](/dns/zone-setups/full-setup/) (full setup). You cannot use another DNS provider while registered with Cloudflare.
+
+</Details>
 
 ---
 
-## Set up a domain transfer
+## 1. Add your domain to Cloudflare
 
-To begin, complete the following steps in your current registrar to transfer your domain to Cloudflare. Below, you will find links for detailed transfer instructions from some of the most popular registrars:
+Before you can transfer your registration, your domain must be [active on Cloudflare](/dns/zone-setups/full-setup/). This is what allows Cloudflare to protect your site with performance and security features during and after the transfer. You will not be able to enter an authorization code or proceed with the transfer until this step is complete.
+
+### Disable DNSSEC
+
+If DNSSEC is enabled at your current registrar, disable it before you change nameservers. DNSSEC validates DNS responses using cryptographic signatures tied to your current provider. When you point nameservers to Cloudflare, those signatures will no longer match, which causes DNS resolution failures and can prevent your domain from becoming active.
+
+**At your current registrar:**
+
+1. Check your domain settings for DNSSEC or DS records. If there are none, DNSSEC is not active and you can skip to [Add your domain](#add-your-domain-and-update-your-nameservers).
+2. Remove or disable DNSSEC (sometimes labeled "DS records").
+3. Wait at least 24 hours for the change to propagate before changing nameservers.
+
+<Render file="dnssec-providers" product="dns" />
+
+After your transfer completes, you can re-enable DNSSEC through Cloudflare with one click. Refer to [Enable DNSSEC](/dns/dnssec/#1-activate-dnssec-in-cloudflare).
+
+### Add your domain and update your nameservers
+
+Follow the steps in [Set up Cloudflare DNS](/dns/zone-setups/full-setup/setup/) to add your domain, review your DNS records, and get your assigned nameservers. Then [update the nameservers](/dns/nameservers/update-nameservers/) at your current registrar to the ones Cloudflare assigned.
+
+<Details header="Nameserver instructions for popular registrars">
+
+Each registrar has a different interface for updating nameservers. These links explain the process at popular registrars:
 
 - [Enom](https://support.enom.com/support/solutions/articles/201000065324-preparing-your-domain-for-transfer)
 - [GoDaddy](https://www.godaddy.com/help/transfer-my-domain-away-from-godaddy-3560)
@@ -42,107 +79,67 @@ To begin, complete the following steps in your current registrar to transfer you
 - [Network Solutions](https://www.networksolutions.com/help/article/transfer-out-of-network-solutions)
 - [Squarespace](https://support.squarespace.com/hc/articles/205812338-Transferring-a-domain-away-from-Squarespace)
 
-### 1. Log in to your registrar account
+</Details>
 
-Log in to the registrar account where the domain is currently registered.
+### Wait for your domain to become active
 
-### 2. Unlock the domain
+**In the Cloudflare dashboard:**
 
-Registrars include a lightweight safeguard to prevent unauthorized users from starting domain transfers. This is known as registrar lock, but you might also see it referred to as domain lock. In WHOIS, it may appear as `clientTransferProhibited`. When enabled, the lock prevents any other registrar from attempting to initiate a transfer.
-
-Only the registrant can enable or disable this lock, typically through the administration interface of the registrar. To proceed with a transfer, remove this lock if it is enabled.
+Wait for your domain status to change from **Pending** to **Active**. This usually takes a few minutes but can take up to 24 hours.
 
 :::note
-Some registrars have multiple lock types that must each be disabled separately, such as "domain lock", "transfer lock", and "privacy lock". If you have unlocked the domain but it still shows as locked, check your registrar settings for all lock and protection toggles.
+You cannot proceed with the transfer until your domain shows **Active** status. The Transfer Domains page will not let you enter an authorization code while the zone is still **Pending**.
 :::
 
-### 3. Disable DNSSEC
+If your zone has been pending for more than 24 hours, verify that you updated the nameservers correctly at your current registrar and that DNSSEC is disabled.
 
-If DNSSEC is enabled at your current registrar, you must disable it before transferring. An active DNSSEC configuration will block the transfer from completing.
+---
 
-Refer to the [Disable DNSSEC](/registrar/get-started/transfer-domain-to-cloudflare/#disable-dnssec) section above for detailed steps.
+## 2. Transfer your registration
 
-### 4. WHOIS privacy
+Once your domain is active on Cloudflare, you can transfer the registration. This moves your domain record from your current registrar to Cloudflare. You will go back and forth between your current registrar and Cloudflare during this process.
 
-Most domains can be transferred with WHOIS privacy enabled. If you experience issues with your transfer, check with your current registrar to confirm WHOIS privacy is not blocking it.
+### Unlock your domain
 
-### 5. Add your domain to Cloudflare and activate the zone
+**At your current registrar:**
 
-Unlike most registrars, Cloudflare requires your domain to be added and active on Cloudflare **before** you can enter your authorization code and begin the transfer. This ensures your site is protected by Cloudflare performance and security features from the moment the transfer begins. You cannot skip this step.
+Remove the lock on your domain so Cloudflare can process the transfer. Most registrars apply a lock by default (sometimes called registrar lock, domain lock, or transfer lock) to prevent unauthorized transfers. In WHOIS, this appears as `clientTransferProhibited`.
 
-1. [Add your domain](/fundamentals/manage-domains/add-site/) to your Cloudflare account if you have not already.
-2. Cloudflare will assign you two nameservers (for example, `ada.ns.cloudflare.com` and `paul.ns.cloudflare.com`).
-3. Go to your current registrar and [update your domain nameservers](/dns/nameservers/update-nameservers/) to the ones Cloudflare provided.
-4. Wait for your domain status to change from **Pending** to **Active** in your Cloudflare dashboard. This usually takes a few minutes but can take up to 24 hours.
-
-:::caution
-You cannot enter your authorization code or proceed with the transfer until your domain shows **Active** status. If you try while the zone is still **Pending**, the transfer page will not let you proceed.
+:::note
+Some registrars have multiple lock types (domain lock, transfer lock, privacy lock) that must each be disabled separately. If your domain still shows as locked after you have disabled one, check for additional lock settings.
 :::
 
-If your zone has been pending for more than 24 hours, verify that you updated the nameservers correctly at your current registrar.
+### Request an authorization code
 
-### 6. Initiate your transfer to Cloudflare
+**At your current registrar:**
 
-From your Cloudflare Account Home, go to the **Transfer Domains** page.
+Request an authorization code for your domain. This is also called an auth code, EPP code, authinfo code, or transfer code. Cloudflare uses this code to verify that the transfer is authorized by the domain owner.
+
+Authorization codes expire within 5-14 days depending on the registrar. Some registrars invalidate the previous code each time you request a new one. Request the code when you are ready to enter it in the next step.
+
+### Enter your authorization code and confirm payment
+
+**In the Cloudflare dashboard:**
 
 <DashButton url="/?to=/:account/registrar/transfer" />
 
-Cloudflare Registrar will display the zones available for transfer.
+Select your domain and enter the authorization code. The page will show the transfer price, which includes a one-year registration extension from your current expiration date. This is an ICANN requirement — every transfer extends your registration by one year.
 
-You will be presented with the price for each transfer. When you transfer a domain, you are required by ICANN to pay to extend its registration by one year from the expiration date.
-
-If you do not have a payment method on file, add one at this step before proceeding.
+If you do not have a payment method on file, add one before proceeding.
 
 :::note
-Verify your payment method is valid before submitting. A payment failure after submitting the auth code can leave the transfer in a partially started state.
+Verify your payment method is valid before submitting. A payment failure after submitting the authorization code can leave the transfer in a partially started state.
 :::
 
-In some cases, premium (non-standard priced) domains may not be detected immediately. Pricing will be confirmed with the registry before submission, and you will have the opportunity to review and approve any price adjustments.
+For information about registration limits and the one-year extension, refer to [Transfer rejected due to registration limits](/registrar/troubleshooting/#transfer-rejected-due-to-registration-limits).
 
-<Details header="Exceptions to the one-year registration extension">
+### Confirm your contact information
 
-- Transferring a `.uk` domain does not extend its registration by an additional year.
-- If the transfer is completed within 45 days of the domain expiration, the extra year may not be added. This is determined by the domain registry.
-- If the domain already has more than nine years remaining, a full year may not be added. This is also subject to registry policy.
-- `.co` domains have a maximum registration period of 5 years. If a transfer would exceed this limit, it may be rejected.
-- `.ai` domains require a minimum 2-year registration for transfers.
-- Most TLDs (such as `.com`, `.net`, `.org`) allow up to 10 years of registration. You cannot exceed these limits through transfers or renewals.
+**In the Cloudflare dashboard:**
 
-</Details>
+Enter the contact information for your registration. Cloudflare Registrar redacts this information from public WHOIS by default, but ICANN requires Cloudflare to collect accurate contact details. Providing inaccurate information may result in domain suspension.
 
-:::note
-
-Sites can be unavailable to transfer for a few reasons, including:
-
-- You did not [add your domain](/fundamentals/manage-domains/add-site/) to your Cloudflare account.
-- The site was registered in the last 60 days.
-- Cloudflare does not yet support the TLD.
-- The domain has a status that does not allow for a transfer.
-- You failed to follow the steps highlighted above in [creating an account with your domain](/fundamentals/account/create-account/) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup/).
-
-:::
-
-<Render file="email-verification" product="registrar" />
-
-### 7. Request an authorization code from your current registrar
-
-Go back to your current registrar and request an authorization code for your domain. This code is also referred to as an auth code, authinfo code, or transfer code. Cloudflare will use it to confirm the transfer is authentic.
-
-:::note
-Unlike other registrars, Cloudflare does not accept your authorization code upfront. You can only enter it after your domain is active on Cloudflare (step 5) and you have initiated the transfer (step 6). Request the code now so you have it ready for the next step.
-:::
-
-Some authorization codes expire within 5-14 days depending on the registrar. Some registrars issue a new code each time one is requested, which invalidates the previous code.
-
-### 8. Input your authorization code in the Cloudflare dashboard
-
-In the next page, input the authorization code for each domain you are transferring. You also need to unlock each domain so that Cloudflare can process your request. For more information, refer to the instructions provided by your [current registrar on how to transfer your domain](/registrar/get-started/transfer-domain-to-cloudflare/#set-up-a-domain-transfer).
-
-### 9. Confirm or input your contact information
-
-In the final stage of the transfer process, input the contact information for your registration. Cloudflare Registrar redacts this information by default but is required to collect the authentic contact information for this registration. It is important that you provide accurate WHOIS contact information. You may be required to verify the contact information. Failure to provide accurate information and/or failure to verify the information may result in suspension or deletion of your domain.
-
-You can always [modify the contact information](/registrar/account-options/domain-contact-updates/) later, if needed.
+You can [modify your contact information](/registrar/account-options/domain-contact-updates/) later.
 
 :::caution
 Some TLDs have additional registrant verification requirements. For `.ca`, `.mx`, and `.nz` domains, you may receive a separate email to verify your registrant contact information after the transfer completes. Failure to complete this verification within the required timeframe may result in domain suspension.
@@ -150,11 +147,11 @@ Some TLDs have additional registrant verification requirements. For `.ca`, `.mx`
 
 After entering the contact information, agree to the domain registration terms of service by selecting **Confirm transfer**.
 
-### 10. Approve the transfer
+### Approve the transfer at your current registrar
 
-Once you have requested your transfer, Cloudflare will begin processing it, and send a Form of Authorization (FOA) email to the registrant, if the information is available in the public WHOIS database. The FOA is what authorizes the domain transfer.
+After you submit the transfer, Cloudflare will begin processing it and send a Form of Authorization (FOA) email to the registrant if the information is available in the public WHOIS database.
 
-After this step, your previous registrar will also email you to confirm your request to transfer. Most registrars will include a link to confirm the transfer request. If you select that link, you can accelerate the transfer operation. If you do not act on the email, most registrars will wait up to 5 business days to process the transfer to Cloudflare. Some TLDs (such as `.mx`) can take up to 10 business days. You may also be able to approve the transfer from within your current registrar dashboard.
+Your current registrar will email you confirming the transfer or asking for your approval. Afterwards, most registrars process it within 5 business days (but some TLDs, such as `.mx`, can take up to 10 business days).
 
 :::note
 Registrants transferring a `.us` domain will always receive a FOA email.
@@ -170,8 +167,8 @@ The workaround is to transfer your domain to another registrar first, wait 60 da
 
 1. **Get your authorization code from the website builder.** Each platform has a different process. Refer to your platform documentation for instructions on transferring your domain away.
 2. **Transfer to another registrar** that allows nameserver changes. Enter the authorization code there and complete the transfer. This usually takes 3-5 days.
-3. **Update nameservers to Cloudflare.** Once the domain is at the new registrar, update the nameservers to Cloudflare. You can use all of Cloudflare features (CDN, DNS, security) immediately after this step.
-4. **Transfer to Cloudflare Registrar after 60 days.** ICANN requires a 60-day wait between transfers. After that period, initiate the transfer to Cloudflare from the [Transfer Domains](/registrar/get-started/transfer-domain-to-cloudflare/#6-initiate-your-transfer-to-cloudflare) page.
+3. **Update nameservers to Cloudflare.** Once the domain is at the new registrar, update the nameservers to Cloudflare. You can use all Cloudflare features (CDN, DNS, security) immediately after this step.
+4. **Transfer to Cloudflare Registrar after 60 days.** ICANN requires a 60-day wait between transfers. After that period, initiate the transfer to Cloudflare from the [Transfer Domains](#enter-your-authorization-code-and-confirm-payment) page.
 
 :::note
 Each transfer adds one year to your domain registration. You will pay the other registrar for the first transfer, and Cloudflare for the second. These are not redundant charges — each extends your registration.
@@ -181,19 +178,21 @@ If you do not need Cloudflare as your registrar and only want to use Cloudflare 
 
 ---
 
-## Bulk domain transfers
-
-The process for transferring domains in bulk to Cloudflare is the same process as transferring a single domain. Even if you transfer multiple domains in bulk, you will be charged for each domain as bulk billing is not yet available.
-
 ## Transfer statuses
 
-You can check the status of your transfer on the **Transfer Domains** page in the dashboard. Below, you can find a list of the possible transfer statuses.
+You can check the status of your transfer on the **Transfer Domains** page in the dashboard.
 
-- **Transfer in progress**: Your request has been submitted by Cloudflare to your previous registrar. Cloudflare is now waiting on them to confirm they have received the request. If this status persists for more than a day (24 hours), ensure that the domain has been unlocked at your current registrar and any WHOIS privacy services have been removed.
+- **Transfer in progress**: Cloudflare has submitted the request to your current registrar. If this status persists for more than 24 hours, verify that you have unlocked the domain at your current registrar.
 
-- **Pending approval**: Your current registrar has received the transfer request. They can now wait up to five days to release the domain. If you want to move faster, you can manually approve the transfer for immediate release in the dashboard of most registrars.
+- **Pending approval**: Your current registrar has received the transfer request and can take up to five days to release the domain. To speed this up, approve the transfer through the email or dashboard of your current registrar.
 
-- **Transfer rejected**: your transfer has been rejected. This can occur if you canceled the request at your current registrar instead of approving it. If you still wish to transfer, you can select **Retry** and initiate a new transfer request.
+- **Transfer rejected**: The transfer was rejected by your current registrar. This can happen if you declined the transfer request, or if the registrar determined the domain is not eligible. Select **Retry** to start a new transfer request.
+
+---
+
+## Bulk domain transfers
+
+The process for transferring domains in bulk is the same as transferring a single domain. Each domain is charged individually.
 
 ---
 
