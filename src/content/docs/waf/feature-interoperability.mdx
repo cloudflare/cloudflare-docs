@@ -19,15 +19,15 @@ The security-related request phases, in execution order, are:
 | Phase name                      | Product                                                                |
 | ------------------------------- | ---------------------------------------------------------------------- |
 | `ddos_l7`                       | [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) |
-| `http_request_firewall_custom`  | [WAF custom rules](/waf/custom-rules/)                                 |
+| `http_request_firewall_custom`  | [Custom rules](/waf/custom-rules/)                                     |
 | `http_ratelimit`                | [Rate limiting rules](/waf/rate-limiting-rules/)                       |
-| `http_request_firewall_managed` | [WAF Managed Rules](/waf/managed-rules/)                               |
+| `http_request_firewall_managed` | [Managed Rules](/waf/managed-rules/)                                   |
 | `http_request_sbfm`             | [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/)        |
 
 Within each phase, account-level rulesets run before zone-level rulesets.
 
 :::note
-[Bot Fight Mode](/bots/get-started/bot-fight-mode/) does not use the Ruleset Engine. It operates outside this phase system and cannot be skipped with WAF custom rules.
+[Bot Fight Mode](/bots/get-started/bot-fight-mode/) does not use the Ruleset Engine. It operates outside this phase system and cannot be skipped with custom rules.
 :::
 
 The Ruleset Engine powers many Cloudflare products beyond security. Refer to [Phases list](/ruleset-engine/reference/phases-list/) for the complete list of request and response phases.
@@ -51,38 +51,38 @@ Because these features run independently, they do not follow the phase order des
 
 [DDoS protection](/ddos-protection/) is always on for all Cloudflare plans. L7 HTTP DDoS Attack Protection detects and mitigates application-layer DDoS attacks. L3/4 Network-layer DDoS Attack Protection handles network-layer attacks. You do not need to turn on or configure anything for DDoS protection to work.
 
-### WAF custom rules
+### Custom rules
 
-[WAF custom rules](/waf/custom-rules/) are rules you define. They run in the `http_request_firewall_custom` phase and support actions like _Block_, _Managed Challenge_, _Skip_, and _Log_. You can reference [bot score](/bots/concepts/bot-score/) fields, [WAF attack score](/waf/detections/attack-score/) fields, and all standard request fields in your expressions.
+[Custom rules](/waf/custom-rules/) are rules you define. They run in the `http_request_firewall_custom` phase and support actions like _Block_, _Managed Challenge_, _Skip_, and _Log_. You can reference [bot score](/bots/concepts/bot-score/) fields, [WAF attack score](/waf/detections/attack-score/) fields, and all standard request fields in your expressions.
 
 ### Rate limiting rules
 
 [Rate limiting rules](/waf/rate-limiting-rules/) throttle or block traffic that exceeds a defined request rate. They run in the `http_ratelimit` phase, after custom rules.
 
-### WAF Managed Rules
+### Managed Rules
 
-[WAF Managed Rules](/waf/managed-rules/) are pre-configured rulesets maintained by Cloudflare. These include the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) and the [OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). They run in the `http_request_firewall_managed` phase.
+[Managed Rules](/waf/managed-rules/) are pre-configured rulesets maintained by Cloudflare. These include the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) and the [OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). They run in the `http_request_firewall_managed` phase.
 
 ### Bot Fight Mode
 
-[Bot Fight Mode](/bots/get-started/bot-fight-mode/) is available on Free plans. It is a simple on/off toggle that challenges traffic matching patterns of known bots. You cannot customize its behavior or skip it with WAF custom rules.
+[Bot Fight Mode](/bots/get-started/bot-fight-mode/) is available on Free plans. It is a simple on/off toggle that challenges traffic matching patterns of known bots. You cannot customize its behavior or skip it with custom rules.
 
 ### Super Bot Fight Mode
 
-[Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) (SBFM) is available on Pro, Business, and Enterprise plans (without the Bot Management add-on). It runs in the `http_request_sbfm` phase and offers more control than Bot Fight Mode. You can configure separate actions for **Definitely automated**, **Likely automated**, and **Verified bots** traffic. You can skip SBFM for specific requests using the [_Skip_ action](/waf/custom-rules/skip/) in WAF custom rules.
+[Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) (SBFM) is available on Pro, Business, and Enterprise plans (without the Bot Management add-on). It runs in the `http_request_sbfm` phase and offers more control than Bot Fight Mode. You can configure separate actions for **Definitely automated**, **Likely automated**, and **Verified bots** traffic. You can skip SBFM for specific requests using the [_Skip_ action](/waf/custom-rules/skip/) in custom rules.
 
 ### Bot Management
 
-[Bot Management](/bots/get-started/bot-management/) is an Enterprise add-on. It generates a bot score from `1` to `99` for every request. Lower scores indicate more automated traffic. You write WAF custom rules using the `cf.bot_management.score` field to take action based on this score. For more information, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
+[Bot Management](/bots/get-started/bot-management/) is an Enterprise add-on. It generates a bot score from `1` to `99` for every request. Lower scores indicate more automated traffic. You write custom rules using the `cf.bot_management.score` field to take action based on this score. For more information, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
 ## Key interaction rules
 
 These rules govern how security features interact:
 
 - **Terminating actions stop the request evaluation workflow.** If a rule blocks or challenges a request, Cloudflare does not evaluate later phases for that request.
-- **WAF custom rules run before SBFM.** A terminating action in custom rules prevents Super Bot Fight Mode from evaluating the request.
-- **Skip actions bypass later phases.** You can use the [_Skip_ action](/waf/custom-rules/skip/options/) in WAF custom rules to bypass rate limiting rules (`http_ratelimit`), Super Bot Fight Mode (`http_request_sbfm`), and WAF Managed Rules (`http_request_firewall_managed`).
-- **Bot Fight Mode cannot be skipped.** Because Bot Fight Mode is not part of the Ruleset Engine, WAF custom rules cannot skip it. If you need to exempt traffic from bot protection, upgrade to Super Bot Fight Mode or Bot Management.
+- **Custom rules run before SBFM.** A terminating action in custom rules prevents Super Bot Fight Mode from evaluating the request.
+- **Skip actions bypass later phases.** You can use the [_Skip_ action](/waf/custom-rules/skip/options/) in custom rules to bypass rate limiting rules (`http_ratelimit`), Super Bot Fight Mode (`http_request_sbfm`), and Managed Rules (`http_request_firewall_managed`).
+- **Bot Fight Mode cannot be skipped.** Because Bot Fight Mode is not part of the Ruleset Engine, custom rules cannot skip it. If you need to exempt traffic from bot protection, upgrade to Super Bot Fight Mode or Bot Management.
 - **Bot Management scores are available in custom rules.** Enterprise customers with Bot Management can use `cf.bot_management.score` in custom rule expressions to define custom thresholds per path, user agent, or any other request property.
 
 ## Common scenarios
@@ -99,12 +99,12 @@ Because Bot Fight Mode cannot be skipped or customized, you cannot create except
 
 ### E-commerce site (Pro or Business plan)
 
-A Pro or Business plan adds Super Bot Fight Mode, WAF custom rules, and WAF Managed Rules.
+A Pro or Business plan adds Super Bot Fight Mode, custom rules, and Managed Rules.
 
 - DDoS protection runs automatically.
 - Turn on **Super Bot Fight Mode** to block automated and likely automated traffic.
-- Deploy **WAF Managed Rules** for protection against known vulnerabilities like SQL injection and cross-site scripting.
-- Create WAF custom rules with the _Skip_ action to allow legitimate automated traffic while SBFM blocks bad bots everywhere else:
+- Deploy **Managed Rules** for protection against known vulnerabilities like SQL injection and cross-site scripting.
+- Create custom rules with the _Skip_ action to allow legitimate automated traffic while SBFM blocks bad bots everywhere else:
   1. Go to **Security** > **Security rules**.
   2. Select **Create rule** > **Custom rule**.
   3. Set the expression to match the IP addresses or user agents of your payment processor.
@@ -116,9 +116,9 @@ An Enterprise plan with the Bot Management add-on provides the most flexibility.
 
 - DDoS protection runs automatically.
 - Bot Management generates a bot score on every request.
-- Create WAF custom rules that reference `cf.bot_management.score` to define your own thresholds. For example, block requests with a bot score below 30 for website paths, while allowing all scores on API paths that authenticated partners use.
+- Create custom rules that reference `cf.bot_management.score` to define your own thresholds. For example, block requests with a bot score below 30 for website paths, while allowing all scores on API paths that authenticated partners use.
 - Use rate limiting rules to throttle abusive traffic patterns.
-- Deploy WAF Managed Rules to protect against known vulnerabilities.
+- Deploy Managed Rules to protect against known vulnerabilities.
 
 ## Troubleshoot conflicts
 
@@ -158,7 +158,7 @@ For more information, refer to [Handle false positives from Bot Fight Mode or Su
 
 ### Resolve Super Bot Fight Mode false positives
 
-Create a WAF custom rule with the _Skip_ action to bypass SBFM for the affected traffic:
+Create a custom rule with the _Skip_ action to bypass SBFM for the affected traffic:
 
 <Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
@@ -194,7 +194,7 @@ For more information, refer to [Handle false positives from Bot Fight Mode or Su
 If you use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), keep **Definitely Automated** set to **Allow** in your Super Bot Fight Mode configuration. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
 :::
 
-### Resolve WAF Managed Rules false positives
+### Resolve Managed Rules false positives
 
 If a managed rule blocks legitimate traffic:
 
