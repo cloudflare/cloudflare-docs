@@ -1,0 +1,59 @@
+---
+title: Spec-compliant WebSocket close event with allowHalfOpen opt-out
+description: Server-initiated WebSocket Close frames now automatically fire a close event with readyState set to CLOSED, matching browser behavior. Pass allowHalfOpen to accept() to restore half-open behavior for proxying use cases.
+products:
+  - workers
+date: 2026-03-10
+---
+
+When a server sends a WebSocket Close frame, the Workers runtime now automatically sends a reciprocal Close frame and transitions `readyState` to `CLOSED` before firing the `close` event. This matches the [WebSocket spec](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close_event) and browser behavior.
+
+Previously, receiving a server-initiated Close frame left the WebSocket in `CLOSING` and required the application to call `close()` itself.
+
+This behavior is enabled by the `web_socket_auto_reply_to_close` compatibility flag, which becomes the default on compatibility date `2026-04-07` or later. You can also explicitly enable it by adding `"web_socket_auto_reply_to_close"` to your compatibility flags, or disable it with `"web_socket_manual_reply_to_close"`.
+
+With the flag active (or `allowHalfOpen` set to `false`), you no longer need to call `close()` in your `close` event handler. The runtime handles the close handshake automatically.
+
+```js
+const [client, server] = Object.values(new WebSocketPair());
+server.accept();
+
+server.addEventListener("close", (event) => {
+  // readyState is already CLOSED — no need to call server.close().
+  console.log(server.readyState); // WebSocket.CLOSED
+  console.log(event.code); // 1000
+  console.log(event.wasClean); // true
+}, { once: true });
+```
+
+If you do still call `close()` inside the handler, the call is silently ignored. This means existing code that manually replies to Close frames will not break when you update your compatibility date.
+
+### WebSocket proxying and `allowHalfOpen`
+
+The automatic close behavior can interfere with WebSocket proxying. When a Worker proxies between a client and a backend, the old behavior allowed the Worker to observe a backend Close frame without the runtime tearing down the connection, giving the Worker time to coordinate a clean close on the client side.
+
+To support this pattern, the `accept()` method now takes an optional `WebSocketAcceptOptions` parameter. Pass `{ allowHalfOpen: true }` to restore the old half-open behavior regardless of the compatibility flag.
+
+```ts
+interface WebSocketAcceptOptions {
+  allowHalfOpen?: boolean;
+}
+```
+
+```js
+const [client, server] = Object.values(new WebSocketPair());
+
+// Opt into half-open mode for proxying
+server.accept({ allowHalfOpen: true });
+
+server.addEventListener("close", (event) => {
+  // With allowHalfOpen true, readyState is still CLOSING here,
+  // giving you time to coordinate the close on the other side.
+  console.log(server.readyState); // WebSocket.CLOSING
+
+  // Manually close when ready.
+  server.close(1000, "done");
+}, { once: true });
+```
+
+For more information, refer to the [WebSocket API documentation](/workers/runtime-apis/websockets/).
