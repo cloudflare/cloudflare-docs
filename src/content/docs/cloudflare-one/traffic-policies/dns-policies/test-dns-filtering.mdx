@@ -114,7 +114,7 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 ## Test EDNS configuration
 
-EDNS client subnet is a DNS extension that sends a portion of the user's IP address (a `/24` subnet) to the upstream DNS resolver, allowing it to return geographically optimal answers. If you [enabled EDNS client subnet](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) for your DNS location, you can validate it as follows:
+EDNS client subnet (ECS) is a DNS extension that sends a portion of the user's IP address to authoritative DNS nameservers, allowing them to return geographically optimal answers. Cloudflare sends the first `/24` of the user's IP address to preserve privacy while still providing location information. If you [enabled EDNS client subnet](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) for your DNS location, you can validate it as follows:
 
 1. Obtain your DNS location's DoH (DNS over HTTPS) subdomain:
    1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Networks** > **Resolvers & Proxies** > **DNS locations**.

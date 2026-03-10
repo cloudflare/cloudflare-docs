@@ -83,7 +83,7 @@ API value: `allow`
 
 </Details>
 
-Policies with Allow actions explicitly permit DNS queries to resolve, even if a lower-precedence policy would block them. Use Allow to create exceptions to broader Block policies. For example, the following configuration allows DNS queries to reach domains categorized as belonging to the Education content category:
+Policies with Allow actions explicitly permit DNS queries to resolve. Because Gateway uses a [first-match principle](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence), an Allow policy stops evaluation for matching queries, preventing lower-precedence policies from blocking them. For example, the following configuration allows DNS queries to reach domains categorized as belonging to the Education content category:
 
 | Selector           | Operator | Value       | Action |
 | ------------------ | -------- | ----------- | ------ |
@@ -291,7 +291,9 @@ Each selector is evaluated during a specific phase of the DNS resolution process
 
 - **Before DNS resolution** — Gateway inspects properties of the incoming query (for example, the domain name or source IP) before looking up the answer.
 - **During DNS resolution** — Gateway inspects information discovered while resolving the query (for example, the authoritative nameserver IP).
-- **After DNS resolution** — Gateway inspects the DNS answer (for example, the resolved IP or CNAME record) after resolution completes. These selectors cannot be used with the Override action, because the override must be applied before the answer is returned.
+- **After DNS resolution** — Gateway inspects the DNS answer (for example, the resolved IP or CNAME record) after resolution completes.
+
+The Override action cannot be used with selectors evaluated during or after DNS resolution, because the override must be applied before the answer is returned. For more information on how evaluation phase interacts with precedence, refer to [order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/#dns-policies).
 
 ### Application
 
@@ -303,7 +305,7 @@ Each selector is evaluated during a specific phase of the DNS resolution process
 
 ### Authoritative Nameserver IP
 
-Use this selector to match against the IP address of the authoritative nameserver — the DNS server that holds the definitive records for a domain.
+Use this selector to match against the IP address of the authoritative nameserver IP address.
 
 | UI name                     | API example                                | Evaluation phase      |
 | --------------------------- | ------------------------------------------ | --------------------- |
