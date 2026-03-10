@@ -7,7 +7,7 @@ sidebar:
 
 import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
-Cloudflare reserves several IPv4 and IPv6 ranges for internal routing and service functionality. These ranges are drawn from the CGNAT address space (`100.64.0.0/10`) and must not overlap with your Cloudflare Tunnel, WARP Connector, or WAN routes.
+Cloudflare reserves several IPv4 and IPv6 ranges for internal routing and service functionality. These ranges are drawn from the CGNAT address space (`100.64.0.0/10`). To avoid routing conflicts, your Cloudflare Tunnel, WARP Connector, or WAN routes should not include subsets of these reserved ranges. Broader routes that contain a reserved range, such as `0.0.0.0/0`, are unaffected because longest-prefix match ensures the reserved ranges still take priority.
 
 When planning your private network addressing and configuring [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) entries, use the tables below to identify which IP ranges Cloudflare has reserved and whether they can be reconfigured.
 
