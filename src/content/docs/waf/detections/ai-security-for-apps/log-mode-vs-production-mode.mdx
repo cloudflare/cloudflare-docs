@@ -8,7 +8,7 @@ sidebar:
   order: 9
 ---
 
-import { Steps, Tabs, TabItem, DashButton } from "~/components";
+import { Steps, Tabs, TabItem, DashButton, APIRequest } from "~/components";
 
 AI Security for Apps can operate in two distinct modes. Understanding the trade-offs between them helps you choose the right approach for your stage of deployment.
 
@@ -41,7 +41,7 @@ In production mode, the prompt text is not logged. You can see detection metadat
 
 ## Log mode
 
-Log mode uses the **AI Security Log Mode Ruleset** — a pre-built ruleset that logs the full request body alongside detection results. This mode is designed for **evaluation and tuning** rather than production enforcement.
+Log mode uses the **AI Security Log Mode Ruleset** — a pre-built ruleset that logs the full request body alongside detection results. This mode is designed for evaluation and tuning rather than production enforcement.
 
 In log mode:
 
@@ -61,13 +61,13 @@ In log mode:
 
 <Steps>
 
-1. In the Cloudflare dashboard, go to the **Settings** page under Security.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
 
    <DashButton url="/?to=/:account/:zone/security/settings" />
 
 2. Under **AI Security for Apps**, find the **Managed Ruleset** section.
 3. Enable the **AI Security Log Mode Ruleset**.
-4. Set the action to **Log**.
+4. Set the action to _Log_.
 5. (Recommended) Configure [payload logging](/waf/managed-rules/payload-logging/) so you can decrypt and view the full prompt content alongside detection results.
 
 </Steps>
@@ -76,24 +76,27 @@ In log mode:
 
 Enable the managed ruleset using a `PUT` request:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/rulesets/phases/http_request_firewall_managed/entrypoint" \
---request PUT \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---json '{
-  "rules": [
-    {
-      "action": "execute",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID>"
-      },
-      "expression": "true"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID>",
+				},
+				expression: "true",
+			},
+		],
+	}}
+	roles="WAF"
+/>
 
-To set individual rule actions to **Log**, override the rules within the managed ruleset using `action_parameters.overrides`.
+To set individual rule actions to `log`, override the rules within the managed ruleset using `action_parameters.overrides`. For more information, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
 </TabItem> </Tabs>
 
@@ -105,13 +108,13 @@ Since the managed ruleset uses broad, binary detection logic (detected/not detec
 
 <Steps>
 
-1. **Start in log mode.** Enable the AI Security Log Mode Ruleset with the action set to **Log**. Configure [payload logging](/waf/managed-rules/payload-logging/) so you can view prompts alongside detection results.
+1. **Start in log mode.** Enable the AI Security Log Mode Ruleset with the action set to _Log_. Configure [payload logging](/waf/managed-rules/payload-logging/) so you can view prompts alongside detection results.
 
-2. **Review detections in Security Analytics.** Filter on events from the managed ruleset. Decrypt payloads and review the prompts that triggered detections. Note the scores to understand where to set thresholds.
+2. **Review detections in [Security Analytics](/waf/analytics/security-analytics/).** Filter on events from the managed ruleset. Decrypt payloads and review the prompts that triggered detections. Note the scores to understand where to set thresholds.
 
 3. **Build production rules.** Based on your analysis, [create custom rules](/waf/custom-rules/create-dashboard/) with appropriate score thresholds and PII category filters.
 
-4. **Disable log mode.** Once your production rules are deployed and validated, disable the managed ruleset or keep it on Log as ongoing monitoring.
+4. **Disable log mode.** Once your production rules are deployed and validated, disable the managed ruleset or keep it on _Log_ as ongoing monitoring.
 
 5. **Monitor and iterate.** Continuously review detection events in [Security Analytics](/waf/analytics/security-analytics/) and adjust thresholds as your traffic patterns evolve.
 
