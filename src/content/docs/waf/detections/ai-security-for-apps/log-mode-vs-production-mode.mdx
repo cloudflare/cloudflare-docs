@@ -8,7 +8,14 @@ sidebar:
   order: 9
 ---
 
-import { Steps, Tabs, TabItem, DashButton, APIRequest } from "~/components";
+import {
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+	APIRequest,
+	RuleID,
+} from "~/components";
 
 AI Security for Apps can operate in two distinct modes. Understanding the trade-offs between them helps you choose the right approach for your stage of deployment.
 
@@ -74,7 +81,7 @@ In log mode:
 
 </TabItem> <TabItem label="API">
 
-Enable the managed ruleset using a `PUT` request:
+Deploy the managed ruleset using a `PUT` request:
 
 <APIRequest
 	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
@@ -87,7 +94,7 @@ Enable the managed ruleset using a `PUT` request:
 			{
 				action: "execute",
 				action_parameters: {
-					id: "<MANAGED_RULESET_ID>",
+					id: "b7cd52df92f74c848cec0c2ed385e336",
 				},
 				expression: "true",
 			},
@@ -95,6 +102,8 @@ Enable the managed ruleset using a `PUT` request:
 	}}
 	roles="WAF"
 />
+
+The ID of the AI Security Log Mode Ruleset is <RuleID id="b7cd52df92f74c848cec0c2ed385e336" />.
 
 To set individual rule actions to `log`, override the rules within the managed ruleset using `action_parameters.overrides`. For more information, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
