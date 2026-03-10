@@ -219,26 +219,6 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 
 - None.
 
-### `interceptAllOutboundHttp`
-
-`interceptAllOutboundHttp` routes all outbound HTTP requests from the container through a `WorkerEntrypoint`, regardless of destination. Use this when you want a single handler for all egress traffic.
-
-```js
-const outboundWorker = this.ctx.exports.MyWorker({
-	props: { message: "hello" },
-});
-await this.ctx.container.interceptAllOutboundHttp(outboundWorker);
-```
-
-Like `interceptOutboundHttp`, this method can be called at any time and updates in-flight connections without dropping them.
-
-#### Parameters
-
-- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle all outbound HTTP requests.
-
-#### Return values
-
-- A promise that resolves once the intercept rule is installed.
 
 ## Related resources
 
