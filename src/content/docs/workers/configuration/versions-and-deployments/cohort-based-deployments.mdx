@@ -57,45 +57,121 @@ A request can carry both a cohort header and a version key. In that case, the co
 
 ## Create a cohort-based deployment
 
-Create a cohort-based deployment through the API. The following example keeps default traffic on the stable version, while `canary` users get a 50/50 split and `employee` users are fully on the new version:
+The following examples keep default traffic on the stable version, while `canary` users get a 50/50 split and `employee` users are fully on the new version.
 
-```json
-{
-  "strategy": "percentage",
-  "versions": [
-    {
-      "version_id": "abc123-stable-version",
-      "percentage": 100
-    }
-  ],
-  "cohorts": [
-    {
-      "name": "canary",
-      "versions": [
-        {
-          "version_id": "abc123-stable-version",
-          "percentage": 50
-        },
-        {
-          "version_id": "def456-new-version",
-          "percentage": 50
-        }
-      ]
-    },
-    {
-      "name": "employee",
-      "versions": [
-        {
-          "version_id": "def456-new-version",
-          "percentage": 100
-        }
-      ]
-    }
-  ]
-}
+### Via Wrangler
+
+:::note
+
+Minimum required Wrangler version: 3.40.0. Versions before 3.73.0 require you to specify a `--x-versions` flag.
+
+:::
+
+#### 1. Upload a new version
+
+If you have not already uploaded two versions, make a code change and upload without deploying:
+
+```sh
+npx wrangler versions upload
 ```
 
-Percentages within each cohort's `versions` array must sum to 100. Each cohort operates independently -- changing the `canary` split does not affect `employee` or the default.
+Note the Version ID in the output. Use [`wrangler versions list`](/workers/wrangler/commands/#versions-list) to see all available versions:
+
+```sh
+npx wrangler versions list
+```
+
+#### 2. Deploy with cohorts
+
+Use [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy) with the `--cohort` flag. The positional version specs set the default configuration for uncohorted traffic. Each `--cohort` flag defines a named cohort with its own version split:
+
+```sh
+npx wrangler versions deploy \
+  <STABLE_VERSION_ID>@100% \
+  --cohort canary=<STABLE_VERSION_ID>@50%,<NEW_VERSION_ID>@50% \
+  --cohort employee=<NEW_VERSION_ID>@100% \
+  --message "Canary at 50%, employees on new version" -y
+```
+
+You can also run `npx wrangler versions deploy` without arguments to use the interactive prompt, which will guide you through selecting versions, setting default percentages, and adding cohorts.
+
+#### 3. Verify the deployment
+
+Use [`wrangler deployments status`](/workers/wrangler/commands/#deployments-status) to confirm the deployment was created with your cohort configuration:
+
+```sh
+npx wrangler deployments status
+```
+
+The output includes the default version split and each cohort's configuration:
+
+```txt
+Created:     2026-03-09T18:35:09.591Z
+Author:      yomna@cloudflare.com
+Source:      Unknown (deployment)
+Message:     Canary at 50%, employees on new version
+Version(s):  (100%) abc123-stable-version
+                 Created:  2026-03-09T18:25:13.361Z
+                     Tag:  -
+                 Message:  -
+
+Cohort(s):   canary:
+                 (50%) abc123-stable-version
+                 (50%) def456-new-version
+             employee:
+                 (100%) def456-new-version
+```
+
+#### 4. Progress or complete the deployment
+
+When you are confident in the new version, update the deployment to shift more traffic. For example, to move `canary` to 100% of the new version:
+
+```sh
+npx wrangler versions deploy \
+  <STABLE_VERSION_ID>@100% \
+  --cohort canary=<NEW_VERSION_ID>@100% \
+  --cohort employee=<NEW_VERSION_ID>@100% \
+  --message "Canary fully on new version" -y
+```
+
+To complete the rollout for all traffic, deploy the new version at 100% without any cohorts:
+
+```sh
+npx wrangler versions deploy <NEW_VERSION_ID>@100% -y
+```
+
+### Via the API
+
+Create a cohort-based deployment by sending a POST request to the deployments endpoint. The `versions` array defines the default traffic split. The `cohorts` array is optional and defines named cohort configurations:
+
+```sh
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/scripts/<SCRIPT_NAME>/deployments" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "strategy": "percentage",
+    "versions": [
+      { "version_id": "<STABLE_VERSION_ID>", "percentage": 100 }
+    ],
+    "cohorts": [
+      {
+        "name": "canary",
+        "versions": [
+          { "version_id": "<STABLE_VERSION_ID>", "percentage": 50 },
+          { "version_id": "<NEW_VERSION_ID>", "percentage": 50 }
+        ]
+      },
+      {
+        "name": "employee",
+        "versions": [
+          { "version_id": "<NEW_VERSION_ID>", "percentage": 100 }
+        ]
+      }
+    ]
+  }'
+```
+
+Percentages within each cohort's `versions` array must sum to 100. Each cohort operates independently -- changing the `canary` split does not affect `employee` or the default. A deployment without a `cohorts` array behaves identically to a standard [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/).
 
 ## Assign requests to cohorts
 
@@ -279,20 +355,24 @@ Cohort-based deployments do not currently affect [Durable Object](/durable-objec
 
 With [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects), each Durable Object instance is assigned a version based on a hash of its unique ID and the deployment percentages. The assignment is deterministic and sticky -- the same instance stays on the same version until a new deployment is created. However, you have no control over which instances get which version.
 
-```txt
-Deployment: Version A @ 60%, Version B @ 40%
+```mermaid
+block-beta
+  columns 2
+  block:vA["Version A (60%)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"]:2
+    alice["alice"]
+    carol["carol"]
+    eve["eve"]
+  end
+  block:vB["Version B (40%)"]:2
+    bob["bob"]
+    dave["dave"]
+  end
 
-DO Namespace: USER_DO
-┌──────────────────────────────────┬──────────────────────┐
-│  Version A (60%)                 │  Version B (40%)     │
-│  ┌──────┐ ┌──────┐ ┌──────┐    │  ┌──────┐ ┌──────┐  │
-│  │alice │ │carol │ │eve   │    │  │ bob  │ │dave  │  │
-│  └──────┘ └──────┘ └──────┘    │  └──────┘ └──────┘  │
-│                                  │                      │
-│  Assigned by: hash(DO ID)        │                      │
-│  You cannot choose.              │                      │
-└──────────────────────────────────┴──────────────────────┘
+  style vA fill:#d4edda,stroke:#28a745
+  style vB fill:#cce5ff,stroke:#0366d6
 ```
+
+Version assignment is based on `hash(DO ID)`. You cannot choose which instances get which version.
 
 This means you cannot say "I want all paid users' Durable Objects on the new version." The hash decides, and a high-value customer's Durable Object might end up on the untested version.
 
@@ -308,11 +388,13 @@ Cohort-based deployments for Durable Objects will let you control which instance
 
 Your deployment configuration maps cohorts to versions, the same as for stateless Workers:
 
-```txt
-Deployment config:
-  cohort "free"    → Version A (stable)
-  cohort "paid"    → Version B (new features)
-  default (null)   → Version A
+```mermaid
+flowchart LR
+  subgraph Deployment config
+    free["cohort: free"] --> vA1["Version A (stable)"]
+    paid["cohort: paid"] --> vB1["Version B (new)"]
+    def["default (no cohort)"] --> vA2["Version A (stable)"]
+  end
 ```
 
 Your Worker passes the cohort at `.get()` time -- when obtaining a [stub](/durable-objects/best-practices/access-durable-objects-from-a-worker/#2-create-durable-object-stubs) to a Durable Object, not when making an RPC call on it:
@@ -357,35 +439,45 @@ export class UserDO extends DurableObject {
 
 A Durable Object instance locks to the version of the cohort it was instantiated with. If a subsequent request passes a different cohort, the instance stays on its original version. This prevents the Durable Object from flipping between code versions mid-lifetime, which would risk data corruption.
 
-```txt
-Request 1: get(bobId, { version: { cohort: "paid" } })
-→ bob starts on Version B, cohort "paid" is saved
+```mermaid
+sequenceDiagram
+    participant W1 as Request 1
+    participant Platform
+    participant bob as bob (DO instance)
+    participant W2 as Request 2
 
-Request 2: get(bobId, { version: { cohort: "free" } })
-→ bob is ALREADY RUNNING on "paid" / Version B
-→ the "free" hint is ignored
-→ bob stays on Version B (no reset, no flapping)
+    W1->>Platform: get(bobId, cohort: "paid")
+    Platform->>bob: Start on Version B
+    Note over bob: Cohort "paid" saved
+
+    W2->>Platform: get(bobId, cohort: "free")
+    Platform->>bob: Already running "paid" / Version B
+    Note over bob: "free" ignored, stays on Version B
 ```
 
 #### Sticky across evictions
 
 The cohort will be persisted so that when a Durable Object is [evicted](/durable-objects/concepts/durable-object-lifecycle/) from memory (due to inactivity or server maintenance) and later reinstantiated, it returns to the same cohort and version.
 
-```txt
-1. bob starts with cohort "paid" → Version B
-   Cohort "paid" is persisted.
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Platform
+    participant bob as bob (DO instance)
 
-2. bob is evicted (idle overnight).
-   Stored data and cohort persist.
+    Client->>Platform: Request
+    Platform->>bob: Start with cohort "paid" on Version B
+    Note over bob: Cohort "paid" persisted
 
-3. New request arrives for bob.
-   System reads persisted cohort → "paid"
-   → bob reinstantiates on Version B ✅
+    Note over bob: Evicted (idle overnight).<br/>Stored data and cohort persist.
 
-4. bob has a scheduled alarm that fires.
-   No incoming request, no caller cohort.
-   System reads persisted cohort → "paid"
-   → bob runs on Version B ✅
+    Client->>Platform: New request for bob
+    Platform->>Platform: Read persisted cohort: "paid"
+    Platform->>bob: Reinstantiate on Version B
+
+    Note over bob: Scheduled alarm fires.<br/>No incoming request.
+    Platform->>Platform: Read persisted cohort: "paid"
+    Platform->>bob: Run on Version B
 ```
 
 This means not every caller needs to know the correct cohort. Once a Durable Object's cohort is set, it sticks until you change it or create a new deployment.
@@ -404,20 +496,7 @@ const stub = env.USER_DO.get(id, { version: { cohort: "paid" } });
 
 #### Why this matters
 
-The key difference from gradual deployments is the type of control you get over version assignment:
-
-```txt
-Gradual deployments (today):
-  "Roughly 40% of my DO instances will run the new code."
-  "I do not know which ones. The hash decides."
-
-Cohort-based deployments (planned):
-  "All paid users' DOs run the new code."
-  "All free users' DOs stay on the stable code."
-  "I decide, based on my business logic, and it sticks."
-```
-
-With gradual deployments, you have **statistical** control -- "approximately this percentage." With cohort-based deployments, you have **semantic** control -- "these specific user segments." You can start with your lowest-risk instances, verify everything works, then move higher-value instances over deliberately.
+The key difference from gradual deployments is the type of control you get over version assignment. With gradual deployments, you have **statistical** control -- "approximately this percentage." With cohort-based deployments, you have **semantic** control -- "these specific user segments." You can start with your lowest-risk instances, verify everything works, then move higher-value instances over deliberately.
 
 | | Gradual deployments | Cohort-based deployments |
 |---|---|---|
