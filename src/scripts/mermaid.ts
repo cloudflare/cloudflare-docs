@@ -108,8 +108,11 @@ async function render() {
 			theme: "base",
 			themeVariables,
 			flowchart: {
-				htmlLabels: true,
+				htmlLabels: false,
 				useMaxWidth: true,
+				padding: 15,
+				nodeSpacing: 50,
+				rankSpacing: 50,
 			},
 		});
 

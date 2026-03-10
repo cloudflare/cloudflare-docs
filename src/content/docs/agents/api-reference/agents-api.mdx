@@ -46,11 +46,11 @@ Each Agent can have millions of instances. Each instance is a separate micro-ser
 
 ```mermaid
 flowchart TD
-    A["onStart<br/>(instance wakes up)"] --> B["onRequest<br/>(HTTP)"]
-    A --> C["onConnect<br/>(WebSocket)"]
-    A --> D["onEmail"]
-    C --> E["onMessage ↔ send()<br/>onError (on failure)"]
-    E --> F["onClose"]
+    A(["onStart<br/>(instance wakes up)"]) --> B(["onRequest<br/>(HTTP)"])
+    A --> C(["onConnect<br/>(WebSocket)"])
+    A --> D(["onEmail"])
+    C --> E(["onMessage ↔ send()<br/>onError (on failure)"])
+    E --> F(["onClose"])
 ```
 
 | Method                                        | When it runs                                                                                                                                                                            |
