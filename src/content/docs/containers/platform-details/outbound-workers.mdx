@@ -28,7 +28,10 @@ to intercept all traffic, and optionally upgrade to TLS from inside the Worker.
 Use `outbound` to intercept all outbound HTTP traffic regardless of destination:
 
 ```js
-import { Container } from "@cloudflare/containers";
+import { Container, ContainerProxy } from "@cloudflare/containers";
+
+// ContainerProxy must be exported from your Worker for outbound interception to work
+export { ContainerProxy };
 
 export class MyContainer extends Container {
 	static outbound = (request, env, ctx) => {
