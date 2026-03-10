@@ -50,6 +50,23 @@ Delegation means that `shop.example.com` has specific `NS` records set up for it
 
 If that is the case, when setting up your zone in Cloudflare or opting for a different set of [nameservers](/dns/nameservers/), you have to update the `NS` records in the parent domain, and not at the registrar.
 
+## Restricted nameserver management
+
+Some providers act as registrars but do not allow you to change nameservers. If your domain registrar or hosting platform does not expose nameserver settings, you have two options:
+
+- **Transfer your domain** to a registrar that allows full nameserver management, such as [Cloudflare Registrar](/registrar/) or another registrar of your choice. After the transfer completes, update your nameservers to Cloudflare.
+- **Use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/)** instead of a primary (full) setup. A CNAME setup does not require nameserver changes. This option is available on Business and Enterprise plans.
+
+### Platforms that already use Cloudflare
+
+Some platforms — such as Shopify and GoHighLevel — pre-configure domains with their own Cloudflare nameserver pair through partner programs (for example, [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) or Orange-to-Orange). When you add the same domain to your own Cloudflare account, Cloudflare assigns a different nameserver pair that conflicts with the platform configuration.
+
+In this case, use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/) to avoid the nameserver conflict. A CNAME setup lets you proxy traffic through your own Cloudflare account without changing the nameservers at the registrar.
+
+:::note
+For provider-specific DNS guidance, refer to [Vendor-specific DNS records](/dns/manage-dns-records/reference/vendor-specific-records/).
+:::
+
 ## Further guidance
 
 This page covers specific workflows that customers who do not use Cloudflare Registrar[^1] might have to follow to update their domain nameservers. For complete tutorials, refer to the pages below. Full setup is the most common option, and the only one available for customers on the Free or Pro plans.
