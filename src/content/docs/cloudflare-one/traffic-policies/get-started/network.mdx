@@ -8,7 +8,7 @@ head:
     content: Set up network filtering
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
 
 Secure Web Gateway allows you to apply policies at the network level to control which websites and non-HTTP applications users can access. This is useful when you need to control traffic that is not web browsing — for example, blocking remote desktop connections or restricting file-transfer tools across your organization.
 
@@ -43,9 +43,22 @@ To verify your device is connected to Cloudflare One:
 2. Under **Log traffic activity**, enable activity logging for all Network logs. This tells Cloudflare to record network-level traffic so you can confirm your device appears in the logs.
 3. On your WARP-enabled device, open a browser and visit any website. This generates traffic that should appear in the logs.
 4. Determine the **Source IP** for your device (the public-facing address Cloudflare sees for your connection):
-   1. Open the WARP client settings.
-   2. Go to **Preferences** > **General**.
+
+  <Tabs>
+	<TabItem label="Version 2026.2+">
+
+   1. Open the Cloudflare One client.
+   2. Go to **Profile**.
+   3. Note the **Client Interface IP**. This is the same address that will appear as the Source IP in your network logs.
+  </TabItem>
+	<TabItem label="Version 2026.1 and earlier">
+   1. Open the WARP client.
+   2. Go to **Settings** (gear icon) **Preferences** > **General**.
    3. Note the **Public IP**. This is the same address that will appear as the Source IP in your network logs.
+
+  </TabItem>
+  </Tabs>
+
 5. In Cloudflare One, go to **Insights** > **Logs** > **Network logs**. Before building network policies, make sure you see network logs from the Source IP assigned to your device.
 
 If no logs appear after a few minutes, check two things: first, verify that the [Gateway proxy is turned on](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy). Second, confirm that the device is enrolled in your Zero Trust organization by checking the WARP client connection status.

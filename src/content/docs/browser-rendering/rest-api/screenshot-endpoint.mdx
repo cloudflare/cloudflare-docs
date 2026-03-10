@@ -90,7 +90,11 @@ Visit the [Browser Rendering API reference](/api/resources/browser_rendering/sub
 
 ### Capture a screenshot of an authenticated page
 
-Some webpages require authentication before you can view their content. To capture a screenshot of these pages, you must provide valid session cookies. The following example navigates to a page that requires login. By providing a valid cookie in the `cookies` array, Browser Rendering will be able to access the secure content in order to capture the screenshot.
+Some webpages require authentication before you can view their content. Browser Rendering supports three authentication methods, which work across all [REST API](/browser-rendering/rest-api/) endpoints. For a quick reference of all methods, refer to [How do I render authenticated pages using the REST API?](/browser-rendering/faq/#how-do-i-render-authenticated-pages-using-the-rest-api).
+
+#### Cookie-based authentication
+
+Provide valid session cookies to access pages that require login:
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
@@ -106,6 +110,41 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
         "path": "/"
       }
     ]
+  }' \
+  --output "authenticated-screenshot.png"
+```
+
+#### HTTP Basic Auth
+
+Use the `authenticate` parameter for pages behind HTTP Basic Authentication:
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/protected-page",
+    "authenticate": {
+      "username": "user",
+      "password": "pass"
+    }
+  }' \
+  --output "authenticated-screenshot.png"
+```
+
+#### Token-based authentication
+
+Add custom authorization headers using `setExtraHTTPHeaders`:
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/protected-page",
+    "setExtraHTTPHeaders": {
+      "Authorization": "Bearer your-token"
+    }
   }' \
   --output "authenticated-screenshot.png"
 ```

@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-03-10"
+    title: "New REST API endpoint: /crawl (Beta)"
+    description: |-
+      * Added the [`/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/) (beta) to the REST API. The `/crawl` endpoint scrapes content from a starting URL and follows links across the site, up to a configurable depth or page limit. Responses can be returned as HTML, Markdown, or structured JSON (powered by [Workers AI](/workers-ai/)).
   - publish_date: "2026-03-04"
     title: "Increased REST API rate limits"
     description: |-
