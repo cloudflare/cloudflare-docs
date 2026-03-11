@@ -1,6 +1,6 @@
 ---
 title: JSON responses and RFC 9457 support for Cloudflare 1xxx errors
-description: "Cloudflare-generated 1xxx errors now return structured JSON when requested with Accept: application/json or Accept: application/problem+json, following RFC 9457 (Problem Details for HTTP APIs)."
+description: "Cloudflare-generated 1xxx errors now return structured JSON when requested with 'Accept: application/json' or 'Accept: application/problem+json', following RFC 9457 (Problem Details for HTTP APIs)."
 products:
   - fundamentals
 date: 2026-03-11
@@ -33,12 +33,14 @@ The Markdown frontmatter field `http_status` has been renamed to `status`. Agent
 
 ## Negotiation behavior
 
-- `Accept: application/json` -> JSON (`application/json` content type)
-- `Accept: application/problem+json` -> JSON (`application/problem+json` content type)
-- `Accept: application/json, text/markdown;q=0.9` -> JSON
-- `Accept: text/markdown` -> Markdown
-- `Accept: text/markdown, application/json` -> Markdown (equal `q`, first-listed wins)
-- `Accept: */*` -> HTML (default)
+| Request header sent                             | Response format                                |
+| ----------------------------------------------- | ---------------------------------------------- |
+| `Accept: application/json`                      | JSON (`application/json` content type)         |
+| `Accept: application/problem+json`              | JSON (`application/problem+json` content type) |
+| `Accept: application/json, text/markdown;q=0.9` | JSON                                           |
+| `Accept: text/markdown`                         | Markdown                                       |
+| `Accept: text/markdown, application/json`       | Markdown (equal `q`, first-listed wins)        |
+| `Accept: */*`                                   | HTML (default)                                 |
 
 ## Availability
 
