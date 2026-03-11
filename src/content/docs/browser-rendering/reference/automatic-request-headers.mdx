@@ -9,17 +9,19 @@ Cloudflare automatically attaches headers to every request made through Browser 
 
 ## User-Agent
 
-Browser Rendering uses a standard browser User-Agent by default:
+The default User-Agent depends on how you access Browser Rendering:
 
-```txt
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
-```
+| Method | Default User-Agent |
+| --- | --- |
+| [REST API](/browser-rendering/rest-api/) | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36` |
+| [Crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/) | `CloudflareBrowserRenderingCrawler/1.0` |
+| [Workers Bindings](/browser-rendering/workers-bindings/) | The default User-Agent of the underlying Chrome version |
 
 :::note
-The Chrome version in the User-Agent string may change as Browser Rendering updates its underlying browser engine. Do not rely on a specific version number.
+The Chrome version in the REST API and Workers Bindings User-Agent strings may change as Browser Rendering updates its underlying browser engine. Do not rely on a specific version number.
 :::
 
-Unlike the headers listed below, the User-Agent can be customized using the [`userAgent` parameter](/browser-rendering/rest-api/screenshot-endpoint/#set-a-custom-user-agent) in your API request. Because the User-Agent is configurable, destination servers should use the headers below to identify Browser Rendering requests rather than relying on the User-Agent string.
+Unlike the headers listed below, the User-Agent can be customized using the `userAgent` parameter in your [REST API](/browser-rendering/rest-api/) request or in your [Workers Bindings](/browser-rendering/workers-bindings/) configuration. Because the User-Agent is configurable, destination servers should use the headers below to identify Browser Rendering requests rather than relying on the User-Agent string.
 
 ## Non-configurable headers
 
