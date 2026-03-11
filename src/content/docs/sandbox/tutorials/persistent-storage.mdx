@@ -176,13 +176,7 @@ Try this flow:
 Replace `YOUR_ACCOUNT_ID` in the endpoint URL with your Cloudflare account ID. Find it in the [dashboard](https://dash.cloudflare.com/) under **R2** > **Overview**.
 :::
 
-## 4. Local development limitation
-
-:::caution[Requires production deployment]
-Bucket mounting does not work with `wrangler dev` because it requires FUSE support that wrangler does not currently provide. You must deploy to production to test this feature. All other Sandbox SDK features work locally - only `mountBucket()` and `unmountBucket()` require production deployment.
-:::
-
-## 5. Deploy to production
+## 4. Deploy to production
 
 **Generate R2 API tokens:**
 1. Go to **R2** > **Overview** in the [Cloudflare dashboard](https://dash.cloudflare.com/)
@@ -210,7 +204,7 @@ npx wrangler deploy
 
 After deployment, wrangler outputs your Worker URL (e.g., `https://data-pipeline.yourname.workers.dev`).
 
-## 6. Test the persistence flow
+## 5. Test the persistence flow
 
 Now test against your deployed Worker. Replace `YOUR_WORKER_URL` with your actual Worker URL:
 

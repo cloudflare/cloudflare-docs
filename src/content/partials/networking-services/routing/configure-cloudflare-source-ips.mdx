@@ -9,6 +9,14 @@ You can configure the source IP address range used by Cloudflare whenever a Clou
 - IPv4 traffic is sourced from `100.64.0.0/12`. This range is configurable.
 - IPv6 traffic is sourced from `2606:4700:cf1:5000::/64`. This range is not configurable.
 
+When Cloudflare services send traffic to your private network, the source IP address determines how return traffic is routed. It also determines whether on-premises security devices can properly inspect the traffic. In legacy routing mode, traffic to private networks is sourced from public Cloudflare IPs, which can cause routing and security issues.
+
+For customers using <a href={props.unifiedRoutingLink}>Unified Routing (beta)</a>, traffic to private networks is sourced from a dedicated, non-internet-routable private IPv4 range by default. This ensures:
+
+- **Symmetric routing** — Return traffic stays on your private network connection instead of taking an asymmetric path over the public Internet.
+- **Firewall state preservation** — On-premises stateful firewalls can track connections end-to-end because they see both request and response traffic.
+- **Security and compliance** — Private traffic stays on secure private paths.
+
 Customers may wish to change the default allocated range to avoid IP conflicts or fit with an existing IP Address Management plan.
 
 You must configure routes in your network so that response traffic for these source ranges is sent back to Cloudflare over your Cloudflare One connections.

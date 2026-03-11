@@ -32,14 +32,42 @@ AI Gateway DLP can scan:
 
 The system works with all AI providers supported by AI Gateway, providing consistent protection regardless of which models or services you use.
 
+### Inspection scope
+
+DLP inspects the text content of request and response bodies as they pass through AI Gateway. The following details apply:
+
+- **Non-streaming requests and responses**: DLP scans the full request and response body.
+- **Streaming (SSE) responses**: DLP buffers the full streamed response before scanning. This means DLP-scanned streaming responses are not delivered incrementally to the client. Expect increased time-to-first-token latency when DLP response scanning is enabled on streaming requests, because the entire response must be received from the provider before DLP can evaluate it and release it to the client.
+- **Tool call arguments and results**: DLP scans the text content present in the message body, which includes tool call arguments and results if they appear in the JSON request or response payload.
+- **Base64-encoded images and file attachments**: DLP does not decode base64-encoded content or follow external URLs. Only the raw text of the request and response body is inspected.
+- **Multipart form data**: DLP scans the text portions of the request body. Binary data within multipart payloads is not inspected.
+
+### Streaming behavior
+
+When DLP response scanning is enabled and a client sends a streaming request (`"stream": true`), AI Gateway buffers the complete provider response before running DLP inspection. This differs from requests without DLP, where streamed chunks are forwarded to the client as they arrive.
+
+Because of this buffering:
+
+- **Time-to-first-token latency increases** proportionally to the full response generation time.
+- **Request-only DLP scanning** (where the **Check** setting is set to **Request**) does not buffer the response and has no impact on streaming latency.
+- If you need low-latency streaming for certain requests while still using DLP on the same gateway, consider setting the DLP policy **Check** to **Request** only, or use separate gateways for latency-sensitive and DLP-scanned traffic.
+
+### Per-request DLP controls
+
+DLP policies are configured at the gateway level and apply uniformly to all requests passing through that gateway. There is no per-request header to select specific DLP profiles or to bypass DLP scanning for individual requests.
+
+If you need different DLP policies for different use cases (for example, per-tenant policy variance in a multi-tenant application), the recommended approach is to create separate gateways with different DLP configurations and route requests to the appropriate gateway based on your application logic.
+
 ## Integration with Cloudflare DLP
 
-AI Gateway DLP uses the same detection profiles and policies as Cloudflare's enterprise DLP solution. This means:
+AI Gateway DLP uses the same [detection profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) as Cloudflare One's DLP solution. Profiles are shared account-level objects, so you can reuse existing predefined or custom profiles across both [Gateway HTTP policies](/cloudflare-one/data-loss-prevention/dlp-policies/) and AI Gateway DLP policies.
 
-- **Unified management** - Configure DLP policies once and apply them across web traffic, email, SaaS applications, and AI interactions
-- **Consistent detection** - The same sensitive data patterns are detected across all channels
-- **Centralized reporting** - All DLP events appear in the same dashboard and logs
-- **Shared profiles** - Reuse existing DLP detection profiles for AI traffic
+Key differences from Cloudflare One Gateway DLP:
+
+- **No Gateway proxy or TLS decryption required** - AI Gateway inspects traffic directly as an AI proxy, so you do not need to set up [Gateway HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/) or [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+- **Separate policy management** - DLP policies for AI Gateway are configured per gateway in the AI Gateway dashboard, not in Cloudflare One traffic policies.
+- **Separate logs** - DLP events for AI Gateway appear in [AI Gateway logs](/ai-gateway/observability/logging/), not in Cloudflare One HTTP request logs.
+- **Shared profiles** - DLP detection profiles (predefined and custom) are shared across both products. Changes to a profile apply everywhere it is used.
 
 For more information about Cloudflare's DLP capabilities, refer to the [Data Loss Prevention documentation](/cloudflare-one/data-loss-prevention/).
 

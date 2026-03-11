@@ -35,7 +35,11 @@ cloudflare-docs/
 ├── public/                 # Static files served as-is (images, redirects, robots.txt)
 ├── worker/                 # Cloudflare Worker for serving the site
 ├── bin/                    # Build scripts and CI helpers
-├── skills/                 # Interactive exercises (astro-skills)
+│   └── fetch-skills.ts     # Downloads skills.tar.gz from middlecache, extracts to skills/
+├── skills/                 # Agent Skills served at /.well-known/skills/ — GENERATED, do not edit
+│                           # Fetched from https://middlecache.ced.cloudflare.com/v1/cloudflare-skills/skills.tar.gz
+│                           # by bin/fetch-skills.ts, which runs automatically via prebuild/predev hooks.
+│                           # skills/ is in .gitignore and is NOT committed to the repository.
 ├── astro.config.ts         # Astro + Starlight configuration
 ├── ec.config.mjs           # Expressive Code (syntax highlighting) configuration
 ├── package.json
@@ -63,19 +67,19 @@ All docs pages require frontmatter. Key fields:
 
 ```yaml
 ---
-title: Page Title                    # Required
-description: SEO meta description    # Recommended
-pcx_content_type: how-to             # Page type (see below)
+title: Page Title # Required
+description: SEO meta description # Recommended
+pcx_content_type: how-to # Page type (see below)
 sidebar:
-  order: 1                           # Sort order in sidebar
-  label: Custom Label                # Override sidebar text
-tags:                                # Optional, validated against allowlist
+  order: 1 # Sort order in sidebar
+  label: Custom Label # Override sidebar text
+tags: # Optional, validated against allowlist
   - JavaScript
   - Workers
-products:                            # References to src/content/products/ entries
+products: # References to src/content/products/ entries
   - workers
-difficulty: Beginner                 # For tutorials: Beginner | Intermediate | Advanced
-reviewed: 2025-01-15                 # YYYY-MM-DD of last content review
+difficulty: Beginner # For tutorials: Beginner | Intermediate | Advanced
+reviewed: 2025-01-15 # YYYY-MM-DD of last content review
 ---
 ```
 
@@ -87,10 +91,10 @@ Tags are validated against an allowlist in `src/schemas/tags.ts`. Invalid tags w
 
 MDX is parsed as JSX, not plain Markdown. These characters have special meaning and **will break the build** if used unescaped in prose:
 
-| Character | Problem | Fix |
-|-----------|---------|-----|
-| `{` `}` | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}` |
-| `<` `>` | Interpreted as JSX elements | Use `&lt;` `&gt;` or wrap in backticks |
+| Character | Problem                       | Fix                                    |
+| --------- | ----------------------------- | -------------------------------------- |
+| `{` `}`   | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}`     |
+| `<` `>`   | Interpreted as JSX elements   | Use `&lt;` `&gt;` or wrap in backticks |
 
 This is the single most common build failure. Always check prose, tables, and headings for these characters.
 
@@ -130,7 +134,14 @@ The full style guide is at `src/content/docs/style-guide/`. Key rules:
 Components are imported from `~/components` in MDX files:
 
 ```mdx
-import { Render, TypeScriptExample, WranglerConfig, Details } from "~/components";
+import {
+	Render,
+	TypeScriptExample,
+	WranglerConfig,
+	Details,
+} from "~/components";
+
+;
 ```
 
 Components **must** be imported after the frontmatter block. Forgetting the import is a common mistake.
@@ -143,6 +154,7 @@ Renders a reusable partial from `src/content/partials/`. This is the primary con
 <Render file="partial-name" product="workers" />
 
 <!-- With parameters: -->
+
 <Render file="partial-name" product="workers" params={{ key: "value" }} />
 ```
 
@@ -164,7 +176,7 @@ Auto-transpiles TypeScript to JavaScript and shows both in synced tabs.
 
 Shows Wrangler configuration in both TOML and JSON formats with synced tabs. Auto-converts between formats.
 
-```mdx
+````mdx
 <WranglerConfig>
 
 ```toml
@@ -172,6 +184,7 @@ name = "my-worker"
 main = "src/index.ts"
 compatibility_date = "$today"
 ```
+````
 
 </WranglerConfig>
 ```
@@ -185,8 +198,8 @@ Starlight's `<Tabs>` and `<TabItem>` are re-exported from `~/components`:
 import { Tabs, TabItem } from "~/components";
 
 <Tabs>
-  <TabItem label="npm">npm install package</TabItem>
-  <TabItem label="yarn">yarn add package</TabItem>
+	<TabItem label="npm">npm install package</TabItem>
+	<TabItem label="yarn">yarn add package</TabItem>
 </Tabs>
 ```
 
@@ -212,19 +225,19 @@ Content inside the collapsible section.
 
 ### Other frequently used components
 
-| Component | Purpose |
-|-----------|---------|
-| `Plan` | Display plan availability (e.g., `<Plan type="enterprise" />`) |
-| `GlossaryTooltip` | Inline hover tooltip with glossary definition |
-| `InlineBadge` | Status badges: `<InlineBadge preset="beta" />` |
-| `LinkTitleCard` | Navigation card with icon, title, and description |
-| `DirectoryListing` | Auto-generated listing of child pages |
-| `YouTube` | Embed YouTube video by ID |
-| `Stream` | Embed Cloudflare Stream video |
-| `APIRequest` | Generate curl commands from the Cloudflare OpenAPI schema |
-| `DashButton` | "Go to Dashboard" button with validated deeplink |
-| `ListTutorials` | Auto-generated tutorial listing table |
-| `GitHubCode` | Fetch and display code from a GitHub repository |
+| Component          | Purpose                                                        |
+| ------------------ | -------------------------------------------------------------- |
+| `Plan`             | Display plan availability (e.g., `<Plan type="enterprise" />`) |
+| `GlossaryTooltip`  | Inline hover tooltip with glossary definition                  |
+| `InlineBadge`      | Status badges: `<InlineBadge preset="beta" />`                 |
+| `LinkTitleCard`    | Navigation card with icon, title, and description              |
+| `DirectoryListing` | Auto-generated listing of child pages                          |
+| `YouTube`          | Embed YouTube video by ID                                      |
+| `Stream`           | Embed Cloudflare Stream video                                  |
+| `APIRequest`       | Generate curl commands from the Cloudflare OpenAPI schema      |
+| `DashButton`       | "Go to Dashboard" button with validated deeplink               |
+| `ListTutorials`    | Auto-generated tutorial listing table                          |
+| `GitHubCode`       | Fetch and display code from a GitHub repository                |
 
 For the full component list and their props, see `src/components/index.ts` (barrel export) and the individual `.astro` / `.tsx` files.
 
@@ -315,27 +328,27 @@ A separate Semgrep workflow checks style guide compliance (dates, "coming soon" 
 
 The site defines 20 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
 
-| Collection | Location | Description |
-|-----------|----------|-------------|
-| `docs` | `src/content/docs/` | Main documentation pages (MDX) |
-| `partials` | `src/content/partials/` | Reusable content snippets (MDX) |
-| `changelog` | `src/content/changelog/` | Product changelogs (MDX) |
-| `glossary` | `src/content/glossary/` | Glossary terms (YAML) |
-| `products` | `src/content/products/` | Product metadata (YAML) |
-| `plans` | `src/content/plans/` | Plan/pricing data (YAML) |
-| `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON) |
-| `fields` | `src/content/fields/` | Ruleset engine field definitions (YAML) |
-| `learning-paths` | `src/content/learning-paths/` | Learning path definitions (JSON) |
+| Collection          | Location                         | Description                             |
+| ------------------- | -------------------------------- | --------------------------------------- |
+| `docs`              | `src/content/docs/`              | Main documentation pages (MDX)          |
+| `partials`          | `src/content/partials/`          | Reusable content snippets (MDX)         |
+| `changelog`         | `src/content/changelog/`         | Product changelogs (MDX)                |
+| `glossary`          | `src/content/glossary/`          | Glossary terms (YAML)                   |
+| `products`          | `src/content/products/`          | Product metadata (YAML)                 |
+| `plans`             | `src/content/plans/`             | Plan/pricing data (YAML)                |
+| `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON)             |
+| `fields`            | `src/content/fields/`            | Ruleset engine field definitions (YAML) |
+| `learning-paths`    | `src/content/learning-paths/`    | Learning path definitions (JSON)        |
 
 ## Testing
 
 Tests use Vitest with three workspace projects (`vitest.workspace.ts`):
 
-| Suite | File pattern | Runtime |
-|-------|-------------|---------|
+| Suite   | File pattern       | Runtime                           |
+| ------- | ------------------ | --------------------------------- |
 | Workers | `*.worker.test.ts` | `@cloudflare/vitest-pool-workers` |
-| Node | `*.node.test.ts` | Node.js |
-| Astro | `*.astro.test.ts` | Astro Vite config |
+| Node    | `*.node.test.ts`   | Node.js                           |
+| Astro   | `*.astro.test.ts`  | Astro Vite config                 |
 
 Run all tests: `npm run test`
 

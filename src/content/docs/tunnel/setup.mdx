@@ -1,0 +1,184 @@
+---
+title: Setup
+pcx_content_type: get-started
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Set up Cloudflare Tunnel
+description: Create your first Cloudflare Tunnel and publish an application in under 5 minutes.
+---
+
+import {
+	DashButton,
+	Render,
+	Stream,
+	Tabs,
+	TabItem,
+	APIRequest,
+} from "~/components";
+
+Create a Cloudflare Tunnel and publish your first application in under 5 minutes.
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- A [domain on Cloudflare](/fundamentals/manage-domains/add-site/) (required to publish applications)
+- A server or VM with internet access where you will install `cloudflared`
+
+:::tip
+If your server is behind a restrictive firewall, verify it can reach Cloudflare on port `7844` before proceeding. Refer to [Connection errors](/tunnel/troubleshooting/#connection-errors).
+:::
+
+## Create a tunnel
+
+To create a new Cloudflare Tunnel:
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+<Stream
+	id="4b75ad2aa58700602e94b148827687a2"
+	title="How to set up Cloudflare Tunnel"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/tunnel%204_%20set%20up%20tunnel.png"
+/>
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
+2. Select **Create Tunnel**.
+
+3. Enter a name for your tunnel (for example, `production-web` or `staging-api`).
+
+4. Select **Create Tunnel**.
+
+5. Under **Setup Environment**, select the operating system and architecture of your server.
+
+6. Copy the install commands shown under **Install and Run** and run them in a terminal on your server.
+
+7. Once the tunnel connects, select **Continue**.
+
+Your tunnel should appear on the **Tunnels** page with a `Healthy` [status](/tunnel/monitoring/#tunnel-health).
+
+</TabItem>
+<TabItem label="API">
+
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+
+   | Type    | Item              | Permission |
+   | ------- | ----------------- | ---------- |
+   | Account | Cloudflare Tunnel | Edit       |
+   | Zone    | DNS               | Edit       |
+
+2. Create a tunnel:
+
+   <APIRequest
+   	path="/accounts/{account_id}/cfd_tunnel"
+   	method="POST"
+   	json={{
+   		name: "api-tunnel",
+   		config_src: "cloudflare",
+   	}}
+   />
+
+3. Copy the `id` and `token` values from the response. You will need them to configure and run the tunnel.
+
+</TabItem>
+</Tabs>
+
+## Publish an application
+
+To make an application accessible from the Internet, add a published application route to your tunnel. The tunnel route maps a public hostname to a local service.
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels** and select your tunnel. <DashButton url="/?to=/:account/tunnels" />
+
+2. Under **Routes**, select **Add route**.
+
+3. Select **Published application**.
+
+4. Under **Hostname**, enter a subdomain and select a domain from the drop-down menu.
+
+5. For **Service URL**, enter the local address and port of your application.
+
+   For example, if your web server runs on the same machine as `cloudflared`:
+   - HTTP on port `80`: `http://localhost:80`
+   - HTTPS on port `443`: `https://localhost:443`
+
+   If your web server runs on a different machine: `http://192.0.2.1:80`
+
+6. Select **Add route**.
+
+</TabItem>
+<TabItem label="API">
+
+1. Configure your tunnel's ingress rules:
+
+   <APIRequest
+   	path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/configurations"
+   	method="PUT"
+   	json={{
+   		config: {
+   			ingress: [
+   				{
+   					hostname: "app.example.com",
+   					service: "http://localhost:80",
+   					originRequest: {},
+   				},
+   				{
+   					service: "http_status:404",
+   				},
+   			],
+   		},
+   	}}
+   />
+
+   Your ingress rules must include a catch-all rule at the end. In this example, `cloudflared` will respond with a 404 status code when the request does not match any hostname.
+
+2. Create a DNS record for your application:
+
+   <APIRequest
+   	path="/zones/{zone_id}/dns_records"
+   	method="POST"
+   	json={{
+   		type: "CNAME",
+   		proxied: true,
+   		name: "app.example.com",
+   		content: "<TUNNEL_ID>.cfargotunnel.com",
+   	}}
+   />
+
+3. Install `cloudflared` on your server and run the tunnel using the `token` obtained in [Create a tunnel](/tunnel/setup/#create-a-tunnel):
+
+   <Render file="tunnel/install-and-run-tunnel" product="cloudflare-one" />
+
+</TabItem>
+</Tabs>
+
+Your application is now live at the hostname you configured. Cloudflare automatically proxies traffic through its network, applying CDN caching, WAF, and DDoS protection.
+
+:::note
+Non-HTTP services (SSH, TCP, RDP) require `cloudflared` on the client side. Refer to the [protocols reference](/tunnel/routing/#supported-protocols) for details.
+:::
+
+## Quick tunnels (development)
+
+For local development, you can instantly expose localhost without a Cloudflare account:
+
+```sh
+cloudflared tunnel --url http://localhost:8080
+```
+
+This generates a random `trycloudflare.com` subdomain that proxies traffic to your local server. Quick tunnels are for testing only — they have a 200 concurrent request limit and do not support Server-Sent Events (SSE).
+
+For production use, [create a tunnel](#create-a-tunnel) instead.
+
+## Next steps
+
+- [Routing](/tunnel/routing/) — Configure DNS records, load balancers, and protocol support.
+- [Configuration](/tunnel/configuration/) — Deploy replicas, manage tokens, and tune performance.
+- [Deployment guides](/tunnel/deployment-guides/) — Deploy on Kubernetes, AWS, GCP, Terraform, and more.
+- [Troubleshooting](/tunnel/troubleshooting/) — Resolve common errors and connectivity issues.

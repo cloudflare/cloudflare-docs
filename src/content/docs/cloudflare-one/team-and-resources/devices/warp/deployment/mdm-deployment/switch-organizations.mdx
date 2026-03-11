@@ -80,23 +80,31 @@ An MDM file supports a maximum of 25 configurations. The following example inclu
 
 ## Switch organizations in WARP
 
+To switch to a different organization as a user:
+
 <Tabs> <TabItem label="Windows, macOS, and Linux">
 
-<Render
-	file="warp/switch-orgs"
-	product="cloudflare-one"
-	params={{ one: "Select the gear icon.", two: "Preferences > Account" }}
-/>
+1. Open the Cloudflare One client on your device.
+2. Go to **Home**. The **Configuration** dropdown will show the organizations that the admin has configured for your device.
+	<Details header="Version 2026.1 and earlier">
+	In the WARP client, select the gear icon > **Switch configurations**.
+	</Details>
 
 </TabItem> <TabItem label="iOS and Android">
 
-<Render
-	file="warp/switch-orgs"
-	product="cloudflare-one"
-	params={{ one: "Go to Settings > Advanced.", two: "Settings > Account" }}
-/>
+1. Open the Cloudflare One Agent app on your device.
+2. Go to **Settings** > **Advanced** > **Switch configurations**. The menu will show the organizations that the admin has configured for your device.
 
 </TabItem> </Tabs>
+
+3. Select the configuration that you want to connect to.
+4. If prompted, complete the authentication steps required for the new organization. Your authentication information will be saved and you will be able to switch back and forth between configurations.
+
+:::note
+Only admins can [add additional organizations](#mdm-file-format) to the client GUI. To connect to an organization that is not displayed in the GUI, manually log out[^1] of the old organization and [enroll](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) in the new organization.
+:::
+
+[^1]: Logging out is only possible if [Allow device to leave organization](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) is enabled for your device.
 
 ### Troubleshooting
 

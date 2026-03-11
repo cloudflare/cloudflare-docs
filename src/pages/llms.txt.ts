@@ -2,49 +2,53 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import dedent from "dedent";
 
-export const GET: APIRoute = async () => {
-	const products = await getCollection("directory", (p) => {
-		return p.data.entry.group?.toLowerCase() === "developer platform";
+export const GET: APIRoute = async ({ url }) => {
+	const base = url.origin;
+	const directory = await getCollection("directory", (p) => {
+		return !!p.data.entry.group;
 	});
 
-	const docs = await getCollection("docs", (e) => {
-		return products.some((p) => e.id.startsWith(p.data.entry.url.slice(1, -1)));
-	});
+	const docs = await getCollection("docs");
 
-	const grouped = Object.entries(
-		Object.groupBy(docs, (e) => {
-			const product = products.find((p) =>
-				e.id.startsWith(p.data.entry.url.slice(1, -1)),
-			);
-
-			if (!product) throw new Error(`Unable to find product for ${e.id}`);
-
-			return product.data.entry.title;
-		}),
+	// Build a set of product IDs that actually have docs pages
+	const productsWithDocs = new Set(
+		directory
+			.filter((entry) => {
+				const prefix = entry.data.entry.url.slice(1, -1);
+				return docs.some(
+					(e) => e.id.startsWith(prefix + "/") || e.id === prefix,
+				);
+			})
+			.map((entry) => entry.id),
 	);
+
+	// Group products by their group, skipping any without docs pages
+	const grouped = Object.entries(
+		Object.groupBy(
+			directory.filter((entry) => productsWithDocs.has(entry.id)),
+			(entry) => entry.data.entry.group as string,
+		),
+	).sort(([a], [b]) => a.localeCompare(b));
 
 	const markdown = dedent(`
 		# Cloudflare Developer Documentation
 
-		Easily build and deploy full-stack applications everywhere,
-		thanks to integrated compute, storage, and networking.
+		Explore guides and tutorials to start building on Cloudflare's platform.
+
+		> Each product below links to its own llms.txt, which contains a full index of that product's documentation pages and is the recommended way to explore a specific product's content.
+		>
+		> For the complete documentation archive in a single file, use the [Full Documentation Archive](${base}/llms-full.txt). That file is intended for offline indexing, bulk vectorization, or large-context models. Each product's llms.txt also links to a product-scoped llms-full.txt.
 
 		${grouped
-			.map(([product, entries]) => {
+			.map(([group, entries]) => {
 				return dedent(`
-				## ${product}
+				## ${group}
 
 				${entries
-					?.map((e) => {
-						const line = `- [${e.data.title}](https://developers.cloudflare.com/${e.id}/index.md)`;
-
-						const description = e.data.description;
-
-						if (description) {
-							return line.concat(`: ${description}`);
-						}
-
-						return line;
+					?.map((entry) => {
+						const line = `- [${entry.data.entry.title}](${base}/${entry.id}/llms.txt)`;
+						const description = entry.data.meta?.description;
+						return description ? line.concat(`: ${description}`) : line;
 					})
 					.join("\n")}
 			`);

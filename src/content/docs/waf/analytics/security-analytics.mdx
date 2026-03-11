@@ -11,6 +11,7 @@ import {
 	Badge,
 	Steps,
 	DashButton,
+	Render,
 } from "~/components";
 
 Security Analytics displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
@@ -59,6 +60,8 @@ To use Security Analytics:
 
 Adjust the scope of analytics by manually entering filter conditions. You can also select **Filter** or **Exclude** to filter by a field value. These buttons appear when you hover the analytics data legend.
 
+<Render file="case-sensitivity-note" product="analytics" />
+
 To manually add a filter:
 
 <Steps>
@@ -101,7 +104,7 @@ The suspicious activity section gives you information about suspicious requests 
 - [Leaked credential check](/waf/detections/leaked-credentials/) (only for user and password leaked)
 - [Malicious uploads](/waf/detections/malicious-uploads/)
 - [WAF attack score](/waf/detections/attack-score/)
-- [Firewall for AI](/waf/detections/firewall-for-ai/)
+- [AI Security for Apps](/waf/detections/ai-security-for-apps/)
 
 Each suspicious activity is classified with a severity score that can vary from critical to low. You can use the filter option to investigate further.
 

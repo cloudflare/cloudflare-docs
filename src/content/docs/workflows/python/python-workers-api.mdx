@@ -21,18 +21,30 @@ class MyWorkflow(WorkflowEntrypoint):
 
 ## WorkflowStep
 
-* <code>step.do(name, depends=[], concurrent=False, config=None)</code> is a decorator that allows you to define a step in a workflow.
-  * `name` - the name of the step.
-  * `depends` - an optional list of steps that must complete before this step can run. See [DAG Workflows](/workflows/python/dag).
-  * `concurrent` - an optional boolean that indicates whether this step can run concurrently with other steps.
-  * `config` - an optional [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/). This is passed as a Python dictionary and then type translated into a `WorkflowStepConfig` object.
+{/* prettier-ignore */}
+- <code>step.do(name=None, *, concurrent=False, config=None)</code> — a decorator that allows you to define a step in a workflow.
+  - `name` — an optional name for the step. If omitted, the function name (`func.__name__`) is used.
+  - `concurrent` — an optional boolean that indicates whether dependencies for this step can run concurrently.
+  - `config` — an optional [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/). This is passed as a Python dictionary and then type translated into a `WorkflowStepConfig` object.
+
+  All parameters except `name` are keyword-only.
+
+Dependencies are resolved implicitly by parameter name. If a step function parameter name matches a previously declared step function, its result is injected into the step.
+
+If you define a `ctx` parameter, the step context is injected into that argument.
+
+:::note
+
+Older compatibility behavior supports explicit dependency lists with `depends=[...]`. For new workflows, prefer implicit dependency resolution by parameter name.
+
+:::
 
 ```python
 from workers import WorkflowEntrypoint
 
 class MyWorkflow(WorkflowEntrypoint):
     async def run(self, event, step):
-        @step.do("my first step")
+        @step.do()
         async def my_first_step():
             # do some work
             return "Hello World!"
@@ -45,20 +57,20 @@ Note that the decorator doesn't make the call to the step, it just returns a cal
 When returning state from a step, you must make sure that the returned value is serializable. Since steps run through an FFI layer, the returned value gets type translated via [FFI.](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.to_js)
 Refer to [Pyodide's documentation](https://pyodide.org/en/stable/usage/type-conversions.html#type-translations-pyproxy-to-js) regarding type conversions for more information.
 
-* <code>step.sleep(name, duration)</code>
-
-  * `name` - the name of the step.
-  * `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
+{/* prettier-ignore */}
+- <code>step.sleep(name, duration)</code>
+  - `name` — the name of the step.
+  - `duration` — the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
 
 ```python
 async def run(self, event, step):
     await step.sleep("my-sleep-step", "10 seconds")
 ```
 
-* <code>step.sleep_until(name, timestamp)</code>
-
-  * `name` - the name of the step.
-  * `timestamp` - a `datetime.datetime` object or seconds from the Unix epoch to sleep the workflow instance until.
+{/* prettier-ignore */}
+- <code>step.sleep_until(name, timestamp)</code>
+  - `name` — the name of the step.
+  - `timestamp` — a `datetime.datetime` object or seconds from the Unix epoch to sleep the workflow instance until.
 
 ```python
 import datetime
@@ -67,11 +79,11 @@ async def run(self, event, step):
     await step.sleep_until("my-sleep-step", datetime.datetime.now() + datetime.timedelta(seconds=10))
 ```
 
-* <code>step.wait_for_event(name, event_type, timeout="24 hours")</code>
-
-  * `name` - the name of the step.
-  * `event_type` - the type of event to wait for.
-  * `timeout` - the timeout for the `wait_for_event` call. The default timeout is 24 hours.
+{/* prettier-ignore */}
+- <code>step.wait_for_event(name, event_type, timeout="24 hours")</code>
+  - `name` — the name of the step.
+  - `event_type` — the type of event to wait for.
+  - `timeout` — the timeout for the `wait_for_event` call. The default timeout is 24 hours.
 
 ```python
 async def run(self, event, step):
@@ -82,10 +94,10 @@ async def run(self, event, step):
 
 The `event` parameter is a dictionary that contains the payload passed to the workflow instance, along with other metadata:
 
-* <code>payload</code> - the payload passed to the workflow instance.
-* <code>timestamp</code> - the timestamp that the workflow was triggered.
-* <code>instanceId</code> - the ID of the current workflow instance.
-* <code>workflowName</code> - the name of the workflow.
+- <code>payload</code> - the payload passed to the workflow instance.
+- <code>timestamp</code> - the timestamp that the workflow was triggered.
+- <code>instanceId</code> - the ID of the current workflow instance.
+- <code>workflowName</code> - the name of the workflow.
 
 ## Error Handling
 
@@ -139,6 +151,20 @@ class DemoWorkflowClass(WorkflowEntrypoint):
         async def first_step():
             # do some work
             pass
+```
+
+### Access step context (`ctx`)
+
+```python
+from workers import WorkflowEntrypoint
+
+class CtxWorkflow(WorkflowEntrypoint):
+    async def run(self, event, step):
+        @step.do()
+        async def read_context(ctx):
+            return ctx["attempt"]
+
+        return await read_context()
 ```
 
 ### Create an instance via binding

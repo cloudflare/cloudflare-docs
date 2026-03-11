@@ -1,1 +1,7 @@
-[]
+[
+	{
+		"deeplink": "/?to=/:account/tunnels",
+		"name": "Tunnels",
+		"parent": ["Networking"]
+	}
+]

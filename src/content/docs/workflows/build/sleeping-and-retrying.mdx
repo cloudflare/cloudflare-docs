@@ -3,7 +3,6 @@ title: Sleeping and retrying
 pcx_content_type: concept
 sidebar:
   order: 4
-
 ---
 
 This guide details how to sleep a Workflow and/or configure retries for a Workflow step.
@@ -23,7 +22,7 @@ A Workflow instance that is resuming from sleep will take priority over newly sc
 Use `step.sleep` to have a Workflow sleep for a relative period of time:
 
 ```ts
-await step.sleep("sleep for a bit", "1 hour")
+await step.sleep("sleep for a bit", "1 hour");
 ```
 
 The second argument to `step.sleep` accepts both `number` (milliseconds) or a human-readable format, such as "1 minute" or "26 hours". The accepted units for `step.sleep` when used this way are as follows:
@@ -45,7 +44,7 @@ Use `step.sleepUntil` to have a Workflow sleep to a specific `Date`: this can be
 ```ts
 // sleepUntil accepts a Date object as its second argument
 const workflowsLaunchDate = Date.parse("24 Oct 2024 13:00:00 UTC");
-await step.sleepUntil("sleep until X times out", workflowsLaunchDate)
+await step.sleepUntil("sleep until X times out", workflowsLaunchDate);
 ```
 
 You can also provide a UNIX timestamp (milliseconds since the UNIX epoch) directly to `sleepUntil`.
@@ -61,30 +60,47 @@ const defaultConfig: WorkflowStepConfig = {
 	retries: {
 		limit: 5,
 		delay: 10000,
-		backoff: 'exponential',
+		backoff: "exponential",
 	},
-	timeout: '10 minutes',
+	timeout: "10 minutes",
 };
 ```
 
 When providing your own `StepConfig`, you can configure:
 
-* The total number of attempts to make for a step (accepts `Infinity` for unlimited retries)
-* The delay between attempts (accepts both `number` (ms) or a human-readable format)
-* What backoff algorithm to apply between each attempt: any of `constant`, `linear`, or `exponential`
-* When to timeout (in duration) before considering the step as failed (including during a retry attempt, as the timeout is set per attempt)
+- The total number of attempts to make for a step (accepts `Infinity` for unlimited retries)
+- The delay between attempts (accepts both `number` (ms) or a human-readable format)
+- What backoff algorithm to apply between each attempt: any of `constant`, `linear`, or `exponential`
+- When to timeout (in duration) before considering the step as failed (including during a retry attempt, as the timeout is set per attempt)
 
 For example, to limit a step to 10 retries and have it apply an exponential delay (starting at 10 seconds) between each attempt, you would pass the following configuration as an optional object to `step.do`:
 
 ```ts
-let someState = await step.do("call an API", {
-  retries: {
-    limit: 10, // The total number of attempts
-    delay: "10 seconds", // Delay between each retry
-    backoff: "exponential" // Any of "constant" | "linear" | "exponential";
-  },
-  timeout: "30 minutes",
-}, async () => { /* Step code goes here */ })
+let someState = await step.do(
+	"call an API",
+	{
+		retries: {
+			limit: 10, // The total number of attempts
+			delay: "10 seconds", // Delay between each retry
+			backoff: "exponential", // Any of "constant" | "linear" | "exponential";
+		},
+		timeout: "30 minutes",
+	},
+	async () => {
+		/* Step code goes here */
+	},
+);
+```
+
+## Access step context
+
+Workflow step callbacks receive a context object containing the current attempt number (1-indexed). This allows you to access which retry attempt is currently executing.
+
+```ts
+await step.do("my-step", async (ctx) => {
+	// ctx.attempt is 1 on first try, 2 on first retry, etc.
+	console.log(`Attempt ${ctx.attempt}`);
+});
 ```
 
 ## Force a Workflow instance to fail
@@ -95,17 +111,23 @@ This can be useful when you detect a terminal (permanent) error from an upstream
 
 ```ts
 // Import the NonRetryableError definition
-import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
-import { NonRetryableError } from 'cloudflare:workflows';
+import {
+	WorkflowEntrypoint,
+	WorkflowStep,
+	WorkflowEvent,
+} from "cloudflare:workers";
+import { NonRetryableError } from "cloudflare:workflows";
 
 // In your step code:
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-	  await step.do("some step", async () => {
-			  if (!event.payload.data) {
-					throw new NonRetryableError("event.payload.data did not contain the expected payload")
-				}
-			})
+		await step.do("some step", async () => {
+			if (!event.payload.data) {
+				throw new NonRetryableError(
+					"event.payload.data did not contain the expected payload",
+				);
+			}
+		});
 	}
 }
 ```
@@ -119,7 +141,6 @@ Any uncaught exceptions that propagate to the top level, or any steps that reach
 If you want to avoid this, you can catch exceptions emitted by a `step`. This can be useful if you need to trigger clean-up tasks or have conditional logic that triggers additional steps.
 
 To allow the Workflow to continue its execution, surround the intended steps that are allowed to fail with a `try-catch` block.
-
 
 ```ts
 ...

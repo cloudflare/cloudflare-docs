@@ -1,7 +1,6 @@
 ---
 import { z } from "astro:schema";
-import { Aside, Code } from "@astrojs/starlight/components";
-import Details from "~/components/Details.astro";
+import { Aside, Code, Tabs, TabItem } from "@astrojs/starlight/components";
 
 type Props = z.infer<typeof props>;
 
@@ -69,17 +68,17 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 `;
 ---
 
-<Details header="Workers - TypeScript" open>
-	<Code code={worker} lang="ts" />
-</Details>
-
-<Details header="Python" open>
-	<Code code={python} lang="py" />
-</Details>
-
-<Details header="curl" open>
-	<Code code={curl} lang="sh" />
-</Details>
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript" icon="seti:typescript">
+		<Code code={worker} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="Python" icon="seti:python">
+		<Code code={python} lang="py" title="" />
+	</TabItem>
+	<TabItem label="curl" icon="seti:shell">
+		<Code code={curl} lang="sh" />
+	</TabItem>
+</Tabs>
 
 <Aside type="note" title="OpenAI compatible endpoints">
 	Workers AI also supports OpenAI compatible API endpoints for{" "}

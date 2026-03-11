@@ -1,7 +1,6 @@
 ---
 import { z } from "astro:schema";
 import { Code } from "@astrojs/starlight/components";
-import Details from "~/components/Details.astro";
 
 type Props = z.infer<typeof props>;
 
@@ -36,6 +35,4 @@ export default {
 `;
 ---
 
-<Details header="Workers - TypeScript" open>
-	<Code code={worker} lang="ts" />
-</Details>
+<Code code={worker} lang="ts" />

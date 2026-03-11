@@ -1,5 +1,5 @@
 ---
-title: CrowdStrike and Cloudflare - A unified security ecosystem for automated, Risk-based protection
+title: CrowdStrike and Cloudflare - A unified security ecosystem for automated, risk-based protection
 pcx_content_type: reference-architecture
 products: [access, gateway, zero-trust-warp, logs, api]
 sidebar:
@@ -36,7 +36,7 @@ This continuous verification process is enhanced by bidirectional data sharing b
 1. **Device posture assessment:** CrowdStrike's real-time Zero Trust Assessment (ZTA) telemetry informs Cloudflare Zero Trust access decisions.
 2. **Unified security logging:** Cloudflare forwards security telemetry to CrowdStrike's Falcon Next-Gen SIEM.
 3. **Email security intelligence:** Cloudflare Email Security alerts feed into CrowdStrike's logging and analysis tools.
-4. **Automated remediation workflows:** Security events trigger coordinated, automated responses across both platforms, orchestrated via Crowdstrike Falcon Fusion SOAR.
+4. **Automated remediation workflows:** Security events trigger coordinated, automated responses across both platforms, orchestrated via CrowdStrike Falcon Fusion SOAR.
 
 ## Integration architecture overview
 
@@ -105,9 +105,9 @@ The integration between Cloudflare and CrowdStrike enables six use cases that ad
 
 This use case demonstrates how the integration helps prevent compromised or unmanaged devices from accessing corporate resources.
 
-### Phase 1: Device and use risk assessment
+### Phase 1: Device and user risk assessment
 
-The CrowdStrike Falcon agent continuously monitors the endpoint, calculating a ZTA score (1–100) based on OS health, patch levels, and threat activity. In parallel, Cloudflare continuously updates the user risk score based on user and entity behavior analytics (UEBA) .
+The CrowdStrike Falcon agent continuously monitors the endpoint, calculating a ZTA score (1–100) based on OS health, patch levels, and threat activity. In parallel, Cloudflare continuously updates the user risk score based on user and entity behavior analytics (UEBA).
 
 ### Phase 2: Policy evaluation
 
@@ -165,7 +165,7 @@ The Falcon agent detects malware execution. It immediately drops the device's ZT
 
 ### Phase 2: Instant access revocation
 
-Cloudflare Access, checking the ZTA score on the very next request, blocks the user from accessing Salesforce, email, or internal tools effectively quarantining the device from the network.
+Cloudflare Access, checking the ZTA score on the very next request, blocks the user from accessing Salesforce, email, or internal tools, effectively quarantining the device from the network.
 
 ### Phase 3: Investigate and remediate
 
@@ -175,7 +175,7 @@ Falcon Fusion SOAR automates a response playbook: It isolates the endpoint (netw
 
 ## Use case detail: Insider threat and data protection
 
-This use case demonstrates how the unified approach helps preventing and responding to data exfiltration by trusted insider actors.
+This use case demonstrates how the unified approach helps prevent and respond to data exfiltration by trusted insider actors.
 
 ### Phase 1: DLP monitoring
 
