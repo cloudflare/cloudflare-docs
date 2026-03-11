@@ -49,6 +49,8 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 		> Use [${title} llms-full.txt](${base}${productUrl}llms-full.txt) for the complete ${title} documentation in a single file. That file is intended for offline indexing, bulk vectorization, or large-context models.
 		>
 		> For other Cloudflare products, see the [Cloudflare documentation directory](${base}/llms.txt).
+		>
+		> Any page below can also be retrieved as Markdown by requesting it with an \`Accept: text/markdown\` header, and removing the trailing \`/index.md\` segment (for example, \`curl -H "Accept: text/markdown" ${base}${productUrl}\`).
 
 		## ${title} documentation pages
 
