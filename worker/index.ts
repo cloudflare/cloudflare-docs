@@ -21,16 +21,6 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
-		if (request.url.endsWith("/index.md")) {
-			const htmlUrl = request.url.replace(/\/index\.md$/, "/");
-
-			return fetch(htmlUrl, {
-				headers: {
-					Accept: "text/markdown",
-				},
-			});
-		}
-
 		try {
 			try {
 				const redirect = await redirectsEvaluator(request, this.env.ASSETS);
