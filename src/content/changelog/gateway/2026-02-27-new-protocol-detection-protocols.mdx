@@ -1,0 +1,25 @@
+---
+title: New protocols added for Gateway Protocol Detection (Beta)
+description: Gateway protocol detection now supports IMAP, POP3, SMTP, MYSQL, RSYNC-DAEMON, LDAP, and NTP.
+products:
+  - gateway
+date: 2026-02-27
+---
+
+Gateway [Protocol Detection](/cloudflare-one/traffic-policies/network-policies/protocol-detection/) now supports seven additional protocols in beta:
+
+| Protocol     | Notes                                              |
+| ------------ | -------------------------------------------------- |
+| IMAP         | Internet Message Access Protocol — email retrieval  |
+| POP3         | Post Office Protocol v3 — email retrieval           |
+| SMTP         | Simple Mail Transfer Protocol — email sending       |
+| MYSQL        | MySQL database wire protocol                        |
+| RSYNC-DAEMON | rsync daemon protocol                               |
+| LDAP         | Lightweight Directory Access Protocol               |
+| NTP          | Network Time Protocol                               |
+
+These protocols join the existing set of detected protocols (HTTP, HTTP2, SSH, TLS, DCERPC, MQTT, and TPKT) and can be used with the _Detected Protocol_ selector in [Network policies](/cloudflare-one/traffic-policies/network-policies/) to identify and filter traffic based on the application-layer protocol, without relying on port-based identification.
+
+If protocol detection is enabled on your account, these protocols will automatically be logged when detected in your Gateway network traffic.
+
+For more information on using Protocol Detection, refer to the [Protocol detection documentation](/cloudflare-one/traffic-policies/network-policies/protocol-detection/).

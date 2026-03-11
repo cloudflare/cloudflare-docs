@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: RtkVirtualizedParticipantList
+description: API reference for RtkVirtualizedParticipantList component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `bufferedItemsCount` | `number` | ✅ | - | Buffer items to render before and after the visible area |
+| `emptyListElement` | `HTMLElement` | ✅ | - | Element to render if list is empty |
+| `itemHeight` | `number` | ✅ | - | Height of each item in pixels (assumed fixed) |
+| `items` | `Peer1[]` | ✅ | - | Items to be virtualized |
+| `renderItem` | `(item: Peer1, index: number)` | ✅ | - | Function to render each item |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkVirtualizedParticipantList } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkVirtualizedParticipantList />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkVirtualizedParticipantList } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkVirtualizedParticipantList
+      bufferedItemsCount={42}
+      emptyListElement={htmlelement}
+      itemHeight={42}
+    />
+  );
+}
+```
+

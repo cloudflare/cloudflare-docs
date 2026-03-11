@@ -1,0 +1,13 @@
+id: hMLrcP
+name: Version Management
+
+entry:
+  title: Version Management
+  url: /version-management/
+  wrap: true
+  group: Core platform
+
+meta:
+  title: Cloudflare Version Management docs
+  description: Safely manage configurations on Cloudflare's global network with versioning, staging, and rollbacks
+  author: "@cloudflare"

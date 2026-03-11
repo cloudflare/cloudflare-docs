@@ -5,7 +5,7 @@
 
 With Cloudflare One, you can show applications on the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) even if those applications are not secured behind Access. This way, users can access all the applications they need to work, all in one place — regardless of whether those applications are protected by Access.
 
-Links to applications not protected by Access can be added as bookmarks. To add a bookmark:
+Links to applications not protected by Access can be added as bookmarks. You can assign [Access policies](/cloudflare-one/access-controls/policies/) to control which users see the bookmark in the App Launcher. Users who do not match an Allow policy will not see the bookmark tile. Unlike policies for other Access application types, bookmark policies only affect visibility in the App Launcher and do not control access to the destination URL.
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 
@@ -15,15 +15,45 @@ Links to applications not protected by Access can be added as bookmarks. To add 
 
 4. Enter your **Application URL**, for example `https://mybookmark.com`.
 
-5. Turn on **App Launcher visibility** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application.
+5. (Optional) To restrict who can see the bookmark, select an existing policy or create a new one. If you do not add any policies, the bookmark is visible to all users in your organization.
+   - To use an existing policy, select **Select existing policies** and choose the policies you want to apply. Refer to [supported policies](#supported-policies) for policy limitations.
+   - To create a new policy, select **Create new policy** and [build your policy rules](/cloudflare-one/access-controls/policies/).
 
-6. (Optional) To add a custom logo for your application, select **Custom** and enter the image URL.
+6. Select **Next**.
+
+7. Turn on **App Launcher visibility** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application.
+
+8. (Optional) To add a custom logo for your application, select **Custom** and enter the image URL.
 
    :::note
 
    If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
    :::
 
-7. Select **Add application** to save and exit.
+9. Select **Save**.
 
 The application will show up on the Applications page labeled as `BOOKMARK`. You can always edit or delete your bookmarks, as you would any other application.
+
+## Authentication logs
+
+Bookmark applications do not generate individual [Access authentication logs](/cloudflare-one/insights/logs/audit-logs/#authentication-logs) when a user selects the bookmark tile. Only the authentication event to the App Launcher itself is logged.
+
+## Supported bookmark policies
+
+Bookmark policies support all [Access policy selectors](/cloudflare-one/access-controls/policies/#selectors), including
+
+- Identity-based selectors (such as emails, email domains, or identity provider groups)
+- Location-based selectors (such as country or IP ranges)
+- Device posture checks (requires installing the WARP client)
+
+The following policy features are not supported for bookmark applications:
+
+- [Isolate application](/cloudflare-one/access-controls/policies/isolate-application/)
+- [Purpose justification](/cloudflare-one/access-controls/policies/require-purpose-justification/)
+- [Temporary authentication](/cloudflare-one/access-controls/policies/temporary-auth/)
+
+If you attempt to assign a policy that uses an unsupported feature, the dashboard will display an error.
+
+:::tip[Device posture policies]
+To show bookmarks only to users on managed devices, assign a policy that requires device posture checks (such as [Require Gateway](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-gateway/)). The bookmark will only appear in the App Launcher for users whose devices satisfy the posture requirements.
+:::

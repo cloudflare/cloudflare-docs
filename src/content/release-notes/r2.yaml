@@ -121,7 +121,7 @@ entries:
       ranged reads on smaller files. Performance should now be consistently good independent of filesize.
   - publish_date: "2023-06-21"
     description: |-
-      - [Multipart ETags](/r2/objects/multipart-objects/#etags) are now MD5
+      - [Multipart ETags](/r2/objects/upload-objects/#etags) are now MD5
       hashes.
   - publish_date: "2023-06-16"
     description: |-

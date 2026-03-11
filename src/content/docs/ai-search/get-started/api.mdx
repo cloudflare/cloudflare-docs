@@ -56,20 +56,14 @@ Use the [Create token API](/api/resources/user/subresources/tokens/methods/creat
              "com.cloudflare.api.account.<ACCOUNT_ID>": "*"
            },
            "permission_groups": [
-             { "id": "9e9b428a0bcd46fd80e580b46a69963c" },
-             { "id": "bf7481a1826f439697cb59a20b22293e" }
+             { "id": "9e9b428a0bcd46fd80e580b46a69963c" }
            ]
          }
        ]
      }'
    ```
 
-   This creates a token with the following permissions:
-
-   | Permission ID                      | Name                     | Description                                  |
-   | ---------------------------------- | ------------------------ | -------------------------------------------- |
-   | `9e9b428a0bcd46fd80e580b46a69963c` | AI Search Index Engine   | Grants access to run AI Search Index Engine  |
-   | `bf7481a1826f439697cb59a20b22293e` | Workers R2 Storage Write | Grants write access to Cloudflare R2 Storage |
+   This creates a token with the AI Search Index Engine permission (`9e9b428a0bcd46fd80e580b46a69963c`) which grants access to run AI Search Index Engine.
 
 2. Save the `id` (`<CF_API_ID>`) and `value` (`<CF_API_KEY>`) from the response. You will need these values in the next step.
 
@@ -94,10 +88,6 @@ Use the [Create token API](/api/resources/user/subresources/tokens/methods/creat
    					{
    						"id": "9e9b428a0bcd46fd80e580b46a69963c",
    						"name": "AI Search Index Engine"
-   					},
-   					{
-   						"id": "bf7481a1826f439697cb59a20b22293e",
-   						"name": "Workers R2 Storage Write"
    					}
    				]
    			}

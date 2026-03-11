@@ -1,0 +1,55 @@
+---
+pcx_content_type: navigation
+title: RtkMeeting
+description: API reference for RtkMeeting component (React Library)
+---
+A single component which renders an entire meeting UI.
+ It loads your preset and renders the UI based on it.
+ With this component, you don't have to handle all the states,
+ dialogs and other smaller bits of managing the application.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `applyDesignSystem` | `boolean` | ✅ | - | Whether to apply the design system on the document root from config |
+| `config` | `UIConfig` | ✅ | - | UI Config |
+| `gridLayout` | `GridLayout1` | ✅ | - | Grid layout |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `leaveOnUnmount` | `boolean` | ✅ | - | Whether participant should leave when this component gets unmounted |
+| `loadConfigFromPreset` | `boolean` | ✅ | - | Whether to load config from preset |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `mode` | `MeetingMode` | ✅ | - | Fill type |
+| `overrides` | `Overrides` | ❌ | `defaultOverrides` | UI Kit Overrides |
+| `showSetupScreen` | `boolean` | ✅ | - | Whether to show setup screen or not |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMeeting } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkMeeting />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMeeting } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkMeeting
+      applyDesignSystem={true}
+      config={defaultUiConfig}
+      gridLayout={gridlayout1}
+    />
+  );
+}
+```
+

@@ -55,4 +55,6 @@ If you need further assistance from our Support team, provide the following deta
 
 - Using [Gateway](/cloudflare-one/traffic-policies/) can lead to an HTTP Error `502` if the origin only partially supports HTTP/2. Refer to [Gateway FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-504-when-browsing-to-a-website) for more details and resolution.
 
+- You might see a `502 Bad Gateway` error when connecting to an HTTP or HTTPS application through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), with `Unable to reach the origin service. The service may be down or it may not be responding to traffic from cloudflared`. It means the tunnel itself is connected to the Cloudflare network, but `cloudflared` cannot reach the origin service defined in your ingress rule. Refer to the [tunnel common errors page](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/#i-see-a-502-bad-gateway-error-when-connecting-to-an-http-or-https-application-through-tunnel) for more details and resolution.
+
 - You may see an influx of HTTP Error `504` with the `RequestSource` of `earlyHintsCache` in Cloudflare Logs when Early Hints is enabled, which is expected and benign. Refer to [the Early Hints article](/cache/advanced-configuration/early-hints/#emit-early-hints) for more details and resolution.

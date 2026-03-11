@@ -1,0 +1,14 @@
+id: FaqGrN
+name: Cloudflare Fundamentals
+
+entry:
+  title: Cloudflare Fundamentals
+  url: /fundamentals/
+  wrap: true
+  group: Core platform
+  additional_groups: [Docs collections]
+
+meta:
+  title: Cloudflare Fundamentals docs
+  description: Learn about using Cloudflare and features that span across Cloudflare products
+  author: "@cloudflare"

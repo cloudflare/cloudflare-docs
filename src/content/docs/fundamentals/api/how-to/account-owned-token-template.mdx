@@ -6,7 +6,9 @@ lastUpdated: 2025-01-14
 
 Use template URLs to generate Cloudflare API tokens with pre-configured permissions. Template URLs allow you to share token requirements with users without manually selecting permissions in the dashboard.
 
-Template URLs use query parameters to pre-fill the API token creation page in the Cloudflare dashboard. When a user clicks a template URL, the dashboard automatically configures the specified permissions and settings.
+Template URLs use query parameters to pre-fill the API token creation page in the Cloudflare dashboard. When a user opens a template URL, the dashboard automatically configures the specified permissions and settings.
+
+Cloudflare supports template URLs for both [user API tokens](#user-token-url-format) and [account API tokens](#account-token-url-format). For more information on the difference between these token types, refer to [Account API tokens](/fundamentals/api/get-started/account-owned-tokens/).
 
 :::note
 
@@ -14,11 +16,13 @@ Template URLs only pre-fill the token creation form. Users must still complete t
 
 :::
 
-## URL format
+## User token URL format
+
+User token template URLs open the token creation form at the user profile level (`/profile/api-tokens`). Tokens created this way are owned by the user.
 
 The basic template URL structure is:
 
-```
+```txt
 https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=[ENCODED_PERMISSIONS]&accountId=*&zoneId=all&name=[TOKEN_NAME]
 ```
 
@@ -31,15 +35,40 @@ https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=[ENCODED_PERM
 | `zoneId`              | Yes      | Zone scope (use `all` for all zones)         |
 | `name`                | No       | Pre-filled token name                        |
 
-### Permission format
+## Account token URL format
 
-Permissions are encoded as a JSON array with the following structure:
+Account token template URLs open the token creation form at the account level. Tokens created this way are owned by the account (service principal tokens) and are not tied to any individual user. Creating account tokens requires Super Administrator or Administrator permissions.
+
+The basic template URL structure is:
+
+```txt
+https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=[ENCODED_PERMISSIONS]&name=[TOKEN_NAME]
+```
+
+The `:account` segment is a placeholder. When a user opens the URL, the dashboard prompts them to select an account if they have access to more than one.
+
+### URL components
+
+| Parameter             | Required | Description                                  |
+| --------------------- | -------- | -------------------------------------------- |
+| `permissionGroupKeys` | Yes      | URL-encoded JSON array of permission objects |
+| `name`                | No       | Pre-filled token name                        |
+
+:::note
+
+Account token template URLs do not use `accountId` or `zoneId` parameters. Resource scoping for account tokens is configured during token creation in the dashboard.
+
+:::
+
+## Permission format
+
+Both user token and account token template URLs use the same permission encoding. Permissions are encoded as a JSON array with the following structure:
 
 ```json
 [{ "key": "permission_name", "type": "read|edit|revoke|run|purge" }]
 ```
 
-#### Permission types
+### Permission types
 
 | Type     | Description                                |
 | -------- | ------------------------------------------ |
@@ -48,7 +77,6 @@ Permissions are encoded as a JSON array with the following structure:
 | `revoke` | Revoke permissions                         |
 | `run`    | Execute permissions                        |
 | `purge`  | Purge permissions                          |
-
 
 ## Create custom templates
 
@@ -62,8 +90,8 @@ Format your permissions as a JSON array:
 
 ```json
 [
-  { "key": "zone_dns", "type": "edit" },
-  { "key": "analytics", "type": "read" }
+	{ "key": "zone_dns", "type": "edit" },
+	{ "key": "analytics", "type": "read" }
 ]
 ```
 
@@ -77,10 +105,16 @@ Use a URL encoder to convert the JSON string:
 
 ### 4. Build the complete URL
 
-Combine all components into the final template URL:
+For a **user token**, combine all components into the final template URL:
 
-```text
+```txt
 https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=[ENCODED_JSON]&accountId=*&zoneId=all&name=Custom%20Token
+```
+
+For an **account token**, use the account-level path instead:
+
+```txt
+https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=[ENCODED_JSON]&name=Custom%20Token
 ```
 
 ## Permission reference
@@ -119,46 +153,81 @@ Use this table to find permission keys for your custom templates.
 | `access_audit_log`   | Access audit logs    | Compliance, security      |
 | `access_custom_page` | Custom pages         | Branding, user experience |
 
-
 ## Common permission templates
 
-Use these ready-to-use template URLs for common scenarios.
+Use these ready-to-use template URLs for common scenarios. Each example provides both a user token URL and an account token URL.
 
 ### DNS management
 
 Create tokens for DNS record management.
+
+#### User token
 
 | Use case       | Template URL                                                                                                                                                                                             |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | DNS read-only  | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=DNS%20Read%20Token<br>`       |
 | DNS read/write | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=DNS%20Management%20Token<br>` |
 
+#### Account token
+
+| Use case       | Template URL                                                                                                                                                                          |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| DNS read-only  | `text<br>https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22read%22%7D%5D&name=DNS%20Read%20Token<br>`       |
+| DNS read/write | `text<br>https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22edit%22%7D%5D&name=DNS%20Management%20Token<br>` |
+
 ### Workers development
 
 Create tokens for Workers, KV storage, and related services.
+
+#### User token
 
 | Use case             | Template URL                                                                                                                                                                                                                                                                                                                                             |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Workers scripts only | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=Workers%20Scripts%20Token<br>`                                                                                                                                         |
 | Workers full access  | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_kv%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_routes%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=Workers%20Full%20Access%20Token<br>` |
 
+#### Account token
+
+| Use case             | Template URL                                                                                                                                                                                                                                                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Workers scripts only | `text<br>https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%5D&name=Workers%20Scripts%20Token<br>`                                                                                                                                         |
+| Workers full access  | `text<br>https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_kv%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_routes%22%2C%22type%22%3A%22edit%22%7D%5D&name=Workers%20Full%20Access%20Token<br>` |
+
 ### Analytics and monitoring
 
 Create tokens for accessing analytics and logs.
+
+#### User token
 
 | Use case          | Template URL                                                                                                                                                                                                         |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Account analytics | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22account_analytics%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=Account%20Analytics%20Token<br>` |
 | Zone analytics    | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22analytics%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=Zone%20Analytics%20Token<br>`            |
 
+#### Account token
+
+| Use case          | Template URL                                                                                                                                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Account analytics | `text<br>https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22account_analytics%22%2C%22type%22%3A%22read%22%7D%5D&name=Account%20Analytics%20Token<br>` |
+| Zone analytics    | `text<br>https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22analytics%22%2C%22type%22%3A%22read%22%7D%5D&name=Zone%20Analytics%20Token<br>`            |
+
 ### Zero Trust administration
 
 Create tokens for Cloudflare Zero Trust management.
+
+#### User token
 
 | Use case                 | Template URL                                                                                                                                                                                                                                                              |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Access applications read | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22access%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=Access%20Read%20Token<br>`                                                                       |
 | Access full management   | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22access%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22access_acct%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=Access%20Management%20Token<br>` |
+
+#### Account token
+
+| Use case                 | Template URL                                                                                                                                                                                                                                           |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Access applications read | `text<br>https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22access%22%2C%22type%22%3A%22read%22%7D%5D&name=Access%20Read%20Token<br>`                                                                       |
+| Access full management   | `text<br>https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22access%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22access_acct%22%2C%22type%22%3A%22edit%22%7D%5D&name=Access%20Management%20Token<br>` |
 
 ## Best practices
 

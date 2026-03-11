@@ -1,0 +1,209 @@
+---
+params:
+  - showPrivateNetworking
+  - downloadsURL
+  - certPemURL
+  - defaultDirURL
+  - credentialsFileURL
+  - configFileURL
+  - routingURL
+  - privateNetURL
+  - asServiceURL
+---
+
+import { Code, Render, TabItem, Tabs } from "~/components";
+
+Follow this step-by-step guide to get your first tunnel up and running using the CLI.
+
+{props.showPrivateNetworking === "true" && <Render file="tunnel/connectivity-prechecks-note" product="cloudflare-one" />}
+
+## Prerequisites
+
+Before you start, make sure you:
+
+- [Add a website to Cloudflare](/fundamentals/manage-domains/add-site/).
+- [Change your domain nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
+
+## 1. Download and install `cloudflared`
+
+<Tabs> <TabItem label="Windows">
+
+1. Download `cloudflared` on your machine. Visit the <a href={props.downloadsURL}>downloads</a> page to find the right package for your OS.
+
+2. Rename the executable to `cloudflared.exe`
+
+3. In PowerShell, change directory to your Downloads folder and run `.\cloudflared.exe --version`. It should output the version of `cloudflared`. Note that `cloudflared.exe` could be `cloudflared-windows-amd64.exe` or `cloudflared-windows-386.exe` if you have not renamed it.
+
+   ```powershell
+   PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudflared.exe --version
+   ```
+
+</TabItem> <TabItem label="macOS">
+
+To download and install `cloudflared`:
+
+```sh
+brew install cloudflared
+```
+
+Alternatively, you can <a href={props.downloadsURL}>download the latest Darwin amd64 release</a> directly.
+
+</TabItem> <TabItem label="Linux">
+
+**Debian and Ubuntu APT**
+
+Use the apt package manager to install `cloudflared` on compatible machines.
+
+<Render file="tunnel/cloudflared-debian-install" product="cloudflare-one" />
+
+**RHEL RPM**
+
+Use the rpm package manager to install `cloudflared` on compatible machines.
+
+1. Add Cloudflare's repository:
+
+   ```sh
+   curl -fsSl https://pkg.cloudflare.com/cloudflared.repo | sudo tee /etc/yum.repos.d/cloudflared.repo
+   ```
+
+2. Update repositories and install cloudflared:
+
+   ```sh
+   sudo yum update && sudo yum install cloudflared
+   ```
+
+**Arch Linux**
+
+`cloudflared` is in the Arch Linux [`community` repository](https://wiki.archlinux.org/title/official_repositories#community).
+Use `pacman` to install `cloudflared` on compatible machines.
+
+```sh
+pacman -Syu cloudflared
+```
+
+**Other**
+
+Alternatively you can download the `cloudflared` binary or the linux packages to your machine and install manually. Visit the <a href={props.downloadsURL}>downloads</a> page to find the right package for your OS.
+
+</TabItem> <TabItem label="Build from source">
+
+To build the latest version of `cloudflared` from source:
+
+```sh
+git clone https://github.com/cloudflare/cloudflared.git
+cd cloudflared
+make cloudflared
+go install github.com/cloudflare/cloudflared/cmd/cloudflared
+```
+
+Depending on where you installed `cloudflared`, you can move it to a known path as well.
+
+```sh
+mv /root/cloudflared/cloudflared /usr/bin/cloudflared
+```
+
+</TabItem> </Tabs>
+
+## 2. Authenticate `cloudflared`
+
+```sh
+cloudflared tunnel login
+```
+
+Running this command will:
+
+- Open a browser window and prompt you to log in to your Cloudflare account. After logging in to your account, select your hostname.
+- Generate an account certificate, the <a href={props.certPemURL}>cert.pem file</a>, in the <a href={props.defaultDirURL}>default `cloudflared` directory</a>.
+
+## 3. Create a tunnel and give it a name
+
+```sh
+cloudflared tunnel create <NAME>
+```
+
+Running this command will:
+
+- Create a tunnel by establishing a persistent relationship between the name you provide and a UUID for your tunnel. At this point, no connection is active within the tunnel yet.
+- Generate a <a href={props.credentialsFileURL}>tunnel credentials file</a> in the <a href={props.defaultDirURL}>default `cloudflared` directory</a>.
+- Create a subdomain of `.cfargotunnel.com`.
+
+From the output of the command, take note of the tunnel's UUID and the path to your tunnel's credentials file.
+
+Confirm that the tunnel has been successfully created by running:
+
+```sh
+cloudflared tunnel list
+```
+
+## 4. Create a configuration file
+
+1.  In your `.cloudflared` directory, create a <a href={props.configFileURL}>`config.yml` file</a> using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
+
+2.  Add the following fields to the file:
+
+    {props.showPrivateNetworking === "true" && <>If you are connecting a <a href={props.routingURL}>published application</a>:</>}
+
+    ```yml
+    url: http://localhost:8000
+    tunnel: <Tunnel-UUID>
+    credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
+    ```
+
+    {props.showPrivateNetworking === "true" && <>If you are connecting a <a href={props.privateNetURL}>private network</a>:</>}
+
+    {props.showPrivateNetworking === "true" && <Code code={`tunnel: <Tunnel-UUID>\ncredentials-file: /root/.cloudflared/<Tunnel-UUID>.json\nwarp-routing:\n  enabled: true`} lang="yml" />}
+
+3.  Confirm that the configuration file has been successfully created by running:
+
+    ```sh
+    cat config.yml
+    ```
+
+## 5. Start routing traffic
+
+{props.showPrivateNetworking === "true" ? "1. " : ""}To route a <a href={props.routingURL}>published application</a> through the tunnel:
+
+   ```sh
+   cloudflared tunnel route dns <UUID or NAME> <hostname>
+   ```
+	 This command will create a `CNAME` record pointing to `<UUID>.cfargotunnel.com`.
+
+{props.showPrivateNetworking === "true" && (
+<>
+<p>2. If you are connecting a private network, route a private IP address or CIDR through the tunnel:</p>
+
+<Code code="cloudflared tunnel route ip add <IP/CIDR> <UUID or NAME>" lang="sh" />
+
+<p>3. Confirm that the route has been successfully established:</p>
+
+<Code code="cloudflared tunnel route ip show" lang="sh" />
+</>
+)}
+
+## 6. Run the tunnel
+
+Run the tunnel to proxy incoming traffic from the tunnel to any number of services running locally on your origin.
+
+```sh
+cloudflared tunnel run <UUID or NAME>
+```
+
+If your configuration file has a custom name or is not in the `.cloudflared` directory, add the `--config` flag and specify the path.
+
+```sh
+cloudflared tunnel --config /path/your-config-file.yml run <UUID or NAME>
+```
+
+:::note
+
+Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to <a href={props.asServiceURL}>run as a service</a>.
+
+:::
+
+## 7. Check the tunnel
+
+To get information on the tunnel you just created, run:
+
+```sh
+cloudflared tunnel info <UUID or NAME>
+```

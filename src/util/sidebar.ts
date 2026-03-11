@@ -16,8 +16,22 @@ type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 export type SidebarEntry = Link | Group;
 type Badge = Link["badge"];
 
-const products = await getCollection("products");
+const directory = await getCollection("directory");
+const productAvailability = await getCollection("product-availability");
 const sidebars = new Map<string, Group>();
+
+// Build URL → beta badge map from directory entries + product availability
+const betaBadgeUrls = new Map<string, Badge>();
+for (const dirEntry of directory) {
+	const availabilityId = dirEntry.data.id;
+	const availEntry = productAvailability.find((e) => e.id === availabilityId);
+	if (availEntry?.data.availability?.toLowerCase() === "beta") {
+		betaBadgeUrls.set(dirEntry.data.entry.url, {
+			text: "Beta",
+			variant: "caution",
+		});
+	}
+}
 
 export async function getSidebar(context: AstroGlobal) {
 	const pathname = context.url.pathname;
@@ -93,10 +107,10 @@ export async function generateSidebar(group: Group) {
 		group.entries[0].label = "Overview";
 	}
 
-	const product = products.find((p) => p.id === group.label);
-	if (product && product.data.product.group === "Developer platform") {
+	const product = directory.find((p) => p.id === group.label);
+	if (product && product.data.entry.group === "Developer platform") {
 		const links = [
-			["llms.txt", "/llms.txt"],
+			["llms.txt", `/${product.id}/llms.txt`],
 			["prompt.txt", "/workers/prompt.txt"],
 			[`${product.data.name} llms-full.txt`, `/${product.id}/llms-full.txt`],
 			["Developer Platform llms-full.txt", "/developer-platform/llms-full.txt"],
@@ -136,7 +150,11 @@ function setSidebarCurrentEntry(
 			const href = entry.href;
 
 			// Compare with and without trailing slash
-			if (href === pathname || href.slice(0, -1) === href) {
+			const normalizedHref = href.endsWith("/") ? href.slice(0, -1) : href;
+			const normalizedPathname = pathname.endsWith("/")
+				? pathname.slice(0, -1)
+				: pathname;
+			if (normalizedHref === normalizedPathname) {
 				entry.isCurrent = true;
 				return true;
 			}
@@ -214,6 +232,11 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	if (frontmatter.sidebar.group?.badge) {
 		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
+	} else {
+		const availabilityBadge = betaBadgeUrls.get(index.href);
+		if (availabilityBadge) {
+			group.badge = availabilityBadge;
+		}
 	}
 
 	if (frontmatter.hideChildren) {
@@ -290,6 +313,11 @@ async function handleLink(link: Link): Promise<Link> {
 
 	if (link.badge) {
 		link.badge = inferBadgeVariant(link.badge);
+	} else {
+		const availabilityBadge = betaBadgeUrls.get(link.href);
+		if (availabilityBadge) {
+			link.badge = availabilityBadge;
+		}
 	}
 
 	if (frontmatter.external_link && !frontmatter.sidebar.group?.hideIndex) {
@@ -339,14 +367,14 @@ export const lookupProductTitle = async (product: string, module: string) => {
 
 		return `${entry?.data?.title} (Learning Paths)`;
 	} else if (product === "1.1.1.1") {
-		const entry = await getEntry("products", "1111");
+		const entry = await getEntry("directory", "1111");
 
-		return entry?.data?.product?.title;
+		return entry?.data?.entry?.title;
 	}
 
-	const entry = await getEntry("products", product);
+	const entry = await getEntry("directory", product);
 
-	return entry?.data?.product?.title ?? "Unknown";
+	return entry?.data?.entry?.title ?? "Unknown";
 };
 
 export function sortBySidebarOrder(a: any, b: any): number {

@@ -16,9 +16,12 @@ For example, consider the following Worker that implements a [`fetch()` handler]
 
 <WranglerConfig>
 
-```toml
-name = "worker_b"
-main = "./src/workerB.js"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker_b",
+	"main": "./src/workerB.js"
+}
 ```
 
 </WranglerConfig>
@@ -37,12 +40,18 @@ The following Worker declares a binding to the Worker above:
 
 <WranglerConfig>
 
-```toml
-name = "worker_a"
-main = "./src/workerA.js"
-services = [
-  { binding = "WORKER_B", service = "worker_b" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker_a",
+	"main": "./src/workerA.js",
+	"services": [
+		{
+			"binding": "WORKER_B",
+			"service": "worker_b"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

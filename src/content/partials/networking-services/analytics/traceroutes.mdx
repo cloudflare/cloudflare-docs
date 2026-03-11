@@ -8,7 +8,7 @@ import { Aside, DashButton, Markdown, Tabs, TabItem } from "~/components";
 
 You can run traceroutes to analyze the hop-by-hop Internet path and latency between Cloudflare's network and your network.
 
-{ props.magicWord === "WAN Tunnels" && (
+{ props.magicWord === "CF1 Cloudflare WAN" && (
   <>
     <Markdown
       text={`
@@ -24,7 +24,7 @@ To run a traceroute from a specific Cloudflare data center to your network:
   </>
 )}
 
-{ props.magicWord !== "WAN Tunnels" && (
+{ props.magicWord !== "CF1 Cloudflare WAN" && (
   <>
     <Markdown
       text={`

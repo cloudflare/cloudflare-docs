@@ -30,7 +30,7 @@ When using Wrangler for building and a different method for uploading, make sure
 
 ## Terraform
 
-In this example, you need a local file named `my-script.mjs` with script content similar to the below examples. Learn more about the Cloudflare Terraform Provider [here](/terraform), and see an example with all the Workers script resource settings [here](https://github.com/cloudflare/terraform-provider-cloudflare/blob/main/examples/resources/cloudflare_workers_script/resource.tf).
+In this example, you need a local file named `my-script.mjs` with script content similar to the below examples. Learn more about the [Cloudflare Terraform Provider](/terraform/), and refer to the [Workers script resource example](https://github.com/cloudflare/terraform-provider-cloudflare/blob/main/examples/resources/cloudflare_workers_script/resource.tf) for all available resource settings.
 
 ```tf
 variable "account_id" {
@@ -48,7 +48,7 @@ resource "cloudflare_worker" "my_worker" {
 resource "cloudflare_worker_version" "my_worker_version" {
   account_id = var.account_id
   worker_id = cloudflare_worker.my_worker.id
-  compatibility_date = "$today"
+  compatibility_date = "2025-02-21" # Set this to today's date
   main_module = "my-script.mjs"
   modules = [
     {
@@ -71,7 +71,7 @@ resource "cloudflare_workers_deployment" "my_worker_deployment" {
 }
 ```
 
-Notice how you don't have to manage all of these resources in Terraform. For example, you could just the `cloudflare_worker` resource and seamlessly use Wrangler or your own deployment tools for Versions or Deployments.
+Notice how you do not have to manage all of these resources in Terraform. For example, you could use just the `cloudflare_worker` resource and seamlessly use Wrangler or your own deployment tools for Versions or Deployments.
 
 ## Bindings in Terraform
 
@@ -245,6 +245,26 @@ bindings = [{
 - `name`: The binding name to access via `env.HYPERDRIVE`
 - `id`: The ID of your Hyperdrive configuration
 
+### VPC Service Binding
+
+Bind to a [VPC Service](/workers-vpc/configuration/vpc-services/) for accessing resources in your private network:
+
+```tf
+bindings = [{
+  type = "vpc_service"
+  name = "PRIVATE_API"
+  service_id = "your-vpc-service-id"
+}]
+```
+
+**Properties:**
+
+- `type`: `"vpc_service"`
+- `name`: The binding name to access via `env.PRIVATE_API`
+- `service_id`: The ID of your VPC Service (from `cloudflare_connectivity_directory_service` or the dashboard)
+
+You can create the VPC Service with Terraform using the `cloudflare_connectivity_directory_service` resource. For a full walkthrough, refer to [Configure VPC Services with Terraform](/workers-vpc/configuration/vpc-services/terraform/).
+
 ### Analytics Engine Binding
 
 Bind to an [Analytics Engine](/analytics/analytics-engine/) dataset:
@@ -346,6 +366,11 @@ resource "cloudflare_worker_version" "my_worker_version" {
       type = "secret_text"
       name = "API_KEY"
       text = var.api_key
+    },
+    {
+      type = "vpc_service"
+      name = "PRIVATE_API"
+      service_id = var.vpc_service_id
     }
   ]
 }

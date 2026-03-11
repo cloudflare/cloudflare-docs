@@ -1,7 +1,6 @@
 ---
 import { z } from "astro:schema";
-import { Code } from "@astrojs/starlight/components";
-import Details from "~/components/Details.astro";
+import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
 
 type Props = z.infer<typeof props>;
 
@@ -22,6 +21,13 @@ export default {
 		form.append('prompt', 'a sunset with a dog');
 		form.append('width', '1024');
 		form.append('height', '1024');
+
+		// FormData doesn't expose its serialized body or boundary. Passing it to a
+		// Request (or Response) constructor serializes it and generates the Content-Type
+		// header with the boundary, which is required for the server to parse the multipart fields.
+		const formResponse = new Response(form);
+		const formStream = formResponse.body;
+		const formContentType = formResponse.headers.get('content-type')!;
 
 		const resp = await env.AI.run("${name}", {
 			multipart: {
@@ -47,10 +53,11 @@ curl --request POST \\
 `;
 ---
 
-<Details header="Workers - TypeScript">
-	<Code code={workerCode} lang="ts" />
-</Details>
-
-<Details header="curl">
-	<Code code={curl} lang="sh" />
-</Details>
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript" icon="seti:typescript">
+		<Code code={workerCode} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="curl" icon="seti:shell">
+		<Code code={curl} lang="sh" />
+	</TabItem>
+</Tabs>

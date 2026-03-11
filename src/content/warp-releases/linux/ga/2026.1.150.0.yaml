@@ -1,0 +1,34 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements.
+
+  WARP client version 2025.8.779.0 introduced an updated public key for Linux packages. The public key must be updated if it was installed before September 12, 2025 to ensure the repository remains functional after December 4, 2025. Instructions to make this update are available at [pkg.cloudflareclient.com](https://pkg.cloudflareclient.com).
+
+  **Changes and improvements**
+  - Fixed an issue causing failure of the [local network exclusion](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-users-to-enable-local-network-exclusion) feature when configured with a timeout of `0`.
+  - Improvement for more accurate reporting of device colocation information in the Cloudflare One dashboard.
+  - Fixed an issue where misconfigured DEX HTTP tests prevented new registrations.
+  - Fixed issues causing DNS requests to fail with clients in Traffic and DNS mode or DNS only mode.
+version: 2026.1.150.0
+releaseDate: 2026-02-24T00:14:20.428Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/bullseye-intel/version/2026.1.150.0
+packageSize: 55066560
+platformName: Linux
+linuxPlatforms:
+  bullseye-intel: 55066560
+  bullseye-arm: 54255858
+  focal-intel: 55160542
+  noble-arm: 54420122
+  fedora35-arm: 56579512
+  fedora34-arm: 57017329
+  fedora35-intel: 57413580
+  bookworm-arm: 54003512
+  trixie-arm: 54237942
+  centos8-arm: 56805426
+  jammy-arm: 54012602
+  noble-intel: 54634650
+  trixie-intel: 54637160
+  jammy-intel: 54846138
+  focal-arm: 54335324
+  centos8-intel: 57326460
+  fedora34-intel: 57759435
+  bookworm-intel: 54835986

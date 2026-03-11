@@ -2,25 +2,10 @@
 {}
 ---
 
-import { Tabs, TabItem, Render, GlossaryTooltip } from "~/components"
+import { Render, GlossaryTooltip } from "~/components"
 
-In your WARP [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/), configure [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) such that the <GlossaryTooltip term="initial resolved IP">initial resolved IPs</GlossaryTooltip> route through the WARP tunnel. Refer to the steps below for your Split Tunnels mode:
+In your WARP [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/), configure [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) such that the <GlossaryTooltip term="initial resolved IP">initial resolved IPs</GlossaryTooltip> route through the WARP tunnel.  Configuration depends on your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode):
 
-   <Tabs> <TabItem label="Exclude IPs and domains">
-
-   1. [Remove the route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) to the IP address `100.64.0.0/10` from your Split Tunnel exclude list.
-
-	 2. We recommend [adding back the IPs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) that are not being used for Zero Trust services. For example, if you are using <GlossaryTooltip term="initial resolved IP">initial resolved IPs</GlossaryTooltip> alongside [WARP-to-WARP connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), add routes to exclude the following IP addresses:
-			- `100.64.0.0/12`
-			- `100.81.0.0/16`
-			- `100.82.0.0/15`
-			- `100.84.0.0/14`
-			- `100.88.0.0/13`
-			- `100.112.0.0/12`
-
-   </TabItem> <TabItem label="Include IPs and domains">
-
-   1. Add the required [Zero Trust domains](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
-   2. [Add routes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include the following IP addresses:
+- **Exclude mode**: Delete `100.64.0.0/10` from your Split Tunnels list. We recommend [adding back the IP ranges](/cloudflare-one/networks/routes/reserved-ips/#warp-split-tunnel-configuration) that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use the CGNAT address space.
+- **Include mode**: Add Split Tunnel entries for the following IP addresses:
 	 	<Render file="gateway/egress-selector-cgnat-ips" product="cloudflare-one" />
-   </TabItem> </Tabs>

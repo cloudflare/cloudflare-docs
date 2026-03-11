@@ -4,17 +4,17 @@
 
 import { Render, DashButton } from "~/components"
 
-Magic Network Monitoring rules allow you to monitor your network traffic for Distributed Denial of Service (DDoS) attacks on specific IP addresses or IP prefixes within your network. If the network traffic that is monitored by a rule exceeds the rule's threshold or contains a DDoS attack fingerprint, then you will receive an alert.
+Network Flow (formerly Magic Network Monitoring) rules allow you to monitor your network traffic for Distributed Denial of Service (DDoS) attacks on specific IP addresses or IP prefixes within your network. If the network traffic that is monitored by a rule exceeds the rule's threshold or contains a DDoS attack fingerprint, then you will receive an alert.
 
 ## Rule types
 
-There are three different types of rules that can be configured within Magic Network Monitoring. You can refer to the linked documentation page for each rule type to learn more.
+There are three different types of rules that can be configured within Network Flow. You can refer to the linked documentation page for each rule type to learn more.
 
 | Rule Type | Rule Description | Rule Availability |
 | :---- | :---- | :---- |
-| [Dynamic threshold](/magic-network-monitoring/rules/dynamic-threshold/) (recommended) | A dynamic threshold rule will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. | API configuration only |
-| [Static threshold](/magic-network-monitoring/rules/static-threshold/) | A static threshold rule allows you to define a constant numeric threshold, in terms of bits or packets, for DDoS traffic monitoring. | API configuration and dashboard configuration |
-| [sFlow DDoS attack](/magic-network-monitoring/rules/s-flow-ddos-attack/) | Magic Network Monitoring customers that send sFlow data to Cloudflare can receive alerts when a specific type of DDoS attack is detected within their network traffic. | API configuration only. Only applicable to sFlow data sets |
+| [Dynamic threshold](/network-flow/rules/dynamic-threshold/) (recommended) | A dynamic threshold rule will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. | API configuration only |
+| [Static threshold](/network-flow/rules/static-threshold/) | A static threshold rule allows you to define a constant numeric threshold, in terms of bits or packets, for DDoS traffic monitoring. | API configuration and dashboard configuration |
+| [sFlow DDoS attack](/network-flow/rules/s-flow-ddos-attack/) | Network Flow customers that send sFlow data to Cloudflare can receive alerts when a specific type of DDoS attack is detected within their network traffic. | API configuration only. Only applicable to sFlow data sets |
 
 ## Create rules in the dashboard
 
@@ -38,7 +38,7 @@ To create a new rule:
 
 2. Select **Configure Network flow**.
 3. In the **Configure rules** tab, select **Add new rule**.
-4. Create a new static traffic threshold rule according to your needs. Refer to the documentation on [static threshold](/magic-network-monitoring/rules/static-threshold/) rules for more information on each field in the static threshold rule's configuration.
+4. Create a new static traffic threshold rule according to your needs. Refer to the documentation on [static threshold](/network-flow/rules/static-threshold/) rules for more information on each field in the static threshold rule's configuration.
 5. Select **Create a new rule** when you are finished.
 
 ## Edit rules in the dashboard
@@ -49,7 +49,7 @@ To create a new rule:
 
 2. Select **Configure Network flow**.
 3. In the **Configure rules** tab, find the static threshold rule you want to edit, and select **Edit**.
-4. Edit the appropriate fields. Refer to [Rule configuration fields](/magic-network-monitoring/rules/static-threshold/#rule-configuration-fields) for more information on what each field does.
+4. Edit the appropriate fields. Refer to [Rule configuration fields](/network-flow/rules/static-threshold/#rule-configuration-fields) for more information on what each field does.
 5. Select **Save** when you are finished.
 
 ## Delete rules in the dashboard

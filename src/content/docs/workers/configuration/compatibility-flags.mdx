@@ -24,11 +24,15 @@ This example enables the specific flag `formdata_parser_supports_files`, which i
 
 <WranglerConfig>
 
-```toml
-# Opt into backwards-incompatible changes through September 14, 2021.
-compatibility_date = "2021-09-14"
-# Also opt into an upcoming fix to the FormData API.
-compatibility_flags = [ "formdata_parser_supports_files" ]
+```jsonc
+{
+	// Opt into backwards-incompatible changes through September 14, 2021.
+	"compatibility_date": "2021-09-14",
+	// Also opt into an upcoming fix to the FormData API.
+	"compatibility_flags": [
+		"formdata_parser_supports_files"
+	]
+}
 ```
 
 </WranglerConfig>
@@ -56,8 +60,12 @@ A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available 
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-compatibility_flags = [ "nodejs_compat" ]
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_compat"
+	]
+}
 ```
 
 </WranglerConfig>
@@ -68,8 +76,12 @@ The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-compatibility_flags = [ "nodejs_als" ]
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_als"
+	]
+}
 ```
 
 </WranglerConfig>

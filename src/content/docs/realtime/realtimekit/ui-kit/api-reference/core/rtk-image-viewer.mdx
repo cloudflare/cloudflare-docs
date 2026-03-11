@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-image-viewer
+description: API reference for rtk-image-viewer component (Web Components (HTML) Library)
+---
+A component which shows an image sent via chat.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `image` | `ImageMessage` | ✅ | - | Image message |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-image-viewer></rtk-image-viewer>
+```
+
+### With Properties
+
+```html
+<rtk-image-viewer
+ size="md">
+</rtk-image-viewer>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-image-viewer");
+
+</script>
+```

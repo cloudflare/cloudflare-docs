@@ -1,0 +1,24 @@
+---
+pcx_content_type: reference
+title: Workers for Platforms
+description: Wrangler commands for managing Workers for Platforms dispatch namespaces.
+---
+
+import { WranglerCommand } from "~/components";
+
+Wrangler commands for managing Workers for Platforms [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace) using Wrangler.
+
+<WranglerCommand command="dispatch-namespace list" />
+
+<WranglerCommand command="dispatch-namespace get" />
+
+<WranglerCommand command="dispatch-namespace create" />
+
+<WranglerCommand command="dispatch-namespace delete" />
+
+:::note
+
+You must delete all user Workers in the dispatch namespace before it can be deleted.
+:::
+
+<WranglerCommand command="dispatch-namespace rename" />

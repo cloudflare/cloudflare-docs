@@ -1,0 +1,31 @@
+---
+pcx_content_type: navigation
+title: Replace your VPN
+sidebar:
+  order: 1
+description: Replace your traditional VPN with Cloudflare Zero Trust. Choose a connection scenario to get started.
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+Cloudflare One uses Cloudflare's global network and Zero Trust Network Access (ZTNA) to replace traditional VPNs. After you securely connect your devices and resources to Cloudflare, you can set policies to verify every request based on identity and context, reducing your attack surface and improving performance for remote users. For more background, refer to [Why should you replace your VPN?](/learning-paths/replace-vpn/concepts/why-vpn/)
+
+How you set this up depends on what needs to connect to what. Choose the scenario that matches your use case:
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Device to network"
+	href="/cloudflare-one/setup/replace-vpn/device-to-network/"
+	icon="laptop"
+>
+	Connect remote users to internal applications and services through a secure
+	connection. Best for remote access to private networks.
+</LinkTitleCard>
+
+</CardGrid>
+
+:::note
+
+For in-depth guidance on policy design and device posture checks, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
+:::

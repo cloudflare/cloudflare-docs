@@ -15,7 +15,7 @@ Domain Connect is an open standard that allows service providers - such as email
 
 This is achieved with templates that close the gap between necessary configurations (required by the service provider) and necessary DNS records changes (that must happen at the authoritative DNS provider).
 
-In practice, this means that when a user that owns `example.com` and has Cloudflare as their authoritative DNS provider wants to use your service, instead of having to manually update their DNS records, they will only have to authenticate themselves and the necessary changes will be applied automatically.
+In practice, this means that when a user that owns `example.com` and has Cloudflare as their authoritative DNS wants to use your service, instead of having to manually update their DNS records, they will only have to authenticate themselves and the necessary changes will be applied automatically.
 
 ## Setup
 
@@ -43,7 +43,7 @@ Domain Connect templates are published and maintained on a GitHub repository.
 You can use Domain Connect's [linter tool](https://github.com/Domain-Connect/dc-template-linter) with the option `-cloudflare` enabled to check your template against Cloudflare specific rules.
 :::
 
-4. Submit a pull request to have your template(s) added to the repository.
+4. Submit a pull request to have your templates added to the repository.
 
 Once your pull request has been reviewed and merged, contact Cloudflare as specified below.
 
@@ -53,15 +53,16 @@ When your template is onboarded, a graphical user interface flow will be availab
 
 Send an email to `domain-connect@cloudflare.com`, including the following information:
 
-1. List of template(s) you want to onboard, with their corresponding GitHub hyperlinks.
-2. A logo to be displayed as part of the Domain Connect flow. Preferably in `SVG` format.
-3. The default [proxy status](/dns/proxy-status/) you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s). Proxying other record types is not supported.
+1. List of templates you want to onboard, with their corresponding GitHub hyperlinks.
+2. Fully qualified domain names to query for the `syncPubKeyDomain`[^1] TXT records.
+3. A logo to be displayed as part of the Domain Connect flow. Preferably in `SVG` format.
+4. The default [proxy status](/dns/proxy-status/) you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your templates. Proxying other record types is not supported.
 
    :::note
-
    Proxy status is applied per template. If needed, organize the records in different templates to specify a different default proxy status per template. Once the records have been created, the domain owner can always change the proxy status for `A`, `AAAA`, and `CNAME` records later.
    :::
-4. (Optional) A Cloudflare [account ID](/fundamentals/account/find-account-and-zone-ids/) for you to test the flow.
+
+5. (Optional) A Cloudflare [account ID](/fundamentals/account/find-account-and-zone-ids/) for you to test the flow.
 
    If you have a [DNS provider discovery](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#dns-provider-discovery) automation in place and will not list new DNS providers manually, Cloudflare can initially restrict your template to be exposed to the specified account only. Once you confirm everything is working as expected, Cloudflare will publish your template on the discovery endpoint, to be picked up by your automation.
 
@@ -131,11 +132,18 @@ You can contact Cloudflare to opt out of the automatic updates. Once the automat
 
 Send an email to `domain-connect@cloudflare.com` with the following information:
 
-1. Detailed description of what is wrong:
-   - List the record(s) that the issue is related with.
-   - Describe what the template did.
-   - Describe what you expected the template to do.
+1. Detailed description of what is wrong, including:
+   - Date and time when the issue occurred.
+   - The `providerId` and `serviceId` of the template.
+   - Description of what the request did.
+   - Description of what you expected to happen.
 
 2. A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) attachment containing the problematic update.
 
-[^1]: A domain that can be queried for `TXT` records containing a public key to verify your digital signature.
+### Validation errors
+
+The most common issues after template onboarding are validation errors, typically caused by `syncPubKeyDomain` TXT records.
+
+You can fix these by republishing the signature, using tools such as the one provided by [Domain Connect](https://exampleservice.domainconnect.org/sig). Additionally, you can test signature validation with this [public key debug tool](https://github.com/kerolasa/dc-debug-pubkey).
+
+[^1]: A domain that can be queried for `TXT` records containing a public key to verify your digital signature. Refer to [digitally signed requests](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#digitally-sign-requests) for details.

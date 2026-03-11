@@ -36,12 +36,17 @@ Review the following environments flow:
 
     <WranglerConfig>
 
-    ```toml
-    name = "your-worker"
-    route = "example.com"
-
-    [env.dev]
-    route = "dev.example.com"
+    ```jsonc
+    {
+      "$schema": "./node_modules/wrangler/config-schema.json",
+      "name": "your-worker",
+      "route": "example.com",
+      "env": {
+        "dev": {
+          "route": "dev.example.com"
+        }
+      }
+    }
     ```
 
     </WranglerConfig>
@@ -64,22 +69,33 @@ Review the following example Wrangler file:
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-
-vars = { API_HOST = "example.com" }
-
-kv_namespaces = [
-  { binding = "<BINDING_NAME>", id = "<KV_NAMESPACE_ID_DEV>" }
-]
-
-[env.production]
-
-vars = { API_HOST = "production.example.com" }
-
-kv_namespaces = [
-  { binding = "<BINDING_NAME>", id = "<KV_NAMESPACE_ID_PRODUCTION>" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"vars": {
+		"API_HOST": "example.com"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "<BINDING_NAME>",
+			"id": "<KV_NAMESPACE_ID_DEV>"
+		}
+	],
+	"env": {
+		"production": {
+			"vars": {
+				"API_HOST": "production.example.com"
+			},
+			"kv_namespaces": [
+				{
+					"binding": "<BINDING_NAME>",
+					"id": "<KV_NAMESPACE_ID_PRODUCTION>"
+				}
+			]
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -91,25 +107,45 @@ In the example below, we have two Workers, both with a `staging` environment. `w
 
 <WranglerConfig>
 
-```toml
-name = "worker-a"
-
-vars = { FOO = "<top-level-var>" }
-[env.staging.vars]
-FOO = "<staging-var>"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker-a",
+	"vars": {
+		"FOO": "<top-level-var>"
+	},
+	"env": {
+		"staging": {
+			"vars": {
+				"FOO": "<staging-var>"
+			}
+		}
+	}
+}
 ```
 
 </WranglerConfig>
 
 <WranglerConfig>
 
-```toml
-name = "worker-b"
-
-services = { binding = "<BINDING_NAME>", service = "worker-a" }
-
-# Note how `service = "worker-a-staging"`
-env.staging.service ={ binding = "<BINDING_NAME>", service = "worker-a-staging" }
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker-b",
+	"services": {
+		"binding": "<BINDING_NAME>",
+		"service": "worker-a"
+	},
+	// Note how `service = "worker-a-staging"`
+	"env": {
+		"staging": {
+			"service": {
+				"binding": "<BINDING_NAME>",
+				"service": "worker-a-staging"
+			}
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -134,21 +170,32 @@ The following Wrangler file adds two environments, `[env.staging]` and `[env.pro
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-route = "dev.example.com/*"
-vars = { ENVIRONMENT = "dev" }
-
-[env.staging]
-vars = { ENVIRONMENT = "staging" }
-route = "staging.example.com/*"
-
-[env.production]
-vars = { ENVIRONMENT = "production" }
-routes = [
-  "example.com/foo/*",
-  "example.com/bar/*"
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"route": "dev.example.com/*",
+	"vars": {
+		"ENVIRONMENT": "dev"
+	},
+	"env": {
+		"staging": {
+			"vars": {
+				"ENVIRONMENT": "staging"
+			},
+			"route": "staging.example.com/*"
+		},
+		"production": {
+			"vars": {
+				"ENVIRONMENT": "production"
+			},
+			"routes": [
+				"example.com/foo/*",
+				"example.com/bar/*"
+			]
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -205,12 +252,17 @@ To deploy your code to your `*.workers.dev` subdomain, include `workers_dev = tr
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-route = "example.com/*"
-
-[env.staging]
-workers_dev = true
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"route": "example.com/*",
+	"env": {
+		"staging": {
+			"workers_dev": true
+		}
+	}
+}
 ```
 
 </WranglerConfig>

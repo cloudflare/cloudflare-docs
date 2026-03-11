@@ -1,0 +1,12 @@
+id: xJWUx6
+name: Network
+
+entry:
+  title: Network
+  url: /network/
+  group: Core platform
+
+meta:
+  title: Cloudflare Network settings docs
+  description: Manage Cloudflare network settings for your website
+  author: "@cloudflare"

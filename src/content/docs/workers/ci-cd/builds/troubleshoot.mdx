@@ -16,31 +16,28 @@ Here are some common build errors that may surface in the build logs or general 
 
 ### Workers name requirement
 
-`✘ [ERROR] The name in your wrangler.toml file (<Worker name>) must match the name of your Worker. Please update the name field in your wrangler.toml file.`
+`✘ [ERROR] The name in your Wrangler configuration file (<Worker name>) must match the name of your Worker. Please update the name field in your Wrangler configuration file.`
 
-When connecting a Git repository to your Workers project, the specified name for the Worker on the Cloudflare dashboard must match the `name` argument in the wrangler.toml file located in the specified root directory. If it does not match, update the name field in your wrangler.toml file to match the name of the Worker on the dashboard.
+When connecting a Git repository to your Workers project, the specified name for the Worker on the Cloudflare dashboard must match the `name` argument in the Wrangler configuration file located in the specified root directory. If it does not match, update the name field in your Wrangler configuration file to match the name of the Worker on the dashboard.
 
-The build system uses the `name` argument in the wrangler.toml to determine which Worker to deploy to Cloudflare's global network. This requirement ensures consistency between the Worker's name on the dashboard and the deployed Worker.
-
+The build system uses the `name` argument in the Wrangler configuration file to determine which Worker to deploy to Cloudflare's global network. This requirement ensures consistency between the Worker's name on the dashboard and the deployed Worker.
 :::note
-This does not apply to [Wrangler Environments](/workers/wrangler/environments/) if the Worker name before the `-<env_name>` suffix matches the name in wrangler.toml.
+This does not apply to [Wrangler Environments](/workers/wrangler/environments/) if the Worker name before the `-<env_name>` suffix matches the name in the Wrangler configuration file.
 
-For example, a Worker named `my-worker-staging` on the dashboard can be deployed from a repository that contains a wrangler.toml with the arguments `name = my-worker` and `[env.staging]` using the deploy command `npx wrangler deploy --env staging`.
-
+For example, a Worker named `my-worker-staging` on the dashboard can be deployed from a repository that contains a Wrangler configuration file with the arguments `name = my-worker` and `[env.staging]` using the deploy command `npx wrangler deploy --env staging`.
 On Wrangler v3 and up, Workers Builds automatically matches the name of the connected Worker by overriding it with the `WRANGLER_CI_OVERRIDE_NAME` environment variable.
 :::
 
-### Missing wrangler.toml
+### Missing Wrangler configuration file
 
 `✘ [ERROR] Missing entry-point: The entry-point should be specified via the command line (e.g. wrangler deploy path/to/script) or the main config field.`
 
-If you see this error, a wrangler.toml is likely missing from the root directory. Navigate to **Settings** > **Build** > **Build Configuration** to update the root directory, or add a [wrangler.toml](/workers/wrangler/configuration/) to the specified directory.
-
+If you see this error, a Wrangler configuration file is likely missing from the root directory. Navigate to **Settings** > **Build** > **Build Configuration** to update the root directory, or add a [Wrangler configuration file](/workers/wrangler/configuration/) to the specified directory.
 ### Incorrect account_id
 
 `Could not route to /client/v4/accounts/<Account ID>/workers/services/<Worker name>, perhaps your object identifier is invalid? [code: 7003]`
 
-If you see this error, the wrangler.toml likely has an `account_id` for a different account. Remove the `account_id` argument or update it with your account's `account_id`, available in **Workers & Pages Overview** under **Account Details**.
+If you see this error, the Wrangler configuration file likely has an `account_id` for a different account. Remove the `account_id` argument or update it with your account's `account_id`, available in **Workers & Pages Overview** under **Account Details**.
 
 ### Stale API token
 

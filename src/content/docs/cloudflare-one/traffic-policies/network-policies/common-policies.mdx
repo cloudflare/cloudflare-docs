@@ -10,7 +10,7 @@ head:
 
 import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
-The following policies are commonly used to secure network traffic.
+The following policies are commonly used to secure network traffic. Network policies are evaluated in order from top to bottom, and the first matching policy applies. Place more specific Allow policies above broader Block policies.
 
 For a baseline set of recommended policies, refer to [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/build-network-policies/recommended-network-policies/).
 
@@ -29,6 +29,8 @@ Refer to the [network policies page](/cloudflare-one/traffic-policies/network-po
 </TabItem>
 
 <TabItem label="API">
+
+In the following API examples, `filters: ["l4"]` indicates that this is a network (Layer 4) policy.
 
 <APIRequest
 	path="/accounts/{account_id}/gateway/rules"
@@ -95,7 +97,7 @@ To require users to re-authenticate after a certain amount of time has elapsed, 
 
 ## Allow only approved traffic
 
-Restrict user access to only the specific sites or applications configured in your [HTTP policies](/cloudflare-one/traffic-policies/http-policies/).
+Restrict user access to only the specific sites or applications configured in your [HTTP policies](/cloudflare-one/traffic-policies/http-policies/). This pattern uses two policies: an Allow policy to permit HTTP/HTTPS traffic, followed by a Block policy to deny everything else. Place the Allow policy above the Block policy so that matching traffic is allowed before the catch-all block applies.
 
 ### 1. Allow HTTP and HTTPS traffic
 

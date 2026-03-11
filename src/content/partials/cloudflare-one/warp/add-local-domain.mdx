@@ -108,7 +108,7 @@ WARP tries all servers and always uses the fastest response, even if that respon
 
 The WARP client routes DNS traffic to your [Local Domain Fallback server](#add-a-domain) according to your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/). To ensure that queries can reach your private DNS server:
 
-- If your DNS server is only reachable inside of the WARP tunnel (for example, via `cloudflared` or Magic WAN):
+- If your DNS server is only reachable inside of the WARP tunnel (for example, via `cloudflared` or Cloudflare WAN):
 
    1. Go to **Networks** > **Routes** and verify that the DNS server is connected to Cloudflare. To connect a DNS server, refer to [Private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
 

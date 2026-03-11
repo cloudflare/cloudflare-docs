@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, DirectoryListing } from "~/components";
+import { Render, DirectoryListing, Details } from "~/components";
 
 To use Cloudflare DNS as an authoritative DNS provider - be it in a [primary (full)](/dns/zone-setups/full-setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) setup -, your domain nameservers must point to nameservers that you get from your Cloudflare account. Updating your nameservers is required to activate your domain on Cloudflare and use most of our [application services](/fundamentals/concepts/how-cloudflare-works/).
 
@@ -23,9 +23,13 @@ If you are using Cloudflare Registrar with [custom nameservers](/dns/nameservers
 
 If you have acquired your domain from a [registrar](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/) other than Cloudflare Registrar - and it has not been [delegated](#your-domain-is-delegated) - you need to update your nameservers at your registrar.
 
+If you do not know who your registrar is, you can use a Whois search, such as [ICANN Lookup](https://lookup.icann.org/). If the registrar indicated on your Whois search result is not a service that you have interacted directly with, you may [have acquired your domain from a reseller](#you-have-acquired-your-domain-from-a-reseller).
+
+<Details header="Provider-specific instructions" open={true}>
+
 <Render file="ns-update-providers" product="dns" />
 
-If you do not know who your registrar is, you can use a Whois search, such as [ICANN Lookup](https://lookup.icann.org/). If the registrar indicated on your Whois search result is not a service that you have interacted directly with, you may [have acquired your domain from a reseller](#you-have-acquired-your-domain-from-a-reseller).
+</Details>
 
 ### You have acquired your domain from a reseller
 

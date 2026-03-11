@@ -67,7 +67,7 @@ entries:
     general_definition: |-
       the duration for which a cached copy of a resource is considered valid before it needs to be refreshed or revalidated.
     associated_products:
-      - Magic WAN
+      - Cloudflare WAN
       - DNS
 
   - term: cache lock

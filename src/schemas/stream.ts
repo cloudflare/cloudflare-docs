@@ -7,10 +7,10 @@ export const streamSchema = z.object({
 	title: z.string(),
 	description: z.string(),
 	products: z
-		.array(reference("products"))
+		.array(reference("directory"))
 		.default([])
 		.describe(
-			"The names of related products (according to their file name in `src/content/products`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
+			"The names of related directory entries (according to their file name in `src/content/directory`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
 		),
 	transcript: z.string().optional(),
 	chapters: z.record(z.string(), z.string()).optional(),

@@ -1,0 +1,12 @@
+id: kJEHAw
+name: zt-art-analytics
+
+entry:
+  title: Cloudflare One Analytics
+  url: /cloudflare-one/insights/analytics-overview/
+  show: false
+
+meta:
+  title: Cloudflare One Analytics docs
+  description: The Cloudflare One Analytics overview provides a dashboard that reports on how Cloudflare One is protecting your organization and networks.
+  author: "@cloudflare"

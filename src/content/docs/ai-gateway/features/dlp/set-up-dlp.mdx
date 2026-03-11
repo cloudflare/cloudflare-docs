@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { Render } from "~/components";
+
 Add Data Loss Prevention (DLP) to any AI Gateway to start scanning AI prompts and responses for sensitive data.
 
 ## Prerequisites
@@ -69,21 +71,24 @@ After configuring DLP settings:
 
 ### Viewing DLP logs in AI Gateway
 
-DLP events are integrated into your AI Gateway logs:
+DLP events are integrated into your AI Gateway logs. When a DLP policy matches, the log entry includes details about the match alongside standard log fields like provider, model, tokens, and cost.
 
 1. Go to **AI** > **AI Gateway** > your gateway > **Logs**.
-2. Click on any log entry to view detailed information. For requests where DLP policies were triggered, additional details are included:
-   - **DLP Action Taken**: Shows whether the action was "Flag" or "Block"
-   - **DLP Policies Matched**: Detailed information about each policy that matched, including:
-     - Which DLP profiles triggered within each policy
-     - Whether the match occurred in the request or response
-     - Specific entries that matched within each DLP profile
+2. Select any log entry to view detailed information. For requests where DLP policies were triggered, the log entry includes additional DLP fields:
+
+<Render file="dlp-log-fields" product="ai-gateway" />
+
+### DLP fields in the Logs API
+
+When you retrieve logs through the [Logs API](/api/resources/ai_gateway/subresources/logs/methods/list/), log entries for requests where DLP policies matched include DLP-specific fields in the response. These fields contain the same match data surfaced in the dashboard and in the `cf-aig-dlp` response header, including the action taken, matched policy IDs, matched profile IDs, and entry IDs.
+
+For more information on log fields, refer to the [Logging documentation](/ai-gateway/observability/logging/).
 
 ### Filter DLP events
 
 To view only DLP-related requests:
 
-1. On the **Logs** tab, click **Add Filter**.
+1. On the **Logs** tab, select **Add Filter**.
 2. Select **DLP Action** from the filter options.
 3. Choose to filter by:
    - **FLAG** - Show only requests where sensitive data was flagged

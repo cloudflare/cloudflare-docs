@@ -42,6 +42,17 @@ If you encounter other 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX Er
 
 ---
 
+## Old SaaS provider content after updating a CNAME
+
+When switching SaaS providers, an older configuration can take precedence if the old provider provisioned a specific custom hostname and the new provider provisioned a wildcard custom hostname. This is expected as per the [certificate and hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority).
+
+In this case there are two ways forward:
+
+- (Recommended) Ask the new SaaS provider to provision a specific custom hostname for you instead of the wildcard - `mystore.example.com` instead of `*.example.com`.
+- Ask the Super Administrator of your account to contact [Cloudflare Support](/support/contacting-cloudflare-support/) to request an update of the SaaS configuration.
+
+---
+
 ## Custom hostname in Moved status
 
 To move a custom hostname back to an Active status, send a [PATCH request](/api/resources/custom_hostnames/methods/edit/) to restart the hostname validation. A Custom Hostname in a Moved status is deleted after 7 days.
@@ -71,7 +82,7 @@ example.com CAA 0 issue "ssl.com"
 example.com CAA 0 issuewild "ssl.com"
 ```
 
-More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubleshooting/caa-records/).
+For more details, refer to [CAA records FAQ](/ssl/faq/#caa-records).
 
 ***
 

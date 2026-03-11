@@ -1,0 +1,15 @@
+---
+params:
+  - tunnelFirewallURL
+  - hostnameAnchor
+  - privateIpAnchor?
+---
+
+To secure your VM instance, you can [configure your VPC firewall rules](https://cloud.google.com/firewall/docs/using-firewalls) to deny all ingress traffic and allow only egress traffic to the <a href={props.tunnelFirewallURL}>Cloudflare Tunnel IP addresses</a>. Since GCP denies ingress traffic by [default](https://cloud.google.com/firewall/docs/firewalls#default_firewall_rules), you can delete all ingress rules and leave only the relevant egress rules.
+
+:::note
+
+If you delete the default `allow-ssh` rule, you will be unable to SSH back into the VM.
+:::
+
+After configuring your VPC firewall rules, verify that you can still access the service through Cloudflare Tunnel via its <a href={props.hostnameAnchor}>public hostname</a>{props.privateIpAnchor && <> or <a href={props.privateIpAnchor}>private IP</a></>}. The service should no longer be accessible from outside Cloudflare Tunnel -- for example, if you go to `http://<EXTERNAL IP>` the test page should no longer load.

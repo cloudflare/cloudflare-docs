@@ -36,8 +36,6 @@ export default {
 
 				// Sample query
 				connection.query("SHOW tables;", [], (error, rows, fields) => {
-					connection.end();
-
 					resolve({ fields, rows });
 				});
 			});

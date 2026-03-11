@@ -1,0 +1,15 @@
+---
+pcx_content_type: how-to
+title: Network segmentation
+description: Define policies to define if traffic should flow between your LANs without leaving your local premises, or if traffic should be forwarded to Cloudflare for additional security configurations.
+---
+
+import { Render } from "~/components"
+
+<Render file="mconn/network-options/network-segmentation"
+	product="networking-services"
+	params={{
+		dashName: "CF1 Cloudflare WAN",
+		hardConnectorURL: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/",
+		virtualConnectorURL: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-virtual-appliance/",
+	}} />

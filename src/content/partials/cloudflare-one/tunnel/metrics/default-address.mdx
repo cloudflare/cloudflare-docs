@@ -1,0 +1,12 @@
+---
+params:
+  - logsURL
+---
+
+In non-containerized environments, `cloudflared` starts the metrics server on `127.0.0.1:<PORT>/metrics`, where `<PORT>` is the first available port in the range `20241` to `20245`. If all ports are unavailable, `cloudflared` binds to a random port. In containerized environments (Docker, Kubernetes), the default address is `0.0.0.0:<PORT>/metrics`.
+
+To determine the default port, check your <a href={props.logsURL}>tunnel logs</a> around the time when the tunnel started. For example:
+
+```text
+2024-12-19T21:17:58Z INF Starting metrics server on 127.0.0.1:20241/metrics
+```

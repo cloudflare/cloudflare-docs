@@ -10,7 +10,7 @@ import { DashButton } from "~/components";
 
 Scopes are one of three constituent parts of a policy that allows granting of access to users.
 
-To allow for flexible combinations of access to users, Cloudflare currently has two types of scopes (Account and Domain), with different sets of roles for each scope.
+To allow for flexible combinations of access to users, Cloudflare currently has account-level scopes, domain scopes, and resource-specific scopes. Each scope is associated with a different set of [roles](/fundamentals/manage-members/roles/).
 
 ***
 
@@ -37,7 +37,7 @@ You can only assign [account-scoped roles](/fundamentals/manage-members/roles/#a
 
 :::
 
-### Specific Domains
+### Specific domains
 
 If you want the member to have a policy that applies to a specific domain, use the following combination of fields. When applying these roles to this policy, only domain-scoped roles can be used.
 
@@ -87,7 +87,7 @@ With Domain Groups, you can only assign [domain-scoped roles](/fundamentals/mana
 :::
 
 
-### Specific Resources
+### Specific resources
 
 If you want the member to have a policy that applies to a specific resource, use the following combination of fields.
 
@@ -97,3 +97,19 @@ If you want the member to have a policy that applies to a specific resource, use
 | Type     | *Granular* |
 | Product  | *Product Name* |
 | Resource  | *Specific Resource* |
+
+#### Available scopes
+
+You can assign the following resource-specific scopes to members:
+
+| Scope                                     | Description                                                                                                                                              |
+| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Individual Access applications               | Grant access to manage a specific [Access application](/cloudflare-one/access-controls/applications/).                                                   |
+| Individual Access identity providers (IdPs)  | Grant access to manage a specific [Cloudflare One identity provider (IdP)](/cloudflare-one/integrations/identity-providers/).                                    |
+| Individual Access policies                   | Grant access to manage a specific [Access policy](/cloudflare-one/access-controls/policies/).                                                            |
+| Individual Access service tokens             | Grant access to manage a specific [Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/).                           |
+| Individual Access infrastructure targets     | Grant access to manage a specific [Access for Infrastructure target](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/).        |
+
+:::note
+When using scopes for specific resources, you can only assign [resource-scoped roles](/fundamentals/manage-members/roles/#resource-scoped-roles) to these members.
+:::

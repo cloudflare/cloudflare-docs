@@ -111,12 +111,20 @@ An object representing the incoming request. This includes methods for accessing
 
 Provides access to Worker [bindings](/workers/runtime-apis/bindings/).
 
-- [`Secret`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Secret value configured in Cloudflare dashboard or using `wrangler secret put`.
-- [`Var`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Environment variable defined in `wrangler.toml`.
-- [`KvStore`](https://docs.rs/worker-kv/latest/worker_kv/struct.KvStore.html) - Workers [KV](/kv/api/) namespace binding.
+- [`Secret`](https://docs.rs/worker/latest/worker/struct.Secret.html) - Secret value configured in Cloudflare dashboard or using `wrangler secret put`.
+- [`Var`](https://docs.rs/worker/latest/worker/type.Var.html) - Environment variable defined in `wrangler.toml`.
+- [`KvStore`](https://docs.rs/worker/latest/worker/kv/struct.KvStore.html) - Workers [KV](/kv/api/) namespace binding.
 - [`ObjectNamespace`](https://docs.rs/worker/latest/worker/durable/struct.ObjectNamespace.html) - [Durable Object](/durable-objects/) binding.
 - [`Fetcher`](https://docs.rs/worker/latest/worker/struct.Fetcher.html) - [Service binding](/workers/runtime-apis/bindings/service-bindings/) to another Worker.
 - [`Bucket`](https://docs.rs/worker/latest/worker/struct.Bucket.html) - [R2](/r2/) Bucket binding.
+- [`D1Database`](https://docs.rs/worker/latest/worker/d1/struct.D1Database.html) - [D1](/d1/) database binding.
+- [`Queue`](https://docs.rs/worker/latest/worker/struct.Queue.html) - [Queues](/queues/) producer binding.
+- [`Ai`](https://docs.rs/worker/latest/worker/struct.Ai.html) - [Workers AI](/workers-ai/) binding.
+- [`Hyperdrive`](https://docs.rs/worker/latest/worker/struct.Hyperdrive.html) - [Hyperdrive](/hyperdrive/) binding.
+- [`AnalyticsEngineDataset`](https://docs.rs/worker/latest/worker/struct.AnalyticsEngineDataset.html) - [Analytics Engine](/analytics/analytics-engine/) binding.
+- [`DynamicDispatcher`](https://docs.rs/worker/latest/worker/struct.DynamicDispatcher.html) - [Dynamic Dispatch](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) binding.
+- [`SecretStore`](https://docs.rs/worker/latest/worker/struct.SecretStore.html) - [Secrets Store](/secrets-store/) binding.
+- [`RateLimiter`](https://docs.rs/worker/latest/worker/struct.RateLimiter.html) - [Rate Limiting](/workers/runtime-apis/bindings/rate-limit/) binding.
 
 3. **[`Context`](https://docs.rs/worker/latest/worker/struct.Context.html)**
 

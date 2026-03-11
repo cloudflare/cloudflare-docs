@@ -1,0 +1,33 @@
+---
+pcx_content_type: navigation
+title: rtk-emoji-picker
+description: API reference for rtk-emoji-picker component (Angular Library)
+---
+A very simple emoji picker component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `focusWhenOpened` | `boolean` | ✅ | - | Controls whether or not to focus on mount |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-emoji-picker></rtk-emoji-picker>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-emoji-picker
+ [focusWhenOpened]="true">
+</rtk-emoji-picker>
+```
+

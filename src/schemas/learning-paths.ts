@@ -9,10 +9,10 @@ export const learningPathsSchema = z
 		description: z.string(),
 		pcx_content_type: z.string().default("learning-path"),
 		products: z
-			.array(reference("products"))
+			.array(reference("directory"))
 			.default([])
 			.describe(
-				"The names of related products (according to their file name in `src/content/products`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
+				"The names of related directory entries (according to their file name in `src/content/directory`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
 			),
 		tags: z.string().array().optional(),
 		reviewed: z
