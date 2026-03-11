@@ -84,7 +84,7 @@ The **Security Settings** toggles you configured above already provide baseline 
 If you need additional control, such as path-specific protection, custom score thresholds, or combining bot score with other fields, Cloudflare provides [rule templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) to get started.
 
 :::note
-Custom rules created from these templates execute before the built-in managed rules configured in **Security Settings**. For more details on this execution order, refer to [WAF custom rules](/bots/get-started/super-bot-fight-mode/#waf-custom-rules) in the Super Bot Fight Mode documentation.
+Custom rules created from these templates execute before the managed rules configured in **Security Settings**. For more details on this execution order, refer to [WAF custom rules](/bots/get-started/super-bot-fight-mode/#waf-custom-rules) in the Super Bot Fight Mode documentation.
 :::
 
 - [Definite Bots template](https://dash.cloudflare.com/?to=/:account/:zone:/security/security-rules/custom-rules/create?template=Definitely%20Bots): Targets malicious bot traffic while ignoring verified bots and routes delivering static content.

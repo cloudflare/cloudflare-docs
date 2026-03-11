@@ -2,15 +2,15 @@
 title: Custom rules
 pcx_content_type: concept
 sidebar:
-  order: 6
+  order: 7
 description: >-
   Understand when to use the built-in bot protection settings in Security
   Settings versus creating WAF custom rules for bot management.
 ---
 
-Bot protection on Cloudflare works through two complementary mechanisms: built-in settings configured through toggles in **Security Settings**, and WAF custom rules that you write using bot management fields. Understanding when to use each approach helps you avoid creating duplicate rules and simplifies your security configuration.
+import { Render } from "~/components";
 
-## What Security Settings handle
+Bot protection on Cloudflare works through two complementary mechanisms: built-in settings configured through toggles in **Security Settings**, and [WAF custom rules](/waf/custom-rules/) that you write using [bot management fields](/bots/reference/bot-management-variables/). Understanding when to use each approach helps you avoid creating duplicate rules and simplifies your security configuration.
 
 The following features are configured through toggles and dropdowns in [Security Settings](/security/). They do not require you to write any rule expressions.
 
@@ -26,20 +26,15 @@ The following features are configured through toggles and dropdowns in [Security
 | [Optimize for WordPress](/bots/troubleshooting/wordpress-loopback-issue/) | Allows WordPress loopback requests through bot protection | Pro, Business, Enterprise |
 | [JavaScript detections](/cloudflare-challenges/challenge-types/javascript-detections/) | Injects a lightweight script to identify clients that cannot execute JavaScript | All plans (automatic on Free) |
 
-### Advantages of built-in bot settings
-
-- Built-in rules update automatically as Cloudflare identifies new bot signatures and AI crawlers. Custom rules require manual updates.
-- Built-in settings do not count toward your [custom rule limits](/waf/custom-rules/#availability).
-- Toggles and dropdowns are easier to configure, audit, and troubleshoot than rule expressions.
-- Built-in settings apply uniformly across your domain without the risk of expression errors.
-
-## When to use custom rules
+Bot settings update automatically as Cloudflare identifies new bot signatures and AI crawlers, while custom rules require manual updates. They do not count toward your [custom rule limits](/waf/custom-rules/#availability), and apply uniformly across your domain without the risk of expression errors.
 
 Custom rules are valuable when you need capabilities that built-in settings do not offer. The following scenarios require [WAF custom rules](/waf/custom-rules/) with [bot management fields](/bots/reference/bot-management-variables/).
 
+## Scenarios that require custom rules
+
 ### Path-specific protection
 
-Built-in settings apply to all traffic across your domain. If you need different bot handling for different paths — for example, stricter protection on `/login/` than on `/public/` — you need custom rules.
+Since Bot settings apply to all traffic across your domain, you may need an alternative approach to bot handling for different paths using custom rules — for example, stricter protection on `/login/` than on `/public/`.
 
 #### Example 
 
@@ -51,11 +46,11 @@ Block likely automated traffic only on your login endpoint:
 
 ### Custom score thresholds
 
-The built-in **Definitely automated** and **Likely automated** settings use fixed bot score groupings (1 and 2-29). If you need a different threshold, for example, challenging all traffic with a score below 20, you need a custom rule.
+The **Definitely automated** and **Likely automated** settings use fixed bot score groupings (1 and 2-29). If you need a different threshold, for example, challenging all traffic with a score below 20, you need a custom rule.
 
 ### Conditional logic
 
-If you need to combine bot score with other request fields, such as country, ASN, URI path, JA3/JA4 fingerprint, or user agent, you need custom rules. Built-in settings do not support compound conditions.
+If you need to combine bot score with other request fields, such as country, ASN, URI path, JA3/JA4 fingerprint, or user agent, you need custom rules. Bot settings do not support compound conditions.
 
 #### Example
 
@@ -67,11 +62,13 @@ Challenge likely automated traffic only from specific ASNs:
 
 ### Custom actions
 
-Built-in settings offer Block, Managed Challenge, and Allow as actions. If you need other actions, such as Log (for testing rules before enforcement), Interactive Challenge, or Skip (to bypass other rules), you need custom rules.
+Bot settings offer **Block**, **Managed Challenge**, and **Allow** as actions. 
+
+If you need other actions, such as **Log** (for testing rules before enforcement), **Interactive Challenge**, or **Skip** (to bypass other rules), you need custom rules.
 
 ### Detection ID targeting
 
-To act on specific bot heuristic detections, such as [account takeover](/bots/additional-configurations/detection-ids/account-takeover-detections/) or [scraping](/bots/additional-configurations/detection-ids/scraping-detections/) patterns, you need custom rules using the `cf.bot_management.detection_ids` field. Built-in settings do not expose individual detection IDs.
+To act on specific bot heuristic detections, such as [account takeover](/bots/additional-configurations/detection-ids/account-takeover-detections/) or [scraping](/bots/additional-configurations/detection-ids/scraping-detections/) patterns, you need custom rules using the `cf.bot_management.detection_ids` field. Bot settings do not expose individual detection IDs.
 
 ### Forwarding bot data to origin
 
@@ -79,20 +76,16 @@ To send bot scores, verified bot status, or JA3/JA4 fingerprints to your origin 
 
 ## Execution order
 
-Custom rules execute **before** the built-in [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/#waf-custom-rules) managed rules. If a custom rule takes a terminating action (such as Block or Managed Challenge), the request does not reach the built-in settings. The execution order is:
+Custom rules execute before Super Bot Fight Mode managed rules. If a custom rule takes a terminating action (such as **Block** or **Managed Challenge**), the request does not reach bot settings. 
 
-1. WAF custom rules
-2. Block AI bots managed rule
-3. Other SBFM managed rules (Definitely automated, Likely automated, Verified bots)
+<Render file="execution-order" product="bots" />
 
-For more details, refer to [WAF custom rules](/bots/get-started/super-bot-fight-mode/#waf-custom-rules) in the Super Bot Fight Mode documentation.
+## Avoid duplicate rules
 
-## Avoiding duplicate rules
+If you use both bot settings and custom rules, make sure they do not overlap. Common duplication patterns include:
 
-If you use both built-in settings and custom rules, make sure they do not overlap. Common duplication patterns include:
-
-- **Definitely automated traffic**: If you set **Definitely automated** to **Block** in Security Settings, you do not also need a custom rule with `cf.bot_management.score eq 1` and a Block action.
-- **Likely automated traffic**: If you set **Likely automated** to **Managed Challenge**, you do not also need a custom rule with `cf.bot_management.score lt 30` and a Challenge action (unless you are using a different threshold or adding conditions).
-- **Verified bots**: If you set **Verified bots** to **Allow**, you do not need a Skip rule for `cf.bot_management.verified_bot` (unless you need to skip specific downstream rules).
+- **Definitely automated traffic**: If you set **Definitely automated** to **Block** in Security Settings, you do not also need a custom rule with `cf.bot_management.score eq 1` and a **Block** action.
+- **Likely automated traffic**: If you set **Likely automated** to **Managed Challenge**, you do not also need a custom rule with `cf.bot_management.score lt 30` and a **Challenge** action (unless you are using a different threshold or adding conditions).
+- **Verified bots**: If you set **Verified bots** to **Allow**, you do not need a **Skip** rule for `cf.bot_management.verified_bot` (unless you need to skip specific downstream rules).
 - **AI crawlers**: If you turned on **Block AI bots**, you do not need custom rules that block AI crawler user agents (GPTBot, ClaudeBot, and others). The built-in rule auto-updates as new crawlers emerge.
 - **Static resources**: For [Bot Management](/bots/get-started/bot-management/) customers, static resources are protected by default in custom rules that use `cf.bot_management.score`. You do not need to add static resource handling separately unless you want to exclude them.

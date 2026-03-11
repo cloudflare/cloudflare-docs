@@ -80,20 +80,7 @@ import { Render } from "~/components";
 	</tbody>
 </table>
 
-## Built-in settings vs. custom rules
-
-The following features are handled automatically by the toggles in **Security Settings** and do not require custom rules:
-
-| Feature | Handled by built-in settings | Requires custom rules |
-| --- | --- | --- |
-| Block or challenge definitely automated traffic | Yes | Only for path-specific or threshold-tuned rules |
-| Block or challenge likely automated traffic | Not available on Pro | Yes, with [Bot Management](/bots/plans/bm-subscription/) |
-| Allow or block verified bots | Yes | Only to allow or block specific bot categories |
-| Block AI crawlers | Yes | Only to target individual AI crawlers |
-| Protect static resources | Yes | No |
-| Optimize for WordPress | Yes | No |
-
-For more details on when custom rules are needed, refer to [custom rules](/bots/additional-configurations/custom-rules/).
+<Render file="bot-settings-vs-custom-rules" product="bots" />
 
 ## How do I get started?
 
