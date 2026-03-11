@@ -32,7 +32,7 @@ To create a Gateway HTTP policy with Application Granular Controls:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **HTTP**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Select **Add a policy**.
 3. Name the policy.
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block. Because granular controls are specific to each application, you must use the _Application_ selector with the _is_ operator.
@@ -77,7 +77,7 @@ Gateway defines Application Granular Controls at different levels of granularity
 
 ### Application Controls
 
-Application Controls are pre-defined groups that represent common user actions, such as uploads or downloads. Cloudflare maps each Application Control to one or more underlying API operations for a given application. Use Application Controls when a pre-defined grouping matches your intent.
+Application Controls are pre-defined controls that represent user intent, such as uploads or downloads. Cloudflare organizes sets of related operations into Application Controls for each supported application. Use Application Controls when a pre-defined grouping matches your intent.
 
 ### Operations
 
