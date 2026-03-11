@@ -47,7 +47,14 @@ if (currentSection) {
 		if (originalEntry && originalEntry.data.products.length > 0) {
 			const primaryProductRef = originalEntry.data.products[0];
 			product = await getEntry("directory", primaryProductRef.id);
+			// product = await getEntry(originalEntry.data.products[0]);
 		}
+		["pcx_content_type", "algolia_content_type"].map((name) => {
+			metaTags.push({
+				name,
+				content: formatContentType("changelog-entry"),
+			});
+		});
 	}
 
 	if (product) {
@@ -201,7 +208,10 @@ if (frontmatter.external_link) {
 	});
 }
 
-if (frontmatter.pcx_content_type === "changelog") {
+if (
+	frontmatter.pcx_content_type === "changelog" ||
+	currentSection === "changelog"
+) {
 	const href = new URL(entry.id.concat("/index.xml"), Astro.url.origin);
 
 	head.push({
