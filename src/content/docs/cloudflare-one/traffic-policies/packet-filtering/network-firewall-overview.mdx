@@ -23,9 +23,9 @@ import {
 
 <Plan type="enterprise" />
 
-Cloudflare Network Firewall is a <GlossaryTooltip term="firewall-as-a-service">firewall-as-a-service (FWaaS)</GlossaryTooltip> delivered from the Cloudflare global network to protect office networks and cloud infrastructure with advanced, scalable protection. With Cloudflare Network Firewall, you can apply filter rules on a variety of criteria, such as protocol and <GlossaryTooltip term="data packet">packet</GlossaryTooltip> length, to filter unwanted traffic before it reaches your network.
+Unwanted network traffic — from DDoS floods to unauthorized scans — can overwhelm your infrastructure. Cloudflare Network Firewall is a <GlossaryTooltip term="firewall-as-a-service">firewall-as-a-service (FWaaS)</GlossaryTooltip> delivered from the Cloudflare global network, meaning Cloudflare runs the firewall for you in the cloud instead of on your own hardware. You can apply filter rules on a variety of criteria, such as protocol (for example, TCP or UDP) and <GlossaryTooltip term="data packet">packet</GlossaryTooltip> length, to filter unwanted traffic before it reaches your network.
 
-Cloudflare Network Firewall uses Wireshark syntax, a domain-specific language (DSL) common in the networking world and the same syntax used across our other products. With this syntax, you can easily craft powerful rules to precisely allow or deny any traffic in or out of your network.
+Cloudflare Network Firewall uses Wireshark display filter syntax — a rule language originally from the popular network analysis tool [Wireshark](https://www.wireshark.org/), widely used in networking and the same syntax used across other Cloudflare products. With this syntax, you can craft rules to precisely allow or deny any traffic in or out of your network.
 
 Cloudflare Network Firewall is available with the purchase of [Magic Transit](/magic-transit/) or [Cloudflare WAN](/cloudflare-wan/).
 
@@ -37,7 +37,11 @@ Cloudflare Network Firewall is available with the purchase of [Magic Transit](/m
 	header="Intrusion Detection System (IDS)"
 	href="/cloudflare-one/traffic-policies/ids/"
 >
-	Actively monitor for a wide range of known threat signatures in your traffic.
+
+    Actively monitor for a wide range of known threat signatures in your
+    traffic. IDS scans packets for patterns that match known attacks (such as malware
+    signatures or exploit attempts) and alerts you when it finds a match.
+
 </Feature>
 
 ---

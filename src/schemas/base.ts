@@ -135,4 +135,10 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"Whether to show the FeedbackPrompt on the page, defaults to true",
 			),
+		canonical: z
+			.string()
+			.optional()
+			.describe(
+				'A canonical URL or path to set as the `<link rel="canonical">` in the page `<head>`, overriding the default derived from the page URL.',
+			),
 	});

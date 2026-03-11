@@ -18,7 +18,13 @@ If your device does not support [certificate installation via WARP](/cloudflare-
 
 Zero Trust will only inspect traffic using installed certificates set to [**Available** and **In-Use**](/cloudflare-one/team-and-resources/devices/user-side-certificates/#activate-a-root-certificate).
 
-## Download a Cloudflare root certificate
+To install a certificate manually, you must:
+
+1. Download a Cloudflare certificate and verify it.
+2. Install the certificate in your operating system's certificate store.
+3. If a target application does not accept certificates from the operating system, you must install the certificate in the application's certificate store.
+
+## 1. Download a Cloudflare root certificate
 
 :::note[Download limitation]
 You can only download Cloudflare-generated certificates from the Cloudflare One dashboard or with WARP.
@@ -34,11 +40,11 @@ First, [generate](/cloudflare-one/team-and-resources/devices/user-side-certifica
 
 Alternatively, you can download and install a certificate [using WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#install-a-certificate-using-warp). WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem`.
 
-### Verify the downloaded certificate
+## 2. Verify the downloaded certificate
 
 To verify your download, use a terminal to check that the downloaded certificate's hash matches the thumbprint listed under **Certificate thumbprint**. For example:
 
-#### SHA1
+### SHA1
 
 ```sh title="SHA1 .crt example"
 openssl x509 -noout -fingerprint -sha1 -inform der -in <certificate.crt>
@@ -56,7 +62,7 @@ openssl x509 -noout -fingerprint -sha1 -inform pem -in <certificate.pem>
 SHA1 Fingerprint=BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
 ```
 
-#### SHA256
+### SHA256
 
 ```sh title="SHA256 .crt example"
 openssl x509 -noout -fingerprint -sha256 -inform der -in <certificate.crt>
@@ -74,7 +80,7 @@ openssl x509 -noout -fingerprint -sha256 -inform pem -in <certificate.pem>
 sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
 ```
 
-### Convert the certificate
+## 3. (Optional) Convert the certificate
 
 Some applications require a certificate formatted in the `.cer` file type. You can convert your downloaded certificate using [OpenSSL](https://www.openssl.org/):
 
@@ -102,7 +108,11 @@ Some applications require a certificate formatted in the `.cer` file type. You c
 </TabItem>
 </Tabs>
 
-## Add the certificate to operating systems
+## 4. Add the certificate to operating systems
+
+If you are deploying the Cloudflare certificate to desktop devices, use the [Install certificate using WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) method.
+
+Mobile devices require manual installations detailed in the instructions below.
 
 ### macOS
 
@@ -303,14 +313,20 @@ ChromeOS devices use different methods to store and deploy root certificates. Ce
 
 After adding the Cloudflare certificate to ChromeOS, you may also have to [install the certificate in your browser](#browsers).
 
-## Add the certificate to applications
+## 5. Add the certificate to applications
 
-Some packages, development tools, and other applications provide options to trust root certificates that will allow for the traffic inspection features of Gateway to work without breaking the application.
+Some applications do not use the system certificate store and therefore require the certificate to be added to the application directly. For certain applications like the ones below, you will need to follow the steps in this section and add the Cloudflare certificate to the application for TLS decryption to function properly.
 
-All of the applications below first require downloading a Cloudflare certificate with the instructions above. On macOS, the default path to the system keychain database file is `/Library/Keychains/System.keychain`. On Windows, the default path is `\Cert:\CurrentUser\Root`.
+If you do not update the application to trust the Cloudflare certificate, the application will refuse to connect and you will receive an untrusted certificate error.
+
+All of the applications below first require downloading a Cloudflare certificate with [the instructions above](#download-the-cloudflare-root-certificate). On macOS, the default path to the system keychain database file is `/Library/Keychains/System.keychain`. On Windows, the default path is `\Cert:\CurrentUser\Root`.
 
 :::note
 Some applications require the use of a publicly trusted certificate — they do not trust the system certificate, nor do they have a configurable private store. For these applications to function, you must add a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) for the domains or IPs that the application relies on.
+:::
+
+:::caution
+Even if you deployed WARP through the [Install certificate using WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) method, you may still need to add the Cloudflare certificate to certain applications. The Install certificate using WARP method only installs the Cloudflare certificate to the operating system certificate store.
 :::
 
 ### Browsers

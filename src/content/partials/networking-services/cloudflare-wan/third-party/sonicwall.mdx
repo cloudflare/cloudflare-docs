@@ -32,7 +32,7 @@ The following instructions show how to set up an IPsec connection on your SonicW
 
    - **Interface address**: Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is `10.200.1.0/31`.
    - **Customer endpoint**: Enter the WAN IP address of your SonicWall device. In our example, this is `198.51.100.2`.
-   - **Cloudflare endpoint**: Enter the IP address provided by Cloudflare. In our example, this is `1.2.3.4`.
+   - **Cloudflare endpoint**: Enter one of the Cloudflare anycast IP addresses assigned to your account, available in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space). In our example, this is `1.2.3.4`.
    - **Pre-shared key**: Select **Use my own pre-shared key** and paste a secure key of your own.
 
 2. Select **Add tunnels** when you are finished.
@@ -40,7 +40,7 @@ The following instructions show how to set up an IPsec connection on your SonicW
 3. After you create your tunnel, Cloudflare dashboard will load a list of tunnels set up for your account. Select the arrow to expand the tunnels you have just created, and check the following settings:
 
    - **Customer endpoint**: Refers to the SonicWall WAN IP that the VPN policy is bound to (in red).
-   - **Cloudflare endpoint**: Refers to the anycast IP provided by Cloudflare (in blue).
+   - **Cloudflare endpoint**: Refers to the Cloudflare anycast IP address (in blue).
    - **FQDN ID**: The ID used in the VPN policy for the SonicWall's Local IKE ID. Copy this ID and save it. You will need it when configuring the tunnel on your SonicWall (in green).
 
    ![An example of what your IPsec tunnel should look like](~/assets/images/cloudflare-wan/third-party/sonicwall/step3.png)

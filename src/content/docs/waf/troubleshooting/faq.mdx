@@ -30,6 +30,7 @@ If you are using a regular expression, it is recommended that you test it with a
 
 If you have [SSL/TLS certificates](/ssl/) managed by Cloudflare, every time a certificate is issued or renewed, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) must happen. When a certificate is in `pending_validation` state and there are valid DCV tokens in place, some Cloudflare security features such as [custom rules](/waf/custom-rules/) and [Managed Rules](/waf/managed-rules/) will be automatically disabled on specific DCV paths (for example, `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`).
 
+These automatic bypasses do not appear in [Trace](/rules/trace-request/) results.
 ### Why have I been blocked?
 
 Cloudflare may block requests when it detects activity that could be unsafe. Common reasons include:

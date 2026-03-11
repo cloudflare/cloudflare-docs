@@ -1,6 +1,10 @@
+.sidebar-pane {
+	scrollbar-gutter: stable;
+}
+
 .sidebar-content {
-	gap: 0.5rem;
-	padding: 1rem 1.5rem;
+	gap: 0;
+	padding: 0 1.5rem 1rem;
 
 	.large {
 		font-weight: unset;

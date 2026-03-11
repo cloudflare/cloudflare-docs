@@ -233,6 +233,18 @@ head.push({
 	},
 });
 
+if (frontmatter.canonical) {
+	const canonicalHref = new URL(frontmatter.canonical, Astro.site).toString();
+	const canonicalIdx = head.findIndex(
+		({ tag, attrs }) => tag === "link" && attrs?.rel === "canonical",
+	);
+	if (canonicalIdx !== -1) {
+		head[canonicalIdx].attrs!.href = canonicalHref;
+	} else {
+		head.push({ tag: "link", attrs: { rel: "canonical", href: canonicalHref } });
+	}
+}
+
 metaTags.map((attrs) => {
 	head.push({
 		tag: "meta",

@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Virtual networks
+tags:
+  - Private networks
 sidebar:
   order: 5
 ---
@@ -270,9 +272,22 @@ In this example, "private network" refers to a distinct environment (such as sta
 
 ### Windows, macOS, and Linux
 
+<Tabs>
+<TabItem label="Version 2026.2+">
+
+1. Open the Cloudflare One client.
+2. Go to **Home**.
+3. In the **VNET** dropdown, choose the virtual network you want to connect to (for example, `staging-vnet`).
+
+</TabItem>
+<TabItem label="Version 2026.1 and earlier">
+
 1. Open the WARP client.
 2. Go to **Settings** > **Traffic and DNS mode** > **Virtual Networks**.
 3. Choose the virtual network you want to connect to, for example `staging-vnet`.
+
+</TabItem>
+</Tabs>
 
 When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.
 

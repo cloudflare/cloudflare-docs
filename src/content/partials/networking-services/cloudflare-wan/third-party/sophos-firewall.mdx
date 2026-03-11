@@ -59,7 +59,7 @@ The next step involves configuring a site-to-site IPsec VPN connection on your S
 4. In the **Encryption** group, make sure you have the following settings:
    - **Authentication type**: **Preshared key**
 5. In **Gateway settings**, make sure you have the following settings:
-   - **Gateway address**: Enter your Cloudflare anycast IP address provided by Cloudflare.
+   - **Gateway address**: Enter one of the Cloudflare anycast IP addresses assigned to your account, available in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
    - **Local ID type**: Add the <a href={props.ikeIdUrl}>IKE ID</a> provided by Cloudflare.
 
 ![Configure an IPsec tunnel.](~/assets/images/cloudflare-wan/third-party/sophos-firewall/2-ipsec-tunnel.png)

@@ -8,6 +8,10 @@ sidebar:
 
 You can scan HTTP traffic for sensitive data through Secure Web Gateway policies. To perform DLP filtering, first configure a DLP profile with the data patterns you want to detect, and then build a Gateway HTTP policy to allow or block the sensitive data from leaving your organization. Gateway will parse and scan your HTTP traffic for strings matching the keywords or regular expressions (regexes) specified in the DLP profile.
 
+:::note
+To scan AI prompts and responses without Gateway HTTP filtering, you can also enable DLP directly on an [AI Gateway](/ai-gateway/features/dlp/).
+:::
+
 ## Prerequisites
 
 - Set up [Gateway HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/).

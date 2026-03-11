@@ -372,7 +372,7 @@ If either protocol succeeds, `cloudflared` can use that protocol to establish th
 
 You have already confirmed DNS is working in the previous steps. These connectivity tests now verify whether your environment allows traffic to Cloudflare on port `7844`. By default, `cloudflared` automatically falls back to whichever protocol is available.
 
-If a [protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol) is blocked but you force `cloudflared` to use it (for example, forcing QUIC when UDP is blocked), the tunnel will fail to connect.
+If a [protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#protocol) is blocked but you force `cloudflared` to use it (for example, forcing QUIC when UDP is blocked), the tunnel will fail to connect.
 
 #### Both UDP and TCP succeed
 
@@ -384,7 +384,7 @@ Outbound UDP is allowed, but TCP on port `7844` is blocked or inspected.
 
 `cloudflared` will only be able to connect using `quic`. If you force `http2` in your configuration while TCP is blocked, the tunnel will fail.
 
-To resolve: Either allow TCP on your local network firewall on port `7844` or stop forcing `http2` to allow `cloudflared` to connect over `QUIC` instead. Refer to the [Protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol) parameter documentation for more information.
+To resolve: Either allow TCP on your local network firewall on port `7844` or stop forcing `http2` to allow `cloudflared` to connect over `QUIC` instead. Refer to the [Protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#protocol) parameter documentation for more information.
 
 #### TCP succeeds, UDP fails
 
@@ -392,7 +392,7 @@ Outbound TCP is allowed, but UDP on port `7844` is blocked.
 
 `cloudflared` will only be able to connect using `http2`. If you force `quic` while UDP is blocked, the tunnel will fail.
 
-To resolve: Either allow UDP on the local network firewall on port `7844` or stop forcing QUIC to allow `cloudflared` to connect over HTTP/2 instead. Refer to the [Protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol) parameter documentation for more information.
+To resolve: Either allow UDP on the local network firewall on port `7844` or stop forcing QUIC to allow `cloudflared` to connect over HTTP/2 instead. Refer to the [Protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#protocol) parameter documentation for more information.
 
 #### Both UDP and TCP fail
 

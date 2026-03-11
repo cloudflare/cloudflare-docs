@@ -5,7 +5,15 @@ sidebar:
   order: 0
 ---
 
-import { MetaInfo, Render, Steps, Stream, Tabs, TabItem, Type } from "~/components";
+import {
+	MetaInfo,
+	Render,
+	Steps,
+	Stream,
+	Tabs,
+	TabItem,
+	Type,
+} from "~/components";
 
 This guide helps you diagnose and resolve common issues with the Cloudflare WARP client. It covers how to troubleshoot the WARP client on desktop operating systems, including Windows, macOS, and Linux.
 
@@ -20,7 +28,6 @@ This guide helps you diagnose and resolve common issues with the Cloudflare WARP
 Cloudflare One includes two free AI helpers to speed up WARP investigations:
 
 [**WARP Diagnostics Analyzer**](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#warp-diagnostics-analyzer-beta) - Uses AI to parse a device's WARP diagnostic log and summarizes key events, likely causes, and recommended next steps in a concise summary. This analyzer is available for logs collected via the dashboard.
-
 
 [**DEX MCP server**](/cloudflare-one/insights/dex/dex-mcp-server/) — An AI tool that allows customers to ask a question like, "Show me the connectivity and performance metrics for the device used by carly@acme.com", and receive an answer that contains data from the DEX API.
 
@@ -42,10 +49,22 @@ After updating the WARP client, monitor the issue to see if it recurs. If the is
 
 #### Via the device
 
+<Tabs>
+<TabItem label="Version 2026.2+">
+
+1. Open the Cloudflare One client on your desktop.
+2. Select **About**.
+4. Compare your device's version with the [latest version](/cloudflare-one/team-and-resources/devices/warp/download-warp/).
+</TabItem>
+<TabItem label="Version 2026.1 and earlier">
+
 1. Open the WARP GUI on the desktop.
 2. Select the gear icon.
 3. Select **About WARP**.
 4. Compare your device's version with the [latest version of WARP](/cloudflare-one/team-and-resources/devices/warp/download-warp/).
+
+</TabItem>
+</Tabs>
 
 #### Via the Cloudflare One dashboard
 
@@ -449,9 +468,25 @@ This can be done by instructing the end user to [toggle WARP off and on](#option
 
 Both methods update the client with the latest configuration.
 
-##### Option A: Toggle WARP off and back on
+##### Option A: Disconnect and reconnect the client
 
-On the end user device, open the WARP GUI and toggle WARP on and off.
+<Tabs>
+<TabItem label="Version 2026.2+">
+
+1. On the end user device, open the Cloudflare One client and select **Disconnect**.
+
+:::note[What if the end user cannot disconnect?]
+If the end user does not see the [disconnect button](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#lock-warp-switch), they will need to enter an [admin override code](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-admin-override-codes).
+
+[Resetting the encryption keys](#option-b-reset-the-encryption-keys) may be a faster solution.
+:::
+
+2. Select **Connect**.
+
+</TabItem>
+<TabItem label="Version 2026.1 and earlier">
+
+1. On the end user device, open the WARP GUI and toggle WARP off.
 
 :::note[What if the end user cannot turn off WARP?]
 If the end user's [WARP switch](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#lock-warp-switch) is locked, they will need an [admin override code](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-admin-override-codes) to be able to toggle the WARP switch.
@@ -459,17 +494,20 @@ If the end user's [WARP switch](/cloudflare-one/team-and-resources/devices/warp/
 [Resetting the encryption keys](#option-b-reset-the-encryption-keys) may be a faster solution.
 :::
 
-After you toggle WARP back on, the WARP client will fetch new settings when it reconnects.
+2. Toggle WARP back on.
+
+</TabItem>
+</Tabs>
+
+The client will fetch new settings when it reconnects.
 
 ##### Option B: Reset the encryption keys
 
 To reset the encryption keys on an end user's desktop:
 
-1. Open the WARP GUI.
-2. Select the gear icon.
-3. Select **Preferences** > **Connection** > **Reset encryption keys**.
 
-Resetting the encryption keys forces the WARP client to reestablish its tunnel and retrieve the latest configuration.
+
+<Render file="warp/reset-encryption-keys" product="cloudflare-one" />
 
 ## 5. Get help
 

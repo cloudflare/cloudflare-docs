@@ -1,0 +1,33 @@
+---
+title: System requirements
+pcx_content_type: reference
+sidebar:
+  order: 3
+---
+
+import { Render, TunnelCalculator } from "~/components";
+
+`cloudflared` is lightweight enough to run on a Raspberry Pi or a data center server. Tunnel throughput is primarily limited by the number of ports configured in system software, not hardware.
+
+## Baseline recommendations
+
+Run a `cloudflared` [replica](/tunnel/configuration/#replicas-and-high-availability) on two dedicated hosts per location with a minimum of 4 GB RAM and 4 CPU cores. Allocate 50,000 ports per host.
+
+## Port configuration
+<Render file="tunnel/availability/port-configuration" product="cloudflare-one" />
+
+## ulimits (Linux and macOS)
+
+<Render file="tunnel/availability/ulimits" product="cloudflare-one" />
+
+## Capacity calculator
+
+To estimate tunnel capacity requirements for your deployment:
+1. Use the [metrics endpoint](/tunnel/monitoring/#cloudflared-metrics) to measure `cloudflared_tcp_total_sessions` and `cloudflared_udp_total_sessions`.
+2. Compute the average **TCP requests per second** by dividing `cloudflared_tcp_total_sessions` by total time.
+3. Compute the average **Non-DNS UDP requests per second** by dividing `cloudflared_udp_total_sessions` by total time.
+4. Input **TCP requests per second** and **Non-DNS UDP requests per second** into the calculator below. (You can leave **Private DNS requests per second** as `0` unless you are using the tunnel for [private network access](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/).)
+
+<TunnelCalculator />
+
+To increase tunnel capacity, add identical hosts running `cloudflared` replicas.

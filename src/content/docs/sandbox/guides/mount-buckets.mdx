@@ -6,16 +6,12 @@ sidebar:
 description: Mount S3-compatible object storage as local filesystems for persistent data storage.
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Mount S3-compatible object storage buckets as local filesystem paths. Access object storage using standard file operations.
 
 :::note[S3-compatible providers]
 The SDK works with any S3-compatible object storage provider. Examples include Cloudflare R2, Amazon S3, Google Cloud Storage, Backblaze B2, MinIO, and [many others](https://github.com/s3fs-fuse/s3fs-fuse/wiki/Non-Amazon-S3). The SDK automatically detects and optimizes for R2, S3, and GCS.
-:::
-
-:::caution[Production only]
-Bucket mounting does not work with `wrangler dev` because it requires FUSE support that wrangler does not currently provide. Deploy your Worker with `wrangler deploy` to use this feature. All other Sandbox SDK features work in local development.
 :::
 
 ## When to mount buckets
@@ -149,6 +145,86 @@ await sandbox.exec('cat', { args: ['/data/dataset.csv'] });
 await sandbox.writeFile('/data/new-file.txt', 'data');  // Error: Read-only filesystem
 ```
 </TypeScriptExample>
+
+## Local development
+
+You can mount R2 buckets during local development with `wrangler dev` by passing the `localBucket` option. This uses the R2 binding from your Worker environment directly, so no S3-compatible endpoint or credentials are required.
+
+### Configure R2 bindings
+
+Add an R2 bucket binding to your Wrangler configuration:
+
+<WranglerConfig>
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "my-test-bucket"
+		}
+	]
+}
+```
+</WranglerConfig>
+
+### Mount with `localBucket`
+
+Pass `localBucket: true` in the options to mount the bucket locally:
+
+<TypeScriptExample>
+```typescript
+await sandbox.mountBucket('MY_BUCKET', '/data', {
+	localBucket: true
+});
+
+// Access files using standard operations
+await sandbox.exec('ls', { args: ['/data'] });
+await sandbox.writeFile('/data/results.json', JSON.stringify(results));
+```
+</TypeScriptExample>
+
+:::note
+You can use an environment variable to toggle `localBucket` between local development and production. Set an environment variable such as `LOCAL_DEV` in your Wrangler configuration using `vars` for local development, then reference it in your code:
+
+```typescript
+await sandbox.mountBucket('MY_BUCKET', '/data', {
+	localBucket: Boolean(env.LOCAL_DEV),
+	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
+});
+```
+
+When `localBucket` is `true`, the `endpoint` is ignored and the SDK uses the R2 binding directly. For more information on setting environment variables, refer to [Environment variables in Wrangler configuration](/workers/configuration/environment-variables/).
+:::
+
+The `readOnly` and `prefix` options work the same way in local mode:
+
+<TypeScriptExample>
+```typescript
+// Read-only local mount
+await sandbox.mountBucket('MY_BUCKET', '/data', {
+	localBucket: true,
+	readOnly: true
+});
+
+// Mount a subdirectory
+await sandbox.mountBucket('MY_BUCKET', '/images', {
+	localBucket: true,
+	prefix: '/uploads/images/'
+});
+```
+</TypeScriptExample>
+
+### Local development considerations
+
+During local development, files are synchronized between R2 and the container using a periodic sync process rather than a direct filesystem mount. Keep the following in mind:
+
+- **Synchronization window** - A brief delay exists between when a file is written and when it appears on the other side. For example, if you upload a file to R2 and then immediately read it from the mounted path in the container, the file may not yet be available. Allow a short window for synchronization to complete before reading recently written data.
+- **High-frequency writes** - Rapid successive writes to the same file path may take slightly longer to fully propagate. For best results, avoid writing to the same file from both R2 and the container at the same time.
+- **Bidirectional sync** - Changes made in the container are synced to R2, and changes made in R2 are synced to the container. Both directions follow the same periodic sync model.
+
+:::note
+These considerations apply to local development with `wrangler dev` only. In production, bucket mounts use a direct filesystem mount with no synchronization delay.
+:::
 
 ## Unmount buckets
 

@@ -1246,7 +1246,7 @@ entries:
     description: |-
       When a prompt is not present, the other LLM-related fields will have default values.
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
 
   - name: cf.llm.prompt.pii_detected
     data_type: Boolean
@@ -1257,7 +1257,7 @@ entries:
     description: |-
       Equivalent to checking if the [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) field is not empty.
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
 
   - name: cf.llm.prompt.pii_categories
     data_type: Array<String>
@@ -1310,9 +1310,9 @@ entries:
       `IN_PASSPORT`               | Indian Passport Number
       `FI_PERSONAL_IDENTITY_CODE` | Finnish Personal Identity Code
 
-      The categories list is based on the [list of PII entities supported by Presidio](https://microsoft.github.io/presidio/supported_entities/). Presidio is the data protection and de-identification SDK used in Firewall for AI.
+      The categories list is based on the [list of PII entities supported by Presidio](https://microsoft.github.io/presidio/supported_entities/). Presidio is the data protection and de-identification SDK used in AI Security for Apps.
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
     example_block: |-
       # Matches requests where PII categorized as "EMAIL_ADDRESS" or "IBAN_CODE" was detected:
       (cf.llm.prompt.pii_detected and any(cf.llm.prompt.pii_categories[*] in {"EMAIL_ADDRESS" "IBAN_CODE"}))
@@ -1326,7 +1326,7 @@ entries:
     description: |-
       Equivalent to checking if the [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) field is not empty.
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
 
   - name: cf.llm.prompt.unsafe_topic_categories
     data_type: Array<String>
@@ -1339,23 +1339,24 @@ entries:
 
       | Value | Category name             | Description                                                                                                       |
       | ----- | ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-      | `S1`  | Violent Crimes            | Violent crimes against people or animals.                                                                         |
-      | `S2`  | Non-Violent Crimes        | Non-violent offenses such as fraud, theft, drug creation, or hacking.                                             |
-      | `S3`  | Sex-Related Crimes        | Sex-related crimes, including trafficking, assault, and harassment.                                               |
-      | `S4`  | Child Sexual Exploitation | Sexual exploitation of children.                                                                                  |
+      | `S1`  | Violent crimes            | Violent crimes against people or animals.                                                                         |
+      | `S2`  | Non-violent crimes        | Non-violent offenses such as fraud, theft, drug creation, or hacking.                                             |
+      | `S3`  | Sex-related crimes        | Sex-related crimes, including trafficking, assault, and harassment.                                               |
+      | `S4`  | Child sexual exploitation | Sexual exploitation of children.                                                                                  |
       | `S5`  | Defamation                | False statements that are likely to damage a living person's reputation.                                          |
-      | `S6`  | Specialized Advice        | Specialized financial, medical, or legal advice, or misrepresent dangerous things as safe.                        |
+      | `S6`  | Specialized advice        | Specialized financial, medical, or legal advice, or misrepresent dangerous things as safe.                        |
       | `S7`  | Privacy                   | Sensitive, nonpublic personal information that could endanger an individual.                                      |
-      | `S8`  | Intellectual Property     | Violate a third party's intellectual property rights.                                                             |
-      | `S9`  | Indiscriminate Weapons    | Creation of indiscriminate weapons like chemical, biological, or nuclear arms.                                    |
+      | `S8`  | Intellectual property     | Violate a third party's intellectual property rights.                                                             |
+      | `S9`  | Indiscriminate weapons    | Creation of indiscriminate weapons like chemical, biological, or nuclear arms.                                    |
       | `S10` | Hate                      | Demean or dehumanize people based on their race, religion, sexual orientation, or other personal characteristics. |
-      | `S11` | Suicide & Self-Harm       | Encourage or endorse suicide, self-injury, or disordered eating.                                                  |
-      | `S12` | Sexual Content            | Erotic content.                                                                                                   |
+      | `S11` | Suicide and self-harm     | Encourage or endorse suicide, self-injury, or disordered eating.                                                  |
+      | `S12` | Sexual content            | Erotic content.                                                                                                   |
       | `S13` | Elections                 | False information about the time, place, or manner of voting in elections.                                        |
+      | `S14` | Code interpreter abuse    | Misuse of code execution capabilities.                                                                            |
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
     example_block: |-
-      # Matches requests where an unsafe topic categorized as "S2" (Non-Violent Crimes) or "S10" (Hate) was detected in the LLM prompt:
+      # Matches requests where an unsafe topic categorized as "S2" (Non-violent crimes) or "S10" (Hate) was detected in the LLM prompt:
       (cf.llm.prompt.unsafe_topic_detected and any(cf.llm.prompt.unsafe_topic_categories[*] in {"S2" "S10"}))
 
   - name: cf.llm.prompt.injection_score
@@ -1370,7 +1371,35 @@ entries:
 
       The special score `100` indicates that Cloudflare did not score the request.
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
+
+  - name: cf.llm.prompt.token_count
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: An estimated token count for the LLM prompt in the request.
+    description: |-
+      The count is calculated using a general-purpose tokenizer and may not exactly match the count reported by your LLM provider.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
+    example_block: |-
+      # Matches requests where the estimated token count exceeds 4,000:
+      (cf.llm.prompt.token_count gt 4000)
+
+  - name: cf.llm.prompt.custom_topic_categories
+    data_type: Map<Number>
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: A map of custom topic labels to relevance scores (1–99) for the LLM prompt in the request.
+    description: |-
+      Lower scores indicate the prompt is more relevant to that topic. Only populated when [custom topics](/waf/detections/ai-security-for-apps/unsafe-topics/#custom-topics) are configured.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
+    example_block: |-
+      # Matches requests where the prompt is highly relevant to the "competitors" custom topic:
+      (cf.llm.prompt.custom_topic_categories["competitors"] lt 30)
 
   - name: cf.worker.upstream_zone
     data_type: String

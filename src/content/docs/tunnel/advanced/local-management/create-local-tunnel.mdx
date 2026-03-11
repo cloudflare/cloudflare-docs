@@ -1,0 +1,30 @@
+---
+title: Create a locally-managed tunnel
+pcx_content_type: how-to
+sidebar:
+  order: 1
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="tunnel/locally-managed/create-local-tunnel"
+	product="cloudflare-one"
+	params={{
+		showPrivateNetworking: "false",
+		downloadsURL: "/tunnel/downloads/",
+		certPemURL: "/tunnel/advanced/local-management/local-tunnel-terms/#certpem",
+		defaultDirURL:
+			"/tunnel/advanced/local-management/local-tunnel-terms/#default-cloudflared-directory",
+		credentialsFileURL:
+			"/tunnel/advanced/local-management/local-tunnel-terms/#credentials-file",
+		configFileURL: "/tunnel/advanced/local-management/configuration-file/",
+		routingURL: "/tunnel/routing/",
+		privateNetURL: "",
+		asServiceURL: "/tunnel/advanced/local-management/as-a-service/",
+	}}
+/>
+
+:::note[Looking for private network routing?]
+For WARP-to-tunnel private network access, refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/#file-structure-for-private-networks).
+:::

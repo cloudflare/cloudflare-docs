@@ -69,9 +69,22 @@ The user will have an unlimited amount of time to activate their code.
 
 To activate the override code on a user device:
 
+<Tabs>
+<TabItem label="Version 2026.2+">
+
+1. Open the Cloudflare One client and go to **Settings**.
+2. In **Temporarily disconnect Cloudflare One Client**, select **Enter admin code**.
+3. Enter the override code and select **Disconnect**.
+
+</TabItem>
+<TabItem label="Version 2026.1 and earlier">
+
 1. In the WARP client, go to **Settings** > **Preferences** > **Advanced**.
 2. Select **Enter code**.
 3. Enter the override code.
+
+</TabItem>
+</Tabs>
 
 The user can now toggle the WARP switch or use the `warp-cli connect` command. The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn on or off WARP until the override expires.
 
@@ -362,9 +375,16 @@ To turn on local network access in the WARP client:
 
 <TabItem label="Windows and macOS">
 
-1. Select the Cloudflare logo in the menu bar.
+1. Open the Cloudflare One client and go to **Settings**.
+2. In **Temporarily access local network resources**, select **Access resources**.
+
+<Details header="Version 2026.1 and earlier">
+
+1. Open the WARP client.
 2. Select the gear icon.
 3. Select **Access Local Network**.
+
+</Details>
 
 </TabItem>
 
@@ -516,7 +536,7 @@ When the device is remote, the WARP interface description changes to `(SCCM) Clo
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2026.1.89.1         |
+| Windows  | ✅           | 2026.1.89.1          |
 | macOS    | ❌           |                      |
 | Linux    | ❌           |                      |
 | iOS      | ❌           |                      |

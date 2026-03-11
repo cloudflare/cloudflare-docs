@@ -1,0 +1,90 @@
+---
+pcx_content_type: reference
+title: Reserved IP addresses
+sidebar:
+  order: 2
+---
+
+import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
+
+Cloudflare reserves several IPv4 and IPv6 ranges for internal routing and service functionality. These ranges are drawn from the CGNAT address space (`100.64.0.0/10`). To avoid routing conflicts, your Cloudflare Tunnel, WARP Connector, or WAN routes should not include subsets of these reserved ranges. Broader routes that contain a reserved range, such as `0.0.0.0/0`, are unaffected because longest-prefix match ensures the reserved ranges still take priority.
+
+When planning your private network addressing and configuring [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) entries, use the tables below to identify which IP ranges Cloudflare has reserved and whether they can be reconfigured.
+
+## IPv4 ranges
+
+| Name                                                          | Default CIDR     | Configurable |
+| ------------------------------------------------------------- | ---------------- | ------------ |
+| [Cloudflare source IPs](#cloudflare-source-ips)               | `100.64.0.0/12`  | Yes          |
+| [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `100.80.0.0/16`  | No           |
+| [WARP device IPs](#warp-device-ips)                           | `100.96.0.0/12`  | Yes          |
+| [Private Load Balancer IPs](#private-load-balancer-ips)       | `100.112.0.0/16` | Yes          |
+
+## IPv6 ranges
+
+| Name                                                          | Default CIDR               | Configurable |
+| ------------------------------------------------------------- | -------------------------- | ------------ |
+| [WARP device IPs](#warp-device-ips)                           | `2606:4700:0cf1:1000::/64` | No           |
+| [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `2606:4700:0cf1:4000::/64` | No           |
+| [Cloudflare source IPs](#cloudflare-source-ips)               | `2606:4700:0cf1:5000::/64` | No           |
+
+## Cloudflare source IPs
+
+Cloudflare source IPs are the source addresses used when a Cloudflare service sends traffic to your private networks. This range applies to customers using [Unified Routing (beta)](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta). Examples of requests that are sourced from this range include:
+
+- [Load Balancing](/load-balancing/monitors/) — health check requests to private endpoints
+- [Gateway DNS resolver](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/) — DNS resolution for private hostnames
+- [Cloudflare Workers](/workers/) — requests from Workers to private origins
+
+The default IPv4 range is `100.64.0.0/12`. You can change this to a different `/12` CIDR to avoid conflicts with your existing IP address management plan. For more information on affected services and configuration instructions, refer to [Configure Cloudflare source IPs](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-cloudflare-source-ips/).
+
+## Gateway initial resolved IPs
+
+Gateway initial resolved IPs are ephemeral addresses used to map hostnames to destination IPs at the network layer, where hostname information is not usually available.
+
+The following features use this range:
+
+- [Private hostname routing](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) — routes traffic to private applications behind Cloudflare Tunnel using their hostnames.
+- [Public hostname routing](/cloudflare-one/traffic-policies/egress-policies/egress-cloudflared/) — egresses traffic through Cloudflare Tunnel to anchor source IPs for public destinations.
+- [Egress policy host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) — evaluates Gateway egress policies using hostname-based selectors.
+- [Access private applications](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) — manage access to private applications using their private hostnames.
+
+Initial resolved IPs are assigned from the `100.80.0.0/16` (IPv4) or `2606:4700:0cf1:4000::/64` (IPv6) range. This range is not configurable.
+
+## WARP device IPs
+
+WARP device IPs are virtual addresses assigned to each WARP device registration. These IPs identify and route traffic to specific devices for the following features:
+
+- [Peer-to-peer connectivity (WARP-to-WARP)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) — allows WARP devices to communicate directly with each other over Cloudflare's network.
+- [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) — routes traffic between your private network and WARP devices.
+- [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) — on-ramps traffic from WAN tunnels to WARP devices.
+
+The default IPv4 range is `100.96.0.0/12`. If this range conflicts with services on your private network, you can configure custom IPv4 subnets drawn from RFC 1918 or CGNAT address space. For configuration instructions, refer to [Device IPs](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/).
+
+## Private Load Balancer IPs
+
+Private Load Balancer IPs are virtual addresses allocated to [Private Network Load Balancers](/load-balancing/private-network/). Each private load balancer receives a `/32` address from the `100.112.0.0/16` range by default, which serves as the load balancer's virtual IP for traffic distribution to private endpoints. Alternatively, you can configure a custom [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) `/32` address for each load balancer.
+
+## WARP Split Tunnel configuration
+
+For deployments that use the [WARP client](/cloudflare-one/team-and-resources/devices/warp/), ensure that the [reserved IP ranges](#ipv4-ranges) required by your deployment route through [WARP Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to Cloudflare. Configuration depends on whether your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude IPs and domains** or **Include IPs and domains**.
+
+### Exclude mode (default)
+
+In **Exclude IPs and domains** mode, the CGNAT range (`100.64.0.0/10`) is excluded from WARP routing by default. You must delete the [reserved IP ranges](#ipv4-ranges) from your Split Tunnels exclude list, or the associated features will stop working.
+
+Cloudflare recommends adding back the IPs that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use CGNAT address space.
+
+You can use the calculator below to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if your deployment requires [Gateway initial resolved IPs](#gateway-initial-resolved-ips) (`100.80.0.0/16`) and [WARP device IPs](#warp-device-ips) (`100.96.0.0/12`), delete `100.64.0.0/10` from Split Tunnels and add back `100.64.0.0/12`, `100.81.0.0/16`, `100.82.0.0/15`, `100.84.0.0/14`, `100.88.0.0/13`, and `100.112.0.0/12`.
+
+<SubtractIPCalculator
+	client:load
+	defaults={{
+		base: "100.64.0.0/10",
+		subtract: ["100.80.0.0/16", "100.96.0.0/12"],
+	}}
+/>
+
+### Include mode
+
+In **Include IPs and domains** mode, only traffic for the included routes is sent to Cloudflare. You must explicitly add the reserved IP ranges that your deployment depends on. For example, if you use [hostname routing or egress policy host selectors](#gateway-initial-resolved-ips), add `100.80.0.0/16` to your Split Tunnels include list.
