@@ -4,7 +4,6 @@ pcx_content_type: reference
 reviewed: 2024-11-27
 sidebar:
   order: 8
-
 ---
 
 Workflows support local development using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. Wrangler runs an emulated version of Workflows compared to the one that Cloudflare runs globally.
@@ -56,4 +55,4 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/general/#
 
 Workflows are not supported as [remote bindings](/workers/development-testing/#remote-bindings) or when using `npx wrangler dev --remote`.
 
-Wrangler Workflows commands `npx wrangler workflow [cmd]` are not supported for local development, as they target production API. The methods to `pause()`, `resume()`, `terminate()`, and `restart()` are also not yet implemented in local development.
+Wrangler Workflows commands `npx wrangler workflow [cmd]` are not supported for local development, as they target production API.
