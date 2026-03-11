@@ -15,7 +15,7 @@ When using Cloudflare as a reverse proxy (orange-clouded) in front of F5 BIG-IP 
 
 F5 BIG-IP load balancers typically set a session cookie at the beginning of a TCP connection (if none exists) and then ignore all cookies from subsequent HTTP requests on the same TCP connection. This breaks session affinity because Cloudflare sends multiple HTTP sessions on the same TCP connection due to HTTP keep-alive.
 
-**Symptoms include:**
+Symptoms include:
 
 - Users being logged out or experiencing authentication flow issues.
 - Shopping carts showing empty at checkout.
