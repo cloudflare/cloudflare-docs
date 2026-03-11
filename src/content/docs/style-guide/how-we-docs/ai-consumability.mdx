@@ -19,11 +19,11 @@ The primary proposal in this space is [`llms.txt`](https://llmstxt.org/), offeri
 
 Every documentation page can be retrieved as Markdown using [Markdown for Agents](/fundamentals/reference/markdown-for-agents/), which converts HTML to Markdown at the Cloudflare network layer. You can request any page as Markdown in two ways:
 
-- Append `/index.md` to the URL — for example, [`/workers/get-started/guide/index.md`](/workers/get-started/guide/index.md)
+- Append `/index.md` to the URL — for example, [`/style-guide/index.md`](/style-guide/index.md)
 - Send a request with an `Accept: text/markdown` header:
 
   ```bash
-  curl "https://developers.cloudflare.com/workers/get-started/guide/" \
+  curl "https://developers.cloudflare.com/style-guide/" \
     --header "Accept: text/markdown"
   ```
 
