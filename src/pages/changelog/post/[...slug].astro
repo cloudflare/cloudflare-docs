@@ -30,7 +30,8 @@ const props = {
 		noindex: note.data.hidden,
 		chatbot_deprioritize: true,
 		pcx_content_type: "changelog-entry",
-		products: note.data.products.map((a: { id: string }) => a.id),
+		// The type system expects strings but runtime needs references
+		products: note.data.products as any,
 		lastUpdated: note.data.date,
 	},
 	headings,
