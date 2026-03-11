@@ -24,13 +24,13 @@ Active DNSSEC at your current registrar will block the transfer. Disable DNSSEC 
 
 ## Authorization code is invalid or expired
 
-Authorization codes typically expire within 5-14 days depending on your registrar. If your code is rejected, request a fresh one from your current registrar. Check for trailing spaces or line breaks when copy-pasting the code. Some registrars issue a new code each time one is requested, which invalidates the previous code.
+Authorization codes are usually only valid for a limited period. If your code is rejected, request a fresh one from your current registrar. Check for trailing spaces or line breaks when copy-pasting the code.
 
 ## Cannot find where to enter your authorization code
 
 Unlike some registrars, Cloudflare does not allow you to submit an authorization code upfront. Cloudflare requires your domain to be active on its network first so that your site benefits from Cloudflare performance and security features from the moment the transfer begins. You must first [add your domain](/fundamentals/manage-domains/add-site/) to Cloudflare, [update your nameservers](/dns/nameservers/update-nameservers/), and wait for the zone to show **Active** status in the Cloudflare dashboard. Only then will the [Transfer Domains](https://dash.cloudflare.com/?to=/:account/registrar/transfer) page allow you to enter your code.
 
-If your zone is still **Pending**, verify that you updated nameservers correctly at your current registrar and wait up to 24 hours. If you already have an authorization code, keep in mind that most codes expire within 5-14 days depending on the registrar. If your code expires while you wait for the zone to activate, request a new one from your current registrar before proceeding.
+If your zone is still **Pending**, verify that you updated nameservers correctly at your current registrar and wait up to 24 hours. If you already have an authorization code, keep in mind that most codes are only valid for a limited period. If your code expires while you wait for the zone to activate, request a new one from your current registrar before proceeding.
 
 ## Transfer rejected
 
@@ -39,6 +39,7 @@ Your transfer has been rejected by your previous registrar. There are several re
 - You actively rejected the transfer request in the email you received from your registrar or on your registrar interface.
 - Your registrar determined the domain is not eligible for transfer.
 - Some registrars allow customers to enable a setting to reject all transfer requests.
+- If you are transferring from GoDaddy, domain forwarding may still be active. GoDaddy will reject the transfer until it is disabled.
 - In some instances, registrars may reject the transfer if they suspect malicious behavior.
 
 You will need to restart the transfer and approve the request or contact your current registrar to resolve this issue.
