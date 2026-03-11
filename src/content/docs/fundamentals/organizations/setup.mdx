@@ -15,7 +15,9 @@ Before you create an organization:
 - You must have [two-factor authentication (2FA)](/fundamentals/setup/account/account-security/2fa/) or [single sign-on (SSO)](/cloudflare-one/applications/configure-apps/dash-sso-apps/) enabled.
 - You must be a Super Administrator on the accounts you want to assign.
 
+:::note
 All organization members must have 2FA or SSO enabled.
+:::
 
 ## Create an organization
 
@@ -32,7 +34,7 @@ The organization overview page displays after creation.
 After creating an organization, you can assign accounts to manage them centrally.
 
 1. From the organization overview, select **Assign an account**.
-2. Search for the account name. Only Enterprise accounts where you are a Super Administrator will appear.
+2. Search for an account name. Only Enterprise accounts where you are a Super Administrator will appear.
 3. Select the account.
 4. Select **Assign to organization**.
 
@@ -44,7 +46,7 @@ To remove an account from your organization, contact [Cloudflare Support](/suppo
 
 When you create an organization, you become the Organization Super Administrator. This role provides implicit access to all accounts in your organization.
 
-Implicit access means you do not need explicit membership on each account. When you access any account in your organization, you automatically have Super Administrator permissions.
+Implicit access means you do not need explicit membership on each account. When you access any account within your organization, you automatically have Super Administrator permissions.
 
 ### Invite members
 
@@ -87,4 +89,4 @@ The data includes traffic for proxied hostnames and may be based on a sample. Th
 
 ## Terraform
 
-You can manage Organizations using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+You can manage Organizations using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/organization).
