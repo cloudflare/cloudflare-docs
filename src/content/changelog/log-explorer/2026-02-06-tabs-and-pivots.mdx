@@ -1,0 +1,42 @@
+---
+title: Multitask in Log Explorer with Tabs and Pivots
+description: Investigate malicious activity across multiple datasets simultaneously by pivoting between concurrent search tabs and filtering results.
+date: 2026-02-06
+---
+
+# Multitask in Log Explorer with Tabs and Pivots
+
+Cloudflare is introducing **Tabs and Pivots** in Log Explorer, a significant workflow enhancement for security analysts and developers. Previously, investigating an incident often required a linear approach—running one query at a time and losing context when switching between different datasets.
+
+With this update, you can now manage multiple concurrent investigations within the same view. This feature allows you to maintain the state of various searches, compare findings across different logs (such as WAF, Workers, or DNS), and pivot into deeper analysis without losing your initial progress. If you navigate away from Log Explorer and return, your active tabs and their respective query states are preserved.
+
+### How it works
+
+* **Concurrent Searches:** Open multiple tabs to query different datasets side-by-side.
+* **Filtering:** Click the filter button directly from query results to append that value as a filter to your current query.
+* **Seamless Pivoting:** Use **Cmd + click** (or **Ctrl + click**) on the filter button to automatically open a new tab with that specific filter applied, keeping your original search intact.
+
+
+
+### Example: Pivoting on a suspicious IP
+
+Imagine you find a suspicious IP address in your HTTP requests. Instead of overwriting your broad search, you can pivot to see all activity from that specific IP in a new tab:
+
+1.  Locate the IP address in your current results.
+2.  **Cmd + click** the filter icon next to the IP field.
+3.  A new tab opens specifically filtered for `ClientIP == "1.2.3.4"`.
+
+```sql
+-- Example of a pivot-generated query in a new tab
+SELECT
+    Timestamp,
+    ClientRequestHost,
+    ClientRequestPath,
+    ClientIP
+FROM
+    http_requests
+WHERE
+    ClientIP = '1.2.3.4'
+ORDER BY
+    Timestamp DESC
+LIMIT 100
