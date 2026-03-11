@@ -146,7 +146,7 @@
 		"wrangler": "4.58.0"
 	},
 	"engines": {
-		"npm": "10.9.4",
+		"npm": "10.x",
 		"node": "22.x"
 	},
 	"packageManager": "npm@10.9.4+sha512.3a7506f37e85c1ba1021baad79f0cd9724748131f321fc117c4dc3ba235ec01be7327584a41d15117c01945560aa9373220628fcc1e1dddd877a5fe9b336a900"
