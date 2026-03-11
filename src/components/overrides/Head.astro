@@ -41,18 +41,12 @@ if (currentSection) {
 			: undefined;
 	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
 	if (currentSection === "changelog") {
-		const products = frontmatter.products;
-		if (products && products.length > 0) {
-			const primaryProduct = products[0];
-			const entryId =
-				typeof primaryProduct === "string" ? primaryProduct : primaryProduct.id;
-			// TODO: remove when tests pass
-			console.log("Looking up directory entry for changelog.", {
-				entryId,
-				primaryProduct,
-				products,
-			});
-			product = await getEntry("directory", entryId);
+		const originalEntry = Astro.locals.starlightRoute.originalEntry as
+			| CollectionEntry<"changelog">
+			| undefined;
+		if (originalEntry && originalEntry.data.products.length > 0) {
+			const primaryProductRef = originalEntry.data.products[0];
+			product = await getEntry("directory", primaryProductRef.id);
 		}
 	}
 
