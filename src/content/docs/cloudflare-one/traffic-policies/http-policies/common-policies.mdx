@@ -10,7 +10,7 @@ head:
 
 import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
-The following policies are commonly used to secure HTTP traffic.
+The following policies are commonly used to secure HTTP traffic. HTTP policies are evaluated in order from top to bottom, and the first matching policy applies — except for [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies, which are always evaluated first.
 
 For a baseline set of recommended policies, refer to [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/build-http-policies/recommended-http-policies/).
 
@@ -33,6 +33,8 @@ Block all subdomains that use a host.
 </TabItem>
 
 <TabItem label="API">
+
+In the following API examples, `filters: ["http"]` indicates that this is an HTTP (Layer 7) policy.
 
 <APIRequest
 	path="/accounts/{account_id}/gateway/rules"
@@ -135,9 +137,9 @@ Block content categories which go against your organization's acceptable use pol
 
 ## Skip inspection for groups of applications
 
-Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
+Certain client applications, such as Zoom or Apple services, rely on certificate pinning. These applications verify they are connecting directly to their own servers and will reject Gateway's TLS inspection certificate. To avoid connection errors, you must add a Do Not Inspect HTTP policy for these applications.
 
-Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/traffic-policies/order-of-enforcement/#http-policies). We recommend moving your Do Not Inspect policies to the top of the list to reduce confusion.
+Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/traffic-policies/order-of-enforcement/#http-policies), regardless of their position in the policy list. Cloudflare recommends moving your Do Not Inspect policies to the top of the list to reduce confusion.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
