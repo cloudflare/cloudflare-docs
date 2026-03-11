@@ -1339,19 +1339,20 @@ entries:
 
       | Value | Category name             | Description                                                                                                       |
       | ----- | ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-      | `S1`  | Violent Crimes            | Violent crimes against people or animals.                                                                         |
-      | `S2`  | Non-Violent Crimes        | Non-violent offenses such as fraud, theft, drug creation, or hacking.                                             |
-      | `S3`  | Sex-Related Crimes        | Sex-related crimes, including trafficking, assault, and harassment.                                               |
-      | `S4`  | Child Sexual Exploitation | Sexual exploitation of children.                                                                                  |
+      | `S1`  | Violent crimes            | Violent crimes against people or animals.                                                                         |
+      | `S2`  | Non-violent crimes        | Non-violent offenses such as fraud, theft, drug creation, or hacking.                                             |
+      | `S3`  | Sex-related crimes        | Sex-related crimes, including trafficking, assault, and harassment.                                               |
+      | `S4`  | Child sexual exploitation | Sexual exploitation of children.                                                                                  |
       | `S5`  | Defamation                | False statements that are likely to damage a living person's reputation.                                          |
-      | `S6`  | Specialized Advice        | Specialized financial, medical, or legal advice, or misrepresent dangerous things as safe.                        |
+      | `S6`  | Specialized advice        | Specialized financial, medical, or legal advice, or misrepresent dangerous things as safe.                        |
       | `S7`  | Privacy                   | Sensitive, nonpublic personal information that could endanger an individual.                                      |
-      | `S8`  | Intellectual Property     | Violate a third party's intellectual property rights.                                                             |
-      | `S9`  | Indiscriminate Weapons    | Creation of indiscriminate weapons like chemical, biological, or nuclear arms.                                    |
+      | `S8`  | Intellectual property     | Violate a third party's intellectual property rights.                                                             |
+      | `S9`  | Indiscriminate weapons    | Creation of indiscriminate weapons like chemical, biological, or nuclear arms.                                    |
       | `S10` | Hate                      | Demean or dehumanize people based on their race, religion, sexual orientation, or other personal characteristics. |
-      | `S11` | Suicide & Self-Harm       | Encourage or endorse suicide, self-injury, or disordered eating.                                                  |
-      | `S12` | Sexual Content            | Erotic content.                                                                                                   |
+      | `S11` | Suicide and self-harm     | Encourage or endorse suicide, self-injury, or disordered eating.                                                  |
+      | `S12` | Sexual content            | Erotic content.                                                                                                   |
       | `S13` | Elections                 | False information about the time, place, or manner of voting in elections.                                        |
+      | `S14` | Code interpreter abuse    | Misuse of code execution capabilities.                                                                            |
 
       Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
     example_block: |-

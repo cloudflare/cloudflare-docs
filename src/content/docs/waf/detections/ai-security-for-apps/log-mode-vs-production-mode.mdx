@@ -23,7 +23,7 @@ AI Security for Apps can operate in two distinct modes. Understanding the trade-
 
 | Feature                | Production mode                                                                              | Log mode                                                                                                                              |
 | ---------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| **How it works**       | You write WAF [custom rules](/waf/custom-rules/) using AI Security for Apps detection fields | You enable the **AI Security Log Mode Ruleset** with pre-built rules                                                                  |
+| **How it works**       | You write WAF [custom rules](/waf/custom-rules/) using AI Security for Apps detection fields | You enable the AI Security Log Mode Ruleset with pre-built rules                                                                      |
 | **Prompt logging**     | No — only request metadata is logged                                                         | Yes — the full request body is logged (encrypted via [payload logging](/waf/managed-rules/payload-logging/))                          |
 | **Response logging**   | No — use [AI Gateway](/ai-gateway/) if response visibility is required                       | No — same limitation                                                                                                                  |
 | **Policy flexibility** | Full — combine injection scores, PII categories, bot scores, custom topics, and more         | Limited — three fixed rules (PII detected, unsafe topic detected, prompt injection detected) with no score-based or subcategory logic |
@@ -48,7 +48,7 @@ In production mode, the prompt text is not logged. You can see detection metadat
 
 ## Log mode
 
-Log mode uses the **AI Security Log Mode Ruleset** — a pre-built ruleset that logs the full request body alongside detection results. This mode is designed for evaluation and tuning rather than production enforcement.
+Log mode uses the AI Security Log Mode Ruleset — a pre-built ruleset that logs the full request body alongside detection results. This mode is designed for evaluation and tuning rather than production enforcement.
 
 In log mode:
 

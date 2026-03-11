@@ -29,12 +29,13 @@ Cloudflare will populate [AI detection fields](/waf/detections/ai-security-for-a
 
 AI Security for Apps capabilities vary by Cloudflare plan:
 
-| Capability                                                                                               | Free | Pro | Business | Enterprise |
-| -------------------------------------------------------------------------------------------------------- | ---- | --- | -------- | ---------- |
-| **LLM endpoint discovery** — Automatically identify AI-powered endpoints across your web properties      | Yes  | Yes | Yes      | Yes        |
-| **AI detection fields** — PII detection, prompt injection scoring, unsafe topic detection, custom topics | No   | No  | No       | Yes        |
+| Capability                                                                                                       | Free | Pro | Business | Enterprise |
+| ---------------------------------------------------------------------------------------------------------------- | ---- | --- | -------- | ---------- |
+| **LLM endpoint discovery** — Automatically identify AI-powered endpoints across your web properties              | Yes  | Yes | Yes      | Yes        |
+| **AI Security Log Mode Ruleset** — Pre-built ruleset that logs the full request body alongside detection results | No   | No  | No       | Yes        |
+| **AI detection fields** — PII detection, prompt injection scoring, unsafe topic detection, custom topics         | No   | No  | No       | Yes        |
 
-To enable AI detection fields, contact your account team.
+To get access to the [AI Security Log Mode Ruleset](/waf/detections/ai-security-for-apps/log-mode-vs-production-mode/#log-mode) and enable [AI detection fields](/waf/detections/ai-security-for-apps/fields/), contact your account team.
 
 AI Security for Apps is built into the Cloudflare [Web Application Firewall (WAF)](/waf/) — the WAF must be enabled on your zone before detection fields can be populated and used in rule expressions.
 
