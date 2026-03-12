@@ -163,8 +163,9 @@ export default defineConfig({
 									"/videos/**",
 									"/search/**",
 									"mailto:*",
-									"vscode:*",
-									"chrome:*",
+									// Note: Two * are required to match across separators (i.e. `/`)
+									"vscode:**",
+									"chrome:**",
 								],
 							}),
 						]
