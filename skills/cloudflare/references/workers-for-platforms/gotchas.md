@@ -27,7 +27,7 @@ try {
 ### "Hostname Routing Issues"
 
 **Cause:** DNS proxy settings causing routing problems  
-**Solution:** Use `*/*` wildcard route which works regardless of proxy settings for orange-to-orange routing
+**Solution:** Use `*/*` wildcard route which works regardless of proxy settings for O2O routing
 
 ### "Bindings Lost on Update"
 

@@ -4,7 +4,7 @@
 
 ### "Bot Score = 0"
 
-**Cause:** Bot Management didn't run (internal Cloudflare request, Worker routing to zone (Orange-to-Orange), or request handled before BM (Redirect Rules, etc.))  
+**Cause:** Bot Management didn't run (internal Cloudflare request, Worker routing to zone (O2O), or request handled before BM (Redirect Rules, etc.))  
 **Solution:** Check request flow and ensure Bot Management runs in request lifecycle
 
 ### "JavaScript Detections Not Working"
@@ -44,7 +44,7 @@ Issue resolves automatically after 48h. Contact Cloudflare Support if persists.
 
 ### "JA3/JA4 Missing"
 
-**Cause:** Non-HTTPS traffic, Worker routing traffic, Orange-to-Orange traffic via Worker, or Bot Management skipped  
+**Cause:** Non-HTTPS traffic, Worker routing traffic, O2O traffic via Worker, or Bot Management skipped  
 **Solution:** JA3/JA4 only available for HTTPS/TLS traffic; check request routing
 
 **JA3/JA4 Not User-Unique:** Same browser/library version = same fingerprint

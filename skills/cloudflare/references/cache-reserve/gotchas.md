@@ -41,9 +41,9 @@
 **Cause:** Purge by tag only triggers revalidation but doesn't remove from Cache Reserve storage  
 **Solution:** Use purge by URL for immediate removal, or disable Cache Reserve then clear all data for complete removal
 
-### "O2O (Orange-to-Orange) Assets Not Caching"
+### "O2O Assets Not Caching"
 
-**Cause:** Orange-to-Orange (proxied zone requesting another proxied zone on Cloudflare) bypasses Cache Reserve  
+**Cause:** O2O (proxied zone requesting another proxied zone on Cloudflare) bypasses Cache Reserve  
 **Solution:** 
 - **What is O2O**: Zone A (proxied) → Zone B (proxied), both on Cloudflare
 - **Detection**: Check `cf-cache-status` for `BYPASS` and review request path
@@ -70,7 +70,7 @@
 | Range requests | NOT supported | HTTP 206 bypasses Cache Reserve |
 | Compression | Fetches uncompressed | Serves compressed to visitors |
 | Worker control | Zone-level only | Cannot control per-request |
-| O2O requests | Bypassed | Orange-to-Orange not eligible |
+| O2O requests | Bypassed | O2O not eligible |
 
 ## Additional Resources
 
@@ -115,7 +115,7 @@ Asset not caching in Cache Reserve?
    → Yes: Range requests bypass Cache Reserve (not supported)
    → No: Continue to step 8
 
-8. Is this an O2O (Orange-to-Orange) request?
+8. Is this an O2O request?
    → Yes: O2O bypasses Cache Reserve
    → No: Continue to step 9
 

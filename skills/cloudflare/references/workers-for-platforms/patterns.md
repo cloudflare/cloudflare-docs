@@ -80,7 +80,7 @@ export default {
 2. Route: `*.saas.com/*` → dispatch Worker
 3. Extract subdomain for routing
 
-### Orange-to-Orange (O2O) Behavior
+### O2O Behavior
 
 When customers use Cloudflare and CNAME to your Workers domain:
 

@@ -81,7 +81,7 @@ Use this checklist to verify if an asset is eligible:
 - [ ] `Vary` header is NOT `*` (can be `Accept-Encoding`)
 - [ ] Not an image transformation variant (original images OK)
 - [ ] Not a range request (no HTTP 206 support)
-- [ ] Not O2O (Orange-to-Orange) proxied request
+- [ ] Not O2O proxied request
 
 **All boxes must be checked for Cache Reserve eligibility.**
 
@@ -93,7 +93,7 @@ Use this checklist to verify if an asset is eligible:
 - Responses with `Set-Cookie` headers
 - Responses with `Vary: *` header
 - Assets from R2 public buckets on same zone
-- O2O (Orange-to-Orange) setup requests
+- O2O setup requests
 - **Range requests** (video seeking, partial content downloads)
 
 ## Quick Start
