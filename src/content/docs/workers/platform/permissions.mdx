@@ -1,0 +1,89 @@
+---
+pcx_content_type: reference
+title: Permissions and access
+sidebar:
+  order: 7
+description: Roles and permissions for managing Workers on your Cloudflare account.
+---
+
+When you add members to your Cloudflare account, you control what they can do with Workers by assigning [roles](/fundamentals/manage-members/roles/) and [scopes](/fundamentals/manage-members/scope/) through [permission policies](/fundamentals/manage-members/policies/).
+
+## Account-wide roles
+
+These roles apply to **all Workers** (and other developer platform resources) on the account:
+
+| Role | Access level | Description |
+| --- | --- | --- |
+| Workers Platform Admin | Read and edit | Can create, update, deploy, and delete all Workers, [Pages](/pages/) projects, [KV](/kv/) namespaces, [R2](/r2/) buckets, [Durable Objects](/durable-objects/), and other developer platform resources. |
+| Workers Platform (Read-only) | Read only | Can view all Workers and other developer platform resources but cannot make changes. |
+
+These roles also cover [Pages](/pages/), [Durable Objects](/durable-objects/), [KV](/kv/), [R2](/r2/), [Zone Analytics](/analytics/account-and-zone-analytics/zone-analytics/), and [Page Rules](/rules/).
+
+## Per-Worker roles
+
+:::note
+Per-Worker roles are currently in beta.
+:::
+
+Per-Worker roles let you grant a member edit access to **specific Workers** instead of all Workers on the account. This is useful when you need to restrict who can deploy to production-critical Workers (like a payment service or authentication gateway) while allowing broader access to general-purpose Workers.
+
+| Role | Access level | Description |
+| --- | --- | --- |
+| Worker Admin | Full manage | Can manage a single Worker. Grants full read, edit, deploy, and delete access. |
+| Worker Edit (Versions & Deployments) | Deploy | Can update a single Worker. Grants access to create new versions and deployments, but not to delete or change Worker-level settings. |
+| Worker Read | Read only | Can read a single Worker. View-only access to the Worker, its configuration, versions, and deployments. |
+
+### How per-Worker permissions work
+
+1. Assign the **Workers Platform (Read-only)** role at the account level so the member can view all Workers in the dashboard.
+2. Assign a per-Worker role (such as **Worker Edit (Versions & Deployments)**) scoped to the individual Workers the member should be able to modify.
+
+The member can then view all Workers but can only deploy to or modify the Workers you explicitly selected.
+
+For a full walkthrough of setting this up — including User Groups, dashboard steps, API examples, and Terraform — refer to [Per-resource permissions](/fundamentals/manage-members/per-resource-permissions/).
+
+### Wrangler and per-Worker roles
+
+Wrangler support for per-Worker permissions is in progress. Most `wrangler` commands work when the member has per-Worker edit access and the account-wide **Workers Platform (Read-only)** role:
+
+- **`wrangler deploy`** (existing Worker) — works with per-Worker edit access. If the Worker has [routes](/workers/configuration/routing/routes/), the member also needs zone-level permissions for the zones referenced by those routes.
+- **`wrangler deploy`** (new Worker) — requires **Workers Platform Admin**. You cannot have per-Worker access to a Worker that does not exist yet.
+- **`wrangler versions upload`**, **`wrangler versions deploy`**, **`wrangler rollback`** — work with per-Worker edit access.
+- **`wrangler secret put`**, **`wrangler secret delete`**, **`wrangler secret bulk`** — work with per-Worker edit access.
+- **`wrangler tail`**, **`wrangler deployments list`**, **`wrangler versions list`** — work with per-Worker read access.
+
+## Required roles for common tasks
+
+| Task | Minimum role required |
+| --- | --- |
+| View Workers in the dashboard | Workers Platform (Read-only) |
+| Deploy an existing Worker with Wrangler | Workers Platform (Read-only) + Worker Edit (Versions & Deployments) (per-Worker) |
+| Create a new Worker | Workers Platform Admin |
+| Delete a Worker | Workers Platform Admin (account-wide) or Worker Admin (per-Worker) |
+| Edit environment variables and secrets | Workers Platform Admin (account-wide) or Worker Admin (per-Worker) |
+| Manage versions and deployments | Worker Edit (Versions & Deployments) (per-Worker) |
+| View Logpush configuration | [Log Share Reader](/fundamentals/manage-members/roles/#account-scoped-roles) |
+| Edit Logpush configuration | [Log Share](/fundamentals/manage-members/roles/#account-scoped-roles) |
+
+## API tokens
+
+[API tokens](/fundamentals/api/get-started/create-token/) are separate from member roles. When creating an API token, you can scope it to specific permissions and resources.
+
+For Workers, the relevant API token permission groups are:
+
+| Permission | Access |
+| --- | --- |
+| Workers Scripts Read | Can read Worker scripts and metadata. |
+| Workers Scripts Edit | Can create, update, and delete Worker scripts. |
+
+:::note
+Account-owned API tokens do not yet support per-resource scoping. You cannot restrict an account-owned API token to a specific Worker. This will be supported in a future release. User-level API tokens can be scoped to specific accounts and zones but not to individual Workers.
+:::
+
+## Related resources
+
+- [Per-resource permissions](/fundamentals/manage-members/per-resource-permissions/) — end-to-end guide to restricting access to individual Workers.
+- [Roles](/fundamentals/manage-members/roles/) — full list of all roles.
+- [Role scopes](/fundamentals/manage-members/scope/) — account, domain, and resource-level scopes.
+- [User Groups](/fundamentals/manage-members/user-groups/) — group members with shared permissions.
+- [API token permissions](/fundamentals/api/reference/permissions/) — permissions for API tokens.

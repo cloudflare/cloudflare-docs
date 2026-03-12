@@ -109,11 +109,23 @@ Domain-scoped roles apply for a given domain within an account.
 
 ## Resource-scoped roles
 
-Resource-scoped roles apply for a specific resource within an account.
+Resource-scoped roles apply to a specific resource within an account, such as an individual Worker or Access application. Use resource-scoped roles with [per-resource permissions](/fundamentals/manage-members/per-resource-permissions/) to restrict access to individual resources.
 
 :::note
 Resource-scoped roles is currently in Beta.
 :::
+
+### Workers
+
+| Role                                      | Description                                                                                                                                       |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Worker Admin                              | Can manage a single Cloudflare [Worker](/workers/) resource. Grants full read, edit, deploy, and delete access.                                  |
+| Worker Edit (Versions & Deployments)      | Can update a single Cloudflare [Worker](/workers/) resource. Grants access to create new versions and deployments, but not to delete or change Worker-level settings. |
+| Worker Read                               | Can read a single Cloudflare [Worker](/workers/) resource. View-only access to the Worker, its configuration, versions, and deployments.         |
+
+For a walkthrough of restricting access to individual Workers, refer to [Per-resource permissions](/fundamentals/manage-members/per-resource-permissions/).
+
+### Access
 
 | Role                                      | Description                                                                                                                                       |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |

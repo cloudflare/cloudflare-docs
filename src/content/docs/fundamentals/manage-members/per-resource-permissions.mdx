@@ -1,0 +1,429 @@
+---
+pcx_content_type: how-to
+title: Per-resource permissions
+sidebar:
+  order: 6
+  badge:
+    text: Beta
+description: Grant members permission to edit specific resources — like individual Workers — while restricting access to others.
+---
+
+import { Details, DashButton, InlineBadge, Render, Tabs, TabItem } from "~/components";
+
+Per-resource permissions let you grant members of your Cloudflare account access to **individual resources** rather than giving them blanket access across an entire account. This is useful when your account contains a mix of production-critical and general-purpose resources, and you need to restrict who can make changes to each one.
+
+For example, you can allow most developers on your team to deploy to general-purpose Workers, while restricting deployment access to a sensitive payment-processing Worker to a smaller group.
+
+:::note
+Per-resource permissions are currently in beta for [Workers](/workers/) and [Access](/cloudflare-one/) resources. Account-owned API tokens do not yet support per-resource permissions. This restriction will be lifted in a future release.
+:::
+
+## How it works
+
+Per-resource permissions build on the existing [policy model](/fundamentals/manage-members/policies/). Every permission policy has three parts:
+
+1. **Actor** — the member or [User Group](/fundamentals/manage-members/user-groups/) receiving the permission.
+2. **Role** — what the actor can do (for example, read-only or edit).
+3. **Scope** — what the role applies to (for example, the entire account, a specific domain, or an individual resource).
+
+With per-resource permissions, you set the scope to **Individual Workers** instead of the entire account. This gives you granular control over who can read, edit, and deploy each Worker.
+
+### Available per-Worker roles
+
+When you select the **Individual Workers** scope, the following resource-scoped roles are available:
+
+| Role | Description |
+| --- | --- |
+| Worker Admin | Can manage a single Cloudflare Worker resource. Grants full read, edit, deploy, and delete access. |
+| Worker Edit (Versions & Deployments) | Can update a single Cloudflare Worker resource. Grants access to create new versions and deployments, but not to delete or change Worker-level settings. |
+| Worker Read | Can read a single Cloudflare Worker resource. View-only access to the Worker, its configuration, versions, and deployments. |
+
+For Access resource-scoped roles, refer to [Resource-scoped roles](/fundamentals/manage-members/roles/#resource-scoped-roles).
+
+### Why a read-only base policy is required
+
+The Cloudflare dashboard and some API endpoints assume that a member can list all Workers on an account. If you assign a member only a per-Worker edit role with no account-wide role, the dashboard will display errors.
+
+To avoid this, always assign an account-wide **Workers Platform (Read-only)** role alongside any per-Worker roles. This gives the member read access to all Workers (so the dashboard functions correctly) while edit access remains restricted to the specific Workers you choose.
+
+---
+
+## Example scenario
+
+Consider an account with 10 Workers:
+
+| Worker | Purpose |
+| --- | --- |
+| `payment-service` | Processes payments. Only the payments team should deploy to this Worker. |
+| `auth-gateway` | Handles authentication. Only the security team should deploy to this Worker. |
+| `api-v1` through `api-v8` | General-purpose API Workers. Any developer on the team should be able to deploy to these. |
+
+You want to set up three groups:
+
+| User Group | Members | Access |
+| --- | --- | --- |
+| General Developers | All developers | Can view all 10 Workers. Can deploy to the 8 API Workers. Cannot deploy to `payment-service` or `auth-gateway`. |
+| Payments Team | 2 payments engineers | Can view all 10 Workers. Can deploy to `payment-service` and the 8 API Workers. |
+| Security Team | 2 security engineers | Can view all 10 Workers. Can deploy to `auth-gateway` and the 8 API Workers. |
+
+Each group needs two policies:
+
+| Policy | Scope | Role | Effect |
+| --- | --- | --- | --- |
+| 1 | Account-level | Workers Platform (Read-only) | Can view all Workers in the dashboard. |
+| 2 | Individual Workers (selected) | Worker Edit (Versions & Deployments) | Can deploy to the selected Workers only. |
+
+---
+
+## Set up per-resource permissions
+
+### Prerequisites
+
+- You must be a **Super Administrator** on the account.
+- Your account members must already be [added to the account](/fundamentals/manage-members/manage/) before you can add them to a User Group.
+
+### Step 1: Create User Groups
+
+Create a User Group for each set of members who should share the same access.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the Cloudflare dashboard, go to the **Members** page.
+
+    <DashButton url="/?to=/:account/members" />
+
+2. Select the **Groups** tab.
+3. Select **Create a group**.
+4. Enter a name for the group (for example, `General Developers`) and select **Create a group**.
+
+![Create a user group dialog with a name field](~/assets/images/fundamentals/members/per-resource-permissions/create-group.png)
+
+Repeat for each group you need (for example, `Payments Team`, `Security Team`).
+
+</TabItem> <TabItem label="API">
+
+Create a User Group:
+
+```bash title="Create a User Group"
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/iam/user_groups" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "name": "General Developers"
+  }'
+```
+
+Note the `id` in the response. You will use it in subsequent steps.
+
+</TabItem> </Tabs>
+
+### Step 2: Add members to the group
+
+Add existing account members to the group. Members must already be [invited to the account](/fundamentals/manage-members/manage/) before they can be added to a group.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Select the group you created.
+2. On the **Group members** tab, select **Add members**.
+3. Search for members by email and select the checkbox next to each member you want to add.
+4. Select **Add to Group**.
+
+![Add existing members dialog showing a search field and list of account members with checkboxes](~/assets/images/fundamentals/members/per-resource-permissions/add-members.png)
+
+:::note
+This list only shows members who have already accepted their invitation to the account. Pending members do not appear.
+:::
+
+</TabItem> <TabItem label="API">
+
+List account members to find their IDs, then add them to the group:
+
+```bash title="List account members"
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/members" \
+  --header "Authorization: Bearer <API_TOKEN>" | jq '.result[] | {id, email: .user.email}'
+```
+
+```bash title="Add members to the group"
+curl --request PUT \
+  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/iam/user_groups/<GROUP_ID>/members" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "members": [
+      {"id": "<MEMBER_ID_1>"},
+      {"id": "<MEMBER_ID_2>"}
+    ]
+  }'
+```
+
+</TabItem> </Tabs>
+
+### Step 3: Assign an account-wide read-only policy
+
+Every group needs an account-wide **Workers Platform (Read-only)** policy so that members can view all Workers in the dashboard.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to the **Members** page and select the **Groups** tab.
+
+    <DashButton url="/?to=/:account/members" />
+
+2. Select the group you want to configure (for example, **General Developers**).
+3. Select the **Permission policies** tab.
+4. Select **Add a Policy**.
+5. Under **Define scope**, for **Select a scope**, choose your account name under **Account-level**. This applies the policy to all resources in the account.
+6. Under **Assign roles**, find and turn on **Workers Platform (Read-only)**.
+7. Select **Create policy**.
+
+</TabItem> <TabItem label="API">
+
+First, look up the permission group ID for **Workers Platform (Read-only)**:
+
+```bash title="List available permission groups"
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/iam/permission_groups" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  | jq '.result[] | select(.name == "Workers Platform (Read-only)") | {id, name}'
+```
+
+Then assign the policy to the group:
+
+```bash title="Assign account-wide read-only policy"
+curl --request PUT \
+  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/iam/user_groups/<GROUP_ID>" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "policies": [
+      {
+        "access": "allow",
+        "permission_groups": [
+          {"id": "<WORKERS_PLATFORM_READONLY_ROLE_ID>"}
+        ],
+        "resource_groups": [
+          {
+            "scope": {
+              "key": "com.cloudflare.api.account.<ACCOUNT_ID>",
+              "objects": [{"key": "*"}]
+            }
+          }
+        ]
+      }
+    ]
+  }'
+```
+
+</TabItem> </Tabs>
+
+### Step 4: Add per-Worker edit policies
+
+Now add a second policy to each group that grants edit access only to the specific Workers that group should be able to deploy.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. On the same group, go to the **Permission policies** tab and select **Add a Policy**.
+2. Under **Define scope**, for **Select a scope**, choose **Individual Workers** under **Resource-specific**.
+
+![The scope dropdown showing Account-level and Resource-specific options, with Individual Workers highlighted](~/assets/images/fundamentals/members/per-resource-permissions/select-scope.png)
+
+3. For **Applies to**, select the specific Workers this group should be able to edit. You can search by Worker name. For the **General Developers** group, select `api-v1` through `api-v8`.
+
+![The Applies to dropdown showing a list of Workers with checkboxes, with one Worker selected](~/assets/images/fundamentals/members/per-resource-permissions/select-workers.png)
+
+4. Under **Assign roles**, turn on the role you want to grant for those Workers. The available roles are:
+   - **Worker Admin** — full manage access to the selected Workers.
+   - **Worker Edit (Versions & Deployments)** — can create new versions and deploy, but cannot delete or change Worker-level settings.
+   - **Worker Read** — view-only access to the selected Workers.
+
+   For most teams, **Worker Edit (Versions & Deployments)** is the right choice because it allows deploying code without granting the ability to delete the Worker or change its name.
+
+![The Assign roles section showing Worker Admin, Worker Edit (Versions and Deployments), and Worker Read roles with descriptions and toggles](~/assets/images/fundamentals/members/per-resource-permissions/assign-roles.png)
+
+:::note
+These roles only grant access to the Workers you selected. To grant access to all Workers in the account, change the scope to your account name under **Account-level** instead.
+:::
+
+5. Select **Create policy**.
+
+Repeat for each group. For the **Payments Team**, select the same 8 API Workers plus `payment-service`. For the **Security Team**, select the 8 API Workers plus `auth-gateway`.
+
+</TabItem> <TabItem label="API">
+
+Look up the permission group ID for the per-Worker role you want to assign:
+
+```bash title="Find Worker role permission group IDs"
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/iam/permission_groups" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  | jq '.result[] | select(.name | test("^Worker")) | {id, name}'
+```
+
+This returns the IDs for Worker Admin, Worker Edit (Versions & Deployments), and Worker Read.
+
+Then update the group policies. Note that `PUT` replaces all policies on the group, so include both the account-wide read-only policy from Step 3 and the new per-Worker edit policy:
+
+```bash title="Assign both policies to the group"
+curl --request PUT \
+  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/iam/user_groups/<GROUP_ID>" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "policies": [
+      {
+        "access": "allow",
+        "permission_groups": [
+          {"id": "<WORKERS_PLATFORM_READONLY_ROLE_ID>"}
+        ],
+        "resource_groups": [
+          {
+            "scope": {
+              "key": "com.cloudflare.api.account.<ACCOUNT_ID>",
+              "objects": [{"key": "*"}]
+            }
+          }
+        ]
+      },
+      {
+        "access": "allow",
+        "permission_groups": [
+          {"id": "<WORKER_EDIT_VERSIONS_DEPLOYMENTS_ROLE_ID>"}
+        ],
+        "resource_groups": [
+          {
+            "scope": {
+              "key": "com.cloudflare.api.account.<ACCOUNT_ID>",
+              "objects": [
+                {"key": "com.cloudflare.api.account.worker.<WORKER_ID_API_V1>"},
+                {"key": "com.cloudflare.api.account.worker.<WORKER_ID_API_V2>"},
+                {"key": "com.cloudflare.api.account.worker.<WORKER_ID_API_V3>"}
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }'
+```
+
+:::note
+The resource key format for individual Workers uses the Worker's unique ID (not its name). You can find a Worker's ID by listing Workers on the account:
+
+```bash title="List Workers and their IDs"
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/scripts" \
+  --header "Authorization: Bearer <API_TOKEN>" | jq '.result[] | {id, name}'
+```
+:::
+
+For the **Payments Team**, include the same objects plus the `payment-service` Worker ID. For the **Security Team**, include the API Workers plus the `auth-gateway` Worker ID.
+
+</TabItem> </Tabs>
+
+### Step 5: Verify the configuration
+
+After setting up all groups and policies, verify that the configuration works as expected.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in as a member of the **General Developers** group (or ask a team member to verify).
+2. Go to **Workers & Pages**. You should see all Workers listed.
+3. Workers that the member can edit should be labeled as editable. Workers they cannot edit (like `payment-service`) should appear as read-only.
+
+</TabItem> <TabItem label="API">
+
+List the member's effective policies to verify:
+
+```bash title="Get a member's details including policies"
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/members/<MEMBER_ID>" \
+  --header "Authorization: Bearer <API_TOKEN>" | jq '.result.policies'
+```
+
+The response should show both the account-wide read-only policy and the per-Worker edit policies inherited from the member's group.
+
+To verify a specific User Group's policies:
+
+```bash title="Get a group's policies"
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/iam/user_groups/<GROUP_ID>" \
+  --header "Authorization: Bearer <API_TOKEN>" | jq '.result.policies'
+```
+
+</TabItem> </Tabs>
+
+---
+
+## Terraform
+
+You can partially manage per-resource permissions with Terraform using the [`cloudflare_account_member`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/account_member) resource.
+
+### What Terraform supports
+
+The `cloudflare_account_member` resource supports the `policies` block, which includes `permission_groups` and `resource_groups` for per-resource scoping:
+
+```tf title="Example: Member with per-Worker permissions"
+resource "cloudflare_account_member" "developer" {
+  account_id = "<ACCOUNT_ID>"
+  email      = "developer@example.com"
+
+  policies {
+    access = "allow"
+    permission_groups {
+      id = "<WORKERS_PLATFORM_READONLY_ROLE_ID>"
+    }
+    resource_groups {
+      id = "<ACCOUNT_RESOURCE_GROUP_ID>"
+    }
+  }
+
+  policies {
+    access = "allow"
+    permission_groups {
+      id = "<WORKER_EDIT_VERSIONS_DEPLOYMENTS_ROLE_ID>"
+    }
+    resource_groups {
+      id = "<PER_WORKER_RESOURCE_GROUP_ID>"
+    }
+  }
+}
+```
+
+### What Terraform does not support
+
+The following are **not yet available** as Terraform resources:
+
+| Capability | Status |
+| --- | --- |
+| User Groups | Not supported. Use the dashboard or API to manage User Groups. |
+| Creating resource groups | Not supported. Resource groups must be created via the API and then referenced by ID in Terraform. |
+
+To use per-Worker permissions in Terraform, you must first create the resource groups via the API, then reference their IDs in the `resource_groups` block.
+
+---
+
+## Limitations and caveats
+
+### Wrangler support
+
+Wrangler support for per-Worker permissions is in progress. Some `wrangler` commands call account-level API endpoints that may require broader permissions than the per-Worker role alone provides.
+
+- **Deploying to an existing Worker** (`wrangler deploy`) works when the member has per-Worker edit access and the account-wide read-only role. If the Worker has [routes](/workers/configuration/routing/routes/), the member also needs zone-level permissions for the zones referenced by those routes.
+- **Creating a new Worker** (`wrangler deploy` for a Worker that does not exist yet) requires **Workers Platform Admin**. You cannot have per-Worker access to a Worker that does not exist yet.
+- **Read-only commands** like `wrangler deployments list`, `wrangler versions list`, and `wrangler tail` work with per-Worker read access.
+
+### Other limitations
+
+| Limitation | Details |
+| --- | --- |
+| Account-owned API tokens | Do not yet support per-resource permissions. You cannot scope an account-owned API token to a specific Worker. This will be supported in a future release. |
+| Dashboard requires read-only base role | Members with per-Worker edit roles must also have an account-wide read-only role (such as **Workers Platform (Read-only)**) for the dashboard to function correctly. |
+| Creating new Workers | Requires **Workers Platform Admin**. Per-Worker roles only apply to Workers that already exist on the account. |
+| Route permissions | If a Worker uses [routes](/workers/configuration/routing/routes/), deploying it also requires zone-level permissions for each zone referenced by the routes. Per-Worker edit access alone is not sufficient. |
+| Terraform User Groups | User Groups cannot be managed via Terraform. Use the dashboard or API. |
+| Terraform resource groups | Resource groups for per-resource scoping cannot be created in Terraform. Create them via the API and reference their IDs. |
+
+---
+
+## Related resources
+
+- [Roles](/fundamentals/manage-members/roles/) — full list of account-scoped, domain-scoped, and resource-scoped roles.
+- [Role scopes](/fundamentals/manage-members/scope/) — how to assign account, domain, and resource-level scopes.
+- [Policies](/fundamentals/manage-members/policies/) — how the policy model (actor + role + scope) works.
+- [User Groups](/fundamentals/manage-members/user-groups/) — how to create and manage User Groups.
+- [Workers permissions and access](/workers/platform/permissions/) — Workers-specific guide to roles and per-resource permissions.
