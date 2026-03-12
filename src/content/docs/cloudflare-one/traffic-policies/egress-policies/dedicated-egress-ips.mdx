@@ -11,7 +11,9 @@ import { Details, Render } from "~/components";
 Only available as an add-on to Zero Trust Enterprise plans.
 :::
 
-Dedicated egress IPs are static IP addresses that can be used to allowlist traffic from your organization. These IPs are unique to your account and are not used by any other customers routing traffic through Cloudflare's network. Each dedicated egress IP consists of an IPv4 address and an IPv6 range that are assigned to a specific Cloudflare data center. At minimum, Cloudflare will provision your account with two dedicated egress IPs corresponding to data centers in two different cities.
+Dedicated egress IPs are static IP addresses that can be used to allowlist traffic from your organization. Third-party services that restrict access by source IP can trust that traffic from your dedicated egress IPs belongs to your organization.
+
+These IPs are unique to your account and are not used by any other customers routing traffic through Cloudflare's network. Each dedicated egress IP consists of an IPv4 address and an IPv6 range that are assigned to a specific Cloudflare data center. At minimum, Cloudflare will provision your account with two dedicated egress IPs corresponding to data centers in two different cities for geographic redundancy.
 
 An account can have any number of additional dedicated egress IPs. To request additional dedicated egress IPs, contact your account team to schedule a service window.
 
@@ -75,7 +77,7 @@ Dedicated egress IPs do not apply to:
 - Traffic destined for private networks connected to Zero Trust via [Cloudflare WAN](/cloudflare-wan/)
 - ICMP traffic (such as `ping`)
 
-These origins will see the default shared IPs instead of the dedicated egress IPs. This is because Cloudflare can filter traffic to these origins by identifiers other than source IP.
+These origins will see the default shared IPs instead of the dedicated egress IPs. Dedicated egress IPs are designed for traffic where the destination identifies your organization by source IP. For the traffic types listed above, Cloudflare uses other identifiers (such as tunnel authentication or account configuration) to attribute the traffic, so a dedicated IP is not required.
 
 ### Traffic resilience
 
@@ -90,10 +92,10 @@ If the location for your primary egress IPs goes down and there is no secondary 
 ### IP geolocation
 
 :::note
-IP geolocation will take at least six weeks to update across databases.
+IP geolocation will take at least six weeks to update across databases. Third-party geolocation databases (such as MaxMind and Google) update their records on their own schedules, which typically takes several weeks.
 :::
 
-Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/traffic-policies/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user. We recommend you create a [catch-all egress policy](/cloudflare-one/traffic-policies/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. This will prevent incorrect geolocation for your users' traffic while geolocation databases update.
+Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/traffic-policies/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user. We recommend you create a [catch-all egress policy](/cloudflare-one/traffic-policies/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. Without a catch-all policy, traffic that does not match any egress policy may use a dedicated egress IP in an unexpected city. Geolocation databases will then associate your users with that city until the databases update — a process that takes at least six weeks to reverse.
 
 When you turn on dedicated egress IPs, Gateway will update third-party IP geolocation databases. Other websites, such as Google Search, will check these databases to geolocate a user's source IP. For example, if your users are in India, Google will direct them to the United States Google landing page instead of the India landing page until Google recognizes the updated IP geolocation.
 
@@ -123,6 +125,8 @@ To verify that the IP geolocation has updated, check your dedicated egress IP in
 
 Your users' physical egress location will vary depending on whether their connection is over IPv4 or IPv6.
 
+IPv4 addresses are limited, so Cloudflare must physically route traffic to the data center where your dedicated IPv4 address is provisioned. IPv6 has virtually unlimited address space, so Cloudflare can assign IPv6 ranges from all geolocations to every data center. This means IPv6 traffic can egress locally while still appearing to originate from your configured geolocation.
+
 | Protocol | Destination proxied by Cloudflare | Physical egress location             | IP geolocation                       |
 | -------- | --------------------------------- | ------------------------------------ | ------------------------------------ |
 | IPv4     | No                                | Data center with dedicated egress IP | Matches dedicated egress IP location |
@@ -134,13 +138,9 @@ Your users' physical egress location will vary depending on whether their connec
 
 To physically egress from a specific location, traffic must be proxied to Cloudflare via IPv4. The end user connects to the nearest Cloudflare data center, but Cloudflare will internally route their traffic to egress from the dedicated location configured in your [egress policies](/cloudflare-one/traffic-policies/egress-policies/). Therefore, the connected data center shown in the user's WARP client preferences may not match their actual egress location.
 
-We are able to offer better IPv4 performance when users visit domains proxied by Cloudflare (also known as an [orange-clouded](/dns/proxy-status/) domain). In this scenario, IPv4 traffic will physically egress from the most performant data center in our network while still appearing to egress from your dedicated location.
+Cloudflare offers better IPv4 performance when users visit domains [proxied by Cloudflare](/dns/proxy-status/) (orange-clouded). In this scenario, IPv4 traffic will physically egress from the most performant data center in our network while still appearing to egress from your dedicated location.
 
-For example, assume you have a primary dedicated egress IP in Los Angeles and a secondary dedicated egress IP in New York. A user in Las Vegas would see Las Vegas as their connected data center. If they go to a site not proxied by Cloudflare ([gray-clouded](/dns/proxy-status/#dns-only-records)), such as `espn.com`, they will egress from Los Angeles (or whichever city is in the matching egress policy). If they go to an orange-clouded site such as `cloudflare.com`, they will physically egress from Las Vegas but use Los Angeles as their IP geolocation.
-
-:::note[IPv4 and IPv6 behavior]
-IPv4 addresses are limited, so Cloudflare must physically route traffic to the data center where your dedicated IPv4 address is provisioned. IPv6 has virtually unlimited address space, so Cloudflare can assign IPv6 ranges from all geolocations to every data center. This means IPv6 traffic can egress locally while still appearing to originate from your configured geolocation.
-:::
+For example, assume you have a primary dedicated egress IP in Los Angeles and a secondary dedicated egress IP in New York. A user in Las Vegas would see Las Vegas as their connected data center. If they go to a site [not proxied by Cloudflare](/dns/proxy-status/#dns-only-records) (gray-clouded), such as `espn.com`, they will egress from Los Angeles (or whichever city is in the matching egress policy). If they go to an orange-clouded site such as `cloudflare.com`, they will physically egress from Las Vegas but use Los Angeles as their IP geolocation.
 
 #### IPv6
 

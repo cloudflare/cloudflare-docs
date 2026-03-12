@@ -9,12 +9,9 @@ sidebar:
 
 import { Render, Details, GlossaryTooltip } from "~/components";
 
-<Render
-	file="gateway/egress-selector-warp-version"
-	product="cloudflare-one"
-/>
+<Render file="gateway/egress-selector-warp-version" product="cloudflare-one" />
 
-A Cloudflare Tunnel can be used for source IP anchoring when you want to use existing egress IPs instead of purchasing [Cloudflare dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/). Some third-party websites may have an Access Control List (ACL) that only allows connections from certain source IPs. If you already have a non-Cloudflare IP on their allowlist (such as an egress IP provided by an ISP or a cloud provider like AWS), you can configure `cloudflared` to anchor user traffic to the same IPs that you use today.
+A Cloudflare Tunnel can be used for source IP anchoring — routing outgoing traffic through a location you control so it exits the Internet with a specific source IP — when you want to use existing egress IPs instead of purchasing [Cloudflare dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/). Some third-party websites may have an Access Control List (ACL) that only allows connections from certain source IPs. If you already have a non-Cloudflare IP on their allowlist (such as an egress IP provided by an ISP or a cloud provider like AWS), you can configure `cloudflared` to anchor user traffic to the same IPs that you use today.
 
 For example, assume that your organization's banking service, `app.bank.com`, expects user traffic to come from an AWS IP. You can install `cloudflared` in your AWS environment and add a public hostname route pointing to `app.bank.com`. When users connect to `app.bank.com` using the WARP client, Gateway will apply your network policies and route the filtered traffic down the corresponding Cloudflare Tunnel to AWS. The traffic can then egress to the public Internet using your AWS egress IP.
 
@@ -42,10 +39,7 @@ To learn more about how Gateway applies hostname-based egress policies, refer to
 
 User traffic is on-ramped to Gateway using one of the following methods:
 
-<Render
-	file="gateway/egress-selector-onramps"
-	product="cloudflare-one"
-/>
+<Render file="gateway/egress-selector-onramps" product="cloudflare-one" />
 
 ## 1. Connect your private network
 
@@ -77,14 +71,11 @@ In your WARP [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/con
 
 When users connect to a public hostname route, Gateway will assign an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> to the DNS query from the following range:
 
-The initial resolved IP is required because Gateway's network engine operates at L3/L4 and can only see IPs (not hostnames) when processing the connection. If a packet's destination IP falls within the initial resolved IP CGNAT range, Gateway knows that the IP maps to a public hostname route and sends the traffic down the corresponding Cloudflare Tunnel.
+The initial resolved IP is required because Gateway's network engine operates at layer 3/layer 4 (the network and transport layers) and can only see IP addresses — not hostnames — when processing the connection. If a packet's destination IP falls within the initial resolved IP range (`100.80.0.0/16` or `2606:4700:0cf1:4000::/64`), Gateway knows that the IP maps to a public hostname route and sends the traffic down the corresponding Cloudflare Tunnel.
 
 To route initial resolved IPs through WARP:
 
-<Render
-	file="gateway/egress-selector-split-tunnels"
-	product="cloudflare-one"
-/>
+<Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one" />
 
 ### Private network IPs
 
@@ -95,13 +86,18 @@ Your private network's CIDR block should also route through the WARP tunnel. For
 You can build [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to filter HTTPS traffic to your public hostname on port `443`. For example, suppose that you want to block all WARP users from accessing `app.bank.com` except for a specific set of users or groups. Additionally, those authorized users should only access `app.bank.com` using your AWS egress IP. You can accomplish this using two policies: the first allows specific users to reach `app.bank.com`, and the second blocks all other port `443` traffic to `app.bank.com`.
 
 1. Allow company employees:
-	<Render file="gateway/policies/restrict-access-to-private-networks-allow" product="cloudflare-one" params={{ selector: "SNI", value: "app.bank.com" }} />
+
+   <Render
+   	file="gateway/policies/restrict-access-to-private-networks-allow"
+   	product="cloudflare-one"
+   	params={{ selector: "SNI", value: "app.bank.com" }}
+   />
 
 2. Block everyone else on port `443`:
 
-	| Selector       | Operator | Value        | Action |
-	| -------------- | -------- | ------------ | ------ |
-	| SNI            | in       | `app.bank.com` | Block  |
+   | Selector | Operator | Value          | Action |
+   | -------- | -------- | -------------- | ------ |
+   | SNI      | in       | `app.bank.com` | Block  |
 
 Gateway does not currently support hostname-based filtering for traffic on non-`443` ports. To block traffic to `app.bank.com` on all ports, you will need to use the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector and specify the public IP space of `app.bank.com`.
 
@@ -115,4 +111,4 @@ You can search for `app.bank.com` in your [Gateway DNS logs](/cloudflare-one/ins
 
 ### Google Chrome restricts local network access
 
-<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one"/>
+<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one" />

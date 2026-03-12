@@ -19,7 +19,9 @@ import {
 Only available on Enterprise plans.
 :::
 
-When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise users can purchase [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
+Many third-party services restrict access by source IP address — the IP that the destination sees on incoming traffic. When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Because this IP is shared, external services cannot use it to identify your organization.
+
+Enterprise users can purchase [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) to ensure that egress traffic (traffic leaving Cloudflare's network toward a destination) from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
 
 Egress policies allow you to control which dedicated egress IP is used and when, based on attributes such as identity, IP address, and geolocation. Traffic that does not match an egress policy will default to using the most performant dedicated egress IP.
 
@@ -29,7 +31,9 @@ Cloudflare does not publish WARP egress IP ranges. WARP egress IPs are not docum
 
 ## Load balancing
 
-When using either the default Cloudflare egress IPs or any dedicated egress IPs, Gateway traffic that does not match an egress policy will egress from the closest Cloudflare data center with a default Gateway egress IP. If there are two data centers of equal distance from the user, Gateway will split the traffic between the two data centers, and the load balancer will retain the same user selection and egress IP regardless of data center.
+Traffic that does not match an egress policy will egress from the closest Cloudflare data center using a default Gateway egress IP. This applies whether you are using the default Cloudflare egress IPs or dedicated egress IPs.
+
+If two data centers are equidistant from the user, Gateway splits traffic between them. The load balancer maintains user affinity, so each user keeps the same egress IP regardless of which data center handles the request.
 
 ## Force IP version
 
@@ -66,7 +70,7 @@ When you configure your egress policy, you can choose whether to egress traffic 
 
 **Use dedicated egress IPs (Cloudflare or BYOIP)** uses the primary IPv4 address and IPv6 range selected in the dropdown menus. <Render file="gateway/secondary-ipv4-requirement" product="cloudflare-one" />
 
-If the data center associated with your primary dedicated egress IPv4 goes down, Gateway will egress from the secondary data center to avoid traffic drops during reroutes. There is no need for a secondary IPv6 because IPv6 traffic can egress from any Cloudflare data center. Dedicated egress IPs can be provided by either Cloudflare or [BYOIP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/#bring-your-own-ip-address-byoip).
+If the data center associated with your primary dedicated egress IPv4 goes down, Gateway will egress from the secondary data center to avoid traffic drops during reroutes. There is no need for a secondary IPv6 because IPv6 address space is large enough for Cloudflare to assign ranges from every geolocation to every data center, so IPv6 traffic can egress from any Cloudflare data center. Dedicated egress IPs can be provided by either Cloudflare or [Bring Your Own IP (BYOIP)](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/#bring-your-own-ip-address-byoip).
 
 To learn more about IPv4 and IPv6 egress behavior, refer to [Egress locations](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/#egress-location).
 
@@ -228,4 +232,4 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 ### Selector prerequisites
 
-The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors require configuration changes in order to be operational. Before deploying policies with these selectors, refer to [Host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors).
+The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors require additional configuration because egress policies evaluate traffic at the network layer, where only IP addresses are visible — not hostnames. Gateway uses a temporary IP mapping to bridge this gap. Before deploying policies with these selectors, refer to [Host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors).

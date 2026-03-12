@@ -11,7 +11,7 @@ import { Tabs, TabItem, Details, APIRequest, Render } from "~/components";
 
 | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Traffic and DNS mode                                                                        | Enterprise                                                    |
+| Traffic and DNS mode                                                                     | Enterprise                                                    |
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
@@ -24,7 +24,9 @@ import { Tabs, TabItem, Details, APIRequest, Render } from "~/components";
 
 </Details>
 
-When Gateway receives a DNS query for hostname covered by the [Application](/cloudflare-one/traffic-policies/egress-policies/#application), [Content Categories](/cloudflare-one/traffic-policies/egress-policies/#content-categories), [Domain](/cloudflare-one/traffic-policies/egress-policies/#domain), and [Host](/cloudflare-one/traffic-policies/egress-policies/#host) selectors in an Egress policy, Gateway initially resolves DNS to an IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range. This process allows Gateway to map a destination IP with a hostname at [layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) (where Gateway evaluates Egress policies). The destination IP for a hostname is not usually known at layer 4. Prior to evaluating Egress policies, the initially resolved IP is overwritten with the correct destination IP.
+Egress policies evaluate traffic at [layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) (the transport layer), where only IP addresses are visible — not hostnames. To allow hostname-based selectors to work at this layer, Gateway uses a temporary IP mapping.
+
+When Gateway receives a DNS query for a hostname covered by the [Application](/cloudflare-one/traffic-policies/egress-policies/#application), [Content Categories](/cloudflare-one/traffic-policies/egress-policies/#content-categories), [Domain](/cloudflare-one/traffic-policies/egress-policies/#domain), and [Host](/cloudflare-one/traffic-policies/egress-policies/#host) selectors in an egress policy, Gateway initially resolves the DNS query to a temporary IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range. These reserved IP ranges do not route to real destinations. Instead, the temporary IP acts as a tag that allows Gateway to associate the network-layer connection with the original hostname. Prior to forwarding the traffic to the real destination, Gateway overwrites the temporary IP with the correct destination IP.
 
 ![Example egress policy flow](~/assets/images/cloudflare-one/policies/host-selector-diagram.png)
 
@@ -67,7 +69,7 @@ Traffic must be on-ramped to Gateway with the following methods:
 | [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/)                        | ✅            |
 | [Browser Isolation](/cloudflare-one/remote-browser-isolation/)                                      | ✅            |
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌            |
-| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                              | ✅            |
+| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                    | ✅            |
 
 Unsupported traffic will be resolved with your default Gateway settings. If you use DNS locations to send a DNS query to Gateway with IPv4, IPv6, DoT, or DoH, Gateway will not return the initial resolved IP for supported traffic nor resolve unsupported traffic.
 
@@ -76,9 +78,9 @@ Unsupported traffic will be resolved with your default Gateway settings. If you 
 To configure your Zero Trust organization to use Host selectors with Egress policies:
 
 1.  Make sure you deploy the following version of WARP on your users' devices:
-    - **Desktop**: [WARP version 2025.4.929.0](/cloudflare-one/team-and-resources/devices/warp/download-warp/) or later 
+    - **Desktop**: [WARP version 2025.4.929.0](/cloudflare-one/team-and-resources/devices/warp/download-warp/) or later
     - **iOS**: [WARP version 1.11](/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios) or later
-    - **Android and Chrome OS**: [WARP version 2.4.2](/cloudflare-one/team-and-resources/devices/warp/download-warp/#android) or later. 
+    - **Android and Chrome OS**: [WARP version 2.4.2](/cloudflare-one/team-and-resources/devices/warp/download-warp/#android) or later.
 
     If you need to support devices running prior versions of WARP, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
 
@@ -95,7 +97,7 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
 
 2. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
 
-The WARP client must be set to _Traffic and DNS mode_ mode for traffic affected by these selectors to route correctly.
+The WARP client must be set to _Traffic and DNS mode_ for traffic affected by these selectors to route correctly.
 
 {/* prettier-ignore-end */}
 
@@ -103,4 +105,4 @@ The WARP client must be set to _Traffic and DNS mode_ mode for traffic affected 
 
 ### Google Chrome restricts local network access
 
-<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one"/>
+<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one" />
