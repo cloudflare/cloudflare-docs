@@ -1,0 +1,62 @@
+---
+pcx_content_type: how-to
+title: Create a secondary zone using Terraform
+sidebar:
+  order: 2
+  label: Create a secondary zone
+head:
+  - tag: title
+    content: Create a secondary zone using Terraform
+---
+
+A [secondary zone](/dns/zone-setups/subdomain-setup/) lets you manage a subdomain in a separate Cloudflare zone from the parent domain. This is useful for access control and team management. This guide shows how to automate the setup using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+
+## Prerequisites
+
+- Terraform installed. Refer to [Get started](/terraform/installing/).
+- Your Cloudflare account ID and a configured provider block. Refer to [Initialize Terraform](/terraform/tutorial/initialize-terraform/).
+- Secondary zone entitlement enabled on your account. Contact your Cloudflare account team to confirm.
+
+## 1. Create the zone
+
+Create a `cloudflare_zone` resource with `type = "secondary"`. The following example creates a secondary zone for `subdomain.example.com`:
+
+```hcl
+resource "cloudflare_zone" "subdomain_example_com" {
+  account = {
+    id = var.cloudflare_account_id
+  }
+  name = "subdomain.example.com"
+  type = "secondary"
+}
+```
+
+Terraform creates the zone in a **Pending** state. You must add NS delegation records to the parent zone before Cloudflare activates it.
+
+## 2. Add NS delegation records
+
+Create `NS` records in the parent zone that delegate authority to the new secondary zone. Use the `name_servers` output from the zone resource to populate the record values:
+
+```hcl
+resource "cloudflare_dns_record" "subdomain_example_com_ns" {
+  for_each = toset(cloudflare_zone.subdomain_example_com.name_servers)
+
+  zone_id = cloudflare_zone.example_com.id
+  type    = "NS"
+  name    = "subdomain.example.com"
+  content = each.value
+  ttl     = 1
+}
+```
+
+After applying your configuration, allow time for DNS propagation before the zone becomes active.
+
+:::note
+Refer to the [read-only zone outputs](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone#read-only) in the Terraform provider documentation when you need to reference other zone properties.
+:::
+
+## Related resources
+
+- [Subdomain setup](/dns/zone-setups/subdomain-setup/)
+- [`cloudflare_zone` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone)
+- [`cloudflare_dns_record` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record)
