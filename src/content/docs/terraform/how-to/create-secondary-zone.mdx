@@ -15,9 +15,8 @@ A [secondary zone](/dns/zone-setups/subdomain-setup/) lets you manage a subdomai
 
 - Terraform installed. Refer to [Get started](/terraform/installing/).
 - Your Cloudflare account ID and a configured provider block. Refer to [Initialize Terraform](/terraform/tutorial/initialize-terraform/).
-- Secondary zone entitlement enabled on your account. Contact your Cloudflare account team to confirm.
 
-## 1. Create the zone
+## Create the zone
 
 Create a `cloudflare_zone` resource with `type = "secondary"`. The following example creates a secondary zone for `subdomain.example.com`:
 
@@ -33,26 +32,8 @@ resource "cloudflare_zone" "subdomain_example_com" {
 
 Terraform creates the zone in a **Pending** state. You must add NS delegation records to the parent zone before Cloudflare activates it.
 
-## 2. Add NS delegation records
-
-Create `NS` records in the parent zone that delegate authority to the new secondary zone. Use the `name_servers` output from the zone resource to populate the record values:
-
-```hcl
-resource "cloudflare_dns_record" "subdomain_example_com_ns" {
-  for_each = toset(cloudflare_zone.subdomain_example_com.name_servers)
-
-  zone_id = cloudflare_zone.example_com.id
-  type    = "NS"
-  name    = "subdomain.example.com"
-  content = each.value
-  ttl     = 1
-}
-```
-
-After applying your configuration, allow time for DNS propagation before the zone becomes active.
-
 :::note
-Refer to the [read-only zone outputs](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone#read-only) in the Terraform provider documentation when you need to reference other zone properties.
+Refer to the [cloudflare_zone docs](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone) in the Terraform provider documentation when you need to reference other zone properties.
 :::
 
 ## Related resources

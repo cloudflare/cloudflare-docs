@@ -9,6 +9,8 @@ head:
     content: Create a partial zone using Terraform
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 A [partial zone](/dns/zone-setups/partial-setup/) lets you use Cloudflare for a subdomain while keeping your existing authoritative DNS provider for the parent domain. This guide shows how to automate the setup using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 :::caution
@@ -19,11 +21,33 @@ A partial zone cannot be created in the same Cloudflare account as the parent do
 
 - Terraform installed. Refer to [Get started](/terraform/installing/).
 - Your Cloudflare account ID and a configured provider block. Refer to [Initialize Terraform](/terraform/tutorial/initialize-terraform/).
-- Partial zone entitlement enabled on your account. Contact your Cloudflare account team to confirm.
 
-## 1. Create the zone
+## Create the zone
 
-Create a `cloudflare_zone` resource with `type = "partial"`. The following example creates a partial zone for `subdomain.example.com`:
+Add the zone configuration and apply the change to create the zone:
+
+```hcl
+resource "cloudflare_zone" "subdomain_example_com" {
+  account = {
+    id = var.cloudflare_account_id
+  }
+  name = "subdomain.example.com"
+}
+```
+
+Then, in a new Terraform plan and apply cycle, upgrade the zone to a Business plan or higher:
+```hcl
+resource "cloudflare_zone_subscription" "example_zone_subscription" {
+  zone_id = cloudflare_zone.subdomain_example_com.id
+  frequency = "monthly"
+  rate_plan = {
+    id = "business"
+    currency = "USD"
+  }
+}
+```
+
+Then, again in a new Terraform plan and apply cycle, update your Terraform configuration to add `type = "partial"` to the zone:
 
 ```hcl
 resource "cloudflare_zone" "subdomain_example_com" {
@@ -35,46 +59,10 @@ resource "cloudflare_zone" "subdomain_example_com" {
 }
 ```
 
-Terraform creates the zone in a **Pending** state. You must verify domain ownership before Cloudflare activates it.
-
-## 2. Verify domain ownership
-
-Create a `TXT` record in your authoritative DNS provider using the `verification_key` output from the zone resource. The record name follows the pattern `cloudflare-verify.<your-subdomain>`.
-
-The syntax for this record varies by DNS provider. The following example uses a generic `dns_record` resource:
-
-```hcl
-# This record belongs to the parent domain zone
-resource "dns_record" "subdomain_verification" {
-  zone_id = var.parent_zone_id
-  type    = "TXT"
-  name    = "cloudflare-verify.subdomain.example.com"
-  content = cloudflare_zone.subdomain_example_com.verification_key
-  ttl     = 1
-}
-```
-
-## 3. Add CNAME delegation
-
-Delegate DNS for the subdomain to Cloudflare using a `CNAME` record. The target follows the pattern `<hostname>.cdn.cloudflare.net`.
-
-As with the verification record, the syntax varies by DNS provider:
-
-```hcl
-# This record belongs to the parent domain zone
-resource "dns_record" "subdomain_cname" {
-  zone_id = var.parent_zone_id
-  type    = "CNAME"
-  name    = "subdomain.example.com"
-  content = "subdomain.example.com.cdn.cloudflare.net"
-  ttl     = 1
-}
-```
-
-After applying your configuration, allow time for DNS propagation before the zone becomes active.
+Terraform places the zone in a **Pending** state. You must add the necessary DNS records and verify domain ownership before Cloudflare activates it.
 
 :::note
-Refer to the [read-only zone outputs](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone#read-only) in the Terraform provider documentation when you need to reference other zone properties.
+Refer to the [cloudflare_zone docs](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone) in the Terraform provider documentation when you need to reference other zone properties.
 :::
 
 ## Related resources
