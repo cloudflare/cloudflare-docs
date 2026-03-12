@@ -1,0 +1,21 @@
+---
+title: 2026-03-12 - New fields added to Network Analytics Logs
+pcx_content_type: overview
+sidebar:
+  order: 300
+
+---
+
+Cloudflare added new fields to the [Network Analytics Logs](/logs/logpush/logpush-job/datasets/account/network_analytics_logs/) dataset.
+
+## New fields
+
+The following fields are now available in the Network Analytics Logs dataset:
+
+| Field name | Type | Description |
+|------------|------|-------------|
+| `DNSQueryName` | string | The DNS query name (domain), if the packet is a DNS query. |
+| `DNSQueryType` | string | The DNS query type (for example, `A`, `AAAA`, `MX`, `TXT`), if the packet is a DNS query. |
+| `PFPCustomTag` | int | The custom network analytics tag set by a Programmable Flow Protection program, if any. |
+
+Use the DNS fields to get visibility into DNS query information for packets processed by [Advanced DNS Protection](/ddos-protection/managed-rulesets/network/advanced-dns-protection/). Use `PFPCustomTag` to identify packets tagged by [Programmable Flow Protection](/magic-firewall/how-to/use-programmable-flow-protection/) programs.
