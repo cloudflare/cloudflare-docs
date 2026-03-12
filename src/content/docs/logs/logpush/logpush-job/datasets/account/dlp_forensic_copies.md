@@ -49,7 +49,7 @@ Captured request/response data, base64-encoded.
 
 Type: `string`
 
-Phase of the HTTP request this forensic copy was captured from (i.e. "request" or "response").
+Phase of the HTTP request this forensic copy was captured from (that is, "request" or "response").
 
 ## TriggeredRuleID
 
