@@ -105,12 +105,12 @@ Bot Management customers have both bot settings (configured in **Security Settin
 
 | Feature | Handled by bot settings | When to use custom rules instead |
 | --- | --- | --- |
-| Block or challenge definitely automated traffic | Yes | Path-specific rules, custom thresholds, or combining with other fields |
-| Block or challenge likely automated traffic | Yes | Path-specific rules, custom thresholds, or combining with other fields |
-| Allow or block verified bots | Yes | Granular control by verified bot category |
+| Block or challenge definitely automated traffic | No | Path-specific rules, custom thresholds, or combining with other fields |
+| Block or challenge likely automated traffic | No | Path-specific rules, custom thresholds, or combining with other fields |
+| Allow or block verified bots | No | Granular control by verified bot category |
 | Block AI crawlers | Yes | Target individual AI crawlers using detection IDs |
-| Protect static resources | Yes (on by default) | Exclude static resources from specific rules |
-| Optimize for WordPress | Yes | No |
+| Protect static resources | No | Exclude static resources from specific rules |
+| Optimize for WordPress | No | No |
 | Forward bot data to origin | No | Use [Transform Rules](/rules/transform/) or [Snippets](/rules/snippets/) |
 | Detection ID targeting | No | Use `cf.bot_management.detection_ids` in [custom rules](/waf/custom-rules/) |
 | JA3/JA4 fingerprint rules | No | Use `cf.bot_management.ja3_hash` or `cf.bot_management.ja4` in [custom rules](/waf/custom-rules/) |

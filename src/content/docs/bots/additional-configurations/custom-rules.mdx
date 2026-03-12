@@ -16,21 +16,21 @@ The following features are configured through toggles and dropdowns in [Security
 
 | Feature | What it does | Availability |
 | --- | --- | --- |
-| [Block AI bots](/bots/additional-configurations/block-ai-bots/) | Blocks verified AI crawlers (GPTBot, ClaudeBot, Bytespider, and others) using an auto-updating managed rule | All plans |
+| [Block AI bots](/bots/additional-configurations/block-ai-bots/) | Blocks AI crawlers (GPTBot, ClaudeBot, Bytespider, and others) using an auto-updating managed rule | All plans |
 | [AI Labyrinth](/bots/additional-configurations/ai-labyrinth/) | Feeds non-compliant AI crawlers into a maze of generated content | All plans |
 | [Managed robots.txt](/bots/additional-configurations/managed-robots-txt/) | Prepends AI crawler disallow directives to your `robots.txt` | All plans |
 | **Definitely automated** | Blocks or challenges traffic with a [bot score](/bots/concepts/bot-score/) of 1 | Pro, Business, Enterprise |
 | **Likely automated** | Blocks or challenges traffic with a bot score of 2-29 | Business, Enterprise |
-| [Verified bots](/bots/concepts/bot/verified-bots/) | Allows or blocks traffic from known good bots (Googlebot, Bingbot, and others) | Pro, Business, Enterprise |
+| [Verified bots](/bots/concepts/bot/verified-bots/) | Managed category of high-trust bots (Googlebot, Bingbot, and others) | Pro, Business, Enterprise |
 | [Static resource protection](/bots/additional-configurations/static-resources/) | Extends bot actions to cover static file types | Pro, Business, Enterprise |
 | [Optimize for WordPress](/bots/troubleshooting/wordpress-loopback-issue/) | Allows WordPress loopback requests through bot protection | Pro, Business, Enterprise |
 | [JavaScript detections](/cloudflare-challenges/challenge-types/javascript-detections/) | Injects a lightweight script to identify clients that cannot execute JavaScript | All plans (automatic on Free) |
 
 Bot settings update automatically as Cloudflare identifies new bot signatures and AI crawlers, while custom rules require manual updates. They do not count toward your [custom rule limits](/waf/custom-rules/#availability), and apply uniformly across your domain without the risk of expression errors.
 
-Custom rules are valuable when you need capabilities that built-in settings do not offer. The following scenarios require [WAF custom rules](/waf/custom-rules/) with [bot management fields](/bots/reference/bot-management-variables/).
+## Custom rules use cases
 
-## Scenarios that require custom rules
+Custom rules are valuable when you need capabilities that built-in settings do not offer. The following scenarios require [WAF custom rules](/waf/custom-rules/) with [bot management fields](/bots/reference/bot-management-variables/).
 
 ### Path-specific protection
 
@@ -79,13 +79,3 @@ To send bot scores, verified bot status, or JA3/JA4 fingerprints to your origin 
 Custom rules execute before Super Bot Fight Mode managed rules. If a custom rule takes a terminating action (such as **Block** or **Managed Challenge**), the request does not reach bot settings. 
 
 <Render file="execution-order" product="bots" />
-
-## Avoid duplicate rules
-
-If you use both bot settings and custom rules, make sure they do not overlap. Common duplication patterns include:
-
-- **Definitely automated traffic**: If you set **Definitely automated** to **Block** in Security Settings, you do not also need a custom rule with `cf.bot_management.score eq 1` and a **Block** action.
-- **Likely automated traffic**: If you set **Likely automated** to **Managed Challenge**, you do not also need a custom rule with `cf.bot_management.score lt 30` and a **Challenge** action (unless you are using a different threshold or adding conditions).
-- **Verified bots**: If you set **Verified bots** to **Allow**, you do not need a **Skip** rule for `cf.bot_management.verified_bot` (unless you need to skip specific downstream rules).
-- **AI crawlers**: If you turned on **Block AI bots**, you do not need custom rules that block AI crawler user agents (GPTBot, ClaudeBot, and others). The built-in rule auto-updates as new crawlers emerge.
-- **Static resources**: For [Bot Management](/bots/get-started/bot-management/) customers, static resources are protected by default in custom rules that use `cf.bot_management.score`. You do not need to add static resource handling separately unless you want to exclude them.
