@@ -15,11 +15,52 @@ The primary proposal in this space is [`llms.txt`](https://llmstxt.org/), offeri
 
 <Render file="llms-txt" product="style-guide" />
 
-## Markdown for Agents
+## Textual representation of interactive elements
 
-Every documentation page can be retrieved as Markdown using [Markdown for Agents](/fundamentals/reference/markdown-for-agents/), which converts HTML to Markdown at the Cloudflare network layer. You can request any page as Markdown in two ways:
+HTML is easily parsed - after all, the browser has to parse it to decide how to render the page you're reading now - it tends to not be very _portable_. This limitation is especially painful in an AI context, because all the extra presentation information consumes additional tokens.
 
-- Append `/index.md` to the URL — for example, [`/style-guide/index.md`](/style-guide/index.md)
+For example, given our [`Tabs`](/style-guide/components/tabs/), the panels are hidden until the tab itself is clicked:
+
+<Tabs>
+	<TabItem label="One">One Content</TabItem>
+	<TabItem label="Two">Two Content</TabItem>
+</Tabs>
+
+If we run the resulting HTML from this component through a solution like [`turndown`](https://www.npmjs.com/package/turndown):
+
+```md
+- [One](#tab-panel-6)
+- [Two](#tab-panel-7)
+
+One Content
+
+Two Content
+```
+
+The references to the panels `id`, usually handled by JavaScript, are visible but non-functional.
+
+### Turning our components into "Markdownable" HTML
+
+To solve this, we use [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) (MFA), which converts HTML to Markdown at the Cloudflare network layer. MFA handles:
+
+- Removing non-content tags (`script`, `style`, `link`, etc.)
+- Transforming custom elements like `starlight-tabs` into standard unordered lists
+- Adapting code block HTML into clean Markdown fenced code blocks
+
+Taking the `Tabs` example from the previous section, MFA will give us a normal unordered list with the content properly associated with a given list item:
+
+```md
+- One
+
+  One Content
+
+- Two
+
+  Two Content
+```
+
+You can request any page as Markdown in two ways:
+
 - Send a request with an `Accept: text/markdown` header:
 
   ```bash
@@ -27,7 +68,7 @@ Every documentation page can be retrieved as Markdown using [Markdown for Agents
     --header "Accept: text/markdown"
   ```
 
-Both methods return the same Markdown output. Markdown for Agents handles the conversion, including transforming interactive elements like tabs and code blocks into clean, portable Markdown.
+- Append `/index.md` to the URL — for example, [`/style-guide/index.md`](/style-guide/index.md)
 
 ### Saving on tokens
 
