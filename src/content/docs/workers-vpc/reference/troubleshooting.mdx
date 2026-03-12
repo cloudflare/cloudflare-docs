@@ -56,7 +56,7 @@ These errors indicate a problem with your VPC Service setup or your Worker's beh
 | `rate_limited` | The connection rate limit to this origin has been exceeded. | Reduce the rate of new connections from your Worker to this service. |
 
 :::note
-The `dns_error` code can appear as either a **Service Unreachable** error or a **Configuration Error** depending on the DNS failure type. An NXDOMAIN response (hostname does not exist) is classified as a configuration error because it typically means the VPC Service hostname is misconfigured. All other DNS failures (SERVFAIL, timeouts, etc.) are classified as service unreachable errors.
+The `dns_error` code can appear as either a **Service Unreachable** error or a **Configuration Error** depending on the DNS failure type. An NXDOMAIN response (hostname does not exist) is classified as a configuration error because it typically means the VPC Service hostname is misconfigured. All other DNS failures (SERVFAIL, timeouts, and similar) are classified as service unreachable errors.
 :::
 
 ### Internal errors
