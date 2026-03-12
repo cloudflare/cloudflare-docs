@@ -162,6 +162,9 @@ export default defineConfig({
 									"/style-guide/fixtures/markdown/index.md",
 									"/videos/**",
 									"/search/**",
+									"mailto:*",
+									"vscode:*",
+									"chrome:*",
 								],
 							}),
 						]
