@@ -1,28 +1,8 @@
 ---
-params:
-  - feature
+
 ---
 
-import { TabItem, Tabs } from "~/components";
+In your device profile, configure [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) so that traffic to your [device IPs](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/) goes through the WARP tunnel. Configuration depends on your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode). For example, if your devices use the default `100.96.0.0/12` range:
 
-Ensure that traffic to your [device IPs](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/) goes through the WARP tunnel. For example, if your devices use the default `100.96.0.0/12` range:
-
-    <Tabs> <TabItem label="Exclude IPs and domains">
-		If using Split Tunnels in **Exclude** mode:
-			1. Delete `100.64.0.0/10` from the list.
-			2. We recommend [adding back the IPs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) that are not being used for Cloudflare One services. For example, if you plan to use {props.feature} alongside [Gateway host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors/), add routes to exclude the following IP addresses:
-
-				- `100.64.0.0/12`
-				- `100.81.0.0/16`
-				- `100.82.0.0/15`
-				- `100.84.0.0/14`
-				- `100.88.0.0/13`
-				- `100.112.0.0/12`
-
-    </TabItem> <TabItem label="Include IPs and domains">
-		If using Split Tunnels in **Include** mode:
-
-		1. Add the required [Zero Trust domains](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
-		2. [Add a route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include `100.96.0.0/12`.
-
-    </TabItem> </Tabs>
+- **Exclude mode**: Delete `100.64.0.0/10` from your Split Tunnels list. We recommend [adding back the IP ranges](/cloudflare-one/networks/routes/reserved-ips/#warp-split-tunnel-configuration) that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use the CGNAT address space.
+- **Include mode**: Add `100.96.0.0/12` to your Split Tunnels list.

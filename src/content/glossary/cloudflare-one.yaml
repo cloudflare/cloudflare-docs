@@ -169,7 +169,7 @@ entries:
 
   - term: remotely-managed tunnel
     general_definition: |-
-      a Cloudflare Tunnel whose configuration is stored on Cloudflare rather than on your local machine. You can manage the tunnel in the dashboard under **Networks** > **Connectors** or by using the API.
+      a Cloudflare Tunnel whose configuration is stored on Cloudflare rather than on your local machine. You can manage the tunnel in the dashboard or by using the API.
 
   - term: RDP
     general_definition: |-

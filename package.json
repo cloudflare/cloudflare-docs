@@ -4,11 +4,13 @@
 	"type": "module",
 	"scripts": {
 		"astro": "npx astro",
+		"prebuild": "npx tsx bin/fetch-skills.ts",
 		"build": "export NODE_OPTIONS='--max-old-space-size=6192' || set NODE_OPTIONS=\"--max-old-space-size=6192\" && npx astro build",
 		"typegen:worker": "npx wrangler types ./worker/worker-configuration.d.ts",
 		"check": "npm run check:astro && npm run check:worker",
 		"check:astro": "npx astro check",
 		"check:worker": "npx tsc --noEmit -p ./worker/tsconfig.json",
+		"predev": "npx tsx bin/fetch-skills.ts --soft",
 		"dev": "npx astro dev",
 		"format": "npm run format:core:fix && npm run format:data",
 		"format:core": "npx prettier \"**/*.{js,jsx,ts,tsx,mjs,css}\"",
@@ -144,7 +146,7 @@
 		"wrangler": "4.58.0"
 	},
 	"engines": {
-		"npm": "10.9.4",
+		"npm": "10.x",
 		"node": "22.x"
 	},
 	"packageManager": "npm@10.9.4+sha512.3a7506f37e85c1ba1021baad79f0cd9724748131f321fc117c4dc3ba235ec01be7327584a41d15117c01945560aa9373220628fcc1e1dddd877a5fe9b336a900"

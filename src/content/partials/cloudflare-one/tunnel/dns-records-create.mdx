@@ -1,0 +1,47 @@
+---
+params:
+  - certPemURL
+---
+
+import { TabItem, Tabs, DashButton } from "~/components";
+
+To create a DNS record for a Cloudflare Tunnel:
+
+<Tabs> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **DNS Records** for your domain.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Add record**.
+3. Enter the following values:
+   - **Type**: _CNAME_
+   - **Name**: Subdomain of your application
+   - **Target**: `<UUID>.cfargotunnel.com`
+4. Select **Save**.
+
+![Example of fields completed to create a new CNAME record.](~/assets/images/cloudflare-one/connections/connect-apps/dns/dns-record.png)
+
+</TabItem>
+
+<TabItem label="CLI">
+
+For locally-managed tunnels, run the following command to create a CNAME record pointing to your tunnel subdomain:
+
+```sh
+cloudflared tunnel route dns <UUID or NAME> www.app.com
+```
+
+This creates a CNAME record but does not proxy traffic unless the tunnel is running.
+
+:::note
+To create DNS records using `cloudflared`, the <a href={props.certPemURL}>`cert.pem`</a> file must be installed on your system.
+:::
+
+</TabItem>
+
+</Tabs>
+
+The DNS record and the tunnel are independent. You can create DNS records that point to a tunnel that is not running. If a tunnel stops, the DNS record is not deleted — visitors will see a `1016` error.
+
+You can also create multiple DNS records pointing to the same tunnel subdomain. If you route traffic from multiple hostnames to multiple services, create a CNAME entry for each hostname. All entries share the same target.

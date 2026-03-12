@@ -139,7 +139,7 @@ interface MessageSendRequest<Body = unknown> {
 * <code>delaySeconds</code> <Type text="number" />
 
   * The number of seconds to [delay a message](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
-  * Must be an integer between 0 and 43200 (12 hours).
+  * Must be an integer between 0 and 86400 (24 hours).
 
 
 
@@ -156,7 +156,7 @@ Optional configuration that applies when sending a message to a queue.
 * <code>delaySeconds</code> <Type text="number" />
 
   * The number of seconds to [delay a message](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
-  * Must be an integer between 0 and 43200 (12 hours). Setting this value to zero will explicitly prevent the message from being delayed, even if there is a global (default) delay at the queue level.
+  * Must be an integer between 0 and 86400 (24 hours). Setting this value to zero will explicitly prevent the message from being delayed, even if there is a global (default) delay at the queue level.
 
 ### `QueueSendBatchOptions`
 

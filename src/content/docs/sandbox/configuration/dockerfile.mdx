@@ -137,9 +137,10 @@ COPY my-app.js /workspace/my-app.js
 COPY startup.sh /workspace/startup.sh
 RUN chmod +x /workspace/startup.sh
 
-ENTRYPOINT ["/sandbox"]
 CMD ["/workspace/startup.sh"]
 ```
+
+The base image already sets the correct `ENTRYPOINT`, so you only need to provide a `CMD`. The sandbox binary starts the HTTP API server, then spawns your `CMD` as a child process with proper signal forwarding.
 
 ```bash title="startup.sh"
 #!/bin/bash
@@ -156,7 +157,7 @@ wait
 ```
 
 :::note[Legacy startup scripts]
-If you have existing startup scripts that end with `exec bun /container-server/dist/index.js`, they will continue to work for backwards compatibility. However, we recommend migrating to the new approach using `ENTRYPOINT ["/sandbox"]` with `CMD` for your startup script.
+If you have existing startup scripts that end with `exec bun /container-server/dist/index.js`, they will continue to work for backwards compatibility. However, we recommend migrating to the new approach using `CMD` for your startup script. Do not override `ENTRYPOINT` when extending the base image.
 :::
 
 ## Related resources

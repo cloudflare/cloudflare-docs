@@ -14,7 +14,7 @@ description: >-
   Use the GraphQL Analytics API to review data for Cloudflare Network Firewall network traffic related to rules matching your traffic.
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Render } from "~/components";
 
 Use the GraphQL Analytics API to review data for Cloudflare Network Firewall (formerly Magic Firewall) network traffic related to rules matching your traffic. This contains both rules you configured in the Network Firewall dashboard, and the rules managed by Cloudflare as a part of [Network Firewall Managed rules](/cloudflare-network-firewall/how-to/enable-managed-rulesets/) and [Network Firewall IDS](/cloudflare-network-firewall/about/ids/) features.
 
@@ -72,6 +72,8 @@ query MagicFirewallExample($accountTag: string!, $start: Time, $end: Time) {
 ### Obtain analytics for a specific rule
 
 Use the example below to display the total number of packets and bits for the top ten suspected malicious traffic streams within the last hour. After receiving the results, you can sort by packet rates with a five minute average.
+
+<Render file="case-sensitivity-note" product="analytics" />
 
 For each stream, display the:
 

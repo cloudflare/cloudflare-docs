@@ -1,0 +1,39 @@
+---
+{}
+---
+
+1. In your [Google Cloud Console](https://console.cloud.google.com/), [create a new project](https://developers.google.com/workspace/guides/create-project).
+
+2. Go to **Compute Engine** > **VM instances**.
+
+3. Select **Create instance**.
+
+4. Name your VM instance. In this example we will name it `http-test-server`.
+
+5. Choose your desired operating system and specifications. For this example, you can use the following settings:
+   - **Machine family:** General Purpose
+   - **Series:** E2
+   - **Machine type:** e2-micro
+   - **Boot disk image:** Debian GNU/Linux 12
+   - **Firewalls**: Allow HTTP and HTTPS traffic
+
+6. Under **Advanced options** > **Management** > **Automation**, add the following startup script. This example deploys a basic Apache web server on port `80`.
+
+   ```bash
+   #!/bin/bash
+   apt update
+   apt -y install apache2
+   cat <<EOF > /var/www/html/index.html
+   <html><body><h1>Hello Cloudflare!</h1>
+   <p>This page was created for a Cloudflare demo.</p>
+   </body></html>
+   EOF
+   ```
+
+7. Select **Create**.
+
+8. The operating system automatically starts the Apache HTTP server. To verify that the server is running:
+   1. Copy the **External IP** for the VM instance.
+   2. Open a browser and go to `http://<EXTERNAL IP>`. You should see the **Hello Cloudflare!** test page.
+
+9. To login to the VM instance, open the dropdown next to **SSH** and select _Open in browser window_.

@@ -1,26 +1,40 @@
 ---
-title: Revalidation and request collapsing
+title: Revalidation
 pcx_content_type: concept
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+## Stale-while-revalidate
 
-Revalidation is a caching mechanism that checks the [freshness](/cache/concepts/retention-vs-freshness/#freshness-ttl) of cached data before serving it to users. If a cached object is no longer fresh and Cloudflare receives a request for it, the system makes a request to the origin to revalidate the object in the Cloudflare cache. By using headers like `If-Modified-Since` and `ETag`, Cloudflare validates content without fully re-fetching it. When these headers are missing, [Smart Edge Revalidation](https://blog.cloudflare.com/introducing-smart-edge-revalidation/) generates a `Last-Modified` header, ensuring efficient updates and delivery of fresh content while reducing origin traffic.
+When a cached asset expires, Cloudflare uses the [`stale-while-revalidate`](/cache/concepts/cache-control/#revalidation) directive in `Cache-Control` to determine whether it can continue serving the stale asset while fetching a fresh copy from the origin. If the directive is present and the asset is within the allowed staleness window, Cloudflare serves the expired content to visitors and revalidates in the background. By using headers like `If-Modified-Since` and `ETag`, Cloudflare validates content without fully re-fetching it, reducing origin traffic.
 
-## Revalidation towards origin
+:::note
+Asynchronous `stale-while-revalidate` is live for all Free, Pro, and Business zones. Enterprise zones are actively being migrated. The previous synchronous behavior is described in [Synchronous revalidation](#synchronous-revalidation-legacy).
+:::
 
-For stale (expired TTL) content, Cloudflare will send a revalidation request to the origin. If the stale content is still valid Cloudflare will set a new TTL. If the content is expired, then the origin will provide new fresh content to replace the old.
+## Asynchronous revalidation
 
-Consider the following example scenarios.
+Revalidation is fully asynchronous. When a cached asset expires and `stale-while-revalidate` is set, the first request that arrives after expiry triggers revalidation in the background. That request immediately receives stale content with an [UPDATING](/cache/concepts/cache-responses/#updating) status instead of blocking until the origin responds. All following requests also receive stale content with an `UPDATING` status until the origin responds. Once revalidation completes, subsequent requests receive fresh content with a [HIT](/cache/concepts/cache-responses/#hit) status.
 
-### Example 1
+If the stale content is still valid, Cloudflare sets a new TTL. If the content has changed, the origin provides fresh content to replace the old.
 
-One-thousand (1,000) requests arrive simultaneously at Cloudflare's network, and the requested resource was in Cloudflare but cannot be served because its TTL configuration indicates it is no longer fresh. This means that the resource needs to be served from the origin server. In this case, one request will go to the origin to be revalidated, while the other 999 requests will be served from cache with the status of [UPDATING](/cache/concepts/cache-responses/#updating). This means that the resource, although expired, is served stale from Cloudflare's cache, while the origin server is updating it. This behavior is defined by the [`stale-while-revalidate`](/cache/concepts/cache-control/#revalidation) directive in `cache-control`. If you do not wish to serve stale content, set the directive to zero seconds, `stale-while-revalidate=0`.
+## Synchronous revalidation (legacy)
 
-### Example 2
+:::note
+Synchronous revalidation refers to a previous implementation that is only available to a subset of Enterprise zones that have not been migrated yet. All other zones use [asynchronous revalidation](#asynchronous-revalidation).
+:::
 
-One-thousand (1,000) requests arrive simultaneously at a single Cloudflare data center, and the requested asset is not in Cloudflare's cache (a cache miss). These requests will use a <GlossaryTooltip term="cache lock">cache lock</GlossaryTooltip> to communicate with your origin. This means that only the first request will go to origin to fetch the asset. The remaining 999 requests wait for the first request to fetch the data, after which the response is [streamed](https://blog.cloudflare.com/introducing-concurrent-streaming-acceleration/) to all the waiting requests. The cache lock ensures that Cloudflare only sends the origin one request at a time for a given asset from a location in Cloudflare's network, preventing the origin from getting too much traffic.
+With synchronous revalidation (a legacy implementation), `stale-while-revalidate` blocks on the first request that arrives after a cached asset expired. That first request is held until the origin responds, and is served with a [MISS](/cache/concepts/cache-responses/#miss) or [REVALIDATED](/cache/concepts/cache-responses/#revalidated) status. Any other requests that arrive during this time for the same asset in the same cache location are served stale with the [UPDATING](/cache/concepts/cache-responses/#updating) status.
+
+For example, if 1,000 requests arrive simultaneously for an expired asset in this previous implementation, one request goes to the origin while the other 999 are served stale from cache. The first visitor experiences higher latency because they have to wait for the origin round-trip.
+
+On the other hand, with [asynchronous revalidation](#asynchronous-revalidation) all 1,000 requests are served from cache immediately and no visitor is blocked.
+
+## Controlling stale behavior
+
+Cloudflare only serves stale content during revalidation if your origin includes the `stale-while-revalidate` directive in its `Cache-Control` header. Without this directive, visitors wait for the origin to respond before receiving content.
+
+If your origin sets `stale-while-revalidate` but you want to override it, you can disable stale serving through the [Serve stale content while revalidating](/cache/how-to/cache-rules/settings/#serve-stale-content-while-revalidating) setting in Cache Rules. Directives like `must-revalidate` and `no-cache` also prevent stale content from being served when [Origin Cache Control](/cache/concepts/cache-control/#enable-origin-cache-control) is enabled. For all available options, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
 ## Smart revalidation towards users
 

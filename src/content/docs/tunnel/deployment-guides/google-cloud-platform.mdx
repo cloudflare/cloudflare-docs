@@ -1,0 +1,57 @@
+---
+pcx_content_type: how-to
+title: GCP
+sidebar:
+  order: 5
+---
+
+import { Render } from "~/components";
+
+This guide covers how to connect a Google Cloud Platform (GCP) virtual machine to Cloudflare using `cloudflared` and publish a web application through a Cloudflare Tunnel.
+
+### Prerequisites
+
+- [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)
+- [A zone on Cloudflare](/fundamentals/manage-domains/add-site/)
+
+## 1. Create a VM instance
+
+<Render
+	file="tunnel/deployment-guides/deploy-gcp-vm"
+	product="cloudflare-one"
+/>
+
+## 2. Create a tunnel
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels**.
+2. Select **Create Tunnel** and enter a name (for example, `gcp-tunnel`).
+3. Select **Create Tunnel**.
+4. Under **Setup Environment**, select **Debian 64-bit**.
+5. SSH into your VM and run the install commands shown in the dashboard.
+6. Once the tunnel connects, select **Continue**.
+
+## 3. Publish an application
+
+1. Under **Routes**, select **Add route** > **Published application**.
+2. Enter a hostname (for example, `hellocloudflare.<your-domain>.com`).
+3. Under **Service**, enter `http://localhost:80`.
+4. Select **Add route**.
+
+To test, open a browser and go to the hostname you configured.
+
+You can optionally add [Cloudflare Access](/tunnel/integrations/#cloudflare-access) to control who can reach the service.
+
+:::note[Looking for private network access?]
+To connect to your VM via private IP using the WARP client, refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
+:::
+
+## Firewall configuration
+
+<Render
+	file="tunnel/deployment-guides/deploy-gcp-firewall"
+	product="cloudflare-one"
+	params={{
+		tunnelFirewallURL: "/tunnel/configuration/#required-ports",
+		hostnameAnchor: "#3-publish-an-application",
+	}}
+/>

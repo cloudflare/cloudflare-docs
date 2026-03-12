@@ -1,0 +1,53 @@
+---
+pcx_content_type: concept
+title: Token counting
+tags:
+  - AI
+sidebar:
+  order: 6
+---
+
+AI Security for Apps (formerly Firewall for AI) provides an estimated token count for each incoming LLM prompt. This lets you monitor prompt sizes, set limits on overly long prompts, and track token usage across your AI endpoints.
+
+## How token counting works
+
+When AI Security for Apps processes a request to a `cf-llm` labeled endpoint, it calculates an approximate token count for the prompt content. The result is available in the **LLM Token count** ([`cf.llm.prompt.token_count`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.token_count/)) field, which you can reference in rule expressions and view in analytics.
+
+:::note
+**The token count is an estimate.** It uses a general-purpose tokenizer and will not exactly match the token count reported by your LLM provider. Different models use different tokenizers — GPT-4, Claude, Llama, and others all tokenize text differently. Use this field for relative thresholds and anomaly detection, not as a precise measurement for billing or model-specific token budgets.
+:::
+
+## Use cases
+
+### Block oversized prompts
+
+Set a hard threshold to block prompts that exceed a certain estimated token count. This prevents unexpectedly large inputs from reaching your model.
+
+- **When incoming requests match**:
+
+  Enter the following expression in the editor:<br/>
+  `(cf.llm.prompt.token_count gt 4000)`
+
+- **Action**: _Block_
+
+### Rate limit large prompts
+
+Create a [rate limiting rule](/waf/rate-limiting-rules/) that restricts the number of large prompts a single client can send within a time window. This helps prevent abuse where attackers send excessively long prompts to consume model resources.
+
+Enter the following rule expression in the editor:<br/>
+`(cf.llm.prompt.token_count gt 2000)`
+
+Set the rate to, for example, 10 requests per minute per IP, with an action of _Block_ or _Managed Challenge_.
+
+### Combine token count with other detections
+
+Target large prompts that also show signs of prompt injection — a common pattern where attackers pad injection attempts with long context.
+
+Example rule expression:<br/>
+`(cf.llm.prompt.token_count gt 3000 and cf.llm.prompt.injection_score lt 50)`
+
+## Important considerations
+
+- **Estimate only.** The token count is a general approximation. Actual token consumption at your model may differ depending on the model's tokenizer.
+- **Input tokens only.** The token count reflects the incoming prompt. It does not estimate output or response tokens.
+- **Extracted prompt only.** The token count is calculated on the prompt text extracted from the request body. Cloudflare extracts the prompt using a set of known JSON paths for major LLM providers. When the prompt cannot be extracted, Cloudflare uses the full request body as a fallback. In these situations, token count will reflect the full request body.

@@ -63,6 +63,10 @@ The following IPv4 address ranges are allowed in the {props.routingTableName}:
   )
 }
 
+### Default routing
+
+Traffic destined for Internet routable addresses will be egressed to the Internet if it does not match a route within the virtual network. Any RFC 1918 or CGNAT (RFC 6598) destined traffic that does not match a route within the virtual network will be dropped (null routed).
+
 ### Route prioritization
 
 {props.productName} steers traffic along tunnel routes based on route entry priorities.

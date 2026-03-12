@@ -27,7 +27,7 @@ The following table provides a high-level comparison of all connectivity options
 | Connectivity option | Protocol | Direction | Typical deployment model | Use when |
 | ---- | ---- | ---- | ---- | ---- |
 | [Cloudflare Tunnel](#cloudflare-tunnel) | HTTP/2, QUIC | Off-ramp only | Software daemon (`cloudflared`) on server | Exposing private applications without a public IP |
-| [WARP client](#warp-client) | MASQUE (default), WireGuard | On-ramp only | Client software on end-user devices | Securing remote workforce devices |
+| [WARP client](#warp-client) | MASQUE (default), WireGuard | Bidirectional | Client software on end-user devices | Securing remote workforce devices |
 | [WARP Connector](#warp-connector) | MASQUE, WireGuard | Bidirectional | Software client on Linux host | Connecting sites with IoT or VoIP devices |
 | [DNS locations](#dns-locations) |  DNS (DoH, DoT, IPv4/IPv6) | On-ramp only | DNS resolver configuration  | Filtering DNS traffic without device agents |
 | [Proxy endpoints](#proxy-endpoints) | HTTP/HTTPS | On-ramp only | Browser PAC file configuration | Filtering web traffic without device agents |
@@ -63,7 +63,7 @@ The Cloudflare WARP client is a device agent that securely connects end-user dev
 Use WARP client to secure remote workforce devices, replace traditional VPN solutions, enforce DNS filtering and web security policies, implement device posture checks, and enable WARP-to-WARP connectivity between enrolled devices.
 
 :::note[Important to know]
-WARP client is on-ramp only — it establishes outbound connections to Cloudflare but cannot receive unsolicited inbound traffic directly from external networks. However, enrolled WARP devices can communicate with each other via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) using virtual IP addresses, since both devices have active connections to Cloudflare.
+WARP client is a bidirectional L3 tunnel — it on-ramps device traffic to Cloudflare and can also off-ramp traffic sent to the device's virtual IP address. Any connectivity option that routes traffic through Cloudflare's network (for example, IPsec tunnels, GRE tunnels, CNI, or another WARP device via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/)) can initiate connections towards a WARP-enrolled device.
 :::
 
 For detailed configuration, refer to the [WARP client documentation](/cloudflare-one/team-and-resources/devices/warp/).
@@ -321,7 +321,7 @@ Not all connectivity options work together in the same account. Review the follo
 | Combination | Compatible | Notes |
 | ---- | ---- | ---- |
 | WARP Connector + Cloudflare WAN | Conditional | Requires <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a>. Accounts on Legacy routing mode cannot use both. |
-| WARP client + Cloudflare WAN | Yes | WARP users can access Cloudflare WAN-connected sites. |
+| WARP client + Cloudflare WAN | Yes | WARP users can access Cloudflare WAN-connected sites. Cloudflare WAN sites can also initiate connections to WARP devices using their virtual IP addresses. |
 | Cloudflare Tunnel + Cloudflare WAN | Yes | Avoid overlapping IP routes. Cloudflare Tunnel takes priority if the same CIDR is configured for both. |
 | GRE + IPsec | Yes | Use for redundancy or migration scenarios. |
 | CNI + GRE or IPsec | Yes | Use Internet-based GRE or IPsec tunnels as backup connectivity alongside CNI. |
@@ -371,13 +371,13 @@ Source IP preservation is required for:
 | Connectivity option | Client-initiated traffic | Server-initiated traffic |
 | ---- | ---- | ---- |
 | Cloudflare Tunnel | Yes | No |
-| WARP client | Yes | No (device cannot receive unsolicited inbound) |
+| WARP client | Yes | Yes |
 | WARP Connector | Yes | Yes |
 | GRE and IPsec tunnels | Yes | Yes |
 | Cloudflare One Appliance | Yes | Yes |
 | CNI | Yes | Yes |
 
-If your application requires server-initiated connections (for example, VoIP callbacks, database replication), use WARP Connector, Cloudflare WAN, or CNI instead of Cloudflare Tunnel.
+If your application requires server-initiated connections (for example, VoIP callbacks, database replication), use a bidirectional connectivity option such as WARP client, WARP Connector, Cloudflare WAN (IPsec/GRE), or CNI. Cloudflare Tunnel does not support server-initiated traffic.
 
 ---
 

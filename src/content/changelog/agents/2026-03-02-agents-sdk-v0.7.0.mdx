@@ -1,0 +1,166 @@
+---
+title: "Agents SDK v0.7.0: Observability rewrite, keepAlive, and waitForMcpConnections"
+description: "Agents SDK v0.7.0 replaces the old console.log-based observability with diagnostics_channel events across 7 named channels, adds keepAlive() to prevent idle eviction during long-running work, and introduces waitForMcpConnections to guarantee MCP tools are ready before chat handlers run."
+products:
+  - agents
+  - workers
+date: 2026-03-02
+---
+
+import { TypeScriptExample } from "~/components";
+
+The latest release of the [Agents SDK](https://github.com/cloudflare/agents) rewrites observability from scratch with `diagnostics_channel`, adds `keepAlive()` to prevent Durable Object eviction during long-running work, and introduces `waitForMcpConnections` so MCP tools are always available when `onChatMessage` runs.
+
+## Observability rewrite
+
+The previous observability system used `console.log()` with a custom `Observability.emit()` interface. v0.7.0 replaces it with structured events published to [diagnostics channels](/workers/runtime-apis/nodejs/diagnostics-channel/) — silent by default, zero overhead when nobody is listening.
+
+Every event has a `type`, `payload`, and `timestamp`. Events are routed to seven named channels:
+
+| Channel            | Event types                                                                                                                                                      |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `agents:state`     | `state:update`                                                                                                                                                   |
+| `agents:rpc`       | `rpc`, `rpc:error`                                                                                                                                               |
+| `agents:message`   | `message:request`, `message:response`, `message:clear`, `message:cancel`, `message:error`, `tool:result`, `tool:approval`                                        |
+| `agents:schedule`  | `schedule:create`, `schedule:execute`, `schedule:cancel`, `schedule:retry`, `schedule:error`, `queue:retry`, `queue:error`                                       |
+| `agents:lifecycle` | `connect`, `destroy`                                                                                                                                             |
+| `agents:workflow`  | `workflow:start`, `workflow:event`, `workflow:approved`, `workflow:rejected`, `workflow:terminated`, `workflow:paused`, `workflow:resumed`, `workflow:restarted` |
+| `agents:mcp`       | `mcp:client:preconnect`, `mcp:client:connect`, `mcp:client:authorize`, `mcp:client:discover`                                                                     |
+
+Use the typed `subscribe()` helper from `agents/observability` for type-safe access:
+
+<TypeScriptExample>
+
+```ts
+import { subscribe } from "agents/observability";
+
+const unsub = subscribe("rpc", (event) => {
+	if (event.type === "rpc") {
+		console.log(`RPC call: ${event.payload.method}`);
+	}
+	if (event.type === "rpc:error") {
+		console.error(
+			`RPC failed: ${event.payload.method} — ${event.payload.error}`,
+		);
+	}
+});
+
+// Clean up when done
+unsub();
+```
+
+</TypeScriptExample>
+
+In production, all diagnostics channel messages are automatically forwarded to [Tail Workers](/workers/observability/logs/tail-workers/) — no subscription code needed in the agent itself:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async tail(events) {
+		for (const event of events) {
+			for (const msg of event.diagnosticsChannelEvents) {
+				// msg.channel is "agents:rpc", "agents:workflow", etc.
+				console.log(msg.timestamp, msg.channel, msg.message);
+			}
+		}
+	},
+};
+```
+
+</TypeScriptExample>
+
+The custom `Observability` override interface is still supported for users who need to filter or forward events to external services.
+
+For the full event reference, refer to the [Observability documentation](/agents/api-reference/observability/).
+
+## `keepAlive()` and `keepAliveWhile()`
+
+Durable Objects are evicted after a period of inactivity (typically 70-140 seconds with no incoming requests, WebSocket messages, or alarms). During long-running operations — streaming LLM responses, waiting on external APIs, running multi-step computations — the agent can be evicted mid-flight.
+
+`keepAlive()` prevents this by creating a 30-second heartbeat schedule. The alarm firing resets the inactivity timer. Returns a disposer function that cancels the heartbeat when called.
+
+<TypeScriptExample>
+
+```ts
+const dispose = await this.keepAlive();
+try {
+	const result = await longRunningComputation();
+	await sendResults(result);
+} finally {
+	dispose();
+}
+```
+
+</TypeScriptExample>
+
+`keepAliveWhile()` wraps an async function with automatic cleanup — the heartbeat starts before the function runs and stops when it completes:
+
+<TypeScriptExample>
+
+```ts
+const result = await this.keepAliveWhile(async () => {
+	const data = await longRunningComputation();
+	return data;
+});
+```
+
+</TypeScriptExample>
+
+Key details:
+
+- **Multiple concurrent callers** — Each `keepAlive()` call returns an independent disposer. Disposing one does not affect others.
+- **AIChatAgent built-in** — `AIChatAgent` automatically calls `keepAlive()` during streaming responses. You do not need to add it yourself.
+- **Uses the scheduling system** — The heartbeat does not conflict with your own schedules. It shows up in `getSchedules()` if you need to inspect it.
+
+:::note
+`keepAlive()` is marked `@experimental` and may change between releases.
+:::
+
+For the full API reference and when-to-use guidance, refer to [Schedule tasks — Keeping the agent alive](/agents/api-reference/schedule-tasks/#keeping-the-agent-alive).
+
+## `waitForMcpConnections`
+
+`AIChatAgent` now waits for MCP server connections to settle before calling `onChatMessage`. This ensures `this.mcp.getAITools()` returns the full set of tools, especially after Durable Object hibernation when connections are being restored in the background.
+
+<TypeScriptExample>
+
+```ts
+export class ChatAgent extends AIChatAgent {
+	// Default — waits up to 10 seconds
+	// waitForMcpConnections = { timeout: 10_000 };
+
+	// Wait forever
+	waitForMcpConnections = true;
+
+	// Disable waiting
+	waitForMcpConnections = false;
+}
+```
+
+</TypeScriptExample>
+
+| Value                 | Behavior                                      |
+| --------------------- | --------------------------------------------- |
+| `{ timeout: 10_000 }` | Wait up to 10 seconds (default)               |
+| `{ timeout: N }`      | Wait up to `N` milliseconds                   |
+| `true`                | Wait indefinitely until all connections ready |
+| `false`               | Do not wait (old behavior before 0.2.0)       |
+
+For lower-level control, call `this.mcp.waitForConnections()` directly inside `onChatMessage` instead.
+
+## Other improvements
+
+- **MCP deduplication by name and URL** — `addMcpServer` with HTTP transport now deduplicates on both server name and URL. Calling it with the same name but a different URL creates a new connection. URLs are normalized before comparison (trailing slashes, default ports, hostname case).
+- **`callbackHost` optional for non-OAuth servers** — `addMcpServer` no longer requires `callbackHost` when connecting to MCP servers that do not use OAuth.
+- **MCP URL security** — Server URLs are validated before connection to prevent SSRF. Private IP ranges, loopback addresses, link-local addresses, and cloud metadata endpoints are blocked.
+- **Custom denial messages** — `addToolOutput` now supports `state: "output-error"` with `errorText` for custom denial messages in human-in-the-loop tool approval flows.
+- **`requestId` in chat options** — `onChatMessage` options now include a `requestId` for logging and correlating events.
+
+### Upgrade
+
+To update to the latest version:
+
+```sh
+npm i agents@latest @cloudflare/ai-chat@latest
+```

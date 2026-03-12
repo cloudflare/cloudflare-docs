@@ -160,6 +160,8 @@ export default defineConfig({
 									"/markdown.zip",
 									"/style-guide/index.md",
 									"/style-guide/fixtures/markdown/index.md",
+									"/videos/**",
+									"/search/**",
 								],
 							}),
 						]

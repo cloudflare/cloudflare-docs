@@ -50,29 +50,29 @@ It is best practice to treat Wrangler's configuration file as the [source of tru
 	"workers_dev": false,
 	"route": {
 		"pattern": "example.org/*",
-		"zone_name": "example.org"
+		"zone_name": "example.org",
 	},
 	"kv_namespaces": [
 		{
 			"binding": "<MY_NAMESPACE>",
-			"id": "<KV_ID>"
-		}
+			"id": "<KV_ID>",
+		},
 	],
 	"env": {
 		"staging": {
 			"name": "my-worker-staging",
 			"route": {
 				"pattern": "staging.example.org/*",
-				"zone_name": "example.org"
+				"zone_name": "example.org",
 			},
 			"kv_namespaces": [
 				{
 					"binding": "<MY_NAMESPACE>",
-					"id": "<STAGING_KV_ID>"
-				}
-			]
-		}
-	}
+					"id": "<STAGING_KV_ID>",
+				},
+			],
+		},
+	},
 }
 ```
 
@@ -112,9 +112,9 @@ To use this feature, add bindings to your configuration file _without_ adding re
 {
 	"kv_namespaces": [
 		{
-			"binding": "<MY_KV_NAMESPACE>"
-		}
-	]
+			"binding": "<MY_KV_NAMESPACE>",
+		},
+	],
 }
 ```
 
@@ -271,6 +271,12 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `services` <Type text="object" /> <MetaInfo text="optional" />
   - A list of service bindings that your Worker should be bound to. Refer to [service bindings](#service-bindings).
 
+- `queues` <Type text="object" /> <MetaInfo text="optional" />
+  - A list of Queue producers and consumers that your Worker should be bound to. Refer to [Queues](#queues).
+
+- `workflows` <Type text="object" /> <MetaInfo text="optional" />
+  - A list of Workflows that your Worker should be bound to. Refer to [Workflows](#workflows).
+
 - `tail_consumers` <Type text="object" /> <MetaInfo text="optional" />
   - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logs/tail-workers/).
 
@@ -297,9 +303,9 @@ Example:
 	"routes": [
 		{
 			"pattern": "shop.example.com",
-			"custom_domain": true
-		}
-	]
+			"custom_domain": true,
+		},
+	],
 }
 ```
 
@@ -326,9 +332,9 @@ Example:
 	"routes": [
 		{
 			"pattern": "subdomain.example.com/*",
-			"zone_id": "<YOUR_ZONE_ID>"
-		}
-	]
+			"zone_id": "<YOUR_ZONE_ID>",
+		},
+	],
 }
 ```
 
@@ -351,9 +357,9 @@ Example:
 	"routes": [
 		{
 			"pattern": "subdomain.example.com/*",
-			"zone_name": "example.com"
-		}
-	]
+			"zone_name": "example.com",
+		},
+	],
 }
 ```
 
@@ -369,7 +375,7 @@ Example:
 
 ```jsonc
 {
-	"route": "example.com/*"
+	"route": "example.com/*",
 }
 ```
 
@@ -386,7 +392,7 @@ Cloudflare Workers accounts come with a `workers.dev` subdomain that is configur
 
 ```jsonc
 {
-	"workers_dev": false
+	"workers_dev": false,
 }
 ```
 
@@ -407,10 +413,8 @@ Example:
 ```jsonc
 {
 	"triggers": {
-		"crons": [
-			"* * * * *"
-		]
-	}
+		"crons": ["* * * * *"],
+	},
 }
 ```
 
@@ -434,8 +438,8 @@ Example:
 {
 	"observability": {
 		"enabled": true,
-		"head_sampling_rate": 0.1 // 10% of requests are logged
-	}
+		"head_sampling_rate": 0.1, // 10% of requests are logged
+	},
 }
 ```
 
@@ -467,8 +471,8 @@ Example:
 	"build": {
 		"command": "npm run build",
 		"cwd": "build_cwd",
-		"watch_dir": "build_watch_dir"
-	}
+		"watch_dir": "build_watch_dir",
+	},
 }
 ```
 
@@ -496,8 +500,8 @@ Example:
 {
 	"limits": {
 		"cpu_ms": 100,
-		"subrequests": 150
-	}
+		"subrequests": 150,
+	},
 }
 ```
 
@@ -521,8 +525,8 @@ Example:
 ```jsonc
 {
 	"browser": {
-		"binding": "<BINDING_NAME>"
-	}
+		"binding": "<BINDING_NAME>",
+	},
 }
 ```
 
@@ -566,9 +570,9 @@ Example:
 		{
 			"binding": "<BINDING_NAME>",
 			"database_name": "<DATABASE_NAME>",
-			"database_id": "<DATABASE_ID>"
-		}
-	]
+			"database_id": "<DATABASE_ID>",
+		},
+	],
 }
 ```
 
@@ -598,12 +602,10 @@ Dispatch namespace bindings allow for communication between a [dynamic dispatch 
 			"namespace": "<NAMESPACE_NAME>",
 			"outbound": {
 				"service": "<WORKER_NAME>",
-				"parameters": [
-					"params_object"
-				]
-			}
-		}
-	]
+				"parameters": ["params_object"],
+			},
+		},
+	],
 }
 ```
 
@@ -637,10 +639,10 @@ Example:
 		"bindings": [
 			{
 				"name": "<BINDING_NAME>",
-				"class_name": "<CLASS_NAME>"
-			}
-		]
-	}
+				"class_name": "<CLASS_NAME>",
+			},
+		],
+	},
 }
 ```
 
@@ -671,23 +673,26 @@ Example:
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [ // Array of new classes
-				"DurableObjectExample"
-			]
+			"new_sqlite_classes": [
+				// Array of new classes
+				"DurableObjectExample",
+			],
 		},
 		{
 			"tag": "v2", // Should be unique for each entry
-			"renamed_classes": [ // Array of rename directives
+			"renamed_classes": [
+				// Array of rename directives
 				{
 					"from": "DurableObjectExample",
-					"to": "UpdatedName"
-				}
+					"to": "UpdatedName",
+				},
 			],
-			"deleted_classes": [ // Array of deleted class names
-				"DeprecatedClass"
-			]
-		}
-	]
+			"deleted_classes": [
+				// Array of deleted class names
+				"DeprecatedClass",
+			],
+		},
+	],
 }
 ```
 
@@ -739,15 +744,13 @@ Example:
 ```jsonc
 {
 	// required for database drivers to function
-	"compatibility_flags": [
-		"nodejs_compat_v2"
-	],
+	"compatibility_flags": ["nodejs_compat_v2"],
 	"hyperdrive": [
 		{
 			"binding": "<BINDING_NAME>",
-			"id": "<ID>"
-		}
-	]
+			"id": "<ID>",
+		},
+	],
 }
 ```
 
@@ -803,13 +806,13 @@ Example:
 	"kv_namespaces": [
 		{
 			"binding": "<BINDING_NAME1>",
-			"id": "<NAMESPACE_ID1>"
+			"id": "<NAMESPACE_ID1>",
 		},
 		{
 			"binding": "<BINDING_NAME2>",
-			"id": "<NAMESPACE_ID2>"
-		}
-	]
+			"id": "<NAMESPACE_ID2>",
+		},
+	],
 }
 ```
 
@@ -841,10 +844,10 @@ Example:
 			{
 				"binding": "<BINDING_NAME>",
 				"queue": "<QUEUE_NAME>",
-				"delivery_delay": 60 // Delay messages by 60 seconds before they are delivered to a consumer
-			}
-		]
-	}
+				"delivery_delay": 60, // Delay messages by 60 seconds before they are delivered to a consumer
+			},
+		],
+	},
 }
 ```
 
@@ -891,10 +894,10 @@ Example:
 				"max_retries": 10,
 				"dead_letter_queue": "my-queue-dlq",
 				"max_concurrency": 5,
-				"retry_delay": 120 // Delay retried messages by 2 minutes before re-attempting delivery
-			}
-		]
-	}
+				"retry_delay": 120, // Delay retried messages by 2 minutes before re-attempting delivery
+			},
+		],
+	},
 }
 ```
 
@@ -933,13 +936,13 @@ Example:
 	"r2_buckets": [
 		{
 			"binding": "<BINDING_NAME1>",
-			"bucket_name": "<BUCKET_NAME1>"
+			"bucket_name": "<BUCKET_NAME1>",
 		},
 		{
 			"binding": "<BINDING_NAME2>",
-			"bucket_name": "<BUCKET_NAME2>"
-		}
-	]
+			"bucket_name": "<BUCKET_NAME2>",
+		},
+	],
 }
 ```
 
@@ -966,9 +969,9 @@ Example:
 	"vectorize": [
 		{
 			"binding": "<BINDING_NAME>",
-			"index_name": "<INDEX_NAME>"
-		}
-	]
+			"index_name": "<INDEX_NAME>",
+		},
+	],
 }
 ```
 
@@ -1000,9 +1003,9 @@ Example:
 		{
 			"binding": "<BINDING_NAME>",
 			"service": "<WORKER_NAME>",
-			"entrypoint": "<ENTRYPOINT_NAME>"
-		}
-	]
+			"entrypoint": "<ENTRYPOINT_NAME>",
+		},
+	],
 }
 ```
 
@@ -1033,9 +1036,9 @@ Example:
 	"analytics_engine_datasets": [
 		{
 			"binding": "<BINDING_NAME>",
-			"dataset": "<DATASET_NAME>"
-		}
-	]
+			"dataset": "<DATASET_NAME>",
+		},
+	],
 }
 ```
 
@@ -1062,13 +1065,13 @@ Example of a Wrangler configuration file that includes an mTLS certificate bindi
 	"mtls_certificates": [
 		{
 			"binding": "<BINDING_NAME1>",
-			"certificate_id": "<CERTIFICATE_ID1>"
+			"certificate_id": "<CERTIFICATE_ID1>",
 		},
 		{
 			"binding": "<BINDING_NAME2>",
-			"certificate_id": "<CERTIFICATE_ID2>"
-		}
-	]
+			"certificate_id": "<CERTIFICATE_ID2>",
+		},
+	],
 }
 ```
 
@@ -1095,8 +1098,44 @@ Example:
 ```jsonc
 {
 	"ai": {
-		"binding": "AI" // available in your Worker code on `env.AI`
-	}
+		"binding": "AI", // available in your Worker code on `env.AI`
+	},
+}
+```
+
+</WranglerConfig>
+
+### Workflows
+
+[Workflows](/workflows/) allow you to build durable, multi-step applications using the Workers platform. A Workflow binding enables your Worker to create and manage Workflow instances programmatically.
+
+To bind Workflows to your Worker, assign an array of the below object to the `workflows` key.
+
+- `binding` <Type text="string" /> <MetaInfo text="required" />
+  - The binding name used to refer to the Workflow in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_WORKFLOW"` would be a valid name for the binding.
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the Workflow.
+
+- `class_name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the exported Workflow class. The `class_name` must match the name of the Workflow class exported from your Worker code.
+
+- `script_name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name of the Worker script where the Workflow class is defined. Only required if the Workflow is defined in a different Worker than the one the binding is configured on.
+
+Example:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"binding": "<BINDING_NAME>",
+			"name": "<WORKFLOW_NAME>",
+			"class_name": "<CLASS_NAME>",
+		},
+	],
 }
 ```
 
@@ -1136,8 +1175,8 @@ Example:
 		"directory": "./public",
 		"binding": "ASSETS",
 		"html_handling": "force-trailing-slash",
-		"not_found_handling": "404-page"
-	}
+		"not_found_handling": "404-page",
+	},
 }
 ```
 
@@ -1153,10 +1192,10 @@ You can also configure `run_worker_first` with an array of route patterns:
 		"directory": "./public",
 		"binding": "ASSETS",
 		"run_worker_first": [
-			"/api/*",			// API calls go to Worker first
-			"!/api/docs/*"	// EXCEPTION: For /api/docs/*, try static assets first
-		]
-	}
+			"/api/*", // API calls go to Worker first
+			"!/api/docs/*", // EXCEPTION: For /api/docs/*, try static assets first
+		],
+	},
 }
 ```
 
@@ -1227,26 +1266,24 @@ The following options are available:
 			"max_instances": 10,
 			"instance_type": "basic", // Optional, defaults to "lite"
 			"image_vars": {
-				"FOO": "BAR"
-			}
-		}
+				"FOO": "BAR",
+			},
+		},
 	],
 	"durable_objects": {
 		"bindings": [
 			{
 				"name": "MY_CONTAINER",
-				"class_name": "MyContainer"
-			}
-		]
+				"class_name": "MyContainer",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"MyContainer"
-			]
-		}
-	]
+			"new_sqlite_classes": ["MyContainer"],
+		},
+	],
 }
 ```
 
@@ -1278,10 +1315,10 @@ The following options are available:
 			"instance_type": {
 				"vcpu": 1,
 				"memory_mib": 1024,
-				"disk_mb": 4000
-			}
-		}
-	]
+				"disk_mb": 4000,
+			},
+		},
+	],
 }
 ```
 
@@ -1319,12 +1356,10 @@ Example:
 	"rules": [
 		{
 			"type": "Text",
-			"globs": [
-				"**/*.md"
-			],
-			"fallthrough": true
-		}
-	]
+			"globs": ["**/*.md"],
+			"fallthrough": true,
+		},
+	],
 }
 ```
 
@@ -1367,11 +1402,8 @@ To fix this, you can exclude certain files from being included. To do this use t
 ```jsonc
 {
 	"python_modules": {
-		"excludes": [
-			"**/*.pyc",
-			"**/__pycache__"
-		]
-	}
+		"excludes": ["**/*.pyc", "**/__pycache__"],
+	},
 }
 ```
 
@@ -1423,8 +1455,8 @@ You can configure various aspects of local development, such as the local protoc
 	"dev": {
 		"ip": "192.168.1.1",
 		"port": 8080,
-		"local_protocol": "http"
-	}
+		"local_protocol": "http",
+	},
 }
 ```
 
@@ -1449,8 +1481,8 @@ You can configure Wrangler to replace all calls to import a particular package w
 ```jsonc
 {
 	"alias": {
-		"foo": "./replacement-module-filepath"
-	}
+		"foo": "./replacement-module-filepath",
+	},
 }
 ```
 
@@ -1483,8 +1515,8 @@ You can alias all imports of `node-fetch` to instead point directly to the `fetc
 ```jsonc
 {
 	"alias": {
-		"node-fetch": "./fetch-polyfill"
-	}
+		"node-fetch": "./fetch-polyfill",
+	},
 }
 ```
 
@@ -1505,8 +1537,8 @@ For example, let's say the NPM package you rely on calls [`fs.readFile`](https:/
 ```jsonc
 {
 	"alias": {
-		"fs": "./fs-polyfill"
-	}
+		"fs": "./fs-polyfill",
+	},
 }
 ```
 
@@ -1533,7 +1565,7 @@ Example:
 
 ```jsonc
 {
-	"upload_source_maps": true
+	"upload_source_maps": true,
 }
 ```
 
@@ -1562,13 +1594,9 @@ Example:
 {
 	"site": {
 		"bucket": "./public",
-		"include": [
-			"upload_dir"
-		],
-		"exclude": [
-			"ignore_dir"
-		]
-	}
+		"include": ["upload_dir"],
+		"exclude": ["ignore_dir"],
+	},
 }
 ```
 
@@ -1654,19 +1682,19 @@ A common example of using a redirected configuration is where a custom build too
 
   ```jsonc
   {
-    "$schema": "./node_modules/wrangler/config-schema.json",
-    "name": "my-worker",
-    "main": "src/index.ts",
-    "vars": {
-      "MY_VARIABLE": "production variable"
-    },
-    "env": {
-      "staging": {
-        "vars": {
-          "MY_VARIABLE": "staging variable"
-        }
-      }
-    }
+  	"$schema": "./node_modules/wrangler/config-schema.json",
+  	"name": "my-worker",
+  	"main": "src/index.ts",
+  	"vars": {
+  		"MY_VARIABLE": "production variable",
+  	},
+  	"env": {
+  		"staging": {
+  			"vars": {
+  				"MY_VARIABLE": "staging variable",
+  			},
+  		},
+  	},
   }
   ```
 

@@ -51,11 +51,13 @@ The origin web server instructed Cloudflare to bypass cache via a `Cache-Control
 
 ## REVALIDATED
 
-The resource is served from Cloudflare's cache but is stale. The resource was revalidated by either an `If-Modified-Since` header or an `If-None-Match` header.
+The origin confirmed the cached resource was unchanged via a conditional request (`If-Modified-Since` or `If-None-Match`), and the response is served from Cloudflare's cache. This status reflects the synchronous validation path — the request waits for the origin to respond before being served.
+
+With [asynchronous `stale-while-revalidate`](/cache/concepts/revalidation/#asynchronous-revalidation), most revalidations now return `UPDATING` or `HIT` instead. `REVALIDATED` is seen in the following situations: `stale-while-revalidate` is not set; directives like `must-revalidate` or `no-cache` (with [Origin Cache Control](/cache/concepts/cache-control/) enabled) prevent stale content from being served; or the zone is an Enterprise zone that has not yet been migrated (refer to [Synchronous revalidation](/cache/concepts/revalidation/#synchronous-revalidation-legacy)).
 
 ## UPDATING
 
-The resource was served from Cloudflare's cache and was expired, but the origin web server is updating the resource. `UPDATING` is typically only seen for very popular cached resources.
+The resource was expired but served from Cloudflare's cache while the origin updates it in the background. `UPDATING` is the expected status during [asynchronous `stale-while-revalidate`](/cache/concepts/revalidation/#asynchronous-revalidation) revalidation — all requests during the revalidation window receive `UPDATING` or `HIT` rather than waiting for the origin.
 
 ## DYNAMIC
 
