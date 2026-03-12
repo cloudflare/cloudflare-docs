@@ -1,6 +1,6 @@
 ---
 pcx_content_type: get-started
-title: Get started with Firewall for AI
+title: Get started with AI Security for Apps
 tags:
   - AI
 sidebar:
@@ -17,12 +17,12 @@ import {
 	Render,
 } from "~/components";
 
-## 1. Turn on Firewall for AI
+## 1. Turn on AI Security for Apps
 
 <Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 :::note
-Firewall for AI is only available in the new [application security dashboard](/security/).
+AI Security for Apps (formerly Firewall for AI) is only available in the new [application security dashboard](/security/).
 :::
 
 <Steps>
@@ -32,7 +32,7 @@ Firewall for AI is only available in the new [application security dashboard](/s
    <DashButton url="/?to=/:account/:zone/security/settings" />
 
 2. (Optional) Filter by **Detection tools**.
-3. Turn on **Firewall for AI**.
+3. Turn on **AI Security for Apps**.
 
 </Steps>
 
@@ -115,7 +115,7 @@ In the context of this guide, consider an example endpoint with the following pr
 
 ## 3. Add `cf-llm` label to endpoint
 
-You must [label endpoints](/api-shield/management-and-monitoring/endpoint-labels/) with the `cf-llm` label so that Firewall for AI starts scanning incoming requests for malicious LLM prompts.
+You must [label endpoints](/api-shield/management-and-monitoring/endpoint-labels/) with the `cf-llm` label so that AI Security for Apps starts scanning incoming requests for malicious LLM prompts.
 
 Add the `cf-llm` label to the endpoint you added:
 
@@ -190,7 +190,7 @@ Use [Security Analytics](/waf/analytics/security-analytics/) in the new applicat
 
 </Steps>
 
-Alternatively, you can also create a custom rule with a _Log_ action (only available on Enterprise plans) to check for potentially harmful traffic related to LLM prompts. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your Firewall for AI configuration.
+Alternatively, you can also create a custom rule with a _Log_ action (only available on Enterprise plans) to check for potentially harmful traffic related to LLM prompts. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your AI Security for Apps configuration.
 
 ## 6. Mitigate harmful requests
 
@@ -209,11 +209,11 @@ Alternatively, you can also create a custom rule with a _Log_ action (only avail
 - **With response type**: Custom JSON
 - **Response body**: `{ "error": "Your request was blocked. Please rephrase your request." }`
 
-For additional examples, refer to [Example mitigation rules](/waf/detections/firewall-for-ai/example-rules/). For a list of fields provided by Firewall for AI, refer to [Firewall for AI fields](/waf/detections/firewall-for-ai/fields/).
+For additional examples, refer to [Example mitigation rules](/waf/detections/ai-security-for-apps/example-rules/). For a list of fields provided by AI Security for Apps, refer to [AI Security for Apps fields](/waf/detections/ai-security-for-apps/fields/).
 
 <Details header="Combine with other Rules language fields">
 
-You can combine the previous expression with other [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) of the Rules language. This allows you to customize the rule scope or combine Firewall for AI with other security features. For example:
+You can combine the previous expression with other [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) of the Rules language. This allows you to customize the rule scope or combine AI Security for Apps with other security features. For example:
 
 - The following expression will match requests with PII in an LLM prompt addressed to a specific host:
 

@@ -36,7 +36,7 @@ This guide covers how to:
 3. Turn on [**Allow all Cloudflare One traffic to reach enrolled devices**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices).
 4. Go to **Team & Resources** > **Devices** > **Device profiles** > **General profiles** and select the device group that needs WARP-to-WARP connectivity.
 5.
-	<Render file="tunnel/cgnat-split-tunnels" product="cloudflare-one" params={{ feature: "WARP-to-WARP"}} />
+	<Render file="tunnel/cgnat-split-tunnels" product="cloudflare-one" />
 
 This will instruct WARP to begin proxying any traffic destined for a `100.96.0.0/12` IP address to Cloudflare for routing and policy enforcement.
 

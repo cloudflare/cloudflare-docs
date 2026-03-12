@@ -1853,9 +1853,9 @@
 					"ent": "Yes"
 				},
 				"g_fw_for_ai": {
-					"title": "Firewall for AI (beta)",
+					"title": "AI Security for Apps",
 					"summary": "Enterprise-only",
-					"link": "/waf/detections/firewall-for-ai/",
+					"link": "/waf/detections/ai-security-for-apps/",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",

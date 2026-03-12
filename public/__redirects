@@ -2248,6 +2248,7 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/connections/connect-networks/downloads/system-requirements/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/lb/ /cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/ 301
+/cloudflare-one/networks/routes/ /cloudflare-one/networks/routes/add-routes/ 301
 /cloudflare-one/tutorials/vnc-client-in-browser/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/vnc-browser-rendering/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules 301
 /cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
@@ -2559,6 +2560,7 @@
 # WAF
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
 /waf/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
+/waf/detections/firewall-for-ai/* /waf/detections/ai-security-for-apps/:splat 301
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
 /waf/security-events/* /waf/analytics/security-events/:splat 301
 /waf/change-log/2019-* /waf/change-log/ 301

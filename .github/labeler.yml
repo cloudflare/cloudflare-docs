@@ -10,6 +10,10 @@ product:agents:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/agents/**
+product:cloudflare-agent:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-agent/**
 product:ai-crawl-control:
   - changed-files:
       - any-glob-to-any-file:
