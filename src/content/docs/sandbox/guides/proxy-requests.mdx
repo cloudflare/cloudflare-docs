@@ -189,6 +189,19 @@ response = requests.post(
 
 The real `MY_API_KEY` is never present in the sandbox. The Worker substitutes it transparently.
 
+:::note[Pointing SDKs at the proxy URL]
+Many API clients and SDKs default to the official API base URL. After setting up the proxy, you need to tell the library to send requests to your Worker instead. Most SDKs support an environment variable or constructor option to override the base URL.
+
+For example, the Anthropic SDK reads `ANTHROPIC_BASE_URL`. Pass your proxy URL as that value and the JWT token as the API key:
+
+```bash
+export ANTHROPIC_BASE_URL="$PROXY_BASE/proxy/anthropic"
+export ANTHROPIC_API_KEY="$PROXY_TOKEN"
+```
+
+The SDK then sends all requests to your Worker proxy, which validates the token and forwards them to `api.anthropic.com` with the real key injected. Check the documentation for your API client to find the equivalent base URL setting.
+:::
+
 ## Adding more services
 
 To proxy additional APIs, define another `ServiceConfig` and add it to `createProxyHandler`:
