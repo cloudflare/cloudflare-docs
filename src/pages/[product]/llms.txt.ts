@@ -36,7 +36,7 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 
 	const pageLinks = pages
 		.map((e) => {
-			const line = `- [${e.data.title}](${base}/${e.id}/index.md)`;
+			const line = `- [${e.data.title}](${base}/${e.id}/)`;
 			return e.data.description ? line.concat(`: ${e.data.description}`) : line;
 		})
 		.join("\n");
@@ -50,7 +50,9 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 		>
 		> For other Cloudflare products, see the [Cloudflare documentation directory](${base}/llms.txt).
 		>
-		> Any page below can also be retrieved as Markdown by requesting it with an \`Accept: text/markdown\` header, and removing the trailing \`/index.md\` segment (for example, \`curl -H "Accept: text/markdown" ${base}${productUrl}\`).
+		> Any page below can be retrieved as Markdown in two ways:
+		> - By sending an \`Accept: text/markdown\` header (for example, \`curl -H "Accept: text/markdown" ${base}${productUrl}\`)
+		> - By appending \`index.md\` to the route (for example, \`${base}${productUrl}index.md\`)
 
 		## ${title} documentation pages
 

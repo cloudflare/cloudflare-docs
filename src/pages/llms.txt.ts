@@ -39,7 +39,9 @@ export const GET: APIRoute = async ({ url }) => {
 		>
 		> For the complete documentation archive in a single file, use the [Full Documentation Archive](${base}/llms-full.txt). That file is intended for offline indexing, bulk vectorization, or large-context models. Each product's llms.txt also links to a product-scoped llms-full.txt.
 		>
-		> Any documentation page can also be retrieved as Markdown by requesting it with an \`Accept: text/markdown\` header, and removing the trailing \`/index.md\` segment (for example, \`curl -H "Accept: text/markdown" ${base}/workers\`).
+		> Any documentation page can be retrieved as Markdown in two ways:
+		> - By sending an \`Accept: text/markdown\` header (for example, \`curl -H "Accept: text/markdown" ${base}/workers/\`)
+		> - By appending \`index.md\` to the route (for example, \`${base}/workers/index.md\`)
 
 		${grouped
 			.map(([group, entries]) => {
