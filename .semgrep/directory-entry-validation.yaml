@@ -18,7 +18,7 @@ rules:
     languages: [yaml]
     message: >-
       Directory entry is missing a required id field.
-      Run tools/directory-entry-ids to generate one automatically.
+      Run "tools/directory-entry-ids" to generate one automatically.
       (add [skip style guide checks] to commit message to skip)
     severity: MEDIUM
     paths:
@@ -37,7 +37,7 @@ rules:
     message: >-
       Directory entry has an invalid id. The id must be exactly 6 characters
       composed only of: abcdefghijkmnopqrstuvwxyzACDEFGHJKLMNPQRTUVWXY34679.
-      Run tools/directory-entry-ids to generate a valid id.
+      Run "tools/directory-entry-ids" to generate a valid id.
       (add [skip style guide checks] to commit message to skip)
     severity: MEDIUM
     paths:
