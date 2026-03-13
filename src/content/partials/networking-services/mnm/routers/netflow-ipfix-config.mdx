@@ -32,7 +32,7 @@ These settings direct your router to send flow data to Cloudflare's network for 
 
 Set up your router's **Flow Record** configuration with the following fields. These fields define what traffic metadata your router collects and exports.
 
-**Match fields** identify the traffic:
+Match fields identify the traffic:
 
 - `match ipv4 protocol`
 - `match ipv4 source address`
@@ -41,7 +41,7 @@ Set up your router's **Flow Record** configuration with the following fields. Th
 - `match transport destination-port`
 - `match interface input`
 
-**Collect fields** capture statistics about the traffic:
+Collect fields capture statistics about the traffic:
 
 - `collect transport tcp flag`
 - `collect counter packets long`
@@ -54,7 +54,7 @@ Set up your router's **Flow Record** configuration with the following fields. Th
 
 Save your NetFlow or IPFIX configuration changes and apply them to your router. Verify that your router's NetFlow template does not contain duplicated fields, as duplicates can cause export errors.
 
-## Verify your configuration
+## 5. Verify your configuration
 
 After configuring NetFlow or IPFIX, verify that data is being sent to Cloudflare:
 
