@@ -45,3 +45,18 @@ index 66f1b2e..b52f3c9 100644
  								{label}
  							</a>
  						</li>
+diff --git a/node_modules/@astrojs/starlight/utils/navigation.ts b/node_modules/@astrojs/starlight/utils/navigation.ts
+index 079663c..15c1774 100644
+--- a/node_modules/@astrojs/starlight/utils/navigation.ts
++++ b/node_modules/@astrojs/starlight/utils/navigation.ts
+@@ -405,9 +405,7 @@ function getSidebarFromIntermediateSidebar(
+ 	intermediateSidebar: SidebarEntry[],
+ 	pathname: string
+ ): SidebarEntry[] {
+-	const sidebar = structuredClone(intermediateSidebar);
+-	setIntermediateSidebarCurrentEntry(sidebar, pathname);
+-	return sidebar;
++	return intermediateSidebar;
+ }
+ 
+ /** Marks the current page as such in an intermediate sidebar. */
