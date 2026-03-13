@@ -433,12 +433,11 @@ Browser Rendering does not bypass CAPTCHAs, Turnstile challenges, or any other b
 If you are crawling your own site and want Browser Rendering to access it freely, you can create a WAF skip rule to allowlist Browser Rendering. Refer to [How do I allowlist Browser Rendering?](/browser-rendering/faq/#can-i-allowlist-browser-rendering-on-my-own-website) for instructions.
 :::
 
-<Render
-  file="setting-custom-user-agent"
-  product="browser-rendering"
-/>
+### User-Agent
 
-The `/crawl` endpoint uses `CloudflareBrowserRenderingCrawler/1.0` as its default User-Agent, which is different from the other [REST API](/browser-rendering/rest-api/) endpoints. For a full list of default User-Agent strings, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/#user-agent).
+The `/crawl` endpoint uses `CloudflareBrowserRenderingCrawler/1.0` as its User-Agent, which is different from the other [REST API](/browser-rendering/rest-api/) endpoints. This User-Agent is not customizable. Unlike the other REST API endpoints and [Workers Bindings](/browser-rendering/workers-bindings/), the `userAgent` parameter is not supported on the `/crawl` endpoint.
+
+For a full list of default User-Agent strings, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/#user-agent).
 
 ## Troubleshooting
 

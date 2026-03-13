@@ -21,7 +21,7 @@ The default User-Agent depends on how you access Browser Rendering:
 The Chrome version in the REST API and Workers Bindings User-Agent strings may change as Browser Rendering updates its underlying browser engine. Do not rely on a specific version number.
 :::
 
-Unlike the headers listed below, the User-Agent can be customized using the `userAgent` parameter in your [REST API](/browser-rendering/rest-api/) request or in your [Workers Bindings](/browser-rendering/workers-bindings/) configuration. Because the User-Agent is configurable, destination servers should use the headers below to identify Browser Rendering requests rather than relying on the User-Agent string.
+Unlike the headers listed below, the User-Agent can be customized for the [REST API](/browser-rendering/rest-api/) (using the `userAgent` parameter) and [Workers Bindings](/browser-rendering/workers-bindings/) configuration. The [crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/) is the exception. Its User-Agent is always `CloudflareBrowserRenderingCrawler/1.0` and cannot be changed. Because the User-Agent is configurable for most methods, destination servers should use the headers below to identify Browser Rendering requests rather than relying on the User-Agent string.
 
 ## Non-configurable headers
 
