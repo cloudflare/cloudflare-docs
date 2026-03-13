@@ -95,9 +95,37 @@ Load balancing **requests** are the number of uncached requests made by your l
 
 ***
 
-## I'm seeing a specific error code for my load balancer or monitor.
+## I am seeing a specific error code for my load balancer or monitor.
 
-For a list of specific error codes and next steps, refer to [Load Balancing Troubleshooting](/load-balancing/troubleshooting).
+For a list of specific error codes and next steps, refer to [Common error codes](/load-balancing/troubleshooting/common-error-codes/).
+
+***
+
+## How do I troubleshoot a load balancing issue?
+
+When you experience unexpected load balancing behavior — such as traffic routing to the wrong pool, endpoints marked unhealthy, or intermittent failures — work through the following checks:
+
+1. **Identify the affected resources**: Note the specific load balancer, pool, and endpoint (origin) names experiencing the issue.
+2. **Capture error details**: Record the exact error messages or unexpected behaviors you observe, including screenshots if applicable.
+3. **Record timestamps**: Note when the issue occurred, in UTC.
+4. **Review your current configuration**: Use the API to retrieve your load balancer and pool configuration:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/load_balancers" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json"
+```
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/load_balancers/pools" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json"
+```
+
+5. **Check health monitor results**: Review monitor status in the dashboard under **Traffic** > **Load Balancing** to see which endpoints are reported as healthy or unhealthy.
+6. **Review common causes**: Refer to [Common error codes](/load-balancing/troubleshooting/common-error-codes/) for explanations of specific error codes and their resolutions.
+
+If the issue persists and you need additional help, include the affected resources, timestamps, error details, and current configuration when you open a support case.
 
 ***
 
@@ -106,3 +134,4 @@ For a list of specific error codes and next steps, refer to [Load Balancing Trou
 * [Endpoint and pool health](/load-balancing/understand-basics/health-details)
 * [Monitors](/load-balancing/monitors)
 * [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/)
+* [Common error codes](/load-balancing/troubleshooting/common-error-codes/)

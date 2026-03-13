@@ -61,3 +61,48 @@ If you wish to disable RUM, follow these steps:
 
 2. Select **Manage Site** for the hostname for which you wish to disable RUM.
 3. Select **Delete**.
+
+## Why does my Time to First Byte (TTFB) appear higher with Cloudflare enabled?
+
+Because Cloudflare operates as a [reverse proxy](/fundamentals/concepts/how-cloudflare-works/), every request for an uncached resource travels through an additional network hop:
+
+1. Cloudflare negotiates a connection with your origin server.
+2. Cloudflare sends the request over that connection.
+3. Your origin generates and returns a response.
+4. Cloudflare receives the response and forwards it to the visitor.
+
+For **uncached** resources, this extra hop can add a small amount of latency — typically only a few milliseconds. Visitors located closer to your origin server than to the nearest Cloudflare data center may occasionally see slightly longer TTFB values. In many cases, Cloudflare's network still reduces overall latency by serving cached content closer to visitors and optimizing the path to your origin.
+
+For **cached** resources, TTFB is almost always faster because the response is served directly from the Cloudflare data center nearest the visitor, without contacting your origin at all.
+
+:::note
+Each Cloudflare data center maintains its own cache. The first request for a cacheable resource in a given data center must reach your origin before the response can be stored locally. Subsequent requests from that data center are served from cache and are significantly faster.
+:::
+
+To learn more about how TTFB is measured and why it may not reflect real-world user experience, refer to [Are you measuring what matters? A fresh look at Time To First Byte](https://blog.cloudflare.com/ttfb-is-not-what-it-used-to-be/).
+
+### Recommendations to reduce TTFB
+
+- Turn on [Argo Smart Routing](/argo-smart-routing/) to optimize the network path between Cloudflare and your origin.
+- Review the [Speed features](/speed/) available on your plan, including auto-minification and Early Hints.
+- Increase your [cache hit ratio](/cache/performance-review/cache-performance/) so more requests are served from Cloudflare without contacting your origin.
+- Use [Tiered Cache](/cache/how-to/tiered-cache/) to reduce the number of data centers that need to reach your origin.
+
+## How do I troubleshoot slow website performance?
+
+Start by running a speed test in Observatory to establish a baseline:
+
+1. In the Cloudflare dashboard, go to **Speed** > **Synthetic monitoring**.
+
+   <DashButton url="/?to=/:account/:zone/speed/test" />
+
+2. Enter the URL you want to test and select **Run test**.
+3. Review the results. For help interpreting the metrics, refer to [Test results](/speed/observatory/test-results/).
+
+When requesting further help from Cloudflare Support, include the following information:
+
+- The tool or service you used to measure performance (for example, a Lighthouse report URL or WebPageTest result link).
+- Example URLs that are affected.
+- Ray IDs from the `cf-ray` response header captured during the test.
+- Timestamps of when you observed the issue, in UTC.
+- Which performance metric you want to optimize (for example, Largest Contentful Paint, Time to First Byte, or overall page load time).

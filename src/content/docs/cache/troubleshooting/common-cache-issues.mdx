@@ -1,0 +1,62 @@
+---
+pcx_content_type: troubleshooting
+title: Common cache issues
+description: Fix common Cloudflare cache issues.
+sidebar:
+  order: 2
+---
+
+This page covers common cache issues related to session management and cache configuration.
+
+## Session or login issues after enabling Cloudflare
+
+Cloudflare does not store or manage session state for your application. Session information — typically stored in cookies — is proxied between the visitor and your origin server without modification by default. However, certain Cloudflare features can interfere with session persistence if your application is not configured to account for them.
+
+### Cached responses strip cookies
+
+By default, Cloudflare only caches [specific static file extensions](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) such as images, stylesheets, and JavaScript files. These file types do not normally carry session cookies, so default caching does not affect sessions.
+
+However, if you use a [Cache Rule](/cache/how-to/cache-rules/) to cache additional content types (for example, HTML pages), Cloudflare serves those responses from cache and does **not** forward cookies from the origin. This can break session-dependent pages.
+
+**To resolve this:**
+
+- Do not cache URLs that set or require cookies for session management. Use a Cache Rule with a [bypass condition based on cookie presence](/cache/how-to/cache-rules/examples/bypass-cache-on-cookie/) to exclude authenticated or session-dependent pages.
+- Confirm that your origin application does not require cookies on any URL that Cloudflare is caching. Review the `CF-Cache-Status` header to determine which URLs are being served from cache.
+
+### IP-based session persistence breaks behind a reverse proxy
+
+Some applications use the visitor's IP address as part of session tracking. Because Cloudflare operates as a reverse proxy, your origin server sees Cloudflare IP addresses instead of the visitor's real IP. If your application ties sessions to the client IP, sessions may break or rotate unexpectedly.
+
+**To resolve this:**
+
+- Configure your origin to read the visitor's real IP from the [`CF-Connecting-IP`](/fundamentals/reference/http-headers/#cf-connecting-ip) or `X-Forwarded-For` request header instead of the TCP source address.
+- Refer to [Restoring visitor IPs](/support/troubleshooting/restoring-visitor-ips/) for server-specific configuration guides (Apache, Nginx, IIS, and others).
+- If possible, switch your application to cookie-based session tracking instead of IP-based tracking.
+
+### Workers or Transform Rules modify headers
+
+If you have [Cloudflare Workers](/workers/), [Transform Rules](/rules/transform/), or legacy Page Rules active, they can modify request or response headers — including `Set-Cookie` and `Cookie` headers. Review these configurations if sessions break after adding or changing rules.
+
+## Verifying whether Cloudflare is caching a URL
+
+To check whether a specific URL is being cached:
+
+1. Make a request to the URL and inspect the response headers for [`CF-Cache-Status`](/cache/concepts/cache-responses/).
+2. If the header is absent, the request did not pass through Cloudflare's cache layer. Verify that the DNS record is set to **Proxied** (orange cloud).
+3. If the header value is `DYNAMIC`, Cloudflare does not consider the URL cacheable by default. You can create a [Cache Rule](/cache/how-to/cache-rules/) to cache it.
+4. If the header value is `HIT`, the response was served from Cloudflare's cache.
+
+## Stale or incorrect content served from cache
+
+If you see outdated content being served:
+
+1. [Purge the cache](/cache/how-to/purge-cache/) for the affected URL or your entire zone.
+2. After purging, make a new request and verify the `CF-Cache-Status` header shows `MISS` (indicating a fresh fetch from origin).
+3. If the issue persists after purging, the problem may be at your origin server. [Temporarily pause Cloudflare](/fundamentals/manage-domains/pause-cloudflare/) to test the origin response directly.
+4. If the origin response is also incorrect, the issue is in your application or server configuration, not Cloudflare's cache.
+
+If you need additional help with a caching issue, include:
+
+- The affected URL.
+- The `CF-Cache-Status` and `CF-Ray` header values from the response.
+- A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) captured while reproducing the issue.
