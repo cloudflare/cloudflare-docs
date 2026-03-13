@@ -131,7 +131,7 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 
 	const pagesSection = sections
 		? `## Overview\n\n${rootLink}\n\n${pageContent}`
-		: `## ${title} documentation pages\n\n${rootLink}\n${pageContent}`;
+		: `## ${title} documentation pages\n\n${rootLink}\n\n${pageContent}`;
 
 	const markdown = dedent(`
 		# ${title}
