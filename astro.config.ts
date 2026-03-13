@@ -145,6 +145,7 @@ export default defineConfig({
 									"/llms.txt",
 									"/llms-full.txt",
 									"**/llms.txt",
+									"**/index.md",
 									"{props.*}",
 									"/",
 									"/glossary/",
