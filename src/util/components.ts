@@ -84,8 +84,7 @@ async function ensureScanned() {
 		visit(tree, ["mdxJsxFlowElement", "mdxJsxTextElement"], function (node) {
 			const typed = node as MdxJsxFlowElement | MdxJsxTextElement;
 
-			if (!typed.name || typed.name[0] === typed.name[0].toLowerCase())
-				return;
+			if (!typed.name || typed.name[0] === typed.name[0].toLowerCase()) return;
 
 			// Track component usage
 			usages[typed.name] ||= { count: 0, pages: new Set() };
@@ -99,8 +98,7 @@ async function ensureScanned() {
 				)?.value;
 
 				let product = typed.attributes.find(
-					(attr) =>
-						attr.type === "mdxJsxAttribute" && attr.name === "product",
+					(attr) => attr.type === "mdxJsxAttribute" && attr.name === "product",
 				)?.value;
 
 				if (!product) {

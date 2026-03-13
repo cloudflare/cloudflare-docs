@@ -1,6 +1,10 @@
 import { getCollection } from "astro:content";
 
-type GlossaryEntry = { product: string; term: string; general_definition: string };
+type GlossaryEntry = {
+	product: string;
+	term: string;
+	general_definition: string;
+};
 
 let allEntries: GlossaryEntry[];
 let termMap: Map<string, GlossaryEntry>;
