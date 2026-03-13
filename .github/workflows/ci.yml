@@ -79,7 +79,7 @@ jobs:
         id: check_link_result
         run: |
           if [ ! -d dist ] || [ -z "$(ls -A dist)" ]; then
-            echo "Build failed before producing output — this is a real build error, not a link check failure."
+            echo "Build failed before producing output. Check the Build job logs for the error."
             exit 1
           fi
           if [ "${{ steps.build_step.outcome }}" = "failure" ]; then
