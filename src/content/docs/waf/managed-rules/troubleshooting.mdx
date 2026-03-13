@@ -18,19 +18,64 @@ By default, WAF's managed rulesets are compatible with most websites and web app
 
 ## Troubleshoot false positives
 
-You can use [Security Events](/waf/analytics/security-events/) to help you identify what caused legitimate requests to get blocked. Add filters and adjust the report duration as needed.
+Cloudflare WAF uses two main rule packages:
 
-If you encounter a false positive caused by a managed rule, do one of the following:
+- **Cloudflare Managed Ruleset**: Maintained by Cloudflare WAF engineers. Rule patterns are not publicly shared for security reasons.
+- **OWASP ModSecurity Core Rule Set**: Cloudflare's implementation of the open-source [OWASP CRS](https://owasp.org/www-project-modsecurity-core-rule-set/), which is not maintained by Cloudflare.
 
-- **Add an exception**: [Exceptions](/waf/managed-rules/waf-exceptions/) allow you to skip the execution of WAF managed rulesets or some of their rules for certain requests.
+### Identify the blocking rule
 
-- **Adjust the OWASP managed ruleset**: A request blocked by the rule with ID <RuleID id="6179ae15870a4bb7b2d480d4843b323c" /> and description `949110: Inbound Anomaly Score Exceeded` refers to the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). To resolve the issue, [configure the OWASP managed ruleset](/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard/).
+Before taking action, identify which rule blocked the request:
 
-- **Disable the corresponding managed rule(s)**: Create an override to disable specific rules. This may avoid false positives, but you will also reduce the overall site security. Refer to the [dashboard instructions](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) on configuring a managed ruleset, or to the [API instructions](/ruleset-engine/managed-rulesets/override-managed-ruleset/) on creating an override.
+1. Go to **Security** > **Events** in the Cloudflare dashboard.
+2. Filter by the request details (IP address, URI path, timestamp) to find the blocked event.
+3. Note the **Rule ID** and **Rule message** — these determine which remediation step to follow.
+
+### Recommended remediation steps
+
+Follow this decision tree based on the rule that triggered the false positive:
+
+#### 1. Add a WAF exception (recommended first step)
+
+[WAF exceptions](/waf/managed-rules/waf-exceptions/) let you skip specific rules or entire managed rulesets for requests that match certain conditions. This is the recommended approach because it preserves protection for all other traffic.
+
+Define exceptions in the [Cloudflare dashboard](/waf/managed-rules/waf-exceptions/define-dashboard/) or via the [Rulesets API](/waf/managed-rules/waf-exceptions/define-api/).
+
+#### 2. Adjust OWASP settings (if rule 949110 is triggering)
+
+A request blocked by the rule with ID <RuleID id="6179ae15870a4bb7b2d480d4843b323c" /> and description `949110: Inbound Anomaly Score Exceeded` was blocked by the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). The OWASP ruleset calculates a cumulative [threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score) — when the score exceeds the configured threshold, the request is blocked.
+
+To resolve OWASP false positives:
+
+- **Increase the anomaly score threshold**: Increase the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold) so that more rule matches are required before blocking.
+- **Lower the paranoia level**: Reduce the [paranoia level](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#paranoia-level) to disable more aggressive rules that are more likely to produce false positives.
+
+For configuration steps, refer to [Configure the OWASP managed ruleset](/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard/).
+
+#### 3. Disable specific managed rules
+
+Create an override to disable the individual rule causing the false positive. This reduces overall security, so only disable the minimum number of rules necessary.
+
+Refer to the [dashboard instructions](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) or the [API instructions](/ruleset-engine/managed-rulesets/override-managed-ruleset/) on creating an override.
 
 :::note
 If you contact Cloudflare Support to verify whether a WAF managed rule triggers as expected, [provide a HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) captured while sending the specific request of concern.
 :::
+
+### Legacy WAF remediation options
+
+:::note
+The legacy WAF has been replaced by the current WAF managed rulesets. If you are still using the legacy WAF, consider migrating to the current WAF. The following options apply only to the legacy WAF.
+:::
+
+If you are on the legacy WAF, the following remediation options are available (ordered from least to most impact on security):
+
+1. **Add the requesting IP to the allowlist**: Use [IP Access Rules](/waf/tools/ip-access-rules/) to allowlist the IP. This is the best option if the affected users always connect from the same IP address and does not reduce site security for other visitors.
+2. **Disable the specific WAF rule**: Turn off only the rule causing the false positive. This reduces security slightly but stops the incorrect block or challenge.
+3. **Create a bypass rule**: Create a [custom rule](/waf/custom-rules/skip/) with a bypass action targeting a specific URL combined with IP address or user-agent conditions.
+4. **Lower OWASP sensitivity**: If the blocking rule is `981176` (legacy OWASP) or `949110` (current OWASP), decrease the OWASP sensitivity level.
+5. **Disable WAF for a specific endpoint via Page Rule** (not recommended): This disables the WAF entirely for that URL pattern, removing all WAF protection for matching requests.
+6. **WAF overrides via API** (Enterprise only): Use the [WAF Overrides API](/api/resources/waf/subresources/overrides/methods/list/) to disable a specific WAF rule for a particular URI without affecting other traffic.
 
 ### Additional recommendations
 
