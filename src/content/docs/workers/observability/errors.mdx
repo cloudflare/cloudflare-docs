@@ -5,7 +5,7 @@ head: []
 description: Review Workers errors and exceptions.
 ---
 
-import { TabItem, Tabs, DashButton } from "~/components";
+import { TabItem, Tabs, DashButton, TypeScriptExample } from "~/components";
 
 Review Workers errors and exceptions.
 
@@ -30,6 +30,40 @@ When a Worker running in production has an error that prevents it from returning
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
 Errors in the `11xx` range can also be related with [Snippets](/rules/snippets/).
+
+### Troubleshooting 1101 errors
+
+A `1101` error with HTTP status `500` means your Worker threw an unhandled JavaScript exception. Visitors see a Cloudflare error page instead of your expected response. Common triggers include:
+
+- **Unhandled promise rejections** — an `await` that rejects without a surrounding `try`/`catch`.
+- **Fetch failures to your origin** — the origin is unreachable or returns an unexpected response that your code does not handle.
+- **KV or binding errors** — a read or write to [Workers KV](/kv/), [D1](/d1/), or another binding fails and the error is not caught.
+
+To fix this, wrap code that could throw in `try`/`catch` blocks and return a graceful fallback response:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+  MY_KV: KVNamespace;
+}
+
+export default {
+  async fetch(_request: Request, env: Env): Promise<Response> {
+    try {
+      const result = await env.MY_KV.get("key");
+      return new Response(result ?? "No value found");
+    } catch (error) {
+      console.error("KV read failed", error);
+      return new Response("An error occurred", { status: 500 });
+    }
+  },
+};
+```
+
+</TypeScriptExample>
+
+Use [Workers Logs](/workers/observability/logs/workers-logs/) or [`wrangler tail`](/workers/wrangler/commands/general/#tail) to identify the specific exception. For a full list of error codes and invocation statuses, refer to the [error pages table](#error-pages-generated-by-workers) above and [Workers Trace Events](/logs/logpush/logpush-job/datasets/account/workers_trace_events/#outcome).
 
 ### Loop limit
 

@@ -64,3 +64,22 @@ No.
 ### Are key expirations billed as delete operations?
 
 No. Key expirations are not billable operations.
+
+## Troubleshooting
+
+### Common issues
+
+- **Stale reads after writing** — KV is [eventually consistent](/kv/concepts/how-kv-works/). After writing a key, it may take up to 60 seconds for the new value to propagate globally. If you need to read your own writes immediately, refer to the [`cacheTtl` parameter](/kv/api/read-key-value-pairs/#cachettl-parameter).
+- **Namespace not found or binding errors** — Verify the KV namespace is correctly bound in your Wrangler configuration file. The binding name in your code must match the `binding` value in `[[kv_namespaces]]`. Refer to [KV bindings](/kv/concepts/kv-bindings/) for setup instructions.
+- **Key or value size errors** — Keys are limited to 512 bytes and values to 25 MiB. Refer to [Limits](/kv/platform/limits/) for the full list of constraints.
+
+### Information to gather if the issue persists
+
+If the issue persists after these checks, gather the following details:
+
+1. When you first noticed the issue.
+2. Steps to reproduce the problem.
+3. The KV namespace name experiencing the issue.
+4. Expected behavior versus actual behavior.
+5. The Worker script name that invokes the KV namespace.
+6. A brief summary of what the Worker does.
