@@ -174,6 +174,16 @@ describe("Cloudflare Docs", () => {
 				expect(content_type).toBe("Overview");
 			});
 
+			it("index.md rel='alternate' tag", () => {
+				const markdown = dom.querySelector(
+					"link[rel='alternate'][type='text/markdown']",
+				)?.attributes.href;
+
+				expect(markdown).toBe(
+					"https://developers.cloudflare.com/workers/index.md",
+				);
+			});
+
 			it("og:image tag", () => {
 				const image = dom.querySelector("meta[property='og:image']")?.attributes
 					.content;
