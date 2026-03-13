@@ -493,6 +493,24 @@ https://example.com {
 ```
 ---
 
+## Cloudflare IPs in your server logs
+
+When your site is proxied through Cloudflare, your origin server logs will show Cloudflare edge IP addresses instead of original visitor IPs by default. This is expected behavior and does not mean Cloudflare is originating traffic to your site. Cloudflare does not generate or originate attack traffic to customer origins.
+
+### Scenario 1: Cloudflare IPs in origin HTTP logs (expected when proxied)
+
+If your site is proxied through Cloudflare and your origin logs show Cloudflare IP addresses, this is normal. Your origin sees Cloudflare edge server IPs because Cloudflare acts as a reverse proxy between visitors and your origin.
+
+To log the original visitor IP instead, follow the [web server instructions](#web-server-instructions) on this page to extract the IP from the [`CF-Connecting-IP` header](/fundamentals/reference/http-headers/#cf-connecting-ip).
+
+### Scenario 2: Cloudflare IPs on non-HTTP protocols (likely IP spoofing)
+
+Cloudflare's reverse proxy only forwards HTTP and HTTPS traffic. If you observe UDP traffic, ICMP traffic, or other non-HTTP traffic that appears to originate from [Cloudflare IP addresses](https://www.cloudflare.com/ips/), this is consistent with IP spoofing or amplification attacks, not Cloudflare-originated traffic.
+
+In IP spoofing attacks, the attacker forges the source IP address of packets to make them appear to come from a different source. Cloudflare IP addresses, like any other public IP ranges, can be used as spoofed source addresses by attackers. This does not indicate that Cloudflare systems sent the traffic.
+
+---
+
 ## Related Resources
 
 - [Cloudflare HTTP headers](/fundamentals/reference/http-headers/)

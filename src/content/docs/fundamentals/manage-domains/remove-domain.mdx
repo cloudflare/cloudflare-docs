@@ -62,3 +62,22 @@ Please also note that domains in the `Initializing (Finish setup)` or `Pending` 
    :::
 
 3. Select **Confirm**.
+
+## Automatic domain removal
+
+Cloudflare periodically checks whether your domain's nameservers still point to Cloudflare. If the nameservers are changed away from Cloudflare:
+
+1. **After 7 days** — the domain is marked as **Moved** and Cloudflare sends an email notification to the account owner.
+2. **After 7 more days in Moved status** — the domain is permanently deleted from the account.
+
+This process ensures that new domain owners can add domains to their own Cloudflare accounts without conflicts.
+
+### Restore an automatically removed domain
+
+To restore a domain that was automatically removed:
+
+1. [Re-add the domain](/fundamentals/manage-domains/add-site/) to your Cloudflare account.
+2. Update the nameservers at your domain registrar to the Cloudflare nameservers assigned to your zone.
+3. Wait for the domain to become **Active** in the Cloudflare dashboard.
+
+You will need to reconfigure any settings (DNS records, page rules, firewall rules, and so on) that were previously associated with the domain, as they are not preserved after deletion.

@@ -20,15 +20,17 @@ If your account does not use SSO, you can delete your account on your own.
 
 ## Prerequisites
 
-Before Cloudflare can cancel your account and delete your personal information, you will need to follow the process below for each domain associated with your Cloudflare account:
+Before Cloudflare can cancel your account and delete your personal information, complete the following steps for each domain associated with your Cloudflare account:
 
-- [Cancel your subscriptions or add-on services](/billing/manage/cancel-subscription/)
-- [Remove your domain from Cloudflare](/fundamentals/manage-domains/remove-domain/)
-- [Remove Cloudflare nameservers at your domain registrar](/dns/zone-setups/full-setup/setup/)
-- [Disable auto-renew for your Registrar domain(s)](/registrar/account-options/renew-domains#set-up-automatic-renewals)
-- If you are using a Cloudflare [CNAME setup](/dns/zone-setups/partial-setup/), [update your DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) at your DNS provider to point to your website IPs or hostnames instead of Cloudflare.
-- [Delete payment information](/billing/get-started/update-billing-info/#delete-a-payment-method)
-- (*Optional*) [Download a copy of your invoices](/billing/manage/invoices/#download-invoice). Once deleted, the invoices will no longer be accessible and cannot be re-sent to you.
+1. [Cancel all subscriptions and add-on services](/billing/manage/cancel-subscription/).
+2. [Remove all domains from Cloudflare](/fundamentals/manage-domains/remove-domain/).
+3. Update DNS at your registrar:
+   - If using a [full setup](/dns/zone-setups/full-setup/setup/), remove Cloudflare nameservers at your domain registrar and replace them with your previous DNS provider's nameservers.
+   - If using a [CNAME setup](/dns/zone-setups/partial-setup/), [update your DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) at your DNS provider to point to your website IPs or hostnames instead of Cloudflare.
+4. [Disable auto-renew for your Registrar domain(s)](/registrar/account-options/renew-domains#set-up-automatic-renewals).
+5. [Download a copy of your invoices](/billing/manage/invoices/#download-invoice) from the billing section. Once the account is deleted, invoices will no longer be accessible and cannot be re-sent.
+6. [Delete payment information](/billing/get-started/update-billing-info/#delete-a-payment-method).
+7. Delete your account and personal information from the dashboard (steps below).
 
 ## Delete your Cloudflare account
 
@@ -55,6 +57,12 @@ All domains, subscriptions, and billing information on your account will be remo
 3. Select **Delete this user**.
 4. Select **Delete user**.
 5. Follow the prompts to finish deleting your account.
+
+## After deletion
+
+- **Re-register with the same email** — you can sign up for a new Cloudflare account using the same email address. In most cases, the email is available for reuse immediately.
+- **Re-invitation to other accounts** — if you were a member of other Cloudflare accounts or organizations, the account owner will need to re-invite you after you create a new account.
+- **Prevent future lockouts** — when setting up your new account, store your 2FA backup codes in a secure location (such as a password manager) and consider adding multiple 2FA methods (security key, TOTP app, and email) so you are not dependent on a single device.
 
 :::note
 

@@ -134,7 +134,17 @@ Cloudflare Speed Test measures latency multiple times over the course of the tes
 
 Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using [Cloudflare Gateway](/cloudflare-one/traffic-policies/domain-categories/) or [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
 
-In some cases, a domain may be miscategorized. For example, a social media site might be categorized as "Shopping & Auctions". If you believe a domain is miscategorized, or a domain has not yet been categorized, please provide your suggested category using [this form](https://radar.cloudflare.com/domains/feedback) to bring it to our attention.
+### Review domain categories
+
+To check the categories assigned to a domain, go to `https://radar.cloudflare.com/domains/lookup/<DOMAIN>` and replace `<DOMAIN>` with the domain you want to look up.
+
+### Request recategorization
+
+In some cases, a domain may be miscategorized. For example, a social media site might be categorized as "Shopping & Auctions". If you believe a domain is miscategorized, or a domain has not yet been categorized, you can request a change through any of the following methods:
+
+- **Radar**: Select **Domain Categorization Feedback** on the [Radar domain feedback page](https://radar.cloudflare.com/domains/feedback).
+- **Security Center**: In the Cloudflare dashboard, go to **Security Center** > **Investigate**, search for the domain, then select **Request to change categorization**. For detailed steps, refer to [Change categorization](/security-center/investigate/change-categorization/).
+- **API**: Create an API token with Intel Edit permissions and use the [miscategorization endpoint](/api/resources/intel/subresources/miscategorizations/methods/create/). For detailed steps, refer to [Change categorization via the API](/security-center/investigate/change-categorization/#via-the-api).
 
 ## DNS
 

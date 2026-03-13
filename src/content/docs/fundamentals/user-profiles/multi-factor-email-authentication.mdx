@@ -25,11 +25,18 @@ Email MFA can only be disabled by enabling [two-factor authentication](/fundamen
 
 ## Troubleshoot MFA
 
-Cloudflare emails are sometimes flagged as spam by the recipient's email service. If you are expecting an authentication token, you should check the spam folder for any Cloudflare emails and configure a filter to allow Cloudflare emails from *[no-reply@notify.cloudflare.com](mailto:no-reply@notify.cloudflare.com)*\_**.**\_
+### When does email MFA trigger?
 
-Other times, emails are rejected by the recipient email service. Cloudflare will try again it will flag your email address after several attempts and no further emails will be sent.
+Email MFA challenges a login when the client IP address is not recognized for that account. This means you may be prompted for a code when logging in from a new network, device, or location.
 
-If you still do not receive an email after ensuring your email service is not flagging Cloudflare, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+### Not receiving the one-time code email
+
+1. **Check your spam or junk folder** for an email from `no-reply@notify.cloudflare.com`.
+2. **Allowlist the sender** — add `no-reply@notify.cloudflare.com` to your email provider's allowlist or safe senders list to prevent future emails from being flagged as spam.
+3. **Request a new code** if the token has expired. Each one-time code has a limited validity period (30 minutes). If it has expired, return to the login page and attempt to log in again to receive a fresh code.
+4. **Check for email suppression** — if previous emails to your address bounced or were marked as spam, Cloudflare may have added it to a suppression list and will stop sending further emails. [Contact Cloudflare Support](/support/contacting-cloudflare-support/) to have your email address cleared from the suppression list.
+
+If you still do not receive an email after completing these steps, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ***
 

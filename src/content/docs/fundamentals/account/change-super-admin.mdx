@@ -6,14 +6,33 @@ products:
   - fundamentals
 ---
 
-If you or someone in your organization leaves or loses access to email, you can add another Super Administrator using any other Super Administrator on your Account with a [verified email](https://developers.cloudflare.com/fundamentals/account/verify-email-address/) address.
+If you or someone in your organization leaves or loses access to email, you can add another Super Administrator using any other Super Administrator on your account with a [verified email](/fundamentals/account/verify-email-address/) address.
 
-First, [add a member](/fundamentals/manage-members/manage/) to your account and assign the **Super Administrator** role.
-
-Then, if needed, remove the previous Super Administrator.
+1. [Add a member](/fundamentals/manage-members/manage/) to your account and assign the **Super Administrator** role.
+2. If needed, remove the previous Super Administrator.
 
 :::note
 
 Cloudflare recommends having more than one user as Super Administrators for your accounts, so that if you are unable to login with your credentials for any reason, there is another one you can use to manage your domains.
 
 :::
+
+## Swap Super Administrator email addresses
+
+If you need to reassign the Super Administrator role between two existing members, the system will not allow you to assign an email address that is already in use on the account. Use a temporary placeholder:
+
+1. Change the new Super Administrator's email (for example, `newsuperadmin@example.com`) to a temporary placeholder (for example, `temp@example.com`).
+2. Change the old Super Administrator's email (for example, `oldsuperadmin@example.com`) to `newsuperadmin@example.com`.
+3. Change the temporary placeholder (`temp@example.com`) to `oldsuperadmin@example.com`, or remove the temporary member.
+
+:::note
+This process applies to self-serve accounts only. Enterprise accounts should contact their account team.
+:::
+
+## Regain access when the Super Administrator email is lost
+
+If you cannot access the email address associated with the Super Administrator role:
+
+1. **Recover the email account** — contact your email provider to regain access to the mailbox, or set up email forwarding from the old address to one you control.
+2. **Reset your Cloudflare password** — once you can receive email at the Super Administrator address, go to [`https://dash.cloudflare.com/forgot-password`](https://dash.cloudflare.com/forgot-password) to reset your password.
+3. **Add a new Super Administrator** — after logging in, [add a new member](/fundamentals/manage-members/manage/#add-account-members) with the Super Administrator role using an email address you control, then remove the old Super Administrator if needed.

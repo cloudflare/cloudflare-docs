@@ -50,13 +50,17 @@ You will receive an email with instructions to set your password. Once created, 
 
 * **Different Cloudflare account email as Apple ID**: This option creates a new Cloudflare account. If you want to log in to an existing account, [change your email address](/fundamentals/user-profiles/change-password-or-email/) to match the one used for your Apple ID.
 
-If you chose to share your email when creating a Cloudflare account with Apple ID and want to set a password and obtain an API key, go to the [Cloudflare dashboard](https://dash.cloudflare.com/login) login page and select **Forgot your password?** to trigger a password reset email.
+##### Shared email (not hidden)
 
-If you have chosen to hide your email when creating a Cloudflare account with Apple ID, resetting your password will not work. You can use the suggested workaround below:
+If you chose to share your email when creating a Cloudflare account with Apple ID and want to set a password and obtain an API key, trigger a password reset from [`https://dash.cloudflare.com/forgot-password`](https://dash.cloudflare.com/forgot-password). The reset email will be sent to the email address you shared with Cloudflare during sign-up.
 
-1. [Add a new member to your account](/fundamentals/manage-members/manage/#add-account-members) using your secondary email address.
-2. [Register a new Cloudflare account](/fundamentals/account/create-account/) with your secondary email address and set a password.
-3. Access the Cloudflare dashboard with the new user and password to obtain an API key.
+##### Hidden email (Apple Private Relay)
+
+If you chose to hide your email when creating a Cloudflare account with Apple ID, password reset will not work because the relay address does not accept inbound email from arbitrary senders. Use the following workaround:
+
+1. [Add a new member to your account](/fundamentals/manage-members/manage/#add-account-members) using a secondary email address you control.
+2. [Register a new Cloudflare account](/fundamentals/account/create-account/) with that secondary email address and set a password.
+3. Log in to the Cloudflare dashboard with the new account to obtain an API key.
 
 Changing your Cloudflare account email address will unlink the login credentials with the Apple ID from your Cloudflare account. If you attempt to log in using the same Apple ID after the email is changed, you will create a new Cloudflare account.
 

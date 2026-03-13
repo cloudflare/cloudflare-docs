@@ -165,6 +165,61 @@ When setting up 2FA, you should have saved your backup codes in a secure locatio
 Once you use a backup code, it becomes invalid.
 :::
 
+## Recover your account
+
+If you do not have access to your 2FA account or backup codes and cannot currently generate a 2FA code, use a verified device that you have logged in from before to request a temporary access code.
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+
+      <DashButton url="/?to=/:account/home" />
+
+2. On the **Two-Factor Authentication** page, select **Try recovery** on **Lost all 2FA devices and backup codes?**.
+3. Select **Begin recovery**.
+4. A 6-digit access code will be sent to the email address associated with your Cloudflare account.
+5. Enter the temporary access code into the Cloudflare Dashboard and select **Verify email**.
+6. Select **Verify device**. This checks whether you are using a device that has previously logged into your account.
+
+If you see **Device verified**, you will receive an email within 3-5 days with instructions to regain access to your account. It is important to note this process cannot be expedited, so you will need to wait until that email arrives before you can proceed.
+
+If you see **Device verification failed**, you may be able to try again considering the following:
+
+   * If you clear your cookies often or are logging in from a different IP address, you have wiped Cloudflare's memory of your device and will need to use a different device to verify.
+   * Your browser may be set to clear cookies on exit or after browser or OS upgrades. This interferes with the device verification process.
+   * You may be using anti-malware or other software that automatically clears your browser cookies and makes your device unregognizable by Cloudflare's Dashboard.
+
+If you are still unable to verify your device, follow the instructions to *Request manual verification* on the **Device verification failed** page.
+
+## Troubleshooting and recovery
+
+### Find your backup codes
+
+When you first set up 2FA, your backup codes were saved in a file named `cloudflare-<YOUR_EMAIL>-<DATE>.txt`. Search your computer's downloads folder for a file starting with `cloudflare-` to locate it.
+
+### Self-service recovery from a recognized device
+
+If you have lost your backup codes, you can attempt recovery from a device where you have recently logged in:
+
+1. Go to the [Cloudflare login page](https://dash.cloudflare.com/login) and enter your credentials.
+2. At the 2FA challenge, select **Try recovery** under **Lost all 2FA devices and backup codes?**.
+3. Follow the on-screen steps to verify your device. The device must have an existing Cloudflare login cookie.
+
+:::note
+If device verification fails, your browser may have cleared cookies since your last login. Try from a different device or browser where you previously logged in.
+:::
+
+### Contact support for manual recovery
+
+If both backup codes and device recovery are unavailable, [contact Cloudflare Support](/support/contacting-cloudflare-support/) with billing verification details to prove account ownership:
+
+- Date and amount of the last charge on the account
+- Last four digits and expiry date of the payment card on file (or the PayPal email address used for billing)
+
+:::caution
+As a last resort, Cloudflare can delete the account so you can re-register with the same email address. This permanently removes all account configuration, domains, and data. This action cannot be undone.
+:::
+
+***
+
 ## Related resources
 
 * [Google Authentication documentation](https://support.google.com/accounts/answer/1066447?hl=en\&ref_topic=2954345\&co=GENIE.Platform%3DiOS\&oco=0)
