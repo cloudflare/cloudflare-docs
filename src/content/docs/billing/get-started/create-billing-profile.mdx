@@ -7,6 +7,27 @@ sidebar:
 
 import { Render, DashButton } from "~/components";
 
+## Accepted payment methods
+
+Cloudflare accepts the following payment methods:
+
+- **Credit cards**: Visa, Mastercard, American Express, Discover, and UnionPay
+- **PayPal**
+
+Other card types (for example, Maestro) are not supported.
+
+### Payment method validation
+
+When you add or update a payment method, Cloudflare performs the following validation checks:
+
+- **Address validation**: Your billing address is checked against an address database.
+- **Card address validation**: The address on your Cloudflare account must match the address on file with your card provider.
+- **CVC validation**: The Card Verification Code (CVC) is verified against your card.
+- **Card type validation**: Not all card subtypes are supported. If your card is declined, try a different card.
+- **PayPal**: Your PayPal address and email are validated.
+
+If your payment method is rejected, try adding it again in an incognito or private browser window. Browser extensions can sometimes interfere with payment processing. Verify that all details match the information on file with your card provider or PayPal.
+
 ## Add a primary payment method
 
 A primary payment method is required to purchase Cloudflare products and services. Cloudflare does not store or have access to your full card number, PIN, or PayPal password.
