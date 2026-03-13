@@ -149,7 +149,9 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 
 		${description ?? ""}
 
-		> Links below point directly to Markdown versions of each page. For other Cloudflare products, see the [Cloudflare documentation directory](${base}/llms.txt).
+		> Links below point directly to Markdown versions of each page. Any page can also be retrieved as Markdown by sending an \`Accept: text/markdown\` header to the page's URL without the \`index.md\` suffix (for example, \`curl -H "Accept: text/markdown" ${base}${productUrl}\`).
+		>
+		> For other Cloudflare products, see the [Cloudflare documentation directory](${base}/llms.txt).
 		>
 		> Use [${title} llms-full.txt](${base}${productUrl}llms-full.txt) for the complete ${title} documentation in a single file, intended for offline indexing, bulk vectorization, or large-context models.
 
