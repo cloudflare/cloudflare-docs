@@ -2333,7 +2333,7 @@
 /cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/ 301
 /cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/ 301
 /cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/ 301
-/cloudflare-one/changelog/warp/ /changelog/cloudflare-one-client/ 301
+/cloudflare-one/changelog/warp/ /cloudflare-one/changelog/cloudflare-one-client/ 301
 /cloudflare-one/insights/analytics/analytics-overview/ /cloudflare-one/insights/analytics-overview/ 301
 /cloudflare-one/api-terraform/access-with-terraform/ /learning-paths/clientless-access/terraform/publish-apps-with-terraform/ 301
 /cloudflare-one/traffic-policies/lists/ /cloudflare-one/reusable-components/lists/ 301
