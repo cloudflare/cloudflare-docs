@@ -6,9 +6,13 @@ products:
 date: 2026-03-12
 ---
 
+import { WranglerConfig } from "~/components";
+
 You can now SSH into running Container instances using Wrangler. This is useful for debugging, inspecting running processes, or executing one-off commands inside a Container.
 
 To connect, enable `wrangler_ssh` in your Container configuration and add your `ssh-ed25519` public key to `authorized_keys`:
+
+<WranglerConfig>
 
 ```jsonc
 {
@@ -27,6 +31,8 @@ To connect, enable `wrangler_ssh` in your Container configuration and add your `
 	]
 }
 ```
+
+</WranglerConfig>
 
 Then connect with:
 
