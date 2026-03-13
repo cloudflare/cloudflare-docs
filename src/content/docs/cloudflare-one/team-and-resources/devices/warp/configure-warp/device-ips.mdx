@@ -11,22 +11,22 @@ import { Render, Details } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| <ul><li> Traffic and DNS mode</li><li> Traffic only mode </li></ul>   | All plans                                                     |
+| [Client modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| <ul><li> Traffic and DNS mode</li><li> Traffic only mode </li></ul>                        | All plans                                                     |
 
-| System   | Availability | Minimum WARP version |
-| -------- | ------------ | -------------------- |
-| Windows  | ✅           |  2025.10.186.0         |
-| macOS    | ✅           |  2025.10.186.0          |
-| Linux    | ✅           |  2025.10.186.0           |
-| iOS      | ❌           |                      |
-| Android  | ❌           |                      |
-| ChromeOS | ❌           |                      |
+| System   | Availability | Minimum client version |
+| -------- | ------------ | ---------------------- |
+| Windows  | ✅           | 2025.10.186.0          |
+| macOS    | ✅           | 2025.10.186.0          |
+| Linux    | ✅           | 2025.10.186.0          |
+| iOS      | ❌           |                        |
+| Android  | ❌           |                        |
+| ChromeOS | ❌           |                        |
 
 </Details>
 
-A device IP identifies and routes traffic to a specific WARP device in your Zero Trust organization. When a user registers the WARP client, Cloudflare assigns a virtual IPv4 and IPv6 address to the [device registration](/cloudflare-one/team-and-resources/devices/device-registration/). The WARP client uses these IP addresses to create a [virtual network interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) on the device, which allows your private network to reach the device via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) on-ramps.
+A device IP identifies and routes traffic to a specific device in your Zero Trust organization. When a user registers the Cloudflare One Client (formerly WARP), Cloudflare assigns a virtual IPv4 and IPv6 address to the [device registration](/cloudflare-one/team-and-resources/devices/device-registration/). The Cloudflare One Client uses these IP addresses to create a [virtual network interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) on the device, which allows your private network to reach the device via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) on-ramps.
 
 You can verify device IPs and, if needed, reconfigure address pools to avoid overlapping IPs with existing internal resources.
 
@@ -37,9 +37,9 @@ By default, Cloudflare assigns device IPs from the following address space:
 - Default IPv4: `100.96.0.0/12`
 - Default IPv6: `2606:4700:0cf1:1000::/64`
 
-If your organization already uses the default IPv4 range for internal networking, or if you require more granular IP assignments for firewall policy management, you can configure custom WARP IPv4 subnets. You can assign different IPv4 subnets to devices based on the user's identity.
+If your organization already uses the default IPv4 range for internal networking, or if you require more granular IP assignments for firewall policy management, you can configure custom device IPv4 subnets. You can assign different IPv4 subnets to devices based on the user's identity.
 
-The default IPv6 range is owned by Cloudflare and therefore should not conflict with services on your private network. The WARP IPv6 range is not configurable.
+The default IPv6 range is owned by Cloudflare and therefore should not conflict with services on your private network. The device IPv6 range is not configurable.
 
 ## Create an IP subnet
 
@@ -51,16 +51,17 @@ To define a custom IPv4 subnet for device IPs:
 2. Under **Device IP subnets**, select **Add new IP subnet**.
 3. Enter any name for the subnet.
 4. In **CIDR**, enter a valid IPv4 CIDR block from the supported private ranges:
-	- `10.0.0.0/8`
-	- `172.16.0.0/12`
-	- `192.168.0.0/16`
-	- `100.64.0.0/10`
+   - `10.0.0.0/8`
+   - `172.16.0.0/12`
+   - `192.168.0.0/16`
+   - `100.64.0.0/10`
 
-	The configured CIDR block must be at least size `/24`.
+   The configured CIDR block must be at least size `/24`.
 
-	:::note[Avoid IP conflicts]
-	Ensure that the chosen CIDR block does not overlap with existing internal routes, such as local office subnets or virtual private clouds (VPCs) in AWS or GCP.
-	:::
+   :::note[Avoid IP conflicts]
+   Ensure that the chosen CIDR block does not overlap with existing internal routes, such as local office subnets or virtual private clouds (VPCs) in AWS or GCP.
+   :::
+
 5. Select **Add subnet** to save.
 
 Next, [assign this subnet](#assign-device-ips) to a group of devices.
@@ -138,7 +139,7 @@ Apply a device IP profile based on an [IdP group](/cloudflare-one/traffic-polici
 <Render
 	file="gateway/selectors/user-name"
 	product="cloudflare-one"
-		params={{ UIname: "User Name" }}
+	params={{ UIname: "User Name" }}
 />
 
 #### SAML attributes
@@ -151,19 +152,25 @@ Apply a device IP profile based on an attribute name and value from a [SAML IdP]
 
 Comparison operators determine how device IP profiles match a selector.
 
-| Operator | Meaning                                    |
-| -------- | ------------------------------------------ |
-| in       | matches at least one of the defined values |
-| not in   | does not match any of the defined values   |
-| is       | equals the defined value                   |
-| matches  | regular expression (regex) evaluates to true  |
+| Operator | Meaning                                      |
+| -------- | -------------------------------------------- |
+| in       | matches at least one of the defined values   |
+| not in   | does not match any of the defined values     |
+| is       | equals the defined value                     |
+| matches  | regular expression (regex) evaluates to true |
 
 ### Value
 
 <Render
 	file="gateway/value"
 	product="cloudflare-one"
-	params={{ selector: "User email", selectordescription: "user's email domain", operator: "matches", valueOne: "@acme.com", valueTwo: "@widgets.com" }}
+	params={{
+		selector: "User email",
+		selectordescription: "user's email domain",
+		operator: "matches",
+		valueOne: "@acme.com",
+		valueTwo: "@widgets.com",
+	}}
 />
 
 ### Logical operators
@@ -177,7 +184,7 @@ To evaluate multiple conditions in an expression, select a logical operator:
 
 ### Order of precedence
 
-WARP checks the IP profiles from top to bottom as they appear in the Cloudflare One dashboard (lowest precedence number is checked first). WARP follows the first match principle — once a device matches an IP profile, WARP stops evaluating and no subsequent IP profiles can override the decision. You can rearrange the IP profiles in the Cloudflare One dashboard according to your desired order of precedence.
+The Cloudflare One Client checks the IP profiles from top to bottom as they appear in the Cloudflare One dashboard (lowest precedence number is checked first). The client follows the first match principle — once a device matches an IP profile, the client stops evaluating and no subsequent IP profiles can override the decision. You can rearrange the IP profiles in the Cloudflare One dashboard according to your desired order of precedence.
 
 ## Verify device IPs
 
@@ -187,14 +194,14 @@ To check the virtual IP addresses assigned to a specific device registration:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices**.
 2. Select your device > **View details**.
-	:::tip[Device filters]
-	The Cloudflare One dashboard defaults to showing devices that were last seen within the past year. You can select **Show filters** to change the date range or filter by the last active user.
-	:::
+   :::tip[Device filters]
+   The Cloudflare One dashboard defaults to showing devices that were last seen within the past year. You can select **Show filters** to change the date range or filter by the last active user.
+   :::
 3. Scroll down to **Users**. You will see the registrations associated with this device along with their assigned IPv4 and IPv6 addresses.
 
 ### Via the CLI
 
-To check the device IP used by WARP's virtual network interface:
+To check the device IP used by the device client's virtual network interface:
 
 <Render file="warp/check-network-interface-ip" product="cloudflare-one" />
 
@@ -223,106 +230,106 @@ To get a list of all device registrations in a subnet (including revoked registr
 	import ipaddress
 	import json
 
-	# --- Configuration ---
-	AUTH_EMAIL = "<CLOUDFLARE_ACCOUNT_EMAIL>"
-	AUTH_KEY = "<CLOUDFLARE_API_KEY>"  # Refer to https://developers.cloudflare.com/fundamentals/api/get-started/keys/. API token authentication is not currently supported for fetching device IPs.
-	ACCOUNT_ID = "<CLOUDLFARE_ACCOUNT_ID"  # Refer to https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/.
-	TARGET_CIDR = "100.64.0.0/10"
+    # --- Configuration ---
+    AUTH_EMAIL = "<CLOUDFLARE_ACCOUNT_EMAIL>"
+    AUTH_KEY = "<CLOUDFLARE_API_KEY>"  # Refer to https://developers.cloudflare.com/fundamentals/api/get-started/keys/. API token authentication is not currently supported for fetching device IPs.
+    ACCOUNT_ID = "<CLOUDLFARE_ACCOUNT_ID"  # Refer to https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/.
+    TARGET_CIDR = "100.64.0.0/10"
 
-	# --- API request headers ---
-	headers = {
-			"X-Auth-Email": AUTH_EMAIL,
-			"X-Auth-Key": AUTH_KEY,
-			"Content-Type": "application/json"
-	}
+    # --- API request headers ---
+    headers = {
+    		"X-Auth-Email": AUTH_EMAIL,
+    		"X-Auth-Key": AUTH_KEY,
+    		"Content-Type": "application/json"
+    }
 
-	def get_all_registrations():
-			"""Fetches all device registrations including revoked registrations. """
-			devices = {}
-			url = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/devices/registrations"
-			params = {"per_page": 50, "status": "all"}
+    def get_all_registrations():
+    		"""Fetches all device registrations including revoked registrations. """
+    		devices = {}
+    		url = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/devices/registrations"
+    		params = {"per_page": 50, "status": "all"}
 
-			while True:
-					response = requests.get(url, headers=headers, params=params).json()
-					if not response.get('success'):
-							print(f"Error fetching registrations: {response.get('errors')}")
-							break
+    		while True:
+    				response = requests.get(url, headers=headers, params=params).json()
+    				if not response.get('success'):
+    						print(f"Error fetching registrations: {response.get('errors')}")
+    						break
 
-					for d in response.get('result', []):
-							# We use the ID as the key to link with IP data later
-							devices[d['id']] = d
+    				for d in response.get('result', []):
+    						# We use the ID as the key to link with IP data later
+    						devices[d['id']] = d
 
-					cursor = response.get('result_info', {}).get('cursor')
-					if not cursor:
-							break
-					params['cursor'] = cursor
+    				cursor = response.get('result_info', {}).get('cursor')
+    				if not cursor:
+    						break
+    				params['cursor'] = cursor
 
-			return devices
+    		return devices
 
-	def filter_by_cidr(device_map, network):
-			"""Fetch device IPs and return devices that fall within the target CIDR block."""
-			matches = []
-			device_ids = list(device_map.keys())
+    def filter_by_cidr(device_map, network):
+    		"""Fetch device IPs and return devices that fall within the target CIDR block."""
+    		matches = []
+    		device_ids = list(device_map.keys())
 
-			# API limits IP correlation to batches of 20
-			for i in range(0, len(device_ids), 20):
-					batch = device_ids[i:i+20]
-					# Construct parameters for the IP endpoint
-					params = {f"device_ids[{idx}]": d_id for idx, d_id in enumerate(batch)}
-					url = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/teamnet/devices/ips"
+    		# API limits IP correlation to batches of 20
+    		for i in range(0, len(device_ids), 20):
+    				batch = device_ids[i:i+20]
+    				# Construct parameters for the IP endpoint
+    				params = {f"device_ids[{idx}]": d_id for idx, d_id in enumerate(batch)}
+    				url = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/teamnet/devices/ips"
 
-					res = requests.get(url, headers=headers, params=params).json()
+    				res = requests.get(url, headers=headers, params=params).json()
 
-					if not res.get('success'):
-							print(f"Error fetching IPs: {res.get('errors')}")
-							continue
+    				if not res.get('success'):
+    						print(f"Error fetching IPs: {res.get('errors')}")
+    						continue
 
-					for item in res.get('result', []):
-							d_id = item.get('device_id')
-							ip_data = item.get('device_ips', {})
-							ipv4_str = ip_data.get('ipv4')
+    				for item in res.get('result', []):
+    						d_id = item.get('device_id')
+    						ip_data = item.get('device_ips', {})
+    						ipv4_str = ip_data.get('ipv4')
 
-							if ipv4_str:
-									try:
-											if ipaddress.IPv4Address(ipv4_str) in network:
-													if d_id in device_map:
-															full_data = device_map[d_id]
-															full_data['device_ips'] = ip_data
-															matches.append(full_data)
-									except ValueError:
-											continue
+    						if ipv4_str:
+    								try:
+    										if ipaddress.IPv4Address(ipv4_str) in network:
+    												if d_id in device_map:
+    														full_data = device_map[d_id]
+    														full_data['device_ips'] = ip_data
+    														matches.append(full_data)
+    								except ValueError:
+    										continue
 
-			return matches
+    		return matches
 
-	if __name__ == "__main__":
-			try:
-					net = ipaddress.IPv4Network(TARGET_CIDR, strict=False)
+    if __name__ == "__main__":
+    		try:
+    				net = ipaddress.IPv4Network(TARGET_CIDR, strict=False)
 
-					print(f"[*] Fetching registrations (status=all)...")
-					all_devices = get_all_registrations()
-					print(f"[*] Found {len(all_devices)} total registrations.")
+    				print(f"[*] Fetching registrations (status=all)...")
+    				all_devices = get_all_registrations()
+    				print(f"[*] Found {len(all_devices)} total registrations.")
 
-					print(f"[*] Checking IP ranges for match...")
-					filtered_list = filter_by_cidr(all_devices, net)
+    				print(f"[*] Checking IP ranges for match...")
+    				filtered_list = filter_by_cidr(all_devices, net)
 
-					if filtered_list:
-							print(f"\n--- Found {len(filtered_list)} Device(s) in {TARGET_CIDR} ---\n")
-							for dev in filtered_list:
-									print(json.dumps(dev, indent=2))
-									print("-" * 50)
-					else:
-							print(f"\nNo devices found within the {TARGET_CIDR} range.")
+    				if filtered_list:
+    						print(f"\n--- Found {len(filtered_list)} Device(s) in {TARGET_CIDR} ---\n")
+    						for dev in filtered_list:
+    								print(json.dumps(dev, indent=2))
+    								print("-" * 50)
+    				else:
+    						print(f"\nNo devices found within the {TARGET_CIDR} range.")
 
-			except Exception as e:
-					print(f"Script Error: {e}")
-	```
+    		except Exception as e:
+    				print(f"Script Error: {e}")
+    ```
 
 2. In the script configuration section, input your Cloudflare API credentials and your IP subnet range.
 
 3. Open a terminal and navigate to the script directory. To run the script, type:
-	```sh
-	python3 filter-device-ips.py
-	```
+   ```sh
+   python3 filter-device-ips.py
+   ```
 
 </Details>
 
@@ -336,6 +343,3 @@ Cloudflare does not support editing an existing IPv4 subnet definition. To assig
 4. Select **Save**.
 
 The new subnet will appear in the **Device IP subnets** table. You can now delete the old subnet. Devices will only get an IP from the new subnet when they [re-register](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration); existing registrations will retain their [current IP](#verify-device-ips).
-
-
-

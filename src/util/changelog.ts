@@ -38,7 +38,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 
 	return releases.map((release) => {
 		const { platformName, version, releaseNotes, releaseDate } = release.data;
-		const title = `WARP client for ${platformName} (version ${version})`;
+		const title = `Cloudflare One Client for ${platformName} (version ${version})`;
 
 		const [platform, track] = release.id.split("/");
 
@@ -53,7 +53,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				? "[stable releases downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/)"
 				: "[beta releases downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/beta-releases/)";
 
-		const prefix = `A new ${prettyTrack} release for the ${prettyPlatform} WARP client is now available on the ${link}.`;
+		const prefix = `A new ${prettyTrack} release for the ${prettyPlatform} Cloudflare One Client is now available on the ${link}.`;
 
 		return {
 			id: `${releaseDate.toISOString().slice(0, 10)}-warp-${platform}-${track}`,

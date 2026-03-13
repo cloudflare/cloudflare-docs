@@ -9,11 +9,11 @@ import { GlossaryTooltip, Render } from "~/components";
 
 By default, Cloudflare Zero Trust excludes common top-level domains, used for local resolution, from being sent to Gateway for processing. These top-level domains are resolved by the local DNS resolver configured for the device on its primary interface.
 
-You can add additional domains to the Local Domain Fallback list and specify a DNS server to use in place of the Gateway resolver. The WARP client proxies these requests directly to the configured fallback servers.
+You can add additional domains to the Local Domain Fallback list and specify a DNS server to use in place of the Gateway resolver. The Cloudflare One Client (formerly WARP) proxies these requests directly to the configured fallback servers.
 
 ## Limitations
 
-Local Domain Fallback only applies to devices running the WARP client.
+Local Domain Fallback only applies to devices running the Cloudflare One Client.
 
 Because DNS requests subject to Local Domain Fallback bypass the Gateway resolver, they are not subject to Gateway DNS policies or DNS logging. If you want to route DNS queries to custom resolvers and apply Gateway filtering, use [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/). If both Local Domain Fallback and resolver policies are configured for the same device, Cloudflare will apply client-side Local Domain Fallback rules first.
 
@@ -43,7 +43,7 @@ To view the fallback domains applied to a device, you can:
 
 - In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > find the target device and the **Last active device profile** > follow the [steps above](#view-domains).
 - (Desktop only) Run `warp-cli settings` in the terminal of the target device and review the [fallback domains](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/#fallback-domains) section of the output.
-- (Desktop only) Collect [WARP diagnostic logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/) for the device and review the [fallback domain](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/#fallback-domains) section in `warp_settings.txt`.
+- (Desktop only) Collect [client diagnostic logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/) for the device and review the [fallback domain](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/#fallback-domains) section in `warp_settings.txt`.
 
 ### Add a domain
 
@@ -63,5 +63,5 @@ By default, Warp sends [reverse DNS queries](https://www.cloudflare.com/learning
 
 ## Related resources
 
-- [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) - Control which traffic goes through WARP by including or excluding specific IPs or domains.
-- [WARP with firewall](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/) - Learn which IPs, domains, and ports to allow so users can deploy and connect WARP successfully behind a firewall.
+- [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) - Control which traffic goes through the Cloudflare One Client by including or excluding specific IPs or domains.
+- [Cloudflare One Client with firewall](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/) - Learn which IPs, domains, and ports to allow so users can deploy and connect the Cloudflare One Client successfully behind a firewall.

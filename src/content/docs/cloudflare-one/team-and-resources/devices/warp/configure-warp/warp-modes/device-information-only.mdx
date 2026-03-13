@@ -34,7 +34,7 @@ Using the API, enable client certificate provisioning for [your zone](/fundament
 	}}
 />
 
-## 2. Configure the WARP client
+## 2. Configure the Cloudflare One Client
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles** > **General profiles**.
 
@@ -46,7 +46,7 @@ Using the API, enable client certificate provisioning for [your zone](/fundament
 
 5. [Enroll your device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) into your Zero Trust organization.
 
-   When enrolled in Posture only mode, the WARP client will automatically generate a client certificate and install the certificate on the device. This certificate is necessary to confirm the source of outgoing traffic.
+   When enrolled in Posture only mode, the Cloudflare One Client (formerly WARP) will automatically generate a client certificate and install the certificate on the device. This certificate is necessary to confirm the source of outgoing traffic.
 
 ## 3. (Optional) Verify the client certificate
 
@@ -97,7 +97,7 @@ Using the API, enable client certificate provisioning for [your zone](/fundament
         </TabItem>
         </Tabs>
 
-        The client certificate name should match the **Device ID** in your WARP client **Preferences**.
+        The client certificate name should match the **Device ID** in your Cloudflare One Client **Preferences**.
 
 2.  To verify the client certificate in your Cloudflare account:
     1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), select the zone for which you enabled client certificates.
@@ -120,7 +120,7 @@ To block traffic from devices that do not have a valid client certificate:
    | Hostname | equals | `app.mycompany.com` | | |
 5. Select **Deploy**.
 
-Posture only mode is now enabled on the device. To start enforcing device posture, set up a [WARP client check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) and add a _Require_ device posture rule to your [Access policy](/cloudflare-one/access-controls/policies/). When the device connects to the Access application for the first time, the browser will ask to use the client certificate installed by WARP.
+Posture only mode is now enabled on the device. To start enforcing device posture, set up a [WARP client check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) and add a _Require_ device posture rule to your [Access policy](/cloudflare-one/access-controls/policies/). When the device connects to the Access application for the first time, the browser will ask to use the client certificate installed by the Cloudflare One Client.
 
 <Width size="large">
 	![Browser prompts for client
@@ -129,4 +129,4 @@ Posture only mode is now enabled on the device. To start enforcing device postur
 
 ## Limitations
 
-Posture only mode is not compatible with the [Windows pre-login](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/) feature. The user must be logged into Windows because WARP needs to [install a certificate](#3-optional-verify-the-client-certificate) in the user store.
+Posture only mode is not compatible with the [Windows pre-login](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/) feature. The user must be logged into Windows because the Cloudflare One Client needs to [install a certificate](#3-optional-verify-the-client-certificate) in the user store.

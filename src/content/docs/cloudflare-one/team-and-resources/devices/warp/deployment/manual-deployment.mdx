@@ -7,7 +7,7 @@ sidebar:
 
 import { Details, GlossaryTooltip, Render } from "~/components";
 
-If you plan to direct your users to manually download and configure the WARP client, users will need to connect the client to your organization's Cloudflare Zero Trust instance.
+If you plan to direct your users to manually download and configure the Cloudflare One Client (formerly WARP), users will need to connect the client to your organization's Cloudflare Zero Trust instance.
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ The device is now protected by your organization's Zero Trust policies.
 
 To enroll your device using the terminal:
 
-1. [Download](https://pkg.cloudflareclient.com/) and install the WARP package.
+1. [Download](https://pkg.cloudflareclient.com/) and install the Cloudflare One Client package.
 
 2. Open a terminal window. Ensure that you are logged into the terminal as the current user and not as root.
 
@@ -49,7 +49,7 @@ To enroll your device using the terminal:
 
 <Details header="Troubleshoot missing registration">
 
-The registration process may take a few minutes to complete. If the registration continues to be missing, then manually copy the authentication token from the browser to the WARP client:
+The registration process may take a few minutes to complete. If the registration continues to be missing, then manually copy the authentication token from the browser to the Cloudflare One Client:
 
 1. On the success page, right-click and select **View Page Source**.
 2. Find the HTML metadata tag that contains the token. For example, `<meta http-equiv="refresh" content"=0;url=com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=yeooilknmasdlfnlnsadfojDSFJndf_kjnasdf..." />`
@@ -64,7 +64,7 @@ If you get a `401` error, then the token has expired. Generate a new one by refr
 
 </Details>
 
-7. If you did not configure WARP to [auto-connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect), manually turn on WARP:
+7. If you did not configure the client to [auto-connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect), manually connect:
 
    ```sh
    warp-cli connect
@@ -84,20 +84,20 @@ The device is now protected by your organization's Zero Trust policies.
 
 <Details header="Feature availability">
 
-| System   | Availability | Minimum WARP version |
-| -------- | ------------ | -------------------- |
-| Windows  | ❌           |                      |
-| macOS    | ❌           |                      |
-| Linux    | ❌           |                      |
-| iOS      | ✅           | 1.10                 |
-| Android  | ✅           | 2.4                  |
-| ChromeOS | ✅           | 2.4                  |
+| System   | Availability | Minimum client version |
+| -------- | ------------ | ---------------------- |
+| Windows  | ❌           |                        |
+| macOS    | ❌           |                        |
+| Linux    | ❌           |                        |
+| iOS      | ✅           | 1.10                   |
+| Android  | ✅           | 2.4                    |
+| ChromeOS | ✅           | 2.4                    |
 
 </Details>
 
 Administrators can provide users with a custom login URL that automatically fills in your organization's <GlossaryTooltip term="team name">team name</GlossaryTooltip> during device enrollment. Using a URL reduces the potential for error that comes with manual entry of the team name.
 
-The WARP client supports URLs accessed through a direct link or with a URL handler such as a QR code. Direct links are currently only supported in Safari and Firefox. If your default browser is Chrome (or another unsupported browser), we recommend embedding the link in a QR code.
+The Cloudflare One Client supports URLs accessed through a direct link or with a URL handler such as a QR code. Direct links are currently only supported in Safari and Firefox. If your default browser is Chrome (or another unsupported browser), we recommend embedding the link in a QR code.
 
 #### Generate a login URL
 
@@ -147,4 +147,4 @@ The device is now protected by your organization's Zero Trust policies.
 
 ## Virtual machines
 
-By default, virtual machines (VMs) are subject to the WARP client settings of the host. If you want to deploy a separate instance of WARP in a VM, you must configure the VM to operate in bridged networking mode.
+By default, virtual machines (VMs) are subject to the device client settings of the host. If you want to deploy a separate instance of the Cloudflare One Client in a VM, you must configure the VM to operate in bridged networking mode.

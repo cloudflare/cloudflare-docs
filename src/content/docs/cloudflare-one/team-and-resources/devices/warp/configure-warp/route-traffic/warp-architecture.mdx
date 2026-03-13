@@ -1,28 +1,28 @@
 ---
 pcx_content_type: concept
-title: WARP architecture
+title: Client architecture
 tags:
   - Wireguard
-description: Explore how the Cloudflare WARP client routes DNS and IP traffic to apply your Zero Trust policies.
+description: Explore how the Cloudflare One Client routes DNS and IP traffic to apply your Zero Trust policies.
 sidebar:
   order: 5
 ---
 
 import { Render, TabItem, Tabs, GlossaryTooltip } from "~/components";
 
-This guide explains how the Cloudflare WARP client interacts with a device's operating system to route traffic in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-and-dns-mode-default) mode.
+This guide explains how the Cloudflare One Client (formerly WARP) interacts with a device's operating system to route traffic in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-and-dns-mode-default) mode.
 
 In [DNS only mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#dns-only-mode) mode, the IP traffic information does not apply. In [Traffic only mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-only-mode) mode, the DNS traffic information does not apply.
 
-## WARP traffic flow
+## Client traffic flow
 
-The WARP client allows organizations to have granular control over the applications an end user device can access. The client forwards DNS and network traffic from the device to Cloudflare's global network, where Zero Trust policies are applied in the cloud. On all operating systems, the WARP daemon maintains three connections between the device and Cloudflare:
+The Cloudflare One Client allows organizations to have granular control over the applications an end user device can access. The client forwards DNS and network traffic from the device to Cloudflare's global network, where Zero Trust policies are applied in the cloud. On all operating systems, the WARP daemon maintains three connections between the device and Cloudflare:
 
-| Connection                                                                                                                                     | Protocol | Purpose                                                                                                              |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
+| Connection                                                                                                                                    | Protocol | Purpose                                                                                                              |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
 | WARP tunnel ([via WireGuard or MASQUE](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol)) | UDP      | Send IP packets to Gateway for network policy enforcement, HTTP policy enforcement, and private network access.      |
-| [DoH](https://www.cloudflare.com/learning/dns/dns-over-tls/)                                                                                   | HTTPS    | Send DNS requests to Gateway for DNS policy enforcement. The DoH connection is maintained inside of the WARP tunnel. |
-| Device orchestration                                                                                                                           | HTTPS    | Perform user registration, check device posture, apply WARP profile settings.                                        |
+| [DoH](https://www.cloudflare.com/learning/dns/dns-over-tls/)                                                                                  | HTTPS    | Send DNS requests to Gateway for DNS policy enforcement. The DoH connection is maintained inside of the WARP tunnel. |
+| Device orchestration                                                                                                                          | HTTPS    | Perform user registration, check device posture, apply device client profile settings.                               |
 
 ```mermaid
 flowchart LR
@@ -51,32 +51,32 @@ N --> O[(Application)]
 
 Your [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) configuration determines what IP traffic is sent down the WARP tunnel. Your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) configuration determines which DNS requests are sent to Gateway via DoH. Traffic to the [device orchestration API](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#client-orchestration-api) endpoint does not obey Split Tunnel rules since the connection always operates outside of the WARP tunnel.
 
-Next, you will learn how WARP configures your operating system to apply your Local Domain Fallback and Split Tunnel routing rules. Implementation details differ between desktop and mobile clients.
+Next, you will learn how the Cloudflare One Client configures your operating system to apply your Local Domain Fallback and Split Tunnel routing rules. Implementation details differ between desktop and mobile clients.
 
 ## Windows, macOS, and Linux
 
-The desktop client consists of two components: a service/daemon that handles all WARP functionality on your device, and a GUI wrapper that makes it easier for a user to interact with the daemon.
+The desktop client consists of two components: a service/daemon that handles all client functionality on your device, and a GUI wrapper that makes it easier for a user to interact with the daemon.
 
 ### DNS traffic
 
-When you turn on WARP, WARP creates a local DNS proxy on the device and binds it to these IP addresses on port 53 (the port designated for DNS traffic):
+When you connect the Cloudflare One Client, the client creates a local DNS proxy on the device and binds it to these IP addresses on port 53 (the port designated for DNS traffic):
 
 - **IPv4**: `127.0.2.2` and `127.0.2.3`
 - **IPv6**:
   - macOS and Linux: `fd01:db8:1111::2` and `fd01:db8:1111::3`
   - Windows: `::ffff:127.0.2.2`
 
-WARP then configures the operating system to send all DNS requests to these IP addresses. All network interfaces on the device will now use this local DNS proxy for DNS resolution. In other words, all DNS traffic will now be handled by the WARP client.
+The Cloudflare One Client then configures the operating system to send all DNS requests to these IP addresses. All network interfaces on the device will now use this local DNS proxy for DNS resolution. In other words, all DNS traffic will now be handled by the Cloudflare One Client.
 
 :::note
 
 Browsers with DoH configured will bypass the local DNS proxy. You may need to disable DoH settings in the browser.
 :::
 
-Based on your Local Domain Fallback configuration, WARP will either forward the request to Gateway for DNS policy enforcement or forward the request to your private DNS resolver.
+Based on your Local Domain Fallback configuration, the Cloudflare One Client will either forward the request to Gateway for DNS policy enforcement or forward the request to your private DNS resolver.
 
 - Requests to Gateway are sent over our [DoH connection](#overview) inside the WARP tunnel.
-- Requests to your private DNS resolver are sent either inside or outside of the tunnel depending on your Split Tunnel configuration. For more information, refer to [How the WARP client handles DNS requests](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
+- Requests to your private DNS resolver are sent either inside or outside of the tunnel depending on your Split Tunnel configuration. For more information, refer to [How the Cloudflare One Client handles DNS requests](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/#how-the-cloudflare-one-client-handles-dns-requests).
 
 ```mermaid
 flowchart LR
@@ -85,11 +85,11 @@ R -- Yes --> F[Private DNS resolver]
 R -- No --> G[Cloudflare Gateway]
 ```
 
-You can verify that the operating system is using WARP's local DNS proxy:
+You can verify that the operating system is using the Cloudflare One Client's local DNS proxy:
 
 <Tabs> <TabItem label="macOS">
 
-On macOS, open a terminal window and run `scutil --dns`. The DNS servers should be set to WARP's local DNS proxy IPs.
+On macOS, open a terminal window and run `scutil --dns`. The DNS servers should be set to the Cloudflare One Client's local DNS proxy IPs.
 
 ```sh
 scutil --dns
@@ -116,7 +116,7 @@ resolver #2
 
 </TabItem> <TabItem label="Windows">
 
-On Windows, open a PowerShell window and run `ipconfig`. The DNS servers should be set to WARP's local DNS proxy IPs.
+On Windows, open a PowerShell window and run `ipconfig`. The DNS servers should be set to the Cloudflare One Client's local DNS proxy IPs.
 
 ```powershell
 ipconfig
@@ -146,7 +146,7 @@ Unknown adapter CloudflareWARP:
 
 <TabItem label="Linux">
 
-On Linux, check the `/etc/resolv.conf` file. The DNS servers should be set to WARP's local DNS proxy IPs.
+On Linux, check the `/etc/resolv.conf` file. The DNS servers should be set to the Cloudflare One Client's local DNS proxy IPs.
 
 ```sh
 cat /etc/resolv.conf
@@ -167,7 +167,7 @@ options trust-ad
 
 ### IP traffic
 
-When you turn on WARP, WARP makes three changes on the device to control if traffic is sent inside or outside of the WARP tunnel:
+When you connect the Cloudflare One Client, it makes three changes on the device to control if traffic is sent inside or outside of the WARP tunnel:
 
 - Creates a [virtual network interface](#virtual-interface).
 - Modifies the operating system [routing table](#routing-table) according to your Split Tunnel rules.
@@ -182,7 +182,7 @@ S -- No --> U["Virtual interface<br> (172.16.0.2)"] --> G[Cloudflare Gateway]
 
 #### Virtual interface
 
-Virtual interfaces allow the operating system to logically subdivide a physical interface, such as a network interface controller (NIC), into separate interfaces for the purposes of routing IP traffic. WARP's virtual interface is what maintains the WireGuard/MASQUE connection between the device and Cloudflare. By default, its IPv4 address is hardcoded as `172.16.0.2` for devices using WireGuard, whereas devices using MASQUE are [assigned a unique IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) from the CGNAT IP space (`100.96.0.0/12`). You can override the default virtual interface IP with a [custom device IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/).
+Virtual interfaces allow the operating system to logically subdivide a physical interface, such as a network interface controller (NIC), into separate interfaces for the purposes of routing IP traffic. The Cloudflare One Client's virtual interface is what maintains the WireGuard/MASQUE connection between the device and Cloudflare. By default, its IPv4 address is hardcoded as `172.16.0.2` for devices using WireGuard, whereas devices using MASQUE are [assigned a unique IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) from the CGNAT IP space (`100.96.0.0/12`). You can override the default virtual interface IP with a [custom device IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/).
 
 To view a list of all network interfaces on the operating system:
 
@@ -190,7 +190,7 @@ To view a list of all network interfaces on the operating system:
 
 #### Routing table
 
-WARP edits the system routing table to control what IP traffic goes to Gateway. The routing table indicates which network interface should handle packets to a particular IP address. By default, all traffic routes through WARP's virtual interface except for the IPs and domains on your Split Tunnel exclude list (which use the default interface on your device).
+The Cloudflare One Client edits the system routing table to control what IP traffic goes to Gateway. The routing table indicates which network interface should handle packets to a particular IP address. By default, all traffic routes through the Cloudflare One Client's virtual interface except for the IPs and domains on your Split Tunnel exclude list (which use the default interface on your device).
 
 You can verify that the routing table matches your Split Tunnel rules:
 
@@ -198,7 +198,7 @@ You can verify that the routing table matches your Split Tunnel rules:
 
 To view the entire routing table on macOS, run `netstat -r`.
 
-You can also search the routing table for a domain or IP address. In this example, we see that traffic to `google.com` is sent through `utun3`, which is the WARP virtual interface on this device:
+You can also search the routing table for a domain or IP address. In this example, we see that traffic to `google.com` is sent through `utun3`, which is the Cloudflare One Client's virtual interface on this device:
 
 ```sh
 route get google.com
@@ -214,7 +214,7 @@ destination: 136.0.0.0
        0         0         0         0         0         0      1280         0
 ```
 
-In contrast, this DHCP address is excluded from WARP and uses the default interface:
+In contrast, this DHCP address is excluded from the Cloudflare One Client and uses the default interface:
 
 ```sh
 route get 169.254.0.0
@@ -234,7 +234,7 @@ destination: 169.254.0.0
 
 To view the entire routing table on Windows, run `netstat -r`.
 
-You can also search the routing table for an IP address. In this example, we see that traffic to `1.1.1.1` is sent through the WARP virtual interface:
+You can also search the routing table for an IP address. In this example, we see that traffic to `1.1.1.1` is sent through the Cloudflare One Client's virtual interface:
 
 ```powershell
 Find-NetRoute -RemoteIPAddress "1.1.1.1" | Select-Object InterfaceAlias -Last 1
@@ -246,7 +246,7 @@ InterfaceAlias
 CloudflareWARP
 ```
 
-In contrast, this DHCP address is excluded from WARP and uses the default interface:
+In contrast, this DHCP address is excluded from the Cloudflare One Client and uses the default interface:
 
 ```powershell
 Find-NetRoute -RemoteIPAddress "169.254.0.0" | Select-Object InterfaceAlias -Last 1
@@ -264,7 +264,7 @@ Wi-Fi
 
 To view the entire routing table on Linux, run `ip -6 route show table all` or `ip -4 route show table all`.
 
-You can also search the routing table for an IP address. In this example, we see that traffic to `1.1.1.1` is sent through the WARP virtual interface:
+You can also search the routing table for an IP address. In this example, we see that traffic to `1.1.1.1` is sent through the Cloudflare One Client's virtual interface:
 
 ```sh
 ip route get 1.1.1.1
@@ -275,7 +275,7 @@ ip route get 1.1.1.1
     cache
 ```
 
-In contrast, this DHCP address is excluded from WARP and uses the default interface:
+In contrast, this DHCP address is excluded from the Cloudflare One Client and uses the default interface:
 
 ```sh
 ip route get 169.254.0.0
@@ -292,7 +292,7 @@ ip route get 169.254.0.0
 
 #### System firewall
 
-WARP modifies the operating system firewall to enforce your Split Tunnel rules. This adds a layer of protection in case a service bypasses the routing table and tries to send traffic directly through another interface. For example, if traffic to `203.0.113.0` is supposed to be inspected by Gateway, we create a firewall rule that blocks `203.0.113.0` on all interfaces except for `utun`.
+The Cloudflare One Client modifies the operating system firewall to enforce your Split Tunnel rules. This adds a layer of protection in case a service bypasses the routing table and tries to send traffic directly through another interface. For example, if traffic to `203.0.113.0` is supposed to be inspected by Gateway, we create a firewall rule that blocks `203.0.113.0` on all interfaces except for `utun`.
 
 ## iOS, Android, and ChromeOS
 

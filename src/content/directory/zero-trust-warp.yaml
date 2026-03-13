@@ -1,8 +1,8 @@
 id: fyoNfT
-name: Zero Trust WARP Client
+name: Cloudflare One Client
 
 entry:
-  title: Zero Trust WARP Client
+  title: Cloudflare One Client
   group: Cloudflare One
   url: /cloudflare-one/team-and-resources/devices/warp/
   wrap: true
