@@ -34,3 +34,49 @@ In addition to the steps for all customers, Cloudflare Enterprise customers subs
 ## Magic Transit customers
 
 In addition to the steps for all customers, Cloudflare Magic Transit customers should ensure that the [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/), [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/), and [Programmable Flow Protection](/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/) are enabled and that their configurations are optimized.
+
+---
+
+## Protect your origin server
+
+Cloudflare edge protection is only effective if attackers cannot bypass it by reaching your origin directly.
+
+1. Verify that all hostnames serving traffic are [proxied (orange-clouded)](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare.
+2. Check whether your origin IP is reachable from non-Cloudflare sources. If it is, attackers can send traffic directly to the origin and bypass all Cloudflare protections.
+3. Before restricting access, identify any non-Cloudflare sources that must still reach your origin (for example, third-party vendors, monitoring services, CI/CD pipelines, or partner integrations).
+4. Restrict your origin firewall to accept HTTP/HTTPS traffic only from [Cloudflare IP ranges](https://www.cloudflare.com/ips/) and any explicitly trusted IPs you identified.
+5. As an extra precaution, if your origin IP has been previously targeted or exposed, contact your hosting provider to request a new origin IP address.
+
+---
+
+## DDoS response triage
+
+If you are experiencing a DDoS attack or suspect elevated attack traffic, use the following checklist to assess impact and choose the next mitigation.
+
+### Quick triage questions
+
+1. Are you experiencing service impact (timeouts, 5xx errors) or mainly observing high traffic volume in logs and analytics?
+2. Which hostname(s) are affected, and are they [proxied (orange-clouded)](/dns/manage-dns-records/reference/proxied-dns-records/)?
+3. What is the timeframe that should be investigated? Provide times in UTC.
+
+### If your site or origin is impacted
+
+In addition to the quick triage questions, provide:
+
+- Example errors (5xx status codes, connection timeouts) and where they are observed (browser, Cloudflare analytics, origin logs).
+- Origin server metrics during the timeframe: CPU load, memory, bandwidth usage.
+- Relevant origin or access log samples showing the problematic traffic.
+
+### If you mainly observe high traffic volume but the site is up
+
+Provide:
+
+- Where you observe the traffic: [Cloudflare analytics](/analytics/), origin access logs, or both.
+- Top attacked endpoints, URI paths, and User-Agent strings.
+- The outcome you want: reduce cost, reduce noise, add challenges, or block traffic entirely.
+
+### Common targeted mitigations
+
+- **One or a few endpoints targeted**: Create [rate limiting rules](/waf/rate-limiting-rules/) and [WAF custom rules](/waf/custom-rules/) scoped to the affected paths.
+- **Specific User-Agent or request fingerprint dominates**: Create [WAF custom rules](/waf/custom-rules/) to challenge or block matching requests.
+- **Origin needs protection from direct access**: Ensure all hostnames are proxied and restrict origin access to [Cloudflare IP ranges](https://www.cloudflare.com/ips/) (refer to [Protect your origin server](#protect-your-origin-server) above).
