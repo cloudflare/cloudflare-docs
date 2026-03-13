@@ -46,6 +46,7 @@ async function run(): Promise<void> {
 			core.setFailed(`Could not find pull request number`);
 			process.exit();
 		}
+
 		if (!process.env.BRANCH_SLUG) {
 			core.setFailed(`Could not find BRANCH_SLUG in env`);
 			process.exit();
