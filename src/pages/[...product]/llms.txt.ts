@@ -40,7 +40,7 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 type Page = InferGetStaticPropsType<typeof getStaticPaths>["pages"][number];
 
 function formatPage(base: string, e: Page) {
-	const line = `- [${e.data.title}](${base}/${e.id}/)`;
+	const line = `- [${e.data.title}](${base}/${e.id}/index.md)`;
 	return e.data.description ? line.concat(`: ${e.data.description}`) : line;
 }
 
@@ -113,7 +113,7 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 	const rootPage = pages.find((e) => e.id === prefix);
 	const rootLink = rootPage
 		? formatPage(base, rootPage)
-		: `- [${title}](${base}${productUrl})`;
+		: `- [${title}](${base}${productUrl}index.md)`;
 
 	const sections = buildSections(prefix, pages);
 
@@ -149,13 +149,9 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 
 		${description ?? ""}
 
-		> For other Cloudflare products, see the [Cloudflare documentation directory](${base}/llms.txt).
+		> Links below point directly to Markdown versions of each page. For other Cloudflare products, see the [Cloudflare documentation directory](${base}/llms.txt).
 		>
-		> Any page below can be retrieved as Markdown in two ways:
-		> - By sending an \`Accept: text/markdown\` header (for example, \`curl -H "Accept: text/markdown" ${base}${productUrl}\`)
-		> - By appending \`index.md\` to the route (for example, \`${base}${productUrl}index.md\`)
-		>
-		> Use [${title} llms-full.txt](${base}${productUrl}llms-full.txt) for the complete ${title} documentation in a single file. That file is intended for offline indexing, bulk vectorization, or large-context models.
+		> Use [${title} llms-full.txt](${base}${productUrl}llms-full.txt) for the complete ${title} documentation in a single file, intended for offline indexing, bulk vectorization, or large-context models.
 
 		${pagesSection}
 	`);
