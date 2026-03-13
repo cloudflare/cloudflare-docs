@@ -253,7 +253,7 @@ String key-value pairs for Cookies. This field is populated based on [Logpush Cu
 
 Type: `bool`
 
-True if the request looped through multiple zones on the Cloudflare edge. This is considered an orange to orange (O2O) request.
+True if the request looped through multiple zones on the Cloudflare edge. This is considered an O2O request.
 
 ## EdgeColoCode
 
