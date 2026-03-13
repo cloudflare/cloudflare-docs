@@ -10,7 +10,7 @@ sidebar:
 
 import { Render, Details, GlossaryTooltip } from "~/components";
 
-If you want to manage your own SSH keys, you can use Cloudflare Tunnel to create a secure, outbound-only connection from your server to Cloudflare's global network. This requires running the `cloudflared` daemon on the server (or any other host machine within the private network). Users with SSH keys that are trusted by the SSH server can access the server by installing the [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/warp/) on their device and enrolling in your Zero Trust organization. Users can SSH directly to the server's private hostname (for example, `ssh.internal.local`). You control access to the server using network-level Gateway policies instead of application-level Access policies.
+If you want to manage your own SSH keys, you can use Cloudflare Tunnel to create a secure, outbound-only connection from your server to Cloudflare's global network. This requires running the `cloudflared` daemon on the server (or any other host machine within the private network). Users with SSH keys that are trusted by the SSH server can access the server by installing the [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device and enrolling in your Zero Trust organization. Users can SSH directly to the server's private hostname (for example, `ssh.internal.local`). You control access to the server using network-level Gateway policies instead of application-level Access policies.
 
 :::note
 
@@ -20,8 +20,8 @@ If you want to create more granular policies, allow Cloudflare to manage SSH key
 ## Prerequisites
 
 - A [Cloudflare Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization)
-- [WARP client](/cloudflare-one/team-and-resources/devices/warp/download-warp/) installed on user devices.
-- Devices [enrolled](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) in your Zero Trust organization
+- [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) installed on user devices.
+- Devices [enrolled](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) in your Zero Trust organization
 
 ## 1. Create an example SSH server
 
@@ -156,7 +156,7 @@ To connect to private hostnames, WARP clients must be configured to forward the 
 
 #### 3.3.2 Configure Local Domain Fallback
 
-In [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
+In [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
 
 For example, if your SSH hostname is `ssh.internal.local`, remove `internal.local` from Local Domain Fallback.
 
@@ -256,7 +256,7 @@ If you cannot connect, verify the following:
    Address: 100.80.200.48
    ```
 
-   The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
+   The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
 
 2. **Check Gateway logs** - Review your [Gateway network logs](/cloudflare-one/insights/logs/gateway-logs/) to see if the connection is being blocked by a policy.
 
@@ -274,4 +274,4 @@ If you cannot connect, verify the following:
 		...
 		```
 
-		Look for a line showing connection to an IP in the `100.64.0.0/10` range. If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the server's private IP.
+		Look for a line showing connection to an IP in the `100.64.0.0/10` range. If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the server's private IP.

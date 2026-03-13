@@ -19,7 +19,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 ## Prerequisites
 
 - Private IPs and hostnames are reachable over Cloudflare WARP, Cloudflare WAN (formerly Magic WAN) or Browser Isolation. For more details, refer to [Connect a private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
-- Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
+- Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
 - Public IPs and hostnames can be used to define a private application, however the IP or hostname must route through Cloudflare via [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Cloudflare WAN](/cloudflare-wan/configuration/manually/how-to/configure-routes/).
 - (Optional) Turn on [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) if you want to use Access JWTs to manage [HTTPS application sessions](#https-applications).
 
@@ -57,7 +57,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 
         1. Select the [**Identity providers**](/cloudflare-one/integrations/identity-providers/) you want to enable for your application.
         2. (Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/reusable-components/custom-pages/access-login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
-        3. (Recommended) Turn on **WARP authentication identity** to allow users to authenticate to the application using their [WARP session identity](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/). We recommend turning this on if your application is not in the browser and cannot handle a `302` redirect.
+        3. (Recommended) Turn on **WARP authentication identity** to allow users to authenticate to the application using their [WARP session identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/). We recommend turning this on if your application is not in the browser and cannot handle a `302` redirect.
 
 10.  Select **Next**.
 

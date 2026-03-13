@@ -21,7 +21,7 @@ This guide follows the same steps as the **Get Started** onboarding wizard in th
 
 ## How it works
 
-The <GlossaryTooltip term="WARP client">[WARP client](/cloudflare-one/team-and-resources/devices/warp/)</GlossaryTooltip> is an app that you install on each device you want to connect. When you sign in to your Cloudflare account through WARP (called "enrolling"), each device is assigned a <GlossaryTooltip term="WARP CGNAT IP">[virtual IP address](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/)</GlossaryTooltip>.
+The <GlossaryTooltip term="WARP client">[WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)</GlossaryTooltip> is an app that you install on each device you want to connect. When you sign in to your Cloudflare account through WARP (called "enrolling"), each device is assigned a <GlossaryTooltip term="WARP CGNAT IP">[virtual IP address](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/)</GlossaryTooltip>.
 
 Devices use these virtual IPs to communicate with each other through Cloudflare's network. This works for most common types of network traffic, including web requests, remote desktop, file sharing, and ping.
 
@@ -92,5 +92,5 @@ For in-depth guidance on policy design and device posture checks, refer to the [
 If you have issues connecting, try these steps:
 
 - **Windows users**: Windows Firewall blocks device-to-device traffic by default. You may need to add a firewall rule that allows incoming traffic from `100.96.0.0/12`. For details, refer to [Peer-to-peer connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/#troubleshooting).
-- [Troubleshoot WARP](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/): resolve WARP client connection and enrollment issues.
+- [Troubleshoot WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/): resolve WARP client connection and enrollment issues.
 - [Peer-to-peer connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/): review WARP-to-WARP setup details and firewall requirements.

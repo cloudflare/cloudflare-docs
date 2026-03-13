@@ -10,7 +10,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-Cloudflare WARP to Tunnel allows users to connect to RDP servers using their preferred RDP client. Cloudflare Tunnel creates a secure, outbound-only connection from your RDP server to Cloudflare's global network; this requires running the `cloudflared` daemon on the server (or any other host machine within the private network). Users install the [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/warp/) on their device and enroll in your Zero Trust organization. Remote devices will be able to connect as if they were on your private network. By default, all devices enrolled in your organization can connect to the RDP server unless you build policies to allow or block specific users.
+Cloudflare WARP to Tunnel allows users to connect to RDP servers using their preferred RDP client. Cloudflare Tunnel creates a secure, outbound-only connection from your RDP server to Cloudflare's global network; this requires running the `cloudflared` daemon on the server (or any other host machine within the private network). Users install the [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device and enroll in your Zero Trust organization. Remote devices will be able to connect as if they were on your private network. By default, all devices enrolled in your organization can connect to the RDP server unless you build policies to allow or block specific users.
 
 This example walks through how to set up an RDP server on a Google Cloud Platform (GCP) virtual machine (VM), but you can use any machine that supports RDP connections.
 

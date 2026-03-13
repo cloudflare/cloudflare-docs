@@ -27,8 +27,8 @@ This guide covers how to connect WARP client user devices to a private network b
 ## Prerequisites
 
 - A Linux host [^1] on the subnet.
-- For WARP Connector to connect to Cloudflare services, your firewall should allow inbound/outbound traffic for the [WARP IP addresses, ports, and domains](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/).
-- For WARP clients to connect to your subnet, your firewall should allow inbound traffic from  your [device IPs](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/).
+- For WARP Connector to connect to Cloudflare services, your firewall should allow inbound/outbound traffic for the [WARP IP addresses, ports, and domains](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
+- For WARP clients to connect to your subnet, your firewall should allow inbound traffic from  your [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
 
 ## 1. Install a WARP Connector
 
@@ -40,9 +40,9 @@ This guide covers how to connect WARP client user devices to a private network b
 
 ## 3. Route device IPs through Cloudflare
 
-WARP clients and WARP Connectors are accessed using their [device IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/). Therefore, traffic to your device IPs must route through Cloudflare on both the WARP Connector host and WARP client devices.
+WARP clients and WARP Connectors are accessed using their [device IP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/). Therefore, traffic to your device IPs must route through Cloudflare on both the WARP Connector host and WARP client devices.
 
-1. In your WARP Connector device profile, go to [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
+1. In your WARP Connector device profile, go to [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
 2.
 	<Render file="tunnel/cgnat-split-tunnels" product="cloudflare-one" />
 
@@ -65,7 +65,7 @@ Depending on where you installed the WARP Connector, you may need to configure o
 
 #### Add IP route to router
 
-`100.96.0.0/12` is the default CIDR for all user devices running the [WARP client](/cloudflare-one/team-and-resources/devices/warp/). On your router, add a rule that routes the destination IP `100.96.0.0/12` to the WARP Connector host machine (`10.0.0.100`).
+`100.96.0.0/12` is the default CIDR for all user devices running the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/). On your router, add a rule that routes the destination IP `100.96.0.0/12` to the WARP Connector host machine (`10.0.0.100`).
 
 <Render
 	file="tunnel/warp-connector-alternate-gateway-flow"

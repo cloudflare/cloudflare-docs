@@ -63,7 +63,7 @@ If you try to perform TLS decryption on an application with an incompatible cert
 
 - Add a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to supported applications.
 - Create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) to exempt applications from inspection. The [Application selector](/cloudflare-one/traffic-policies/http-policies/#application) provides a list of trusted applications that are known to use embedded certificates. Note that if you create a Do Not Inspect policy for an application or website, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
-- Configure a [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) in Include mode to ensure Gateway will only inspect traffic destined for your IPs or domains. This is useful for organizations that deploy Zero Trust on users' personal devices or otherwise expect personal applications to be used.
+- Configure a [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) in Include mode to ensure Gateway will only inspect traffic destined for your IPs or domains. This is useful for organizations that deploy Zero Trust on users' personal devices or otherwise expect personal applications to be used.
 
 Alternatively, to allow HTTP filtering while accessing a site with an insecure certificate, set your [Untrusted certificate action](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates) to _Pass through_.
 
