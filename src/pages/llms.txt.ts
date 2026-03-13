@@ -50,7 +50,7 @@ export const GET: APIRoute = async ({ url }) => {
 
 	const otherLinks = ungrouped
 		.map((entry) => {
-			const line = `- [${entry.data.entry.title}](${base}/${entry.id}/llms.txt)`;
+			const line = `- [${entry.data.entry.title}](${base}${entry.data.entry.url}llms.txt)`;
 			const description = entry.data.meta?.description;
 			return description ? line.concat(`: ${description}`) : line;
 		})
@@ -72,7 +72,7 @@ export const GET: APIRoute = async ({ url }) => {
 
 				${entries
 					?.map((entry) => {
-						const line = `- [${entry.data.entry.title}](${base}/${entry.id}/llms.txt)`;
+						const line = `- [${entry.data.entry.title}](${base}${entry.data.entry.url}llms.txt)`;
 						const description = entry.data.meta?.description;
 						return description ? line.concat(`: ${description}`) : line;
 					})

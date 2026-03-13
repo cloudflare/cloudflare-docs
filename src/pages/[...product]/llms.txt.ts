@@ -9,7 +9,18 @@ export const getStaticPaths = (async () => {
 
 	return directory
 		.map((entry) => {
-			const prefix = entry.data.entry.url.slice(1, -1);
+			const productUrl = entry.data.entry.url;
+			// Derive route segments from the product's canonical URL.
+			// e.g. /cloudflare-for-platforms/cloudflare-for-saas/ → ["cloudflare-for-platforms", "cloudflare-for-saas"]
+			// e.g. /workers/ → ["workers"]
+			// Skip the root URL "/" (home entry) and fragment-only anchors (e.g. /path/#anchor)
+			if (!productUrl || productUrl === "/" || productUrl.includes("#"))
+				return null;
+
+			const urlPath = productUrl.slice(1, -1); // strip leading/trailing slashes
+			if (!urlPath) return null;
+
+			const prefix = urlPath;
 			const pages = docs.filter(
 				(e) => e.id.startsWith(prefix + "/") || e.id === prefix,
 			);
@@ -17,7 +28,7 @@ export const getStaticPaths = (async () => {
 			if (pages.length === 0) return null;
 
 			return {
-				params: { product: entry.id },
+				params: { product: urlPath },
 				props: { entry, pages },
 			};
 		})
@@ -98,7 +109,7 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 	const { title, url: productUrl } = entry.data.entry;
 	const description = entry.data.meta?.description;
 
-	const prefix = entry.data.entry.url.slice(1, -1);
+	const prefix = productUrl.slice(1, -1);
 	const rootPage = pages.find((e) => e.id === prefix);
 	const rootLink = rootPage
 		? formatPage(base, rootPage)
