@@ -175,7 +175,7 @@ jobs:
     name: Deploy Preview
     needs: build
     if: github.repository == 'cloudflare/cloudflare-docs'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
