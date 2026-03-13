@@ -9,6 +9,41 @@ import { Render, Tabs, TabItem } from "~/components";
 
 Use this page to diagnose and resolve common issues with Cloudflare Tunnel. For tunnel health monitoring, logs, and metrics, refer to [Monitoring](/tunnel/monitoring/).
 
+## Before you start
+
+Before troubleshooting, verify the following:
+
+1. **You are running the latest version of `cloudflared`**. Many issues are resolved by upgrading. Refer to [Update cloudflared](/tunnel/downloads/update-cloudflared/) for instructions.
+2. **Required ports and IPs are allowed**. Your firewall must permit egress to the [Cloudflare Tunnel IPs and ports](/tunnel/configuration/#firewall-rules), as well as `api.cloudflare.com` on port `443`.
+
+### Collect logs
+
+Attach logs when opening a support ticket or investigating an issue.
+
+- **Locally-managed tunnels**: Run `cloudflared` with the `--loglevel debug` flag to capture verbose output:
+
+  ```sh
+  cloudflared tunnel --loglevel debug run
+  ```
+
+  To persist logs to a file, add the `--logfile` flag:
+
+  ```sh
+  cloudflared tunnel --loglevel debug --logfile /var/log/cloudflared/cloudflared.log run
+  ```
+
+- **Remotely-managed tunnels** (created via the dashboard): Configure logging in the tunnel's [run parameters](/tunnel/advanced/run-parameters/#loglevel). You can also stream logs in real time using the [remote log streaming](/tunnel/monitoring/#remote-log-streaming) feature.
+
+### Information to provide for support
+
+When [contacting support](/support/contacting-cloudflare-support/), include the following:
+
+- Tunnel ID and tunnel name
+- `cloudflared` version (`cloudflared --version`)
+- How the tunnel was set up (locally-managed or remotely-managed via the dashboard)
+- Debug log output or `cloudflared.log` file
+- Steps to reproduce the issue
+
 ## Connection errors
 
 When `cloudflared` cannot reach the Cloudflare network, it [logs](/tunnel/monitoring/#logs) specific error messages that indicate whether the issue is DNS resolution, QUIC (UDP), or TCP connectivity.
