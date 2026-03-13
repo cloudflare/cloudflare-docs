@@ -2327,6 +2327,13 @@
 /cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
 /cloudflare-one/team-and-resources/devices/warp/user-side-certificates/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
+/cloudflare-one/team-and-resources/devices/warp/set-up-warp/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/ 301
+/cloudflare-one/team-and-resources/devices/warp/remove-warp/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/uninstall/ 301
+/cloudflare-one/team-and-resources/devices/warp/download-warp/update-warp/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/update/ 301
+/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/ 301
+/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/ 301
+/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/ 301
+/cloudflare-one/changelog/warp/ /changelog/cloudflare-one-client/ 301
 /cloudflare-one/insights/analytics/analytics-overview/ /cloudflare-one/insights/analytics-overview/ 301
 /cloudflare-one/api-terraform/access-with-terraform/ /learning-paths/clientless-access/terraform/publish-apps-with-terraform/ 301
 /cloudflare-one/traffic-policies/lists/ /cloudflare-one/reusable-components/lists/ 301
@@ -2610,20 +2617,11 @@
 /magic-network-monitoring/* /network-flow/:splat 301
 
 # Cloudflare One Client (formerly WARP Client)
-# Static redirects for renamed slugs (must come before splats)
-/cloudflare-one/team-and-resources/devices/warp/set-up-warp/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/ 301
-/cloudflare-one/team-and-resources/devices/warp/remove-warp/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/uninstall/ 301
-/cloudflare-one/team-and-resources/devices/warp/download-warp/update-warp/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/update/ 301
-/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/ 301
-/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/ 301
-/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/ 301
 # Splat redirects for renamed sub-folders (most specific first)
 /cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/:splat 301
 /cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/:splat 301
 /cloudflare-one/team-and-resources/devices/warp/configure-warp/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/:splat 301
 /cloudflare-one/team-and-resources/devices/warp/download-warp/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/:splat 301
-# CF1 changelog page redirect
-/cloudflare-one/changelog/warp/ /cloudflare-one/changelog/cloudflare-one-client/ 301
 # Main catch-all redirect (must be last)
 /cloudflare-one/team-and-resources/devices/warp/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/:splat 301
 
