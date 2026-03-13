@@ -197,6 +197,7 @@ jobs:
           path: dist
 
       - name: Deploy to Cloudflare Workers
+        id: deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
@@ -205,11 +206,14 @@ jobs:
           BRANCH="${{ github.event.pull_request.head.ref }}"
           BRANCH_SLUG=$(echo "$BRANCH" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
 
+          echo "branch_slug=$BRANCH_SLUG" >> "$GITHUB_OUTPUT"
+
           npx wrangler deploy --dispatch-namespace preview-deployments --name $SHORT_SHA
           npx wrangler deploy --dispatch-namespace preview-deployments --name $BRANCH_SLUG
 
       - name: Post preview URL on PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
         run: npx tsx bin/post-preview-url-comment/index.ts
         continue-on-error: true

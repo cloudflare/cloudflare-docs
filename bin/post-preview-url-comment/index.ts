@@ -8,7 +8,7 @@ import {
 	PREVIEW_URL_REGEX,
 } from "./constants";
 
-import { filenameToPath, branchToSubdomain } from "./util";
+import { filenameToPath } from "./util";
 
 async function run(): Promise<void> {
 	try {
@@ -46,9 +46,13 @@ async function run(): Promise<void> {
 			core.setFailed(`Could not find pull request number`);
 			process.exit();
 		}
+		if (!process.env.BRANCH_SLUG) {
+			core.setFailed(`Could not find BRANCH_SLUG in env`);
+			process.exit();
+		}
 
 		const previewUrl = {
-			branch: `https://${branchToSubdomain(branch)}.preview.developers.cloudflare.com`,
+			branch: `https://${process.env.BRANCH_SLUG}.preview.developers.cloudflare.com`,
 			commit: `https://${commitSha.slice(0, 8)}.preview.developers.cloudflare.com`,
 		};
 

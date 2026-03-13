@@ -32,13 +32,3 @@ export const filenameToPath = (filename: string) => {
 		.replace(/\/index$/, "")
 		.concat("/");
 };
-
-export const branchToSubdomain = (branch: string) => {
-	return branch
-		.normalize("NFD")
-		.replace(/[\u0300-\u036f]/g, "") // strip diacritics (like iconv -t ascii//TRANSLIT)
-		.replace(/[~^]+/g, "") // strip ~ and ^
-		.replace(/[^a-zA-Z0-9]+/g, "-") // replace non-alphanumeric runs with hyphens
-		.replace(/^-+|-+$/g, "") // trim leading/trailing hyphens
-		.toLowerCase();
-};
