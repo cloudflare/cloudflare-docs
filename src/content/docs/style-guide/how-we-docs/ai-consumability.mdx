@@ -41,13 +41,13 @@ The references to the panels `id`, usually handled by JavaScript, are visible bu
 
 ### Turning our components into "Markdownable" HTML
 
-To solve this, we use [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) (MFA), which converts HTML to Markdown at the Cloudflare network layer. MFA handles:
+To solve this, we use [Markdown for Agents](/fundamentals/reference/markdown-for-agents/), which converts HTML to Markdown at the Cloudflare network layer. It handles:
 
 - Removing non-content tags (`script`, `style`, `link`, etc.)
 - Transforming custom elements like `starlight-tabs` into standard unordered lists
 - Adapting code block HTML into clean Markdown fenced code blocks
 
-Taking the `Tabs` example from the previous section, MFA will give us a normal unordered list with the content properly associated with a given list item:
+Taking the `Tabs` example from the previous section, Markdown for Agents will give us a normal unordered list with the content properly associated with a given list item:
 
 ```md
 - One
