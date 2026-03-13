@@ -29,6 +29,8 @@ DNS policies act at the earliest stage of a connection, before any content is fe
 
 Use DNS policies to block malicious domains, restrict content categories, or prevent entire sites from loading. For full threat protection, pair DNS policies with HTTP policies — DNS blocks known bad domains, while HTTP catches threats hidden in allowed traffic.
 
+RESTRICTION: DNS policies cannot inspect URL paths, request headers, or file content — they only see the queried domain name. To filter by URL or inspect file uploads, use HTTP policies.
+
 </Details>
 
 <Details header="Network policies">
@@ -37,6 +39,8 @@ Use DNS policies to block malicious domains, restrict content categories, or pre
 
 Use network policies to block access to specific ports or non-HTTP services such as SSH and RDP.
 
+RESTRICTION: Network policies cannot inspect the content of encrypted connections or full URLs — they see only packet-level attributes such as IP, port, protocol, and SNI. To inspect HTTP request content, use HTTP policies.
+
 </Details>
 
 <Details header="HTTP policies">
@@ -44,6 +48,8 @@ Use network policies to block access to specific ports or non-HTTP services such
 **[HTTP policies](/cloudflare-one/traffic-policies/http-policies/)** inspect the full content of web requests — including URLs, headers, and uploaded or downloaded files. Gateway decrypts HTTPS traffic so it can examine what DNS and network policies cannot see.
 
 Use HTTP policies to block specific URLs, scan file uploads for sensitive data, block malware in downloads, and control which accounts users can sign in to — for example, allow your company Google Workspace account but block personal Gmail.
+
+RESTRICTION: HTTP policies only apply to HTTP/HTTPS traffic. To block non-HTTP protocols such as SSH or RDP, use network policies. To block entire domains without content inspection, use DNS policies.
 
 </Details>
 
@@ -73,24 +79,28 @@ When creating or editing policies, it may take up to 60 seconds for that policy 
 	thumbnail="https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/a6fd20a9-4cdf-4640-81b1-cada4c4f3f00/public"
 />
 
-## Get started
+## Get started with Cloudflare Gateway policies
 
-For each policy type, follow this workflow:
+Requires a Cloudflare One account with the Secure Web Gateway proxy turned on. Users must be connected through the [WARP client](/cloudflare-one/connections/connect-devices/warp/), a [Magic WAN site](/magic-wan/), or another [connectivity option](/cloudflare-one/networks/connectivity-options).
 
-1. Connect the devices or networks you want to protect.
+For each Cloudflare Gateway policy type, follow this workflow:
+
+1. Connect the devices or networks you want to protect. 
 2. Verify that Gateway is receiving traffic from your devices.
-3. Set up recommended security policies — for example, block all [security threat categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories) with a DNS policy.
+3. Set up recommended Cloudflare Gateway security policies, such as blocking all [security threat categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories) with a DNS policy.
 4. Add policies specific to your organization's needs.
 
 For example, if your goal is to prevent employees from accessing known malware domains, you would start by enrolling devices with the WARP client (step 1), confirm DNS queries appear in your Gateway logs (step 2), then create a DNS policy that blocks all security-risk categories (step 3).
 
 For step-by-step setup guides, refer to [DNS](/cloudflare-one/traffic-policies/get-started/dns/), [Network](/cloudflare-one/traffic-policies/get-started/network/), and [HTTP](/cloudflare-one/traffic-policies/get-started/http/) policies.
 
-### Select a policy type
+### How to choose a Cloudflare Gateway policy type
 
-The right policy type depends on the traffic you want to filter:
+The right Cloudflare Gateway policy type depends on the traffic you want to filter:
 
-| Goal                                   | Policy type      | Why                                                                    |
+**Cloudflare Gateway — policy type selection guide:**
+
+| Security goal                          | Policy type      | How it works                                                           |
 | -------------------------------------- | ---------------- | ---------------------------------------------------------------------- |
 | Block websites by URL                  | HTTP             | Inspects the full URL path, not just the domain                        |
 | Block domains (all pages)              | DNS              | Prevents the domain from resolving                                     |
@@ -99,3 +109,5 @@ The right policy type depends on the traffic you want to filter:
 | Assign static egress IPs               | Egress           | Lets third-party services identify your organization                   |
 | Drop traffic before other policies run | Packet filtering | Blocks by packet attributes without user context                       |
 | Route DNS to custom nameservers        | Resolver         | Overrides the default Cloudflare resolver                              |
+
+Once you have identified the right Cloudflare Gateway policy type, go to **Traffic policies** > **Firewall policies** in the Cloudflare One dashboard to build your first policy. 
