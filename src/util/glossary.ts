@@ -1,36 +1,50 @@
 import { getCollection } from "astro:content";
 
-export async function getGlossaryEntries(product?: string) {
+type GlossaryEntry = { product: string; term: string; general_definition: string };
+
+let allEntries: GlossaryEntry[];
+let termMap: Map<string, GlossaryEntry>;
+let productIndex: Map<string, GlossaryEntry[]>;
+
+async function ensureLoaded() {
+	if (allEntries) return;
+
 	const glossaries = await getCollection("glossary");
 
-	if (!product) {
-		return glossaries.flatMap((x) => {
-			return x.data.entries.map((y) => {
-				return {
-					product: x.data.productName,
-					...y,
-				};
-			});
-		});
+	allEntries = [];
+	productIndex = new Map();
+
+	for (const g of glossaries) {
+		const entries = g.data.entries.map((y) => ({
+			product: g.data.productName,
+			...y,
+		}));
+		allEntries.push(...entries);
+		productIndex.set(g.id, entries);
 	}
 
-	return glossaries.flatMap((x) => {
-		if (x.id !== product) {
-			return [];
+	termMap = new Map();
+	for (const entry of allEntries) {
+		if (!termMap.has(entry.term)) {
+			termMap.set(entry.term, entry);
 		}
-		return x.data.entries.map((y) => {
-			return {
-				product: x.data.productName,
-				...y,
-			};
-		});
-	});
+	}
+}
+
+export async function getGlossaryEntries(product?: string) {
+	await ensureLoaded();
+
+	if (!product) {
+		return [...allEntries];
+	}
+
+	return [...(productIndex.get(product) ?? [])];
 }
 
 export async function getGlossaryEntry(term: string) {
-	const terms = await getGlossaryEntries();
+	await ensureLoaded();
 
-	const entry = terms.find((x) => x.term === term);
+	const entry = termMap.get(term);
 
 	if (!entry) {
 		throw new Error(`[GetGlossaryEntry] Unable to find entry for ${term}`);

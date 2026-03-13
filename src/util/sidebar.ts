@@ -141,6 +141,13 @@ function setSidebarCurrentEntry(
 	sidebar: SidebarEntry[],
 	pathname: string,
 ): boolean {
+	const hideChildrenMatch = flattenSidebar(sidebar)
+		.filter(
+			(link) =>
+				link.attrs["data-hide-children"] && pathname.startsWith(link.href),
+		)
+		.at(0);
+
 	for (const entry of sidebar) {
 		if (entry.type === "link") {
 			if (entry.attrs["data-external-link"]) {
@@ -167,17 +174,10 @@ function setSidebarCurrentEntry(
 			return true;
 		}
 
-		const flattened = flattenSidebar(sidebar)
-			.filter(
-				(link) =>
-					link.attrs["data-hide-children"] && pathname.startsWith(link.href),
-			)
-			.at(0);
-
 		if (
-			flattened &&
+			hideChildrenMatch &&
 			entry.type === "link" &&
-			entry.href.startsWith(flattened.href)
+			entry.href.startsWith(hideChildrenMatch.href)
 		) {
 			entry.isCurrent = true;
 			entry.attrs = {};
