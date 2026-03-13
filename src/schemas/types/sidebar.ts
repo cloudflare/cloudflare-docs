@@ -49,14 +49,6 @@ const BadgeConfigSchema = () =>
 		})
 		.optional();
 
-export const SidebarIconSchema = () =>
-	z
-		.object({
-			lottieLink: z.string(),
-			color: z.enum(["primary"]).optional(),
-		})
-		.optional();
-
 export const sidebar = z
 	.object({
 		order: z.number().optional(),
@@ -79,7 +71,6 @@ export const sidebar = z
 						"Hides the index page from the sidebar. Refer to [Sidebar](/style-guide/frontmatter/sidebar/).",
 					),
 				badge: BadgeConfigSchema(),
-				icon: SidebarIconSchema(),
 			})
 			.optional(),
 	})
