@@ -297,7 +297,7 @@
                                 "enable_thinking": {
                                     "type": "boolean",
                                     "default": true,
-                                    "description": "Wether to enable reasoning, enabled by default."
+                                    "description": "Whether to enable reasoning, enabled by default."
                                 },
                                 "clear_thinking": {
                                     "type": "boolean",
