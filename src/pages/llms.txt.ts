@@ -9,10 +9,30 @@ export const GET: APIRoute = async ({ url }) => {
 
 	const docs = await getCollection("docs");
 
-	// Build a set of product IDs that actually have docs pages
+	// Build a set of all canonical URL prefixes across the entire directory.
+	// Used to detect sub-products whose pages are already covered by a parent entry.
+	const allUrlPrefixes = new Set(
+		allDirectory
+			.map((entry) => entry.data.entry.url)
+			.filter((u) => u && u !== "/" && !u.includes("#")),
+	);
+
+	// Returns true if this entry's URL is nested under another directory entry's URL.
+	// e.g. /logs/logpush/ is nested under /logs/  →  duplicate in parent's llms.txt
+	function isSubProduct(entryUrl: string): boolean {
+		if (!entryUrl || entryUrl === "/" || entryUrl.includes("#")) return false;
+		for (const otherUrl of allUrlPrefixes) {
+			if (otherUrl === entryUrl) continue;
+			if (entryUrl.startsWith(otherUrl)) return true;
+		}
+		return false;
+	}
+
+	// Build a set of product IDs that actually have docs pages and are not sub-products
 	const productsWithDocs = new Set(
 		directory
 			.filter((entry) => {
+				if (isSubProduct(entry.data.entry.url)) return false;
 				const prefix = entry.data.entry.url.slice(1, -1);
 				return docs.some(
 					(e) => e.id.startsWith(prefix + "/") || e.id === prefix,
@@ -31,19 +51,11 @@ export const GET: APIRoute = async ({ url }) => {
 
 	// Find ungrouped directory entries that have their own top-level docs section
 	// (not nested under another product's URL path)
-	const groupedPrefixes = new Set(
-		directory.map((entry) => entry.data.entry.url.slice(1, -1)),
-	);
 	const ungrouped = allDirectory
 		.filter((entry) => {
 			if (entry.data.entry.group) return false;
+			if (isSubProduct(entry.data.entry.url)) return false;
 			const prefix = entry.data.entry.url.slice(1, -1);
-			// Only include entries whose URL is a top-level path (e.g., /style-guide/)
-			// and not nested under a grouped product's path
-			if (prefix.includes("/")) {
-				const topLevel = prefix.split("/")[0];
-				if (groupedPrefixes.has(topLevel)) return false;
-			}
 			return docs.some((e) => e.id.startsWith(prefix + "/") || e.id === prefix);
 		})
 		.sort((a, b) => a.data.entry.title.localeCompare(b.data.entry.title));
