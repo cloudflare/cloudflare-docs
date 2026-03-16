@@ -4,7 +4,7 @@
 
 import { APIRequest } from "~/components";
 
-You can encrypt the network flow data sent from your router to Cloudflare by [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) your network flow traffic through a device running the Cloudflare One Client. Encrypted network flow traffic is then forwarded from the Cloudflare One Client-enabled device to Cloudflare's network flow endpoints.
+You can encrypt the network flow data sent from your router to Cloudflare by [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) your network flow traffic through a device running the Cloudflare One Client. Encrypted network flow traffic is then forwarded from the Cloudflare One Client device to Cloudflare's network flow endpoints.
 
 To learn more about the Cloudflare One Client, and to install it on Linux, macOS, or Windows, refer to the [Cloudflare One Client documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/).
 
@@ -65,4 +65,4 @@ In the machine running the Cloudflare One Client, you can redirect this traffic 
 
 ## 3. (Optional) Configure split tunnels
 
-If you do not want all the traffic in your device to be Cloudflare One Client-enabled, [configure split tunnels/proxy mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) to either only allow Network Flow traffic towards `162.159.65.1` or exclude everything else.
+If you do not want all traffic on your device to route through the Cloudflare One Client, [configure split tunnels/proxy mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) to either only allow Network Flow traffic towards `162.159.65.1` or exclude everything else.
