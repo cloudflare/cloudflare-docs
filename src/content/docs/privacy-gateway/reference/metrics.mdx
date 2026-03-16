@@ -3,117 +3,651 @@ title: Privacy Gateway Metrics
 pcx_content_type: reference
 sidebar:
   order: 1
+---
+
+import { Details } from "~/components";
+
+Privacy Gateway exposes metrics through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). All metrics are queryable via a single endpoint:
+
+```
+POST https://api.cloudflare.com/client/v4/graphql
+```
+
+To access your metrics, you need a Cloudflare API token with **Analytics Read** permissions. Refer to [Get started with the Analytics API](/analytics/graphql-api/getting-started/) for authentication details.
 
 ---
 
-Privacy Gateway now supports enhanced monitoring through our GraphQL API, providing detailed insights into your gateway traffic and performance. To access these metrics, ensure you have:
+<h2 id="making-a-request">Making a request</h2>
 
-* A relay gateway proxy implementation where Cloudflare acts as the oblivious relay party.
-* An API token with Analytics Read permissions.
-  We offer two GraphQL nodes to retrieve metrics: `ohttpMetricsAdaptive` and `ohttpMetricsAdaptiveGroups`. The first node provides comprehensive request data, while the second facilitates grouped analytics.
+The following example shows a complete request with authentication headers. Replace `<API_TOKEN>` with your token and update the query body as needed.
 
-## ohttpMetricsAdaptive
+```bash
+curl https://api.cloudflare.com/client/v4/graphql \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "query": "query DailyRequestVolume($accountTag: string!, $startDate: Date!, $endDate: Date!, $endpoint: string!) { viewer { accounts(filter: { accountTag: $accountTag }) { ohttpRelayRequestMetricsAdaptiveGroups(filter: { date_geq: $startDate, date_leq: $endDate, endpoint: $endpoint }, limit: 10000, orderBy: [date_ASC]) { sum { requests bytesToGateway bytesToClient } dimensions { date endpoint } } } } }",
+    "variables": {
+      "accountTag": "<YOUR_ACCOUNT_TAG>",
+      "startDate": "<START_DATE e.g. 2025-01-01>",
+      "endDate": "<END_DATE e.g. 2025-01-31>",
+      "endpoint": "https://<YOUR_PRIVACY_GATEWAY_ENDPOINT>"
+    }
+  }'
+```
 
-The `ohttpMetricsAdaptive` node is designed for detailed insights into individual OHTTP requests with adaptive sampling. This node can help in understanding the performance and load on your server and client setup.
+---
 
-### Key Arguments
+<h2 id="available-nodes">Available nodes</h2>
 
+Three GraphQL nodes are available, each corresponding to a different event type. All three nodes are aggregated-only — no raw per-connection records are exposed.
 
+| Node | Source event | Use for |
+| ---- | ------------ | ------- |
+| `ohttpRelayRequestMetricsAdaptiveGroups` | Per OHTTP request | Traffic volume and error analysis |
+| `ohttpRelayIngressConnMetricsAdaptiveGroups` | Per client-to-relay connection | Client latency and protocol distribution |
+| `ohttpRelayEgressConnMetricsAdaptiveGroups` | Per relay-to-gateway connection | Relay-to-gateway latency |
 
-* `filter` required
-  * Apply filters to narrow down your data set. `accountTag` is a required filter.
-* `limit`  optional
-  * Specify the maximum number of records to return.
-* `orderBy` optional
-  * Choose how to sort your data, with options for various dimensions and metrics.
+:::note[Adaptive sampling]
 
+Each node is backed by an independent adaptive bit-rate (ABR) sampling pipeline. Cloudflare automatically scales the sampling rate based on traffic volume to keep query performance consistent. All returned values are extrapolated totals, not raw counts. Because each node has its own sampling rate, figures across nodes are not directly comparable.
 
-### Available Fields
+:::
 
+<h3 id="shared-arguments">Arguments</h3>
 
+All three nodes share the same argument signature.
 
-* `bytesToClient` int optional
-  * The number of bytes returned to the client.
-* `bytesToGateway` int optional
-  * Total bytes received from the client.
-* `colo` string optional
-  * Airport code of the Cloudflare data center that served the request.
-* `datetime` Time optional
-  * The date and time when the event was recorded.
-* `gatewayStatusCode` int optional
-  * Status code returned by the gateway.
-* `relayStatusCode` int optional
-  * Status code returned by the relay.
+| Argument | Required | Description |
+| -------- | -------- | ----------- |
+| `filter` | Yes | Filter your data. `accountTag` is always required. |
+| `limit` | Yes | Maximum number of records to return. |
+| `orderBy` | No | Sort order for results. |
 
+<h3 id="shared-dimensions">Shared dimensions</h3>
 
-This node is useful for a granular view of traffic, helping you identify patterns, performance issues, or anomalies in your data flow.
+The following dimensions are available on all three nodes.
 
-## ohttpMetricsAdaptiveGroups
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `accountTag` | string | Your Cloudflare account identifier |
+| `date` | Date | Calendar date (day granularity) |
+| `datetimeMinute` | Time | Timestamp truncated to the minute |
+| `datetimeFiveMinutes` | Time | Timestamp truncated to 5-minute intervals |
+| `datetimeFifteenMinutes` | Time | Timestamp truncated to 15-minute intervals |
+| `datetimeHour` | Time | Timestamp truncated to the hour |
+| `colo` | string | Cloudflare data center that handled the request |
+| `endpoint` | string | The URL of the Privacy Gateway endpoint provided to you by Cloudflare |
 
-The `ohttpMetricsAdaptiveGroups` node allows for aggregated analysis of OHTTP request metrics with adaptive sampling. This node is particularly useful for identifying trends and patterns across different dimensions of your traffic and operations.
+---
 
-### Key Arguments
+<h2 id="request-node">ohttpRelayRequestMetricsAdaptiveGroups</h2>
 
+**Sum fields**
 
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `requests` | uint64 | Total request count |
+| `bytesToGateway` | uint64 | Total bytes sent from client to gateway |
+| `bytesToClient` | uint64 | Total bytes sent from gateway back to client |
 
-* `filter` required
-  * Apply filters to narrow down your data set. `accountTag` is a required filter.
-* `limit`  optional
-  * Specify the maximum number of records to return.
-* `orderBy` optional
-  * Choose how to sort your data, with options for various dimensions and metrics.
+**Additional dimensions**
 
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `relayStatusCode` | uint16 | HTTP status code returned by the relay to the client |
+| `gatewayStatusCode` | uint16 | HTTP status code returned by the gateway to the relay. A value of `0` means the request never reached the gateway (relay-side failure or timeout). |
 
-### Available Fields
+**Status code reference**
 
+*relayStatusCode*
 
+| Code | Description |
+| ---- | ----------- |
+| **2xx — Success** | |
+| `200` | Request relayed and response returned to client |
+| **4xx — Client errors** | |
+| `400` | Bad Request — malformed OHTTP capsule or invalid headers |
+| `401` | Unauthorized — missing or invalid credentials on the outer request |
+| `403` | Forbidden — client is not permitted to use this endpoint |
+| `405` | Method Not Allowed — only POST is accepted for OHTTP |
+| `413` | Payload Too Large — encapsulated request exceeds the size limit |
+| `429` | Too Many Requests — client has been rate limited by the relay |
+| **5xx — Server errors** | |
+| `500` | Internal Server Error — relay failed to process the request |
+| `502` | Bad Gateway — relay received an invalid response from the gateway |
+| `503` | Service Unavailable — relay is temporarily unable to handle requests |
+| `504` | Gateway Timeout — gateway did not respond within the configured timeout |
 
-* `count` int optional
-  * The number of records that meet the criteria.
-* `dimensions` optional
-  * Specifies the grouping dimensions for your data.
-* `sum` optional
-  * Aggregated totals for various metrics, per dimension.
+*gatewayStatusCode*
 
+A value of `0` means the request never reached the gateway — the relay failed or timed out before forwarding it.
 
-**Dimensions**
+| Code | Description |
+| ---- | ----------- |
+| **0 — No gateway response** | |
+| `0` | Request never reached the gateway (relay-side failure or timeout) |
+| **2xx — Success** | |
+| `200` | Gateway processed the inner OHTTP request |
+| **4xx — Client errors** | |
+| `400` | Bad Request — gateway could not parse the decapsulated inner request |
+| `401` | Unauthorized — missing or invalid credentials on the inner request |
+| `403` | Forbidden — gateway rejected the request based on policy |
+| `404` | Not Found — target resource not found at the origin |
+| `429` | Too Many Requests — gateway rate limited the request |
+| **5xx — Server errors** | |
+| `500` | Internal Server Error — gateway encountered a processing failure |
+| `502` | Bad Gateway — gateway received an invalid response from the origin |
+| `503` | Service Unavailable — gateway or origin is temporarily unavailable |
 
-You can group your metrics by various dimensions to get a more segmented view of your data:
+**Sample queries**
 
+<h4 id="query-daily-volume">Total requests by day</h4>
 
-* `colo` string optional
-  * The airport code of the Cloudflare data center.
-* `date` Date optional
-  * The date of OHTTP request metrics.
-* `datetimeFifteenMinutes` Time optional
-  * Timestamp truncated to fifteen minutes.
-* `datetimeFiveMinutes` Time optional
-  * Timestamp truncated to five minutes.
-* `datetimeHour` Time optional
-  * Timestamp truncated to the hour.
-* `datetimeMinute` Time optional
-  * Timestamp truncated to the minute.
-* `endpoint` string optional
-  * The appId that generated traffic.
-* `gatewayStatusCode` int optional
-  * Status code returned by the gateway.
-* `relayStatusCode` int optional
-  * Status code returned by the relay.
+Get a high-level view of daily request volume and bytes transferred over a time range.
 
+<Details header="Query">
 
-**Sum Fields**
+```graphql
+query DailyRequestVolume(
+  $accountTag: string!
+  $startDate: Date!
+  $endDate: Date!
+  $endpoint: string!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayRequestMetricsAdaptiveGroups(
+        filter: {
+          date_geq: $startDate
+          date_leq: $endDate
+          endpoint: $endpoint
+        }
+        limit: 10000
+        orderBy: [date_ASC]
+      ) {
+        sum {
+          requests
+          bytesToGateway
+          bytesToClient
+        }
+        dimensions {
+          date
+          endpoint
+        }
+      }
+    }
+  }
+}
+```
 
-Sum fields offer a cumulative view of various metrics over your selected time period:
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "startDate": "<START_DATE e.g. 2025-01-01>",
+  "endDate": "<END_DATE e.g. 2025-01-31>",
+  "endpoint": "https://<YOUR_PRIVACY_GATEWAY_ENDPOINT>"
+}
+```
 
+</Details>
 
-* `bytesToClient` int optional
-  * Total bytes sent from the gateway to the client.
-* `bytesToGateway` int optional
-  * Total bytes from the client to the gateway.
-* `clientRequestErrors` int optional
-  * Total number of client request errors.
-* `gatewayResponseErrors` int optional
-  * Total number of gateway response errors.
+<h4 id="query-client-errors">Client request errors</h4>
 
+Find client-side failures — such as malformed requests or auth failures — that never reached the gateway. These appear as relay `4xx` with `gatewayStatusCode: 0`.
 
-Utilize the ohttpMetricsAdaptiveGroups node to gain comprehensive, aggregated insights into your traffic patterns, helping you optimize performance and user experience.
+<Details header="Query">
+
+```graphql
+query ClientRequestErrors(
+  $accountTag: string!
+  $start: Time!
+  $end: Time!
+  $endpoint: string!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayRequestMetricsAdaptiveGroups(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+          endpoint: $endpoint
+          relayStatusCode_geq: 400
+          relayStatusCode_leq: 499
+          gatewayStatusCode: 0
+        }
+        limit: 10000
+        orderBy: [datetimeMinute_ASC]
+      ) {
+        sum {
+          requests
+        }
+        dimensions {
+          datetimeMinute
+          datetimeFiveMinutes
+          datetimeHour
+          relayStatusCode
+          colo
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "start": "<START_TIME e.g. 2025-01-01T00:00:00Z>",
+  "end": "<END_TIME e.g. 2025-01-01T23:59:59Z>",
+  "endpoint": "https://<YOUR_PRIVACY_GATEWAY_ENDPOINT>"
+}
+```
+
+</Details>
+
+<h4 id="query-gateway-errors">Gateway response errors</h4>
+
+Identify errors originating from the upstream gateway to determine if it is unhealthy.
+
+<Details header="Query">
+
+```graphql
+query GatewayResponseErrors(
+  $accountTag: string!
+  $start: Time!
+  $end: Time!
+  $endpoint: string!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayRequestMetricsAdaptiveGroups(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+          endpoint: $endpoint
+          gatewayStatusCode_geq: 500
+          gatewayStatusCode_leq: 599
+        }
+        limit: 10000
+        orderBy: [datetimeMinute_ASC]
+      ) {
+        sum {
+          requests
+        }
+        dimensions {
+          datetimeMinute
+          datetimeFiveMinutes
+          datetimeHour
+          gatewayStatusCode
+          colo
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "start": "<START_TIME e.g. 2025-01-01T00:00:00Z>",
+  "end": "<END_TIME e.g. 2025-01-01T23:59:59Z>",
+  "endpoint": "https://<YOUR_PRIVACY_GATEWAY_ENDPOINT>"
+}
+```
+
+</Details>
+
+<h4 id="query-gateway-timeouts">Gateway timeouts</h4>
+
+Detect incidents where the gateway did not respond within the configured timeout. These appear as `relayStatusCode: 504` with `gatewayStatusCode: 0`.
+
+<Details header="Query">
+
+```graphql
+query GatewayTimeouts(
+  $accountTag: string!
+  $start: Time!
+  $end: Time!
+  $endpoint: string!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayRequestMetricsAdaptiveGroups(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+          endpoint: $endpoint
+          relayStatusCode: 504
+          gatewayStatusCode: 0
+        }
+        limit: 10000
+        orderBy: [datetimeMinute_ASC]
+      ) {
+        sum {
+          requests
+        }
+        dimensions {
+          datetimeMinute
+          datetimeFiveMinutes
+          datetimeHour
+          colo
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "start": "<START_TIME e.g. 2025-01-01T00:00:00Z>",
+  "end": "<END_TIME e.g. 2025-01-01T23:59:59Z>",
+  "endpoint": "https://<YOUR_PRIVACY_GATEWAY_ENDPOINT>"
+}
+```
+
+</Details>
+
+<h4 id="query-relay-errors">Relay internal errors</h4>
+
+Isolate relay-internal failures that are not caused by the gateway. These appear as relay `5xx` with `gatewayStatusCode: 0`.
+
+<Details header="Query">
+
+```graphql
+query RelayInternalErrors(
+  $accountTag: string!
+  $start: Time!
+  $end: Time!
+  $endpoint: string!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayRequestMetricsAdaptiveGroups(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+          endpoint: $endpoint
+          relayStatusCode_geq: 500
+          relayStatusCode_leq: 599
+          gatewayStatusCode: 0
+        }
+        limit: 10000
+        orderBy: [datetimeMinute_ASC]
+      ) {
+        sum {
+          requests
+        }
+        dimensions {
+          datetimeMinute
+          datetimeFiveMinutes
+          datetimeHour
+          relayStatusCode
+          colo
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "start": "<START_TIME e.g. 2025-01-01T00:00:00Z>",
+  "end": "<END_TIME e.g. 2025-01-01T23:59:59Z>",
+  "endpoint": "https://<YOUR_PRIVACY_GATEWAY_ENDPOINT>"
+}
+```
+
+</Details>
+
+---
+
+<h2 id="ingress-node">ohttpRelayIngressConnMetricsAdaptiveGroups</h2>
+
+**Quantile fields**
+
+| Field | Type | Unit | Description |
+| ----- | ---- | ---- | ----------- |
+| `clientRelayRttMsP50` | float64 | ms | Median round trip time between client and relay |
+| `clientRelayRttMsP95` | float64 | ms | 95th percentile RTT between client and relay |
+| `clientRelayRttMsP99` | float64 | ms | 99th percentile RTT between client and relay |
+
+**Additional dimensions**
+
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `httpVersion` | string | HTTP protocol version used for the client-to-relay connection |
+| `tlsVersion` | string | TLS version negotiated on the client-to-relay connection |
+
+**Sample queries**
+
+<h4 id="query-ingress-latency-colo">Client-to-relay latency by data center</h4>
+
+Compare latency across Cloudflare data centers to identify geographic performance issues.
+
+<Details header="Query">
+
+```graphql
+query ClientRelayLatencyByColo(
+  $accountTag: string!
+  $start: Time!
+  $end: Time!
+  $endpoint: string!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayIngressConnMetricsAdaptiveGroups(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+          endpoint: $endpoint
+        }
+        limit: 10000
+      ) {
+        quantiles {
+          clientRelayRttMsP50
+          clientRelayRttMsP95
+          clientRelayRttMsP99
+        }
+        dimensions {
+          datetimeMinute
+          datetimeFiveMinutes
+          datetimeHour
+          colo
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "start": "<START_TIME e.g. 2025-01-01T00:00:00Z>",
+  "end": "<END_TIME e.g. 2025-01-01T23:59:59Z>",
+  "endpoint": "https://<YOUR_PRIVACY_GATEWAY_ENDPOINT>"
+}
+```
+
+</Details>
+
+<h4 id="query-protocol-distribution">Protocol distribution</h4>
+
+Monitor HTTP and TLS version adoption across your connections over time. Each row in the result represents a distinct combination of `httpVersion` and `tlsVersion` observed in the selected time window.
+
+<Details header="Query">
+
+```graphql
+query ProtocolDistribution(
+  $accountTag: string!
+  $start: Time!
+  $end: Time!
+  $endpoint: string!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayIngressConnMetricsAdaptiveGroups(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+          endpoint: $endpoint
+        }
+        limit: 10000
+        orderBy: [datetimeMinute_ASC]
+      ) {
+        quantiles {
+          clientRelayRttMsP50
+        }
+        dimensions {
+          datetimeMinute
+          datetimeFiveMinutes
+          datetimeHour
+          httpVersion
+          tlsVersion
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "start": "<START_TIME e.g. 2025-01-01T00:00:00Z>",
+  "end": "<END_TIME e.g. 2025-01-01T23:59:59Z>",
+  "endpoint": "https://<YOUR_PRIVACY_GATEWAY_ENDPOINT>"
+}
+```
+
+</Details>
+
+---
+
+<h2 id="egress-node">ohttpRelayEgressConnMetricsAdaptiveGroups</h2>
+
+**Quantile fields**
+
+| Field | Type | Unit | Description |
+| ----- | ---- | ---- | ----------- |
+| `relayGatewayRttMsP50` | float64 | ms | Median round trip time between relay and gateway |
+| `relayGatewayRttMsP95` | float64 | ms | 95th percentile RTT between relay and gateway |
+| `relayGatewayRttMsP99` | float64 | ms | 99th percentile RTT between relay and gateway |
+
+**Sample queries**
+
+<h4 id="query-egress-latency-colo">Relay-to-gateway latency by data center</h4>
+
+Compare relay-to-gateway latency across data centers to detect routing or peering issues.
+
+<Details header="Query">
+
+```graphql
+query RelayGatewayLatencyByColo(
+  $accountTag: string!
+  $start: Time!
+  $end: Time!
+  $endpoint: string!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayEgressConnMetricsAdaptiveGroups(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+          endpoint: $endpoint
+        }
+        limit: 10000
+      ) {
+        quantiles {
+          relayGatewayRttMsP50
+          relayGatewayRttMsP95
+          relayGatewayRttMsP99
+        }
+        dimensions {
+          datetimeMinute
+          datetimeFiveMinutes
+          datetimeHour
+          colo
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "start": "<START_TIME e.g. 2025-01-01T00:00:00Z>",
+  "end": "<END_TIME e.g. 2025-01-01T23:59:59Z>",
+  "endpoint": "https://<YOUR_PRIVACY_GATEWAY_ENDPOINT>"
+}
+```
+
+</Details>
+
+<h4 id="query-egress-latency-time">Relay-to-gateway latency over time</h4>
+
+Track relay-to-gateway latency trends to detect gradual degradation.
+
+<Details header="Query">
+
+```graphql
+query RelayGatewayLatencyOverTime(
+  $accountTag: string!
+  $start: Time!
+  $end: Time!
+  $endpoint: string!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayEgressConnMetricsAdaptiveGroups(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+          endpoint: $endpoint
+        }
+        limit: 10000
+        orderBy: [datetimeMinute_ASC]
+      ) {
+        quantiles {
+          relayGatewayRttMsP50
+          relayGatewayRttMsP95
+          relayGatewayRttMsP99
+        }
+        dimensions {
+          datetimeMinute
+          datetimeFiveMinutes
+          datetimeHour
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "start": "<START_TIME e.g. 2025-01-01T00:00:00Z>",
+  "end": "<END_TIME e.g. 2025-01-01T23:59:59Z>",
+  "endpoint": "https://<YOUR_PRIVACY_GATEWAY_ENDPOINT>"
+}
+```
+
+</Details>
+
+---
+
+<h2 id="related-resources">Related resources</h2>
+
+- [GraphQL Analytics API — getting started](/analytics/graphql-api/getting-started/) — authentication, pagination, and rate limits
+- [GraphQL Analytics API — filtering](/analytics/graphql-api/features/filtering/) — full filter syntax reference
+- [Create an API token](/fundamentals/api/get-started/create-token/) — set up a token with Analytics Read permissions
