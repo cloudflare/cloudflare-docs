@@ -110,9 +110,12 @@ export async function generateSidebar(group: Group) {
 	const product = directory.find((p) => p.id === group.label);
 	if (product && product.data.entry.group === "Developer platform") {
 		const links = [
-			["llms.txt", `/${product.id}/llms.txt`],
+			["llms.txt", `${product.data.entry.url}llms.txt`],
 			["prompt.txt", "/workers/prompt.txt"],
-			[`${product.data.name} llms-full.txt`, `/${product.id}/llms-full.txt`],
+			[
+				`${product.data.name} llms-full.txt`,
+				`${product.data.entry.url}llms-full.txt`,
+			],
 			["Developer Platform llms-full.txt", "/developer-platform/llms-full.txt"],
 		];
 

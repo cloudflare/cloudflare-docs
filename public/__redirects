@@ -1096,13 +1096,15 @@
 /magic-transit/how-to/bgp-peering/ /magic-transit/how-to/configure-routes/ 301
 /magic-transit/how-to/run-endpoint-health-checks/ /magic-transit/network-health/run-endpoint-health-checks/ 301
 /magic-transit/how-to/check-tunnel-health-dashboard/ /magic-transit/network-health/check-tunnel-health-dashboard/ 301
-/magic-transit/how-to/configure-magic-tunnel-alerts/ /magic-transit/network-health/configure-magic-tunnel-health-alerts/ 301
+/magic-transit/how-to/configure-magic-tunnel-alerts/ /magic-transit/network-health/configure-tunnel-health-alerts/ 301
 /magic-transit/how-to/tunnel-health-checks/ /magic-transit/network-health/update-tunnel-health-checks-frequency/ 301
 /magic-transit/how-to/configure-tunnels/ /magic-transit/how-to/configure-tunnel-endpoints/ 301
 /magic-transit/network-health/update-tunnel-health-checks/ /magic-transit/network-health/update-tunnel-health-checks-frequency/ 301
-/magic-transit/network-health/configure-magic-tunnel-alerts/ /magic-transit/network-health/configure-magic-tunnel-health-alerts/ 301
+/magic-transit/network-health/configure-magic-tunnel-alerts/ /magic-transit/network-health/configure-tunnel-health-alerts/ 301
 /magic-transit/reference/tunnels/ /magic-transit/reference/gre-ipsec-tunnels/ 301
-/magic-transit/reference/magic-tunnels/ /magic-transit/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/301 301
+/magic-transit/reference/magic-tunnels/ /magic-transit/reference/how-cloudflare-calculates-tunnel-health-alerts/ 301
+/magic-transit/network-health/configure-magic-tunnel-health-alerts/ /magic-transit/network-health/configure-tunnel-health-alerts/ 301
+/magic-transit/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ /magic-transit/reference/how-cloudflare-calculates-tunnel-health-alerts/ 301
 
 # magic-wan → cloudflare-wan
 /magic-wan/tutorials/ipsec/ /cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels 301

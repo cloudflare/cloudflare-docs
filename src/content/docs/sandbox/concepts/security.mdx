@@ -135,6 +135,20 @@ try {
 }
 ```
 
+## Proxying external API requests
+
+Passing credentials directly to a sandbox — via environment variables or files — means the sandbox process holds a live credential that any code running inside it can read. A Worker proxy removes that exposure by keeping credentials exclusively in the Worker and giving the sandbox a short-lived JWT instead.
+
+The flow works as follows:
+
+```
+Sandbox (short-lived JWT) → Worker proxy (validates JWT, injects real credentials) → External API
+```
+
+The sandbox never sees the real credential. If the JWT is compromised, it expires after a short window and cannot be reused.
+
+This pattern is useful when accessing GitHub for private repository operations, AI services, or object storage where you want to keep credentials out of the container entirely. Refer to [Proxy requests to external APIs](/sandbox/guides/proxy-requests/) for a complete implementation.
+
 ## What the SDK protects against
 
 - Sandbox-to-sandbox access (VM isolation)

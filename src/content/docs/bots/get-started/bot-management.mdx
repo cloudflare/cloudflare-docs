@@ -77,9 +77,15 @@ Refer to [Block AI bots](/bots/additional-configurations/block-ai-bots/).
 You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/security-analytics/).
 :::
 
-### Deploy default templates
+### Deploy custom rule templates
 
-Cloudflare has [default templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) for definite bots, which have a [bot score](/bots/concepts/bot-score/) of 1, and likely bots which have a bot score of 2 to 29. In our templates, Cloudflare recommends to allow verified bots such as Google SEO Crawler and access to cached static resources.
+The **Security Settings** toggles you configured above already provide baseline protection against definitely automated and likely automated traffic. 
+
+If you need additional control, such as path-specific protection, custom score thresholds, or combining bot score with other fields, Cloudflare provides [rule templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) to get started.
+
+:::note
+Custom rules created from these templates execute before the managed rules configured in **Security Settings**. For more details on this execution order, refer to [Security features interoperability](/waf/feature-interoperability/).
+:::
 
 - [Definite Bots template](https://dash.cloudflare.com/?to=/:account/:zone:/security/security-rules/custom-rules/create?template=Definitely%20Bots): Targets malicious bot traffic while ignoring verified bots and routes delivering static content.
 
@@ -93,7 +99,7 @@ Cloudflare has [default templates](https://dash.cloudflare.com/?to=/:account/:zo
   (cf.bot_management.score ge 2 and cf.bot_management.score le 29 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)
   ```
 
-- (Optional) [JavaScript detections template](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules/custom-rules/create?template=JavaScript%20Verified%20URLs): If you enabled JavaScript detections, then set up a [managed challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge), make sure to add a method and URI path. JavaScript detections improves security for URLs that should only expect JavaScript-enabled clients.
+- (Optional) [JavaScript detections template](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules/custom-rules/create?template=JavaScript%20Verified%20URLs):  You must first enable JavaScript Detections from Security Settings, then set up a [managed challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge). Make sure to add a method and URI path. JavaScript detections improves security for URLs that should only expect JavaScript-enabled clients.
 
   ```txt wrap
   (not cf.bot_management.js_detection.passed and http.request.method eq "" and http.request.uri.path in {""})
