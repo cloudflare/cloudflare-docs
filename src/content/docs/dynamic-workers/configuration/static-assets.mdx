@@ -80,7 +80,7 @@ export default {
 
 This works well when assets are small or generated at runtime. All file contents stay in the Worker's memory for the lifetime of that Worker.
 
-## Serving assets from R2
+## Serve assets from R2
 
 For larger assets, or when you do not want to load all file contents into memory, store the files in an R2 bucket and build only the manifest in memory. Use `buildAssetManifest()` from [`@cloudflare/worker-bundler`](https://www.npmjs.com/package/@cloudflare/worker-bundler) to create the manifest without bundling the content.
 
