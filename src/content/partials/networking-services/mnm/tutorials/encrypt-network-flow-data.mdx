@@ -50,7 +50,7 @@ If you installed a Cloudflare One Client on your router or machine collector (so
 If you have access to the router but installed the Cloudflare One Client on another machine, you can configure the router to export flow traffic to the machine running the Cloudflare One Client. To do this:
 
 1. Set the machine's IP address as the export destination on the router.
-2. Configure the export port on the router to match the listening port on the WARP machine.
+2. Configure the export port on the router to match the listening port on the Cloudflare One Client machine.
 3. Redirect traffic that arrives at your machine running the Cloudflare One Client to the following Cloudflare's destination IPs and ports:
    - **For NetFlow**: IP address `162.159.65.1` and port `2055`.
    - **For sFlow**: IP `162.159.65.1` and port `6343`. <br />

@@ -15,7 +15,7 @@ params:
 :::note
 By default, Cloudflare WAN does not support direct Peer-to-peer connections for devices with the Cloudflare One Client enabled. Double encapsulation and asymmetric routing prevent these connections.
 
-When a device is behind Cloudflare WAN, avoid enabling WARP. Instead, access the device using its local LAN IP from remote systems, rather than relying on Peer-to-peer communication.
+When a device is behind Cloudflare WAN, avoid enabling the Cloudflare One Client. Instead, access the device using its local LAN IP from remote systems, rather than relying on Peer-to-peer communication.
 
 If you do want to use the Cloudflare One Client on a device behind Cloudflare WAN and connect to its virtual IP (within the `100.96.0.0/12` range), you will need to adjust your Cloudflare One Client profiles. Specifically, exclude the `100.96.0.0/12` subnet from the on-premises Cloudflare One Client profiles, and include it in the off-premises profile.
 :::
@@ -34,7 +34,7 @@ When connecting a device to Cloudflare WAN, you will have virtual IP addresses f
 
 ---
 
-## Set up WARP with Cloudflare WAN
+## Set up the Cloudflare One Client with Cloudflare WAN
 
 ### 1. Route packets back to the Cloudflare One Client devices
 
@@ -95,7 +95,7 @@ To learn which IP addresses and UDP ports you should exclude to accomplish this,
 	}}
 />
 
-## Test WARP integration
+## Test Cloudflare One Client integration
 
 Before testing, <a href={props.domainFallbackURL}>configure domain fallback</a> for the server or service in the Cloudflare One Client settings. This is needed because by default Cloudflare Zero Trust excludes common top level domains used for local resolution from being sent to Gateway for processing.
 

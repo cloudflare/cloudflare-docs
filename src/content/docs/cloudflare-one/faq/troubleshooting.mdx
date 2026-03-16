@@ -43,7 +43,7 @@ Gateway presents an **HTTP Response Code: 526** error page in the following case
   - The server certificate is revoked and fails a CRL check.
   - There is at least one expired certificate in the certificate chain for the server certificate.
   - The common name on the certificate does not match the URL you are trying to reach.
-  - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
+  - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off the Cloudflare One Client.
 
 - **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
   - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
@@ -220,7 +220,7 @@ To reset the encryption keys:
 
 <Render file="warp/reset-encryption-keys" product="cloudflare-one" />
 
-macOS Big Sur and newer releases do not allow WARP to automatically trust the certificate. You must either [manually trust the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#macos) as the user or [use a MDM to trust the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software).
+macOS Big Sur and newer releases do not allow the Cloudflare One Client to automatically trust the certificate. You must either [manually trust the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#macos) as the user or [use a MDM to trust the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software).
 
 After confirming that the certificate is installed and trusted on the end-user device, mark the certificate as **In-Use**. To mark the certificate as **In-Use**:
 
@@ -229,7 +229,7 @@ After confirming that the certificate is installed and trusted on the end-user d
 3. In the detailed menu under **Basic Information**, select **Confirm and turn on certificate**.
 4. Once turned on, the new certificate will now show as **In-Use** in Cloudflare One. **In-Use** indicates that the certificate is being used for inspection.
 
-It is recommended to have end users disconnect and reconnect WARP to expedite this change being reflected on their local machine. To verify the new certificate is being used correctly:
+It is recommended to have end users disconnect and reconnect the Cloudflare One Client to expedite this change being reflected on their local machine. To verify the new certificate is being used correctly:
 
 1. Connect to the Cloudflare One Client.
 2. Visit an HTTPS site.
@@ -243,7 +243,7 @@ The new certificate will be valid until the configured expiration date.
 
 If the new certificate is not activating on the end-user device or you are getting a `Certificate is missing` warning even though the certificate is marked **In-Use**. Refer to the following troubleshooting options:
 
-1. Rotate the keys used by WARP to force activate the new certificate by running:
+1. Rotate the keys used by the Cloudflare One Client to force activate the new certificate by running:
 
    ```sh
    warp-cli tunnel rotate-keys
@@ -287,11 +287,11 @@ However, if the user attempts to enter the override code at **1:00 PM** the same
 
 If the user attempts to enter the override code at **11:59 AM** the next day, the override code will only be valid until **12:59 PM** (a one hour duration). The override code was generated at **12:00 PM** and 23 hours of its total 24 hour validity were counted as used from 12:00 PM to 11:00 AM the next day (a 23 hour duration).
 
-## I disabled WARP using an override code but WARP turned on by itself before my override code expired.
+## I disabled the Cloudflare One Client using an override code but it turned on by itself before my override code expired.
 
 If you are using an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) with [Auto connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#auto-connect) also enabled, the Cloudflare One Client will turn on automatically according to the Timeout set for **Auto connect**. Using an override code to override the WARP lock switch will not disable Auto connect. As best practice, review your Auto connect settings before sending the override code to the user.
 
-To prevent WARP from auto connecting while using an admin override code, disable Auto connect or set a longer **Timeout** for **Auto connect**. Note the changes you make to Auto connect while the end user is using the admin override code if you need to revert these changes later.
+To prevent the Cloudflare One Client from auto connecting while using an admin override code, disable Auto connect or set a longer **Timeout** for **Auto connect**. Note the changes you make to Auto connect while the end user is using the admin override code if you need to revert these changes later.
 
 ## I am getting the error `Failed to fetch user/group information from the identity provider`.
 
@@ -356,7 +356,7 @@ Some legacy Windows systems (such as Windows 10 Enterprise 1607 LTSB, which is b
 To fix this:
 
 1. Download and install the [.NET Framework 4.7.2 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net472) (make sure to install the **Runtime**, not the Developer Pack).
-2. Re-run the WARP installer.
+2. Re-run the Cloudflare One Client installer.
 
 If the problem continues, try running the [.NET Repair Tool](https://www.microsoft.com/en-ca/download/details.aspx?id=30135), or check which .NET versions are installed by running the following command in PowerShell:
 

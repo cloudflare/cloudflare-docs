@@ -58,7 +58,7 @@ For detailed configuration, refer to the [Cloudflare Tunnel documentation](/clou
 
 ## Cloudflare One Client
 
-The Cloudflare One Client is a device agent that securely connects end-user devices to Cloudflare's global network. WARP encrypts traffic from the device using MASQUE (with post-quantum cryptography) or WireGuard and routes it through Cloudflare, where Gateway policies filter and inspect the traffic.
+The Cloudflare One Client is a device agent that securely connects end-user devices to Cloudflare's global network. The Cloudflare One Client encrypts traffic from the device using MASQUE (with post-quantum cryptography) or WireGuard and routes it through Cloudflare, where Gateway policies filter and inspect the traffic.
 
 Use Cloudflare One Client to secure remote workforce devices, replace traditional VPN solutions, enforce DNS filtering and web security policies, implement device posture checks, and enable Peer-to-peer connectivity between enrolled devices.
 
@@ -344,7 +344,7 @@ When layering tunnels or using multiple encapsulation methods, account for overh
 | ---- | ---- | ---- |
 | GRE tunnel | 1,476 bytes | 1,436 bytes or lower |
 | IPsec tunnel | 1,400-1,436 bytes (varies by encryption) | 1,360-1,396 bytes |
-| WARP behind Cloudflare WAN (double encapsulation) | ~1,300 bytes | Configure based on testing |
+| Cloudflare One Client behind Cloudflare WAN (double encapsulation) | ~1,300 bytes | Configure based on testing |
 | WARP Connector to Cloudflare One Client | ~1,280 bytes | Configure based on testing. Traffic is encapsulated twice: by WARP Connector and again by Cloudflare before delivery to the Cloudflare One Client. |
 
 Configure MSS clamping on your edge devices to ensure TCP traffic does not require fragmentation.
