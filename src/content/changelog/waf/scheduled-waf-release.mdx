@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2026-03-09
-description: WAF managed ruleset changes scheduled for 2026-03-09
-date: 2026-03-02
+title: WAF Release - Scheduled changes for 2026-03-23
+description: WAF managed ruleset changes scheduled for 2026-03-23
+date: 2026-03-16
 scheduled: true
 ---
 
@@ -21,15 +21,48 @@ import { RuleID } from "~/components";
   </thead>
   <tbody>
     <tr>
-      <td>2026-03-02</td>
-      <td>2026-03-09</td>
+      <td>2026-03-16</td>
+      <td>2026-03-23</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="5ae86a9bda0c41dbb905132f796ea2f6" />
+        <RuleID id="54ad0465c30d4cd2ac7a707197321c6c" />
       </td>
-      <td>Ivanti EPMM - Code Injection - CVE:CVE-2026-1281 CVE:CVE-2026-1340</td>
-      <td>This is a new detection. </td>
+      <td>Command Injection - Generic 9 - URI Vector</td>
+      <td>This is a new detection.</td>
+   </tr>
+   <tr>
+      <td>2026-03-16</td>
+      <td>2026-03-23</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="b31c34a7b29b4aaf9be6883d1eb7a999" />
+      </td>
+      <td>Command Injection - Generic 9 - Header Vector</td>
+      <td>This is a new detection.</td>
+   </tr>
+    <tr>
+      <td>2026-03-16</td>
+      <td>2026-03-23</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="155bb67d1061479e995a38510677175f" />
+      </td>
+      <td>Command Injection - Generic 9 - Body Vector</td>
+      <td>This is a new detection.</td>
+   </tr>
+   <tr>
+      <td>2026-03-16</td>
+      <td>2026-03-23</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="55fb1c76f0304f6a9d935d03479da68f" />
+      </td>
+      <td>PHP, vBulletin, jQuery File Upload - Code Injection, Dangerous File Upload - CVE:CVE-2018-9206, CVE:CVE-2019-17132 (beta)</td>
+      <td>This rule will be merged into the original rule  "PHP, vBulletin, jQuery File Upload - Code Injection, Dangerous File Upload - CVE:CVE-2018-9206, CVE:CVE-2019-17132" (ID: <RuleID id="0f2da91cec674eb58006929e824b817c" />)</td>
    </tr>
 </tbody>
 </table>
