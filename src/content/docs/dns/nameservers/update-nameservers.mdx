@@ -64,14 +64,6 @@ Some providers act as registrars but do not expose nameserver settings. If you c
 
 ---
 
-## Platforms that already use Cloudflare
-
-Platforms like Shopify and GoHighLevel pre-configure domains with their own Cloudflare nameserver pair through partner programs. Adding the same domain to your own Cloudflare account assigns a different nameserver pair, which creates a conflict.
-
-Use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/) to proxy traffic through your own account without changing the nameservers at the registrar.
-
----
-
 ## Further guidance
 
 This page covers specific workflows that customers who do not use Cloudflare Registrar[^1] might have to follow to update their domain nameservers. For complete tutorials, refer to the pages below. Full setup is the most common option, and the only one available for customers on the Free or Pro plans.
