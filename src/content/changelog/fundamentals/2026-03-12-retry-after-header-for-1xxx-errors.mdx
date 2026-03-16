@@ -24,7 +24,7 @@ Seven retryable error codes now emit `Retry-After`:
 
 The header value matches the existing `retry_after` body field in JSON and Markdown responses.
 
-If a WAF rate-limiting rule has already set a dynamic `Retry-After` value on the response, that value takes precedence.
+If a WAF rate limiting rule has already set a dynamic `Retry-After` value on the response, that value takes precedence.
 
 ## Availability
 
@@ -39,5 +39,5 @@ curl -s --compressed -D - -o /dev/null -H "Accept: application/json" -A "TestAge
 ```
 
 References:
-- [RFC 9110 §10.2.3 — Retry-After](https://www.rfc-editor.org/rfc/rfc9110#section-10.2.3)
+- [RFC 9110 section 10.2.3 - Retry-After](https://www.rfc-editor.org/rfc/rfc9110#section-10.2.3)
 - [Cloudflare 1xxx error documentation](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/)
