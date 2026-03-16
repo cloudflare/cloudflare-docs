@@ -1,189 +1,197 @@
 ---
 title: Bindings
-description: Pass data and resource bindings to dynamic Workers.
+description: Pass data and resource bindings to Dynamic Workers.
 pcx_content_type: how-to
 sidebar:
   order: 1
 ---
 
-import { Details } from "~/components";
+import { WranglerConfig } from "~/components";
 
-Bindings pass data and resources to a Dynamic Worker through the `env` property in the `WorkerCode` object returned by `get()` or passed to `load()`.
+You can pass [bindings](/workers/runtime-apis/bindings/) to Dynamic Workers to allow them to:
 
-A Dynamic Worker does not automatically inherit bindings from the Worker that creates it. You must pass each binding explicitly.
+- Write and read data from a [KV namespace](/kv/)
+- Query a [D1 database](/d1/)
+- Store and retrieve objects from an [R2 bucket](/r2/)
+- Run inference with [Workers AI](/workers-ai/)
 
-## Environment variables
+Normally, to give a Worker access to a binding, you declare that binding in the Worker's Wrangler configuration and deploy it with that configuration.
 
-You can pass strings, numbers, booleans, objects, arrays, and `ArrayBuffer` values. These values are copied into the Dynamic Worker, not shared by reference.
+Dynamic Workers work differently. Because they are created at runtime, they do not come with bindings declared ahead of time. Instead, the Worker that creates the Dynamic Worker is responsible for passing bindings in when it calls `load()`.
 
-```js
-env: {
-	API_KEY: "sk-abc123",
-	MAX_RETRIES: 3,
-	FEATURE_FLAGS: { darkMode: true, beta: false },
-}
+This gives the Worker that loads the Dynamic Worker control over what the Dynamic Worker can access. It can decide which resources to pass through, which names to expose them under, and whether to pass the original binding directly or wrap it in a custom interface so it can add its own logic around each operation.
+
+To pass bindings to a Dynamic Worker, you need to:
+
+1. Add the binding to the Worker that is loading the Dynamic Workers, so it can grant the Dynamic Worker access to it.
+2. When calling `load()` to create the Dynamic Worker, pass the binding in the [`env`](/workers/runtime-apis/handlers/fetch/#parameters) object. This is where you choose the name the Dynamic Worker will use for that binding.
+3. In the Dynamic Worker, read the binding from `env` using the name you assigned in `load()`.
+
+```txt
+┌─────────────────────────────────────────────────────────┐
+│  Loader Worker Bindings                                 │
+│  ┌───────────────┐ ┌──────────┐ ┌──────────┐           │
+│  │ worker_loaders│ │  MY_KV   │ │  MY_D1   │           │
+│  └───────┬───────┘ └─────┬────┘ └─────┬────┘           │
+│          │               │            │                 │
+│          ▼               │            │                 │
+│  ┌───────────────────────┼────────────┼──────────────┐  │
+│  │  Loader Worker        │            │              │  │
+│  │  env.LOADER           │            │              │  │
+│  │  env.MY_KV  ◄─────────┘            │              │  │
+│  │  env.MY_D1  ◄───────────────────────┘              │  │
+│  │                                                    │  │
+│  │  load({                                            │  │
+│  │    env: {                                          │  │
+│  │      STORAGE: env.MY_KV,  ──┐                     │  │
+│  │      DB:      env.MY_D1,  ──┼──┐                  │  │
+│  │    }                        │  │                   │  │
+│  │  })                         │  │                   │  │
+│  └─────────────────────────────┼──┼───────────────────┘  │
+│                                │  │                      │
+│                                ▼  ▼                      │
+│  ┌─────────────────────────────────────────────────────┐ │
+│  │  Dynamic Worker (created at runtime)                │ │
+│  │  env.STORAGE  →  reads/writes KV                    │ │
+│  │  env.DB       →  queries D1                         │ │
+│  └─────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────┘
 ```
 
-## Bindings (KV, D1, R2)
+#### Add the binding to the loader Worker
 
-To give a Dynamic Worker access to resources like [KV namespaces](/kv/), [D1 databases](/d1/), or [R2 buckets](/r2/), configure those bindings on the Worker that loads the Dynamic Workers. Then pass them through the `env` property when calling `load()` or `get()`. The Dynamic Worker receives these as properties on its own `env` object:
+To pass a resource to a Dynamic Worker, first add that resource as a binding in the loader Worker's Wrangler configuration.
+
+The loader Worker is the deployed Worker that uses the `worker_loaders` binding to create Dynamic Workers:
+
+<WranglerConfig>
+
+```toml
+[[worker_loaders]]
+binding = "LOADER"
+
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "<your-kv-namespace-id>"
+```
+
+</WranglerConfig>
+
+#### Pass the binding when creating the Dynamic Worker
+
+When you call `load()` to create the Dynamic Worker, include an [`env`](/workers/runtime-apis/handlers/fetch/#parameters) object that specifies which bindings the Dynamic Worker should have access to. The keys you set in `env` become the binding names inside the Dynamic Worker.
+
+You can also use `env` to pass plain values like strings, numbers, booleans, objects, arrays, and `ArrayBuffer` values. These values are copied into the Dynamic Worker when it is created, so changes inside the Dynamic Worker do not affect the original values in the loader Worker.
 
 ```js
 const worker = env.LOADER.load({
-	// ...modules, compatibilityDate, etc.
+	// ...
 	env: {
 		STORAGE: env.MY_KV,
-		DB: env.MY_D1,
+		GREETING: "Hello",
 	},
 });
 ```
 
-The keys you set in `env` determine the binding names the Dynamic Worker uses. For example, `STORAGE: env.MY_KV` means the Dynamic Worker accesses that KV namespace as `env.STORAGE`.
+#### Use the binding in the Dynamic Worker
 
-### Use `env` for global resources
-
-Resources like [KV namespaces](/kv/), [R2 buckets](/r2/), or [D1 databases](/d1/) are globally available, so you can safely pass them through `env` at creation time.
-
-### Use function parameters for Durable Object storage
-
-Durable Objects have their own lifecycle and can be shut down independently of a Dynamic Worker. Do not give a Dynamic Worker direct access to objects owned by the Durable Object, such as `this.storage`, at creation time. The Durable Object could be destroyed while the Dynamic Worker is still alive, causing references to its storage to become invalid.
-
-Instead, pass storage access as an RPC method argument. This keeps the Durable Object and Dynamic Worker lifecycles independent while keeping the storage available for the duration of the call.
-
-To give a Dynamic Worker access to Durable Object storage, wrap it in an `RpcTarget` and pass it as a function parameter.
-
-```ts
-return await worker
-	.getEntrypoint()
-	.call(request, new StorageContext(this.ctx.storage));
-```
-
-<Details header="Show full Durable Object example">
-
-```ts
-import { DurableObject, RpcTarget, WorkerEntrypoint } from "cloudflare:workers";
-
-class StorageContext extends RpcTarget {
-	constructor(private storage: DurableObjectStorage) {
-		super();
-		this.storage = storage;
-	}
-
-	async put(key: string, data: any) {
-		this.storage.sql.exec(
-			"INSERT OR REPLACE INTO kv (key, value) VALUES (?, ?)",
-			key,
-			JSON.stringify(data),
-		);
-	}
-
-	async get(key: string) {
-		const cursor = this.storage.sql.exec(
-			"SELECT value FROM kv WHERE key = ?",
-			key,
-		);
-		const row = cursor.one();
-		return row ? JSON.parse(row.value as string) : null;
-	}
-}
-
-export class MyDurableObject extends DurableObject<Env> {
-	constructor(ctx: DurableObjectState, env: Env) {
-		super(ctx, env);
-		this.ctx.storage.sql.exec(
-			"CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT)",
-		);
-	}
-
-	async call(request: Request) {
-		let worker = this.env.LOADER.get("my-dynamic-worker", () => {
-			return {
-				compatibilityDate: "2025-06-01",
-				mainModule: "worker.js",
-				modules: {
-					"worker.js": `
-						import { WorkerEntrypoint } from 'cloudflare:workers';
-
-						export default class extends WorkerEntrypoint {
-							async call(request, storage) {
-								await storage.put('key', 123);
-								const value = await storage.get('key');
-								return new Response(value);
-							}
-						}
-					`,
-				},
-			};
-		});
-
-		return await worker
-			.getEntrypoint()
-			.call(request, new StorageContext(this.ctx.storage));
-	}
-}
-
-export default class extends WorkerEntrypoint<Env> {
-	async fetch(request: Request): Promise<Response> {
-		const id = this.env.MY_DURABLE_OBJECT.idFromName("example");
-		const stub = this.env.MY_DURABLE_OBJECT.get(id);
-		return stub.call(request);
-	}
-}
-```
-
-</Details>
-
-### Custom resource bindings
-
-Sometimes you do not want to hand the Dynamic Worker a raw binding like KV or D1 directly. For example, you might want to:
-
-- Log or audit every operation the Dynamic Worker performs.
-- Allow access to an R2 bucket, but only to a specific prefix.
-- Transform or validate data before writing it to storage.
-- Let a tenant's Worker query a database, but only rows that belong to that tenant.
-
-To do this, define a `WorkerEntrypoint` class in the loader Worker that wraps the real binding with your own logic. Pass it to the Dynamic Worker using `ctx.exports`. The Dynamic Worker calls methods on the class over RPC, but can only access what you explicitly expose.
+The Dynamic Worker accesses `env.STORAGE` to read from KV and `env.GREETING` to use the plain value passed in by the loader Worker:
 
 ```js
-import { WorkerEntrypoint } from "cloudflare:workers";
-
-export class ScopedKV extends WorkerEntrypoint {
-	async get(key) {
-		return this.env.MY_KV.get(`${this.ctx.props.prefix}:${key}`);
-	}
-
-	async put(key, value) {
-		return this.env.MY_KV.put(`${this.ctx.props.prefix}:${key}`, value);
-	}
-}
-
+// Inside the Dynamic Worker
 export default {
-	async fetch(request, env, ctx) {
-		return env.LOADER.load({
-			mainModule: "index.js",
-			modules: {
-				"index.js": `
-					export default {
-						async fetch(request, env) {
-							await env.STORAGE.put("user:1", "Alice");
-							const value = await env.STORAGE.get("user:1");
-							return new Response(value);
-						},
-					};
-				`,
-			},
-			env: {
-				STORAGE: ctx.exports.ScopedKV({ props: { prefix: "tenant-abc" } }),
-			},
-		});
+	async fetch(request, env) {
+		const name = await env.STORAGE.get("user:1");
+		return new Response(`${env.GREETING}, ${name}`);
 	},
 };
 ```
 
-In this example, `ScopedKV` wraps a KV namespace and automatically prefixes every key with a tenant identifier. When the Dynamic Worker calls `env.STORAGE.put("user:1", "Alice")`, the actual key written to KV is `tenant-abc:user:1`.
+## Custom bindings
 
-The Dynamic Worker has no way to read or write keys outside that prefix.
+When you pass a binding like [KV](/kv/) or [D1](/d1/) to a Dynamic Worker, the Dynamic Worker can call any method on it directly. If you want to control what happens when those calls are made — for example, logging every write, validating inputs before they reach the database, or returning custom errors — you can create a custom binding instead.
 
-`props` lets you reuse the same class with different configuration. In this example, you could create another binding with `ctx.exports.ScopedKV({ props: { prefix: "tenant-xyz" } })` to scope a second Dynamic Worker to a different tenant.
+A custom binding is a class you define in the loader Worker with its own methods. You pass an instance of it to the Dynamic Worker in place of the original binding. When the Dynamic Worker calls `env.STORAGE.get("user:1")`, that does not go to KV directly — it runs the `get()` method you defined in your loader Worker, where you can add logging, validation, or any other logic before reading from KV.
 
-If your wrapper does not need configuration, omit `props` entirely.
+### Logging KV writes on Dynamic Workers to Workers Analytics Engine
+
+In this example, you create a custom binding so that every time the Dynamic Worker makes a write to KV, that operation is logged to [Workers Analytics Engine](/analytics/analytics-engine/) to track usage.
+
+#### Add bindings to the loader Worker
+
+First, grant the loader Worker access to the [KV namespace](/kv/) that the Dynamic Worker will read and write to, and a [Workers Analytics Engine](/analytics/analytics-engine/) dataset so you can log each write operation.
+
+<WranglerConfig>
+
+```toml
+[[worker_loaders]]
+binding = "LOADER"
+
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "<your-kv-namespace-id>"
+
+[[analytics_engine_datasets]]
+binding = "ANALYTICS"
+dataset = "kv_usage"
+```
+
+</WranglerConfig>
+
+#### Define the custom binding
+
+Next, create a class in the loader Worker that extends `WorkerEntrypoint` and define the methods you want the Dynamic Worker to be able to call. `WorkerEntrypoint` makes these methods callable from the Dynamic Worker using [RPC](/workers/runtime-apis/rpc/), allowing the Dynamic Worker to call them as if they were local, like `env.STORAGE.put()`, even though each call actually runs in the loader Worker where the actual KV binding and your custom logic live.
+
+In this example, the exported class is called `TrackedKV` and has two methods:
+
+- `get(key)`: reads a value from KV
+- `put(key, value)`: writes a value to KV, then logs the write to Analytics Engine
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class TrackedKV extends WorkerEntrypoint {
+	async get(key) {
+		return this.env.MY_KV.get(key);
+	}
+
+	async put(key, value) {
+		await this.env.MY_KV.put(key, value);
+
+		// Write the KV write operation to Workers Analytics Engine
+		this.env.ANALYTICS.writeDataPoint({
+			indexes: ["kv_write"],
+			blobs: [key],
+			doubles: [typeof value === "string" ? value.length : 0],
+		});
+	}
+}
+```
+
+Once `TrackedKV` is exported, it becomes available on [`ctx.exports`](/workers/runtime-apis/context/#exports) in the loader Worker's `fetch()` handler — `ctx` is the handler's third parameter, after `request` and `env`. This is how you will pass it to the Dynamic Worker in the next step.
+
+#### Pass the custom binding to the Dynamic Worker
+
+Now, instead of passing `env.MY_KV` directly to the Dynamic Worker (which would give it raw access to KV and bypass the logging logic you added), pass an instance of the `TrackedKV` class you defined in the previous step. Create an instance with `ctx.exports.TrackedKV()` and pass it through the `env` object in `load()`, just like you would with any other binding:
+
+```js
+const worker = env.LOADER.load({
+	// ...
+	env: {
+		STORAGE: ctx.exports.TrackedKV(),
+	},
+});
+```
+
+The Dynamic Worker will see `STORAGE` as a binding and will be able to call `env.STORAGE.get()` and `env.STORAGE.put()` because those are the methods you defined on `TrackedKV`. When the Dynamic Worker calls those methods, they will run in the loader Worker, where your `TrackedKV` class reads from KV and logs writes to Analytics Engine.
+
+```js
+// Inside the Dynamic Worker
+export default {
+	async fetch(request, env) {
+		await env.STORAGE.put("user:1", "Alice");
+		const value = await env.STORAGE.get("user:1");
+		return new Response(value);
+	},
+};
+```
