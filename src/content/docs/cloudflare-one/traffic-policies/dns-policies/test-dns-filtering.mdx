@@ -9,11 +9,14 @@ sidebar:
 
 import { Details } from "~/components";
 
-This section covers how to validate your Gateway DNS configuration.
+This section covers how to validate your Gateway DNS configuration. Testing your policies after setup helps confirm that queries are being filtered as expected before you rely on them in production.
 
 ## Prerequisites
 
-Before you start, make sure your device is sending DNS queries through a [DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) where the policy is active. If your device uses WARP, DNS queries route through Gateway automatically. If you are using a DNS-only deployment (without WARP), verify that your network's DNS resolver points to your Gateway DNS location's IP address.
+Before you start, make sure your device is sending DNS queries to Gateway. You can do this in one of two ways:
+
+- **WARP** — If your device runs the [WARP client](/cloudflare-one/connections/connect-devices/warp/), DNS queries route through Gateway automatically.
+- **DNS location** — If you are using a DNS-only deployment (without WARP), verify that your network's DNS resolver points to your [Gateway DNS location's](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) IP address.
 
 ## Test a DNS policy
 

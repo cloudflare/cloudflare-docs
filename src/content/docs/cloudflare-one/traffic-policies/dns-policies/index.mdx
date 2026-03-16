@@ -85,7 +85,7 @@ API value: `allow`
 
 </Details>
 
-Policies with Allow actions explicitly permit DNS queries to resolve. Because Gateway uses a [first-match principle](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence), an Allow policy stops evaluation for matching queries, preventing lower-precedence policies from blocking them. For example, the following configuration allows DNS queries to reach domains categorized as belonging to the Education content category:
+Policies with Allow actions explicitly permit DNS queries to resolve. Gateway uses a [first-match principle](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence), which means that if an Allow policy matches a query at a higher precedence than a Block policy, the query will be allowed to resolve. For example, the following configuration allows DNS queries to reach domains categorized as belonging to the Education content category:
 
 | Selector           | Operator | Value       | Action |
 | ------------------ | -------- | ----------- | ------ |
