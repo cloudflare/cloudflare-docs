@@ -78,7 +78,7 @@ function buildSections(prefix: string, pages: Page[]): Section[] | null {
 		if (page.id === sectionId) {
 			// This is the section index page
 			section.indexPage = page;
-			section.label = page.data.sidebar?.label ?? page.data.title;
+			section.label = page.data.title;
 			section.order = page.data.sidebar?.order;
 		} else {
 			section.children.push(page);
