@@ -10,11 +10,13 @@ export const GET: APIRoute = async ({ url }) => {
 	const docs = await getCollection("docs");
 
 	// Build a set of all canonical URL prefixes across the entire directory.
-	// Used to detect sub-products whose pages are already covered by a parent entry.
 	const allUrlPrefixes = new Set(
 		allDirectory
 			.map((entry) => entry.data.entry.url)
-			.filter((u) => u && u !== "/" && !u.includes("#")),
+			.filter(
+				(u): u is string =>
+					typeof u === "string" && u !== "" && u !== "/" && !u.includes("#"),
+			),
 	);
 
 	// Returns true if this entry's URL is nested under another directory entry's URL.
