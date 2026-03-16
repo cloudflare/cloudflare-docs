@@ -11,17 +11,15 @@ Cloudflare automatically attaches headers to every request made through Browser 
 
 The default User-Agent depends on how you access Browser Rendering:
 
-| Method | Default User-Agent |
-| --- | --- |
-| [REST API](/browser-rendering/rest-api/) | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36` |
-| [Crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/) | `CloudflareBrowserRenderingCrawler/1.0` |
-| [Workers Bindings](/browser-rendering/workers-bindings/) | The default User-Agent of the underlying Chrome version |
+| Method | Default User-Agent | Customizable |
+| --- | --- | --- |
+| [REST API](/browser-rendering/rest-api/) | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36` | Yes, using the `userAgent` parameter |
+| [Crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/) | `CloudflareBrowserRenderingCrawler/1.0` | No |
+| [Workers Bindings](/browser-rendering/workers-bindings/) | The default User-Agent of the underlying Chrome version | Yes, via Puppeteer/Playwright configuration |
 
 :::note
-The Chrome version in the REST API and Workers Bindings User-Agent strings may change as Browser Rendering updates its underlying browser engine. Do not rely on a specific version number.
+Because the User-Agent is configurable for most methods and the Chrome version may change as Browser Rendering updates its underlying browser engine, destination servers should use the non-configurable headers below to identify Browser Rendering requests rather than relying on the User-Agent string.
 :::
-
-Unlike the headers listed below, the User-Agent can be customized for the [REST API](/browser-rendering/rest-api/) (using the `userAgent` parameter) and [Workers Bindings](/browser-rendering/workers-bindings/) configuration. The [crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/) is the exception. Its User-Agent is always `CloudflareBrowserRenderingCrawler/1.0` and cannot be changed. Because the User-Agent is configurable for most methods, destination servers should use the headers below to identify Browser Rendering requests rather than relying on the User-Agent string.
 
 ## Non-configurable headers
 
@@ -43,4 +41,11 @@ The `Signature` headers use an authentication method called [Web Bot Auth](/bots
 
 ### Bot detection
 
-The bot detection ID for Browser Rendering is `128292352`. If you are attempting to scan your own zone and want Browser Rendering to access your website freely without your bot protection configuration interfering, you can create a WAF skip rule to [allowlist Browser Rendering](/browser-rendering/faq/#can-i-allowlist-browser-rendering-on-my-own-website).
+Browser Rendering uses different bot detection IDs depending on the method. The [REST API](/browser-rendering/rest-api/) (excluding the [crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/)) and [Workers Bindings](/browser-rendering/workers-bindings/) share one ID, while the crawl endpoint has its own.
+
+| Method | Bot detection ID |
+| --- | --- |
+| [REST API](/browser-rendering/rest-api/) and [Workers Bindings](/browser-rendering/workers-bindings/) | `119853733` |
+| [Crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/) | `128292352` |
+
+If you are attempting to scan your own zone and want Browser Rendering to access your website freely without your bot protection configuration interfering, you can create a WAF skip rule to [allowlist Browser Rendering](/browser-rendering/faq/#can-i-allowlist-browser-rendering-on-my-own-website).

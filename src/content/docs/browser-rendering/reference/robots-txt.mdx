@@ -11,10 +11,11 @@ This page provides general guidance on configuring `robots.txt` and sitemaps for
 
 Requests can be identified by the [automatic headers](/browser-rendering/reference/automatic-request-headers/) that Cloudflare attaches:
 
+- [User-Agent](/browser-rendering/reference/automatic-request-headers/#user-agent) — Each Browser Rendering method has a different default User-Agent, which you can use to write targeted `robots.txt` rules
 - `cf-brapi-request-id` — Unique identifier for REST API requests
 - `Signature-agent` — Pointer to Cloudflare's bot verification keys
 
-Browser Rendering has a bot detection ID of `128292352`. Use this to create WAF rules that allow or block Browser Rendering traffic. For the default user agent and other identification details, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/).
+To allow or block Browser Rendering traffic using WAF rules instead of `robots.txt`, use the [bot detection IDs](/browser-rendering/reference/automatic-request-headers/#bot-detection) on the automatic request headers page.
 
 ## Best practices for robots.txt
 
@@ -82,9 +83,9 @@ User-agent: *
 Allow: /
 ```
 
-### Block specific paths
+### Block the /crawl endpoint on specific paths
 
-To allow crawling of your site but block specific sections:
+To allow the [`/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/) to access your site but block specific sections:
 
 ```txt title="robots.txt"
 User-agent: CloudflareBrowserRenderingCrawler

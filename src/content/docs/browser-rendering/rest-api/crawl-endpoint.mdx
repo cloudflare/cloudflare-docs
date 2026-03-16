@@ -430,7 +430,7 @@ The `/crawl` endpoint respects the directives of `robots.txt` files, including `
 :::caution[Bot protection may block crawling]
 Browser Rendering does not bypass CAPTCHAs, Turnstile challenges, or any other bot protection mechanisms. If a target site uses Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the Browser Rendering crawler.
 
-If you are crawling your own site and want Browser Rendering to access it freely, you can create a WAF skip rule to allowlist Browser Rendering. Refer to [How do I allowlist Browser Rendering?](/browser-rendering/faq/#can-i-allowlist-browser-rendering-on-my-own-website) for instructions.
+If you are crawling your own site and want Browser Rendering to access it freely, you can create a WAF skip rule to allowlist Browser Rendering. Refer to [How do I allowlist Browser Rendering?](/browser-rendering/faq/#can-i-allowlist-browser-rendering-on-my-own-website) for instructions. The `/crawl` endpoint uses [bot detection ID](/browser-rendering/reference/automatic-request-headers/#bot-detection) `128292352`.
 :::
 
 ### User-Agent
