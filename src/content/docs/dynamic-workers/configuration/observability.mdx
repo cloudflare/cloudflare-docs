@@ -1,0 +1,84 @@
+---
+title: Observability
+description: Capture, retrieve, and forward logs from dynamic Workers.
+pcx_content_type: how-to
+sidebar:
+  order: 4
+---
+
+This guide covers how to capture logs from dynamic Worker execution and retrieve or forward them so you can debug issues and get visibility into each execution.
+
+## Capture logs with Tail Workers
+
+Dynamic Workers support Tail Workers, which receive console logs, exceptions, and request metadata after a dynamic Worker finishes execution. Attach them with the [`tails`](/dynamic-workers/api-reference/#tails) property in the `WorkerCode` object you return from the loader callback.
+
+Define a Tail Worker as an entrypoint in your loader Worker:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class LogTailer extends WorkerEntrypoint {
+	async tail(events) {
+		const { workerName } = this.ctx.props;
+
+		for (const event of events) {
+			const logs = event.logs.map((log) => ({
+				level: log.level,
+				message: Array.isArray(log.message)
+					? log.message.map((part) => String(part)).join(" ")
+					: String(log.message),
+				timestamp: log.timestamp,
+			}));
+
+			// Forward logs to your logging endpoint, a Queue, or a Durable Object.
+			await fetch(`https://logs.example.com/ingest/${workerName}`, {
+				method: "POST",
+				body: JSON.stringify(logs),
+			});
+		}
+	}
+}
+```
+
+Then attach it when you load the dynamic Worker:
+
+```js
+return {
+	mainModule: "index.js",
+	modules: { "index.js": code },
+	tails: [
+		ctx.exports.LogTailer({
+			props: { workerName: tenantId },
+		}),
+	],
+};
+```
+
+Tail Workers run asynchronously after the dynamic Worker responds, so they do not add latency to the request.
+
+## Retrieve logs after execution
+
+If you need to read logs right after execution finishes, for example, to return them in an API response, store them in a Durable Object that both the Tail Worker and the loader Worker can access.
+
+Tag every log record with a stable identifier, such as a worker ID, tenant ID, or code hash, so you can correlate logs with a specific execution.
+
+The pattern is:
+
+1. Create a log session before the dynamic Worker runs.
+2. Point the Tail Worker at the same session so it writes logs there.
+3. After execution, read the collected logs with a short timeout.
+
+```js
+import { exports } from "cloudflare:workers";
+
+// Get a Durable Object stub for this Worker's log session.
+// `exports` refers to entrypoints and Durable Objects defined
+// in this same Worker, accessed through the `cloudflare:workers` module.
+const logSession = exports.LogSession.getByName(workerName);
+const logWaiter = await logSession.waitForLogs();
+
+const response = await worker.getEntrypoint().fetch(request);
+
+// Wait up to 1 second for tail events to arrive.
+const logs = await logWaiter.getLogs(1000);
+```

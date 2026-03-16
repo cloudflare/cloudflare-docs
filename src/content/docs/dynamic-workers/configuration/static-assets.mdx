@@ -1,0 +1,180 @@
+---
+title: Static assets
+description: Serve HTML, JavaScript, images, and other assets from dynamic Workers.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+Dynamic Workers can serve static assets like HTML pages, JavaScript bundles, images, and other files alongside your Worker code. This is useful when you need a dynamic Worker to serve a full-stack application.
+
+Static assets for dynamic Workers work differently from static assets in regular Workers. Instead of uploading assets at deploy time, you provide them at runtime through the Worker Loader `get()` callback, sourcing them from R2, KV, or another storage backend.
+
+## How it works
+
+The [`@cloudflare/worker-bundler`](https://www.npmjs.com/package/@cloudflare/worker-bundler) package provides the utilities for building and serving static assets in dynamic Workers.
+
+<PackageManagers type="install" pkg="@cloudflare/worker-bundler" />
+
+Asset serving is split into two parts:
+
+- **Manifest**: a lightweight lookup table that maps URL paths to metadata like content types and ETags. The manifest tells the asset handler which assets exist and how to serve them, but it does not contain the file contents.
+- **Storage**: a backend that retrieves asset content on demand. When a request matches an asset in the manifest, the handler calls the storage backend to fetch the bytes.
+
+This keeps the manifest small enough to hold in memory while letting you store the file contents wherever makes sense for your application.
+
+## Serve assets from memory
+
+The simplest approach is to use `buildAssets()` from [`@cloudflare/worker-bundler`](https://www.npmjs.com/package/@cloudflare/worker-bundler), which keeps both the manifest and asset content in memory.
+
+<TypeScriptExample>
+
+```ts
+import { buildAssets } from "@cloudflare/worker-bundler";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const worker = env.LOADER.get("my-app", async () => {
+			const { manifest, storage } = await buildAssets({
+				"/index.html": "<!DOCTYPE html><h1>Hello</h1>",
+				"/app.js": "console.log('loaded')",
+				"/styles.css": "body { margin: 0 }",
+			});
+
+			return {
+				compatibilityDate: "2025-06-01",
+				mainModule: "server.js",
+				modules: {
+					"server.js": `
+						import { handleAssetRequest } from "@cloudflare/worker-bundler";
+
+						export default {
+							async fetch(request, env) {
+								const response = await handleAssetRequest(
+									request,
+									env.MANIFEST,
+									env.STORAGE,
+								);
+								if (response) return response;
+
+								return new Response("Not found", { status: 404 });
+							},
+						};
+					`,
+				},
+				env: {
+					MANIFEST: manifest,
+					STORAGE: storage,
+				},
+			};
+		});
+
+		return worker.getEntrypoint().fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+This works well when assets are small or generated at runtime. All file contents stay in the Worker's memory for the lifetime of that Worker.
+
+## Serving assets from R2
+
+For larger assets, or when you do not want to load all file contents into memory, store the files in an R2 bucket and build only the manifest in memory. Use `buildAssetManifest()` from [`@cloudflare/worker-bundler`](https://www.npmjs.com/package/@cloudflare/worker-bundler) to create the manifest without bundling the content.
+
+<TypeScriptExample>
+
+```ts
+import {
+	buildAssetManifest,
+	handleAssetRequest,
+} from "@cloudflare/worker-bundler";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const worker = env.LOADER.get("my-app", async () => {
+			const manifest = await buildAssetManifest({
+				"/index.html": "<html>...</html>",
+				"/app.js": "console.log('hi')",
+				"/styles.css": "body { margin: 0 }",
+			});
+
+			// Storage reads from R2 on demand.
+			const storage = {
+				async get(pathname: string) {
+					const object = await env.ASSETS_BUCKET.get(`assets${pathname}`);
+					return object?.body ?? null;
+				},
+			};
+
+			return {
+				compatibilityDate: "2025-06-01",
+				mainModule: "server.js",
+				modules: {
+					"server.js": `
+						import { handleAssetRequest } from "@cloudflare/worker-bundler";
+
+						export default {
+							async fetch(request, env) {
+								const response = await handleAssetRequest(
+									request,
+									env.MANIFEST,
+									env.STORAGE,
+									env.ASSET_CONFIG,
+								);
+								if (response) return response;
+
+								return new Response("Not found", { status: 404 });
+							},
+						};
+					`,
+				},
+				env: {
+					MANIFEST: manifest,
+					STORAGE: storage,
+					ASSET_CONFIG: {
+						not_found_handling: "single-page-application",
+					},
+				},
+			};
+		});
+
+		return worker.getEntrypoint().fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+You can also use KV as a caching layer in front of R2 to reduce latency on frequently accessed assets:
+
+```ts
+const storage = {
+	async get(pathname: string) {
+		const cached = await env.ASSETS_KV.get(pathname, "arrayBuffer");
+		if (cached) return cached;
+
+		const object = await env.ASSETS_BUCKET.get(`assets${pathname}`);
+		if (!object) return null;
+
+		const content = await object.arrayBuffer();
+		await env.ASSETS_KV.put(pathname, content);
+
+		return content;
+	},
+};
+```
+
+## Configure asset handling
+
+Pass an optional configuration object as the fourth argument to `handleAssetRequest()` to control route resolution and missing-page behavior.
+
+```ts
+const response = await handleAssetRequest(request, manifest, storage, {
+	not_found_handling: "single-page-application",
+});
+```
+
+`@cloudflare/worker-bundler` supports HTML route resolution, not-found handling, including single-page application mode, static and dynamic redirects, and custom response headers.

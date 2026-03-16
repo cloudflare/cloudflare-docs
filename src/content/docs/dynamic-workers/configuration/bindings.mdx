@@ -1,0 +1,189 @@
+---
+title: Bindings
+description: Pass data and resource bindings to dynamic Workers.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+---
+
+import { Details } from "~/components";
+
+Bindings pass data and resources to a Dynamic Worker through the `env` property in the `WorkerCode` object returned by `get()` or passed to `load()`.
+
+A Dynamic Worker does not automatically inherit bindings from the Worker that creates it. You must pass each binding explicitly.
+
+## Environment variables
+
+You can pass strings, numbers, booleans, objects, arrays, and `ArrayBuffer` values. These values are copied into the Dynamic Worker, not shared by reference.
+
+```js
+env: {
+	API_KEY: "sk-abc123",
+	MAX_RETRIES: 3,
+	FEATURE_FLAGS: { darkMode: true, beta: false },
+}
+```
+
+## Bindings (KV, D1, R2)
+
+To give a Dynamic Worker access to resources like [KV namespaces](/kv/), [D1 databases](/d1/), or [R2 buckets](/r2/), configure those bindings on the Worker that loads the Dynamic Workers. Then pass them through the `env` property when calling `load()` or `get()`. The Dynamic Worker receives these as properties on its own `env` object:
+
+```js
+const worker = env.LOADER.load({
+	// ...modules, compatibilityDate, etc.
+	env: {
+		STORAGE: env.MY_KV,
+		DB: env.MY_D1,
+	},
+});
+```
+
+The keys you set in `env` determine the binding names the Dynamic Worker uses. For example, `STORAGE: env.MY_KV` means the Dynamic Worker accesses that KV namespace as `env.STORAGE`.
+
+### Use `env` for global resources
+
+Resources like [KV namespaces](/kv/), [R2 buckets](/r2/), or [D1 databases](/d1/) are globally available, so you can safely pass them through `env` at creation time.
+
+### Use function parameters for Durable Object storage
+
+Durable Objects have their own lifecycle and can be shut down independently of a Dynamic Worker. Do not give a Dynamic Worker direct access to objects owned by the Durable Object, such as `this.storage`, at creation time. The Durable Object could be destroyed while the Dynamic Worker is still alive, causing references to its storage to become invalid.
+
+Instead, pass storage access as an RPC method argument. This keeps the Durable Object and Dynamic Worker lifecycles independent while keeping the storage available for the duration of the call.
+
+To give a Dynamic Worker access to Durable Object storage, wrap it in an `RpcTarget` and pass it as a function parameter.
+
+```ts
+return await worker
+	.getEntrypoint()
+	.call(request, new StorageContext(this.ctx.storage));
+```
+
+<Details header="Show full Durable Object example">
+
+```ts
+import { DurableObject, RpcTarget, WorkerEntrypoint } from "cloudflare:workers";
+
+class StorageContext extends RpcTarget {
+	constructor(private storage: DurableObjectStorage) {
+		super();
+		this.storage = storage;
+	}
+
+	async put(key: string, data: any) {
+		this.storage.sql.exec(
+			"INSERT OR REPLACE INTO kv (key, value) VALUES (?, ?)",
+			key,
+			JSON.stringify(data),
+		);
+	}
+
+	async get(key: string) {
+		const cursor = this.storage.sql.exec(
+			"SELECT value FROM kv WHERE key = ?",
+			key,
+		);
+		const row = cursor.one();
+		return row ? JSON.parse(row.value as string) : null;
+	}
+}
+
+export class MyDurableObject extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.ctx.storage.sql.exec(
+			"CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT)",
+		);
+	}
+
+	async call(request: Request) {
+		let worker = this.env.LOADER.get("my-dynamic-worker", () => {
+			return {
+				compatibilityDate: "2025-06-01",
+				mainModule: "worker.js",
+				modules: {
+					"worker.js": `
+						import { WorkerEntrypoint } from 'cloudflare:workers';
+
+						export default class extends WorkerEntrypoint {
+							async call(request, storage) {
+								await storage.put('key', 123);
+								const value = await storage.get('key');
+								return new Response(value);
+							}
+						}
+					`,
+				},
+			};
+		});
+
+		return await worker
+			.getEntrypoint()
+			.call(request, new StorageContext(this.ctx.storage));
+	}
+}
+
+export default class extends WorkerEntrypoint<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const id = this.env.MY_DURABLE_OBJECT.idFromName("example");
+		const stub = this.env.MY_DURABLE_OBJECT.get(id);
+		return stub.call(request);
+	}
+}
+```
+
+</Details>
+
+### Custom resource bindings
+
+Sometimes you do not want to hand the Dynamic Worker a raw binding like KV or D1 directly. For example, you might want to:
+
+- Log or audit every operation the Dynamic Worker performs.
+- Allow access to an R2 bucket, but only to a specific prefix.
+- Transform or validate data before writing it to storage.
+- Let a tenant's Worker query a database, but only rows that belong to that tenant.
+
+To do this, define a `WorkerEntrypoint` class in the loader Worker that wraps the real binding with your own logic. Pass it to the Dynamic Worker using `ctx.exports`. The Dynamic Worker calls methods on the class over RPC, but can only access what you explicitly expose.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class ScopedKV extends WorkerEntrypoint {
+	async get(key) {
+		return this.env.MY_KV.get(`${this.ctx.props.prefix}:${key}`);
+	}
+
+	async put(key, value) {
+		return this.env.MY_KV.put(`${this.ctx.props.prefix}:${key}`, value);
+	}
+}
+
+export default {
+	async fetch(request, env, ctx) {
+		return env.LOADER.load({
+			mainModule: "index.js",
+			modules: {
+				"index.js": `
+					export default {
+						async fetch(request, env) {
+							await env.STORAGE.put("user:1", "Alice");
+							const value = await env.STORAGE.get("user:1");
+							return new Response(value);
+						},
+					};
+				`,
+			},
+			env: {
+				STORAGE: ctx.exports.ScopedKV({ props: { prefix: "tenant-abc" } }),
+			},
+		});
+	},
+};
+```
+
+In this example, `ScopedKV` wraps a KV namespace and automatically prefixes every key with a tenant identifier. When the Dynamic Worker calls `env.STORAGE.put("user:1", "Alice")`, the actual key written to KV is `tenant-abc:user:1`.
+
+The Dynamic Worker has no way to read or write keys outside that prefix.
+
+`props` lets you reuse the same class with different configuration. In this example, you could create another binding with `ctx.exports.ScopedKV({ props: { prefix: "tenant-xyz" } })` to scope a second Dynamic Worker to a different tenant.
+
+If your wrapper does not need configuration, omit `props` entirely.

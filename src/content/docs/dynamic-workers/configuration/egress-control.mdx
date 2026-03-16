@@ -1,0 +1,116 @@
+---
+title: Egress control
+description: Restrict, intercept, and audit outbound network access for dynamic Workers.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+When you run untrusted or AI-generated code in a dynamic Worker, you need to control what it can access on the network. You might want to:
+
+- block all outbound access so the dynamic Worker can only use the bindings you give it
+- restrict outbound requests to a specific set of allowed destinations
+- inject credentials into outbound requests without exposing secrets to the dynamic Worker
+- log or audit every outbound request for observability
+
+The `globalOutbound` option in the `WorkerCode` object returned by `get()` or passed to `load()` controls all of this. It intercepts every `fetch()` and `connect()` call the dynamic Worker makes.
+
+## Block all outbound access
+
+Set `globalOutbound` to `null` to fully isolate the dynamic Worker from the network:
+
+```js
+return {
+	mainModule: "index.js",
+	modules: { "index.js": code },
+	globalOutbound: null,
+};
+```
+
+Both `fetch()` and `connect()` throw exceptions inside the dynamic Worker.
+
+Start here if the dynamic Worker does not need network access. You can always open access later by switching to a service binding.
+
+## Intercept outbound requests
+
+To intercept outbound requests, define a `WorkerEntrypoint` class in the loader Worker that acts as a gateway. Every `fetch()` and `connect()` call the dynamic Worker makes goes through this gateway instead of hitting the network directly. Pass the gateway to the dynamic Worker with `globalOutbound` and `ctx.exports`:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class HttpGateway extends WorkerEntrypoint {
+	async fetch(request) {
+		// Every outbound fetch() from the dynamic Worker arrives here.
+		// Inspect, modify, block, or forward the request.
+		return fetch(request);
+	}
+}
+
+export default {
+	async fetch(request, env, ctx) {
+		const worker = env.LOADER.get("my-worker", async () => {
+			return {
+				mainModule: "index.js",
+				modules: { "index.js": code },
+
+				// Pass the gateway as a service binding.
+				// The dynamic Worker's fetch() and connect() calls
+				// are routed through HttpGateway instead of going
+				// to the network directly.
+				globalOutbound: ctx.exports.HttpGateway(),
+			};
+		});
+
+		return worker.getEntrypoint().fetch(request);
+	},
+};
+```
+
+From here, you can add any logic to the gateway, such as restricting destinations, injecting credentials, or logging requests.
+
+## Inject credentials
+
+A common pattern is attaching credentials to outbound requests so the dynamic Worker never sees the secret. Use `ctx.props` to pass per-tenant or per-request context to the gateway.
+
+The dynamic Worker calls `fetch()` normally. `HttpGateway` intercepts the request, attaches the token from the loader Worker's environment, and forwards it. The dynamic Worker never has access to `API_TOKEN`.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class HttpGateway extends WorkerEntrypoint {
+	async fetch(request) {
+		const headers = new Headers(request.headers);
+		headers.set("Authorization", `Bearer ${this.env.API_TOKEN}`);
+		headers.set("X-Tenant-Id", this.ctx.props.tenantId);
+
+		return fetch(new Request(request, { headers }));
+	}
+}
+
+export default {
+	async fetch(request, env, ctx) {
+		const tenantId = getTenantFromRequest(request);
+
+		const worker = env.LOADER.get(`tenant:${tenantId}`, async () => {
+			return {
+				mainModule: "index.js",
+				modules: {
+					"index.js": `
+						export default {
+							async fetch() {
+								const resp = await fetch("https://api.example.com/data");
+								return new Response(await resp.text());
+							},
+						};
+					`,
+				},
+				globalOutbound: ctx.exports.HttpGateway({
+					props: { tenantId },
+				}),
+			};
+		});
+
+		return worker.getEntrypoint().fetch(request);
+	},
+};
+```
