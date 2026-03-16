@@ -10,7 +10,9 @@ import { PackageManagers, TypeScriptExample } from "~/components";
 
 Dynamic Workers can serve static assets like HTML pages, JavaScript bundles, images, and other files alongside your Worker code. This is useful when you need a dynamic Worker to serve a full-stack application.
 
-Static assets for dynamic Workers work differently from static assets in regular Workers. Instead of uploading assets at deploy time, you provide them at runtime through the Worker Loader `get()` callback, sourcing them from R2, KV, or another storage backend.
+Dynamic Workers can serve static assets like HTML pages, JavaScript bundles, images, and other files alongside your Worker code. This is useful when you need a dynamic Worker to serve a full-stack application.
+
+Static assets for dynamic Workers work differently from [static assets in regular Workers](/workers/static-assets/). Instead of uploading assets at deploy time, you provide them at runtime through the Worker Loader `get()` callback, sourcing them from R2, KV, or another storage backend.
 
 ## How it works
 
