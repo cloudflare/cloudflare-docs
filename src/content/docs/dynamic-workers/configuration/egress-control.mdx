@@ -27,9 +27,7 @@ return {
 };
 ```
 
-Both `fetch()` and `connect()` throw exceptions inside the dynamic Worker.
-
-Start here if the dynamic Worker does not need network access. You can always open access later by switching to a service binding.
+This causes any `fetch()` or `connect()` request from the dynamic Worker to throw an exception. If the dynamic Worker needs network access, you can intercept outbound requests instead.
 
 ## Intercept outbound requests
 
