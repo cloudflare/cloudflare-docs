@@ -1,0 +1,346 @@
+---
+title: Restore sessions
+pcx_content_type: how-to
+sidebar:
+  order: 12
+description: Reconnect to sessions across requests and restore session state after container restarts.
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide covers patterns for maintaining and recovering session state across Worker requests and container restarts.
+
+Sandbox containers sleep after a period of inactivity (10 minutes by default). When a container restarts, all in-memory state is lost: shell sessions reset, processes terminate, and files written to the container filesystem are deleted. This guide shows you how to design applications that handle this gracefully.
+
+## Reconnect to a session across requests
+
+Sessions persist within a single container lifetime. Use `getSession()` to reconnect to an existing session from a new Worker request without losing its shell state, working directory, or environment variables:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+    const sandbox = getSandbox(env.Sandbox, "user-123");
+
+    if (url.pathname === "/init") {
+      const session = await sandbox.createSession({
+        id: "workspace",
+        env: { NODE_ENV: "development" },
+        cwd: "/workspace",
+      });
+      await session.exec("git clone https://github.com/user/repo.git .");
+      await session.exec("npm install");
+      return Response.json({ status: "initialized" });
+    }
+
+    if (url.pathname === "/build") {
+      // Reconnect to the existing session — env and cwd are preserved
+      const session = await sandbox.getSession("workspace");
+      const result = await session.exec("npm run build");
+      return Response.json({ output: result.stdout, success: result.success });
+    }
+
+    return new Response("Not found", { status: 404 });
+  },
+};
+```
+
+</TypeScriptExample>
+
+`getSession()` returns a session handle bound to the named session. If the container is still active, the session retains its shell state from the previous request.
+
+:::note
+`getSession()` does not create a new session if the ID does not exist. If you reference a session that was never created or was deleted, subsequent commands run in a fresh shell with default settings. Use `createSession()` to explicitly set environment variables and working directory.
+:::
+
+## Detect container restarts
+
+Because container state is ephemeral, check for the presence of expected files or processes before assuming the environment is already initialized:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+async function ensureInitialized(sandbox: ReturnType<typeof getSandbox>) {
+  const files = await sandbox.listFiles("/workspace");
+  const isInitialized = files.some((f) => f.name === "node_modules");
+
+  if (!isInitialized) {
+    // Container restarted — reinitialize the environment
+    await sandbox.exec("npm install");
+  }
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox(env.Sandbox, "user-123");
+    await ensureInitialized(sandbox);
+
+    const result = await sandbox.exec("npm test");
+    return Response.json({ output: result.stdout });
+  },
+};
+```
+
+</TypeScriptExample>
+
+## Persist and restore session configuration
+
+Session configuration — environment variables and working directory — is held in memory and lost when the container restarts. Store session metadata in [Workers KV](/kv/) or [D1](/d1/) and reapply it when recreating a session:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+interface SessionConfig {
+  id: string;
+  env: Record<string, string>;
+  cwd: string;
+}
+
+async function getOrRestoreSession(
+  sandbox: ReturnType<typeof getSandbox>,
+  config: SessionConfig,
+  kv: KVNamespace,
+) {
+  const key = `session-config:${config.id}`;
+
+  // Persist the session config so it can be restored after a restart
+  await kv.put(key, JSON.stringify(config));
+
+  return sandbox.createSession({
+    id: config.id,
+    env: config.env,
+    cwd: config.cwd,
+  });
+}
+
+async function restoreSessionFromKV(
+  sandbox: ReturnType<typeof getSandbox>,
+  sessionId: string,
+  kv: KVNamespace,
+) {
+  const stored = await kv.get(`session-config:${sessionId}`);
+  if (!stored) {
+    throw new Error(`No stored config found for session: ${sessionId}`);
+  }
+
+  const config: SessionConfig = JSON.parse(stored);
+
+  return sandbox.createSession({
+    id: config.id,
+    env: config.env,
+    cwd: config.cwd,
+  });
+}
+```
+
+</TypeScriptExample>
+
+## Restore filesystem state with backups
+
+Use [backup and restore](/sandbox/guides/backup-restore/) to persist filesystem state across container restarts. Store the backup handle in KV and re-restore it on startup:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const BACKUP_KEY = "workspace-backup";
+
+async function saveWorkspace(
+  sandbox: ReturnType<typeof getSandbox>,
+  kv: KVNamespace,
+) {
+  const backup = await sandbox.createBackup({
+    dir: "/workspace",
+    useGitignore: true,
+    ttl: 604800, // 7 days
+  });
+  await kv.put(BACKUP_KEY, JSON.stringify(backup));
+  return backup;
+}
+
+async function restoreWorkspace(
+  sandbox: ReturnType<typeof getSandbox>,
+  kv: KVNamespace,
+) {
+  const stored = await kv.get(BACKUP_KEY);
+  if (!stored) return false;
+
+  const backup = JSON.parse(stored);
+  await sandbox.restoreBackup(backup);
+  return true;
+}
+```
+
+</TypeScriptExample>
+
+:::caution[Production only]
+Backup and restore requires FUSE support and does not work with `wrangler dev`. Deploy your Worker with `wrangler deploy` to use this feature. Refer to the [backup and restore guide](/sandbox/guides/backup-restore/#prerequisites) for the required Wrangler configuration.
+:::
+
+## Full session restoration pattern
+
+Combine session configuration persistence with filesystem backups for a complete restoration pattern. This pattern saves and restores both shell configuration and workspace files:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+interface SessionState {
+  sessionConfig: {
+    env: Record<string, string>;
+    cwd: string;
+  };
+  backupHandle: object | null;
+}
+
+const STATE_KEY = "session-state:user-123";
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+    const sandbox = getSandbox(env.Sandbox, "user-123");
+
+    if (url.pathname === "/start") {
+      return handleStart(sandbox, env);
+    }
+
+    if (url.pathname === "/resume") {
+      return handleResume(sandbox, env);
+    }
+
+    if (url.pathname === "/save") {
+      return handleSave(sandbox, env);
+    }
+
+    return new Response("Not found", { status: 404 });
+  },
+};
+
+async function handleStart(sandbox, env) {
+  // Create a session with the desired configuration
+  const session = await sandbox.createSession({
+    id: "main",
+    env: { NODE_ENV: "development", PORT: "3000" },
+    cwd: "/workspace",
+  });
+
+  await session.exec("git clone https://github.com/user/repo.git .");
+  await session.exec("npm install");
+
+  // Persist the session config for future restores
+  const state: SessionState = {
+    sessionConfig: {
+      env: { NODE_ENV: "development", PORT: "3000" },
+      cwd: "/workspace",
+    },
+    backupHandle: null,
+  };
+  await env.KV.put(STATE_KEY, JSON.stringify(state));
+
+  return Response.json({ status: "started" });
+}
+
+async function handleResume(sandbox, env) {
+  const stored = await env.KV.get(STATE_KEY);
+  if (!stored) {
+    return Response.json({ error: "No saved state found" }, { status: 400 });
+  }
+
+  const state: SessionState = JSON.parse(stored);
+
+  // Check whether the container is still active by probing a known file
+  const files = await sandbox.listFiles("/workspace");
+  const isActive = files.some((f) => f.name === "package.json");
+
+  if (!isActive && state.backupHandle) {
+    // Container restarted — restore filesystem from backup
+    await sandbox.restoreBackup(state.backupHandle);
+  }
+
+  // Recreate the session with stored configuration
+  const session = await sandbox.createSession({
+    id: "main",
+    env: state.sessionConfig.env,
+    cwd: state.sessionConfig.cwd,
+  });
+
+  const result = await session.exec("node --version");
+  return Response.json({ status: "resumed", output: result.stdout });
+}
+
+async function handleSave(sandbox, env) {
+  const stored = await env.KV.get(STATE_KEY);
+  const state: SessionState = stored ? JSON.parse(stored) : { sessionConfig: {}, backupHandle: null };
+
+  // Snapshot the workspace and update the stored state
+  const backup = await sandbox.createBackup({
+    dir: "/workspace",
+    useGitignore: true,
+    ttl: 604800,
+  });
+
+  state.backupHandle = backup;
+  await env.KV.put(STATE_KEY, JSON.stringify(state));
+
+  return Response.json({ status: "saved", backupId: backup.id });
+}
+```
+
+</TypeScriptExample>
+
+## Re-run startup commands after restart
+
+For sandboxes that run background services, re-run startup commands after detecting a container restart:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+async function ensureServicesRunning(sandbox: ReturnType<typeof getSandbox>) {
+  const processes = await sandbox.listProcesses();
+  const serverRunning = processes.some((p) => p.command.includes("node server.js"));
+
+  if (!serverRunning) {
+    // Server is not running — start it
+    await sandbox.startProcess("node /workspace/server.js", {
+      id: "web-server",
+      env: { PORT: "3000" },
+    });
+  }
+}
+```
+
+</TypeScriptExample>
+
+## Best practices
+
+- **Use `getSession()` for cross-request continuity** — Within a container lifetime, `getSession()` reconnects to an existing shell context without resetting state.
+- **Persist session config externally** — Store environment variables and working directory in KV or D1 so you can recreate sessions with the correct configuration after a restart.
+- **Probe before assuming state** — Check for expected files or processes before using the sandbox to detect whether the container restarted.
+- **Save backups before long pauses** — If users step away, save a backup so work is not lost when the container sleeps.
+- **Re-restore backups after restart** — FUSE mounts are ephemeral. After a container restart, call `restoreBackup()` again using the stored handle.
+- **Use `keepAlive` for interactive sessions** — Set [`keepAlive: true`](/sandbox/configuration/sandbox-options/#keepalive) on long-running interactive environments to prevent the container from sleeping during active use.
+- **Clean up stored state** — Delete KV entries and backup objects when the sandbox is destroyed to avoid stale data.
+
+## Related resources
+
+- [Session management](/sandbox/concepts/sessions/) — How sessions and shell state work
+- [Sandbox lifecycle](/sandbox/concepts/sandboxes/) — Container states, inactivity sleep, and restart behavior
+- [Backup and restore](/sandbox/guides/backup-restore/) — Snapshot and restore filesystem directories
+- [Sessions API](/sandbox/api/sessions/) — `createSession()`, `getSession()`, and `deleteSession()` reference
+- [Sandbox options](/sandbox/configuration/sandbox-options/) — Configure `sleepAfter` and `keepAlive`
