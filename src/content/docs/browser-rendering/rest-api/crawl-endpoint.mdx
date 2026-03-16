@@ -10,6 +10,8 @@ import { Render } from "~/components";
 
 The `/crawl` endpoint scrapes content from a starting URL and follows links across the site, up to a configurable depth or page limit. Responses can be returned as HTML, Markdown, or JSON.
 
+<Render file="rest-api-token-permissions" product="browser-rendering" />
+
 ## Endpoint
 
 ```txt
@@ -423,16 +425,19 @@ Use the `source` parameter to customize which sources the crawler uses. The avai
 
 ### robots.txt and bot protection
 
-The `/crawl` endpoint respects the directives of `robots.txt` files, including `crawl-delay`. All URLs that `/crawl` is directed not to crawl are listed in the response with `"status": "disallowed"`. For guidance on configuring `robots.txt` and sitemaps for sites you plan to crawl, refer to [robots.txt and sitemaps](/browser-rendering/reference/robots-txt/).
+The `/crawl` endpoint respects the directives of `robots.txt` files, including `crawl-delay`. All URLs that `/crawl` is directed not to crawl are listed in the response with `"status": "disallowed"`. For guidance on configuring `robots.txt` and sitemaps for sites you plan to crawl, refer to [robots.txt and sitemaps](/browser-rendering/reference/robots-txt/). If you want to block the `/crawl` endpoint from accessing your site, refer to [Blocking crawlers with robots.txt](/browser-rendering/reference/robots-txt/#blocking-crawlers-with-robotstxt).
 
 :::caution[Bot protection may block crawling]
-If you use Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the Browser Rendering crawler. Refer to [Will Browser Rendering bypass Cloudflare's Bot Protection?](/browser-rendering/faq/#will-browser-rendering-bypass-cloudflares-bot-protection) for instructions on creating a WAF skip rule.
+Browser Rendering does not bypass CAPTCHAs, Turnstile challenges, or any other bot protection mechanisms. If a target site uses Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the Browser Rendering crawler.
+
+If you are crawling your own site and want Browser Rendering to access it freely, you can create a WAF skip rule to allowlist Browser Rendering. Refer to [How do I allowlist Browser Rendering?](/browser-rendering/faq/#can-i-allowlist-browser-rendering-on-my-own-website) for instructions.
 :::
 
-<Render
-  file="setting-custom-user-agent"
-  product="browser-rendering"
-/>
+### User-Agent
+
+The `/crawl` endpoint uses `CloudflareBrowserRenderingCrawler/1.0` as its User-Agent, which is different from the other [REST API](/browser-rendering/rest-api/) endpoints. This User-Agent is not customizable. Unlike the other REST API endpoints and [Workers Bindings](/browser-rendering/workers-bindings/), the `userAgent` parameter is not supported on the `/crawl` endpoint.
+
+For a full list of default User-Agent strings, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/#user-agent).
 
 ## Troubleshooting
 
@@ -440,7 +445,7 @@ If you use Cloudflare products that control or restrict bot traffic such as [Bot
 
 If your crawl job completes but returns an empty records array, or all URLs show `skipped` or `disallowed` status:
 
-- **robots.txt blocking** — The crawler respects `robots.txt` rules. Check the target site's `robots.txt` file to verify your user agent is allowed. Blocked URLs appear with `"status": "disallowed"`.
+- **robots.txt blocking** — The crawler respects `robots.txt` rules. The `/crawl` endpoint identifies itself as `CloudflareBrowserRenderingCrawler/1.0`. Check the target site's `robots.txt` file to verify this user agent is allowed. Blocked URLs appear with `"status": "disallowed"`.
 - **Pattern filters too restrictive** — Your `includePatterns` may not match any URLs on the site. Try crawling without patterns first to confirm URLs are discoverable, then add patterns.
 - **No links found** — The starting URL may not contain links. Try using `source: "sitemaps"`, increasing the `depth` parameter, or setting `includeSubdomains` or `includeExternalLinks` to `true`.
 

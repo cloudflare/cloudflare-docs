@@ -22,7 +22,7 @@ To prevent interference, Cloudflare does not write scanned content to disk. Inst
 
 ## Data in transit
 
-Data Loss Prevention complements [Secure Web Gateway](/cloudflare-one/traffic-policies/) to detect sensitive data transferred in HTTP requests. DLP scans the entire HTTP body, which may include uploaded or downloaded files, chat messages, forms, and other web content. You can also use DLP with [Email security](/cloudflare-one/email-security/) to scan [outbound emails](/cloudflare-one/email-security/outbound-dlp/).
+Data Loss Prevention complements [Secure Web Gateway](/cloudflare-one/traffic-policies/) to detect sensitive data transferred in HTTP requests. DLP scans the HTTP body (excluding headers), which may include uploaded or downloaded files, chat messages, forms, and other web content. You can also use DLP with [Email security](/cloudflare-one/email-security/) to scan [outbound emails](/cloudflare-one/email-security/outbound-dlp/).
 
 DLP requires [Gateway HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/) with [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) for visibility into data in transit. The depth of visibility varies for each site or application. DLP does not scan any traffic that bypasses Cloudflare Gateway (such as traffic that matches a [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policy).
 
@@ -30,7 +30,7 @@ To get started, refer to [Scan HTTP traffic with DLP](/cloudflare-one/data-loss-
 
 ## Data at rest
 
-Data Loss Prevention complements [Cloudflare CASB](/cloudflare-one/integrations/cloud-and-saas/) to detect sensitive data stored in your SaaS applications. Unlike data in transit scans which read files sent through Cloudflare Gateway, CASB retrieves files directly via the API. Therefore, Gateway and WARP settings (such as [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies and [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) configurations) will not affect data at rest scans.
+Data Loss Prevention complements [Cloudflare CASB](/cloudflare-one/integrations/cloud-and-saas/) to detect sensitive data stored in your SaaS applications. Unlike data in transit scans which read files sent through Cloudflare Gateway, CASB retrieves files directly via the API. Therefore, Gateway and WARP settings (such as [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies and [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configurations) will not affect data at rest scans.
 
 To get started, refer to [Scan SaaS applications with DLP](/cloudflare-one/cloud-and-saas-findings/casb-dlp/).
 

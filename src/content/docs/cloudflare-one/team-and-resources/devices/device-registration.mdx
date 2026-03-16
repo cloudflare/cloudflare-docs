@@ -7,9 +7,9 @@ sidebar:
 
 import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
-A device registration represents an individual session of the [WARP client](/cloudflare-one/team-and-resources/devices/warp/) on a physical device, linking a user (or service token) and the device to your [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization). A device registration is created when the WARP client first authenticates. Each device registration has associated configuration, which includes a unique public key, device profile, and virtual IP addresses (one IPv4 and one IPv6).
+A device registration represents an individual session of the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on a physical device, linking a user (or service token) and the device to your [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization). A device registration is created when the WARP client first authenticates. Each device registration has associated configuration, which includes a unique public key, device profile, and virtual IP addresses (one IPv4 and one IPv6).
 
-A single physical device can have [multiple device registrations](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-multiuser/), for example, if multiple users share a single laptop and each enrolls the WARP client with their own credentials.
+A single physical device can have [multiple device registrations](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/windows-multiuser/), for example, if multiple users share a single laptop and each enrolls the WARP client with their own credentials.
 
 ## Key concepts
 
@@ -18,7 +18,7 @@ A single physical device can have [multiple device registrations](/cloudflare-on
 | [User](/cloudflare-one/team-and-resources/users/seat-management/#manage-users) | An identity provider (IdP)-backed human identity that can connect new devices to your Zero Trust organization. |
 | [Seat](/cloudflare-one/team-and-resources/users/seat-management/) | A unique, billable user within your Zero Trust organization who has performed [an authentication event](/cloudflare-one/team-and-resources/users/seat-management/#authentication-events). Service tokens do not consume seats. |
 | [Service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) | A token used by automated systems (a non-human identity) to authenticate against your Cloudflare One policies. |
-| Device registration | An individual session of the WARP client on a physical device, with associated configuration including a unique public key, device profile, and [virtual IP addresses](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/) (one IPv4 and one IPv6). |
+| Device registration | An individual session of the WARP client on a physical device, with associated configuration including a unique public key, device profile, and [virtual IP addresses](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) (one IPv4 and one IPv6). |
 | [Session](/cloudflare-one/access-controls/access-settings/session-management/) | JSON Web Tokens (JWTs) that are generated when Access validates user identity against your Access policies and determines how long a user can access an Access application without re-authenticating. Unlike these session-based tokens, device registration is a persistent state that does not expire and will exist until permanently deleted. |
 
 ## Review device registration status
@@ -182,7 +182,7 @@ Seat management (billing) and access management are separate processes. Deleting
 
 ### Remove user access
 
-Deleting or revoking a registration will not be permanent if the user can re-authenticate. To prevent a user from re-authenticating and creating new device registrations, you must remove them from your [device enrollment policies](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) or from your Identity Provider (IdP).
+Deleting or revoking a registration will not be permanent if the user can re-authenticate. To prevent a user from re-authenticating and creating new device registrations, you must remove them from your [device enrollment policies](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) or from your Identity Provider (IdP).
 
 * If your device enrollment policies allow a broad domain (for example, `@company.com`), remove the user from your IdP. This prevents the user from authenticating through Access, effectively blocking them from enrolling devices.
 * If your device enrollment policies list specific user emails (for example, `sally@company.com`), you must remove that specific email from your device enrollment policies. Additionally, you can add an explicit Exclude rule for that user to the policy.

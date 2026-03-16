@@ -27,14 +27,14 @@ To resolve private DNS queries:
 
 3. Route specific DNS queries to your internal DNS resolver using one of the following options:
 
-	- [Create a Local Domain Fallback entry](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) that points to the internal DNS resolver. For example, you can instruct the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
+	- [Create a Local Domain Fallback entry](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) that points to the internal DNS resolver. For example, you can instruct the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
 	- Alternatively, [create a resolver policy](/cloudflare-one/traffic-policies/resolver-policies/#create-a-resolver-policy) that points to the internal DNS resolver. <Render file="gateway/resolver-policies-intro" product="cloudflare-one"/>
 
 4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP and UDP.
 
 5. Finally, ensure that your tunnel uses QUIC as the default [transport protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#protocol). This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries.
 
-The WARP client will now send DNS queries to your internal DNS resolver for resolution. To learn more, refer to [How the WARP client handles DNS requests](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
+The WARP client will now send DNS queries to your internal DNS resolver for resolution. To learn more, refer to [How the WARP client handles DNS requests](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/#how-the-warp-client-handles-dns-requests).
 
 ## Test the setup
 

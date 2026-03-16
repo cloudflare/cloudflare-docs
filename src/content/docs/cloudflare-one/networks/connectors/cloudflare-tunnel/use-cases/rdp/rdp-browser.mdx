@@ -10,7 +10,7 @@ sidebar:
 
 import { Render, GlossaryTooltip, Details, Tabs, TabItem, APIRequest } from "~/components";
 
-Users can connect to an RDP server without installing an RDP client or the [WARP client](/cloudflare-one/team-and-resources/devices/warp/) on their device. Browser-based RDP leverages [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), which creates a secure, outbound-only connection from your RDP server to Cloudflare's global network. Setup involves running the `cloudflared` daemon on the RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
+Users can connect to an RDP server without installing an RDP client or the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device. Browser-based RDP leverages [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), which creates a secure, outbound-only connection from your RDP server to Cloudflare's global network. Setup involves running the `cloudflared` daemon on the RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
 
 There are two ways for users to [reach the RDP server in their browser](#4-connect-as-a-user):
 
@@ -172,6 +172,11 @@ To connect to a Windows machine over RDP:
 
 4. Select the port that you want to connect to. The port selection screen only appears if the Access application allows RDP traffic on multiple ports (for example, port `3389` and port `65321`).
 5. (Optional) In your browser settings, allow the Access application to access the clipboard. Clipboard access is subject to [policy restrictions](#configure-clipboard-controls) configured by your administrator.
+
+   :::note
+   Automatic clipboard sharing only works by default in Chromium-based browsers; Firefox requires additional configuration. Refer to [Known limitations](#known-limitations) for details.
+   :::
+
 6. Enter your Windows username and password. For more information on how to format your username, refer to [User identifier formats](#user-identifier-formats).
 
 You now have access to the remote Windows desktop.
@@ -356,10 +361,16 @@ The login flow differs slightly when using an Microsoft Entra ID-bound username:
 ## Known limitations
 
 - **TLS certificate verification**: Cloudflare uses TLS to connect to the RDP target but does not verify the origin TLS certificate.
-- **WARP authentication**: Since browser-based RDP traffic does not go through the WARP client, users cannot use their [WARP session identity](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-access) to authenticate.
+- **WARP authentication**: Since browser-based RDP traffic does not go through the WARP client, users cannot use their [WARP session identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-warp-sessions-in-access) to authenticate.
 - **Audio over RDP**: Users cannot use their microphone and speaker to interact with the remote machine.
 - **Clipboard size limit**: Data copied between the local machine and the browser-based RDP session may not exceed 500 KB.
 - **Clipboard data types**: Clipboard controls only support text data. Image and file clipboard transfers are not supported.
 - **File transfers**: Users cannot transfer files from their local machine to the remote machine and vice versa.
 - **Print to local printer**: Users cannot print information from their browser-based RDP session to a printer in their local network.
 - **Network Level Authentication for Entra-joined accounts**: Browser-based RDP does not support PKU2U authentication which is required for [Network Level Authentication (NLA)](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remotepc/remote-desktop-allow-access#why-allow-connections-only-with-network-level-authentication) with Entra-joined accounts. Connecting to Entra-joined accounts requires disabling enforcement of NLA on the remote Windows machine. You can disable NLA from **Settings** > **System** > **Remote Desktop**, or use the Local Group Policy Editor to disable **Require user authentication for remote connections by using Network Level Authentication**.
+- **Clipboard browser compatibility**: Automatic clipboard sharing between the local and remote machine is only available in Chromium-based browsers by default (Google Chrome, Microsoft Edge, Opera, Brave). To enable this functionality in Firefox:
+    1. Type `about:config` into the browser address bar and press **Enter**.
+    2. Accept the warning prompt if displayed.
+    3. Search for `dom.events.testing.asyncClipboard` and set it to `true`.
+    4. Search for `dom.events.asyncClipboard.clipboardItem` and set it to `true`.
+    5. Search for `dom.events.asyncClipboard.readText` and set it to `true`.

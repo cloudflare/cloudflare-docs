@@ -9,7 +9,7 @@ import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
 Cloudflare reserves several IPv4 and IPv6 ranges for internal routing and service functionality. These ranges are drawn from the CGNAT address space (`100.64.0.0/10`). To avoid routing conflicts, your Cloudflare Tunnel, WARP Connector, or WAN routes should not include subsets of these reserved ranges. Broader routes that contain a reserved range, such as `0.0.0.0/0`, are unaffected because longest-prefix match ensures the reserved ranges still take priority.
 
-When planning your private network addressing and configuring [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) entries, use the tables below to identify which IP ranges Cloudflare has reserved and whether they can be reconfigured.
+When planning your private network addressing and configuring [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) entries, use the tables below to identify which IP ranges Cloudflare has reserved and whether they can be reconfigured.
 
 ## IPv4 ranges
 
@@ -59,7 +59,7 @@ WARP device IPs are virtual addresses assigned to each WARP device registration.
 - [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) — routes traffic between your private network and WARP devices.
 - [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) — on-ramps traffic from WAN tunnels to WARP devices.
 
-The default IPv4 range is `100.96.0.0/12`. If this range conflicts with services on your private network, you can configure custom IPv4 subnets drawn from RFC 1918 or CGNAT address space. For configuration instructions, refer to [Device IPs](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/).
+The default IPv4 range is `100.96.0.0/12`. If this range conflicts with services on your private network, you can configure custom IPv4 subnets drawn from RFC 1918 or CGNAT address space. For configuration instructions, refer to [Device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
 
 ## Private Load Balancer IPs
 
@@ -67,7 +67,7 @@ Private Load Balancer IPs are virtual addresses allocated to [Private Network Lo
 
 ## WARP Split Tunnel configuration
 
-For deployments that use the [WARP client](/cloudflare-one/team-and-resources/devices/warp/), ensure that the [reserved IP ranges](#ipv4-ranges) required by your deployment route through [WARP Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to Cloudflare. Configuration depends on whether your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude IPs and domains** or **Include IPs and domains**.
+For deployments that use the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), ensure that the [reserved IP ranges](#ipv4-ranges) required by your deployment route through [WARP Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) to Cloudflare. Configuration depends on whether your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude IPs and domains** or **Include IPs and domains**.
 
 ### Exclude mode (default)
 

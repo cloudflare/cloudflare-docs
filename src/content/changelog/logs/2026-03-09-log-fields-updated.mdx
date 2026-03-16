@@ -1,0 +1,27 @@
+---
+title: New MCP Portal Logs dataset and new fields across multiple Logpush datasets in Cloudflare Logs
+description: New MCP Portal Logs dataset is now available, along with new fields for multiple Logpush datasets in Cloudflare Logs.
+date: 2026-03-09
+---
+
+Cloudflare has added new fields across multiple [Logpush datasets](/logs/logpush/logpush-job/datasets/):
+
+### New dataset
+
+- **MCP Portal Logs**: A new dataset with fields including `ClientCountry`, `ClientIP`, `ColoCode`, `Datetime`, `Error`, `Method`, `PortalAUD`, `PortalID`, `PromptGetName`, `ResourceReadURI`, `ServerAUD`, `ServerID`, `ServerResponseDurationMs`, `ServerURL`, `SessionID`, `Success`, `ToolCallName`, `UserEmail`, and `UserID`.
+
+### New fields in existing datasets
+
+- **DEX Application Tests**: `HTTPRedirectEndMs`, `HTTPRedirectStartMs`, `HTTPResponseBody`, and `HTTPResponseHeaders`.
+- **DEX Device State Events**: `ExperimentalExtra`.
+- **Firewall Events**: `FraudUserID`.
+- **Gateway HTTP**: `AppControlInfo` and `ApplicationStatuses`.
+- **Gateway DNS**: `InternalDNSDurationMs`.
+- **HTTP Requests**: `FraudEmailRisk`, `FraudUserID`, and `PayPerCrawlStatus`.
+- **Network Analytics Logs**: `DNSQueryName`, `DNSQueryType`, and `PFPCustomTag`.
+- **WARP Toggle Changes**: `UserEmail`.
+- **WARP Config Changes**: `UserEmail`.
+- **Zero Trust Network Session Logs**: `SNI`.
+
+For the complete field definitions for each dataset, refer to [Logpush datasets](/logs/logpush/logpush-job/datasets/).
+
