@@ -9,11 +9,11 @@ import { Tabs, TabItem, Details, APIRequest, Render } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Traffic and DNS mode                                                                        | Enterprise                                                    |
 
-| System   | Availability | Minimum WARP version |
+| System   | Availability | Minimum client version |
 | -------- | ------------ | -------------------- |
 | Windows  | ✅           | 2025.4.929.0         |
 | macOS    | ✅           | 2025.4.929.0         |
@@ -63,7 +63,7 @@ Traffic must be on-ramped to Gateway with the following methods:
 
 | On-ramp method                                                                                      | Compatibility |
 | --------------------------------------------------------------------------------------------------- | ------------- |
-| [WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)                                            | ✅            |
+| [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)                                            | ✅            |
 | [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/)                        | ✅            |
 | [Browser Isolation](/cloudflare-one/remote-browser-isolation/)                                      | ✅            |
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌            |
@@ -75,10 +75,10 @@ Unsupported traffic will be resolved with your default Gateway settings. If you 
 
 To configure your Zero Trust organization to use Host selectors with Egress policies:
 
-1.  Make sure you deploy the following version of WARP on your users' devices:
-    - **Desktop**: [WARP version 2025.4.929.0](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) or later 
-    - **iOS**: [WARP version 1.11](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#ios) or later
-    - **Android and Chrome OS**: [WARP version 2.4.2](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#android) or later. 
+1.  Make sure you deploy the following version of the Cloudflare One Client on your users' devices:
+    - **Desktop**: [Cloudflare One Client version 2025.4.929.0](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) or later 
+    - **iOS**: [Cloudflare One Client version 1.11](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#ios) or later
+    - **Android and Chrome OS**: [Cloudflare One Client version 2.4.2](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#android) or later. 
 
     If you need to support devices running prior versions of WARP, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
 
@@ -95,7 +95,7 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
 
 2. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
 
-The WARP client must be set to _Traffic and DNS mode_ mode for traffic affected by these selectors to route correctly.
+The Cloudflare One Client must be set to _Traffic and DNS mode_ mode for traffic affected by these selectors to route correctly.
 
 {/* prettier-ignore-end */}
 

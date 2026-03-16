@@ -29,7 +29,7 @@ The custom service provider integration works with any API service that meets th
 
 ### Authentication
 
-The WARP client authenticates to the external API through Cloudflare Access. The external API should [validate the application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) issued by Cloudflare Access to ensure that any requests which bypass Access (for example, due to a network misconfiguration) are rejected.
+The Cloudflare One Client authenticates to the external API through Cloudflare Access. The external API should [validate the application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) issued by Cloudflare Access to ensure that any requests which bypass Access (for example, due to a network misconfiguration) are rejected.
 
 ### Data passed to external API
 
@@ -37,8 +37,8 @@ Cloudflare will pass the following parameters to the configured API endpoint. Yo
 
 | Field           | Description                                        |
 | --------------- | -------------------------------------------------- |
-| `device_id`     | Device UUID assigned by the WARP client            |
-| `email`         | Email address used to authenticate the WARP client |
+| `device_id`     | Device UUID assigned by the Cloudflare One Client            |
+| `email`         | Email address used to authenticate the Cloudflare One Client |
 | `serial_number` | Device serial number                               |
 | `mac_address`   | Device MAC address                                 |
 | `virtual_ipv4`  | Device virtual IPv4 address                        |
@@ -103,7 +103,7 @@ WARP uses an Access Client ID and Access Client Secret to securely authenticate 
 
 ### 2. Create an Access application
 
-Next, secure the external API behind Cloudflare Access so that WARP can authenticate with the service token. To add the API endpoint to Access:
+Next, secure the external API behind Cloudflare Access so that the Cloudflare One Client can authenticate with the service token. To add the API endpoint to Access:
 
 1. [Create a self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for your API endpoint.
 2. Add the following Access policy to the application. Make sure that **Action** is set to _Service Auth_ (not _Allow_).

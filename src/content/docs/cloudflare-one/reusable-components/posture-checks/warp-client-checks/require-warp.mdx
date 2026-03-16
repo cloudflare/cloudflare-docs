@@ -16,7 +16,7 @@ This device posture attribute will check for all versions of WARP, including the
 
 :::
 
-Cloudflare One enables you to restrict access to your applications to devices running the Cloudflare WARP client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Cloudflare One.
+Cloudflare One enables you to restrict access to your applications to devices running the Cloudflare One Client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Cloudflare One.
 
 ## Prerequisites
 
@@ -24,8 +24,8 @@ Cloudflare One enables you to restrict access to your applications to devices ru
   	file="posture/prereqs-warp-is-deployed"
   	product="cloudflare-one"
   	params={{
-  		name: "WARP Client Checks",
-  		link: "/cloudflare-one/reusable-components/posture-checks/warp-client-checks/",
+  		name: "Cloudflare One Client Checks",
+  		link: "/cloudflare-one/reusable-components/posture-checks/client-checks/",
   	}}
   />
 
@@ -34,7 +34,7 @@ Cloudflare One enables you to restrict access to your applications to devices ru
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
 2. Ensure that *Allow Secure Web Gateway to proxy traffic** is enabled.
 3. Go to **Reusable components** > **Posture checks**.
-4. In **WARP client checks**, select **Add a check**.
+4. In **Cloudflare One Client checks**, select **Add a check**.
 5. Select **WARP**, then select **Save**.
 
 ## 2. Add the check to an Access policy
@@ -49,4 +49,4 @@ Cloudflare One enables you to restrict access to your applications to devices ru
 
 5. Save the Access application.
 
-Before granting access to the application, the policy will check that the device is running the WARP client.
+Before granting access to the application, the policy will check that the device is running the Cloudflare One Client.

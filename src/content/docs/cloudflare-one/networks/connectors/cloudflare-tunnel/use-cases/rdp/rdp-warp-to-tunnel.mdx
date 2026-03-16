@@ -1,16 +1,16 @@
 ---
 pcx_content_type: how-to
-title: Connect to RDP using WARP
+title: Connect to RDP using the Cloudflare One Client
 tags:
   - RDP
 sidebar:
   order: 2
-  label: RDP with WARP client
+  label: RDP with Cloudflare One Client
 ---
 
 import { Render } from "~/components";
 
-Cloudflare WARP to Tunnel allows users to connect to RDP servers using their preferred RDP client. Cloudflare Tunnel creates a secure, outbound-only connection from your RDP server to Cloudflare's global network; this requires running the `cloudflared` daemon on the server (or any other host machine within the private network). Users install the [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device and enroll in your Zero Trust organization. Remote devices will be able to connect as if they were on your private network. By default, all devices enrolled in your organization can connect to the RDP server unless you build policies to allow or block specific users.
+the Cloudflare One Client to Tunnel allows users to connect to RDP servers using their preferred RDP client. Cloudflare Tunnel creates a secure, outbound-only connection from your RDP server to Cloudflare's global network; this requires running the `cloudflared` daemon on the server (or any other host machine within the private network). Users install the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device and enroll in your Zero Trust organization. Remote devices will be able to connect as if they were on your private network. By default, all devices enrolled in your organization can connect to the RDP server unless you build policies to allow or block specific users.
 
 This example walks through how to set up an RDP server on a Google Cloud Platform (GCP) virtual machine (VM), but you can use any machine that supports RDP connections.
 
@@ -62,7 +62,7 @@ By default, Internet Explorer will be installed and configured in [Enhanced Secu
 
 <Render file="tunnel/warp-to-tunnel-client" product="cloudflare-one" />
 
-## 5. Route private network IPs through WARP
+## 5. Route private network IPs through the Cloudflare One Client
 
 <Render
 	file="tunnel/warp-to-tunnel-route-ips"
@@ -72,7 +72,7 @@ By default, Internet Explorer will be installed and configured in [Enhanced Secu
 
 ## 6. Connect as a user
 
-Once the WARP client is configured, you can use your RDP client to connect to the server's private IP address (instead of the public IP address used initially).
+Once the Cloudflare One Client is configured, you can use your RDP client to connect to the server's private IP address (instead of the public IP address used initially).
 
 To connect in Microsoft Remote Desktop:
 

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Set up Private Network Load Balancing with WARP-to-Tunnel
+title: Set up Private Network Load Balancing with Client-to-Tunnel
 sidebar:
   order: 4
 ---
@@ -14,9 +14,9 @@ import {
 	GlossaryTooltip,
 } from "~/components";
 
-You can use Private Network Load Balancing to distribute WARP client traffic to private hostnames and IPs connected via [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+You can use Private Network Load Balancing to distribute Cloudflare One Client traffic to private hostnames and IPs connected via [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
 
-For example, assume you have an internal application running in two data centers, and you want WARP users to access the application from the data center closest to their geographic location. A typical load balancing configuration is shown in the following diagram:
+For example, assume you have an internal application running in two data centers, and you want Cloudflare One Client users to access the application from the data center closest to their geographic location. A typical load balancing configuration is shown in the following diagram:
 
 ```mermaid
 graph LR
@@ -124,9 +124,9 @@ The following example adds a Cloudflare Tunnel endpoint to an existing Load Bala
 
 After completing the setup, you will be redirected to the Load Balancing dashboard. You can locate your load balancer using the search bar or by filtering for **Private** load balancers. Be sure to note the load balancer IP as it will be required in the following steps.
 
-## 3. Route the load balancer IP through WARP
+## 3. Route the load balancer IP through the Cloudflare One Client
 
-In order for WARP clients to connect to your load balancer, the load balancer's IP address must route through the WARP tunnel in your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
+In order for Cloudflare One Clients to connect to your load balancer, the load balancer's IP address must route through the WARP tunnel in your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Device profiles**.
 2. Find the [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) you would like to modify and select **Edit**.
@@ -138,7 +138,7 @@ In order for WARP clients to connect to your load balancer, the load balancer's 
      :::
    - **Include mode**: Add your load balancer IP.
 
-WARP traffic can now reach your private load balancer. For example, if your load balancer points to a web application, you can test by running `curl <load-balancer-IP>` from the WARP device. This traffic will be distributed over Cloudflare Tunnel to your private endpoints according to your configured steering method.
+Cloudflare One Client traffic can now reach your private load balancer. For example, if your load balancer points to a web application, you can test by running `curl <load-balancer-IP>` from the device. This traffic will be distributed over Cloudflare Tunnel to your private endpoints according to your configured steering method.
 
 ## 4. (Optional) Assign a hostname to the load balancer
 

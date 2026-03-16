@@ -10,7 +10,7 @@ sidebar:
 
 import { Render, Details, GlossaryTooltip } from "~/components";
 
-If you want to manage your own SSH keys, you can use Cloudflare Tunnel to create a secure, outbound-only connection from your server to Cloudflare's global network. This requires running the `cloudflared` daemon on the server (or any other host machine within the private network). Users with SSH keys that are trusted by the SSH server can access the server by installing the [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device and enrolling in your Zero Trust organization. Users can SSH directly to the server's private hostname (for example, `ssh.internal.local`). You control access to the server using network-level Gateway policies instead of application-level Access policies.
+If you want to manage your own SSH keys, you can use Cloudflare Tunnel to create a secure, outbound-only connection from your server to Cloudflare's global network. This requires running the `cloudflared` daemon on the server (or any other host machine within the private network). Users with SSH keys that are trusted by the SSH server can access the server by installing the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device and enrolling in your Zero Trust organization. Users can SSH directly to the server's private hostname (for example, `ssh.internal.local`). You control access to the server using network-level Gateway policies instead of application-level Access policies.
 
 :::note
 
@@ -20,7 +20,7 @@ If you want to create more granular policies, allow Cloudflare to manage SSH key
 ## Prerequisites
 
 - A [Cloudflare Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization)
-- [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) installed on user devices.
+- [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) installed on user devices.
 - Devices [enrolled](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) in your Zero Trust organization
 
 ## 1. Create an example SSH server
@@ -143,9 +143,9 @@ The output should contain the server's private IP address (the **Internal IP** o
   params={{ hostname: "ssh.internal.local" }}
 />
 
-### 3.3 Configure WARP clients
+### 3.3 Configure Cloudflare One Clients
 
-To connect to private hostnames, WARP clients must be configured to forward the following traffic to Cloudflare:
+To connect to private hostnames, Cloudflare One Clients must be configured to forward the following traffic to Cloudflare:
 
 - Initial resolved IPs (CGNAT range: `100.64.0.0/10`)
 - DNS queries for your private hostname
@@ -166,7 +166,7 @@ For example, if your SSH hostname is `ssh.internal.local`, remove `internal.loca
 
 To connect to the SSH server using its IP address (instead of a [hostname](#3-use-hostname-routes)), [add a CIDR route](/cloudflare-one/networks/routes/add-routes/#add-a-cidr-route) that includes the server's private IP address.
 
-### 4.2 Configure WARP clients
+### 4.2 Configure Cloudflare One Clients
 
 <Render
 	file="tunnel/warp-to-tunnel-route-ips"
@@ -224,7 +224,7 @@ For an additional layer of protection, create a Gateway DNS policy to control DN
 
 <Render file="gateway/selectors/sni-443" product="cloudflare-one" />
 
-Additionally, SNI selectors will only apply to WARP client traffic.
+Additionally, SNI selectors will only apply to Cloudflare One Client traffic.
 :::
 
 ## 6. Connect as a user
@@ -235,13 +235,13 @@ Once you have set up the tunnel route and the user device, the user can now SSH 
 ssh -i ~/.ssh/gcp_ssh <username>@ssh.internal.local
 ```
 
-The WARP client must be connected to your Zero Trust organization. Users will be able to connect if they match the Gateway network policies you created.
+The Cloudflare One Client must be connected to your Zero Trust organization. Users will be able to connect if they match the Gateway network policies you created.
 
 ### Troubleshooting
 
 If you cannot connect, verify the following:
 
-1. **Confirm DNS resolution** - From the WARP device, confirm that you can successfully resolve the private hostname:
+1. **Confirm DNS resolution** - From the device, confirm that you can successfully resolve the private hostname:
 
    ```sh
    nslookup ssh.internal.local

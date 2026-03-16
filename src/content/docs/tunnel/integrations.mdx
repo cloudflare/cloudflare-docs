@@ -12,10 +12,10 @@ Cloudflare Tunnel integrates with other Cloudflare products to extend connectivi
 
 ## Cloudflare One (private networking)
 
-Beyond publishing public applications, Cloudflare Tunnel is the connectivity layer for [Cloudflare One](/cloudflare-one/) — Cloudflare's SASE platform. The same post-quantum encrypted tunnels that serve your public applications can also serve private traffic when combined with the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/):
+Beyond publishing public applications, Cloudflare Tunnel is the connectivity layer for [Cloudflare One](/cloudflare-one/) — Cloudflare's SASE platform. The same post-quantum encrypted tunnels that serve your public applications can also serve private traffic when combined with the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/):
 
 - **Private applications** — Expose internal web apps, SSH servers, RDP hosts, and other services to authenticated users without making them publicly reachable.
-- **Private networks** — Route entire IP ranges (RFC 1918, custom CIDRs) through a tunnel, replacing site-to-site VPNs. Users on WARP-enrolled devices reach private IPs as if they were on your private network.
+- **Private networks** — Route entire IP ranges (RFC 1918, custom CIDRs) through a tunnel, replacing site-to-site VPNs. Users on Cloudflare One Client-enrolled devices reach private IPs as if they were on your private network.
 - **Network traffic filtering** — Apply DNS, HTTP, and network-level policies through [Cloudflare Gateway](/cloudflare-one/traffic-policies/) to all traffic flowing through the tunnel.
 
 If you are using Cloudflare Tunnel for Zero Trust network access, VPN replacement, or private network connectivity, refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/) for setup and configuration.

@@ -5,11 +5,11 @@ sidebar:
   order: 5
 ---
 
-With Cloudflare One, you can isolate HTTP traffic from on-ramps such as [proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) or [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/) (formerly Magic WAN). Since these on-ramps do not require users to log in to Cloudflare WARP, [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) are not supported.
+With Cloudflare One, you can isolate HTTP traffic from on-ramps such as [proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) or [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/) (formerly Magic WAN). Since these on-ramps do not require users to log in to the Cloudflare One Client, [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) are not supported.
 
 :::note
 
-If you want to apply Isolate policies based on user identity, you will need to either install the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) or manually redirect users to the [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) URL.
+If you want to apply Isolate policies based on user identity, you will need to either install the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) or manually redirect users to the [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) URL.
 :::
 
 ## Set up non-identity browser isolation

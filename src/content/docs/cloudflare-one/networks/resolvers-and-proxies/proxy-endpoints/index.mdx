@@ -23,12 +23,12 @@ import {
 Proxy endpoints allow you to apply Gateway policies without installing a client on your devices. By configuring a [Proxy Auto-Configuration (PAC) file](#what-is-a-pac-file) at the browser level, you can route traffic through Gateway for filtering and policy enforcement. Cloudflare supports configuring two types of proxy endpoints: identity-based [authorization endpoints](#authorization-endpoint) and [source IP proxy endpoints](#source-ip-endpoint).
 
 :::note
-For the best experience and deepest visibility, Cloudflare recommends using the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/). Use proxy endpoints when installing a device client is not feasible for your environment.
+For the best experience and deepest visibility, Cloudflare recommends using the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/). Use proxy endpoints when installing a device client is not feasible for your environment.
 :::
 
 ### When to use proxy endpoints
 
-Proxy endpoints are designed for environments where deploying the WARP client is not an option. Common use cases include:
+Proxy endpoints are designed for environments where deploying the Cloudflare One Client is not an option. Common use cases include:
 
 - **Virtual desktops (VDI)**: Users log into a virtual machine and use a browser to reach the Internet.
 - **Compliance-restricted endpoints**: Environments where you are legally or technically prohibited from installing software on the endpoint.
@@ -486,7 +486,7 @@ Proxy endpoint traffic is logged in the following locations:
 
 ## Billing
 
-Each user who authenticates through an authorization proxy endpoint occupies a [Gateway seat](/cloudflare-one/team-and-resources/users/seat-management/), the same as a user connected through the WARP client.
+Each user who authenticates through an authorization proxy endpoint occupies a [Gateway seat](/cloudflare-one/team-and-resources/users/seat-management/), the same as a user connected through the Cloudflare One Client.
 
 ## Limitations
 
