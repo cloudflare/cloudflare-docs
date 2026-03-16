@@ -12,6 +12,14 @@ import { GlossaryTooltip } from "~/components";
 
 Cloudflare does not collect data on every single page view. Instead, it uses a sampling approach to gather information efficiently. This means that domains with lower traffic might take longer to generate initial reports, as these domains need more page views to accumulate enough samples. To speed up the reporting process, it is recommended that you actively generate traffic to your application after [activating client-side resource monitoring](/client-side-security/get-started/). This will provide Cloudflare with more data to work with, leading to faster report generation.
 
+Other steps you can take to troubleshoot this issue:
+
+- Verify that [client-side resource monitoring is turned on](/client-side-security/get-started/#1-activate-client-side-resource-monitoring).
+- After enabling client-side resource monitoring and generating some traffic to your application (at least 100 requests), wait approximately one hour to ensure that Cloudflare has already collected and processed enough data to display in the client-side resource monitoring dashboard.
+- Use your browser's dev tools (**Network** tab) to check if the [`content-security-policy-report-only` HTTP header](/client-side-security/reference/csp-header/) is present.
+- Use analytics dashboards to verify if traffic is being proxied by Cloudflare.
+- Check if there are duplicate or conflicting Content Security Policy (CSP) headers in responses. Your origin server might be adding CSP headers to the response.
+
 ## The dashboard shows scripts and connections that I do not recognize
 
 Scripts often reference other scripts outside your application.
@@ -43,3 +51,53 @@ Some third-party services you may want to cover in your allow policies perform r
 For example, if you add the `adservice.google.com` domain to an allow policy, you could get policy violation reports for this domain due to redirects to a different domain (not present in your allow policy). In this case, the violation report would still mention the original domain, and not the domain of the redirected destination, which can cause some confusion.
 
 To try to solve this issue, add the domain of the redirected destination to your allow policy. You may need to add several domains to your policy due to redirects.
+
+## My policy is not triggering (CSP header not added)
+
+If you have configured a client-side security policy but the expected CSP header is not being added to responses, [Transform Rules](/rules/transform/) may be rewriting the request path before the policy is evaluated.
+
+Cloudflare evaluates rules in a [specific order](/ruleset-engine/reference/phases-list/) across different phases. [URL Rewrite Rules](/rules/transform/url-rewrite/) run early in the request lifecycle, while client-side security policies are evaluated later, during response phases.
+
+This means that if your policy is matching incoming requests based on the request URI path (for example, using the field `http.request.uri.path`), the policy will evaluate against the rewritten path, not the original URI path requested by the visitor.
+
+### Solution
+
+To fix this issue, choose one of the following approaches:
+
+- **Update the policy condition to match the rewritten path**: Change your policy's expression to match the rewritten URI path instead of the original visitor's URI path.
+
+- **Use raw fields to match the original URI path**: Use the [`raw.http.request.uri.path`](/ruleset-engine/rules-language/fields/reference/raw.http.request.uri.path/) field instead of the [`http.request.uri.path`](/ruleset-engine/rules-language/fields/reference/http.request.uri.path/) field in your policy expression. [Raw fields](/ruleset-engine/rules-language/fields/reference/?field-category=Raw+fields) preserve the original request values and are not affected by Transform Rules.
+
+When troubleshooting this issue, consider using [Cloudflare Trace](/rules/trace-request/) to verify how the request path changes as it passes through different phases.
+
+## Responses contain duplicate CSP headers
+
+If responses have duplicate `Content-Security-Policy` or `Content-Security-Policy-Report-Only` headers, this is likely caused by having both Client-Side Security and a [response header transform rule](/rules/transform/response-header-modification/) adding the same header type.
+
+Client-side security policies automatically add CSP headers to responses:
+
+- [Log policies](/client-side-security/policies/#policy-actions) add `Content-Security-Policy-Report-Only` headers.
+- [Allow policies](/client-side-security/policies/#policy-actions) add `Content-Security-Policy` headers.
+
+If you have a response header transform rule configured with the **Add** operation for the same header type, both headers will be present in the response.
+
+When browsers encounter multiple CSP headers, they enforce all of them, and the most restrictive policy wins. This can lead to unexpected blocking of legitimate resources.
+
+### Solution
+
+If you need to use Response Header Transform Rules alongside client-side security policies, use the **Set static** or **Set dynamic** operations. These operations replace any existing header value, including headers added by Client-Side Security. Using these operations will make your transform rule take precedence over Client-Side Security.
+
+Follow these steps to troubleshoot this issue:
+
+1. Use your browser's dev tools (**Network** tab) to inspect the response headers and check for duplicate CSP headers.
+2. Review your configured [Response Header Transform Rules](/rules/transform/response-header-modification/) and check if any are using the **Add** operation for `Content-Security-Policy` or `Content-Security-Policy-Report-Only` headers.
+3. Change the operation from **Add** to **Set static** or **Set dynamic** if you want the transform rule to override Client-Side Security's CSP headers.
+4. Alternatively, disable or adjust the client-side security policy scope to avoid overlap with your transform rule.
+
+### Recommended patterns
+
+| Scenario                                     | Recommended approach                                                                                                               |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Client-Side Security manages all CSP headers | Do not create Response Header Transform Rules for CSP headers.                                                                     |
+| Transform Rule manages all CSP headers       | Use **Set static** or **Set dynamic** operations, and consider excluding the affected paths from your client-side security policy. |
+| Different CSP headers for different paths    | Use client-side security policy conditions to target specific paths, and avoid overlapping Transform Rules.                        |
