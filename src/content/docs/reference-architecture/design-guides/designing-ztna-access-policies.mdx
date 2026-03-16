@@ -341,7 +341,7 @@ But notice we now enable "Isolate Application." What does this mean? This forces
 
 In the example above, the SWG policy is matching any traffic heading to your company wiki, then enforcing RBI (to match the ZTNA application policy) and then disabling all interaction with the wiki.
 
-It also adds the device posture check "WARP Check (Mac OS)" to scan the user's device for the presence of our device agent. If the user's device does not have the agent installed and enabled, then the device posture check cannot occur and they will automatically fail to meet the policy requirements. If the user does have the device agent enabled, then they will pass the posture check and be granted full wiki access. Note that the Cloudflare One Client is the name used for our device agent.
+It also adds the device posture check "WARP Check (Mac OS)" to scan the user's device for the presence of our device agent. If the user's device does not have the agent installed and enabled, then the device posture check cannot occur and they will automatically fail to meet the policy requirements. If the user does have the device agent enabled, then they will pass the posture check and be granted full wiki access. Note that "WARP" is the previous name for the Cloudflare One Client, which is Cloudflare's device agent.
 
 Essentially, the employee on an insecure device is permitted to view the wiki in a "read-only" mode, but is restricted from further interactions like uploading/downloading or copying/pasting confidential information.
 
