@@ -164,7 +164,16 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 		}
 
 		if (filters.search) {
-			if (!model.name.toLowerCase().includes(filters.search.toLowerCase())) {
+			const searchTerm = filters.search.toLowerCase();
+			const matchesName = model.name.toLowerCase().includes(searchTerm);
+			const matchesDescription = model.description
+				.toLowerCase()
+				.includes(searchTerm);
+			const matchesTags = model.tags?.some((tag) =>
+				tag.toLowerCase().includes(searchTerm),
+			);
+
+			if (!matchesName && !matchesDescription && !matchesTags) {
 				return false;
 			}
 		}
@@ -309,7 +318,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					return (
 						<a
 							key={model.model.id}
-							className="relative mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
+							className="relative mb-3 flex w-full flex-col rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
 							href={`/workers-ai/models/${model.model_display_name}`}
 						>
 							{isPinned && (
@@ -340,8 +349,8 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 							<p className="mt-2! line-clamp-2 text-sm leading-6">
 								{model.model.description}
 							</p>
-							<div className="mt-2! text-xs">
-								<ModelBadges model={model.model} />
+							<div className="mt-auto pt-2 text-xs">
+								<ModelBadges model={model.model} showTags />
 							</div>
 						</a>
 					);
