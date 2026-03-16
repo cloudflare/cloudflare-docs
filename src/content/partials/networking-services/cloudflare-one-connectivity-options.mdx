@@ -321,7 +321,7 @@ Not all connectivity options work together in the same account. Review the follo
 | Combination | Compatible | Notes |
 | ---- | ---- | ---- |
 | WARP Connector + Cloudflare WAN | Conditional | Requires <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a>. Accounts on Legacy routing mode cannot use both. |
-| Cloudflare One Client + Cloudflare WAN | Yes | Cloudflare One Client users can access Cloudflare WAN-connected sites. Cloudflare WAN sites can also initiate connections to the Cloudflare One Client devices using their virtual IP addresses. |
+| Cloudflare One Client + Cloudflare WAN | Yes | Cloudflare One Client users can access Cloudflare WAN-connected sites. Cloudflare WAN sites can also initiate connections to Cloudflare One Client devices using their virtual IP addresses. |
 | Cloudflare Tunnel + Cloudflare WAN | Yes | Avoid overlapping IP routes. Cloudflare Tunnel takes priority if the same CIDR is configured for both. |
 | GRE + IPsec | Yes | Use for redundancy or migration scenarios. |
 | CNI + GRE or IPsec | Yes | Use Internet-based GRE or IPsec tunnels as backup connectivity alongside CNI. |
