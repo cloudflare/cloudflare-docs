@@ -157,7 +157,6 @@ export default defineConfig({
 									"/workers/examples/?tags=*",
 									"/workers/llms-full.txt",
 									"/workers-ai/models/**",
-									"**index.md",
 									"/markdown.zip",
 									"/style-guide/index.md",
 									"/videos/**",
