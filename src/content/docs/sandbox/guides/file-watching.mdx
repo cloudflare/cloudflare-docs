@@ -12,6 +12,17 @@ This guide shows you how to monitor filesystem changes in real-time using the Sa
 
 The `watch()` method returns an SSE (Server-Sent Events) stream that you consume with `parseSSEStream()`. Each event in the stream describes a filesystem change.
 
+Use `watch()` when you have an active consumer reading the SSE stream. Use persistent watch state when a background consumer, hibernating Durable Object, or reconnecting client needs to keep track of whether files changed while nothing is connected.
+
+## Choose a watch model
+
+- `watch()` - Best for active consumers such as live development tools, terminal sessions, and streaming UIs that stay connected.
+- `ensureWatch()` - Best for background consumers that need reconnect-friendly invalidation state without holding an SSE connection open.
+
+:::note[Container-lifetime state]
+Persistent watch state lives only as long as the sandbox container stays alive. If the sandbox sleeps or is destroyed, create a new persistent watch after it wakes up.
+:::
+
 ## Basic file watching
 
 Start by watching a directory for any changes:
@@ -211,6 +222,48 @@ for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
 
 </TypeScriptExample>
 
+## Track changes across reconnects
+
+Persistent watch state lets a background consumer keep a watch alive without holding an SSE connection open. This pattern works well for hibernating Durable Objects, background indexers, and retrying workers.
+
+Use the following flow:
+
+1. Call `ensureWatch()` to create or reconnect to a persistent watch.
+2. Call `getWatchState()` when the consumer wakes up.
+3. Reconcile from the current filesystem state if `changed` or `overflowed` is `true`.
+4. Call `checkpointWatch()` with the latest `cursor` after reconciliation finishes.
+
+<TypeScriptExample>
+
+```ts
+const { watch: persistentWatch, leaseToken } = await sandbox.ensureWatch(
+	"/workspace/docs",
+	{
+		resumeToken: "indexer:user-123",
+		recursive: true,
+		exclude: [".git", "node_modules"],
+	},
+);
+
+const state = await sandbox.getWatchState(persistentWatch.watchId);
+
+if (state.watch.changed || state.watch.overflowed) {
+	await rebuildIndexFromFilesystem();
+	await sandbox.checkpointWatch(persistentWatch.watchId, {
+		cursor: state.watch.cursor,
+		leaseToken,
+	});
+}
+```
+
+</TypeScriptExample>
+
+- `resumeToken` lets repeated `ensureWatch()` calls reconnect to the same persistent watch after retries or wake-ups.
+- `leaseToken` is returned by `ensureWatch()` and is required for `checkpointWatch()` and `stopWatch()`.
+- `changed` means at least one file changed since the last successful checkpoint.
+- `overflowed` means incremental delivery may have dropped events, so rebuild from the current filesystem state instead of assuming you saw every change.
+- `expiresAt` shows when an idle persistent watch will expire automatically.
+
 ## Advanced patterns
 
 ### Process events with a helper function
@@ -330,11 +383,11 @@ for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
 
 ## Stop a watch
 
-The stream ends naturally when the container sleeps or shuts down. There are two ways to stop a watch early:
+The stream ends naturally when the container sleeps or shuts down. Use the stop pattern that matches your watch model:
 
 ### Use an AbortController
 
-Pass an `AbortSignal` to `parseSSEStream`. Aborting the signal cancels the stream reader, which propagates cleanup to the server. This is the recommended approach when you need to cancel the watch from outside the consuming loop:
+Pass an `AbortSignal` to `parseSSEStream`. Aborting the signal cancels the stream reader, which propagates cleanup to the server. This is the recommended way to stop a live `watch()` stream from outside the consuming loop:
 
 <TypeScriptExample>
 
@@ -364,7 +417,7 @@ console.log("Watch stopped");
 
 ### Break out of the loop
 
-Breaking out of the `for await` loop also cancels the stream:
+Breaking out of the `for await` loop also cancels a live `watch()` stream:
 
 <TypeScriptExample>
 
@@ -388,6 +441,27 @@ for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
 }
 
 console.log("Watch stopped");
+```
+
+</TypeScriptExample>
+
+### Use `stopWatch()` for persistent watches
+
+Use `stopWatch()` when you no longer need a persistent watch created with `ensureWatch()`:
+
+<TypeScriptExample>
+
+```ts
+const { watch: persistentWatch, leaseToken } = await sandbox.ensureWatch(
+	"/workspace/src",
+	{
+		resumeToken: "builder:user-123",
+	},
+);
+
+await sandbox.stopWatch(persistentWatch.watchId, {
+	leaseToken,
+});
 ```
 
 </TypeScriptExample>
@@ -495,7 +569,7 @@ If watching large directories causes performance issues:
 All paths must exist and resolve to within `/workspace`. Relative paths are resolved from `/workspace`.
 
 :::note[Container lifecycle]
-File watchers are automatically stopped when the sandbox sleeps or shuts down. If the sandbox wakes up, you must re-establish watches in your application logic.
+Live watchers and persistent watch state are automatically stopped when the sandbox sleeps or shuts down. If the sandbox wakes up, you must create a new watch in your application logic.
 :::
 
 ## Related resources

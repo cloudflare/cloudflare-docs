@@ -7,7 +7,9 @@ sidebar:
 
 import { TypeScriptExample } from "~/components";
 
-Monitor filesystem changes in real-time using Linux's native inotify system. The `watch()` method returns a Server-Sent Events (SSE) stream of file change events that you consume with `parseSSEStream()`.
+Monitor filesystem changes in real-time using Linux's native inotify system. Use `watch()` for a live Server-Sent Events (SSE) stream while a consumer is actively connected.
+
+Use the persistent watch APIs when background consumers need to keep watch state alive across reconnects while the container is still running.
 
 ## Methods
 
@@ -81,6 +83,104 @@ const stream = await session.watch("/workspace/src", {
 
 :::
 
+### `ensureWatch()`
+
+Create or reuse a persistent watch. Unlike `watch()`, this keeps change state in the container even when no SSE client is connected.
+
+```ts
+const result = await sandbox.ensureWatch(
+	path: string,
+	options?: PersistentWatchOptions,
+): Promise<WatchEnsureResult>
+```
+
+**Parameters**:
+
+- `path` - Absolute path or relative to `/workspace` (for example, `/app/src` or `src`)
+- `options` (optional):
+  - `recursive` - Watch subdirectories recursively (default: `true`)
+  - `include` - Glob patterns to include. Cannot be used together with `exclude`.
+  - `exclude` - Glob patterns to exclude (default: `['.git', 'node_modules', '.DS_Store']`). Cannot be used together with `include`.
+  - `sessionId` - Session to run the watch in (if omitted, the default session is used)
+  - `resumeToken` - Stable token that lets repeated `ensureWatch()` calls reconnect to the same persistent watch
+
+**Returns**: `Promise<WatchEnsureResult>` - the current `watch` state plus a `leaseToken` used by `checkpointWatch()` and `stopWatch()`
+
+<TypeScriptExample>
+
+```ts
+const { watch, leaseToken } = await sandbox.ensureWatch("/workspace/src", {
+	resumeToken: "builder:user-123",
+	recursive: true,
+	exclude: [".git", "node_modules"],
+});
+
+const state = await sandbox.getWatchState(watch.watchId);
+
+if (state.watch.changed || state.watch.overflowed) {
+	await rebuildFromFilesystem();
+	await sandbox.checkpointWatch(watch.watchId, {
+		cursor: state.watch.cursor,
+		leaseToken,
+	});
+}
+```
+
+</TypeScriptExample>
+
+### `getWatchState()`
+
+Get the retained state for a persistent watch created with `ensureWatch()`.
+
+```ts
+const result = await sandbox.getWatchState(watchId: string): Promise<WatchStateResult>
+```
+
+**Parameters**:
+
+- `watchId` - Watch identifier returned by `ensureWatch()`
+
+**Returns**: `Promise<WatchStateResult>` - the latest persistent state for the watch
+
+### `checkpointWatch()`
+
+Mark changes up to a cursor as processed.
+
+```ts
+const result = await sandbox.checkpointWatch(
+	watchId: string,
+	request: WatchCheckpointRequest,
+): Promise<WatchCheckpointResult>
+```
+
+**Parameters**:
+
+- `watchId` - Watch identifier returned by `ensureWatch()`
+- `request`:
+  - `cursor` - Cursor value from the current `WatchState`
+  - `leaseToken` - Lease token returned by `ensureWatch()`
+
+**Returns**: `Promise<WatchCheckpointResult>` - whether the checkpoint was accepted and the updated watch state
+
+### `stopWatch()`
+
+Stop a watch by ID. When stopping a persistent watch created with `ensureWatch()`, pass the `leaseToken`.
+
+```ts
+const result = await sandbox.stopWatch(
+	watchId: string,
+	options?: WatchStopOptions,
+): Promise<WatchStopResult>
+```
+
+**Parameters**:
+
+- `watchId` - Watch identifier returned by `watch()` or `ensureWatch()`
+- `options` (optional):
+  - `leaseToken` - Required when stopping a persistent watch obtained from `ensureWatch()`
+
+**Returns**: `Promise<WatchStopResult>` - confirmation that the watch stopped
+
 ## Types
 
 ### `FileWatchSSEEvent`
@@ -92,6 +192,7 @@ type FileWatchSSEEvent =
 	| { type: "watching"; path: string; watchId: string }
 	| {
 			type: "event";
+			eventId: string;
 			eventType: FileWatchEventType;
 			path: string;
 			isDirectory: boolean;
@@ -102,7 +203,7 @@ type FileWatchSSEEvent =
 ```
 
 - **`watching`** — Emitted once when the watch is established. Contains the `watchId` and the `path` being watched.
-- **`event`** — Emitted for each filesystem change. Contains the `eventType`, the `path` that changed, and whether it `isDirectory`.
+- **`event`** — Emitted for each filesystem change. Contains an `eventId`, the `eventType`, the `path` that changed, and whether it `isDirectory`.
 - **`error`** — Emitted when the watch encounters an error.
 - **`stopped`** — Emitted when the watch is stopped, with a `reason`.
 
@@ -144,9 +245,118 @@ interface WatchOptions {
 }
 ```
 
+### `PersistentWatchOptions`
+
+Options for creating a persistent watch.
+
+```ts
+interface PersistentWatchOptions extends WatchOptions {
+	/** Stable token used to reconnect to the same persistent watch. */
+	resumeToken?: string;
+}
+```
+
 :::caution[Mutual exclusivity]
 `include` and `exclude` cannot be used together. Use `include` to allowlist patterns, or `exclude` to blocklist patterns. Requests that specify both are rejected with a validation error.
 :::
+
+### `WatchState`
+
+State retained for a persistent watch while the container stays alive.
+
+```ts
+interface WatchState {
+	watchId: string;
+	path: string;
+	recursive: boolean;
+	include?: string[];
+	exclude?: string[];
+	cursor: number;
+	changed: boolean;
+	overflowed: boolean;
+	lastEventAt: string | null;
+	expiresAt: string | null;
+	subscriberCount: number;
+	startedAt: string;
+}
+```
+
+- `changed` - Files changed since the last successful checkpoint.
+- `cursor` - Monotonic change counter used for checkpointing.
+- `overflowed` - Incremental delivery may have dropped events, so reconcile from current filesystem state before checkpointing.
+- `expiresAt` - When an idle persistent watch will expire automatically.
+- `subscriberCount` - Number of live SSE subscribers currently attached to the watch.
+
+### `WatchEnsureResult`
+
+Returned by `ensureWatch()`.
+
+```ts
+interface WatchEnsureResult {
+	success: boolean;
+	watch: WatchState;
+	leaseToken: string;
+	timestamp: string;
+}
+```
+
+### `WatchStateResult`
+
+Returned by `getWatchState()`.
+
+```ts
+interface WatchStateResult {
+	success: boolean;
+	watch: WatchState;
+	timestamp: string;
+}
+```
+
+### `WatchCheckpointRequest`
+
+Request body for `checkpointWatch()`.
+
+```ts
+interface WatchCheckpointRequest {
+	cursor: number;
+	leaseToken: string;
+}
+```
+
+### `WatchCheckpointResult`
+
+Returned by `checkpointWatch()`.
+
+```ts
+interface WatchCheckpointResult {
+	success: boolean;
+	checkpointed: boolean;
+	watch: WatchState;
+	timestamp: string;
+}
+```
+
+### `WatchStopOptions`
+
+Options for `stopWatch()`.
+
+```ts
+interface WatchStopOptions {
+	leaseToken?: string;
+}
+```
+
+### `WatchStopResult`
+
+Returned by `stopWatch()`.
+
+```ts
+interface WatchStopResult {
+	success: boolean;
+	watchId: string;
+	timestamp: string;
+}
+```
 
 ### `parseSSEStream()`
 
@@ -195,11 +405,19 @@ Character classes (`[abc]`), brace expansion (`{a,b}`), and backslash escapes ar
 ## Notes
 
 :::note[Deterministic readiness]
-`watch()` blocks until the filesystem watcher is established on the server. When the promise resolves, the watcher is active and you can immediately perform filesystem actions that depend on the watch being in place.
+`watch()` blocks until the filesystem watcher is established on the server. `ensureWatch()` also resolves only after the persistent watch exists. When either promise resolves, the watch is active and you can immediately perform filesystem actions that depend on it.
+:::
+
+:::note[Persistent watch state]
+Persistent watch state is an invalidation signal, not an event log. `changed` means files changed since the last successful checkpoint. `overflowed` means incremental delivery may have dropped events, so reconcile from the current filesystem state before calling `checkpointWatch()`.
+:::
+
+:::note[Idle expiry]
+Persistent watches expire automatically if they are not refreshed. Call `ensureWatch()` again with the same `resumeToken` when a consumer reconnects if you need to keep the watch alive.
 :::
 
 :::note[Container lifecycle]
-File watchers are automatically stopped when the sandbox container sleeps or is destroyed. You do not need to manually cancel the stream on container shutdown.
+Live and persistent watches are automatically stopped when the sandbox container sleeps or is destroyed. Persistent watch state is container-lifetime only and is not durable across container restarts.
 :::
 
 :::caution[Path requirements]

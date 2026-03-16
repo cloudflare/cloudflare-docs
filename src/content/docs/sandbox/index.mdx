@@ -119,38 +119,40 @@ With Sandbox, you can execute Python scripts, run Node.js applications, analyze 
     	```
     </TabItem>
 
-    <TabItem label="File Watching">
-    	```typescript
-    	import { getSandbox } from '@cloudflare/sandbox';
+        <TabItem label="File Watching">
+        	```typescript
+        	import { getSandbox } from '@cloudflare/sandbox';
 
-    	export { Sandbox } from '@cloudflare/sandbox';
+        	export { Sandbox } from '@cloudflare/sandbox';
 
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			const sandbox = getSandbox(env.Sandbox, 'user-123');
+        	export default {
+        		async fetch(request: Request, env: Env): Promise<Response> {
+        			const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-    			// Watch for file changes in real-time
-    			const watcher = await sandbox.watch('/workspace/src', {
-    				include: ['*.js', '*.ts'],
-    				onEvent: (event) => {
-    					console.log(`${event.type}: ${event.path}`);
-    					if (event.type === 'modify') {
-    						// Trigger rebuild or hot reload
-    						console.log('Code changed, recompiling...');
-    					}
-    				},
-    				onError: (error) => {
-    					console.error('Watch error:', error);
-    				}
-    			});
+        			const { watch, leaseToken } = await sandbox.ensureWatch('/workspace/src', {
+        				include: ['*.js', '*.ts'],
+        				resumeToken: 'builder:user-123'
+        			});
 
-    			// Stop watching when done
-    			setTimeout(() => watcher.stop(), 60000);
+        			const state = await sandbox.getWatchState(watch.watchId);
 
-    			return Response.json({ message: 'File watcher started' });
-    		}
-    	};
-    	```
+        			if (state.watch.changed || state.watch.overflowed) {
+        				// Reconcile from the current filesystem state before checkpointing
+        				await sandbox.checkpointWatch(watch.watchId, {
+        					cursor: state.watch.cursor,
+        					leaseToken
+        				});
+        			}
+
+        			return Response.json({
+        				watchId: watch.watchId,
+        				changed: state.watch.changed
+        			});
+        		}
+        	};
+        	```
+
+    	Use `watch()` for live SSE streams, or `ensureWatch()` when a background consumer needs watch state across reconnects.
     </TabItem>
 
     <TabItem label="Terminal Access">
@@ -250,7 +252,7 @@ Mount S3-compatible object storage (R2, S3, GCS, and more) as local filesystems.
 
 <Feature header="Watch files for real-time changes" href="/sandbox/guides/file-watching/" cta="Learn about file watching">
 
-Monitor files and directories for changes using native filesystem events. Perfect for building hot reloading development servers, build automation systems, and configuration monitoring tools.
+Monitor files and directories with live SSE streams or persistent watch state. Build hot reloading development servers, background indexers, and automation that reconnects while the sandbox stays alive.
 
 </Feature>
 
