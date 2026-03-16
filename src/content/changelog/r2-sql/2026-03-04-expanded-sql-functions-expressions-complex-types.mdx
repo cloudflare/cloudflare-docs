@@ -15,6 +15,7 @@ R2 SQL now supports an expanded SQL grammar so you can write richer analytical q
 - **Scalar functions** — 163 new functions across math, string, datetime, regex, crypto, encoding, and type inspection categories
 - **Aggregate functions** — statistical (variance, stddev, correlation, regression), bitwise, boolean, and positional aggregates join the existing basic and approximate functions
 - **Complex types** — query struct fields with bracket notation, use 46 array functions, and extract map keys/values
+- **Common table expressions (CTEs)** — use `WITH ... AS` to define named temporary result sets. Chained CTEs are supported. All CTEs must reference the same single table.
 - **Full expression support** — arithmetic, type casting (`CAST`, `TRY_CAST`, `::` shorthand), and `EXTRACT` in SELECT, WHERE, GROUP BY, HAVING, and ORDER BY
 
 ## Examples

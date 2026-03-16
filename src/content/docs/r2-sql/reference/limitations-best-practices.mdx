@@ -25,8 +25,9 @@ This page summarizes supported features, limitations, and best practices.
 | 33 aggregate functions                                  | Yes       | Basic, approximate, statistical, bitwise, boolean, positional                |
 | Approximate aggregates                                  | Yes       | `approx_distinct`, `approx_median`, `approx_percentile_cont`, `approx_top_k` |
 | Struct / Array / Map column types                       | Yes       | Bracket notation, `get_field()`, 46 array functions, map functions           |
+| CTEs (`WITH ... AS`)                                    | Yes       | Single-table only. No JOINs or cross-table references within CTEs.           |
 | JOINs                                                   | No        | Single-table only                                                            |
-| Subqueries / CTEs                                       | No        |                                                                              |
+| Subqueries                                              | No        |                                                                              |
 | Window functions (`OVER`)                               | No        |                                                                              |
 | `SELECT DISTINCT`                                       | No        | Use `approx_distinct`                                                        |
 | `OFFSET`                                                | No        |                                                                              |
@@ -43,7 +44,7 @@ For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 | Feature                                                                       | Error                                                    |
 | :---------------------------------------------------------------------------- | :------------------------------------------------------- |
 | JOINs (any type)                                                              | `unsupported feature: JOIN operations are not supported` |
-| CTEs (`WITH ... AS`)                                                          | `unsupported feature: common table expressions`          |
+| Multi-table CTEs (JOINs or cross-table references within `WITH`)              | Single-table CTEs are supported                          |
 | Subqueries (FROM, WHERE, scalar)                                              | `unsupported feature: subqueries`                        |
 | `SELECT DISTINCT`                                                             | `unsupported feature: SELECT DISTINCT is not supported`  |
 | `OFFSET`                                                                      | `unsupported feature: OFFSET clause is not supported`    |
@@ -74,13 +75,13 @@ For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 
 ## Runtime constraints
 
-| Constraint                           | Details                                                            |
-| :----------------------------------- | :----------------------------------------------------------------- |
-| Single table per query               | Queries must reference exactly one table. No JOINs, no subqueries. |
-| Partitioned Iceberg tables only      | Unpartitioned tables are not supported.                            |
-| Parquet format only                  | No CSV, JSON, or other formats.                                    |
-| Read-only                            | R2 SQL is a query engine, not a database. No writes.               |
-| `now()` / `current_time()` precision | Quantized to 10ms boundaries and forced to UTC.                    |
+| Constraint                           | Details                                                                                               |
+| :----------------------------------- | :---------------------------------------------------------------------------------------------------- |
+| Single table per query               | Queries must reference exactly one table. No JOINs, no subqueries. CTEs may reference a single table. |
+| Partitioned Iceberg tables only      | Unpartitioned tables are not supported.                                                               |
+| Parquet format only                  | No CSV, JSON, or other formats.                                                                       |
+| Read-only                            | R2 SQL is a query engine, not a database. No writes.                                                  |
+| `now()` / `current_time()` precision | Quantized to 10ms boundaries and forced to UTC.                                                       |
 
 ---
 
