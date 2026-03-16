@@ -17,14 +17,14 @@ When planning your private network addressing and configuring [Split Tunnel](/cl
 | ------------------------------------------------------------- | ---------------- | ------------ |
 | [Cloudflare source IPs](#cloudflare-source-ips)               | `100.64.0.0/12`  | Yes          |
 | [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `100.80.0.0/16`  | No           |
-| [device IPs](#warp-device-ips)                           | `100.96.0.0/12`  | Yes          |
+| [device IPs](#device-ips)                           | `100.96.0.0/12`  | Yes          |
 | [Private Load Balancer IPs](#private-load-balancer-ips)       | `100.112.0.0/16` | Yes          |
 
 ## IPv6 ranges
 
 | Name                                                          | Default CIDR               | Configurable |
 | ------------------------------------------------------------- | -------------------------- | ------------ |
-| [device IPs](#warp-device-ips)                           | `2606:4700:0cf1:1000::/64` | No           |
+| [device IPs](#device-ips)                           | `2606:4700:0cf1:1000::/64` | No           |
 | [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `2606:4700:0cf1:4000::/64` | No           |
 | [Cloudflare source IPs](#cloudflare-source-ips)               | `2606:4700:0cf1:5000::/64` | No           |
 
@@ -75,7 +75,7 @@ In **Exclude IPs and domains** mode, the CGNAT range (`100.64.0.0/10`) is exclud
 
 Cloudflare recommends adding back the IPs that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use CGNAT address space.
 
-You can use the calculator below to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if your deployment requires [Gateway initial resolved IPs](#gateway-initial-resolved-ips) (`100.80.0.0/16`) and [device IPs](#warp-device-ips) (`100.96.0.0/12`), delete `100.64.0.0/10` from Split Tunnels and add back `100.64.0.0/12`, `100.81.0.0/16`, `100.82.0.0/15`, `100.84.0.0/14`, `100.88.0.0/13`, and `100.112.0.0/12`.
+You can use the calculator below to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if your deployment requires [Gateway initial resolved IPs](#gateway-initial-resolved-ips) (`100.80.0.0/16`) and [device IPs](#device-ips) (`100.96.0.0/12`), delete `100.64.0.0/10` from Split Tunnels and add back `100.64.0.0/12`, `100.81.0.0/16`, `100.82.0.0/15`, `100.84.0.0/14`, `100.88.0.0/13`, and `100.112.0.0/12`.
 
 <SubtractIPCalculator
 	client:load

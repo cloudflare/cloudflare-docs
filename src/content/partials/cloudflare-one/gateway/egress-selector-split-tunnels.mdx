@@ -6,6 +6,6 @@ import { Render, GlossaryTooltip } from "~/components"
 
 In your WARP [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/), configure [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) such that the <GlossaryTooltip term="initial resolved IP">initial resolved IPs</GlossaryTooltip> route through the WARP tunnel.  Configuration depends on your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#change-split-tunnels-mode):
 
-- **Exclude mode**: Delete `100.64.0.0/10` from your Split Tunnels list. We recommend [adding back the IP ranges](/cloudflare-one/networks/routes/reserved-ips/#warp-split-tunnel-configuration) that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use the CGNAT address space.
+- **Exclude mode**: Delete `100.64.0.0/10` from your Split Tunnels list. We recommend [adding back the IP ranges](/cloudflare-one/networks/routes/reserved-ips/#split-tunnel-configuration) that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use the CGNAT address space.
 - **Include mode**: Add Split Tunnel entries for the following IP addresses:
 	 	<Render file="gateway/egress-selector-cgnat-ips" product="cloudflare-one" />

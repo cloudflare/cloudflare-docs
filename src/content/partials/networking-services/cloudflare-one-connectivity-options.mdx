@@ -27,7 +27,7 @@ The following table provides a high-level comparison of all connectivity options
 | Connectivity option | Protocol | Direction | Typical deployment model | Use when |
 | ---- | ---- | ---- | ---- | ---- |
 | [Cloudflare Tunnel](#cloudflare-tunnel) | HTTP/2, QUIC | Off-ramp only | Software daemon (`cloudflared`) on server | Exposing private applications without a public IP |
-| [Cloudflare One Client](#warp-client) | MASQUE (default), WireGuard | Bidirectional | Client software on end-user devices | Securing remote workforce devices |
+| [Cloudflare One Client](#cloudflare-one-client) | MASQUE (default), WireGuard | Bidirectional | Client software on end-user devices | Securing remote workforce devices |
 | [WARP Connector](#warp-connector) | MASQUE, WireGuard | Bidirectional | Software client on Linux host | Connecting sites with IoT or VoIP devices |
 | [DNS locations](#dns-locations) |  DNS (DoH, DoT, IPv4/IPv6) | On-ramp only | DNS resolver configuration  | Filtering DNS traffic without device agents |
 | [Proxy endpoints](#proxy-endpoints) | HTTP/HTTPS | On-ramp only | Browser PAC file configuration | Filtering web traffic without device agents |
@@ -272,7 +272,7 @@ Use the following guidance to select the appropriate connectivity option for you
 | Requirement | Recommended option |
 | ---- | ---- |
 | Expose a private web application without a public IP | [Cloudflare Tunnel](#cloudflare-tunnel) |
-| Secure end-user devices | [Cloudflare One Client](#warp-client) |
+| Secure end-user devices | [Cloudflare One Client](#cloudflare-one-client) |
 | Replace traditional VPN for remote access | [Cloudflare Tunnel](#cloudflare-tunnel) (primary) + [WARP Connector](#warp-connector) (for bidirectional needs) |
 | Connect a site with IoT devices or VoIP systems | [WARP Connector](#warp-connector) |
 | Connect a branch office using existing routers | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) |
@@ -288,7 +288,7 @@ The team driving your connectivity project influences which option provides the 
 
 | Primary team | Recommended starting point | Rationale |
 | ---- | ---- | ---- |
-| Security / InfoSec | [Cloudflare Tunnel](#cloudflare-tunnel) + [Cloudflare One Client](#warp-client) | Minimal network infrastructure changes required. Security controls are managed within the Cloudflare One dashboard. |
+| Security / InfoSec | [Cloudflare Tunnel](#cloudflare-tunnel) + [Cloudflare One Client](#cloudflare-one-client) | Minimal network infrastructure changes required. Security controls are managed within the Cloudflare One dashboard. |
 | Network Operations | [Cloudflare WAN](#ipsec-tunnels) (IPsec/GRE) or [Cloudflare One Appliance](#cloudflare-one-appliance) | Familiar routing and tunnel configuration. Integrates with existing network equipment and workflows. |
 | DevOps / Platform Engineering | [WARP Connector](#warp-connector) or [Cloudflare Tunnel](#cloudflare-tunnel) | Software-defined deployment. Scriptable via API. No hardware dependencies. |
 | Facilities / Branch IT | [Cloudflare One Appliance](#cloudflare-one-appliance) | Zero-touch deployment with centralized management. No on-site networking expertise required. |

@@ -111,7 +111,7 @@ When Gateway receives a request for your private hostname, it must resolve the h
 
 #### Scenario A: Use the system resolver (Default)
 
-By default, `cloudflared` uses the private DNS resolver configured on its host machine (for example, in `/etc/resolv.conf` on Linux). If the machine running `cloudflared` can already resolve `ssh.internal.local` to its private IP using the local system resolver, no further configuration is required. You can skip to [Step 3.3](#33-configure-warp-clients).
+By default, `cloudflared` uses the private DNS resolver configured on its host machine (for example, in `/etc/resolv.conf` on Linux). If the machine running `cloudflared` can already resolve `ssh.internal.local` to its private IP using the local system resolver, no further configuration is required. You can skip to [Step 3.3](#33-configure-cloudflare-one-clients).
 
 <Details header="Verify local DNS resolution">
 To check if `cloudflared` can successfully resolve `ssh.internal.local`, run the following command from the `cloudflared` host:

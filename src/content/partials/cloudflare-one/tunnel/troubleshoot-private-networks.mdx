@@ -32,7 +32,7 @@ If there are no relevant Gateway logs, it means that WARP was unable to forward 
 
 Next, check if your Gateway Network logs (**Insights** > **Logs** > **Network logs**) show any traffic to the destination IP.
 
-If the Cloudflare One Client is connected but there are no network logs, it means that your private network IPs are not routing through the Cloudflare One Client. You can confirm this by [searching the routing table](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#routing-table) on the device for the IP address of your application. Traffic to your application should route through the Cloudflare One Client interface. If another interface is used, [check your Split Tunnel configuration](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#3-route-private-network-ips-through-warp).
+If the Cloudflare One Client is connected but there are no network logs, it means that your private network IPs are not routing through the Cloudflare One Client. You can confirm this by [searching the routing table](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#routing-table) on the device for the IP address of your application. Traffic to your application should route through the Cloudflare One Client interface. If another interface is used, [check your Split Tunnel configuration](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#3-route-private-network-ips-through-the-cloudflare-one-client).
 
 ## 4. Is the user blocked by a Gateway policy?
 
