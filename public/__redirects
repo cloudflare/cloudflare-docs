@@ -2287,7 +2287,7 @@
 /cloudflare-one/policies/zero-trust/common-configs/ /cloudflare-one/policies/access/ 301
 /cloudflare-one/applications/casb/troubleshooting/ /cloudflare-one/applications/casb/troubleshooting/troubleshoot-integrations/ 301
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/gateway-logs/ 301
-/cloudflare-one/identity/devices/os-version/ /cloudflare-one/identity/devices/warp-client-checks/os-version/ 301
+/cloudflare-one/identity/devices/os-version/ /cloudflare-one/reusable-components/posture-checks/client-checks/os-version/ 301
 /cloudflare-one/insights/dex/fleet-status/ /cloudflare-one/insights/dex/monitoring/ 301
 /cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/users/groups/ /cloudflare-one/policies/access/groups/ 301
@@ -2320,7 +2320,7 @@
 /cloudflare-one/tutorials/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
-/magic-wan/tutorials/warp/ /cloudflare-wan/zero-trust/warp/ 301
+/magic-wan/tutorials/warp/ /cloudflare-wan/zero-trust/cloudflare-one-client/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /warp-client/teams/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/ 301
 /cloudflare-one/integrations/identity-providers/azuread/ /cloudflare-one/integrations/identity-providers/entra-id/ 301
@@ -2360,8 +2360,8 @@
 /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
 /cloudflare-one/identity/devices/crowdstrike/ /cloudflare-one/integrations/service-providers/crowdstrike/ 301
 /cloudflare-one/identity/devices/microsoft/ /cloudflare-one/integrations/service-providers/microsoft/ 301
-/cloudflare-one/identity/devices/require-gateway/ /cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-gateway/ 301
-/cloudflare-one/identity/devices/require-warp/ /cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-warp/ 301
+/cloudflare-one/identity/devices/require-gateway/ /cloudflare-one/reusable-components/posture-checks/client-checks/require-gateway/ 301
+/cloudflare-one/identity/devices/require-warp/ /cloudflare-one/reusable-components/posture-checks/client-checks/require-warp/ 301
 /cloudflare-one/identity/devices/service-providers/custom/ /cloudflare-one/integrations/service-providers/custom/ 301
 /cloudflare-one/identity/devices/service-providers/ /cloudflare-one/integrations/service-providers/ 301
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match 301
@@ -2377,7 +2377,7 @@
 /cloudflare-one/traffic-policies/initial-setup/network/ /cloudflare-one/traffic-policies/get-started/network/ 301
 
 # More specific redirects from nav revamp (before catch-alls)
-/cloudflare-one/identity/devices/access-integrations/tanium/ /cloudflare-one/reusable-components/posture-checks/warp-client-checks/tanium/ 301
+/cloudflare-one/identity/devices/access-integrations/tanium/ /cloudflare-one/reusable-components/posture-checks/client-checks/tanium/ 301
 /cloudflare-one/identity/authorization-cookie/application-token/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/ 301
 /cloudflare-one/identity/authorization-cookie/validating-json/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/ 301
 /cloudflare-one/identity/authorization-cookie/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/ 301
@@ -2410,7 +2410,13 @@
 /cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
 /cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
 
-
+# WARP Client rename — file/folder slug renames
+/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/ /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-warp-to-tunnel/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-device-client/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/ 301
+/cloudflare-one/tutorials/warp-on-headless-linux/ /cloudflare-one/tutorials/deploy-client-headless-linux/ 301
+/cloudflare-wan/zero-trust/warp/ /cloudflare-wan/zero-trust/cloudflare-one-client/ 301
+/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/warp/ /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-one-client/ 301
 
 # ============================================================================
 # DYNAMIC REDIRECTS
@@ -2619,6 +2625,8 @@
 /magic-network-monitoring/* /network-flow/:splat 301
 
 # Cloudflare One Client (formerly WARP Client)
+# Splat redirect for renamed posture checks folder
+/cloudflare-one/reusable-components/posture-checks/warp-client-checks/* /cloudflare-one/reusable-components/posture-checks/client-checks/:splat 301
 # Splat redirects for renamed sub-folders (most specific first)
 /cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/:splat 301
 /cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/:splat 301

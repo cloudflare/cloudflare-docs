@@ -101,7 +101,7 @@ You can use a shell script to automate WARP installation and registration. The f
 3.  If you are using Debian or RHEL / CentOS, modify the `warp()` function so that it installs the correct [WARP package](https://pkg.cloudflareclient.com/) for your OS.
 
 4.  Modify the values in the `mdm()` function:
-    1. For `auth_client_id` and `auth_client_secret`, replace the string values with the Client ID and Client Secret of your [service token](/cloudflare-one/tutorials/warp-on-headless-linux/#1-create-a-service-token).
+    1. For `auth_client_id` and `auth_client_secret`, replace the string values with the Client ID and Client Secret of your [service token](/cloudflare-one/tutorials/deploy-client-headless-linux/#1-create-a-service-token).
     2. For `organization`, replace `your-team-name` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
     3. (Optional) Add or modify other [Cloudflare One Client deployment parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/) according to your preferences.
 
