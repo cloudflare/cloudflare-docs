@@ -15,7 +15,7 @@ Worker Loader supports two loading modes:
 - `load()` creates a fresh Dynamic Worker for one-time execution.
 - `get(id, callback)` caches a Dynamic Worker by ID so it can stay warm across requests.
 
-`load()` is best for one-time code execution, for example when using Codemode. `get(id, callback)` is better when the same code will receive subsequent requests, for example when you are building applications.
+`load()` is best for one-time code execution, for example when using [Codemode](/agents/api-reference/codemode/). `get(id, callback)` is better when the same code will receive subsequent requests, for example when you are building applications.
 
 :::note[Billing]
 Dynamic Workers are billed based on unique Dynamic Worker creations per day.
