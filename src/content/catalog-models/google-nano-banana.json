@@ -2,7 +2,7 @@
 	"model_id": "google/nano-banana",
 	"provider_id": "google",
 	"name": "Nano Banana",
-	"description": " Google's latest image editing model in Gemini 2.5 ",
+	"description": "Google's latest image editing model in Gemini 2.5",
 	"task": "Image Generation",
 	"tags": [
 		"image-generation"
