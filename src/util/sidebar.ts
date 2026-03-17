@@ -1,7 +1,7 @@
 import type { AstroGlobal } from "astro";
 import type { StarlightRouteData } from "@astrojs/starlight/route-data";
 
-import { getEntry } from "astro:content";
+import { getEntry, getCollection } from "astro:content";
 import { externalLinkArrow } from "~/plugins/rehype/external-links";
 
 type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
@@ -16,7 +16,22 @@ type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 export type SidebarEntry = Link | Group;
 type Badge = Link["badge"];
 
+const directory = await getCollection("directory");
+const productAvailability = await getCollection("product-availability");
 const sidebars = new Map<string, Group>();
+
+// Build URL → beta badge map from directory entries + product availability
+const betaBadgeUrls = new Map<string, Badge>();
+for (const dirEntry of directory) {
+	const availabilityId = dirEntry.data.id;
+	const availEntry = productAvailability.find((e) => e.id === availabilityId);
+	if (availEntry?.data.availability?.toLowerCase() === "beta") {
+		betaBadgeUrls.set(dirEntry.data.entry.url, {
+			text: "Beta",
+			variant: "caution",
+		});
+	}
+}
 
 export async function getSidebar(context: AstroGlobal) {
 	const pathname = context.url.pathname;
@@ -92,12 +107,15 @@ export async function generateSidebar(group: Group) {
 		group.entries[0].label = "Overview";
 	}
 
-	const product = await getEntry("directory", group.label);
+	const product = directory.find((p) => p.id === group.label);
 	if (product && product.data.entry.group === "Developer platform") {
 		const links = [
-			["llms.txt", `/${product.id}/llms.txt`],
+			["llms.txt", `${product.data.entry.url}llms.txt`],
 			["prompt.txt", "/workers/prompt.txt"],
-			[`${product.data.name} llms-full.txt`, `/${product.id}/llms-full.txt`],
+			[
+				`${product.data.name} llms-full.txt`,
+				`${product.data.entry.url}llms-full.txt`,
+			],
 			["Developer Platform llms-full.txt", "/developer-platform/llms-full.txt"],
 		];
 
@@ -217,8 +235,8 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	if (frontmatter.sidebar.group?.badge) {
 		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
-	} else if (frontmatter.wid) {
-		const availabilityBadge = await productAvailabilityBadge(frontmatter.wid);
+	} else {
+		const availabilityBadge = betaBadgeUrls.get(index.href);
 		if (availabilityBadge) {
 			group.badge = availabilityBadge;
 		}
@@ -298,8 +316,8 @@ async function handleLink(link: Link): Promise<Link> {
 
 	if (link.badge) {
 		link.badge = inferBadgeVariant(link.badge);
-	} else if (frontmatter.wid) {
-		const availabilityBadge = await productAvailabilityBadge(frontmatter.wid);
+	} else {
+		const availabilityBadge = betaBadgeUrls.get(link.href);
 		if (availabilityBadge) {
 			link.badge = availabilityBadge;
 		}
@@ -320,23 +338,6 @@ async function handleLink(link: Link): Promise<Link> {
 	}
 
 	return link;
-}
-
-async function productAvailabilityBadge(
-	wid: string,
-): Promise<Badge | undefined> {
-	try {
-		const availabilityEntry = await getEntry("product-availability", wid);
-		if (
-			availabilityEntry &&
-			availabilityEntry.data.availability?.toLowerCase() === "beta"
-		) {
-			return { text: "Beta", variant: "caution" };
-		}
-	} catch (_error) {
-		// If the entry doesn't exist in the collection, return undefined
-	}
-	return undefined;
 }
 
 function inferBadgeVariant(badge: Badge) {
