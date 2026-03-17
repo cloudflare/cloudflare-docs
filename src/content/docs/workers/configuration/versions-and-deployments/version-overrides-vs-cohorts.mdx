@@ -1,0 +1,70 @@
+---
+pcx_content_type: concept
+title: "Version overrides vs. cohorts"
+description: Choose the right tool for testing and rolling out new Worker versions — version overrides for one-off requests, cohorts for groups of users.
+sidebar:
+  order: 6
+---
+
+[Version overrides](/workers/configuration/versions-and-deployments/version-overrides/) and [cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-based-deployments/) both let you control which version of your Worker handles a request. They solve different problems.
+
+## When to use version overrides
+
+Use version overrides when you want to hit a specific version **right now, from a specific request**. You set a header and the platform routes that one request to the version you specify.
+
+```sh
+curl -s https://example.com \
+  -H 'Cloudflare-Workers-Version-Overrides: my-worker="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+```
+
+Version overrides are best for:
+
+- **Quick manual testing.** You uploaded a new version and want to verify it works before anyone else sees it. One curl command, no setup.
+- **CI/CD verification.** Your pipeline uploads a version and runs tests against it using the override header before creating a deployment.
+- **Debugging.** You need to reproduce an issue against a specific version.
+
+Version overrides are **per-request**. Every request that should hit the override needs the header. There is no persistence — if you open your browser without the header, you get the default version.
+
+## When to use cohort-based deployments
+
+Use cohort-based deployments when you want a **group of users** to consistently see a specific version, without each request needing a special header.
+
+```sh
+npx wrangler versions deploy \
+  STABLE_VERSION_ID@100% \
+  --cohort team=NEW_VERSION_ID@100% \
+  --message "Team on new version" -y
+```
+
+Cohort-based deployments are best for:
+
+- **Team rollout.** Your team sees the new version automatically on every request. No special headers, no remembering to set anything.
+- **Beta users, countries, tenants.** Route groups of real users to the new version based on cookies, geography, headers, or application logic.
+- **Gradual expansion.** Start with your team, expand to 10% of traffic, then 50%, then everyone. Each step is a deployment command.
+- **Durable Objects.** Control which DO instances run which version, with sticky assignment that survives evictions.
+
+Cohort-based deployments are **persistent and automatic**. Once a request matches a cohort (via a [Transform Rule](/rules/transform/request-header-modification/) or [application logic](/workers/configuration/versions-and-deployments/cohort-based-deployments/#assign-cohorts-with-application-logic)), every subsequent request from that user routes to the correct version without any extra headers.
+
+## Comparison
+
+|                 | Version overrides                       | Cohort-based deployments                        |
+| --------------- | --------------------------------------- | ----------------------------------------------- |
+| Scope           | Single request                          | Group of users                                  |
+| Persistence     | None — header required on every request | Automatic — Transform Rule or cookie handles it |
+| Setup           | None — just add the header              | Transform Rule or application logic             |
+| Best for        | Manual testing, CI, debugging           | Team rollout, beta users, gradual expansion     |
+| Durable Objects | Does not affect DO version              | Controls which DO instances get which version   |
+| Rollback        | Stop sending the header                 | Deploy stable at 100%                           |
+
+## Using them together
+
+Version overrides take priority over cohorts. If a request has both a `Cloudflare-Workers-Version-Overrides` header and a `Cloudflare-Workers-Cohort` header, the override wins.
+
+A common workflow:
+
+1. Upload a new version with `wrangler versions upload`.
+2. **Test it yourself** with a version override — one curl command, instant feedback.
+3. Once it looks good, **deploy with cohorts** — route your team to it automatically.
+4. Expand to beta users, then a country, then everyone.
+
+This way, version overrides handle the quick "does it even work?" check, and cohorts handle the progressive rollout.

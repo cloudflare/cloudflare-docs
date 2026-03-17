@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 320" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .title { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+    .label { font-size: 12px; fill: #1a1a1a; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .cohort-canary { font-size: 11px; font-weight: 600; fill: #c2410c; }
+    .no-cohort { font-size: 11px; fill: #9ca3af; }
+    .arrow-label { font-size: 10px; fill: #6b7280; }
+    .vtag { font-size: 10px; font-weight: 600; fill: #fff; }
+  </style>
+
+  <rect width="750" height="320" fill="#fafafa" rx="8"/>
+
+  <!-- Config -->
+  <rect x="20" y="12" width="710" height="36" rx="5" fill="#f0fdf4" stroke="#22c55e" stroke-width="1"/>
+  <text x="375" y="35" text-anchor="middle" style="font-size: 11px; fill: #16a34a; font-weight: 600;">Deployment config:  default = stable 100%   |   canary = new 100%</text>
+
+  <!-- Instance foo (alice's DO) -->
+  <text x="375" y="75" text-anchor="middle" class="title">Instance: foo (alice's DO)</text>
+
+  <!-- Timeline -->
+  <line x1="60" y1="150" x2="710" y2="150" stroke="#d1d5db" stroke-width="1.5"/>
+  <polygon points="705,145 715,150 705,155" fill="#d1d5db"/>
+
+  <!-- DO in memory -->
+  <rect x="80" y="95" width="290" height="45" rx="6" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="225" y="118" text-anchor="middle" class="label">Running on</text>
+  <rect x="300" y="103" width="60" height="28" rx="4" fill="#f97316"/>
+  <text x="330" y="122" text-anchor="middle" class="vtag">Version B</text>
+
+  <!-- Request from alice -->
+  <line x1="120" y1="220" x2="120" y2="155" stroke="#f97316" stroke-width="2"/>
+  <polygon points="116,158 120,150 124,158" fill="#f97316"/>
+  <text x="120" y="240" text-anchor="middle" class="label">alice's request</text>
+  <text x="120" y="256" text-anchor="middle" class="cohort-canary">cohort = canary</text>
+  <text x="120" y="274" text-anchor="middle" class="arrow-label">starts foo on Version B</text>
+
+  <!-- Another request from alice -->
+  <line x1="300" y1="220" x2="300" y2="155" stroke="#f97316" stroke-width="2"/>
+  <polygon points="296,158 300,150 304,158" fill="#f97316"/>
+  <text x="300" y="240" text-anchor="middle" class="label">alice's request</text>
+  <text x="300" y="256" text-anchor="middle" class="cohort-canary">cohort = canary</text>
+  <text x="300" y="274" text-anchor="middle" class="arrow-label">still Version B</text>
+
+  <!-- Instance bar (bob's DO) -->
+  <text x="570" y="75" text-anchor="middle" class="title">Instance: bar (bob's DO)</text>
+
+  <!-- DO in memory -->
+  <rect x="440" y="95" width="250" height="45" rx="6" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="545" y="118" text-anchor="middle" class="label">Running on</text>
+  <rect x="620" y="103" width="60" height="28" rx="4" fill="#9ca3af"/>
+  <text x="650" y="122" text-anchor="middle" class="vtag">Version A</text>
+
+  <!-- Request from bob -->
+  <line x1="510" y1="220" x2="510" y2="155" stroke="#9ca3af" stroke-width="2"/>
+  <polygon points="506,158 510,150 514,158" fill="#9ca3af"/>
+  <text x="510" y="240" text-anchor="middle" class="label">bob's request</text>
+  <text x="510" y="256" text-anchor="middle" class="no-cohort">no cohort</text>
+  <text x="510" y="274" text-anchor="middle" class="arrow-label">uses default (stable)</text>
+
+  <!-- Bottom note -->
+  <text x="375" y="310" text-anchor="middle" class="sublabel">Only alice's instance gets Version B. Bob's instance stays on stable because no cohort was passed.</text>
+</svg>

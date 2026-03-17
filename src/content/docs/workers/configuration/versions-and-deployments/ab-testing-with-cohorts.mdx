@@ -1,0 +1,222 @@
+---
+pcx_content_type: tutorial
+title: "Safe production rollouts with Astro and cohort-based deployments"
+description: Build an Astro site on Workers and use cohort-based deployments to test a new version on yourself and your team before rolling out to everyone.
+sidebar:
+  order: 5
+difficulty: Intermediate
+tags:
+  - Astro
+---
+
+import { WranglerConfig, TypeScriptExample } from "~/components";
+
+This tutorial shows how to use [cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-based-deployments/) with a real framework application. You will build an Astro site on Workers, deploy a new version, and roll it out safely — first to yourself, then to your team, then to everyone.
+
+The key pattern: your server-side code identifies who the user is and sets a cookie. A Transform Rule reads that cookie and tells the platform which version to serve. The user's browser carries the cookie on every request, so routing is automatic after the first visit.
+
+By the end, you will have:
+
+- An Astro site deployed on Workers with two versions.
+- A middleware that identifies users and sets a cohort cookie.
+- A Transform Rule that routes requests based on that cookie.
+- A deployment where your team sees the new version and everyone else stays on stable.
+
+## Prerequisites
+
+- A Cloudflare account with Workers enabled.
+- [Wrangler](/workers/wrangler/install-and-update/) installed (version 3.40.0 or later).
+- [Node.js](https://nodejs.org/) version 20 or later.
+- A [zone](/workers/configuration/routing/) configured in Cloudflare (required for Transform Rules). Your Worker must be routed through a custom domain, not just a `*.workers.dev` subdomain.
+
+## 1. Create the Astro project
+
+Scaffold a new Astro project configured for Workers:
+
+```sh
+npm create cloudflare@latest -- rollout-demo --framework=astro
+```
+
+Follow the prompts. When asked, choose a blog or basic template and select TypeScript. Answer **yes** to deploy when asked — this creates your initial deployment.
+
+Change into the project directory:
+
+```sh
+cd rollout-demo
+```
+
+## 2. Add a version indicator
+
+Edit `src/pages/index.astro` to include a visible banner so you can tell which version you are seeing. Add this at the top of the page body:
+
+```html
+<div
+	style="background: #0051c3; color: white; padding: 12px; text-align: center; font-family: sans-serif;"
+>
+	Version A — Current release
+</div>
+```
+
+## 3. Add middleware to identify users and set a cohort cookie
+
+Create an [Astro middleware](https://docs.astro.build/en/guides/middleware/) that determines which cohort a user belongs to and sets a cookie. On subsequent requests, the browser sends this cookie automatically, and a Transform Rule (set up in step 6) routes the request to the correct version.
+
+Create `src/middleware.ts`:
+
+```ts
+import { defineMiddleware } from "astro:middleware";
+
+// Emails of team members who should see the new version first
+const TEAM_EMAILS = new Set([
+	"you@yourcompany.com",
+	"teammate@yourcompany.com",
+]);
+
+export const onRequest = defineMiddleware(async (context, next) => {
+	const cookieName = "deploy-cohort";
+
+	// If the user already has a cohort cookie, do nothing —
+	// the Transform Rule handles routing on subsequent requests
+	if (context.cookies.get(cookieName)?.value) {
+		return next();
+	}
+
+	// Identify the user (replace this with your actual auth logic)
+	const userEmail = getUserEmail(context.request);
+
+	if (userEmail && TEAM_EMAILS.has(userEmail)) {
+		// Team members get the "team" cohort
+		context.cookies.set(cookieName, "team", {
+			path: "/",
+			maxAge: 60 * 60 * 24 * 7, // 1 week
+		});
+	}
+
+	// Everyone else gets no cohort cookie — they use the default version split
+	return next();
+});
+
+function getUserEmail(request: Request): string | null {
+	// Replace this with your actual auth check —
+	// for example, reading a session cookie, verifying a JWT,
+	// or checking Cloudflare Access headers
+	return request.headers.get("cf-access-authenticated-user-email");
+}
+```
+
+**How the loop works:**
+
+1. **First visit:** The middleware runs, identifies the user, and sets a `deploy-cohort=team` cookie if they are a team member.
+2. **Subsequent visits:** The browser sends the cookie automatically. The Transform Rule reads it and sets the `Cloudflare-Workers-Cohort` header. The platform routes to the correct version _before_ the middleware runs.
+3. **Non-team users:** No cookie is set, no cohort header is added, and they get the default version split.
+
+## 4. Deploy Version A
+
+Build and deploy:
+
+```sh
+npx wrangler deploy
+```
+
+Note the **Version ID** in the output. This is Version A — your current stable release.
+
+## 5. Create Version B
+
+Make the changes you want to test. For this tutorial, update the banner in `src/pages/index.astro`:
+
+```html
+<div
+	style="background: #e04e2a; color: white; padding: 12px; text-align: center; font-family: sans-serif;"
+>
+	Version B — New release
+</div>
+```
+
+In a real scenario, this could be any change — a redesigned page, updated dependencies, a new compatibility date, different static assets.
+
+Upload without deploying:
+
+```sh
+npx wrangler versions upload
+```
+
+Note the new **Version ID**. This is Version B.
+
+## 6. Create the Transform Rule
+
+Go to the Cloudflare dashboard and create a [Transform Rule](/rules/transform/request-header-modification/) that reads the `deploy-cohort` cookie and sets the `Cloudflare-Workers-Cohort` header:
+
+- **Expression:** `http.cookie contains "deploy-cohort=team"`
+- **Action:** Set static request header
+- **Header name:** `Cloudflare-Workers-Cohort`
+- **Value:** `team`
+
+This rule only matches requests that already carry the cookie. Users without the cookie are unaffected.
+
+## 7. Deploy with a team cohort
+
+Deploy so that the `team` cohort sees Version B while everyone else stays on Version A:
+
+```sh
+npx wrangler versions deploy \
+  VERSION_A_ID@100% \
+  --cohort team=VERSION_B_ID@100% \
+  --message "Team testing Version B" -y
+```
+
+Replace `VERSION_A_ID` and `VERSION_B_ID` with your actual version IDs.
+
+Nothing changes for your users. Only team members (identified by the middleware, carrying the cookie, matched by the Transform Rule) see Version B.
+
+## 8. Verify
+
+Visit your site as a team member. You should see the red "Version B" banner. Open an incognito window (no auth) — you should see the blue "Version A" banner.
+
+From the command line:
+
+```sh
+# Team member (with the cohort cookie) — sees Version B
+curl -s https://rollout-demo.your-domain.com -H "Cookie: deploy-cohort=team"
+
+# Everyone else — sees Version A
+curl -s https://rollout-demo.your-domain.com
+```
+
+Refresh multiple times. Team members always see Version B. Everyone else always sees Version A.
+
+## 9. Expand and complete the rollout
+
+Once your team has verified Version B works, gradually expand:
+
+```sh
+# Give 10% of non-team traffic the new version
+npx wrangler versions deploy \
+  VERSION_A_ID@90% VERSION_B_ID@10% \
+  --cohort team=VERSION_B_ID@100% \
+  --message "Expanding to 10% of traffic" -y
+```
+
+When you are confident, deploy to everyone:
+
+```sh
+npx wrangler versions deploy VERSION_B_ID@100% -y
+```
+
+This removes all cohorts. The `deploy-cohort` cookie has no effect once there are no cohorts defined — it will expire on its own.
+
+## Adapting this to your application
+
+The middleware in this tutorial uses a hardcoded email list and `cf-access-authenticated-user-email` for simplicity. In a real application, you would replace `getUserEmail()` with whatever user identification you already have:
+
+- **Session cookie or JWT:** Decode the token and check a role or team claim.
+- **Database lookup:** Query your user table for a `beta_tester` flag.
+- **Cloudflare Access:** Use the `cf-access-authenticated-user-email` header as shown, or verify the [Access JWT](/cloudflare-one/identity/authorization-cookie/).
+- **Request property:** Check a custom header set by your API gateway or upstream service.
+
+The pattern is always the same: identify the user on the server, set a cookie, and let the Transform Rule handle routing from that point forward. The client carries the context automatically.
+
+## Related resources
+
+- [Cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-based-deployments/) — Full reference for cohort-based deployments.
+- [Astro on Workers](/workers/framework-guides/web-apps/astro/) — Getting started with Astro on Cloudflare Workers.
+- [Transform Rules](/rules/transform/request-header-modification/) — Setting request headers based on request properties.

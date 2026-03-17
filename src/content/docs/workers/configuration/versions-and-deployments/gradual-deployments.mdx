@@ -134,9 +134,9 @@ To enable Workers Logs, add the following to your Wrangler configuration:
 
 ```json
 {
-  "observability": {
-    "enabled": true
-  }
+	"observability": {
+		"enabled": true
+	}
 }
 ```
 
@@ -179,73 +179,214 @@ Use the [Version metadata binding](/workers/runtime-apis/bindings/version-metada
 
 You can only create a new deployment with the last 100 uploaded versions of your Worker.
 
-## Get started
+## Walkthrough
 
-The following section guides you through an example usage of gradual deployments. You will choose to use either [Wrangler](#via-wrangler) or the [Cloudflare dashboard](#via-the-cloudflare-dashboard) to:
+This section walks you through a complete gradual deployment from start to finish using [Wrangler](#via-wrangler) or the [Cloudflare dashboard](#via-the-cloudflare-dashboard). You will:
 
-- Create a new Worker.
-- Publish a new version of that Worker without deploying it.
-- Create a gradual deployment between the two versions.
-- Progress the deployment of the new version to 100% of traffic.
+- Create a Worker and deploy it.
+- Upload a new version without deploying it.
+- Split traffic between the two versions.
+- Verify the split with curl.
+- Test version overrides to target a specific version.
+- Progress the new version to 100%.
 
 ### Via Wrangler
 
 :::note
-
 Minimum required Wrangler version: 3.40.0. Versions before 3.73.0 require you to specify a `--x-versions` flag.
-
 :::
 
 #### 1. Create and deploy a new Worker
 
-Create a new `"Hello World"` Worker using the [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) and deploy it.
+Create a new Worker and deploy it. This becomes your first version — call it Version A:
 
 ```sh
-npm create cloudflare@latest <NAME> -- --type=hello-world
+npm create cloudflare@latest gradual-deploy-demo -- --type=hello-world
+cd gradual-deploy-demo
+npx wrangler deploy
 ```
 
-Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your application. This is the first version of your Worker.
+Note the **Version ID** in the output. Verify it is live:
 
-#### 2. Create a new version of the Worker
+```sh
+curl -s https://gradual-deploy-demo.YOUR_SUBDOMAIN.workers.dev
+```
 
-To create a new version of the Worker, edit the Worker code by changing the `Response` content to your desired text and upload the Worker by using the [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) command.
+You should see the default `"Hello World!"` response.
+
+#### 2. Add a version endpoint
+
+To make it easy to see which version is handling a request, add a `/version` route. Replace the contents of `src/index.ts`:
+
+```ts
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/version") {
+			return Response.json({
+				workerVersionId: env.CF_VERSION_METADATA?.id ?? "unknown",
+				timestamp: new Date().toISOString(),
+			});
+		}
+
+		return new Response("Version A");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+Add a [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to your Wrangler configuration so the Worker can report its own version ID:
+
+```json
+{
+	"version_metadata": {
+		"binding": "CF_VERSION_METADATA"
+	}
+}
+```
+
+Deploy the updated Worker:
+
+```sh
+npx wrangler deploy
+```
+
+Verify the `/version` endpoint returns the current version ID:
+
+```sh
+curl -s https://gradual-deploy-demo.YOUR_SUBDOMAIN.workers.dev/version
+```
+
+```json
+{
+	"workerVersionId": "00363d26-4ef1-4339-8b9f-2bdf44ab879e",
+	"timestamp": "2025-01-15T12:00:00.000Z"
+}
+```
+
+#### 3. Make a code change and upload Version B
+
+Change the response so you can tell the two versions apart. In `src/index.ts`, change `"Version A"` to `"Version B"`:
+
+```ts
+return new Response("Version B");
+```
+
+Upload the new code **without deploying it**:
 
 ```sh
 npx wrangler versions upload
 ```
 
-This will create a new version of the Worker that is not automatically deployed.
+Note the new **Version ID** from the output. This is Version B. It is not serving any traffic yet.
 
-#### 3. Create a new deployment
-
-Use the [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy) command to
-create a new deployment that splits traffic between two versions of the Worker. Follow the interactive prompts to create a deployment with the versions uploaded in [step #1](#1-create-and-deploy-a-new-worker) and [step #2](#2-create-a-new-version-of-the-worker). Select your desired percentages for each version.
+You can verify nothing changed — all requests still hit Version A:
 
 ```sh
-npx wrangler versions deploy
+curl -s https://gradual-deploy-demo.YOUR_SUBDOMAIN.workers.dev
+# Output: Version A
 ```
 
-#### 4. Test the split deployment
+#### 4. List your versions
 
-Run a cURL command on your Worker to test the split deployment.
+See all uploaded versions:
 
-```bash
-for j in {0..10}
-do
-    curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
+```sh
+npx wrangler versions list
+```
+
+You will see both Version A and Version B with their IDs and timestamps.
+
+#### 5. Create a gradual deployment
+
+Split traffic so that 90% goes to Version A and 10% goes to Version B. Replace the version IDs with your own:
+
+```sh
+npx wrangler versions deploy VERSION_A_ID@90% VERSION_B_ID@10% -y
+```
+
+:::note
+You can also run `npx wrangler versions deploy` without arguments to use the interactive prompt, which walks you through selecting versions and setting percentages.
+:::
+
+#### 6. Verify the traffic split
+
+Hit the `/version` endpoint repeatedly and observe that most responses return Version A's ID, with some returning Version B's:
+
+```sh
+for i in $(seq 1 20); do
+  curl -s https://gradual-deploy-demo.YOUR_SUBDOMAIN.workers.dev/version
+  echo
 done
 ```
 
-You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in [step #3](#3-create-a-new-deployment).
+With a 90/10 split, roughly 18 out of 20 requests will show Version A's ID and 2 will show Version B's. The exact numbers will vary — this is probabilistic, not deterministic.
 
-You can also target a specific version using [version overrides](/workers/configuration/versions-and-deployments/version-overrides/).
-
-#### 5. Set your new version to 100% deployment
-
-Run `wrangler versions deploy` again and follow the interactive prompts. Select the version uploaded in [step 2](#2-create-a-new-version-of-the-worker) and set it to 100% deployment.
+You can also verify by hitting the root path and checking whether the response says `"Version A"` or `"Version B"`:
 
 ```sh
-npx wrangler versions deploy
+for i in $(seq 1 20); do
+  curl -s https://gradual-deploy-demo.YOUR_SUBDOMAIN.workers.dev
+done
+```
+
+#### 7. Test a specific version with a version override
+
+You can bypass the percentage-based routing and force a request to a specific version using the `Cloudflare-Workers-Version-Overrides` header. This is useful for testing the new version before exposing it to any real traffic.
+
+Force a request to Version B:
+
+```sh
+curl -s https://gradual-deploy-demo.YOUR_SUBDOMAIN.workers.dev/version \
+  -H 'Cloudflare-Workers-Version-Overrides: gradual-deploy-demo="VERSION_B_ID"'
+```
+
+The response will always show Version B's ID, regardless of the configured percentages. For more details, refer to [version overrides](/workers/configuration/versions-and-deployments/version-overrides/).
+
+#### 8. Check the active deployment
+
+View the current deployment and its version split:
+
+```sh
+npx wrangler deployments list
+```
+
+The output shows the deployment history, including which versions are active and their percentages.
+
+#### 9. Increase traffic to the new version
+
+As you gain confidence, shift more traffic to Version B:
+
+```sh
+npx wrangler versions deploy VERSION_A_ID@50% VERSION_B_ID@50% -y
+```
+
+Then verify the split again:
+
+```sh
+for i in $(seq 1 20); do
+  curl -s https://gradual-deploy-demo.YOUR_SUBDOMAIN.workers.dev
+done
+```
+
+You should now see a roughly even mix of `"Version A"` and `"Version B"` responses.
+
+#### 10. Complete the deployment
+
+Deploy Version B to 100% of traffic:
+
+```sh
+npx wrangler versions deploy VERSION_B_ID@100% -y
+```
+
+Verify all traffic is now on Version B:
+
+```sh
+curl -s https://gradual-deploy-demo.YOUR_SUBDOMAIN.workers.dev
+# Output: Version B
+
+curl -s https://gradual-deploy-demo.YOUR_SUBDOMAIN.workers.dev/version
+# workerVersionId will be Version B's ID
 ```
 
 ### Via the Cloudflare dashboard
@@ -254,22 +395,24 @@ npx wrangler versions deploy
 
    <DashButton url="/?to=/:account/workers-and-pages" />
 
-2. Select **Create application** > **Hello World** template > deploy your Worker.
-3. Once the Worker is deployed, go to the online code editor through **Edit code**. Edit the Worker code (change the `Response` content) and upload the Worker.
-4. To save changes, select the **down arrow** next to **Deploy** > **Save**. This will create a new version of your Worker.
-5. Create a new deployment that splits traffic between the two versions created in step 3 and 5 by going to **Deployments** and selecting **Deploy Version**.
-6. cURL your Worker to test the split deployment.
+2. Select **Create application** > **Hello World** template > deploy your Worker. This creates Version A.
+3. Go to the online code editor through **Edit code**. Change the response content so you can tell the two versions apart.
+4. Select the **down arrow** next to **Deploy** > **Save**. This uploads a new version (Version B) without deploying it.
+5. Go to **Deployments** and select **Deploy Version**. Choose both versions and set the percentages (for example, 90% Version A, 10% Version B).
+6. Test the split by running curl repeatedly:
 
-```bash
-for j in {0..10}
-do
-    curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
-done
-```
+   ```sh
+   for i in $(seq 1 20); do
+     curl -s https://YOUR_WORKER.YOUR_SUBDOMAIN.workers.dev
+   done
+   ```
 
-You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in step #6.
+   You should see responses from both versions, distributed according to the percentages you set.
+
+7. When you are ready, go back to **Deployments**, select **Deploy Version**, and set Version B to 100%.
 
 ## Related resources
 
 - [Cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-based-deployments/) — Route requests to different version configurations based on named user segments instead of a single percentage split.
 - [Version overrides](/workers/configuration/versions-and-deployments/version-overrides/) — Send a specific request to a specific version of your Worker, bypassing the percentage-based routing.
+- [Tutorial: Controlled Durable Object rollouts](/workers/configuration/versions-and-deployments/testing-gradual-deployments/) — Deploy new code to specific Durable Object instances instead of leaving it to chance.

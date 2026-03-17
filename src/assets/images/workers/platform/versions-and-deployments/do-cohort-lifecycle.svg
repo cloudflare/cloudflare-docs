@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .title { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+    .label { font-size: 12px; fill: #1a1a1a; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .cohort-free { font-size: 11px; font-weight: 600; fill: #c2410c; }
+    .cohort-paid { font-size: 11px; font-weight: 600; fill: #1d4ed8; }
+    .ignored { font-size: 10px; fill: #9ca3af; font-style: italic; }
+    .evicted { font-size: 11px; fill: #6b7280; font-style: italic; }
+    .arrow-label { font-size: 10px; fill: #6b7280; }
+  </style>
+
+  <!-- Background -->
+  <rect width="900" height="520" fill="#fafafa" rx="8"/>
+
+  <!-- Timeline axis -->
+  <line x1="80" y1="260" x2="860" y2="260" stroke="#d1d5db" stroke-width="1.5"/>
+  <polygon points="855,255 865,260 855,265" fill="#d1d5db"/>
+  <text x="870" y="264" class="sublabel">time</text>
+
+  <!-- Phase 1: DO in memory (free) -->
+  <rect x="100" y="170" width="280" height="70" rx="6" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="240" y="200" text-anchor="middle" class="title">DO instance in memory</text>
+  <text x="240" y="218" text-anchor="middle" class="cohort-free">cohort = free (Version B)</text>
+
+  <!-- Phase 2: Evicted -->
+  <rect x="400" y="185" width="100" height="40" rx="6" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="450" y="209" text-anchor="middle" class="evicted">evicted</text>
+
+  <!-- Phase 3: DO in memory (paid) -->
+  <rect x="520" y="170" width="280" height="70" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="660" y="200" text-anchor="middle" class="title">DO instance in memory</text>
+  <text x="660" y="218" text-anchor="middle" class="cohort-paid">cohort = paid (Version A)</text>
+
+  <!-- Request 1 -->
+  <line x1="140" y1="350" x2="140" y2="245" stroke="#f97316" stroke-width="2"/>
+  <polygon points="136,248 140,240 144,248" fill="#f97316"/>
+  <text x="140" y="370" text-anchor="middle" class="label">Request 1</text>
+  <text x="140" y="385" text-anchor="middle" class="cohort-free">cohort=free</text>
+  <text x="140" y="402" text-anchor="middle" class="arrow-label">sets cohort</text>
+
+  <!-- Request 2 -->
+  <line x1="240" y1="350" x2="240" y2="245" stroke="#d1d5db" stroke-width="2" stroke-dasharray="4 3"/>
+  <polygon points="236,248 240,240 244,248" fill="#d1d5db"/>
+  <text x="240" y="370" text-anchor="middle" class="label">Request 2</text>
+  <text x="240" y="385" text-anchor="middle" class="cohort-paid">cohort=paid</text>
+  <text x="240" y="402" text-anchor="middle" class="ignored">ignored</text>
+
+  <!-- Request 3 -->
+  <line x1="340" y1="350" x2="340" y2="245" stroke="#f97316" stroke-width="2"/>
+  <polygon points="336,248 340,240 344,248" fill="#f97316"/>
+  <text x="340" y="370" text-anchor="middle" class="label">Request 3</text>
+  <text x="340" y="385" text-anchor="middle" class="cohort-free">cohort=free</text>
+  <text x="340" y="402" text-anchor="middle" class="arrow-label">still free</text>
+
+  <!-- Request 4 -->
+  <line x1="560" y1="350" x2="560" y2="245" stroke="#3b82f6" stroke-width="2"/>
+  <polygon points="556,248 560,240 564,248" fill="#3b82f6"/>
+  <text x="560" y="370" text-anchor="middle" class="label">Request 4</text>
+  <text x="560" y="385" text-anchor="middle" class="cohort-paid">cohort=paid</text>
+  <text x="560" y="402" text-anchor="middle" class="arrow-label">sets cohort</text>
+
+  <!-- Request 5 -->
+  <line x1="660" y1="350" x2="660" y2="245" stroke="#d1d5db" stroke-width="2" stroke-dasharray="4 3"/>
+  <polygon points="656,248 660,240 664,248" fill="#d1d5db"/>
+  <text x="660" y="370" text-anchor="middle" class="label">Request 5</text>
+  <text x="660" y="385" text-anchor="middle" class="cohort-free">cohort=free</text>
+  <text x="660" y="402" text-anchor="middle" class="ignored">ignored</text>
+
+  <!-- Request 6 -->
+  <line x1="760" y1="350" x2="760" y2="245" stroke="#3b82f6" stroke-width="2"/>
+  <polygon points="756,248 760,240 764,248" fill="#3b82f6"/>
+  <text x="760" y="370" text-anchor="middle" class="label">Request 6</text>
+  <text x="760" y="385" text-anchor="middle" class="cohort-paid">cohort=paid</text>
+  <text x="760" y="402" text-anchor="middle" class="arrow-label">still paid</text>
+
+  <!-- Idle annotation -->
+  <text x="450" y="155" text-anchor="middle" class="sublabel">idle timeout</text>
+  <line x1="385" y1="190" x2="395" y2="190" stroke="#9ca3af" stroke-width="1"/>
+  <line x1="505" y1="190" x2="515" y2="190" stroke="#9ca3af" stroke-width="1"/>
+
+  <!-- Legend -->
+  <rect x="100" y="445" width="700" height="50" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="130" y1="470" x2="150" y2="470" stroke="#f97316" stroke-width="2"/>
+  <polygon points="147,467 153,470 147,473" fill="#f97316"/>
+  <text x="160" y="474" class="sublabel">Request sets or matches cohort</text>
+
+  <line x1="400" y1="470" x2="420" y2="470" stroke="#d1d5db" stroke-width="2" stroke-dasharray="4 3"/>
+  <polygon points="417,467 423,470 417,473" fill="#d1d5db"/>
+  <text x="430" y="474" class="sublabel">Request cohort ignored (different from locked cohort)</text>
+</svg>
