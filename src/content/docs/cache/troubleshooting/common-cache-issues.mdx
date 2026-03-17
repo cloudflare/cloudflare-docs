@@ -16,7 +16,7 @@ Cloudflare does not store or manage session state for your application. Session 
 
 By default, Cloudflare only caches [specific static file extensions](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) such as images, stylesheets, and JavaScript files. These file types do not normally carry session cookies, so default caching does not affect sessions.
 
-However, if you use a [Cache Rule](/cache/how-to/cache-rules/) to cache additional content types (for example, HTML pages), Cloudflare serves those responses from cache and does **not** forward cookies from the origin. This can break session-dependent pages.
+However, if you use a [Cache Rule](/cache/how-to/cache-rules/) to cache additional content types (for example, HTML pages), Cloudflare may serve those responses from cache without the original `Set-Cookie` headers from your origin. This can break session-dependent pages.
 
 **To resolve this:**
 
@@ -42,7 +42,7 @@ If you have [Cloudflare Workers](/workers/), [Transform Rules](/rules/transform/
 To check whether a specific URL is being cached:
 
 1. Make a request to the URL and inspect the response headers for [`CF-Cache-Status`](/cache/concepts/cache-responses/).
-2. If the header is absent, the request did not pass through Cloudflare's cache layer. Verify that the DNS record is set to **Proxied** (orange cloud).
+2. If the header is absent, the response may not have passed through Cloudflare's cache layer. Common causes include the DNS record not being set to **Proxied** (orange cloud), a Worker returning a response before the cache phase, or a WAF/redirect rule acting on the request. Verify your DNS proxy status first.
 3. If the header value is `DYNAMIC`, Cloudflare does not consider the URL cacheable by default. You can create a [Cache Rule](/cache/how-to/cache-rules/) to cache it.
 4. If the header value is `HIT`, the response was served from Cloudflare's cache.
 

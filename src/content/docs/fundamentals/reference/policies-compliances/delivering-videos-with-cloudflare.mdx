@@ -45,11 +45,7 @@ For more information, refer to the [Stream documentation](/stream/).
 
 [R2](/r2/) is an S3-compatible object storage service with zero egress fees. R2 is well suited for storing and serving large files such as media assets, backups, software downloads, and datasets.
 
-R2 does not charge for egress bandwidth when accessed via the S3 API or Workers, making it a lower-cost option for serving large files. You can connect an R2 bucket to a [custom domain](/r2/buckets/public-buckets/#custom-domains) and use [Cache Rules](/cache/how-to/cache-rules/) to control caching behavior.
-
-:::note
-Serving R2 objects through a custom domain routes traffic through the Cloudflare CDN proxy. For Enterprise customers, this may have billing implications depending on your plan terms.
-:::
+R2 does not charge egress for data accessed directly from R2 (Workers API, S3 API, `r2.dev` domains). If you place other Cloudflare services in front of R2 — for example, serving through a [custom domain](/r2/buckets/public-buckets/#custom-domains) — those services may have separate usage-based charges depending on your plan. You can use [Cache Rules](/cache/how-to/cache-rules/) to control caching behavior.
 
 To get started, refer to the [R2 documentation](/r2/).
 
