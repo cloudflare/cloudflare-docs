@@ -5,21 +5,37 @@ sidebar:
   order: 2
 ---
 
-Cloudflare automatically attaches headers to every [REST API](/browser-rendering/rest-api/) request made through Browser Rendering. These headers make it easy for destination servers to identify that these requests came from Cloudflare.
+Cloudflare automatically attaches headers to every request made through Browser Rendering. These headers make it easy for destination servers to identify that these requests came from Cloudflare.
 
-:::note[Note]
+## User-Agent
 
-These headers are meant to ensure transparency and cannot be removed or overridden (with `setExtraHTTPHeaders`, for example).
+The default User-Agent depends on how you access Browser Rendering:
 
+| Method | Default User-Agent |
+| --- | --- |
+| [REST API](/browser-rendering/rest-api/) | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36` |
+| [Crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/) | `CloudflareBrowserRenderingCrawler/1.0` |
+| [Workers Bindings](/browser-rendering/workers-bindings/) | The default User-Agent of the underlying Chrome version |
+
+:::note
+The Chrome version in the REST API and Workers Bindings User-Agent strings may change as Browser Rendering updates its underlying browser engine. Do not rely on a specific version number.
 :::
 
-| Header               | Description                                                                         |
-| -------------------- | ----------------------------------------------------------------------------------- |
-| `cf-brapi-request-id` | A unique identifier for the Browser Rendering request when using the [REST API](/browser-rendering/rest-api/)                           |
-| `cf-brapi-devtools` | A unique identifier for the Browser Rendering request when using [Workers Bindings](/browser-rendering/workers-bindings/)             |
-| `cf-biso-devtools`   | A flag indicating the request originated from Cloudflare's rendering infrastructure |
-| `Signature-agent`    | [The location of the bot public keys](https://web-bot-auth.cloudflare-browser-rendering-085.workers.dev), used to sign the request and verify it came from Cloudflare                                       |
-| `Signature` and `Signature-input`| A digital signature, used to validate requests, as shown in [this architecture document](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)                     |
+Unlike the headers listed below, the User-Agent can be customized for the [REST API](/browser-rendering/rest-api/) (using the `userAgent` parameter) and [Workers Bindings](/browser-rendering/workers-bindings/) configuration. The [crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/) is the exception. Its User-Agent is always `CloudflareBrowserRenderingCrawler/1.0` and cannot be changed. Because the User-Agent is configurable for most methods, destination servers should use the headers below to identify Browser Rendering requests rather than relying on the User-Agent string.
+
+## Non-configurable headers
+
+:::note
+The following headers are meant to ensure transparency and cannot be removed or overridden (with `setExtraHTTPHeaders`, for example).
+:::
+
+| Header                            | Description                                                                                                                                                             |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cf-brapi-request-id`             | A unique identifier for the Browser Rendering request when using the [REST API](/browser-rendering/rest-api/)                                                           |
+| `cf-brapi-devtools`               | A unique identifier for the Browser Rendering request when using [Workers Bindings](/browser-rendering/workers-bindings/)                                               |
+| `cf-biso-devtools`                | A flag indicating the request originated from Cloudflare's rendering infrastructure                                                                                     |
+| `Signature-agent`                 | [The location of the bot public keys](https://web-bot-auth.cloudflare-browser-rendering-085.workers.dev), used to sign the request and verify it came from Cloudflare   |
+| `Signature` and `Signature-input` | A digital signature, used to validate requests, as shown in [this architecture document](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) |
 
 ### About Web Bot Auth
 
@@ -27,4 +43,4 @@ The `Signature` headers use an authentication method called [Web Bot Auth](/bots
 
 ### Bot detection
 
-The bot detection ID for Browser Rendering is `128292352`. If you are attempting to scan your own zone and want Browser Rendering to access your website freely without your bot protection configuration interfering, you can create a WAF skip rule to [allowlist Browser Rendering](/browser-rendering/faq/#how-do-i-allowlist-browser-rendering).
+The bot detection ID for Browser Rendering is `128292352`. If you are attempting to scan your own zone and want Browser Rendering to access your website freely without your bot protection configuration interfering, you can create a WAF skip rule to [allowlist Browser Rendering](/browser-rendering/faq/#can-i-allowlist-browser-rendering-on-my-own-website).

@@ -17,6 +17,8 @@ By default, the `/json` endpoint leverages [Workers AI](/workers-ai/) for data e
 
 :::
 
+<Render file="rest-api-token-permissions" product="browser-rendering" />
+
 ## Endpoint
 
 ```txt
@@ -374,6 +376,16 @@ In this example, Browser Rendering first calls Anthropic's Claude Sonnet 4 model
   }
 ]
 ```
+
+## Troubleshooting
+
+### JSON extraction returns null or empty results
+
+If the `/json` endpoint returns null or empty results:
+
+- **Provide a clear prompt** — Be specific about what data to extract and where it appears on the page (for example, "Extract the product name, price, and description from the main product section").
+- **Define a response schema** — Use `response_format` with a JSON schema to enforce the expected output structure.
+- **Use a custom model** — If the default [Workers AI](/workers-ai/) model does not produce the desired results, use the `custom_ai` parameter to specify a different model. Refer to [Using a custom model (BYO API Key)](/browser-rendering/rest-api/json-endpoint/#using-a-custom-model-byo-api-key) for details.
 
 <Render file="javascript-heavy-pages" product="browser-rendering" />
 

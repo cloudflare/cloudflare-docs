@@ -50,8 +50,8 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 
 		const link =
 			track === "ga"
-				? "[stable releases downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/)"
-				: "[beta releases downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/beta-releases/)";
+				? "[stable releases downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/)"
+				: "[beta releases downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/beta-releases/)";
 
 		const prefix = `A new ${prettyTrack} release for the ${prettyPlatform} WARP client is now available on the ${link}.`;
 
@@ -64,7 +64,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				description: title,
 				hidden: false,
 				date: releaseDate,
-				products: [{ id: "zero-trust-warp", collection: "directory" }],
+				products: [{ id: "cloudflare-one-client", collection: "directory" }],
 				scheduled: false,
 			},
 			rendered: {

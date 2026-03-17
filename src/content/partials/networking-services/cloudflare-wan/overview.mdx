@@ -15,11 +15,13 @@ params:
 ---
 
 import {
+	AnchorHeading,
 	CardGrid,
 	Description,
 	Feature,
 	GlossaryTooltip,
 	LinkTitleCard,
+	Markdown,
 	Plan,
 	RelatedProduct,
 	Stream,
@@ -43,6 +45,30 @@ Refer to <a href={props.onRampsUrl}>On-ramps</a> for a full list of supported on
 Traditional WANs backhaul traffic through central data centers and require dedicated MPLS circuits at every site. {props.productName} eliminates both — security applies inline at the nearest Cloudflare data center, and any site connects over standard Internet.
 
 Refer to <a href={props.wanTransformationUrl}>WAN transformation</a> to compare approaches and plan your migration, or go straight to <a href={props.getStartedUrl}>get started</a>.
+
+{props.magicWord === "Cloudflare WAN" && (
+
+<>
+	<AnchorHeading depth={2} title="Cloudflare WAN and Cloudflare One" />
+	<Markdown text={`
+Cloudflare WAN is a standalone WAN-as-a-Service (WANaaS) product. It provides site-to-site connectivity over Cloudflare's global network, with packet-level security through [Cloudflare Network Firewall](/cloudflare-network-firewall/). Cloudflare WAN supports IPsec tunnels, GRE tunnels, [Cloudflare Network Interconnect](/network-interconnect/), and the [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/) for connecting your sites.
+
+[Cloudflare One](/cloudflare-one/) is the full SASE (Secure Access Service Edge) platform. It extends Cloudflare WAN with identity-aware security services:
+
+- **[Cloudflare One Client (WARP)](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)** — deploys on user devices to route traffic through Cloudflare with identity context.
+- **[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)** — creates outbound-only connections from your infrastructure to Cloudflare, with no inbound ports required.
+- **[Cloudflare Gateway](/cloudflare-one/traffic-policies/)** — applies secure web gateway (SWG) policies to filter and inspect Internet-bound traffic.
+- **[Cloudflare Access](/cloudflare-one/access-controls/)** — enforces Zero Trust Network Access (ZTNA) policies based on user identity, device posture, and context.
+
+If your requirements are limited to site-to-site connectivity and network-layer security, Cloudflare WAN provides what you need. When you need user-level security policies, identity-based access controls, or secure Internet egress, you can add Cloudflare One capabilities to your existing deployment.
+
+Cloudflare One builds on the same network infrastructure as Cloudflare WAN, so there is no migration required.
+
+For more information about Cloudflare One, refer to the [Cloudflare One documentation](/cloudflare-one/).
+	`} inline={false} />
+</>
+
+)}
 
 <Stream
 	id="86f22d1f760b77cdc349f89b25b63c3e"

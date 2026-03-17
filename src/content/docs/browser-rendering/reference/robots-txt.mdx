@@ -55,6 +55,47 @@ Sitemap: https://example.com/sitemap.xml
 
 The value is in seconds. A `crawl-delay` of 2 means the crawler waits two seconds between requests.
 
+## Blocking crawlers with robots.txt
+
+If you want to prevent Browser Rendering (or other crawlers) from accessing your site, you can configure your `robots.txt` to restrict access.
+
+### Block all bots from your entire site
+
+To prevent all crawlers from accessing any page on your site:
+
+```txt title="robots.txt"
+User-agent: *
+Disallow: /
+```
+
+This is the most restrictive configuration and blocks all compliant bots, not just Browser Rendering.
+
+### Block only the /crawl endpoint
+
+The [`/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/) identifies itself with the User-Agent `CloudflareBrowserRenderingCrawler/1.0`. To block the `/crawl` endpoint while allowing all other traffic (including other Browser Rendering [REST API](/browser-rendering/rest-api/) endpoints, which use a [different User-Agent](/browser-rendering/reference/automatic-request-headers/#user-agent)):
+
+```txt title="robots.txt"
+User-agent: CloudflareBrowserRenderingCrawler
+Disallow: /
+
+User-agent: *
+Allow: /
+```
+
+### Block specific paths
+
+To allow crawling of your site but block specific sections:
+
+```txt title="robots.txt"
+User-agent: CloudflareBrowserRenderingCrawler
+Disallow: /admin/
+Disallow: /private/
+Allow: /
+
+User-agent: *
+Allow: /
+```
+
 ## Best practices for sitemaps
 
 Structure your sitemap to help crawlers process your site efficiently:
@@ -113,4 +154,5 @@ Browser Rendering periodically refetches sitemaps to keep content fresh. Serve y
 
 ## Related resources
 
-- [FAQ: Will Browser Rendering bypass Cloudflare's Bot Protection?](/browser-rendering/faq/#will-browser-rendering-bypass-cloudflares-bot-protection) — Instructions for creating a WAF skip rule
+- [FAQ: Will Browser Rendering be detected by Bot Management?](/browser-rendering/faq/#will-browser-rendering-be-detected-by-bot-management) — How Browser Rendering interacts with bot protection and how to create a WAF skip rule
+- [Automatic request headers](/browser-rendering/reference/automatic-request-headers/) — User-Agent strings and non-configurable headers used by Browser Rendering

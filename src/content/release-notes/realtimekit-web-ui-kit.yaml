@@ -3,6 +3,25 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-03-10"
+    title: RealtimeKit Web UI Kit 1.1.1
+    description: |-
+      **Compatibility:** Works best with RealtimeKit Web Core 1.2.5 or later.
+
+      **Enhancements**
+
+      - Improved error handling for room join failures to display actionable error messages instead of showing an infinite loader.
+
+      **Fixes**
+
+      - Corrected typos in UI strings:
+        - `occured` → `occurred`
+        - `On you device` → `On your device`
+        - `Grant acess` → `Grant access`
+      - Fixed default language pack keys:
+        - `ai.chat.summerise` → `ai.chat.summarize`
+        - `date.yesteday` → `date.yesterday`
+
   - publish_date: "2026-01-30"
     title: RealtimeKit Web UI Kit 1.1.0
     description: |-

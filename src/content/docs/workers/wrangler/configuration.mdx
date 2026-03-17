@@ -1255,6 +1255,12 @@ The following options are available:
   - Defaults to `[10, 100]`.
   - This can be overridden ad hoc by deploying with the `--containers-rollout=immediate` flag, which will roll out to 100% of instances in one step. Note that flag will not override `rollout_active_grace_period`, if configured.
 
+- `wrangler_ssh` <Type text="object" /> <MetaInfo text="optional" />
+  - Configuration for SSH through Wrangler. Refer to [Wrangler SSH](#wrangler-ssh).
+
+- `authorized_keys` <Type text="object[]" /> <MetaInfo text="optional" />
+  - Public keys that should be added to the Container's `authorized_keys` file.
+
 <WranglerConfig>
 
 ```jsonc
@@ -1323,6 +1329,31 @@ The following options are available:
 ```
 
 </WranglerConfig>
+
+### Wrangler SSH
+
+Configuration for SSH access to a Container instance through Wrangler. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/ssh/).
+
+The following options are available:
+
+- `enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether SSH through Wrangler is enabled. Defaults to `false`.
+
+- `port` <Type text="number" /> <MetaInfo text="optional" />
+  - The port for the SSH service to run on. Defaults to `22`.
+
+### Authorized keys
+
+An authorized key is a public key that can be used to SSH into a Container.
+
+The following are properties of a key:
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+  - The display name of the key.
+
+- `public_key` <Type text="string" /> <MetaInfo text="required" />
+  - The public key itself.
+  - Currently only the `ssh-ed25519` key type is supported.
 
 ## Bundling
 

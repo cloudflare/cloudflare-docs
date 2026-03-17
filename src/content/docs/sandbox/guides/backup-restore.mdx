@@ -121,6 +121,34 @@ console.log(`Restored: ${result.success}`);
 The FUSE mount is lost when the sandbox sleeps or the container restarts. Re-restore from the backup handle to recover.
 :::
 
+## Exclude gitignored files
+
+When backing up a directory inside a git repository, set `useGitignore: true` to exclude files matching `.gitignore` rules. This is useful for skipping large generated directories like `node_modules/`, `dist/`, or `build/` that can be recreated.
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+// Back up only tracked and untracked non-ignored files
+const backup = await sandbox.createBackup({
+	dir: "/workspace",
+	useGitignore: true,
+});
+```
+
+</TypeScriptExample>
+
+The SDK uses `git ls-files` to resolve which files are ignored. Both root-level and nested `.gitignore` files are respected.
+
+By default, `useGitignore` is `false` and all files in the directory are included in the backup.
+
+:::note[Requirements]
+`useGitignore` requires `git` to be installed in the container. If `useGitignore` is `true` and `git` is not available, `createBackup()` throws a `BackupCreateError`. If the backup directory is not inside a git repository, the option has no effect and all files are included.
+:::
+
 ## Checkpoint and rollback
 
 Save state before risky operations and restore if something fails:
@@ -415,6 +443,7 @@ This means `mksquashfs` could not read one or more files inside the directory yo
 
 - **Stop writes before restoring** - Stop processes writing to the target directory before calling `restoreBackup()`
 - **Use checkpoints** - Create backups before risky operations like package installations or migrations
+- **Exclude gitignored files** - Set `useGitignore: true` when backing up git repositories to skip generated files like `node_modules/` and reduce backup size
 - **Set appropriate TTLs** - Use short TTLs for temporary checkpoints and longer TTLs for persistent snapshots
 - **Store handles externally** - Persist `DirectoryBackup` handles to KV, D1, or Durable Object storage for cross-request access
 - **Configure R2 lifecycle rules** - Set up [object lifecycle rules](/r2/buckets/object-lifecycles/) to automatically delete expired backups from R2, since TTL is only enforced at restore time

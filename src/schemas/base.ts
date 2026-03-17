@@ -1,7 +1,7 @@
 import { z } from "astro/zod";
 import { reference, type SchemaContext } from "astro:content";
 
-import { sidebar, SidebarIconSchema } from "./types/sidebar";
+import { sidebar } from "./types/sidebar";
 
 export const baseSchema = ({ image }: SchemaContext) =>
 	z.object({
@@ -100,11 +100,16 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"Displays a [Banner](https://developers.cloudflare.com/style-guide/frontmatter/banner/) on the current docs page.",
 			),
-		icon: SidebarIconSchema(),
 		feedback: z
 			.boolean()
 			.default(true)
 			.describe(
 				"Whether to show the FeedbackPrompt on the page, defaults to true",
+			),
+		canonical: z
+			.string()
+			.optional()
+			.describe(
+				'A canonical URL or path to set as the `<link rel="canonical">` in the page `<head>`, overriding the default derived from the page URL.',
 			),
 	});
