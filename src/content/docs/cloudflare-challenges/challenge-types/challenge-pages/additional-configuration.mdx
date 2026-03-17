@@ -21,14 +21,8 @@ You can customize your favicon by using the HTML snippet below.
 
 ## Custom Content Security Policy (CSP) and error pages
 
-Cloudflare-served Challenge Pages operate in a strictly controlled environment to maximize security and ensure the challenge mechanism functions correctly. Because of this, you cannot set your own Content Security Policy (CSP) or Referer-Policy using `<meta>` tags or Transform Rules on Challenge Pages. Origin headers can be modified within the Challenge Page context and are not immutable, but they may cause issues.
+Cloudflare-served Challenge Pages operate in a strictly controlled environment to maximize security and ensure the challenge mechanism functions correctly. Because of this, customer-created Transform Rules do not apply to Challenge Pages.
 
-If you have an active Transform Rule configured to modify HTTP response headers globally across your website, such as adding custom CSP headers, this rule will interfere with and cause the Challenge Page to fail.
+This behavior ensures reliability for Challenge Pages by preventing custom request or response header rewrites from interfering with challenge execution.
 
-To prevent this conflict, you must modify your Transform Rule expression to explicitly exclude Challenge Page error types. Prefix your Transform Rule expression with the following logical exclusion:
-
-```txt wrap
-not cf.response.error_type in {"managed_challenge" "iuam" "legacy_challenge" "country_challenge"}
-```
-
-This exclusion ensures that your custom header modification logic is only applied to traffic destined for your origin, allowing Cloudflare's Challenge Platform to function without being impacted by conflicting response headers.
+For more information about Transform Rules behavior, refer to [Transform Rules](/rules/transform/).
