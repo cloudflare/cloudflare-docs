@@ -17,13 +17,11 @@ Worker Loader supports two loading modes:
 
 `load()` is best for one-time code execution, for example when using [Codemode](/agents/api-reference/codemode/). `get(id, callback)` is better when the same code will receive subsequent requests, for example when you are building applications.
 
-:::note[Billing]
-Dynamic Workers are billed based on unique Dynamic Worker creations per day.
+### Try it out
 
-Use `get(id, callback)` when you plan to run the same code more than once. Reusing the same ID for the same code avoids creating a new billable Dynamic Worker on every request.
+Deploy the Dynamic Workers Playground to get automatically set up with a Worker that bundles and executes Dynamic Workers. Import GitHub repos and deploy them as Dynamic Workers, with real-time logs and observability.
 
-If you reuse the same ID but return different code, those executions are still treated as different Dynamic Worker creations.
-:::
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/dinasaur404/dynamic-workers-playground)
 
 ## Configure Worker Loader
 
