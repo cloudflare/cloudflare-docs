@@ -61,20 +61,20 @@ If you run into issues with Wrangler, follow these steps before opening a suppor
 
 ### Check your version
 
-Run `wrangler --version` to confirm you are on the latest release. Many issues are fixed in newer versions — upgrade first and retry your command.
+Run `npx wrangler --version` to confirm you are on the latest release. Many issues are fixed in newer versions — upgrade first and retry your command.
 
 ### Collect debug logs
 
 Set the `WRANGLER_LOG` environment variable to `debug` before running your command. This produces verbose output that is useful for diagnosing failures:
 
 ```sh
-WRANGLER_LOG=debug wrangler deploy
+WRANGLER_LOG=debug npx wrangler deploy
 ```
 
 You can also write debug logs to a file with `WRANGLER_LOG_PATH`:
 
 ```sh
-WRANGLER_LOG=debug WRANGLER_LOG_PATH=./wrangler-debug.log wrangler deploy
+WRANGLER_LOG=debug WRANGLER_LOG_PATH=./wrangler-debug.log npx wrangler deploy
 ```
 
 Refer to [System environment variables](/workers/wrangler/system-environment-variables/) for the full list of variables.
@@ -83,7 +83,7 @@ Refer to [System environment variables](/workers/wrangler/system-environment-var
 
 When opening a support ticket or GitHub issue, include the following:
 
-1. Wrangler version (`wrangler --version`).
+1. Wrangler version (`npx wrangler --version`).
 2. Full contents of your Wrangler configuration file (`wrangler.toml` or `wrangler.json`), with secrets redacted.
 3. The exact Wrangler command you ran.
 4. Your operating system, Node.js version, and package manager.
