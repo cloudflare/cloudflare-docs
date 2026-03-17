@@ -1979,7 +1979,7 @@
 				},
 				"h_malicious_scripts": {
 					"title": "Malicious script detection\n and alerting",
-					"summary": "Self-serve add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1988,7 +1988,7 @@
 				},
 				"j_code_change_detection": {
 					"title": "Code change detection\n and alerting",
-					"summary": "Self-serve add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1997,7 +1997,7 @@
 				},
 				"k_malicious_connections": {
 					"title": "Malicious connection detection\n and alerting",
-					"summary": "Self-serve add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -2006,7 +2006,7 @@
 				},
 				"l_cookie_advanced_fields": {
 					"title": "Cookie monitoring\n advanced fields",
-					"summary": "Self-serve add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -2015,7 +2015,7 @@
 				},
 				"m_policies": {
 					"title": "Number of policies\n(positive blocking)",
-					"summary": "Self-serve add-on",
+					"summary": "Advanced",
 					"free": 0,
 					"pro": 0,
 					"biz": 0,
@@ -2024,7 +2024,7 @@
 				},
 				"n_logpush_jobs": {
 					"title": "Number of Logpush jobs",
-					"summary": "Self-serve add-on",
+					"summary": "Advanced",
 					"free": 0,
 					"pro": 0,
 					"biz": 0,
