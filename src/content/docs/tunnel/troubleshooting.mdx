@@ -7,12 +7,9 @@ sidebar:
 
 import { Render, Tabs, TabItem } from "~/components";
 
-Use this page to diagnose and resolve common issues with Cloudflare Tunnel. For tunnel health monitoring, logs, and metrics, refer to [Monitoring](/tunnel/monitoring/).
+Use this page to diagnose and resolve common issues with Cloudflare Tunnel. Many issues are resolved by upgrading to the latest version of `cloudflared` — refer to [Update cloudflared](/tunnel/downloads/update-cloudflared/) before investigating further.
 
-Before troubleshooting, verify the following:
-
-1. **You are running the latest version of `cloudflared`**. Many issues are resolved by upgrading. Refer to [Update cloudflared](/tunnel/downloads/update-cloudflared/) for instructions.
-2. **Required ports and IPs are allowed**. Your firewall must permit egress to the [Cloudflare Tunnel required destinations](/tunnel/configuration/#firewall-rules) on port `7844` (TCP/UDP). Port `443` destinations (including `api.cloudflare.com`) are optional and only needed for features such as software update checks and Access JWT validation.
+For tunnel health monitoring, logs, and metrics, refer to [Monitoring](/tunnel/monitoring/).
 
 ## Connection errors
 

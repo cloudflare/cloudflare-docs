@@ -11,15 +11,25 @@ head:
 
 import { Render, TabItem, Tabs, DirectoryListing } from "~/components";
 
-With an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) subscription, you can restrict connections between Cloudflare and clients — such as your visitor's browser — to specific [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
+You can restrict connections between Cloudflare and clients — such as your visitor's browser — to specific [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
 
-You may want to do this to follow specific [recommendations](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/), to [disable weak cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/troubleshooting/#ssl-labs-weak-ciphers-report), or to comply with [industry standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/).
+:::note[Prerequisites]
+Cipher suite customization requires one of the following:
+
+- [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) — for zone-level and per-hostname cipher configuration.
+- [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) — for cipher configuration on [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/). Refer to [TLS management](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites) for SaaS-specific instructions.
+:::
+
+You may want to customize cipher suites to:
+
+- Follow specific [security level recommendations](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/).
+- Meet [compliance standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/) such as PCI DSS or FIPS 140-2.
+- Manually select from the [supported cipher suites list](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/).
+- [Disable weak cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/troubleshooting/#ssl-labs-weak-ciphers-report) flagged by third-party testing tools.
 
 Customizing cipher suites will not lead to any downtime in your SSL/TLS protection.
 
-:::note[Cloudflare for SaaS]
-If you are a SaaS provider looking to restrict cipher suites for connections to [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/), this can be configured with a [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) subscription. Refer to [TLS management](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites) instead.
-:::
+You can configure cipher suites [via the Cloudflare dashboard](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/dashboard/) or [via API](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/api/). For zone-level changes, the API uses the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint with `ciphers` as the setting. For per-hostname changes, refer to the [Edit TLS setting for hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/) endpoint.
 
 ## How it works
 
