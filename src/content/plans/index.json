@@ -1921,7 +1921,7 @@
 		"page_shield": {
 			"title": "Client-Side Security",
 			"link": "/client-side-security/",
-			"ent_plus": "Self-serve add-on",
+			"ent_plus": "Advanced",
 			"properties": {
 				"availability": {
 					"title": "Availability",
