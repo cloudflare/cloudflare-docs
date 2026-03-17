@@ -32,8 +32,8 @@ const directive = [
 		? `For this product's page index use ${productLlmsTxt}. For all Cloudflare products use ${globalLlmsTxt}.`
 		: `For all Cloudflare products use ${globalLlmsTxt}.`,
 	isProductPage
-		? `For bulk access: this product's full docs at ${productLlmsFullTxt} (single file, use for large-context ingestion or vectorization). All Cloudflare docs at ${globalLlmsFullTxt}.`
-		: `For bulk access: all Cloudflare docs at ${globalLlmsFullTxt} (single file, use for large-context ingestion or vectorization).`,
+		? `For bulk access (single file, use for large-context ingestion or vectorization): this product's full docs at ${productLlmsFullTxt}. All Cloudflare docs at ${globalLlmsFullTxt}.`
+		: `For bulk access (single file, use for large-context ingestion or vectorization): all Cloudflare docs at ${globalLlmsFullTxt}.`,
 ].join(" ");
 ---
 
