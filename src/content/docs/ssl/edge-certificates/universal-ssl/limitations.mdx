@@ -22,7 +22,7 @@ Cloudflare can only serve an SSL/TLS certificate for a DNS record when you set t
 
 ### Full setup
 
-Universal SSL certificates only cover the root domain (for example, `example.com`) and first-level subdomains (for example, `www.example.com` or `blog.example.com`). Second, third, and fourth-level subdomains — such as `dev.www.example.com` or `app3.dev.www.example.com` — are **not** covered by Universal SSL and will not serve a valid certificate.
+When you rely only on Universal SSL in a full setup zone, coverage is limited to the root domain (for example, `example.com`) and first-level subdomains (for example, `www.example.com` or `blog.example.com`). Deeper subdomains — such as `dev.www.example.com` or `app3.dev.www.example.com` — are **not** covered and will not serve a valid certificate.
 
 To enable SSL for deeper subdomains, you can:
 

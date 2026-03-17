@@ -20,7 +20,7 @@ The problem HPKP tries to solve is preventing certificate misissuance. A safer w
 
 ## If you must pin certificates
 
-If your use case requires certificate pinning, the only advisable approach is to upload a [custom certificate](/ssl/edge-certificates/custom-certificates/) to Cloudflare and pin to that certificate. Because you control the certificate lifecycle — including renewal timing, CA selection, and key material — the pinned key will remain valid across renewals.
+If your use case requires certificate pinning, the only advisable approach is to upload a [custom certificate](/ssl/edge-certificates/custom-certificates/) to Cloudflare and pin to that certificate. Because you control the certificate lifecycle — including renewal timing, CA selection, and key material — you can ensure pin continuity. However, pinning still carries outage risk: if a renewal deploys a new key, clients pinned to the old key will fail TLS. If you need pin continuity, you must intentionally reuse the same key material during renewal. Test renewed certificates in the [staging environment](/ssl/edge-certificates/staging-environment/) before production.
 
 Select the [**user-defined** bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/#user-defined) so that you control exactly which CA, intermediate, and leaf certificate are served.
 
