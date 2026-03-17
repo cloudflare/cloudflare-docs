@@ -37,19 +37,19 @@ If you have a [CNAME setup (partial)](/dns/zone-setups/partial-setup), ensure yo
 
 ### DNSSEC was not disabled before the domain was added to Cloudflare
 
-DNS resolution failures occur if [DNSSEC is not disabled](/dns/dnssec/#disable-dnssec) at your domain provider before you add the domain to Cloudflare. For more information, refer to [Cannot add domain](/dns/zone-setups/troubleshooting/cannot-add-domain/) and [Troubleshooting DNSSEC](/dns/dnssec/troubleshooting/).
+DNS resolution failures occur if [DNSSEC is not disabled](/dns/dnssec/#disable-dnssec) at your domain provider before you add the domain to Cloudflare.
 
 ### Nameservers no longer point to Cloudflare
 
 If you manage DNS records via the Cloudflare dashboard and your domain stops pointing to Cloudflare's nameservers, DNS resolution will stop functioning.
 
-This can occur if your domain registrar switches the nameservers for your domain to point to their default nameservers. To confirm if this is the problem, [check whether your domain uses Cloudflare's nameservers](/dns/zone-setups/full-setup/setup/#verify-changes). If your domain was removed, refer to [Domain deleted from Cloudflare](/dns/zone-setups/troubleshooting/domain-deleted/).
+This can occur if your domain registrar switches the nameservers for your domain to point to their default nameservers. To confirm if this is the problem, [check whether your domain uses Cloudflare's nameservers](/dns/zone-setups/full-setup/setup/#verify-changes).
 
 ### Unresolved IP address
 
 In rare cases, the DNS resolver in the client requesting the URL might fail to resolve a DNS record to a valid IP address.
 
-Reload the page after a short wait to note if the problem disappears. This issue is unrelated to Cloudflare, but using [Cloudflare's DNS resolver](/1.1.1.1/setup/) may help. Contact your hosting provider for additional help with your current DNS resolver. You can also use [debug endpoints](/dns/troubleshooting/dns-debug-endpoints/) to verify DNS resolution from Cloudflare's side.
+Reload the page after a short wait to note if the problem disappears. This issue is unrelated to Cloudflare, but using [Cloudflare's DNS resolver](/1.1.1.1/setup/) may help. Contact your hosting provider for additional help with your current DNS resolver.
 
 ### Account recovery
 
