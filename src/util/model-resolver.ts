@@ -9,6 +9,16 @@ export { getModelSlug, getModelAuthor } from "./model-helpers";
 export type { ResolvedModel } from "./model-types";
 
 /**
+ * Normalize raw pricing unit keys (e.g. "per_image", "per_megapixel") into a
+ * human-readable unit label (e.g. "per image", "per megapixel").
+ */
+function normalizePricingUnit(unit: string): string {
+	const withoutPrefix = unit.startsWith("per_") ? unit.slice(4) : unit;
+	const humanReadable = withoutPrefix.replace(/_/g, " ");
+	return `per ${humanReadable}`;
+}
+
+/**
  * Convert catalog model to resolved model format.
  */
 function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
@@ -18,7 +28,7 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 	// Pricing
 	if (model.pricing && Object.keys(model.pricing).length > 0) {
 		const priceValue = Object.entries(model.pricing).map(([unit, price]) => ({
-			unit: `per ${unit}`,
+			unit: normalizePricingUnit(unit),
 			price,
 			currency: "USD",
 		}));
