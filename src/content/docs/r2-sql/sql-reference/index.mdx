@@ -32,50 +32,6 @@ FROM namespace_name.table_name
 
 ---
 
-## Common table expressions (CTEs)
-
-CTEs let you define named temporary result sets using `WITH` that you can reference in the main query. All CTEs must reference the same single table.
-
-### Syntax
-
-```sql
-WITH cte_name AS (
-    SELECT ...
-    FROM namespace_name.table_name
-    [WHERE ...]
-)
-SELECT ... FROM cte_name
-```
-
-### Chained CTEs
-
-A CTE can reference a previously defined CTE. All CTEs in the chain must derive from the same underlying table.
-
-```sql
-WITH filtered AS (
-    SELECT customer_id, department, total_amount
-    FROM my_namespace.sales_data
-    WHERE total_amount > 0
-),
-summary AS (
-    SELECT department,
-           COUNT(*) AS order_count,
-           round(AVG(total_amount), 2) AS avg_amount
-    FROM filtered
-    GROUP BY department
-)
-SELECT *
-FROM summary
-WHERE order_count > 100
-ORDER BY avg_amount DESC
-```
-
-:::note
-CTEs must reference a single table. Multi-table CTEs, JOINs within CTEs, and cross-table references are not supported.
-:::
-
----
-
 ## Schema discovery commands
 
 ### SHOW DATABASES
@@ -135,6 +91,50 @@ SELECT * FROM my_namespace.sales_data LIMIT 10
 SELECT customer_id, region, total_amount FROM my_namespace.sales_data LIMIT 10
 SELECT region, total_amount * 1.1 AS total_with_tax FROM my_namespace.sales_data LIMIT 10
 ```
+
+---
+
+## Common table expressions (CTEs)
+
+CTEs let you define named temporary result sets using `WITH` that you can reference in the main query. All CTEs must reference the same single table.
+
+### Syntax
+
+```sql
+WITH cte_name AS (
+    SELECT ...
+    FROM namespace_name.table_name
+    [WHERE ...]
+)
+SELECT ... FROM cte_name
+```
+
+### Chained CTEs
+
+A CTE can reference a previously defined CTE. All CTEs in the chain must derive from the same underlying table.
+
+```sql
+WITH filtered AS (
+    SELECT customer_id, department, total_amount
+    FROM my_namespace.sales_data
+    WHERE total_amount > 0
+),
+summary AS (
+    SELECT department,
+           COUNT(*) AS order_count,
+           round(AVG(total_amount), 2) AS avg_amount
+    FROM filtered
+    GROUP BY department
+)
+SELECT *
+FROM summary
+WHERE order_count > 100
+ORDER BY avg_amount DESC
+```
+
+:::note
+CTEs must reference a single table. Multi-table CTEs, JOINs within CTEs, and cross-table references are not supported.
+:::
 
 ---
 
