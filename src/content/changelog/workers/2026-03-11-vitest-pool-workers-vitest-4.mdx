@@ -3,12 +3,14 @@ title: "`@cloudflare/vitest-pool-workers` now targets Vitest 4"
 description: The Workers Vitest integration has been rearchitected to support Vitest 4, dropping support for Vitest 2.x and 3.x.
 products:
   - workers
-date: 2026-03-11
+date: 2026-03-18
 ---
 
-`@cloudflare/vitest-pool-workers` now requires Vitest 4.1 or later. Support for Vitest 2.x and 3.x has been dropped. This release rearchitects the integration to use a Vite plugin model and simplifies the configuration and isolation APIs as the package moves toward v1.
+`@cloudflare/vitest-pool-workers` now targets Vitest 4.1 or later. Support for Vitest 2.x and 3.x has been dropped in this version, though past versions remain compatible. This release rearchitects the integration to use a Vite plugin model and simplifies the configuration and isolation APIs as the package moves toward v1.
 
 If you are not ready to migrate, stay on the previous version of `@cloudflare/vitest-pool-workers`. It will continue to work with Vitest 3.x and your existing Wrangler setup. However, you will not be able to use the new features and improvements introduced in Vitest 4 or future versions of Wrangler until you upgrade.
+
+Vitest 4 brings an [array of new capabilities](https://vitest.dev/blog/vitest-4) to your testing, and bringing this to `vitest-pool-workers` has enabled us to improve stability and fix outstanding issues relating to bundling and bindings.
 
 ## Run the codemod
 
@@ -60,6 +62,8 @@ export default defineConfig({
 ```
 
 ## Other breaking changes
+
+You will need to make the following changes to your `vitest-pool-workers` code.
 
 - **`isolatedStorage` and `singleWorker` removed.** Storage isolation is now per test file, matching Vitest's own isolation model. To make test files share the same storage, use the Vitest flags `--max-workers=1 --no-isolate`.
 
