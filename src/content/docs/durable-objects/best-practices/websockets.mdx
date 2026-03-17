@@ -252,47 +252,50 @@ To maximize throughput:
 - **Target fewer, larger messages** rather than many small ones
 
 <TypeScriptExample>
+
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
 // Define a batch envelope format
 interface BatchedMessage {
-messages: Array<{ type: string; payload: unknown }>;
-timestamp: number;
+	messages: Array<{ type: string; payload: unknown }>;
+	timestamp: number;
 }
 
 // Client-side: batch messages before sending
 function sendBatch(
-ws: WebSocket,
-messages: Array<{ type: string; payload: unknown }>,
+	ws: WebSocket,
+	messages: Array<{ type: string; payload: unknown }>,
 ) {
-const batch: BatchedMessage = {
-messages,
-timestamp: Date.now(),
-};
-ws.send(JSON.stringify(batch));
+	const batch: BatchedMessage = {
+		messages,
+		timestamp: Date.now(),
+	};
+	ws.send(JSON.stringify(batch));
 }
 
 // Durable Object: process batched messages
 export class GameRoom extends DurableObject<Env> {
-async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
-if (typeof message !== "string") return;
+	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+		if (typeof message !== "string") return;
 
-    	const batch = JSON.parse(message) as BatchedMessage;
+		const batch = JSON.parse(message) as BatchedMessage;
 
-    	// Process all messages in the batch in a single handler invocation
-    	for (const msg of batch.messages) {
-    		this.handleMessage(ws, msg);
-    	}
-    }
+		// Process all messages in the batch in a single handler invocation
+		for (const msg of batch.messages) {
+			this.handleMessage(ws, msg);
+		}
+	}
 
-    private handleMessage(ws: WebSocket, msg: { type: string; payload: unknown }) {
-    	// Handle individual message logic
-    }
-
+	private handleMessage(
+		ws: WebSocket,
+		msg: { type: string; payload: unknown },
+	) {
+		// Handle individual message logic
+	}
 }
+```
 
-````
 </TypeScriptExample>
 
 #### Why batching helps
@@ -347,8 +350,8 @@ Use `serializeAttachment` and `deserializeAttachment` to persist per-connection 
 import { DurableObject } from "cloudflare:workers";
 
 interface ConnectionState {
-	orderId: string;
-	joinedAt: number;
+orderId: string;
+joinedAt: number;
 }
 
 export class WebSocketServer extends DurableObject<Env> {
@@ -356,33 +359,35 @@ export class WebSocketServer extends DurableObject<Env> {
 		const url = new URL(request.url);
 		const orderId = url.searchParams.get("orderId") ?? "anonymous";
 
-		const webSocketPair = new WebSocketPair();
-		const [client, server] = Object.values(webSocketPair);
+    	const webSocketPair = new WebSocketPair();
+    	const [client, server] = Object.values(webSocketPair);
 
-		this.ctx.acceptWebSocket(server);
+    	this.ctx.acceptWebSocket(server);
 
-		// Persist per-connection state that survives hibernation
-		const state: ConnectionState = {
-			orderId,
-			joinedAt: Date.now(),
-		};
-		server.serializeAttachment(state);
+    	// Persist per-connection state that survives hibernation
+    	const state: ConnectionState = {
+    		orderId,
+    		joinedAt: Date.now(),
+    	};
+    	server.serializeAttachment(state);
 
-		return new Response(null, { status: 101, webSocket: client });
-	}
+    	return new Response(null, { status: 101, webSocket: client });
+    }
 
-	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
-		// Restore state after potential hibernation
-		const state = ws.deserializeAttachment() as ConnectionState;
-		ws.send(`Hello ${state.orderId}, you joined at ${state.joinedAt}`);
-	}
+    async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+    	// Restore state after potential hibernation
+    	const state = ws.deserializeAttachment() as ConnectionState;
+    	ws.send(`Hello ${state.orderId}, you joined at ${state.joinedAt}`);
+    }
 
-	async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-		const state = ws.deserializeAttachment() as ConnectionState;
-		console.log(`${state.orderId} disconnected`);
-		ws.close(code, reason);
-	}
+    async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
+    	const state = ws.deserializeAttachment() as ConnectionState;
+    	console.log(`${state.orderId} disconnected`);
+    	ws.close(code, reason);
+    }
+
 }
+
 ````
 
 </TypeScriptExample>
@@ -525,6 +530,7 @@ headers={
         )
 
 ````
+
 </TabItem>
 </Tabs>
 
@@ -574,7 +580,7 @@ export class WebSocketServer extends DurableObject {
 		});
 	}
 }
-````
+```
 
 </TabItem>
 <TabItem label="TypeScript" icon="seti:typescript">
