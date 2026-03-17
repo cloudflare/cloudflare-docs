@@ -6,7 +6,7 @@ products:
 date: 2026-03-17
 ---
 
-AI Gateway now supports the `cf-aig-collect-log-payload` header, which controls whether request and response bodies are stored in logs. By default, payloads are stored alongside metadata. Set this header to `false` to skip payload storage while still logging metadata such as token counts, model, provider, status code, cost, and duration.
+AI Gateway now supports the `cf-aig-collect-log-payload` header, which controls whether request and response bodies are stored in logs. By default, this header is set to `true` and payloads are stored alongside metadata. Set this header to `false` to skip payload storage while still logging metadata such as token counts, model, provider, status code, cost, and duration.
 
 This is useful when you need usage metrics but do not want to persist sensitive prompt or response data.
 
