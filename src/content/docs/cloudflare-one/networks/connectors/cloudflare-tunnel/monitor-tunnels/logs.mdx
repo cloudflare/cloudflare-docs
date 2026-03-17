@@ -17,13 +17,16 @@ Tunnel logs record all activity between a `cloudflared` instance and Cloudflare'
 ## View logs on the server
 
 <Render
-  file="tunnel/logs/view-logs-on-server"
-  product="cloudflare-one"
-  params={{
-    loglevelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel",
-    logfileURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#logfile",
-    runParametersURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#add-run-parameters-to-tunnel-service"
-  }}
+	file="tunnel/logs/view-logs-on-server"
+	product="cloudflare-one"
+	params={{
+		loglevelURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel",
+		logfileURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#logfile",
+		runParametersURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#add-run-parameters-to-tunnel-service",
+	}}
 />
 
 ## View logs on your local machine
@@ -47,16 +50,21 @@ The `cloudflared` daemon can stream logs from any tunnel in your account to the 
 #### Filter logs
 
 <Render
-  file="tunnel/logs/filter-logs"
-  product="cloudflare-one"
-  params={{
-    loglevelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel"
-  }}
+	file="tunnel/logs/filter-logs"
+	product="cloudflare-one"
+	params={{
+		loglevelURL:
+			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#loglevel",
+	}}
 />
 
 #### View logs for a replica
 
-If you are running multiple `cloudflared` instances for the same tunnel (also known as [replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/)), you must specify an individual instance to stream logs from:
+If you are running multiple `cloudflared` instances for the same tunnel (also known as [replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/)), you can view logs for specific replicas from the dashboard or CLI.
+
+In the dashboard, the **Connectors** list on the tunnel overview page displays all active replicas. Select a **Connector ID** to stream logs for that specific replica in the [**Live Logs** tab](#dashboard). You can also stream logs from all replicas simultaneously using the **View Logs** shortcut on the **Networks** > **Connectors** page.
+
+To stream logs for a specific replica from the CLI:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels** and select your tunnel.
 2. Find the **Connector ID** for the `cloudflared` instance you want to view.

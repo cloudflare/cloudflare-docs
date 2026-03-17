@@ -1,0 +1,22 @@
+---
+title: Stream logs from multiple replicas of Cloudflare Tunnel simultaneously
+description: The tunnel overview page in Zero Trust now displays all replicas and supports streaming logs from multiple connectors at the same time.
+products:
+  - tunnel
+  - cloudflare-tunnel-sase
+date: 2026-03-17
+---
+
+The tunnel overview page in Zero Trust dashboard now shows all [replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) of a single [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) directly and supports streaming logs from multiple connectors at once.
+
+![View replicas and stream logs from multiple connectors](~/assets/images/changelog/cloudflare-tunnel/tunnel-multiconn.gif)
+
+Previously, you could only stream logs from one replica at a time. With this update:
+
+- **Replicas on the tunnel overview** — All active replicas now appear in the Connectors list on the tunnel overview page. Select any replica to stream its logs from the Live Logs tab.
+- **Multi-connector log streaming** — Stream logs from multiple replicas simultaneously, making it easier to correlate events across your infrastructure during debugging or incident response.
+- **View Logs shortcut** — Select View Logs directly from Networks > Connectors > Cloudflare Tunnels to start streaming logs for all connectors of a tunnel without opening the tunnel overview page.
+
+To try it out, go to [Zero Trust](https://one.dash.cloudflare.com/) > Networks > Connectors > Cloudflare Tunnels and select a tunnel.
+
+For more information, refer to [Tunnel log streams](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) and [Deploy replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/deploy-replicas/).
