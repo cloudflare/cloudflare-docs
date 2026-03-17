@@ -18,10 +18,10 @@ By default, WAF's managed rulesets are compatible with most websites and web app
 
 ## Troubleshoot false positives
 
-Cloudflare WAF uses two main rule packages:
+Cloudflare WAF includes multiple [managed rulesets](/waf/managed-rules/#available-managed-rulesets). The two most commonly involved in false positives are:
 
 - **Cloudflare Managed Ruleset**: Maintained by Cloudflare WAF engineers. Rule patterns are not publicly shared for security reasons.
-- **OWASP ModSecurity Core Rule Set**: Cloudflare's implementation of the open-source [OWASP CRS](https://owasp.org/www-project-modsecurity-core-rule-set/), which is not maintained by Cloudflare.
+- **Cloudflare OWASP Core Ruleset**: Cloudflare's implementation of the open-source [OWASP CRS](https://owasp.org/www-project-modsecurity-core-rule-set/).
 
 ### Identify the blocking rule
 
@@ -73,9 +73,9 @@ If you are on the legacy WAF, the following remediation options are available (o
 1. **Add the requesting IP to the allowlist**: Use [IP Access Rules](/waf/tools/ip-access-rules/) to allowlist the IP. This is the best option if the affected users always connect from the same IP address and does not reduce site security for other visitors.
 2. **Disable the specific WAF rule**: Turn off only the rule causing the false positive. This reduces security slightly but stops the incorrect block or challenge.
 3. **Create a bypass rule**: Create a [custom rule](/waf/custom-rules/skip/) with a bypass action targeting a specific URL combined with IP address or user-agent conditions.
-4. **Lower OWASP sensitivity**: If the blocking rule is `981176` (legacy OWASP) or `949110` (current OWASP), decrease the OWASP sensitivity level.
+4. **Adjust OWASP settings**: If the blocking rule is `981176` (legacy OWASP) or `949110` (current OWASP), increase the OWASP score threshold and/or lower the OWASP paranoia level.
 5. **Disable WAF for a specific endpoint via Page Rule** (not recommended): This disables the WAF entirely for that URL pattern, removing all WAF protection for matching requests.
-6. **WAF overrides via API** (Enterprise only): Use the [WAF Overrides API](/api/resources/waf/subresources/overrides/methods/list/) to disable a specific WAF rule for a particular URI without affecting other traffic.
+6. **WAF overrides via API** (legacy WAF only): Use the [WAF Overrides API](/api/resources/firewall/subresources/waf/subresources/overrides/methods/list/) to disable a specific legacy WAF rule for a particular URI without affecting other traffic. These overrides apply only to the previous version of the WAF.
 
 ### Additional recommendations
 
