@@ -263,7 +263,7 @@ If there is an issue with your SSO IdP provider, you can add an alternate IdP us
      | jq '.result[] | select(.type == "dash_sso")'
    ```
 
-```txt
+   ```json output
    {
    	"id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
    	"uid": "3537a672-e4d8-4d89-aab9-26cb622918a1",
@@ -325,7 +325,7 @@ The following API calls will disable SSO enforcement for an account. This action
      --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
    ```
 
-```txt
+   ```json output {2}
    {
    	"result": [
    		{
@@ -352,7 +352,7 @@ The following API calls will disable SSO enforcement for an account. This action
      }'
    ```
 
-```txt
+   ```json output
    {
    	"result": [
    		{
