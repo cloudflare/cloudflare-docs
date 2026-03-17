@@ -11,7 +11,7 @@ head:
 
 import { Render, TabItem, Tabs, DirectoryListing } from "~/components";
 
-With an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) subscription, you can restrict connections between Cloudflare and clients — such as your visitor's browser — to specific [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
+You can restrict connections between Cloudflare and clients — such as your visitor's browser — to specific [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
 
 :::note[Prerequisites]
 Cipher suite customization requires one of the following:
@@ -29,7 +29,7 @@ You may want to customize cipher suites to:
 
 Customizing cipher suites will not lead to any downtime in your SSL/TLS protection.
 
-You can configure cipher suites [via the Cloudflare dashboard](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/dashboard/) or [via API](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/api/). The API uses the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint (with `ciphers` as the setting) for zone-level changes, and the [Edit TLS setting for hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/) endpoint for per-hostname changes.
+You can configure cipher suites [via the Cloudflare dashboard](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/dashboard/) or [via API](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/api/). For zone-level changes, the API uses the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint with `ciphers` as the setting. For per-hostname changes, refer to the [Edit TLS setting for hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/) endpoint.
 
 ## How it works
 
