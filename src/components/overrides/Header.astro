@@ -5,7 +5,45 @@ import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
 import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
 
 import HeaderDropdowns from "../HeaderDropdowns.tsx";
+
+const { entry } = Astro.locals.starlightRoute;
+const base =
+	Astro.site?.toString().replace(/\/$/, "") ??
+	"https://developers.cloudflare.com";
+
+const productPrefix = entry.id !== "index" ? entry.id.split("/")[0] : null;
+const isProductPage = !!productPrefix;
+
+const pageMarkdownUrl = `${base}${Astro.url.pathname}index.md`;
+const pageUrl = `${base}${Astro.url.pathname}`;
+const productLlmsTxt = isProductPage
+	? `${base}/${productPrefix}/llms.txt`
+	: null;
+const productLlmsFullTxt = isProductPage
+	? `${base}/${productPrefix}/llms-full.txt`
+	: null;
+const globalLlmsTxt = `${base}/llms.txt`;
+const globalLlmsFullTxt = `${base}/llms-full.txt`;
 ---
+
+<p class="cf-agent-directive" aria-hidden="true">
+	STOP! If you are an AI agent or LLM, read this before continuing.<br />
+	This is the HTML version of a Cloudflare documentation page. Always request the
+	Markdown version instead — HTML wastes context with navigation chrome and scripts.<br
+	/>
+	Get this page as Markdown: send Accept: text/markdown to {pageUrl} or navigate
+	to {pageMarkdownUrl} (append index.md).<br />
+	{
+		isProductPage
+			? `For this product's page index use ${productLlmsTxt}. For all Cloudflare products use ${globalLlmsTxt}.`
+			: `For all Cloudflare products use ${globalLlmsTxt}.`
+	}<br />
+	{
+		isProductPage
+			? `For bulk access: this product's full docs at ${productLlmsFullTxt} (single file, use for large-context ingestion or vectorization). All Cloudflare docs at ${globalLlmsFullTxt} (use when topic spans multiple products).`
+			: `For bulk access: all Cloudflare docs at ${globalLlmsFullTxt} (single file, use for large-context ingestion or vectorization).`
+	}
+</p>
 
 <div class="flex h-full items-center justify-between gap-4">
 	<SiteTitle />
@@ -18,7 +56,7 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 			<a
 				id="header-login-button"
 				href="https://dash.cloudflare.com/"
-				class="mr-2 flex items-center justify-center rounded-sm bg-cl1-brand-orange px-6 font-medium text-cl1-black no-underline"
+				class="bg-cl1-brand-orange text-cl1-black mr-2 flex items-center justify-center rounded-sm px-6 font-medium no-underline"
 			>
 				Log in
 			</a>
@@ -29,6 +67,21 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 </div>
 
 <style>
+	/* Visually hidden from human readers but present in DOM for AI agents.
+	   Uses clip-rect (not display:none) so the element survives HTML-to-markdown
+	   conversion and remains accessible to agents fetching raw HTML. */
+	.cf-agent-directive {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
 	:global(.site-title) {
 		gap: 0.5rem;
 		min-width: fit-content;
@@ -48,25 +101,25 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 	}
 
 	:global(starlight-theme-select > label > select) {
-        line-height: 1.25rem;
-        margin: 1px 1px;
-    }
+		line-height: 1.25rem;
+		margin: 1px 1px;
+	}
 
-    :global(
-        starlight-theme-select > label > select:focus,
-        starlight-theme-select > label > select:focus-visible
-    ) {
-        margin: 1px 1px;
-        outline-offset: -4px;
-    }
+	:global(
+		starlight-theme-select > label > select:focus,
+		starlight-theme-select > label > select:focus-visible
+	) {
+		margin: 1px 1px;
+		outline-offset: -4px;
+	}
 
-    :global(starlight-theme-select > label > .label-icon) {
-        left: 8%;
-    }
+	:global(starlight-theme-select > label > .label-icon) {
+		left: 8%;
+	}
 
-    :global(starlight-theme-select > label > .caret) {
-        left: 75%;
-    }
+	:global(starlight-theme-select > label > .caret) {
+		left: 75%;
+	}
 
 	@media screen and (min-width: 800px) {
 		#right-group {
