@@ -505,7 +505,7 @@ To log the original visitor IP instead, follow the [web server instructions](#we
 
 ### Scenario 2: Cloudflare IPs on non-HTTP protocols (likely IP spoofing)
 
-Cloudflare's reverse proxy only forwards HTTP and HTTPS traffic. If you observe UDP traffic, ICMP traffic, or other non-HTTP traffic that appears to originate from [Cloudflare IP addresses](https://www.cloudflare.com/ips/), this is consistent with IP spoofing or amplification attacks, not Cloudflare-originated traffic.
+Cloudflare's standard reverse proxy for proxied DNS records handles HTTP and HTTPS traffic. Cloudflare also supports non-HTTP traffic through [Spectrum](/spectrum/) (TCP/UDP) and [Magic Transit](/magic-transit/about/). If you are not using Spectrum or Magic Transit, non-HTTP traffic appearing from [Cloudflare IP addresses](https://www.cloudflare.com/ips/) is consistent with IP spoofing or amplification attacks, not Cloudflare-originated traffic.
 
 In IP spoofing attacks, the attacker forges the source IP address of packets to make them appear to come from a different source. Cloudflare IP addresses, like any other public IP ranges, can be used as spoofed source addresses by attackers. This does not indicate that Cloudflare systems sent the traffic.
 

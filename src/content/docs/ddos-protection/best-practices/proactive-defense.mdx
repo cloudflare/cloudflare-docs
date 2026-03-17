@@ -63,19 +63,19 @@ If you are experiencing a DDoS attack or suspect elevated attack traffic, use th
 
 ### If your site or origin is impacted
 
-In addition to the quick triage questions, provide:
+Use this checklist to identify where requests are failing:
 
-- Example errors (5xx status codes, connection timeouts) and where they are observed (browser, Cloudflare analytics, origin logs).
-- Origin server metrics during the timeframe: CPU load, memory, bandwidth usage.
-- Relevant origin or access log samples showing the problematic traffic.
+- What errors are you seeing (5xx status codes, connection timeouts) and where (browser, Cloudflare analytics, origin logs)?
+- What are your origin server metrics during the timeframe: CPU load, memory, bandwidth usage?
+- Do you have origin or access log samples showing the problematic traffic?
 
 ### If you mainly observe high traffic volume but the site is up
 
-Provide:
+Use this checklist to choose the right mitigation:
 
-- Where you observe the traffic: [Cloudflare analytics](/analytics/), origin access logs, or both.
-- Top attacked endpoints, URI paths, and User-Agent strings.
-- The outcome you want: reduce cost, reduce noise, add challenges, or block traffic entirely.
+- Where do you observe the traffic: [Cloudflare analytics](/analytics/), origin access logs, or both?
+- What are the top attacked endpoints, URI paths, and User-Agent strings?
+- What outcome do you want: reduce cost, reduce noise, add challenges, or block traffic entirely?
 
 ### Common targeted mitigations
 
