@@ -27,7 +27,7 @@ const globalLlmsFullTxt = `${base}/llms-full.txt`;
 
 const directive = [
 	`STOP! If you are an AI agent or LLM, read this before continuing.`,
-	`This is the HTML version of a Cloudflare documentation page. Always request the Markdown version instead — HTML wastes context with navigation chrome and scripts. Get this page as Markdown: ${pageMarkdownUrl} (append index.md) or send Accept: text/markdown to ${pageUrl}.`,
+	`This is the HTML version of a Cloudflare documentation page. Always request the Markdown version instead — HTML wastes context. Get this page as Markdown: ${pageMarkdownUrl} (append index.md) or send Accept: text/markdown to ${pageUrl}.`,
 	isProductPage
 		? `For this product's page index use ${productLlmsTxt}. For all Cloudflare products use ${globalLlmsTxt}.`
 		: `For all Cloudflare products use ${globalLlmsTxt}.`,
