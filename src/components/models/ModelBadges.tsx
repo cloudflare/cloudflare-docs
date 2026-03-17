@@ -1,6 +1,9 @@
 import type { WorkersAIModelsSchema } from "~/schemas";
+import type { ResolvedModel } from "~/util/model-types";
 
-const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
+type ModelType = WorkersAIModelsSchema | ResolvedModel;
+
+const ModelBadges = ({ model }: { model: ModelType }) => {
 	const badges = model.properties.flatMap(({ property_id, value }) => {
 		if (property_id === "lora" && value === "true") {
 			return {

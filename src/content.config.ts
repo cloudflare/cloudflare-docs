@@ -21,6 +21,7 @@ import {
 	learningPathsSchema,
 	videosSchema,
 	workersAiModelsSchema,
+	catalogModelsSchema,
 	warpReleasesSchema,
 	releaseNotesSchema,
 	fieldsSchema,
@@ -95,6 +96,10 @@ export const collections = {
 	"workers-ai-models": defineCollection({
 		loader: dataLoader("workers-ai-models"),
 		schema: workersAiModelsSchema,
+	}),
+	"catalog-models": defineCollection({
+		loader: dataLoader("catalog-models"),
+		schema: catalogModelsSchema,
 	}),
 	videos: defineCollection({
 		loader: file("src/content/videos/index.yaml"),
