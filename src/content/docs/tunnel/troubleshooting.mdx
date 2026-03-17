@@ -12,7 +12,7 @@ Use this page to diagnose and resolve common issues with Cloudflare Tunnel. For 
 Before troubleshooting, verify the following:
 
 1. **You are running the latest version of `cloudflared`**. Many issues are resolved by upgrading. Refer to [Update cloudflared](/tunnel/downloads/update-cloudflared/) for instructions.
-2. **Required ports and IPs are allowed**. Your firewall must permit egress to the [Cloudflare Tunnel IPs and ports](/tunnel/configuration/#firewall-rules), as well as `api.cloudflare.com` on port `443`.
+2. **Required ports and IPs are allowed**. Your firewall must permit egress to the [Cloudflare Tunnel required destinations](/tunnel/configuration/#firewall-rules) on port `7844` (TCP/UDP). Port `443` destinations (including `api.cloudflare.com`) are optional and only needed for features such as software update checks and Access JWT validation.
 
 ## Connection errors
 
