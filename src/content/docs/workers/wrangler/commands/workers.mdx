@@ -62,7 +62,7 @@ None of the options for this command are required. Many of these options can be 
   - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If not provided, Wrangler will use the nearest config file based on your current working directory.
   - You can provide multiple configuration files to run multiple Workers in one dev session like this: `wrangler dev -c ./wrangler.toml -c ../other-worker/wrangler.toml`. The first config will be treated as the _primary_ Worker, which will be exposed over HTTP. The remaining config files will only be accessible via a service binding from the primary Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
+  - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
@@ -168,7 +168,7 @@ None of the options for this command are required. Also, many can be set in your
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
+  - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
     <Render file="vite-environments" product="workers" />
@@ -348,7 +348,7 @@ If your Worker has a high volume of traffic, the tail might enter sampling mode.
 It may take up to 1 minute (60 seconds) for a tail to exit sampling mode after adding an option to filter tail messages.
 :::
 
-If sampling persists after using options to filter messages, consider using [instant logs](https://developers.cloudflare.com/logs/instant-logs/).
+If sampling persists after using options to filter messages, consider using [instant logs](/logs/instant-logs/).
 
 ---
 
@@ -489,3 +489,34 @@ To generate types for only a specific environment, use the `--env` flag.
   	SERVICE_BINDING: Service<import("../bound-worker/src/index").Entrypoint>;
   }
   ```
+
+---
+
+## `check`
+
+### `startup`
+
+Generate a CPU profile of your Worker's startup phase.
+
+After you run `wrangler check startup`, you can import the profile into Chrome DevTools or open it directly in VSCode to view a flamegraph of your Worker's startup phase. Additionally, when a Worker deployment fails with a startup time error Wrangler will automatically generate a CPU profile for easy investigation.
+
+:::note
+
+This command measures performance of your Worker locally, on your own machine — which has a different CPU than when your Worker runs on Cloudflare. This means results can vary widely.
+
+You should use the CPU profile that `wrangler check startup` generates in order to understand where time is spent at startup, but you should not expect the overall startup time in the profile to match exactly what your Worker's startup time will be when deploying to Cloudflare.
+
+:::
+
+```sh
+wrangler check startup
+```
+
+- `--args` <Type text="string" /> <MetaInfo text="optional" />
+  - To customise the way `wrangler check startup` builds your Worker for analysis, provide the exact arguments you use when deploying your Worker with `wrangler deploy`, or your Pages project with `wrangler pages functions build`. For instance, if you deploy your Worker with `wrangler deploy --no-bundle`, you should use `wrangler check startup --args="--no-bundle"` to profile the startup phase.
+- `--worker` <Type text="string" /> <MetaInfo text="optional" />
+  - If you don't use Wrangler to deploy your Worker, you can use this argument to provide a Worker bundle to analyse. This should be a file path to a serialized multipart upload, with the exact same format as [the API expects](/api/resources/workers/subresources/scripts/methods/update/).
+- `--pages` <Type text="boolean" /> <MetaInfo text="optional" />
+  - If you don't use a Wrangler config file with your Pages project (i.e. a Wrangler config file containing `pages_build_output_dir`), use this flag to force `wrangler check startup` to treat your project as a Pages project.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
