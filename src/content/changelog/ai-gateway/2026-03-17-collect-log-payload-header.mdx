@@ -1,0 +1,29 @@
+---
+title: Log request metadata without storing payloads
+description: Skip storing request and response bodies while retaining metadata logs.
+products:
+  - ai-gateway
+date: 2026-03-17
+---
+
+Use the `cf-aig-collect-log-payload` header to control whether request and response bodies are stored for a given request. Set it to `false` to skip payload storage while still logging metadata such as token counts, model, provider, status code, cost, and duration.
+
+This is useful when you need usage metrics but do not want to persist sensitive prompt or response data.
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header "Authorization: Bearer $TOKEN" \
+  --header 'Content-Type: application/json' \
+  --header 'cf-aig-collect-log-payload: false' \
+  --data '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is the email address and phone number of user123?"
+      }
+    ]
+  }'
+```
+
+For more information, refer to [Logging](/ai-gateway/observability/logging/#collect-log-payload-cf-aig-collect-log-payload).
