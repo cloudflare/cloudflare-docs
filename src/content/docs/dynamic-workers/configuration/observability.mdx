@@ -6,6 +6,8 @@ sidebar:
   order: 4
 ---
 
+import { WranglerConfig } from "~/components";
+
 Dynamic Workers support logs with `console.log()` calls, exceptions, and request metadata captured during execution. To access those logs, you attach a [Tail Worker](/workers/observability/logs/tail-workers/), a callback that runs after the Dynamic Worker finishes that passes along all the logs, exceptions, and metadata it collected.
 
 This guide will show you how to:

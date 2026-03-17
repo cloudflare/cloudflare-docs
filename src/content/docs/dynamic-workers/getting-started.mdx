@@ -10,7 +10,7 @@ import { WranglerConfig, TypeScriptExample } from "~/components";
 
 Worker Loader lets a Worker create and run other Workers at runtime. Each Dynamic Worker runs in its own isolated sandbox. You provide the code, choose which bindings the Dynamic Worker can access, and control whether the Dynamic Worker can reach the network.
 
-Worker Loader supports two loading modes:
+Dynamic Workers support two loading modes:
 
 - `load()` creates a fresh Dynamic Worker for one-time execution.
 - `get(id, callback)` caches a Dynamic Worker by ID so it can stay warm across requests.
