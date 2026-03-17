@@ -93,7 +93,7 @@ export default {
 
 ## Persist and restore session configuration
 
-Session configuration — environment variables and working directory — is held in memory and lost when the container restarts. Store session metadata in [Workers KV](/kv/) or [D1](/d1/) and reapply it when recreating a session:
+Session configuration is held in memory and lost when the container restarts. Store session metadata in [Workers KV](/kv/) or [D1](/d1/) and reapply it when recreating a session:
 
 <TypeScriptExample>
 
@@ -185,7 +185,7 @@ async function restoreWorkspace(
 </TypeScriptExample>
 
 :::caution[Production only]
-Backup and restore requires FUSE support and does not work with `wrangler dev`. Deploy your Worker with `wrangler deploy` to use this feature. Refer to the [backup and restore guide](/sandbox/guides/backup-restore/#prerequisites) for the required Wrangler configuration.
+Backup and restore requires FUSE support and does not work with `wrangler dev`. Deploy your Worker with `wrangler deploy` to use this feature. Refer to the [backup and restore guide](/sandbox/guides/backup-restore) for the required Wrangler configuration.
 :::
 
 ## Full session restoration pattern
