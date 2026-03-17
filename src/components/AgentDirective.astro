@@ -30,12 +30,12 @@ const directive = [
 ].join(" ");
 ---
 
-<p class="cf-agent-directive" aria-hidden="true">{directive}</p>
+<p class="agent-directive" aria-hidden="true">{directive}</p>
 
 <style>
 	/* Visually hidden from human readers but present in DOM for AI agents.
 	   Uses clip-rect (not display:none) so the element remains accessible to agents fetching raw HTML. */
-	.cf-agent-directive {
+	.agent-directive {
 		position: absolute;
 		width: 1px;
 		height: 1px;
