@@ -15,7 +15,7 @@ When a Worker running in production has an error that prevents it from returning
 
 | Error code | Meaning                                                                                                                                         |
 | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `1101`     | Worker threw a JavaScript exception.                                                                                                            |
+| `1101`     | Worker failed to produce a response (unhandled exception, unresolved Promise, or other runtime failure).                                         |
 | `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                                                           |
 | `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)                                         |
 | `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#daily-requests).                                                                        |
@@ -33,7 +33,7 @@ Errors in the `11xx` range can also be related with [Snippets](/rules/snippets/)
 
 ### Troubleshooting 1101 errors
 
-A `1101` error with HTTP status `500` means your Worker threw an unhandled JavaScript exception. Visitors see a Cloudflare error page instead of your expected response. Common triggers include:
+A `1101` error with HTTP status `500` means your Worker failed to produce a response. This can happen when your code throws an unhandled JavaScript exception, or when the runtime determines the script will never generate a response (for example, due to unresolved Promises). Visitors see a Cloudflare error page instead of your expected response. Common triggers include:
 
 - **Unhandled promise rejections** — an `await` that rejects without a surrounding `try`/`catch`.
 - **Fetch failures to your origin** — the origin is unreachable or returns an unexpected response that your code does not handle.

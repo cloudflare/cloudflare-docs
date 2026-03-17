@@ -69,7 +69,7 @@ No. Key expirations are not billable operations.
 
 ### Common issues
 
-- **Stale reads after writing** — KV is [eventually consistent](/kv/concepts/how-kv-works/). After writing a key, it may take up to 60 seconds for the new value to propagate globally. If you need to read your own writes immediately, refer to the [`cacheTtl` parameter](/kv/api/read-key-value-pairs/#cachettl-parameter).
+- **Stale reads after writing** — Workers KV is [eventually consistent](/kv/concepts/how-kv-works/#consistency). The [`cacheTtl` parameter](/kv/api/read-key-value-pairs/#cachettl-parameter) controls how long reads are cached locally and does not provide immediate read-after-write consistency. If you need strong consistency, consider using [Durable Objects](/durable-objects/).
 - **Namespace not found or binding errors** — Verify the KV namespace is correctly bound in your Wrangler configuration file. The binding name in your code must match the `binding` value in `[[kv_namespaces]]`. Refer to [KV bindings](/kv/concepts/kv-bindings/) for setup instructions.
 - **Key or value size errors** — Keys are limited to 512 bytes and values to 25 MiB. Refer to [Limits](/kv/platform/limits/) for the full list of constraints.
 
