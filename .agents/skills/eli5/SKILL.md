@@ -170,22 +170,15 @@ I produce a comparison with:
 - **Issues identified** with specific examples
 - **Simplified version** including: plain-language summary, clear explanation building from basics, why it matters, when you would use this, tech-adjacent metaphor, common pitfalls, related concepts
 
-**8. Report and Prompt**
+**8. Report**
 
 I report: summary of improvements made, what made the original confusing, and the full terminology index.
 
-Then I ask: **What would you like to do next?**
-
-1. **Run adversarial fact-check** — Independent review of all claims for accuracy (recommended before applying changes)
-2. **Suggest additional improvements**
-3. **Create a PR** with changes
-4. **Refine specific sections**
-5. **Apply changes to original** file
-6. **Keep as reference**
+Then proceed immediately to Step 9 (Adversarial Review). Do not prompt the user for next steps until the review is complete.
 
 **9. Adversarial Review**
 
-If the user selects the adversarial fact-check, launch a **fresh subagent** (Task tool, `subagent_type: "general"`) to perform the review. Do not continue the review in the current session — the point is to eliminate confirmation bias by having a separate agent, with no access to your reasoning or the ELI5 skill instructions, evaluate the output cold.
+After presenting the report in Step 8, **always** launch a **fresh subagent** (Task tool, `subagent_type: "general"`) to perform an adversarial review before prompting the user for next steps. Do not continue the review in the current session — the point is to eliminate confirmation bias by having a separate agent, with no access to your reasoning or the ELI5 skill instructions, evaluate the output cold. Do not skip this step.
 
 Pass the subagent the following prompt (fill in the bracketed values):
 
@@ -264,7 +257,16 @@ These are the highest-risk categories when documentation has been simplified. Pr
 
 ---
 
-When the subagent returns its findings, present the full claim table to the user. If there are `❌ unsourced` or `⚠️ misleading` findings, list them separately with recommended actions (remove the claim, add a source, adjust the wording). Then return to the Step 8 prompt so the user can choose their next action.
+When the subagent returns its findings, present the full claim table to the user. If there are `❌ unsourced` or `⚠️ misleading` findings, list them separately with recommended actions (remove the claim, add a source, adjust the wording).
+
+Then ask: **What would you like to do next?**
+
+1. **Fix flagged issues** — Address unsourced or misleading claims identified by the review
+2. **Suggest additional improvements**
+3. **Create a PR** with changes
+4. **Refine specific sections**
+5. **Apply changes to original** file
+6. **Keep as reference**
 
 ## Decision Framework
 
@@ -312,7 +314,7 @@ Before finalizing, verify:
 - [ ] No rhetorical questions (examples stated as examples)
 - [ ] Every simplification describes the correct mechanism
 - [ ] Register matches the existing documentation voice
-- [ ] Adversarial review offered to user
+- [ ] Adversarial review completed
 
 ## Anti-patterns to avoid
 
