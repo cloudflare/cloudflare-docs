@@ -89,17 +89,7 @@ To access [bindings](/workers/runtime-apis/bindings/) in your tests, use the `en
   });
 ```
 
-If you are using TypeScript, add an ambient `.d.ts` declaration file defining a `ProvidedEnv` `interface` in the `cloudflare:workers` module to control the type of `env`:
-
-```ts
-declare module "cloudflare:workers" {
-	interface ProvidedEnv {
-		NAMESPACE: KVNamespace;
-	}
-	// ...or if you have an existing `Env` type...
-	interface ProvidedEnv extends Env {}
-}
-```
+If you are using TypeScript, you need to define the type of `env` for your tests. Refer to [Define types](/workers/testing/vitest-integration/write-your-first-test/#define-types) for setup instructions.
 
 ## Storage isolation
 
