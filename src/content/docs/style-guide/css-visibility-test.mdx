@@ -1,0 +1,259 @@
+---
+title: CSS Visibility Test for Agents
+description: Test page to determine which CSS hiding/showing strategies survive markdown-for-agents rendering.
+pcx_content_type: concept
+sidebar:
+  order: 999
+---
+
+This page exists to test which CSS visibility strategies are visible in the DOM, visible to humans on the page, and visible to agents reading the markdown representation.
+
+Each row uses a different CSS property or technique. The text pattern is `TESTING: {strategy}`.
+
+---
+
+## 1. No hiding (baseline)
+
+<div>TESTING: no-hiding (baseline — always visible)</div>
+
+---
+
+## 2. `display: none`
+
+<div style={{ display: "none" }}>TESTING: display-none</div>
+
+---
+
+## 3. `display: block` (explicit)
+
+<div style={{ display: "block" }}>TESTING: display-block</div>
+
+---
+
+## 4. `visibility: hidden`
+
+<div style={{ visibility: "hidden" }}>TESTING: visibility-hidden</div>
+
+---
+
+## 5. `visibility: visible` (explicit)
+
+<div style={{ visibility: "visible" }}>TESTING: visibility-visible</div>
+
+---
+
+## 6. `opacity: 0`
+
+<div style={{ opacity: 0 }}>TESTING: opacity-0</div>
+
+---
+
+## 7. `opacity: 1` (explicit)
+
+<div style={{ opacity: 1 }}>TESTING: opacity-1</div>
+
+---
+
+## 8. `opacity: 0.01` (near-invisible)
+
+<div style={{ opacity: 0.01 }}>TESTING: opacity-0.01</div>
+
+---
+
+## 9. `color: transparent`
+
+<div style={{ color: "transparent" }}>TESTING: color-transparent</div>
+
+---
+
+## 10. `color: white` on white background
+
+<div style={{ color: "white", backgroundColor: "white" }}>TESTING: color-white-on-white</div>
+
+---
+
+## 11. `font-size: 0`
+
+<div style={{ fontSize: 0 }}>TESTING: font-size-0</div>
+
+---
+
+## 12. `width: 0; height: 0; overflow: hidden`
+
+<div style={{ width: 0, height: 0, overflow: "hidden" }}>TESTING: width-height-0-overflow-hidden</div>
+
+---
+
+## 13. `overflow: hidden` with explicit dimensions
+
+<div style={{ width: "100%", height: "1px", overflow: "hidden" }}>TESTING: overflow-hidden-1px-height</div>
+
+---
+
+## 14. `position: absolute; left: -9999px`
+
+<div style={{ position: "absolute", left: "-9999px" }}>TESTING: position-absolute-offscreen</div>
+
+---
+
+## 15. `clip: rect(0 0 0 0)` (legacy clip)
+
+<div style={{ position: "absolute", clip: "rect(0 0 0 0)" }}>TESTING: clip-rect-0</div>
+
+---
+
+## 16. `clipPath: inset(100%)`
+
+<div style={{ clipPath: "inset(100%)" }}>TESTING: clip-path-inset-100</div>
+
+---
+
+## 17. `transform: scale(0)`
+
+<div style={{ transform: "scale(0)" }}>TESTING: transform-scale-0</div>
+
+---
+
+## 18. `transform: translateX(-9999px)`
+
+<div style={{ transform: "translateX(-9999px)" }}>TESTING: transform-translateX-offscreen</div>
+
+---
+
+## 19. `pointer-events: none` (still visible)
+
+<div style={{ pointerEvents: "none" }}>TESTING: pointer-events-none</div>
+
+---
+
+## 20. `z-index: -9999` (behind page)
+
+<div style={{ position: "relative", zIndex: -9999 }}>TESTING: z-index-negative</div>
+
+---
+
+## 21. `max-height: 0; overflow: hidden`
+
+<div style={{ maxHeight: 0, overflow: "hidden" }}>TESTING: max-height-0-overflow-hidden</div>
+
+---
+
+## 22. `height: 0; overflow: hidden`
+
+<div style={{ height: 0, overflow: "hidden" }}>TESTING: height-0-overflow-hidden</div>
+
+---
+
+## 23. `margin-left: -9999px`
+
+<div style={{ marginLeft: "-9999px" }}>TESTING: margin-left-offscreen</div>
+
+---
+
+## 24. `text-indent: -9999px`
+
+<div style={{ textIndent: "-9999px", overflow: "hidden" }}>TESTING: text-indent-offscreen</div>
+
+---
+
+## 25. `aria-hidden="true"` (attribute, no CSS)
+
+<div aria-hidden="true">TESTING: aria-hidden-true</div>
+
+---
+
+## 26. `hidden` attribute (HTML boolean)
+
+<div hidden>TESTING: html-hidden-attribute</div>
+
+---
+
+## 27. `role="presentation"`
+
+<div role="presentation">TESTING: role-presentation</div>
+
+---
+
+## 28. Inside a `<details>` (collapsed by default)
+
+<details>
+  <summary>Click to expand</summary>
+  <div>TESTING: inside-details-collapsed</div>
+</details>
+
+---
+
+## 29. Inside a `<details open>` (expanded by default)
+
+<details open>
+  <summary>Click to expand</summary>
+  <div>TESTING: inside-details-open</div>
+</details>
+
+---
+
+## 30. `background-color` matching text color (camouflage)
+
+<div style={{ backgroundColor: "#000", color: "#000" }}>TESTING: bg-color-matches-text</div>
+
+---
+
+## 31. Wrapping `span` with `display: none` around block
+
+<span style={{ display: "none" }}><div>TESTING: span-display-none-wrapping-div</div></span>
+
+---
+
+## 32. `user-select: none` (still visible)
+
+<div style={{ userSelect: "none" }}>TESTING: user-select-none</div>
+
+---
+
+## 33. `content-visibility: hidden`
+
+<div style={{ contentVisibility: "hidden" }}>TESTING: content-visibility-hidden</div>
+
+---
+
+## 34. `content-visibility: auto` (visible)
+
+<div style={{ contentVisibility: "auto" }}>TESTING: content-visibility-auto</div>
+
+---
+
+## 35. `will-change: opacity` with opacity 0
+
+<div style={{ willChange: "opacity", opacity: 0 }}>TESTING: will-change-opacity-0</div>
+
+---
+
+## 36. Nested: outer `display: none`, inner `display: block`
+
+<div style={{ display: "none" }}>
+  <div style={{ display: "block" }}>TESTING: nested-outer-none-inner-block</div>
+</div>
+
+---
+
+## 37. CSS class via `class` attribute — visually-hidden pattern
+
+<div class="sr-only">TESTING: class-sr-only (visually-hidden screenreader pattern)</div>
+
+---
+
+## 38. Inline comment (MDX/JSX expression)
+
+{/* TESTING: jsx-comment — this is a JSX comment, not rendered */}
+
+---
+
+## 39. HTML comment
+
+{String("<!-- TESTING: html-comment-inside-expression -->")}
+
+---
+
+## 40. Zero-width characters (unicode trickery)
+
+<div>TESTING:&#x200B;zero-width-space&#x200B;between&#x200B;words</div>
