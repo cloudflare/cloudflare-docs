@@ -72,9 +72,11 @@ The `ai` and `zod` peer dependencies are now optional — only required when imp
 const executor = new DynamicWorkerExecutor({
 	loader: env.LOADER,
 	modules: {
-		"my-utils": { add: (a: number, b: number) => a + b },
+		"utils.js": `export function add(a, b) { return a + b; }`,
 	},
 });
+
+// Sandbox code can then: import { add } from "utils.js"
 ```
 
 </TypeScriptExample>
