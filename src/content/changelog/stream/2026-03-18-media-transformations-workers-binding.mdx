@@ -6,6 +6,8 @@ products:
 date: 2026-02-20
 ---
 
+import { WranglerConfig, TypeScriptExample } from "~/components";
+
 You can now use a Workers binding to transform videos with Media Transformations. This allows you to resize, crop, extract frames, and extract audio from videos stored anywhere, even in private locations like R2 buckets.
 
 The Media Transformations binding is useful when you want to:
@@ -17,12 +19,18 @@ The Media Transformations binding is useful when you want to:
 
 To get started, add the Media binding to your Wrangler configuration:
 
+<WranglerConfig>
+
 ```toml
 [media]
 binding = "MEDIA"
 ```
 
+</WranglerConfig>
+
 Then use the binding in your Worker to transform videos:
+
+<TypeScriptExample>
 
 ```ts
 export default {
@@ -37,6 +45,8 @@ export default {
 	},
 };
 ```
+
+</TypeScriptExample>
 
 Output modes include `video` for optimized MP4 clips, `frame` for still images, `spritesheet` for multiple frames, and `audio` for M4A extraction.
 
