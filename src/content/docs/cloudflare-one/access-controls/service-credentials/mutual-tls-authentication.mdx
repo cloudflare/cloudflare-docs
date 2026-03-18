@@ -354,6 +354,8 @@ You can use the Cloudflare PKI toolkit to generate a certificate revocation list
 
 You will need to add the CRL to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be found on the [Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template).
 
+<Render file="add-client-certificate-rfc9440" product="ssl" />
+
 <Render file="forward-client-certificate" product="ssl" />
 
 ## Known limitations
@@ -371,4 +373,3 @@ Cloudflare will send the following [notifications](/notifications/) before your 
 	product="SSL/TLS"
 	notificationFilter="Access mTLS Certificate Expiration Alert"
 />
-
