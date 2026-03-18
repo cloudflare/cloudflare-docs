@@ -41,10 +41,10 @@ For simple, single tool calls, standard AI SDK tool calling is simpler and suffi
 npm install @cloudflare/codemode
 ```
 
-The `ai` and `zod` packages are optional peer dependencies — only required when importing from `@cloudflare/codemode/ai`:
+If you use `@cloudflare/codemode/ai`, also install the `ai` and `zod` peer dependencies:
 
 ```sh
-npm install @cloudflare/codemode ai zod
+npm install ai zod
 ```
 
 ## Quick start
@@ -348,7 +348,7 @@ const types = generateTypes(myTools);
 
 </TypeScriptExample>
 
-For JSON Schema inputs that don't depend on the AI SDK, use the main entry point:
+For JSON Schema inputs that do not depend on the AI SDK, use the main entry point:
 
 <TypeScriptExample>
 
