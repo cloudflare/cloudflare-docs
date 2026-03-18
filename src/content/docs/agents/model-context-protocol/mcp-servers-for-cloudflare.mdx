@@ -43,6 +43,11 @@ When you connect, you will be redirected to Cloudflare to authorize via OAuth an
 
 For CI/CD or automation, you can create a [Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with the permissions you need and pass it as a bearer token in the `Authorization` header. Both user tokens and account tokens are supported.
 
+Please note that [Client IP Address Filtering feature](https://developers.cloudflare.com/fundamentals/api/how-to/restrict-tokens/#client-ip-address-range-filtering) is not compatible with Cloudflare MCP servers. 
+MCP servers run as Cloudflare Workers, and API calls originate from Worker subrequest IPs (not your local IP). If you enable IP filtering on your API token, MCP requests will fail.
+Recommendation: Create a separate API token for MCP usage without Client IP Address Filtering, and scope it with only the necessary permissions.
+
+
 For more information, refer to the [Cloudflare MCP repository](https://github.com/cloudflare/mcp).
 
 ### Install via agent and IDE plugins
