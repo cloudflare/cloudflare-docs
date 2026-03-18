@@ -28,7 +28,7 @@ const executor = new DynamicWorkerExecutor({ loader: env.LOADER });
 
 // Wrap an existing MCP server — all its tools become
 // typed methods the LLM can call from generated code
-const server = codeMcpServer({ server: upstreamMcp, executor });
+const server = await codeMcpServer({ server: upstreamMcp, executor });
 ```
 
 </TypeScriptExample>
