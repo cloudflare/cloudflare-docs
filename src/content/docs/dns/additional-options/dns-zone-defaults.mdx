@@ -42,7 +42,3 @@ For secondary zones:
 - [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/): Enable the options to use Cloudflare [proxy](/dns/proxy-status/) and add `CNAME` records at your zone apex.
 
   Multi-provider DNS does not apply as a setting for secondary zones, as this is already a required behavior for this setup. `SOA` record and the `NS` record TTL are defined on your external DNS provider and only transferred into Cloudflare.
-
-## Enforce DNS-only
-
-In addition to zone defaults, the account DNS settings API also supports the [enforce DNS-only](/dns/proxy-status/enforce-dns-only/) setting — an emergency break-glass mechanism that bypasses Cloudflare's reverse proxy for all zones in your account. This setting is API-only and is not available in the dashboard.
