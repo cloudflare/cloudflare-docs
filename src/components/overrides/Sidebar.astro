@@ -7,7 +7,9 @@ import { lookupProductTitle } from "~/util/sidebar";
 const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 ---
 
-<div class="sidebar-header">
+<div
+	class="sticky top-0 z-[1] flex flex-col gap-2 bg-[var(--sl-color-black)] py-3.5 min-[50rem]:bg-[var(--sl-color-bg-sidebar)]"
+>
 	<div class="sidebar-product-title px-1">
 		<a href={"/" + product + "/"} class="flex items-center gap-2 no-underline">
 			<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
@@ -22,10 +24,13 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	<!-- Search Input -->
 	<div class="relative">
 		<input
-			type="text"
+			type="search"
 			id="sidebar-search"
-			placeholder="Search sidebar..."
-			class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 pr-10 text-base sm:text-sm text-gray-900 placeholder-gray-500 transition-colors duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:focus:border-orange-500 dark:focus:ring-orange-500"
+			placeholder="Search..."
+			aria-label="Search sidebar navigation"
+			autocomplete="off"
+			spellcheck="false"
+			class="box-border min-h-[2.125rem] w-full rounded-lg border border-neutral-200 bg-transparent px-3 pr-10 text-sm text-neutral-950 placeholder-neutral-400 outline-2 outline-offset-2 outline-transparent transition-colors duration-150 focus-visible:outline-blue-500 dark:border-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-500 dark:focus-visible:outline-blue-400"
 		/>
 		<div class="sidebar-search-icon"></div>
 	</div>
@@ -309,6 +314,71 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	} else {
 		initSidebarSearch();
 	}
+
+	// ── Smooth details expand/collapse ──
+	// Only animates opacity + transform (GPU-composited, 60fps)
+	const DURATION = 200;
+	const EASE_OUT = "cubic-bezier(0.16, 1, 0.3, 1)";
+	const prefersReducedMotion = window.matchMedia(
+		"(prefers-reduced-motion: reduce)",
+	).matches;
+
+	function initDetailsAnimation() {
+		const sidebarContent = document.querySelector(".sidebar-content");
+		if (!sidebarContent) return;
+
+		const detailsElements = sidebarContent.querySelectorAll("details");
+
+		detailsElements.forEach((details) => {
+			const summary = details.querySelector("summary");
+			if (!summary) return;
+
+			let animating = false;
+
+			summary.addEventListener("click", (e) => {
+				e.preventDefault();
+				if (animating) return;
+
+				const content = details.querySelector("ul");
+				if (!content) return;
+
+				// Defer the DOM change so Starlight's SidebarPersistState click
+				// handler (which reads !details.open) sees the pre-toggle value.
+				setTimeout(() => {
+					if (prefersReducedMotion) {
+						details.open = !details.open;
+						return;
+					}
+
+					if (details.open) {
+						// ── Closing — snap shut ──
+						details.open = false;
+					} else {
+						// ── Opening ──
+						details.open = true;
+						animating = true;
+						const anim = content.animate(
+							[
+								{ opacity: 0, transform: "translateY(-4px)" },
+								{ opacity: 1, transform: "translateY(0)" },
+							],
+							{ duration: DURATION, easing: EASE_OUT, fill: "forwards" },
+						);
+						anim.onfinish = () => {
+							content.getAnimations().forEach((a) => a.cancel());
+							animating = false;
+						};
+					}
+				}, 0);
+			});
+		});
+	}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initDetailsAnimation);
+	} else {
+		initDetailsAnimation();
+	}
 </script>
 
 <style is:global>
@@ -326,91 +396,8 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		background-color: currentColor;
 		pointer-events: none;
 	}
-
-	:root {
-		/* Sticky header: position: sticky works because .sidebar-pane (overflow-y: auto)
-		   is the scroll container, and we remove min-height: max-content from
-		   .sidebar-content so the containing block height is bounded by the viewport. */
-		.sidebar-header {
-			position: sticky;
-			top: 0;
-			z-index: 1;
-			display: flex;
-			flex-direction: column;
-			gap: 0.5rem;
-			background-color: var(--sl-color-black);
-			padding-top: 1rem;
-			padding-bottom: 1rem;
-
-			@media (min-width: 50rem) {
-				background-color: var(--sl-color-bg-sidebar);
-			}
-		}
-
-		/* Override Starlight's height: 100% / min-height: max-content.
-		   Let .sidebar-content size to its content so sticky has the full
-		   scroll range to work within, not just one viewport height. */
-		.sidebar-content {
-			height: auto !important;
-			min-height: 0 !important;
-
-			--sl-color-hairline-light: #cacaca !important;
-
-			& > * {
-				a {
-					padding: 0.2375em var(--sl-sidebar-item-padding-inline) !important;
-
-					&[aria-current="page"] {
-						background-color: unset !important;
-						border: unset !important;
-						border-color: unset !important;
-						color: var(--sl-color-accent) !important;
-						font-weight: 600 !important;
-					}
-				}
-
-				/* Style parent navigation items that contain the current page */
-				details:has(a[aria-current="page"]) > summary,
-				details:has(a[aria-current="page"]) > summary * {
-					color: var(--sl-color-accent-high) !important;
-					font-weight: 600 !important;
-				}
-
-				/* Override to keep caret default color */
-				details:has(a[aria-current="page"]) > summary svg,
-				details:has(a[aria-current="page"]) > summary .caret,
-				details:has(a[aria-current="page"]) > summary [class*="caret"] {
-					fill: var(--sl-color-gray-3) !important;
-				}
-
-				summary {
-					padding: 0.1375em var(--sl-sidebar-item-padding-inline) !important;
-				}
-
-				.large {
-					color: var(--sl-color-gray-2) !important;
-					font-weight: unset !important;
-					font-size: unset !important;
-
-					@media (min-width: 50rem) {
-						font-size: var(--sl-text-sm) !important;
-					}
-				}
-
-				.caret {
-					font-size: 1rem !important;
-				}
-			}
-		}
-	}
-
-	:root[data-theme="dark"] {
-		.sidebar-content {
-			--sl-color-hairline-light: #444444 !important;
-
-			& > * a[aria-current="page"] {
-				color: var(--sl-color-accent-high) !important;
-			}
-		}
+	.sidebar-content {
+		height: auto !important;
+		min-height: 0 !important;
 	}
 </style>
