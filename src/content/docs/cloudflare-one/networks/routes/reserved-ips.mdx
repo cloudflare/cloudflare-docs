@@ -17,7 +17,7 @@ When planning your private network addressing and configuring [Split Tunnel](/cl
 | ------------------------------------------------------------- | ---------------- | ------------ |
 | [Cloudflare source IPs](#cloudflare-source-ips)               | `100.64.0.0/12`  | Yes          |
 | [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `100.80.0.0/16`  | No           |
-| [device IPs](#device-ips)                           | `100.96.0.0/12`  | Yes          |
+| [Device IPs](#device-ips)                           | `100.96.0.0/12`  | Yes          |
 | [Private Load Balancer IPs](#private-load-balancer-ips)       | `100.112.0.0/16` | Yes          |
 
 ## IPv6 ranges
@@ -51,9 +51,9 @@ The following features use this range:
 
 Initial resolved IPs are assigned from the `100.80.0.0/16` (IPv4) or `2606:4700:0cf1:4000::/64` (IPv6) range. This range is not configurable.
 
-## device IPs
+## Device IPs
 
-device IPs are virtual addresses assigned to each device registration. These IPs identify and route traffic to specific devices for the following features:
+Device IPs are virtual addresses assigned to each Cloudflare One Client registration. These IPs identify and route traffic to specific devices for the following features:
 
 - [Peer-to-peer connectivity (Peer-to-peer)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/) — allows devices to communicate directly with each other over Cloudflare's network.
 - [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) — routes traffic between your private network and WARP devices.

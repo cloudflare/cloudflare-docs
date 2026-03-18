@@ -5,7 +5,10 @@ import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
 import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
 
 import HeaderDropdowns from "../HeaderDropdowns.tsx";
+import AgentDirective from "../AgentDirective.astro";
 ---
+
+<AgentDirective />
 
 <div class="flex h-full items-center justify-between gap-4">
 	<SiteTitle />
@@ -18,7 +21,7 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 			<a
 				id="header-login-button"
 				href="https://dash.cloudflare.com/"
-				class="mr-2 flex items-center justify-center rounded-sm bg-cl1-brand-orange px-6 font-medium text-cl1-black no-underline"
+				class="bg-cl1-brand-orange text-cl1-black mr-2 flex items-center justify-center rounded-sm px-6 font-medium no-underline"
 			>
 				Log in
 			</a>

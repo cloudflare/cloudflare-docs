@@ -918,7 +918,7 @@ One known pitfall: the Vitest pool automatically injects `nodejs_compat`, so tes
 
 ```ts
 import { describe, it, expect } from "vitest";
-import { env } from "cloudflare:test";
+import { env } from "cloudflare:workers";
 
 describe("KV operations", () => {
 	it("should store and retrieve a value", async () => {
