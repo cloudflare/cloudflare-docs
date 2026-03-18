@@ -1,16 +1,17 @@
 ---
 import { Icon, Badge } from "@astrojs/starlight/components";
+import { SidebarEntry } from "~/util/sidebar";
 
 interface Props {
-	sublist: any[];
+	sublist: SidebarEntry[];
 	nested?: boolean;
 }
 
 const { sublist, nested } = Astro.props;
 
 /** Flatten a sidebar tree into a flat list of link entries. */
-function flattenSidebar(entries: any[]): any[] {
-	return entries.flatMap((entry: any) =>
+function flattenSidebar(entries: SidebarEntry[]): SidebarEntry[] {
+	return entries.flatMap((entry: SidebarEntry) =>
 		entry.type === "group" ? flattenSidebar(entry.entries) : entry,
 	);
 }
@@ -52,18 +53,16 @@ const restoreIndices = sublist.map((entry) =>
 						aria-current={entry.isCurrent ? "page" : undefined}
 						class:list={[
 							"flex min-h-[2.125rem] items-start rounded-lg px-3 py-1.5 text-sm font-medium no-underline transition-colors duration-150",
-							"outline-2 outline-offset-0 outline-transparent focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400",
-							"text-[var(--sidebar-text)] hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-text-strong)]",
+							"outline-2 outline-offset-[-2px] outline-transparent focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400",
+							"text-[var(--sidebar-text)] hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)]",
 							entry.isCurrent &&
-								"!bg-[var(--sidebar-active-bg)] !font-semibold !text-[var(--sidebar-text-strong)]",
+								"!bg-[var(--sidebar-active-bg)] !font-semibold !text-[var(--sidebar-active-text)]",
 							!nested && "large",
 							entry.attrs.class,
 						]}
 						{...entry.attrs}
 					>
-						<span class="">
-							{entry.label}
-						</span>
+						<span>{entry.label}</span>
 						{entry.badge && (
 							<Badge
 								variant={entry.badge.variant}
@@ -75,11 +74,12 @@ const restoreIndices = sublist.map((entry) =>
 				) : (
 					<details
 						open={
-							flattenSidebar(entry.entries).some((i: any) => i.isCurrent) ||
-							!entry.collapsed
+							flattenSidebar(entry.entries).some(
+								(i: SidebarEntry) => i.isCurrent,
+							) || !entry.collapsed
 						}
 					>
-						<summary class="flex min-h-[2.125rem] cursor-pointer items-start justify-between rounded-lg px-3 py-1.5 text-sm font-medium text-[var(--sidebar-text)] no-underline outline-2 outline-offset-0 outline-transparent transition-colors duration-150 select-none hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-text-strong)] focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400 [&::-webkit-details-marker]:hidden [&::marker]:hidden">
+						<summary class="flex min-h-[2.125rem] cursor-pointer items-center justify-between rounded-lg px-3 py-1.5 text-sm font-medium text-[var(--sidebar-text)] no-underline outline-2 outline-offset-[-2px] outline-transparent transition-colors duration-150 select-none hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)] focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400 [&::-webkit-details-marker]:hidden [&::marker]:hidden">
 							<span class="group-label">
 								<span class:list={["", !nested && "large"]}>{entry.label}</span>
 								{entry.badge && (

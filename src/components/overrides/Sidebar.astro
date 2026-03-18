@@ -74,6 +74,35 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		)
 			return;
 
+		// Attach an event listener so that we ONLY animate details that are explicitly toggled
+		// by the user clicking them, preventing CSS animations from flickering on page load
+		sidebarContent.addEventListener("click", (e) => {
+			const target = e.target as HTMLElement;
+			const summary = target.closest("summary");
+			if (!summary) return;
+			const details = summary.parentElement;
+			if (details && details.tagName === "DETAILS") {
+				details.classList.add("is-user-toggled");
+			}
+		});
+
+		// Remove the animation class once it completes to prevent the animation from
+		// re-running when Astro View Transitions detaches and reattaches the sidebar DOM
+		sidebarContent.addEventListener("animationend", (e) => {
+			const target = e.target as HTMLElement;
+			if (e.animationName === "sidebar-details-open") {
+				const details = target.closest("details");
+				if (details) details.classList.remove("is-user-toggled");
+			}
+		});
+
+		// Failsafe: strip the class before any page transition DOM swap
+		document.addEventListener("astro:before-swap", () => {
+			document.querySelectorAll(".sidebar-content details.is-user-toggled").forEach(d => {
+				d.classList.remove("is-user-toggled");
+			});
+		});
+
 		const originalState: Map<Element, boolean> = new Map();
 
 		// Store original state of details elements
@@ -313,71 +342,6 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		document.addEventListener("DOMContentLoaded", initSidebarSearch);
 	} else {
 		initSidebarSearch();
-	}
-
-	// ── Smooth details expand/collapse ──
-	// Only animates opacity + transform (GPU-composited, 60fps)
-	const DURATION = 200;
-	const EASE_OUT = "cubic-bezier(0.16, 1, 0.3, 1)";
-	const prefersReducedMotion = window.matchMedia(
-		"(prefers-reduced-motion: reduce)",
-	).matches;
-
-	function initDetailsAnimation() {
-		const sidebarContent = document.querySelector(".sidebar-content");
-		if (!sidebarContent) return;
-
-		const detailsElements = sidebarContent.querySelectorAll("details");
-
-		detailsElements.forEach((details) => {
-			const summary = details.querySelector("summary");
-			if (!summary) return;
-
-			let animating = false;
-
-			summary.addEventListener("click", (e) => {
-				e.preventDefault();
-				if (animating) return;
-
-				const content = details.querySelector("ul");
-				if (!content) return;
-
-				// Defer the DOM change so Starlight's SidebarPersistState click
-				// handler (which reads !details.open) sees the pre-toggle value.
-				setTimeout(() => {
-					if (prefersReducedMotion) {
-						details.open = !details.open;
-						return;
-					}
-
-					if (details.open) {
-						// ── Closing — snap shut ──
-						details.open = false;
-					} else {
-						// ── Opening ──
-						details.open = true;
-						animating = true;
-						const anim = content.animate(
-							[
-								{ opacity: 0, transform: "translateY(-4px)" },
-								{ opacity: 1, transform: "translateY(0)" },
-							],
-							{ duration: DURATION, easing: EASE_OUT, fill: "forwards" },
-						);
-						anim.onfinish = () => {
-							content.getAnimations().forEach((a) => a.cancel());
-							animating = false;
-						};
-					}
-				}, 0);
-			});
-		});
-	}
-
-	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", initDetailsAnimation);
-	} else {
-		initDetailsAnimation();
 	}
 </script>
 

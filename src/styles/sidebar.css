@@ -1,7 +1,3 @@
-:root {
-	--sl-sidebar-width: 272px;
-}
-
 .sidebar-pane {
 	scrollbar-gutter: stable;
 }
@@ -11,16 +7,31 @@
 	padding: 0 0.75rem 1rem;
 }
 
-/* Content animated via JS — these are the targets */
+/* Content animated via CSS — these are the targets */
 .sidebar-content details > ul {
 	overflow: hidden;
-	will-change: transform, opacity;
+}
+
+.sidebar-content details.is-user-toggled[open] > ul {
+	animation: sidebar-details-open 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes sidebar-details-open {
+	from {
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-	.sidebar-content details > ul {
-		will-change: auto;
+	.sidebar-content details > ul,
+	.sidebar-content details.is-user-toggled[open] > ul {
+		animation: none !important;
 	}
 }
 
@@ -29,7 +40,9 @@
 	--sidebar-text: #525252; /* neutral-600 */
 	--sidebar-text-strong: #0a0a0a; /* neutral-950 */
 	--sidebar-hover-bg: #f2f2f2; /* neutral-150 */
+	--sidebar-hover-text: var(--sidebar-text-strong);
 	--sidebar-active-bg: #f2f2f2; /* neutral-150 */
+	--sidebar-active-text: var(--sidebar-text-strong);
 	--sidebar-border: #e5e5e5; /* neutral-200 */
 	--sl-color-sidebar-active: #0a0a0a; /* neutral-950 */
 	--sl-color-sidebar-hover: #f2f2f2; /* neutral-150 */
@@ -40,9 +53,11 @@
 	--sl-color-bg-sidebar: var(--color-cl1-gray-0);
 	--sidebar-text: #a3a3a3; /* neutral-400 */
 	--sidebar-text-strong: #ffffff; /* white */
-	--sidebar-hover-bg: #171717; /* neutral-900 */
-	--sidebar-active-bg: #171717; /* neutral-900 */
+	--sidebar-hover-bg: var(--sidebar-orange-accent-600);
+	--sidebar-hover-text: var(--orange-accent-200);
+	--sidebar-active-bg: var(--sidebar-orange-accent-600);
+	--sidebar-active-text: var(--orange-accent-200);
 	--sidebar-border: #404040; /* neutral-700 */
-	--sl-color-sidebar-active: #ffffff; /* white */
-	--sl-color-sidebar-hover: #171717; /* neutral-900 */
+	--sl-color-sidebar-active: var(--orange-accent-200);
+	--sl-color-sidebar-hover: var(--sidebar-orange-accent-600);
 }
