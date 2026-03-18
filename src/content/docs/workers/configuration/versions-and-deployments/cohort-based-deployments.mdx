@@ -8,126 +8,155 @@ sidebar:
 
 import { Details, Example, TypeScriptExample } from "~/components";
 
-Cohort-based deployments let you test your deployments in production by choosing exactly who sees them.
+Cohort deployments let you test your deployments in production by choosing exactly who sees them.
 
-You define named groups — called **cohorts** — and control which Worker version each group runs. Deploy a new version, route only your team's traffic to it, verify it works, then expand to more users. If something breaks, roll back instantly. Everyone else stays on the stable version the entire time.
+With [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), traffic is split randomly between two versions. Cohort deployments extend this by letting you define named groups — called **cohorts** — where each group gets its own version split.
 
-```txt
-team:         0% stable, 100% new    <- your team sees the new version
-beta:        50% stable,  50% new    <- beta testers get a 50/50 split
-vip:        100% stable,   0% new    <- VIP users stay on stable
-```
+Roll out to your team first, verify it works, then expand to more users. If something breaks, roll back instantly. Traffic that is not in a cohort gets split randomly per your gradual deployment configuration.
 
-![Cohort-based deployments overview: incoming requests are matched to named cohorts, each with its own version split. Unmatched traffic falls through to the default gradual deployment split.](~/assets/images/workers/platform/versions-and-deployments/cohort-overview.svg)
+![Cohort-based deployments overview: incoming requests are matched to named cohorts, each with its own version split.](~/assets/images/workers/platform/versions-and-deployments/cohort-overview.svg)
 
-Traffic that does not match any cohort uses your [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) split. You set this split yourself when you deploy, and it can be anything:
+If you already use gradual deployments, add cohorts alongside your existing configuration without disrupting current traffic. Refer to [How it works](#how-it-works) for how to set cohorts via [Wrangler](#with-wrangler), the [API](#with-the-api), or the Dashboard.
 
-```txt
-stable 100%, new 0%          <- only cohorted traffic sees the new version
-stable 90%, new 10%          <- non-cohorted traffic gets a 90/10 gradual split
-stable 50%, new 50%          <- non-cohorted traffic gets a 50/50 split
-```
+## Why cohort deployments
 
-The gradual deployment split and cohort splits are set together in the same deployment. Cohort-based deployments are a superset of gradual deployments. If you already use gradual deployments, add cohorts alongside your existing configuration without disrupting current traffic.
+| What you can do                                   | How                                                                                        | Details                                                            |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| **Test in production before anyone else sees it** | Route your team's traffic to a new version with a Transform Rule. No one else is affected. | [Quick start](#quick-start-roll-out-to-your-team-first)            |
+| **Roll out to beta users**                        | Cookie set at signup + Transform Rule                                                      | [Example](#roll-out-to-beta-users)                                 |
+| **Canary a country or region**                    | `ip.geoip.country` in Transform Rule                                                       | [Example](#canary-by-country)                                      |
+| **Test per-tenant**                               | Gateway entrypoint or service binding                                                      | [Example](#test-per-tenant)                                        |
+| **Control Durable Object rollout**                | Pass a cohort at `.get()` time to choose which per-user DO instances run the new version   | [Durable Objects](#durable-objects)                                |
+| **Hold back a group during incident**             | Deploy stable at 100% for that cohort                                                      | [Create a cohort deployment](#create-a-cohort-deployment)          |
+| **Mobile app version rollout**                    | `User-Agent` or custom header + Transform Rule                                             | [Transform Rules](#transform-rules)                                |
+| **Route by API version**                          | URL path match in Transform Rule                                                           | [Transform Rules](#transform-rules)                                |
+| **Internal dogfooding**                           | Gateway entrypoint with auth check                                                         | [Application logic](#application-logic-gateway-entrypoint-pattern) |
+| **Instant rollback**                              | Deploy the stable version at 100% and every cohort is overridden. One command.             | [Create a cohort deployment](#create-a-cohort-deployment)          |
 
-## Why cohort-based deployments
-
-- **Test in production before anyone else sees it.** Route your team's traffic to a new version with a [Transform Rule](#assign-cohorts-with-transform-rules). No one else is affected. [Get started](#quick-start-roll-out-to-your-team-first).
-- **Control the blast radius.** Roll out to [beta users](#roll-out-to-beta-users), a [single country](#canary-by-country), or a [specific tenant](#test-per-tenant) before deploying globally.
-- **Test the entire release artifact, not just a code path.** Cohorts control which **version** runs — code, bindings, compatibility date, and static assets. You can catch problems that feature flags cannot: a broken compat date bump, a misconfigured binding, a bundling regression.
-- **Secure by default.** The platform [ignores the cohort header](#security) when it comes from external HTTP clients. Users cannot assign themselves to a cohort.
-- **Control which Durable Object instances run new code.** Route users' [Durable Object](#durable-objects) instances to the new version based on your app logic, instead of leaving it to a random hash.
-- **Instant rollback.** Deploy the stable version at 100% and every cohort is overridden. One command.
+Cohorts control which **version** runs — code, bindings, compatibility date, and static assets. This is different from feature flags, which toggle behavior inside a single version. Cohorts can catch problems that feature flags cannot: a broken compat date bump, a misconfigured binding, a bundling regression.
 
 Cohorts are for rollout, not for permanent version divergence. Every scenario ends the same way: once you are confident, deploy the new version to everyone.
+
+:::note
+Cohort deployments share the same [two-version limit](/workers/configuration/versions-and-deployments/gradual-deployments/) as gradual deployments. All cohorts reference the same two version IDs — you can only change the _percentages_ per cohort, not use different versions.
+:::
 
 ## How it works
 
 ### 1. Define cohorts in your deployment
 
-A cohort is a name (up to 10 characters) with its own version percentage split. You can have up to **5 cohorts** per deployment, and all cohorts share the same two version IDs. Define cohorts via [Wrangler](#with-wrangler) or the [API](#with-the-api).
+A cohort is a name (up to 20 characters) with its own version percentage split. You can have up to **10 cohorts** per deployment, and all cohorts share the same two version IDs. Define cohorts via [Wrangler](#with-wrangler) or the [API](#with-the-api).
 
 ### 2. Determine which users belong to which cohort
 
 You decide how to identify which requests belong to which cohort by setting the `Cloudflare-Workers-Cohort` header on incoming requests. There are three ways to do this:
 
-| Method                                                               | When to use                                                  | Needs code? |
-| -------------------------------------------------------------------- | ------------------------------------------------------------ | ----------- |
-| [Transform Rules](#assign-cohorts-with-transform-rules)              | Match on cookies, headers, geography, URL patterns, and more | No          |
-| [Gateway entrypoint pattern](#assign-cohorts-with-application-logic) | JWT verification, database lookups, custom logic             | Yes         |
-| [Service bindings](#assign-cohorts-via-service-bindings)             | Upstream Worker decides the cohort                           | Yes         |
-
-### 3. The platform routes to the right version
-
-When a request arrives with a matching cohort header, the platform uses that cohort's version split. Requests without a cohort header use the default split. Refer to [How version selection works](#how-version-selection-works) for the full algorithm.
-
-## Security
+| Method                                                                      | When to use                                                  | Needs code? |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------ | ----------- |
+| [Transform Rules](#transform-rules)                                         | Match on cookies, headers, geography, URL patterns, and more | No          |
+| [Gateway entrypoint pattern](#application-logic-gateway-entrypoint-pattern) | JWT verification, database lookups, custom logic             | Yes         |
+| [Service bindings](#service-bindings)                                       | Upstream Worker decides the cohort                           | Yes         |
 
 The `Cloudflare-Workers-Cohort` header is set by trusted sources — [Transform Rules](/rules/transform/request-header-modification/), your Worker code, or [service bindings](/workers/runtime-apis/bindings/service-bindings/). The platform ignores this header when it originates from an external HTTP client, so users cannot assign themselves to a cohort.
 
-## Get started
+### 3. The platform routes to the right version
 
-- **[Quick start: Roll out to your team first](#quick-start-roll-out-to-your-team-first)** — No code changes. The best way to try cohort-based deployments for the first time.
-- **[Tutorial: Safe production rollouts with Astro](/workers/configuration/versions-and-deployments/ab-testing-with-cohorts/)** — Build an Astro site and use cohorts to test a new version on your team before rolling out to everyone. Shows the full server-to-client cookie loop.
-- **[Tutorial: Controlled Durable Object rollouts](/workers/configuration/versions-and-deployments/testing-gradual-deployments/)** — Deploy new code to specific Durable Object instances instead of leaving it to chance.
+When a request arrives with a matching cohort header, the platform uses that cohort's version split. Requests without a cohort header use the gradual deployment split.
 
-## Use cases
+When multiple routing signals are present on a request, they are evaluated in this order:
 
-The table below shows common use cases with one example approach each. Any use case can be implemented with any [assignment method](#2-determine-which-users-belong-to-which-cohort).
-
-| Use case                          | Example approach                               | Details                                                     |
-| --------------------------------- | ---------------------------------------------- | ----------------------------------------------------------- |
-| Roll out to your team             | Transform Rule (Access, cookie, or IP)         | [Quick start](#quick-start-roll-out-to-your-team-first)     |
-| Roll out to beta users            | Cookie set at signup + Transform Rule          | [Example](#roll-out-to-beta-users)                          |
-| Canary a country or region        | `ip.geoip.country` in Transform Rule           | [Example](#canary-by-country)                               |
-| Test per-tenant                   | Gateway entrypoint or service binding          | [Example](#test-per-tenant)                                 |
-| Control Durable Object rollout    | Cohort at `.get()` time                        | [Durable Objects](#durable-objects)                         |
-| Hold back a group during incident | Deploy stable at 100% for that cohort          | [Manage deployments](#manage-deployments)                   |
-| Mobile app version rollout        | `User-Agent` or custom header + Transform Rule | [Transform Rules](#assign-cohorts-with-transform-rules)     |
-| Route by API version              | URL path match in Transform Rule               | [Transform Rules](#assign-cohorts-with-transform-rules)     |
-| Internal dogfooding               | Gateway entrypoint with auth check             | [Application logic](#assign-cohorts-with-application-logic) |
-
-:::note
-Cohort-based deployments share the same [two-version limit](/workers/configuration/versions-and-deployments/gradual-deployments/) as gradual deployments. All cohorts reference the same two version IDs — you can only change the _percentages_ per cohort, not use different versions.
-:::
+1. **Version override** (`Cloudflare-Workers-Version-Overrides` header). If it matches a version in the current deployment, that version is used immediately. All other signals are ignored. Refer to [version overrides](/workers/configuration/versions-and-deployments/version-overrides/).
+2. **Cohort** (`Cloudflare-Workers-Cohort` header). If it matches a defined cohort name, that cohort's version split is used.
+3. **Version key** (`Cloudflare-Workers-Version-Key` header). Within the selected configuration (cohort or default), deterministic hashing picks a version. The same key always routes to the same version for a given deployment.
+4. **Random percentage.** If none of the above apply, a version is picked randomly based on the gradual deployment split.
 
 ---
 
-## Quick start: roll out to your team first
+## Create a cohort deployment
 
-The best way to get started. Deploy a new version, route your team's traffic to it, and verify it works. Everyone else stays on the current version.
+### With the API
 
-:::note[Just need to test a single request?]
-Use [version overrides](/workers/configuration/versions-and-deployments/version-overrides/) instead. One curl command with a header, no Transform Rule needed. Refer to [Version overrides vs. cohorts](/workers/configuration/versions-and-deployments/version-overrides-vs-cohorts/) to pick the right tool.
+Use the [Create Deployment](/api/resources/workers/subresources/scripts/subresources/deployments/) endpoint. Add a `cohorts` array alongside the existing `versions` array:
+
+```json
+{
+	"strategy": "percentage",
+	"versions": [
+		{
+			"version_id": "abc123-stable-version",
+			"percentage": 100
+		}
+	],
+	"cohorts": [
+		{
+			"name": "internal",
+			"versions": [
+				{
+					"version_id": "def456-new-version",
+					"percentage": 100
+				}
+			]
+		},
+		{
+			"name": "beta",
+			"versions": [
+				{
+					"version_id": "abc123-stable-version",
+					"percentage": 50
+				},
+				{
+					"version_id": "def456-new-version",
+					"percentage": 50
+				}
+			]
+		}
+	]
+}
+```
+
+Percentages within each cohort must sum to 100. Each cohort is independent. A deployment without a `cohorts` array behaves identically to a standard [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/).
+
+### With Wrangler
+
+:::note
+Minimum required Wrangler version: TODO_ADD_VERSION
 :::
 
-**Prerequisites:**
-
-- An existing deployed Worker. If you do not have one, [create one first](/workers/get-started/guide/).
-- [Wrangler](/workers/wrangler/install-and-update/) 3.40.0 or later.
-- Your Worker must be routed through a [zone](/workers/configuration/routing/) (required for Transform Rules).
-
-### Step 1: Upload a new version
-
-Make any visible change to your Worker code (like modifying a response body), then upload without deploying:
+Deploy with cohorts (positional arguments set the gradual deployment split, `--cohort` flags define named cohorts):
 
 ```sh
-npx wrangler versions upload
+npx wrangler versions deploy \
+  abc123-stable-version@100% \
+  --cohort internal=def456-new-version@100% \
+  --cohort beta=abc123-stable-version@50%,def456-new-version@50% \
+  --message "Internal on new, beta at 50/50" -y
 ```
 
-Note the **Version ID** in the output. See all versions with:
+You can also run `npx wrangler versions deploy` without arguments for an interactive prompt.
+
+Check deployment status:
 
 ```sh
-npx wrangler versions list
+npx wrangler deployments status
 ```
 
-You now have two versions: the one currently serving traffic (call it `STABLE`) and the one you just uploaded (call it `NEW`).
+Complete the rollout:
 
-### Step 2: Create a Transform Rule to identify your team
+```sh
+npx wrangler versions deploy def456-new-version@100% -y
+```
 
-Create a [Transform Rule](/rules/transform/request-header-modification/) in the Cloudflare dashboard that sets the `Cloudflare-Workers-Cohort` header for your team's requests. How you identify your team depends on your setup. Here are a few options:
+---
 
-**If you use Cloudflare Access** — match on the authenticated email domain:
+## How to assign requests to cohorts
+
+### Transform Rules
+
+[Transform Rules](/rules/transform/request-header-modification/) let you set the `Cloudflare-Workers-Cohort` header based on any request property with no code changes to your Worker. For the full list of available fields, refer to the [Rules language fields reference](/ruleset-engine/rules-language/fields/).
+
+Each example below sets the `Cloudflare-Workers-Cohort` header. All use the same setup in the dashboard: create a Transform Rule, write the expression, and set the header.
+
+- **Cloudflare Access** — route your team by matching on authenticated email:
 
 <Example>
 
@@ -141,97 +170,11 @@ Selected operation under **Modify request header**: _Set static_
 
 **Header name**: `Cloudflare-Workers-Cohort`
 
-**Value**: `team`
+**Value**: `internal`
 
 </Example>
 
-**If you identify users by cookie** — match on a cookie your app sets for internal users:
-
-<Example>
-
-Text in **Expression Editor**:
-
-```txt
-http.cookie contains "internal=true"
-```
-
-Selected operation under **Modify request header**: _Set static_
-
-**Header name**: `Cloudflare-Workers-Cohort`
-
-**Value**: `team`
-
-</Example>
-
-**If your team is on a known network** — match on IP range or ASN:
-
-<Example>
-
-Text in **Expression Editor**:
-
-```txt
-ip.src in {192.0.2.0/24}
-```
-
-Selected operation under **Modify request header**: _Set static_
-
-**Header name**: `Cloudflare-Workers-Cohort`
-
-**Value**: `team`
-
-</Example>
-
-### Step 3: Deploy with a `team` cohort
-
-Keep 100% of default traffic on the stable version. Create a `team` cohort that sends 100% of matching traffic to the new version:
-
-```sh
-npx wrangler versions deploy \
-  STABLE_VERSION_ID@100% \
-  --cohort team=NEW_VERSION_ID@100% \
-  --message "Team testing new version" -y
-```
-
-Replace `STABLE_VERSION_ID` and `NEW_VERSION_ID` with your actual IDs. Nothing changes for your users yet — only requests matched by the Transform Rule see the new version.
-
-### Step 4: Verify
-
-```sh
-# Team member (matched by Transform Rule) — hits the new version
-curl -s https://your-worker.example.com -H "Cookie: internal=true"
-
-# Everyone else — hits the stable version
-curl -s https://your-worker.example.com
-```
-
-### Step 5: Expand or roll back
-
-Confident it works? Expand to 10% of all traffic while keeping your team on the new version:
-
-```sh
-npx wrangler versions deploy \
-  STABLE_VERSION_ID@90% NEW_VERSION_ID@10% \
-  --cohort team=NEW_VERSION_ID@100% \
-  --message "Expanding to 10% of default traffic" -y
-```
-
-Deploy to everyone:
-
-```sh
-npx wrangler versions deploy NEW_VERSION_ID@100% -y
-```
-
-Something wrong? Roll back instantly:
-
-```sh
-npx wrangler versions deploy STABLE_VERSION_ID@100% -y
-```
-
----
-
-## Roll out to beta users
-
-Set a `cohort=beta` cookie when users opt into your beta program (for example, from a settings page). Then create a Transform Rule:
+- **Cookie** — route beta users who opted in via a cookie set at signup or from a settings page:
 
 <Example>
 
@@ -249,27 +192,16 @@ Selected operation under **Modify request header**: _Set static_
 
 </Example>
 
-Deploy with a `beta` cohort:
+To extract the cohort name dynamically from the cookie value, use _Set dynamic_ with `regex_replace(http.cookie, ".*cohort=([^;]+).*", "$\{1\}")`.
 
-```sh
-npx wrangler versions deploy \
-  STABLE_VERSION_ID@100% \
-  --cohort beta=NEW_VERSION_ID@100% \
-  --message "Beta users on new version" -y
-```
-
-Beta users see the new version. Everyone else stays on stable. When you are ready, deploy the new version to everyone.
-
-## Canary by country
-
-Route traffic from specific countries to a canary cohort using a Transform Rule:
+- **Country** — canary a region before going global:
 
 <Example>
 
 Text in **Expression Editor**:
 
 ```txt
-ip.geoip.country in {"US" "CA"}
+ip.geoip.country in {"US" "CA" "GB"}
 ```
 
 Selected operation under **Modify request header**: _Set static_
@@ -280,68 +212,25 @@ Selected operation under **Modify request header**: _Set static_
 
 </Example>
 
-Deploy:
+- **IP range** — route traffic from your office network:
 
-```sh
-npx wrangler versions deploy \
-  STABLE_VERSION_ID@100% \
-  --cohort canary=STABLE_VERSION_ID@50%,NEW_VERSION_ID@50% \
-  --message "50/50 canary in US and CA" -y
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+ip.src in {192.0.2.0/24}
 ```
 
-Users in the US and Canada get a 50/50 split. Everyone else stays on stable.
+Selected operation under **Modify request header**: _Set static_
 
-## Test per-tenant
+**Header name**: `Cloudflare-Workers-Cohort`
 
-If your application identifies tenants by a JWT claim, API key, or database lookup, use the [gateway entrypoint pattern](#assign-cohorts-with-application-logic) to resolve the cohort in your Worker:
+**Value**: `internal`
 
-<TypeScriptExample>
+</Example>
 
-```ts
-import { WorkerEntrypoint } from "cloudflare:workers";
-
-export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		const tenantId = await getTenantId(request, env);
-
-		// Route one specific tenant to the canary cohort
-		const cohort = tenantId === "acme-corp" ? "canary" : "default";
-
-		return ctx.exports.Service({ version: { cohort } }).handle(request);
-	},
-};
-
-export class Service extends WorkerEntrypoint {
-	async handle(request: Request) {
-		return new Response("OK");
-	}
-}
-```
-
-</TypeScriptExample>
-
-Deploy:
-
-```sh
-npx wrangler versions deploy \
-  STABLE_VERSION_ID@100% \
-  --cohort canary=NEW_VERSION_ID@100% \
-  --message "Testing on acme-corp tenant" -y
-```
-
-Only requests from the `acme-corp` tenant hit the new version. All other tenants stay on stable.
-
----
-
-## Assign cohorts with Transform Rules
-
-[Transform Rules](/rules/transform/request-header-modification/) let you set the `Cloudflare-Workers-Cohort` header based on any request property with no code changes to your Worker. The use case sections above show examples using cookies, IP ranges, Access headers, and country. Here are additional patterns.
-
-For the full list of available fields, refer to the [Rules language fields reference](/ruleset-engine/rules-language/fields/).
-
-### From a hostname
-
-If you serve multiple domains (for example, via [SSL for SaaS](/ssl/ssl-for-saas/) or [custom domains](/workers/configuration/routing/custom-domains/)) and want to canary one domain first:
+- **Hostname** — canary one domain in a multi-domain setup:
 
 <Example>
 
@@ -359,9 +248,7 @@ Selected operation under **Modify request header**: _Set static_
 
 </Example>
 
-### From a URL path
-
-Route requests to a specific API version to a cohort:
+- **URL path** — route a specific API version:
 
 <Example>
 
@@ -379,9 +266,7 @@ Selected operation under **Modify request header**: _Set static_
 
 </Example>
 
-### From a User-Agent
-
-Route traffic from a specific mobile app version:
+- **User-Agent** — route a specific mobile app version:
 
 <Example>
 
@@ -399,29 +284,7 @@ Selected operation under **Modify request header**: _Set static_
 
 </Example>
 
-### From a cookie (dynamic extraction)
-
-If your application sets a `cohort` cookie and you want to use the cookie value directly as the cohort name:
-
-<Example>
-
-Text in **Expression Editor**:
-
-```txt
-http.cookie contains "cohort="
-```
-
-Selected operation under **Modify request header**: _Set dynamic_
-
-**Header name**: `Cloudflare-Workers-Cohort`
-
-**Value**: `regex_replace(http.cookie, ".*cohort=([^;]+).*", "$\{1\}")`
-
-</Example>
-
-### From a request header
-
-If an upstream service or API gateway attaches metadata:
+- **Request header** — route based on metadata from an upstream service or API gateway:
 
 <Example>
 
@@ -439,7 +302,7 @@ Selected operation under **Modify request header**: _Set static_
 
 </Example>
 
-## Assign cohorts with application logic
+### Gateway entrypoint pattern (application logic)
 
 When you need custom logic to determine the cohort — like verifying a JWT, querying a database, or looking up a tenant — use the **gateway entrypoint pattern**.
 
@@ -453,18 +316,23 @@ This splits your Worker into two parts:
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
 
+// fetch handler — always runs the latest version
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
 		const user = await getUser(request, env);
 
-		let cohort = "default";
-		if (user.email.endsWith("@mycompany.com")) cohort = "team";
-		else if (user.isBetaTester) cohort = "beta";
+		let cohort = undefined;
+		if (user.email.endsWith("@mycompany.com")) cohort = "internal";
+		else if (user.plan === "free") cohort = "free";
 
-		return ctx.exports.Service({ version: { cohort } }).handle(request);
+		// Pass cohort to version-routed entrypoint
+		return cohort
+			? ctx.exports.Service({ version: { cohort } }).handle(request)
+			: ctx.exports.Service().handle(request);
 	},
 };
 
+// Service entrypoint — version-routed based on cohort
 export class Service extends WorkerEntrypoint {
 	async handle(request: Request) {
 		return new Response("OK");
@@ -479,6 +347,8 @@ export class Service extends WorkerEntrypoint {
 - **The `fetch` handler always runs the latest version.** Only the `Service` entrypoint is version-routed. Keep `fetch` minimal.
 - **Loopback calls without a cohort are version-locked.** If you call `ctx.exports.Service()` without passing `version: \{ cohort \}`, the platform routes to the same version the caller is already running. You must explicitly pass a cohort to get cohort-based routing.
 - **Requires a compatibility flag.** Enable [`enable_ctx_exports`](/workers/configuration/compatibility-flags/#enable-ctxexports) in your Wrangler configuration.
+
+This all happens within a single request. The client sends one request and receives one response.
 
 ```mermaid
 sequenceDiagram
@@ -495,104 +365,34 @@ sequenceDiagram
     Service->>Client: Response
 ```
 
-This all happens within a single request. The client sends one request and receives one response.
-
-## Assign cohorts via service bindings
+### Service bindings
 
 When Worker A calls Worker B through a [service binding](/workers/runtime-apis/bindings/service-bindings/), cohorts do not propagate automatically. Worker A must pass the cohort explicitly:
 
 ```ts
-const cohort = ctx.version.cohort ?? "default";
-const result = await env.WORKER_B({ version: { cohort } }).someMethod();
+// Worker A — resolves cohort and passes to Worker B
+export default {
+	async fetch(request, env, ctx) {
+		const user = await getUser(request, env);
+		const cohort = user.plan === "free" ? "free" : undefined;
+
+		// Pass cohort explicitly to downstream Worker
+		const result = cohort
+			? await env.WORKER_B({ version: { cohort } }).processRequest(request)
+			: await env.WORKER_B.processRequest(request);
+
+		return new Response(result);
+	},
+};
 ```
 
 If Worker A does not pass a cohort, Worker B falls back to its default version configuration.
 
 ---
 
-## Manage deployments
-
-### With Wrangler
-
-:::note
-Minimum required Wrangler version: 3.40.0. Versions before 3.73.0 require you to specify a `--x-versions` flag.
-:::
-
-Upload a new version:
-
-```sh
-npx wrangler versions upload
-```
-
-Deploy with cohorts (positional arguments set the default split, `--cohort` flags define named cohorts):
-
-```sh
-npx wrangler versions deploy \
-  STABLE_VERSION_ID@100% \
-  --cohort canary=STABLE_VERSION_ID@50%,NEW_VERSION_ID@50% \
-  --cohort team=NEW_VERSION_ID@100% \
-  --message "Canary at 50%, team on new version" -y
-```
-
-You can also run `npx wrangler versions deploy` without arguments for an interactive prompt.
-
-Check deployment status:
-
-```sh
-npx wrangler deployments status
-```
-
-Complete the rollout:
-
-```sh
-npx wrangler versions deploy NEW_VERSION_ID@100% -y
-```
-
-### With the API
-
-```sh
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/workers/scripts/SCRIPT_NAME/deployments" \
-  -H "Authorization: Bearer API_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "strategy": "percentage",
-    "versions": [
-      { "version_id": "STABLE_VERSION_ID", "percentage": 100 }
-    ],
-    "cohorts": [
-      {
-        "name": "canary",
-        "versions": [
-          { "version_id": "STABLE_VERSION_ID", "percentage": 50 },
-          { "version_id": "NEW_VERSION_ID", "percentage": 50 }
-        ]
-      },
-      {
-        "name": "team",
-        "versions": [
-          { "version_id": "NEW_VERSION_ID", "percentage": 100 }
-        ]
-      }
-    ]
-  }'
-```
-
-Percentages within each cohort must sum to 100. Each cohort is independent. A deployment without a `cohorts` array behaves identically to a standard [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/).
-
-## How version selection works
-
-When multiple routing signals are present on a request, they are evaluated in this order:
-
-1. **Version override** (`Cloudflare-Workers-Version-Overrides` header). If it matches a version in the current deployment, that version is used immediately. All other signals are ignored. Refer to [version overrides](/workers/configuration/versions-and-deployments/version-overrides/).
-2. **Cohort** (`Cloudflare-Workers-Cohort` header). If it matches a defined cohort name, that cohort's version split is used.
-3. **Version key** (`Cloudflare-Workers-Version-Key` header). Within the selected configuration (cohort or default), deterministic hashing picks a version. The same key always routes to the same version for a given deployment.
-4. **Random percentage.** If none of the above apply, a version is picked randomly based on the configured percentages.
-
----
-
 ## Observability
 
-Use `ctx.version` to include version and cohort information in your logs:
+To see which version and cohort handled a request, use `ctx.version` in your Worker code. This lets you log cohort information, compare error rates between versions, and monitor your rollout.
 
 ```ts
 export default {
@@ -606,25 +406,23 @@ export default {
 };
 ```
 
-| Property   | Type                    | Description                                                                       |
-| ---------- | ----------------------- | --------------------------------------------------------------------------------- |
-| `cohort`   | `string` or `undefined` | The matched cohort name, if any.                                                  |
-| `override` | `string` or `undefined` | The matched version override, if any.                                             |
-| `key`      | `string` or `undefined` | The version key, if present.                                                      |
-| `reason`   | `string`                | How the version was selected: `override`, `versionKey`, or `random`.              |
-| `metadata` | `object`                | Contains `id` (version ID), `tag` (version tag), and `timestamp` (creation time). |
+`ctx.version` returns the following properties:
+
+| Property   | Type                    | What it tells you                                                    |
+| ---------- | ----------------------- | -------------------------------------------------------------------- |
+| `cohort`   | `string` or `undefined` | Which cohort this request matched, if any.                           |
+| `override` | `string` or `undefined` | Whether a version override was used instead of cohort routing.       |
+| `key`      | `string` or `undefined` | The version key used for deterministic selection, if present.        |
+| `reason`   | `string`                | How the version was selected: `override`, `versionKey`, or `random`. |
+| `metadata` | `object`                | The selected version's `id`, `tag`, and `timestamp`.                 |
 
 When no cohort, key, or override matches, `ctx.version` is an empty object.
 
 :::caution[Do not branch on cohort in application logic]
-Cohort-based deployments control which **version** of your code runs — the code itself should behave the same regardless of cohort. Use `ctx.version` for **observability only** — logging, metrics, and tracing.
+Cohort deployments control which **version** of your code runs. The code itself should behave the same regardless of cohort. Use `ctx.version` for **observability only** — logging, metrics, and tracing.
 :::
 
-Other tools:
-
-- **[Workers Logs](/workers/observability/logs/workers-logs/)** — Filter invocation logs by version to compare error rates.
-- **[Tail Workers](/workers/observability/logs/tail-workers/)** — Process version and cohort metadata in real time.
-- **[Logpush](/workers/observability/logs/logpush/)** — `ScriptVersion` field in Workers Trace Events includes version ID, tag, and message.
+The version ID is automatically included in [Workers Logs](/workers/observability/logs/workers-logs/), [Tail Workers](/workers/observability/logs/tail-workers/), and [Logpush](/workers/observability/logs/logpush/) via the `ScriptVersion` field — no code changes needed for version-level filtering. The cohort name is not automatically included. To see it in your logs, you need the `console.log()` shown above. Since each cohort maps to a known version in your deployment, you can also filter by version ID and infer the cohort from there.
 
 ---
 
@@ -632,7 +430,13 @@ Other tools:
 
 With [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects), each [Durable Object](/durable-objects/) instance is assigned a version based on a hash of its ID. You cannot choose which instances get the new version.
 
-With cohort-based deployments, you can target specific instances. Pass a cohort at `.get()` time, set the default to 100% stable, and only the instances you target get the new version. Everything else stays on stable.
+With cohort deployments, you pass a cohort at `.get()` time to control which version an instance runs. How well this works depends on how your Durable Objects are used.
+
+### Per-entity instances
+
+When each user, tenant, or resource has their own Durable Object instance (for example, user profiles, shopping carts, sessions, or per-tenant state), cohorts work cleanly. Only one user's requests reach each instance, so the cohort is always consistent.
+
+Pass a cohort at `.get()` time, set the gradual deployment split to 100% stable, and only the instances you target get the new version:
 
 ```ts
 export default {
@@ -651,32 +455,24 @@ export default {
 };
 ```
 
-```sh
-# Default = 100% stable. Only the canary cohort gets the new version.
-npx wrangler versions deploy \
-  STABLE_VERSION_ID@100% \
-  --cohort canary=NEW_VERSION_ID@100% \
-  --message "Testing new DO version on alice only" -y
-```
-
-Because the default is 100% stable, every instance without a cohort stays on the stable version. Only alice's DO gets the new version. When you are confident, expand the cohort to more users or deploy to everyone.
-
-This works for any cohort logic. Target one user, a group of free-tier users, a set of test tenants, or specific rooms:
-
-```ts
-// Target one test user
-const cohort = userId === "alice" ? "canary" : undefined;
-
-// Target free-tier users
-const cohort = plan === "free" ? "free" : undefined;
-
-// Target a specific chat room
-const cohort = roomId === "room-123" ? "canary" : undefined;
-```
-
-When you do not pass a cohort, the instance uses the default version configuration. If the default is 100% stable, that instance stays on stable.
+Because the gradual deployment split is 100% stable, every instance without a cohort stays on the stable version. Only alice's DO gets the new version. When you are confident, expand the cohort to more users or deploy to everyone.
 
 For a hands-on walkthrough, refer to [Tutorial: Controlled Durable Object rollouts](/workers/configuration/versions-and-deployments/testing-gradual-deployments/).
+
+### Shared instances
+
+When multiple users share a single DO instance (for example, chat rooms, game lobbies, or collaborative documents), different users may pass different cohorts. The first request after instantiation sets the cohort, and subsequent requests with different cohorts are ignored while the instance is in memory. This means you cannot guarantee that a specific user (for example, an enterprise customer) will not end up on the new version if they share an instance with a user from a different cohort.
+
+For shared instances, cohorts control which **instances** get the new version, not which **users**. If you need all users of a shared instance to be on the same version, base the cohort on the instance (the room or document), not the individual user:
+
+```ts
+const isCanaryRoom = roomId === "room-123";
+const stub = isCanaryRoom
+	? env.ROOM_DO.get(id, { version: { cohort: "canary" } })
+	: env.ROOM_DO.get(id);
+```
+
+If you do not need per-instance control for shared DOs, use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) without cohorts. The hash-based split is deterministic per instance regardless of who calls it.
 
 ### How the cohort is assigned to an instance
 
@@ -684,23 +480,19 @@ For a hands-on walkthrough, refer to [Tutorial: Controlled Durable Object rollou
 
 - **Locked while in memory.** The first request that passes a cohort to `.get()` locks that instance to that cohort and version for as long as the DO is running in memory. If a later request passes a different cohort for the same instance, it is ignored.
 - **Resets on eviction.** When the DO is [evicted](/durable-objects/concepts/durable-object-lifecycle/) from memory due to inactivity, the cohort is not persisted. The next request that instantiates the DO can set a new cohort.
-- **Optional.** If you do not pass a cohort, the Durable Object uses the default version configuration. If the default is 100% stable, the instance stays on stable.
+- **Optional.** If you do not pass a cohort, the Durable Object uses the gradual deployment split. If the split is 100% stable, the instance stays on stable.
 
 :::caution[The cohort must be known before calling `.get()`]
 The cohort is set at `.get()` time, which means it must come from information available _outside_ the Durable Object. If the only place that knows a user's plan or tier is inside the DO's storage (for example, a field in its SQLite database), you cannot read that data first and then pass it as a cohort. You need to resolve the cohort from the incoming request, a KV lookup, a D1 query, or another source that your Worker can access before calling `.get()`.
 :::
 
-:::note[Shared Durable Objects]
-If multiple users share a DO instance (for example, a chat room), different users may pass different cohorts. Only the first request after instantiation sets the cohort. For shared DOs, base the cohort on the instance (the room or document), not the individual user.
-:::
-
-|                                         | Gradual deployments (hash-based) | Cohort-based deployments                  |
-| --------------------------------------- | -------------------------------- | ----------------------------------------- |
-| Who decides the version                 | Hash of DO ID                    | Your Worker code via `.get()`             |
-| You choose which instances get new code | No                               | Yes                                       |
-| Sticky while in memory                  | Yes (hash is deterministic)      | Yes (locked until eviction)               |
-| Persists across evictions               | Yes (hash is deterministic)      | No (next request sets new cohort)         |
-| Use case                                | "Roll out to ~10% of instances"  | "Test on alice, then expand to free tier" |
+|                                         | Gradual deployments (hash-based) | Cohort deployments                |
+| --------------------------------------- | -------------------------------- | --------------------------------- |
+| Who decides the version                 | Hash of DO ID                    | Your Worker code via `.get()`     |
+| You choose which instances get new code | No                               | Yes                               |
+| Sticky while in memory                  | Yes (hash is deterministic)      | Yes (locked until eviction)       |
+| Persists across evictions               | Yes (hash is deterministic)      | No (next request sets new cohort) |
+| Best for                                | Shared instances                 | Per-user instances                |
 
 ### Durable Object use cases
 
@@ -732,9 +524,9 @@ const stub = cohort
 	: env.USER_DO.get(id);
 ```
 
-#### Shared instances (chat rooms, lobbies, docs)
+#### Shared instances
 
-When multiple users share a DO, base the cohort on the instance, not the user. All users in that room get the same version.
+All users in a room get the same version. The cohort is based on the room, not the user.
 
 ![Shared DO: cohort is per room. alice and bob share instance foo (Version B). carol and dave share instance bar (Version A).](~/assets/images/workers/platform/versions-and-deployments/do-usecase-shared.svg)
 
@@ -747,14 +539,142 @@ const stub = isCanaryRoom
 
 ---
 
+## Guides
+
+### Quick start: roll out to your team first
+
+The best way to get started. Deploy a new version, route your team's traffic to it, and verify it works. Everyone else stays on the current version.
+
+:::note[Just need to test a single request?]
+Use [version overrides](/workers/configuration/versions-and-deployments/version-overrides/) instead. One curl command with a header, no Transform Rule needed. Refer to [Version overrides vs. cohorts](/workers/configuration/versions-and-deployments/version-overrides-vs-cohorts/) to pick the right tool.
+:::
+
+**Prerequisites:**
+
+- An existing deployed Worker. If you do not have one, [create one first](/workers/get-started/guide/).
+- [Wrangler](/workers/wrangler/install-and-update/) 3.40.0 or later.
+- Your Worker must be routed through a [zone](/workers/configuration/routing/) (required for Transform Rules).
+
+#### Step 1: Upload a new version
+
+Make any visible change to your Worker code (like modifying a response body), then upload without deploying:
+
+```sh
+npx wrangler versions upload
+```
+
+Note the **Version ID** in the output. See all versions with:
+
+```sh
+npx wrangler versions list
+```
+
+You now have two versions: the one currently serving traffic (call it `STABLE`) and the one you just uploaded (call it `NEW`).
+
+#### Step 2: Create a Transform Rule to identify your team
+
+Create a [Transform Rule](#assign-cohorts-with-transform-rules) in the Cloudflare dashboard that sets the `Cloudflare-Workers-Cohort` header for your team's requests. For example, use a [cookie match](#from-a-cookie), a [Cloudflare Access header](#from-cloudflare-access), or an [IP range](#from-an-ip-range).
+
+#### Step 3: Deploy with a `team` cohort
+
+Keep 100% of default traffic on the stable version. Create a `team` cohort that sends 100% of matching traffic to the new version:
+
+```sh
+npx wrangler versions deploy \
+  STABLE_VERSION_ID@100% \
+  --cohort team=NEW_VERSION_ID@100% \
+  --message "Team testing new version" -y
+```
+
+Replace `STABLE_VERSION_ID` and `NEW_VERSION_ID` with your actual IDs. Nothing changes for your users yet — only requests matched by the Transform Rule see the new version.
+
+#### Step 4: Verify
+
+```sh
+# Team member (matched by Transform Rule) — hits the new version
+curl -s https://your-worker.example.com -H "Cookie: internal=true"
+
+# Everyone else — hits the stable version
+curl -s https://your-worker.example.com
+```
+
+#### Step 5: Expand or roll back
+
+Confident it works? Expand to 10% of all traffic while keeping your team on the new version:
+
+```sh
+npx wrangler versions deploy \
+  STABLE_VERSION_ID@90% NEW_VERSION_ID@10% \
+  --cohort team=NEW_VERSION_ID@100% \
+  --message "Expanding to 10% of default traffic" -y
+```
+
+Deploy to everyone:
+
+```sh
+npx wrangler versions deploy def456-new-version@100% -y
+```
+
+Something wrong? Roll back instantly:
+
+```sh
+npx wrangler versions deploy STABLE_VERSION_ID@100% -y
+```
+
+### Roll out to beta users
+
+Set a `cohort=beta` cookie when users opt into your beta program (for example, from a settings page). Create a [Transform Rule](#from-a-cookie) to match it, then deploy:
+
+```sh
+npx wrangler versions deploy \
+  STABLE_VERSION_ID@100% \
+  --cohort beta=NEW_VERSION_ID@100% \
+  --message "Beta users on new version" -y
+```
+
+Beta users see the new version. Everyone else stays on stable. When you are ready, deploy the new version to everyone.
+
+### Canary by country
+
+Create a [Transform Rule](#from-a-country) that matches traffic from specific countries, then deploy:
+
+```sh
+npx wrangler versions deploy \
+  STABLE_VERSION_ID@100% \
+  --cohort canary=STABLE_VERSION_ID@50%,NEW_VERSION_ID@50% \
+  --message "50/50 canary in US and CA" -y
+```
+
+Users in the matched countries get a 50/50 split. Everyone else stays on stable.
+
+### Test per-tenant
+
+Use the [gateway entrypoint pattern](#assign-cohorts-with-application-logic) to resolve the cohort from a tenant ID, then deploy:
+
+```sh
+npx wrangler versions deploy \
+  STABLE_VERSION_ID@100% \
+  --cohort canary=NEW_VERSION_ID@100% \
+  --message "Testing on acme-corp tenant" -y
+```
+
+Only requests from the targeted tenant hit the new version. All other tenants stay on stable.
+
+### More tutorials
+
+- **[Safe production rollouts with Astro](/workers/configuration/versions-and-deployments/ab-testing-with-cohorts/)** — Build an Astro site and use cohorts to test a new version on your team before rolling out to everyone. Shows the full server-to-client cookie loop.
+- **[Controlled Durable Object rollouts](/workers/configuration/versions-and-deployments/testing-gradual-deployments/)** — Deploy new code to specific Durable Object instances instead of leaving it to chance.
+
+---
+
 ## Limits
 
 | Constraint                                 | Value                  |
 | ------------------------------------------ | ---------------------- |
-| Maximum cohorts per deployment             | 5                      |
+| Maximum cohorts per deployment             | 10                     |
 | Maximum unique versions across all cohorts | 2                      |
 | Cohort name: allowed characters            | Alphanumeric, `-`, `_` |
-| Cohort name: maximum length                | 10 characters          |
+| Cohort name: maximum length                | 20 characters          |
 | Cohort name: case sensitivity              | Case-insensitive       |
 
 ## Error handling

@@ -1,20 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 400" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 330" fill="none">
   <style>
     text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
     .heading { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
     .cohort-name { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
     .version-label { font-size: 11px; fill: #6b7280; }
     .pct { font-size: 12px; font-weight: 600; fill: #fff; }
-    .pct-dark { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
     .desc { font-size: 11px; fill: #6b7280; }
-    .arrow-text { font-size: 11px; fill: #6b7280; }
   </style>
 
   <!-- Background -->
-  <rect width="780" height="400" fill="#fafafa" rx="8"/>
+  <rect width="780" height="330" fill="#fafafa" rx="8"/>
 
   <!-- Incoming requests (left side) -->
-  <rect x="30" y="45" width="130" height="310" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="30" y="45" width="130" height="200" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
   <text x="95" y="35" text-anchor="middle" class="heading">Incoming requests</text>
 
   <!-- Team requests -->
@@ -31,9 +29,6 @@
   <rect x="45" y="175" width="100" height="36" rx="4" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
   <text x="95" y="190" text-anchor="middle" class="cohort-name">vip</text>
   <text x="95" y="203" text-anchor="middle" class="desc">VIP users</text>
-
-  <!-- Everyone else (not a named cohort) -->
-  <text x="95" y="262" text-anchor="middle" class="desc">everyone else</text>
 
   <!-- Percentage bars (middle) -->
   <!-- Column header -->
@@ -59,20 +54,13 @@
   <rect x="230" y="175" width="380" height="36" rx="4" fill="#3b82f6"/>
   <text x="420" y="197" text-anchor="middle" class="pct">100% stable version</text>
 
-  <!-- Default bar: 100% stable (gradual deployment split) -->
-  <line x1="160" y1="258" x2="220" y2="258" stroke="#d1d5db" stroke-width="1.5"/>
-  <polygon points="217,254 225,258 217,262" fill="#d1d5db"/>
-  <rect x="230" y="240" width="380" height="36" rx="4" fill="#e5e7eb" stroke="#d1d5db" stroke-width="1"/>
-  <text x="420" y="262" text-anchor="middle" class="pct-dark">gradual deployment split</text>
-
   <!-- Annotations on right -->
   <text x="625" y="87" class="desc">sees new version only</text>
   <text x="625" y="142" class="desc">50/50 chance</text>
   <text x="625" y="197" class="desc">stays on stable</text>
-  <text x="625" y="262" class="desc">uses gradual deployment split</text>
 
   <!-- Bottom note -->
-  <rect x="30" y="320" width="720" height="55" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="50" y="342" class="version-label">Each cohort gets its own percentage split of the same two versions.</text>
-  <text x="50" y="360" class="version-label">Traffic that does not match any cohort uses your gradual deployment split (which you set yourself).</text>
+  <rect x="30" y="255" width="720" height="55" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="50" y="277" class="version-label">Each cohort gets its own percentage split of the same two versions.</text>
+  <text x="50" y="295" class="version-label">Traffic that does not match any cohort uses your gradual deployment split.</text>
 </svg>
