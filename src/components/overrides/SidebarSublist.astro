@@ -1,6 +1,6 @@
 ---
 import { Icon, Badge } from "@astrojs/starlight/components";
-import SidebarIcon from "~/components/SidebarIcon.astro";
+import SidebarIcon from "../SidebarIcon.astro";
 
 interface Props {
 	sublist: any[];
@@ -87,11 +87,11 @@ const restoreIndices = sublist.map((entry) =>
 								{entry.badge && (
 									<Badge
 										variant={entry.badge.variant}
-								class={`ml-[0.5em] ${entry.badge.class ?? ""}`}
-								text={entry.badge.text}
-							/>
-						)}
-					</span>
+										class={`ml-[0.5em] ${entry.badge.class ?? ""}`}
+										text={entry.badge.text}
+									/>
+								)}
+							</span>
 							<Icon
 								name="right-caret"
 								class="caret shrink-0 text-base text-[var(--sidebar-text)] opacity-60 transition-transform duration-200"
