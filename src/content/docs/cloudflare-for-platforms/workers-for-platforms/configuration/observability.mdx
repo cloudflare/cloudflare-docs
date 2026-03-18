@@ -1,10 +1,9 @@
 ---
 pcx_content_type: concept
 title: Observability
-
 ---
 
-Workers for Platforms provides you with logs and analytics that can be used to share data with end users.
+Workers for Platforms provides you with logs, traces, and analytics that can be used to share data with end users.
 
 ## Logs
 
@@ -29,7 +28,7 @@ A [Tail Worker](/workers/observability/logs/tail-workers/) receives information 
 
 Use [Tail Workers](/workers/observability/logs/tail-workers/) instead of Logpush if you want granular control over formatting before logs are sent to their destination to receive [diagnostics channel events](/workers/runtime-apis/nodejs/diagnostics-channel), or if you want logs delivered in real-time.
 
-Adding a Tail Worker to  your dispatch Worker collects logs for both the dispatch Worker and for any user Workers in the dispatch namespace. Logs are automatically collected for all new Workers added to a dispatch namespace. To enable logging for an individual user Worker rather than an entire dispatch namespace, add the [Tail Worker configuration](/workers/observability/logs/tail-workers/#configure-tail-workers) directly to the user Worker.
+Adding a Tail Worker to your dispatch Worker collects logs for both the dispatch Worker and for any user Workers in the dispatch namespace. Logs are automatically collected for all new Workers added to a dispatch namespace. To enable logging for an individual user Worker rather than an entire dispatch namespace, add the [Tail Worker configuration](/workers/observability/logs/tail-workers/#configure-tail-workers) directly to the user Worker.
 
 ## Analytics
 
@@ -37,8 +36,35 @@ There are two ways for you to review your Workers for Platforms analytics.
 
 ### Workers Analytics Engine
 
-[Workers Analytics Engine](/analytics/analytics-engine/) can be used with Workers for Platforms to provide analytics to end users. It can be used to expose events relating to a Workers invocation or custom user-defined events. Platforms can write/query events by script tag to get aggregates over a user’s usage.
+[Workers Analytics Engine](/analytics/analytics-engine/) can be used with Workers for Platforms to provide analytics to end users. It can be used to expose events relating to a Workers invocation or custom user-defined events. Platforms can write/query events by script tag to get aggregates over a user's usage.
 
 ### GraphQL Analytics API
 
-Use Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api) to get metrics relating to your Dispatch Namespaces. Use the `dispatchNamespaceName` dimension in the `workersInvocationsAdaptive` node to query usage by namespace.
+Use Cloudflare's [GraphQL Analytics API](/analytics/graphql-api) to get metrics relating to your Dispatch Namespaces. Use the `dispatchNamespaceName` dimension in the `workersInvocationsAdaptive` node to query usage by namespace.
+
+## OpenTelemetry Exports
+
+Workers for Platforms supports exporting traces and application logs from user Workers to any [supported OpenTelemetry destination](/workers/observability/exporting-opentelemetry-data/#available-opentelemetry-destinations). To configure this, [create a destination](/workers/observability/exporting-opentelemetry-data/#creating-a-destination) in the Cloudflare dashboard, then set the `observability` field in the worker metadata when uploading the user Worker via the [dispatch namespace API](/cloudflare-for-platforms/workers-for-platforms/platform/management/#upload-a-user-worker).
+
+To enable log and trace export when uploading a user Worker:
+
+```js
+await client.workersForPlatforms.dispatch.namespaces.scripts.update(
+	"my-dispatch-namespace",
+	"user-worker-name",
+	{
+		account_id: "your-account-id",
+		metadata: {
+			main_module: "worker.js",
+			observability: {
+				logs: { enabled: true, destinations: ["logs-destination"] },
+				traces: { enabled: true, destinations: ["traces-destination"] },
+			},
+		},
+	},
+);
+```
+
+Exported telemetry include the `cloudflare.dispatch_namespace` attribute, which identifies the dispatch namespace the user Worker belongs to.
+
+For details on supported destinations, limits, and pricing, refer to [Exporting OpenTelemetry Data](/workers/observability/exporting-opentelemetry-data/).
