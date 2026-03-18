@@ -7,9 +7,9 @@ sidebar:
 
 import { Tabs, TabItem } from "~/components";
 
-VPC Service bindings provide a convenient API for accessing VPC Services from your Worker. Each binding represents a connection to a service in your private network through a Cloudflare Tunnel.
+VPC bindings provide a convenient API for accessing your private network from your Worker. Each binding represents a connection to your private network through a Cloudflare Tunnel.
 
-Each request made on the binding will route to the specific service that was configured for the VPC Service, while restricting access to the rest of your private network.
+VPC Service bindings route requests to a specific service that was configured for the VPC Service, restricting access to the rest of your private network. VPC Network bindings provide tunnel-wide access to any service in your private network.
 
 :::note
 
@@ -17,28 +17,32 @@ Workers VPC is currently in beta. Features and APIs may change before general av
 
 :::
 
-## VPC Service binding
+## VPC bindings
 
-A VPC Service binding is accessed via the `env` parameter in your Worker's fetch handler. It provides a `fetch()` method for making HTTP requests to your private service.
+VPC bindings are accessed via the `env` parameter in your Worker's fetch handler. Both VPC Service bindings and VPC Network bindings provide a `fetch()` method for making HTTP requests to your private network.
 
 :::note[Required roles]
-To bind a VPC Service in a Worker, your user needs `Connectivity Directory Bind` (or `Connectivity Directory Admin`). For role definitions, refer to [Roles](/fundamentals/manage-members/roles/#account-scoped-roles).
+To bind a VPC Service or VPC Network in a Worker, your user needs `Connectivity Directory Bind` (or `Connectivity Directory Admin`). For role definitions, refer to [Roles](/fundamentals/manage-members/roles/#account-scoped-roles).
 :::
 
 ## fetch()
 
-Makes an HTTP request to the private service through the configured tunnel.
+Makes an HTTP request to your private network through the configured tunnel.
 
 ```js
-const response = await env.VPC_SERVICE_BINDING.fetch(resource, options);
+const response = await env.VPC_BINDING.fetch(resource, options);
 ```
 
-:::note
-The [VPC Service configurations](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) will always be used to connect and route requests to your services in external networks, even if a different URL or host is present in the actual `fetch()` operation of the Worker code.
+:::note[VPC Service binding behavior]
+When using a VPC Service binding, the [VPC Service configuration](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) will always be used to connect and route requests to your service, even if a different URL or host is present in the actual `fetch()` operation of the Worker code.
 
 The host provided in the `fetch()` operation is not used to route requests, and instead only populates the `Host` field for a HTTP request that can be parsed by the server and used for Server Name Indication (SNI), when the `https` scheme is specified.
 
 The port provided in the `fetch()` operation is ignored — the port specified in the VPC Service configuration will be used.
+:::
+
+:::note[VPC Network binding behavior]
+When using a VPC Network binding, the URL provided in the `fetch()` operation is used directly to route requests. You can access any hostname or IP address accessible through the tunnel.
 :::
 
 ### Parameters
@@ -51,7 +55,7 @@ The port provided in the `fetch()` operation is ignored — the port specified i
   - `signal` - AbortSignal for request cancellation
 
 :::note[Absolute URLs Required]
-VPC Service fetch requests must use absolute URLs including the protocol (`http`/`https`), host, and path. Relative paths are not supported.
+VPC fetch requests must use absolute URLs including the protocol (`http`/`https`), host, and path. Relative paths are not supported.
 :::
 
 ### Return value
@@ -127,5 +131,5 @@ export default {
 
 ## Next steps
 
-- Configure [service bindings in your Wrangler configuration file](/workers-vpc/configuration/vpc-services/)
+- Configure [VPC Service bindings](/workers-vpc/configuration/vpc-services/) or [VPC Network bindings](/workers-vpc/configuration/vpc-networks/)
 - Refer to [usage examples](/workers-vpc/examples/)

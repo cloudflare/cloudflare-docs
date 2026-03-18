@@ -1,0 +1,297 @@
+---
+title: VPC Networks
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+import { WranglerConfig } from "~/components";
+
+VPC Networks allow your Workers to access any service in your private network through a Cloudflare Tunnel without pre-registering individual hosts or ports. A single VPC Network binding grants tunnel-wide access to your private network.
+
+A VPC Network connects your Worker to an entire Cloudflare Tunnel. At runtime, your Worker can make requests to any service accessible through that tunnel using any hostname or IP address. This differs from VPC Services, which require you to create a separate service binding for each target host and port combination.
+
+:::note
+
+Workers VPC is currently in beta. Features and APIs may change before general availability. While in beta, Workers VPC is available for free to all Workers plans.
+
+:::
+
+## When to use VPC Networks
+
+Use VPC Networks when:
+
+- You need to access many services through the same tunnel
+- Your internal hostnames or IP addresses change frequently
+- You need tunnel-wide access without pre-registering individual services
+- You want dynamic hostname or IP resolution
+
+Use VPC Services when:
+
+- You have a fixed set of known targets
+- You want fine-grained per-service configuration
+- You need explicit service cataloging and access control
+
+:::note
+
+Explicit networks are useful even without custom DNS — you can create an explicit network to give your network a memorable name and enable future DNS customization without changing your Worker config.
+
+:::
+
+## VPC Network configuration
+
+A VPC Network consists of:
+
+- **Tunnel ID**: The Cloudflare Tunnel that provides network connectivity
+- **Resolver IPs** (optional): Custom DNS resolver IP addresses. When not provided, `cloudflared` uses the default DNS configuration.
+
+Auto-provisioned networks are created automatically on your first Worker deployment and use the tunnel's default DNS. Explicit networks are created via the `wrangler vpc network` command and can optionally specify custom DNS resolver IPs.
+
+Requests made through a VPC Network are encrypted in flight until they reach your private network via the tunnel. The connection type (HTTP or HTTPS) depends on the scheme used in your `fetch()` operation.
+
+When a VPC Network cannot establish a connection to your target service, `fetch()` will throw an exception.
+
+## Workers binding configuration
+
+Once you have created or configured a VPC Network, you can bind it to your Worker:
+
+<WranglerConfig>
+```jsonc
+{
+  "vpc_networks": [
+    {
+      "binding": "MY_VPC",
+      "network_id": "abc-123-abc-123-abc123abc123",
+      "remote": true
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+You can also use `tunnel_id` directly without creating an explicit network first. This creates an auto-provisioned network automatically on your first deployment:
+
+<WranglerConfig>
+```jsonc
+{
+  "vpc_networks": [
+    {
+      "binding": "MY_VPC",
+      "tunnel_id": "550e8400-e29b-41d4-a716-446655440000",
+      "remote": true
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+The `remote` flag must be set to `true` for VPC Networks to enable remote bindings during local development.
+
+## Auto-provisioned vs explicit networks
+
+### Auto-provisioned networks
+
+When you use `tunnel_id` in your binding configuration, Cloudflare automatically creates a VPC Network on your first Worker deployment:
+
+Auto-provisioned networks:
+
+- Are created automatically on your first deploy
+- Use the tunnel's default DNS configuration
+- Have a `network_id` equal to the `tunnel_id`
+- Cannot be modified via CLI or API
+- Show as "(auto-provisioned)" in the dashboard
+
+### Explicit networks
+
+Create an explicit network to use a custom name or configure custom DNS resolvers:
+
+**Create without custom DNS:**
+
+```sh
+wrangler vpc network create my-network \
+  --tunnel-id 550e8400-e29b-41d4-a716-446655440000
+```
+
+**Create with custom DNS:**
+
+```sh
+wrangler vpc network create my-network \
+  --tunnel-id 550e8400-e29b-41d4-a716-446655440000 \
+  --resolver-ips 10.0.0.2
+```
+
+Then reference the explicit network by `network_id` in your binding configuration (shown in the "Workers binding configuration" section above).
+
+Explicit networks:
+
+- Require manual creation via CLI, API, or dashboard
+- Can optionally configure custom DNS resolver IPs
+- Have a unique `network_id` distinct from the `tunnel_id`
+- Can be updated and deleted
+- Show with their configured name in the dashboard
+
+## Runtime usage
+
+Access any service in your network at runtime:
+
+```typescript
+export default {
+  async fetch(request: Request, env: Env) {
+    // Access any hostname or IP in your network
+    const response = await env.MY_VPC.fetch(
+      "http://internal-api.local/data"
+    );
+
+    // Or access by IP address
+    const dbResponse = await env.MY_VPC.fetch(
+      "http://10.0.5.42:5432"
+    );
+
+    return response;
+  },
+};
+```
+
+## Custom DNS use cases
+
+### AWS VPC private DNS
+
+Connect to AWS services using private DNS zones. The default DNS resolver for AWS VPCs is `10.0.0.2`:
+
+```sh
+wrangler vpc network create aws-vpc \
+  --tunnel-id <tunnel-uuid> \
+  --resolver-ips 10.0.0.2
+```
+
+Now your Worker can resolve AWS internal hostnames:
+
+```typescript
+const response = await env.MY_VPC.fetch(
+  "http://mydb.us-east-1.rds.amazonaws.com"
+);
+```
+
+### Split-horizon DNS
+
+Configure different resolvers for internal vs external names:
+
+```sh
+wrangler vpc network create internal-network \
+  --tunnel-id <tunnel-uuid> \
+  --resolver-ips 10.0.0.53,10.0.1.53
+```
+
+### DNS resolver redundancy
+
+Provide multiple resolvers for failover:
+
+```sh
+wrangler vpc network create redundant-network \
+  --tunnel-id <tunnel-uuid> \
+  --resolver-ips 10.0.0.53,10.0.1.53,10.0.2.53
+```
+
+## Upgrading from auto-provisioned to explicit
+
+To add custom DNS to an existing auto-provisioned network:
+
+1. **Create a new explicit network** with the same tunnel and your desired resolvers:
+
+   ```sh
+   wrangler vpc network create my-custom-network \
+     --tunnel-id 550e8400-e29b-41d4-a716-446655440000 \
+     --resolver-ips 10.0.0.53
+   ```
+
+2. **Update your Worker config** to reference the new network by `network_id`:
+
+   ```jsonc
+   {
+     "vpc_networks": [
+       {
+         "binding": "MY_VPC",
+         "network_id": "abc-123-abc-123-abc123abc123",
+         "remote": true
+       }
+     ]
+   }
+   ```
+
+3. **Redeploy** your Worker.
+
+The old auto-provisioned network remains in your account but is no longer used. You can safely ignore it or delete it.
+
+## Network lifecycle
+
+### Listing networks
+
+View all networks in your account:
+
+```sh
+wrangler vpc network list
+```
+
+The output includes both auto-provisioned and explicit networks.
+
+### Getting network details
+
+Inspect a specific network:
+
+```sh
+wrangler vpc network get <network-id>
+```
+
+### Updating networks
+
+Only explicit networks can be updated:
+
+```sh
+wrangler vpc network update <network-id> \
+  --name new-name \
+  --resolver-ips 10.0.0.54
+```
+
+### Deleting networks
+
+Only explicit networks can be deleted. Ensure no Workers reference the network before deleting:
+
+```sh
+wrangler vpc network delete <network-id>
+```
+
+## Troubleshooting
+
+### "Network not found" error on deploy
+
+Your config references a `network_id` that does not exist or was deleted.
+
+**Fix:** Run `wrangler vpc network list` to see available networks, or switch back to `tunnel_id` for auto-provisioning.
+
+### DNS resolution fails for internal hostnames
+
+Your network is using default DNS, but your services require custom resolvers.
+
+**Fix:** Create an explicit network with `--resolver-ips` pointing to your internal DNS servers.
+
+### Cannot update or delete auto-provisioned network
+
+Auto-provisioned networks (created automatically on deploy) cannot be modified or deleted.
+
+**Fix:** Create an explicit network with your desired settings, update your Worker config to use `network_id`, and redeploy.
+
+## VPC Networks vs VPC Services
+
+| Feature | VPC Networks | VPC Services |
+|---------|--------------|--------------|
+| Scope | Tunnel-wide access | Specific host + port |
+| Configuration | `tunnel_id` or `network_id` | `service_id` |
+| Service registration | Not required | Required for each target |
+| Best for | Dynamic discovery, tunnel-wide access | Fixed, cataloged services |
+
+## Next steps
+
+- [CLI commands reference](/workers/wrangler/commands/vpc/)
+- Set up [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/)
+- View [examples](/workers-vpc/examples/)
+- Learn about the [Network Binding API](/workers-vpc/api/)

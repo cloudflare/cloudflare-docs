@@ -9,9 +9,9 @@ import { GlossaryTooltip, Tabs, TabItem, Example } from "~/components";
 
 Cloudflare Tunnel creates secure connections from your infrastructure to Cloudflare's global network, providing the network connectivity that allows Workers to access your private resources.
 
-When you create a VPC Service, you specify a tunnel ID and target service. Workers VPC then routes requests from your Worker to the specified tunnel, which establishes a connection to the specified hostname or IP address, such that the target service receives the request and returns a response back to your Worker.
+When you create a VPC Service or VPC Network, you specify a tunnel ID. Workers VPC then routes requests from your Worker to the specified tunnel, which establishes a connection to your private network such that your services receive the request and return a response back to your Worker.
 
-To allow members to create VPC Services that represent a target service reachable via a tunnel, you must assign them the **Connectivity Directory Admin** role. Members must possess **Connectivity Directory Bind** role to bind to existing VPC Services from worker.
+To allow members to create VPC Services or VPC Networks, you must assign them the **Connectivity Directory Admin** role. Members must possess **Connectivity Directory Bind** role to bind to existing VPC Services or VPC Networks from Workers.
 
 The tunnel maintains persistent connections to Cloudflare, eliminating the need for inbound firewall rules or public IP addresses.
 
@@ -51,7 +51,7 @@ The same `cloudflared` instance can be used to cover both Zero Trust and Workers
 
 :::note
 
-[Ingress configurations](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/) for locally-managed tunnels are only relevant when using tunnels to expose services to the public internet, and are not required for Workers VPC as routing is handled by the VPC Service configuration.
+[Ingress configurations](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/) for locally-managed tunnels are only relevant when using tunnels to expose services to the public internet, and are not required for Workers VPC as routing is handled by VPC Service or VPC Network bindings.
 
 :::
 
@@ -73,6 +73,6 @@ We do not recommend using `cloudflared` in autoscaling setups because downscalin
 
 ## Next steps
 
-- Configure [VPC Services](/workers-vpc/configuration/vpc-services/) to connect your tunnels to Workers
+- Configure [VPC Services](/workers-vpc/configuration/vpc-services/) or [VPC Networks](/workers-vpc/configuration/vpc-networks/) to connect your tunnels to Workers
 - Review [hardware requirements](/workers-vpc/configuration/tunnel/hardware-requirements/) for capacity planning
 - Review the [complete Cloudflare Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/) for advanced features
