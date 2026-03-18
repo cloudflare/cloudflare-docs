@@ -75,8 +75,8 @@
 <path d="M203.19 542.77C220.44 542.77 234.43 528.78 234.43 511.53C234.43 494.28 220.44 480.29 203.19 480.29C185.94 480.29 171.95 494.28 171.95 511.53C171.95 528.78 185.94 542.77 203.19 542.77Z" stroke="#3E74FF" stroke-width="1.5" stroke-miterlimit="10"/>
 <path d="M516.73 313.56H200.5V379.4" stroke="#9E9E9E" stroke-width="3" stroke-miterlimit="10"/>
 <path d="M516.73 790.44H203.82V743.15" stroke="#9E9E9E" stroke-width="3" stroke-miterlimit="10"/>
-<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="30" font-weight="600" letter-spacing="0em"><tspan x="99.76" y="636.949">[WARP Agent]</tspan></text>
-<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="30" font-weight="600" letter-spacing="0em"><tspan x="99.76" y="672.949">[Falcon agent]</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="600" letter-spacing="0em"><tspan x="99.76" y="632.949">[Cloudflare One</tspan><tspan x="99.76" y="657.949">Client]</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="600" letter-spacing="0em"><tspan x="99.76" y="682.949">[Falcon agent]</tspan></text>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="30" font-weight="600" letter-spacing="0em"><tspan x="138.39" y="421.579">Endpoint</tspan></text>
 <path d="M1394.28 649.59H516.73V1017H1394.28V649.59Z" fill="white" stroke="#FC0000" stroke-width="2.54"/>
 <path d="M784.11 1038.61H1127.24V990.61H784.11V1038.61Z" fill="white"/>

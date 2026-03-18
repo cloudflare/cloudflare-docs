@@ -87,8 +87,8 @@
 <path d="M1458.2 319.32H1394.28" stroke="#9E9E9E" stroke-width="3" stroke-miterlimit="10"/>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="12" font-weight="500" letter-spacing="0em"><tspan x="1712.84" y="1049.34"></tspan></text>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="32.05" font-weight="600" letter-spacing="0em"><tspan x="684.72" y="73.5345">High level architecture: Integration</tspan></text>
-<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="30" font-weight="600" letter-spacing="0em"><tspan x="99.76" y="636.949">[WARP agent]</tspan></text>
-<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="30" font-weight="600" letter-spacing="0em"><tspan x="99.76" y="672.949">[Falcon agent]</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="600" letter-spacing="0em"><tspan x="99.76" y="632.949">[Cloudflare One</tspan><tspan x="99.76" y="657.949">Client]</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="24" font-weight="600" letter-spacing="0em"><tspan x="99.76" y="682.949">[Falcon agent]</tspan></text>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="30" font-weight="600" letter-spacing="0em"><tspan x="138.39" y="421.579">Endpoint</tspan></text>
 <path d="M1577.64 788.84H1493.56" stroke="#F26733" stroke-width="5" stroke-miterlimit="10"/>
 <path d="M1493.56 892.65H1577.64" stroke="#239B7F" stroke-width="5" stroke-miterlimit="10"/>
