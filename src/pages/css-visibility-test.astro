@@ -1,0 +1,271 @@
+---
+// CSS Visibility Test for Agents
+// Tests which CSS hiding/showing strategies survive markdown-for-agents rendering.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Visibility Test for Agents</title>
+    <style>
+      body {
+        font-family: monospace;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      h2 {
+        margin-top: 2rem;
+        font-size: 1rem;
+        color: #555;
+      }
+      hr {
+        margin: 1rem 0;
+        border: none;
+        border-top: 1px solid #eee;
+      }
+
+      /* Class-based rules for tests that need a stylesheet */
+      .display-none        { display: none; }
+      .visibility-hidden   { visibility: hidden; }
+      .opacity-0           { opacity: 0; }
+      .sr-only-class {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .agent-directive     { display: none; }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Visibility Test for Agents</h1>
+    <p>Each block uses a different CSS hiding strategy. Pattern: <code>TESTING: {strategy}</code></p>
+
+    <hr />
+
+    <h2>1. No hiding (baseline)</h2>
+    <div>TESTING: no-hiding (baseline — always visible)</div>
+
+    <hr />
+
+    <h2>2. display: none (inline style)</h2>
+    <div style="display: none">TESTING: display-none-inline</div>
+
+    <hr />
+
+    <h2>3. display: block (inline style, explicit)</h2>
+    <div style="display: block">TESTING: display-block-inline</div>
+
+    <hr />
+
+    <h2>4. display: none (stylesheet class)</h2>
+    <div class="display-none">TESTING: display-none-class</div>
+
+    <hr />
+
+    <h2>5. visibility: hidden (inline style)</h2>
+    <div style="visibility: hidden">TESTING: visibility-hidden-inline</div>
+
+    <hr />
+
+    <h2>6. visibility: hidden (stylesheet class)</h2>
+    <div class="visibility-hidden">TESTING: visibility-hidden-class</div>
+
+    <hr />
+
+    <h2>7. opacity: 0 (inline style)</h2>
+    <div style="opacity: 0">TESTING: opacity-0-inline</div>
+
+    <hr />
+
+    <h2>8. opacity: 0 (stylesheet class)</h2>
+    <div class="opacity-0">TESTING: opacity-0-class</div>
+
+    <hr />
+
+    <h2>9. opacity: 0.01 (near-invisible)</h2>
+    <div style="opacity: 0.01">TESTING: opacity-0.01-inline</div>
+
+    <hr />
+
+    <h2>10. color: transparent</h2>
+    <div style="color: transparent">TESTING: color-transparent</div>
+
+    <hr />
+
+    <h2>11. color: white on white background</h2>
+    <div style="color: white; background-color: white">TESTING: color-white-on-white</div>
+
+    <hr />
+
+    <h2>12. font-size: 0</h2>
+    <div style="font-size: 0">TESTING: font-size-0</div>
+
+    <hr />
+
+    <h2>13. width: 0; height: 0; overflow: hidden</h2>
+    <div style="width: 0; height: 0; overflow: hidden">TESTING: width-height-0-overflow-hidden</div>
+
+    <hr />
+
+    <h2>14. height: 1px; overflow: hidden</h2>
+    <div style="width: 100%; height: 1px; overflow: hidden">TESTING: overflow-hidden-1px-height</div>
+
+    <hr />
+
+    <h2>15. position: absolute; left: -9999px</h2>
+    <div style="position: absolute; left: -9999px">TESTING: position-absolute-offscreen</div>
+
+    <hr />
+
+    <h2>16. clip: rect(0 0 0 0) (legacy)</h2>
+    <div style="position: absolute; clip: rect(0 0 0 0)">TESTING: clip-rect-0</div>
+
+    <hr />
+
+    <h2>17. clip-path: inset(100%)</h2>
+    <div style="clip-path: inset(100%)">TESTING: clip-path-inset-100</div>
+
+    <hr />
+
+    <h2>18. transform: scale(0)</h2>
+    <div style="transform: scale(0)">TESTING: transform-scale-0</div>
+
+    <hr />
+
+    <h2>19. transform: translateX(-9999px)</h2>
+    <div style="transform: translateX(-9999px)">TESTING: transform-translateX-offscreen</div>
+
+    <hr />
+
+    <h2>20. pointer-events: none (still visible)</h2>
+    <div style="pointer-events: none">TESTING: pointer-events-none</div>
+
+    <hr />
+
+    <h2>21. z-index: -9999</h2>
+    <div style="position: relative; z-index: -9999">TESTING: z-index-negative</div>
+
+    <hr />
+
+    <h2>22. max-height: 0; overflow: hidden</h2>
+    <div style="max-height: 0; overflow: hidden">TESTING: max-height-0-overflow-hidden</div>
+
+    <hr />
+
+    <h2>23. height: 0; overflow: hidden</h2>
+    <div style="height: 0; overflow: hidden">TESTING: height-0-overflow-hidden</div>
+
+    <hr />
+
+    <h2>24. margin-left: -9999px</h2>
+    <div style="margin-left: -9999px">TESTING: margin-left-offscreen</div>
+
+    <hr />
+
+    <h2>25. text-indent: -9999px; overflow: hidden</h2>
+    <div style="text-indent: -9999px; overflow: hidden">TESTING: text-indent-offscreen</div>
+
+    <hr />
+
+    <h2>26. aria-hidden="true" (no CSS)</h2>
+    <div aria-hidden="true">TESTING: aria-hidden-true</div>
+
+    <hr />
+
+    <h2>27. hidden attribute (HTML boolean)</h2>
+    <div hidden>TESTING: html-hidden-attribute</div>
+
+    <hr />
+
+    <h2>28. role="presentation"</h2>
+    <div role="presentation">TESTING: role-presentation</div>
+
+    <hr />
+
+    <h2>29. Inside &lt;details&gt; (collapsed by default)</h2>
+    <details>
+      <summary>Click to expand</summary>
+      <div>TESTING: inside-details-collapsed</div>
+    </details>
+
+    <hr />
+
+    <h2>30. Inside &lt;details open&gt; (expanded by default)</h2>
+    <details open>
+      <summary>Click to expand</summary>
+      <div>TESTING: inside-details-open</div>
+    </details>
+
+    <hr />
+
+    <h2>31. background-color matches text color</h2>
+    <div style="background-color: #000; color: #000">TESTING: bg-color-matches-text</div>
+
+    <hr />
+
+    <h2>32. span[display:none] wrapping div</h2>
+    <span style="display: none"><div>TESTING: span-display-none-wrapping-div</div></span>
+
+    <hr />
+
+    <h2>33. user-select: none (still visible)</h2>
+    <div style="user-select: none">TESTING: user-select-none</div>
+
+    <hr />
+
+    <h2>34. content-visibility: hidden</h2>
+    <div style="content-visibility: hidden">TESTING: content-visibility-hidden</div>
+
+    <hr />
+
+    <h2>35. content-visibility: auto</h2>
+    <div style="content-visibility: auto">TESTING: content-visibility-auto</div>
+
+    <hr />
+
+    <h2>36. will-change: opacity; opacity: 0</h2>
+    <div style="will-change: opacity; opacity: 0">TESTING: will-change-opacity-0</div>
+
+    <hr />
+
+    <h2>37. Nested: outer display:none, inner display:block</h2>
+    <div style="display: none">
+      <div style="display: block">TESTING: nested-outer-none-inner-block</div>
+    </div>
+
+    <hr />
+
+    <h2>38. Stylesheet class: sr-only</h2>
+    <div class="sr-only-class">TESTING: class-sr-only-full-pattern</div>
+
+    <hr />
+
+    <h2>39. Stylesheet class: agent-directive (display:none)</h2>
+    <div class="agent-directive">TESTING: class-agent-directive</div>
+
+    <hr />
+
+    <h2>40. HTML comment</h2>
+    <!-- TESTING: html-comment -->
+
+    <hr />
+
+    <h2>41. Zero-width characters</h2>
+    <div>TESTING:&#x200B;zero-width-space&#x200B;between&#x200B;words</div>
+
+    <hr />
+
+    <h2>42. Visually hidden sr-only full pattern (inline)</h2>
+    <div style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0">TESTING: visually-hidden-sr-only-full-pattern-inline</div>
+
+  </body>
+</html>

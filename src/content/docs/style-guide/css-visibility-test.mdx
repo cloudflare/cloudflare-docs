@@ -68,7 +68,9 @@ Each row uses a different CSS property or technique. The text pattern is `TESTIN
 
 ## 10. `color: white` on white background
 
-<div style={{ color: "white", backgroundColor: "white" }}>TESTING: color-white-on-white</div>
+<div style={{ color: "white", backgroundColor: "white" }}>
+	TESTING: color-white-on-white
+</div>
 
 ---
 
@@ -80,25 +82,33 @@ Each row uses a different CSS property or technique. The text pattern is `TESTIN
 
 ## 12. `width: 0; height: 0; overflow: hidden`
 
-<div style={{ width: 0, height: 0, overflow: "hidden" }}>TESTING: width-height-0-overflow-hidden</div>
+<div style={{ width: 0, height: 0, overflow: "hidden" }}>
+	TESTING: width-height-0-overflow-hidden
+</div>
 
 ---
 
 ## 13. `overflow: hidden` with explicit dimensions
 
-<div style={{ width: "100%", height: "1px", overflow: "hidden" }}>TESTING: overflow-hidden-1px-height</div>
+<div style={{ width: "100%", height: "1px", overflow: "hidden" }}>
+	TESTING: overflow-hidden-1px-height
+</div>
 
 ---
 
 ## 14. `position: absolute; left: -9999px`
 
-<div style={{ position: "absolute", left: "-9999px" }}>TESTING: position-absolute-offscreen</div>
+<div style={{ position: "absolute", left: "-9999px" }}>
+	TESTING: position-absolute-offscreen
+</div>
 
 ---
 
 ## 15. `clip: rect(0 0 0 0)` (legacy clip)
 
-<div style={{ position: "absolute", clip: "rect(0 0 0 0)" }}>TESTING: clip-rect-0</div>
+<div style={{ position: "absolute", clip: "rect(0 0 0 0)" }}>
+	TESTING: clip-rect-0
+</div>
 
 ---
 
@@ -116,7 +126,9 @@ Each row uses a different CSS property or technique. The text pattern is `TESTIN
 
 ## 18. `transform: translateX(-9999px)`
 
-<div style={{ transform: "translateX(-9999px)" }}>TESTING: transform-translateX-offscreen</div>
+<div style={{ transform: "translateX(-9999px)" }}>
+	TESTING: transform-translateX-offscreen
+</div>
 
 ---
 
@@ -128,19 +140,25 @@ Each row uses a different CSS property or technique. The text pattern is `TESTIN
 
 ## 20. `z-index: -9999` (behind page)
 
-<div style={{ position: "relative", zIndex: -9999 }}>TESTING: z-index-negative</div>
+<div style={{ position: "relative", zIndex: -9999 }}>
+	TESTING: z-index-negative
+</div>
 
 ---
 
 ## 21. `max-height: 0; overflow: hidden`
 
-<div style={{ maxHeight: 0, overflow: "hidden" }}>TESTING: max-height-0-overflow-hidden</div>
+<div style={{ maxHeight: 0, overflow: "hidden" }}>
+	TESTING: max-height-0-overflow-hidden
+</div>
 
 ---
 
 ## 22. `height: 0; overflow: hidden`
 
-<div style={{ height: 0, overflow: "hidden" }}>TESTING: height-0-overflow-hidden</div>
+<div style={{ height: 0, overflow: "hidden" }}>
+	TESTING: height-0-overflow-hidden
+</div>
 
 ---
 
@@ -152,7 +170,9 @@ Each row uses a different CSS property or technique. The text pattern is `TESTIN
 
 ## 24. `text-indent: -9999px`
 
-<div style={{ textIndent: "-9999px", overflow: "hidden" }}>TESTING: text-indent-offscreen</div>
+<div style={{ textIndent: "-9999px", overflow: "hidden" }}>
+	TESTING: text-indent-offscreen
+</div>
 
 ---
 
@@ -177,8 +197,8 @@ Each row uses a different CSS property or technique. The text pattern is `TESTIN
 ## 28. Inside a `<details>` (collapsed by default)
 
 <details>
-  <summary>Click to expand</summary>
-  <div>TESTING: inside-details-collapsed</div>
+	<summary>Click to expand</summary>
+	<div>TESTING: inside-details-collapsed</div>
 </details>
 
 ---
@@ -186,21 +206,25 @@ Each row uses a different CSS property or technique. The text pattern is `TESTIN
 ## 29. Inside a `<details open>` (expanded by default)
 
 <details open>
-  <summary>Click to expand</summary>
-  <div>TESTING: inside-details-open</div>
+	<summary>Click to expand</summary>
+	<div>TESTING: inside-details-open</div>
 </details>
 
 ---
 
 ## 30. `background-color` matching text color (camouflage)
 
-<div style={{ backgroundColor: "#000", color: "#000" }}>TESTING: bg-color-matches-text</div>
+<div style={{ backgroundColor: "#000", color: "#000" }}>
+	TESTING: bg-color-matches-text
+</div>
 
 ---
 
 ## 31. Wrapping `span` with `display: none` around block
 
-<span style={{ display: "none" }}><div>TESTING: span-display-none-wrapping-div</div></span>
+<span style={{ display: "none" }}>
+	<div>TESTING: span-display-none-wrapping-div</div>
+</span>
 
 ---
 
@@ -212,33 +236,41 @@ Each row uses a different CSS property or technique. The text pattern is `TESTIN
 
 ## 33. `content-visibility: hidden`
 
-<div style={{ contentVisibility: "hidden" }}>TESTING: content-visibility-hidden</div>
+<div style={{ contentVisibility: "hidden" }}>
+	TESTING: content-visibility-hidden
+</div>
 
 ---
 
 ## 34. `content-visibility: auto` (visible)
 
-<div style={{ contentVisibility: "auto" }}>TESTING: content-visibility-auto</div>
+<div style={{ contentVisibility: "auto" }}>
+	TESTING: content-visibility-auto
+</div>
 
 ---
 
 ## 35. `will-change: opacity` with opacity 0
 
-<div style={{ willChange: "opacity", opacity: 0 }}>TESTING: will-change-opacity-0</div>
+<div style={{ willChange: "opacity", opacity: 0 }}>
+	TESTING: will-change-opacity-0
+</div>
 
 ---
 
 ## 36. Nested: outer `display: none`, inner `display: block`
 
 <div style={{ display: "none" }}>
-  <div style={{ display: "block" }}>TESTING: nested-outer-none-inner-block</div>
+	<div style={{ display: "block" }}>TESTING: nested-outer-none-inner-block</div>
 </div>
 
 ---
 
 ## 37. CSS class via `class` attribute — visually-hidden pattern
 
-<div class="sr-only">TESTING: class-sr-only (visually-hidden screenreader pattern)</div>
+<div class="sr-only">
+	TESTING: class-sr-only (visually-hidden screenreader pattern)
+</div>
 
 ---
 
@@ -257,3 +289,23 @@ Each row uses a different CSS property or technique. The text pattern is `TESTIN
 ## 40. Zero-width characters (unicode trickery)
 
 <div>TESTING:&#x200B;zero-width-space&#x200B;between&#x200B;words</div>
+
+---
+
+## 41. Visually hidden (sr-only full pattern)
+
+<div
+	style={{
+		position: "absolute",
+		width: "1px",
+		height: "1px",
+		padding: 0,
+		margin: "-1px",
+		overflow: "hidden",
+		clip: "rect(0,0,0,0)",
+		whiteSpace: "nowrap",
+		border: 0,
+	}}
+>
+	TESTING: visually-hidden-sr-only-full-pattern
+</div>
