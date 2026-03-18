@@ -107,7 +107,7 @@ Certain web browsers (such as Chrome and Microsoft Edge) load and cache root cer
 This error appears if you try to change your [team domain](/cloudflare-one/faq/getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare dashboard SSO](/fundamentals/manage-members/dashboard-sso/) feature is enabled on your account.
 Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.
 
-## the Cloudflare One Client on Linux shows `DNS connectivity check failed`.
+## The Cloudflare One Client on Linux shows `DNS connectivity check failed`.
 
 This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. You can identify this issue in the [`daemon.log`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#warp-diag-logs) file of the `warp diag` logs, where the error message appears as `ERROR main_loop: warp::warp::connectivity_check: DNS connectivity check failed to resolve host="warp-svc."`.
 
@@ -349,7 +349,7 @@ msiexec /i <PATH_TO_WARP_MSI> /L*V <PATH_TO_OUTPUT_LOG>
 
 Check the logs to verify if there are any missing DLLs (for example, `netstandard2.0`), which may point to a missing or outdated version of the .NET Framework.
 
-One common cause is a missing or outdated version of the [.NET Framework Runtime](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#windows:~:text=NET%20Framework%20version-,4.7.2%20or%20later,-HD%20space). the Cloudflare One Client requires a .NET Framework version of `4.7.2` or later.
+One common cause is a missing or outdated version of the [.NET Framework Runtime](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#windows:~:text=NET%20Framework%20version-,4.7.2%20or%20later,-HD%20space). The Cloudflare One Client requires a .NET Framework version of `4.7.2` or later.
 
 Some legacy Windows systems (such as Windows 10 Enterprise 1607 LTSB, which is bundled with .NET `4.6`) do not include this runtime by default and may fail during installation with a `Setup Wizard ended prematurely` error. More recent Windows versions include .NET `4.7.2` or later by default and do not encounter this error.
 

@@ -29,7 +29,7 @@ The Client Certificate device posture attribute checks if the device has a valid
 
 ## Prerequisites
 
-- A CA that issues client certificates for your devices. the Cloudflare One Client does not evaluate the certificate trust chain; this needs to be the issuing certificate.
+- A CA that issues client certificates for your devices. The Cloudflare One Client does not evaluate the certificate trust chain; this needs to be the issuing certificate.
 
   :::note[Upload the signing certificate that issued the client certificate]
 
@@ -86,10 +86,10 @@ To generate a sample root CA for testing, refer to [Generate mTLS certificates](
       	files or the same file.
       </Details>
    4. **Certificate ID**: Enter the UUID of the signing certificate.
-   5. **Common name**: (Optional) To check for a Common Name (CN) on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). the Cloudflare One Client will search for an exact, case-insensitive match. If you do not specify a common name, the Cloudflare One Client will ignore the common name field on the certificate.
+   5. **Common name**: (Optional) To check for a Common Name (CN) on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). The Cloudflare One Client will search for an exact, case-insensitive match. If you do not specify a common name, the Cloudflare One Client will ignore the common name field on the certificate.
    6. **Check for Extended Key Usage**: (Optional) Check whether the client certificate has one or more attributes set. Supported values are **Client authentication** (`1.3.6.1.5.5.7.3.2`) and/or **Email** (`1.3.6.1.5.5.7.3.4`).
    7. **Check for private key**: (Recommended) When enabled, WARP checks that the device has a private key associated with the client certificate.
-   8. **Subject Alternative Name**: (Optional) To check for a Subject Alternative Name (SAN) on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). the Cloudflare One Client will search for an exact, case-insensitive match. You can add multiple SANs to the posture check — a certificate only needs to match one SAN for the check to pass.
+   8. **Subject Alternative Name**: (Optional) To check for a Subject Alternative Name (SAN) on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). The Cloudflare One Client will search for an exact, case-insensitive match. You can add multiple SANs to the posture check — a certificate only needs to match one SAN for the check to pass.
 
 6. Select **Save**.
 

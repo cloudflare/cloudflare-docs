@@ -42,14 +42,14 @@ To configure the Cloudflare One Client to install a root certificate on your org
 5. [Enroll the device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) in your Zero Trust organization.
 6. (Optional) If the device is running macOS Big Sur or newer, [manually trust the certificate](#manually-trust-the-certificate).
 
-the Cloudflare One Client will now download any [certificates set to **Available**](/cloudflare-one/team-and-resources/devices/user-side-certificates/#activate-a-root-certificate). After download, the Cloudflare One Client will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem` and append the contents to the `installed_cert.pem` file. If you have any scripts using `installed_cert.pem`, Cloudflare recommends you set them to use the individual files in the `installed_certs/` directory instead. `installed_certs.pem` will be deprecated by 2025-06-31.
+The Cloudflare One Client will now download any [certificates set to **Available**](/cloudflare-one/team-and-resources/devices/user-side-certificates/#activate-a-root-certificate). After download, the Cloudflare One Client will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem` and append the contents to the `installed_cert.pem` file. If you have any scripts using `installed_cert.pem`, Cloudflare recommends you set them to use the individual files in the `installed_certs/` directory instead. `installed_certs.pem` will be deprecated by 2025-06-31.
 
 :::note
 
 <Render file="warp/client-notification-lag" product="cloudflare-one" />
 :::
 
-the Cloudflare One Client does not install certificates to individual applications. You will need to [manually add certificates](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to applications that rely on their own certificate store instead of the system certificate store.
+The Cloudflare One Client does not install certificates to individual applications. You will need to [manually add certificates](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to applications that rely on their own certificate store instead of the system certificate store.
 
 ## Access the installed certificate
 
@@ -118,6 +118,6 @@ The Cloudflare One Client will also place the certificate in `/var/lib/cloudflar
 
 ## Uninstall the certificate
 
-If the certificate was installed by the Cloudflare One Client, it is automatically removed when you turn on another certificate for inspection in Cloudflare One, turn off **Install CA to system certificate store**, or [uninstall the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/uninstall/). the Cloudflare One Client does not remove certificates that were installed manually (for example, certificates added to third-party applications).
+If the certificate was installed by the Cloudflare One Client, it is automatically removed when you turn on another certificate for inspection in Cloudflare One, turn off **Install CA to system certificate store**, or [uninstall the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/uninstall/). The Cloudflare One Client does not remove certificates that were installed manually (for example, certificates added to third-party applications).
 
 To manually remove the certificate, refer to the instructions supplied by your operating system or the third-party application.
