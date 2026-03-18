@@ -30,13 +30,19 @@ First, make sure that:
   	dev="true"
   />
 
+  :::note
+
+  Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 2.0.x - 3.2.x.
+
+  :::
+
 ## Define Vitest configuration
 
-In your `vitest.config.ts` file, use the `cloudflareTest()` Vite plugin to configure the Workers Vitest integration.
+In your `vitest.config.ts` file, use the `cloudflareTest()` plugin to configure the Workers Vitest integration.
 
 You can use your Worker configuration from your [Wrangler config file](/workers/wrangler/configuration/) by specifying it with `wrangler.configPath`.
 
-```ts title="vitest.config.ts"
+```ts title = vitest.config.ts
 import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
 import { defineConfig } from "vitest/config";
 
@@ -49,24 +55,24 @@ export default defineConfig({
 });
 ```
 
-You can also override or define additional configuration using the `miniflare` key. This takes precedence over values set via your Wrangler config.
+You can also override or define additional configuration using the `miniflare` key. This takes precedence over values set in via your Wrangler config.
 
-For example, this configuration would add a KV namespace `TEST_NAMESPACE` that is only accessed and modified in tests.
+For example, this configuration would add a KV namespace `TEST_NAMESPACE` that was only accessed and modified in tests.
 
-```ts title="vitest.config.ts" {5-7}
-export default defineConfig({
-	plugins: [
-		cloudflareTest({
-			wrangler: { configPath: "./wrangler.jsonc" },
-			miniflare: {
-				kvNamespaces: ["TEST_NAMESPACE"],
-			},
-		}),
-	],
-});
-```
+        ```js null {6-8}
+        export default defineConfig({
+        	plugins: [
+        		cloudflareTest({
+        			wrangler: { configPath: "./wrangler.jsonc" },
+        			miniflare: {
+        				kvNamespaces: ["TEST_NAMESPACE"],
+        			},
+        		}),
+        	],
+        });
+        ```
 
-For a full list of available Miniflare options, refer to the [Miniflare `WorkersOptions` API documentation](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions).
+    For a full list of available Miniflare options, refer to the [Miniflare `WorkersOptions` API documentation](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions).
 
 For a full list of available configuration options, refer to [Configuration](/workers/testing/vitest-integration/configuration/).
 
@@ -86,7 +92,7 @@ You should also add the output of `wrangler types` to the `include` array so tha
 		"compilerOptions": {
 			"moduleResolution": "bundler",
 			"types": [
-				"@cloudflare/vitest-pool-workers", // provides `cloudflare:test` types
+				"@cloudflare/vitest-pool-workers", // provides `cloudflare:test` and `cloudflare:workers` types
 			],
 		},
 		"include": [
@@ -133,7 +139,10 @@ By importing the Worker we can write a unit test for its `fetch` handler.
 <TypeScriptExample filename="test/unit.spec.ts">
 	```ts
 	import { env } from "cloudflare:workers";
-	import { createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
+	import {
+		createExecutionContext,
+		waitOnExecutionContext,
+	} from "cloudflare:test";
 	import { describe, it, expect } from "vitest";
 	// Import your worker so you can unit test it
 	import worker from "../src";
@@ -161,7 +170,7 @@ By importing the Worker we can write a unit test for its `fetch` handler.
 
 ### Integration tests
 
-You can use the `exports` object from `cloudflare:workers` to write an integration test. `exports.default` refers to the default export defined in the main Worker.
+You can use the `exports` object provided by `cloudflare:workers` to write an integration test. `exports.default.fetch()` calls the default export handler defined in the main Worker.
 
 <TypeScriptExample filename="test/integration.spec.ts">
 	```ts
@@ -181,8 +190,7 @@ You can use the `exports` object from `cloudflare:workers` to write an integrati
 </TypeScriptExample>
 
 When using `exports.default.fetch()` for integration tests, your Worker code runs in the same context as the test runner. This means you can use global mocks to control your Worker, but also means your Worker uses the subtly different module resolution behavior provided by Vite.
-
-`exports.default.fetch()` does not expose Assets. To test your assets, write an integration test using [`startDevWorker()`](/workers/testing/unstable_startworker/).
+Usually this is not a problem, but to run your Worker in a fresh environment that is as close to production as possible, you can use an auxiliary Worker. Refer to [this example](https://github.com/cloudflare/workers-sdk/blob/main/fixtures/vitest-pool-workers-examples/basics-integration-auxiliary/vitest.config.ts) for how to set up integration tests using auxiliary Workers. However, using auxiliary Workers comes with [limitations](/workers/testing/vitest-integration/configuration/#workerspooloptions) that you should be aware of.
 
 ## Related resources
 
