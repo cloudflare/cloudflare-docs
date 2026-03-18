@@ -167,7 +167,7 @@ Example response:
 
 ### Errored and blocked pages
 
-If a crawled page returns an HTTP error (such as `402`, `403`, or `500`), the record for that URL will have `"status": "errored"`. The HTTP status code and the response body are captured in the `metadata` field.
+If a crawled page returns an HTTP error (such as `402`, `403`, or `500`), the record for that URL will have `"status": "errored"`.
 
 This information is only available in the crawl results (step 2) — the [initiation response](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) only returns the job `id`. Because crawl jobs run asynchronously, the crawler does not fetch page content at initiation time.
 
@@ -178,7 +178,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
-The `metadata.status` field contains the HTTP status code returned by the origin server, and `metadata.html` contains the response body. This is useful for understanding site owners' intent when they block crawlers — for example, sites using [AI Crawl Control](https://blog.cloudflare.com/ai-crawl-control) may return a custom status code and message.
+The record's `status` field contains the HTTP status code returned by the origin server, and `html` contains the response body. This is useful for understanding site owners' intent when they block crawlers — for example, sites using [AI Crawl Control](https://blog.cloudflare.com/ai-crawl-control) may return a custom status code and message.
 
 ## Cancel a crawl job
 
@@ -500,7 +500,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 In this example, because the operator declared only `search` as their purpose, the crawl will succeed even if the site sets `ai-train=no`.
 
 :::note
-Content Signals are trust-based. By setting `crawlPurposes`, you are declaring to the site owner how you intend to use the crawled content. Misrepresenting your intended use may violate the site owner's expressed preferences and could have legal implications depending on jurisdiction.
+Content Signals are trust-based. By setting `crawlPurposes`, you are declaring to the site owner how you intend to use the crawled content.
 :::
 
 ## Troubleshooting
