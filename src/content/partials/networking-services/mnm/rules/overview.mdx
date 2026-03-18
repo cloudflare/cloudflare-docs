@@ -2,19 +2,19 @@
 {}
 ---
 
-import { Render, DashButton } from "~/components"
+import { Render, DashButton } from "~/components";
 
-Network Flow (formerly Magic Network Monitoring) rules allow you to monitor your network traffic for Distributed Denial of Service (DDoS) attacks on specific IP addresses or IP prefixes within your network. If the network traffic that is monitored by a rule exceeds the rule's threshold or contains a DDoS attack fingerprint, then you will receive an alert.
+Network Flow (formerly Magic Network Monitoring) rules monitor your network traffic for Distributed Denial of Service (DDoS) attacks targeting specific IP addresses or prefixes. When traffic exceeds a rule's threshold or matches a known DDoS attack fingerprint, you receive an alert.
 
 ## Rule types
 
-There are three different types of rules that can be configured within Network Flow. You can refer to the linked documentation page for each rule type to learn more.
+Network Flow supports three rule types:
 
-| Rule Type | Rule Description | Rule Availability |
-| :---- | :---- | :---- |
-| [Dynamic threshold](/network-flow/rules/dynamic-threshold/) (recommended) | A dynamic threshold rule will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. | API configuration only |
-| [Static threshold](/network-flow/rules/static-threshold/) | A static threshold rule allows you to define a constant numeric threshold, in terms of bits or packets, for DDoS traffic monitoring. | API configuration and dashboard configuration |
-| [sFlow DDoS attack](/network-flow/rules/s-flow-ddos-attack/) | Network Flow customers that send sFlow data to Cloudflare can receive alerts when a specific type of DDoS attack is detected within their network traffic. | API configuration only. Only applicable to sFlow data sets |
+| Rule Type                                                                 | Description                                                                                                                                 | Availability               |
+| :------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------- |
+| [Dynamic threshold](/network-flow/rules/dynamic-threshold/) (recommended) | Analyzes your network's traffic patterns over time and automatically adjusts the DDoS threshold (bits or packets) based on traffic history. | API only                   |
+| [Static threshold](/network-flow/rules/static-threshold/)                 | You define a fixed threshold (bits or packets) for DDoS traffic monitoring.                                                                 | API and dashboard          |
+| [sFlow DDoS attack](/network-flow/rules/s-flow-ddos-attack/)              | If you send sFlow data to Cloudflare, you can receive alerts when a specific DDoS attack type is detected in your traffic.                  | API only (sFlow data only) |
 
 ## Create rules in the dashboard
 
@@ -38,7 +38,7 @@ To create a new rule:
 
 2. Select **Configure Network flow**.
 3. In the **Configure rules** tab, select **Add new rule**.
-4. Create a new static traffic threshold rule according to your needs. Refer to the documentation on [static threshold](/network-flow/rules/static-threshold/) rules for more information on each field in the static threshold rule's configuration.
+4. Fill in the rule fields. For details on each field, refer to [Static threshold rules](/network-flow/rules/static-threshold/).
 5. Select **Create a new rule** when you are finished.
 
 ## Edit rules in the dashboard
@@ -66,50 +66,60 @@ To create a new rule:
 
 ### Rule Auto-Advertisement
 
-If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit/on-demand), you can enable **Auto-Advertisement** for any dynamic threshold, static threshold, and sFlow DDoS attack rule. The Auto-Advertisement feature will automatically activate Magic Transit when a static or dynamic rule threshold is exceeded or a DDoS attack fingerprint is identified in sFlow traffic logs.
+Auto-Advertisement automatically activates [Magic Transit](/magic-transit/) when a rule triggers, routing your traffic through Cloudflare for DDoS mitigation without manual intervention.
+
+This feature is available to Enterprise customers using [Magic Transit On Demand](/magic-transit/on-demand). You can enable it for any dynamic threshold, static threshold, or sFlow DDoS attack rule.
 
 Follow the previous steps to [create](#create-rules-in-the-dashboard) or [edit](#edit-rules-in-the-dashboard) a rule. Then, enable **Auto-Advertisement**.
 
 #### Rule Auto-Advertisement notifications
 
-<Render file="mnm-auto-advertisement-notifications" product="networking-services" />
+<Render
+	file="mnm-auto-advertisement-notifications"
+	product="networking-services"
+/>
 
 ### Rule IP prefixes
 
-Each rule must include a group of IP prefixes in its definition. All IP prefixes inside a rule are evaluated as a whole, and you should set up a rule with multiple IP prefixes when you want the IP prefixes' aggregated traffic to trigger an alert or advertisement. For thresholds on singular IP prefixes or IP addresses, you can create an individual rule with one prefix and the desired rule parameters.
+Each rule must include one or more IP prefixes. All prefixes in a rule are evaluated as aggregate traffic — their combined volume is measured against the threshold.
+
+- To alert on the **combined** traffic of multiple prefixes, add them to the same rule.
+- To alert on **individual** prefix traffic, create a separate rule for each prefix.
 
 #### Rule IP prefixes example
 
-For a rule with two prefix Classless Inter-Domain Routing (CIDR) blocks and a `packet_threshold` of `10000` as shown below, the rule will be flagged if the joint packet traffic of `192.168.0.0/24` and `172.118.0.0/24` is greater than `10000`. This also means that Cloudflare attempts to auto advertise both CIDR blocks if the rule has the auto advertisement flag enabled. Customers can also [configure Rule IP prefixes at scale using Cloudflare's API](/api/resources/magic_network_monitoring/subresources/rules/).
+In the following example, the rule triggers when the **combined** packet traffic of `192.168.0.0/24` and `172.118.0.0/24` exceeds `10000` packets. If Auto-Advertisement is enabled, Cloudflare advertises both prefixes when the rule triggers.
+
+You can also [configure rule IP prefixes at scale using the API](/api/resources/magic_network_monitoring/subresources/rules/).
 
 ```json
 {
-  "rules": [
-    {
-      "name": "Too many packets",
-      "prefixes": ["192.168.0.0/24", "172.118.0.0/24"],
-      "packet_threshold": 10000,
-      "automatic_advertisement": true,
-      "duration": "1m0s",
-      "type": "threshold"
-    }
-  ]
+	"rules": [
+		{
+			"name": "Too many packets",
+			"prefixes": ["192.168.0.0/24", "172.118.0.0/24"],
+			"packet_threshold": 10000,
+			"automatic_advertisement": true,
+			"duration": "1m0s",
+			"type": "threshold"
+		}
+	]
 }
 ```
 
-For more granular thresholds, create a more focused rule as shown below.
+To set a threshold for a single prefix, create a separate rule:
 
 ```json
 {
-  "rules": [
-    {
-      "name": "Too many packets",
-      "prefixes": ["172.118.0.0/24"],
-      "packet_threshold": 1000,
-      "automatic_advertisement": true,
-      "duration": "1m0s",
-      "type": "threshold"
-    }
-  ]
+	"rules": [
+		{
+			"name": "Too many packets",
+			"prefixes": ["172.118.0.0/24"],
+			"packet_threshold": 1000,
+			"automatic_advertisement": true,
+			"duration": "1m0s",
+			"type": "threshold"
+		}
+	]
 }
 ```

@@ -1,0 +1,27 @@
+---
+pcx_content_type: reference
+title: Microsoft 365 Copilot (FedRAMP)
+rss: file
+sidebar:
+  order: 10
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/fedramp-availability"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Microsoft 365 Copilot (FedRAMP)",
+	}}
+/>
+
+<Render
+	file="casb/microsoft/integrations/m365-copilot"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Microsoft 365 Copilot (FedRAMP)",
+		environmentName: "Microsoft 365 account",
+		slugifiedName: "microsoft-365/copilot-fedramp",
+	}}
+/>

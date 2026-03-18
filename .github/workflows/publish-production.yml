@@ -6,6 +6,7 @@ on:
 
 jobs:
   publish:
+    if: github.repository == 'cloudflare/cloudflare-docs'
     name: Production
     runs-on: ubuntu-22.04
     permissions:

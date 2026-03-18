@@ -3,11 +3,11 @@ params:
   - warpFirewallURL
 ---
 
-If you have Cloudflare One Appliance (formerly Magic WAN Connector) and WARP clients deployed in your premises, Cloudflare One Appliance automatically routes WARP traffic to the Internet rather than Cloudflare WAN IPsec tunnels. This prevents traffic from being encapsulated twice.
+If you have Cloudflare One Appliance (formerly Magic WAN Connector) and Cloudflare One Clients deployed in your premises, Cloudflare One Appliance automatically routes Cloudflare One Client traffic to the Internet rather than Cloudflare WAN IPsec tunnels. This prevents traffic from being encapsulated twice.
 
 You may need to configure your firewall to allow this new traffic. Make sure to allow the following IPs and ports:
 
 - **Destination IPs**: `162.159.193.0/24`, `162.159.197.0/24`
 - **Destination ports**: `443`, `500`, `1701`, `2408`, `4443`, `4500`, `8095`, `8443`
 
-Refer to <a href={props.warpFirewallURL}>WARP with firewall</a> for more information on this topic.
+Refer to <a href={props.warpFirewallURL}>Cloudflare One Client with firewall</a> for more information on this topic.

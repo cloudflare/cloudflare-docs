@@ -49,7 +49,7 @@ WAN transformation is not an all-or-nothing change. Most organizations follow an
 
 ### 1. Secure user access
 
-Start by replacing VPN concentrators with Zero Trust Network Access (ZTNA). Deploy the WARP client on user devices and use Cloudflare Access to enforce identity-based policies for application access. This step secures remote and hybrid workers without changing your existing network infrastructure.
+Start by replacing VPN concentrators with Zero Trust Network Access (ZTNA). Deploy the Cloudflare One Client on user devices and use Cloudflare Access to enforce identity-based policies for application access. This step secures remote and hybrid workers without changing your existing network infrastructure.
 
 For more information, refer to <a href={props.zeroTrustUrl}>Cloudflare One</a>.
 
@@ -70,6 +70,8 @@ For more information, refer to [Cloudflare Gateway](/cloudflare-one/traffic-poli
 ### 4. Reduce infrastructure
 
 As Cloudflare handles routing and security in the cloud, you can begin decommissioning branch firewalls, VPN concentrators, and MPLS circuits. The end state is what some call "coffee shop networking" — every location, whether a corporate office, a home office, or a coffee shop, provides the same secure, performant experience. The network is managed centrally through Cloudflare, and local infrastructure is minimal.
+
+Organizations that start with Cloudflare WAN for site-to-site connectivity and packet-level security can follow this same incremental path. Cloudflare One builds on the same network infrastructure, so you can add identity-based access controls, secure web gateway policies, and user-level security as your requirements grow — without re-architecting your deployment.
 
 ---
 

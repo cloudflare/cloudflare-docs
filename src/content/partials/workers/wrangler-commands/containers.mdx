@@ -101,7 +101,7 @@ wrangler containers registries configure [DOMAIN] [OPTIONS]
 ```
 
 - `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
-  - domain to configre for the registry
+  - Domain to configure for the registry.
 - `--public-credential` <Type text="string" /> <MetaInfo text="required" />
   - The public part of the registry credentials, e.g. `AWS_ACCESS_KEY_ID` for ECR
 - `--secret-store-id` <Type text="string" /> <MetaInfo text="optional" />
@@ -139,6 +139,58 @@ wrangler containers info <CONTAINER_ID> [OPTIONS]
 - `CONTAINER_ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the Container to get information about.
 
+<AnchorHeading title="`instances`" slug="containers-instances" depth={3} />
+
+List all Container instances for a given application. Displays instance ID, name, state, location, version, and creation time.
+
+In interactive mode, results are paginated. Press `Enter` to load the next page or `Esc`/`q` to stop. In non-interactive environments (for example, when piping output or running in CI), all pages are fetched automatically.
+
+Use the `--json` flag to return output as a flat JSON array. Each element contains the fields `id`, `name`, `state`, `location`, `version`, and `created`. This is also the default output format in non-interactive environments.
+
+```txt
+wrangler containers instances <APPLICATION_ID> [OPTIONS]
+```
+
+- `APPLICATION_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The UUID of the application to list instances for. Use `wrangler containers list` to find application IDs.
+- `--per-page` <Type text="number" /> <MetaInfo text="optional" />
+  - Number of instances per page.
+  - Default: 25
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as clean JSON.
+  - Default: false
+
+For example, to list instances for an application:
+
+```sh
+wrangler containers instances 12345678-abcd-1234-abcd-123456789abc
+```
+
+```sh output
+INSTANCE                              NAME        STATE          LOCATION  VERSION  CREATED
+a1b2c3d4-e5f6-7890-abcd-ef1234567890  worker-12   running        sfo06     3        2025-06-01T12:00:00Z
+b2c3d4e5-f6a7-8901-bcde-f12345678901  worker-47   provisioning   iad01     2        2025-06-01T13:00:00Z
+```
+
+To get the same data as JSON:
+
+```sh
+wrangler containers instances 12345678-abcd-1234-abcd-123456789abc --json
+```
+
+```json output
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "worker-12",
+    "state": "running",
+    "location": "sfo06",
+    "version": 3,
+    "created": "2025-06-01T12:00:00Z"
+  }
+]
+```
+
 <AnchorHeading title="`list`" slug="containers-list" depth={3} />
 
 List the Containers in your account.
@@ -160,3 +212,20 @@ wrangler containers push [TAG] [OPTIONS]
 - `--path-to-docker` <Type text="string" /> <MetaInfo text="optional" />
   - Path to your docker binary if it's not on `$PATH`.
   - Default: "docker"
+
+<AnchorHeading title="`ssh`" slug="containers-ssh" depth={3} />
+
+Connect to a running Container instance using SSH. Refer to [SSH](/containers/ssh/) for configuration details.
+
+```txt
+wrangler containers ssh <INSTANCE_ID>
+```
+
+You can also specify a command to run, instead of the default shell. For example:
+
+```txt
+wrangler containers ssh <INSTANCE_ID> -- ls -al
+```
+
+- `INSTANCE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the Container instance to SSH into.

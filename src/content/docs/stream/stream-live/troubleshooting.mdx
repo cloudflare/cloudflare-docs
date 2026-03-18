@@ -5,7 +5,7 @@ sidebar:
   order: 12
 
 ---
-import { Steps, Details, DashButton } from "~/components"
+import {Details, DashButton } from "~/components"
 
 In addition to following the live stream troubleshooting steps in this guide, make sure that your video settings align with [Cloudflare live stream recommendations](/stream/stream-live/start-stream-live/#recommendations-requirements-and-limitations). If you use OBS, you can also check these [OBS-specific recommendations](/stream/examples/obs-from-scratch/#6-optional-optimize-settings).
 
@@ -13,7 +13,6 @@ In addition to following the live stream troubleshooting steps in this guide, ma
 
 If your live stream is buffering, freezing, experiencing latency issues, or having other similar issues, try these troubleshooting steps:
 
-<Steps>
 1. In the Cloudflare dashboard, go to the **Live inputs** page.
 
    <DashButton url="/?to=/:account/stream/inputs" />
@@ -45,29 +44,30 @@ If your live stream is buffering, freezing, experiencing latency issues, or havi
 	<Details header="What is the upload-to-duration ratio?">
 	The upload-to-duration ratio is a measurement of how long it takes to upload a part of the stream compared to how long that part would take to play. A ratio of less than 100% means that the stream is uploading at least as fast as it would take to play, so most users should not experience buffering or freezing. A ratio of 100% or more means that your video is uploading slower than it would take to play, so it is likely that most users will experience buffering and freezing.
 	</Details>
-</Steps>
 
-## Connection rejected or unable to connect
+## Not starting, not connecting, or disconnecting
 
-If your broadcast software shows a connection error or the stream fails to start, verify that the live input is enabled. A live input that is _disabled_ will reject all incoming connections.
+If your broadcast software shows a connection error or the stream fails to start, try the following:
 
-You can disable or enable a live input from the **Live inputs** list page or the live input detail page in the Dashboard.
+- Verify that your RTMPS URL, stream key, and encoder software are copied correctly into your broadcasting software.
 
-<DashButton url="/?to=/:account/stream/inputs" />
+- Verify that the live input is enabled. A live input that is _disabled_ will reject all incoming connections. You can enable or disable a live input from the **Live inputs** page in the Dashboard or via the API using the `enabled` property.
 
-To check or update the live input status via the API, use the `enabled` property:
+   <DashButton url="/?to=/:account/stream/inputs" />
 
-```bash
-curl -X GET \
---header "Authorization: Bearer <API_TOKEN>" \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id}
-```
+   ```bash
+   curl -X GET \
+   --header "Authorization: Bearer <API_TOKEN>" \
+   https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id}
+   ```
 
-If `enabled` is `false` in the response, update the live input to enable it:
+   If `enabled` is `false` in the response, update the live input to enable it:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{"enabled": true}'
-```
+   ```bash
+   curl --request PUT \
+   https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
+   --header "Authorization: Bearer <API_TOKEN>" \
+   --data '{"enabled": true}'
+   ```
+
+- If you use [Live Webhooks](/stream/stream-live/webhooks/), check for a `live_input.errored` event. The webhook payload includes an [error code](/stream/stream-live/webhooks/#error-codes) that can help you troubleshoot the specific cause.

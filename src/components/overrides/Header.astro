@@ -5,7 +5,10 @@ import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
 import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
 
 import HeaderDropdowns from "../HeaderDropdowns.tsx";
+import AgentDirective from "../AgentDirective.astro";
 ---
+
+<AgentDirective />
 
 <div class="flex h-full items-center justify-between gap-4">
 	<SiteTitle />
@@ -18,7 +21,7 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 			<a
 				id="header-login-button"
 				href="https://dash.cloudflare.com/"
-				class="mr-2 flex items-center justify-center rounded-sm bg-cl1-brand-orange px-6 font-medium text-cl1-black no-underline"
+				class="bg-cl1-brand-orange text-cl1-black mr-2 flex items-center justify-center rounded-sm px-6 font-medium no-underline"
 			>
 				Log in
 			</a>
@@ -33,14 +36,13 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 		gap: 0.5rem;
 		min-width: fit-content;
 		overflow: none;
+	}
+	:global(.site-title span) {
+		color: var(--sl-color-white);
+	}
 
-		span {
-			color: var(--sl-color-white);
-		}
-
-		img {
-			height: 1.25rem;
-		}
+	:global(.site-title img) {
+		height: 1.25rem;
 	}
 
 	#social-icons {
@@ -48,25 +50,25 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 	}
 
 	:global(starlight-theme-select > label > select) {
-        line-height: 1.25rem;
-        margin: 1px 1px;
-    }
+		line-height: 1.25rem;
+		margin: 1px 1px;
+	}
 
-    :global(
-        starlight-theme-select > label > select:focus,
-        starlight-theme-select > label > select:focus-visible
-    ) {
-        margin: 1px 1px;
-        outline-offset: -4px;
-    }
+	:global(
+		starlight-theme-select > label > select:focus,
+		starlight-theme-select > label > select:focus-visible
+	) {
+		margin: 1px 1px;
+		outline-offset: -4px;
+	}
 
-    :global(starlight-theme-select > label > .label-icon) {
-        left: 8%;
-    }
+	:global(starlight-theme-select > label > .label-icon) {
+		left: 8%;
+	}
 
-    :global(starlight-theme-select > label > .caret) {
-        left: 75%;
-    }
+	:global(starlight-theme-select > label > .caret) {
+		left: 75%;
+	}
 
 	@media screen and (min-width: 800px) {
 		#right-group {

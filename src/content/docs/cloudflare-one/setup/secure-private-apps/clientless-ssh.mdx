@@ -1,0 +1,53 @@
+---
+pcx_content_type: get-started
+title: "Clientless SSH"
+sidebar:
+  order: 2
+  label: Clientless SSH
+description: Provide in-browser SSH access to an internal server through Cloudflare Access.
+products:
+  - cloudflare-one
+tags:
+  - Private networks
+---
+
+import { Render } from "~/components";
+
+Provide secure, in-browser command line access to an internal server without SSH client software on the user's device. This is useful when you need to give developers or IT staff remote access to servers for administration or troubleshooting from any browser.
+
+To explore other access scenarios, refer to [Secure private apps](/cloudflare-one/setup/secure-private-apps/).
+
+This guide follows the same steps as the **Get Started** experience in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+
+## How it works
+
+[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) connects your private network to Cloudflare without opening any ports on your network. You install `cloudflared`, a connector service that runs in the background, on a device that can reach your server. It creates a secure connection from your network out to Cloudflare, so no firewall changes are required.
+
+[Cloudflare Access](/cloudflare-one/access-controls/) sits in front of the server and verifies who each user is before letting them through. Users sign in through a browser using an email one-time PIN or your identity provider, then interact with the server through an in-browser terminal.
+
+For details on connection methods and advanced configuration, refer to [Connect to SSH in the browser](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-browser-rendering/).
+
+## Prerequisites
+
+- A Cloudflare account with a Zero Trust organization. If you have not set this up, refer to [Get started](/cloudflare-one/setup/).
+- An [active domain on your Cloudflare account](/fundamentals/manage-domains/add-site/). A public subdomain is created on this domain for your application.
+- A Linux, Windows, or macOS device on your private network that can reach the server. This is where you install the tunnel.
+- A server on your private network with SSH enabled.
+
+## Step 1: Define your application
+
+In this step, you describe the internal server you want to make available through Cloudflare.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), select the **Get Started** tab.
+2. For **Securely access private web apps without an agent**, select **Get started**.
+3. For **Configure clientless SSH access to an internal service**, select **Continue**.
+4. On the **Zero Trust SSH terminal directly from your browser** screen, select **Continue**.
+5. Enter a name for your application.
+6. Enter the hostname or IP address of the server. Use the IP address if you are not sure (for example, `10.10.1.25`).
+7. Enter the SSH port (the default is `22`).
+8. Select **Continue**.
+
+<Render
+	file="access/secure-private-apps-shared-steps"
+	product="cloudflare-one"
+/>
