@@ -30,11 +30,11 @@ When you use the Cloudflare One Client together with `cloudflared` Tunnels or th
 ```mermaid
 flowchart TD
     %% Accessibility
-    accTitle: How the WARP client handles DNS requests
-    accDescr: Flowchart describing how the WARP client routes DNS queries when using Local Domain Fallback, Split Tunnels, and Gateway resolver policies.
+    accTitle: How the Cloudflare One Client handles DNS requests
+    accDescr: Flowchart describing how the Cloudflare One Client routes DNS queries when using Local Domain Fallback, Split Tunnels, and Gateway resolver policies.
 
-    A(["WARP user requests resource"]) --> B["WARP client proxies all DNS traffic"]
-    B --> LDFCHK{"WARP checks if domain is listed in Local Domain Fallback policies"}
+    A(["User requests resource"]) --> B["Cloudflare One Client proxies all DNS traffic"]
+    B --> LDFCHK{"Cloudflare One Client checks if domain is listed in Local Domain Fallback policies"}
 
     %% Left branch (LDF exists)
     LDFCHK -- Domain exists in Local Domain Fallback policies --> C["Local Domain Fallback"]
@@ -50,9 +50,9 @@ flowchart TD
     GWALLOW -- Blocked by Gateway Network or HTTP Policy --> BLK(["Traffic blocked by Cloudflare"])
 
     OR --> ORCHK{"Onramp routes include resolver IP"}
-    ORCHK -- Onramp routes do not include resolver IP --> GP(["Gateway proxies query to resolver IP via normal WARP egress route"])
+    ORCHK -- Onramp routes do not include resolver IP --> GP(["Gateway proxies query to resolver IP via normal Cloudflare One Client egress route"])
     ORCHK -- Onramp routes include resolver IP --> ADV["Cloudflare onramps advertise route that includes Resolver IP"]
-    ADV --> PR(["Private resolver returns IP address to WARP client"])
+    ADV --> PR(["Private resolver returns IP address to Cloudflare One Client"])
 
     %% Right branch (no LDF match)
     LDFCHK -- Domain does not exist in Local Domain Fallback policies --> GWR{"Gateway checks Resolver Policies (Enterprise only)"}
