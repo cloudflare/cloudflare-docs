@@ -1,0 +1,39 @@
+---
+params:
+  - publishedAppRouteURL
+  - tunnelIdLocation
+---
+
+import { DashButton } from "~/components";
+
+To create a load balancer for Cloudflare Tunnel published applications:
+
+1. In the Cloudflare dashboard, go to the **Load Balancing** page.
+
+   <DashButton url="/?to=/:account/load-balancing" />
+
+2. Select **Create load balancer**, then select **Public load balancer**.
+3. Under **Select website**, select the domain of your published application route.
+4. On the **Hostname** page, enter a hostname for the load balancer (for example, `lb.example.com`).
+5. On the **Pools** page, select **Create a pool** and enter a descriptive name.
+6. Add a tunnel endpoint with the following values:
+   - **Endpoint Name**: Name of the server running the application
+   - **Endpoint Address**: `<UUID>.cfargotunnel.com` (find the Tunnel ID in {props.tunnelIdLocation})
+   - **Header value**: Hostname of your published application route (for example, `app.example.com`)
+   - **Weight**: `1` (if only one endpoint)
+
+   :::note
+   A single origin pool cannot reference the same tunnel UUID twice.
+   :::
+
+7. Choose a **Fallback pool**. Refer to [traffic steering policies](/load-balancing/understand-basics/traffic-steering/steering-policies/) for routing options.
+8. (Recommended) On the **Monitors** page, attach a monitor to the endpoint. For an HTTP or HTTPS application, create an HTTPS monitor:
+   - **Type**: _HTTPS_
+   - **Path**: `/`
+   - **Port**: `443`
+   - **Expected Code(s)**: `200`
+   - **Header Name**: `Host`
+   - **Value**: `app.example.com`
+9. Save and deploy the load balancer.
+
+To test, access your application using the load balancer hostname (`lb.example.com`).

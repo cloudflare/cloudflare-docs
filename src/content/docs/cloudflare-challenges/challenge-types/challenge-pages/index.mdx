@@ -19,7 +19,15 @@ The level of interactivity and visibility of the Challenge Page depends on the A
 
 The following Challenge types are the available actions when you create a WAF rule for a Challenge Page.
 
-### Managed Challenge (recommended)
+### Non-Interactive Challenge
+
+With a Non-Interactive Challenge, Cloudflare makes the determination on whether or not the visitor is automated based on the limited information attained from their browser signals via an injected JavaScript. Then, it presents a Challenge Page that requires no interaction from a visitor except the JavaScript processed by their browser.
+
+The visitor must wait until their browser finishes processing the JavaScript, which typically takes less than five seconds.
+
+If the visitor passes the Challenge, the original request continues to the destination URL. If the Challenge fails or cannot be completed, the visitor is presented with another Interstitial Challenge Page.
+
+### Managed Challenge
 
 Managed Challenges are where Cloudflare dynamically chooses the appropriate type of Challenge served to the visitor based on the characteristics of a request from the signals indicated by their browser. This helps avoid [CAPTCHAs](https://www.cloudflare.com/learning/bots/how-captchas-work/), which also reduces the lifetimes of human time spent solving CAPTCHAs across the Internet.
 
@@ -36,14 +44,6 @@ Using Cloudflare Challenges along with Rules features may cause Challenge loops.
 Interactive Challenge Pages offer the highest security for your website or application because it requires a visitor to interact with the Interstitial Challenge Page, presenting the visitor with an Interactive Challenge to solve.
 
 For more information about why Cloudflare does not recommend using Interactive Challenge, in favor of Managed Challenge, refer to our [blog post](https://blog.cloudflare.com/end-cloudflare-captcha/).
-
-### JavaScript Challenge (non-interactive)
-
-With a JavaScript (JS) Challenge, Cloudflare makes the determination on whether or not the visitor is automated based on the limited information attained from their browser signals via an injected JavaScript. Then, it presents a Challenge Page that requires no interaction from a visitor except the JavaScript processed by their browser.
-
-The visitor must wait until their browser finishes processing the JavaScript, which typically takes less than five seconds.
-
-If the visitor passes the Challenge, the original request continues to the destination URL. If the Challenge fails or cannot be completed, the visitor is presented with another Interstitial Challenge Page.
 
 ## Compatibility limitations
 

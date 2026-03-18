@@ -1,0 +1,13 @@
+id: mxTnLg
+name: Privacy Gateway
+
+entry:
+  title: Privacy Gateway
+  url: /privacy-gateway/
+  group: Developer platform
+  additional_groups: [Privacy]
+
+meta:
+  title: Cloudflare Privacy Gateway docs
+  description: Implement the Oblivious HTTP IETF standard to improve client privacy
+  author: "@cloudflare"

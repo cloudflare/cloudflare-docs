@@ -5,11 +5,11 @@ params:
 
 import { APIRequest, Markdown, Render, TabItem, Tabs, DashButton } from "~/components";
 
-When you use a static IP address, Magic WAN Connector can also act as a DHCP server in your network. To enable this feature:
+When you use a static IP address, Cloudflare One Appliance (formerly Magic WAN Connector) can also act as a DHCP server in your network. To enable this feature:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -40,7 +40,7 @@ When you use a static IP address, Magic WAN Connector can also act as a DHCP ser
 }
 {/* Command needed so list starts on number 3 since steps 1, 2 are inside conditional render */}
 <ol start="3">
-<li>Select the Magic WAN Connector you want to configure &gt; <strong>Edit</strong>.</li>
+<li>Select the Cloudflare One Appliance you want to configure &gt; <strong>Edit</strong>.</li>
 <li>Select <strong>Network Configuration</strong> &gt; <strong>LAN configuration</strong>.</li>
 <li>In <strong>LAN configuration</strong>, select the LAN where you want to enable DHCP server.</li>
 <li>Select <strong>Edit</strong>.</li>

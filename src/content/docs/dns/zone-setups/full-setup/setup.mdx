@@ -1,8 +1,9 @@
 ---
-title: Setup
+title: Set up a primary zone (Full setup)
 pcx_content_type: tutorial
 sidebar:
   order: 1
+  label: Setup
 head:
   - tag: title
     content: Change your nameservers (Full setup)
@@ -10,13 +11,13 @@ description: >-
   If you want to use Cloudflare as your primary DNS provider and manage your DNS records, your domain should be using a full setup.
 ---
 
-import { Render, DashButton, Tabs, TabItem, APIRequest } from "~/components";
+import { Render, DashButton, Tabs, TabItem, APIRequest, Details } from "~/components";
 
-<Render file="full-setup-definition" product="dns" />
+Cloudflare DNS offers a few different [setup options](/dns/zone-setups/). A primary setup (also known as full) is the most common and the only one available for Free or Pro plans. For details, refer to [About](/dns/zone-setups/full-setup/). For more introductory context, refer to [Concepts](/dns/concepts/).
 
 ## Before you begin
 
-Before you update your domain nameservers, make sure that you:
+The sections below offer detailed guidance on the different steps to onboard your domain. Before you begin, make sure that you:
 
 - Already own a domain name (such as `example.com` or `cloudflare.com`).
 
@@ -33,7 +34,7 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 <Render file="dnssec-enabled-migration" product="dns" />
 
-## Add site to Cloudflare
+## 1. Add your domain to Cloudflare
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -58,7 +59,7 @@ If Cloudflare is unable to identify your domain as a registered domain, make sur
 
 Cloudflare requires your `apex domain` to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat). Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 
-## Review DNS records
+## 2. Review your DNS records
 
 When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a primary setup (full), Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
@@ -73,7 +74,7 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 
 <Render file="dns-nxdomain-warning" product="dns" />
 
-## Update your nameservers
+## 3. Change your nameservers
 
 <Render file="nameserver-preamble" product="dns" />
 
@@ -121,7 +122,9 @@ Depending on your use case, you may have to perform this step on the DNS records
 
 3. Add the nameservers provided by Cloudflare. If their names are not **copied exactly**, your DNS will not resolve correctly.
 
+<Details header="Provider-specific instructions">
 <Render file="ns-update-providers" product="dns" />
+</Details>
 
 :::note
 
@@ -160,7 +163,7 @@ If you see unexpected results, refer to our [troubleshooting suggestions](/dns/z
 
 :::
 
-## Re-enable DNSSEC
+## 4. Re-enable DNSSEC
 
 When you updated your nameservers, you should have also disabled DNSSEC at your registrar.
 

@@ -74,7 +74,7 @@ For [immediately deployed uploads](/workers/configuration/versions-and-deploymen
 
 :::note
 
-These attributes are **not available** for version uploads.
+Except for `annotations`, these attributes are **not available** for version uploads.
 :::
 
 - `migrations` array\[object] optional
@@ -89,14 +89,14 @@ These attributes are **not available** for version uploads.
 - `tags` array\[string] optional
   - List of strings to use as tags for this Worker.
 
+- `annotations` <Type text="object" /> <MetaInfo text="optional" />
+  - Annotations object for the Worker version created by this upload. Also available on the [Version Upload API](#additional-attributes-version-upload-api).
+  - `workers/message` specifies a custom message for the version.
+  - `workers/tag` specifies a custom identifier for the version.
+
 ## Additional attributes: [Version Upload API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/)
 
 For [version uploads](/workers/configuration/versions-and-deployments/#upload-a-new-version-to-be-gradually-deployed-or-deployed-at-a-later-time), the following **additional** attributes are configurable at the top-level.
-
-:::note
-
-These attributes are **not available** for immediately deployed uploads.
-:::
 
 - `annotations` <Type text="object" /> <MetaInfo text="optional" />
   - Annotations object specific to the Worker version.

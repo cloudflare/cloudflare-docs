@@ -50,8 +50,8 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 
 		const link =
 			track === "ga"
-				? "[stable releases downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/)"
-				: "[beta releases downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/beta-releases/)";
+				? "[stable releases downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/)"
+				: "[beta releases downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/beta-releases/)";
 
 		const prefix = `A new ${prettyTrack} release for the ${prettyPlatform} WARP client is now available on the ${link}.`;
 
@@ -64,7 +64,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				description: title,
 				hidden: false,
 				date: releaseDate,
-				products: [{ id: "zero-trust-warp", collection: "directory" }],
+				products: [{ id: "cloudflare-one-client", collection: "directory" }],
 				scheduled: false,
 			},
 			rendered: {
@@ -118,6 +118,16 @@ export async function getChangelogs({
 
 	return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
+
+// Pre-computed set of all product IDs that have at least one visible changelog
+// entry. Used by Header to scope the filter dropdown consistently across all pages.
+export const changelogProductIds: string[] = [
+	...new Set(
+		(await getChangelogs({ filter: (e) => !e.data.hidden })).flatMap((e) =>
+			e.data.products.map((p) => p.id),
+		),
+	),
+];
 
 type GetRSSItemsOptions = {
 	/**
@@ -179,7 +189,7 @@ export async function getRSSItems({
 				description: content,
 				pubDate: date,
 				categories: productTitles,
-				link: `/changelog/${note.id}/`,
+				link: `/changelog/post/${note.id}/`,
 				customData: `<product>${productTitles.at(0)}</product>`,
 			};
 		}),

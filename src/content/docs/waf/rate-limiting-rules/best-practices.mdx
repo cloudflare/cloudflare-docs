@@ -252,8 +252,8 @@ In this situation, you could configure a rule similar to the following:
 | Matching criteria        | Hostname equals `example.com`         |
 | Expression               | `http.host eq "example.com"`          |
 | Counting characteristics | IP                                    |
-| Increment counter when   | Response Status Code is in (401, 403) |
-| Counting expression      | `http.response.code in {401 403}`     |
+| Increment counter when   | Response Status Code is in (403, 404) |
+| Counting expression      | `http.response.code in {403 404}`     |
 | Rate (Requests / Period) | 5 requests / 3 minutes                |
 | Action                   | Managed Challenge                     |
 

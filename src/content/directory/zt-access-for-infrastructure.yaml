@@ -1,0 +1,12 @@
+id: xhoFgr
+name: zt-access-for-infrastructure
+
+entry:
+  title: Access for Infrastructure
+  url: /cloudflare-one/access-controls/applications/non-http/infrastructure-apps/
+  show: false
+
+meta:
+  title: Cloudflare Access for Infrastructure docs
+  description: Access for Infrastructure provides granular control over how users access individual servers, clusters, or databases, including the ports, protocols, and usernames they can connect with.
+  author: "@cloudflare"

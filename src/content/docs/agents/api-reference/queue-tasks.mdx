@@ -68,10 +68,10 @@ class MyAgent extends Agent {
 
 ### `dequeue()`
 
-Removes a specific task from the queue by ID.
+Removes a specific task from the queue by ID. This method is synchronous.
 
 ```ts
-async dequeue(id: string): Promise<void>
+dequeue(id: string): void
 ```
 
 **Parameters:**
@@ -84,17 +84,17 @@ async dequeue(id: string): Promise<void>
 
 ```ts
 // Remove a specific task
-await agent.dequeue("abc123def");
+agent.dequeue("abc123def");
 ```
 
 </TypeScriptExample>
 
 ### `dequeueAll()`
 
-Removes all tasks from the queue.
+Removes all tasks from the queue. This method is synchronous.
 
 ```ts
-async dequeueAll(): Promise<void>
+dequeueAll(): void
 ```
 
 **Example:**
@@ -103,17 +103,17 @@ async dequeueAll(): Promise<void>
 
 ```ts
 // Clear the entire queue
-await agent.dequeueAll();
+agent.dequeueAll();
 ```
 
 </TypeScriptExample>
 
 ### `dequeueAllByCallback()`
 
-Removes all tasks that match a specific callback method.
+Removes all tasks that match a specific callback method. This method is synchronous.
 
 ```ts
-async dequeueAllByCallback(callback: string): Promise<void>
+dequeueAllByCallback(callback: string): void
 ```
 
 **Parameters:**
@@ -126,17 +126,17 @@ async dequeueAllByCallback(callback: string): Promise<void>
 
 ```ts
 // Remove all email processing tasks
-await agent.dequeueAllByCallback("processEmail");
+agent.dequeueAllByCallback("processEmail");
 ```
 
 </TypeScriptExample>
 
 ### `getQueue()`
 
-Retrieves a specific queued task by ID.
+Retrieves a specific queued task by ID. This method is synchronous.
 
 ```ts
-async getQueue<T>(id: string): Promise<QueueItem<T> | undefined>
+getQueue<T>(id: string): QueueItem<T> | undefined
 ```
 
 **Parameters:**
@@ -152,7 +152,7 @@ The payload is automatically parsed from JSON before being returned.
 <TypeScriptExample>
 
 ```ts
-const task = await agent.getQueue("abc123def");
+const task = agent.getQueue("abc123def");
 if (task) {
 	console.log(`Task callback: ${task.callback}`);
 	console.log(`Task payload:`, task.payload);
@@ -163,10 +163,10 @@ if (task) {
 
 ### `getQueues()`
 
-Retrieves all queued tasks that match a specific key-value pair in their payload.
+Retrieves all queued tasks that match a specific key-value pair in their payload. This method is synchronous.
 
 ```ts
-async getQueues<T>(key: string, value: string): Promise<QueueItem<T>[]>
+getQueues<T>(key: string, value: string): QueueItem<T>[]
 ```
 
 **Parameters:**
@@ -184,7 +184,7 @@ This method fetches all queue items and filters them in memory by parsing each p
 
 ```ts
 // Find all tasks for a specific user
-const userTasks = await agent.getQueues("userId", "12345");
+const userTasks = agent.getQueues("userId", "12345");
 ```
 
 </TypeScriptExample>
@@ -340,9 +340,12 @@ The queue system works with other Agent SDK features:
 ## Limitations
 
 - Tasks are processed sequentially, not in parallel.
-- No built-in retry mechanism (implement your own).
 - No priority system (FIFO only).
 - Queue processing happens during agent execution, not as separate background jobs.
+
+:::note
+Queue tasks support built-in retries with exponential backoff. Pass `{ retry: { maxAttempts, baseDelayMs, maxDelayMs } }` as the third argument to `queue()`. Refer to [Retries](/agents/api-reference/retries/) for details.
+:::
 
 ## Queue vs Schedule
 

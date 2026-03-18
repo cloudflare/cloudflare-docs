@@ -104,8 +104,8 @@ curl https://blog.cloudflare.com/markdown-for-agents/ \
 ## Limitations
 
 - We only convert from HTML, other types of documents may be included in the future.
-- We don't support compressed responses from the origin.
-- Markdown for Agents is a zone level setting. If you need different settings for different sub-domains of a zone, you need to decouple them to separate zones.
+- The origin response cannot exceed 2 MB (2,097,152 bytes).
+- If the feature is enabled but responses are still `text/html`, contact [Cloudflare Support](/support/contacting-cloudflare-support/) to verify your zone's compatibility.
 
 ## Other Markdown conversion APIs
 

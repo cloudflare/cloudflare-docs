@@ -5,9 +5,9 @@ sidebar:
   order: 3
 ---
 
-Auto-move events are events where emails are automatically moved to different inboxes based on the disposition Email security assigned to them.
+Auto-moves allow you to automatically move emails out of your inbox based on a [disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/) that Email security assigns to each message (for example, malicious, spam, or spoof).
 
-Email security shows you the total number of auto-moves and the source folder from which these moves are originating from.
+Use auto-moves to enforce email security policy without relying on end users to identify and act on threats themselves. After you configure auto-moves, Email security handles flagged messages according to the action you choose for each disposition.
 
 To configure auto-move events:
 
@@ -16,10 +16,10 @@ To configure auto-move events:
 3. Select **Settings**.
 4. Select **Moves**.
 5. Under **Auto-moves**, select **Configure**.
-6. Assign actions based on malicious, spoof, suspicious, spam, and bulk dispositions. Select among:
-   - **Soft delete - user recoverable**: Moves the message to the user's **Recoverable Items - Deleted** folder. Messages can be recovered by the user.
-   - **Hard delete - admin recoverable**: Completely deletes messages from a user's inbox.
-   - **Move to trash**: Moves messages to the trash or deleted items email folder.
-   - **Move to junk**: Moves the message to the junk or spam folder.
-   - **No action**: Messages stay in the origin folder.
+6. For each disposition (malicious, spoof, suspicious, spam, and bulk), choose what happens to matching emails:
+   - **Soft delete - user recoverable**: Moves the message to the user's **Recoverable Items - Deleted** folder. The user can still find and restore the message.
+   - **Hard delete - admin recoverable**: Removes the message from the user's inbox entirely. Only an administrator can recover it. 
+   - **Move to trash**: Moves the message to the user's trash or deleted items folder.
+   - **Move to junk**: Moves the message to the user's junk or spam folder.
+   - **No action**: Leaves the message where it is. Email security still records the disposition, but does not move the message.
 7. Select **Save**.

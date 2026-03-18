@@ -452,7 +452,7 @@ function GameComponent() {
 
 ## How it works
 
-Readonly status is stored in the connection's WebSocket attachment, which persists through the WebSocket Hibernation API. The flag is namespaced internally so it cannot be accidentally overwritten by `connection.setState()`. This means:
+Readonly status is stored in the connection's WebSocket attachment, which persists through the WebSocket Hibernation API. The flag is namespaced internally so it cannot be accidentally overwritten by `connection.setState()`. The same mechanism is used by [protocol message control](/agents/api-reference/protocol-messages/) — both flag coexist safely in the attachment. This means:
 
 - **Survives hibernation** — the flag is serialized and restored when the agent wakes up
 - **No cleanup needed** — connection state is automatically discarded when the connection closes
@@ -625,5 +625,6 @@ export class AuditedAgent extends Agent<Env, State> {
 ## Related resources
 
 - [Store and sync state](/agents/api-reference/store-and-sync-state/)
+- [Protocol messages](/agents/api-reference/protocol-messages/) — suppress JSON protocol frames for binary-only clients (can be combined with readonly)
 - [WebSockets](/agents/api-reference/websockets/)
 - [Callable methods](/agents/api-reference/callable-methods/)

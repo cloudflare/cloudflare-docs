@@ -3,32 +3,41 @@ import { getEntry } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-	product: CollectionEntry<"product-availability">["id"];
+	product: CollectionEntry<"directory">["id"];
 	parentheses?: string;
 }
 
 const { product, parentheses = "true" } = Astro.props;
 
-let entry = await getEntry("product-availability", product);
+const directoryEntry = await getEntry("directory", product);
 let output = "";
 
-if (!entry || !entry.data.availability) {
+if (!directoryEntry) {
 	console.warn(
-		`Product availability value not found for product="${product}" in ${Astro.url.pathname}. Returning empty.`,
+		`Directory entry not found for product="${product}" in ${Astro.url.pathname}. Returning empty.`,
 	);
-}
-// don't show anything for GA products
-else if (entry.data.availability.toUpperCase() === "GA") {
-	console.info(
-		`Product availability entry is GA for product="${product}" in ${Astro.url.pathname}. Returning empty.`,
-	);
-}
-// show an availability value
-else {
-	if (parentheses === "false") {
-		output = entry.data.availability;
-	} else {
-		output = `(${entry.data.availability})`;
+} else {
+	const availabilityId = directoryEntry.data.id;
+	const entry = await getEntry("product-availability", availabilityId);
+
+	if (!entry || !entry.data.availability) {
+		console.warn(
+			`Product availability value not found for product="${product}" (id="${availabilityId}") in ${Astro.url.pathname}. Returning empty.`,
+		);
+	}
+	// don't show anything for GA products
+	else if (entry.data.availability.toUpperCase() === "GA") {
+		console.info(
+			`Product availability entry is GA for product="${product}" (id="${availabilityId}") in ${Astro.url.pathname}. Returning empty.`,
+		);
+	}
+	// show an availability value
+	else {
+		if (parentheses === "false") {
+			output = entry.data.availability;
+		} else {
+			output = `(${entry.data.availability})`;
+		}
 	}
 }
 ---

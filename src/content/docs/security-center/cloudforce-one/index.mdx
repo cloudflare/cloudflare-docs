@@ -12,11 +12,17 @@ import { Details, DashButton } from "~/components"
 You must have a Cloudforce One subscription to access Cloudforce One on the dashboard.
 :::
 
-Cloudforce One is a threat intelligence solution that offers threat research reports, brand protection, Request for Information (RFIs), and more.
+Cloudforce One is an actionable, cloud-native Threat Intelligence Platform (TIP) that transforms global telemetry into instant security posture. By integrating visualization, automation, and human-in-the-loop analysis, Cloudforce One allows SOC teams to go from data management to active threat hunting.
+
+## Access Cloudforce One
+
+:::note
+You must have a **Cloudforce One subscription** to access the platform.
+:::
 
 To access Cloudforce One:
 
-1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
+1. In the Cloudflare dashboard, go to the **Threat intelligence** page.
 
    <DashButton url="/?to=/:account/security-center/threat-intelligence" />
 
@@ -28,6 +34,61 @@ Cloudforce One Threat Intelligence displays the following information:
 - **Priority Intelligence Requirements** to review and manage Cloudforce One Priority Intelligence Requirements (PIRs). PIRs are a structured approach to identifying intelligence gaps.
 - **Requests for Information** to submit specific queries and requests directly into Cloudforce One's analysis queue.
 - **Reports** to get the latest Cloudforce One Threat reports.
+
+## Analyze threat events
+
+Threat events allow you to protect your assets and respond to emerging threats.
+
+To access and analyze threat intelligence data on the Cloudflare dashboard, go to the **Threat intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
+
+You can also access threat events via the [API](/api/resources/cloudforce_one/subresources/threat_events/).
+
+Cloudforce One customers have access to the following existing datasets:
+
+- APTs (default)
+- DDoS attacks 
+- Cybercrime
+- Compromised devices
+- Residential Proxies
+- WAF attacks 
+
+### Identify the adversary
+
+The Cloudflare dashboard presents you with dynamic visualizations that include:
+
+- Sankey diagrams: Diagrams that allow you to trace attack flows from origin infrastructure to targets.
+- Industry distribution: Identify if campaigns are targeting your specific sector (for example, finance or retail).
+
+### Search for indicators
+
+Search across global datasets for specific indicators, including:
+
+- IP addresses and domains
+- File hashes
+- [JA3 fingerprints](/bots/additional-configurations/ja3-ja4-fingerprint/)
+- Threat insights: Correlate threat insights by linking events to specific campaigns or industry aliases (for example, APT28).
+
+### Receive alerts
+
+- Threat events saved views: Save custom filters for recurring investigations.
+- Automated rules: Generate security rules directly from threat data and push them to your Cloudflare [WAF](/waf/) or Firewall.
+- [STIX2 exports](https://www.cloudflare.com/en-gb/learning/security/what-is-stix-and-taxii/): Export intelligence for seamless integration with third-party SIEM/SOAR platforms.
+
+## Use Cloudy to analyze threat events
+
+You can use Cloudy, Cloudflare's AI Agent, to receive an analysis and summary of threat events.
+
+To analyze threat events using Cloudy:
+
+1. In the Cloudflare dashboard, go to the **Threat intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
+
+2. Go to **Threat Events** > **Analyze with Cloudy**.
+
+Cloudy will show you the top threat events, analyze them, and give you a summary of threat events. You can also decide to receive an analysis based on **Attacker**, **Indicator**, and more. For example, you can enter "Give me a summary of threat events for ABC Attacker". Cloudy will then summarize threat events for ABC attacker.
 
 ## Submit RFIs
 
@@ -91,57 +152,6 @@ You can also choose to upload and download an attachment.
 Under **Attachments**, select the file you want to upload, then select **Save**.
 
 To download an attachment, select **Download** on the attachment.
-
-## Analyze threat events
-
-Threat events allow you to protect your assets and respond to emerging threats.
-
-To access and analyze threat intelligence data on the dashboard:
-
-1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
-
-   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
-
-You can also access threat events via the [API](/api/resources/cloudforce_one/subresources/threat_events/).
-
-Cloudforce One customers have access to the following existing datasets:
-
-- APTs (default)
-- DDoS attacks 
-- Cybercrime
-- Compromised devices
-- Residential Proxies
-- WAF attacks 
-
-You can filter **Threat Events** by:
-
-- Attacker
-- Attacker Country
-- Target Country
-- Target Industry
-- TLP (Traffic Light Protocol)
-- Indicator Type
-- [Kill Chain](https://en.wikipedia.org/wiki/Cyber_kill_chain)
-- Tags
-- Event Category
-
-You can also filter by **Date range**.
-
-Some events will not display **Target Country** and **Target Industry** because they are unknown information. There may be situations where the attacker's information is unknown. When Cloudflare finds a new attacker, the attacker will be assigned a new name.
-
-## Use Cloudy to analyze threat events
-
-You can use Cloudy, Cloudflare's AI Agent, to receive an analysis and summary of threat events.
-
-To analyze threat events using Cloudy:
-
-1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
-
-   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
-
-2. Go to **Threat Events** > **Analyze with Cloudy**.
-
-Cloudy will show you the top threat events, analyze them, and give you a summary of threat events. You can also decide to receive an analysis based on **Attacker**, **Indicator**, and more. For example, you can enter "Give me a summary of threat events for ABC Attacker". Cloudy will then summarize threat events for ABC attacker.
 
 ## Receive help for an incident
 

@@ -6,18 +6,30 @@ import { externalLinkArrow } from "~/plugins/rehype/external-links";
 
 type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
 	order?: number;
-	icon?: { lottieLink: string };
 };
 type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 	order?: number;
-	icon?: { lottieLink: string };
 };
 
 export type SidebarEntry = Link | Group;
 type Badge = Link["badge"];
 
 const directory = await getCollection("directory");
+const productAvailability = await getCollection("product-availability");
 const sidebars = new Map<string, Group>();
+
+// Build URL → beta badge map from directory entries + product availability
+const betaBadgeUrls = new Map<string, Badge>();
+for (const dirEntry of directory) {
+	const availabilityId = dirEntry.data.id;
+	const availEntry = productAvailability.find((e) => e.id === availabilityId);
+	if (availEntry?.data.availability?.toLowerCase() === "beta") {
+		betaBadgeUrls.set(dirEntry.data.entry.url, {
+			text: "Beta",
+			variant: "caution",
+		});
+	}
+}
 
 export async function getSidebar(context: AstroGlobal) {
 	const pathname = context.url.pathname;
@@ -96,9 +108,12 @@ export async function generateSidebar(group: Group) {
 	const product = directory.find((p) => p.id === group.label);
 	if (product && product.data.entry.group === "Developer platform") {
 		const links = [
-			["llms.txt", "/llms.txt"],
+			["llms.txt", `${product.data.entry.url}llms.txt`],
 			["prompt.txt", "/workers/prompt.txt"],
-			[`${product.data.name} llms-full.txt`, `/${product.id}/llms-full.txt`],
+			[
+				`${product.data.name} llms-full.txt`,
+				`${product.data.entry.url}llms-full.txt`,
+			],
 			["Developer Platform llms-full.txt", "/developer-platform/llms-full.txt"],
 		];
 
@@ -136,7 +151,11 @@ function setSidebarCurrentEntry(
 			const href = entry.href;
 
 			// Compare with and without trailing slash
-			if (href === pathname || href.slice(0, -1) === href) {
+			const normalizedHref = href.endsWith("/") ? href.slice(0, -1) : href;
+			const normalizedPathname = pathname.endsWith("/")
+				? pathname.slice(0, -1)
+				: pathname;
+			if (normalizedHref === normalizedPathname) {
 				entry.isCurrent = true;
 				return true;
 			}
@@ -208,14 +227,13 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	const frontmatter = entry.data;
 
-	group.icon = frontmatter.sidebar.group?.icon ?? frontmatter.icon;
 	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
 
 	if (frontmatter.sidebar.group?.badge) {
 		group.badge = inferBadgeVariant(frontmatter.sidebar.group?.badge);
-	} else if (frontmatter.wid) {
-		const availabilityBadge = await productAvailabilityBadge(frontmatter.wid);
+	} else {
+		const availabilityBadge = betaBadgeUrls.get(index.href);
 		if (availabilityBadge) {
 			group.badge = availabilityBadge;
 		}
@@ -225,7 +243,6 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 		return {
 			type: "link",
 			href: index.href,
-			icon: group.icon,
 			label: group.label,
 			order: group.order,
 			attrs: {
@@ -295,8 +312,8 @@ async function handleLink(link: Link): Promise<Link> {
 
 	if (link.badge) {
 		link.badge = inferBadgeVariant(link.badge);
-	} else if (frontmatter.wid) {
-		const availabilityBadge = await productAvailabilityBadge(frontmatter.wid);
+	} else {
+		const availabilityBadge = betaBadgeUrls.get(link.href);
 		if (availabilityBadge) {
 			link.badge = availabilityBadge;
 		}
@@ -305,7 +322,6 @@ async function handleLink(link: Link): Promise<Link> {
 	if (frontmatter.external_link && !frontmatter.sidebar.group?.hideIndex) {
 		return {
 			...link,
-			icon: frontmatter.icon,
 			label: link.label.concat(externalLinkArrow),
 			href: frontmatter.external_link,
 			badge: getBadge(frontmatter.external_link) ?? link.badge,
@@ -317,23 +333,6 @@ async function handleLink(link: Link): Promise<Link> {
 	}
 
 	return link;
-}
-
-async function productAvailabilityBadge(
-	wid: string,
-): Promise<Badge | undefined> {
-	try {
-		const availabilityEntry = await getEntry("product-availability", wid);
-		if (
-			availabilityEntry &&
-			availabilityEntry.data.availability?.toLowerCase() === "beta"
-		) {
-			return { text: "Beta", variant: "caution" };
-		}
-	} catch (_error) {
-		// If the entry doesn't exist in the collection, return undefined
-	}
-	return undefined;
 }
 
 function inferBadgeVariant(badge: Badge) {

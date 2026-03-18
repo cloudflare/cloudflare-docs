@@ -1,0 +1,182 @@
+---
+title: Workers Binding
+pcx_content_type: how-to
+sidebar:
+  order: 2
+---
+
+import { WranglerConfig, Type, TypeScriptExample } from "~/components";
+
+Cloudflare’s serverless platform allows you to run code at the edge to build full-stack applications with [Workers](/workers/). A [binding](/workers/runtime-apis/bindings/) enables your Worker or Pages Function to interact with resources on the Cloudflare Developer Platform.
+
+To use our Markdown Conversion service directly from your Workers, create an AI binding either in the Cloudflare dashboard (refer to [AI bindings](/pages/functions/bindings/#workers-ai) for instructions), or you can update your [Wrangler file](/workers/wrangler/configuration/). Add the following to your Wrangler file:
+
+<WranglerConfig>
+
+```toml
+[ai]
+binding = "AI" # i.e. available in your Worker on env.AI
+```
+
+</WranglerConfig>
+
+## Examples
+
+### Converting files
+
+In this example, we fetch a PDF document and an image from R2 and feed them both to `env.AI.toMarkdown`. The result is a list of converted documents. Workers AI models are used automatically to detect and summarize the image.
+
+<TypeScriptExample>
+
+```typescript
+import { Env } from "./env";
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		// https://pub-979cb28270cc461d94bc8a169d8f389d.r2.dev/somatosensory.pdf
+		const pdf = await env.R2.get("somatosensory.pdf");
+
+		// https://pub-979cb28270cc461d94bc8a169d8f389d.r2.dev/cat.jpeg
+		const cat = await env.R2.get("cat.jpeg");
+
+		return Response.json(
+			await env.AI.toMarkdown([
+				{
+					name: "somatosensory.pdf",
+					blob: new Blob([await pdf.arrayBuffer()], {
+						type: "application/pdf",
+					}),
+				},
+				{
+					name: "cat.jpeg",
+					blob: new Blob([await cat.arrayBuffer()], {
+						type: "image/jpeg",
+					}),
+				},
+			]),
+		);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Getting supported file formats
+
+<TypeScriptExample>
+
+```typescript
+import { Env } from "./env";
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		return Response.json(await env.AI.toMarkdown().supported());
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Methods
+
+### async env.AI.toMarkdown()
+
+Takes a document or list of documents in different formats and converts them to Markdown.
+
+<TypeScriptExample>
+
+```typescript
+const result = await env.AI.toMarkdown({
+	name: "document.pdf",
+	blob: new Blob([documentBuffer]),
+});
+```
+
+</TypeScriptExample>
+
+#### Parameter
+
+- <code>files</code>: <Type text="MarkdownDocument | MarkdownDocument[]" />- an
+  instance of or an array of `MarkdownDocument`s.
+
+- <code>conversionOptions</code>: <Type text="ConversionOptions" />- options
+  that control how conversion happens. See [Conversion
+  Options](/workers-ai/features/markdown-conversion/conversion-options/) for
+  further details.
+
+#### Return values
+
+- <code>results</code>:
+  <Type text="Promise<ConversionResult | ConversionResult[]>" />- An instance of
+  or an array of `ConversionResult`s.
+
+#### `MarkdownDocument` definition
+
+- `name` <Type text="string" />
+  - Name of the document to convert.
+
+- `blob` <Type text="Blob" />
+  - A new [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob) object with the document content.
+
+#### `ConversionResult` definition
+
+- `id` <Type text="string" />
+  - ID associated to this object.
+
+- `name` <Type text="string" />
+  - Name of the converted document. Matches the input name.
+
+- `format` <Type text="'markdown' | 'error'" />
+  - The format of this `ConversionResult` object
+
+- `mimetype` <Type text="string" />
+  - The detected [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types) of the document.
+
+- `tokens` <Type text="number" />
+  - The estimated number of tokens of the converted document. Only present if `format` is equal to `markdown`.
+
+- `data` <Type text="string" />
+  - The content of the converted document in Markdown format. Only present if `format` is equal to `markdown`.
+
+- `error` <Type text="string" />
+  - The error message explaining why this conversion failed. Only present if `format` is equal to `error`.
+
+### async env.AI.toMarkdown().transform()
+
+This method is similar to `env.AI.toMarkdown` except that it is exposed through a new handle. It takes the same arguments and returns the same values.
+
+<TypeScriptExample>
+
+```typescript
+const result = await env.AI.toMarkdown().transform({
+	name: "document.pdf",
+	blob: new Blob([documentBuffer]),
+});
+```
+
+</TypeScriptExample>
+
+### async env.AI.toMarkdown().supported()
+
+Returns a list of file formats that are currently supported for markdown conversion. See [Supported formats](/workers-ai/features/markdown-conversion/supported-formats/) for the full list of file formats that can be converted into Markdown.
+
+<TypeScriptExample>
+
+```typescript
+const formats = await env.AI.toMarkdown().supported();
+```
+
+</TypeScriptExample>
+
+#### Return values
+
+- <code>results</code>: <Type text="SupportedFormat[]" />- An array of all
+  formats supported for markdown conversion.
+
+#### `SupportedFormat` definition
+
+- `extension` <Type text="string" />
+  - Extension of files in this format.
+
+- `mimeType` <Type text="string" />
+  - The [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types) of files of this format
