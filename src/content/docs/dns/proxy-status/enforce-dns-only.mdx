@@ -1,0 +1,93 @@
+---
+pcx_content_type: how-to
+title: Enforce DNS-only
+sidebar:
+  order: 3
+  label: Enforce DNS-only
+---
+
+The enforce DNS-only setting is an account-level break-glass mechanism that allows you to bypass Cloudflare's reverse proxy for all zones in your account in a single action. When enabled, Cloudflare responds to DNS queries with your origin IP addresses instead of Cloudflare anycast IP addresses, effectively setting all [proxied DNS records](/dns/proxy-status/) to DNS-only without modifying the records themselves.
+
+This setting is intended for emergency situations only, such as during an outage when you need to quickly route traffic directly to your origins.
+
+:::caution
+
+Enabling this setting immediately exposes your origin IP addresses and removes all Cloudflare protections — including DDoS mitigation, WAF, caching, and all other proxy-based features — for every zone in your account. Use with extreme caution and only after proper preparation.
+
+:::
+
+## Key characteristics
+
+- **Account-level**: Affects all zones in the account simultaneously.
+- **Non-destructive**: Does not modify your DNS records. Disabling the setting restores normal proxy behavior.
+- **API-only**: Available through the API only, not in the Cloudflare dashboard.
+
+## Before you begin
+
+Before relying on enforce DNS-only as part of your incident response plan, you should:
+
+- **Verify origin server capacity**: Without Cloudflare proxying, your origin servers will handle all traffic directly, including any traffic that Cloudflare would normally cache or filter. Ensure your infrastructure can sustain this load.
+- **Review exposed IP addresses**: When enforce DNS-only is active, all origin IPs configured in proxied records become publicly visible through DNS queries. If your origins rely on IP obscurity for security, plan accordingly.
+- **Test in advance**: Use the API in a staging or test account to confirm that you understand the behavior before you need it in an emergency.
+
+## Enable enforce DNS-only
+
+Use the [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/account/methods/edit/) endpoint to enable enforce DNS-only for your account:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/dns_settings" \
+--request PATCH \
+--header "Authorization: Bearer {api_token}" \
+--header "Content-Type: application/json" \
+--data '{
+  "enforce_dns_only": true
+}'
+```
+
+The response confirms the updated setting:
+
+```json
+{
+	"success": true,
+	"result": {
+		"enforce_dns_only": true
+	}
+}
+```
+
+Once enabled, Cloudflare will begin responding to DNS queries for all proxied records with your configured origin IP addresses instead of Cloudflare anycast IPs.
+
+## Disable enforce DNS-only
+
+To restore normal proxy behavior, set `enforce_dns_only` to `false`:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/dns_settings" \
+--request PATCH \
+--header "Authorization: Bearer {api_token}" \
+--header "Content-Type: application/json" \
+--data '{
+  "enforce_dns_only": false
+}'
+```
+
+After you disable the setting, Cloudflare will resume responding to DNS queries with anycast IP addresses for proxied records and all proxy-based features will be restored.
+
+:::note
+Due to DNS caching by recursive resolvers, the transition back to proxied behavior may not be instantaneous. The TTL of your proxied records (default 300 seconds) determines how long resolvers may continue to serve the origin IP addresses after you disable the setting.
+:::
+
+## Check current status
+
+Use the [Show DNS Settings](/api/resources/dns/subresources/settings/subresources/account/methods/get/) endpoint to verify the current value:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/dns_settings" \
+--header "Authorization: Bearer {api_token}"
+```
+
+## Related resources
+
+- [Proxy status](/dns/proxy-status/) - Understand how proxied and DNS-only records behave.
+- [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/#edit-proxy-status-in-bulk) - Change proxy status for individual records in bulk within a single zone.
+- [DNS zone defaults](/dns/additional-options/dns-zone-defaults/) - Configure other account-level DNS settings.

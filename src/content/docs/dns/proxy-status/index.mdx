@@ -88,9 +88,9 @@ Consider that the same Cloudflare account has two different zones, `example.com`
 
 DNS management for **example.com**:
 
-| Type | Name   | Content     | Proxy status | TTL  |
-| ---- | ------ | ----------- | ------------ | ---- |
-| CNAME   | `example.com` | `origin.example.net` | DNS only     | Auto |
+| Type  | Name          | Content              | Proxy status | TTL  |
+| ----- | ------------- | -------------------- | ------------ | ---- |
+| CNAME | `example.com` | `origin.example.net` | DNS only     | Auto |
 
 </Example>
 
@@ -98,9 +98,9 @@ DNS management for **example.com**:
 
 DNS management for **example.net**:
 
-| Type | Name   | Content     | Proxy status | TTL  |
-| ---- | ------ | ----------- | ------------ | ---- |
-| CNAME   | `origin.example.net` | `<origin>` | Proxied     | Auto |
+| Type  | Name                 | Content    | Proxy status | TTL  |
+| ----- | -------------------- | ---------- | ------------ | ---- |
+| CNAME | `origin.example.net` | `<origin>` | Proxied      | Auto |
 
 </Example>
 
@@ -139,3 +139,7 @@ When an A, AAAA, or CNAME record is **DNS-only** — also known as being gray-cl
 In addition to potentially exposing your origin IP addresses to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), leaving your records as **DNS-only** means that Cloudflare cannot [optimize, cache, and protect](/fundamentals/concepts/how-cloudflare-works/) requests to your application or provide analytics on those requests.
 
 <Render file="mix-proxied-and-unproxied" product="dns" />
+
+### Enforce DNS-only for all zones
+
+In emergency situations, you can use the account-level [enforce DNS-only](/dns/proxy-status/enforce-dns-only/) setting to bypass Cloudflare's reverse proxy for all zones in your account at once, without modifying individual DNS records. This API-only break-glass mechanism is intended for scenarios where you need to quickly route all traffic directly to your origins.
