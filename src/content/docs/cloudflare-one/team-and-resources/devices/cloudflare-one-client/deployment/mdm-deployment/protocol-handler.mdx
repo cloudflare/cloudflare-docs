@@ -48,6 +48,8 @@ You can configure your browser to automatically launch the Cloudflare One Client
 
 ![Browser popup requesting permission to open the Cloudflare One Client](~/assets/images/cloudflare-one/connections/warp-protocol-handler.png)
 
+_Note: Labels in this image may reflect a previous product name._
+
 ### Chromium-based browsers
 
 Chromium-based browsers such as Google Chrome and Microsoft Edge have a policy setting called [AutoLaunchProtocolsFromOrigins](https://learn.microsoft.com/en-us/DeployEdge/microsoft-edge-policies#autolaunchprotocolsfromorigins). This setting takes in two parameters: a protocol for the browser to launch and the origins that are allowed to launch it. For the browser to launch the Cloudflare One Client, you need to set the protocol to `com.cloudflare.warp` and the origin to your <GlossaryTooltip term="team domain">Cloudflare Zero Trust team domain</GlossaryTooltip> (`https://<your-team-name>.cloudflareaccess.com`).
