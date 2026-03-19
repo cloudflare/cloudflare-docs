@@ -82,8 +82,8 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --state open \
             --limit 1000 \
-            --json headRefName,headRepositoryOwner,baseRepositoryOwner \
-            | jq -r '.[] | select(.headRepositoryOwner.login == .baseRepositoryOwner.login) | .headRefName' \
+            --json headRefName \
+            | jq -r '.[].headRefName' \
             | sort -u)
 
           cutoff=$(date -d '60 days ago' --utc +%Y-%m-%dT%H:%M:%SZ 2>/dev/null \
