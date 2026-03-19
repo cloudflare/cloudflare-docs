@@ -57,11 +57,11 @@
 	--sl-color-hairline-shade: var(--color-cl1-gray-2);
 	--sidebar-text: var(--color-cl1-gray-7);
 	--sidebar-text-strong: var(--color-cl1-white);
-	--sidebar-hover-bg: var(--sidebar-orange-accent-600);
-	--sidebar-hover-text: var(--orange-accent-200);
-	--sidebar-active-bg: var(--sidebar-orange-accent-600);
-	--sidebar-active-text: var(--orange-accent-200);
+	--sidebar-hover-bg: var(--color-cl1-gray-2);
+	--sidebar-hover-text: var(--sidebar-text-strong);
+	--sidebar-active-bg: var(--color-cl1-gray-2);
+	--sidebar-active-text: var(--sidebar-text-strong);
 	--sidebar-border: var(--color-cl1-gray-2);
-	--sl-color-sidebar-active: var(--orange-accent-200);
-	--sl-color-sidebar-hover: var(--sidebar-orange-accent-600);
+	--sl-color-sidebar-active: var(--sidebar-text-strong);
+	--sl-color-sidebar-hover: var(--color-cl1-gray-2);
 }
