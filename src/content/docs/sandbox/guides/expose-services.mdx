@@ -32,27 +32,33 @@ The typical workflow is: start service → wait for ready → expose port → ha
 ```
 import { getSandbox, proxyToSandbox } from '@cloudflare/sandbox';
 
-const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+export { Sandbox } from '@cloudflare/sandbox';
 
-// 1. Start a web server
-await sandbox.startProcess('python -m http.server 8000');
-
-// 2. Wait for service to start
-await new Promise(resolve => setTimeout(resolve, 2000));
-
-// 3. Expose the port
-const exposed = await sandbox.exposePort(8000);
-
-// 4. Preview URL is now available (public by default)
-console.log('Server accessible at:', exposed.exposedAt);
-// Production: https://8000-abc123.example.com
-// Local dev: http://localhost:8787/...
-
-// 5. Handle preview URL requests in your Worker
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    // Proxy requests to the exposed port
-    return proxyToSandbox(request, env.Sandbox, 'my-sandbox');
+    // Proxy requests to exposed ports first
+    const proxyResponse = await proxyToSandbox(request, env);
+    if (proxyResponse) return proxyResponse;
+
+    // Extract hostname from request
+    const { hostname } = new URL(request.url);
+    const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+    // 1. Start a web server
+    await sandbox.startProcess('python -m http.server 8000');
+
+    // 2. Wait for service to start
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // 3. Expose the port
+    const exposed = await sandbox.exposePort(8000, { hostname });
+
+    // 4. Preview URL is now available (public by default)
+    console.log('Server accessible at:', exposed.url);
+    // Production: https://8000-abc123.yourdomain.com
+    // Local dev: http://localhost:8787/...
+
+    return Response.json({ url: exposed.url });
   }
 };
 ```
@@ -62,25 +68,95 @@ export default {
 **Preview URLs are public by default.** Anyone with the URL can access your service. Add authentication if needed.
 :::
 
+:::note[Local development requirement]
+When using `wrangler dev`, you must add `EXPOSE` directives to your Dockerfile for each port you plan to expose. Without this, you'll see "Connection refused: container port not found". See [Local development](#local-development) section below for setup details.
+:::
+
+:::caution[Uppercase sandbox IDs don't work with preview URLs]
+Preview URLs extract the sandbox ID from the hostname, which is always lowercase (e.g., `8000-myproject-123.yourdomain.com`). If you created your sandbox with an uppercase ID like `"MyProject-123"`, the URL routes to `"myproject-123"` (a different Durable Object), making your sandbox unreachable.
+
+To fix this, use `normalizeId: true` when creating sandboxes for port exposure:
+
+```ts
+const sandbox = getSandbox(env.Sandbox, 'MyProject-123', { normalizeId: true });
+```
+
+This lowercases the ID during creation so it matches preview URL routing. Without this, `exposePort()` throws an error.
+
+**Best practice**: Use lowercase IDs from the start (`'my-project-123'`).
+
+See [Sandbox options](/sandbox/configuration/sandbox-options/#normalizeid) for details.
+:::
+
+## Stable URLs with custom tokens
+
+For production deployments or when sharing URLs with users, use custom tokens to maintain consistent preview URLs across container restarts:
+
+<TypeScriptExample>
+```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
+// Without custom token - URL changes on restart
+const exposed = await sandbox.exposePort(8080, { hostname });
+// https://8080-sandbox-id-random16chars12.yourdomain.com
+
+// With custom token - URL stays the same across restarts
+const stable = await sandbox.exposePort(8080, { 
+  hostname, 
+  token: 'api-v1' 
+});
+// https://8080-sandbox-id-api-v1.yourdomain.com
+// Same URL after container restart ✓
+
+return Response.json({
+  'Temporary URL (changes on restart)': exposed.url,
+  'Stable URL (consistent)': stable.url
+});
+```
+</TypeScriptExample>
+
+**Token requirements:**
+- 1-16 characters long
+- Lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (_) only
+- Must be unique within each sandbox
+
+**Use cases:**
+- Production APIs with stable endpoints
+- Sharing demo URLs with external users
+- Integration testing with predictable URLs
+- Documentation with consistent examples
+
 ## Name your exposed ports
 
 When exposing multiple ports, use names to stay organized:
 
 <TypeScriptExample>
 ```
-// Start and expose API server
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
+// Start and expose API server with stable token
 await sandbox.startProcess('node api.js', { env: { PORT: '8080' } });
 await new Promise(resolve => setTimeout(resolve, 2000));
-const api = await sandbox.exposePort(8080, { name: 'api' });
+const api = await sandbox.exposePort(8080, { 
+  hostname, 
+  name: 'api',
+  token: 'api-prod'
+});
 
-// Start and expose frontend
+// Start and expose frontend with stable token
 await sandbox.startProcess('npm run dev', { env: { PORT: '5173' } });
 await new Promise(resolve => setTimeout(resolve, 2000));
-const frontend = await sandbox.exposePort(5173, { name: 'frontend' });
+const frontend = await sandbox.exposePort(5173, { 
+  hostname, 
+  name: 'frontend',
+  token: 'web-app'
+});
 
 console.log('Services:');
-console.log('- API:', api.exposedAt);
-console.log('- Frontend:', frontend.exposedAt);
+console.log('- API:', api.url);
+console.log('- Frontend:', frontend.url);
 ```
 </TypeScriptExample>
 
@@ -90,6 +166,9 @@ Always verify a service is ready before exposing. Use a simple delay for most ca
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 // Start service
 await sandbox.startProcess('npm run dev', { env: { PORT: '8080' } });
 
@@ -97,7 +176,7 @@ await sandbox.startProcess('npm run dev', { env: { PORT: '8080' } });
 await new Promise(resolve => setTimeout(resolve, 2000));
 
 // Now expose
-await sandbox.exposePort(8080);
+await sandbox.exposePort(8080, { hostname });
 ```
 </TypeScriptExample>
 
@@ -105,6 +184,9 @@ For critical services, poll the health endpoint:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 await sandbox.startProcess('node api-server.js', { env: { PORT: '8080' } });
 
 // Wait for health check
@@ -117,7 +199,7 @@ for (let i = 0; i < 10; i++) {
   }
 }
 
-await sandbox.exposePort(8080);
+await sandbox.exposePort(8080, { hostname });
 ```
 </TypeScriptExample>
 
@@ -127,6 +209,9 @@ Expose multiple ports for full-stack applications:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 // Start backend
 await sandbox.startProcess('node api/server.js', {
   env: { PORT: '8080' }
@@ -141,12 +226,12 @@ await sandbox.startProcess('npm run dev', {
 await new Promise(resolve => setTimeout(resolve, 3000));
 
 // Expose both
-const api = await sandbox.exposePort(8080, { name: 'api' });
-const frontend = await sandbox.exposePort(5173, { name: 'frontend' });
+const api = await sandbox.exposePort(8080, { hostname, name: 'api' });
+const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
 
 return Response.json({
-  api: api.exposedAt,
-  frontend: frontend.exposedAt
+  api: api.url,
+  frontend: frontend.url
 });
 ```
 </TypeScriptExample>
@@ -162,7 +247,7 @@ const { ports, count } = await sandbox.getExposedPorts();
 console.log(`${count} ports currently exposed:`);
 
 for (const port of ports) {
-  console.log(`  Port ${port.port}: ${port.exposedAt}`);
+  console.log(`  Port ${port.port}: ${port.url}`);
   if (port.name) {
     console.log(`    Name: ${port.name}`);
   }
@@ -227,12 +312,15 @@ Port 3000 is used by the internal Bun server and cannot be exposed:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 // ❌ This will fail
-await sandbox.exposePort(3000);  // Error: Port 3000 is reserved
+await sandbox.exposePort(3000, { hostname });  // Error: Port 3000 is reserved
 
 // ✅ Use a different port
 await sandbox.startProcess('node server.js', { env: { PORT: '8080' } });
-await sandbox.exposePort(8080);
+await sandbox.exposePort(8080, { hostname });
 ```
 </TypeScriptExample>
 
@@ -242,9 +330,12 @@ Wait for the service to start before exposing:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 await sandbox.startProcess('npm run dev');
 await new Promise(resolve => setTimeout(resolve, 3000));
-await sandbox.exposePort(8080);
+await sandbox.exposePort(8080, { hostname });
 ```
 </TypeScriptExample>
 
@@ -254,19 +345,42 @@ Check before exposing to avoid errors:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 const { ports } = await sandbox.getExposedPorts();
 if (!ports.some(p => p.port === 8080)) {
-  await sandbox.exposePort(8080);
+  await sandbox.exposePort(8080, { hostname });
 }
 ```
 </TypeScriptExample>
 
+### Uppercase sandbox ID error
+
+**Error**: `Preview URLs require lowercase sandbox IDs`
+
+**Cause**: You created a sandbox with uppercase characters (e.g., `"MyProject-123"`) but preview URLs always use lowercase in routing, causing a mismatch.
+
+**Solution**:
+
+<TypeScriptExample>
+```
+// Create sandbox with normalization
+const sandbox = getSandbox(env.Sandbox, 'MyProject-123', { normalizeId: true });
+await sandbox.exposePort(8080, { hostname });
+```
+</TypeScriptExample>
+
+This creates the Durable Object with ID `"myproject-123"`, matching the preview URL routing.
+
+See [Sandbox options - normalizeId](/sandbox/configuration/sandbox-options/#normalizeid) for details.
+
 ## Preview URL Format
 
-**Production**: `https://{port}-{sandbox-id}.yourdomain.com`
+**Production**: `https://{port}-{sandbox-id}-{token}.yourdomain.com`
 
-- Port 8080: `https://8080-abc123.example.com`
-- Port 5173: `https://5173-abc123.example.com`
+- Auto-generated token: `https://8080-abc123-random16chars12.yourdomain.com`
+- Custom token: `https://8080-abc123-my-api-v1.yourdomain.com`
 
 **Local development**: `http://localhost:8787/...`
 

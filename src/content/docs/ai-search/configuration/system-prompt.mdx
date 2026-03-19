@@ -21,13 +21,7 @@ System prompts are particularly useful for:
 - Applying domain-specific tone or terminology
 - Encouraging consistent, high-quality output
 
-## How to set your system prompt
-
-The system prompt for your AI Search can be set after it has been created by:
-
-1. Navigating to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/autorag), and go to AI > AI Search
-2. Select your AI Search
-3. Go to Settings page and find the System prompt setting for either Query rewrite or Generation
+## System prompt configuration
 
 ### Default system prompt
 
@@ -39,38 +33,30 @@ You can view the effective system prompt used for any AI Search's model call thr
 The default system prompt can change and evolve over time to improve performance and quality.
 :::
 
-## Query rewriting system prompt
+### Configure via API
 
-If query rewriting is enabled, you can provide a custom system prompt to control how the model rewrites user queries. In this step, the model receives:
+When you make a `/ai-search` request using the [Workers Binding](/ai-search/usage/workers-binding/) or [REST API](/ai-search/usage/rest-api/), you can set the system prompt programmatically.
 
-- The query rewrite system prompt
-- The original user query
+For example:
 
-The model outputs a rewritten query optimized for semantic retrieval.
-
-### Example
-
-```text
-You are a search query optimizer for vector database searches. Your task is to reformulate user queries into more effective search terms.
-
-Given a user's search query, you must:
-1. Identify the core concepts and intent
-2. Add relevant synonyms and related terms
-3. Remove irrelevant filler words
-4. Structure the query to emphasize key terms
-5. Include technical or domain-specific terminology if applicable
-
-Provide only the optimized search query without any explanations, greetings, or additional commentary.
-
-Example input: "how to fix a bike tire that's gone flat"
-Example output: "bicycle tire repair puncture fix patch inflate maintenance flat tire inner tube replacement"
-
-Constraints:
-- Output only the enhanced search terms
-- Keep focus on searchable concepts
-- Include both specific and general related terms
-- Maintain all important meaning from original query
+```javascript
+const answer = await env.AI.autorag("my-autorag").aiSearch({
+  query: "How do I train a llama to deliver coffee?",
+  model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+  system_prompt: "You are a helpful assistant."
+});
 ```
+
+import { DashButton } from "~/components";
+
+### Configure via Dashboard
+The system prompt for your AI Search can be set after it has been created:
+
+1. Go to **AI Search** in the Cloudflare dashboard.
+   <DashButton url="/?to=/:account/ai/ai-search" />
+2. Select an existing AI Search instance.
+3. Go to the **Settings** tab.
+4. Go to **Query rewrite** or **Generation**, and edit the **System prompt**.
 
 ## Generation system prompt
 
@@ -108,4 +94,37 @@ Important:
 - Present information in order of relevance
 - If documents contradict each other, note this and explain your reasoning for the chosen answer
 - Do not repeat the instructions
+```
+
+## Query rewriting system prompt
+
+If query rewriting is enabled, you can provide a custom system prompt to control how the model rewrites user queries. In this step, the model receives:
+
+- The query rewrite system prompt
+- The original user query
+
+The model outputs a rewritten query optimized for semantic retrieval.
+
+### Example
+
+```text
+You are a search query optimizer for vector database searches. Your task is to reformulate user queries into more effective search terms.
+
+Given a user's search query, you must:
+1. Identify the core concepts and intent
+2. Add relevant synonyms and related terms
+3. Remove irrelevant filler words
+4. Structure the query to emphasize key terms
+5. Include technical or domain-specific terminology if applicable
+
+Provide only the optimized search query without any explanations, greetings, or additional commentary.
+
+Example input: "how to fix a bike tire that's gone flat"
+Example output: "bicycle tire repair puncture fix patch inflate maintenance flat tire inner tube replacement"
+
+Constraints:
+- Output only the enhanced search terms
+- Keep focus on searchable concepts
+- Include both specific and general related terms
+- Maintain all important meaning from original query
 ```

@@ -13,7 +13,7 @@ This page lists the profile settings available when configuring a [predefined](/
 
 To edit profile settings for an existing predefined or custom DLP profile:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **DLP profiles**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
 2. Choose a profile, then select **Edit**.
 3. In **Settings**, configure the [settings](#available-settings) for your profile.
 4. Select **Save profile**.
@@ -44,7 +44,7 @@ DLP redacts any matched text, then submits the context as an AI text embedding v
 
 To use AI context analysis:
 
-1. Turn on **AI context analysis** in a DLP profile.
+1. Choose the **Confidence threshold** in a DLP profile.
 2. [Add the profile](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy) to a DLP policy.
 3. When configuring the DLP policy, turn on [payload logging](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules).
 
@@ -54,15 +54,16 @@ AI context analysis results will appear in the payload section of your [DLP logs
 
 Confidence thresholds indicate how confident Cloudflare DLP is in a DLP detection. DLP determines the confidence by inspecting the content for proximity keywords around the detection.
 
-Confidence threshold is set on the DLP profile. When you select a confidence threshold in Zero Trust, you will see which DLP entries will be affected by the confidence threshold. Entries that do not reflect a confidence threshold in Zero Trust are not yet supported or are not applicable.
+Confidence threshold is set on the DLP profile. When you select a confidence threshold in Cloudflare One, you will see which DLP entries will be affected by the confidence threshold. Entries that do not reflect a confidence threshold in Cloudflare One are not yet supported or are not applicable.
 
 DLP confidence detections consist of Low, Medium, and High confidence thresholds. DLP will default to Low confidence detections, which are based on regular expressions, require few keywords, and will trigger more often. Medium and High confidence detections require more keywords, will trigger less often, and have a higher likelihood of accuracy.
 
 To change the confidence threshold of a DLP profile:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **DLP profiles**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
 2. Select the profile, then select **Edit**.
 3. In **Settings** > **Confidence threshold**, choose a new confidence threshold from the dropdown menu.
+4. Select **Save profile**.
 
 Setting the confidence to Low will also consider Medium and High confidence detections as matches. Setting the confidence to Medium or High will filter out lower confidence detections.
 

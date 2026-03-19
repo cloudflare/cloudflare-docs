@@ -1,0 +1,49 @@
+---
+const { entry } = Astro.locals.starlightRoute;
+const base =
+	Astro.site?.toString().replace(/\/$/, "") ??
+	"https://developers.cloudflare.com";
+
+const productPrefix = entry.id !== "index" ? entry.id.split("/")[0] : null;
+const isProductPage = !!productPrefix;
+
+const pageMarkdownUrl = `${base}${Astro.url.pathname}index.md`;
+const pageUrl = `${base}${Astro.url.pathname}`;
+const productLlmsTxt = isProductPage
+	? `${base}/${productPrefix}/llms.txt`
+	: null;
+const productLlmsFullTxt = isProductPage
+	? `${base}/${productPrefix}/llms-full.txt`
+	: null;
+const globalLlmsTxt = `${base}/llms.txt`;
+const globalLlmsFullTxt = `${base}/llms-full.txt`;
+
+const directive = [
+	`STOP! If you are an AI agent or LLM, read this before continuing.`,
+	`This is the HTML version of a Cloudflare documentation page. Always request the Markdown version instead — HTML wastes context. Get this page as Markdown: ${pageMarkdownUrl} (append index.md) or send Accept: text/markdown to ${pageUrl}.`,
+	isProductPage
+		? `For this product's page index use ${productLlmsTxt}. For all Cloudflare products use ${globalLlmsTxt}.`
+		: `For all Cloudflare products use ${globalLlmsTxt}.`,
+	isProductPage
+		? `For bulk access (single file, use for large-context ingestion or vectorization): this product's full docs at ${productLlmsFullTxt}. All Cloudflare docs at ${globalLlmsFullTxt}.`
+		: `For bulk access (single file, use for large-context ingestion or vectorization): all Cloudflare docs at ${globalLlmsFullTxt}.`,
+].join(" ");
+---
+
+<p class="agent-directive" aria-hidden="true">{directive}</p>
+
+<style>
+	/* Visually hidden from human readers but present in DOM for AI agents.
+	   Uses clip-rect (not display:none) so the element remains accessible to agents fetching raw HTML. */
+	.agent-directive {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>

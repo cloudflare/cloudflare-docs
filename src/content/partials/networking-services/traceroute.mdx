@@ -1,12 +1,12 @@
 ---
 params:
-  - productName
   - greIpsecURL
   - warpURL
-  - cloudflareTunnelURL
   - tracerouteURL
 ---
 
 :::note[Run <code>traceroute</code>]
-{props.productName} clients connecting through <a href={props.greIpsecURL}>GRE</a>, <a href={props.greIpsecURL}>IPsec</a>, [CNI](/network-interconnect/) or <a href={props.warpURL}>WARP</a> that want to perform a `traceroute` to an endpoint behind a <a href={props.cloudflareTunnelURL}>Cloudflare Tunnel</a> will need to change some settings to make the command useful. Refer to <a href={props.tracerouteURL}>Run `traceroute`</a> for more information.
+If you connect through <a href={props.greIpsecURL}>GRE</a>, <a href={props.greIpsecURL}>IPsec</a>, [CNI](/network-interconnect/), or <a href={props.warpURL}>WARP</a> and want to run `traceroute` to an endpoint behind a <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel</a>, you need to change some settings.
+
+Refer to <a href={props.tracerouteURL}>Run `traceroute`</a> for more information.
 :::

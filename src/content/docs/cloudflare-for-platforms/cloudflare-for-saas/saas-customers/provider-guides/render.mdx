@@ -62,6 +62,14 @@ If your root domain needs to route somewhere besides Render, add individual subd
 	product="cloudflare-for-platforms"
 />
 
+## Zone hold
+
+<Render
+	file="provider-guide-zone-hold"
+	params={{ providerName: "Render" }}
+	product="cloudflare-for-platforms"
+/>
+
 ## Additional support
 
 <Render
@@ -76,4 +84,4 @@ If you encounter SSL errors, check if you have a `CAA` record.
 
 If you have a `CAA` record, verify that it permits SSL certificates to be issued by Google Trust Services (`pki.goog`).
 
-For more details, refer to [CAA records](/ssl/edge-certificates/troubleshooting/caa-records/#what-caa-records-are-added-by-cloudflare).
+For more details, refer to [CAA records](/ssl/edge-certificates/caa-records/).

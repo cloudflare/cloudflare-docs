@@ -83,9 +83,36 @@ const isRunning = processes.some(p => p.id === processId && p.status === 'runnin
 ```
 </TypeScriptExample>
 
+## Wait for process readiness
+
+Wait for a process to be ready before proceeding:
+
+<TypeScriptExample>
+```
+const server = await sandbox.startProcess('node server.js');
+
+// Wait for server to respond on port 3000
+await server.waitForPort(3000);
+
+console.log('Server is ready');
+```
+</TypeScriptExample>
+
+Or wait for specific log patterns:
+
+<TypeScriptExample>
+```
+const server = await sandbox.startProcess('node server.js');
+
+// Wait for log message
+const result = await server.waitForLog('Server listening');
+console.log('Server is ready:', result.line);
+```
+</TypeScriptExample>
+
 ## Monitor process logs
 
-Stream logs in real-time to detect when a service is ready:
+Stream logs in real-time:
 
 <TypeScriptExample>
 ```
@@ -98,11 +125,6 @@ const logStream = await sandbox.streamProcessLogs(server.id);
 
 for await (const log of parseSSEStream<LogEvent>(logStream)) {
   console.log(log.data);
-
-  if (log.data.includes('Server listening')) {
-    console.log('Server is ready!');
-    break;
-  }
 }
 ```
 </TypeScriptExample>
@@ -118,9 +140,11 @@ console.log('Logs:', logs);
 
 ## Stop processes
 
+Stop background processes and their children:
+
 <TypeScriptExample>
 ```
-// Stop specific process
+// Stop specific process (terminates entire process tree)
 await sandbox.killProcess(server.id);
 
 // Force kill if needed
@@ -131,40 +155,99 @@ await sandbox.killAllProcesses();
 ```
 </TypeScriptExample>
 
+`killProcess()` terminates the specified process and all child processes it spawned. This ensures that processes running in the background do not leave orphaned child processes when terminated.
+
+For example, if your process spawns multiple worker processes or background tasks, `killProcess()` will clean up the entire process tree:
+
+<TypeScriptExample>
+```
+// This script spawns multiple child processes
+const batch = await sandbox.startProcess(
+  'bash -c "process1 & process2 & process3 & wait"'
+);
+
+// killProcess() terminates the bash process AND all three child processes
+await sandbox.killProcess(batch.id);
+```
+</TypeScriptExample>
+
 ## Run multiple processes
 
 Start services in sequence, waiting for dependencies:
 
 <TypeScriptExample>
 ```
-import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
-
 // Start database first
 const db = await sandbox.startProcess('redis-server');
 
 // Wait for database to be ready
-const dbLogs = await sandbox.streamProcessLogs(db.id);
-for await (const log of parseSSEStream<LogEvent>(dbLogs)) {
-  if (log.data.includes('Ready to accept connections')) {
-    break;
-  }
-}
+await db.waitForPort(6379, { mode: 'tcp' });
 
 // Now start API server (depends on database)
 const api = await sandbox.startProcess('node api-server.js', {
   env: { DATABASE_URL: 'redis://localhost:6379' }
 });
 
+// Wait for API to be ready
+await api.waitForPort(8080, { path: '/health' });
+
 console.log('All services running');
 ```
 </TypeScriptExample>
 
+## Keep containers alive for long-running processes
+
+By default, containers automatically shut down after 10 minutes of inactivity. For long-running processes that may have idle periods (like CI/CD pipelines, batch jobs, or monitoring tasks), use the [`keepAlive` option](/sandbox/configuration/sandbox-options/#keepalive):
+
+<TypeScriptExample>
+```ts
+import { getSandbox, parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // Enable keepAlive for long-running processes
+    const sandbox = getSandbox(env.Sandbox, 'build-job-123', {
+      keepAlive: true
+    });
+
+    try {
+      // Start a long-running build process
+      const build = await sandbox.startProcess('npm run build:production');
+
+      // Monitor progress
+      const logs = await sandbox.streamProcessLogs(build.id);
+
+      // Process can run indefinitely without container shutdown
+      for await (const log of parseSSEStream<LogEvent>(logs)) {
+        console.log(log.data);
+        if (log.data.includes('Build complete')) {
+          break;
+        }
+      }
+
+      return new Response('Build completed');
+    } finally {
+      // Important: Must explicitly destroy when done
+      await sandbox.destroy();
+    }
+  }
+};
+```
+</TypeScriptExample>
+
+:::caution[Always destroy with keepAlive]
+When using `keepAlive: true`, containers will not automatically timeout. You **must** call `sandbox.destroy()` when finished to prevent containers running indefinitely and counting toward your account limits.
+:::
+
 ## Best practices
 
-- **Wait for readiness** - Stream logs to detect when services are ready
+- **Wait for readiness** - Use `waitForPort()` or `waitForLog()` to detect when services are ready
 - **Clean up** - Always stop processes when done
 - **Handle failures** - Monitor logs for errors and restart if needed
 - **Use try/finally** - Ensure cleanup happens even on errors
+- **Use `keepAlive` for long-running tasks** - Prevent container shutdown during processes with idle periods
 
 ## Troubleshooting
 
@@ -199,6 +282,9 @@ const server = await sandbox.startProcess('node server.js');
 ## Related resources
 
 - [Commands API reference](/sandbox/api/commands/) - Complete process management API
+- [Sandbox options configuration](/sandbox/configuration/sandbox-options/) - Configure `keepAlive` and other options
+- [Lifecycle API](/sandbox/api/lifecycle/) - Create and manage sandboxes
+- [Sessions API reference](/sandbox/api/sessions/) - Create isolated execution contexts
 - [Execute commands guide](/sandbox/guides/execute-commands/) - One-time command execution
 - [Expose services guide](/sandbox/guides/expose-services/) - Make processes accessible
 - [Streaming output guide](/sandbox/guides/streaming-output/) - Monitor process output

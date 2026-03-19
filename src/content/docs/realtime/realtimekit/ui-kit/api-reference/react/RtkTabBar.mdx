@@ -1,0 +1,47 @@
+---
+pcx_content_type: navigation
+title: RtkTabBar
+description: API reference for RtkTabBar component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `activeTab` | `Tab` | ✅ | - | Active tab |
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `layout` | `GridLayout1` | ✅ | - | Grid Layout |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `tabs` | `Tab[]` | ✅ | - | Tabs |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkTabBar } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkTabBar />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkTabBar } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkTabBar
+      activeTab={tab}
+      layout={gridlayout1}
+      meeting={meeting}
+    />
+  );
+}
+```
+

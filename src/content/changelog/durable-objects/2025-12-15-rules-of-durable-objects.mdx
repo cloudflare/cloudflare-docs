@@ -1,0 +1,39 @@
+---
+title: New Best Practices guide for Durable Objects
+description: A comprehensive guide to building effective Durable Objects applications.
+products:
+  - durable-objects
+  - workers
+date: 2025-12-15
+---
+
+import { TypeScriptExample } from "~/components";
+
+A new [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/) guide is now available, providing opinionated best practices for building effective Durable Objects applications. This guide covers design patterns, storage strategies, concurrency, and common anti-patterns to avoid.
+
+Key guidance includes:
+
+- **Design around your "atom" of coordination** — Create one Durable Object per logical unit (chat room, game session, user) instead of a global singleton that becomes a bottleneck.
+- **Use SQLite storage with RPC methods** — SQLite-backed Durable Objects with typed RPC methods provide the best developer experience and performance.
+- **Understand input and output gates** — Learn how Cloudflare's runtime prevents data races by default, how write coalescing works, and when to use `blockConcurrencyWhile()`.
+- **Leverage Hibernatable WebSockets** — Reduce costs for real-time applications by allowing Durable Objects to sleep while maintaining WebSocket connections.
+
+The [testing documentation](/durable-objects/examples/testing-with-durable-objects/) has also been updated with modern patterns using `@cloudflare/vitest-pool-workers`, including examples for testing SQLite storage, alarms, and direct instance access:
+
+<TypeScriptExample filename="test/counter.test.ts">
+```ts
+import { env, runDurableObjectAlarm } from "cloudflare:test";
+import { it, expect } from "vitest";
+
+it("can test Durable Objects with isolated storage", async () => {
+	const stub = env.COUNTER.getByName("test");
+
+	// Call RPC methods directly on the stub
+	await stub.increment();
+	expect(await stub.getCount()).toBe(1);
+
+	// Trigger alarms immediately without waiting
+	await runDurableObjectAlarm(stub);
+});
+```
+</TypeScriptExample>

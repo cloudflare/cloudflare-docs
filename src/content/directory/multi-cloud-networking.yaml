@@ -1,0 +1,13 @@
+id: jNiJyW
+name: Multi-Cloud Networking
+
+entry:
+  title: Multi-Cloud Networking
+  url: /multi-cloud-networking/
+  group: Cloudflare One
+  additional_groups: [Network security]
+
+meta:
+  title: Cloudflare Multi-Cloud Networking docs
+  description: Automate resource discovery and simplify managing your public cloud infrastructure
+  author: "@cloudflare"

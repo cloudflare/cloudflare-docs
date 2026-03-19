@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: RtkPipToggle
+description: API reference for RtkPipToggle component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPipToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkPipToggle />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPipToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkPipToggle
+      meeting={meeting}
+      size="md"
+      variant="button"
+    />
+  );
+}
+```
+

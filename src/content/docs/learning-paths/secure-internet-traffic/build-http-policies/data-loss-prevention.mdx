@@ -56,7 +56,7 @@ To help this better match the needs of your organization, you can also build a c
 		name: "Secrets and AWS keys",
 		precedence: 0,
 		traffic:
-			"any(dlp.profiles[] in <CREDENTIALS_DLP_PROFILE_UUID>) or any(dlp.profiles[] in <AWS_DLP_PROFILE_UUID>)",
+			"any(dlp.profiles[*] in <CREDENTIALS_DLP_PROFILE_UUID>) or any(dlp.profiles[*] in <AWS_DLP_PROFILE_UUID>)",
 	}}
 />
 
@@ -127,7 +127,7 @@ As your datasets change and grow, we recommend building a pipeline to update the
 
 #### Microsoft Information Protection (MIP) labels
 
-If your data already contains Microsoft Information Protection (MIP) labeling schema, Cloudflare can detect those values in-transit automatically. To get started, connect your Microsoft 365 account with a [CASB integration](/cloudflare-one/applications/casb/casb-integrations/microsoft-365/). Cloudflare will automatically pull in your existing MIP definitions into Zero Trust. You can then use the MIP definitions to build DLP profiles for use in Gateway policies.
+If your data already contains Microsoft Information Protection (MIP) labeling schema, Cloudflare can detect those values in-transit automatically. To get started, connect your Microsoft 365 account with a [CASB integration](/cloudflare-one/integrations/cloud-and-saas/microsoft-365/). Cloudflare will automatically pull in your existing MIP definitions into Zero Trust. You can then use the MIP definitions to build DLP profiles for use in Gateway policies.
 
 For more information, refer to [Integration profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/integration-profiles/).
 
@@ -162,7 +162,7 @@ Many organizations want to detect and log financial information egressing from u
 		name: "Block AI financial info",
 		precedence: 0,
 		traffic:
-			"any(dlp.profiles[] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[] in {184})",
+			"any(dlp.profiles[*] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[*] in {184})",
 	}}
 />
 

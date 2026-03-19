@@ -1,0 +1,15 @@
+---
+title: Aruba EdgeConnect Enterprise
+pcx_content_type: integration-guide
+
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/aruba-edgeconnect"
+  product="networking-services"
+  params={{
+		tunnelHealthCheckUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/tunnel-health-checks/",
+		magicFirewallUrl: "/cloudflare-network-firewall/",
+		gatewayUrl: "/cloudflare-one/traffic-policies/"
+  }} />

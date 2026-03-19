@@ -3,7 +3,6 @@ title: Get started
 pcx_content_type: get-started
 sidebar:
   order: 2
-
 ---
 
 import { Render, DashButton } from "~/components";
@@ -19,8 +18,9 @@ This guide will get you started with creating and managing configured Health Che
    <DashButton url="/?to=/:account/:zone/traffic/health-checks" />
 
 2. Select **Create** and fill out the form, paying special attention to:
-   * The values for **Interval** and **Check regions**, because decreasing the **Interval** and increasing **Check regions** may increase the load on your origin server.
-   * **Retries**, which specify the number of retries to attempt in case of a timeout before marking the origin as unhealthy.
+   - The values for **Interval** and **Check regions**, because decreasing the **Interval** and increasing **Check regions** may increase the load on your origin server.
+   - **Retries**, which specify the number of retries to attempt in case of a timeout before marking the origin as unhealthy.
+   - **Response body**, which specifies a substring that must be present in the first 10 KB of the response body for the check to succeed.
 3. Select **Save and Deploy**.
 
 ## Manage Health Checks
@@ -33,16 +33,12 @@ This guide will get you started with creating and managing configured Health Che
 
 :::note
 
-
 You can also enable, disable, or delete configured Health Checks.
-
 
 :::
 
 :::note
 
-
 Authenticated origin pull is not supported by Standalone Health Checks.
-
 
 :::

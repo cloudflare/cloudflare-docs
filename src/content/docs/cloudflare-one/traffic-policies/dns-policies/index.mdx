@@ -1,13 +1,15 @@
 ---
 pcx_content_type: configuration
 title: DNS policies
+tags:
+  - DNS
 sidebar:
   order: 2
 ---
 
 import { Details, InlineBadge, Render } from "~/components";
 
-When a user makes a DNS request to Gateway, Gateway matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection.
+When a user makes a DNS request to Gateway, Gateway matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives an address based on the DNS resolution from Cloudflare's 1.1.1.1 servers. Alternatively, you can use a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) to redirect DNS requests to a custom server.
 
 A DNS policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
@@ -141,13 +143,13 @@ Policies with Block actions block DNS queries to reach destinations you specify 
 
 #### Custom block page
 
-When choosing the Block action, turn on **Modify Gateway block behavior** to respond to queries with a block page to display to users who go to blocked websites. Optionally, you can override your global block page setting with a URL redirect for the specific DNS policy. For more information, refer to [Block page](/cloudflare-one/traffic-policies/block-page/).
+When choosing the Block action, turn on **Modify Gateway block behavior** to respond to queries with a block page to display to users who go to blocked websites. Optionally, you can override your global block page setting with a URL redirect for the specific DNS policy. For more information, refer to [Block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/).
 
 If the block page is turned off for a policy, Gateway will respond to queries blocked at the DNS level with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. The browser will display its default connection error page.
 
 <Render file="gateway/block-page-dns-records" product="cloudflare-one" />
 
-#### WARP client block notifications
+#### Cloudflare One Client block notifications
 
 <Render
 	file="gateway/client-notifications"
@@ -450,6 +452,14 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 <Render file="gateway/selectors/source-ip-resolver" product="cloudflare-one" />
 
+### Source Internal IP
+
+Use this selector to apply policies to the source internal IP address of a DNS query. For example, this could be the private IP address of the hosts behind [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/) (formerly Magic WAN) or [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) used by your organization to send queries to Gateway.
+
+| UI name            | API example                        | Evaluation phase      |
+| ------------------ | ---------------------------------- | --------------------- |
+| Source Internal IP | `dns.src_internal_ip == 10.10.0.1` | Before DNS resolution |
+
 ### Users
 
 <Render file="gateway/selectors/users-dns" product="cloudflare-one" />
@@ -463,7 +473,7 @@ Use this selector to filter based on the country where the query arrived to Gate
 <Render
 	file="gateway/value"
 	product="cloudflare-one"
-	params={{ one: "hostnames", two: "Host" }}
+	params={{ selector: "Host", selectordescription: "hostname", operator: "matches regex", valueOne: ".*whispersystems.org", valueTwo: ".*signal.org" }}
 />
 
 ## Logical operators
@@ -480,6 +490,16 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 <Render file="gateway/third-party-warning" product="cloudflare-one" />
 
-### Magic WAN forwarding
+### Cloudflare WAN forwarding
 
-To apply DNS policies to queries forwarded through [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/), you can either point your organization's DNS resolver to an IPv6, DoH, or DoT endpoint or request a dedicated resolver IPv4 address. For more information, refer to [DNS resolver IPs and hostnames](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/dns-resolver-ips/).
+To apply DNS policies to queries forwarded through [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/), you can either point your organization's DNS resolver to an IPv6, DoH, or DoT endpoint or request a dedicated resolver IPv4 address. For more information, refer to [DNS resolver IPs and hostnames](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/).
+
+### Fallback DNS
+
+Some apps, such as WhatsApp and Android Studio, use hard-coded fallback DNS servers. Fallback DNS can cause unexpected behavior with Gateway DNS policies. For example, if you have a Block DNS policy, Gateway will initially block DNS queries from those apps, but the queries can resolve correctly afterward using the fallback DNS. To mitigate this behavior, you create a [Gateway Network policy](/cloudflare-one/traffic-policies/network-policies/) to block outbound DNS traffic on TCP/UDP port `53` to the fallback DNS servers. For example, to block Google's fallback DNS servers:
+
+| Selector         | Operator | Value                | Logic | Action |
+| ---------------- | -------- | -------------------- | ----- | ------ |
+| Protocol         | in       | _TCP_, _UDP_         | And   | Block  |
+| Destination Port | in       | `53`                 | And   |        |
+| Destination IP   | in       | `8.8.8.8`, `8.8.4.4` |       |        |

@@ -3,36 +3,56 @@ title: DAG Workflows
 pcx_content_type: concept
 sidebar:
   order: 4
-
 ---
 
-The Python Workflows SDK supports DAG workflows in a declarative way, using the `step.do` decorator with the `depends` parameter to define dependencies (other steps that must complete before this step can run).
+The Python Workflows SDK supports DAG workflows in a declarative way, using `step.do` and parameter names to define dependencies (other steps that must complete before a step can run).
 
 ```python
-from workers import WorkflowEntrypoint
+from workers import Response, WorkflowEntrypoint, WorkerEntrypoint
 
-class MyWorkflow(WorkflowEntrypoint):
+class PythonWorkflowStarter(WorkflowEntrypoint):
     async def run(self, event, step):
-        @step.do("dependency a")
-        async def step_a():
-            # do some work
-            return 10
+        async def await_step(fn):
+            try:
+                return await fn()
+            except TypeError as e:
+                print(f"Successfully caught {type(e).__name__}: {e}")
 
-        @step.do("dependency b")
-        async def step_b():
-            # do some work
-            return 20
+        await step.sleep('demo sleep', '10 seconds')
 
-        @step.do("my final step", depends=[step_a, step_b], concurrent=True)
-        async def my_final_step(result_a=0, result_b=0):
-            # should return 30
-            return result_a + result_b
+        @step.do()
+        async def dep_1():
+            # does stuff
+            print('executing dep1')
+            return 'dep1'
 
-        await my_final_step()
+        @step.do()
+        async def dep_2():
+            # does stuff
+            print('executing dep2')
+            return 'dep2'
+
+        @step.do(concurrent=True)
+        async def final_step(dep_1, dep_2):
+            # does stuff
+            print(f'{dep_1} {dep_2}')
+
+        await await_step(final_step)
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        await self.env.MY_WORKFLOW.create()
+        return Response("Hello world!")
 ```
 
-On this example, `step_a` and `step_b` are run concurrently before execution of `my_final_step`, which depends on both of them.
+In this example, `dep_1` and `dep_2` are run concurrently before execution of `final_step`, which depends on both of them.
 
-Having `concurrent=True` allows the dependencies to be resolved concurrently. If one of the callables passed to `depends` has already completed, it will be skipped and its return value will be reused.
+Having `concurrent=True` allows dependencies to be resolved concurrently. If a dependency has already completed, it will be skipped and its return value will be reused.
+
+:::note
+
+Older compatibility behavior supports explicit dependency lists with `depends=[...]`. For new workflows, use parameter names to express step dependencies.
+
+:::
 
 This pattern is useful for diamond shaped workflows, where a step depends on two or more other steps that can run concurrently.

@@ -2,14 +2,14 @@
 title: Delete objects
 pcx_content_type: how-to
 sidebar:
-  order: 3
+  order: 5
 ---
 
-import { Render, DashButton } from "~/components";
+import { Render, Tabs, TabItem, DashButton } from "~/components";
 
-You can delete objects from your bucket from the Cloudflare dashboard or using the Wrangler.
+You can delete objects from R2 using the dashboard, Workers API, S3 API, or command-line tools.
 
-## Delete objects via the Cloudflare dashboard
+## Delete via dashboard
 
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
@@ -19,7 +19,75 @@ You can delete objects from your bucket from the Cloudflare dashboard or using t
 4. Select your objects and select **Delete**.
 5. Confirm your choice by selecting **Delete**.
 
-## Delete objects via Wrangler
+## Delete via Workers API
+
+Use R2 [bindings](/workers/runtime-apis/bindings/) in Workers to delete objects:
+
+```ts ins={3}
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		await env.MY_BUCKET.delete("image.png");
+		return new Response("Deleted");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+For complete documentation, refer to [Workers API](/r2/api/workers/workers-api-usage/).
+
+## Delete via S3 API
+
+Use S3-compatible SDKs to delete objects. You'll need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [R2 API token](/r2/api/tokens/).
+
+<Tabs>
+<TabItem label="JavaScript">
+
+```ts
+import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
+
+const S3 = new S3Client({
+	region: "auto", // Required by SDK but not used by R2
+	// Provide your Cloudflare account ID
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
+	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+	credentials: {
+		accessKeyId: '<ACCESS_KEY_ID>',
+		secretAccessKey: '<SECRET_ACCESS_KEY>',
+	},
+});
+
+await S3.send(
+	new DeleteObjectCommand({
+		Bucket: "my-bucket",
+		Key: "image.png",
+	}),
+);
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+import boto3
+
+s3 = boto3.client(
+	service_name="s3",
+	# Provide your Cloudflare account ID
+	endpoint_url=f"https://{ACCOUNT_ID}.r2.cloudflarestorage.com",
+	# Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+	aws_access_key_id=ACCESS_KEY_ID,
+	aws_secret_access_key=SECRET_ACCESS_KEY,
+	region_name="auto", # Required by SDK but not used by R2
+)
+
+s3.delete_object(Bucket="my-bucket", Key="image.png")
+```
+
+</TabItem>
+</Tabs>
+
+For complete S3 API documentation, refer to [S3 API](/r2/api/s3/api/).
+
+## Delete via Wrangler
 
 :::caution
 
@@ -27,18 +95,8 @@ Deleting objects from a bucket is irreversible.
 
 :::
 
-You can delete an object directly by calling `delete` against a `{bucket}/{path/to/object}`.
-
-For example, to delete the object `foo.png` from bucket `test-bucket`:
+Use [Wrangler](/workers/wrangler/install-and-update/) to delete objects. Run the [`r2 object delete` command](/workers/wrangler/commands/#r2-object-delete):
 
 ```sh
-wrangler r2 object delete test-bucket/foo.png
+wrangler r2 object delete test-bucket/image.png
 ```
-
-```sh output
-
-Deleting object "foo.png" from bucket "test-bucket".
-Delete complete.
-```
-
-<Render file="link-to-workers-r2-api" product="r2"/>

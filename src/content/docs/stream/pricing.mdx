@@ -4,6 +4,7 @@ title: Pricing
 sidebar:
   order: 30
 ---
+
 import { DashButton } from "~/components";
 
 :::note[Media Transformations is now GA:]
@@ -27,7 +28,7 @@ Ingress (sending your content to us) and encoding are always free. Bandwidth is 
 
 Storage is a prepaid pricing dimension purchased in increments of $5 per 1,000 minutes stored, regardless of file size. You can check how much storage you have and how much you have used on the **Stream** page of the Cloudflare dashboard.
 
-<DashButton url="/?to=/:account/stream" />
+<DashButton url="/?to=/:account/stream/videos" />
 
 Storage is consumed by:
 
@@ -54,6 +55,7 @@ Enterprise customers _may_ continue to upload new content beyond their contracte
 ### Minutes of video delivered
 
 Delivery is a post-paid, usage-based pricing dimension billed at $1 per 1,000 minutes delivered. You can check how much delivery you have used on the **Billing** page or the Stream **Analytics** page of the Cloudflare dashboard.
+
 <DashButton url="/?to=/:account/billing" />
 <DashButton url="/?to=/:account/stream/analytics" />
 
@@ -102,9 +104,16 @@ Yes, contact our [Sales Team](https://www.cloudflare.com/plans/enterprise/contac
 
 ## Pricing for Media Transformations
 
-After November 1st, 2025, Media Transforamtions and Image Transformations will use the same subscriptions and usage metrics.
+Media Transformations and Image Transformations use the same subscriptions and usage metrics.
+
+When transforming a video via URL:
 
 - Generating a still frame (single image) from a video counts as 1 transformation.
 - Generating an optimized video or extracting audio counts as 1 transformation _per second of the output_ content.
 - Each unique transformation, as determined by input and unique combination of flags, is only billed once per calendar month.
 - All Media and Image Transformations cost $0.50 per 1,000 monthly unique transformation operations, with a free monthly allocation of 5,000.
+
+When transforming assets via the Workers binding:
+
+- While binding Media Transformations to Workers Bindings is in beta, operations via the binding are not billed.
+- After beta, the costs for transforming via bindings will be the same as for transforming via URL, but all operations will be billed individually, not based on uniqueness. Cache or store results for cost optimization and performance.

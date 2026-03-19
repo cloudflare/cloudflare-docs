@@ -4,7 +4,7 @@ source: https://support.cloudflare.com/hc/en-us/articles/200169466-Using-Cloudfl
 title: WebSockets
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components";
+import { FeatureTable, TabItem, Tabs, DashButton } from "~/components";
 
 Cloudflare supports proxied WebSocket connections without additional configuration.
 
@@ -18,9 +18,11 @@ WebSockets are open connections sustained between the client and the origin serv
 
 To enable **WebSockets** connections to your origin server in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. Go to **Network**.
-3. For **WebSockets**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **Network** page.
+
+   <DashButton url="/?to=/:account/:zone/network" />
+
+2. For **WebSockets**, switch the toggle to **On**.
 
 </TabItem> <TabItem label="API">
 
@@ -32,7 +34,7 @@ To enable **WebSockets** connections to your origin server with the API, send a 
 
 | Product                                  | Compatible | Notes                                                                                                                                                                                                                                                            |
 | ---------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Argo](/argo-smart-routing/)             | No         | Argo is not compatible with WebSockets.                                                                                                   |
+| [Argo](/argo-smart-routing/)             | No         | Argo is not compatible with WebSockets.                                                                                                                                                                                                                          |
 | [SSL](/ssl/)                             | Yes        |                                                                                                                                                                                                                                                                  |
 | [WAF](/waf/)                             | Yes\*      | The initial HTTP 101 request is subject to WAF managed rules, custom rules, rate limiting rules, and other WAF features like any other WebSockets connection. However, once a connection has been established, the WAF does not perform any further inspections. |
 | [Workers](/workers/examples/websockets/) | Yes        | You can also use [Durable Objects](/durable-objects/) as an endpoint for WebSocket sessions, giving you full control over messages sent to and from clients.                                                                                                     |

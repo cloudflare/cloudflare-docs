@@ -552,7 +552,7 @@ entries:
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
   - name: cf.bot_management.static_resource
-    data_type: Number
+    data_type: Boolean
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
     plan_info_label: Enterprise add-on
@@ -625,7 +625,7 @@ entries:
       This field is only meaningful for [BYOIP customers](/byoip/).
 
   - name: cf.edge.server_port
-    data_type: IP address
+    data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, client, visitor]
     summary: Represents the port number at which the Cloudflare global network received the request.
@@ -890,6 +890,56 @@ entries:
     example_value: |-
       "TLSv1.2"
 
+  - name: cf.edge.client_tcp
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, tcp, network, client]
+    summary: Indicates if the request was made over TCP.
+    example_value: |-
+      true
+
+  - name: cf.timings.client_tcp_rtt_msec
+    data_type: Number
+    categories: [Request]
+    keywords: [request, timing, tcp, rtt, performance, latency]
+    summary: The smoothed TCP round-trip time (RTT) from client to Cloudflare in milliseconds.
+    example_value: |-
+      20
+
+  - name: cf.timings.edge_msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timing, edge, performance]
+    summary: The time spent processing a request within the Cloudflare global network in milliseconds.
+    description: |-
+      The value corresponds to the time interval between when the Cloudflare edge server accepted the HTTP request headers for processing and just before the HTTP response headers were available to be sent to the client.
+
+      The value does not include:
+        - The time spent forwarding the request to the origin server (refer to [`cf.timings.origin_ttfb_msec`](/ruleset-engine/rules-language/fields/reference/cf.timings.origin_ttfb_msec/)).
+        - The network transfer time to the client.
+    example_value: |-
+      28
+    example_block: |-
+      # Matches requests where Cloudflare's edge processing time was greater than 500 milliseconds
+      cf.timings.edge_msec > 500
+
+  - name: cf.timings.origin_ttfb_msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timing, ttfb, performance, origin, latency]
+    summary: The round-trip time (RTT) between the Cloudflare global network and the origin server in milliseconds.
+    description: |-
+      This field provides insight into origin server latency. It represents the Time to First Byte (TTFB) from the perspective of the Cloudflare edge server.
+
+      This metric includes both the network RTT and the time the origin server spent handling the request.
+
+      If the request was served from the Cloudflare CDN cache and the origin server was not reached, the value of this field will be `0`.
+    example_value: |-
+      150
+    example_block: |-
+      # Matches requests where the origin response time (TTFB) was greater than 2 seconds:
+      cf.timings.origin_ttfb_msec > 2000
+
   - name: cf.waf.content_scan.has_obj
     data_type: Boolean
     categories: [Request]
@@ -906,6 +956,9 @@ entries:
     summary: Indicates whether the request contains at least one content object.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint include any content objects
+      cf.waf.content_scan.has_obj and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.has_malicious_obj
     data_type: Boolean
@@ -923,6 +976,9 @@ entries:
     summary: Indicates whether the request contains at least one malicious content object.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint include any malicious content objects
+      cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.num_malicious_obj
     data_type: Integer
@@ -940,6 +996,9 @@ entries:
     summary: The number of malicious content objects detected in the request (zero or greater).
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint contain more than two malicious content objects
+      cf.waf.content_scan.num_malicious_obj > 2 and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.has_failed
     data_type: Boolean
@@ -954,9 +1013,10 @@ entries:
         visitor,
       ]
     plan_info_label: Enterprise add-on
-    summary: Indicates whether the file scanner was unable to scan all the content objects detected in the request.
+    summary: Indicates whether the file scanner was unable to scan any of the content objects detected in the request.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
   - name: cf.waf.content_scan.num_obj
     data_type: Integer
     categories: [Request]
@@ -973,6 +1033,9 @@ entries:
     summary: The number of content objects detected in the request (zero or greater).
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint contain more than two content objects
+      cf.waf.content_scan.num_obj > 2 and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.obj_sizes
     data_type: Array<Integer>
@@ -990,6 +1053,9 @@ entries:
     summary: An array of file sizes in bytes, in the order the content objects were detected in the request.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint contain any content objects larger than 500 KB (512,000 bytes)
+      any(cf.waf.content_scan.obj_sizes[*] > 512000) and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.obj_types
     data_type: Array<String>
@@ -1009,6 +1075,9 @@ entries:
       If Cloudflare cannot determine the file type of a content object, the corresponding value in the `obj_types` array will be `application/octet-stream`.
 
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint contain content objects other than PDFs
+      any(cf.waf.content_scan.obj_types[*] != "application/pdf") and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.obj_results
     data_type: Array<String>
@@ -1028,6 +1097,9 @@ entries:
       The possible values are: `clean`, `suspicious`, `infected`, and `not scanned`.
 
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint contain any suspicious or infected content objects
+      any(cf.waf.content_scan.obj_results[*] in {"suspicious" "infected"}) and http.request.uri.path eq "/upload"
 
   - name: cf.waf.score
     data_type: Number
@@ -1174,7 +1246,7 @@ entries:
     description: |-
       When a prompt is not present, the other LLM-related fields will have default values.
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
 
   - name: cf.llm.prompt.pii_detected
     data_type: Boolean
@@ -1185,7 +1257,7 @@ entries:
     description: |-
       Equivalent to checking if the [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) field is not empty.
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
 
   - name: cf.llm.prompt.pii_categories
     data_type: Array<String>
@@ -1238,9 +1310,9 @@ entries:
       `IN_PASSPORT`               | Indian Passport Number
       `FI_PERSONAL_IDENTITY_CODE` | Finnish Personal Identity Code
 
-      The categories list is based on the [list of PII entities supported by Presidio](https://microsoft.github.io/presidio/supported_entities/). Presidio is the data protection and de-identification SDK used in Firewall for AI.
+      The categories list is based on the [list of PII entities supported by Presidio](https://microsoft.github.io/presidio/supported_entities/). Presidio is the data protection and de-identification SDK used in AI Security for Apps.
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
     example_block: |-
       # Matches requests where PII categorized as "EMAIL_ADDRESS" or "IBAN_CODE" was detected:
       (cf.llm.prompt.pii_detected and any(cf.llm.prompt.pii_categories[*] in {"EMAIL_ADDRESS" "IBAN_CODE"}))
@@ -1254,7 +1326,7 @@ entries:
     description: |-
       Equivalent to checking if the [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) field is not empty.
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
 
   - name: cf.llm.prompt.unsafe_topic_categories
     data_type: Array<String>
@@ -1267,23 +1339,24 @@ entries:
 
       | Value | Category name             | Description                                                                                                       |
       | ----- | ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-      | `S1`  | Violent Crimes            | Violent crimes against people or animals.                                                                         |
-      | `S2`  | Non-Violent Crimes        | Non-violent offenses such as fraud, theft, drug creation, or hacking.                                             |
-      | `S3`  | Sex-Related Crimes        | Sex-related crimes, including trafficking, assault, and harassment.                                               |
-      | `S4`  | Child Sexual Exploitation | Sexual exploitation of children.                                                                                  |
+      | `S1`  | Violent crimes            | Violent crimes against people or animals.                                                                         |
+      | `S2`  | Non-violent crimes        | Non-violent offenses such as fraud, theft, drug creation, or hacking.                                             |
+      | `S3`  | Sex-related crimes        | Sex-related crimes, including trafficking, assault, and harassment.                                               |
+      | `S4`  | Child sexual exploitation | Sexual exploitation of children.                                                                                  |
       | `S5`  | Defamation                | False statements that are likely to damage a living person's reputation.                                          |
-      | `S6`  | Specialized Advice        | Specialized financial, medical, or legal advice, or misrepresent dangerous things as safe.                        |
+      | `S6`  | Specialized advice        | Specialized financial, medical, or legal advice, or misrepresent dangerous things as safe.                        |
       | `S7`  | Privacy                   | Sensitive, nonpublic personal information that could endanger an individual.                                      |
-      | `S8`  | Intellectual Property     | Violate a third party's intellectual property rights.                                                             |
-      | `S9`  | Indiscriminate Weapons    | Creation of indiscriminate weapons like chemical, biological, or nuclear arms.                                    |
+      | `S8`  | Intellectual property     | Violate a third party's intellectual property rights.                                                             |
+      | `S9`  | Indiscriminate weapons    | Creation of indiscriminate weapons like chemical, biological, or nuclear arms.                                    |
       | `S10` | Hate                      | Demean or dehumanize people based on their race, religion, sexual orientation, or other personal characteristics. |
-      | `S11` | Suicide & Self-Harm       | Encourage or endorse suicide, self-injury, or disordered eating.                                                  |
-      | `S12` | Sexual Content            | Erotic content.                                                                                                   |
+      | `S11` | Suicide and self-harm     | Encourage or endorse suicide, self-injury, or disordered eating.                                                  |
+      | `S12` | Sexual content            | Erotic content.                                                                                                   |
       | `S13` | Elections                 | False information about the time, place, or manner of voting in elections.                                        |
+      | `S14` | Code interpreter abuse    | Misuse of code execution capabilities.                                                                            |
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
     example_block: |-
-      # Matches requests where an unsafe topic categorized as "S2" (Non-Violent Crimes) or "S10" (Hate) was detected in the LLM prompt:
+      # Matches requests where an unsafe topic categorized as "S2" (Non-violent crimes) or "S10" (Hate) was detected in the LLM prompt:
       (cf.llm.prompt.unsafe_topic_detected and any(cf.llm.prompt.unsafe_topic_categories[*] in {"S2" "S10"}))
 
   - name: cf.llm.prompt.injection_score
@@ -1298,7 +1371,35 @@ entries:
 
       The special score `100` indicates that Cloudflare did not score the request.
 
-      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
+
+  - name: cf.llm.prompt.token_count
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: An estimated token count for the LLM prompt in the request.
+    description: |-
+      The count is calculated using a general-purpose tokenizer and may not exactly match the count reported by your LLM provider.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
+    example_block: |-
+      # Matches requests where the estimated token count exceeds 4,000:
+      (cf.llm.prompt.token_count gt 4000)
+
+  - name: cf.llm.prompt.custom_topic_categories
+    data_type: Map<Number>
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: A map of custom topic labels to relevance scores (1–99) for the LLM prompt in the request.
+    description: |-
+      Lower scores indicate the prompt is more relevant to that topic. Only populated when [custom topics](/waf/detections/ai-security-for-apps/unsafe-topics/#custom-topics) are configured.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
+    example_block: |-
+      # Matches requests where the prompt is highly relevant to the "competitors" custom topic:
+      (cf.llm.prompt.custom_topic_categories["competitors"] lt 30)
 
   - name: cf.worker.upstream_zone
     data_type: String

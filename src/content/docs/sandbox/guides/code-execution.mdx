@@ -63,11 +63,11 @@ const context = await sandbox.createCodeContext({
 });
 
 // Execute code
-const result = await sandbox.runCode(context.id, `
+const result = await sandbox.runCode(`
 print("Hello from Code Interpreter!")
 result = 2 + 2
 print(f"2 + 2 = {result}")
-`);
+`, { context: context.id });
 
 console.log('Output:', result.output);
 console.log('Success:', result.success);
@@ -85,19 +85,19 @@ const context = await sandbox.createCodeContext({
 });
 
 // First execution - import and define variables
-await sandbox.runCode(context.id, `
+await sandbox.runCode(`
 import pandas as pd
 import numpy as np
 
 data = [1, 2, 3, 4, 5]
 print("Data initialized")
-`);
+`, { context: context.id });
 
 // Second execution - use previously defined variables
-const result = await sandbox.runCode(context.id, `
+const result = await sandbox.runCode(`
 mean = np.mean(data)
 print(f"Mean: {mean}")
-`);
+`, { context: context.id });
 
 console.log(result.output); // "Mean: 3.0"
 ```
@@ -113,13 +113,13 @@ The code interpreter returns multiple output formats:
 
 <TypeScriptExample>
 ```
-const result = await sandbox.runCode(context.id, `
+const result = await sandbox.runCode(`
 import matplotlib.pyplot as plt
 
 plt.plot([1, 2, 3], [1, 4, 9])
 plt.title('Simple Chart')
 plt.show()
-`);
+`, { context: context.id });
 
 // Check available formats
 console.log('Formats:', result.formats);  // ['text', 'png']
@@ -157,7 +157,6 @@ const context = await sandbox.createCodeContext({
 });
 
 const result = await sandbox.runCode(
-  context.id,
   `
 import time
 
@@ -168,6 +167,7 @@ for i in range(10):
 print("Done!")
 `,
   {
+    context: context.id,
     stream: true,
     onOutput: (data) => {
       console.log('Output:', data);
@@ -212,7 +212,7 @@ const code = content[0].text;
 
 // 2. Execute in sandbox
 const context = await sandbox.createCodeContext({ language: 'python' });
-const result = await sandbox.runCode(context.id, code);
+const result = await sandbox.runCode(code, { context: context.id });
 
 console.log('Generated code:', code);
 console.log('Output:', result.output);

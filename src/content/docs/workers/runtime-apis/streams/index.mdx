@@ -14,16 +14,15 @@ The [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) 
 
 <DirectoryListing />
 
-Workers do not need to prepare an entire response body before returning a `Response`. You can use a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) to stream a response body after sending the front matter (that is, HTTP status line and headers). This allows you to minimize:
+Use the Streams API to avoid buffering large requests or responses in memory. This enables you to parse extremely large request or response bodies within a Worker's 128 MB memory limit. This is faster than buffering the entire payload into memory, as your Worker can start processing data incrementally, and allows your Worker to handle multi-gigabyte payloads or files within its memory limits.
 
-- The visitor's time-to-first-byte.
-- The buffering done in the Worker.
-
-Minimizing buffering is especially important for processing or transforming response bodies larger than the Worker's memory limit. For these cases, streaming is the only implementation strategy.
+Workers do not need to prepare an entire response body before returning a `Response`. You can use a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) to stream a response body after sending the response status line and headers.
 
 :::note
 
-By default, Cloudflare Workers is capable of streaming responses using the [Streams APIs](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API). To maintain the streaming behavior, you should only modify the response body using the methods in the Streams APIs. If your Worker only forwards subrequest responses to the client verbatim without reading their body text, then its body handling is already optimal and you do not have to use these APIs.
+By default, Cloudflare Workers is capable of streaming responses using the [Streams APIs](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API). To maintain the streaming behavior, you should only modify the response body using the methods in the Streams APIs.
+
+If your Worker only forwards subrequest responses to the client verbatim without reading their body text, then its body handling is already optimal and you do not have to use these APIs.
 
 :::
 
@@ -144,6 +143,7 @@ The Streams API is only available inside of the [Request context](/workers/runti
 
 ## Related resources
 
+- [Stream large JSON](/workers/examples/streaming-json/) - Parse and transform large JSON request and response bodies
 - [MDN's Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
 - [Streams API spec](https://streams.spec.whatwg.org/)
 - Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

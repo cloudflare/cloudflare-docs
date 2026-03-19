@@ -1,0 +1,61 @@
+---
+{}
+---
+
+## Step 2: Select a public domain
+
+Your application needs a public URL so users can reach it from a browser. Cloudflare creates a public URL on one of your existing domains for the application.
+
+1. Select a domain from the dropdown.
+2. Enter a subdomain (for example, `grafana`). A preview of the full URL appears (for example, `grafana.example.com`).
+3. Select **Continue**.
+
+## Step 3: Add your first policy
+
+An Access policy controls who can reach your application. In this step, you create a simple policy using email-based one-time PINs. Users you add here receive a one-time PIN by email when they try to access the application.
+
+1. Enter the email addresses of users you want to grant access to.
+2. Select **Continue**.
+
+:::note
+You can add your identity provider (for example, Okta or Google Workspace) to the application later. For more information, refer to [Identity providers](/cloudflare-one/integrations/identity-providers/).
+:::
+
+## Step 4: Assign a tunnel
+
+A tunnel connects your private network to Cloudflare so traffic can reach your application. You can select an existing tunnel or create a new one.
+
+1. In the **Choose or create a Tunnel** dropdown, select an existing tunnel or enter a name to create a new one.
+2. Select **Continue**.
+
+## Step 5: Deploy your tunnel
+
+Install `cloudflared` on a device in your private network that can reach the application. The dashboard generates commands specific to your operating system.
+
+1. Select your operating system from the dropdown.
+2. Copy and run the commands shown in the dashboard. For Windows, open Command Prompt as an administrator. For all other operating systems, use a terminal window.
+3. After the tunnel connects, select **Continue**.
+
+## Step 6: Review details
+
+The dashboard confirms that your application is available and protected behind Cloudflare Access.
+
+## Recommended next steps
+
+- **Test your application**:
+  1.  Select **Test login** on the success screen.
+  2.  On the Access login screen, enter one of the email addresses you added to your Access policy.
+  3.  Select **Send me a code**.
+  4.  Enter the code from your email and select **Sign in**.
+
+- **Explore more with Zero Trust**: Review your applications, policies, and tunnels in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+- **Configure an identity provider**: Replace email one-time PINs with your organization's identity provider for a seamless login experience. For more information, refer to [Identity providers](/cloudflare-one/integrations/identity-providers/).
+
+For in-depth guidance on clientless access, refer to the [Clientless access learning path](/learning-paths/clientless-access/concepts/what-is-clientless-access/).
+
+## Troubleshoot
+
+If you have issues connecting, refer to these resources:
+
+- [Troubleshoot tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/): diagnose tunnel connectivity and routing problems.
+- [Troubleshooting](/cloudflare-one/faq/troubleshooting/): resolve common Zero Trust errors and issues.

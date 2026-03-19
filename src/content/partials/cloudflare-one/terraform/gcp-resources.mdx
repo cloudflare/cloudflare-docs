@@ -1,0 +1,101 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+The following configuration defines the specifications for the GCP virtual machine and configures a startup script to run upon boot.
+
+1.  In your configuration directory, create a `.tf` file:
+
+    ```sh
+    touch GCP-config.tf
+    ```
+
+2.  Add the following content to `GCP-config.tf`:
+
+        <Tabs syncKey="dashPlusAPI">
+        <TabItem label="Terraform (v5)">
+
+        ```tf
+        # OS the server will use
+        data "google_compute_image" "image" {
+        	family  = "ubuntu-2204-lts"
+        	project = "ubuntu-os-cloud"
+        }
+
+        # GCP Instance resource
+        resource "google_compute_instance" "http_server" {
+        	name         = "test"
+        	machine_type = var.machine_type
+        	zone         = var.zone
+        	tags         = []
+        	boot_disk {
+        		initialize_params {
+        			image = data.google_compute_image.image.self_link
+        		}
+        	}
+
+        	network_interface {
+        		network = "default"
+        		access_config {
+        			//Ephemeral IP
+        		}
+        	}
+        	// Optional config to make instance ephemeral
+        /*  scheduling {
+        		preemptible       = true
+        		automatic_restart = false
+        	} */
+
+        	// Pass the tunnel token to the GCP server so that the server can install and run the tunnel upon startup.
+        	metadata_startup_script = templatefile("./install-tunnel.tftpl",
+        		{
+        			tunnel_token = data.cloudflare_zero_trust_tunnel_cloudflared_token.gcp_tunnel_token.token
+        		})
+        }
+        ```
+
+        </TabItem>
+        <TabItem label="Terraform (v4)">
+
+        ```tf
+        # OS the server will use
+        data "google_compute_image" "image" {
+        	family  = "ubuntu-2204-lts"
+        	project = "ubuntu-os-cloud"
+        }
+
+        # GCP Instance resource
+        resource "google_compute_instance" "http_server" {
+        	name         = "test"
+        	machine_type = var.machine_type
+        	zone         = var.zone
+        	tags         = []
+        	boot_disk {
+        		initialize_params {
+        			image = data.google_compute_image.image.self_link
+        		}
+        	}
+
+        	network_interface {
+        		network = "default"
+        		access_config {
+        			//Ephemeral IP
+        		}
+        	}
+        	// Optional config to make instance ephemeral
+        /*  scheduling {
+        		preemptible       = true
+        		automatic_restart = false
+        	} */
+
+        	// Pass the tunnel token to the GCP server so that the server can install and run the tunnel upon startup.
+        	metadata_startup_script = templatefile("./install-tunnel.tftpl",
+        		{
+        			tunnel_token = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.tunnel_token
+        		})
+        }
+        ```
+        </TabItem>
+        </Tabs>

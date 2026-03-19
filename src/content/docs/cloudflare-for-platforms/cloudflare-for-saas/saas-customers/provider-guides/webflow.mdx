@@ -4,7 +4,7 @@ title: Webflow
 head:
   - tag: title
     content: Webflow | Provider guides
-description: Learn how to configure your Enterprise zone with Webflow.
+description: Learn how to configure your Cloudflare zone with Webflow.
 ---
 
 import { Render } from "~/components";
@@ -32,6 +32,14 @@ To enable O2O for a specific hostname within a Cloudflare Zone, [create](/dns/ma
 | Type    | Name                 | Target                | Proxy status |
 | ------- | -------------------- | --------------------- | ------------ |
 | `CNAME` | `<YOUR_DOMAIN>`      | `cdn.webflow.com`     | Proxied      |
+
+## Zone hold
+
+<Render
+	file="provider-guide-zone-hold"
+	params={{ providerName: "Webflow" }}
+	product="cloudflare-for-platforms"
+/>
 
 ## Product compatibility
 

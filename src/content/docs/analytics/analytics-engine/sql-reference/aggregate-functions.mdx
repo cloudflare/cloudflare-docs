@@ -248,3 +248,57 @@ SELECT topKWeighted(double1, _sample_interval) FROM my_dataset
 -- find the 15 most common values of <blob1>, weighted by `_sample_interval`
 SELECT topKWeighted(15)(blob1, _sample_interval) FROM my_dataset
 ```
+
+## countIf <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+countIf(<expr>)
+```
+
+`countIf` is an aggregation function that returns the number of rows in the results set,
+but only counting rows where a provided expression evaluates to true.
+
+Example:
+
+```sql
+-- return the number of rows where `double1` is greater than 5
+countIf(double1 > 5)
+```
+
+## sumIf <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+sumIf(<expr>, <expr>)
+```
+
+`sumIf` is an aggregation function that returns the sum of a first expression across all rows in the results set,
+but only including rows where a second expression evaluates to true.
+
+Example:
+
+```sql
+-- return the sum of column `item_cost` of all items where another column `in_stock` is not zero
+sumIf(item_cost, in_stock > 0)
+```
+
+## avgIf <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+avgIf(<expr>, <expr>)
+```
+
+`avgIf` is an aggregation function that returns the mean of an expression across all rows in the results set,
+but only including rows where a second expression evaluates to true.
+
+Example:
+
+```sql
+-- return the mean of column `item_cost` where another column `in_stock` is not zero
+avgIf(item_cost, in_stock > 0)
+```

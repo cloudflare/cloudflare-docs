@@ -13,7 +13,7 @@ At the moment, HTTPS applications do not support HTTP/3.
 
 ## UDP
 
-At the moment, Cloudflare does not support packet fragmentation for UDP packets. If packets are fragmented, they will be dropped at Cloudflare’s edge.
+At the moment, Cloudflare does not support packet fragmentation for UDP packets. If packets are fragmented, they will be dropped at Cloudflare’s edge. Additionally, UDP Spectrum applications are not supported on Magic Transit, BYOIP, Spectrum, and Bindings.
 
 ## Minecraft
 
@@ -25,7 +25,7 @@ Minecraft Java Edition is supported but Minecraft Bedrock Edition is not support
 
 ## Private Network Load Balancing
 
-When using [Spectrum](/load-balancing/private-network/#on-ramps) as an on-ramp and [Magic WAN](/load-balancing/private-network/#magic-wan) as an off-ramp the [proxy protocol](/spectrum/how-to/enable-proxy-protocol/) setting in Spectrum is not supported.
+When using [Spectrum](/load-balancing/private-network/#on-ramps) as an on-ramp and [Cloudflare WAN](/load-balancing/private-network/#cloudflare-wan) as an off-ramp the [proxy protocol](/spectrum/how-to/enable-proxy-protocol/) setting in Spectrum is not supported.
 
 ## Cloudflare Tunnel
 

@@ -24,41 +24,54 @@
     ],
     "schema": {
         "input": {
-          "type": "object",
-          "properties": {
-            "text": {
-              "oneOf": [
-                { "type": "string" },
-                {
-                  "type": "array",
-                  "items": { "type": "string" }
+            "type": "object",
+            "properties": {
+                "text": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
+                    "description": "Input text to embed. Can be a single string or a list of strings."
                 }
-              ],
-              "description": "Input text to embed. Can be a single string or a list of strings."
-            }
-          },
-          "required": ["text"]
+            },
+            "required": [
+                "text"
+            ]
         },
         "output": {
-          "type": "object",
-          "properties": {
-            "data": {
-              "type": "array",
-              "items": {
-                "type": "array",
-                "items": { "type": "number" }
-              },
-              "description": "Embedding vectors, where each vector is a list of floats."
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "description": "Embedding vectors, where each vector is a list of floats."
+                },
+                "shape": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "description": "Shape of the embedding data as [number_of_embeddings, embedding_dimension]."
+                }
             },
-            "shape": {
-              "type": "array",
-              "items": { "type": "integer" },
-              "minItems": 2,
-              "maxItems": 2,
-              "description": "Shape of the embedding data as [number_of_embeddings, embedding_dimension]."
-            }
-          },
-          "required": ["data", "shape"]
+            "required": [
+                "data",
+                "shape"
+            ]
         }
     }
 }

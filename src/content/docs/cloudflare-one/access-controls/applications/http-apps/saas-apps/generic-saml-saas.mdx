@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Generic SAML application
+tags:
+  - SAML
 sidebar:
   order: 1
 ---
@@ -11,7 +13,7 @@ This page provides generic instructions for setting up a SaaS application in Clo
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Admin access to the account of the SaaS application
 
 ## 1. Get SaaS application URLs
@@ -23,7 +25,7 @@ Obtain the following URLs from your SaaS application account:
 
 ## 2. Add your application to Access
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 
 2. Select **Add an application**.
 
@@ -54,7 +56,7 @@ If you are using Okta, Microsoft Entra ID (formerly Azure AD), Google Workspace,
 
 13. Select **Next**.
 
-14. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+14. (Optional) Configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application.
 
 15. <Render file="access/access-block-page" product="cloudflare-one" />
 
@@ -62,7 +64,7 @@ If you are using Okta, Microsoft Entra ID (formerly Azure AD), Google Workspace,
 
 ## 3. Configure SSO in your SaaS application
 
-Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for instructions on how to configure a third-party SAML SSO provider. You will need the following values from the Zero Trust dashboard:
+Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for instructions on how to configure a third-party SAML SSO provider. You will need the following values from the Cloudflare One:
 
 - **SSO endpoint**
 - **Access Entity ID or Issuer**
@@ -99,13 +101,13 @@ To send additional SAML attributes to your SaaS application, configure the follo
 			- `Unspecified`: (default) No specific format required.
 			- `URI`: Name is in a format such as `urn:ietf:params:scim:schemas:core:2.0:User:userName` or `urn:oid:2.5.4.42`.
 			- `Basic`: Name is a normal string such as `userName`.
-	- **IdP claim**: The identity provider value that should map to this SAML attribute. You can select any [SAML attribute](/cloudflare-one/integrations/identity-providers/generic-saml/#saml-headers-and-attributes) or [OIDC claim](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) that was configured in a Zero Trust IdP integration.
+	- **IdP claim**: The identity provider value that should map to this SAML attribute. You can select any [SAML attribute](/cloudflare-one/integrations/identity-providers/generic-saml/#saml-headers-and-attributes) or [OIDC claim](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) that was configured in a Cloudflare One IdP integration.
 	- **Required**: If an attribute is marked as required but is not provided by an IdP, Cloudflare will fail the authentication request and show an error page.
 	- **Add per IdP claim**: (Optional) If you turned on multiple identity providers for the SaaS application, you can choose different attribute mappings for each IdP. These values will override the parent **IdP claim**.
 
 ### JSONata transforms
 
-In **Advanced settings** > **Transformation**, you can enter a [JSONata](https://jsonata.org/) script that modifies a copy of the [User Registry identity](/cloudflare-one/insights/logs/users/). This is useful for setting default values, excluding email addresses, or ensuring usernames meet arbitrary criteria. Access will send the modified user identity to the SaaS application as SAML attributes.
+In **Advanced settings** > **Transformation**, you can enter a [JSONata](https://jsonata.org/) script that modifies a copy of the [User Registry identity](/cloudflare-one/team-and-resources/users/users/). This is useful for setting default values, excluding email addresses, or ensuring usernames meet arbitrary criteria. Access will send the modified user identity to the SaaS application as SAML attributes.
 
 :::note
 JSONata transformations are not compatible with [SAML attribute statements](#saml-attribute-statements). JSONata transformations will override any specified SAML attributes.

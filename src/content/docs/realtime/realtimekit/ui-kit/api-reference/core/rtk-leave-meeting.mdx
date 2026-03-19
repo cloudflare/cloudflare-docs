@@ -1,0 +1,40 @@
+---
+pcx_content_type: navigation
+title: rtk-leave-meeting
+description: API reference for rtk-leave-meeting component (Web Components (HTML) Library)
+---
+A component which allows you to leave a meeting or
+ end meeting for all, if you have the permission.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-leave-meeting></rtk-leave-meeting>
+```
+
+### With Properties
+
+```html
+<rtk-leave-meeting>
+</rtk-leave-meeting>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-leave-meeting");
+
+  el.meeting= meeting
+</script>
+```

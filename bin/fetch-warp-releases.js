@@ -14,15 +14,20 @@ fs.writeFileSync(
 	"utf-8",
 );
 
+const linuxDistributions = ["Ubuntu", "Debian", "CentOS", "Fedora"];
+
 const linesToRemove = [
 	"For related Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp",
 	"For Zero Trust documentation please see: <https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp>",
 	"For related Consumer documentation please see: https://developers.cloudflare.com/warp-client/",
 	"For Consumer documentation please see: <https://developers.cloudflare.com/warp-client/>",
+	"For Consumer documentation please see: <https://developers.cloudflare.com/warp-client>",
 ];
 
-for (const { platform } of platforms) {
-	const isLinux = platform !== "windows" && platform !== "macos";
+for (const { platform, display_name } of platforms) {
+	const isLinux = linuxDistributions.some((dist) =>
+		display_name.includes(dist),
+	);
 
 	for (const track of ["ga", "beta"]) {
 		fetch(`${BASE_URL}/update/json/${platform}/${track}`)
@@ -63,9 +68,17 @@ for (const { platform } of platforms) {
 								);
 
 								existingFile.linuxPlatforms[platform] = item.packageSize;
+							} else {
+								console.log(
+									`${platform} already exists in Linux ${track} ${item.version}.`,
+								);
 							}
 
-							fs.writeFileSync(path, YAML.stringify(existingFile), "utf-8");
+							fs.writeFileSync(
+								path,
+								YAML.stringify(existingFile, { blockQuote: "literal" }),
+								"utf-8",
+							);
 						} else {
 							console.log(
 								`${platform} ${track} ${item.version} already exists.`,
@@ -75,7 +88,7 @@ for (const { platform } of platforms) {
 						return;
 					}
 
-					console.log(`Saving ${track} ${item.version}.`);
+					console.log(`Saving ${platform} ${track} ${item.version}.`);
 
 					let markdown = item.releaseNotes;
 
@@ -103,14 +116,17 @@ for (const { platform } of platforms) {
 
 					fs.writeFileSync(
 						path,
-						YAML.stringify({
-							...item,
-							releaseNotes,
-							platformName,
-							linuxPlatforms: isLinux
-								? { [platform]: item.packageSize }
-								: undefined,
-						}),
+						YAML.stringify(
+							{
+								...item,
+								releaseNotes,
+								platformName,
+								linuxPlatforms: isLinux
+									? { [platform]: item.packageSize }
+									: undefined,
+							},
+							{ blockQuote: "literal" },
+						),
 						"utf-8",
 					);
 				});

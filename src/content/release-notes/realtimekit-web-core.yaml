@@ -1,0 +1,242 @@
+---
+link: "/realtime/realtimekit/release-notes/"
+productName: RealtimeKit Web Core
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2026-03-10"
+    title: RealtimeKit Web Core 1.2.5
+    description: |-
+      **Compatibility:** Works best with RealtimeKit Web UI Kit 1.1.1 or later.
+
+      **Enhancements**
+
+      - Implemented retry limits for ICE connection failures to prevent indefinite connection attempts and improve reliability.
+      - Improved error handling for room join operations to provide more descriptive and actionable error messages.
+      - Room join errors are now thrown consistently when network connectivity is blocked by firewalls or when TURN servers are unreachable.
+
+      **Fixes**
+
+      - Fixed an issue in Connected Meetings where peer IDs were not regenerated when switching between rooms. Peer IDs are now correctly assigned per room session.
+
+  - publish_date: "2026-01-30"
+    title: RealtimeKit Web Core 1.2.4
+    description: |-
+      **Compatibility:** Works best with RealtimeKit Web UI Kit 1.1.0 or later.
+
+      **New APIs**
+
+      Added chat pagination support with the following methods:
+
+      - `meeting.chat.fetchPinnedMessages` - Fetch pinned messages from server.
+      - `meeting.chat.fetchPublicMessages` - Fetch public messages from server.
+      - `meeting.chat.fetchPrivateMessages` - Fetch private messages from server.
+
+      **Enhancements**
+
+      - Added JSDoc comments to all public-facing methods and classes for improved developer suggestions.
+      - Chat message operations (edit, delete, pin) are now available to all RealtimeKit clients without additional configuration.
+      - `pinMessage` and `unpinMessage` events on `meeting.chat` now emit reliably.
+      - Message pinning (`meeting.chat.pin` and `meeting.chat.unpin`) is now available to all participants.
+
+      **Removed APIs**
+
+      Removed non-operational chat channel APIs to streamline the RealtimeKit SDK. Meeting chat (`meeting.chat`) remains fully operational.
+
+      - Removed `meeting.self.permissions.chatChannel`.
+      - Removed `meeting.self.permissions.chatMessage`. Use `meeting.self.permissions.chatPublic` and `meeting.self.permissions.chatPrivate` instead.
+      - Removed `meeting.chat.channels`.
+      - Removed `meeting.chat.sendMessageToChannel`.
+      - Removed `meeting.chat.markLastReadMessage`.
+      - Removed events: `channelMessageUpdate`, `channelCreate`, and `channelUpdate` from `meeting.chat`.
+
+      **API changes**
+
+      - The following methods no longer accept a third optional `channelId` parameter:
+        - `meeting.chat.editTextMessage(messageId, message)`
+        - `meeting.chat.editImageMessage(messageId, imageFile)`
+        - `meeting.chat.editFileMessage(messageId, file)`
+        - `meeting.chat.editMessage(messageId, messagePayload)`
+        - `meeting.chat.deleteMessage(messageId)`
+
+      **Deprecations**
+
+      The following methods are deprecated due to scalability limitations (limited to 1,000 recent messages):
+
+      - `meeting.chat.messages` - Only fetches recent messages and new messages after joining.
+      - `meeting.chat.getMessagesByUser` - Use new fetch methods for scalable message retrieval.
+      - `meeting.chat.getMessagesByType` - Use new fetch methods for scalable message retrieval.
+      - `meeting.chat.getMessages` - Use `meeting.chat.fetchPublicMessages` or `meeting.chat.fetchPrivateMessages` instead.
+      - `meeting.chat.pinned` - Use `meeting.chat.fetchPinnedMessages` instead.
+      - `meeting.chat.searchMessages` - Use `meeting.chat.fetchPublicMessages` or `meeting.chat.fetchPrivateMessages` instead.
+
+      **Known limitations**
+
+      - Pinned messages are not supported for private chats.
+  - publish_date: "2026-01-05"
+    title: RealtimeKit Web Core 1.2.3
+    description: |-
+      **Fixes**
+
+      - Fixed an issue where users who joined a meeting with audio and video disabled and then initiated tab screen sharing would experience SDP corruption upon stopping the screen share, preventing subsequent actions such as enabling audio or video.
+
+        Error thrown:
+        ```text
+        InvalidAccessError: Failed to execute 'setRemoteDescription' on 'RTCPeerConnection': Failed to set remote answer sdp: Failed to set remote audio description send parameters for m-section with mid='<N>'
+        ```
+      - Fixed an issue where awaiting `RealtimeKitClient.initMedia` did not return media tracks
+
+        Example usage:
+        ```ts
+        const media = await RealtimeKitClient.initMedia({
+          video : true,
+          audio: true,
+        });
+
+        const { videoTrack, audioTrack } = media;
+        ```
+
+      - Fixed an issue where an undefined variable caused `TypeError: Cannot read properties of undefined (reading 'getValue')` in media retrieval due to a race condition.
+
+  - publish_date: "2025-12-17"
+    title: RealtimeKit Web Core 1.2.2
+    description: |-
+      **Fixes**
+
+      - Fixed an issue where camera switching between front and rear cameras was not working on Android devices
+      - Fixed device selection logic to prioritize media devices more effectively
+      - Added PIP support for [Reactions](https://developers.cloudflare.com/realtime/realtimekit/ui-kit/addons/#reactions-1)
+
+  - publish_date: "2025-11-18"
+    title: RealtimeKit Web Core 1.2.1
+    description: |-
+      **Fixes**
+
+      - Resolved an issue preventing default media device selection.
+      - Fixed SDK bundle to include `browser.js` instead of incorrectly shipping `index.iife.js` in 1.2.0.
+
+      **Enhancements**
+
+      - External media devices are now prioritized over internal devices when no preferred device is set.
+
+  - publish_date: "2025-10-30"
+    title: RealtimeKit Web Core 1.2.0
+    description: |-
+      **Features**
+
+      - Added support for configuring simulcast via `initMeeting`:
+
+        ```ts
+        initMeeting({
+          overrides: {
+            simulcastConfig: {
+              disable: false,
+              encodings: [{ scaleResolutionDownBy: 2 }],
+            },
+          },
+        });
+        ```
+
+      **Fixes**
+
+      - Resolved an issue where remote participants' video feeds were not visible during grid pagination in certain edge cases.
+      - Fixed a bug preventing participants from switching microphones if the first listed microphone was non-functional.
+
+      **Breaking changes**
+
+      - Legacy media engine support has been removed. If your organization was created before March 1, 2025 and you are upgrading to this SDK version or later, you may experience recording issues. Contact support to migrate to the new Cloudflare SFU media engine to ensure continued recording functionality.
+
+  - publish_date: "2025-08-26"
+    title: RealtimeKit Web Core 1.1.7
+    description: |-
+      **Fixes**
+
+      - Prevented speaker change events from being emitted when the active speaker does not change.
+      - Addressed a behavioral change in microphone switching on recent versions of Google Chrome.
+      - Added `deviceInfo` logs to improve debugging capabilities for React Native.
+      - Fixed an issue that queued multiple media consumers for the same peer, optimizing resource usage.
+
+  - publish_date: "2025-08-14"
+    title: RealtimeKit Web Core 1.1.6
+    description: |-
+      **Enhancements**
+
+      - Internal changes to make debugging of media consumption issues easier and faster.
+
+  - publish_date: "2025-08-04"
+    title: RealtimeKit Web Core 1.1.5
+    description: |-
+      **Fixes**
+
+      - Improved React Native support for `AudioActivityReporter` with proper audio sampling.
+      - Resolved issue preventing users from creating polls.
+      - Fixed issue where leaving a meeting took more than 20 seconds.
+
+  - publish_date: "2025-07-17"
+    title: RealtimeKit Web Core 1.1.4
+    description: |-
+      **Fixes**
+
+      - Livestream feature is now available to all beta users.
+      - Fixed Livestream stage functionality where hosts were not consuming peer videos upon participants' stage join.
+      - Resolved issues with viewer joins and leaves in Livestream stage.
+
+  - publish_date: "2025-07-08"
+    title: RealtimeKit Web Core 1.1.3
+    description: |-
+      **Fixes**
+
+      - Fixed issue where users could not enable video mid-meeting if they joined without video initially.
+
+  - publish_date: "2025-07-02"
+    title: RealtimeKit Web Core 1.1.2
+    description: |-
+      **Fixes**
+
+      - Fixed edge case in large meetings where existing participants could not hear or see newly joined users.
+
+  - publish_date: "2025-06-30"
+    title: RealtimeKit Web Core 1.1.0–1.1.1
+    description: |-
+      **Features**
+
+      - Added methods to toggle self tile visibility.
+      - Introduced broadcast functionality across connected meetings (breakout rooms).
+
+      **New API**
+
+      - Broadcast messages across meetings:
+
+        ```ts
+        meeting.participants.broadcastMessage("<message_type>", { message: "Hi" }, {
+          meetingIds: ["<connected_meeting_id>"],
+        });
+        ```
+
+      **Enhancements**
+
+      - Reduced time to display videos of newly joined participants when joining in bulk.
+      - Added support for multiple meetings on the same page in RealtimeKit Core SDK.
+
+  - publish_date: "2025-06-17"
+    title: RealtimeKit Web Core 1.0.2
+    description: |-
+      **Fixes**
+
+      - Enhanced error handling for media operations.
+      - Fixed issue where active participants with audio or video were not appearing in the active participant list.
+
+  - publish_date: "2025-05-29"
+    title: RealtimeKit Web Core 1.0.1
+    description: |-
+      **Fixes**
+
+      - Resolved initial setup issues with Cloudflare RealtimeKit integration.
+      - Fixed meeting join and media connectivity issues.
+      - Enhanced media track handling.
+
+  - publish_date: "2025-05-29"
+    title: RealtimeKit Web Core 1.0.0
+    description: |-
+      **Features**
+
+      - Initial release of Cloudflare RealtimeKit with support for group calls, webinars, livestreaming, polls, and chat.

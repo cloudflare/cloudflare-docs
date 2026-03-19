@@ -48,7 +48,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "Ai_Cf_Meta_Llama_4_Prompt",
+                    "title": "Prompt",
                     "properties": {
                         "prompt": {
                             "type": "string",
@@ -137,7 +137,7 @@
                     ]
                 },
                 {
-                    "title": "Ai_Cf_Meta_Llama_4_Messages",
+                    "title": "Messages",
                     "properties": {
                         "messages": {
                             "type": "array",
@@ -151,8 +151,7 @@
                                     },
                                     "tool_call_id": {
                                         "type": "string",
-                                        "description": "The tool call id. If you don't know what to put here you can fall back to 000000001",
-                                        "pattern": "[a-zA-Z0-9]{9}"
+                                        "description": "The tool call id. If you don't know what to put here you can fall back to 000000001"
                                     },
                                     "content": {
                                         "oneOf": [
@@ -453,7 +452,7 @@
                     ]
                 },
                 {
-                    "title": "Ai_Cf_Meta_Llama_4_Async_Batch",
+                    "title": "Async_Batch",
                     "type": "object",
                     "properties": {
                         "requests": {
@@ -462,7 +461,7 @@
                                 "type": "object",
                                 "oneOf": [
                                     {
-                                        "title": "Ai_Cf_Meta_Llama_4_Prompt_Inner",
+                                        "title": "Prompt_Inner",
                                         "properties": {
                                             "prompt": {
                                                 "type": "string",
@@ -551,7 +550,7 @@
                                         ]
                                     },
                                     {
-                                        "title": "Ai_Cf_Meta_Llama_4_Messages_Inner",
+                                        "title": "Messages_Inner",
                                         "properties": {
                                             "messages": {
                                                 "type": "array",

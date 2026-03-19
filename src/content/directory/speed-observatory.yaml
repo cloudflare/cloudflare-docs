@@ -1,0 +1,12 @@
+id: jJoegf
+name: speed-observatory
+
+entry:
+  title: Observatory
+  url: /speed/observatory/
+  show: false
+
+meta:
+  title: Cloudflare Observatory docs
+  description: Observatory uses synthetic tests and real user data from browsers to assess website performance and recommend optimizations.
+  author: "@cloudflare"

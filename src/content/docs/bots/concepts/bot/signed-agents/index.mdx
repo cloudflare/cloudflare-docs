@@ -28,14 +28,6 @@ Once Cloudflare approves a signed agent, it should appear on [Cloudflare Radar's
 
 ---
 
-## Transient false negatives
-
-Once Cloudflare lists an agent as a signed agent, this entry is cached and may get delisted if no traffic is seen in the Cloudflare network coming from the agent for a defined period of time.
-
-An agent can remain unlisted until Cloudflare sees traffic being sourced from the agent. When the agent is revalidated, it is listed as a signed agent again.
-
----
-
 ## Verification method
 
 The bot must be verified using [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/).

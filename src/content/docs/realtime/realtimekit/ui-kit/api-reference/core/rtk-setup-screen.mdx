@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: rtk-setup-screen
+description: API reference for rtk-setup-screen component (Web Components (HTML) Library)
+---
+A screen shown before joining the meeting, where you can edit your display name,
+ and media settings.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-setup-screen></rtk-setup-screen>
+```
+
+### With Properties
+
+```html
+<rtk-setup-screen
+ size="md">
+</rtk-setup-screen>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-setup-screen");
+
+  el.meeting= meeting
+</script>
+```

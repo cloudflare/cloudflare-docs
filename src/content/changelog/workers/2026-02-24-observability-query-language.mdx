@@ -1,0 +1,25 @@
+---
+title: Write structured queries to filter and search your Workers logs and traces
+description: Workers Observability now supports a query language to filter logs and traces using operators, functions, and boolean logic directly from the search bar.
+products:
+  - workers
+date: 2026-02-25
+---
+
+[Workers Observability](/workers/observability/) now includes a query language that lets you write structured queries directly in the search bar to filter your logs and traces. The search bar doubles as a free text search box — type any term to search across all metadata and attributes, or write field-level queries for precise filtering.
+
+![Workers Observability search bar with autocomplete suggestions and Query Builder sidebar filters](~/assets/images/changelog/workers/observability/2026-02-24-query-language.png)
+
+Queries written in the search bar sync with the [Query Builder](/workers/observability/) sidebar, so you can write a query by hand and then refine it visually, or build filters in the Query Builder and see the corresponding query syntax. The search bar provides autocomplete suggestions for metadata fields and operators as you type.
+
+The query language supports:
+
+- **Free text search** — search everywhere with a keyword like `error`, or match an exact phrase with `"exact phrase"`
+- **Field queries** — filter by specific fields using comparison operators (for example, `status = 500` or `$workers.wallTimeMs > 100`)
+- **Operators** — `=`, `!=`, `>`, `>=`, `<`, `<=`, and `:` (contains)
+- **Functions** — `contains(field, value)`, `startsWith(field, prefix)`, `regex(field, pattern)`, and `exists(field)`
+- **Boolean logic** — add conditions with `AND`, `OR`, and `NOT`
+
+Select the help icon next to the search bar to view the full syntax reference, including all supported operators, functions, and keyboard shortcuts.
+
+Go to the [Workers Observability dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/) to try the query language.

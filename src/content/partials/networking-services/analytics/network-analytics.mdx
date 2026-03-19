@@ -1,0 +1,115 @@
+---
+params:
+  - magicWord
+---
+
+import { GlossaryTooltip, Markdown, DashButton } from "~/components"
+
+{ props.magicWord === "Magic Transit" && (
+  <>
+    <Markdown
+      text="[Network Analytics](/analytics/network-analytics/) provides real-time insights into Magic Transit traffic that enters and leaves Cloudflare's network through GRE or IPsec tunnels."
+      inline={false}
+    />
+  </>
+)}
+
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
+  <>
+    <Markdown
+      text="You can access real-time and historical network data in Network Analytics. Explore Cloudflare WAN traffic (in packets or bytes) over time in a time series, and filter the data by different [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) characteristics."
+      inline={false}
+    />
+  </>
+)}
+
+Data is aggregated into time intervals that vary based on the selected zoom level. For example, a daily view shows 24-hour averages, which can flatten short-term traffic spikes. As a result, longer time intervals display lower peak bandwidth values compared to more granular views like five-minute intervals.
+
+For details, refer to the [Network Analytics](/analytics/network-analytics/) documentation.
+
+## Network traffic data filters
+
+{ props.magicWord === "Magic Transit" && (
+  <>
+	<Markdown
+	text={`
+	With Magic Transit, you can account for traffic flows that enter Cloudflare's network, are blocked by DDoS rules or Cloudflare Network Firewall, and leave Cloudflare's network. This insight lets you track the total packets and bytes that traverse Cloudflare's network and are ultimately destined for your network. It also provides increased insight into traffic flows that are unaccounted for.
+	`}
+	inline={false}
+	/>
+  </>
+  )
+}
+
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
+  <>
+	<Markdown
+	text={`
+	With Cloudflare WAN, you have increased insight into traffic flows across Cloudflare One products, including:
+
+	- Traffic entering Cloudflare's network via the Cloudflare One Client
+	- Traffic leaving Cloudflare's network via the Cloudflare One Client
+	- Traffic leaving Cloudflare's network via Cloudflare Tunnel (\`cloudflared\`)
+
+	`}
+	inline={false}
+	/>
+  </>
+  )
+}
+
+The complete list of filters includes:
+
+- A list of your top tunnels by traffic volume.
+- Traffic source and destination by traffic type, on-ramps and off-ramps, <GlossaryTooltip term="IP address">IP addresses</GlossaryTooltip>, and ports.
+- Destination IP ranges and ASNs.
+- Protocols and packet sizes.
+- Samples of all GRE or IPsec tunnel traffic entering or leaving Cloudflare's network.
+- Mitigations applied (such as DDoS and Cloudflare Network Firewall) to traffic entering Cloudflare's network.
+
+For instructions, refer to [Access tunnel traffic analytics](#access-tunnel-traffic-analytics).
+
+## Access tunnel traffic analytics
+
+1. Go to the **Network Analytics** page.
+
+<DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/transport-analytics" />
+
+2. In the **All Traffic** tab, scroll to **Top Insights** to access network traffic filters. By default, the dashboard displays five items, but you can display up to 25 items at once. To change the number of items, select the drop-down menu.
+3. (Optional) Hover over a traffic type. You can then filter for that traffic or exclude it from the results.
+4. To adjust the scope of information, scroll to **All traffic** > **Add filter**.
+5. In the **New filter** popover, select the data type from the left drop-down menu, an operator from the middle drop-down menu, and an action from the right drop-down menu. For example:
+
+   ```txt
+   <DESTINATION_TUNNELS> | _equals_ | <NAME_OF_YOUR_TUNNEL>
+   ```
+
+   This lets you examine traffic from specific Source tunnels and/or Destination tunnels.
+
+## Feature notes
+
+{ props.magicWord === "Magic Transit" && (
+  <>
+	<Markdown
+		text="- For Magic Transit, `Non-Tunnel traffic` often represents traffic from the public Internet or traffic via [CNIs](/network-interconnect/)."
+		inline={false}
+	/>
+  </>
+)}
+
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
+  <>
+	<Markdown
+		text={`
+		- For Cloudflare WAN, \`Non-Tunnel traffic\` refers to traffic outside GRE or IPsec tunnels. This can include traffic from:
+		  - [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)
+		  - [CNIs](/network-interconnect/)
+		  - Traffic destined for the public Internet via [Gateway](/cloudflare-one/traffic-policies/)
+		  - Traffic destined for applications behind [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
+		`}
+		inline={false}
+	/>
+  </>
+)}
+
+The label `Non-Tunnel traffic` is a placeholder, and Cloudflare will apply more specific labels to this category of traffic in the future.

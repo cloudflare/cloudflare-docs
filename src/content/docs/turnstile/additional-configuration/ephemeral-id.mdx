@@ -6,18 +6,64 @@ sidebar:
 
 ---
 
-Ephemeral IDs generate a unique short-lived ID that can link behavior to a specific client instead of an IP address without relying on setting any cookies or using similar client-side storage.
+Ephemeral IDs provide device fingerprinting capabilities to enhance bot detection and abuse prevention beyond traditional IP-based methods. Ephemeral IDs are unique, short-lived identifiers that Turnstile generates to link visitor behavior to a specific client device without relying on cookies or client-side storage. They are temporary device fingerprints that help identify patterns of behavior across multiple interactions. Ephemeral ID is an advanced detection method that persists even when attackers change their IP addresses.
 
-When the same visitor interacts with Turnstile widgets from different Cloudflare customers, they receive different Ephemeral IDs for each contact. In attacks where fraudsters attempt to disguise themselves using different IP addresses, Ephemeral IDs detect abuse patterns more accurately than determining whether the visitor is a human or a bot.
+## Process
 
-Ephemeral IDs are not unique and have a lifespan of up to a few days. They can be useful for identifying a bad actor in acute attacks such as sudden spikes in fake account creations or credential stuffing.
+Ephemeral IDs use advanced analysis techniques to create unique identifiers that help find patterns of behavior across multiple interactions. These identifiers are generated dynamically for each visitor interaction with Turnstile widgets.
+
+No cookies or local storage is required. 
+
+Ephemeral IDs are scoped to your Cloudflare account and cannot be shared across accounts. IDs have a short lifespan and expire within a few days. They cannot be used to identify individual users
+
+Ephemeral IDs provide more accurate abuse detection than IP-based methods by linking behavior to individual clients rather than network addresses. This is particularly effective against acute attacks where bad actors try to evade detection, such as credential stuffing and fake account creation attacks.
 
 Refer to the [blog post](https://blog.cloudflare.com/turnstile-ephemeral-ids-for-fraud-detection/) for more information.
+
+---
+
+## Implementation
+
+### Enable Ephemeral IDs
+
+1. Contact your Cloudflare account team to enable Ephemeral ID entitlement for your account. This feature requires Enterprise-level access and cannot be self-activated.
+2. After entitlement is enabled, activate Ephemeral IDs for specific widgets using the Cloudflare API.
+
+    ```bash title="cURL command" wrap
+    curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets/$WIDGET_ID" \
+      -H "Authorization: Bearer $API_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "ephemeral_id": true
+      }'
+    ```
+3. Confirm Ephemeral IDs are active by checking your widget configuration.
+
+    ```bash title="cURL command" wrap
+    curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets/$WIDGET_ID" \
+      -H "Authorization: Bearer $API_TOKEN"
+    ```
+
+### Access Ephemeral IDs
+
+Once enabled, Ephemeral IDs are included in Siteverify API responses.
+
+```json title="Siteverify API response" wrap
+{
+  "success": true,
+  "challenge_ts": "2022-02-28T15:14:30.096Z",
+  "hostname": "example.com",
+  "error-codes": [],
+  "action": "login",
+  "cdata": "sessionid-123456789",
+  "metadata": {
+    "ephemeral_id": "x:9f78e0ed210960d7693b167e"
+  }
+}
+```
+
+---
 
 ## Availability
 
 Ephemeral IDs are available to Enterprise Bot Management customers with the Enterprise Turnstile add-on or standalone Enterprise Turnstile customers. Contact your account team for access to Ephemeral IDs.
-
-## Enablement
-
-After your account team enables the Ephemeral ID entitlement, you must turn it on for the widget that you want the Ephemeral ID on via the [API call](/api/resources/turnstile/subresources/widgets/methods/update/).

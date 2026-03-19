@@ -66,6 +66,10 @@ Return streaming output to users via Server-Sent Events:
 
 <TypeScriptExample>
 ```
+import { getSandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const sandbox = getSandbox(env.Sandbox, 'builder');

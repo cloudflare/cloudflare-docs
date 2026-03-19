@@ -3,6 +3,30 @@ pcx_content_type: concept
 title: Footnotes
 ---
 
-Footnotes are useful when you want to provide additional context about an item but that context would greatly distract from the flow of reading through the document (legal disclaimers, pricing, etc.).
+Use footnotes to add details or context about something without distracting from the main content. We recommend using hover-activated footnotes, but you can also use plain text.
 
-To implement footnotes, use standard [markdown footnote formatting](https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/). You can also see an example in the [Load Balancing documentation](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/load-balancing/additional-options/spectrum.mdx?plain=1#L42).
+### Hover-activated footnotes
+
+To add hover-activated footnotes, use the following syntax:
+
+```mdx live
+This is a sentence with a footnote.[^1]
+
+[^1]: A footnote adds details or context.
+```
+
+With this type of footnote, you can add the numbers to the MDX file in any order and they will still display in numerical order on the page.
+
+The hover ability of this type of footnote is powered by [tippy.js](https://atomiks.github.io/tippyjs/).
+
+### Plain text footnotes
+
+To add plain text footnotes, use the syntax in this example:
+
+```mdx live
+This is a sentence with a footnote.<sup>1</sup>
+
+<sup>1</sup> A footnote adds details or context.
+
+```
+With this type of footnote, you can add the footnote note anywhere on the page. We recommend adding it to the bottom of the section or table where the footnote is referenced or to the bottom of the page.

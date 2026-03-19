@@ -1,0 +1,21 @@
+id: wogVyr
+name: Data Localization Suite
+
+entry:
+  title: Data Localization Suite
+  url: /data-localization/
+  group: Cloudflare One
+  additional_groups:
+    [
+      Analytics,
+      Application performance,
+      Application security,
+      Developer platform,
+      Network security,
+      Storage,
+    ]
+
+meta:
+  title: Cloudflare Data Localization Suite docs
+  description: Control where Cloudflare stores and inspects data
+  author: "@cloudflare"

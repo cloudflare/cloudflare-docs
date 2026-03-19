@@ -12,6 +12,8 @@ import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 The following policies are commonly used to secure HTTP traffic.
 
+For a baseline set of recommended policies, refer to [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/build-http-policies/recommended-http-policies/).
+
 Refer to the [HTTP policies page](/cloudflare-one/traffic-policies/http-policies/) for a comprehensive list of other selectors, operators, and actions.
 
 ## Block sites
@@ -171,11 +173,11 @@ You can select either individual applications or the entire Do Not Inspect set, 
 
 ## Check device posture
 
-Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
+Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to [Enforce device posture](/cloudflare-one/reusable-components/posture-checks/).
 
 ### Enforce a minimum OS version
 
-Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) to ensure users are running at least a minimum version.
+Perform an [OS version check](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/) to ensure users are running at least a minimum version.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -209,7 +211,7 @@ To get the UUIDs of your device posture checks, use the [List device posture rul
 
 ### Check for a specific file
 
-Perform a [file check](/cloudflare-one/identity/devices/warp-client-checks/file-check/) to ensure users have a certain file on their device.
+Perform a [file check](/cloudflare-one/reusable-components/posture-checks/client-checks/file-check/) to ensure users have a certain file on their device.
 
 Since the file path will be different for each operating system, you can configure a file check for each system and use the **Or** logical operator to only require one of the checks to pass.
 
@@ -247,7 +249,7 @@ To get the UUIDs of your device posture checks, use the [List device posture rul
 
 ## Enforce session duration
 
-[Require users to re-authenticate](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/) after a certain amount of time has elapsed.
+[Require users to re-authenticate](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/) after a certain amount of time has elapsed.
 
 ## Isolate high risk sites in remote browser
 
@@ -277,7 +279,7 @@ When accessing origin servers with certificates not signed by a public certifica
 		enabled: true,
 		action: "off",
 		filters: ["http"],
-		traffic: 'any(http.conn.domains[*] in {"internal.example.com"})',
+		traffic: 'any(http.request.domains[*] in {"internal.example.com"})',
 		identity: "",
 		device_posture: "",
 	}}
@@ -293,9 +295,9 @@ For more information on supported file types, refer to [Download and Upload File
 
 ## Isolate or block shadow IT applications
 
-Isolate shadow IT applications discovered by the [Application Library](/cloudflare-one/applications/app-library/) that have not been reviewed yet or are currently under review, and block applications that are not approved by your organization.
+Isolate shadow IT applications discovered by the [Application Library](/cloudflare-one/team-and-resources/app-library/) that have not been reviewed yet or are currently under review, and block applications that are not approved by your organization.
 
-For more information on reviewing shadow IT applications, refer to [Review applications](/cloudflare-one/applications/app-library/#review-applications).
+For more information on reviewing shadow IT applications, refer to [Review applications](/cloudflare-one/team-and-resources/app-library/#review-applications).
 
 ### 1. Isolate unreviewed or in review applications
 

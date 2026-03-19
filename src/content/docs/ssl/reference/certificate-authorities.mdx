@@ -41,6 +41,7 @@ For Universal certificates, Cloudflare controls the validity periods and certifi
 
 - Hostname on certificate can contain up to 10 levels of subdomains.
 - Duplicate certificate limit of [5 certificates](https://letsencrypt.org/docs/rate-limits/) per week.
+- Redsys[^1] is not compatible with Let's Encrypt certificates. If you use Redsys and find issues with Let's Encrypt certificates, order an advanced certificate or upload a custom certificate to use a different CA.
 
 #### Browser compatibility
 
@@ -81,7 +82,7 @@ By cross-signing with a [GlobalSign root CA](https://valid.r1.roots.globalsign.c
 
 Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo’s 360 browser, all browsers or operating systems that depend on these root programs are covered.
 
-You can use the [root CAs list](https://pki.goog/faq/#faq-27) for checking compatibility between chain and client but, as explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
+You can use the [root CAs list](https://pki.goog/faq/#connecting-to-google) for checking compatibility between chain and client but, as explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
 
 ---
 
@@ -119,7 +120,7 @@ SSL.com certificates are [cross-signed with Certum](https://www.ssl.com/reposito
 
 #### Browser compatibility
 
-Refer to [Sectigo documentation](https://www.sectigo.com/knowledge-base/detail/SSL-Browser-Compatibility-1527076085062/kA01N000000zFJt).
+Refer to [Sectigo documentation](https://www.sectigo.com/resource-library/sectigo-certificate-authority-root-keys).
 
 ---
 
@@ -137,3 +138,5 @@ The following table lists the CAA record content for each CA:
 | Google Trust Services | `pki.goog; cansignhttpexchanges=yes` |
 | SSL.com               | `ssl.com`                            |
 | Sectigo               | `sectigo.com`                        |
+
+[^1]: A payment gateway used with some ecommerce plugins.

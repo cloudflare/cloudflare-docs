@@ -40,7 +40,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "Mistral_Small_3_1_24B_Instruct_Prompt",
+                    "title": "Prompt",
                     "properties": {
                         "prompt": {
                             "type": "string",
@@ -115,7 +115,7 @@
                     ]
                 },
                 {
-                    "title": "Mistral_Small_3_1_24B_Instruct_Messages",
+                    "title": "Messages",
                     "properties": {
                         "messages": {
                             "type": "array",
@@ -129,8 +129,7 @@
                                     },
                                     "tool_call_id": {
                                         "type": "string",
-                                        "description": "The tool call id. Must be supplied for tool calls for Mistral-3. If you don't know what to put here you can fall back to 000000001",
-                                        "pattern": "[a-zA-Z0-9]{9}"
+                                        "description": "The tool call id. Must be supplied for tool calls for Mistral-3. If you don't know what to put here you can fall back to 000000001"
                                     },
                                     "content": {
                                         "oneOf": [

@@ -10,28 +10,32 @@ description: Create a redirect rule to redirect all requests to a different
   service (port 80).
 ---
 
-import { Steps } from "~/components";
+import { Example } from "~/components";
 
 In this example the original domain was replaced with a different domain. All functionality was maintained, except for the HTTP service (port 80) which was discontinued.
 
-<Steps>
+[Create a redirect rule](/rules/url-forwarding/single-redirects/create-dashboard/) with the following configuration:
 
-1. Create a Bulk Redirect List with the following URL redirect:
+<Example>
 
-   - **Source URL**: `example.com/`
-   - **Target URL**: `https://example.net/`
-   - **Subpath matching**: Enabled
-   - **Preserve query string**: Enabled
+**When incoming requests match**
 
-2. Create a Bulk Redirect Rule that enables this list.
+- **Wildcard pattern**
+  - **Request URL**: `http*://example.com/*`
 
-</Steps>
+**Then**
+
+- **Target URL**: `https://example.net/${2}`
+- **Status code:** _301_
+- **Preserve query string:** Enabled
+
+</Example>
 
 This configuration will perform the following redirects:
 
-| Request URL                               | URL after redirect                        |
-| ----------------------------------------- | ----------------------------------------- |
-| `http://example.com/`                     | `https://example.net/`                    |
-| `https://example.com/`                    | `https://example.net/`                    |
-| `https://example.com/my/path/to/page.htm` | `https://example.net/my/path/to/page.htm` |
-| `https://example.com/search?q=term`       | `https://example.net/search?q=term`       |
+| Request URL                               | URL after redirect                        | Status code |
+| ----------------------------------------- | ----------------------------------------- | ----------- |
+| `http://example.com/`                     | `https://example.net/`                    | `301`       |
+| `https://example.com/`                    | `https://example.net/`                    | `301`       |
+| `https://example.com/my/path/to/page.htm` | `https://example.net/my/path/to/page.htm` | `301`       |
+| `https://example.com/search?q=term`       | `https://example.net/search?q=term`       | `301`       |

@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: OneLogin
 ---
 
+import { Render } from "~/components";
+
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an OIDC identity provider.
 
 ## Set up OneLogin as an OIDC provider
@@ -23,7 +25,7 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+   <Render file="find-team-name" product="cloudflare-one" />
 
 6. Select **Save**.
 
@@ -33,20 +35,19 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 
 9. Copy the **Client ID** and **Client Secret**.
 
-### 2. Add OneLogin to Zero Trust
+### 2. Add OneLogin to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
 
-2. Under **Login methods**, select **Add new**.
+2. Under **Your identity providers**, select **Add new identity provider**.
 
 3. Select **OneLogin**.
 
 4. Fill in the following information:
-
-    - **Name**: Name your identity provider.
-    - **App ID**: Enter your OneLogin client ID.
-    - **Client secret**: Enter your OneLogin client secret.
-    - **OneLogin account URL**: Enter your OneLogin domain, for example `https://<your-domain>.onelogin.com`.
+   - **Name**: Name your identity provider.
+   - **App ID**: Enter your OneLogin client ID.
+   - **Client secret**: Enter your OneLogin client secret.
+   - **OneLogin account URL**: Enter your OneLogin domain, for example `https://<your-domain>.onelogin.com`.
 
 5. (Optional) To enable SCIM, refer to [Synchronize users and groups](/cloudflare-one/integrations/identity-providers/generic-oidc/#synchronize-users-and-groups).
 
@@ -54,7 +55,7 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 
 7. Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to OneLogin.
+To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to OneLogin.
 
 ## Example API Config
 

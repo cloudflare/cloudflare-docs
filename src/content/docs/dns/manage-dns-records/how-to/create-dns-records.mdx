@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, Render, TabItem, Tabs, Details, DashButton } from "~/components";
+import { GlossaryTooltip, Render, TabItem, Tabs, Details, DashButton, DirectoryListing } from "~/components";
 
 Consider the sections below for step-by-step instructions on managing DNS records at Cloudflare.
 
@@ -15,7 +15,11 @@ To better understand what DNS records are, refer to [Overview](/dns/manage-dns-r
 If your domain is added to Cloudflare by a hosting partner, manage your DNS records via the hosting partner.
 :::
 
-## Create DNS records
+---
+
+## Basic operations
+
+### Create DNS records
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -43,9 +47,7 @@ For specific API examples, refer to [DNS record types](/dns/manage-dns-records/r
 
 </TabItem> </Tabs>
 
----
-
-## Edit DNS records
+### Edit DNS records
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -67,9 +69,7 @@ To update part of a record with the API, use a [PATCH request](/api/resources/dn
 
 </TabItem> </Tabs>
 
----
-
-## Delete DNS records
+### Delete DNS records
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -93,6 +93,22 @@ To delete records with the API, use a [DELETE request](/api/resources/dns/subres
 
 ---
 
-## Batch record changes
+## Use cases
 
-For guidance on how to apply several changes to your zone records in just one action, refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/).
+### Update an origin IP address
+
+If your hosting provider changes or your origin IP address changes, update the **Content** value of the relevant DNS records (usually `A` or `AAAA` records).
+
+If you are not sure which IP address to use, refer to your hosting provider's documentation.
+
+### Originless setups
+
+If you need a placeholder address for an originless setup (also referred to as parked domain or redirect-only), you can use the reserved IPv6 address `100::` or the reserved IPv4 address `192.0.2.0` in a <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied</GlossaryTooltip> DNS record.
+
+This allows you to route requests using products such as [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Workers](/workers/).
+
+---
+
+## Further guidance
+
+<DirectoryListing folder="/dns/manage-dns-records/how-to/"/>

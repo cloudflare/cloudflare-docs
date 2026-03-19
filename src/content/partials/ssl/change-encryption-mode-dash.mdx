@@ -3,8 +3,12 @@
 
 ---
 
+import { DashButton } from "~/components";
+
 To change your encryption mode in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. Go to **SSL/TLS**.
-3. Choose an encryption mode.
+1. In the Cloudflare dashboard, go to the **SSL/TLS Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls" />
+
+2. Choose an encryption mode.

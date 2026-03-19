@@ -1,0 +1,13 @@
+id: YULcVn
+name: Support
+
+entry:
+  title: Support
+  url: /support/
+  group: Core platform
+  additional_groups: [Docs collections]
+
+meta:
+  title: Cloudflare Support docs
+  description: Cloudflare Support-focused documentation
+  author: "@cloudflare"

@@ -1,0 +1,10 @@
+---
+params:
+  - skipLink?
+---
+
+import { Markdown } from "~/components";
+
+:::note
+Currently, zone-level custom rulesets are only available in the <Markdown text={ props.skipLink ? "`http_request_firewall_custom`" : "[`http_request_firewall_custom`](/waf/custom-rules/custom-rulesets/#deploy-a-custom-ruleset-via-api)" } /> phase.
+:::

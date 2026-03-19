@@ -17,7 +17,7 @@ Application Security reports provide cyber attack insights and trends for all of
 
 The reports are automatically generated on a monthly basis.
 
-You can access reports by going to the **Security reports** page. You can access reports from previous months by selecting the month from the dropdown. 
+You can access reports by going to the **Security reports** page or via the [API](#api). You can access reports from previous months by selecting the month from the dropdown. 
 
 <DashButton url="/?to=/:account/security-center/reports" />
 
@@ -52,6 +52,14 @@ To view more details, apply filters, analyze the data, and generate ad-hoc repor
 
 ### Industry benchmarks
 
+Industry benchmarks provide additional context for your mitigated traffic by comparing your organization's attack activity against others in the same industry. These benchmarks help you understand whether the volume and frequency of attacks you experience are typical, higher, or lower than your peers — offering a clear sense of where your organization stands within its threat landscape.
+
+Beyond providing context, benchmarks can also help demonstrate value to stakeholders by quantifying the scale of threats your organization faces and how effectively Cloudflare mitigates them. This information can be useful when communicating your security posture internally or when prioritizing future security investments.
+
+To ensure fairness and accuracy, Cloudflare normalizes your data before comparison. For each month, we calculate the percentage of mitigated requests relative to the total requests across your account and eligible zones. This normalization ensures that benchmarks are based on relative attack intensity rather than total traffic volume so larger or smaller organizations can be compared meaningfully.
+
+The result helps you interpret your mitigated traffic data in context. For example, you may see a statement such as "_You are in the top 25% most attacked companies in the Cosmetics industry._" This insight enables you to better understand your threat exposure, communicate results to stakeholders, and understand value of the protection Cloudflare provides.
+
 If your account is not assigned an industry or if the shown industry is incorrect, use the link within the report to select the correct industry. 
 
 It may take a while for your new selection to take effect, and it may only be applied to future reports.
@@ -72,6 +80,51 @@ A Cloudflare user must have one of the following [roles](/fundamentals/manage-me
 
 - Super Administrator
 - Administrator
+
+---
+
+## API 
+
+```sh title="List all report policies for a specific account"
+GET /accounts/{account_id}/reporting/policies
+```
+
+```sh title="Retrieve the details of a single, specific report policy"
+GET /accounts/{account_id}/reporting/policies/{policy_id}
+```
+
+```sh title="List all generated reports for a specific account"
+GET /accounts/{account_id}/reporting/reports
+```
+
+```sh title="Retrieve a single, specific report, including its data and findings"
+GET /accounts/{account_id}/reporting/reports/{report_id}
+```
+
+<Details header="Data returned by the API">
+  - Account ID
+  - Account Name
+  - Account Industry
+  - Time range
+  - Total zones
+  - Total zones analyzed
+  - Industry percentile (nullable float)
+  - Total requests (count, percentage)
+  - Total mitigated requests (count, percentage)
+  - Total served requests (count, percentage)
+  - Top 5 hostnames by mitigated requests (hostname, count)
+  - Top 5 source countries by served requests (country, count)
+  - Top 5 source countries by mitigated requests (country, count)
+  - Top 5 rules by mitigated requests (rule name, rule type, count)
+</Details>
+
+:::note
+The data's time range is independent of when the report is generated.
+:::
+
+### Cross-account reports
+
+Each report is generated per account. You can use the [API](#api) to retrieve the reports for all of your accounts and aggregate the data.
 
 ---
 

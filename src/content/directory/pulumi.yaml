@@ -1,0 +1,13 @@
+id: kii3yh
+name: Pulumi
+
+entry:
+  title: Pulumi
+  url: /pulumi/
+  group: Core platform
+  additional_groups: [Developer platform]
+
+meta:
+  title: Pulumi docs
+  description: Create, deploy, and manage Cloudflare resources in various programming languages
+  author: "@cloudflare"

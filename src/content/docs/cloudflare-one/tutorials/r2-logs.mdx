@@ -1,12 +1,14 @@
 ---
 reviewed: 2023-11-30
-category: 🔐 Zero Trust
+category: Zero Trust
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Use Cloudflare R2 as a Zero Trust log destination
 products: [r2]
 description: >-
   This tutorial covers how to build a Cloudflare R2 bucket to store Zero Trust logs. It also shows how to connect the bucket to the Zero Trust Logpush service.
+tags:
+  - Logging
 ---
 
 import { DashButton } from "~/components";
@@ -43,7 +45,7 @@ This tutorial covers how to build a [Cloudflare R2 bucket](/r2/buckets/) to stor
 
 ## Connect a Zero Trust Logpush job
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs**. Select **Manage Logpush**.
 2. Select **Connect a service**.
 3. Choose which data sets and fields you want to send to your bucket. Select **Next**.
 4. Select **S3 Compatible**.

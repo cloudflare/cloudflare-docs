@@ -6,9 +6,9 @@ import {Render, Tabs, TabItem} from "~/components"
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
 
-2. In the **Login methods** card, select **Add new**.
+2. In the **Your identity providers** card, select **Add new identity provider**.
 
 3. Select the identity provider you want to add.
 
@@ -25,7 +25,7 @@ import {Render, Tabs, TabItem} from "~/components"
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Access: Organizations, Identity Providers, and Groups Write`
 
-2. Add an identity provider to Zero Trust using the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource. For example, to add a Microsoft Entra ID integration:
+2. Add an identity provider to Cloudflare One using the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource. For example, to add a Microsoft Entra ID integration:
 
 		<Render file="access/entra-id-terraform" product="cloudflare-one" />
 

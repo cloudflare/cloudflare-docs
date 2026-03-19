@@ -107,19 +107,32 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the
 
 <WranglerConfig>
 
-```toml
-[[containers]]
-max_instances = 10
-class_name = "MyContainer"
-image = "./Dockerfile"
-
-[[durable_objects.bindings]]
-name = "MY_CONTAINER"
-class_name = "MyContainer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyContainer"]
+```jsonc
+{
+	"containers": [
+		{
+			"max_instances": 10,
+			"class_name": "MyContainer",
+			"image": "./Dockerfile"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_CONTAINER",
+				"class_name": "MyContainer"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"MyContainer"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

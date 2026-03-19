@@ -1,0 +1,24 @@
+---
+reviewed: 2023-12-06
+category: Connections
+difficulty: Intermediate
+pcx_content_type: tutorial
+title: Monitor Cloudflare Tunnel with Grafana
+description: >-
+  This tutorial covers how to create the metrics endpoint and set up the Prometheus server.
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="tunnel/metrics/grafana-tutorial"
+	product="cloudflare-one"
+	params={{
+		metricsURL: "/tunnel/monitoring/#metrics",
+		getStartedURL: "/tunnel/setup/",
+		metricsRunParamURL: "/tunnel/advanced/run-parameters/#metrics",
+		addRunParamsURL:
+			"/tunnel/advanced/run-parameters/#add-run-parameters-to-tunnel-service",
+		availableMetricsURL: "/tunnel/monitoring/#metrics",
+	}}
+/>

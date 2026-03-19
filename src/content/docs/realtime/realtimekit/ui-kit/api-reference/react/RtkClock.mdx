@@ -1,0 +1,42 @@
+---
+pcx_content_type: navigation
+title: RtkClock
+description: API reference for RtkClock component (React Library)
+---
+Shows the time elapsed in a meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkClock } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkClock />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkClock } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkClock
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

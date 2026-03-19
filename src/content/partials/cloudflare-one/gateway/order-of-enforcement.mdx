@@ -41,11 +41,11 @@ flowchart TB
     dns3 -- Resolved by --> dns4
     dns2 -----> internet(["Internet"])
     dns4 -----> internet
-    dns4 ---> cloudflare["Private network services <br>(Cloudflare Tunnel, Magic WAN, WARP Connector)"]
+    dns4 ---> cloudflare["Private network services <br>(Cloudflare Tunnel, Cloudflare WAN, WARP Connector)"]
     http1 -- Do Not Inspect --> internet
     http1 -- Inspect --> http2
     http2 --> http3
-    http0 --> magic["Magic Firewall (Enterprise users only)"]
+    http0 --> magic["Cloudflare Network Firewall (Enterprise users only)"]
     magic --> egress1
     egress1 --> tcp["Check for origin availability (TCP SYN)"]
     tcp --> network1
@@ -84,6 +84,23 @@ If the TCP connection to the destination server is successful, Gateway will appl
 
 Connections to Zero Trust will always appear in your [Zero Trust network session logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) regardless of connection success. Because Gateway does not inspect failed connections, they will not appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
 
+### Filter TCP SYN packets with Cloudflare Network Firewall
+
+Because Gateway sends a TCP SYN to the destination server before evaluating policies, Gateway Network or HTTP Block policies do not prevent the initial TCP SYN from reaching the destination server. If you need to prevent TCP SYN packets from being sent to specific destination IP addresses, you can create a [Cloudflare Network Firewall](/cloudflare-one/traffic-policies/packet-filtering/) rule to block traffic at the packet level. As shown in the [enforcement flowchart](#order-of-enforcement), Cloudflare Network Firewall evaluates traffic before Gateway checks for origin availability.
+
+:::note
+Cloudflare Network Firewall is available to Enterprise users only.
+:::
+
+To block TCP SYN packets to a specific destination:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Firewall policies** > **Custom policies**.
+2. Select **Add a policy**.
+3. Create a rule with the destination IP address or CIDR range you want to block. For example, to block all traffic to `10.0.0.0/8`, use the expression `ip.dst in {10.0.0.0/8}` with a **Block** action.
+4. Select **Add new policy**.
+
+For more information on creating packet filtering rules, refer to [Add policies](/cloudflare-one/traffic-policies/packet-filtering/add-policies/).
+
 ## Priority between policy builders
 
 Gateway applies your policies in the following order:
@@ -91,8 +108,8 @@ Gateway applies your policies in the following order:
 1. DNS policies with selectors evaluated before resolution
 2. Resolver policies (if applicable)
 3. DNS policies with selectors evaluated after resolution
-4. Network policies
-5. Egress policies (if applicable)
+4. Egress policies (if applicable)
+5. Network policies
 6. HTTP policies
 
 DNS and resolver policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.
@@ -157,9 +174,9 @@ Order of precedence refers to the priority of individual policies within the DNS
 
 The order of precedence follows the first match principle. Once traffic matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision. Therefore, Cloudflare recommends assigning the most specific policies and exceptions with the highest precedence and the most general policies with the lowest precedence.
 
-#### Zero Trust dashboard
+#### Cloudflare One
 
-In the Zero Trust dashboard, policies are in order of precedence from top to bottom of the list. Policies begin with precedence `1` and count upward. You can modify the order of precedence by dragging and dropping individual policies in the dashboard.
+In Cloudflare One, policies are in order of precedence from top to bottom of the list. Policies begin with precedence `1` and count upward. You can modify the order of precedence by dragging and dropping individual policies in the dashboard.
 
 #### Cloudflare API
 
@@ -209,24 +226,24 @@ When a user goes to `https://test.example.com`, Gateway performs the following o
    2. Policy #2 matches, so DNS resolution is allowed.
    3. Policy #3 is not evaluated because there has already been an explicit match.
 
-2. Evaluate HTTPS request against HTTP policies:
-   1. Policy #2 is evaluated first because Do Not Inspect [always takes precedence](#http-policies) over Allow and Block. Since there is no match, move on to check Policy #1.
-   2. Policy #1 does not match `test.example.com`. Since there are no matching Block policies, the request passes the HTTP filter and moves on to network policy evaluation.
-
-3. Evaluate HTTPS request against network policies:
+2. Evaluate HTTPS request against network policies:
    1. Policy #1 does not match because port 80 is used for standard HTTP, not HTTPS.
    2. Policy #2 matches, so the request is allowed and proxied to the upstream server.
    3. Policy #3 is not evaluated because there has already been an explicit match.
+
+3. Evaluate HTTPS request against HTTP policies:
+   1. Policy #2 is evaluated first because Do Not Inspect [always takes precedence](#http-policies) over Allow and Block. Since there is no match, move on to check Policy #1.
+   2. Policy #1 does not match `test.example.com`. Since there are no matching Block policies, the request passes the HTTP filter.
 
 Therefore, the user is able to connect to `https://test.example.com`.
 
 ## Precedence calculations
 
-When arranging policies in Zero Trust, Gateway automatically calculates the precedence for rearranged policies.
+When arranging policies in [Cloudflare One](https://one.dash.cloudflare.com/), Gateway automatically calculates the precedence for rearranged policies.
 
 When using the API to create a policy, unless the precedence is explicitly defined in the policy, Gateway will assign precedence to policies starting at `1000`. Every time a new policy is added to the bottom of the order, Gateway will calculate the current highest precedence in the account and add a random integer between 1 and 100 to `1000` so that it now claims the maximum precedence in the account. To manually update a policy's precedence, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint. You can set a policy's precedence to any value that is not already in use.
 
-Changing the order within the Zero Trust dashboard or API may result in configuration issues when using [Terraform](#manage-precedence-with-terraform).
+Changing the order within Cloudflare One or API may result in configuration issues when using [Terraform](#manage-precedence-with-terraform).
 
 ## Manage precedence with Terraform
 
@@ -252,4 +269,4 @@ resource "cloudflare_zero_trust_gateway_policy" "policy_3" {
 }
 ```
 
-To avoid precedence calculation errors when reordering policies with Terraform, you should move one policy at a time before running `terraform plan` and `terraform apply`. If you use both Terraform and the Zero Trust dashboard or API, sync your polices with `terraform refresh` before reordering policies in Terraform. Alternatively, you can set your account to [read-only in the Zero Trust dashboard](/cloudflare-one/api-terraform/#set-dashboard-to-read-only), only allowing changes using the API or Terraform.
+To avoid precedence calculation errors when reordering policies with Terraform, you should move one policy at a time before running `terraform plan` and `terraform apply`. If you use both Terraform and Cloudflare One or API, sync your polices with `terraform refresh` before reordering policies in Terraform. Alternatively, you can set your account to [read-only in Cloudflare One](/cloudflare-one/api-terraform/#set-dashboard-to-read-only), only allowing changes using the API or Terraform.

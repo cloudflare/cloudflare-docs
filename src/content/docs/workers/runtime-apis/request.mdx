@@ -134,10 +134,6 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
   * Enables [Image Resizing](/images/transform-images/) for this request. The possible values are described in [Transform images via Workers](/images/transform-images/transform-via-workers/) documentation.
 
-* `mirage` <Type text="boolean" /> <MetaInfo text="optional" />
-
-  * Whether [Mirage](https://www.cloudflare.com/website-optimization/mirage/) (deprecated) should be enabled for this request, if otherwise configured for this zone. Defaults to `true`.
-
 * `polish` <Type text="string" /> <MetaInfo text="optional" />
 
   * Sets [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/) mode. The possible values are `lossy`, `lossless` or `off`.
@@ -430,6 +426,28 @@ A `FixedLengthStream` is an identity `TransformStream` that permits only a fixed
 Using any other type of `ReadableStream` as the body of a request will result in Chunked-Encoding being used.
 
 ***
+
+## Differences
+
+The Workers implementation of the `Request` interface includes several extensions to the web standard `Request` API. These differences are intentional and provide additional functionality specific to the Workers runtime.
+
+:::note[TypeScript users]
+Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/#types)) define a `Request` type that includes Workers-specific properties like `cf`. This type is not directly compatible with the standard `Request` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions or create a new `Request` object.
+:::
+
+### The `cf` property
+
+Workers adds a `cf` property to the `Request` object that contains Cloudflare-specific metadata about the incoming request. This property is not part of the web standard, and is only available in the Workers runtime. Refer to [`IncomingRequestCfProperties`](#incomingrequestcfproperties) for details.
+
+### The `headers` property
+
+The `headers` property returns a Workers-specific [`Headers`](/workers/runtime-apis/headers/) object that includes additional methods like `getAll()` for `Set-Cookie` headers. Refer to the [Headers documentation](/workers/runtime-apis/headers/#differences) for details on how the Workers `Headers` implementation differs from the web standard.
+
+### Immutability
+
+Incoming `Request` objects passed to the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) are immutable. To modify properties of an incoming request, you must create a new `Request` object.
+
+---
 
 ## Related resources
 

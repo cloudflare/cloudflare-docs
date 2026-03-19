@@ -1,12 +1,9 @@
 ---
-params:
-  - productName
-  - vpcFlowLogURL
+{}
 ---
 
+Network Flow (formerly Magic Network Monitoring) lets you monitor cloud traffic alongside your on-premise network data. Export virtual private cloud (VPC) flow logs from your cloud environment to Cloudflare, where they are processed and displayed as analytics in the dashboard. You can also query cloud traffic data through the [GraphQL API](/analytics/graphql-api/).
 
-Customers using {props.productName} can export virtual private cloud (VPC) flow logs from their cloud environment to Cloudflare's network. Cloudflare will then process these VPC flow logs and display analytics on your cloud traffic in the dashboard. Customers can also ingest data on their cloud traffic via our public GraphQL API which powers the cloud traffic analytics in the dashboard.
+Network Flow supports AWS VPC flow logs via AWS Firehose. Configuration is only available through the Network Flow API.
 
-Currently, Magic Network Monitoring only supports AWS VPC flow logs via AWS Firehose. AWS VPC flow logs can only be configured via Cloudflare's API for Magic Network Monitoring.
-
-To learn how to set up this feature, refer to <a href={props.vpcFlowLogURL}>AWS VPC flow log guide (beta)</a>.
+To set up AWS VPC flow logs, refer to [Set up AWS VPC flow logs](/network-flow/get-started/#vpc-flow-log-guide).

@@ -5,6 +5,7 @@ import ReactSelect from "./ReactSelect";
 import { formatDistance } from "date-fns";
 import { setSearchParams } from "~/util/url";
 import { formatContentType } from "~/util/content-type";
+import Markdown from "react-markdown";
 
 type DocsData = keyof CollectionEntry<"docs">["data"];
 type VideosData = keyof CollectionEntry<"stream">["data"];
@@ -367,7 +368,12 @@ export default function ResourcesBySelector({
 								</p>
 								{showDescriptions && (
 									<span className="line-clamp-3" title={page.data.description}>
-										{page.data.description}
+										<Markdown
+											disallowedElements={["a"]}
+											unwrapDisallowed={true}
+										>
+											{page.data.description}
+										</Markdown>
 									</span>
 								)}
 								{showLastUpdated && "reviewed" in page.data && (

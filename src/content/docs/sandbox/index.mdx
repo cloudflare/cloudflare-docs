@@ -1,7 +1,5 @@
 ---
 title: Sandbox SDK (Beta)
-order: 0
-
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -39,45 +37,50 @@ Sandboxes are ideal for building AI agents that need to execute code, interactiv
 With Sandbox, you can execute Python scripts, run Node.js applications, analyze data, compile code, and perform complex computations — all with a simple TypeScript API and no infrastructure to manage.
 
 <Tabs>
-	<TabItem label="Execute Commands">
-		```typescript
-		import { getSandbox } from '@cloudflare/sandbox';
+  <TabItem label="Execute Commands">
+	```typescript
+	import { getSandbox } from '@cloudflare/sandbox';
 
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			const sandbox = getSandbox(env.Sandbox, 'user-123');
+    export { Sandbox } from '@cloudflare/sandbox';
 
-    			// Execute a command and get the result
-    			const result = await sandbox.exec('python --version');
+    export default {
+    	async fetch(request: Request, env: Env): Promise<Response> {
+    		const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-    			return Response.json({
-    				output: result.stdout,
-    				exitCode: result.exitCode,
-    				success: result.success
-    			});
-    		}
-    	};
-    	```
-    </TabItem>
+    		// Execute a command and get the result
+    		const result = await sandbox.exec('python --version');
+
+    		return Response.json({
+    			output: result.stdout,
+    			exitCode: result.exitCode,
+    			success: result.success
+    		});
+    	}
+    };
+    ```
+
+  </TabItem>
+
     <TabItem label="Code Interpreter">
-    	```typescript
-    	import { getSandbox } from '@cloudflare/sandbox';
+    ```typescript
+    import { getSandbox } from '@cloudflare/sandbox';
 
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			const sandbox = getSandbox(env.Sandbox, 'user-123');
+    export { Sandbox } from '@cloudflare/sandbox';
 
-    			// Create a Python execution context
-    			const ctx = await sandbox.createCodeContext({ language: 'python' });
+    export default {
+    	async fetch(request: Request, env: Env): Promise<Response> {
+    		const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-    			// Execute Python code with automatic result capture
-    			const result = await sandbox.runCode(`
+    		// Create a Python execution context
+    		const ctx = await sandbox.createCodeContext({ language: 'python' });
 
-import pandas as pd
-data = {'product': ['A', 'B', 'C'], 'sales': [100, 200, 150]}
-df = pd.DataFrame(data)
-df['sales'].sum()  # Last expression is automatically returned
-				`, { context: ctx });
+    		// Execute Python code with automatic result capture
+    		const result = await sandbox.runCode(`
+    import pandas as pd
+    data = {'product': ['A', 'B', 'C'], 'sales': [100, 200, 150]}
+    df = pd.DataFrame(data)
+    df['sales'].sum()  # Last expression is automatically returned
+    	`, { context: ctx });
 
     			return Response.json({
     				result: result.results?.[0]?.text,
@@ -87,9 +90,12 @@ df['sales'].sum()  # Last expression is automatically returned
     	};
     	```
     </TabItem>
+
     <TabItem label="File Operations">
     	```typescript
     	import { getSandbox } from '@cloudflare/sandbox';
+
+    	export { Sandbox } from '@cloudflare/sandbox';
 
     	export default {
     		async fetch(request: Request, env: Env): Promise<Response> {
@@ -111,6 +117,86 @@ df['sales'].sum()  # Last expression is automatically returned
     		}
     	};
     	```
+    </TabItem>
+
+    <TabItem label="File Watching">
+    	```typescript
+    	import { getSandbox } from '@cloudflare/sandbox';
+
+    	export { Sandbox } from '@cloudflare/sandbox';
+
+    	export default {
+    		async fetch(request: Request, env: Env): Promise<Response> {
+    			const sandbox = getSandbox(env.Sandbox, 'user-123');
+
+    			// Watch for file changes in real-time
+    			const watcher = await sandbox.watch('/workspace/src', {
+    				include: ['*.js', '*.ts'],
+    				onEvent: (event) => {
+    					console.log(`${event.type}: ${event.path}`);
+    					if (event.type === 'modify') {
+    						// Trigger rebuild or hot reload
+    						console.log('Code changed, recompiling...');
+    					}
+    				},
+    				onError: (error) => {
+    					console.error('Watch error:', error);
+    				}
+    			});
+
+    			// Stop watching when done
+    			setTimeout(() => watcher.stop(), 60000);
+
+    			return Response.json({ message: 'File watcher started' });
+    		}
+    	};
+    	```
+    </TabItem>
+
+    <TabItem label="Terminal Access">
+    	```typescript
+    	import { getSandbox } from '@cloudflare/sandbox';
+
+    	export { Sandbox } from '@cloudflare/sandbox';
+
+    	export default {
+    		async fetch(request: Request, env: Env): Promise<Response> {
+    			const url = new URL(request.url);
+
+    			// Terminal WebSocket connection
+    			if (url.pathname === '/ws/terminal') {
+    				const sandbox = getSandbox(env.Sandbox, 'user-123');
+    				return sandbox.terminal(request, { cols: 80, rows: 24 });
+    			}
+
+    			return Response.json({ message: 'Terminal endpoint' });
+    		}
+    	};
+    	```
+
+    	Connect browser terminals directly to sandbox shells via WebSocket. Learn more: [Browser terminals](/sandbox/guides/browser-terminals/).
+    </TabItem>
+
+    <TabItem label="WebSocket Connections">
+    	```typescript
+    	import { getSandbox } from '@cloudflare/sandbox';
+
+    	export { Sandbox } from '@cloudflare/sandbox';
+
+    	export default {
+    		async fetch(request: Request, env: Env): Promise<Response> {
+    			// Connect to WebSocket services in sandbox
+    			if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
+    				const sandbox = getSandbox(env.Sandbox, 'user-123');
+    				return await sandbox.wsConnect(request, 8080);
+    			}
+
+    			return Response.json({ message: 'WebSocket endpoint' });
+    		}
+    	};
+    	```
+
+    	Connect to WebSocket servers running in sandboxes. Learn more: [WebSocket Connections](/sandbox/guides/websocket-connections/).
     </TabItem>
 
 </Tabs>
@@ -150,6 +236,30 @@ Execute Python and JavaScript code with rich outputs including charts, tables, a
 
 </Feature>
 
+<Feature header="Build interactive terminals" href="/sandbox/guides/browser-terminals/" cta="Learn about terminal UIs">
+
+Create browser-based terminal interfaces that connect directly to sandbox shells via WebSocket. Build collaborative terminals, interactive development environments, and real-time shell access with automatic reconnection.
+
+</Feature>
+
+<Feature header="Persistent storage with object storage" href="/sandbox/guides/mount-buckets/" cta="Learn about bucket mounting">
+
+Mount S3-compatible object storage (R2, S3, GCS, and more) as local filesystems. Access buckets using standard file operations with data that persists across sandbox lifecycles. Production deployment required.
+
+</Feature>
+
+<Feature header="Watch files for real-time changes" href="/sandbox/guides/file-watching/" cta="Learn about file watching">
+
+Monitor files and directories for changes using native filesystem events. Perfect for building hot reloading development servers, build automation systems, and configuration monitoring tools.
+
+</Feature>
+
+<Feature header="Proxy external API requests securely" href="/sandbox/guides/proxy-requests/" cta="Learn about request proxying">
+
+Keep credentials in your Worker while allowing sandboxes to access external APIs. A Worker proxy validates short-lived JWT tokens from the sandbox and injects real credentials at request time.
+
+</Feature>
+
 ---
 
 ## Use Cases
@@ -158,7 +268,7 @@ Build powerful applications with Sandbox:
 
 ### AI Code Execution
 
-Execute code generated by Large Language Models safely and reliably. Perfect for AI agents, code assistants, and autonomous systems that need to run untrusted code.
+Execute code generated by Large Language Models safely and reliably. Native integration with [Workers AI](/workers-ai/) models like GPT-OSS enables function calling with sandbox execution. Perfect for AI agents, code assistants, and autonomous systems that need to run untrusted code.
 
 ### Data Analysis & Notebooks
 

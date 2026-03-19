@@ -67,6 +67,67 @@ wrangler containers images delete [IMAGE] [OPTIONS]
 - `IMAGE` <Type text="string" /> <MetaInfo text="required" />
   - Image to delete of the form `IMAGE:TAG`
 
+<AnchorHeading title="`registries`" slug="containers-registries" depth={3} />
+
+Configure and view registries available to your container.
+[Read more](/containers/platform-details/image-management/#using-amazon-ecr-container-images) about our currently supported external registries.
+
+<AnchorHeading
+	title="`registries list`"
+	slug="containers-registries-list"
+	depth={4}
+/>
+
+List registries your containers are able to use.
+
+```txt
+wrangler containers registries list [OPTIONS]
+```
+
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as clean JSON.
+  - Default: false
+
+<AnchorHeading
+	title="`registries configure`"
+	slug="containers-registries-configure"
+	depth={4}
+/>
+
+Configure a new registry for your account.
+
+```txt
+wrangler containers registries configure [DOMAIN] [OPTIONS]
+```
+
+- `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
+  - Domain to configure for the registry.
+- `--public-credential` <Type text="string" /> <MetaInfo text="required" />
+  - The public part of the registry credentials, e.g. `AWS_ACCESS_KEY_ID` for ECR
+- `--secret-store-id` <Type text="string" /> <MetaInfo text="optional" />
+  - The ID of the secret store to use to store the registry credentials
+- `--secret-name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name Wrangler should store the registry credentials under
+
+When run interactively, wrangler will prompt you for your secret and store it in Secrets Store.
+To run non-interactively, you can send your secret value to wrangler through stdin to have
+the secret created for you.
+
+<AnchorHeading
+	title="`registries delete`"
+	slug="containers-registries-delete"
+	depth={4}
+/>
+
+Remove a registry configuration from your account.
+
+```txt
+wrangler containers registries delete [DOMAIN] [OPTIONS]
+```
+
+- `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
+  - domain of the registry to delete
+
 <AnchorHeading title="`info`" slug="containers-info" depth={3} />
 
 Get information about a specific Container, including top-level details and a list of instances.
@@ -77,6 +138,58 @@ wrangler containers info <CONTAINER_ID> [OPTIONS]
 
 - `CONTAINER_ID` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the Container to get information about.
+
+<AnchorHeading title="`instances`" slug="containers-instances" depth={3} />
+
+List all Container instances for a given application. Displays instance ID, name, state, location, version, and creation time.
+
+In interactive mode, results are paginated. Press `Enter` to load the next page or `Esc`/`q` to stop. In non-interactive environments (for example, when piping output or running in CI), all pages are fetched automatically.
+
+Use the `--json` flag to return output as a flat JSON array. Each element contains the fields `id`, `name`, `state`, `location`, `version`, and `created`. This is also the default output format in non-interactive environments.
+
+```txt
+wrangler containers instances <APPLICATION_ID> [OPTIONS]
+```
+
+- `APPLICATION_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The UUID of the application to list instances for. Use `wrangler containers list` to find application IDs.
+- `--per-page` <Type text="number" /> <MetaInfo text="optional" />
+  - Number of instances per page.
+  - Default: 25
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as clean JSON.
+  - Default: false
+
+For example, to list instances for an application:
+
+```sh
+wrangler containers instances 12345678-abcd-1234-abcd-123456789abc
+```
+
+```sh output
+INSTANCE                              NAME        STATE          LOCATION  VERSION  CREATED
+a1b2c3d4-e5f6-7890-abcd-ef1234567890  worker-12   running        sfo06     3        2025-06-01T12:00:00Z
+b2c3d4e5-f6a7-8901-bcde-f12345678901  worker-47   provisioning   iad01     2        2025-06-01T13:00:00Z
+```
+
+To get the same data as JSON:
+
+```sh
+wrangler containers instances 12345678-abcd-1234-abcd-123456789abc --json
+```
+
+```json output
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "worker-12",
+    "state": "running",
+    "location": "sfo06",
+    "version": 3,
+    "created": "2025-06-01T12:00:00Z"
+  }
+]
+```
 
 <AnchorHeading title="`list`" slug="containers-list" depth={3} />
 
@@ -99,3 +212,20 @@ wrangler containers push [TAG] [OPTIONS]
 - `--path-to-docker` <Type text="string" /> <MetaInfo text="optional" />
   - Path to your docker binary if it's not on `$PATH`.
   - Default: "docker"
+
+<AnchorHeading title="`ssh`" slug="containers-ssh" depth={3} />
+
+Connect to a running Container instance using SSH. Refer to [SSH](/containers/ssh/) for configuration details.
+
+```txt
+wrangler containers ssh <INSTANCE_ID>
+```
+
+You can also specify a command to run, instead of the default shell. For example:
+
+```txt
+wrangler containers ssh <INSTANCE_ID> -- ls -al
+```
+
+- `INSTANCE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the Container instance to SSH into.

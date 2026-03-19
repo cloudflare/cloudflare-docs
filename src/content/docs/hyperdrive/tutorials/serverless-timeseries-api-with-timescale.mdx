@@ -143,15 +143,22 @@ This command outputs your Hyperdrive ID. You can now bind your Hyperdrive config
 
 <WranglerConfig>
 
-```toml
-name = "timescale-api"
-main = "src/index.ts"
-compatibility_date = "2024-09-23"
-compatibility_flags = [ "nodejs_compat"]
-
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "your-id-here"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "timescale-api",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "your-id-here"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -175,6 +182,8 @@ export interface Env {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
+		// Create a new client on each request. Hyperdrive maintains the underlying
+		// database connection pool, so creating a new client is fast.
 		const client = new Client({
 			connectionString: env.HYPERDRIVE.connectionString,
 		});
@@ -281,6 +290,6 @@ In this tutorial, you have learned how to create a working example to ingest and
 
 ## Next steps
 
-- Learn more about [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+- Learn more about [How Hyperdrive Works](/hyperdrive/concepts/how-hyperdrive-works/).
 - Learn more about [Timescale](https://timescale.com).
 - Refer to the [troubleshooting guide](/hyperdrive/observability/troubleshooting/) to debug common issues.

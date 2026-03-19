@@ -10,4 +10,11 @@ The exact location of these data centers are subject to change at any moment.
 
 The Internet is not the same everywhere around the world and your users may not have the same experience on your application according to where they are. Running Health Checks from different regions lets you know the health of your application from the point of view of the Cloudflare network in each of these regions.
 
+Analytics are presented at two levels:
+
+* Regional Aggregates: Combined results from the three data centers within a specific region.
+* Global Aggregates: Total results across all configured regions and data centers.
+
+In the event log, entries are labeled by region or as **Global**. We do not provide granular data for individual data centers.
+
 If you select multiple regions or choose **All Regions** (Business and Enterprise Only), you may increase traffic to your servers. Each region sends individual health checks from three data centers.

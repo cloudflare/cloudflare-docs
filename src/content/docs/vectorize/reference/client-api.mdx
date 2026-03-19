@@ -67,7 +67,7 @@ let matches = await env.YOUR_INDEX.query(queryVector, {
 
 #### topK
 
-The `topK` can be configured to specify the number of matches returned by the query operation. Vectorize now supports an upper limit of `100` for the `topK` value. However, for a query operation with `returnValues` set to `true` or `returnMetadata` set to `all`, `topK` would be limited to a maximum value of `20`.
+The `topK` can be configured to specify the number of matches returned by the query operation. Vectorize now supports an upper limit of `100` for the `topK` value. However, for a query operation with `returnValues` set to `true` or `returnMetadata` set to `all`, `topK` is limited to a maximum value of `50`.
 
 #### returnMetadata
 
@@ -75,7 +75,7 @@ The `returnMetadata` field provides three ways to fetch vector metadata while qu
 
 1. `none`: Do not fetch metadata.
 2. `indexed`: Fetched metadata only for the indexed metadata fields. There is no latency overhead with this option, but long text fields may be truncated.
-3. `all`: Fetch all metadata associated with a vector. Queries may run slower with this option, and `topK` would be limited to 20.
+3. `all`: Fetch all metadata associated with a vector. Queries may run slower with this option, and `topK` is limited to 50.
 
 :::note[`topK` and `returnMetadata` for legacy Vectorize indexes]
 
@@ -128,6 +128,12 @@ const details = await env.YOUR_INDEX.describe();
 Retrieves the configuration of a given index directly, including its configured `dimensions` and distance `metric`.
 
 ### List Vectors
+
+:::note[Python SDK availability]
+
+The `client.vectorize.indexes.list_vectors()` method is not yet available in the current release of the [Cloudflare Python SDK](https://pypi.org/project/cloudflare/). While the method appears in the [API reference](/api/python/resources/vectorize/subresources/indexes/methods/list_vectors/), it has not been included in a published SDK version as of v4.3.1. In the meantime, you can use the [REST API](/api/resources/vectorize/subresources/indexes/methods/list_vectors/) or the Wrangler CLI to list vectors.
+
+:::
 
 List all vector identifiers in an index using paginated requests, returning up to 1000 vector identifiers per page.
 
@@ -188,7 +194,7 @@ Get additional details about the index.
 Run the following `wrangler vectorize` command:
 
 ```sh
-wrangler vectorize info <name>
+wrangler vectorize info <index-name>
 ```
 
 ## Vectors
@@ -222,10 +228,15 @@ Vectorize indexes are bound by name. A binding for an index named `production-do
 
 <WranglerConfig>
 
-```toml
-[[vectorize]]
-binding = "PROD_SEARCH" # the index will be available as env.PROD_SEARCH in your Worker
-index_name = "production-doc-search"
+```jsonc
+{
+	"vectorize": [
+		{
+			"binding": "PROD_SEARCH", // the index will be available as env.PROD_SEARCH in your Worker
+			"index_name": "production-doc-search",
+		},
+	],
+}
 ```
 
 </WranglerConfig>

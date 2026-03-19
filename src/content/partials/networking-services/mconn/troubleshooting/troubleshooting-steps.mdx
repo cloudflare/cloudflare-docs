@@ -1,11 +1,37 @@
 ---
-{}
+params:
+  - dashName
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Markdown } from "~/components";
 
-1. In the Cloudflare dashboard, go to the **Configuration** page.
-
-	<DashButton url="/?to=/:account/magic-wan/configuration" />
-
-2. In the **Connectors** tab, select the Connector you want to check metrics for > **View analytics**.
+{ props.dashName === "CF1 Cloudflare WAN" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks** > **Connectors**.
+		2. Go to **Appliances** > **Profiles**.
+		3. Select your Appliance > **View analytics**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+<Markdown
+	text={`
+		1. Go to the **Connectors** page.
+		`}
+	inline={false}
+	/>
+		<DashButton url="/?to=/:account/magic-networks/connections" />
+		<Markdown
+	text={`
+		2. Go to the **Appliances** tab > **Appliances**, and select the Cloudflare One Appliance you want to check analytics for.
+		3. Select **View analytics**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}

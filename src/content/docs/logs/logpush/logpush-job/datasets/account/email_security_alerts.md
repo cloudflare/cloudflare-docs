@@ -25,7 +25,7 @@ Human-readable list of findings which contributed to this message's final dispos
 
 Type: `array[object]`
 
-List of objects containing metadata of attachments contained in this message (for example, [{"Md5": "91f073bd208689ddbd248e8989ecae90", "Sha1": "62b77e14e2c43049c45b5725018e78d0f9986930", "Sha256": "3b57505305e7162141fd898ed87d08f92fc42579b5047495859e56b3275a6c06", "Ssdeep": "McAQ8tPlH25e85Q2OiYpD08NvHmjJ97UfPMO47sekO:uN9M553OiiN/OJ9MM+e3", "Name": "attachment.gif", "ContentTypeProvided": "image/gif", "ContentTypeComputed": "application/x-msi", "Encrypted": true, "Decrypted": true]}, ...]).
+List of objects containing metadata of attachments contained in this message (for example, [{"Md5": "91f073bd208689ddbd248e8989ecae90", "Sha1": "62b77e14e2c43049c45b5725018e78d0f9986930", "Sha256": "3b57505305e7162141fd898ed87d08f92fc42579b5047495859e56b3275a6c06", "Ssdeep": "McAQ8tPlH25e85Q2OiYpD08NvHmjJ97UfPMO47sekO:uN9M553OiiN/OJ9MM+e3", "Name": "attachment.gif", "ContentTypeProvided": "image/gif", "ContentTypeComputed": "application/x-msi", "Encrypted": true, "Decrypted": true}, ...]).
 
 ## CC
 

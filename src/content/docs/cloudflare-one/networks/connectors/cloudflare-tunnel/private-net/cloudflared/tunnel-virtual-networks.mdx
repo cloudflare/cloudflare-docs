@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Virtual networks
+tags:
+  - Private networks
 sidebar:
   order: 5
 ---
@@ -9,9 +11,9 @@ import { Details, Render, Tabs, TabItem } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Traffic and DNS mode</li><li> Traffic only mode </li></ul>  | All plans                                                     |
 
 | System   | Availability |
 | -------- | ------------ |
@@ -39,24 +41,26 @@ Here are a few scenarios where virtual networks may prove useful:
 ## Prerequisites
 
 - [Install `cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) on each private network.
-- [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on user devices.
+- [Deploy the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on user devices.
 
 ## Create a virtual network
 
-The following example demonstrates how to add two overlapping IP routes to Cloudflare (`10.128.0.1/32` staging and `10.128.0.1/32` production).
+In this example, "private network" refers to a distinct environment (such as staging or production) that has its own overlapping IP address space (`10.128.0.1/32` staging and `10.128.0.1/32` production). If your environments use non-overlapping IPs, you do not need a separate tunnel for each. Instead, you can add multiple routes to a single tunnel.
 
 <Tabs>
   <TabItem label="Dashboard">
       To route overlapping IPs over virtual networks:
 
-      1. First, create two unique virtual networks:
-         1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
-         2. Find the **Virtual networks** setting and select **Manage**.
-         3. Select **Create virtual network**.
-         4. Name your virtual network `staging-vnet` and select **Save**.
-         5. Repeat Steps 1a-1d to create another virtual network called `production-vnet`.
-      2. Next, create a Cloudflare Tunnel for each private network:
-         1. Go to **Networks** > **Tunnels**.
+      1. Create two unique virtual networks:
+         1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Routes** > **Virtual networks**.
+				 :::note
+				 The **Virtual networks** card will only appear if a CIDR route exists in your account. If you do not already have a route, you can navigate to **Virtual networks** using this [direct link](https://one.dash.cloudflare.com/?to=/:account/networks/routes/cidr/vnets).
+				 :::
+         2. Select **Create virtual network**.
+         3. Name your virtual network `staging-vnet` and select **Save**.
+         4. Repeat Steps 1a-1d to create another virtual network called `production-vnet`.
+      2. Create a Cloudflare Tunnel for each private network with overlapping IPs (one tunnel per isolated environment, for example staging and production):
+         1. Go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
          2. Select **Create a tunnel**.
          3. Name your tunnel `Staging tunnel` and select **Save tunnel**.
          4. Install the connector within your staging environment.
@@ -65,75 +69,76 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
          7. Save the tunnel.
          8. Repeat Steps 2a-2g to create another tunnel called `Production tunnel`. Be sure to install the connector within your production environment and assign the route to *production-vnet*.
 
-      We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively. You can use the Cloudflare WARP client to [switch between virtual networks](#connect-to-a-virtual-network).
+      We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively. You can use the Cloudflare One Client to [switch between virtual networks](#connect-to-a-virtual-network).
 
   </TabItem>
 
-	<TabItem label="Terraform (v5)">
-	To route overlapping IPs over virtual networks:
-		1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-			- `Cloudflare Tunnel Write`
+    <TabItem label="Terraform (v5)">
+    To route overlapping IPs over virtual networks:
+    	1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+    		- `Cloudflare Tunnel Write`
 
-		2. Create two unique virtual networks:
-			```tf
-			resource "cloudflare_zero_trust_tunnel_cloudflared_virtual_network" "staging_vnet" {
-				account_id = var.cloudflare_account_id
-				name       = "staging-vnet"
-				comment    = "Staging virtual network"
-				is_default = false
-			}
+    	2. Create two unique virtual networks:
+    		```tf
+    		resource "cloudflare_zero_trust_tunnel_cloudflared_virtual_network" "staging_vnet" {
+    			account_id = var.cloudflare_account_id
+    			name       = "staging-vnet"
+    			comment    = "Staging virtual network"
+    			is_default = false
+    		}
 
-			resource "cloudflare_zero_trust_tunnel_cloudflared_virtual_network" "production_vnet" {
-				account_id = var.cloudflare_account_id
-				name       = "production-vnet"
-				comment    = "Production virtual network"
-				is_default = false
-			}
-			```
+    		resource "cloudflare_zero_trust_tunnel_cloudflared_virtual_network" "production_vnet" {
+    			account_id = var.cloudflare_account_id
+    			name       = "production-vnet"
+    			comment    = "Production virtual network"
+    			is_default = false
+    		}
+    		```
 
-		3. Create a Cloudflare Tunnel for each private network:
-			```tf
-			resource "cloudflare_zero_trust_tunnel_cloudflared" "staging_tunnel" {
-				account_id = var.cloudflare_account_id
-				name       = "Staging tunnel"
-				config_src = "cloudflare"
-			}
+    	3. Create a Cloudflare Tunnel for each private network with overlapping IPs (one tunnel per isolated environment, for example staging and production):
+    		```tf
+    		resource "cloudflare_zero_trust_tunnel_cloudflared" "staging_tunnel" {
+    			account_id = var.cloudflare_account_id
+    			name       = "Staging tunnel"
+    			config_src = "cloudflare"
+    		}
 
-			resource "cloudflare_zero_trust_tunnel_cloudflared" "production_tunnel" {
-				account_id = var.cloudflare_account_id
-				name       = "Production tunnel"
-				config_src = "cloudflare"
-			}
-			```
+    		resource "cloudflare_zero_trust_tunnel_cloudflared" "production_tunnel" {
+    			account_id = var.cloudflare_account_id
+    			name       = "Production tunnel"
+    			config_src = "cloudflare"
+    		}
+    		```
 
-		4. Route `10.128.0.1/32` through `Staging tunnel` and assign it to `staging-vnet`. Route `10.128.0.1/32` through `Production tunnel` and assign it to `production-vnet`.
+    	4. Route `10.128.0.1/32` through `Staging tunnel` and assign it to `staging-vnet`. Route `10.128.0.1/32` through `Production tunnel` and assign it to `production-vnet`.
 
-				```tf
-				resource "cloudflare_zero_trust_tunnel_cloudflared_route" "staging_tunnel_route" {
-					account_id         = var.cloudflare_account_id
-					tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.staging_tunnel.id
-					network            = "10.128.0.1/32"
-					comment            = "Staging tunnel route"
-					virtual_network_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.staging_vnet.id
-				}
+    			```tf
+    			resource "cloudflare_zero_trust_tunnel_cloudflared_route" "staging_tunnel_route" {
+    				account_id         = var.cloudflare_account_id
+    				tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.staging_tunnel.id
+    				network            = "10.128.0.1/32"
+    				comment            = "Staging tunnel route"
+    				virtual_network_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.staging_vnet.id
+    			}
 
-				resource "cloudflare_zero_trust_tunnel_cloudflared_route" "production_tunnel_route" {
-					account_id         = var.cloudflare_account_id
-					tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.production_tunnel.id
-					network            = "10.128.0.1/32"
-					comment            = "Production tunnel route"
-					virtual_network_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.production_vnet.id
-				}
-				```
-		5. [Get the token](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/#get-the-tunnel-token) for each tunnel.
+    			resource "cloudflare_zero_trust_tunnel_cloudflared_route" "production_tunnel_route" {
+    				account_id         = var.cloudflare_account_id
+    				tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.production_tunnel.id
+    				network            = "10.128.0.1/32"
+    				comment            = "Production tunnel route"
+    				virtual_network_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.production_vnet.id
+    			}
+    			```
+    	5. [Get the token](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/#get-the-tunnel-token) for each tunnel.
 
-		6. Using the tunnel tokens, run `Staging tunnel` in your staging environment and run `Production tunnel` in your production environment. Refer to [Install and run the tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel-api/#4-install-and-run-the-tunnel).
+    	6. Using the tunnel tokens, run `Staging tunnel` in your staging environment and run `Production tunnel` in your production environment. Refer to [Install and run the tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel-api/#4-install-and-run-the-tunnel).
+
   </TabItem>
 
   <TabItem label="Locally-managed tunnels">
       To route overlapping IPs over virtual networks for [locally-managed tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/):
 
-      1. Create a tunnel for each private network:
+      1. Create a Cloudflare Tunnel for each private network with overlapping IPs (one tunnel per isolated environment, for example staging and production):
 
          1. Within your staging environment, authenticate `cloudflared`:
 
@@ -214,7 +219,7 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 
           8. Within your production environment, repeat Steps 6 and 7 for `production-tunnel`.
 
-          You can use now the Cloudflare WARP client to [switch between virtual networks](#connect-to-a-virtual-network).
+          You can use now the Cloudflare One Client to [switch between virtual networks](#connect-to-a-virtual-network).
 
   </TabItem>
 </Tabs>
@@ -225,13 +230,13 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
   <TabItem label="Dashboard">
       To delete a virtual network:
 
-      1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels** and ensure that no IP routes are assigned to the virtual network you are trying to delete. If your virtual network is in use, delete the route or reassign it to a different virtual network.
+      1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels** and ensure that no IP routes are assigned to the virtual network you are trying to delete. If your virtual network is in use, delete the route or reassign it to a different virtual network.
 
-      2. Next, go to **Settings** > **WARP Client**.
+      2. Next, go to **Networks** > **Routes**.
 
-      3. Find the **Virtual networks** setting and select **Manage**.
+      3. In **Virtual networks**, find your virtual network.
 
-      4. Select the three-dot menu for your virtual network and select **Delete**.
+      4. Select the three-dot menu and choose **Delete**.
 
       You can optionally delete the tunnel associated with your virtual network.
 
@@ -267,11 +272,24 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 
 ### Windows, macOS, and Linux
 
-1. Open the WARP client.
-2. Go to **Settings** > **Gateway with WARP** > **Virtual Networks**.
+<Tabs>
+<TabItem label="Version 2026.2+">
+
+1. Open the Cloudflare One Client.
+2. Go to **Home**.
+3. In the **VNET** dropdown, choose the virtual network you want to connect to (for example, `staging-vnet`).
+
+</TabItem>
+<TabItem label="Version 2026.1 and earlier">
+
+1. Open the Cloudflare One Client.
+2. Go to **Settings** > **Traffic and DNS mode** > **Virtual Networks**.
 3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
-When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.
+</TabItem>
+</Tabs>
+
+When you visit `10.128.0.3/32`, the Cloudflare One Client will route your request to the staging environment.
 
 ### iOS, Android, and ChromeOS
 
@@ -279,4 +297,4 @@ When you visit `10.128.0.3/32`, WARP will route your request to the staging envi
 2. Go to **Advanced** > **Connection options** > **Virtual networks**.
 3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
-When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.
+When you visit `10.128.0.3/32`, the Cloudflare One Client will route your request to the staging environment.

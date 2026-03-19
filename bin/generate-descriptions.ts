@@ -14,21 +14,35 @@
  * 2. Have a local Worker running on `localhost:8787` with the following code (also requires adding a binding in the Wrangler config file):
  *
  * 		```
- * 		export interface Env {
- * 			AI: Ai;
- * 		}
+  		export interface Env {
+				AI: Ai;
+			}
 
- * 		export default {
- * 			async fetch(request, env): Promise<Response> {
- * 				const response = await env.AI.run("@cf/facebook/bart-large-cnn", {
- * 					input_text: await request.text(),
- * 					max_length: 60
- * 				});
- * 				return Response.json(response.summary);
- * 			},
- * 		} satisfies ExportedHandler<Env>;
+			export default {
+				async fetch(request, env): Promise<Response> {
+
+					const input_text = await request.text()
+
+					const messages = [
+						{ role: "system", content: "You are an assistant who helps summarize long chunks of text." },
+						{ role: "system", content: "You help generate optimized SEO descriptions that are - at most - 60 words. These also convey the most important points of the page and contain keywords." },
+						{ role: "system", content: "In your response, provide no content other than the summary text."},
+						{
+							role: "user",
+							content: input_text,
+						},
+					];
+					const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", { messages });
+
+					return Response.json(response.response);
+				},
+			} satisfies ExportedHandler<Env>;
  * 		```
- * 3. Run `npx tsx bin/generate-descriptions.ts --pcx-content-type $TYPE` to generate the descriptions.
+ * 3. Run `npx tsx bin/generate-descriptions.ts [options]` to generate the descriptions.
+ *
+ * Available options:
+ * - `--pcx-content-type $TYPE`: Filter by content type (e.g., tutorial, overview)
+ * - `--product $PRODUCT`: Filter by product folder (e.g., workers, pages, r2)
  *
  */
 
@@ -166,18 +180,22 @@ async function updateFrontmatter(
 function parseArgs() {
 	const args = process.argv.slice(2);
 	let pcxContentType: string | undefined;
+	let product: string | undefined;
 	let showHelp = false;
 
 	for (let i = 0; i < args.length; i++) {
 		if (args[i] === "--pcx-content-type" && i + 1 < args.length) {
 			pcxContentType = args[i + 1];
 			i++; // Skip the next argument as it's the value
+		} else if (args[i] === "--product" && i + 1 < args.length) {
+			product = args[i + 1];
+			i++; // Skip the next argument as it's the value
 		} else if (args[i] === "--help" || args[i] === "-h") {
 			showHelp = true;
 		}
 	}
 
-	return { pcxContentType, showHelp };
+	return { pcxContentType, product, showHelp };
 }
 
 /**
@@ -189,13 +207,14 @@ Usage: npx tsx bin/generate-descriptions.ts [options]
 
 Options:
   --pcx-content-type <type>  Filter MDX files by pcx_content_type (e.g., overview, tutorial, navigation)
+  --product <product>        Filter MDX files by product folder (e.g., workers, pages, r2)
   --help, -h                 Show this help message
 `);
 }
 
 async function main() {
 	// Parse command line arguments
-	const { pcxContentType, showHelp } = parseArgs();
+	const { pcxContentType, product, showHelp } = parseArgs();
 
 	if (showHelp) {
 		showUsage();
@@ -205,6 +224,10 @@ async function main() {
 	if (pcxContentType) {
 		console.log(`Filtering by pcx_content_type: ${pcxContentType}`);
 	}
+
+	if (product) {
+		console.log(`Filtering by product: ${product}`);
+	}
 	try {
 		// Find all MDX files in the docs directory
 		const mdxFiles = await globby("**/*.mdx", {
@@ -213,21 +236,45 @@ async function main() {
 		});
 		console.log(`Found ${mdxFiles.length} MDX files in the docs directory`);
 
-		// Filter files by pcx_content_type if specified
+		// Filter files by product if specified
 		let filteredMdxFiles = mdxFiles;
+		if (product) {
+			const productPath = path.join(DOCS_DIR, product);
+
+			// Check if the product directory exists
+			try {
+				await fs.access(productPath);
+			} catch (error) {
+				console.error(
+					`Product directory not found: ${productPath} -- ${error}`,
+				);
+				process.exit(1);
+			}
+
+			// Filter files by product
+			filteredMdxFiles = mdxFiles.filter((file) => {
+				return file.startsWith(productPath);
+			});
+			console.log(
+				`Filtered to ${filteredMdxFiles.length} MDX files in product: ${product}`,
+			);
+		}
+
+		// Further filter files by pcx_content_type if specified
 		if (pcxContentType) {
-			filteredMdxFiles = [];
-			for (const mdxFile of mdxFiles) {
+			const contentTypeFiltered = [];
+			for (const mdxFile of filteredMdxFiles) {
 				try {
 					const content = await fs.readFile(mdxFile, "utf-8");
 					const { data: frontmatter } = matter(content);
 					if (frontmatter.pcx_content_type === pcxContentType) {
-						filteredMdxFiles.push(mdxFile);
+						contentTypeFiltered.push(mdxFile);
 					}
 				} catch (error) {
 					console.error(`Error reading ${mdxFile}:`, error);
 				}
 			}
+			filteredMdxFiles = contentTypeFiltered;
 			console.log(
 				`Filtered to ${filteredMdxFiles.length} MDX files with pcx_content_type: ${pcxContentType}`,
 			);
@@ -306,6 +353,14 @@ async function main() {
 
 		console.log("\n--- Summary ---");
 		console.log(`Total MDX files: ${mdxFiles.length}`);
+		if (product) {
+			console.log(`Files in product '${product}': ${filteredMdxFiles.length}`);
+		}
+		if (pcxContentType) {
+			console.log(
+				`Files with pcx_content_type '${pcxContentType}': ${filteredMdxFiles.length}`,
+			);
+		}
 		console.log(`Updated: ${updatedCount}`);
 		console.log(`Skipped (already had description): ${skippedExistingCount}`);
 		console.log(`Skipped (description unchanged): ${skippedUnchangedCount}`);

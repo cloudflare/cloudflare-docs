@@ -8,10 +8,10 @@ import DirectoryCatalog from "~/components/DirectoryCatalog";
 import type { ProductData } from "~/components/DirectoryCatalog";
 import type { StarlightPageProps } from "@astrojs/starlight/props";
 
-let products: CollectionEntry<"products">[] = await getCollection(
-	"products",
-	(entry: CollectionEntry<"products">) => {
-		return entry.data.product?.show ?? true;
+let products: CollectionEntry<"directory">[] = await getCollection(
+	"directory",
+	(entry: CollectionEntry<"directory">) => {
+		return entry.data.entry?.show ?? true;
 	},
 );
 
@@ -27,8 +27,8 @@ let productData: ProductData[] = products
 			...product,
 			icon,
 			groups: [
-				product.data.product.group,
-				...(product.data.product.additional_groups || []),
+				product.data.entry.group,
+				...(product.data.entry.additional_groups || []),
 			].filter((val) => Boolean(val)),
 		};
 	})

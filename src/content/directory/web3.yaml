@@ -1,0 +1,14 @@
+id: kt4kUN
+name: Web3
+
+entry:
+  title: Web3
+  url: /web3/
+  group: Application performance
+  additional_groups: [Application security]
+  preview_tryout: true
+
+meta:
+  title: Cloudflare Web3 docs
+  description: Gateways to networks to help you develop applications without worrying about running infrastructure
+  author: "@cloudflare"

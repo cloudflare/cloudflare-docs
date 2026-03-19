@@ -1,0 +1,42 @@
+---
+pcx_content_type: navigation
+title: rtk-audio-tile
+description: API reference for rtk-audio-tile component (Web Components (HTML) Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ✅ | - | Config |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting |
+| `participant` | `Peer` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | States |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-audio-tile></rtk-audio-tile>
+```
+
+### With Properties
+
+```html
+<rtk-audio-tile>
+</rtk-audio-tile>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-audio-tile");
+
+  el.config= defaultUiConfig
+  el.meeting= meeting
+  el.participant= participant
+</script>
+```

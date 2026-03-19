@@ -1,0 +1,47 @@
+---
+pcx_content_type: concept
+title: Cloudspeaker
+sidebar:
+  order: 2
+---
+
+One of the greatest challenges at any scale is understanding what your customers are _really_ saying. At Cloudflare, we collect massive amounts of customer feedback every day. This feedback is a goldmine of insight, but it is scattered across dozens of disparate, public-facing channels: our own Cloudflare community forum, Reddit, X (formerly Twitter), GitHub, Discord, HackerNews, and more.
+
+Individually, these posts are anecdotes. Collectively, they are a strategic asset. The problem is that the sheer size of these datasets makes it impossible to manually process them for product, content, and design insights. This mass of unorganized feedback was an underutilized opportunity to see cross-functional trends.
+
+To solve this, we built CloudSpeaker, an internal tool created to amplify the voice of the user. Its purpose is to save time, increase efficiency, and consolidate public feedback from all these external communities into a single, unified view.
+
+## The goal: Turning unstructured noise into actionable insight
+
+CloudSpeaker was designed to give any stakeholder at Cloudflare — from product managers and engineers to our user experience teams — a quick way to "check the pulse" of the products and features they own.
+
+The tool allows anyone to see:
+
+- A combined view of product feedback from many channels.
+- Recurring issues and customer pain points.
+- General sentiment for a product over time.
+
+This consolidated view is now a key part of our planning cycles, informing everything from user research and persona creation to feature requests and quarterly backlog prioritization.
+
+## How it is built: An AI-powered data pipeline
+
+CloudSpeaker is built entirely on our own products. The real power, however, comes from its AI-driven data pipeline, managed by our Data Intelligence team.
+
+Here is how it works:
+
+1. **Ingestion:** On a daily basis, our pipelines ingest new community content from our various public sources.
+2. **AI classification:** This new, unstructured content is fed into our AI Content Pipeline. We use Large Language Models (LLMs) via [Workers AI](/workers-ai/) to automatically classify every single post. Each post is tagged with three key pieces of information:
+   - **Product(s) mentioned:** It identifies which of the 60+ Cloudflare products are being discussed.
+   - **Sentiment:** The model analyzes the text to determine the user's sentiment, classifying it on a spectrum from `negative` to `neutral` to `positive`.
+   - **Post type:** It categorizes the intent of the post, such as a `help request`, `feature request`, or `bug report`.
+3. **Storage and display:** Once the AI completes its inference, these new classifications are stored in our D1 database and become viewable in the CloudSpeaker UI.
+
+## The workflow: On-demand AI analysis
+
+The backend classification pipeline solves the problem of manual processing. The frontend application solves the problem of accessibility.
+
+In the CloudSpeaker dashboard, a product manager can filter the entire dataset — spanning up to six months — by any combination of product, sentiment, post type, or date range. If they want to see all `negative` sentiment posts about a specific product that were `feature requests` in the last quarter, they can do so in seconds.
+
+Furthermore, we added a second layer of AI directly into the UI. After filtering down to a set of comments, the user can select a **Summarize** button. This uses Workers AI to generate an on-the-fly summary of the currently displayed comments, providing an instant, qualitative overview of quantitative data.
+
+CloudSpeaker is a powerful example of using AI not to generate content, but to analyze and structure the vast amounts of content our users generate every day. It transforms what was once an impossible manual task into a critical source of automated, actionable insights.

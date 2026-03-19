@@ -1096,20 +1096,6 @@
 				}
 			}
 		},
-		"response_buffering": {
-			"title": "Response buffering",
-			"link": "/network/response-buffering/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Enterprise-only",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "Yes"
-				}
-			}
-		},
 		"true_client_ip_header": {
 			"title": "True Client IP Header",
 			"link": "/fundamentals/reference/http-headers/#true-client-ip-enterprise-plan-only",
@@ -1282,7 +1268,7 @@
 					"ent": "Yes"
 				},
 				"z_origin_error_pages": {
-					"title": "Enable Origin Error Pages",
+					"title": "Origin Error Pages",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1675,7 +1661,7 @@
 				"retention": {
 					"title": "Retention",
 					"free": "7",
-					"pro": "31",
+					"pro": "7",
 					"biz": "31",
 					"ent": "90"
 				},
@@ -1793,7 +1779,7 @@
 					"ent": "Yes"
 				},
 				"managed_ruleset_3": {
-					"title": "Cloudflare Exposed Credentials Check",
+					"title": "Cloudflare Exposed Credentials Check (deprecated)",
 					"summary": "Available on paid plans",
 					"link": "/waf/managed-rules/reference/exposed-credentials-check/",
 					"free": "No",
@@ -1867,9 +1853,9 @@
 					"ent": "Yes"
 				},
 				"g_fw_for_ai": {
-					"title": "Firewall for AI (beta)",
+					"title": "AI Security for Apps",
 					"summary": "Enterprise-only",
-					"link": "/waf/detections/firewall-for-ai/",
+					"link": "/waf/detections/ai-security-for-apps/",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1913,8 +1899,16 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
-				"z_custom_rulesets": {
-					"title": "Custom rulesets",
+				"x_custom_rulesets_zone": {
+					"title": "Number of custom rulesets (zone)",
+					"link": "/waf/account/custom-rulesets/",
+					"free": "1",
+					"pro": "2",
+					"biz": "5",
+					"ent": "10"
+				},
+				"z_custom_rulesets_account": {
+					"title": "Account-level custom rulesets",
 					"link": "/waf/account/custom-rulesets/",
 					"summary": "Enterprise with add-on",
 					"free": "No",
@@ -2172,7 +2166,7 @@
 				"hostname_management": {
 					"title": "Hostname management",
 					"link": "/turnstile/concepts/hostname-management/",
-					"free": "15 hostnames per widget",
+					"free": "10 hostnames per widget",
 					"ent": "Maximum of 200 hostnames per widget"
 				},
 				"anyhostname": {
@@ -2204,7 +2198,7 @@
 					"ent": "Yes"
 				},
 				"compliance": {
-					"title": "WCAG 2.1 AA compliance",
+					"title": "WCAG 2.2 AAA compliance",
 					"free": "Yes",
 					"ent": "Yes"
 				},
@@ -2441,20 +2435,6 @@
 					"pro": "Paid add-on",
 					"biz": "Paid add-on",
 					"ent": "Paid add-on"
-				}
-			}
-		},
-		"mirage": {
-			"title": "Mirage (deprecated)",
-			"link": "/speed/optimization/images/mirage/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Pro and above",
-					"free": "No",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
 				}
 			}
 		},
