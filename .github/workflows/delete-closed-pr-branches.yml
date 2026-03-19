@@ -1,6 +1,7 @@
-# Fires immediately when any PR is closed (merged or otherwise) and deletes
-# the head branch — provided it lives on this repo (not a fork) and is not
-# protected.
+# Fires immediately when a PR is closed without merging and deletes the head
+# branch — provided it lives on this repo (not a fork) and is not protected.
+# Merged PRs are excluded because the repo's "automatically delete head branches"
+# setting already handles those.
 #
 # Fork branches are skipped at the job level via the `if:` condition because
 # we don't own them and the API would return a 403.
@@ -26,7 +27,7 @@ permissions:
 
 jobs:
   delete-branch:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.merged == false)
     runs-on: ubuntu-latest
     steps:
       - name: Delete branch associated with closed PR
