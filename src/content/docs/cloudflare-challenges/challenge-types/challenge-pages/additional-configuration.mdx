@@ -21,8 +21,8 @@ You can customize your favicon by using the HTML snippet below.
 
 ## Custom Content Security Policy (CSP) and error pages
 
-Cloudflare-served Challenge Pages operate in a strictly controlled environment to maximize security and ensure the challenge mechanism functions correctly. Because of this, customer-created Transform Rules do not apply to Challenge Pages.
+Cloudflare-served Challenge Pages operate in a strictly controlled environment to maximize security and ensure the challenge mechanism functions correctly. Because of this, customer-created and managed [Transform Rules](/rules/transform/) for response headers do not apply to Challenge Pages.
 
-This behavior ensures reliability for Challenge Pages by preventing custom request or response header rewrites from interfering with challenge execution.
+This behavior ensures reliability for Challenge Pages by preventing custom response header rewrites from interfering with challenge execution.
 
 For more information about Transform Rules behavior, refer to [Transform Rules](/rules/transform/).
