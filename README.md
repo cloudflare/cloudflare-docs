@@ -1,6 +1,6 @@
 # Cloudflare Developer Documentation
 
-<!-- test comment: just testing a fork PR workflow -->
+<!-- test comment: testing fork PR workflow and CI triggering -->
 
 Welcome to the open-source repository for all [Cloudflare Developer Documentation](https://developers.cloudflare.com/).
 
