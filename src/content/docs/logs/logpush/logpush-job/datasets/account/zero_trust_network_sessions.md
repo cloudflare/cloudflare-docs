@@ -207,6 +207,12 @@ Type: `int`
 
 The duration taken by Secure Web Gateway applying applicable Network, HTTP, and Egress rules to the network session in milliseconds.
 
+## SNI
+
+Type: `string`
+
+The server name indication (SNI) value from the TLS handshake, if applicable.
+
 ## SessionEndTime
 
 Type: `int or string`

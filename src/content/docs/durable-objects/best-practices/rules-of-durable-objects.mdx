@@ -1498,8 +1498,8 @@ Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. The integrati
 
 <TypeScriptExample filename="test/chat-room.test.ts">
 ```ts
+import { env } from "cloudflare:workers";
 import {
-	env,
 	runInDurableObject,
 	runDurableObjectAlarm,
 } from "cloudflare:test";
@@ -1543,16 +1543,15 @@ describe("ChatRoom", () => {
 Configure Vitest in your `vitest.config.ts`:
 
 ```ts
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
 
-export default defineWorkersConfig({
-	test: {
-		poolOptions: {
-			workers: {
-				wrangler: { configPath: "./wrangler.jsonc" },
-			},
-		},
-	},
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			wrangler: { configPath: "./wrangler.jsonc" },
+		}),
+	],
 });
 ```
 

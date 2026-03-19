@@ -4,7 +4,7 @@
 
 # More dev-specific files
 
-/.github/ @cloudflare/content-engineering @kodster28 @mvvmm @colbywhitedev @adutton
+/.github/ @cloudflare/content-engineering @kodster28 @mvvmm @colbywhite @ahaywood
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing @kodster28
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing @kodster28
 /src/components/ @cloudflare/content-engineering @kodster28
@@ -20,15 +20,16 @@ package.json @cloudflare/content-engineering
 
 # AI
 
+/src/content/docs/cloudflare-agent/ @dmmulroy @Brayden @cloudflare/pcx-technical-writing
 /src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/partials/agents/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
-/src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @cloudflare/pcx-technical-writing
-/src/content/docs/workers-ai/ @rita3ko @craigsdennis @mchenco @zeke @superhighfives @bfirsh @cloudflare/pcx-technical-writing
+/src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/pcx-technical-writing
+/src/content/docs/workers-ai/ @rita3ko @craigsdennis @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/pcx-technical-writing
 /src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @mchenco @cloudflare/pcx-technical-writing
 /src/content/partials/vectorize/ @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
-/src/content/partials/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @cloudflare/pcx-technical-writing
-/src/content/release-notes/workers-ai.yaml @kathayl @mchenco @zeke @superhighfives @bfirsh @cloudflare/pcx-technical-writing
-/src/content/release-notes/ai-gateway.yaml @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @cloudflare/pcx-technical-writing
+/src/content/partials/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/pcx-technical-writing
+/src/content/release-notes/workers-ai.yaml @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/pcx-technical-writing
+/src/content/release-notes/ai-gateway.yaml @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/pcx-technical-writing
 /src/content/release-notes/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
 /src/content/docs/ai-search/ @rita3ko @irvinebroque @aninibread @cloudflare/pcx-technical-writing
 
@@ -69,6 +70,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/cloud-and-saas-findings/ @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/traffic-policies/ @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/remote-browser-isolation/ @deadlypants1973 @cloudflare/pcx-technical-writing

@@ -52,7 +52,7 @@ const nextUrl = currentPage < lastPage ? pageUrl(currentPage + 1) : null;
 
 {
 	lastPage > 1 && (
-		<nav class="pagination mt-8 flex items-center justify-between" aria-label="Pagination">
+		<nav class="pagination mt-8 flex flex-wrap items-center justify-between gap-y-2" aria-label="Pagination">
 			{prevUrl ? (
 				<a href={prevUrl} class="pagination-btn no-underline">
 					← Prev
@@ -61,7 +61,7 @@ const nextUrl = currentPage < lastPage ? pageUrl(currentPage + 1) : null;
 				<span class="pagination-btn disabled">← Prev</span>
 			)}
 
-			<div class="flex items-center gap-1">
+			<div class="pagination-pages flex items-center gap-1">
 				{items.map((item) =>
 					item === null ? (
 						<span class="flex h-9 items-center justify-center px-2 text-sm text-sl-color-gray-3">
@@ -127,5 +127,13 @@ const nextUrl = currentPage < lastPage ? pageUrl(currentPage + 1) : null;
 
 	.pagination-btn.disabled {
 		opacity: 0.35;
+	}
+
+	@media (max-width: 640px) {
+		.pagination-pages {
+			order: -1;
+			width: 100%;
+			justify-content: center;
+		}
 	}
 </style>

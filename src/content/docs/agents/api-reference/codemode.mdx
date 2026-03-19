@@ -38,7 +38,13 @@ For simple, single tool calls, standard AI SDK tool calling is simpler and suffi
 ## Installation
 
 ```sh
-npm install @cloudflare/codemode ai zod
+npm install @cloudflare/codemode
+```
+
+If you use `@cloudflare/codemode/ai`, also install the `ai` and `zod` peer dependencies:
+
+```sh
+npm install ai zod
 ```
 
 ## Quick start
@@ -144,23 +150,6 @@ compatibility_flags = ["nodejs_compat"]
 
 </WranglerConfig>
 
-### Vite configuration
-
-If you use `zod-to-ts` (which codemode depends on), add a `__filename` define to your Vite config:
-
-<TypeScriptExample>
-
-```ts
-export default defineConfig({
-	plugins: [react(), cloudflare(), tailwindcss()],
-	define: {
-		__filename: "'index.ts'",
-	},
-});
-```
-
-</TypeScriptExample>
-
 ## How it works
 
 1. `createCodeTool` generates TypeScript type definitions from your tools and builds a description the LLM can read.
@@ -246,6 +235,54 @@ const codemode = createCodeTool({
 
 Tool names with hyphens or dots (common in MCP) are automatically sanitized to valid JavaScript identifiers (for example, `my-server.list-items` becomes `my_server_list_items`).
 
+## MCP server wrappers
+
+The `@cloudflare/codemode/mcp` export provides two functions that wrap MCP servers with Code Mode.
+
+### `codeMcpServer`
+
+Wraps an existing MCP server with a single `code` tool. Each upstream tool becomes a typed `codemode.*` method inside the sandbox:
+
+<TypeScriptExample>
+
+```ts
+import { codeMcpServer } from "@cloudflare/codemode/mcp";
+import { DynamicWorkerExecutor } from "@cloudflare/codemode";
+
+const executor = new DynamicWorkerExecutor({ loader: env.LOADER });
+const server = await codeMcpServer({ server: upstreamMcp, executor });
+```
+
+</TypeScriptExample>
+
+### `openApiMcpServer`
+
+Creates an MCP server with `search` and `execute` tools from an OpenAPI spec. All `$ref` pointers are resolved before being passed to the sandbox, and the host-side `request` handler keeps authentication out of the sandbox:
+
+<TypeScriptExample>
+
+```ts
+import { openApiMcpServer } from "@cloudflare/codemode/mcp";
+import { DynamicWorkerExecutor } from "@cloudflare/codemode";
+
+const executor = new DynamicWorkerExecutor({ loader: env.LOADER });
+const server = openApiMcpServer({
+	spec: openApiSpec,
+	executor,
+	request: async ({ method, path, query, body }) => {
+		// Runs on the host — add auth headers here
+		const res = await fetch(`https://api.example.com${path}`, {
+			method,
+			headers: { Authorization: `Bearer ${token}` },
+			body: body ? JSON.stringify(body) : undefined,
+		});
+		return res.json();
+	},
+});
+```
+
+</TypeScriptExample>
+
 ## The Executor interface
 
 The `Executor` interface is deliberately minimal — implement it to run code in any sandbox:
@@ -283,11 +320,14 @@ Returns an AI SDK compatible `Tool`.
 
 Executes code in an isolated Cloudflare Worker via `WorkerLoader`.
 
-| Option           | Type              | Default  | Description                                                  |
-| ---------------- | ----------------- | -------- | ------------------------------------------------------------ |
-| `loader`         | `WorkerLoader`    | required | Worker Loader binding from `env.LOADER`                      |
-| `timeout`        | `number`          | `30000`  | Execution timeout in ms                                      |
-| `globalOutbound` | `Fetcher \| null` | `null`   | Network access control. `null` = blocked, `Fetcher` = routed |
+| Option           | Type                       | Default  | Description                                                                        |
+| ---------------- | -------------------------- | -------- | ---------------------------------------------------------------------------------- |
+| `loader`         | `WorkerLoader`             | required | Worker Loader binding from `env.LOADER`                                            |
+| `timeout`        | `number`                   | `30000`  | Execution timeout in ms                                                            |
+| `globalOutbound` | `Fetcher \| null`          | `null`   | Network access control. `null` = blocked, `Fetcher` = routed                       |
+| `modules`        | `Record<string, string>`   | —        | Custom ES modules available in the sandbox. Keys are specifiers, values are source. |
+
+Code and tool names are normalized and sanitized internally — you do not need to call `normalizeCode()` or `sanitizeToolName()` before passing them to `execute()`.
 
 ### `generateTypes(tools)`
 
@@ -296,7 +336,7 @@ Generates TypeScript type definitions from your tools. Used internally by `creat
 <TypeScriptExample>
 
 ```ts
-import { generateTypes } from "@cloudflare/codemode";
+import { generateTypes } from "@cloudflare/codemode/ai";
 
 const types = generateTypes(myTools);
 // Returns:
@@ -304,6 +344,18 @@ const types = generateTypes(myTools);
 // declare const codemode: {
 //   createProject: (input: CreateProjectInput) => Promise<unknown>;
 // }
+```
+
+</TypeScriptExample>
+
+For JSON Schema inputs that do not depend on the AI SDK, use the main entry point:
+
+<TypeScriptExample>
+
+```ts
+import { generateTypesFromJsonSchema } from "@cloudflare/codemode";
+
+const types = generateTypesFromJsonSchema(jsonSchemaToolDescriptors);
 ```
 
 </TypeScriptExample>
@@ -337,7 +389,6 @@ sanitizeToolName("delete"); // "delete_"
 - **Tool approval (`needsApproval`) is not supported yet.** Tools with `needsApproval: true` execute immediately inside the sandbox without pausing for approval. Support for approval flows within codemode is planned. For now, do not pass approval-required tools to `createCodeTool` — use them through standard AI SDK tool calling instead.
 - Requires Cloudflare Workers environment for `DynamicWorkerExecutor`.
 - Limited to JavaScript execution.
-- The `zod-to-ts` dependency bundles the TypeScript compiler, which increases Worker size.
 - LLM code quality depends on prompt engineering and model capability.
 
 ## Related resources

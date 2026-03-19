@@ -11,7 +11,7 @@ This tutorial provides configuration information and a sample template for using
 - `ike-group <NAME_OF_IKE_GROUP>` - Exchanges keys using a particular IKE policy or profile.
 - The IP addresses of the IPsec tunnel interfaces on both ends of the tunnel should be a pair of private IP addresses (RFC 1918) on the same `/31` or `/30` subnet, specifying a point-to-point link.
 - The IPsec tunnel endpoint on this VyOS router is the `<IP_ADDR_OF_UPLINK_INTF_TO_INTERNET/WAN>`.
-- The IP address of the IPsec tunnel endpoint on the Cloudflare side is the anycast IP address provided by Cloudflare.
+- The IP address of the IPsec tunnel endpoint on the Cloudflare side is one of the anycast IP addresses assigned to your account, available in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 - This router is configured to initiate the IPsec tunnel connection.
 
 ## Configuration parameters
