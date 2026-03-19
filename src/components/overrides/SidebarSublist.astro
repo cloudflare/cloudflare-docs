@@ -1,6 +1,6 @@
 ---
 import { Icon, Badge } from "@astrojs/starlight/components";
-import { SidebarEntry } from "~/util/sidebar";
+import type { SidebarEntry } from "~/util/sidebar";
 
 interface Props {
 	sublist: SidebarEntry[];
@@ -75,7 +75,7 @@ const restoreIndices = sublist.map((entry) =>
 					<details
 						open={
 							flattenSidebar(entry.entries).some(
-								(i: SidebarEntry) => i.isCurrent,
+								(i) => i.type === "link" && i.isCurrent,
 							) || !entry.collapsed
 						}
 					>
