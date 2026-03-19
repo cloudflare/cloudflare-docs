@@ -186,9 +186,9 @@
 		/* Kumo header tokens — dark mode */
 		--color-header-text: var(--color-cl1-gray-7);
 		--color-header-text-subtle: var(--color-cl1-gray-6);
-		--color-header-hover-text: var(--orange-accent-200);
+		--color-header-hover-text: var(--color-cl1-white);
 		--color-header-line: rgb(255 255 255 / 0.1);
-		--color-header-fill: var(--sidebar-orange-accent-600);
+		--color-header-fill: rgb(255 255 255 / 0.07);
 		--color-header-overlay-bg: var(--sl-color-bg);
 		--color-header-overlay-line: rgb(255 255 255 / 0.08);
 		--color-header-overlay-shadow: rgb(0 0 0 / 0.4);

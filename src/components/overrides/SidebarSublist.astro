@@ -52,11 +52,11 @@ const restoreIndices = sublist.map((entry) =>
 						href={entry.href}
 						aria-current={entry.isCurrent ? "page" : undefined}
 						class:list={[
-							"flex min-h-[2.125rem] items-start rounded-lg px-3 py-1.5 text-sm font-medium no-underline transition-colors duration-150",
+							"flex min-h-[2.125rem] items-start rounded-lg px-3 py-1.5 text-sm font-medium no-underline",
 							"outline-2 outline-offset-[-2px] outline-transparent focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400",
-							"text-[var(--sidebar-text)] hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)]",
-							entry.isCurrent &&
-								"!bg-[var(--sidebar-active-bg)] !font-semibold !text-[var(--sidebar-active-text)]",
+							entry.isCurrent
+								? "!bg-[var(--sidebar-active-bg)] !font-semibold !text-[var(--sidebar-active-text)]"
+								: "transition-colors duration-150 text-[var(--sidebar-text)] hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)]",
 							!nested && "large",
 							entry.attrs.class,
 						]}

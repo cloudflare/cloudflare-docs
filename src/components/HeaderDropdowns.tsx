@@ -51,7 +51,7 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="flex cursor-pointer items-center justify-center gap-1.5 rounded-md bg-transparent px-2 py-1 text-sm font-medium text-[var(--color-header-text)] transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)]"
+				className="flex h-9 cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-transparent px-3 text-sm font-medium text-[var(--color-header-text)] transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)]"
 			>
 				{label}
 				<PiCaretDownBold className="size-2.5 text-[var(--color-header-text-subtle)]" />
@@ -87,7 +87,7 @@ export default function HeaderDropdownsComponent() {
 				<a
 					key={href}
 					href={href}
-					className="flex items-center justify-center rounded-md px-2 py-1 text-sm font-medium text-[var(--color-header-text)] no-underline transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)]"
+					className="flex h-9 items-center justify-center rounded-lg px-3 text-sm font-medium text-[var(--color-header-text)] no-underline transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)]"
 				>
 					{label}
 				</a>
