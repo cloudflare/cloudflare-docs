@@ -87,10 +87,16 @@ For more information, refer to [Deploy managed rulesets](/waf/managed-rules/depl
 
 **Custom rules for e-commerce**
 
-Once managed rulesets are turned on, add custom rules to address patterns specific to your store. Go to **Security** > **Application Security** > **Custom rules** and create rules for:
+Once managed rulesets are turned on, add rules to address patterns specific to your store.
 
-- **Login brute force** — Rate limit requests to `/login` or `/account` to a low threshold (for example, 5 requests per minute per IP). Refer to [Rate limiting rules](/waf/rate-limiting-rules/).
-- **Admin path protection** — Block all requests to `/admin`, `/wp-admin`, or equivalent paths from IPs that are not on your allowlist.
+**Rate limiting rules** — Rate limiting rules are a separate rule type from custom rules. Go to **Security** > **Security rules**, then select **Create rule** > **Rate limiting rules** and create rules for:
+
+- **Login brute force** — Rate limit requests to `/login` or `/account` per IP. On Pro plans and above, you can use a 1-minute counting period (for example, 5 requests per minute). Free plans are limited to a 10-second counting period. Refer to [Rate limiting rules](/waf/rate-limiting-rules/).
+- **Gift card cracking** — Rate limit requests to gift card balance or redemption endpoints per IP to prevent automated enumeration attacks.
+
+**Custom rules** — Go to **Security** > **Security rules**, then select **Create rule** > **Custom rules** for rules that block or challenge based on conditions rather than request rate:
+
+- **Admin path protection** — Block all requests to `/admin`, `/wp-admin`, or equivalent paths from IPs not on your allowlist.
 - **Checkout challenges** — Apply a managed challenge to requests to `/checkout` or `/cart` that carry suspicious characteristics such as a low Cloudflare threat score.
 
 </Details>
@@ -111,10 +117,10 @@ The table below describes how to address each threat at each tier. If a mitigati
 
 | Threat                    | Free / Pro / Business                                                                      | Enterprise                                                                        |
 | ------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
-| **Inventory hoarding**    | Super Bot Fight Mode blocks definitively automated traffic site-wide                       | Write a WAF custom rule targeting bot score ≤ 30 on `/cart` and `/checkout` paths |
+| **Inventory hoarding**    | Super Bot Fight Mode blocks definitively automated traffic site-wide                       | Write a WAF custom rule targeting bot score ≤ 29 on `/cart` and `/checkout` paths |
 | **Price scraping**        | Rate limit product page requests; Super Bot Fight Mode challenges bots on static resources | Target bot score ≤ 29 on product and category pages with a managed challenge      |
-| **Credential stuffing**   | Bot Fight Mode / Super Bot Fight Mode challenges automated login attempts                  | Custom rule: block score ≤ 30 on `/login`; combine with Exposed Credentials Check |
-| **Gift card cracking**    | Rate limit gift card balance endpoints (available on all plans)                            | Custom rule: block or challenge score ≤ 30 on gift card endpoints                 |
+| **Credential stuffing**   | Bot Fight Mode / Super Bot Fight Mode challenges automated login attempts                  | Custom rule: block score ≤ 29 on `/login`; combine with Exposed Credentials Check |
+| **Gift card cracking**    | Rate limit gift card balance endpoints (available on Pro plans and above)                  | Custom rule: block or challenge score ≤ 29 on gift card endpoints                 |
 | **Fake account creation** | Add [Turnstile](/turnstile/) to registration forms (available on all plans)                | Turnstile on registration plus challenge score ≤ 29 on `/register`                |
 
 For a full list of bot score thresholds and field reference, refer to [Bot scores](/bots/concepts/bot-score/).

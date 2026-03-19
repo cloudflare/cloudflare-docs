@@ -76,11 +76,14 @@ Coordinate stateful AI workflows and maintain conversation state across requests
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-   			prompt: "What is Cloudflare Workers AI?",
+   			messages: [
+   				{ role: "system", content: "You are a friendly assistant." },
+   				{ role: "user", content: "What is Cloudflare Workers AI?" },
+   			],
    		});
-   		return new Response(JSON.stringify(response));
+   		return Response.json(response);
    	},
-   };
+   } satisfies ExportedHandler<Env>;
    ```
 
 4. Back in your terminal, deploy your Worker:
