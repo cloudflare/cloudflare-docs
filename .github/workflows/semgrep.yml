@@ -20,7 +20,7 @@ jobs:
     container:
       image: semgrep/semgrep
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # fetch full history so Semgrep can compare against the base branch
           fetch-depth: 0
@@ -65,7 +65,7 @@ jobs:
               $list_of_files \
               | jq --raw-output ".results[] | \"::warning file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
             #exit ${PIPESTATUS[0]}
-            # for the moment always return a successful run 
+            # for the moment always return a successful run
             exit 0
           else
             echo "No relevant files changed"
