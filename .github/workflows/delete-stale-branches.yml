@@ -12,6 +12,9 @@
 name: Delete stale branches
 
 on:
+  push:
+    branches:
+      - stale-branch-cleanup # temporary: for dry-run testing on this PR branch — remove before merging
   schedule:
     - cron: "0 4 * * *"
   workflow_dispatch:
@@ -36,7 +39,7 @@ jobs:
       - name: Delete unassociated branches older than 60 days
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run || 'false' }}
+          DRY_RUN: ${{ github.event_name == 'push' && 'true' || github.event_name == 'schedule' && 'false' || inputs.dry-run }}
         run: |
           LIMIT=100
           deleted=0
