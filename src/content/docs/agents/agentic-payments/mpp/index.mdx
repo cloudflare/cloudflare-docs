@@ -10,7 +10,7 @@ description: Accept and make payments using the Machine Payments Protocol (MPP) 
 
 import { LinkCard, CardGrid } from "~/components";
 
-[MPP (Machine Payments Protocol)](https://mpp.dev) is an open protocol for machine-to-machine payments, co-authored by [Tempo Labs](https://tempo.xyz) and [Stripe](https://stripe.com). It standardizes the HTTP `402 Payment Required` status code with a formal authentication scheme proposed to the [IETF](https://paymentauth.org), giving agents, apps, and humans a single interface to pay for any service in the same HTTP request.
+[Machine Payments Protocol (MPP)](https://mpp.dev) is a protocol for machine-to-machine payments, co-authored by [Tempo Labs](https://tempo.xyz) and [Stripe](https://stripe.com). It standardizes the HTTP `402 Payment Required` status code with a formal authentication scheme proposed to the [IETF](https://paymentauth.org), giving agents, apps, and humans a single interface to pay for any service in the same HTTP request.
 
 MPP is payment-method agnostic. A single endpoint can accept stablecoins (Tempo), credit cards (Stripe), or Bitcoin (Lightning).
 
@@ -73,5 +73,4 @@ The TypeScript SDK includes framework middleware for [Hono](https://mpp.dev/sdk/
 
 - [mpp.dev](https://mpp.dev) — Protocol documentation and quickstart guides
 - [IETF specification](https://paymentauth.org) — Full Payment HTTP Authentication Scheme specification
-- [x402](/agents/agentic-payments/x402/) — Coinbase's open payment standard, compatible with MPP
 - [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/) — Cloudflare-native monetization for web content
