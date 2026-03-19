@@ -940,6 +940,23 @@ entries:
       # Matches requests where the origin response time (TTFB) was greater than 2 seconds:
       cf.timings.origin_ttfb_msec > 2000
 
+  - name: cf.timings.worker_msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timing, workers, performance, latency]
+    summary: The time spent executing a Cloudflare Worker in milliseconds.
+    description: |-
+      This field provides the wall-clock time that a Cloudflare Worker spent handling the request, measured in milliseconds.
+
+      Use this field to identify slow Worker executions, set up alerts for performance regressions, or add Worker execution time as a request header using Transform Rules for downstream observability.
+
+      If the request did not invoke a Worker, the value of this field will be `0`.
+    example_value: |-
+      12
+    example_block: |-
+      # Matches requests where the Worker execution time exceeded 500 milliseconds
+      cf.timings.worker_msec > 500
+
   - name: cf.waf.content_scan.has_obj
     data_type: Boolean
     categories: [Request]
