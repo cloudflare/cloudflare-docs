@@ -79,7 +79,13 @@ const restoreIndices = sublist.map((entry) =>
 							) || !entry.collapsed
 						}
 					>
-						<summary class="group/expander flex min-h-[2.125rem] cursor-pointer items-center justify-between rounded-lg px-3 py-1.5 text-sm font-medium text-[var(--sidebar-text)] no-underline outline-2 outline-offset-[-2px] outline-transparent transition-colors duration-150 select-none hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)] focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400 [&::-webkit-details-marker]:hidden [&::marker]:hidden">
+						<summary class:list={[
+							"group/expander flex min-h-[2.125rem] cursor-pointer items-center justify-between rounded-lg px-3 py-1.5 text-sm no-underline outline-2 outline-offset-[-2px] outline-transparent transition-colors duration-150 select-none focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400 [&::-webkit-details-marker]:hidden [&::marker]:hidden",
+							"hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)]",
+							entry.hasActivePage
+								? "font-semibold text-[var(--sidebar-text-strong)]"
+								: "font-medium text-[var(--sidebar-text)]",
+						]}>
 							<span class="group-label">
 								<span class:list={["", !nested && "large"]}>{entry.label}</span>
 								{entry.badge && (
