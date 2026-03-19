@@ -125,7 +125,7 @@ function Form({
 			</fieldset>
 			<textarea
 				name="info"
-				rows={3}
+				rows={2}
 				placeholder="Tell us more about your experience."
 				className="mt-1 w-full resize-none rounded-lg border-0 bg-white px-3 py-2 text-[13px] text-[var(--sl-color-text)] ring-1 ring-[var(--sl-color-hairline)] transition-all duration-150 outline-none placeholder:text-[var(--sl-color-gray-3)] focus:ring-2 focus:ring-[var(--sl-color-text-accent)] dark:bg-[var(--sl-color-bg-nav)]"
 			/>
