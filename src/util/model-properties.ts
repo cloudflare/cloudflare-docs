@@ -11,6 +11,7 @@ type PropertyDef = {
  * Boolean properties surfaced as badges and sidebar filters.
  *
  * - "model" properties describe what a model can do (blue badges).
+ * - "model" properties describe what a model can do (gray badges).
  * - "platform" properties describe Workers AI platform features (orange badges).
  *
  * Add a new property here and it propagates to ModelCatalog, ModelBadges,
