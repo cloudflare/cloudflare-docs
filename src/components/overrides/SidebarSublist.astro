@@ -88,7 +88,7 @@ const restoreIndices = sublist.map((entry) =>
 								: "font-medium text-[var(--sidebar-text)]",
 						]}>
 							<span class="group-label">
-								<span class:list={["", !nested && "large"]}>{entry.label}</span>
+								<span class:list={[!nested && "large"]}>{entry.label}</span>
 								{entry.badge && (
 									<Badge
 										variant={entry.badge.variant}
