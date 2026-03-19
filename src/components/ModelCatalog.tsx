@@ -27,10 +27,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 	// List of model names to pin at the top
 	const pinnedModelNames = [
+		"@cf/moonshotai/kimi-k2.5",
+		"@cf/zai-org/glm-4.7-flash",
 		"@cf/openai/gpt-oss-120b",
-		"@cf/openai/gpt-oss-20b",
 		"@cf/meta/llama-4-scout-17b-16e-instruct",
-		"@cf/meta/llama-3.1-8b-instruct-fast",
 	];
 
 	// Sort models by pinned status first, then by created_at date

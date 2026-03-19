@@ -246,6 +246,13 @@ const starlightPageProps = {
 
 	<ModelFeatures model={model} />
 	{
+		(model.name === "@cf/moonshotai/kimi-k2.5" ||
+			model.name === "@cf/nvidia/nemotron-3-120b-a12b" ||
+			model.name === "@cf/zai-org/glm-4.7-flash") && (
+			<Render file="session-affinity-note" product="workers-ai" />
+		)
+	}
+	{
 		model.name === "@cf/deepgram/nova-3" && (
 			<Aside>
 				<p>
