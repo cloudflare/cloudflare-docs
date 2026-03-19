@@ -31,7 +31,7 @@ To solve this issue, you can do one of the following:
 
 ## acme_challenge TXT records
 
-You might notice TXT records like `_acme-challenge.<hostname>` are returned by your domain but cannot be found in **DNS** > **Records** on the Cloudflare dashboard.
+You might notice TXT records like `_acme-challenge.<hostname>` are returned by your domain but cannot be found on the Cloudflare dashboard.
 
 ### Cause
 
@@ -39,7 +39,7 @@ These records are automatically created to allow Cloudflare edge certificates ([
 
 ### Solution
 
-As these records are tied to the certificates, they cannot be deleted from **DNS** > **Records** on the Cloudflare dashboard.
+As these records are tied to the certificates, they cannot be deleted via the Cloudflare dashboard.
 
 If you need more `_acme-challenge.<hostname>` TXT records in order to provision certificates on your side, you can [manually add them](/dns/manage-dns-records/how-to/create-dns-records/) under [DNS records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records).
 

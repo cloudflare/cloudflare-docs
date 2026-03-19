@@ -7,6 +7,8 @@ sidebar:
   order: 2
 ---
 
+import { DashButton } from '~/components/';
+
 In web browsers such as Safari or Chrome, there are several commonly observable DNS errors:
 
 - `This site can't be reached`
@@ -25,7 +27,11 @@ Verify that the domain or subdomain was correctly spelled in the request URL.
 
 ### Missing DNS records
 
-Ensure that you have the necessary DNS records in **DNS** > **Records** on the Cloudflare dashboard. This includes having the following records:
+Ensure that you have the necessary DNS records for the domain or subdomain that is presenting the error.
+
+<DashButton url="/?to=/:account/:zone/dns/records" />
+
+This includes having the following records:
 
 - The [zone apex](/dns/manage-dns-records/how-to/create-zone-apex/) (e.g., `example.com`) record.
 - Existing [subdomains](/dns/manage-dns-records/how-to/create-subdomain/) (`www.example.com`, `blog.example.com`) records.
