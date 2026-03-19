@@ -73,6 +73,7 @@ const restoreIndices = sublist.map((entry) =>
 					</a>
 				) : (
 					<details
+						class="group/accordion"
 						open={
 							flattenSidebar(entry.entries).some(
 								(i) => i.type === "link" && i.isCurrent,
@@ -103,8 +104,8 @@ const restoreIndices = sublist.map((entry) =>
 							/>
 						</summary>
 						<sl-sidebar-restore data-index={restoreIndices[idx]} />
-						<div class="sidebar-accordion">
-							<div class="sidebar-accordion-inner">
+						<div class="sidebar-accordion grid grid-rows-[0fr] group-open/accordion:grid-rows-[1fr]">
+							<div class="sidebar-accordion-inner overflow-hidden min-h-0">
 								<Astro.self sublist={entry.entries} nested />
 							</div>
 						</div>

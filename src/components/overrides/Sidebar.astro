@@ -74,39 +74,67 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		)
 			return;
 
-		// Attach an event listener so that we ONLY animate details that are explicitly toggled
-		// by the user clicking them, preventing CSS animations from flickering on page load
+		// ── Animated <details> toggle ──
+		const animating = new WeakSet<HTMLDetailsElement>();
+		const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+		const DURATION = 250;
+		const EASING = "cubic-bezier(0.87, 0, 0.13, 1)";
+
+		function animateAccordion(
+			details: HTMLDetailsElement,
+			from: string,
+			to: string,
+			onDone?: () => void,
+		) {
+			const el = details.querySelector<HTMLElement>(
+				":scope > .sidebar-accordion",
+			);
+			if (!el || reducedMotion.matches) {
+				onDone?.();
+				return;
+			}
+			if (animating.has(details)) el.getAnimations().forEach((a) => a.cancel());
+			animating.add(details);
+
+			const anim = el.animate(
+				[{ gridTemplateRows: from }, { gridTemplateRows: to }],
+				{
+					duration: DURATION,
+					easing: EASING,
+					fill: onDone ? "forwards" : "none",
+				},
+			);
+			const cleanup = () => animating.delete(details);
+			anim.oncancel = cleanup;
+			anim.onfinish = () => {
+				onDone?.();
+				anim.cancel();
+				cleanup();
+			};
+		}
 		sidebarContent.addEventListener("click", (e) => {
-			const target = e.target as HTMLElement;
-			const summary = target.closest("summary");
+			const summary = (e.target as HTMLElement).closest("summary");
 			if (!summary) return;
-			const details = summary.parentElement;
-			if (details && details.tagName === "DETAILS") {
-				details.classList.add("is-user-toggled");
+			const details = summary.parentElement as HTMLDetailsElement | null;
+			if (!details || details.tagName !== "DETAILS") return;
+
+			e.preventDefault();
+
+			if (details.open) {
+				animateAccordion(details, "1fr", "0fr", () => {
+					details.open = false;
+				});
+			} else {
+				details.open = true;
+				animateAccordion(details, "0fr", "1fr");
 			}
 		});
 
-		(sidebarContent as HTMLElement).addEventListener(
-			"transitionend",
-			(e: TransitionEvent) => {
-				const target = e.target as HTMLElement;
-				if (
-					target.classList.contains("sidebar-accordion") &&
-					e.propertyName === "grid-template-rows"
-				) {
-					const details = target.closest("details");
-					if (details) details.classList.remove("is-user-toggled");
-				}
-			},
-		);
-
-		// Failsafe: strip the class before any page transition DOM swap
+		// Cancel in-flight animations before Astro page transitions.
 		document.addEventListener("astro:before-swap", () => {
-			document
-				.querySelectorAll(".sidebar-content details.is-user-toggled")
-				.forEach((d) => {
-					d.classList.remove("is-user-toggled");
-				});
+			sidebarContent
+				?.querySelectorAll<HTMLElement>(".sidebar-accordion")
+				.forEach((el) => el.getAnimations().forEach((a) => a.cancel()));
 		});
 
 		const originalState: Map<Element, boolean> = new Map();
