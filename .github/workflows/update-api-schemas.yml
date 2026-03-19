@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout docs repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Get latest api-schemas commit
         id: get-commit

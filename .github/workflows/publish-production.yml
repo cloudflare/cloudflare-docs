@@ -12,15 +12,15 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 22.x
           cache: npm
       - run: npm ci
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v5
         with:
           path: |
             node_modules/.astro/assets
@@ -29,7 +29,7 @@ jobs:
         name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         continue-on-error: true
         with:
           name: site-html
@@ -38,7 +38,7 @@ jobs:
         name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      - uses: actions/cache/save@v4
+      - uses: actions/cache/save@v5
         if: always()
         with:
           path: |
