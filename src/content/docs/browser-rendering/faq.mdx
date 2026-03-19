@@ -136,6 +136,8 @@ If you are attempting to scan your own zone and want Browser Rendering to access
 
 You must be on an Enterprise plan to allowlist Browser Rendering on your own website because WAF custom rules require access to [Bot Management](/bots/get-started/bot-management/) fields.
 
+Browser Rendering uses different [bot detection IDs](/browser-rendering/reference/automatic-request-headers/#bot-detection) depending on the method. Use the ID that matches the method you want to allowlist.
+
 <Steps>
 1. In the Cloudflare dashboard, go to the **Security rules** page of your account and domain.
 
@@ -143,7 +145,7 @@ You must be on an Enterprise plan to allowlist Browser Rendering on your own web
 
 2. To create a new empty rule, select **Create rule** > **Custom rules**.
 3. Enter a descriptive name for the rule in **Rule name**, such as `Allow Browser Rendering`.
-4. Under **When incoming requests match**, use the **Field** dropdown to choose _Bot Detection ID_. For **Operator**, select _equals_. For **Value**, enter `128292352`.
+4. Under **When incoming requests match**, use the **Field** dropdown to choose _Bot Detection ID_. For **Operator**, select _equals_. For **Value**, enter the [bot detection ID](/browser-rendering/reference/automatic-request-headers/#bot-detection) for the method you want to allowlist.
 5. Under **Then take action**, in the **Choose action** dropdown, select  **Skip**.
 6. Under **Place at**, select the order of the rule in the **Select order** dropdown to be **First**. Setting the order as **First** allows this rule to be applied before subsequent rules.
 7. To save and deploy your rule, select **Deploy**.

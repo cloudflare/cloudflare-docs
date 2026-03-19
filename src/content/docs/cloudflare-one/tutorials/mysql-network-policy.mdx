@@ -5,7 +5,7 @@ difficulty: Intermediate
 pcx_content_type: tutorial
 title: Access and secure a MySQL database using Cloudflare Tunnel and network policies
 description: >-
-  Using Cloudflare Tunnel's private networks, users can connect to arbitrary non-browser based TCP/UDP applications, like databases. You can set up network policies that implement zero trust controls to define who and what can access those applications using the WARP client.
+  Using Cloudflare Tunnel's private networks, users can connect to arbitrary non-browser based TCP/UDP applications, like databases. You can set up network policies that implement zero trust controls to define who and what can access those applications using the Cloudflare One Client.
 tags:
   - MySQL
   - Private networks
@@ -13,7 +13,7 @@ tags:
 
 import { Render } from "~/components";
 
-Using Cloudflare Tunnel's private networks, users can connect to arbitrary non-browser based TCP/UDP applications, like databases. You can set up network policies that implement zero trust controls to define who and what can access those applications using the WARP client.
+Using Cloudflare Tunnel's private networks, users can connect to arbitrary non-browser based TCP/UDP applications, like databases. You can set up network policies that implement zero trust controls to define who and what can access those applications using the Cloudflare One Client.
 
 By the end of this tutorial, users that pass network policies will be able to access a remote MySQL database available through a Cloudflare Tunnel on TCP port 3306.
 
@@ -44,7 +44,7 @@ The application and (optional) DNS server are now connected to Cloudflare.
 ## Create a Gateway network policy
 
 1. Go to **Traffic policies** > **Network policies**.
-2. Add a [network policy](/cloudflare-one/traffic-policies/network-policies/) that targets the private IP address and the port of the MySQL database (port 3306 by default). The following example allows access to the database to the users that enrolled into WARP using an `@example.com` email address. The network policies can also take into consideration [device posture checks](/cloudflare-one/reusable-components/posture-checks/).
+2. Add a [network policy](/cloudflare-one/traffic-policies/network-policies/) that targets the private IP address and the port of the MySQL database (port 3306 by default). The following example allows access to the database to the users that enrolled into the Cloudflare One Client using an `@example.com` email address. The network policies can also take into consideration [device posture checks](/cloudflare-one/reusable-components/posture-checks/).
 
 | Selector         | Operator      | Value           | Logic | Action |
 | ---------------- | ------------- | --------------- | ----- | ------ |
@@ -54,7 +54,7 @@ The application and (optional) DNS server are now connected to Cloudflare.
 
 In addition to the Allow rule above, Cloudflare recommends adding a [catch-all block policy](/learning-paths/replace-vpn/build-policies/) to the bottom of your network policy list to enforce a default-deny model.
 
-Allowed WARP users can now connect to the MySQL server at `10.128.0.175` using the MySQL client of their choice.
+Allowed Cloudflare One Client users can now connect to the MySQL server at `10.128.0.175` using the MySQL client of their choice.
 
 ## (Optional) Create a Gateway resolver policy
 
@@ -84,4 +84,4 @@ If your internal DNS server has an `A` record for the MySQL database, users can 
 
 `mysql IN  A  10.128.0.175`
 
-Allowed WARP users can connect to the MySQL database at `mysql.internalrecord.com` using the MySQL client of their choice.
+Allowed Cloudflare One Client users can connect to the MySQL database at `mysql.internalrecord.com` using the MySQL client of their choice.

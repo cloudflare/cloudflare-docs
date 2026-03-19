@@ -19,11 +19,11 @@ import {
 Only available on Enterprise plans.
 :::
 
-When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise users can purchase [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
+When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all the Cloudflare One Client users. Enterprise users can purchase [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
 
 Egress policies allow you to control which dedicated egress IP is used and when, based on attributes such as identity, IP address, and geolocation. Traffic that does not match an egress policy will default to using the most performant dedicated egress IP.
 
-Cloudflare does not publish WARP egress IP ranges. WARP egress IPs are not documented at [Cloudflare's IP Ranges](https://cloudflare.com/ips). To obtain a dedicated WARP egress IP, contact your account team.
+Cloudflare does not publish Cloudflare One Client egress IP ranges. Cloudflare One Client egress IPs are not documented at [Cloudflare's IP Ranges](https://cloudflare.com/ips). To obtain a dedicated Cloudflare One Client egress IP, contact your account team.
 
 <Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 

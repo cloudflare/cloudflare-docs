@@ -9,7 +9,7 @@ import { Badge, Tabs, TabItem, Render } from "~/components";
 
 You can forward [HTTP](/cloudflare-one/traffic-policies/get-started/http/) and [network](/cloudflare-one/traffic-policies/get-started/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, GRE tunnel, or IPsec tunnel. When a user connects to the Gateway proxy, Gateway will accept the connection and establish a new, separate connection to the origin server.
 
-The Gateway proxy is required for filtering HTTP and network traffic via the WARP client in Traffic and DNS mode. To proxy HTTP traffic without deploying the WARP client, you can configure [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) on your devices.
+The Gateway proxy is required for filtering HTTP and network traffic via the Cloudflare One Client in Traffic and DNS mode. To proxy HTTP traffic without deploying the Cloudflare One Client, you can configure [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) on your devices.
 
 ## Proxy algorithm
 
@@ -41,7 +41,7 @@ For HTTP/3 traffic to be logged and filtered, you need to turn on both TLS decry
 
 ### ICMP <Badge text="Beta" variant="caution" size="small" />
 
-The ICMP proxy allows ICMP traffic to reach your private network through Gateway. For example, this would allow a WARP user to run diagnostic commands such as `ping` and `traceroute` to an internal server IP.
+The ICMP proxy allows ICMP traffic to reach your private network through Gateway. For example, this would allow a Cloudflare One Client user to run diagnostic commands such as `ping` and `traceroute` to an internal server IP.
 
 :::caution[Limitation]
 Gateway cannot log or filter ICMP traffic.
@@ -113,7 +113,7 @@ By default the [`cloudflared` Docker container](https://github.com/cloudflare/cl
 
 ## Turn on the Gateway proxy
 
-The Gateway proxy toggle only applies to traffic from WARP devices. Gateway will always proxy traffic sent with [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) or [Browser Isolation](/cloudflare-one/remote-browser-isolation/) regardless of this setting.
+The Gateway proxy toggle only applies to traffic from Cloudflare One Client devices. Gateway will always proxy traffic sent with [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) or [Browser Isolation](/cloudflare-one/remote-browser-isolation/) regardless of this setting.
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
 2. In **Proxy and inspection settings**, turn on **Allow Secure Web Gateway to proxy traffic**.

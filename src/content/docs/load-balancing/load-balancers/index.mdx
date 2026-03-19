@@ -25,7 +25,7 @@ For suggestions, refer to [Common load balancer configurations](/load-balancing/
 
 Public Load Balancers are designed to handle traffic from the public Internet. When deployed, they automatically receive a hostname, making them immediately accessible. These load balancers can direct traffic to a range of destinations, including public hostnames, public IP addresses, and private IP addresses.
 
-Private Load Balancers, in contrast, are meant for internal use within private networks. They do not automatically receive a hostname, but one can be assigned via Gateway Firewall Policies or through an internal DNS system. Private Load Balancers only accept traffic over a private network on-ramp, such as [Cloudflare WARP](/warp-client/) or [Cloudflare WAN](/cloudflare-wan/). They are capable of forwarding traffic exclusively to private IP addresses.
+Private Load Balancers, in contrast, are meant for internal use within private networks. They do not automatically receive a hostname, but one can be assigned via Gateway Firewall Policies or through an internal DNS system. Private Load Balancers only accept traffic over a private network on-ramp, such as [the Cloudflare One Client](/warp-client/) or [Cloudflare WAN](/cloudflare-wan/). They are capable of forwarding traffic exclusively to private IP addresses.
 
 ## Load balancing and existing DNS records
 

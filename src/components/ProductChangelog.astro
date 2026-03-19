@@ -1,7 +1,7 @@
 ---
 import { getChangelogs, type GetChangelogsOptions } from "~/util/changelog";
 import { reference } from "astro:content";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import { getCollection, render } from "astro:content";
 import { slug } from "github-slugger";
 import { format } from "date-fns";

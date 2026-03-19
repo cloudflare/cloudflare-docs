@@ -17,9 +17,9 @@ The following steps are identical to [Connect user devices](/learning-paths/repl
 
 The most common way to protect and filter your end-user traffic is by using a device client. The standard Cloudflare device client supports a number of operating systems and deployment methodologies, but there can still be scenarios in which an alternative path makes sense.
 
-### Zero Trust Client
+### Cloudflare One Client
 
-Cloudflare WARP is the most common onramp to send user traffic to Gateway. It is a lightweight device client, which builds proxy tunnels using either Wireguard or MASQUE, and builds a DNS proxy using DNS-over-HTTPS. It supports all major operating systems, supports all common forms of endpoint management tooling, and has a robust series of management parameters and profiles to accurately scope the needs of a diverse user base. It has flexible operating modes and can control device traffic as a proxy, control device DNS traffic as a DNS proxy, or both. It is the most common method to send traffic from user devices to be filtered and decrypted by Cloudflare Gateway.
+The Cloudflare One Client is the most common onramp to send user traffic to Gateway. It is a lightweight device client, which builds proxy tunnels using either Wireguard or MASQUE, and builds a DNS proxy using DNS-over-HTTPS. It supports all major operating systems, supports all common forms of endpoint management tooling, and has a robust series of management parameters and profiles to accurately scope the needs of a diverse user base. It has flexible operating modes and can control device traffic as a proxy, control device DNS traffic as a DNS proxy, or both. It is the most common method to send traffic from user devices to be filtered and decrypted by Cloudflare Gateway.
 
 ### PAC files (Enterprise only)
 
@@ -29,7 +29,7 @@ Cloudflare supports filtering HTTP/S traffic sent via a PAC file on a user devic
 
 Cloudflare Browser Isolation runs a headless, Chromium-based browser for your users to accomplish their secure browsing needs. It can be activated via an Access application, a Gateway policy, or by using link-based isolation (reverse proxy). In this model, your users can connect from any device to a proxy website to browse the Internet while applying all your Gateway HTTP policies and inspection requirements.
 
-|                                   | WARP                                 | PAC Files      | Clientless Browser Isolation          |
+|                                   | Cloudflare One Client                | PAC Files      | Clientless Browser Isolation          |
 | --------------------------------- | ------------------------------------ | -------------- | ------------------------------------- |
 | Supported OS                      | macOS, Windows, Linux, iOS, Android  | All desktop OS | All OS (with HTML5 compliant browser) |
 | Configurable via MDM              | Yes                                  | Yes            | N/A                                   |
@@ -56,7 +56,7 @@ For more information on how Cloudflare WAN integrates with Zero Trust, refer to 
 
 [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), a software agent similar to our device client, functions as a virtual device to establish a connection between your network and the Cloudflare global network. You can install WARP Connector on a dedicated Linux server or virtual machine.
 
-WARP Connector supports egressing traffic from your private network to the Internet as a gateway. This means it can allow traffic initiated from a network to be on-ramped to Cloudflare for either public or private destinations. You can use WARP Connector to establish a secure egress path for servers or users on a network which may not each be able to run the WARP client and still apply Gateway network and HTTP inspection policies. This connection is most analogous to proxy server connectivity or site-to-site VPN.
+WARP Connector supports egressing traffic from your private network to the Internet as a gateway. This means it can allow traffic initiated from a network to be on-ramped to Cloudflare for either public or private destinations. You can use WARP Connector to establish a secure egress path for servers or users on a network which may not each be able to run the Cloudflare One Client and still apply Gateway network and HTTP inspection policies. This connection is most analogous to proxy server connectivity or site-to-site VPN.
 
 For more information on setting up Cloudflare Tunnel via WARP Connector, refer to [Set up WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
 

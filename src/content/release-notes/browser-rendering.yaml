@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-03-17"
+    title: "Separate bot detection IDs for Browser Rendering methods"
+    description: |-
+      * Browser Rendering now uses separate bot detection IDs for the [REST API](/browser-rendering/rest-api/) and [Workers Bindings](/browser-rendering/workers-bindings/) versus the [crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/), allowing you to identify and control each method independently. For the full list of IDs, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/#bot-detection).
   - publish_date: "2026-03-10"
     title: "New REST API endpoint: /crawl (Beta)"
     description: |-
