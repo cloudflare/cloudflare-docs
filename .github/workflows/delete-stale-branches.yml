@@ -1,13 +1,8 @@
-# Runs daily to clean up two categories of branches:
+# Runs daily and deletes branches with no associated PR that haven't had a
+# commit in over 60 days — these are abandoned branches that were never
+# turned into a PR.
 #
-#   1. Branches whose PR has been closed (merged or otherwise) — acts as a
-#      retroactive safety net for anything the event-driven workflow missed.
-#
-#   2. Branches with no associated PR at all that haven't had a commit in
-#      over 30 days — these are abandoned branches that were never turned
-#      into a PR.
-#
-# Both parts respect protected branches and skip fork branches.
+# Respects protected branches and skips fork branches.
 # Up to 100 branches are deleted per run, oldest first.
 #
 # To test without deleting anything, trigger this workflow manually via
@@ -38,7 +33,7 @@ jobs:
   delete-stale-branches:
     runs-on: ubuntu-latest
     steps:
-      - name: Delete closed PR branches and unassociated branches older than 30 days
+      - name: Delete unassociated branches older than 60 days
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run || 'false' }}
@@ -78,62 +73,23 @@ jobs:
               || echo "Skipped (already gone): $branch"
           }
 
-          # ----------------------------------------------------------------
-          # Part 1: Branches from closed non-fork PRs, oldest first
-          # ----------------------------------------------------------------
-          echo "--- Closed PR branches (oldest first, limit $LIMIT) ---"
-
-          # Write sorted branch names to a temp file to avoid subshell scoping
-          # issues with the deleted counter (piped while loops run in a subshell).
-          closed_pr_branches=$(mktemp)
-
-          gh pr list \
-            --repo "$GITHUB_REPOSITORY" \
-            --state closed \
-            --limit 500 \
-            --json headRefName,headRepositoryOwner,baseRepositoryOwner,closedAt \
-            | jq -r '
-                .[]
-                | select(.headRepositoryOwner.login == .baseRepositoryOwner.login)
-                | [.closedAt, .headRefName]
-                | @tsv
-              ' \
-            | sort \
-            | awk -F'\t' '{print $2}' \
-            | sort -u > "$closed_pr_branches"
-
-          while IFS= read -r branch; do
-            [ "$deleted" -ge "$LIMIT" ] && break
-            delete_branch "$branch" "closed PR"
-          done < "$closed_pr_branches"
-
-          rm -f "$closed_pr_branches"
-
-          # ----------------------------------------------------------------
-          # Part 2: Branches with no PR older than 30 days, oldest first
-          # ----------------------------------------------------------------
-          echo "--- Unassociated branches older than 30 days (oldest first, limit $LIMIT) ---"
+          echo "--- Unassociated branches older than 60 days (oldest first, limit $LIMIT) ---"
 
           pr_branches=$(gh pr list \
             --repo "$GITHUB_REPOSITORY" \
-            --state all \
+            --state open \
             --limit 1000 \
             --json headRefName,headRepositoryOwner,baseRepositoryOwner \
             | jq -r '.[] | select(.headRepositoryOwner.login == .baseRepositoryOwner.login) | .headRefName' \
             | sort -u)
 
-          cutoff=$(date -d '30 days ago' --utc +%Y-%m-%dT%H:%M:%SZ 2>/dev/null \
-            || date -u -v-30d +%Y-%m-%dT%H:%M:%SZ)
+          cutoff=$(date -d '60 days ago' --utc +%Y-%m-%dT%H:%M:%SZ 2>/dev/null \
+            || date -u -v-60d +%Y-%m-%dT%H:%M:%SZ)
 
           echo "Cutoff date: $cutoff"
 
-          # Use a temp file to collect and sort candidates, avoiding both the
-          # subshell scoping issue and fragile printf string concatenation.
           candidates=$(mktemp)
 
-          # Use the GraphQL API to fetch all branches with their last commit
-          # date in one paginated query (100 branches per request), avoiding
-          # the N+1 REST API calls that would otherwise be needed.
           owner="${GITHUB_REPOSITORY%%/*}"
           repo="${GITHUB_REPOSITORY##*/}"
           cursor="null"
@@ -173,8 +129,6 @@ jobs:
             [ "$has_next" = "true" ] || break
           done
 
-          # Sort oldest-first by the ISO 8601 date prefix, then delete up to limit.
-          # Use tab as delimiter for exact field splitting — avoids partial name matches.
           while IFS=$'\t' read -r last_commit branch; do
             [ "$deleted" -ge "$LIMIT" ] && break
             delete_branch "$branch" "no PR, last commit $last_commit"
