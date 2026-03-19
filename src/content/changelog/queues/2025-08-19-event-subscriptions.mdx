@@ -12,7 +12,7 @@ You can now subscribe to events from other Cloudflare services (for example, [Wo
 
 Event subscriptions allow you to receive messages when events occur across your Cloudflare account. Cloudflare products can publish structured events to a queue, which you can then consume with [Workers](/workers/) or [pull via HTTP from anywhere](/queues/configuration/pull-consumers/).
 
-To create a subscription, use the dashboard or [Wrangler](/workers/wrangler/commands/#subscription-create):
+To create a subscription, use the dashboard or [Wrangler](/workers/wrangler/commands/queues/#subscription-create):
 
 ```bash
 npx wrangler queues subscription create my-queue --source r2 --events bucket.created

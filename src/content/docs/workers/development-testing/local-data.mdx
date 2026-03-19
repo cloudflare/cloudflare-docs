@@ -31,7 +31,7 @@ When you first start developing, your local resources will be empty. You'll need
 Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more in the [Wrangler commands for KV page](/kv/reference/kv-commands/).
 :::
 
-#### [Add a single key-value pair](/workers/wrangler/commands/#kv-key)
+#### [Add a single key-value pair](/workers/wrangler/commands/kv/#kv-key)
 
 <PackageManagers
 	type="exec"
@@ -39,7 +39,7 @@ Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using ve
 	args="kv key put <KEY> <VALUE> --binding=<BINDING> --local "
 />
 
-#### [Bulk upload](/workers/wrangler/commands/#kv-bulk)
+#### [Bulk upload](/workers/wrangler/commands/kv/#kv-bulk)
 
 <PackageManagers
 	type="exec"
@@ -49,7 +49,7 @@ Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using ve
 
 ### R2 buckets
 
-#### [Upload a file](/workers/wrangler/commands/#r2-object)
+#### [Upload a file](/workers/wrangler/commands/r2/#r2-object)
 
 <PackageManagers
 	type="exec"
@@ -57,11 +57,11 @@ Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using ve
 	args="r2 object put <BUCKET>/<KEY> --file=<PATH_TO_FILE> --local"
 />
 
-You may also include [other metadata](/workers/wrangler/commands/#r2-object-put).
+You may also include [other metadata](/workers/wrangler/commands/r2/#r2-object-put).
 
 ### D1 databases
 
-#### [Execute a SQL statement](/workers/wrangler/commands/#d1-execute)
+#### [Execute a SQL statement](/workers/wrangler/commands/d1/#d1-execute)
 
 <PackageManagers
 	type="exec"
@@ -69,7 +69,7 @@ You may also include [other metadata](/workers/wrangler/commands/#r2-object-put)
 	args='d1 execute <DATABASE_NAME> --command="<SQL_QUERY>" --local'
 />
 
-#### [Execute a SQL file](/workers/wrangler/commands/#d1-execute)
+#### [Execute a SQL file](/workers/wrangler/commands/d1/#d1-execute)
 
 <PackageManagers
 	type="exec"
@@ -95,7 +95,7 @@ If you prefer to specify a different directory for local storage, you can do so 
 
 #### Using Wrangler
 
-Use the [`--persist-to`](/workers/wrangler/commands/#dev) flag with `wrangler dev`. You need to specify this flag every time you run the `dev` command:
+Use the [`--persist-to`](/workers/wrangler/commands/general/#dev) flag with `wrangler dev`. You need to specify this flag every time you run the `dev` command:
 
 <PackageManagers
 	type="exec"
