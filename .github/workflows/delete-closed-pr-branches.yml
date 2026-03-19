@@ -1,0 +1,59 @@
+# Fires immediately when any PR is closed (merged or otherwise) and deletes
+# the head branch — provided it lives on this repo (not a fork) and is not
+# protected.
+#
+# Fork branches are skipped at the job level via the `if:` condition because
+# we don't own them and the API would return a 403.
+#
+# To test without deleting anything, trigger this workflow manually via
+# workflow_dispatch and supply a branch name. Manual runs always dry-run
+# — they log "Would delete: <branch>" without touching anything.
+
+name: Delete closed PR branches
+
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch name to dry-run against"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  delete-branch:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete branch associated with closed PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+        run: |
+          branch="${{ github.event_name == 'workflow_dispatch' && inputs.branch || github.event.pull_request.head.ref }}"
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "*** DRY RUN — no branches will be deleted ***"
+          fi
+
+          protected=$(gh api "repos/$GITHUB_REPOSITORY/branches?protected=true&per_page=100" \
+            | jq -r '.[].name')
+
+          if echo "$protected" | grep -qx "$branch"; then
+            echo "Skipped (protected): $branch"
+            exit 0
+          fi
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Would delete: $branch"
+            exit 0
+          fi
+
+          gh api "repos/$GITHUB_REPOSITORY/git/refs/heads/$branch" \
+            -X DELETE 2>/dev/null \
+            && echo "Deleted: $branch" \
+            || echo "Skipped (already gone): $branch"

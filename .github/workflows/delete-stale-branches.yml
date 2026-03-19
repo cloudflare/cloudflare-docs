@@ -1,0 +1,146 @@
+# Runs daily to clean up two categories of branches:
+#
+#   1. Branches whose PR has been closed (merged or otherwise) — acts as a
+#      retroactive safety net for anything the event-driven workflow missed.
+#
+#   2. Branches with no associated PR at all that haven't had a commit in
+#      over 30 days — these are abandoned branches that were never turned
+#      into a PR.
+#
+# Both parts respect protected branches and skip fork branches.
+# Up to 100 branches are deleted per run, oldest first.
+#
+# To test without deleting anything, trigger this workflow manually via
+# workflow_dispatch and leave dry-run set to "true" (the default). The
+# run will log "Would delete: ..." for every branch it would have removed.
+
+name: Delete stale branches
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Dry run (log what would be deleted without deleting)"
+        required: false
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  delete-stale-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete closed PR branches and unassociated branches older than 90 days
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run || 'false' }}
+        run: |
+          LIMIT=100
+          deleted=0
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "*** DRY RUN — no branches will be deleted ***"
+          fi
+
+          protected=$(gh api "repos/$GITHUB_REPOSITORY/branches?protected=true&per_page=100" \
+            | jq -r '.[].name')
+
+          is_protected() {
+            echo "$protected" | grep -qx "$1"
+          }
+
+          delete_branch() {
+            local branch="$1"
+            local reason="$2"
+
+            if is_protected "$branch"; then
+              echo "Skipped (protected): $branch"
+              return
+            fi
+
+            if [ "$DRY_RUN" = "true" ]; then
+              echo "Would delete ($reason): $branch"
+              deleted=$((deleted + 1))
+              return
+            fi
+
+            gh api "repos/$GITHUB_REPOSITORY/git/refs/heads/$branch" \
+              -X DELETE 2>/dev/null \
+              && { echo "Deleted ($reason): $branch"; deleted=$((deleted + 1)); } \
+              || echo "Skipped (already gone): $branch"
+          }
+
+          echo "--- Closed PR branches (oldest first, limit $LIMIT) ---"
+
+          gh pr list \
+            --repo "$GITHUB_REPOSITORY" \
+            --state closed \
+            --limit 500 \
+            --json headRefName,headRepositoryOwner,baseRepositoryOwner,closedAt \
+            | jq -r '
+                .[]
+                | select(.headRepositoryOwner.login == .baseRepositoryOwner.login)
+                | [.closedAt, .headRefName]
+                | @tsv
+              ' \
+            | sort \
+            | awk -F'\t' '{print $2}' \
+            | sort -u \
+            | while read -r branch; do
+                [ "$deleted" -ge "$LIMIT" ] && break
+                delete_branch "$branch" "closed PR"
+              done
+
+          echo "--- Unassociated branches older than 30 days (oldest first, limit $LIMIT) ---"
+
+          pr_branches=$(gh pr list \
+            --repo "$GITHUB_REPOSITORY" \
+            --state all \
+            --limit 1000 \
+            --json headRefName,headRepositoryOwner,baseRepositoryOwner \
+            | jq -r '.[] | select(.headRepositoryOwner.login == .baseRepositoryOwner.login) | .headRefName' \
+            | sort -u)
+
+          cutoff=$(date -d '30 days ago' --utc +%Y-%m-%dT%H:%M:%SZ 2>/dev/null \
+            || date -u -v-30d +%Y-%m-%dT%H:%M:%SZ)
+
+          echo "Cutoff date: $cutoff"
+
+          candidates=""
+
+          page=1
+          while true; do
+            batch=$(gh api "repos/$GITHUB_REPOSITORY/branches?per_page=100&page=$page" \
+              | jq -r '.[].name')
+            [ -z "$batch" ] && break
+
+            while read -r branch; do
+              if echo "$pr_branches" | grep -qx "$branch"; then
+                continue
+              fi
+
+              last_commit=$(gh api "repos/$GITHUB_REPOSITORY/commits?sha=$branch&per_page=1" \
+                | jq -r '.[0].commit.committer.date')
+
+              if [[ "$last_commit" < "$cutoff" ]]; then
+                candidates="$candidates$last_commit\t$branch\n"
+              fi
+            done <<< "$batch"
+
+            page=$((page + 1))
+          done
+
+          printf "$candidates" | sort | awk -F'\t' '{print $2}' | while read -r branch; do
+            [ "$deleted" -ge "$LIMIT" ] && break
+            delete_branch "$branch" "no PR, last commit $(printf "$candidates" | grep -F "$branch" | awk -F'\t' '{print $1}')"
+          done
+
+          echo "--- Done: $deleted branch(es) ${DRY_RUN:+would be }deleted ---"
