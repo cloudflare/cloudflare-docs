@@ -44,9 +44,50 @@ jobs:
           path: |
             node_modules/.astro/assets
           key: static
+
+  publish-retry:
+    needs: publish
+    if: failure() && github.repository == 'cloudflare/cloudflare-docs'
+    name: Production (Retry)
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: npm
+      - run: npm ci
+      - uses: actions/cache/restore@v5
+        with:
+          path: |
+            node_modules/.astro/assets
+          key: static
+      - run: npm run build
+        name: Build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v7
+        continue-on-error: true
+        with:
+          name: site-html-retry
+          path: dist
+      - run: npx wrangler deploy
+        name: Deploy to Cloudflare Workers
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - uses: actions/cache/save@v5
+        if: always()
+        with:
+          path: |
+            node_modules/.astro/assets
+          key: static
       - name: Notify Google Chat on failure
         if: failure()
         run: |
           curl -X POST "${{ secrets.CED_TEAM_ALERTS_CHANNEL_WEBHOOK }}" \
             -H "Content-Type: application/json" \
-            -d "{\"text\": \"❌ *Publish Production* workflow failed.\nActor: ${{ github.actor }}\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>\"}"
+            -d "{\"text\": \"❌ *Publish Production* workflow failed after retry.\nActor: ${{ github.actor }}\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>\"}"

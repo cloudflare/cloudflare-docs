@@ -277,6 +277,43 @@ jobs:
 
       - name: Deploy to Cloudflare Workers
         id: deploy
+        # TEST: hardcoded failure to test retry logic
+        run: exit 1
+
+      - name: Post preview URL on PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
+        run: npx tsx bin/post-preview-url-comment/index.ts
+        continue-on-error: true
+
+  publish-preview-retry:
+    name: Deploy Preview (Retry)
+    needs: publish-preview
+    if: failure() && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - run: npm ci
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy to Cloudflare Workers
+        id: deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
@@ -296,3 +333,10 @@ jobs:
           BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
         run: npx tsx bin/post-preview-url-comment/index.ts
         continue-on-error: true
+
+      - name: Notify Google Chat on failure
+        if: failure()
+        run: |
+          curl -X POST "${{ secrets.CED_TEAM_ALERTS_CHANNEL_WEBHOOK }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"text\": \"❌ *Deploy Preview* workflow failed after retry.\nActor: ${{ github.actor }}\nPR: <https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}|#${{ github.event.pull_request.number }}>\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>\"}"
