@@ -8,6 +8,14 @@ entries:
     description: |-
       Cloudflare renamed Page Shield to client-side security. Cloudflare dashboard users still using the previous application security navigation in the dashboard can find the new client-side security section in **Security** > **Client-side security**.<br/>
       Additionally, Page Shield policies are now called content security rules. This name matches the terminology already used in the new [application security dashboard](/security/).
+
+  - publish_date: "2026-03-03"
+    title: LLM-assisted false positive reduction for malicious script detection
+    description: |-
+      Page Shield now includes an additional machine learning step, utilizing an LLM powered by Workers AI, to assist in analyzing the JavaScript code of scripts loaded by your website visitors. This enhancement specifically helps reduce the false positive rate of our detection engines, focusing your attention on true positives.
+
+      Cloudflare uses open-source models for this analysis, and customer data is not used to train these models. For more information, refer to [Malicious script and connection detection](/client-side-security/how-it-works/malicious-script-detection/).
+
   - publish_date: "2025-10-08"
     title: Updated machine learning (ML) model
     description: |-

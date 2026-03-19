@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Malicious script and connection detection
 sidebar:
   order: 2
-head: []
-description:
-  Cloudflare's client-side security implements different mechanisms to determine if a
-  script or a connection is malicious.
+description: Cloudflare analyzes the JavaScript code of the scripts loaded by
+  your website visitors, using threat intelligence and machine learning (including LLMs)
+  to detect malicious behavior.
 ---
 
 :::note
@@ -23,9 +22,13 @@ Any updates to the threat feeds will trigger new checks for previously detected 
 
 ## Malicious script detection
 
-In this type of detection, Cloudflare will download the script file and run it through a classifier. The classifier is a machine learning (ML) model that has learned to detect patterns of malicious operations such as [Magecart-type attacks](https://sansec.io/what-is-magecart).
+Cloudflare analyzes the JavaScript code of the scripts loaded by your website visitors. This analysis uses machine learning, including an LLM powered by Workers AI, to reduce the false positive rate and focus on highlighting true positives such as [Magecart-type attacks](https://sansec.io/what-is-magecart).
 
-The script classifier will output a probability score for the script (also called the JS integrity score) between 1 and 99, where 1 means definitely malicious and 99 means definitely not malicious. This score, together with a threshold value, will determine if the malicious script detection system will classify the script as malicious or not.
+:::note
+Cloudflare uses open-source models for this analysis. Customer data is not used to train these models.
+:::
+
+The analysis assigns a score (also called JS integrity score) between 1 and 99 to each script version, classifying how malicious it is. A score of 1 means definitely malicious, and 99 means definitely not malicious. This score, together with a threshold value, will determine if the malicious script detection system will classify the script as malicious or not.
 
 The score threshold for considering a script as malicious is currently set to 10. If the script classification score is below this value, the monitoring dashboards will display the script as being malicious.
 
