@@ -38,16 +38,16 @@ curl https://api.cloudflare.com/client/v4/graphql \
 
 ---
 
-## Available nodes
+## Available datasets
 
-Three GraphQL nodes are available. All three return aggregate data only — no raw per-connection records are exposed.
+Three GraphQL datasets are available. All three return aggregate data only — no raw per-connection records are exposed.
 
 1. `ohttpRelayRequestMetricsAdaptiveGroups` — Query aggregate request volume, bytes transferred, and error rates, filterable by time, location, endpoint, and relay/gateway status code dimensions.
 2. `ohttpRelayIngressConnMetricsAdaptiveGroups` — Query aggregate client-to-relay connection volume and round-trip latency percentiles (P50/P95/P99), filterable by time, location, endpoint, HTTP version, and TLS version dimensions.
 3. `ohttpRelayEgressConnMetricsAdaptiveGroups` — Query aggregate relay-to-gateway connection volume and round-trip latency percentiles (P50/P95/P99), filterable by time, location, and endpoint dimensions.
 
 :::note[Adaptive sampling]
-Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudflare automatically scales the sampling rate based on traffic volume to keep query performance consistent. All returned values are extrapolated totals, not raw counts. Because each node has its own sampling rate, figures across nodes are not directly comparable.
+Each dataset uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudflare automatically scales the sampling rate based on traffic volume to keep query performance consistent. All returned values are extrapolated totals, not raw counts. Because each dataset has its own sampling rate, figures across datasets are not directly comparable.
 :::
 
 ---
@@ -56,21 +56,21 @@ Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudfl
 
 <Details header="Sum fields">
 
-- `requests` – `uint64` — Total request count. _(Request node)_
-- `bytesToGateway` – `uint64` — Total bytes sent from client to gateway. _(Request node)_
-- `bytesToClient` – `uint64` — Total bytes sent from gateway back to client. _(Request node)_
-- `connections` – `uint64` — Total connection count. _(Ingress and egress connection nodes)_
+- `requests` – `uint64` — Total request count. _(Request dataset)_
+- `bytesToGateway` – `uint64` — Total bytes sent from client to gateway. _(Request dataset)_
+- `bytesToClient` – `uint64` — Total bytes sent from gateway back to client. _(Request dataset)_
+- `connections` – `uint64` — Total connection count. _(Ingress and egress connection datasets)_
 
 </Details>
 
 <Details header="Quantile fields">
 
-- `clientRelayRttMsP50` – `float64` — Median round-trip time between client and relay, in milliseconds. _(Ingress connection node)_
-- `clientRelayRttMsP95` – `float64` — 95th percentile RTT between client and relay, in milliseconds. _(Ingress connection node)_
-- `clientRelayRttMsP99` – `float64` — 99th percentile RTT between client and relay, in milliseconds. _(Ingress connection node)_
-- `relayGatewayRttMsP50` – `float64` — Median round-trip time between relay and gateway, in milliseconds. _(Egress connection node)_
-- `relayGatewayRttMsP95` – `float64` — 95th percentile RTT between relay and gateway, in milliseconds. _(Egress connection node)_
-- `relayGatewayRttMsP99` – `float64` — 99th percentile RTT between relay and gateway, in milliseconds. _(Egress connection node)_
+- `clientRelayRttMsP50` – `float64` — Median round-trip time between client and relay, in milliseconds. _(Ingress connection dataset)_
+- `clientRelayRttMsP95` – `float64` — 95th percentile RTT between client and relay, in milliseconds. _(Ingress connection dataset)_
+- `clientRelayRttMsP99` – `float64` — 99th percentile RTT between client and relay, in milliseconds. _(Ingress connection dataset)_
+- `relayGatewayRttMsP50` – `float64` — Median round-trip time between relay and gateway, in milliseconds. _(Egress connection dataset)_
+- `relayGatewayRttMsP95` – `float64` — 95th percentile RTT between relay and gateway, in milliseconds. _(Egress connection dataset)_
+- `relayGatewayRttMsP99` – `float64` — 99th percentile RTT between relay and gateway, in milliseconds. _(Egress connection dataset)_
 
 </Details>
 
@@ -78,7 +78,7 @@ Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudfl
 
 ## Dimensions
 
-<Details header="All nodes">
+<Details header="All datasets">
 
 - `date` – `Date` — Calendar date (day granularity).
 - `datetimeMinute` – `Time` — Timestamp truncated to the minute.
@@ -90,14 +90,14 @@ Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudfl
 
 </Details>
 
-<Details header="Request node only">
+<Details header="Request dataset only">
 
 - `relayStatusCode` – `uint16` — HTTP status code returned by the relay to the client.
 - `gatewayStatusCode` – `uint16` — HTTP status code returned by the gateway to the relay. A value of `0` means the request did not reach the gateway (relay-side failure or timeout).
 
 </Details>
 
-<Details header="Ingress connection node only">
+<Details header="Ingress connection dataset only">
 
 - `httpVersion` – `string` — HTTP protocol version used for the client-to-relay connection.
 - `tlsVersion` – `string` — TLS version negotiated on the client-to-relay connection.
@@ -110,7 +110,7 @@ Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudfl
 
 <Details header="Arguments">
 
-All three nodes share the same argument signature.
+All three datasets share the same argument signature.
 
 - `filter` <MetaInfo text="required" /> — Filters your data. `accountTag` is always required inside the filter.
 - `limit` <MetaInfo text="required" /> — Maximum number of records to return.
