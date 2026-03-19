@@ -1,16 +1,26 @@
 ---
-title: "Changelog"
+title: "WAF changelog overview"
 pcx_content_type: changelog
 sidebar:
   order: 20
+  group:
+    label: Changelog
 head:
   - tag: title
-    content: Changelog for managed rulesets
+    content: Overview of the WAF changelog
 ---
 
 import { LinkButton, RSSButton } from "~/components";
 
-The WAF changelog provides information about changes to managed rulesets and general updates to WAF protection.
+The [WAF changelog](/waf/change-log/changelog/) provides information about changes to managed rulesets and general updates to WAF protection.
+
+<LinkButton type="primary" href="/waf/change-log/changelog/">
+	View changelog
+</LinkButton>
+<LinkButton type="primary" href="/waf/change-log/scheduled-changes/">
+	View scheduled changes
+</LinkButton>
+<RSSButton href="/changelog/rss/waf.xml" />
 
 ## Changelog for managed rulesets
 
@@ -28,11 +38,6 @@ Cloudflare is very proactive in responding to new vulnerabilities, which may nee
 
 If you do notice a new or updated rule generating an increased volume of security events, you can disable or change the rule from its _Default_ action. Once you change a rule to use an action other than the default one, Cloudflare will not be able to override the rule action.
 
-<LinkButton type="primary" href="/waf/change-log/scheduled-changes/">
-	View scheduled changes
-</LinkButton>
-<RSSButton href="/changelog/rss/waf.xml" />
-
 ## General updates
 
-For more general updates to the WAF, refer to [general updates](/waf/change-log/general-updates/).
+The [changelog](/waf/change-log/changelog/) also includes more general updates to WAF protection.

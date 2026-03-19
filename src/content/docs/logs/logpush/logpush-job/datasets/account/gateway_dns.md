@@ -171,6 +171,12 @@ Type: `array[string]`
 
 The IPs used to correlate existing FQDN matching policy between Gateway DNS and Gateway proxy.
 
+## InternalDNSDurationMs
+
+Type: `int`
+
+The time it took for the internal DNS to respond.
+
 ## InternalDNSFallbackStrategy
 
 Type: `string`

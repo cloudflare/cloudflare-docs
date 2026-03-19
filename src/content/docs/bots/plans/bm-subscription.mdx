@@ -99,6 +99,24 @@ import { Render } from "~/components";
 Zones that have [Enterprise Bot Management](/bots/get-started/bot-management/) enabled will not see Bot Fight Mode or Super Bot Fight Mode under **Security** > **Bots**.
 :::
 
+## Bot settings vs. custom rules
+
+Bot Management customers have both bot settings (configured in **Security Settings**) and the ability to create custom rules using bot score fields. Start with the bot settings for baseline protection, then add custom rules only when you need additional control.
+
+| Feature | Handled by bot settings | When to use custom rules instead |
+| --- | --- | --- |
+| Block or challenge definitely automated traffic | No | Path-specific rules, custom thresholds, or combining with other fields |
+| Block or challenge likely automated traffic | No | Path-specific rules, custom thresholds, or combining with other fields |
+| Allow or block verified bots | No | Granular control by verified bot category |
+| Block AI crawlers | Yes | Target individual AI crawlers using detection IDs |
+| Protect static resources | No | Exclude static resources from specific rules |
+| Optimize for WordPress | No | No |
+| Forward bot data to origin | No | Use [Transform Rules](/rules/transform/) or [Snippets](/rules/snippets/) |
+| Detection ID targeting | No | Use `cf.bot_management.detection_ids` in [custom rules](/waf/custom-rules/) |
+| JA3/JA4 fingerprint rules | No | Use `cf.bot_management.ja3_hash` or `cf.bot_management.ja4` in [custom rules](/waf/custom-rules/) |
+
+For more details on when custom rules are needed, refer to [custom rules](/bots/additional-configurations/custom-rules/).
+
 ## How do I get started?
 
 <Render file="plan-get-started" product="bots" />

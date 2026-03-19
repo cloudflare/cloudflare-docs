@@ -3,6 +3,10 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2026-03-11"
+    title: NVIDIA Nemotron 3 Super now available on Workers AI
+    description: |-
+      - [`@cf/nvidia/nemotron-3-120b-a12b`](/workers-ai/models/nemotron-3-120b-a12b/) now available on Workers AI! A hybrid MoE model with 120B total parameters and 12B active, optimized for multi-agent and agentic AI workloads. Read [changelog](/changelog/post/2026-03-11-nemotron-3-super-workers-ai/) to get started.
   - publish_date: "2026-03-06"
     title: Deepgram Nova-3 now supports 10 languages with regional variants
     description: |-

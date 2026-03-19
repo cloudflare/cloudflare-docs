@@ -532,7 +532,7 @@ entries:
         - **Colo**: Cloudflare data center that the device is connected to.
         - **Platform**: Operating system of the device.
         - **Version**: WARP client version (for example, `2024.3.409.0`).
-        - **Mode**: [WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) deployed on the device.
+        - **Mode**: [WARP mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) deployed on the device.
 
   - name: DEX test latency
     audience: Zero Trust customers who wish to receive alerts when there is a spike or drop in application latency, as measured by the HTTP test [Resource Fetch time](/cloudflare-one/insights/dex/tests/http/#test-results) or Traceroute test [Round trip time](/cloudflare-one/insights/dex/tests/traceroute/#test-results). Requires setting up a [DEX test](/cloudflare-one/insights/dex/tests/).

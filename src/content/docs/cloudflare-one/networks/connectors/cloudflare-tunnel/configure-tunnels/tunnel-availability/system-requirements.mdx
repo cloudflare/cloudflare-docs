@@ -17,11 +17,11 @@ For most use cases, we recommend the following baseline configuration:
 - Size each host with minimum 4GB of RAM and 4 CPU cores.
 - Allocate 50,000 [ports](#number-of-ports) to the `cloudflared` process on each host.
 
-This setup is usually sufficient to handle traffic from 8,000 WARP users (4,000 per host). The actual amount of resources used by `cloudflared` will depend on many variables, including the number of requests per second, bandwidth, network path and hardware. As additional users are onboarded, or if network traffic increases beyond your existing [tunnel capacity](#estimated-throughput), you can scale your tunnel by adding an additional `cloudflared` host in that location.
+This setup is usually sufficient to handle traffic from 8,000 Cloudflare One Client users (4,000 per host). The actual amount of resources used by `cloudflared` will depend on many variables, including the number of requests per second, bandwidth, network path and hardware. As additional users are onboarded, or if network traffic increases beyond your existing [tunnel capacity](#estimated-throughput), you can scale your tunnel by adding an additional `cloudflared` host in that location.
 
 ### Number of ports
 
-When `cloudflared` receives a request from a WARP device, it uses the ports on the host machine to evaluate and forward the request to your origin service. Every machine by system design is hardware-limited to a maximum 65,535 ports. Additionally, each service on the machine has a limited number of ports that it can consume. For this reason, we recommend the following deployment model:
+When `cloudflared` receives a request from a device, it uses the ports on the host machine to evaluate and forward the request to your origin service. Every machine by system design is hardware-limited to a maximum 65,535 ports. Additionally, each service on the machine has a limited number of ports that it can consume. For this reason, we recommend the following deployment model:
 
 - `cloudflared` should be deployed on a dedicated host machine. This model is typically appropriate, but there may be serverless or clustered workflows where a dedicated host is not possible.
 - The host machine should allocate 50,000 ports to be available for use by the `cloudflared` service. The remaining ports are reserved for system administrative processes.

@@ -57,6 +57,18 @@ Type: `string`
 
 The unique site identifier of the Cloudflare data center that received the packet (for example, 'ams01', 'sjc01', 'lhr01').
 
+## DNSQueryName
+
+Type: `string`
+
+The DNS query name (domain) that was queried, if the packet is a DNS query.
+
+## DNSQueryType
+
+Type: `string`
+
+The DNS query type (for example, A, AAAA, MX, TXT), if the packet is a DNS query.
+
 ## Datetime
 
 Type: `int or string`
@@ -320,6 +332,12 @@ Which Cloudflare system sampled the packet. <br />Possible values are <em>dosd</
 Type: `string`
 
 The action that Cloudflare systems took on the packet. <br />Possible values are <em>pass</em> \| <em>drop</em>.
+
+## PFPCustomTag
+
+Type: `int`
+
+The custom network analytics tag set by Programmable Flow Protection program, if any.
 
 ## ProtocolState
 
