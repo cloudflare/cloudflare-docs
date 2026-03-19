@@ -78,7 +78,7 @@ Use WARP Connector to connect sites with IoT devices or IP phones that cannot ru
 
 For VPN replacement and Zero Trust Network Access (ZTNA) use cases, Cloudflare Tunnel via `cloudflared` is the [primary recommended on-ramp](/learning-paths/replace-vpn/concepts/). Cloudflare Tunnel requires minimal network infrastructure changes and integrates directly with Cloudflare Access for identity-aware application protection.
 
-Deploy the Cloudflare One Client Connector supplementally when you need bidirectional connectivity for specific use cases like Active Directory Group Policy updates, SCCM, SIP traffic, VoIP traffic, or DevOps pipelines.
+Deploy the WARP Connector supplementally when you need bidirectional connectivity for specific use cases like Active Directory Group Policy updates, SCCM, SIP traffic, VoIP traffic, or DevOps pipelines.
 
 :::caution[Cloudflare WAN compatibility]
 Accounts on Legacy routing mode do not support WARP Connector when Cloudflare WAN (formerly Magic WAN) is enabled. Your account must be on <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a> for both to work together.

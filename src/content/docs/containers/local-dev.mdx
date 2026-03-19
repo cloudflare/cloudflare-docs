@@ -83,7 +83,7 @@ If you are running the Cloudflare One Client or a VPN that performs TLS inspecti
 To resolve this, you can either:
 
 - Disable the Cloudflare One Client or your VPN while running `wrangler dev` or `wrangler deploy`, then re-enable it afterwards.
-- Add the certificate to your Docker build context. the Cloudflare One Client exposes its certificate via the `NODE_EXTRA_CA_CERTS` and `SSL_CERT_FILE` environment variables on your host machine. You can pass the certificate into your Docker build as an environment variable, so that it is available during the build without being baked into the final image.
+- Add the certificate to your Docker build context. The Cloudflare One Client exposes its certificate via the `NODE_EXTRA_CA_CERTS` and `SSL_CERT_FILE` environment variables on your host machine. You can pass the certificate into your Docker build as an environment variable, so that it is available during the build without being baked into the final image.
 
   ```dockerfile
   RUN if [ -n "$SSL_CERT_FILE" ]; then \

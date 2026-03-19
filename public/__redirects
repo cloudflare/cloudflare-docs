@@ -618,6 +618,7 @@
 /fundamentals/reference/developer-spotlight/ /resources/ 301
 /fundamentals/reference/the-internet/ https://www.cloudflare.com/learning/network-layer/how-does-the-internet-work/ 301
 /fundamentals/reference/http-request-headers/ /fundamentals/reference/http-headers/ 301
+/fundamentals/reference/policies-compliances/incident-management-policy/ /support/ 301
 /fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/reference/ /speed/optimization/ 301
@@ -1481,6 +1482,7 @@
 /support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/reference/troubleshooting/ 301
 /support/account-management-billing/billing-cloudflare-add-on-services/ /billing/usage-based-billing/ 301
 /support/cloudflare-client-api/ /fundamentals/api/ 301
+/support/customer-incident-management-policy/ /support/ 301
 /support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/ /network/onion-routing/ 301
 /support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/legacy/old-waf-managed-rules/upgrade/ 301
 /support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
