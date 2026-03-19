@@ -400,13 +400,13 @@ Cohort deployments give you that control for [per-entity instances](#per-entity-
 
 ### Per-entity instances
 
-When each user, tenant, or resource has their own Durable Object instance (for example, user profiles, shopping carts, sessions, or per-tenant state), cohorts work cleanly. Only one user's requests reach each instance, so the cohort is always consistent. Your Worker already knows which instance each request goes to — you just add the cohort alongside it.
+A Durable Object namespace (like `USER_DO`) contains many instances, one per user. Each instance has its own storage and is identified by a unique ID. When a request comes in, your Worker already knows which instance it goes to. To use cohorts, you just add the cohort at the same `.get()` call you already make.
 
-A Durable Object **namespace** (like `USER_DO`) is the class definition. Each **instance** within that namespace is a separate object with its own storage, identified by a unique ID. You do not need to enumerate instance IDs or set up cohorts per instance. Each request naturally hits one instance, and your Worker resolves the cohort at `.get()` time based on whatever you know about the user (their plan, their role, their email). One `if` statement in your Worker applies to every request as it comes in.
+You do not need to list out instance IDs or configure cohorts per instance. Your Worker resolves the cohort from whatever it knows about the user (their plan, their role, their email) and passes it at request time. This applies to every request automatically.
 
 ![Per-entity instances: each user gets their own Durable Object instance within a namespace. Your Worker resolves the cohort per request, not per instance.](~/assets/images/workers/platform/versions-and-deployments/do-per-entity.svg)
 
-Pass a cohort at `.get()` time, set the gradual deployment split to 100% stable, and only the instances you target get the new version:
+To assign a cohort to an instance, pass it at `.get()` time. Set the gradual deployment split to 100% stable, and only the instances you target get the new version:
 
 ```ts
 export default {
