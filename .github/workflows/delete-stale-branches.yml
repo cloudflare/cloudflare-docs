@@ -4,29 +4,13 @@
 #
 # Respects protected branches and skips fork branches.
 # Deletes all matching branches per run, oldest first.
-#
-# To test without deleting anything, trigger this workflow manually via
-# workflow_dispatch and leave dry-run set to "true" (the default). The
-# run will log "Would delete: ..." for every branch it would have removed.
 
 name: Delete stale branches
 
 on:
-  push:
-    branches:
-      - stale-branch-cleanup # temporary: for dry-run testing on this PR branch — remove before merging
   schedule:
     - cron: "0 4 * * *"
   workflow_dispatch:
-    inputs:
-      dry-run:
-        description: "Dry run (log what would be deleted without deleting)"
-        required: false
-        default: "true"
-        type: choice
-        options:
-          - "true"
-          - "false"
 
 permissions:
   contents: write
@@ -39,13 +23,8 @@ jobs:
       - name: Delete unassociated branches older than 60 days
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DRY_RUN: ${{ github.event_name == 'push' && 'true' || github.event_name == 'schedule' && 'false' || inputs.dry-run }}
         run: |
           deleted=0
-
-          if [ "$DRY_RUN" = "true" ]; then
-            echo "*** DRY RUN — no branches will be deleted ***"
-          fi
 
           protected=$(gh api "repos/$GITHUB_REPOSITORY/branches?protected=true&per_page=100" \
             | jq -r '.[].name')
@@ -60,12 +39,6 @@ jobs:
 
             if is_protected "$branch"; then
               echo "Skipped (protected): $branch"
-              return
-            fi
-
-            if [ "$DRY_RUN" = "true" ]; then
-              echo "Would delete ($reason): $branch"
-              deleted=$((deleted + 1))
               return
             fi
 
@@ -137,4 +110,4 @@ jobs:
 
           rm -f "$candidates"
 
-          echo "--- Done: $deleted branch(es) ${DRY_RUN:+would be }deleted ---"
+          echo "--- Done: $deleted branch(es) deleted ---"
