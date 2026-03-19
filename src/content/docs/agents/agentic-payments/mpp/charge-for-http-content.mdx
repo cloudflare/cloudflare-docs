@@ -22,7 +22,7 @@ Deploy the mpp-proxy template to your Cloudflare account:
 
 Define protected routes in `wrangler.jsonc`:
 
-```json
+```jsonc
 {
 	"vars": {
 		"PAY_TO": "0xYourWalletAddress",
@@ -47,7 +47,7 @@ Set `TEMPO_TESTNET` to `true` and `PAYMENT_CURRENCY` to `0x20c000000000000000000
 
 With [Bot Management](/bots/), the proxy can charge crawlers while keeping the site free for humans:
 
-```json
+```jsonc
 {
 	"pattern": "/content/*",
 	"amount": "0.25",

@@ -10,7 +10,7 @@ description: Let AI agents pay for services programmatically using payment proto
 
 import { LinkCard, CardGrid } from "~/components";
 
-AI agents need to discover, pay for, and consume resources and services programmatically. The old way of onboarding required account creation, adding a payment method, and acquiring an API key before a payment can be made for services. Agentic payments as a category allows AI agents to purchase resources and services by interfacing with the HTTP 402: Payment Required response code.
+AI agents need to discover, pay for, and consume resources and services programmatically. Traditional onboarding requires account creation, a payment method, and an API key before an agent can pay for a service. Agentic payments let AI agents purchase resources and services directly through the HTTP `402 Payment Required` response code.
 
 Cloudflare's [Agents SDK](/agents/) supports agentic payments through two protocols built on the HTTP `402 Payment Required` status code: **x402** and **Machine Payments Protocol (MPP)**. Both follow the same core flow:
 
@@ -49,7 +49,7 @@ MPP supports multiple payment methods beyond blockchain — including cards (via
 	<LinkCard
 		title="HTTP content (MPP)"
 		description="Gate APIs, web pages, and files with a Worker proxy"
-		href="/agents/agentic-payments/mpp/charge-for-mcp-tools/"
+		href="/agents/agentic-payments/mpp/charge-for-http-content/"
 	/>
 </CardGrid>
 
