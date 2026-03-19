@@ -43,11 +43,13 @@ The managed rulesets you can deploy depend on your Cloudflare plan.
 	}}
 />
 
-## Zone-level deployment
+## Interaction with other app security features
 
-At the zone level, you can only deploy each managed ruleset once. At the [account level](/waf/account/managed-rulesets/) you can deploy each managed ruleset multiple times.
+<Render file="app-security-interoperability" product="waf" />
 
 ## Important remarks
+
+### Maximum body size
 
 Cloudflare analyzes the body of incoming requests up to a certain maximum size that varies according to your Cloudflare plan:
 
@@ -58,3 +60,7 @@ Cloudflare analyzes the body of incoming requests up to a certain maximum size t
 This means that the behavior of specific managed rules that analyze request bodies can vary according to your current plan. For example, the OWASP Core Ruleset might have a higher rate of false positives with larger payload sizes because analyzing more data increases the likelihood that the total score exceeds the [threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold).
 
 If included in your plan, you can use [request body fields](/ruleset-engine/rules-language/fields/reference/?field-category=Body) such as `http.request.body.truncated` or `http.request.headers.truncated` in [custom rules](/waf/custom-rules/) that apply appropriate actions to requests that have not been fully analyzed by Cloudflare due to the maximum body size.
+
+### Zone-level deployment
+
+At the zone level, you can only deploy each managed ruleset once. At the [account level](/waf/account/managed-rulesets/) you can deploy each managed ruleset multiple times.

@@ -1,0 +1,12 @@
+id: hLp4ni
+name: ai-security-for-apps
+
+entry:
+  title: AI Security for Apps
+  url: /waf/detections/ai-security-for-apps/
+  show: false
+
+meta:
+  title: Cloudflare AI Security for Apps docs
+  description: AI Security for Apps is a detection that helps protect services powered by large language models against abuse, including PII data leaks, unsafe prompts, and prompt injection attacks.
+  author: "@cloudflare"

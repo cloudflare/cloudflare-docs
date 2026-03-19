@@ -9,7 +9,7 @@ tags:
 
 import { GlossaryTooltip, Render } from "~/components";
 
-Clientless Web Isolation allows users to securely browse high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
+Clientless Web Isolation allows users to securely browse high risk or sensitive websites in a remote browser without having to install the Cloudflare One Client on their device.
 
 ## Set up Clientless Web Isolation
 
@@ -59,7 +59,7 @@ If `<url>` is not provided, users are presented with a Cloudflare Zero Trust lan
 
 ### Allow or block websites
 
-When users visit a website through the [Clientless Web Isolation URL](#use-the-remote-browser), the traffic passes through Cloudflare Gateway. This allows you to [apply HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to control what websites the remote browser can connect to, even if the user's device does not have WARP installed.
+When users visit a website through the [Clientless Web Isolation URL](#use-the-remote-browser), the traffic passes through Cloudflare Gateway. This allows you to [apply HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to control what websites the remote browser can connect to, even if the user's device does not have the Cloudflare One Client installed.
 
 For example, if you use a third-party Secure Web Gateway to block `example.com`, users can still access the page in the remote browser by visiting `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`. To block `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`, create a Cloudflare Gateway HTTP policy to block `example.com`:
 
@@ -137,7 +137,7 @@ To turn on or off the address bar, users can right-click on any isolated page an
 
 ## Redirect traffic to the remote browser
 
-If you want to isolate a website without Cloudflare WARP installed, you will need to redirect traffic to the Clientless Web Isolation [prefixed URL](#use-the-remote-browser). One way to do this is through a third-party Secure Web Gateway. To redirect users to the remote browser, you can implement a custom block page similar to the example shown below.
+If you want to isolate a website without the Cloudflare One Client installed, you will need to redirect traffic to the Clientless Web Isolation [prefixed URL](#use-the-remote-browser). One way to do this is through a third-party Secure Web Gateway. To redirect users to the remote browser, you can implement a custom block page similar to the example shown below.
 
 ```html
 <!DOCTYPE html>

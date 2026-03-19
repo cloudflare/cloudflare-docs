@@ -262,6 +262,22 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 			}
 		});
 
+		// On link click during search, clear persisted open[] so the next page
+		// uses its server-rendered state instead of the search-modified state.
+		sidebarContent.addEventListener("click", (e) => {
+			if (!searchInput.value) return;
+			if (!(e.target instanceof Element)) return;
+			if (!e.target.closest("a")) return;
+			try {
+				// try/catch guards against sessionStorage being blocked (e.g. private browsing)
+				const storageKey = "sl-sidebar-state";
+				const raw = sessionStorage.getItem(storageKey);
+				const state = JSON.parse(raw || "{}");
+				state.open = [];
+				sessionStorage.setItem(storageKey, JSON.stringify(state));
+			} catch (_) {} // eslint-disable-line no-empty
+		});
+
 		document.addEventListener(
 			"keydown",
 			(keyboardEvent) => {

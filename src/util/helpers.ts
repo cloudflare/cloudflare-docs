@@ -1,10 +1,9 @@
-import { z, type ZodEnum } from "astro/zod";
+import { z } from "astro/zod";
 
-export function zodEnumFromObjKeys<K extends string>(
-	obj: Record<K, any>,
-): ZodEnum<[K, ...K[]]> {
-	const [firstKey, ...otherKeys] = Object.keys(obj) as K[];
-	return z.enum([firstKey, ...otherKeys]);
+export function zodEnumFromObjKeys<T extends Record<string, any>>(obj: T) {
+	type Keys = keyof T & string;
+	const keys = Object.keys(obj) as [Keys, ...Keys[]];
+	return z.enum(keys);
 }
 
 export function formatBytes(bytes: number, decimals?: number) {

@@ -24,6 +24,10 @@ Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for mo
 
 Refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
 
+## Interaction with other app security features
+
+<Render file="app-security-interoperability" product="waf" />
+
 ## Important remarks
 
 - Rate limiting rules are evaluated in order, and some actions like _Block_ will stop the evaluation of other rules. For more details on actions and their behavior, refer to [Actions](/ruleset-engine/rules-language/actions/).

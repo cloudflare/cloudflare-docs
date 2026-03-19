@@ -4,7 +4,7 @@ title: Deploy custom certificate
 sidebar:
   order: 3
 head: []
-description: Configure WARP to use a custom root certificate instead of the
+description: Configure the Cloudflare One Client to use a custom root certificate instead of the
   Cloudflare certificate.
 ---
 
@@ -149,7 +149,7 @@ You can upload a single root certificate or a full certificate chain. When uploa
    }
    ```
 
-4. (Optional) Verify the certificate is installed on your user's devices either [with WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) or [manually](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/).
+4. (Optional) Verify the certificate is installed on your user's devices either [with the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) or [manually](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/).
 
 5. Use the [Patch Zero Trust account configuration endpoint](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/) to turn on the certificate for use in inspection. For example:
 

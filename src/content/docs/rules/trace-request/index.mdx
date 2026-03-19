@@ -8,7 +8,12 @@ head:
     content: Trace a request with Cloudflare Trace
 ---
 
-import { DirectoryListing, Plan, ProductAvailabilityText } from "~/components";
+import {
+	DirectoryListing,
+	Plan,
+	ProductAvailabilityText,
+	Render,
+} from "~/components";
 
 <Plan type="all" />
 
@@ -17,6 +22,18 @@ Cloudflare Trace <ProductAvailabilityText product="trace-request" /> follows an 
 You can define specific request properties to simulate different conditions for an HTTP/S request. Inactive rules configured in Cloudflare products will not be evaluated.
 
 Cloudflare Trace is available to users with an Administrator or Super Administrator role.
+
+## When to use Trace
+
+<Render file="trace-use-cases" product="rules" />
+
+<Render
+	file="log-explorer-use-cases"
+	product="rules"
+	params={{ addLink: true }}
+/>
+
+The key difference is that Trace simulates "what-if" scenarios, while Log Explorer shows actual historical traffic.
 
 ## Resources
 

@@ -72,7 +72,7 @@ For example, some applications have an endpoint under the `/admin` route that mu
 | ------ | --------- | -------- | ---------- |
 | Bypass | Include   | Everyone | `Everyone` |
 
-As part of implementing a Zero Trust security model, Cloudflare does not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) and have users connect through WARP.
+As part of implementing a Zero Trust security model, Cloudflare does not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) and have users connect through the Cloudflare One Client.
 
 :::note
 
@@ -82,7 +82,7 @@ When applying a Bypass action, security settings revert to the defaults configur
 
 #### Product compatibility
 
-Bypass policies which contain [WARP device posture check](/cloudflare-one/reusable-components/posture-checks/) rules will not function when [Zaraz](/zaraz/) is enabled for the zone protected by Access, or if a [Worker](/workers/) intercepts the request. To work around this limitation and bypass Access, change the policy action to [Service Auth](#service-auth).
+Bypass policies which contain [device posture check](/cloudflare-one/reusable-components/posture-checks/) rules will not function when [Zaraz](/zaraz/) is enabled for the zone protected by Access, or if a [Worker](/workers/) intercepts the request. To work around this limitation and bypass Access, change the policy action to [Service Auth](#service-auth).
 
 ### Service Auth
 
@@ -159,9 +159,9 @@ Non-identity attributes are polled continuously, meaning they are-evaluated with
 | Identity provider group  | Checks the user groups configured with your identity provider (IdP). This selector only displays if you use Microsoft Entra ID, GitHub, Google, Okta, or an IdP that provisions groups with [SCIM](/cloudflare-one/team-and-resources/users/scim/). | ✅               | ❌                               | ✅                       |
 | SAML Group               | Checks a SAML attribute name / value pair. This selector only displays if you use a [generic SAML](/cloudflare-one/integrations/identity-providers/generic-saml/) identity provider.                                                             | ✅               | ❌                               | ✅                       |
 | OIDC Claim               | Checks an OIDC claim name / value pair. This selector only displays if you use a [generic OIDC](/cloudflare-one/integrations/identity-providers/generic-oidc/) identity provider.                                                                | ✅               | ❌                               | ✅                       |
-| Device posture           | Checks device posture signals from the WARP client or a third-party service provider. This selector only displays after you create a [device posture check](/cloudflare-one/reusable-components/posture-checks/).                                                                                                           | ✅               | ✅                               | ❌                       |
-| Warp                     | Checks that the device is connected to WARP, including the consumer version. This selector only displays after you enable the [WARP posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-warp/).                                                                                                                                                            | ✅               | ✅                               | ❌                       |
-| Gateway                  | Checks that the device is connected to your Zero Trust instance through the WARP client. This selector only displays after you enable the [Gateway posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-gateway/).                                                                                           | ✅               | ✅                               | ❌                       |
+| Device posture           | Checks device posture signals from the Cloudflare One Client or a third-party service provider. This selector only displays after you create a [device posture check](/cloudflare-one/reusable-components/posture-checks/).                                                                                                           | ✅               | ✅                               | ❌                       |
+| Warp                     | Checks that the device is connected to the Cloudflare One Client, including the consumer version. This selector only displays after you enable the [WARP posture check](/cloudflare-one/reusable-components/posture-checks/client-checks/require-warp/).                                                                                                                                                            | ✅               | ✅                               | ❌                       |
+| Gateway                  | Checks that the device is connected to your Zero Trust instance through the Cloudflare One Client. This selector only displays after you enable the [Gateway posture check](/cloudflare-one/reusable-components/posture-checks/client-checks/require-gateway/).                                                                                           | ✅               | ✅                               | ❌                       |
 
 <sup>1</sup> For SaaS applications, Access can only enforce policies at the time
 of initial sign on and when reissuing the SaaS session. Once the user has

@@ -1,0 +1,184 @@
+---
+pcx_content_type: how-to
+title: PII detection
+tags:
+  - AI
+sidebar:
+  order: 3
+---
+
+import { Details } from "~/components";
+
+AI Security for Apps (formerly Firewall for AI) can detect personally identifiable information (PII) in incoming LLM prompts. There are two approaches to PII detection, and you can use them together for layered protection:
+
+- [Fuzzy detection (AI-powered)](#fuzzy-pii-detection) — AI Security for Apps uses an AI model to identify common PII types in the prompt content. This approach catches PII even when it appears in natural language or unexpected formats.
+- [Exact detection (regex)](#exact-pii-detection-regex) — You write a WAF custom rule with a regular expression on the raw request body. This approach is ideal for organization-specific identifiers with a known, predictable format.
+
+## Fuzzy PII detection
+
+When AI Security for Apps is enabled and a request arrives at a `cf-llm` labeled endpoint, it scans the prompt for PII and populates two fields:
+
+- **LLM PII detected** ([`cf.llm.prompt.pii_detected`][1]) — `true` if any PII was found.
+- **LLM PII categories** ([`cf.llm.prompt.pii_categories`][2]) — An array of the specific PII types found.
+
+[1]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/
+[2]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/
+
+The detection is based on [Presidio](https://microsoft.github.io/presidio/supported_entities/), a data protection and de-identification SDK. Refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) for the full list of recognized categories.
+
+:::note[Detecting PII in responses]
+AI Security for Apps PII detection runs on incoming requests (prompts) only. If you also need to detect PII in LLM responses, you can use [Sensitive Data Detection](/waf/managed-rules/reference/sensitive-data-detection/) to scan response bodies for patterns like credit card numbers, Social Security numbers, and API keys. Sensitive Data Detection logs matches, but does not block responses. Use it alongside request-side rules for layered visibility.
+:::
+
+<Details header="Supported PII categories">
+
+| Category                    | Description                                                                   |
+| --------------------------- | ----------------------------------------------------------------------------- |
+| `CREDIT_CARD`               | Credit card number                                                            |
+| `CRYPTO`                    | Cryptocurrency wallet address                                                 |
+| `DATE_TIME`                 | Date or time expression                                                       |
+| `EMAIL_ADDRESS`             | Email address                                                                 |
+| `IBAN_CODE`                 | International bank account number                                             |
+| `IP_ADDRESS`                | IP address                                                                    |
+| `NRP`                       | Nationality, religious, or political group                                    |
+| `LOCATION`                  | Physical location or address                                                  |
+| `PERSON`                    | Person name                                                                   |
+| `PHONE_NUMBER`              | Phone number                                                                  |
+| `MEDICAL_LICENSE`           | Medical license number                                                        |
+| `URL`                       | URL                                                                           |
+| `US_BANK_NUMBER`            | US bank account number                                                        |
+| `US_DRIVER_LICENSE`         | US driver license number                                                      |
+| `US_ITIN`                   | US Individual Taxpayer Identification Number                                  |
+| `US_PASSPORT`               | US passport number                                                            |
+| `US_SSN`                    | US Social Security Number                                                     |
+| `UK_NHS`                    | UK National Health Service number                                             |
+| `UK_NINO`                   | UK National Insurance Number                                                  |
+| `ES_NIF`                    | Spanish tax identification number                                             |
+| `ES_NIE`                    | Spanish foreigner identification number                                       |
+| `IT_FISCAL_CODE`            | Italian fiscal code                                                           |
+| `IT_DRIVER_LICENSE`         | Italian driver license                                                        |
+| `IT_VAT_CODE`               | Italian VAT code                                                              |
+| `IT_PASSPORT`               | Italian passport number                                                       |
+| `IT_IDENTITY_CARD`          | Italian identity card                                                         |
+| `PL_PESEL`                  | Polish national identification number                                         |
+| `SG_NRIC_FIN`               | Singapore National Registration Identity Card / Foreign Identification Number |
+| `SG_UEN`                    | Singapore Unique Entity Number                                                |
+| `AU_ABN`                    | Australian Business Number                                                    |
+| `AU_ACN`                    | Australian Company Number                                                     |
+| `AU_TFN`                    | Australian Tax File Number                                                    |
+| `AU_MEDICARE`               | Australian Medicare number                                                    |
+| `IN_PAN`                    | Indian Permanent Account Number                                               |
+| `IN_AADHAAR`                | Indian Aadhaar number                                                         |
+| `IN_VEHICLE_REGISTRATION`   | Indian vehicle registration number                                            |
+| `IN_VOTER`                  | Indian voter ID                                                               |
+| `IN_PASSPORT`               | Indian passport number                                                        |
+| `FI_PERSONAL_IDENTITY_CODE` | Finnish personal identity code                                                |
+
+</Details>
+
+### Be specific to reduce false positives
+
+The `cf.llm.prompt.pii_detected` field returns `true` when any PII category is detected — including broad categories like `PERSON`, `DATE_TIME`, and `LOCATION` that frequently appear in normal conversation. Blocking based on this field alone will produce a high false-positive rate for most applications.
+
+Instead, build rules against `cf.llm.prompt.pii_categories` and list only the categories that matter for your use case. For example, a customer support chatbot may need to block credit card numbers and SSNs but can safely ignore person names and dates. Start with the narrowest set of categories, monitor matches in [Security Analytics](/waf/analytics/security-analytics/), and expand only as needed.
+
+### Example rules — fuzzy detection
+
+#### Block any request containing PII
+
+- **When incoming requests match**:
+
+  | Field            | Operator | Value |
+  | ---------------- | -------- | ----- |
+  | LLM PII Detected | equals   | True  |
+
+  Expression when using the editor:<br/>
+  `(cf.llm.prompt.pii_detected)`
+
+- **Action**: _Block_
+
+#### Block only specific PII categories
+
+- **When incoming requests match**:
+
+  | Field              | Operator | Value         |
+  | ------------------ | -------- | ------------- |
+  | LLM PII Categories | is in    | `Credit Card` |
+
+  Expression when using the editor:<br/>
+  `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD"}))`
+
+- **Action**: _Block_
+
+#### Log email addresses but block credit cards and SSNs
+
+Create two [custom rules](/waf/custom-rules/create-dashboard/):
+
+1. A rule with action _Block_ and the following expression:<br/>
+   `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD" "US_SSN"}))`
+
+2. A rule with action _Log_ and the following expression:<br/>
+   `(any(cf.llm.prompt.pii_categories[*] in {"EMAIL_ADDRESS"}))`
+
+## Exact PII detection (regex)
+
+If you need to detect **custom PII formats** specific to your organization — such as internal employee IDs, patient record numbers, or proprietary account identifiers — you can create a WAF [custom rule](/waf/custom-rules/) using a regex match on the raw body ([`http.request.body.raw`](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/) field).
+
+This approach complements fuzzy detection by covering formats the AI model does not natively recognize.
+
+### Example: Detect employee IDs
+
+In the following example, an organization uses employee IDs in the format `EMP-` followed by exactly six digits (for example, `EMP-482910`).
+
+[Create a custom rule](/waf/custom-rules/create-dashboard/) with the following configuration:
+
+- **When incoming requests match**:
+
+  | Field            | Operator      | Value          |
+  | ---------------- | ------------- | -------------- |
+  | Raw request body | matches regex | `EMP-[0-9]{6}` |
+
+  Expression when using the editor:<br/>
+  `(http.request.body.raw matches "EMP-[0-9]{6}")`
+
+- **Action**: _Block_
+- **With response type**: Custom JSON
+- **Response body**: `{ "error": "Request blocked: employee ID detected in prompt." }`
+
+<Details header="Scope to a specific endpoint">
+
+To limit this rule to only your LLM endpoint, combine it with a path condition:
+
+| Field            | Operator      | Value          | Logic |
+| ---------------- | ------------- | -------------- | ----- |
+| URI Path         | equals        | `/api/chat`    | And   |
+| Raw request body | matches regex | `EMP-[0-9]{6}` |       |
+
+Expression when using the editor:<br/>
+`(http.request.uri.path eq "/api/chat" and http.request.body.raw matches "EMP-[0-9]{6}")`
+
+</Details>
+
+### More regex examples
+
+| Custom PII type       | Example format      | Regex pattern              |
+| --------------------- | ------------------- | -------------------------- |
+| Employee ID           | `EMP-482910`        | `EMP-[0-9]{6}`             |
+| Patient record number | `PAT/2024/00391`    | `PAT/[0-9]{4}/[0-9]{5}`    |
+| Internal account ID   | `ACCT-XX-99999`     | `ACCT-[A-Z]{2}-[0-9]{5}`   |
+| Custom API key prefix | `sk_live_abc123...` | `sk_live_[a-zA-Z0-9]{20,}` |
+
+### Considerations for regex rules
+
+- **Cloudflare Plan requirement.** Regex operators (`matches` and `~`) require a Business or Enterprise plan.
+- **Body size limit.** The `http.request.body.raw` field inspects a limited portion of the request body. The exact limit [varies by plan](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/).
+- **JSON payloads.** The raw body includes the full JSON structure. Your regex should account for the fact that the prompt text is nested inside a JSON string.
+- **Performance.** Complex regex patterns can impact rule evaluation time. Keep patterns as specific as possible.
+
+## Combine both approaches
+
+You can use fuzzy and exact detection together for layered protection:
+
+`(cf.llm.prompt.pii_detected or http.request.body.raw matches "EMP-[0-9]{6}")`
+
+This rule blocks requests where either the AI model detects any built-in PII category or the regex matches your custom identifier format.

@@ -20,6 +20,7 @@ package.json @cloudflare/content-engineering
 
 # AI
 
+/src/content/docs/cloudflare-agent/ @dmmulroy @Brayden @cloudflare/pcx-technical-writing
 /src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/partials/agents/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
 /src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/pcx-technical-writing

@@ -29,7 +29,7 @@ import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
 **type:** `object`
 
-An optional object containing `base` (`string`) and `exclude` (`string[]`) properties, to set default inputs.
+An optional object containing `base` (`string`) and `subtract` (`string[]`) properties, to set default inputs.
 
 **example:**
 
@@ -37,7 +37,7 @@ An optional object containing `base` (`string`) and `exclude` (`string[]`) prope
 	client:load
 	defaults={{
 		base: "10.0.0.0/8",
-		exclude: ["10.0.0.0/24", "10.32.0.0/11"]
+		subtract: ["10.0.0.0/24", "10.32.0.0/11"]
 	}}
 />
 
@@ -48,7 +48,7 @@ import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 	client:load
 	defaults={{
 		base: "10.0.0.0/8",
-		exclude: ["10.0.0.0/24", "10.32.0.0/11"]
+		subtract: ["10.0.0.0/24", "10.32.0.0/11"]
 	}}
 />
 ```

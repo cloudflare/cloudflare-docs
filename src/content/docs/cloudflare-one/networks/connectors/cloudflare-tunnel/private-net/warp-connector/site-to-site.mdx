@@ -30,7 +30,7 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
 ## Prerequisites
 
 - A Linux host [^1] on each subnet.
-- Verify that your firewall allows inbound/outbound traffic over the [WARP IP addresses, ports, and domains](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/).
+- Verify that your firewall allows inbound/outbound traffic over the [WARP IP addresses, ports, and domains](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
 
 ## 1. Install a WARP Connector
 
@@ -50,7 +50,7 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
    :::
 4. For **Tunnel**, select the name of your WARP Connector (_Subnet-10.0.0.0/24_).
 5. Select **Create**.
-6. In your WARP Connector device profile, [configure Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) so that traffic to your private network CIDR (`10.0.0.0/24`) routes through the WARP tunnel. For example, if you are using **Exclude** mode, delete `10.0.0.0/8` from Split Tunnels and re-add the following IPs: `10.0.1.0/24`, `10.0.2.0/23`, `10.0.4.0/22`, `10.0.8.0/21`, `10.0.16.0/20`, `10.0.32.0/19`, `10.0.64.0/18`, `10.0.128.0/17`, `10.1.0.0/16`, `10.2.0.0/15`, `10.4.0.0/14`, `10.8.0.0/13`, `10.16.0.0/12`, `10.32.0.0/11`, `10.64.0.0/10`, `10.128.0.0/9`
+6. In your WARP Connector device profile, [configure Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) so that traffic to your private network CIDR (`10.0.0.0/24`) routes through the WARP tunnel. For example, if you are using **Exclude** mode, delete `10.0.0.0/8` from Split Tunnels and re-add the following IPs: `10.0.1.0/24`, `10.0.2.0/23`, `10.0.4.0/22`, `10.0.8.0/21`, `10.0.16.0/20`, `10.0.32.0/19`, `10.0.64.0/18`, `10.0.128.0/17`, `10.1.0.0/16`, `10.2.0.0/15`, `10.4.0.0/14`, `10.8.0.0/13`, `10.16.0.0/12`, `10.32.0.0/11`, `10.64.0.0/10`, `10.128.0.0/9`
 
 The WARP Connector will now forward inbound requests to devices on the subnet.
 
@@ -69,7 +69,7 @@ The WARP Connector will now forward inbound requests to devices on the subnet.
 
 ### DNS filtering
 
-If you would like to filter private DNS queries using Cloudflare Gateway, check [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) and ensure that the following IPs route through WARP Connector:
+If you would like to filter private DNS queries using Cloudflare Gateway, check [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) and ensure that the following IPs route through WARP Connector:
 	- Internal DNS resolver IP
 	- <GlossaryTooltip term="initial resolved IP">Initial resolved IP</GlossaryTooltip> CGNAT range:
 		<Render file="gateway/egress-selector-cgnat-ips" 	product="cloudflare-one"/>

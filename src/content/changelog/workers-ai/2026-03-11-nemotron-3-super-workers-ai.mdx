@@ -1,0 +1,22 @@
+---
+title: "NVIDIA Nemotron 3 Super now available on Workers AI"
+description: A hybrid MoE model with 120B total parameters and 12B active, optimized for multi-agent and agentic AI workloads.
+products:
+  - workers-ai
+date: 2026-03-11
+---
+
+We're excited to partner with NVIDIA to bring [`@cf/nvidia/nemotron-3-120b-a12b`](/workers-ai/models/nemotron-3-120b-a12b/) to Workers AI. NVIDIA Nemotron 3 Super is a Mixture-of-Experts (MoE) model with a hybrid Mamba-transformer architecture, 120B total parameters, and 12B active parameters per forward pass.
+
+The model is optimized for running many collaborating agents per application. It delivers high accuracy for reasoning, tool calling, and instruction following across complex multi-step tasks.
+
+**Key capabilities:**
+
+- **Hybrid Mamba-transformer architecture** delivers over 50% higher token generation throughput compared to leading open models, reducing latency for real-world applications
+- **Tool calling** support for building AI agents that invoke tools across multiple conversation turns
+- **Multi-Token Prediction (MTP)** accelerates long-form text generation by predicting several future tokens simultaneously in a single forward pass
+- **32,000 token context window** for retaining conversation history and plan states across multi-step agent workflows
+
+Use Nemotron 3 Super through the [Workers AI binding](/workers-ai/configuration/bindings/) (`env.AI.run()`), the REST API, or the [OpenAI-compatible endpoint](/workers-ai/configuration/open-ai-compatibility/).
+
+For more information, refer to the [Nemotron 3 Super model page](/workers-ai/models/nemotron-3-120b-a12b/).

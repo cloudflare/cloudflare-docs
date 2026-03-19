@@ -1,0 +1,54 @@
+---
+pcx_content_type: get-started
+title: "In-browser remote desktop"
+sidebar:
+  order: 3
+  label: In-browser remote desktop
+description: Provide in-browser remote desktop access to Windows hosts through Cloudflare Access.
+products:
+  - cloudflare-one
+tags:
+  - Private networks
+  - Windows
+---
+
+import { Render } from "~/components";
+
+Provide secure, in-browser remote desktop access to Windows hosts without Remote Desktop Protocol (RDP) client software on the user's device. This is useful when you need to give IT staff or support teams remote access to Windows machines for administration or troubleshooting from any browser.
+
+To explore other access scenarios, refer to [Secure private apps](/cloudflare-one/setup/secure-private-apps/).
+
+This guide follows the same steps as the **Get Started** experience in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+
+## How it works
+
+[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) connects your private network to Cloudflare without opening any ports on your network. You install `cloudflared`, a connector service that runs in the background, on a device that can reach the Windows host. It creates a secure connection from your network out to Cloudflare, so no firewall changes are required.
+
+[Cloudflare Access](/cloudflare-one/access-controls/) sits in front of the host and verifies who each user is before letting them through. Users sign in through a browser using an email one-time PIN or your identity provider, then interact with the Windows desktop through an in-browser remote desktop session.
+
+For details on supported operating systems, connection methods, and known limitations, refer to [Connect to RDP in a browser](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-browser/).
+
+## Prerequisites
+
+- A Cloudflare account with a Zero Trust organization. If you have not set this up, refer to [Get started](/cloudflare-one/setup/).
+- An [active domain on your Cloudflare account](/fundamentals/manage-domains/add-site/). A public subdomain is created on this domain for your application.
+- A Linux, Windows, or macOS device on your private network that can reach the Windows host. This is where you install the tunnel.
+- A Windows host on your private network that accepts Remote Desktop connections.
+
+## Step 1: Define your application
+
+In this step, you describe the Windows host you want to make available through Cloudflare.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), select the **Get Started** tab.
+2. For **Securely access private web apps without an agent**, select **Get started**.
+3. For **Enable in-browser remote desktop sessions to Windows hosts**, select **Continue**.
+4. On the **Zero Trust RDP client directly from your browser** screen, select **Continue**.
+5. Enter a name for your application.
+6. Enter the local IP address of the Windows host (for example, `10.10.1.25`).
+7. Enter the RDP port (the default is `3389`).
+8. Select **Continue**.
+
+<Render
+	file="access/secure-private-apps-shared-steps"
+	product="cloudflare-one"
+/>
