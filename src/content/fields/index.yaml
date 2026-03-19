@@ -940,6 +940,23 @@ entries:
       # Matches requests where the origin response time (TTFB) was greater than 2 seconds:
       cf.timings.origin_ttfb_msec > 2000
 
+  - name: cf.timings.worker_msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timing, workers, performance, latency]
+    summary: The time spent executing a Cloudflare Worker in milliseconds.
+    description: |-
+      This field provides the wall-clock time that a Cloudflare Worker spent handling the request, measured in milliseconds.
+
+      Use this field to identify slow Worker executions, set up alerts for performance regressions, or add Worker execution time as a request header using Transform Rules for downstream observability.
+
+      If the request did not invoke a Worker, the value of this field will be `0`.
+    example_value: |-
+      12
+    example_block: |-
+      # Matches requests where the Worker execution time exceeded 500 milliseconds
+      cf.timings.worker_msec > 500
+
   - name: cf.waf.content_scan.has_obj
     data_type: Boolean
     categories: [Request]
@@ -1843,7 +1860,7 @@ entries:
     data_type: String
     categories: [Request, Body, Raw fields]
     keywords: [request, body, raw, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: The unaltered HTTP request body.
     description: |-
       When the value of [`http.request.body.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.body.truncated/) is `true`, the return value may be truncated.
@@ -1852,35 +1869,35 @@ entries:
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
 
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
 
   - name: http.request.body.truncated
     data_type: Boolean
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: Indicates whether the HTTP request body is truncated.
     description: |-
       When `true`, `http.request.body.*` fields may not contain all of the HTTP request body.
 
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
 
   - name: http.request.body.size
     data_type: Number
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: The total size of the HTTP request body (in bytes).
     description: |-
       This field may have a value larger than the one returned by `len(http.request.body.raw)`, since the [`http.request.body.raw`](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/) field only considers the request body up to a maximum size that varies according to your Cloudflare plan.
 
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
 
   - name: http.request.body.form
     data_type: Map<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, form, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: The HTTP request body of a form represented as a Map (or associative array).
     description: |-
       Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
@@ -1895,7 +1912,7 @@ entries:
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
 
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
     example_value: |-
       {username": ["admin"]}
     example_block: |-
@@ -1905,7 +1922,7 @@ entries:
     data_type: Array<String>
     categories: [Request, Body]
     keywords: [request, body, form, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: The names of the form fields in an HTTP request.
     description: |-
       Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
@@ -1920,7 +1937,7 @@ entries:
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
 
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
     example_value: |-
       ["username"]
     example_block: |-
@@ -1930,7 +1947,7 @@ entries:
     data_type: Array<String>
     categories: [Request, Body]
     keywords: [request, body, form, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: The values of the form fields in an HTTP request.
     description: |-
       Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
@@ -1945,7 +1962,7 @@ entries:
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
 
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
     example_value: |-
       ["admin"]
     example_block: |-
@@ -1967,10 +1984,10 @@ entries:
     data_type: Map<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: A Map (or associative array) representation of multipart names to multipart values in the request body.
     description: |-
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
     example_value: |-
       {"username": ["alice_doe"], "role": ["editor"], "picture": [<binary_content_of_file>]}
     example_block: |-
@@ -1980,10 +1997,10 @@ entries:
     data_type: Array<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: List of multipart names for every part in the multipart body.
     description: |-
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
     example_value: |-
       [["username"], ["picture"]]
     example_block: |-
@@ -1993,10 +2010,10 @@ entries:
     data_type: Array<String>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: List of multipart values for every part in the multipart body.
     description: |-
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
     example_value: |-
       ["alice_doe", <binary_content_of_file>]
     example_block: |-
@@ -2006,10 +2023,10 @@ entries:
     data_type: Array<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: List of `Content-Type` headers for each part in the multipart body.
     description: |-
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
     example_value: |-
       [["text/plain"], ["image/jpeg"]]
     example_block: |-
@@ -2019,10 +2036,10 @@ entries:
     data_type: Array<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: List of `Content-Disposition` headers for each part in the multipart body.
     description: |-
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
     example_value: |-
       [["form-data; name=\"username\""], ["form-data; name=\"picture\""]]
     example_block: |-
@@ -2032,10 +2049,10 @@ entries:
     data_type: Array<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: List of `Content-Transfer-Encoding` headers for each part in the multipart body.
     description: |-
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
     example_value: |-
       [["quoted-printable"], ["base64"]]
     example_block: |-
@@ -2045,10 +2062,10 @@ entries:
     data_type: Array<Array<String>>
     categories: [Request, Body]
     keywords: [request, body, client, visitor]
-    plan_info_label: Enterprise add-on
+    plan_info_label: Enterprise
     summary: List of filenames for each part in the multipart body.
     description: |-
-      Requires a Cloudflare Enterprise plan with a paid add-on.
+      Requires a Cloudflare Enterprise plan.
     example_value: |-
       [["file1.txt"], ["photo.jpg"]]
     example_block: |-

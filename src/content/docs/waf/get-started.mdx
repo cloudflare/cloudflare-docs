@@ -151,7 +151,7 @@ For more information about the bot-related fields you can use in expressions, re
 
 Once you have deployed the Cloudflare Managed Ruleset and rules based on attack score and bot score, you will have achieved substantial protection, limiting the chance of false positives.
 
-## 4. Optional - Deploy the Cloudflare OWASP Core Ruleset
+## 4. (Optional) Deploy the Cloudflare OWASP Core Ruleset
 
 After configuring the Cloudflare Managed Ruleset and attack score, you can also deploy the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). This managed ruleset is Cloudflare's implementation of the OWASP ModSecurity Core Rule Set. Its attack coverage significantly overlaps with Cloudflare Managed Ruleset by detecting common attack vectors such as SQLi and XSS.
 
@@ -199,10 +199,6 @@ For more information on configuring the Cloudflare OWASP Core Ruleset in the das
 
 ## 5. Review traffic in security dashboards
 
-:::note
-Users on the Free plan only have access to Security Events.
-:::
-
 After setting up your WAF configuration, review how incoming traffic is being affected by your current settings using the following dashboards:
 
 - Use [Security Analytics](/waf/analytics/security-analytics/) to explore all traffic, including traffic not affected by WAF mitigation measures. All data provided by [traffic detections](/waf/concepts/#available-traffic-detections) is available in this dashboard.
@@ -210,7 +206,7 @@ After setting up your WAF configuration, review how incoming traffic is being af
 
 Enterprise customers can also obtain data about HTTP requests and security events using [Cloudflare Logs](/logs/).
 
-## 6. Optional - Next steps
+## 6. (Optional) Next steps
 
 After configuring the WAF based on the information in the previous sections, you should have a strong base protection against possible threats to your applications.
 
