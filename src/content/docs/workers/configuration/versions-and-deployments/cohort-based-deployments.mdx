@@ -12,9 +12,11 @@ Cohort deployments let you test your deployments in production by choosing exact
 
 With [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), traffic is split randomly between two versions. Cohort deployments extend this by letting you define named groups — called **cohorts** — where each group gets its own version split.
 
-Roll out to your team first, verify it works, then expand to more users. If something breaks, roll back instantly. Traffic that is not in a cohort gets split randomly per your gradual deployment configuration.
+Roll out to your team first, verify it works, then expand to more users. If something breaks, [rollback instantly](/workers/configuration/versions-and-deployments/rollbacks/).
 
 ![Cohort-based deployments overview: incoming requests are matched to named cohorts, each with its own version split.](~/assets/images/workers/platform/versions-and-deployments/cohort-overview.svg)
+
+Each cohort gets its own percentage split of the same two versions. Traffic that does not match any cohort uses your gradual deployment split.
 
 If you already use gradual deployments, add cohorts alongside your existing configuration without disrupting current traffic. Refer to [How it works](#how-it-works) for how to set cohorts via [Wrangler](#with-wrangler), the [API](#with-the-api), or the Dashboard.
 
@@ -390,6 +392,72 @@ If Worker A does not pass a cohort, Worker B falls back to its default version c
 
 ---
 
+## Durable Objects
+
+With [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects), each [Durable Object](/durable-objects/) instance is assigned a version based on a hash of its ID. You have no control over which instances get the new version. The hash decides, and it could put any instance on untested code.
+
+Cohort deployments give you that control for [per-entity instances](#per-entity-instances) where each user, tenant, or resource has their own Durable Object. You pass a cohort at `.get()` time, and the platform routes that instance to the version your deployment config maps the cohort to. For [shared instances](#shared-instances) where multiple users hit the same Durable Object, cohorts are not the right fit.
+
+### Per-entity instances
+
+When each user, tenant, or resource has their own Durable Object instance (for example, user profiles, shopping carts, sessions, or per-tenant state), cohorts work cleanly. Only one user's requests reach each instance, so the cohort is always consistent. Your Worker already knows which instance each request goes to — you just add the cohort alongside it.
+
+A Durable Object **namespace** (like `USER_DO`) is the class definition. Each **instance** within that namespace is a separate object with its own storage, identified by a unique ID. You do not need to enumerate instance IDs or set up cohorts per instance. Each request naturally hits one instance, and your Worker resolves the cohort at `.get()` time based on whatever you know about the user (their plan, their role, their email). One `if` statement in your Worker applies to every request as it comes in.
+
+![Per-entity instances: each user gets their own Durable Object instance within a namespace. Your Worker resolves the cohort per request, not per instance.](~/assets/images/workers/platform/versions-and-deployments/do-per-entity.svg)
+
+Pass a cohort at `.get()` time, set the gradual deployment split to 100% stable, and only the instances you target get the new version:
+
+```ts
+export default {
+	async fetch(request: Request, env: Env) {
+		const userId = getUserId(request);
+		const id = env.USER_DO.idFromName(userId);
+
+		// Only pass a cohort for the instance you want on the new version
+		const isTestUser = userId === "alice";
+		const stub = isTestUser
+			? env.USER_DO.get(id, { version: { cohort: "canary" } })
+			: env.USER_DO.get(id);
+
+		return stub.fetch(request);
+	},
+};
+```
+
+In the example above, the gradual deployment split is set to 100% stable (as shown in [Create a cohort deployment](#create-a-cohort-deployment)). Every instance without a cohort stays on the stable version. Only alice's DO gets the new version. When you are confident, expand the cohort to more users or deploy to everyone.
+
+Since each user has their own instance, alice is the only one making requests to her DO. The cohort is consistent across all of her requests. If alice's DO is [evicted](/durable-objects/concepts/durable-object-lifecycle/) from memory due to inactivity, the next request from alice sets the same cohort again. If you do not pass a cohort at all, the instance uses the gradual deployment split.
+
+:::caution[The cohort must be known before calling `.get()`]
+The cohort is set at `.get()` time, which means it must come from information available _outside_ the Durable Object. If the only place that knows a user's plan or tier is inside the DO's storage (for example, a field in its SQLite database), you cannot read that data first and then pass it as a cohort. You need to resolve the cohort from the incoming request, a KV lookup, a D1 query, or another source that your Worker can access before calling `.get()`.
+:::
+
+For a hands-on walkthrough, refer to [Tutorial: Controlled Durable Object rollouts](/workers/configuration/versions-and-deployments/testing-gradual-deployments/).
+
+### Shared instances
+
+For shared instances, use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) without cohorts.
+
+When multiple users share a single Durable Object instance (for example, chat rooms, game lobbies, or collaborative documents), cohorts are not a good fit. The diagram below shows why:
+
+![Durable Object cohort lifecycle: the first request sets the cohort, subsequent requests with different cohorts are ignored, and after eviction the next request can set a new cohort.](~/assets/images/workers/platform/versions-and-deployments/do-cohort-lifecycle.svg)
+
+The version an instance runs is not set by each user's cohort. It is set by the cohort of whichever request wakes the instance up first. Once locked, every subsequent request hits that version regardless of its cohort. This means you cannot guarantee that a specific user (for example, an enterprise customer) will not end up on the new version if they share an instance with a user from a different cohort.
+
+Setting cohorts on shared instances adds complexity without giving you reliable control. The gradual deployment hash-based split already assigns a deterministic version per instance regardless of who calls it, which is effectively the same outcome.
+
+### Gradual vs. cohort deployments for Durable Objects
+
+|                                         | Gradual deployments (hash-based) | Cohort deployments (per-entity instances) |
+| --------------------------------------- | -------------------------------- | ----------------------------------------- |
+| Who decides the version                 | Hash of DO ID                    | Your Worker code via `.get()`             |
+| You choose which instances get new code | No                               | Yes                                       |
+| Sticky while in memory                  | Yes (hash is deterministic)      | Yes (locked until eviction)               |
+| Persists across evictions               | Yes (hash is deterministic)      | No (next request sets new cohort)         |
+
+---
+
 ## Observability
 
 To see which version and cohort handled a request, use `ctx.version` in your Worker code. This lets you log cohort information, compare error rates between versions, and monitor your rollout.
@@ -423,119 +491,6 @@ Cohort deployments control which **version** of your code runs. The code itself 
 :::
 
 The version ID is automatically included in [Workers Logs](/workers/observability/logs/workers-logs/), [Tail Workers](/workers/observability/logs/tail-workers/), and [Logpush](/workers/observability/logs/logpush/) via the `ScriptVersion` field — no code changes needed for version-level filtering. The cohort name is not automatically included. To see it in your logs, you need the `console.log()` shown above. Since each cohort maps to a known version in your deployment, you can also filter by version ID and infer the cohort from there.
-
----
-
-## Durable Objects
-
-With [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects), each [Durable Object](/durable-objects/) instance is assigned a version based on a hash of its ID. You cannot choose which instances get the new version.
-
-With cohort deployments, you pass a cohort at `.get()` time to control which version an instance runs. How well this works depends on how your Durable Objects are used.
-
-### Per-entity instances
-
-When each user, tenant, or resource has their own Durable Object instance (for example, user profiles, shopping carts, sessions, or per-tenant state), cohorts work cleanly. Only one user's requests reach each instance, so the cohort is always consistent.
-
-Pass a cohort at `.get()` time, set the gradual deployment split to 100% stable, and only the instances you target get the new version:
-
-```ts
-export default {
-	async fetch(request: Request, env: Env) {
-		const userId = getUserId(request);
-		const id = env.USER_DO.idFromName(userId);
-
-		// Only pass a cohort for the instance you want on the new version
-		const isTestUser = userId === "alice";
-		const stub = isTestUser
-			? env.USER_DO.get(id, { version: { cohort: "canary" } })
-			: env.USER_DO.get(id);
-
-		return stub.fetch(request);
-	},
-};
-```
-
-Because the gradual deployment split is 100% stable, every instance without a cohort stays on the stable version. Only alice's DO gets the new version. When you are confident, expand the cohort to more users or deploy to everyone.
-
-For a hands-on walkthrough, refer to [Tutorial: Controlled Durable Object rollouts](/workers/configuration/versions-and-deployments/testing-gradual-deployments/).
-
-### Shared instances
-
-When multiple users share a single DO instance (for example, chat rooms, game lobbies, or collaborative documents), different users may pass different cohorts. The first request after instantiation sets the cohort, and subsequent requests with different cohorts are ignored while the instance is in memory. This means you cannot guarantee that a specific user (for example, an enterprise customer) will not end up on the new version if they share an instance with a user from a different cohort.
-
-For shared instances, cohorts control which **instances** get the new version, not which **users**. If you need all users of a shared instance to be on the same version, base the cohort on the instance (the room or document), not the individual user:
-
-```ts
-const isCanaryRoom = roomId === "room-123";
-const stub = isCanaryRoom
-	? env.ROOM_DO.get(id, { version: { cohort: "canary" } })
-	: env.ROOM_DO.get(id);
-```
-
-If you do not need per-instance control for shared DOs, use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) without cohorts. The hash-based split is deterministic per instance regardless of who calls it.
-
-### How the cohort is assigned to an instance
-
-![Durable Object cohort lifecycle: the first request sets the cohort, subsequent requests with different cohorts are ignored, and after eviction the next request can set a new cohort.](~/assets/images/workers/platform/versions-and-deployments/do-cohort-lifecycle.svg)
-
-- **Locked while in memory.** The first request that passes a cohort to `.get()` locks that instance to that cohort and version for as long as the DO is running in memory. If a later request passes a different cohort for the same instance, it is ignored.
-- **Resets on eviction.** When the DO is [evicted](/durable-objects/concepts/durable-object-lifecycle/) from memory due to inactivity, the cohort is not persisted. The next request that instantiates the DO can set a new cohort.
-- **Optional.** If you do not pass a cohort, the Durable Object uses the gradual deployment split. If the split is 100% stable, the instance stays on stable.
-
-:::caution[The cohort must be known before calling `.get()`]
-The cohort is set at `.get()` time, which means it must come from information available _outside_ the Durable Object. If the only place that knows a user's plan or tier is inside the DO's storage (for example, a field in its SQLite database), you cannot read that data first and then pass it as a cohort. You need to resolve the cohort from the incoming request, a KV lookup, a D1 query, or another source that your Worker can access before calling `.get()`.
-:::
-
-|                                         | Gradual deployments (hash-based) | Cohort deployments                |
-| --------------------------------------- | -------------------------------- | --------------------------------- |
-| Who decides the version                 | Hash of DO ID                    | Your Worker code via `.get()`     |
-| You choose which instances get new code | No                               | Yes                               |
-| Sticky while in memory                  | Yes (hash is deterministic)      | Yes (locked until eviction)       |
-| Persists across evictions               | Yes (hash is deterministic)      | No (next request sets new cohort) |
-| Best for                                | Shared instances                 | Per-user instances                |
-
-### Durable Object use cases
-
-The diagrams below show which version each instance gets at the time of the request. To understand what happens when an instance is evicted and reinstantiated, refer to [How the cohort is assigned to an instance](#how-the-cohort-is-assigned-to-an-instance).
-
-#### Test one instance in production
-
-Pass a cohort for the one instance you want on the new version. Everything else stays on stable.
-
-![Test one DO instance: alice's instance (foo) gets Version B, bob and carol's instances (bar, baz) stay on stable.](~/assets/images/workers/platform/versions-and-deployments/do-usecase-one-instance.svg)
-
-```ts
-const isTestUser = userId === "alice";
-const stub = isTestUser
-	? env.USER_DO.get(id, { version: { cohort: "canary" } })
-	: env.USER_DO.get(id);
-```
-
-#### Roll out to a group of users
-
-Pass a cohort for all users in a group (for example, free-tier). Each user's DO gets the version their cohort maps to.
-
-![Per-user DO rollout: free-tier users' instances (foo, baz) get Version B, paid users' instances (bar, qux) stay on stable.](~/assets/images/workers/platform/versions-and-deployments/do-usecase-per-user.svg)
-
-```ts
-const cohort = plan === "free" ? "free" : undefined;
-const stub = cohort
-	? env.USER_DO.get(id, { version: { cohort } })
-	: env.USER_DO.get(id);
-```
-
-#### Shared instances
-
-All users in a room get the same version. The cohort is based on the room, not the user.
-
-![Shared DO: cohort is per room. alice and bob share instance foo (Version B). carol and dave share instance bar (Version A).](~/assets/images/workers/platform/versions-and-deployments/do-usecase-shared.svg)
-
-```ts
-const isCanaryRoom = roomId === "room-123";
-const stub = isCanaryRoom
-	? env.ROOM_DO.get(id, { version: { cohort: "canary" } })
-	: env.ROOM_DO.get(id);
-```
 
 ---
 

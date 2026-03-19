@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 455" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .heading { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+    .subheading { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+    .label { font-size: 12px; fill: #1a1a1a; }
+    .label-bold { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .code { font-size: 10px; font-family: 'SF Mono', 'Menlo', monospace; fill: #6b7280; }
+    .vtag { font-size: 11px; font-weight: 600; fill: #fff; }
+    .cohort-tag { font-size: 10px; font-weight: 600; }
+  </style>
+
+  <rect width="720" height="455" fill="#fafafa" rx="8"/>
+
+
+
+  <!-- Left: Users making requests (+15px) -->
+  <text x="80" y="75" text-anchor="middle" class="subheading">Users</text>
+
+  <!-- alice (free) -->
+  <rect x="25" y="93" width="110" height="45" rx="5" fill="#fff7ed" stroke="#f97316" stroke-width="1.2"/>
+  <text x="80" y="113" text-anchor="middle" class="label-bold">alice</text>
+  <text x="80" y="129" text-anchor="middle" class="cohort-tag" style="fill: #c2410c;">free</text>
+
+  <!-- bob (paid) -->
+  <rect x="25" y="155" width="110" height="45" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="80" y="175" text-anchor="middle" class="label-bold">bob</text>
+  <text x="80" y="191" text-anchor="middle" class="cohort-tag" style="fill: #1d4ed8;">paid</text>
+
+  <!-- carol (free) -->
+  <rect x="25" y="217" width="110" height="45" rx="5" fill="#fff7ed" stroke="#f97316" stroke-width="1.2"/>
+  <text x="80" y="237" text-anchor="middle" class="label-bold">carol</text>
+  <text x="80" y="253" text-anchor="middle" class="cohort-tag" style="fill: #c2410c;">free</text>
+
+  <!-- dave (paid) -->
+  <rect x="25" y="279" width="110" height="45" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="80" y="299" text-anchor="middle" class="label-bold">dave</text>
+  <text x="80" y="315" text-anchor="middle" class="cohort-tag" style="fill: #1d4ed8;">paid</text>
+
+  <!-- Middle: Worker resolves cohort (+15px) -->
+  <rect x="175" y="88" width="195" height="250" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="272" y="78" text-anchor="middle" class="subheading">Your Worker</text>
+
+  <!-- Arrows from users to Worker (+15px) -->
+  <line x1="138" y1="115" x2="173" y2="115" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="138" y1="177" x2="173" y2="177" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="138" y1="239" x2="173" y2="239" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="138" y1="301" x2="173" y2="301" stroke="#d1d5db" stroke-width="1"/>
+
+  <!-- Worker code for each (+15px) -->
+  <text x="185" y="112" class="code">plan = "free"</text>
+  <text x="185" y="126" class="code">.get(aliceId,</text>
+  <text x="185" y="138" class="code">  cohort: "free")</text>
+
+  <text x="185" y="174" class="code">plan = "paid"</text>
+  <text x="185" y="188" class="code">.get(bobId)</text>
+  <text x="185" y="200" class="code">  no cohort</text>
+
+  <text x="185" y="236" class="code">plan = "free"</text>
+  <text x="185" y="250" class="code">.get(carolId,</text>
+  <text x="185" y="262" class="code">  cohort: "free")</text>
+
+  <text x="185" y="298" class="code">plan = "paid"</text>
+  <text x="185" y="312" class="code">.get(daveId)</text>
+  <text x="185" y="324" class="code">  no cohort</text>
+
+  <!-- Arrows from Worker to namespace (+15px) -->
+  <line x1="372" y1="115" x2="430" y2="115" stroke="#f97316" stroke-width="1.5"/>
+  <polygon points="427,111 434,115 427,119" fill="#f97316"/>
+  <line x1="372" y1="177" x2="430" y2="177" stroke="#d1d5db" stroke-width="1.5"/>
+  <polygon points="427,173 434,177 427,181" fill="#d1d5db"/>
+  <line x1="372" y1="239" x2="430" y2="239" stroke="#f97316" stroke-width="1.5"/>
+  <polygon points="427,235 434,239 427,243" fill="#f97316"/>
+  <line x1="372" y1="301" x2="430" y2="301" stroke="#d1d5db" stroke-width="1.5"/>
+  <polygon points="427,297 434,301 427,305" fill="#d1d5db"/>
+
+  <!-- Namespace label outside the box (stays at original position) -->
+  <text x="560" y="60" text-anchor="middle" class="subheading">Namespace: USER_DO</text>
+
+  <!-- DO Namespace box (stays at original position) -->
+  <rect x="438" y="70" width="260" height="290" rx="8" fill="#fff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="568" y="90" text-anchor="middle" class="sublabel">One instance per user</text>
+
+  <!-- Instance: alice (free, Version B) -->
+  <rect x="455" y="102" width="225" height="50" rx="5" fill="#fff7ed" stroke="#f97316" stroke-width="1.2"/>
+  <text x="520" y="125" text-anchor="middle" class="label-bold">alice</text>
+  <text x="520" y="142" text-anchor="middle" class="sublabel">instance</text>
+  <rect x="600" y="110" width="70" height="32" rx="4" fill="#f97316"/>
+  <text x="635" y="131" text-anchor="middle" class="vtag">B (new)</text>
+
+  <!-- Instance: bob (paid, Version A) -->
+  <rect x="455" y="162" width="225" height="50" rx="5" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="520" y="185" text-anchor="middle" class="label-bold">bob</text>
+  <text x="520" y="202" text-anchor="middle" class="sublabel">instance</text>
+  <rect x="600" y="170" width="70" height="32" rx="4" fill="#9ca3af"/>
+  <text x="635" y="191" text-anchor="middle" class="vtag">A (stable)</text>
+
+  <!-- Instance: carol (free, Version B) -->
+  <rect x="455" y="222" width="225" height="50" rx="5" fill="#fff7ed" stroke="#f97316" stroke-width="1.2"/>
+  <text x="520" y="245" text-anchor="middle" class="label-bold">carol</text>
+  <text x="520" y="262" text-anchor="middle" class="sublabel">instance</text>
+  <rect x="600" y="230" width="70" height="32" rx="4" fill="#f97316"/>
+  <text x="635" y="251" text-anchor="middle" class="vtag">B (new)</text>
+
+  <!-- Instance: dave (paid, Version A) -->
+  <rect x="455" y="282" width="225" height="50" rx="5" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="520" y="305" text-anchor="middle" class="label-bold">dave</text>
+  <text x="520" y="322" text-anchor="middle" class="sublabel">instance</text>
+  <rect x="600" y="290" width="70" height="32" rx="4" fill="#9ca3af"/>
+  <text x="635" y="311" text-anchor="middle" class="vtag">A (stable)</text>
+
+  <!-- "..." to show there are more -->
+  <text x="568" y="352" text-anchor="middle" class="sublabel">... thousands more instances</text>
+
+  <!-- Bottom: deployment config -->
+  <rect x="25" y="405" width="673" height="35" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="360" y="427" text-anchor="middle" class="sublabel">Rolling out from Version A to Version B. Free users get B, paid users stay on A.</text>
+</svg>
