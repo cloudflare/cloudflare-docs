@@ -62,16 +62,26 @@ The `cloudflared` daemon can stream logs from any tunnel in your account to the 
 
 If you are running multiple `cloudflared` instances for the same tunnel (also known as [replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/)), you can view logs for specific replicas from the dashboard or CLI.
 
-In the dashboard, the **Connectors** list on the tunnel overview page displays all active replicas. Select a **Connector ID** to stream logs for that specific replica in the [**Live Logs** tab](#dashboard). You can also stream logs from all replicas simultaneously using the **View Logs** shortcut on the **Networks** > **Connectors** page.
-
-To stream logs for a specific replica from the CLI:
+<Tabs>
+<TabItem label="Dashboard">
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels** and select your tunnel.
-2. Find the **Connector ID** for the `cloudflared` instance you want to view.
+2. To stream logs for a specific replica, select its **Connector ID**.
+3. To stream logs for all replicas simultaneously, select the **Live logs** tab.
+4. Select **Begin log stream**.
+
+</TabItem>
+<TabItem label="CLI">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels** and select your tunnel.
+2. Find the **Connector ID** for the replica you want to view.
 3. Specify the Connector ID in `cloudflared tail`:
    ```sh
    cloudflared tail --connector-id <CONNECTOR ID> <UUID>
    ```
+
+</TabItem>
+</Tabs>
 
 ### Performance considerations
 
