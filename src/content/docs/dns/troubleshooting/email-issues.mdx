@@ -17,19 +17,19 @@ If you have issues sending or receiving mail, follow these troubleshooting steps
 
 Consult with your mail administrator or mail provider to ensure you have valid DNS record content.
 
-## Are DNS records missing?
+## Are DNS records missing?
 
-Contact your mail administrator to confirm the DNS records for your domain are correct. Refer to our guide on [managing DNS records in Cloudflare](/dns/manage-dns-records/how-to/create-dns-records) if you need assistance to add or edit DNS records.
+Contact your mail administrator to confirm the DNS records for your domain are correct. Refer to our guide on [managing DNS records in Cloudflare](/dns/manage-dns-records/how-to/create-dns-records) if you need assistance to add or edit DNS records.
 
 ## Do you have NS records configured?
 
-NS records are used to delegate the management of a hostname to another DNS provider (refer to [Delegate a subdomain (outgoing)](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/#delegate-a-subdomain-outgoing) for further context). If you have NS records configured in **DNS** > **Records** on the Cloudflare dashboard, confirm that these are expected and not generating conflicts.
+NS records are used to delegate the management of a hostname to another DNS provider (refer to [Delegate a subdomain (outgoing)](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/#delegate-a-subdomain-outgoing) for further context). If you have NS records configured on your DNS records table, confirm that these are expected and not generating conflicts.
 
-## Do you have CNAME Flattening enabled?
+## Do you have CNAME flattening enabled?
 
-When set to [Flatten all CNAMEs](/dns/cname-flattening/set-up-cname-flattening/) in your Cloudflare DNS settings, queries to all `CNAME` records will flatten to an `A` record; no `CNAME` records will be returned.
+When [**CNAME flattening for all CNAME records**](/dns/cname-flattening/set-up-cname-flattening/) is on, queries to all `CNAME` records will flatten to an `A` record; no `CNAME` records will be returned.
 
-Also, if `CNAME` records are not returned by the queried nameserver (sometimes nameservers will return TXT records), this may result in nothing being returned when **Flatten all CNAMEs** is turned on. Changing to **Flatten at the root** should fix any issues with your CNAME records not being returned.
+Also, if `CNAME` records are not returned by the queried nameserver (sometimes nameservers will return TXT records), this may result in nothing being returned when **CNAME flattening for all CNAME records** is on. Turning off this feature should fix any issues with your CNAME records not being returned.
 
 ## Is Cloudflare Spectrum enabled on your account?
 
@@ -41,7 +41,7 @@ If your email does not work shortly after editing DNS records, contact your mail
 
 ## dc-######### subdomain
 
-The dc-##### subdomain is added to overcome a conflict created when your `SRV` or `MX` record resolves to a domain configured to [proxy](/dns/proxy-status/) to Cloudflare.
+The dc-##### subdomain is added to overcome a conflict created when your `SRV` or `MX` record resolves to a domain configured to [proxy](/dns/proxy-status/) to Cloudflare.
 
 Therefore, Cloudflare will create a `dc-#####` DNS record that resolves to the origin IP address. The `dc-#####` record ensures that traffic for your `MX` or `SRV` record is not proxied (it directly resolves to your origin IP) while the Cloudflare proxy works for all other traffic.
 
@@ -49,7 +49,7 @@ For example, before using Cloudflare, suppose your DNS records for mail are as f
 
 `example.com MX example.com` `example.com A 192.0.2.1`
 
-After using Cloudflare and proxying the `A` record, Cloudflare will provide DNS responses with a Cloudflare IP (`203.0.113.1` in the example below):
+After using Cloudflare and proxying the `A` record, Cloudflare will provide DNS responses with a Cloudflare IP (`203.0.113.1` in the example below):
 
 `example.com MX example.com` `example.com A 203.0.113.1`
 
@@ -60,7 +60,7 @@ Since proxying mail traffic to Cloudflare would break your mail services, Cloudf
 Removing the `dc-######` record is only possible via one of these methods:
 
 - If no mail is received for the domain, delete the `MX` record.
-- If mail is received for the domain, update the `MX` record to resolve to a separate `A` record for a mail subdomain that is not proxied by Cloudflare:
+- If mail is received for the domain, update the `MX` record to resolve to a separate `A` record for a mail subdomain that is not proxied by Cloudflare:
 
 `example.com MX mail.example.com` `mail.example.com A 192.0.2.1` `example.com A 203.0.113.1`
 
