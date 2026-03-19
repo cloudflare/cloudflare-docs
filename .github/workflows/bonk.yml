@@ -1,4 +1,4 @@
-name: Lil Bonk
+name: Bonk
 
 on:
   issue_comment:
@@ -47,5 +47,5 @@ jobs:
         with:
           model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.5"
           agent: docs
-          mentions: "/lilbonk"
+          mentions: "/bonk"
           permissions: CODEOWNERS
