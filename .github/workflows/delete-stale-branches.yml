@@ -3,7 +3,7 @@
 # turned into a PR.
 #
 # Respects protected branches and skips fork branches.
-# Up to 100 branches are deleted per run, oldest first.
+# Deletes all matching branches per run, oldest first.
 #
 # To test without deleting anything, trigger this workflow manually via
 # workflow_dispatch and leave dry-run set to "true" (the default). The
@@ -41,7 +41,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRY_RUN: ${{ github.event_name == 'push' && 'true' || github.event_name == 'schedule' && 'false' || inputs.dry-run }}
         run: |
-          LIMIT=100
           deleted=0
 
           if [ "$DRY_RUN" = "true" ]; then
@@ -76,7 +75,7 @@ jobs:
               || echo "Skipped (already gone): $branch"
           }
 
-          echo "--- Unassociated branches older than 60 days (oldest first, limit $LIMIT) ---"
+          echo "--- Unassociated branches older than 60 days (oldest first) ---"
 
           pr_branches=$(gh pr list \
             --repo "$GITHUB_REPOSITORY" \
@@ -133,7 +132,6 @@ jobs:
           done
 
           while IFS=$'\t' read -r last_commit branch; do
-            [ "$deleted" -ge "$LIMIT" ] && break
             delete_branch "$branch" "no PR, last commit $last_commit"
           done < <(sort "$candidates")
 
