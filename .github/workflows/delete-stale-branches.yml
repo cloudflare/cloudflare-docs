@@ -131,27 +131,46 @@ jobs:
           # subshell scoping issue and fragile printf string concatenation.
           candidates=$(mktemp)
 
-          page=1
-          while true; do
-            batch=$(gh api "repos/$GITHUB_REPOSITORY/branches?per_page=100&page=$page" \
-              | jq -r '.[].name')
-            [ -z "$batch" ] && break
+          # Use the GraphQL API to fetch all branches with their last commit
+          # date in one paginated query (100 branches per request), avoiding
+          # the N+1 REST API calls that would otherwise be needed.
+          owner="${GITHUB_REPOSITORY%%/*}"
+          repo="${GITHUB_REPOSITORY##*/}"
+          cursor="null"
 
-            while IFS= read -r branch; do
+          while true; do
+            response=$(gh api graphql -f query="
+              query(\$owner: String!, \$repo: String!, \$cursor: String) {
+                repository(owner: \$owner, name: \$repo) {
+                  refs(refPrefix: \"refs/heads/\", first: 100, after: \$cursor) {
+                    pageInfo { hasNextPage endCursor }
+                    nodes {
+                      name
+                      target {
+                        ... on Commit {
+                          committedDate
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            " -f owner="$owner" -f repo="$repo" -f cursor="$cursor")
+
+            has_next=$(echo "$response" | jq -r '.data.repository.refs.pageInfo.hasNextPage')
+            cursor=$(echo "$response" | jq -r '.data.repository.refs.pageInfo.endCursor')
+
+            while IFS=$'\t' read -r branch last_commit; do
               if echo "$pr_branches" | grep -qx "$branch"; then
                 continue
               fi
 
-              last_commit=$(gh api "repos/$GITHUB_REPOSITORY/commits?sha=$branch&per_page=1" \
-                | jq -r '.[0].commit.committer.date')
-
               if [[ "$last_commit" < "$cutoff" ]]; then
-                # Use printf with explicit format to safely handle special characters
                 printf '%s\t%s\n' "$last_commit" "$branch" >> "$candidates"
               fi
-            done <<< "$batch"
+            done < <(echo "$response" | jq -r '.data.repository.refs.nodes[] | [.name, .target.committedDate] | @tsv')
 
-            page=$((page + 1))
+            [ "$has_next" = "true" ] || break
           done
 
           # Sort oldest-first by the ISO 8601 date prefix, then delete up to limit.
