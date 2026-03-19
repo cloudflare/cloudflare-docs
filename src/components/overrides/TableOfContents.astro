@@ -47,23 +47,23 @@ const { editUrl } = Astro.locals.starlightRoute;
 						{editUrl && (
 							<a
 								href={editUrl}
-								class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-3)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
-							>
-								<Icon
-									name="pencil"
-									class="h-3.5 w-3.5 opacity-60 transition-opacity duration-150 group-hover:opacity-100"
-									aria-hidden="true"
-								/>
-								<span>Edit page</span>
-							</a>
-						)}
-						<a
-							href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
-							class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-3)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+							class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
 						>
 							<Icon
-								name="github"
-								class="h-3.5 w-3.5 opacity-60 transition-opacity duration-150 group-hover:opacity-100"
+								name="pencil"
+								class="h-3.5 w-3.5"
+								aria-hidden="true"
+							/>
+							<span>Edit page</span>
+						</a>
+					)}
+					<a
+						href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
+						class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+					>
+						<Icon
+							name="github"
+							class="h-3.5 w-3.5"
 								aria-hidden="true"
 							/>
 							<span>Report issue</span>
@@ -155,13 +155,8 @@ const { editUrl } = Astro.locals.starlightRoute;
 
 	/* Hover state */
 	.tb-container ul a:hover {
-		border-left-color: var(--sidebar-border) !important;
+		border-left-color: var(--sidebar-border-hover) !important;
 		color: var(--sidebar-text-strong) !important;
-	}
-
-	/* Light mode: orange border on hover */
-	:root[data-theme="light"] .tb-container ul a:hover {
-		border-left-color: var(--orange-accent-200) !important;
 	}
 
 	/* Active state (hooking into starlight's scrollspy) */
