@@ -7,57 +7,61 @@
 	padding: 0 0.75rem 1rem;
 }
 
-/* Content animated via CSS — these are the targets */
-.sidebar-content details > ul {
+/* ── Accordion height transition using CSS grid ── */
+.sidebar-accordion {
+	display: grid;
+	grid-template-rows: 1fr;
+	transition: grid-template-rows 250ms cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+.sidebar-accordion-inner {
 	overflow: hidden;
+	min-height: 0;
 }
 
-.sidebar-content details.is-user-toggled[open] > ul {
-	animation: sidebar-details-open 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+/* Collapsed: when details is closed, grid row = 0fr */
+.sidebar-content details:not([open]) > .sidebar-accordion {
+	grid-template-rows: 0fr;
 }
 
-@keyframes sidebar-details-open {
-	from {
-		opacity: 0;
-		transform: translateY(-4px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+/* Only animate on user-initiated toggles, not page load */
+.sidebar-content details:not(.is-user-toggled) > .sidebar-accordion {
+	transition: none;
 }
 
-/* Respect reduced motion */
+/* Respect motion preferences */
 @media (prefers-reduced-motion: reduce) {
-	.sidebar-content details > ul,
-	.sidebar-content details.is-user-toggled[open] > ul {
-		animation: none !important;
+	.sidebar-accordion {
+		transition: none !important;
 	}
 }
 
 /* ── Light theme ── */
 :root[data-theme="light"] {
-	--sidebar-text: #525252; /* neutral-600 */
-	--sidebar-text-strong: #0a0a0a; /* neutral-950 */
-	--sidebar-hover-bg: #f2f2f2; /* neutral-150 */
+	--sl-color-bg-nav: var(--color-cl1-white);
+	--sidebar-text: var(--color-cl1-gray-4);
+	--sidebar-text-strong: var(--color-cl1-black);
+	--sidebar-hover-bg: var(--color-cl1-gray-9);
 	--sidebar-hover-text: var(--sidebar-text-strong);
-	--sidebar-active-bg: #f2f2f2; /* neutral-150 */
+	--sidebar-active-bg: var(--color-cl1-gray-9);
 	--sidebar-active-text: var(--sidebar-text-strong);
-	--sidebar-border: #e5e5e5; /* neutral-200 */
-	--sl-color-sidebar-active: #0a0a0a; /* neutral-950 */
-	--sl-color-sidebar-hover: #f2f2f2; /* neutral-150 */
+	--sidebar-border: var(--color-cl1-gray-8);
+	--sl-color-sidebar-active: var(--color-cl1-black);
+	--sl-color-sidebar-hover: var(--color-cl1-gray-9);
 }
 
 /* ── Dark theme ── */
 :root[data-theme="dark"] {
-	--sl-color-bg-sidebar: var(--color-cl1-gray-0);
-	--sidebar-text: #a3a3a3; /* neutral-400 */
-	--sidebar-text-strong: #ffffff; /* white */
+	--sl-color-bg-nav: var(--sl-color-bg);
+	--sl-color-bg-sidebar: var(--sl-color-bg);
+	--sl-color-hairline-shade: var(--color-cl1-gray-2);
+	--sidebar-text: var(--color-cl1-gray-7);
+	--sidebar-text-strong: var(--color-cl1-white);
 	--sidebar-hover-bg: var(--sidebar-orange-accent-600);
 	--sidebar-hover-text: var(--orange-accent-200);
 	--sidebar-active-bg: var(--sidebar-orange-accent-600);
 	--sidebar-active-text: var(--orange-accent-200);
-	--sidebar-border: #404040; /* neutral-700 */
+	--sidebar-border: var(--color-cl1-gray-2);
 	--sl-color-sidebar-active: var(--orange-accent-200);
 	--sl-color-sidebar-hover: var(--sidebar-orange-accent-600);
 }

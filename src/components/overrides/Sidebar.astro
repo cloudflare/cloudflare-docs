@@ -86,21 +86,27 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 			}
 		});
 
-		// Remove the animation class once it completes to prevent the animation from
-		// re-running when Astro View Transitions detaches and reattaches the sidebar DOM
-		sidebarContent.addEventListener("animationend", (e) => {
-			const target = e.target as HTMLElement;
-			if (e.animationName === "sidebar-details-open") {
-				const details = target.closest("details");
-				if (details) details.classList.remove("is-user-toggled");
-			}
-		});
+		(sidebarContent as HTMLElement).addEventListener(
+			"transitionend",
+			(e: TransitionEvent) => {
+				const target = e.target as HTMLElement;
+				if (
+					target.classList.contains("sidebar-accordion") &&
+					e.propertyName === "grid-template-rows"
+				) {
+					const details = target.closest("details");
+					if (details) details.classList.remove("is-user-toggled");
+				}
+			},
+		);
 
 		// Failsafe: strip the class before any page transition DOM swap
 		document.addEventListener("astro:before-swap", () => {
-			document.querySelectorAll(".sidebar-content details.is-user-toggled").forEach(d => {
-				d.classList.remove("is-user-toggled");
-			});
+			document
+				.querySelectorAll(".sidebar-content details.is-user-toggled")
+				.forEach((d) => {
+					d.classList.remove("is-user-toggled");
+				});
 		});
 
 		const originalState: Map<Element, boolean> = new Map();
@@ -124,7 +130,9 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		// Show only direct children of a folder (not recursive)
 		function showDirectChildren(details: HTMLDetailsElement) {
 			details.open = true;
-			const directList = details.querySelector(":scope > ul");
+			const directList = details.querySelector(
+				":scope > .sidebar-accordion > .sidebar-accordion-inner > ul",
+			);
 			if (directList) {
 				const directChildren = directList.querySelectorAll(":scope > li");
 				directChildren.forEach((child) => {
