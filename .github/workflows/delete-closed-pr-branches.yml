@@ -34,8 +34,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          BRANCH: ${{ github.event_name == 'workflow_dispatch' && inputs.branch || github.event.pull_request.head.ref }}
         run: |
-          branch="${{ github.event_name == 'workflow_dispatch' && inputs.branch || github.event.pull_request.head.ref }}"
+          branch="$BRANCH"
 
           if [ "$DRY_RUN" = "true" ]; then
             echo "*** DRY RUN — no branches will be deleted ***"

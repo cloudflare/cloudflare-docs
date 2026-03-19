@@ -38,7 +38,7 @@ jobs:
   delete-stale-branches:
     runs-on: ubuntu-latest
     steps:
-      - name: Delete closed PR branches and unassociated branches older than 90 days
+      - name: Delete closed PR branches and unassociated branches older than 30 days
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run || 'false' }}
@@ -78,7 +78,14 @@ jobs:
               || echo "Skipped (already gone): $branch"
           }
 
+          # ----------------------------------------------------------------
+          # Part 1: Branches from closed non-fork PRs, oldest first
+          # ----------------------------------------------------------------
           echo "--- Closed PR branches (oldest first, limit $LIMIT) ---"
+
+          # Write sorted branch names to a temp file to avoid subshell scoping
+          # issues with the deleted counter (piped while loops run in a subshell).
+          closed_pr_branches=$(mktemp)
 
           gh pr list \
             --repo "$GITHUB_REPOSITORY" \
@@ -93,12 +100,18 @@ jobs:
               ' \
             | sort \
             | awk -F'\t' '{print $2}' \
-            | sort -u \
-            | while read -r branch; do
-                [ "$deleted" -ge "$LIMIT" ] && break
-                delete_branch "$branch" "closed PR"
-              done
+            | sort -u > "$closed_pr_branches"
 
+          while IFS= read -r branch; do
+            [ "$deleted" -ge "$LIMIT" ] && break
+            delete_branch "$branch" "closed PR"
+          done < "$closed_pr_branches"
+
+          rm -f "$closed_pr_branches"
+
+          # ----------------------------------------------------------------
+          # Part 2: Branches with no PR older than 30 days, oldest first
+          # ----------------------------------------------------------------
           echo "--- Unassociated branches older than 30 days (oldest first, limit $LIMIT) ---"
 
           pr_branches=$(gh pr list \
@@ -114,7 +127,9 @@ jobs:
 
           echo "Cutoff date: $cutoff"
 
-          candidates=""
+          # Use a temp file to collect and sort candidates, avoiding both the
+          # subshell scoping issue and fragile printf string concatenation.
+          candidates=$(mktemp)
 
           page=1
           while true; do
@@ -122,7 +137,7 @@ jobs:
               | jq -r '.[].name')
             [ -z "$batch" ] && break
 
-            while read -r branch; do
+            while IFS= read -r branch; do
               if echo "$pr_branches" | grep -qx "$branch"; then
                 continue
               fi
@@ -131,16 +146,21 @@ jobs:
                 | jq -r '.[0].commit.committer.date')
 
               if [[ "$last_commit" < "$cutoff" ]]; then
-                candidates="$candidates$last_commit\t$branch\n"
+                # Use printf with explicit format to safely handle special characters
+                printf '%s\t%s\n' "$last_commit" "$branch" >> "$candidates"
               fi
             done <<< "$batch"
 
             page=$((page + 1))
           done
 
-          printf "$candidates" | sort | awk -F'\t' '{print $2}' | while read -r branch; do
+          # Sort oldest-first by the ISO 8601 date prefix, then delete up to limit.
+          # Use tab as delimiter for exact field splitting — avoids partial name matches.
+          while IFS=$'\t' read -r last_commit branch; do
             [ "$deleted" -ge "$LIMIT" ] && break
-            delete_branch "$branch" "no PR, last commit $(printf "$candidates" | grep -F "$branch" | awk -F'\t' '{print $1}')"
-          done
+            delete_branch "$branch" "no PR, last commit $last_commit"
+          done < <(sort "$candidates")
+
+          rm -f "$candidates"
 
           echo "--- Done: $deleted branch(es) ${DRY_RUN:+would be }deleted ---"
