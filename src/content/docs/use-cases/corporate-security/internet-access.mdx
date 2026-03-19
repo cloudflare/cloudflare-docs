@@ -1,0 +1,101 @@
+---
+pcx_content_type: how-to
+title: Secure your company's internet access
+description: Protect users from threats on the internet with DNS filtering and secure web gateway.
+sidebar:
+  order: 2
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Protect users from threats on the internet with DNS filtering and secure web gateway.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Gateway" href="/cloudflare-one/policies/gateway/" icon="cloudflare-one">
+
+Secure web gateway with DNS, HTTP, and network filtering.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="DNS Filtering" href="/cloudflare-one/policies/gateway/dns-policies/" icon="cloudflare-one">
+
+Block malicious domains and enforce acceptable use policies.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Browser Isolation" href="/cloudflare-one/policies/browser-isolation/" icon="cloudflare-one">
+
+Isolate risky web content in a remote browser.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Threat protection** (Gateway) - Block malware, phishing, and command-and-control domains at the DNS and HTTP layers
+- **Content filtering** (DNS Filtering) - Enforce acceptable use policies by blocking categories of domains across the organization
+- **Data protection** (Gateway) - Inspect HTTP traffic and prevent sensitive data from being uploaded to unauthorized destinations
+- **Browser isolation** (Browser Isolation) - Execute risky web content in a remote browser, keeping malware away from user devices
+
+### Getting started with Gateway
+
+<Details header="Set up DNS filtering">
+
+**Option 1: DNS-only (no client required)**
+
+1. Go to **Zero Trust** > **Gateway** > **DNS Locations**.
+2. Select **Add a location**.
+3. Configure your network to use the assigned DNS addresses.
+
+**Option 2: With WARP client (recommended)**
+
+1. Deploy the WARP client to devices.
+2. Go to **Zero Trust** > **Gateway** > **Policies** > **DNS**.
+3. Create policies to block threats:
+
+**Block security threats:**
+
+- **Selector**: Security Categories
+- **Operator**: in
+- **Value**: All security threats
+- **Action**: Block
+
+**Block adult content:**
+
+- **Selector**: Content Categories
+- **Operator**: in
+- **Value**: Adult Themes
+- **Action**: Block
+
+</Details>
+
+<Details header="Configure HTTP inspection">
+
+Turn on HTTP inspection for deeper visibility:
+
+1. Go to **Zero Trust** > **Settings** > **Network**.
+2. Turn on **Transport Layer Security (TLS) decryption**.
+3. Deploy the Cloudflare root certificate to devices.
+4. Create HTTP policies:
+
+**Block file uploads to personal storage:**
+
+- **Selector**: Application
+- **Operator**: in
+- **Value**: Personal Storage (Dropbox, Google Drive personal)
+- **Action**: Block
+
+**Isolate risky downloads:**
+
+- **Selector**: Download File Types
+- **Operator**: in
+- **Value**: Executable files
+- **Action**: Isolate
+
+</Details>
+
+For the complete guide, refer to [Gateway get started](/cloudflare-one/traffic-policies/).

@@ -1,0 +1,86 @@
+---
+pcx_content_type: how-to
+title: Store and retrieve context
+description: Store embeddings, conversation history, and application state with Vectorize, D1, R2, and KV.
+sidebar:
+  order: 2
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+AI applications need data storage for embeddings, conversation history, and application state.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Vectorize" href="/vectorize/" icon="vectorize">
+
+Store and query vector embeddings for semantic search and RAG applications.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="D1" href="/d1/" icon="d1">
+
+Store application data, conversation history, and metadata alongside your AI logic.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="R2" href="/r2/" icon="r2">
+
+Store large files, training data, and generated assets with zero egress fees.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="KV" href="/kv/" icon="kv">
+
+Cache AI responses and store session state at the edge.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Vector search** (Vectorize) - Store embeddings and find semantically similar content for Retrieval Augmented Generation (RAG) and recommendation features
+- **Structured storage** (D1) - Structured Query Language (SQL) database for conversation history, user data, and application metadata
+- **Object storage** (R2) - Store documents, training data, and generated assets with no egress fees
+- **Edge caching** (KV) - Cache frequent AI responses at the edge to reduce inference costs and latency
+
+## Get started
+
+<Details header="Set up Vectorize for RAG">
+
+1. In your terminal, create a Vectorize index:
+
+   ```sh
+   npx wrangler vectorize create my-index --dimensions=768 --metric=cosine
+   ```
+
+2. In `wrangler.toml`, add the Vectorize binding:
+
+   ```toml
+   [[vectorize]]
+   binding = "VECTORIZE"
+   index_name = "my-index"
+   ```
+
+3. In `src/index.ts`, insert vectors into your index:
+
+   ```ts
+   const vectors = [
+     { id: "doc1", values: [0.1, 0.2, ...], metadata: { text: "Document content" } }
+   ];
+   await env.VECTORIZE.upsert(vectors);
+   ```
+
+4. Still in `src/index.ts`, query for similar vectors:
+
+   ```ts
+   const queryVector = [0.1, 0.2, ...];
+   const results = await env.VECTORIZE.query(queryVector, { topK: 5 });
+   ```
+
+</Details>
+
+For the complete guide, refer to [Vectorize get started](/vectorize/get-started/).

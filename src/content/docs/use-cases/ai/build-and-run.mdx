@@ -1,0 +1,154 @@
+---
+pcx_content_type: how-to
+title: Build and run AI applications
+description: Deploy AI application logic and run inference with Workers, Workers AI, AI Gateway, and Durable Objects.
+sidebar:
+  order: 1
+---
+
+import { CardGrid, Details, LinkTitleCard, Render } from "~/components";
+
+Workers is the runtime that powers everything — it hosts your application logic, serves your frontend, and provides the binding through which Workers AI runs inference. AI Gateway sits in front of any provider to add caching, rate limiting, and observability. Durable Objects coordinate stateful workflows and multi-turn conversations.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Workers" href="/workers/" icon="workers">
+
+Build and globally deploy full applications, including the frontend, API routes, and AI orchestration logic.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Workers AI" href="/workers-ai/" icon="workers-ai">
+
+Run inference on Cloudflare's global network via a Workers binding, with pay-per-use pricing and no cold starts.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="AI Gateway" href="/ai-gateway/" icon="ai-gateway">
+
+Proxy requests to any AI provider with caching, rate limiting, and unified analytics.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
+
+Coordinate stateful AI workflows and maintain conversation state across requests.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Global inference** (Workers AI) - Run models at the Cloudflare location nearest to the user, reducing round-trip latency
+- **Pay-per-use pricing** (Workers AI) - No GPU reservations or idle costs; pay only for tokens processed
+- **Streaming responses** (Workers) - Stream AI responses token-by-token as they generate, without buffering the full reply
+- **Full-stack deployment** (Workers) - Serve frontend and backend from a single deployment without managing separate infrastructure
+- **Provider flexibility** (AI Gateway) - Route requests to OpenAI, Anthropic, Workers AI, or any other provider through a single endpoint
+- **Unified observability** (AI Gateway) - Track request volume, latency, costs, and errors across all providers in one place
+- **Stateful workflows** (Durable Objects) - Coordinate multi-step AI pipelines and maintain conversation state across requests
+
+## Get started
+
+### Workers AI
+
+<Details header="Set up Workers AI">
+
+1. In your terminal, create a new Worker project:
+
+   ```sh
+   npm create cloudflare@latest my-ai-app -- --template hello-world
+   cd my-ai-app
+   ```
+
+2. In `wrangler.toml`, add the Workers AI binding:
+
+   ```toml
+   [ai]
+   binding = "AI"
+   ```
+
+3. In `src/index.ts`, replace the default fetch handler with the following:
+
+   ```ts
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+   			prompt: "What is Cloudflare Workers AI?",
+   		});
+   		return new Response(JSON.stringify(response));
+   	},
+   };
+   ```
+
+4. Back in your terminal, deploy your Worker:
+   ```sh
+   npx wrangler deploy
+   ```
+
+</Details>
+
+For the complete guide, refer to [Workers AI get started](/workers-ai/get-started/).
+
+### AI Gateway
+
+AI Gateway is optional but recommended as your application grows. It sits in front of any AI provider — including Workers AI — and adds caching, rate limiting, fallback logic, and unified analytics without changes to your model or prompt code. Use it when you need visibility into costs across providers, want to cache repeated queries to reduce inference spend, or need to enforce request limits per user.
+
+<Details header="Set up AI Gateway">
+
+<Render file="create-gateway" product="ai-gateway" />
+
+</Details>
+
+For the complete guide, refer to [AI Gateway get started](/ai-gateway/get-started/).
+
+## Example: Complete RAG application
+
+<Details header="Build a RAG application">
+
+Add the following to your Worker's `src/index.ts`. This example combines Workers AI, Vectorize, and D1 in a single fetch handler:
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const { query } = await request.json();
+
+		// 1. Generate embedding for the query
+		const embedding = await env.AI.run("@cf/baai/bge-base-en-v1.5", {
+			text: query,
+		});
+
+		// 2. Search for relevant documents
+		const results = await env.VECTORIZE.query(embedding.data[0], {
+			topK: 3,
+			returnMetadata: true,
+		});
+
+		// 3. Build context from retrieved documents
+		const context = results.matches
+			.map((match: { metadata: { text: string } }) => match.metadata.text)
+			.join("\n\n");
+
+		// 4. Generate response with context
+		const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+			messages: [
+				{ role: "system", content: `Use this context to answer: ${context}` },
+				{ role: "user", content: query },
+			],
+		});
+
+		// 5. Store the interaction
+		await env.DB.prepare(
+			"INSERT INTO conversations (message, response) VALUES (?, ?)",
+		)
+			.bind(query, response.response)
+			.run();
+
+		return Response.json({ answer: response.response });
+	},
+};
+```
+
+</Details>

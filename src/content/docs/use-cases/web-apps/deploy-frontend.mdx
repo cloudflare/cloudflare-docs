@@ -1,0 +1,56 @@
+---
+pcx_content_type: how-to
+title: Deploy frontend applications
+description: Ship static sites and full-stack applications with automatic builds, previews, and global distribution.
+sidebar:
+  order: 1
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Ship static sites and full-stack applications with automatic builds, previews, and global distribution.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Workers" href="/workers/" icon="workers">
+
+Build and deploy frontend applications and server-side logic with Git integration, preview deployments, and global distribution.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Git integration** (Workers) - Automatic deployments triggered on push to GitHub or GitLab
+- **Preview deployments** (Workers) - Every pull request gets a unique URL for review before merging
+- **Global distribution** (Workers) - Static assets and server-side logic served from 300+ edge locations
+- **Full-stack support** (Workers) - Serve frontend assets and handle Application Programming Interface (API) routes from a single deployment
+
+### Getting started with Workers
+
+<Details header="Create and deploy a Worker">
+
+1. In your terminal, create a new project:
+
+   ```sh
+   npm create cloudflare@latest my-app
+   cd my-app
+   ```
+
+2. Deploy:
+
+   ```sh
+   npm run deploy
+   ```
+
+3. In the [Cloudflare dashboard](https://dash.cloudflare.com/), add a custom domain:
+   - Go to **Workers & Pages**
+   - Select your Worker > **Settings** > **Domains & Routes**
+   - Add your domain and configure DNS
+
+</Details>
+
+For the complete guide, refer to [Workers get started](/workers/get-started/).

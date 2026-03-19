@@ -1,5 +1,5 @@
 ---
-pcx_content_type: use-case
+pcx_content_type: overview
 title: Web sites and web apps
 head:
   - tag: title
@@ -8,400 +8,11 @@ sidebar:
   order: 7
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, DirectoryListing, LinkTitleCard } from "~/components";
 
 Build and deploy full-stack web applications globally with serverless compute, storage, and instant deployments.
 
-Cloudflare's developer platform lets you build complete applications that run at the edge, close to your users. With Workers, Pages, and integrated storage products, you can deploy everything from simple websites to complex full-stack applications without managing infrastructure.
-
-This guide walks you through the Cloudflare solutions available for building and deploying web applications.
-
----
-
-## Deploy frontend applications
-
-Ship static sites and full-stack applications with automatic builds, previews, and global distribution.
-
-### Solutions
-
-<CardGrid>
-
-<LinkTitleCard title="Pages" href="/pages/" icon="pages">
-
-Deploy frontend applications with Git integration, preview deployments, and global CDN.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Workers" href="/workers/" icon="workers">
-
-Add server-side logic with Pages Functions or standalone Workers.
-
-</LinkTitleCard>
-
-</CardGrid>
-
-### What you get
-
-- **Git integration** - Automatic deployments from GitHub and GitLab
-- **Preview deployments** - Every pull request gets a unique URL
-- **Global CDN** - Static assets served from 300+ locations
-- **Full-stack support** - Add server-side logic with Pages Functions
-
-### Getting started with Pages
-
-<Details header="Deploy a site with Pages">
-
-1. Connect your Git repository:
-   - Go to **Workers & Pages** in the dashboard
-   - Select **Create application** > **Pages** > **Connect to Git**
-   - Authorize access to your repository
-
-2. Configure your build:
-   - **Framework preset**: Select your framework (Next.js, Astro, etc.)
-   - **Build command**: `npm run build`
-   - **Build output directory**: Depends on framework (e.g., `dist`, `.next`, `build`)
-
-3. Deploy:
-   - Select **Save and Deploy**
-   - Your site is live at `your-project.pages.dev`
-
-4. Add a custom domain:
-   - Go to your project > **Custom domains**
-   - Add your domain and configure DNS
-
-</Details>
-
-For the complete guide, refer to [Pages get started](/pages/get-started/).
-
----
-
-## Build serverless backends
-
-Run server-side code at the edge with automatic scaling and global distribution.
-
-### Solutions
-
-<CardGrid>
-
-<LinkTitleCard title="Workers" href="/workers/" icon="workers">
-
-Deploy serverless functions that run in 300+ locations worldwide.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Cron Triggers" href="/workers/configuration/cron-triggers/" icon="workers">
-
-Schedule Workers to run on a recurring basis.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Queues" href="/queues/" icon="queues">
-
-Handle background jobs and async processing.
-
-</LinkTitleCard>
-
-</CardGrid>
-
-### What you get
-
-- **Global deployment** - Code runs close to users automatically
-- **No cold starts** - Sub-millisecond startup times
-- **Auto-scaling** - Handle traffic spikes without configuration
-- **Scheduled tasks** - Run code on a schedule with Cron Triggers
-
-### Getting started with Workers
-
-<Details header="Create and deploy a Worker">
-
-1. Create a new project:
-   ```sh
-   npm create cloudflare@latest my-app
-   cd my-app
-   ```
-
-2. Write your Worker code in `src/index.ts`:
-   ```ts
-   export default {
-     async fetch(request: Request, env: Env): Promise<Response> {
-       const url = new URL(request.url);
-       
-       if (url.pathname === "/api/hello") {
-         return Response.json({ message: "Hello from the edge!" });
-       }
-       
-       return new Response("Not found", { status: 404 });
-     }
-   };
-   ```
-
-3. Test locally:
-   ```sh
-   npm run dev
-   ```
-
-4. Deploy:
-   ```sh
-   npm run deploy
-   ```
-
-</Details>
-
-For the complete guide, refer to [Workers get started](/workers/get-started/).
-
----
-
-## Store application data
-
-Persist data with serverless databases, key-value storage, and object storage.
-
-### Solutions
-
-<CardGrid>
-
-<LinkTitleCard title="D1" href="/d1/" icon="d1">
-
-Serverless SQL database built on SQLite with global read replication.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="KV" href="/kv/" icon="kv">
-
-Global key-value storage for configuration, sessions, and cached data.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="R2" href="/r2/" icon="r2">
-
-Object storage for files, images, and assets with zero egress fees.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
-
-Strongly consistent storage for real-time collaboration and coordination.
-
-</LinkTitleCard>
-
-</CardGrid>
-
-### What you get
-
-- **SQL database** - Full SQL support with D1
-- **Key-value storage** - Fast reads for frequently accessed data
-- **Object storage** - Store files without egress costs
-- **Real-time state** - Coordinate state with Durable Objects
-
-### Getting started with D1
-
-<Details header="Set up a D1 database">
-
-1. Create a database:
-   ```sh
-   npx wrangler d1 create my-database
-   ```
-
-2. Add the binding to `wrangler.toml`:
-   ```toml
-   [[d1_databases]]
-   binding = "DB"
-   database_name = "my-database"
-   database_id = "your-database-id"
-   ```
-
-3. Create a schema:
-   ```sh
-   npx wrangler d1 execute my-database --command "CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, email TEXT)"
-   ```
-
-4. Query from your Worker:
-   ```ts
-   const users = await env.DB.prepare(
-     "SELECT * FROM users WHERE id = ?"
-   ).bind(userId).first();
-   ```
-
-</Details>
-
-For the complete guide, refer to [D1 get started](/d1/get-started/).
-
----
-
-## Add real-time features
-
-Build interactive applications with WebSockets, real-time collaboration, and live updates.
-
-### Solutions
-
-<CardGrid>
-
-<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
-
-Coordinate real-time state and WebSocket connections.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Queues" href="/queues/" icon="queues">
-
-Process events asynchronously and reliably.
-
-</LinkTitleCard>
-
-</CardGrid>
-
-### What you get
-
-- **WebSocket support** - Persistent connections for real-time updates
-- **Collaborative editing** - Build multiplayer experiences
-- **Event processing** - Handle webhooks and background jobs
-- **Strong consistency** - Coordinate state across connections
-
-### Real-time patterns
-
-<Details header="Build a WebSocket chat with Durable Objects">
-
-```ts
-export class ChatRoom {
-  sessions: Map<WebSocket, { name: string }> = new Map();
-
-  async fetch(request: Request) {
-    const url = new URL(request.url);
-    
-    if (url.pathname === "/websocket") {
-      const pair = new WebSocketPair();
-      const [client, server] = Object.values(pair);
-      
-      this.sessions.set(server, { name: "Anonymous" });
-      server.accept();
-      
-      server.addEventListener("message", (event) => {
-        const message = JSON.parse(event.data as string);
-        this.broadcast(JSON.stringify({
-          sender: this.sessions.get(server)?.name,
-          text: message.text
-        }));
-      });
-      
-      server.addEventListener("close", () => {
-        this.sessions.delete(server);
-      });
-      
-      return new Response(null, { status: 101, webSocket: client });
-    }
-    
-    return new Response("Not found", { status: 404 });
-  }
-
-  broadcast(message: string) {
-    for (const [ws] of this.sessions) {
-      ws.send(message);
-    }
-  }
-}
-```
-
-</Details>
-
----
-
-## Optimize performance
-
-Accelerate your application with caching, smart routing, and edge optimization.
-
-### Solutions
-
-<CardGrid>
-
-<LinkTitleCard title="Cache" href="/cache/" icon="cache">
-
-Cache responses at the edge to reduce latency and origin load.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Argo Smart Routing" href="/argo-smart-routing/" icon="argo-smart-routing">
-
-Route traffic through the fastest paths across Cloudflare's network.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Speed" href="/speed/" icon="speed">
-
-Automatic optimizations for HTML, CSS, JavaScript, and fonts.
-
-</LinkTitleCard>
-
-</CardGrid>
-
-### What you get
-
-- **Edge caching** - Serve content from the nearest location
-- **Smart routing** - Faster connections to your origin
-- **Asset optimization** - Automatic minification and compression
-- **Core Web Vitals** - Improve LCP, FID, and CLS scores
-
----
-
-## Secure your application
-
-Protect your web application from attacks, bots, and abuse.
-
-### Solutions
-
-<CardGrid>
-
-<LinkTitleCard title="SSL/TLS" href="/ssl/" icon="ssl">
-
-Encrypt all traffic with free, automatic SSL certificates.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Application security" href="/waf/" icon="waf">
-
-Block SQL injection, XSS, and other application attacks with managed rulesets.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="DDoS protection" href="/ddos-protection/" icon="ddos-protection">
-
-Automatic mitigation of volumetric and application-layer DDoS attacks.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Bot security" href="/bots/" icon="bots">
-
-Detect and block malicious bots while allowing legitimate crawlers.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Turnstile" href="/turnstile/" icon="turnstile">
-
-Privacy-preserving CAPTCHA alternative for forms and login pages.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Page Shield" href="/page-shield/" icon="page-shield">
-
-Monitor and control third-party scripts to prevent supply chain attacks.
-
-</LinkTitleCard>
-
-</CardGrid>
-
-### What you get
-
-- **Automatic HTTPS** - Free SSL certificates with automatic renewal
-- **Attack protection** - WAF rules block common vulnerabilities
-- **DDoS mitigation** - Always-on protection at no extra cost
-- **Bot defense** - Stop credential stuffing and scraping attacks
-- **Script security** - Detect malicious JavaScript injections
-
-### Get started
-
-1. [Enable SSL/TLS](/ssl/get-started/)
-2. [Configure Application Security managed rules](/waf/managed-rules/deploy-zone-dashboard/)
-3. [Add Turnstile to forms](/turnstile/get-started/)
-
----
+<DirectoryListing />
 
 ## Architecture patterns
 
@@ -409,10 +20,9 @@ Monitor and control third-party scripts to prevent supply chain attacks.
 
 Build a complete application with frontend and backend:
 
-1. **Pages** hosts your frontend (React, Vue, Astro, etc.)
-2. **Workers** (via Pages Functions) handles API routes
-3. **D1** stores application data
-4. **R2** stores user uploads and assets
+1. **Workers** serves your frontend assets (React, Vue, Astro, and similar frameworks) and handles Application Programming Interface (API) routes
+2. **D1** stores application data
+3. **R2** stores user uploads and assets
 
 ### Real-time collaborative app
 
@@ -427,10 +37,18 @@ Build multiplayer or collaborative features:
 
 Add interactivity to static content:
 
-1. **Pages** serves static HTML/CSS/JS
-2. **Workers** handles form submissions and API calls
-3. **KV** stores form data and user preferences
-4. **R2** stores uploaded files
+1. **Workers** serves static HTML/CSS/JavaScript (JS) and handles form submissions and API calls
+2. **KV** stores form data and user preferences
+3. **R2** stores uploaded files
+
+---
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up). Workers, D1, KV, R2, Durable Objects, and Queues are account-level products — you do not need a domain added to Cloudflare to deploy a Worker or use storage bindings.
+- [Node.js](https://nodejs.org/) (version 16.17.0 or later) installed on your machine.
+- [Wrangler](/workers/wrangler/install-and-update/) installed. Wrangler is the CLI for creating, testing, and deploying Workers projects.
+- For security features (SSL/TLS, WAF, DDoS protection, Bot security): a domain [added to Cloudflare](/fundamentals/manage-domains/add-site/) with DNS records proxied through Cloudflare.
 
 ---
 
@@ -440,13 +58,7 @@ Add interactivity to static content:
 
 <LinkTitleCard title="Workers documentation" href="/workers/" icon="workers">
 
-Complete documentation for building serverless applications.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Pages documentation" href="/pages/" icon="pages">
-
-Complete documentation for deploying frontend applications.
+Complete documentation for building and deploying applications on Cloudflare.
 
 </LinkTitleCard>
 

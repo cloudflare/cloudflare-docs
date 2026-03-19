@@ -1,0 +1,102 @@
+---
+pcx_content_type: how-to
+title: Access internal applications securely
+description: Implement Zero Trust access to internal applications without the complexity of VPNs.
+sidebar:
+  order: 1
+---
+
+import { CardGrid, Details, LinkTitleCard, Render } from "~/components";
+
+Implement Zero Trust access to internal applications without the complexity of Virtual Private Networks (VPNs).
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Access" href="/cloudflare-one/policies/access/" icon="cloudflare-one">
+
+Replace VPNs with Zero Trust access to internal applications.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Cloudflare Tunnel" href="/cloudflare-one/connections/connect-networks/" icon="cloudflare-one">
+
+Connect internal applications without exposing them to the internet.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="WARP Client" href="/cloudflare-one/connections/connect-devices/warp/" icon="cloudflare-one">
+
+Secure device connectivity for remote workers.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Zero Trust access** (Access) - Verify identity and device posture on every request before granting access to internal applications
+- **No network exposure** (Cloudflare Tunnel) - Internal apps remain private; Tunnel creates an outbound-only connection with no inbound firewall changes
+- **Better performance** (WARP Client) - Lower latency than traditional VPN architectures, as traffic routes through Cloudflare's global network rather than backhauling to a central data center
+- **Granular policies** (Access) - Control access by user, group, device posture, and location with per-application rules
+
+### Getting started with Access
+
+<Details header="Set up Zero Trust access to an internal app">
+
+**Connect your application with Tunnel:**
+
+Run the following commands in a terminal on the server that hosts your application:
+
+1. Install cloudflared on your server:
+
+   ```sh
+   curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+   chmod +x cloudflared
+   ```
+
+2. Authenticate and create a tunnel:
+
+   ```sh
+   cloudflared tunnel login
+   cloudflared tunnel create my-app-tunnel
+   ```
+
+3. Configure the tunnel:
+
+   ```yaml
+   tunnel: my-app-tunnel
+   credentials-file: /path/to/credentials.json
+
+   ingress:
+     - hostname: app.example.com
+       service: http://localhost:8080
+     - service: http_status:404
+   ```
+
+4. Run the tunnel:
+   ```sh
+   cloudflared tunnel run my-app-tunnel
+   ```
+
+**Create an Access application:**
+
+In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access** > **Applications**:
+
+1. Go to **Zero Trust** > **Access** > **Applications**.
+2. Select **Add an application** > **Self-hosted**.
+3. Configure:
+   - **Application name**: My Internal App
+   - **Application domain**: `app.example.com`
+4. Add an Access policy to control who can access.
+
+</Details>
+
+<Details header="Configure identity providers">
+
+<Render file="access/idp-integration" product="cloudflare-one" />
+
+</Details>
+
+For the complete guide, refer to [Access get started](/cloudflare-one/applications/).

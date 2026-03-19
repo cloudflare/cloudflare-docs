@@ -1,0 +1,94 @@
+---
+pcx_content_type: how-to
+title: Deploy APIs at the edge
+description: Build and deploy globally distributed APIs with automatic scaling using Workers, D1, Durable Objects, and Queues.
+sidebar:
+  order: 1
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Build and deploy Application Programming Interfaces (APIs) that run globally with automatic scaling.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Workers" href="/workers/" icon="workers">
+
+Build and deploy APIs at the edge with automatic scaling and global distribution.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="D1" href="/d1/" icon="d1">
+
+Serverless SQL database for API data storage.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
+
+Coordinate state across distributed API endpoints.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Queues" href="/queues/" icon="queues">
+
+Handle async processing and webhooks.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Global deployment** (Workers) - API handlers run in 300+ Cloudflare locations worldwide with no regional configuration
+- **Auto-scaling** (Workers) - Handle traffic spikes without provisioning servers or setting capacity limits
+- **Async processing** (Queues) - Offload webhook delivery and background jobs without blocking the API response
+- **Integrated storage** (D1 / Durable Objects) - Structured Query Language (SQL) database and strongly consistent state storage available as Worker bindings
+
+## Get started
+
+<Details header="Build a REST API with Workers">
+
+1. In your terminal, create a new Worker project:
+
+   ```sh
+   npm create cloudflare@latest my-api -- --template hello-world
+   cd my-api
+   ```
+
+2. In `src/index.ts`, build your Representational State Transfer (REST) API:
+
+   ```ts
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+
+   		// Route requests
+   		if (url.pathname === "/api/users" && request.method === "GET") {
+   			const users = await env.DB.prepare("SELECT * FROM users").all();
+   			return Response.json(users.results);
+   		}
+
+   		if (url.pathname === "/api/users" && request.method === "POST") {
+   			const body = await request.json();
+   			await env.DB.prepare("INSERT INTO users (name, email) VALUES (?, ?)")
+   				.bind(body.name, body.email)
+   				.run();
+   			return Response.json({ success: true }, { status: 201 });
+   		}
+
+   		return new Response("Not Found", { status: 404 });
+   	},
+   };
+   ```
+
+3. Back in your terminal, deploy your API:
+   ```sh
+   npx wrangler deploy
+   ```
+
+</Details>
+
+For the complete guide, refer to [Workers get started](/workers/get-started/).

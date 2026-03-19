@@ -1,0 +1,85 @@
+---
+pcx_content_type: how-to
+title: Enable customer code deployment
+description: Let your customers deploy their own code on your platform with isolated execution environments.
+sidebar:
+  order: 2
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Let your customers deploy their own code on your platform with isolated execution environments.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Workers for Platforms" href="/cloudflare-for-platforms/workers-for-platforms/" icon="workers">
+
+Let customers deploy their own code on your platform with isolated execution.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Dispatch Namespaces" href="/cloudflare-for-platforms/workers-for-platforms/configuration/dispatch-namespaces/" icon="workers">
+
+Organize and route requests to customer Workers.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Tenant isolation** (Workers for Platforms) - Each customer's code runs in a separate V8 isolate with no shared memory between tenants
+- **Custom logic** (Workers for Platforms) - Customers can deploy their own Workers to extend or customize your platform's behavior
+- **Dispatch routing** (Dispatch Namespaces) - Route incoming requests to the correct customer Worker based on hostname, path, or header
+- **Observability** (Workers for Platforms) - Tail Workers capture logs and errors across all tenant code from a single integration
+
+### Getting started with Workers for Platforms
+
+<Details header="Set up Workers for Platforms">
+
+1. In your terminal, **create a dispatch namespace**:
+
+   ```sh
+   npx wrangler dispatch-namespace create my-dispatch-namespace
+   ```
+
+2. **Upload a user Worker** to the namespace:
+
+   ```sh
+   npx wrangler deploy --dispatch-namespace my-dispatch-namespace
+   ```
+
+3. In `src/index.ts`, **create a dispatch Worker** to route requests:
+
+   ```ts
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		// Get customer identifier from request
+   		const customerId = request.headers.get("X-Customer-ID");
+
+   		if (!customerId) {
+   			return new Response("Missing customer ID", { status: 400 });
+   		}
+
+   		// Get the customer's Worker from the dispatch namespace
+   		const userWorker = env.DISPATCH_NAMESPACE.get(customerId);
+
+   		// Forward the request to the customer's Worker
+   		return userWorker.fetch(request);
+   	},
+   };
+   ```
+
+4. In `wrangler.toml`, **configure the dispatch binding**:
+
+   ```toml
+   [[dispatch_namespaces]]
+   binding = "DISPATCH_NAMESPACE"
+   namespace = "my-dispatch-namespace"
+   ```
+
+</Details>
+
+For the complete guide, refer to [Workers for Platforms get started](/cloudflare-for-platforms/workers-for-platforms/get-started/).

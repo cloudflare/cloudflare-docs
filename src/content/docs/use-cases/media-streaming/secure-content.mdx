@@ -1,0 +1,86 @@
+---
+pcx_content_type: how-to
+title: Secure your content
+description: Protect media from unauthorized access and hotlinking.
+sidebar:
+  order: 5
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Protect media from unauthorized access and hotlinking.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Hotlink Protection" href="/waf/tools/scrape-shield/hotlink-protection/" icon="waf">
+
+Prevent other sites from embedding your media.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Signed URLs" href="/stream/viewing-videos/securing-your-stream/" icon="stream">
+
+Time-limited access tokens for media files.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Access" href="/cloudflare-one/policies/access/" icon="cloudflare-one">
+
+Identity-based access control for premium content.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Hotlink protection** (Hotlink Protection) - Block other sites from embedding or hot-linking your images and video without permission
+- **Token authentication** (Signed URLs) - Issue time-limited access tokens so only authorized viewers can access protected media
+- **Identity-based access** (Access) - Gate premium or subscriber-only content behind Cloudflare Access identity policies
+- **Geo-restrictions** (Workers) - Enforce regional content licensing by inspecting `request.cf.country` and blocking or redirecting accordingly
+
+### Content protection
+
+<Details header="Implement token authentication">
+
+**For Stream videos:**
+Use signed URLs with expiration times (see Stage 1).
+
+**For R2/origin content:**
+
+Add the following to your Worker's `src/index.ts`. This Worker validates a token and expiry parameter on every request before serving the protected content:
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const token = url.searchParams.get("token");
+		const expires = url.searchParams.get("expires");
+
+		// Validate token
+		if (!token || !expires) {
+			return new Response("Unauthorized", { status: 401 });
+		}
+
+		if (Date.now() > parseInt(expires)) {
+			return new Response("Token expired", { status: 403 });
+		}
+
+		const expectedToken = await generateToken(
+			url.pathname,
+			expires,
+			env.SECRET,
+		);
+		if (token !== expectedToken) {
+			return new Response("Invalid token", { status: 403 });
+		}
+
+		// Serve the content
+		return fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</Details>

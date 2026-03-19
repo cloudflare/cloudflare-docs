@@ -1,0 +1,160 @@
+---
+pcx_content_type: how-to
+title: Protect your APIs
+description: Implement defense in depth with API Shield schema validation, rate limiting, mTLS, and WAF managed rulesets.
+sidebar:
+  order: 2
+---
+
+import { CardGrid, Details, LinkTitleCard, Render } from "~/components";
+
+Implement defense in depth with Application Programming Interface (API) Shield, rate limiting, and authentication.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="API Shield" href="/api-shield/" icon="api-shield">
+
+Discover, secure, and monitor your APIs with schema validation and anomaly detection.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Rate Limiting" href="/waf/rate-limiting-rules/" icon="waf">
+
+Protect APIs from abuse with flexible rate limiting rules.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="mTLS" href="/ssl/client-certificates/" icon="ssl">
+
+Authenticate API clients with mutual TLS certificates.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Application Security" href="/waf/" icon="waf">
+
+Block injection attacks and other threats with managed rulesets.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Schema validation** (API Shield) - Reject requests that do not conform to your OpenAPI specification before they reach your origin
+- **Rate limiting** (Rate Limiting) - Prevent abuse and volumetric attacks with per-IP or per-API-key request limits
+- **Client authentication** (mutual TLS / mTLS) - Require mutual TLS certificates for machine-to-machine communication
+- **Attack protection** (Application Security) - Web Application Firewall (WAF) managed rulesets block SQL injection, Cross-Site Scripting (XSS), and other injection attacks
+
+## Get started with API Shield
+
+<Details header="Upload an OpenAPI schema">
+
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your domain.
+2. Go to **Security** > **API Shield**.
+3. Select **Schema Validation** > **Upload schema**.
+4. Upload your OpenAPI 3.x specification (JSON or YAML).
+
+Example OpenAPI schema:
+
+```yaml
+openapi: 3.0.0
+info:
+  title: My API
+  version: 1.0.0
+paths:
+  /api/users:
+    get:
+      responses:
+        "200":
+          description: List of users
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email]
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+      responses:
+        "201":
+          description: User created
+```
+
+Cloudflare will automatically discover endpoints and create validation rules.
+
+</Details>
+
+For the complete guide, refer to [API Shield get started](/api-shield/get-started/).
+
+## Configure rate limiting
+
+<Details header="Set up API rate limiting">
+
+1. Go to **Security** > **Application Security** > **Rate limiting rules**.
+2. Select **Create rule**.
+3. Configure the rule:
+   - **Rule name**: `API rate limit`
+   - **Expression**: `http.request.uri.path contains "/api/"`
+   - **Rate**: `100 requests per 1 minute`
+   - **Action**: `Block`
+
+**Per-client rate limiting:**
+
+- Use `IP Address` for per-IP limits
+- Use `http.request.headers["authorization"]` for per-API-key limits
+
+**Tiered rate limits:**
+
+1. Warning: 80 requests/min → Log
+2. Soft limit: 100 requests/min → Challenge
+3. Hard limit: 200 requests/min → Block
+
+</Details>
+
+For the complete guide, refer to [Rate limiting rules](/waf/rate-limiting-rules/).
+
+## Enable mTLS authentication
+
+<Details header="Set up mTLS for API authentication">
+
+**Create a client certificate:**
+
+1. Go to **SSL/TLS** > **Client Certificates**.
+2. Select **Create Certificate**.
+3. Choose validity period and download certificate + key.
+
+**Create an mTLS rule:**
+
+<Render file="mtls-create-rule" product="api-shield" />
+
+**Validate certificates in Workers:**
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const clientCert = request.cf?.tlsClientAuth;
+
+		if (!clientCert || clientCert.certVerified !== "SUCCESS") {
+			return new Response("Client certificate required", { status: 403 });
+		}
+
+		// Certificate is valid, proceed with request
+		return Response.json({
+			authenticated: true,
+			subject: clientCert.certSubjectDN,
+		});
+	},
+};
+```
+
+</Details>
+
+For the complete guide, refer to [mTLS authentication](/ssl/client-certificates/).

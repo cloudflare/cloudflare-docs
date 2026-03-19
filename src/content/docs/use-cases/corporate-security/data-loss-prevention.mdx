@@ -1,0 +1,86 @@
+---
+pcx_content_type: how-to
+title: Prevent data loss
+description: Protect sensitive data from exfiltration with DLP and CASB.
+sidebar:
+  order: 4
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Protect sensitive data from exfiltration with Data Loss Prevention (DLP) and Cloud Access Security Broker (CASB).
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Data Loss Prevention" href="/cloudflare-one/policies/data-loss-prevention/" icon="cloudflare-one">
+
+Detect and block sensitive data in transit.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="CASB" href="/cloudflare-one/applications/scan-apps/" icon="cloudflare-one">
+
+Discover and secure SaaS applications.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Data detection** (Data Loss Prevention) - Identify sensitive data patterns — Personally Identifiable Information (PII), Payment Card Industry (PCI), Protected Health Information (PHI), and custom patterns — in traffic flowing through Gateway
+- **Inline protection** (Data Loss Prevention) - Block uploads or transfers of sensitive data in real time before they leave the network
+- **SaaS visibility** (CASB) - Discover which SaaS applications employees are using, including unsanctioned shadow IT
+- **Posture management** (CASB) - Identify misconfigurations and overly permissive sharing settings across connected SaaS apps
+
+### Getting started with DLP
+
+<Details header="Configure DLP policies">
+
+1. Go to **Zero Trust** > **Gateway** > **Policies** > **HTTP**.
+2. Create a policy to detect sensitive data:
+
+**Block credit card uploads:**
+
+- **Selector**: DLP Profile
+- **Operator**: in
+- **Value**: Financial Information (Credit Cards)
+- **Action**: Block
+
+**Log PII transfers:**
+
+- **Selector**: DLP Profile
+- **Operator**: in
+- **Value**: Personally Identifiable Information
+- **Action**: Allow (with logging enabled)
+
+**Custom patterns:**
+Create custom DLP profiles for:
+
+- Employee IDs
+- Internal project codes
+- Proprietary data patterns
+
+</Details>
+
+<Details header="Set up CASB">
+
+1. Go to **Zero Trust** > **CASB** > **Integrations**.
+2. Connect your SaaS applications:
+   - Microsoft 365
+   - Google Workspace
+   - Salesforce
+   - Slack
+
+3. Review findings:
+   - Misconfigurations
+   - User risks
+   - Data exposure
+
+4. Create Gateway policies based on CASB findings.
+
+</Details>
+
+For the complete guide, refer to [DLP get started](/cloudflare-one/policies/data-loss-prevention/).

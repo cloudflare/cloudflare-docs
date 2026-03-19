@@ -1,0 +1,109 @@
+---
+pcx_content_type: how-to
+title: Store and isolate customer data
+description: Store customer data with appropriate isolation using Cloudflare's storage products.
+sidebar:
+  order: 3
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Store customer data with appropriate isolation using Cloudflare's storage products.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="D1" href="/d1/" icon="d1">
+
+Store tenant data with per-database isolation and global replication.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="R2" href="/r2/" icon="r2">
+
+Store customer files and assets with zero egress fees.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
+
+Coordinate state and provide strong consistency for multi-tenant applications.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="KV" href="/kv/" icon="kv">
+
+Store tenant configuration and session data at the edge.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Database per tenant** (D1) - Create isolated D1 databases per customer for complete data separation, or use row-level isolation in a shared database
+- **Object storage** (R2) - Store customer files and assets per tenant using prefix or bucket-level isolation, with no egress fees
+- **Real-time coordination** (Durable Objects) - Manage stateful workflows and provide strong consistency for multi-tenant operations
+- **Edge configuration** (KV) - Store per-tenant settings, feature flags, and session data at the edge for low-latency reads
+
+### Data isolation patterns
+
+<Details header="Per-tenant database isolation">
+
+Add the following patterns to your Worker's `src/index.ts`:
+
+```ts
+// Query tenant-specific database
+const tenantDb = env[`DB_${tenantId}` as keyof Env] as D1Database;
+const results = await tenantDb
+	.prepare("SELECT * FROM users WHERE active = ?")
+	.bind(true)
+	.all();
+```
+
+For shared database with row-level isolation:
+
+```ts
+// Always include tenant_id in queries
+const results = await env.DB.prepare(
+	"SELECT * FROM users WHERE tenant_id = ? AND active = ?",
+)
+	.bind(tenantId, true)
+	.all();
+```
+
+For shared database with row-level isolation:
+
+```js
+// Always include tenant_id in queries
+const results = await env.DB.prepare(
+	"SELECT * FROM users WHERE tenant_id = ? AND active = ?",
+)
+	.bind(tenantId, true)
+	.all();
+```
+
+</Details>
+
+<Details header="Per-tenant object storage">
+
+Add the following patterns to your Worker's `src/index.ts`:
+
+**Option 1: Prefix-based isolation**
+
+```ts
+// Store files with tenant prefix
+await env.R2.put(`${tenantId}/uploads/${filename}`, file);
+
+// List tenant files
+const objects = await env.R2.list({ prefix: `${tenantId}/` });
+```
+
+**Option 2: Separate buckets per tenant**
+
+- Create buckets programmatically via Application Programming Interface (API)
+- Use bucket-level access controls
+- Better for compliance requirements
+
+</Details>

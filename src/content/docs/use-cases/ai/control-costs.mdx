@@ -1,0 +1,63 @@
+---
+pcx_content_type: how-to
+title: Control costs and improve quality
+description: Optimize AI application cost, latency, and quality with AI Gateway caching, rate limiting, and analytics.
+sidebar:
+  order: 3
+---
+
+import { CardGrid, Details, LinkTitleCard, Render } from "~/components";
+
+As your AI application scales, optimize for cost, latency, and quality.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="AI Gateway" href="/ai-gateway/" icon="ai-gateway">
+
+Cache responses, rate limit requests, and monitor usage across providers.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Workers Analytics Engine" href="/analytics/analytics-engine/" icon="analytics">
+
+Build custom analytics for AI-specific metrics.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Response caching** (AI Gateway) - Cache identical queries so repeated prompts do not trigger a new inference call
+- **Rate limiting** (AI Gateway) - Set request limits per user or Application Programming Interface (API) key to prevent abuse and control spending
+- **Unified analytics** (AI Gateway) - Track usage, latency, and cost across all AI providers from one dashboard
+- **Custom metrics** (Workers Analytics Engine) - Build AI-specific dashboards tracking tokens, latency distributions, and error rates
+
+## Configure AI Gateway
+
+<Details header="Configure AI Gateway optimization">
+
+**Turn on caching** to reduce costs for repeated queries:
+
+1. Go to **AI Gateway** in the dashboard
+2. Select your gateway > **Settings**
+3. Turn on **Cache responses**
+4. Set the cache Time to Live (TTL) based on your use case
+
+**Set up rate limiting** to control costs:
+
+1. Go to **AI Gateway** > **Settings**
+2. Turn on **Rate limiting**
+3. Configure requests per minute per user
+
+**Monitor with analytics**:
+
+- View request volume, latency, and error rates
+- Track costs across providers
+- Identify optimization opportunities
+
+</Details>
+
+<Render file="analytics-dashboard" product="ai-gateway" />

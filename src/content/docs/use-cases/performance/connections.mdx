@@ -1,0 +1,48 @@
+---
+pcx_content_type: how-to
+title: Accelerate connections
+description: Route traffic through the fastest paths and optimize connection performance.
+sidebar:
+  order: 3
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+Route traffic through the fastest paths and optimize connection performance.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Argo Smart Routing" href="/argo-smart-routing/" icon="argo-smart-routing">
+
+Route traffic through the fastest paths across Cloudflare's network.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="HTTP/3" href="/speed/optimization/protocol/http3/" icon="speed">
+
+Enable the latest HTTP protocol for faster connections.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Early Hints" href="/speed/optimization/protocol/early-hints/" icon="speed">
+
+Preload assets before the HTML response arrives.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Smart routing** (Argo Smart Routing) - Automatically route requests through uncongested network paths, reducing latency between edge and origin
+- **Faster handshakes** (HTTP/3) - HTTP/3 with QUIC reduces connection setup time, especially on lossy or mobile networks
+- **Asset preloading** (Early Hints) - Send `103 Early Hints` responses so browsers start fetching assets before the full HTML arrives
+- **Optimized paths** (Argo Smart Routing) - Real-time network telemetry selects the fastest available route for each request
+
+## Get started
+
+1. [Enable Argo Smart Routing](/argo-smart-routing/get-started/)
+2. [Enable HTTP/3](/speed/optimization/protocol/http3/)
+3. [Enable Early Hints](/speed/optimization/protocol/early-hints/)

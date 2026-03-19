@@ -1,0 +1,58 @@
+---
+pcx_content_type: how-to
+title: Customer domains with SSL for SaaS
+description: Allow your customers to use their own domains with your platform, complete with automatic SSL certificates.
+sidebar:
+  order: 1
+---
+
+import { CardGrid, LinkTitleCard, Render } from "~/components";
+
+Allow your customers to use their own domains with your platform, complete with automatic SSL certificates.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Cloudflare for Platforms" href="/cloudflare-for-platforms/" icon="cloudflare-for-platforms">
+
+Extend Cloudflare's network to your customers with custom hostnames and per-tenant configuration.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="SSL for SaaS" href="/cloudflare-for-platforms/cloudflare-for-saas/" icon="ssl">
+
+Automatically provision and manage SSL certificates for customer domains.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Custom domains** (Cloudflare for Platforms) - Customers bring their own domains and have them route to your platform with per-tenant configuration
+- **Automatic SSL** (SSL for SaaS) - Certificates provisioned and renewed automatically for every customer domain with no manual steps
+- **No customer action required** (SSL for SaaS) - Cloudflare can complete domain validation without requiring action from the customer
+- **Scale** (SSL for SaaS) - Support thousands of custom hostnames per domain without additional per-hostname infrastructure
+
+### Prerequisites
+
+<Render file="get-started-prereqs" product="cloudflare-for-platforms" />
+
+### Set up fallback origin
+
+<Render file="get-started-fallback-origin" product="cloudflare-for-platforms" />
+
+For more details, refer to [Fallback origin configuration](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-2---create-fallback-origin-and-cname-target).
+
+### Create custom hostnames
+
+<Render file="create-custom-hostname" product="cloudflare-for-platforms" />
+
+For the complete guide, refer to [Create custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/).
+
+### Verify hostname status
+
+<Render file="get-started-check-statuses" product="cloudflare-for-platforms" />
+
+For troubleshooting, refer to [Hostname validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/).

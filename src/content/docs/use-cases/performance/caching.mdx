@@ -1,0 +1,76 @@
+---
+pcx_content_type: how-to
+title: Cache content globally
+description: Serve static and dynamic content from Cloudflare's edge network, reducing latency and origin load.
+sidebar:
+  order: 1
+---
+
+import { CardGrid, Details, LinkTitleCard, Render } from "~/components";
+
+Serve static and dynamic content from Cloudflare's edge network, reducing latency and origin load.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Cache" href="/cache/" icon="cache">
+
+Cache static assets and HTML at 300+ edge locations worldwide.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Cache Rules" href="/cache/how-to/cache-rules/" icon="cache">
+
+Fine-grained control over what gets cached and for how long.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Tiered Cache" href="/cache/how-to/tiered-cache/" icon="cache">
+
+Reduce origin requests by using regional cache tiers.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Cache Reserve" href="/cache/advanced-configuration/cache-reserve/" icon="cache">
+
+Persistent cache storage for long-tail content.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Global distribution** (Cache) - Content cached in 300+ edge locations so visitors are served from the location nearest to them
+- **Reduced latency** (Cache) - Cache hits are served directly from the edge, eliminating round-trips to your origin
+- **Origin offload** (Tiered Cache) - Regional cache tiers intercept repeated requests before they reach your origin server
+- **Persistent caching** (Cache Reserve) - Long-tail content that would normally expire is kept in durable storage, reducing origin fetches for infrequently accessed assets
+
+### Configure caching
+
+<Details header="Set up cache rules">
+
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your domain.
+2. Go to **Caching** > **Cache Rules**.
+3. Select **Create rule**.
+4. Configure caching behavior:
+   - **Static assets**: Cache with long Time to Live (TTL) values (for example, 1 year for versioned assets)
+   - **HTML pages**: Cache with shorter TTLs or use `stale-while-revalidate`
+   - **API responses**: Cache Application Programming Interface (API) responses selectively based on endpoint
+
+Example cache rule for static assets:
+
+- **Expression**: `http.request.uri.path.extension in {"js" "css" "png" "jpg" "gif" "svg" "woff2"}`
+- **Cache eligibility**: Eligible for cache
+- **Edge TTL**: 1 year
+
+</Details>
+
+<Details header="Enable Tiered Cache">
+
+<Render file="smart-tiered-cache" product="cache" />
+
+</Details>
+
+For the complete guide, refer to [Cache documentation](/cache/).

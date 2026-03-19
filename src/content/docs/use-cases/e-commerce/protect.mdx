@@ -1,0 +1,152 @@
+---
+pcx_content_type: how-to
+title: Protect your store
+description: Before driving traffic to your store, establish security controls to protect against attacks and fraud.
+sidebar:
+  order: 2
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Before driving traffic to your store, establish security controls to protect against attacks and fraud.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="SSL/TLS" href="/ssl/" icon="ssl">
+
+Encrypt all traffic with free, automatic SSL certificates.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Application Security" href="/waf/" icon="waf">
+
+Block SQL injection, XSS, and other application attacks with managed rulesets.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="DDoS Protection" href="/ddos-protection/" icon="ddos-protection">
+
+Automatic mitigation of volumetric and application-layer DDoS attacks.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Bot security" href="/bots/" icon="bots">
+
+Detect and block malicious bots while allowing legitimate crawlers.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Turnstile" href="/turnstile/" icon="turnstile">
+
+Privacy-preserving CAPTCHA alternative for forms and checkout.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Client-side security" href="/page-shield/" icon="page-shield">
+
+Monitor and control third-party scripts to prevent Magecart-style attacks.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **HTTP DDoS protection** (DDoS Protection) - Automatic, always-on mitigation of HTTP flood attacks, cache-busting attacks, and application-layer Distributed Denial of Service (DDoS) attacks at layer 7. No configuration required — active on all Cloudflare domains by default
+- **PCI DSS compliance support** (SSL/TLS + Application Security) - Transport Layer Security (TLS) encryption and Web Application Firewall (WAF) managed rulesets help meet Payment Card Industry (PCI) payment security requirements
+- **Credential stuffing protection** (Bot security) - ML-powered bot detection blocks automated login and account takeover attacks
+- **Payment form security** (Turnstile) - Privacy-preserving CAPTCHA alternative that protects checkout without adding user friction
+- **Supply chain protection** (Client-side security) - Detects malicious scripts injected by compromised third-party vendors (Magecart-style attacks)
+
+## Get started
+
+1. [Enable SSL/TLS](/ssl/get-started/)
+2. [Configure Application Security managed rules](/waf/managed-rules/deploy-zone-dashboard/)
+3. [Set up Bot security](/bots/get-started/)
+4. [Add Turnstile to forms](/turnstile/get-started/)
+5. [Enable Client-side security](/page-shield/get-started/)
+
+### Example e-commerce security configuration
+
+<Details header="Recommended Application Security rules for e-commerce">
+
+Managed rulesets are pre-built sets of firewall rules maintained by Cloudflare. Turning them on means you get protection against common attacks without writing any rules yourself.
+
+To turn on managed rulesets:
+
+1. Go to your domain in the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Go to **Security** > **Application Security** > **Managed rules**.
+3. Turn on the following rulesets:
+   - **Cloudflare Managed Ruleset** — Blocks common attack patterns including SQL injection, Cross-Site Scripting (XSS), and other Open Web Application Security Project (OWASP) Top 10 vulnerabilities. This is the baseline ruleset for all sites.
+   - **Cloudflare OWASP Core Ruleset** — A Cloudflare-adapted version of the OWASP ModSecurity ruleset. Turn on this ruleset for additional coverage, especially if your store handles user-generated content or has complex form submissions.
+   - **Exposed Credentials Check** — Checks login attempts against known breached credential databases and triggers an action when a match is found. For e-commerce, set this to **Block** or **Challenge** to protect customer accounts.
+
+For more information, refer to [Deploy managed rulesets](/waf/managed-rules/deploy-zone-dashboard/).
+
+**Custom rules for e-commerce**
+
+Once managed rulesets are turned on, add custom rules to address patterns specific to your store. Go to **Security** > **Application Security** > **Custom rules** and create rules for:
+
+- **Login brute force** — Rate limit requests to `/login` or `/account` to a low threshold (for example, 5 requests per minute per IP). Refer to [Rate limiting rules](/waf/rate-limiting-rules/).
+- **Admin path protection** — Block all requests to `/admin`, `/wp-admin`, or equivalent paths from IPs that are not on your allowlist.
+- **Checkout challenges** — Apply a managed challenge to requests to `/checkout` or `/cart` that carry suspicious characteristics such as a low Cloudflare threat score.
+
+</Details>
+
+<Details header="Bot security for e-commerce">
+
+The bot protection available to you depends on your Cloudflare plan. All plans include some level of bot protection, but the degree of control and visibility increases at higher tiers.
+
+| Plan                | Product                                                         | What it does                                                                                                                                            |
+| ------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Free                | [Bot Fight Mode](/bots/get-started/bot-fight-mode/)             | Detects known bots and issues computationally expensive challenges. Simple on/off with no customisation.                                                |
+| Pro / Business      | [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) | Challenge or block bots, protect static resources, and access limited bot analytics. Configurable per traffic category.                                 |
+| Enterprise (add-on) | [Bot Management](/bots/get-started/bot-management/)             | Assigns a bot score (1–99) to every request. Use WAF custom rules to take action based on score, path, or any other field. Includes full Bot Analytics. |
+
+**Common e-commerce bot threats**
+
+The table below describes how to address each threat at each tier. If a mitigation requires a higher plan, the relevant plan is noted.
+
+| Threat                    | Free / Pro / Business                                                                      | Enterprise                                                                        |
+| ------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| **Inventory hoarding**    | Super Bot Fight Mode blocks definitively automated traffic site-wide                       | Write a WAF custom rule targeting bot score ≤ 30 on `/cart` and `/checkout` paths |
+| **Price scraping**        | Rate limit product page requests; Super Bot Fight Mode challenges bots on static resources | Target bot score ≤ 29 on product and category pages with a managed challenge      |
+| **Credential stuffing**   | Bot Fight Mode / Super Bot Fight Mode challenges automated login attempts                  | Custom rule: block score ≤ 30 on `/login`; combine with Exposed Credentials Check |
+| **Gift card cracking**    | Rate limit gift card balance endpoints (available on all plans)                            | Custom rule: block or challenge score ≤ 30 on gift card endpoints                 |
+| **Fake account creation** | Add [Turnstile](/turnstile/) to registration forms (available on all plans)                | Turnstile on registration plus challenge score ≤ 29 on `/register`                |
+
+For a full list of bot score thresholds and field reference, refer to [Bot scores](/bots/concepts/bot-score/).
+
+</Details>
+
+<Details header="HTTP DDoS protection for e-commerce">
+
+HTTP DDoS protection is active on all Cloudflare domains by default at no additional cost. No configuration is required to receive baseline protection — Cloudflare's HTTP DDoS Attack Protection managed ruleset automatically detects and mitigates application-layer attacks targeting your storefront.
+
+**What it protects against**
+
+The HTTP DDoS managed ruleset covers attacks that target your web application directly, including:
+
+- **HTTP flood attacks** — High-volume requests designed to exhaust your server's capacity
+- **Cache-busting attacks** — Requests with randomised query strings that bypass your cache and force every request back to your origin
+- **HTTP/2 Rapid Reset** — A protocol-level attack that opens and cancels large numbers of streams simultaneously
+- **Slowloris attacks** — Slow, persistent connections that tie up server threads without sending data
+- **Known DDoS botnets** — Traffic matching signatures of established botnet toolkits (Mirai variants, HULK, LOIC, and others)
+
+This is separate from DNS-layer DDoS protection, which protects your nameservers against DNS amplification and query flood attacks and is described under [Register, manage and secure your domains](/use-cases/e-commerce/domains/).
+
+**Adjusting sensitivity**
+
+If legitimate traffic is being incorrectly flagged, you can adjust the sensitivity of individual rules or override the default action from the dashboard:
+
+1. Go to **Security** > **DDoS**.
+2. Select **HTTP DDoS attack protection**.
+3. Select **Deploy a DDoS override** to change the action or sensitivity level for specific rules.
+
+For e-commerce, the most relevant scenario is a flash sale or marketing campaign. A sudden spike in legitimate traffic can trigger false positives, where Cloudflare incorrectly identifies the traffic as an attack and blocks or challenges real visitors. Cloudflare's own documentation recommends adjusting sensitivity settings when you are expecting large spikes of legitimate traffic. Lowering the sensitivity level of specific rules before a planned event reduces the risk of disruption. Enterprise customers with the Advanced DDoS Protection subscription can target adjustments to specific traffic using custom expressions — other plans apply sensitivity changes globally across all traffic.
+
+For the complete reference, refer to [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/).
+
+</Details>

@@ -1,0 +1,157 @@
+---
+pcx_content_type: how-to
+title: Accelerate your store's performance
+description: Fast page loads directly impact conversion rates. Cloudflare accelerates every aspect of your storefront.
+sidebar:
+  order: 3
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Fast page loads directly impact conversion rates. Cloudflare accelerates every aspect of your storefront.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="CDN / Cache" href="/cache/" icon="cache">
+
+Cache static and dynamic content at edge locations worldwide.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Images" href="/images/" icon="images">
+
+Optimize, resize, and deliver images in modern formats automatically.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Speed" href="/speed/" icon="speed">
+
+Automatic optimizations for HTML, CSS, JavaScript, and fonts.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Zaraz" href="/zaraz/" icon="zaraz">
+
+Load third-party tools without blocking page rendering.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Workers" href="/workers/" icon="workers">
+
+Run custom logic at the edge for personalization and A/B testing.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Global content delivery** (CDN / Cache) - Static assets served from 300+ edge locations, reducing load times for international shoppers
+- **Image optimization** (Images) - Automatic WebP/AV1 Image File Format (AVIF) conversion and on-the-fly responsive resizing for product images
+- **Core Web Vitals improvement** (Speed) - Faster Largest Contentful Paint (LCP), reduced Cumulative Layout Shift (CLS), and improved Interaction to Next Paint (INP) through automatic asset optimization
+- **Third-party script control** (Zaraz) - Load analytics, chat, and marketing tags through Cloudflare without blocking page rendering
+
+## Get started
+
+1. [Configure Cache Rules](/cache/how-to/cache-rules/)
+2. [Set up Cloudflare Images](/images/get-started/)
+3. [Enable Speed optimizations](/speed/optimization/)
+4. [Configure Zaraz](/zaraz/get-started/)
+
+### Example e-commerce performance configuration
+
+<Details header="Cache configuration for e-commerce">
+
+Cache Rules let you control what Cloudflare caches, for how long, and under what conditions. They are available on all plans, but the number of rules you can create varies by the plan type.
+
+To create a Cache Rule:
+
+1. Go to your domain in the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Go to **Caching** > **Cache Rules**.
+3. Select **Create rule**.
+
+Use the following patterns for a typical e-commerce store:
+
+**Static assets** — CSS, JavaScript (JS), fonts, and images that include a version hash in the URL can be cached aggressively. Set a long Time to Live (TTL) and let cache-busting URLs handle invalidation.
+
+- **Expression**: `http.request.uri.path.extension in {"js" "css" "woff2" "woff" "ttf"}`
+- **Cache eligibility**: Eligible for cache
+- **Edge TTL**: 1 year
+
+**Product pages** — Product HTML changes occasionally. Cache it briefly so most visitors get a cached response, but updates propagate quickly.
+
+- **Expression**: `http.request.uri.path matches "^/products/"`
+- **Edge TTL**: 10 minutes
+- **Bypass condition**: Add `http.cookie contains "session="` to bypass cache for logged-in users
+
+**Cart and checkout** — Never cache these. Serving a cached cart or order to the wrong user is a serious error.
+
+- **Expression**: `http.request.uri.path in {"/cart" "/checkout" "/order"}`
+- **Cache eligibility**: Bypass cache
+
+**Product catalog API** — If your storefront fetches products via an Application Programming Interface (API), cache the responses briefly to reduce database load during traffic spikes.
+
+- **Expression**: `http.request.uri.path matches "^/api/products"` and `http.request.method eq "GET"`
+- **Edge TTL**: 5 minutes
+- **Bypass condition**: Exclude any endpoints that return user-specific data
+
+For the complete guide, refer to [Cache Rules](/cache/how-to/cache-rules/).
+
+**Tiered Cache**
+
+Tiered Cache adds an intermediate caching layer between Cloudflare's edge and your origin. When an edge location misses, it asks a regional upper-tier cache before going to your origin — significantly reducing origin requests during traffic spikes.
+
+Smart Tiered Cache (automatically selects the best upper tier) is available on all plans. Generic Global, Regional, and Custom topologies require an Enterprise plan.
+
+To turn on Smart Tiered Cache:
+
+1. Go to **Caching** > **Tiered Cache**.
+2. Select **Smart** under **Tiered Cache Topology** and save.
+
+For the complete guide, refer to [Tiered Cache](/cache/how-to/tiered-cache/).
+
+</Details>
+
+<Details header="Image optimization for e-commerce">
+
+Cloudflare offers two complementary image optimization features. They address different problems and are configured separately.
+
+**Polish** — Automatically compresses images served from your origin without changing their URLs or requiring any markup changes. Polish strips metadata and reduces file size through lossless or lossy compression.
+
+Polish is available on **Pro, Business, and Enterprise** plans. It is not available on the Free plan.
+
+To turn on Polish:
+
+1. Go to **Speed** > **Optimization** > **Image Optimization**.
+2. Turn on **Polish** and select a compression level:
+   - **Lossless** — Removes metadata and redundant data without any visible quality change. Safe for all product images.
+   - **Lossy** — Applies additional compression that may slightly reduce quality. Test on your product images before turning on site-wide.
+3. Turn on **WebP** to automatically serve WebP format to browsers that support it, reducing file sizes by 25–35% compared to JPEG.
+
+For the complete guide, refer to [Polish](/images/polish/).
+
+**Image Transformations** — Lets you resize, crop, and reformat images on-the-fly by adding parameters to the image URL. Unlike Polish, this does not require storing image variants in advance. It is a separate billable feature available on all plans when turned on per domain.
+
+To turn on Image Transformations:
+
+1. Go to the [Transformations page](https://dash.cloudflare.com/?to=/:account/images/transformations) in the dashboard.
+2. Select your domain and select **Enable for zone**.
+
+Once turned on, you can transform product images via URL. For example, to serve a 400px-wide WebP thumbnail:
+
+```
+https://example.com/cdn-cgi/image/width=400,format=webp/images/product.jpg
+```
+
+Common parameters for e-commerce product images:
+
+- `width`, `height` — Set dimensions in pixels
+- `fit=cover` — Crop to fill the target dimensions (useful for uniform product grid thumbnails)
+- `format=auto` — Serve WebP or AVIF to supported browsers, JPEG to others
+- `quality=85` — Reduce file size with minimal visible impact (default is 85)
+
+For the full parameter reference, refer to [Transform images](/images/transform-images/).
+
+</Details>

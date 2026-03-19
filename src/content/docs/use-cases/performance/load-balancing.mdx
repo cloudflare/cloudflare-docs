@@ -1,0 +1,42 @@
+---
+pcx_content_type: how-to
+title: Balance traffic across origins
+description: Distribute traffic across multiple servers for reliability and performance.
+sidebar:
+  order: 5
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+Distribute traffic across multiple servers for reliability and performance.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Load Balancing" href="/load-balancing/" icon="load-balancing">
+
+Distribute traffic across origins with health checks and failover.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Health Checks" href="/health-checks/" icon="load-balancing">
+
+Monitor origin server health and availability.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Traffic distribution** (Load Balancing) - Spread incoming load across multiple origin servers using weighted or latency-based policies
+- **Health monitoring** (Health Checks) - Continuously probe origins and automatically remove unhealthy servers from rotation
+- **Failover** (Load Balancing) - Reroute traffic to healthy origins instantly when a server fails its health check
+- **Geographic steering** (Load Balancing) - Route users to the nearest or best-performing origin based on latency or geography
+
+## Get started
+
+1. [Create a load balancer](/load-balancing/get-started/)
+2. [Configure health checks](/health-checks/get-started/)
+3. [Set up steering policies](/load-balancing/understand-basics/traffic-steering/)

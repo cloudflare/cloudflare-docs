@@ -1,0 +1,51 @@
+---
+pcx_content_type: how-to
+title: Optimize images
+description: Automatically compress, resize, and convert images to modern formats.
+sidebar:
+  order: 2
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Automatically compress, resize, and convert images to modern formats.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Images" href="/images/" icon="images">
+
+Transform, optimize, and deliver images at scale.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Polish" href="/images/polish/" icon="images">
+
+Automatic image compression without quality loss.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Automatic compression** (Polish) - Reduce image file sizes through lossless or lossy compression without visible quality loss
+- **Modern formats** (Images) - Automatically serve WebP or AV1 Image File Format (AVIF) to supported browsers, falling back gracefully for others
+- **Responsive images** (Images) - Resize and transform images on-the-fly via URL parameters without pre-generating variants
+- **Lazy loading** (Speed) - Defer loading of off-screen images to improve initial page load and Core Web Vitals
+
+### Configure image optimization
+
+<Details header="Enable Polish and WebP">
+
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your domain.
+2. Go to **Speed** > **Optimization** > **Image Optimization**.
+3. Turn on **Polish** and select compression level:
+   - **Lossless**: No quality loss, smaller file size reduction
+   - **Lossy**: Slight quality reduction, larger file size reduction
+4. Turn on **WebP** to serve modern formats to supported browsers.
+
+</Details>
+
+For the complete guide, refer to [Images documentation](/images/).

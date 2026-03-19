@@ -1,5 +1,5 @@
 ---
-pcx_content_type: use-case
+pcx_content_type: overview
 title: AI applications
 head:
   - tag: title
@@ -8,313 +8,26 @@ sidebar:
   order: 2
 ---
 
-import { CardGrid, Details, LinkTitleCard, Render, YouTube } from "~/components";
+import {
+	CardGrid,
+	DirectoryListing,
+	LinkTitleCard,
+	YouTube,
+} from "~/components";
 
-Build and deploy ambitious AI applications to Cloudflare's global network with inference at the edge, vector databases, model gateways, and more.
+Build and deploy AI applications to Cloudflare's global network with inference at the edge, vector databases, model gateways, and more.
 
 <YouTube id="uv1Cz_BDFmo" />
 
 AI applications present unique infrastructure challenges: unpredictable inference costs, latency-sensitive user experiences, and the need to work with multiple model providers. Cloudflare provides a complete platform for building AI applications that are fast, cost-effective, and globally distributed.
 
-This guide walks you through the Cloudflare solutions available for building AI-powered applications.
-
----
-
-## Run Cloudflare-hosted AI models
-
-The foundation of any AI application is the ability to run inference. Cloudflare provides multiple options for running models.
-
-### Solutions
-
-<CardGrid>
-
-<LinkTitleCard title="Workers AI" href="/workers-ai/" icon="workers-ai">
-
-Run inference on Cloudflare's global network with pay-per-use pricing and no cold starts.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="AI Gateway" href="/ai-gateway/" icon="ai-gateway">
-
-Proxy requests to any AI provider with caching, rate limiting, and unified analytics.
-
-</LinkTitleCard>
-
-</CardGrid>
-
-### What you get
-
-- **Global inference** - Run models close to users for low-latency responses
-- **Pay-per-use** - No GPU reservations or idle costs
-- **Provider flexibility** - Use Workers AI, OpenAI, Anthropic, or any provider through AI Gateway
-- **Built-in observability** - Track usage, costs, and performance across all providers
-
-### Getting started with AI Gateway
-
-<Render file="create-gateway" product="ai-gateway" />
-
-For the complete guide, refer to [AI Gateway get started](/ai-gateway/get-started/).
-
-### Getting started with Workers AI
-
-<Details header="Set up Workers AI">
-
-1. Create a new Worker project:
-   ```sh
-   npm create cloudflare@latest my-ai-app -- --template hello-world
-   cd my-ai-app
-   ```
-
-2. Add the Workers AI binding to your `wrangler.toml`:
-   ```toml
-   [ai]
-   binding = "AI"
-   ```
-
-3. Update your Worker code to run inference:
-   ```js
-   export default {
-     async fetch(request, env) {
-       const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-         prompt: "What is Cloudflare Workers AI?"
-       });
-       return new Response(JSON.stringify(response));
-     }
-   };
-   ```
-
-4. Deploy your Worker:
-   ```sh
-   npx wrangler deploy
-   ```
-
-</Details>
-
-For the complete guide, refer to [Workers AI get started](/workers-ai/get-started/).
-
----
-
-## Store and retrieve context
-
-AI applications need data storage for embeddings, conversation history, and application state.
-
-### Solutions
-
-<CardGrid>
-
-<LinkTitleCard title="Vectorize" href="/vectorize/" icon="vectorize">
-
-Store and query vector embeddings for semantic search and RAG applications.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="D1" href="/d1/" icon="d1">
-
-Store application data, conversation history, and metadata alongside your AI logic.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="R2" href="/r2/" icon="r2">
-
-Store large files, training data, and generated assets with zero egress fees.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="KV" href="/kv/" icon="kv">
-
-Cache AI responses and store session state at the edge.
-
-</LinkTitleCard>
-
-</CardGrid>
-
-### What you get
-
-- **Vector search** - Find semantically similar content for RAG applications
-- **Structured storage** - SQL database for conversations, users, and metadata
-- **Object storage** - Store documents, images, and generated content
-- **Edge caching** - Cache frequent queries to reduce inference costs
-
-### Getting started with Vectorize
-
-<Details header="Set up Vectorize for RAG">
-
-1. Create a Vectorize index:
-   ```sh
-   npx wrangler vectorize create my-index --dimensions=768 --metric=cosine
-   ```
-
-2. Add the Vectorize binding to your `wrangler.toml`:
-   ```toml
-   [[vectorize]]
-   binding = "VECTORIZE"
-   index_name = "my-index"
-   ```
-
-3. Insert vectors into your index:
-   ```js
-   const vectors = [
-     { id: "doc1", values: [0.1, 0.2, ...], metadata: { text: "Document content" } }
-   ];
-   await env.VECTORIZE.upsert(vectors);
-   ```
-
-4. Query for similar vectors:
-   ```js
-   const queryVector = [0.1, 0.2, ...];
-   const results = await env.VECTORIZE.query(queryVector, { topK: 5 });
-   ```
-
-</Details>
-
-For the complete guide, refer to [Vectorize get started](/vectorize/get-started/).
-
----
-
-## Build complete applications
-
-Combine inference and data into a complete application running at the edge.
-
-### Solutions
-
-<CardGrid>
-
-<LinkTitleCard title="Workers" href="/workers/" icon="workers">
-
-Build the application logic that orchestrates AI workflows at the edge.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Pages" href="/pages/" icon="pages">
-
-Deploy frontend applications with global CDN and instant rollbacks.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
-
-Coordinate stateful AI workflows and real-time collaboration.
-
-</LinkTitleCard>
-
-</CardGrid>
-
-### What you get
-
-- **Edge compute** - Run application logic close to users
-- **Streaming responses** - Stream AI responses as they generate
-- **Stateful workflows** - Coordinate multi-step AI pipelines
-- **Full-stack deployment** - Frontend and backend in one platform
-
-### Example: Complete RAG application
-
-<Details header="Build a RAG application">
-
-Combine all the products to build a retrieval-augmented generation application:
-
-```js
-export default {
-  async fetch(request, env) {
-    const { query } = await request.json();
-
-    // 1. Generate embedding for the query
-    const embedding = await env.AI.run("@cf/baai/bge-base-en-v1.5", {
-      text: query
-    });
-
-    // 2. Search for relevant documents
-    const results = await env.VECTORIZE.query(embedding.data[0], {
-      topK: 3,
-      returnMetadata: true
-    });
-
-    // 3. Build context from retrieved documents
-    const context = results.matches
-      .map(match => match.metadata.text)
-      .join("\n\n");
-
-    // 4. Generate response with context
-    const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-      messages: [
-        { role: "system", content: `Use this context to answer: ${context}` },
-        { role: "user", content: query }
-      ]
-    });
-
-    // 5. Store the interaction
-    await env.DB.prepare(
-      "INSERT INTO conversations (message, response) VALUES (?, ?)"
-    ).bind(query, response.response).run();
-
-    return Response.json({ answer: response.response });
-  }
-};
-```
-
-</Details>
-
----
-
-## Control costs and improve quality
-
-As your AI application scales, optimize for cost, latency, and quality.
-
-### Solutions
-
-<CardGrid>
-
-<LinkTitleCard title="AI Gateway" href="/ai-gateway/" icon="ai-gateway">
-
-Cache responses, rate limit requests, and monitor usage across providers.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Workers Analytics Engine" href="/analytics/analytics-engine/" icon="analytics">
-
-Build custom analytics for AI-specific metrics.
-
-</LinkTitleCard>
-
-</CardGrid>
-
-### What you get
-
-- **Response caching** - Cache identical queries to reduce inference costs
-- **Rate limiting** - Prevent abuse and control spending
-- **Unified analytics** - Track usage across all AI providers
-- **A/B testing** - Compare model performance and costs
-
-### AI Gateway features
-
-<Details header="Configure AI Gateway optimization">
-
-**Enable caching** to reduce costs for repeated queries:
-1. Go to **AI Gateway** in the dashboard
-2. Select your gateway > **Settings**
-3. Enable **Cache responses**
-4. Set cache TTL based on your use case
-
-**Set up rate limiting** to control costs:
-1. Go to **AI Gateway** > **Settings**
-2. Enable **Rate limiting**
-3. Configure requests per minute per user
-
-**Monitor with analytics**:
-- View request volume, latency, and error rates
-- Track costs across providers
-- Identify optimization opportunities
-
-</Details>
-
-<Render file="analytics-dashboard" product="ai-gateway" />
-
----
+<DirectoryListing />
 
 ## Architecture patterns
 
 ### Retrieval Augmented Generation (RAG)
 
-Combine vector search with LLM inference to ground responses in your own data:
+Combine vector search with Large Language Model (LLM) inference to ground responses in your own data:
 
 1. **Vectorize** stores embeddings of your knowledge base
 2. **Workers** receives user queries and searches for relevant context
@@ -332,9 +45,17 @@ Use AI Gateway to route requests across providers while maintaining a single int
 
 Deploy low-latency AI features directly at the edge:
 
-1. **Workers** handles requests at the nearest Cloudflare location
-2. **Workers AI** runs inference without round-trips to origin servers
-3. **KV** or **D1** caches results and stores session state
+1. **Workers** handles requests at the nearest Cloudflare location and runs inference via the Workers AI binding — no round-trips to origin servers
+2. **KV** caches frequent responses to reduce inference calls and latency
+3. **D1** stores session state and conversation history alongside the inference logic
+
+---
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up). Workers AI, AI Gateway, Vectorize, D1, R2, and KV are account-level products — you do not need a domain added to Cloudflare to use them.
+- [Node.js](https://nodejs.org/) (version 16.17.0 or later) installed on your machine.
+- [Wrangler](/workers/wrangler/install-and-update/) installed. Wrangler is the command-line interface (CLI) for deploying Workers and managing bindings.
 
 ---
 

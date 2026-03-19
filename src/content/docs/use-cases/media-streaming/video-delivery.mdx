@@ -1,0 +1,116 @@
+---
+pcx_content_type: how-to
+title: Upload, encode, and deliver videos
+description: Build a complete video hosting and delivery solution with Cloudflare Stream.
+sidebar:
+  order: 1
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Build a complete video hosting and delivery solution with Cloudflare Stream.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Stream" href="/stream/" icon="stream">
+
+Upload, encode, store, and deliver video with adaptive bitrate streaming.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Stream Live" href="/stream/stream-live/" icon="stream">
+
+Live streaming with automatic recording and instant playback.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Calls" href="/calls/" icon="calls">
+
+Add real-time video and audio communication to your application.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **Automatic encoding** (Stream) - Videos transcoded to multiple resolutions and formats on upload with no infrastructure to manage
+- **Adaptive bitrate** (Stream) - HTTP Live Streaming (HLS) and Dynamic Adaptive Streaming over HTTP (DASH) automatically adjusts quality to match viewer bandwidth
+- **Global delivery** (Stream) - Video served directly from Cloudflare's edge network without a separate Content Delivery Network (CDN)
+- **Live streaming** (Stream Live) - Low-latency live video with automatic recording and instant playback after the stream ends
+- **Real-time communication** (Calls) - Add peer-to-peer video and audio directly to your application
+
+### Getting started with Stream
+
+<Details header="Upload and embed videos">
+
+**Upload via Dashboard:**
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Stream** > **Videos**.
+3. Select **Upload** and choose a video file.
+4. Wait for encoding to complete.
+
+**Upload via API (terminal):**
+
+```sh
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream" \
+  -H "Authorization: Bearer {api_token}" \
+  -F "file=@/path/to/video.mp4"
+```
+
+**Embed the video:**
+
+```html
+<iframe
+	src="https://customer-{code}.cloudflarestream.com/{video_id}/iframe"
+	style="border: none; width: 100%; aspect-ratio: 16/9;"
+	allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+	allowfullscreen="true"
+></iframe>
+```
+
+**Use the Stream Player SDK:**
+
+```html
+<stream src="{video_id}" controls></stream>
+<script
+	data-cfasync="false"
+	defer
+	src="https://embed.cloudflarestream.com/embed/sdk.latest.js"
+></script>
+```
+
+</Details>
+
+<Details header="Secure videos with signed URLs">
+
+Turn on signed URLs to prevent unauthorized access:
+
+1. Go to **Stream** > **Videos** > select your video.
+2. Select **Settings** > **Access Control**.
+3. Turn on **Require signed URLs**.
+
+Generate tokens server-side by adding the following to your Worker's `src/index.ts` or server-side application code:
+
+```ts
+const response = await fetch(
+	`https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video_id}/token`,
+	{
+		method: "POST",
+		headers: {
+			Authorization: `Bearer {api_token}`,
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ exp: Math.floor(Date.now() / 1000) + 3600 }),
+	},
+);
+const { result } = await response.json();
+const signedToken = result.token;
+```
+
+</Details>
+
+For the complete guide, refer to [Stream get started](/stream/get-started/).

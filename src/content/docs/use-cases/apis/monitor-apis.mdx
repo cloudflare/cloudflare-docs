@@ -1,0 +1,96 @@
+---
+pcx_content_type: how-to
+title: Monitor your APIs
+description: Track API usage, performance, and errors with API Shield Analytics, Logpush, and Workers Analytics Engine.
+sidebar:
+  order: 5
+---
+
+import { CardGrid, Details, LinkTitleCard } from "~/components";
+
+Track Application Programming Interface (API) usage, performance, and errors.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="API Shield Analytics" href="/api-shield/security/api-discovery/" icon="api-shield">
+
+Discover endpoints and monitor API traffic patterns.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Logpush" href="/logs/" icon="logs">
+
+Export detailed API logs to your analytics platform.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Workers Analytics Engine" href="/analytics/analytics-engine/" icon="analytics">
+
+Build custom API metrics and dashboards.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## What you get
+
+- **API discovery** (API Shield Analytics) - Automatically find undocumented endpoints from observed traffic
+- **Traffic analysis** (API Shield Analytics) - Understand request volume, latency, and usage patterns per endpoint
+- **Log export** (Logpush) - Stream detailed API request logs to your Security Information and Event Management (SIEM) system, data warehouse, or analytics platform
+- **Custom metrics** (Workers Analytics Engine) - Track business-specific Key Performance Indicators (KPIs) such as per-customer usage and error rates
+
+## API observability
+
+<Details header="Track API metrics with Analytics Engine">
+
+Add the following to your Worker's `src/index.ts`. The Worker records a data point to Workers Analytics Engine on every request, then the example SQL query retrieves the aggregated metrics.
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const startTime = Date.now();
+		const url = new URL(request.url);
+
+		try {
+			const response = await handleRequest(request, env);
+
+			// Record successful request
+			env.ANALYTICS.writeDataPoint({
+				blobs: [url.pathname, request.method, response.status.toString()],
+				doubles: [Date.now() - startTime],
+				indexes: [url.pathname],
+			});
+
+			return response;
+		} catch (error) {
+			// Record error
+			env.ANALYTICS.writeDataPoint({
+				blobs: [url.pathname, request.method, "500", error.message],
+				doubles: [Date.now() - startTime],
+				indexes: [url.pathname],
+			});
+
+			return new Response("Internal error", { status: 500 });
+		}
+	},
+};
+```
+
+Query metrics:
+
+```sql
+SELECT
+  blob1 as endpoint,
+  blob2 as method,
+  COUNT(*) as requests,
+  AVG(double1) as avg_latency_ms,
+  SUM(CASE WHEN blob3 >= '400' THEN 1 ELSE 0 END) as errors
+FROM api_metrics
+WHERE timestamp > now() - interval '1 hour'
+GROUP BY endpoint, method
+ORDER BY requests DESC
+```
+
+</Details>
