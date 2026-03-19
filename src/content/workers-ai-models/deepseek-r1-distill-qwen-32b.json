@@ -31,6 +31,10 @@
             ]
         },
         {
+            "property_id": "reasoning",
+            "value": "true"
+        },
+        {
             "property_id": "terms",
             "value": "https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE"
         }

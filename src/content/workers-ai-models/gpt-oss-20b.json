@@ -29,6 +29,14 @@
                     "currency": "USD"
                 }
             ]
+        },
+        {
+            "property_id": "function_calling",
+            "value": "true"
+        },
+        {
+            "property_id": "reasoning",
+            "value": "true"
         }
     ],
     "schema": {
