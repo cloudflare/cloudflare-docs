@@ -104,14 +104,14 @@ function Form({
 					{questions[option].map(([label, value]) => (
 						<label
 							key={value}
-							className="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] text-[var(--sl-color-text)] ring-1 ring-[var(--sl-color-hairline)] transition-colors duration-150 select-none hover:bg-[var(--color-cl1-gray-9)] hover:ring-[var(--sl-color-gray-3)] has-[:checked]:ring-[var(--sl-color-text-accent)] has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[var(--sl-color-text-accent)] has-[:focus-visible]:outline-none dark:hover:bg-[var(--color-cl1-gray-2)]"
+							className="relative flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] text-[var(--sl-color-text)] ring-1 ring-[var(--sl-color-hairline)] transition-colors duration-150 select-none hover:bg-[var(--color-cl1-gray-9)] hover:ring-[var(--sl-color-gray-3)] has-[:checked]:ring-[var(--sl-color-text-accent)] has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[var(--sl-color-text-accent)] has-[:focus-visible]:outline-none dark:hover:bg-[var(--color-cl1-gray-2)]"
 						>
 							<input
 								type="radio"
 								name="reason"
 								value={value}
 								onChange={() => setSelectedReason(true)}
-								className="peer sr-only"
+								className="peer absolute top-0 left-0 h-full w-full cursor-pointer opacity-0"
 							/>
 							{/* Outer ring — becomes accent-colored when checked or focused */}
 							<span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full ring-1 ring-[var(--sl-color-gray-3)] transition-all duration-150 peer-checked:ring-2 peer-checked:ring-[var(--sl-color-text-accent)] peer-focus-visible:ring-2 peer-focus-visible:ring-[var(--sl-color-text-accent)]">
