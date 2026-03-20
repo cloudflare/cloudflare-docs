@@ -27,22 +27,6 @@ jobs:
             node_modules/.astro/assets
           key: static
 
-      - name: Check for CRLF line endings
-        run: |
-          git fetch --depth=1 origin production
-          CHANGED=$(git diff --name-only FETCH_HEAD...HEAD)
-          if [ -z "$CHANGED" ]; then
-            exit 0
-          fi
-          CRLF_FILES=$(echo "$CHANGED" | xargs -I{} sh -c '[ -f "{}" ] && git grep -Il $'"'"'\r'"'"' -- "{}" 2>/dev/null || true')
-          if [ -n "$CRLF_FILES" ]; then
-            echo "::error::CRLF line endings detected in the following files:"
-            echo "$CRLF_FILES"
-            echo ""
-            echo "Fix with: git add --renormalize . && git commit -m 'chore: normalize line endings'"
-            exit 1
-          fi
-
       - run: |
           FILES=$(
             find src/content \
@@ -125,8 +109,7 @@ jobs:
 
       - name: Check for CRLF line endings
         run: |
-          git fetch --depth=1 origin production
-          CHANGED=$(git diff --name-only FETCH_HEAD...HEAD)
+          CHANGED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} HEAD)
           if [ -z "$CHANGED" ]; then
             exit 0
           fi
