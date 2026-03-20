@@ -1,7 +1,7 @@
 ---
 title: Email deliverability
 pcx_content_type: concept
-summary: Understand bounce handling, quarantine system, and reputation management for optimal email delivery.
+summary: Understand bounce handling and reputation management for optimal email delivery.
 sidebar:
   order: 3
 ---
@@ -38,20 +38,6 @@ Soft bounces are temporary failures that may succeed if retried:
 Cloudflare automatically retries soft bounces with exponential backoff (15min → 1hr → 4hr → 12hr → 24hr) for up to 72 hours.
 
 <Sandboxing />
-
-## Quarantine system
-
-Your email sending account may be quarantined when your deliverability is too low (< 98%) and affects the pool of IP addresses shared
-by users of Cloudflare Email Service. To resolve this, ensure that your deliverability is >98% for a period of time and notify the Email Service product team.
-
-Moreover, additional **deliverability factors** may be considered, such as:
-
-- **Sender reputation**: New or low-reputation domains
-- **Content patterns**: Suspicious content analysis
-- **Domain reputation**: Historical sending behavior
-- **Traffic patterns**: Unusual volume spikes
-
-Your reputation status and quarantined emails are visible in the Cloudflare dashboard.
 
 ## Reputation management
 
