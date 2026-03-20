@@ -13,7 +13,7 @@ Privacy Gateway exposes metrics through Cloudflare's [GraphQL Analytics API](/an
 POST https://api.cloudflare.com/client/v4/graphql
 ```
 
-To access your metrics, you need a Cloudflare API token with **Analytics Read** permissions. Refer to [Create an API token](/fundamentals/api/get-started/create-token/) for authentication details.
+To access your metrics, you need a Cloudflare API token. Contact your Cloudflare point of contact to obtain one.
 
 ---
 
@@ -96,6 +96,7 @@ Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudfl
 
 - `relayStatusCode` – `uint16` — HTTP status code returned by the relay to the client.
 - `gatewayStatusCode` – `uint16` — HTTP status code returned by the gateway to the relay. A value of `0` means the request did not reach the gateway (relay-side failure or timeout).
+- `proxyStatus` – `string` — Proxy-level error classification. Indicates the category of failure when the relay could not successfully forward to the gateway. `null` when the request succeeded with no proxy-level error. Refer to [Proxy status codes](#proxy-status-codes) for possible values.
 
 </Details>
 
@@ -627,10 +628,40 @@ The `gatewayStatusCode` dimension indicates the HTTP status code returned by the
 
 </Details>
 
+<Details header="Proxy status codes">
+
+The `proxyStatus` dimension indicates the category of failure when the relay could not successfully forward the request to the gateway. This field is `null` when no proxy-level error occurred. For the relay, the next hop is always the gateway — so for example `dns_error` means the relay failed to resolve the gateway's address.
+
+- `dns_error` — DNS error when resolving the gateway hostname.
+- `dns_timeout` — Timeout while resolving the gateway hostname.
+- `destination_not_found` — Cannot determine the appropriate gateway for this request (for example, not configured).
+- `destination_unavailable` — Gateway is considered unavailable (for example, recent failures or health check down).
+- `destination_ip_prohibited` — Connection to the gateway IP address is prohibited.
+- `destination_ip_unroutable` — No route to the gateway IP address.
+- `connection_refused` — Connection to the gateway was refused.
+- `connection_terminated` — Connection to the gateway was closed before any response was received.
+- `connection_timeout` — Attempt to connect to the gateway timed out.
+- `connection_read_timeout` — Gateway connection timed out waiting for data.
+- `connection_write_timeout` — Could not write data to the gateway connection (for example, buffers full).
+- `connection_limit_reached` — Configured connection limit to the gateway has been exceeded.
+- `source_addr_in_use` — Cannot assign a source address when connecting to the gateway (port/address allocation failure).
+- `source_addr_not_available` — Cannot assign a source address (bind failure or source host resolution failure).
+- `tls_protocol_error` — TLS error when communicating with the gateway.
+- `tls_certificate_error` — Error verifying the gateway's certificate.
+- `http_request_error` — The relay is generating a client `4xx` response on the gateway's behalf.
+- `http_upgrade_failed` — HTTP Upgrade between the relay and the gateway failed.
+- `http_request_denied` — The relay rejected the request based on its configuration or policy. The request was not forwarded.
+- `proxy_internal_error` — Internal relay error unrelated to the gateway.
+- `proxy_loop_detected` — The relay tried to forward the request to itself.
+- `http_protocol_error` — HTTP protocol error when communicating with the gateway.
+- `http_response_incomplete` — Incomplete response received from the gateway.
+- `rate_limit` — Client has reached the maximum number of connections per second to the gateway.
+
+</Details>
+
 ---
 
 ## Related resources
 
-- [GraphQL Analytics API — getting started](/analytics/graphql-api/getting-started/) — Authentication, pagination, and rate limits.
-- [GraphQL Analytics API — filtering](/analytics/graphql-api/features/filtering/) — Full filter syntax reference.
-- [Create an API token](/fundamentals/api/get-started/create-token/) — Set up a token with Analytics Read permissions.
+- [GraphQL Analytics API — getting started](/analytics/graphql-api/getting-started/)
+- [GraphQL Analytics API — filtering](/analytics/graphql-api/features/filtering/)
