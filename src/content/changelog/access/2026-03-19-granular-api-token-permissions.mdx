@@ -1,0 +1,17 @@
+---
+title: New granular API token permissions for Cloudflare Access
+description: Three new API token permissions let you scope tokens to organization session revocation and Access Populations.
+date: 2026-03-19
+products:
+  - access
+---
+
+Three new API token permissions are available for Cloudflare Access, giving you finer-grained control when building automations and integrations:
+
+- **Access: Organizations Revoke** — Grants the ability to revoke user sessions in a Zero Trust organization. Use this permission when you need a token that can terminate active sessions without broader write access to organization settings.
+- **Access: Population Read** — Grants read access to Cloudflare Access Populations. A Population is the SCIM v2 storage namespace created when you enable [SCIM provisioning](/cloudflare-one/team-and-resources/users/scim/) on an identity provider. Use this permission for tokens that only need to read population membership and user data.
+- **Access: Population Write** — Grants read and write access to Cloudflare Access Populations. Use this permission for tokens that need to create or modify populations.
+
+These permissions are scoped at the account level and can be combined with existing Access permissions to follow the principle of least privilege.
+
+For a full list of available permissions, refer to [API token permissions](/fundamentals/api/reference/permissions/).
