@@ -1,5 +1,5 @@
 ---
-title: Metrics and analytics
+title: Observability
 pcx_content_type: reference
 sidebar:
   order: 1
@@ -38,47 +38,49 @@ curl https://api.cloudflare.com/client/v4/graphql \
 
 ---
 
-## Available datasets
+## Available nodes
 
-Three GraphQL datasets are available. All three return aggregate data only — no raw per-connection records are exposed.
+Three GraphQL nodes are available. All three return aggregate data only — no raw per-connection records are exposed.
 
 1. `ohttpRelayRequestMetricsAdaptiveGroups` — Query aggregate request volume, bytes transferred, and error rates, filterable by time, location, endpoint, and relay/gateway status code dimensions.
 2. `ohttpRelayIngressConnMetricsAdaptiveGroups` — Query aggregate client-to-relay connection volume and round-trip latency percentiles (P50/P95/P99), filterable by time, location, endpoint, HTTP version, and TLS version dimensions.
 3. `ohttpRelayEgressConnMetricsAdaptiveGroups` — Query aggregate relay-to-gateway connection volume and round-trip latency percentiles (P50/P95/P99), filterable by time, location, and endpoint dimensions.
 
 :::note[Adaptive sampling]
-Each dataset uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudflare automatically scales the sampling rate based on traffic volume to keep query performance consistent. All returned values are extrapolated totals, not raw counts. Because each dataset has its own sampling rate, figures across datasets are not directly comparable.
+Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudflare automatically scales the sampling rate based on traffic volume to keep query performance consistent. All returned values are extrapolated totals, not raw counts. Because each node has its own sampling rate, figures across nodes are not directly comparable.
 :::
 
 ---
 
-## Metrics
+## Schema
+
+<Details header="Metrics">
 
 <Details header="Sum fields">
 
-- `requests` – `uint64` — Total request count. _(Request dataset)_
-- `bytesToGateway` – `uint64` — Total bytes sent from client to gateway. _(Request dataset)_
-- `bytesToClient` – `uint64` — Total bytes sent from gateway back to client. _(Request dataset)_
-- `connections` – `uint64` — Total connection count. _(Ingress and egress connection datasets)_
+- `requests` – `uint64` — Total request count. _(Request node)_
+- `bytesToGateway` – `uint64` — Total bytes sent from client to gateway. _(Request node)_
+- `bytesToClient` – `uint64` — Total bytes sent from gateway back to client. _(Request node)_
+- `connections` – `uint64` — Total connection count. _(Ingress and egress connection nodes)_
 
 </Details>
 
 <Details header="Quantile fields">
 
-- `clientRelayRttMsP50` – `float64` — Median round-trip time between client and relay, in milliseconds. _(Ingress connection dataset)_
-- `clientRelayRttMsP95` – `float64` — 95th percentile RTT between client and relay, in milliseconds. _(Ingress connection dataset)_
-- `clientRelayRttMsP99` – `float64` — 99th percentile RTT between client and relay, in milliseconds. _(Ingress connection dataset)_
-- `relayGatewayRttMsP50` – `float64` — Median round-trip time between relay and gateway, in milliseconds. _(Egress connection dataset)_
-- `relayGatewayRttMsP95` – `float64` — 95th percentile RTT between relay and gateway, in milliseconds. _(Egress connection dataset)_
-- `relayGatewayRttMsP99` – `float64` — 99th percentile RTT between relay and gateway, in milliseconds. _(Egress connection dataset)_
+- `clientRelayRttMsP50` – `float64` — Median round-trip time between client and relay, in milliseconds. _(Ingress connection node)_
+- `clientRelayRttMsP95` – `float64` — 95th percentile RTT between client and relay, in milliseconds. _(Ingress connection node)_
+- `clientRelayRttMsP99` – `float64` — 99th percentile RTT between client and relay, in milliseconds. _(Ingress connection node)_
+- `relayGatewayRttMsP50` – `float64` — Median round-trip time between relay and gateway, in milliseconds. _(Egress connection node)_
+- `relayGatewayRttMsP95` – `float64` — 95th percentile RTT between relay and gateway, in milliseconds. _(Egress connection node)_
+- `relayGatewayRttMsP99` – `float64` — 99th percentile RTT between relay and gateway, in milliseconds. _(Egress connection node)_
 
 </Details>
 
----
+</Details>
 
-## Dimensions
+<Details header="Dimensions">
 
-<Details header="All datasets">
+<Details header="All nodes">
 
 - `date` – `Date` — Calendar date (day granularity).
 - `datetimeMinute` – `Time` — Timestamp truncated to the minute.
@@ -90,30 +92,28 @@ Each dataset uses an independent adaptive bit-rate (ABR) sampling pipeline. Clou
 
 </Details>
 
-<Details header="Request dataset only">
+<Details header="Request node only">
 
 - `relayStatusCode` – `uint16` — HTTP status code returned by the relay to the client.
 - `gatewayStatusCode` – `uint16` — HTTP status code returned by the gateway to the relay. A value of `0` means the request did not reach the gateway (relay-side failure or timeout).
 
 </Details>
 
-<Details header="Ingress connection dataset only">
+<Details header="Ingress connection node only">
 
 - `httpVersion` – `string` — HTTP protocol version used for the client-to-relay connection.
 - `tlsVersion` – `string` — TLS version negotiated on the client-to-relay connection.
 
 </Details>
 
----
-
-## Arguments
+</Details>
 
 <Details header="Arguments">
 
-All three datasets share the same argument signature.
+All three nodes share the same argument signature.
 
 - `filter` <MetaInfo text="required" /> — Filters your data. `accountTag` is always required inside the filter.
-- `limit` <MetaInfo text="required" /> — Maximum number of records to return.
+- `limit` <MetaInfo text="optional" /> — Maximum number of records to return.
 - `orderBy` <MetaInfo text="optional" /> — Sort order for results.
 
 </Details>
@@ -122,7 +122,7 @@ All three datasets share the same argument signature.
 
 ## Sample queries
 
-<Details header="ohttpRelayRequestMetricsAdaptiveGroups">
+<Details header="ohttpRelayRequestMetricsAdaptiveGroups node">
 
 <Details header="Total requests by day">
 
@@ -379,7 +379,7 @@ query RelayInternalErrors(
 
 </Details>
 
-<Details header="ohttpRelayIngressConnMetricsAdaptiveGroups">
+<Details header="ohttpRelayIngressConnMetricsAdaptiveGroups node">
 
 <Details header="Client-to-relay latency by data center">
 
@@ -482,7 +482,7 @@ query ProtocolDistribution(
 
 </Details>
 
-<Details header="ohttpRelayEgressConnMetricsAdaptiveGroups">
+<Details header="ohttpRelayEgressConnMetricsAdaptiveGroups node">
 
 <Details header="Relay-to-gateway latency by data center">
 
