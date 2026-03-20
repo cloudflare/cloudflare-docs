@@ -32,7 +32,7 @@ async function run(): Promise<void> {
 		);
 
 		if (ciJobs.length === 0) {
-			core.setFailed(`Could not find Build or Validate jobs`);
+			core.setFailed(`Could not find Pre Build, Build, or Post Build jobs`);
 			process.exit();
 		}
 

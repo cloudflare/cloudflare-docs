@@ -24,6 +24,8 @@
 		"start": "npx astro dev",
 		"sync": "npx astro sync",
 		"test": "npx vitest",
+		"test:prebuild": "npx vitest --project Node --project Astro",
+		"test:postbuild": "npx vitest --project Workers",
 		"lint": "npx eslint",
 		"ai-setup:import-from-opencode": "npx rulesync import --targets opencode --features rules,commands,subagents",
 		"ai-setup:claudecode": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets claudecode --features rules,commands,subagents",
