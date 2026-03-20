@@ -257,7 +257,7 @@ query TopProxyErrors(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          proxyStatus_neq: ""
+          proxyStatus_neq: null
         }
         limit: 10000
         orderBy: [sum_requests_DESC]
