@@ -4,9 +4,7 @@
 	"name": "Nano Banana",
 	"description": "Google's latest image editing model in Gemini 2.5",
 	"task": "Image Generation",
-	"tags": [
-		"image-generation"
-	],
+	"tags": ["image-generation"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "0.0.1",
@@ -15,19 +13,29 @@
 	},
 	"examples": [
 		{
-			"name": "Image Editing with Reference",
-			"description": "Transform bedsheets to match a logo style",
+			"name": "Cozy Coffee Shop",
+			"description": "Interior scene with warm lighting and a cat",
 			"input": {
-				"prompt": "Make the sheets in the style of the logo. Make the scene natural.",
-				"image_input": [
-					"https://replicate.delivery/pbxt/NbYIclp4A5HWLsJ8lF5KgiYSNaLBBT1jUcYcHYQmN1uy5OnN/tmpcqc07f_q.png",
-					"https://replicate.delivery/pbxt/NbYId45yH8s04sptdtPcGqFIhV7zS5GTcdS3TtNliyTAoYPO/Screenshot%202025-08-26%20at%205.30.12%E2%80%AFPM.png"
-				],
-				"output_format": "jpg"
+				"prompt": "A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window",
+				"aspect_ratio": "16:9"
 			},
 			"output": {
-				"image_url": "https://replicate.delivery/xezq/eQ2MQYrD6XzheEgCe7OcHlUJAXYc8HaMJmGPmbTOCClZS7dqA/tmp4vqrduzh.jpg"
-			}
+				"image_url": "https://replicate.delivery/xezq/LOB8lf7PV81RfUcAqkPBeuZ9J4DE20XyH1Z6Mk7nRTZtxmSsA/tmpwa9w0ve8.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "cURL",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n      \"aspect_ratio\": \"16:9\"\n    }'"
+				},
+				{
+					"label": "JavaScript",
+					"code": "const response = await fetch(\n  \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n  {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": \"Bearer {API_TOKEN}\",\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n      \"aspect_ratio\": \"16:9\"\n    })\n  }\n);\n\nconst result = await response.json();\nconsole.log(result);"
+				},
+				{
+					"label": "Python",
+					"code": "import requests\n\nresponse = requests.post(\n    \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n    headers={\n        \"Authorization\": \"Bearer {API_TOKEN}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json={\n        \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n        \"aspect_ratio\": \"16:9\"\n    }\n)\n\nresult = response.json()\nprint(result)"
+				}
+			]
 		},
 		{
 			"name": "Character Mashup",
@@ -38,11 +46,25 @@
 					"https://replicate.delivery/pbxt/NeRx7gSc6ORMdhCjOzV0Of9VAEDNjQ56RJWVXFTjT53AK5L1/billie.jpeg",
 					"https://replicate.delivery/pbxt/NeRx7dSeZKRgWr0V6ilLhZsk8HSZgV3Z9VsauD7FSYrrvuXD/michael.jpeg"
 				],
-				"output_format": "jpg"
+				"output_format": "image/jpeg"
 			},
 			"output": {
 				"image_url": "https://replicate.delivery/xezq/mbE0pfJqUtTfu0vp7gjG93nkNYNsy78a1onho9oos56fkTjqA/tmpgxxuv701.jpg"
-			}
+			},
+			"code_snippets": [
+				{
+					"label": "cURL",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"prompt\": \"have the people smile and take a selfie from a phone\",\n      \"image_input\": [\n        \"https://replicate.delivery/pbxt/NeRx7gSc6ORMdhCjOzV0Of9VAEDNjQ56RJWVXFTjT53AK5L1/billie.jpeg\",\n        \"https://replicate.delivery/pbxt/NeRx7dSeZKRgWr0V6ilLhZsk8HSZgV3Z9VsauD7FSYrrvuXD/michael.jpeg\"\n      ],\n      \"output_format\": \"image/jepg\"\n    }'"
+				},
+				{
+					"label": "JavaScript",
+					"code": "const response = await fetch(\n  \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n  {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": \"Bearer {API_TOKEN}\",\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      \"prompt\": \"have the people smile and take a selfie from a phone\",\n      \"image_input\": [\n        \"https://replicate.delivery/pbxt/NeRx7gSc6ORMdhCjOzV0Of9VAEDNjQ56RJWVXFTjT53AK5L1/billie.jpeg\",\n        \"https://replicate.delivery/pbxt/NeRx7dSeZKRgWr0V6ilLhZsk8HSZgV3Z9VsauD7FSYrrvuXD/michael.jpeg\"\n      ],\n      \"output_format\": \"image/jpeg\"\n    })\n  }\n);\n\nconst result = await response.json();\nconsole.log(result);"
+				},
+				{
+					"label": "Python",
+					"code": "import requests\n\nresponse = requests.post(\n    \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n    headers={\n        \"Authorization\": \"Bearer {API_TOKEN}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json={\n        \"prompt\": \"have the people smile and take a selfie from a phone\",\n        \"image_input\": [\n            \"https://replicate.delivery/pbxt/NeRx7gSc6ORMdhCjOzV0Of9VAEDNjQ56RJWVXFTjT53AK5L1/billie.jpeg\",\n            \"https://replicate.delivery/pbxt/NeRx7dSeZKRgWr0V6ilLhZsk8HSZgV3Z9VsauD7FSYrrvuXD/michael.jpeg\"\n        ],\n        \"output_format\": \"image/jpeg\"\n    }\n)\n\nresult = response.json()\nprint(result)"
+				}
+			]
 		},
 		{
 			"name": "Vintage Tokyo Poster",
@@ -53,7 +75,21 @@
 			},
 			"output": {
 				"image_url": "https://replicate.delivery/xezq/8SFezUxl8nx2HqSyhznw2tdgJ7J9EU39Z6uSxJvZzZf0YTJWA/tmpmru_1vc9.jpeg"
-			}
+			},
+			"code_snippets": [
+				{
+					"label": "cURL",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"prompt\": \"A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene\",\n      \"aspect_ratio\": \"9:16\"\n    }'"
+				},
+				{
+					"label": "JavaScript",
+					"code": "const response = await fetch(\n  \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n  {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": \"Bearer {API_TOKEN}\",\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      \"prompt\": \"A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene\",\n      \"aspect_ratio\": \"9:16\"\n    })\n  }\n);\n\nconst result = await response.json();\nconsole.log(result);"
+				},
+				{
+					"label": "Python",
+					"code": "import requests\n\nresponse = requests.post(\n    \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n    headers={\n        \"Authorization\": \"Bearer {API_TOKEN}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json={\n        \"prompt\": \"A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene\",\n        \"aspect_ratio\": \"9:16\"\n    }\n)\n\nresult = response.json()\nprint(result)"
+				}
+			]
 		},
 		{
 			"name": "Dewdrops Macro",
@@ -64,7 +100,21 @@
 			},
 			"output": {
 				"image_url": "https://replicate.delivery/xezq/1i1kL3iCGgpEGlUdXTCScBfQfHfZ5aZe556DtugeAQxqGbKxC/tmpkqbpjy7j.jpeg"
-			}
+			},
+			"code_snippets": [
+				{
+					"label": "cURL",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"prompt\": \"A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet\",\n      \"aspect_ratio\": \"1:1\"\n    }'"
+				},
+				{
+					"label": "JavaScript",
+					"code": "const response = await fetch(\n  \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n  {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": \"Bearer {API_TOKEN}\",\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      \"prompt\": \"A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet\",\n      \"aspect_ratio\": \"1:1\"\n    })\n  }\n);\n\nconst result = await response.json();\nconsole.log(result);"
+				},
+				{
+					"label": "Python",
+					"code": "import requests\n\nresponse = requests.post(\n    \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n    headers={\n        \"Authorization\": \"Bearer {API_TOKEN}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json={\n        \"prompt\": \"A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet\",\n        \"aspect_ratio\": \"1:1\"\n    }\n)\n\nresult = response.json()\nprint(result)"
+				}
+			]
 		},
 		{
 			"name": "Pixel Art Marketplace",
@@ -75,7 +125,50 @@
 			},
 			"output": {
 				"image_url": "https://replicate.delivery/xezq/NTzWZYEFkf1BaSrYfHUr6vdHiI0PZ60Bke8hbDqUJJ8vxmSsA/tmpy7rr33k9.jpeg"
-			}
+			},
+			"code_snippets": [
+				{
+					"label": "cURL",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"prompt\": \"An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof\",\n      \"aspect_ratio\": \"1:1\"\n    }'"
+				},
+				{
+					"label": "JavaScript",
+					"code": "const response = await fetch(\n  \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n  {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": \"Bearer {API_TOKEN}\",\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      \"prompt\": \"An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof\",\n      \"aspect_ratio\": \"1:1\"\n    })\n  }\n);\n\nconst result = await response.json();\nconsole.log(result);"
+				},
+				{
+					"label": "Python",
+					"code": "import requests\n\nresponse = requests.post(\n    \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n    headers={\n        \"Authorization\": \"Bearer {API_TOKEN}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json={\n        \"prompt\": \"An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof\",\n        \"aspect_ratio\": \"1:1\"\n    }\n)\n\nresult = response.json()\nprint(result)"
+				}
+			]
+		},
+		{
+			"name": "Image Editing with Reference",
+			"description": "Transform bedsheets to match a logo style",
+			"input": {
+				"prompt": "Make the sheets in the style of the logo. Make the scene natural.",
+				"image_input": [
+					"https://replicate.delivery/pbxt/NbYIclp4A5HWLsJ8lF5KgiYSNaLBBT1jUcYcHYQmN1uy5OnN/tmpcqc07f_q.png",
+					"https://replicate.delivery/pbxt/NbYId45yH8s04sptdtPcGqFIhV7zS5GTcdS3TtNliyTAoYPO/Screenshot%202025-08-26%20at%205.30.12%E2%80%AFPM.png"
+				],
+				"output_format": "image/jpeg"
+			},
+			"output": {
+				"image_url": "https://replicate.delivery/xezq/eQ2MQYrD6XzheEgCe7OcHlUJAXYc8HaMJmGPmbTOCClZS7dqA/tmp4vqrduzh.jpg"
+			},
+			"code_snippets": [
+				{
+					"label": "cURL",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"prompt\": \"Make the sheets in the style of the logo. Make the scene natural.\",\n      \"image_input\": [\n        \"https://replicate.delivery/pbxt/NbYIclp4A5HWLsJ8lF5KgiYSNaLBBT1jUcYcHYQmN1uy5OnN/tmpcqc07f_q.png\",\n        \"https://replicate.delivery/pbxt/NbYId45yH8s04sptdtPcGqFIhV7zS5GTcdS3TtNliyTAoYPO/Screenshot%202025-08-26%20at%205.30.12%E2%80%AFPM.png\"\n      ],\n      \"output_format\": \"image/jpeg\"\n    }'"
+				},
+				{
+					"label": "JavaScript",
+					"code": "const response = await fetch(\n  \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n  {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": \"Bearer {API_TOKEN}\",\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      \"prompt\": \"Make the sheets in the style of the logo. Make the scene natural.\",\n      \"image_input\": [\n        \"https://replicate.delivery/pbxt/NbYIclp4A5HWLsJ8lF5KgiYSNaLBBT1jUcYcHYQmN1uy5OnN/tmpcqc07f_q.png\",\n        \"https://replicate.delivery/pbxt/NbYId45yH8s04sptdtPcGqFIhV7zS5GTcdS3TtNliyTAoYPO/Screenshot%202025-08-26%20at%205.30.12%E2%80%AFPM.png\"\n      ],\n      \"output_format\": \"image/jpeg\"\n    })\n  }\n);\n\nconst result = await response.json();\nconsole.log(result);"
+				},
+				{
+					"label": "Python",
+					"code": "import requests\n\nresponse = requests.post(\n    \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n    headers={\n        \"Authorization\": \"Bearer {API_TOKEN}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json={\n        \"prompt\": \"Make the sheets in the style of the logo. Make the scene natural.\",\n        \"image_input\": [\n            \"https://replicate.delivery/pbxt/NbYIclp4A5HWLsJ8lF5KgiYSNaLBBT1jUcYcHYQmN1uy5OnN/tmpcqc07f_q.png\",\n            \"https://replicate.delivery/pbxt/NbYId45yH8s04sptdtPcGqFIhV7zS5GTcdS3TtNliyTAoYPO/Screenshot%202025-08-26%20at%205.30.12%E2%80%AFPM.png\"\n        ],\n        \"output_format\": \"image/jpeg\"\n    }\n)\n\nresult = response.json()\nprint(result)"
+				}
+			]
 		}
 	],
 	"supports_async": false,
@@ -88,11 +181,7 @@
 		"input_format": "text",
 		"output_format": "base64",
 		"max_resolution": "1024x1024",
-		"supported_aspect_ratios": [
-			"1:1",
-			"16:9",
-			"9:16"
-		]
+		"supported_aspect_ratios": ["1:1", "16:9", "9:16"]
 	},
 	"created_at": "2026-03-10 02:36:07",
 	"default_example": {
@@ -102,12 +191,26 @@
 		},
 		"output": {
 			"image_url": "https://replicate.delivery/xezq/LOB8lf7PV81RfUcAqkPBeuZ9J4DE20XyH1Z6Mk7nRTZtxmSsA/tmpwa9w0ve8.jpeg"
-		}
+		},
+		"code_snippets": [
+			{
+				"label": "cURL",
+				"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n      \"aspect_ratio\": \"16:9\"\n    }'"
+			},
+			{
+				"label": "JavaScript",
+				"code": "const response = await fetch(\n  \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n  {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": \"Bearer {API_TOKEN}\",\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n      \"aspect_ratio\": \"16:9\"\n    })\n  }\n);\n\nconst result = await response.json();\nconsole.log(result);"
+			},
+			{
+				"label": "Python",
+				"code": "import requests\n\nresponse = requests.post(\n    \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n    headers={\n        \"Authorization\": \"Bearer {API_TOKEN}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json={\n        \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n        \"aspect_ratio\": \"16:9\"\n    }\n)\n\nresult = response.json()\nprint(result)"
+			}
+		]
 	},
 	"code_snippets": [
 		{
 			"label": "curl",
-			"code": "curl https://staging.gateway.ai.cfdata.org/v1/{ACCOUNT_ID}/default/run \\\n  -H \"cf-aig-authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"nano-banana\",\n    \"input\": {\n        \"prompt\": \"A serene Japanese garden with cherry blossoms\",\n        \"aspect_ratio\": \"16:9\",\n        \"output_format\": \"jpg\"\n    }\n  }'"
+			"code": "curl https://staging.gateway.ai.cfdata.org/v1/{ACCOUNT_ID}/default/run \\\n  -H \"cf-aig-authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"google/nano-banana\",\n    \"input\": {\n        \"prompt\": \"A serene Japanese garden with cherry blossoms\",\n        \"aspect_ratio\": \"16:9\",\n        \"output_format\": \"jpg\"\n    }\n  }'"
 		}
 	]
 }

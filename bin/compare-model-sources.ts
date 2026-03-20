@@ -30,11 +30,6 @@ interface CatalogModel {
 const LEGACY_DIR = path.join(process.cwd(), "src/content/workers-ai-models");
 const CATALOG_DIR = path.join(process.cwd(), "src/content/catalog-models");
 
-function getModelSlug(modelId: string): string {
-	const parts = modelId.split("/");
-	return parts.length >= 3 ? parts[2] : modelId;
-}
-
 function loadJsonFiles<T>(dir: string): Map<string, T> {
 	const result = new Map<string, T>();
 
@@ -64,14 +59,13 @@ function main() {
 	// Convert catalog models to slug-keyed map
 	const catalogBySlug = new Map<string, CatalogModel>();
 	for (const [, model] of catalogModels) {
-		const slug = getModelSlug(model.model_id);
-		catalogBySlug.set(slug, model);
+		catalogBySlug.set(model.model_id, model);
 	}
 
 	// Convert legacy models to slug-keyed map
 	const legacyBySlug = new Map<string, LegacyModel>();
 	for (const [, model] of legacyModels) {
-		const slug = getModelSlug(model.name);
+		const slug = model.name;
 		legacyBySlug.set(slug, model);
 	}
 
@@ -102,23 +96,26 @@ function main() {
 		if (model.code_snippets && model.code_snippets.length > 0)
 			withCodeSnippets++;
 		if (model.examples && model.examples.length > 0) withExamples++;
-		if (model.context_length) withContextLength++;
+		if (model.context_length != null) withContextLength++;
 		if (model.pricing && Object.keys(model.pricing).length > 0) withPricing++;
 	}
+
+	const pct = (n: number, total: number) =>
+		total > 0 ? Math.round((n / total) * 100) : 0;
 
 	console.log("Catalog Field Coverage");
 	console.log("----------------------");
 	console.log(
-		`With code snippets:   ${withCodeSnippets}/${catalogSlugs.size} (${Math.round((withCodeSnippets / catalogSlugs.size) * 100)}%)`,
+		`With code snippets:   ${withCodeSnippets}/${catalogSlugs.size} (${pct(withCodeSnippets, catalogSlugs.size)}%)`,
 	);
 	console.log(
-		`With examples:        ${withExamples}/${catalogSlugs.size} (${Math.round((withExamples / catalogSlugs.size) * 100)}%)`,
+		`With examples:        ${withExamples}/${catalogSlugs.size} (${pct(withExamples, catalogSlugs.size)}%)`,
 	);
 	console.log(
-		`With context length:  ${withContextLength}/${catalogSlugs.size} (${Math.round((withContextLength / catalogSlugs.size) * 100)}%)`,
+		`With context length:  ${withContextLength}/${catalogSlugs.size} (${pct(withContextLength, catalogSlugs.size)}%)`,
 	);
 	console.log(
-		`With pricing:         ${withPricing}/${catalogSlugs.size} (${Math.round((withPricing / catalogSlugs.size) * 100)}%)`,
+		`With pricing:         ${withPricing}/${catalogSlugs.size} (${pct(withPricing, catalogSlugs.size)}%)`,
 	);
 	console.log();
 
@@ -137,7 +134,7 @@ function main() {
 	// Migration progress
 	const migrated = inBoth.length + onlyInCatalog.length;
 	const total = legacySlugs.size + onlyInCatalog.length;
-	const progress = Math.round((migrated / total) * 100);
+	const progress = pct(migrated, total);
 
 	console.log("Migration Progress");
 	console.log("------------------");

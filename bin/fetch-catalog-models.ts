@@ -135,7 +135,7 @@ async function fetchFromApi(): Promise<CatalogModel[]> {
 	console.log("Fetching models from Unified Catalog API...");
 
 	while (hasMore) {
-		const url = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/catalog/models?page=${page}&per_page=${PER_PAGE}`;
+		const url = `https://api.staging.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/catalog/models?page=${page}&per_page=${PER_PAGE}`;
 
 		const response = await fetch(url, {
 			headers: {
@@ -214,10 +214,18 @@ function writeModels(models: CatalogModel[]): void {
 			continue;
 		}
 
+		// Trim string fields that may have leading/trailing whitespace
+		model.name = model.name.trim();
+		model.description = model.description.trim();
+
 		const fileName = getModelFileName(model.model_id);
 		const filePath = path.join(OUTPUT_DIR, `${fileName}.json`);
 
-		fs.writeFileSync(filePath, JSON.stringify(model, null, "\t"), "utf-8");
+		fs.writeFileSync(
+			filePath,
+			JSON.stringify(model, null, "\t") + "\n",
+			"utf-8",
+		);
 		written++;
 	}
 

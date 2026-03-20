@@ -1,0 +1,137 @@
+---
+import { Code, Tabs, TabItem } from "~/components";
+import type { ModelExample, CodeSnippet } from "~/schemas/catalog-models";
+
+interface Props {
+	example: ModelExample;
+	fallbackSnippets?: CodeSnippet[];
+}
+
+const { example, fallbackSnippets } = Astro.props;
+
+const snippets = example.code_snippets ?? fallbackSnippets ?? [];
+const hasSnippets = snippets.length > 0;
+
+const rawImageUrl = example.output?.image_url;
+const imageUrl = typeof rawImageUrl === "string" ? rawImageUrl : undefined;
+const hasImage = !!imageUrl;
+
+const languageMap: Record<string, string> = {
+	typescript: "ts",
+	javascript: "js",
+	python: "python",
+	curl: "bash",
+	bash: "bash",
+	shell: "bash",
+	cURL: "bash",
+};
+
+const displayNames: Record<string, string> = {
+	typescript: "TypeScript",
+	javascript: "JavaScript",
+	python: "Python",
+	curl: "cURL",
+	cURL: "cURL",
+	bash: "Bash",
+};
+
+function getLang(label: string): string {
+	return languageMap[label] ?? languageMap[label.toLowerCase()] ?? "txt";
+}
+
+function getLabel(label: string): string {
+	return displayNames[label] ?? displayNames[label.toLowerCase()] ?? label;
+}
+---
+
+<div class:list={["example-card", { "has-image": hasImage && hasSnippets }]}>
+	{hasSnippets && (
+		<div class="example-code">
+			{snippets.length === 1 ? (
+				<Code code={snippets[0].code} lang={getLang(snippets[0].label)} />
+			) : (
+				<Tabs>
+					{snippets.map((snippet) => (
+						<TabItem label={getLabel(snippet.label)}>
+							<Code code={snippet.code} lang={getLang(snippet.label)} />
+						</TabItem>
+					))}
+				</Tabs>
+			)}
+		</div>
+	)}
+
+	{hasImage && (
+		<div class="example-output">
+			<span class="example-output-label">Response</span>
+			<img src={imageUrl} alt={example.name} loading="lazy" />
+		</div>
+	)}
+
+	{!hasImage && !hasSnippets && (
+		<Tabs>
+			<TabItem label="Input">
+				<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
+			</TabItem>
+			<TabItem label="Output">
+				<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
+			</TabItem>
+		</Tabs>
+	)}
+
+	{!hasImage && hasSnippets && (
+		<details class="example-io">
+			<summary>Input / Output JSON</summary>
+			<Tabs>
+				<TabItem label="Input">
+					<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
+				</TabItem>
+				<TabItem label="Output">
+					<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
+				</TabItem>
+			</Tabs>
+		</details>
+	)}
+</div>
+
+<style>
+	.example-card.has-image {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(200px, 1fr);
+		gap: 1rem;
+		align-items: start;
+	}
+
+	@media (max-width: 768px) {
+		.example-card.has-image {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.example-code {
+		min-width: 0;
+		overflow: hidden;
+	}
+
+	.example-output {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.example-output-label {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--sl-color-gray-3);
+	}
+
+	.example-output img {
+		width: 100%;
+		border-radius: 0.5rem;
+		border: 1px solid var(--sl-color-gray-5);
+	}
+
+	.example-io {
+		grid-column: 1 / -1;
+	}
+</style>

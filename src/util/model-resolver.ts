@@ -1,11 +1,11 @@
 import { getCollection } from "astro:content";
 import type { CatalogModelsSchema } from "~/schemas/catalog-models";
 import type { WorkersAIModelsSchema } from "~/schemas/workers-ai-models";
-import { getModelSlug } from "./model-helpers";
+
 import type { ResolvedModel } from "./model-types";
 
 // Re-export client-safe helpers and types for convenience
-export { getModelSlug, getModelAuthor } from "./model-helpers";
+export { getModelAuthor } from "./model-helpers";
 export type { ResolvedModel } from "./model-types";
 
 /**
@@ -36,7 +36,7 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 	}
 
 	// Context window
-	if (model.context_length) {
+	if (model.context_length != null) {
 		properties.push({
 			property_id: "context_window",
 			value: String(model.context_length),
@@ -44,7 +44,7 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 	}
 
 	// Max output tokens
-	if (model.max_output_tokens) {
+	if (model.max_output_tokens != null) {
 		properties.push({
 			property_id: "max_output_tokens",
 			value: String(model.max_output_tokens),
@@ -93,7 +93,7 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 	return {
 		name: model.model_id,
 		modelId: model.model_id,
-		slug: getModelSlug(model.model_id),
+		slug: model.model_id,
 		displayName: model.name,
 		description: model.description,
 		task: {
@@ -129,7 +129,7 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
  * Convert legacy model to resolved model format.
  */
 function legacyToResolved(model: WorkersAIModelsSchema): ResolvedModel {
-	const slug = getModelSlug(model.name);
+	const slug = model.name;
 
 	// Extract values from properties array
 	const getProp = (id: string) =>
@@ -194,34 +194,11 @@ export async function getResolvedModels(): Promise<ResolvedModel[]> {
 	const catalogSlugs = new Set(catalogBySlug.keys());
 
 	for (const entry of legacyModels) {
-		const slug = getModelSlug(entry.data.name);
+		const slug = entry.data.name;
 		if (!catalogSlugs.has(slug)) {
 			resolved.push(legacyToResolved(entry.data));
 		}
 	}
 
 	return resolved;
-}
-
-/**
- * Get a single resolved model by slug.
- */
-export async function getResolvedModelBySlug(
-	slug: string,
-): Promise<ResolvedModel | undefined> {
-	const models = await getResolvedModels();
-	return models.find((m) => m.slug === slug);
-}
-
-/**
- * Get static paths for model pages.
- * Returns params and props for each model.
- */
-export async function getModelStaticPaths() {
-	const models = await getResolvedModels();
-
-	return models.map((model) => ({
-		params: { name: model.slug },
-		props: { model },
-	}));
 }

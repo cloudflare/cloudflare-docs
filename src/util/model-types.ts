@@ -45,6 +45,7 @@ export interface ResolvedModel {
 	defaultExample?: {
 		input?: Record<string, unknown>;
 		output?: Record<string, unknown>;
+		code_snippets?: CodeSnippet[];
 	};
 	metadata?: Record<string, unknown>;
 	coverImageUrl?: string;

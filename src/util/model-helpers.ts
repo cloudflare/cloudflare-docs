@@ -4,19 +4,6 @@
  */
 
 /**
- * Extract the model slug from a model ID.
- * Handles both legacy format (@cf/author/model-name) and catalog format (author/model-name).
- * @example "@cf/meta/llama-3.1-8b-instruct" -> "llama-3.1-8b-instruct"
- * @example "google/nano-banana" -> "nano-banana"
- */
-export function getModelSlug(modelId: string): string {
-	const parts = modelId.split("/");
-	// Legacy format: @cf/author/model-name (3 parts, take last)
-	// Catalog format: author/model-name (2 parts, take last)
-	return parts[parts.length - 1];
-}
-
-/**
  * Extract the author/provider from a model ID.
  * @example "@cf/meta/llama-3.1-8b-instruct" -> "meta"
  * @example "google/nano-banana" -> "google"

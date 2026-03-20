@@ -321,7 +321,7 @@ const ModelCatalog = ({ models }: { models: ModelType[] }) => {
 						<a
 							key={model.model.id}
 							className="relative mb-3 flex w-full flex-col rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
-							href={`/workers-ai/models/${model.model_display_name}`}
+							href={`/workers-ai/models/${model.model.name}`}
 						>
 							{isPinned && (
 								<span className="absolute top-1 right-2" title="Pinned model">

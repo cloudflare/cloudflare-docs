@@ -1,4 +1,4 @@
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
 /**
  * Schema for the Unified Catalog API model data
@@ -13,13 +13,15 @@ export const codeSnippetSchema = z.object({
 export const modelExampleSchema = z.object({
 	name: z.string(),
 	description: z.string().optional(),
-	input: z.record(z.unknown()),
-	output: z.record(z.unknown()),
+	input: z.record(z.string(), z.unknown()),
+	output: z.record(z.string(), z.unknown()),
+	code_snippets: codeSnippetSchema.array().optional(),
 });
 
 export const defaultExampleSchema = z.object({
-	input: z.record(z.unknown()).optional(),
-	output: z.record(z.unknown()).optional(),
+	input: z.record(z.string(), z.unknown()).optional(),
+	output: z.record(z.string(), z.unknown()).optional(),
+	code_snippets: codeSnippetSchema.array().optional(),
 });
 
 export const catalogModelsSchema = z.object({
@@ -39,7 +41,7 @@ export const catalogModelsSchema = z.object({
 	supports_async: z.boolean(),
 
 	// Pricing (flexible structure: {input, output} or {per_image} etc)
-	pricing: z.record(z.number()),
+	pricing: z.record(z.string(), z.number()),
 
 	// Examples
 	examples: modelExampleSchema.array(),
@@ -49,13 +51,13 @@ export const catalogModelsSchema = z.object({
 	// Schema (JSON Schema format)
 	schema: z
 		.object({
-			input: z.record(z.unknown()).optional(),
-			output: z.record(z.unknown()).optional(),
+			input: z.record(z.string(), z.unknown()).optional(),
+			output: z.record(z.string(), z.unknown()).optional(),
 		})
 		.optional(),
 
 	// Metadata & Links
-	metadata: z.record(z.unknown()),
+	metadata: z.record(z.string(), z.unknown()),
 	external_info: z.string().nullable(),
 	terms: z.string().nullable(),
 	cover_image_url: z.string().nullable(),

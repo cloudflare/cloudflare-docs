@@ -17,7 +17,37 @@
 		"per_additional_megapixel": 0.002,
 		"per_input_image_megapixel": 0.002
 	},
-	"examples": [],
+	"examples": [
+		{
+			"name": "Surreal Underwater Garden",
+			"description": "Bioluminescent flora in a cosmic scene",
+			"input": {
+				"prompt": "A surreal underwater or cosmic garden scene with bioluminescent flora",
+				"go_fast": true,
+				"output_megapixels": "1",
+				"aspect_ratio": "1:1",
+				"output_format": "jpg",
+				"output_quality": 95
+			},
+			"output": {
+				"image_url": "https://replicate.delivery/xezq/f8546eTHTDr2vkyI0X7v3D5vLM2nyucjh2dRfyvlG8pftifxC/out.jpg"
+			},
+			"code_snippets": [
+				{
+					"label": "cURL",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/flux-2-klein-9b \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"prompt\": \"A surreal underwater or cosmic garden scene with bioluminescent flora\",\n      \"go_fast\": true,\n      \"output_megapixels\": \"1\",\n      \"aspect_ratio\": \"1:1\",\n      \"output_format\": \"jpg\",\n      \"output_quality\": 95\n    }'"
+				},
+				{
+					"label": "JavaScript",
+					"code": "const response = await fetch(\n  \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/flux-2-klein-9b\",\n  {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": \"Bearer {API_TOKEN}\",\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      \"prompt\": \"A surreal underwater or cosmic garden scene with bioluminescent flora\",\n      \"go_fast\": true,\n      \"output_megapixels\": \"1\",\n      \"aspect_ratio\": \"1:1\",\n      \"output_format\": \"jpg\",\n      \"output_quality\": 95\n    })\n  }\n);\n\nconst result = await response.json();\nconsole.log(result);"
+				},
+				{
+					"label": "Python",
+					"code": "import requests\n\nresponse = requests.post(\n    \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/flux-2-klein-9b\",\n    headers={\n        \"Authorization\": \"Bearer {API_TOKEN}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json={\n        \"prompt\": \"A surreal underwater or cosmic garden scene with bioluminescent flora\",\n        \"go_fast\": True,\n        \"output_megapixels\": \"1\",\n        \"aspect_ratio\": \"1:1\",\n        \"output_format\": \"jpg\",\n        \"output_quality\": 95\n    }\n)\n\nresult = response.json()\nprint(result)"
+				}
+			]
+		}
+	],
 	"supports_async": false,
 	"external_info": "https://developers.cloudflare.com/workers-ai/models/flux-2-klein-9b/",
 	"terms": "https://bfl.ai/legal/terms-of-service",
