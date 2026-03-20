@@ -1,6 +1,7 @@
+id: eMsRv1
 name: Email Service
 
-product:
+entry:
   title: Email Service
   url: /email-service/
   group: Developer platform
