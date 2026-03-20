@@ -109,7 +109,7 @@ jobs:
 
       - name: Check for CRLF line endings
         run: |
-          if git grep -Il $'\r' -- '*.mdx' '*.md' '*.json' '*.yml' '*.yaml' '*.ts' '*.js' '*.astro' '*.css' '*.tsx' '*.mjs' '*.toml' '*.txt' '*.svg' '*.html'; then
+          if git grep -Il $'\r'; then
             echo "::error::CRLF line endings detected. Configure your editor to use LF line endings (this repo has an .editorconfig file that most editors respect automatically)."
             exit 1
           fi
