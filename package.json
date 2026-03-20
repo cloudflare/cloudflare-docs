@@ -28,7 +28,8 @@
 		"ai-setup:import-from-opencode": "npx rulesync import --targets opencode --features rules,commands,subagents",
 		"ai-setup:claudecode": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets claudecode --features rules,commands,subagents",
 		"ai-setup:cursor": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets cursor --features commands,subagents",
-		"ai-setup:copilot": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets copilot --features commands,subagents"
+		"ai-setup:copilot": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets copilot --features commands,subagents",
+		"prepare": "husky"
 	},
 	"devDependencies": {
 		"@actions/core": "1.11.1",
@@ -86,6 +87,7 @@
 		"hast-util-select": "6.0.4",
 		"hastscript": "9.0.1",
 		"he": "1.2.0",
+		"husky": "9.1.7",
 		"jsonc-parser": "3.3.1",
 		"ldrs": "1.1.7",
 		"lz-string": "1.5.0",
