@@ -17,6 +17,7 @@
 	--sidebar-active-bg: var(--color-cl1-gray-9);
 	--sidebar-active-text: var(--sidebar-text-strong);
 	--sidebar-border: var(--color-cl1-gray-8);
+	--sidebar-border-hover: var(--color-cl1-gray-7);
 	--sl-color-sidebar-active: var(--color-cl1-black);
 	--sl-color-sidebar-hover: var(--color-cl1-gray-9);
 }
@@ -33,6 +34,7 @@
 	--sidebar-active-bg: var(--color-cl1-gray-2);
 	--sidebar-active-text: var(--sidebar-text-strong);
 	--sidebar-border: var(--color-cl1-gray-2);
+	--sidebar-border-hover: var(--color-cl1-gray-3);
 	--sl-color-sidebar-active: var(--sidebar-text-strong);
 	--sl-color-sidebar-hover: var(--color-cl1-gray-2);
 }
