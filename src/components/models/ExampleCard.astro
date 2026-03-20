@@ -5,9 +5,10 @@ import type { ModelExample, CodeSnippet } from "~/schemas/catalog-models";
 interface Props {
 	example: ModelExample;
 	fallbackSnippets?: CodeSnippet[];
+	layout?: "stack" | "side-by-side";
 }
 
-const { example, fallbackSnippets } = Astro.props;
+const { example, fallbackSnippets, layout = "side-by-side" } = Astro.props;
 
 const snippets = example.code_snippets ?? fallbackSnippets ?? [];
 const hasSnippets = snippets.length > 0;
@@ -44,44 +45,44 @@ function getLabel(label: string): string {
 }
 ---
 
-<div class:list={["example-card", { "has-image": hasImage && hasSnippets }]}>
-	{hasSnippets && (
-		<div class="example-code">
-			{snippets.length === 1 ? (
-				<Code code={snippets[0].code} lang={getLang(snippets[0].label)} />
-			) : (
-				<Tabs>
-					{snippets.map((snippet) => (
-						<TabItem label={getLabel(snippet.label)}>
-							<Code code={snippet.code} lang={getLang(snippet.label)} />
-						</TabItem>
-					))}
-				</Tabs>
-			)}
-		</div>
-	)}
+<div
+	class:list={[
+		"example-card",
+		{ "side-by-side": layout === "side-by-side" && hasImage && hasSnippets },
+	]}
+>
+	{
+		hasSnippets && (
+			<div class="example-code">
+				{snippets.length === 1 ? (
+					<Code code={snippets[0].code} lang={getLang(snippets[0].label)} />
+				) : (
+					<Tabs>
+						{snippets.map((snippet) => (
+							<TabItem label={getLabel(snippet.label)}>
+								<Code code={snippet.code} lang={getLang(snippet.label)} />
+							</TabItem>
+						))}
+					</Tabs>
+				)}
+			</div>
+		)
+	}
 
-	{hasImage && (
-		<div class="example-output">
-			<span class="example-output-label">Response</span>
-			<img src={imageUrl} alt={example.name} loading="lazy" />
-		</div>
-	)}
+	{
+		hasImage && (
+			<div class="example-output">
+				<span class="example-output-label">
+					Response
+					<span class="example-status-badge">200</span>
+				</span>
+				<img src={imageUrl} alt={example.name} loading="lazy" />
+			</div>
+		)
+	}
 
-	{!hasImage && !hasSnippets && (
-		<Tabs>
-			<TabItem label="Input">
-				<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
-			</TabItem>
-			<TabItem label="Output">
-				<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
-			</TabItem>
-		</Tabs>
-	)}
-
-	{!hasImage && hasSnippets && (
-		<details class="example-io">
-			<summary>Input / Output JSON</summary>
+	{
+		!hasImage && !hasSnippets && (
 			<Tabs>
 				<TabItem label="Input">
 					<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
@@ -90,39 +91,123 @@ function getLabel(label: string): string {
 					<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
 				</TabItem>
 			</Tabs>
-		</details>
-	)}
+		)
+	}
+
+	{
+		!hasImage && hasSnippets && (
+			<details class="example-io">
+				<summary>Input / Output JSON</summary>
+				<Tabs>
+					<TabItem label="Input">
+						<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
+					</TabItem>
+					<TabItem label="Output">
+						<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
+					</TabItem>
+				</Tabs>
+			</details>
+		)
+	}
 </div>
 
 <style>
-	.example-card.has-image {
+	.example-card {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.example-card.side-by-side {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) minmax(200px, 1fr);
 		gap: 1rem;
-		align-items: start;
+		align-items: stretch;
 	}
 
 	@media (max-width: 768px) {
-		.example-card.has-image {
+		.example-card.side-by-side {
 			grid-template-columns: 1fr;
 		}
 	}
 
 	.example-code {
 		min-width: 0;
+		min-height: 0;
 		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* stretch the tabs element and its active panel */
+	.example-card.side-by-side .example-code :global(starlight-tabs) {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.example-card.side-by-side
+		.example-code
+		:global(starlight-tabs > [role="tabpanel"]:not([hidden])) {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.example-card.side-by-side .example-code :global(.expressive-code) {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.example-card.side-by-side .example-code :global(.expressive-code figure) {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.example-card.side-by-side .example-code :global(.expressive-code pre) {
+		flex: 1;
+		overflow: auto;
 	}
 
 	.example-output {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 1rem;
+		margin-top: 0;
+	}
+
+	.example-card.side-by-side .example-output {
+		position: sticky;
+		top: 5rem;
+		align-self: start;
 	}
 
 	.example-output-label {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		height: 1.875rem; /* matches starlight tab bar height (~30px) */
 		font-size: 0.875rem;
 		font-weight: 600;
-		color: var(--sl-color-gray-3);
+		color: var(--sl-color-gray-10);
+		border-bottom: 2px solid var(--sl-color-gray-5);
+	}
+
+	.example-status-badge {
+		font-size: 0.75rem;
+		font-weight: 700;
+		font-family: var(--sl-font-mono);
+		color: var(--sl-color-green);
+		border: 1px solid var(--sl-color-green);
+		border-radius: 0.25rem;
+		padding: 0 0.3rem;
+		line-height: 1.4;
 	}
 
 	.example-output img {

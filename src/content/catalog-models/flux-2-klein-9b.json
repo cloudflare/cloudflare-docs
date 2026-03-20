@@ -1,6 +1,6 @@
 {
 	"model_id": "@cf/black-forest-labs/flux-2-klein-9b",
-	"provider_id": "workers-ai",
+	"provider_id": "black-forest-labs",
 	"name": "FLUX.2 [klein] 9B",
 	"description": "FLUX.2 [klein] 9B is a 9 billion parameter model that can generate images from text descriptions and supports multi-reference editing capabilities.",
 	"task": "Text-to-Image",
@@ -11,13 +11,43 @@
 	],
 	"context_length": null,
 	"max_output_tokens": null,
-	"schema_version": "1.0.0",
+	"schema_version": "0.0.1",
 	"pricing": {
 		"per_megapixel": 0.015,
 		"per_additional_megapixel": 0.002,
 		"per_input_image_megapixel": 0.002
 	},
-	"examples": [],
+	"examples": [
+		{
+			"name": "Surreal Underwater Garden",
+			"description": "Bioluminescent flora in a cosmic scene",
+			"input": {
+				"prompt": "A surreal underwater or cosmic garden scene with bioluminescent flora",
+				"go_fast": true,
+				"output_megapixels": "1",
+				"aspect_ratio": "1:1",
+				"output_format": "jpg",
+				"output_quality": 95
+			},
+			"output": {
+				"image_url": "https://replicate.delivery/xezq/f8546eTHTDr2vkyI0X7v3D5vLM2nyucjh2dRfyvlG8pftifxC/out.jpg"
+			},
+			"code_snippets": [
+				{
+					"label": "cURL",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/flux-2-klein-9b \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"prompt\": \"A surreal underwater or cosmic garden scene with bioluminescent flora\",\n      \"go_fast\": true,\n      \"output_megapixels\": \"1\",\n      \"aspect_ratio\": \"1:1\",\n      \"output_format\": \"jpg\",\n      \"output_quality\": 95\n    }'"
+				},
+				{
+					"label": "JavaScript",
+					"code": "const response = await fetch(\n  \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/flux-2-klein-9b\",\n  {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": \"Bearer {API_TOKEN}\",\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      \"prompt\": \"A surreal underwater or cosmic garden scene with bioluminescent flora\",\n      \"go_fast\": true,\n      \"output_megapixels\": \"1\",\n      \"aspect_ratio\": \"1:1\",\n      \"output_format\": \"jpg\",\n      \"output_quality\": 95\n    })\n  }\n);\n\nconst result = await response.json();\nconsole.log(result);"
+				},
+				{
+					"label": "Python",
+					"code": "import requests\n\nresponse = requests.post(\n    \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/flux-2-klein-9b\",\n    headers={\n        \"Authorization\": \"Bearer {API_TOKEN}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json={\n        \"prompt\": \"A surreal underwater or cosmic garden scene with bioluminescent flora\",\n        \"go_fast\": True,\n        \"output_megapixels\": \"1\",\n        \"aspect_ratio\": \"1:1\",\n        \"output_format\": \"jpg\",\n        \"output_quality\": 95\n    }\n)\n\nresult = response.json()\nprint(result)"
+				}
+			]
+		}
+	],
 	"supports_async": false,
 	"external_info": "https://developers.cloudflare.com/workers-ai/models/flux-2-klein-9b/",
 	"terms": "https://bfl.ai/legal/terms-of-service",
@@ -47,58 +77,53 @@
 		"github_repo": "https://github.com/black-forest-labs/flux",
 		"blog_post": "https://bfl.ai/flux2"
 	},
-	"created_at": "2026-03-09 15:22:50",
-	"default_example": {
-		"input": {
-			"prompt": "A surreal underwater or cosmic garden scene with bioluminescent flora",
-			"go_fast": true,
-			"output_megapixels": "1",
-			"aspect_ratio": "1:1",
-			"output_format": "jpg",
-			"output_quality": 95
-		},
-		"output": {
-			"image_url": "https://replicate.delivery/xezq/f8546eTHTDr2vkyI0X7v3D5vLM2nyucjh2dRfyvlG8pftifxC/out.jpg"
-		}
-	},
-	"code_snippets": [
-		{
-			"label": "curl",
-			"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/black-forest-labs/flux-2-klein-9b \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: multipart/form-data\" \\\n  -F \"prompt=a sunset at the alps\" \\\n  -F steps=25 \\\n  -F width=1024 \\\n  -F height=1024"
-		},
-		{
-			"label": "typescript",
-			"code": "export interface Env {\n  AI: Ai;\n}\n\nexport default {\n  async fetch(request, env): Promise<Response> {\n    const form = new FormData();\n    form.append('prompt', 'a sunset with a dog');\n    form.append('width', '1024');\n    form.append('height', '1024');\n\n    // FormData doesn't expose its serialized body or boundary. Passing it to a\n    // Request (or Response) constructor serializes it and generates the Content-Type\n    // header with the boundary, which is required for the server to parse the multipart fields.\n    const formResponse = new Response(form);\n    const formStream = formResponse.body;\n    const formContentType = formResponse.headers.get('content-type')!;\n\n    const resp = await env.AI.run(\"@cf/black-forest-labs/flux-2-klein-9b\", {\n      multipart: {\n        body: formStream,\n        contentType: formContentType\n      }\n    });\n\n    return Response.json(resp);\n  },\n} satisfies ExportedHandler<Env>;"
-		}
-	],
+	"created_at": "2026-03-20 18:35:59",
+	"default_example": null,
+	"code_snippets": [],
 	"schema": {
 		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",
 			"properties": {
-				"multipart": {
-					"type": "object",
-					"properties": {
-						"body": {
-							"type": "object"
-						},
-						"contentType": {
-							"type": "string"
-						}
-					}
+				"prompt": {
+					"type": "string"
+				},
+				"width": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"height": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"num_steps": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"guidance": {
+					"type": "number"
+				},
+				"seed": {
+					"type": "number"
 				}
 			},
 			"required": [
-				"multipart"
-			]
+				"prompt"
+			],
+			"additionalProperties": false
 		},
 		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",
 			"properties": {
 				"image": {
-					"type": "string",
-					"description": "Generated image as Base64 string."
+					"type": "string"
 				}
-			}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
 		}
 	}
 }

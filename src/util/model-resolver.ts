@@ -13,9 +13,10 @@ export type { ResolvedModel } from "./model-types";
  * human-readable unit label (e.g. "per image", "per megapixel").
  */
 function normalizePricingUnit(unit: string): string {
-	const withoutPrefix = unit.startsWith("per_") ? unit.slice(4) : unit;
-	const humanReadable = withoutPrefix.replace(/_/g, " ");
-	return `per ${humanReadable}`;
+	if (unit.startsWith("per_")) {
+		return `per ${unit.slice(4).replace(/_/g, " ")}`;
+	}
+	return unit.replace(/_/g, " ");
 }
 
 /**
@@ -112,7 +113,7 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 		pricing: model.pricing,
 		codeSnippets: model.code_snippets,
 		examples: model.examples,
-		defaultExample: model.default_example,
+		defaultExample: model.default_example ?? undefined,
 		metadata: model.metadata,
 		coverImageUrl: model.cover_image_url ?? undefined,
 		externalInfo: model.external_info ?? undefined,

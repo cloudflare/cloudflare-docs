@@ -11,7 +11,7 @@
 	],
 	"context_length": null,
 	"max_output_tokens": null,
-	"schema_version": "1.0.0",
+	"schema_version": "0.0.1",
 	"pricing": {
 		"per_megapixel": 0.015,
 		"per_additional_megapixel": 0.002,
@@ -77,26 +77,9 @@
 		"github_repo": "https://github.com/black-forest-labs/flux",
 		"blog_post": "https://bfl.ai/flux2"
 	},
-	"created_at": "2026-03-09 15:22:50",
-	"default_example": {
-		"input": {
-			"prompt": "A surreal underwater or cosmic garden scene with bioluminescent flora",
-			"go_fast": true,
-			"output_megapixels": "1",
-			"aspect_ratio": "1:1",
-			"output_format": "jpg",
-			"output_quality": 95
-		},
-		"output": {
-			"image_url": "https://replicate.delivery/xezq/f8546eTHTDr2vkyI0X7v3D5vLM2nyucjh2dRfyvlG8pftifxC/out.jpg"
-		}
-	},
-	"code_snippets": [
-		{
-			"label": "curl",
-			"code": "curl https://staging.gateway.ai.cfdata.org/v1/{ACCOUNT_ID}/default/run \\\n  -H \"cf-aig-authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"black-forest-labs/flux-2-klein-9b\",\n    \"input\": {\n        \"prompt\": \"A serene Japanese garden with cherry blossoms\",\n        \"aspect_ratio\": \"16:9\",\n        \"output_format\": \"jpg\"\n    }\n  }'"
-		}
-	],
+	"created_at": "2026-03-20 18:34:42",
+	"default_example": null,
+	"code_snippets": [],
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

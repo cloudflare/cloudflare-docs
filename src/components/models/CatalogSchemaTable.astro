@@ -1,0 +1,205 @@
+---
+import {
+	SchemaTree,
+	SchemaCombinerName,
+	type SchemaNode,
+	type RegularNode,
+	type SchemaTreeRefDereferenceFn,
+} from "@stoplight/json-schema-tree";
+import { type Dictionary } from "@stoplight/types";
+import { resolveInlineRef } from "@stoplight/json";
+import { Badge } from "@astrojs/starlight/components";
+import SchemaParamName from "~/components/models/SchemaParamName.astro";
+
+interface Props {
+	schema: Record<string, unknown>;
+	title: string;
+}
+
+const { schema, title } = Astro.props;
+
+type ReferenceInfo = {
+	source: string | null;
+	pointer: string | null;
+};
+type ReferenceResolver = (
+	ref: ReferenceInfo,
+	propertyPath: string[] | null,
+	currentObject?: object,
+) => any;
+
+const defaultResolver: SchemaTreeRefDereferenceFn =
+	(contextObject: object): ReferenceResolver =>
+	({ pointer }, _, currentObject) => {
+		const activeObject = contextObject ?? currentObject;
+		if (pointer === null) return null;
+		if (pointer === "#") return activeObject;
+		const resolved = resolveInlineRef(
+			activeObject as Dictionary<string>,
+			pointer,
+		);
+		if (resolved) return resolved;
+		throw new ReferenceError(`Could not resolve '${pointer}`);
+	};
+
+const jsonSchemaTree = new SchemaTree(schema, {
+	mergeAllOf: true,
+	refResolver: defaultResolver,
+	maxRefDepth: 1,
+});
+jsonSchemaTree.populate();
+
+// Flatten the schema tree into rows with depth tracking.
+// ancestorIsLast[i] = true if the ancestor at depth i+1 was the last sibling —
+// used to decide whether to draw "│" or " " for each ancestor column.
+interface SchemaRow {
+	name: string;
+	type: string;
+	isArray: boolean;
+	isObject: boolean;
+	required: boolean;
+	defaultValue?: string;
+	description?: string;
+	enumValues?: string[];
+	depth: number;
+	isLastChild: boolean;
+	ancestorIsLast: boolean[];
+}
+
+function collectRows(
+	nodes: SchemaNode[] | undefined,
+	depth: number,
+	ancestorIsLast: boolean[],
+): SchemaRow[] {
+	if (!nodes) return [];
+	const rows: SchemaRow[] = [];
+
+	// Filter to only valid property nodes first so we can detect the last one
+	const validNodes = nodes.filter((node) => {
+		const reg = node as RegularNode;
+		const name = reg.subpath?.[reg.subpath.length - 1] ?? "";
+		if (!name) return false;
+		const parentProperties = reg.parent?.fragment?.properties;
+		if (parentProperties && !(name in (parentProperties as object)))
+			return false;
+		return true;
+	});
+
+	for (let i = 0; i < validNodes.length; i++) {
+		const reg = validNodes[i] as RegularNode;
+		const name = reg.subpath?.[reg.subpath.length - 1] ?? "";
+		const isLastChild = i === validNodes.length - 1;
+
+		const parentRequired = reg.parent?.fragment?.required;
+		const required = Array.isArray(parentRequired)
+			? (parentRequired as string[]).includes(name)
+			: false;
+
+		const isArray = reg.primaryType === "array";
+		const isObject = reg.primaryType === "object";
+		const type = reg.combiners?.includes(SchemaCombinerName.OneOf)
+			? "one of"
+			: (reg.primaryType ?? "");
+
+		const defaultValue =
+			reg.annotations?.default !== undefined
+				? String(reg.annotations.default)
+				: undefined;
+
+		const description = reg.annotations?.description as string | undefined;
+
+		const enumValues = (reg.validations?.enum as unknown[])?.map(String);
+
+		rows.push({
+			name,
+			type,
+			isArray,
+			isObject,
+			required,
+			defaultValue,
+			description,
+			enumValues,
+			depth,
+			isLastChild,
+			ancestorIsLast,
+		});
+
+		if (reg.children?.length) {
+			rows.push(
+				...collectRows(reg.children, depth + 1, [
+					...ancestorIsLast,
+					isLastChild,
+				]),
+			);
+		}
+	}
+
+	return rows;
+}
+
+const topLevelNodes =
+	(jsonSchemaTree.root.children[0] as RegularNode)?.children ?? undefined;
+const rows = collectRows(topLevelNodes, 0, []);
+---
+
+<h3 class="mt-6 mb-2 text-base font-semibold">{title}</h3>
+{
+	rows.length === 0 ? (
+		<p class="text-sm text-gray-500">No parameters defined.</p>
+	) : (
+		<div class="not-content overflow-x-auto">
+			<table class="w-full table-fixed border-collapse text-sm">
+				<colgroup>
+					<col style="width: 25%" />
+					<col style="width: 25%" />
+					<col style="width: 15%" />
+					<col style="width: 35%" />
+				</colgroup>
+				<thead>
+					<tr class="border-b border-gray-200 text-left dark:border-gray-700">
+						<th class="py-2 pr-8 font-semibold">Name</th>
+						<th class="py-2 pr-8 font-semibold">Type</th>
+						<th class="py-2 pr-8 font-semibold">Default</th>
+						<th class="py-2 font-semibold">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					{rows.map((row) => (
+						<tr
+							class="border-b border-gray-100 align-top dark:border-gray-800"
+							style={`background-color: rgba(0, 0, 0, ${Math.min(row.depth * 0.1, 1.0)});`}
+						>
+							<td class="py-2 pr-8 pl-3 font-mono">
+								<SchemaParamName
+									name={row.name}
+									depth={row.depth}
+									isArray={row.isArray}
+									isObject={row.isObject}
+								/>
+							</td>
+							<td class="py-2 pr-8">
+								{row.type && <code class="text-xs">{row.type}</code>}
+								{row.required && (
+									<span class="ml-2">
+										<Badge text="required" variant="caution" />
+									</span>
+								)}
+							</td>
+							<td class="py-2 pr-8 font-mono text-gray-500 dark:text-gray-400">
+								{row.defaultValue ?? "—"}
+							</td>
+							<td class="py-2 text-gray-700 dark:text-gray-300">
+								{row.description}
+								{row.enumValues?.length ? (
+									<span class="mt-1 block text-xs text-gray-500 dark:text-gray-400">
+										Allowed: {row.enumValues.join(", ")}
+									</span>
+								) : null}
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
+	)
+}

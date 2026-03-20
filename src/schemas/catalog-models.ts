@@ -45,7 +45,7 @@ export const catalogModelsSchema = z.object({
 
 	// Examples
 	examples: modelExampleSchema.array(),
-	default_example: defaultExampleSchema.optional(),
+	default_example: defaultExampleSchema.nullable().optional(),
 	code_snippets: codeSnippetSchema.array().optional(),
 
 	// Schema (JSON Schema format)

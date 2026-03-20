@@ -4,9 +4,7 @@
 	"name": "Nano Banana",
 	"description": "Google's latest image editing model in Gemini 2.5",
 	"task": "Image Generation",
-	"tags": [
-		"image-generation"
-	],
+	"tags": ["image-generation"],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "0.0.1",
@@ -183,42 +181,11 @@
 		"input_format": "text",
 		"output_format": "base64",
 		"max_resolution": "1024x1024",
-		"supported_aspect_ratios": [
-			"1:1",
-			"16:9",
-			"9:16"
-		]
+		"supported_aspect_ratios": ["1:1", "16:9", "9:16"]
 	},
-	"created_at": "2026-03-10 02:36:07",
-	"default_example": {
-		"input": {
-			"prompt": "A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window",
-			"aspect_ratio": "16:9"
-		},
-		"output": {
-			"image_url": "https://replicate.delivery/xezq/LOB8lf7PV81RfUcAqkPBeuZ9J4DE20XyH1Z6Mk7nRTZtxmSsA/tmpwa9w0ve8.jpeg"
-		},
-		"code_snippets": [
-			{
-				"label": "cURL",
-				"code": "curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana \\\n  -H \"Authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n      \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n      \"aspect_ratio\": \"16:9\"\n    }'"
-			},
-			{
-				"label": "JavaScript",
-				"code": "const response = await fetch(\n  \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n  {\n    method: \"POST\",\n    headers: {\n      \"Authorization\": \"Bearer {API_TOKEN}\",\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify({\n      \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n      \"aspect_ratio\": \"16:9\"\n    })\n  }\n);\n\nconst result = await response.json();\nconsole.log(result);"
-			},
-			{
-				"label": "Python",
-				"code": "import requests\n\nresponse = requests.post(\n    \"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/google/nano-banana\",\n    headers={\n        \"Authorization\": \"Bearer {API_TOKEN}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json={\n        \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n        \"aspect_ratio\": \"16:9\"\n    }\n)\n\nresult = response.json()\nprint(result)"
-			}
-		]
-	},
-	"code_snippets": [
-		{
-			"label": "curl",
-			"code": "curl https://staging.gateway.ai.cfdata.org/v1/{ACCOUNT_ID}/default/run \\\n  -H \"cf-aig-authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"google/nano-banana\",\n    \"input\": {\n        \"prompt\": \"A serene Japanese garden with cherry blossoms\",\n        \"aspect_ratio\": \"16:9\",\n        \"output_format\": \"jpg\"\n    }\n  }'"
-		}
-	],
+	"created_at": "2026-03-20 17:46:49",
+	"default_example": null,
+	"code_snippets": [],
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -252,16 +219,10 @@
 				},
 				"output_format": {
 					"type": "string",
-					"enum": [
-						"image/jpeg",
-						"image/png",
-						"image/webp"
-					]
+					"enum": ["image/jpeg", "image/png", "image/webp"]
 				}
 			},
-			"required": [
-				"prompt"
-			],
+			"required": ["prompt"],
 			"additionalProperties": false
 		},
 		"output": {
@@ -273,9 +234,7 @@
 					"format": "uri"
 				}
 			},
-			"required": [
-				"image"
-			],
+			"required": ["image"],
 			"additionalProperties": false
 		}
 	}
