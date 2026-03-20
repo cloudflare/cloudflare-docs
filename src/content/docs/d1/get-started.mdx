@@ -6,7 +6,17 @@ sidebar:
   order: 2
 ---
 
-import { Render, PackageManagers, Steps, FileTree, Tabs, TabItem, TypeScriptExample, WranglerConfig, DashButton } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	Steps,
+	FileTree,
+	Tabs,
+	TabItem,
+	TypeScriptExample,
+	WranglerConfig,
+	DashButton,
+} from "~/components";
 
 This guide instructs you through:
 
@@ -115,30 +125,31 @@ To create your first D1 database:
 
 2. Run the following `wrangler@latest d1` command and give your database a name. In this tutorial, the database is named `prod-d1-tutorial`:
 
-    :::note
-    The [Wrangler command-line interface](/workers/wrangler/) is Cloudflare's tool for managing and deploying Workers applications and D1 databases in your terminal. It was installed when you used `npm create cloudflare@latest` to initialize your new project.
+   :::note
+   The [Wrangler command-line interface](/workers/wrangler/) is Cloudflare's tool for managing and deploying Workers applications and D1 databases in your terminal. It was installed when you used `npm create cloudflare@latest` to initialize your new project.
 
-    While Wrangler gets installed locally to your project, you can use it outside the project by using the command `npx wrangler`.
-    :::
+   While Wrangler gets installed locally to your project, you can use it outside the project by using the command `npx wrangler`.
+   :::
 
-    ```sh
-    npx wrangler@latest d1 create prod-d1-tutorial
-    ```
+   ```sh
+   npx wrangler@latest d1 create prod-d1-tutorial
+   ```
 
-    ```txt output
-    ✅ Successfully created DB 'prod-d1-tutorial' in region WEUR
-    Created your new D1 database.
+   ```txt output
+   ✅ Successfully created DB 'prod-d1-tutorial' in region WEUR
+   Created your new D1 database.
 
-    {
-    	"d1_databases": [
-    		{
-    			"binding": "prod_d1_tutorial",
-    			"database_name": "prod-d1-tutorial",
-    			"database_id": "<unique-ID-for-your-database>"
-    		}
-    	]
-    }
-    ```
+   {
+   	"d1_databases": [
+   		{
+   			"binding": "prod_d1_tutorial",
+   			"database_name": "prod-d1-tutorial",
+   			"database_id": "<unique-ID-for-your-database>"
+   		}
+   	]
+   }
+   ```
+
 3. When prompted: `Would you like Wrangler to add it on your behalf?`, select `Yes`. This will automatically add the binding to your Wrangler configuration file.
 
 </Steps>
@@ -150,11 +161,13 @@ This creates a new D1 database and outputs the [binding](/workers/runtime-apis/b
 <Steps>
 1. In the Cloudflare dashboard, go to the **D1 SQL database** page.
 
-   <DashButton url="/?to=/:account/workers/d1" />
-2. Select **Create Database**.
-3. Name your database. For this tutorial, name your D1 database `prod-d1-tutorial`.
-4. (Optional) Provide a location hint. Location hint is an optional parameter you can provide to indicate your desired geographical location for your database. Refer to [Provide a location hint](/d1/configuration/data-location/#provide-a-location-hint) for more information.
-5. Select **Create**.
+<DashButton url="/?to=/:account/workers/d1" />
+2. Select **Create Database**. 3. Name your database. For this tutorial, name
+your D1 database `prod-d1-tutorial`. 4. (Optional) Provide a location hint.
+Location hint is an optional parameter you can provide to indicate your desired
+geographical location for your database. Refer to [Provide a location
+hint](/d1/configuration/data-location/#provide-a-location-hint) for more
+information. 5. Select **Create**.
 
 </Steps>
 
@@ -192,20 +205,19 @@ But if you wish to add the binding manually, follow the steps below:
 
    ```jsonc
    {
-     "d1_databases": [
-       {
-         "binding": "prod_d1_tutorial", // available in your Worker on env.DB
-         "database_name": "prod-d1-tutorial",
-         "database_id": "<unique-ID-for-your-database>"
-       }
-     ]
+   	"d1_databases": [
+   		{
+   			"binding": "prod_d1_tutorial", // available in your Worker on env.DB
+   			"database_name": "prod-d1-tutorial",
+   			"database_id": "<unique-ID-for-your-database>",
+   		},
+   	],
    }
    ```
 
    </WranglerConfig>
 
    Specifically:
-
    - The value (string) you set for `binding` is the **binding name**, and is used to reference this database in your Worker. In this tutorial, name your binding `prod_d1_tutorial`.
    - The binding name must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
    - Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [Workers Binding API](/d1/worker-api/) is exposed on this binding.
@@ -223,14 +235,15 @@ You can also bind your D1 database to a [Pages Function](/pages/functions/). For
 You create bindings by adding them to the Worker you have created.
 
 <Steps>
-1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
-   <DashButton url="/?to=/:account/workers-and-pages" />
-2. Select the `d1-tutorial` Worker you created in [step 1](/d1/get-started/#1-create-a-worker).
-3. Go to the **Bindings** tab.
-4. Select **Add binding**.
-5. Select **D1 database** > **Add binding**.
-6. Name your binding in **Variable name**, then select the `prod-d1-tutorial` D1 database you created in [step 2](/d1/get-started/#2-create-a-database) from the dropdown menu. For this tutorial, name your binding `prod_d1_tutorial`.
-7. Select **Add binding**.
+	1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+	<DashButton url="/?to=/:account/workers-and-pages" />
+	2. Select the `d1-tutorial` Worker you created in [step
+	1](/d1/get-started/#1-create-a-worker). 3. Go to the **Bindings** tab. 4.
+	Select **Add binding**. 5. Select **D1 database** > **Add binding**. 6. Name
+	your binding in **Variable name**, then select the `prod-d1-tutorial` D1
+	database you created in [step 2](/d1/get-started/#2-create-a-database) from
+	the dropdown menu. For this tutorial, name your binding `prod_d1_tutorial`. 7.
+	Select **Add binding**.
 </Steps>
 
 </TabItem>
@@ -255,21 +268,22 @@ After correctly preparing your [Wrangler configuration file](/workers/wrangler/c
 
 2. Initialize your database to run and test locally first. Bootstrap your new D1 database by running:
 
-    ```sh
-    npx wrangler d1 execute prod-d1-tutorial --local --file=./schema.sql
-    ```
-    ```txt output
-    ⛅️ wrangler 4.13.2
-    -------------------
+   ```sh
+   npx wrangler d1 execute prod-d1-tutorial --local --file=./schema.sql
+   ```
 
-    🌀 Executing on local database prod-d1-tutorial (<DATABASE_ID>) from .wrangler/state/v3/d1:
-    🌀 To execute on your remote database, add a --remote flag to your wrangler command.
-    🚣 3 commands executed successfully.
-    ```
+   ```txt output
+   ⛅️ wrangler 4.13.2
+   -------------------
 
-    :::note
-    The command `npx wrangler d1 execute` initializes your database locally, not on the remote database.
-    :::
+   🌀 Executing on local database prod-d1-tutorial (<DATABASE_ID>) from .wrangler/state/v3/d1:
+   🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+   🚣 3 commands executed successfully.
+   ```
+
+   :::note
+   The command `npx wrangler d1 execute` initializes your database locally, not on the remote database.
+   :::
 
 3. Validate that your data is in the database by running:
 
@@ -469,38 +483,40 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
     ├────────────────────────┼───────────┼──────────────┼────────────────────┤
     │ 3                      │ 5         │ 6            │ 0.02               │
     └────────────────────────┴───────────┴──────────────┴────────────────────┘
-		```
+    	```
 
 2. Validate the data is in production by running:
 
-    ```sh
-    npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Customers"
-    ```
-    ```txt output
+   ```sh
+   npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Customers"
+   ```
+
+   ```txt output
 
    ⛅️ wrangler 4.33.1
-	───────────────────
-	🌀 Executing on remote database jun-d1-db-gs-2025 (cf91ec5c-fa77-4d49-ad8e-e22921b996b2):
-	🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
-	🚣 Executed 1 command in 0.1797ms
-	┌────────────┬─────────────────────┬───────────────────┐
-	│ CustomerId │ CompanyName         │ ContactName       │
-	├────────────┼─────────────────────┼───────────────────┤
-	│ 1          │ Alfreds Futterkiste │ Maria Anders      │
-	├────────────┼─────────────────────┼───────────────────┤
-	│ 4          │ Around the Horn     │ Thomas Hardy      │
-	├────────────┼─────────────────────┼───────────────────┤
-	│ 11         │ Bs Beverages        │ Victoria Ashworth │
-	├────────────┼─────────────────────┼───────────────────┤
-	│ 13         │ Bs Beverages        │ Random Name       │
-	└────────────┴─────────────────────┴───────────────────┘
-    ```
+   ───────────────────
+   🌀 Executing on remote database jun-d1-db-gs-2025 (cf91ec5c-fa77-4d49-ad8e-e22921b996b2):
+   🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+   🚣 Executed 1 command in 0.1797ms
+   ┌────────────┬─────────────────────┬───────────────────┐
+   │ CustomerId │ CompanyName         │ ContactName       │
+   ├────────────┼─────────────────────┼───────────────────┤
+   │ 1          │ Alfreds Futterkiste │ Maria Anders      │
+   ├────────────┼─────────────────────┼───────────────────┤
+   │ 4          │ Around the Horn     │ Thomas Hardy      │
+   ├────────────┼─────────────────────┼───────────────────┤
+   │ 11         │ Bs Beverages        │ Victoria Ashworth │
+   ├────────────┼─────────────────────┼───────────────────┤
+   │ 13         │ Bs Beverages        │ Random Name       │
+   └────────────┴─────────────────────┴───────────────────┘
+   ```
 
 3. Deploy your Worker to make your project accessible on the Internet. Run:
 
    ```sh
    npx wrangler deploy
    ```
+
    ```txt output
    ⛅️ wrangler 4.33.1
    ────────────────────
@@ -640,6 +656,6 @@ In this tutorial, you have:
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
 
-- See supported [Wrangler commands for D1](/workers/wrangler/commands/d1/#d1).
+- See supported [Wrangler commands for D1](/workers/wrangler/commands/d1/).
 - Learn how to use [D1 Worker Binding APIs](/d1/worker-api/) within your Worker, and test them from the [API playground](/d1/worker-api/#api-playground).
 - Explore [community projects built on D1](/d1/reference/community-projects/).
