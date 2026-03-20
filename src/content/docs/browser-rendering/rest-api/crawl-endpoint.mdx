@@ -442,7 +442,7 @@ Use the `source` parameter to customize which sources the crawler uses. The avai
 
 ### robots.txt and bot protection
 
-The `/crawl` endpoint respects the directives of `robots.txt` files, including `crawl-delay`. All URLs that `/crawl` is directed not to crawl are listed in the response with `"status": "disallowed"`. For guidance on configuring `robots.txt` and sitemaps for sites you plan to crawl, refer to [robots.txt and sitemaps](/browser-rendering/reference/robots-txt/). If you want to block the `/crawl` endpoint from accessing your site, refer to [Blocking crawlers with robots.txt](/browser-rendering/reference/robots-txt/#blocking-crawlers-with-robotstxt).
+The `/crawl` endpoint respects the directives of `robots.txt` files, including `crawl-delay`. If a site does not specify a `crawl-delay` in its `robots.txt`, the crawler uses a default delay of 0.5 seconds between requests to the same domain to avoid overwhelming the origin server. All URLs that `/crawl` is directed not to crawl are listed in the response with `"status": "disallowed"`. For guidance on configuring `robots.txt` and sitemaps for sites you plan to crawl, refer to [robots.txt and sitemaps](/browser-rendering/reference/robots-txt/). If you want to block the `/crawl` endpoint from accessing your site, refer to [Blocking crawlers with robots.txt](/browser-rendering/reference/robots-txt/#blocking-crawlers-with-robotstxt).
 
 :::caution[Bot protection may block crawling]
 Browser Rendering does not bypass CAPTCHAs, Turnstile challenges, or any other bot protection mechanisms. If a target site uses Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the Browser Rendering crawler.
@@ -522,7 +522,7 @@ If your crawl request returns a `400 Bad Request` with the message `Crawl purpos
 If a crawl job remains in `running` status for an extended period:
 
 - **Slow page loads** — Pages with heavy JavaScript take longer to render. Use `render: false` if the content you need is in the initial HTML.
-- **Rate limiting** — Sites with strict rate limits slow crawling. The crawler respects `robots.txt` `Crawl-delay` and implements backoff. Reduce `limit` and run multiple smaller crawls.
+- **Rate limiting** — The crawler enforces a per-domain rate limit to avoid overwhelming origin servers. If a site specifies a `crawl-delay` in its `robots.txt`, the crawler respects it. Otherwise, the crawler uses a default delay of 0.5 seconds between requests to the same domain. If you run multiple crawl jobs targeting the same domain, they share the same per-domain rate limit, which can cause all jobs to take longer than if each ran individually.
 - **Unnecessary resources** — Block resources that are not needed for content extraction using `rejectResourceTypes` (for example, `image`, `media`, `font`).
 
 ### Crawl job cancelled due to limits
