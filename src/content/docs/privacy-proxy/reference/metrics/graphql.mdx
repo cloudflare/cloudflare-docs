@@ -110,7 +110,7 @@ Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudfl
 <Details header="Request node only">
 
 - `statusCode` – `uint16` — HTTP status code returned by the proxy to the client.
-- `proxyStatus` – `string` — Proxy-level error classification. Refer to [proxy status reference](#proxy-status-reference) for possible values.
+- `proxyStatus` – `string` — Proxy-level error classification. `null` when no proxy-level error occurred. Refer to [proxy status reference](#proxy-status-reference) for possible values.
 - `tunnelType` – `string` — Tunnel protocol used (`connect-tcp`, `connect-udp`, `connect-ip`).
 
 </Details>
@@ -749,7 +749,7 @@ query AuthSuccessRate(
 
 <Details header="proxyStatus values">
 
-The `proxyStatus` dimension provides proxy-level error classification. The following values may appear:
+The `proxyStatus` dimension provides proxy-level error classification. This field is `null` when no proxy-level error occurred. The following values may appear:
 
 - `dns_error` — The proxy encountered a DNS error when resolving the next hop hostname.
 - `dns_timeout` — The proxy timed out while resolving the next hop hostname.
