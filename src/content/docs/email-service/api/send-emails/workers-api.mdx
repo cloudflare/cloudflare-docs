@@ -50,7 +50,7 @@ interface EmailMessage {
 	bcc?: string | string[];
 	replyTo?: string | { email: string; name: string };
 	attachments?: Attachment[];
-	headers?: { [key: string]: string };
+	headers?: { [key: string]: string }; // See /email-service/reference/headers/
 }
 
 interface Attachment {
@@ -500,6 +500,13 @@ The following error codes may be returned when sending emails:
 | `E_MONTHLY_LIMIT_EXCEEDED`      | Monthly limit exceeded                  | Monthly sending quota reached                                 |
 | `E_BINDING_UNAVAILABLE`         | Email binding not available             | Email service binding is not configured or available          |
 | `E_INTERNAL_SERVER_ERROR`       | Internal service error                  | Email Service temporarily unavailable                         |
+| `E_HEADER_NOT_ALLOWED`          | Header not allowed                      | Header is platform-controlled or not on the [whitelist](/email-service/reference/headers/) |
+| `E_HEADER_USE_API_FIELD`        | Must use API field                      | Header like `From` must be set via the dedicated API field    |
+| `E_HEADER_VALUE_INVALID`        | Header value invalid                    | Malformed value, empty, or incorrect format                   |
+| `E_HEADER_VALUE_TOO_LONG`       | Header value too long                   | Value exceeds 2,048 byte limit                                |
+| `E_HEADER_NAME_INVALID`         | Header name invalid                     | Invalid characters or exceeds 100 byte limit                  |
+| `E_HEADERS_TOO_LARGE`           | Headers payload too large               | Total custom headers exceed 16 KB limit                       |
+| `E_HEADERS_TOO_MANY`            | Too many headers                        | More than 20 whitelisted (non-X) custom headers               |
 
 ## Legacy EmailMessage API
 
