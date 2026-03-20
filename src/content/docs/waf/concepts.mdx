@@ -37,7 +37,7 @@ The two main roles of the Cloudflare WAF are the following:
 - **Mitigation**: Blocks, challenges, or throttles requests through different mitigation features such as [custom rules](/waf/custom-rules/), [Managed Rules](/waf/managed-rules/), and [rate limiting rules](/waf/rate-limiting-rules/). Rules that mitigate traffic can include scores from traffic scans in their expressions to better address possibly malicious requests.
 
 :::caution
-Detections only score traffic; they do not block or challenge requests on their own. Use those scores in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to act on the findings.:::
+Detections only score traffic. They do not block or challenge requests on their own. Use those scores in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to act on the findings.
 :::
 
 ### Available traffic detections
@@ -62,7 +62,7 @@ Currently, you cannot manage the [bot score](/bots/concepts/bot-score/) and [att
 
 ## Rule execution order
 
-Cloudflare evaluates different types of rules when processing incoming requests. The first rule with a [terminating action](/ruleset-engine/rules-language/actions/) (such as _Block_, _Managed Challenge_, or _Redirect_) stops all further evaluation — for example, an IP Access rule that blocks a request prevents custom rules from running. The rule execution order is the following:
+Cloudflare evaluates different types of rules when processing incoming requests. The first rule with a [terminating action](/ruleset-engine/rules-language/actions/) (such as _Block_, _Managed Challenge_, or _Redirect_) stops all further evaluation. For example, an IP Access rule that blocks a request prevents custom rules from running. The rule execution order is the following:
 
 1. [IP Access rules](/waf/tools/ip-access-rules/)
 2. [Firewall rules](/firewall/cf-firewall-rules/) (deprecated)
