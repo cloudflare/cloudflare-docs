@@ -33,7 +33,7 @@
 	},
 	"devDependencies": {
 		"@actions/core": "1.11.1",
-		"@actions/github": "6.0.1",
+		"@actions/github": "9.0.0",
 		"@apidevtools/swagger-parser": "12.0.0",
 		"@astrojs/check": "0.9.8",
 		"@astrojs/react": "5.0.0",
