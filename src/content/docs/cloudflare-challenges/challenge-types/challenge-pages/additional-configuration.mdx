@@ -51,11 +51,11 @@ Refer to [Design your custom error page](/rules/custom-errors/edit-error-pages/#
 
 When a zone has a custom Challenge Page configured, your uploaded HTML is fetched from the Custom Pages Worker (KV-backed). 
 
-Cloudflare replaces the `::CF_WIDGET_BOX::` placeholder [token](/rules/custom-errors/reference/error-tokens/) with the full challenge bootstrap `<script>` block.
-
-`cTplC: 1` is set in `window._cf_chl_opt` to signal to Cloudflare that a custom template is in use.
+Cloudflare replaces the `::CF_WIDGET_BOX::` placeholder token with the full challenge bootstrap `<script>` block.
 
 ### Placeholder tokens
+
+The custom error token provides diagnostic information or specific functionality that appears on the error page. Refer to [Error tokens](/rules/custom-errors/reference/error-tokens/) for more details.
 
 - `::CF_WIDGET_BOX::`
 - `::CAPTCHA_BOX::`
@@ -72,7 +72,7 @@ Cloudflare replaces the `::CF_WIDGET_BOX::` placeholder [token](/rules/custom-er
 
 1. `::CF_WIDGET_BOX::` must appear exactly once in the body. This is where the challenge script is injected.
 2. `<head>` tag must be present.
-3. Do not add your own `window._cf_chl_opt`. Any existing definition will cause conflicts.
+3. Cloudflare will set `cTplC: 1` in the browser's `window._cf_chl_opt` when a custom template is in use. Do not add your own `window._cf_chl_opt`. Any existing definition will cause conflicts.
 4. Do not block `/cdn-cgi/challenge-platform/` paths via Content Security Policy (CSP). The orchestrator and its sub-resources must load freely.
 5. The page is served for all three challenge types (managed, interactive, non-interactive) if you use `::CF_WIDGET_BOX::`.
 
