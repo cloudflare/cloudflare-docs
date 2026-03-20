@@ -5,9 +5,10 @@ tags:
   - Logging
 sidebar:
   order: 3
+description: Review DNS queries, network traffic, and HTTP requests inspected by Gateway.
 ---
 
-import { Render, GlossaryTooltip } from "~/components";
+import { Render, GlossaryTooltip, DirectoryListing } from "~/components";
 
 :::note[Private source IP substitution]
 
@@ -15,11 +16,13 @@ Gateway logs will only show the public IP address for the **Source IP** field. P
 
 :::
 
-Gateway activity logs show the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/traffic-policies/network-policies/ssh-logging/) for sessions proxied by Gateway.
+Gateway activity logs show the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/insights/logs/dashboard-logs/ssh-command-logs/) for sessions proxied by Gateway.
 
 To view Gateway activity logs, log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Insights** > **Logs** and choose a type of Gateway log. Select an individual row to investigate the event in more detail.
 
 Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/insights/logs/logpush/).
+
+<DirectoryListing />
 
 ## Selective logging
 
