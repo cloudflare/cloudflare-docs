@@ -378,6 +378,53 @@ query RelayInternalErrors(
 
 </Details>
 
+<Details header="Errors by proxy status">
+
+Categorize relay-to-gateway failures by root cause. Filters for requests where a proxy-level error occurred and groups by `proxyStatus` and `colo`.
+
+```graphql
+query ErrorsByProxyStatus(
+  $accountTag: String!
+  $start: Time!
+  $end: Time!
+  $endpoint: String!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayRequestMetricsAdaptiveGroups(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+          endpoint: $endpoint
+          proxyStatus_neq: ""
+        }
+        orderBy: [sum_requests_DESC]
+      ) {
+        sum {
+          requests
+        }
+        dimensions {
+          datetimeHour
+          proxyStatus
+          colo
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "start": "2025-01-01T00:00:00Z",
+  "end": "2025-01-01T23:59:59Z",
+  "endpoint": "<YOUR_ENDPOINT>"
+}
+```
+
+</Details>
+
 </Details>
 
 <Details header="ohttpRelayIngressConnMetricsAdaptiveGroups node">
