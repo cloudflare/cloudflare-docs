@@ -19,7 +19,6 @@ For outbound emails sent through Email Service:
 - **Sent**: Email successfully accepted and queued for delivery
 - **Delivered**: Email successfully delivered to recipient's mail server
 - **Bounced**: Email bounced (hard or soft bounce)
-- **Quarantined**: Email held for review due to reputation or content analysis
 - **Failed**: Email failed to send due to configuration or authentication issues
 
 ### Email routing logs
@@ -104,16 +103,14 @@ Use the Activity Log filters to find specific emails:
 
 - Authentication failure rates
 - Bounce patterns and trends
-- Quarantine frequency
 - Delivery success rates
 
 ### Troubleshooting workflow
 
 1. **Identify the issue**: Use logs to pinpoint failure types
 2. **Check authentication**: Verify SPF, DKIM, DMARC configuration
-3. **Review content**: Look for patterns in quarantined emails
-4. **Adjust configuration**: Make necessary DNS or routing changes
-5. **Monitor improvement**: Track metrics after changes
+3. **Adjust configuration**: Make necessary DNS or routing changes
+4. **Monitor improvement**: Track metrics after changes
 
 ---
 

@@ -46,7 +46,7 @@ You may also manually add or remove email addresses from your suppression list a
 Cloudflare automatically suppresses addresses that:
 
 - **Hard bounce**: Invalid or non-existent email addresses are immediately added to the Cloudflare global suppression list.
-- **Repeated soft bounces**: Addresses that fail delivery 3-5 times within a 48 hour period are temporarily suppressed. Emails that soft bounce more than 5 times are added to the global suppression list.
+- **Repeated soft bounces**: Addresses that repeatedly fail delivery are temporarily or permanently suppressed based on the frequency and pattern of failures.
 - **Spam complaints**: Recipients who mark emails as spam are added to your account suppression list.
 
 ## Best practices

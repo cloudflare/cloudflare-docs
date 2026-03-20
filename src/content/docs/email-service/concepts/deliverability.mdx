@@ -35,7 +35,7 @@ Soft bounces are temporary failures that may succeed if retried:
 - Email server temporarily down
 - Rate limiting or greylisting
 
-Cloudflare automatically retries soft bounces with exponential backoff (15min → 1hr → 4hr → 12hr → 24hr) for up to 72 hours.
+Cloudflare automatically retries soft bounces with exponential backoff over an extended period.
 
 <Sandboxing />
 
@@ -43,7 +43,7 @@ Cloudflare automatically retries soft bounces with exponential backoff (15min �
 
 Cloudflare automatically manages:
 
-- **IP reputation**: Shared pools with tiered promotion based on sending quality
+- **IP reputation**: Managed sending infrastructure optimized for deliverability
 - **Domain authentication**: DKIM signing, SPF alignment, DMARC compliance
 - **Feedback processing**: ISP complaint handling and suppression list management
 

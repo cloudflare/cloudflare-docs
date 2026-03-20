@@ -20,7 +20,7 @@ flowchart LR
     A[Request Received] --> B[Rate Limit Check] --> C[Authentication & Reputation] --> D[Suppression Check] --> E[Delivery Attempt]
     E --> G{Success?}
     G -->|Yes| F[Final Status & Metrics]
-    G -->|No - Soft Bounce| H[Retry with Exponential Backoff<br/>Up to 3 attempts]
+    G -->|No - Soft Bounce| H[Retry with Exponential Backoff]
     G -->|No - Hard Bounce| F
     H --> E
     H -->|Max retries exceeded| F
@@ -42,7 +42,7 @@ flowchart LR
 4. **Suppression list check:** The system checks the recipient against global suppression lists that include bounces, complaints, and unsubscribes. Recipients found on these lists are blocked from receiving the email.
 
 5. **Delivery attempt:** The system connects to the recipient's mail server and attempts message delivery via SMTP. When delivery fails, the system applies different retry logic based on the failure type:
-   - **Soft bounces (4xx responses)**: The system retries delivery up to 3 times using exponential backoff timing
+   - **Soft bounces (4xx responses)**: The system retries delivery using exponential backoff timing
    - **Hard bounces (5xx responses)**: The system marks the email as permanently failed with no retry attempts
 
 6. **Server response handling:** The system processes SMTP response codes from the recipient server to determine the final email status:
@@ -53,8 +53,6 @@ flowchart LR
 7. **Final status and metrics:** Based on the server response, the system assigns emails one of these final statuses:
    - **Delivered**: The email was successfully accepted by the recipient server
    - **Bounced**: The email permanently failed delivery (hard bounce) or exceeded the maximum retry attempts (soft bounce)
-   - **Quarantined**: The email is held for review due to content analysis or reputation concerns
-
 ---
 
 Understanding the email lifecycle helps you build robust email applications that handle all possible outcomes and provide excellent user experiences through proper status tracking and error handling.
