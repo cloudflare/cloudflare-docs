@@ -13,7 +13,7 @@ export interface ResolvedModel {
 	// Identification - 'name' is the full model ID for compatibility with existing components
 	name: string; // @cf/author/name (same as modelId, for backward compatibility)
 	modelId: string; // @cf/author/name
-	slug: string; // model-name (for URLs)
+	slug: string; // URL identifier (full model_id, may include namespaces like @cf/... or provider/model)
 	displayName: string; // Human-readable name
 
 	// Content

@@ -57,13 +57,13 @@ function getLabel(label: string): string {
 				{snippets.length === 1 ? (
 					<Code code={snippets[0].code} lang={getLang(snippets[0].label)} />
 				) : (
-					<Tabs>
-						{snippets.map((snippet) => (
-							<TabItem label={getLabel(snippet.label)}>
-								<Code code={snippet.code} lang={getLang(snippet.label)} />
-							</TabItem>
-						))}
-					</Tabs>
+				<Tabs syncKey="workersAiExamples">
+					{snippets.map((snippet) => (
+						<TabItem label={getLabel(snippet.label)}>
+							<Code code={snippet.code} lang={getLang(snippet.label)} />
+						</TabItem>
+					))}
+				</Tabs>
 				)}
 			</div>
 		)

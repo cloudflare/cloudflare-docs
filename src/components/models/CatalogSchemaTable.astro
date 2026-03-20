@@ -39,7 +39,7 @@ const defaultResolver: SchemaTreeRefDereferenceFn =
 			pointer,
 		);
 		if (resolved) return resolved;
-		throw new ReferenceError(`Could not resolve '${pointer}`);
+		throw new ReferenceError(`Could not resolve '${pointer}'`);
 	};
 
 const jsonSchemaTree = new SchemaTree(schema, {
