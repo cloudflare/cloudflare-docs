@@ -43,11 +43,15 @@ This exclusion ensures that your custom header modification logic is only applie
 
 ## Custom Challenge Pages
 
+Before defining a custom Challenge Page in your Cloudflare account, you will need to design and code that page. It can be hosted on your own web server or using a Cloudflare product like [Snippets](/rules/snippets/).
+
+Refer to [Design your custom error page](/rules/custom-errors/edit-error-pages/#1-design-your-custom-error-page) for more information.
+
 ### How it works
 
 When a zone has a custom Challenge Page configured, your uploaded HTML is fetched from the Custom Pages Worker (KV-backed). 
 
-`<meta http-equiv="refresh" content="360">` is injected before `</head>`, and the placeholder token is replaced with the full challenge bootstrap `<script>` block. 
+Cloudflare replaces the `::CF_WIDGET_BOX::` placeholder [token](/rules/custom-errors/reference/error-tokens/) with the full challenge bootstrap `<script>` block.
 
 `cTplC: 1` is set in `window._cf_chl_opt` to signal to Cloudflare that a custom template is in use.
 
@@ -69,7 +73,7 @@ When a zone has a custom Challenge Page configured, your uploaded HTML is fetche
 1. `::CF_WIDGET_BOX::` must appear exactly once in the body. This is where the challenge script is injected.
 2. `<head>` tag must be present.
 3. Do not add your own `window._cf_chl_opt`. Any existing definition will cause conflicts.
-4. Do not block `/cdn-cgi/challenge-platform/` paths via CSP. The orchestrator and its sub-resources must load freely.
+4. Do not block `/cdn-cgi/challenge-platform/` paths via Content Security Policy (CSP). The orchestrator and its sub-resources must load freely.
 5. The page is served for all three challenge types (managed, interactive, non-interactive) if you use `::CF_WIDGET_BOX::`.
 
 ### Templates
