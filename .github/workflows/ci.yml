@@ -131,18 +131,14 @@ jobs:
             exit 1
           fi
 
-      - name: Cache node_modules
+      - name: Restore node_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@v5
         with:
           path: node_modules
           key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
-      - name: Run sync (if cache hit)
-        run: npm run sync
-        if: steps.node-modules-cache.outputs.cache-hit == 'true'
-
-      - name: Node install (cache miss)
+      - name: Install node_modules (cache miss)
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
@@ -189,18 +185,14 @@ jobs:
           node-version: 22.x
           cache: npm
 
-      - name: Cache node_modules
+      - name: Restore node_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@v5
         with:
           path: node_modules
           key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
-      - name: Run sync (if cache hit)
-        run: npm run sync
-        if: steps.node-modules-cache.outputs.cache-hit == 'true'
-
-      - name: Node install (cache miss)
+      - name: Install node_modules (cache miss)
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
@@ -266,18 +258,14 @@ jobs:
           node-version: 22.x
           cache: npm
 
-      - name: Cache node_modules
+      - name: Restore node_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@v5
         with:
           path: node_modules
           key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
-      - name: Run sync (if cache hit)
-        run: npm run sync
-        if: steps.node-modules-cache.outputs.cache-hit == 'true'
-
-      - name: Node install (cache miss)
+      - name: Install node_modules (cache miss)
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
@@ -313,7 +301,16 @@ jobs:
           node-version: 22.x
           cache: npm
 
-      - run: npm ci
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install node_modules (cache miss)
+        run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Post PR CI failure comment
         continue-on-error: true
@@ -339,7 +336,16 @@ jobs:
           node-version: 22.x
           cache: npm
 
-      - run: npm ci
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install node_modules (cache miss)
+        run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - uses: actions/download-artifact@v8
         with:
