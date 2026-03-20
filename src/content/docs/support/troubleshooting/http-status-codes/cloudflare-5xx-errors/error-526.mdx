@@ -15,13 +15,6 @@ This error occurs when these two conditions are true:
 - Cloudflare cannot validate the SSL certificate at your origin web server.
 - [_Full SSL (Strict)_](/ssl/origin-configuration/ssl-modes/full-strict/) **SSL** is set in the **Overview** tab of your Cloudflare **SSL/TLS** app.
 
-Cloudflare cannot validate the origin certificate when any of the following are true:
-
-- The certificate is expired or not yet valid.
-- The certificate is self-signed.
-- The certificate hostname does not match the requested domain.
-- The certificate chain is incomplete - the origin server is not serving the required intermediate CA certificate(s), preventing Cloudflare from building a trusted chain to a root CA.
-
 #### Resolution
 
 Here are some options to fix or workaround this issue:
@@ -37,6 +30,7 @@ Here are some options to fix or workaround this issue:
   - Certificate is not revoked.
   - Certificate is signed by a [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) (not self-signed).
   - The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**.
+  - The certificate chain is incomplete - the origin server is not serving the required intermediate CA certificate(s), preventing Cloudflare from building a trusted chain to a root CA.
   - Your origin web server accepts connections over port SSL port `443`.
   - [Temporarily pause Cloudflare](/fundamentals/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
 
