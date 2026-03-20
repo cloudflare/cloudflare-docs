@@ -36,9 +36,11 @@ Gateway will automatically detect changes in user name, title, and group members
 
 ### OIDC Claims
 
-Specify a value from a [custom OIDC claim](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) configured on your identity provider.
+Specify a value from a [custom OIDC claim](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) configured on your identity provider. This selector only displays if you use a [generic OIDC](/cloudflare-one/integrations/identity-providers/generic-oidc/) identity provider with at least one custom OIDC claim configured.
 
 <Render file="gateway/selectors/oidc-claims" product="cloudflare-one" />
+
+The claim value format is `<claim-name>=<claim-value>`. For example, to match users with `department` set to `engineering`, enter `department=engineering` as the value.
 
 ### SAML Attributes
 

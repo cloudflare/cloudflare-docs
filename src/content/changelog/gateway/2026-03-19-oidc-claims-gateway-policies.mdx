@@ -1,0 +1,31 @@
+---
+title: OIDC claims selector in Gateway policies
+description: Gateway DNS, HTTP, and Network policies now support filtering traffic based on custom OIDC claims from your identity provider.
+date: 2026-03-19
+products:
+  - gateway
+---
+
+Gateway DNS, HTTP, and Network policies now support the **OIDC Claims** identity selector. You can use this selector to filter outbound traffic based on custom OIDC claims returned by your identity provider (IdP).
+
+![Use OIDC Claims in a Network policy](src/assets/images/gateway/oidc-claims-gateway.png)
+
+Previously, filtering by IdP-specific identity attributes in Gateway required a SAML identity provider and the **SAML Attributes** selector. Customers using a generic OIDC identity provider had no equivalent option and had to fall back to IdP groups, which are often insufficient for fine-grained access control.
+
+With this change, you can write Gateway policies that reference any custom OIDC claim you have configured on your generic OIDC integration. For example, department, cost center, or employment type can be used without requiring a SAML provider.
+
+## Requirements
+
+- Your identity provider must be configured as a [generic OIDC](/cloudflare-one/integrations/identity-providers/generic-oidc/) integration in Cloudflare One.
+- The custom claim must be added to the IdP integration under **OIDC Claims**. Refer to [Custom OIDC claims](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) for setup instructions.
+- Users must be connected to your Zero Trust instance through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) in Traffic and DNS mode.
+
+## Example policy
+
+The following DNS policy blocks access to `example.com` for users whose OIDC claim does not include `department=engineering`:
+
+| Selector    | Claim name   | Claim value   |
+| ----------- | ------------ | ------------- |
+| OIDC Claims | `department` | `engineering` |
+
+For API usage and additional examples, refer to [Identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/#oidc-claims).
