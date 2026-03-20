@@ -37,9 +37,9 @@ curl https://api.cloudflare.com/client/v4/graphql \
 
 ---
 
-## Available datasets
+## Available nodes
 
-Four GraphQL datasets are available. All four return aggregate data only — no raw per-connection records are exposed.
+Four GraphQL nodes are available. All four return aggregate data only — no raw per-connection records are exposed.
 
 1. `privacyProxyRequestMetricsAdaptiveGroups` — Query aggregate request volume, CONNECT request handling and tunnel setup latency percentiles (P50/P95/P99), filterable by time, location, endpoint, status code, proxy status, and tunnel type dimensions.
 2. `privacyProxyIngressConnMetricsAdaptiveGroups` — Query aggregate client-to-proxy connection volume, bytes transferred, connection duration and round-trip latency percentiles (P50/P95/P99), filterable by time, location, endpoint, transport protocol, and TLS version dimensions.
@@ -47,7 +47,7 @@ Four GraphQL datasets are available. All four return aggregate data only — no 
 4. `privacyProxyAuthMetricsAdaptiveGroups` — Query aggregate authentication attempt volume, filterable by time, location, endpoint, authentication method, and authentication result dimensions.
 
 :::note[Adaptive sampling]
-Each dataset uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudflare automatically scales the sampling rate based on traffic volume to keep query performance consistent. All returned values are extrapolated totals, not raw counts. Because each dataset has its own sampling rate, figures across datasets are not directly comparable.
+Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudflare automatically scales the sampling rate based on traffic volume to keep query performance consistent. All returned values are extrapolated totals, not raw counts. Because each node has its own sampling rate, figures across nodes are not directly comparable.
 :::
 
 ---
@@ -58,36 +58,36 @@ Each dataset uses an independent adaptive bit-rate (ABR) sampling pipeline. Clou
 
 <Details header="Sum fields">
 
-- `requests` – `uint64` — Total number of proxy requests processed. _(Request dataset)_
-- `connections` – `uint64` — Total number of connections established. _(Ingress and egress connection datasets)_
-- `bytesSentToClient` – `uint64` — Total bytes sent from the proxy back to the client. _(Ingress connection dataset)_
-- `bytesReceivedFromClient` – `uint64` — Total bytes received by the proxy from the client. _(Ingress connection dataset)_
-- `bytesSentToOrigin` – `uint64` — Total bytes sent from the proxy to the upstream origin. _(Egress connection dataset)_
-- `bytesReceivedFromOrigin` – `uint64` — Total bytes received by the proxy from the upstream origin. _(Egress connection dataset)_
-- `authAttempts` – `uint64` — Total number of authentication attempts. _(Auth dataset)_
+- `requests` – `uint64` — Total number of proxy requests processed. _(Request node)_
+- `connections` – `uint64` — Total number of connections established. _(Ingress and egress connection nodes)_
+- `bytesSentToClient` – `uint64` — Total bytes sent from the proxy back to the client. _(Ingress connection node)_
+- `bytesReceivedFromClient` – `uint64` — Total bytes received by the proxy from the client. _(Ingress connection node)_
+- `bytesSentToOrigin` – `uint64` — Total bytes sent from the proxy to the upstream origin. _(Egress connection node)_
+- `bytesReceivedFromOrigin` – `uint64` — Total bytes received by the proxy from the upstream origin. _(Egress connection node)_
+- `authAttempts` – `uint64` — Total number of authentication attempts. _(Auth node)_
 
 </Details>
 
 <Details header="Quantile fields">
 
-- `connectRequestHandlingDurationUsP50` – `float64` — Median time to handle a CONNECT request, in microseconds. _(Request dataset)_
-- `connectRequestHandlingDurationUsP95` – `float64` — 95th percentile time to handle a CONNECT request, in microseconds. _(Request dataset)_
-- `connectRequestHandlingDurationUsP99` – `float64` — 99th percentile time to handle a CONNECT request, in microseconds. _(Request dataset)_
-- `connectTunnelSetupDurationUsP50` – `float64` — Median time to establish a tunnel after receiving a CONNECT request, in microseconds. _(Request dataset)_
-- `connectTunnelSetupDurationUsP95` – `float64` — 95th percentile tunnel setup time, in microseconds. _(Request dataset)_
-- `connectTunnelSetupDurationUsP99` – `float64` — 99th percentile tunnel setup time, in microseconds. _(Request dataset)_
-- `clientProxyConnectionDurationMsP50` – `float64` — Median client-to-proxy connection lifetime, in milliseconds. _(Ingress connection dataset)_
-- `clientProxyConnectionDurationMsP95` – `float64` — 95th percentile client-to-proxy connection lifetime, in milliseconds. _(Ingress connection dataset)_
-- `clientProxyConnectionDurationMsP99` – `float64` — 99th percentile client-to-proxy connection lifetime, in milliseconds. _(Ingress connection dataset)_
-- `clientProxyRttMsP50` – `float64` — Median round-trip time between client and proxy, in milliseconds. _(Ingress connection dataset)_
-- `clientProxyRttMsP95` – `float64` — 95th percentile RTT between client and proxy, in milliseconds. _(Ingress connection dataset)_
-- `clientProxyRttMsP99` – `float64` — 99th percentile RTT between client and proxy, in milliseconds. _(Ingress connection dataset)_
-- `proxyOriginConnectionDurationMsP50` – `float64` — Median proxy-to-origin connection lifetime, in milliseconds. _(Egress connection dataset)_
-- `proxyOriginConnectionDurationMsP95` – `float64` — 95th percentile proxy-to-origin connection lifetime, in milliseconds. _(Egress connection dataset)_
-- `proxyOriginConnectionDurationMsP99` – `float64` — 99th percentile proxy-to-origin connection lifetime, in milliseconds. _(Egress connection dataset)_
-- `proxyOriginRttMsP50` – `float64` — Median round-trip time between proxy and origin, in milliseconds. _(Egress connection dataset)_
-- `proxyOriginRttMsP95` – `float64` — 95th percentile RTT between proxy and origin, in milliseconds. _(Egress connection dataset)_
-- `proxyOriginRttMsP99` – `float64` — 99th percentile RTT between proxy and origin, in milliseconds. _(Egress connection dataset)_
+- `connectRequestHandlingDurationUsP50` – `float64` — Median time to handle a CONNECT request, in microseconds. _(Request node)_
+- `connectRequestHandlingDurationUsP95` – `float64` — 95th percentile time to handle a CONNECT request, in microseconds. _(Request node)_
+- `connectRequestHandlingDurationUsP99` – `float64` — 99th percentile time to handle a CONNECT request, in microseconds. _(Request node)_
+- `connectTunnelSetupDurationUsP50` – `float64` — Median time to establish a tunnel after receiving a CONNECT request, in microseconds. _(Request node)_
+- `connectTunnelSetupDurationUsP95` – `float64` — 95th percentile tunnel setup time, in microseconds. _(Request node)_
+- `connectTunnelSetupDurationUsP99` – `float64` — 99th percentile tunnel setup time, in microseconds. _(Request node)_
+- `clientProxyConnectionDurationMsP50` – `float64` — Median client-to-proxy connection lifetime, in milliseconds. _(Ingress connection node)_
+- `clientProxyConnectionDurationMsP95` – `float64` — 95th percentile client-to-proxy connection lifetime, in milliseconds. _(Ingress connection node)_
+- `clientProxyConnectionDurationMsP99` – `float64` — 99th percentile client-to-proxy connection lifetime, in milliseconds. _(Ingress connection node)_
+- `clientProxyRttMsP50` – `float64` — Median round-trip time between client and proxy, in milliseconds. _(Ingress connection node)_
+- `clientProxyRttMsP95` – `float64` — 95th percentile RTT between client and proxy, in milliseconds. _(Ingress connection node)_
+- `clientProxyRttMsP99` – `float64` — 99th percentile RTT between client and proxy, in milliseconds. _(Ingress connection node)_
+- `proxyOriginConnectionDurationMsP50` – `float64` — Median proxy-to-origin connection lifetime, in milliseconds. _(Egress connection node)_
+- `proxyOriginConnectionDurationMsP95` – `float64` — 95th percentile proxy-to-origin connection lifetime, in milliseconds. _(Egress connection node)_
+- `proxyOriginConnectionDurationMsP99` – `float64` — 99th percentile proxy-to-origin connection lifetime, in milliseconds. _(Egress connection node)_
+- `proxyOriginRttMsP50` – `float64` — Median round-trip time between proxy and origin, in milliseconds. _(Egress connection node)_
+- `proxyOriginRttMsP95` – `float64` — 95th percentile RTT between proxy and origin, in milliseconds. _(Egress connection node)_
+- `proxyOriginRttMsP99` – `float64` — 99th percentile RTT between proxy and origin, in milliseconds. _(Egress connection node)_
 
 </Details>
 
@@ -95,7 +95,7 @@ Each dataset uses an independent adaptive bit-rate (ABR) sampling pipeline. Clou
 
 <Details header="Dimensions">
 
-<Details header="All datasets">
+<Details header="All nodes">
 
 - `date` – `Date` — Calendar date (day granularity).
 - `datetimeMinute` – `Time` — Timestamp truncated to the minute.
@@ -107,7 +107,7 @@ Each dataset uses an independent adaptive bit-rate (ABR) sampling pipeline. Clou
 
 </Details>
 
-<Details header="Request dataset only">
+<Details header="Request node only">
 
 - `statusCode` – `uint16` — HTTP status code returned by the proxy to the client.
 - `proxyStatus` – `string` — Proxy-level error classification. Refer to [proxy status reference](#proxy-status-reference) for possible values.
@@ -115,20 +115,20 @@ Each dataset uses an independent adaptive bit-rate (ABR) sampling pipeline. Clou
 
 </Details>
 
-<Details header="Ingress connection dataset only">
+<Details header="Ingress connection node only">
 
 - `ingressTransport` – `string` — Transport protocol on the client-to-proxy connection (`tcp`, `quic`).
 - `tlsVersion` – `string` — TLS version negotiated on the client-to-proxy connection.
 
 </Details>
 
-<Details header="Egress connection dataset only">
+<Details header="Egress connection node only">
 
 - `egressTransport` – `string` — Transport protocol on the proxy-to-origin connection.
 
 </Details>
 
-<Details header="Auth dataset only">
+<Details header="Auth node only">
 
 - `authMethod` – `string` — Authentication method used (for example, `token_hash`, `mtls`, `blind_rsa`).
 - `authResult` – `string` — Authentication outcome (`success`, `failure`).
@@ -139,10 +139,10 @@ Each dataset uses an independent adaptive bit-rate (ABR) sampling pipeline. Clou
 
 <Details header="Arguments">
 
-All four datasets share the same argument signature.
+All four nodes share the same argument signature.
 
 - `filter` <MetaInfo text="required" /> — Filters your data. `accountTag` is always required inside the filter.
-- `limit` <MetaInfo text="required" /> — Maximum number of records to return.
+- `limit` <MetaInfo text="optional" /> — Maximum number of records to return.
 - `orderBy` <MetaInfo text="optional" /> — Sort order for results.
 
 </Details>
@@ -151,7 +151,7 @@ All four datasets share the same argument signature.
 
 ## Sample queries
 
-<Details header="privacyProxyRequestMetricsAdaptiveGroups">
+<Details header="privacyProxyRequestMetricsAdaptiveGroups node">
 
 <Details header="Request volume overview">
 
@@ -330,7 +330,7 @@ query TunnelTypeDistribution(
 
 </Details>
 
-<Details header="privacyProxyIngressConnMetricsAdaptiveGroups">
+<Details header="privacyProxyIngressConnMetricsAdaptiveGroups node">
 
 <Details header="Connection volume and ingress bytes overview">
 
@@ -467,7 +467,7 @@ query IngressProtocolDistribution(
 
 </Details>
 
-<Details header="privacyProxyEgressConnMetricsAdaptiveGroups">
+<Details header="privacyProxyEgressConnMetricsAdaptiveGroups node">
 
 <Details header="Egress bytes overview">
 
@@ -607,7 +607,7 @@ query EgressPerformanceTrend(
 
 </Details>
 
-<Details header="privacyProxyAuthMetricsAdaptiveGroups">
+<Details header="privacyProxyAuthMetricsAdaptiveGroups node">
 
 <Details header="Auth volume by method">
 
@@ -784,5 +784,3 @@ The `proxyStatus` dimension provides proxy-level error classification. The follo
 
 - [GraphQL Analytics API — getting started](/analytics/graphql-api/getting-started/) — Authentication, pagination, and rate limits.
 - [GraphQL Analytics API — filtering](/analytics/graphql-api/features/filtering/) — Full filter syntax reference.
-- [Create an API token](/fundamentals/api/get-started/create-token/) — Set up a token with Analytics Read permissions.
-- [OpenTelemetry](/privacy-proxy/reference/metrics/opentelemetry/) — OpenTelemetry integration for Privacy Proxy.
