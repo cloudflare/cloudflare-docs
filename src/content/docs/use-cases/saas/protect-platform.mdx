@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Secure your SaaS platform and your customers' data.
 
@@ -14,50 +14,35 @@ Secure your SaaS platform and your customers' data.
 
 <CardGrid>
 
-<LinkTitleCard title="Application Security" href="/waf/" icon="waf">
+<LinkTitleCard title="Application security" href="/waf/" icon="waf">
 
-Protect your platform from attacks with managed rulesets.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Rate Limiting" href="/waf/rate-limiting-rules/" icon="waf">
-
-Prevent abuse with per-tenant rate limits.
+Get automatic protection from vulnerabilities and create your own custom rules.
 
 </LinkTitleCard>
 
-<LinkTitleCard title="Access" href="/cloudflare-one/policies/access/" icon="cloudflare-one">
+<LinkTitleCard title="Rate limiting" href="/waf/rate-limiting-rules/" icon="waf">
 
-Add identity-based authentication to admin interfaces.
+Limit request rates based on flexible matching criteria.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Cloudflare One" href="/cloudflare-one/" icon="cloudflare-one">
+
+Secure your organization with a cloud security platform that replaces legacy perimeters with Cloudflare's global network.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **Platform protection** (Application Security) - Web Application Firewall (WAF) managed rulesets block common attacks against your platform and your customers' endpoints
 - **Per-tenant limits** (Rate Limiting) - Apply rate limits per customer identifier to prevent one tenant from degrading service for others
-- **Admin security** (Access) - Gate internal dashboards and admin tools behind Zero Trust identity policies
+- **Admin security** (Cloudflare One) - Gate internal dashboards and admin tools behind Zero Trust identity policies
 - **API protection** (Application Security + Rate Limiting) - Secure platform Application Programming Interfaces (APIs) with WAF rules and per-API-key rate limits
 
-### Security configuration
+## Get started
 
-<Details header="Per-tenant rate limiting">
-
-Configure rate limits that apply per customer:
-
-1. Go to **Security** > **Application Security** > **Rate limiting rules**
-2. Create a rule with:
-   - **Expression**: `http.host contains "customer-domain.com"`
-   - **Counting expression**: Use customer identifier header or cookie
-   - **Rate**: Set appropriate limits per tenant tier
-
-Example for API rate limiting:
-
-```
-(http.request.uri.path contains "/api/") and
-(http.request.headers["x-tenant-id"] eq "tenant-123")
-```
-
-</Details>
+1. [Deploy WAF managed rulesets](/waf/managed-rules/deploy-zone-dashboard/)
+2. [Configure rate limiting rules](/waf/rate-limiting-rules/)
+3. [Cloudflare Access get started](/cloudflare-one/access-controls/policies/)

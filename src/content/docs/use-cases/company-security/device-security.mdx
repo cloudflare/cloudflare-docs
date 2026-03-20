@@ -1,0 +1,42 @@
+---
+pcx_content_type: how-to
+title: Ensure device endpoint security
+description: Verify device posture before granting access.
+sidebar:
+  order: 5
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+Verify device posture before granting access.
+
+## Solutions
+
+<CardGrid>
+
+<LinkTitleCard title="Cloudflare One" href="/cloudflare-one/" icon="cloudflare-one">
+
+Secure your organization with a cloud security platform that replaces legacy perimeters with Cloudflare's global network.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="WARP Client" href="/cloudflare-one/team-and-resources/devices/warp/" icon="cloudflare-one">
+
+Device agent that routes traffic through Cloudflare's network.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## Features
+
+- **Posture checks** (Cloudflare One) - Verify OS version, disk encryption status, and antivirus presence before granting access
+- **Endpoint integration** (Cloudflare One) - Pull real-time device health signals from CrowdStrike, SentinelOne, and other Endpoint Detection and Response (EDR) tools
+- **Conditional access** (Cloudflare One) - Gate application access on device posture results, so only healthy devices can connect
+- **Always-on protection** (WARP Client) - Route device traffic through Cloudflare One at all times, enforcing Gateway policies regardless of network
+
+## Get started
+
+1. [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/)
+2. [Configure device posture checks](/cloudflare-one/team-and-resources/devices/)
+3. [Add posture checks to Access policies](/cloudflare-one/access-controls/policies/)

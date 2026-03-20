@@ -6,7 +6,7 @@ sidebar:
   order: 3
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Persist data with serverless databases, key-value storage, and object storage.
 
@@ -16,69 +16,40 @@ Persist data with serverless databases, key-value storage, and object storage.
 
 <LinkTitleCard title="D1" href="/d1/" icon="d1">
 
-Serverless SQL database built on SQLite with global read replication.
+Serverless SQL database built on SQLite, with global read replication.
 
 </LinkTitleCard>
 
 <LinkTitleCard title="KV" href="/kv/" icon="kv">
 
-Global key-value storage for configuration, sessions, and cached data.
+Globally distributed key-value storage for low-latency reads.
 
 </LinkTitleCard>
 
 <LinkTitleCard title="R2" href="/r2/" icon="r2">
 
-Object storage for files, images, and assets with zero egress fees.
+S3-compatible object storage with zero egress fees.
 
 </LinkTitleCard>
 
 <LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
 
-Strongly consistent storage for real-time collaboration and coordination.
+Stateful objects with strongly consistent storage and coordination.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **SQL database** (D1) - Full Structured Query Language (SQL) with global read replication built on SQLite
 - **Key-value storage** (KV) - Fast globally-distributed reads for configuration, sessions, and cached data
 - **Object storage** (R2) - Store user-uploaded files and assets with no egress fees
 - **Real-time state** (Durable Objects) - Strongly consistent coordination for collaborative features and live data
 
-### Getting started with D1
+## Get started
 
-<Details header="Set up a D1 database">
-
-1. In your terminal, create a database:
-
-   ```sh
-   npx wrangler d1 create my-database
-   ```
-
-2. In `wrangler.toml`, add the D1 binding:
-
-   ```toml
-   [[d1_databases]]
-   binding = "DB"
-   database_name = "my-database"
-   database_id = "your-database-id"
-   ```
-
-3. Back in your terminal, create the schema:
-
-   ```sh
-   npx wrangler d1 execute my-database --command "CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, email TEXT)"
-   ```
-
-4. In `src/index.ts`, query your database from the Worker:
-   ```ts
-   const users = await env.DB.prepare("SELECT * FROM users WHERE id = ?")
-   	.bind(userId)
-   	.first();
-   ```
-
-</Details>
-
-For the complete guide, refer to [D1 get started](/d1/get-started/).
+1. [D1 get started](/d1/get-started/)
+2. [KV get started](/kv/get-started/)
+3. [R2 get started](/r2/get-started/)
+4. [Durable Objects get started](/durable-objects/get-started/)

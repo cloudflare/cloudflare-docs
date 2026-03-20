@@ -6,7 +6,7 @@ sidebar:
   order: 3
 ---
 
-import { CardGrid, Details, LinkTitleCard, Render } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 As your AI application scales, optimize for cost, latency, and quality.
 
@@ -22,42 +22,21 @@ Cache responses, rate limit requests, and monitor usage across providers.
 
 <LinkTitleCard title="Workers Analytics Engine" href="/analytics/analytics-engine/" icon="analytics">
 
-Build custom analytics for AI-specific metrics.
+Store and query time-series analytics data from Workers.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **Response caching** (AI Gateway) - Cache identical queries so repeated prompts do not trigger a new inference call
 - **Rate limiting** (AI Gateway) - Set request limits per user or Application Programming Interface (API) key to prevent abuse and control spending
 - **Unified analytics** (AI Gateway) - Track usage, latency, and cost across all AI providers from one dashboard
 - **Custom metrics** (Workers Analytics Engine) - Build AI-specific dashboards tracking tokens, latency distributions, and error rates
 
-## Configure AI Gateway
+## Get started
 
-<Details header="Configure AI Gateway optimization">
-
-**Turn on caching** to reduce costs for repeated queries:
-
-1. Go to **AI Gateway** in the dashboard
-2. Select your gateway > **Settings**
-3. Turn on **Cache responses**
-4. Set the cache Time to Live (TTL) based on your use case
-
-**Set up rate limiting** to control costs:
-
-1. Go to **AI Gateway** > **Settings**
-2. Turn on **Rate limiting**
-3. Configure requests per minute per user
-
-**Monitor with analytics**:
-
-- View request volume, latency, and error rates
-- Track costs across providers
-- Identify optimization opportunities
-
-</Details>
-
-<Render file="analytics-dashboard" product="ai-gateway" />
+1. [AI Gateway get started](/ai-gateway/get-started/)
+2. [Configure caching](/ai-gateway/features/caching/)
+3. [Workers Analytics Engine get started](/analytics/analytics-engine/get-started/)

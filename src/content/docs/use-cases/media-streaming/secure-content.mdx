@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Protect media from unauthorized access and hotlinking.
 
@@ -16,71 +16,32 @@ Protect media from unauthorized access and hotlinking.
 
 <LinkTitleCard title="Hotlink Protection" href="/waf/tools/scrape-shield/hotlink-protection/" icon="waf">
 
-Prevent other sites from embedding your media.
+Block unauthorized embedding of resources from external sites.
 
 </LinkTitleCard>
 
-<LinkTitleCard title="Signed URLs" href="/stream/viewing-videos/securing-your-stream/" icon="stream">
+<LinkTitleCard title="Access" href="/cloudflare-one/access-controls/policies/" icon="cloudflare-one">
 
-Time-limited access tokens for media files.
+Zero Trust access control for applications and infrastructure.
 
 </LinkTitleCard>
 
-<LinkTitleCard title="Access" href="/cloudflare-one/policies/access/" icon="cloudflare-one">
+<LinkTitleCard title="Stream Live" href="/stream/stream-live/" icon="stream">
 
-Identity-based access control for premium content.
+Live streaming with automatic recording and instant playback.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **Hotlink protection** (Hotlink Protection) - Block other sites from embedding or hot-linking your images and video without permission
-- **Token authentication** (Signed URLs) - Issue time-limited access tokens so only authorized viewers can access protected media
+- **Token authentication** (Stream) - Issue time-limited access tokens so only authorized viewers can access protected media
 - **Identity-based access** (Access) - Gate premium or subscriber-only content behind Cloudflare Access identity policies
-- **Geo-restrictions** (Workers) - Enforce regional content licensing by inspecting `request.cf.country` and blocking or redirecting accordingly
 
-### Content protection
+## Get started
 
-<Details header="Implement token authentication">
-
-**For Stream videos:**
-Use signed URLs with expiration times (see Stage 1).
-
-**For R2/origin content:**
-
-Add the following to your Worker's `src/index.ts`. This Worker validates a token and expiry parameter on every request before serving the protected content:
-
-```ts
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
-		const token = url.searchParams.get("token");
-		const expires = url.searchParams.get("expires");
-
-		// Validate token
-		if (!token || !expires) {
-			return new Response("Unauthorized", { status: 401 });
-		}
-
-		if (Date.now() > parseInt(expires)) {
-			return new Response("Token expired", { status: 403 });
-		}
-
-		const expectedToken = await generateToken(
-			url.pathname,
-			expires,
-			env.SECRET,
-		);
-		if (token !== expectedToken) {
-			return new Response("Invalid token", { status: 403 });
-		}
-
-		// Serve the content
-		return fetch(request);
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</Details>
+1. [Enable Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/)
+2. [Secure Stream videos with signed URLs](/stream/viewing-videos/securing-your-stream/)
+3. [Cloudflare Access get started](/cloudflare-one/access-controls/policies/)

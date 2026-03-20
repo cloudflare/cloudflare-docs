@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { CardGrid, Details, LinkTitleCard, Render } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Protect against SQL injection, Cross-Site Scripting (XSS), and other Open Web Application Security Project (OWASP) Top 10 vulnerabilities.
 
@@ -14,44 +14,29 @@ Protect against SQL injection, Cross-Site Scripting (XSS), and other Open Web Ap
 
 <CardGrid>
 
-<LinkTitleCard title="Application Security (WAF)" href="/waf/" icon="waf">
+<LinkTitleCard title="Application security (WAF)" href="/waf/" icon="waf">
 
-Managed rulesets that block common attack patterns automatically.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Custom Rules" href="/waf/custom-rules/" icon="waf">
-
-Create custom firewall rules based on your application's needs.
+Get automatic protection from vulnerabilities and create your own custom rules.
 
 </LinkTitleCard>
 
-<LinkTitleCard title="Rate Limiting" href="/waf/rate-limiting-rules/" icon="waf">
+<LinkTitleCard title="Rate limiting" href="/waf/rate-limiting-rules/" icon="waf">
 
-Protect endpoints from abuse with request rate limits.
+Limit request rates based on flexible matching criteria.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
-- **Managed rulesets** (Application Security / Web Application Firewall (WAF)) - Pre-configured rules covering OWASP Top 10 and emerging threats, updated by Cloudflare
-- **Zero-day protection** (Application Security / WAF) - Rules are updated as new vulnerabilities are discovered, with no action required from you
-- **Custom rules** (Custom Rules) - Block or challenge requests based on any request attribute including headers, cookies, and IP reputation
-- **Rate limiting** (Rate Limiting) - Prevent brute force attacks and Application Programming Interface (API) abuse with flexible per-endpoint request limits
+- **Managed rulesets** (Application security) - Pre-configured rules covering OWASP Top 10 and emerging threats, updated by Cloudflare
+- **Zero-day protection** (Application security) - Rules are updated as new vulnerabilities are discovered, with no action required from you
+- **Custom rules** (Application security) - Block or challenge requests based on any request attribute including headers, cookies, and IP reputation
+- **Rate limiting** (Rate limiting) - Prevent brute force attacks and Application Programming Interface (API) abuse with flexible per-endpoint request limits
 
-### Configure WAF managed rules
+## Get started
 
-<Details header="Deploy managed rulesets">
-
-<Render file="dash-deploy-managed-ruleset-zone" product="waf" />
-
-Turn on these managed rulesets for comprehensive protection:
-
-- **Cloudflare Managed Ruleset** - Core protection against common vulnerabilities
-- **Cloudflare OWASP Core Ruleset** - OWASP ModSecurity rules adapted for Cloudflare
-
-</Details>
-
-For the complete guide, refer to [Deploy managed rulesets](/waf/managed-rules/deploy-zone-dashboard/).
+1. [Deploy WAF managed rulesets](/waf/managed-rules/deploy-zone-dashboard/)
+2. [Create custom rules](/waf/custom-rules/create-dashboard/)
+3. [Configure rate limiting rules](/waf/rate-limiting-rules/)

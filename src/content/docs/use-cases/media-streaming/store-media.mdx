@@ -6,7 +6,7 @@ sidebar:
   order: 3
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Store media files with zero egress fees using R2.
 
@@ -16,80 +16,27 @@ Store media files with zero egress fees using R2.
 
 <LinkTitleCard title="R2" href="/r2/" icon="r2">
 
-Store media files with zero egress fees and S3-compatible API.
+S3-compatible object storage with zero egress fees.
 
 </LinkTitleCard>
 
 <LinkTitleCard title="Workers" href="/workers/" icon="workers">
 
-Build custom media processing pipelines and delivery logic.
+Build and deploy serverless applications on Cloudflare's global network.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **Zero egress fees** (R2) - No charges for data transferred out, regardless of volume
 - **S3 compatibility** (R2) - Use any S3-compatible tool, SDK, or library without code changes
 - **Custom processing pipelines** (Workers) - Build media transformation, validation, and routing logic that runs at the edge
 - **Direct uploads** (R2) - Issue presigned URLs so clients upload directly to R2 without routing through your servers
 
-### Getting started with R2
+## Get started
 
-<Details header="Create a bucket and upload files">
-
-**Create a bucket:**
-
-1. Go to **R2** > **Overview**.
-2. Select **Create bucket**.
-3. Enter a bucket name and select location hint.
-
-**Upload via Dashboard:**
-
-1. Go to your bucket > **Objects**.
-2. Select **Upload** and choose files.
-
-**Upload via S3 API (terminal):**
-
-```sh
-aws s3 cp video.mp4 s3://media-storage/ \
-  --endpoint-url https://{account_id}.r2.cloudflarestorage.com
-```
-
-**Turn on public access:**
-
-1. Go to your bucket > **Settings**.
-2. Under **Public access**, select **Allow Access**.
-3. Connect a custom domain or use R2.dev subdomain.
-
-</Details>
-
-<Details header="Generate presigned URLs for uploads">
-
-Add the following to your Worker's `src/index.ts` or server-side code. This generates a time-limited presigned URL that allows a client to upload a file directly to R2 without routing through your server:
-
-```ts
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-
-const client = new S3Client({
-	region: "auto",
-	endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
-	credentials: {
-		accessKeyId: R2_ACCESS_KEY_ID,
-		secretAccessKey: R2_SECRET_ACCESS_KEY,
-	},
-});
-
-const command = new PutObjectCommand({
-	Bucket: "media-storage",
-	Key: "uploads/user-video.mp4",
-});
-
-const presignedUrl = await getSignedUrl(client, command, { expiresIn: 3600 });
-```
-
-</Details>
-
-For the complete guide, refer to [R2 get started](/r2/get-started/).
+1. [R2 get started](/r2/get-started/)
+2. [Generate presigned URLs](/r2/api/s3/presigned-urls/)
+3. [Workers get started](/workers/get-started/)

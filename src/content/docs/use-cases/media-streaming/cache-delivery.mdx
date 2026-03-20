@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Deliver media content from edge locations worldwide.
 
@@ -14,57 +14,30 @@ Deliver media content from edge locations worldwide.
 
 <CardGrid>
 
-<LinkTitleCard title="CDN / Cache" href="/cache/" icon="cache">
+<LinkTitleCard title="Cache" href="/cache/" icon="cache">
 
-Cache and deliver media content from edge locations worldwide.
+Cache content at Cloudflare's global network of edge locations.
 
 </LinkTitleCard>
 
 <LinkTitleCard title="Argo Smart Routing" href="/argo-smart-routing/" icon="argo-smart-routing">
 
-Route traffic through the fastest paths for origin fetches.
+Route traffic through the fastest paths across Cloudflare's network.
 
 </LinkTitleCard>
 
-<LinkTitleCard title="Tiered Cache" href="/cache/how-to/tiered-cache/" icon="cache">
-
-Reduce origin load with multi-tier caching.
-
-</LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **Global edge caching** (CDN / Cache) - Media content served from 300+ edge locations to reduce latency for global audiences
 - **Origin offload** (CDN / Cache) - Cached content is served directly from the edge, reducing origin bandwidth and compute costs
 - **Smart routing** (Argo Smart Routing) - Requests that miss cache are routed through the fastest available network paths to origin
-- **Tiered caching** (Tiered Cache) - Regional cache tiers absorb repeated requests before they reach the origin, further reducing load
+- **Tiered caching** (Cache) - Regional cache tiers absorb repeated requests before they reach the origin, further reducing load
 
-### Cache configuration for media
+## Get started
 
-<Details header="Optimize caching for media files">
-
-**Configure Cache Rules for media:**
-
-1. Go to **Caching** > **Cache Rules**.
-2. Create rules for different media types:
-
-**Video files (long TTL):**
-
-- Match: `http.request.uri.path.extension in {"mp4" "webm" "m3u8" "ts"}`
-- Cache Time to Live (TTL): 1 year
-- Turn on: Origin Cache Control
-
-**Images (medium TTL):**
-
-- Match: `http.request.uri.path.extension in {"jpg" "jpeg" "png" "webp" "avif"}`
-- Cache TTL: 30 days
-- Turn on: Polish, WebP conversion
-
-**Turn on Tiered Cache:**
-
-1. Go to **Caching** > **Tiered Cache**.
-2. Turn on **Smart Tiered Cache Topology**.
-
-</Details>
+1. [Configure Cache Rules](/cache/how-to/cache-rules/)
+2. [Enable Tiered Cache](/cache/how-to/tiered-cache/)
+3. [Enable Argo Smart Routing](/argo-smart-routing/get-started/)

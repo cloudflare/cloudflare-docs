@@ -1,9 +1,9 @@
 ---
 pcx_content_type: overview
-title: Corporate security
+title: Company security
 head:
   - tag: title
-    content: Corporate security · Use cases
+    content: Company security · Use cases
 sidebar:
   order: 4
 ---
@@ -18,30 +18,8 @@ Protect employees, devices, and data with Zero Trust access, secure web gateway,
 
 - A [Cloudflare account](https://dash.cloudflare.com/sign-up).
 - A [Cloudflare One organization](/cloudflare-one/setup/) created in the Cloudflare dashboard. Access, Gateway (Secure Web Gateway), Data Loss Prevention (DLP), Cloud Access Security Broker (CASB), Browser Isolation, and Device Posture all operate within Cloudflare One. You do not need a domain added to Cloudflare to use these products.
-- For deploying the WARP client to devices: administrative access to your device management system (for example, Microsoft Intune, Jamf, or similar Mobile Device Management (MDM) tooling). Refer to [Deploy WARP to your organization](/cloudflare-one/connections/connect-devices/warp/deployment/).
+- For deploying the WARP client to devices: administrative access to your device management system (for example, Microsoft Intune, Jamf, or similar Mobile Device Management (MDM) tooling). Refer to [Deploy WARP to your organization](/cloudflare-one/team-and-resources/devices/warp/deployment/).
 - For Email Security: admin access to your Microsoft 365 or Google Workspace tenant. Refer to [Email Security deployment](/email-security/deployment/).
-
----
-
-## Deployment approaches
-
-### Start small
-
-Begin with the highest-impact, lowest-friction deployments:
-
-1. **DNS filtering** - No client required, immediate threat protection
-2. **Access for one app** - Pilot Zero Trust with a single application
-3. **Email security** - Application Programming Interface (API) deployment requires no mail flow changes
-
-### Full deployment
-
-Roll out comprehensive protection:
-
-1. Deploy WARP client to all devices
-2. Turn on HTTP inspection with Transport Layer Security (TLS) decryption
-3. Configure Data Loss Prevention (DLP) policies for sensitive data
-4. Integrate with endpoint security tools
-5. Turn on Browser Isolation for risky categories
 
 ---
 

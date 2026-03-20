@@ -6,7 +6,7 @@ sidebar:
   order: 3
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Add identity-based authentication for user-facing Application Programming Interfaces (APIs).
 
@@ -14,92 +14,29 @@ Add identity-based authentication for user-facing Application Programming Interf
 
 <CardGrid>
 
-<LinkTitleCard title="Access" href="/cloudflare-one/policies/access/" icon="cloudflare-one">
+<LinkTitleCard title="Access" href="/cloudflare-one/access-controls/policies/" icon="cloudflare-one">
 
-Add identity-based authentication to your APIs.
+Zero Trust access control for applications and infrastructure.
 
 </LinkTitleCard>
 
 <LinkTitleCard title="Workers" href="/workers/" icon="workers">
 
-Implement custom authentication logic at the edge.
+Build and deploy serverless applications on Cloudflare's global network.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **Identity providers** (Access) - Integrate with Okta, Azure AD, Google Workspace, and other identity providers (IdPs) to gate API access
 - **JWT validation** (Workers) - Verify and decode JSON Web Tokens (JWTs) at the edge before requests reach your backend
 - **Service tokens** (Service Tokens) - Issue long-lived credentials for machine-to-machine authentication between services
 - **Custom auth logic** (Workers) - Build any authentication scheme — API keys, Hash-based Message Authentication Code (HMAC) signatures, custom headers — directly at the edge
 
-## Authentication patterns
+## Get started
 
-<Details header="JWT validation in Workers">
-
-Add the following to your Worker's `src/index.ts`:
-
-```ts
-import { verify } from "@tsndr/cloudflare-worker-jwt";
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const authHeader = request.headers.get("Authorization");
-
-		if (!authHeader?.startsWith("Bearer ")) {
-			return new Response("Missing token", { status: 401 });
-		}
-
-		const token = authHeader.slice(7);
-
-		try {
-			const isValid = await verify(token, env.JWT_SECRET);
-			if (!isValid) {
-				return new Response("Invalid token", { status: 401 });
-			}
-
-			// Token is valid, proceed with request
-			return handleRequest(request, env);
-		} catch (error) {
-			return new Response("Token validation failed", { status: 401 });
-		}
-	},
-};
-```
-
-</Details>
-
-<Details header="API key authentication">
-
-Add the following to your Worker's `src/index.ts`:
-
-```ts
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const apiKey = request.headers.get("X-API-Key");
-
-		if (!apiKey) {
-			return new Response("API key required", { status: 401 });
-		}
-
-		// Look up API key in KV or D1
-		const keyData = await env.API_KEYS.get(apiKey, "json");
-
-		if (!keyData) {
-			return new Response("Invalid API key", { status: 401 });
-		}
-
-		// Check rate limits, permissions, etc.
-		if (keyData.rateLimit && (await isRateLimited(apiKey, env))) {
-			return new Response("Rate limit exceeded", { status: 429 });
-		}
-
-		// Proceed with authenticated request
-		return handleRequest(request, env, keyData);
-	},
-};
-```
-
-</Details>
+1. [Cloudflare Access get started](/cloudflare-one/access-controls/policies/)
+2. [Service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/)
+3. [Workers get started](/workers/get-started/)

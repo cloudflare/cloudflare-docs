@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Automatically minify and optimize HTML, CSS, and JavaScript.
 
@@ -16,37 +16,26 @@ Automatically minify and optimize HTML, CSS, and JavaScript.
 
 <LinkTitleCard title="Speed" href="/speed/" icon="speed">
 
-Automatic optimizations for web assets and Core Web Vitals.
+Improve the performance of your website or web application.
 
 </LinkTitleCard>
 
 <LinkTitleCard title="Zaraz" href="/zaraz/" icon="zaraz">
 
-Load third-party tools without blocking page rendering.
+Server-side loading of third-party tools to improve performance and privacy.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **Minification** (Speed) - Remove whitespace and unnecessary characters from HTML, CSS, and JavaScript automatically
 - **Compression** (Speed) - Brotli and Gzip compression applied to all text-based assets at the edge
 - **Third-party optimization** (Zaraz) - Load analytics, marketing tags, and other third-party tools through Cloudflare without blocking page rendering
 - **Core Web Vitals** (Speed + Zaraz) - Improve Largest Contentful Paint (LCP), Interaction to Next Paint (INP), and Cumulative Layout Shift (CLS) scores by deferring non-critical scripts and optimizing asset delivery
 
-### Configure optimizations
+## Get started
 
-<Details header="Enable Speed optimizations">
-
-1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your domain.
-2. Go to **Speed** > **Optimization**.
-3. Turn on optimizations:
-   - **Auto Minify**: Minify HTML, CSS, and JavaScript
-   - **Brotli**: Turn on Brotli compression
-   - **Rocket Loader**: Defer JavaScript loading
-   - **Mirage**: Optimize image loading on mobile
-
-</Details>
-
-For the complete guide, refer to [Speed documentation](/speed/).
+1. [Enable Speed optimizations](/speed/optimization/)
+2. [Zaraz get started](/zaraz/get-started/)

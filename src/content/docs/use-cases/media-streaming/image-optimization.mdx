@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Serve optimized images without pre-generating variants.
 
@@ -16,7 +16,7 @@ Serve optimized images without pre-generating variants.
 
 <LinkTitleCard title="Images" href="/images/" icon="images">
 
-Transform, optimize, and deliver images at scale with on-the-fly resizing.
+Transform, optimize, and deliver images at scale.
 
 </LinkTitleCard>
 
@@ -28,65 +28,15 @@ Automatic image compression without quality loss.
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **On-the-fly transformation** (Images) - Resize, crop, and convert images by adding URL parameters — no pre-generated variants needed
 - **Modern formats** (Images) - Automatically serve WebP or AV1 Image File Format (AVIF) to supported browsers, falling back to JPEG/PNG for others
 - **Compression** (Polish) - Reduce image file sizes through lossless or lossy compression without visible quality loss
 - **Responsive images** (Images) - Generate size variants on demand for different screen sizes and pixel densities
 
-### Getting started with Images
+## Get started
 
-<Details header="Upload and serve images">
-
-**Upload via Dashboard:**
-
-1. Go to **Images** > **Images**.
-2. Select **Upload** and choose image files.
-
-**Upload via Application Programming Interface (API) (terminal):**
-
-```sh
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1" \
-  -H "Authorization: Bearer {api_token}" \
-  -F "file=@/path/to/image.jpg"
-```
-
-**Create variants:**
-
-1. Go to **Images** > **Variants**.
-2. Select **Add a variant**.
-3. Configure settings (width, height, fit mode).
-
-**Serve images:**
-
-```
-https://imagedelivery.net/{account_hash}/{image_id}/{variant_name}
-```
-
-</Details>
-
-<Details header="Transform images on your domain">
-
-Turn on image transformations on your domain:
-
-1. Go to **Speed** > **Optimization** > **Image Resizing**.
-2. Turn on **Image Resizing**.
-
-Transform images via URL:
-
-```
-https://example.com/cdn-cgi/image/width=400,quality=80,format=auto/images/photo.jpg
-```
-
-**Supported parameters:**
-
-- `width`, `height` - Resize dimensions
-- `fit` - `scale-down`, `contain`, `cover`, `crop`, `pad`
-- `quality` - 1-100 (default 85)
-- `format` - `auto`, `webp`, `avif`, `json`
-- `sharpen` - 0-10 sharpening amount
-
-</Details>
-
-For the complete guide, refer to [Images get started](/images/get-started/).
+1. [Images get started](/images/get-started/)
+2. [Enable Polish](/images/polish/)
+3. [Transform images via URL](/images/transform-images/)

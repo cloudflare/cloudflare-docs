@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Track usage across tenants for billing, optimization, and insights.
 
@@ -14,67 +14,28 @@ Track usage across tenants for billing, optimization, and insights.
 
 <CardGrid>
 
-<LinkTitleCard title="Workers Analytics Engine" href="/analytics/analytics-engine/" icon="analytics">
+<LinkTitleCard title="Workers analytics engine" href="/analytics/analytics-engine/" icon="analytics">
 
-Build custom analytics for per-tenant metrics.
+Store and query time-series analytics data from Workers.
 
 </LinkTitleCard>
 
 <LinkTitleCard title="Logpush" href="/logs/" icon="logs">
 
-Export detailed logs for billing and compliance.
+Stream logs from Cloudflare products to external destinations.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **Per-tenant metrics** (Workers Analytics Engine) - Track request counts, latency, and bytes transferred broken down by tenant ID
 - **Billing data** (Workers Analytics Engine + Logpush) - Query usage data per customer to power usage-based billing calculations
 - **Compliance logging** (Logpush) - Export detailed logs to your Security Information and Event Management (SIEM) system or data warehouse for audit trails and enterprise compliance
 - **Performance insights** (Workers Analytics Engine) - Identify which tenants are generating the most load or experiencing the most errors
 
-### Usage tracking
+## Get started
 
-<Details header="Track per-tenant usage with Analytics Engine">
-
-Add the following to your Worker's `src/index.ts`. The Worker writes a data point to Workers Analytics Engine on every request, recording the tenant ID, country, response time, and payload size.
-
-```ts
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const tenantId = request.headers.get("X-Tenant-ID") ?? "unknown";
-		const startTime = Date.now();
-
-		// Process request
-		const response = await handleRequest(request, env);
-
-		// Record usage metrics
-		env.ANALYTICS.writeDataPoint({
-			blobs: [tenantId, request.cf?.country ?? ""],
-			doubles: [
-				Date.now() - startTime,
-				Number(response.headers.get("Content-Length") ?? 0),
-			],
-			indexes: [tenantId],
-		});
-
-		return response;
-	},
-};
-```
-
-Query usage for billing:
-
-```sql
-SELECT
-  blob1 as tenant_id,
-  COUNT(*) as requests,
-  SUM(double2) as bytes_transferred
-FROM analytics
-WHERE timestamp > now() - interval '30 days'
-GROUP BY tenant_id
-```
-
-</Details>
+1. [Workers Analytics Engine get started](/analytics/analytics-engine/get-started/)
+2. [Configure Logpush](/logs/logpush/)

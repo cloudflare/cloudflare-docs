@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 E-commerce traffic is unpredictable. Flash sales, seasonal peaks, and viral moments can overwhelm infrastructure. Cloudflare ensures your store stays online.
 
@@ -14,7 +14,7 @@ E-commerce traffic is unpredictable. Flash sales, seasonal peaks, and viral mome
 
 <CardGrid>
 
-<LinkTitleCard title="Load Balancing" href="/load-balancing/" icon="load-balancing">
+<LinkTitleCard title="Load balancing" href="/load-balancing/" icon="load-balancing">
 
 Distribute traffic across origins with health checks and automatic failover.
 
@@ -22,7 +22,7 @@ Distribute traffic across origins with health checks and automatic failover.
 
 <LinkTitleCard title="Waiting Room" href="/waiting-room/" icon="waiting-room">
 
-Queue excess visitors during traffic spikes to protect your origin.
+Manage visitor queuing during traffic surges.
 
 </LinkTitleCard>
 
@@ -34,116 +34,24 @@ Route traffic through the fastest paths across Cloudflare's network.
 
 <LinkTitleCard title="Workers" href="/workers/" icon="workers">
 
-Build resilient applications that run at the edge.
+Build and deploy serverless applications on Cloudflare's global network.
 
 </LinkTitleCard>
 
 <LinkTitleCard title="R2" href="/r2/" icon="r2">
 
-Store product images and assets with zero egress fees.
+S3-compatible object storage with zero egress fees.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **Origin protection** (Load Balancing + Waiting Room) - Distribute traffic across origin servers and queue excess visitors to prevent overload during peak events
 - **Automatic failover** (Load Balancing) - Health checks detect unhealthy origins and reroute traffic automatically
 - **Flash sale readiness** (Waiting Room) - Queue visitors fairly during extreme demand, preserving a consistent experience without crashing the site
 - **Reduced latency** (Argo Smart Routing) - Route requests through the fastest available network paths between edge and origin
-
-### Reliability configuration
-
-<Details header="Waiting Room for flash sales">
-
-Waiting Room queues visitors in a branded holding page when traffic exceeds your origin's capacity. Visitors are admitted in order as slots become available, which prevents your store from crashing under sudden load.
-
-Waiting Room is available on **Business and Enterprise** plans only. It is not available on Free or Pro plans. Business plans include one waiting room with First In, First Out (FIFO) queueing. Enterprise plans support additional rooms, custom templates, scheduled events, and alternative queueing methods (Random, Reject, Passthrough) with the Advanced add-on. For a full feature comparison, refer to [Waiting Room plans](/waiting-room/plans/).
-
-**Set up a waiting room**
-
-1. Go to your domain in the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Traffic** > **Waiting Room**.
-3. Select **Create**.
-4. Configure the following settings:
-   - **Hostname** and **Path** — Set this to your sale landing page (for example, `/sale` or `/products/limited`). Only requests to this path will be queued; the rest of your site is unaffected.
-   - **Total active users** — The maximum number of visitors allowed on the page at once. Set this based on the number of concurrent users your origin can handle without degrading. Start conservatively; you can increase it during the event if capacity allows.
-   - **New users per minute** — The rate at which new visitors are admitted from the queue. A lower value gives your origin a smoother ramp-up. For a flash sale, start with a value 20–30% lower than your baseline traffic rate.
-5. Select **Save and Deploy**.
-
-**Running a time-based event (flash sale)**
-
-For a flash sale with a fixed start time, use Queue-all to hold all visitors in the waiting room until the moment the sale begins:
-
-1. Before the sale: Set **Queue-all** to **On**. All new visitors are queued and no one reaches the sale page yet.
-2. At the start time: Set **Queue-all** to **Off**. Visitors are admitted up to your **Total active users** limit at the rate set by **New users per minute**.
-
-:::note
-Visitors already on the page when Queue-all is enabled are not sent back to the queue. Queue-all only applies to new arrivals.
-:::
-
-Enterprise customers with the Advanced add-on can instead use [scheduled Waiting Room events](/waiting-room/additional-options/create-events/) to automate the Queue-all transition at a specific time without manual intervention.
-
-**Before your event**
-
-- [Test your waiting room](/waiting-room/additional-options/test-waiting-room/) before the event to confirm the queue page appears correctly.
-- Monitor queue depth and wait times in real time from **Traffic** > **Waiting Room** > **Analytics** during the event.
-
-For the complete guide, refer to [Waiting Room get started](/waiting-room/get-started/).
-
-</Details>
-
-<Details header="Load balancing for multi-region">
-
-Load Balancing distributes incoming traffic across multiple origin servers or regions. If one origin fails a health check, Cloudflare automatically routes traffic to the remaining healthy origins — no manual intervention required.
-
-Load Balancing is a **paid add-on** available on any Cloudflare plan. It is billed based on the number of load balancers and health checks you configure. For more information, refer to [Enable Load Balancing](/load-balancing/get-started/enable-load-balancing/).
-
-Load Balancing is set up in three steps: create a monitor, create pools, then create the load balancer.
-
-**Step 1 — Create a health monitor**
-
-A monitor issues regular requests to your origins to check they are responding correctly. When an origin fails, the load balancer stops sending traffic to it.
-
-1. Go to **Load Balancing** > **Monitors** tab.
-2. Select **Create monitor**.
-3. Set the monitor **Type** to HTTPS and **Path** to a lightweight health check endpoint on your origin (for example, `/health` returning `200 OK`).
-4. Set **Interval** to the lowest value your plan supports (Pro: 60s, Business: 15s, Enterprise: 10s). Lower intervals mean faster failover detection.
-5. Set **Expected Code(s)** to `2xx`.
-6. Select **Save**.
-
-:::caution
-Ensure your origin's firewall allows requests from [Cloudflare IP addresses](https://www.cloudflare.com/ips/). Health checks will appear unhealthy if they are blocked.
-:::
-
-**Step 2 — Create origin pools**
-
-A pool is a group of one or more origins. Create one pool per region or data center.
-
-1. Go to **Load Balancing** > **Pools** tab.
-2. Select **Create pool**.
-3. Name the pool clearly (for example, `us-east`, `eu-west`).
-4. Add each origin server's address and assign it a weight. Equal weights distribute traffic evenly.
-5. Attach the monitor you created in Step 1.
-6. Select **Save**.
-
-Repeat for each region. For e-commerce, having at least two pools in different regions protects against a full data center outage.
-
-**Step 3 — Create the load balancer**
-
-1. Go to **Load Balancing** and select **Create load balancer**.
-2. Enter a **Hostname** — this is the DNS record that will receive traffic (for example, `shop.example.com`).
-3. Add your pools in priority order. The first pool receives traffic unless it becomes unhealthy.
-4. Set **Traffic Steering** to **Latency** to automatically route each visitor to the lowest-latency origin.
-5. For checkout flows, turn on **Session Affinity** with **Cookie** mode. This ensures a visitor who starts a checkout session is consistently routed to the same origin until the session ends, preventing cart or payment state from being lost during a failover.
-6. Select **Save and Deploy**.
-
-**Verify health before going live**
-
-After saving, go to the **Pools** tab and confirm each pool shows a **Healthy** status before routing production traffic to the load balancer. Refer to [Load Balancing quickstart](/load-balancing/get-started/quickstart/) for more detail on testing with a staging subdomain first.
-
-</Details>
 
 ## Get started
 

@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Run server-side code at the edge with automatic scaling and global distribution.
 
@@ -16,7 +16,7 @@ Run server-side code at the edge with automatic scaling and global distribution.
 
 <LinkTitleCard title="Workers" href="/workers/" icon="workers">
 
-Run server-side logic at the edge with automatic scaling and no cold starts.
+Build and deploy serverless applications on Cloudflare's global network.
 
 </LinkTitleCard>
 
@@ -28,13 +28,13 @@ Schedule Workers to run on a recurring basis.
 
 <LinkTitleCard title="Queues" href="/queues/" icon="queues">
 
-Handle background jobs and async processing.
+Reliable message queuing and background processing for Workers.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **Global deployment** (Workers) - Code runs at the Cloudflare location nearest to each user automatically
 - **No cold starts** (Workers) - Sub-millisecond startup times with no warm-up period
@@ -42,44 +42,8 @@ Handle background jobs and async processing.
 - **Scheduled tasks** (Cron Triggers) - Run Workers on a fixed schedule for background jobs and periodic tasks
 - **Async processing** (Queues) - Reliably process background jobs and webhooks without blocking request handling
 
-### Getting started with Workers
+## Get started
 
-<Details header="Create and deploy a Worker">
-
-1. In your terminal, create a new project:
-
-   ```sh
-   npm create cloudflare@latest my-app
-   cd my-app
-   ```
-
-2. In `src/index.ts`, replace the default handler with your Worker code:
-
-   ```ts
-   export default {
-   	async fetch(request: Request, env: Env): Promise<Response> {
-   		const url = new URL(request.url);
-
-   		if (url.pathname === "/api/hello") {
-   			return Response.json({ message: "Hello from the edge!" });
-   		}
-
-   		return new Response("Not found", { status: 404 });
-   	},
-   };
-   ```
-
-3. Back in your terminal, test locally:
-
-   ```sh
-   npm run dev
-   ```
-
-4. Deploy:
-   ```sh
-   npm run deploy
-   ```
-
-</Details>
-
-For the complete guide, refer to [Workers get started](/workers/get-started/).
+1. [Workers get started](/workers/get-started/)
+2. [Configure Cron Triggers](/workers/configuration/cron-triggers/)
+3. [Queues get started](/queues/get-started/)

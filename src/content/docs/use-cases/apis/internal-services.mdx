@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { CardGrid, Details, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 Connect and secure internal services and microservices.
 
@@ -14,27 +14,27 @@ Connect and secure internal services and microservices.
 
 <CardGrid>
 
-<LinkTitleCard title="Cloudflare Tunnel" href="/cloudflare-one/connections/connect-networks/" icon="cloudflare-one">
+<LinkTitleCard title="Cloudflare Tunnel" href="/cloudflare-one/networks/connectors/cloudflare-tunnel/" icon="cloudflare-one">
 
-Expose internal services without public IPs.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Access" href="/cloudflare-one/policies/access/" icon="cloudflare-one">
-
-Enforce identity-based policies between services.
+Connect infrastructure to Cloudflare without opening inbound firewall ports.
 
 </LinkTitleCard>
 
-<LinkTitleCard title="Service Tokens" href="/cloudflare-one/identity/service-tokens/" icon="cloudflare-one">
+<LinkTitleCard title="Access" href="/cloudflare-one/access-controls/policies/" icon="cloudflare-one">
 
-Authenticate service-to-service communication.
+Zero Trust access control for applications and infrastructure.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Service Tokens" href="/cloudflare-one/access-controls/service-credentials/service-tokens/" icon="cloudflare-one">
+
+Non-interactive credentials for machine-to-machine authentication.
 
 </LinkTitleCard>
 
 </CardGrid>
 
-## What you get
+## Features
 
 - **No public exposure** (Cloudflare Tunnel) - Internal Application Programming Interfaces (APIs) remain private; Tunnel establishes an outbound-only connection with no inbound firewall rules needed
 - **Zero Trust policies** (Access) - Verify identity and enforce per-service policies for every request between services
@@ -43,37 +43,6 @@ Authenticate service-to-service communication.
 
 ## Get started
 
-<Details header="Expose internal APIs with Tunnel">
-
-1. In a terminal on the server that hosts your internal API, install cloudflared:
-
-   ```sh
-   curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
-   chmod +x cloudflared
-   ```
-
-2. Authenticate and create a tunnel:
-
-   ```sh
-   cloudflared tunnel login
-   cloudflared tunnel create my-api-tunnel
-   ```
-
-3. On that same server, create a `config.yml` file with the following content:
-
-   ```yaml
-   tunnel: my-api-tunnel
-   credentials-file: /path/to/credentials.json
-
-   ingress:
-     - hostname: api.example.com
-       service: http://localhost:8080
-     - service: http_status:404
-   ```
-
-4. Back in your terminal, run the tunnel:
-   ```sh
-   cloudflared tunnel run my-api-tunnel
-   ```
-
-</Details>
+1. [Create a Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/)
+2. [Cloudflare Access get started](/cloudflare-one/access-controls/policies/)
+3. [Create service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/)
