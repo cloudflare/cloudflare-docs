@@ -82,7 +82,7 @@ export class MyAgent extends AIChatAgent {
 
 ### Built-in vs custom methods
 
-- **Built-in methods** (`onRequest`, `onEmail`, `onStateChanged`): Already have context.
+- **Built-in methods** (`onStart`, `onRequest`, `onConnect`, `onMessage`, `onClose`, `onEmail`, `onStateChanged`): Already have context.
 - **Custom methods** (your methods): Automatically wrapped during initialization.
 - **External functions**: Access context through `getCurrentAgent()`.
 
@@ -231,13 +231,21 @@ The context available depends on how the method was invoked:
 
 | Invocation              | `agent` | `connection` | `request` | `email` |
 | ----------------------- | ------- | ------------ | --------- | ------- |
+| `onStart()`             | Yes     | No           | No        | No      |
 | `onRequest()`           | Yes     | No           | Yes       | No      |
 | `onConnect()`           | Yes     | Yes          | Yes       | No      |
 | `onMessage()`           | Yes     | Yes          | No        | No      |
+| `onClose()`             | Yes     | Yes          | No        | No      |
 | `onEmail()`             | Yes     | No           | No        | Yes     |
+| `onStateChanged()`      | Yes     | Inherited    | Inherited | Inherited |
+| `onError()`             | Yes     | Inherited    | Inherited | Inherited |
 | Custom method (via RPC) | Yes     | Yes          | No        | No      |
 | Scheduled task          | Yes     | No           | No        | No      |
-| Queue callback          | Yes     | Depends      | Depends   | Depends |
+| Queue callback          | Yes     | Inherited    | Inherited | Inherited |
+
+:::note
+"Inherited" means the value depends on the calling context. For example, `onStateChanged()` receives the `connection` when a client triggers a state update, but not when the server calls `setState()`. Similarly, `onError()` inherits whatever context was active when the error occurred.
+:::
 
 ## Best practices
 
