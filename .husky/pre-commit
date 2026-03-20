@@ -10,7 +10,7 @@ fi
 
 FIXED=0
 
-for file in $STAGED; do
+while IFS= read -r file; do
   # Skip files that no longer exist on disk (e.g. deleted files)
   if [ ! -f "$file" ]; then
     continue
@@ -22,7 +22,9 @@ for file in $STAGED; do
     perl -pi -e 's/\r\n/\n/g; s/\r/\n/g' "$file"
     FIXED=1
   fi
-done
+done << EOF
+$STAGED
+EOF
 
 if [ "$FIXED" = "1" ]; then
   echo "pre-commit: CRLF line endings converted to LF in staged files."
