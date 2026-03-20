@@ -24,7 +24,7 @@ import AgentDirective from "../AgentDirective.astro";
 			<a
 				id="header-login-button"
 				href="https://dash.cloudflare.com/"
-				class="header-login"
+				class="header-login btn-soft"
 			>
 				Log in
 			</a>
@@ -68,15 +68,25 @@ import AgentDirective from "../AgentDirective.astro";
 		align-items: center;
 		justify-content: center;
 		height: 2.25rem;
-		padding: 0 1.25rem;
+		padding: 0 0.875rem;
 		border-radius: 0.5rem;
+		border: 1px solid transparent;
 		font-size: 0.875rem;
 		font-weight: 500;
 		line-height: 1;
 		white-space: nowrap;
 		text-decoration: none;
-		color: var(--color-header-btn-text);
-		background-color: var(--color-header-btn-bg);
+		transition: color 150ms, background-color 150ms, border-color 150ms;
+	}
+
+	.header-login {
+		background-color: var(--color-header-fill);
+		color: var(--color-header-text);
+	}
+
+	.header-login:hover {
+		background-color: var(--color-header-line);
+		color: var(--color-header-hover-text);
 	}
 
 	:global(.site-title) {

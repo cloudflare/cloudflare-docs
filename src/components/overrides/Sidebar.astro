@@ -10,13 +10,11 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 <div
 	class="sticky top-0 z-[1] flex flex-col gap-2 bg-[var(--sl-color-black)] py-3.5 min-[50rem]:bg-[var(--sl-color-bg-sidebar)]"
 >
-	<div class="sidebar-product-title px-1">
-		<a href={"/" + product + "/"} class="flex items-center gap-2 no-underline">
+	<div class="sidebar-product-title">
+		<a href={"/" + product + "/"} class="flex items-center gap-1 no-underline">
 			<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
-			<span class="text-xl text-black">
-				<strong>
-					{lookupProductTitle(product, module)}
-				</strong>
+			<span class="text-xl font-semibold text-black">
+				{lookupProductTitle(product, module)}
 			</span>
 		</a>
 	</div>
