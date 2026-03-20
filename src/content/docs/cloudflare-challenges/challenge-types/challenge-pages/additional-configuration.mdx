@@ -44,6 +44,7 @@ This exclusion ensures that your custom header modification logic is only applie
 ## Custom Challenge Pages
 
 ### How it works
+
 When a zone has a custom Challenge Page configured, your uploaded HTML is fetched from the Custom Pages Worker (KV-backed). 
 
 `<meta http-equiv="refresh" content="360">` is injected before `</head>`, and the placeholder token is replaced with the full challenge bootstrap `<script>` block. 
