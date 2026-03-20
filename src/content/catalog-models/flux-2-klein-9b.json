@@ -70,5 +70,35 @@
 			"label": "typescript",
 			"code": "export interface Env {\n  AI: Ai;\n}\n\nexport default {\n  async fetch(request, env): Promise<Response> {\n    const form = new FormData();\n    form.append('prompt', 'a sunset with a dog');\n    form.append('width', '1024');\n    form.append('height', '1024');\n\n    // FormData doesn't expose its serialized body or boundary. Passing it to a\n    // Request (or Response) constructor serializes it and generates the Content-Type\n    // header with the boundary, which is required for the server to parse the multipart fields.\n    const formResponse = new Response(form);\n    const formStream = formResponse.body;\n    const formContentType = formResponse.headers.get('content-type')!;\n\n    const resp = await env.AI.run(\"@cf/black-forest-labs/flux-2-klein-9b\", {\n      multipart: {\n        body: formStream,\n        contentType: formContentType\n      }\n    });\n\n    return Response.json(resp);\n  },\n} satisfies ExportedHandler<Env>;"
 		}
-	]
+	],
+	"schema": {
+		"input": {
+			"type": "object",
+			"properties": {
+				"multipart": {
+					"type": "object",
+					"properties": {
+						"body": {
+							"type": "object"
+						},
+						"contentType": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"required": [
+				"multipart"
+			]
+		},
+		"output": {
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"description": "Generated image as Base64 string."
+				}
+			}
+		}
+	}
 }

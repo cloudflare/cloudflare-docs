@@ -6,8 +6,14 @@
  *   Option 1: Import from a local JSON file (exported from dashboard)
  *     npx tsx bin/fetch-catalog-models.ts --file catalog-export.json
  *
- *   Option 2: Fetch from API (when publicly available)
+ *   Option 2: Fetch from API
  *     CLOUDFLARE_API_TOKEN=xxx CLOUDFLARE_ACCOUNT_ID=yyy npx tsx bin/fetch-catalog-models.ts
+ *
+ *   The API fetch uses two passes:
+ *     1. Paginated list endpoint to get all model IDs
+ *     2. Individual detail endpoint for each model (has full examples, schemas, code snippets)
+ *
+ *   Set CF_API_BASE_URL to override the API base (defaults to https://api.cloudflare.com).
  *
  * To export from the dashboard:
  *   1. Open browser devtools Network tab
@@ -71,8 +77,17 @@ interface CatalogListResponse {
 	errors?: Array<{ message: string }>;
 }
 
+interface CatalogDetailResponse {
+	success: boolean;
+	result: CatalogModel;
+	errors?: Array<{ message: string }>;
+}
+
 const OUTPUT_DIR = path.join(process.cwd(), "src/content/catalog-models");
+const API_BASE_URL =
+	process.env.CF_API_BASE_URL || "https://api.cloudflare.com";
 const PER_PAGE = 100;
+const CONCURRENCY = 5;
 
 function parseArgs(): { file?: string } {
 	const args = process.argv.slice(2);
@@ -111,6 +126,90 @@ async function loadFromFile(filePath: string): Promise<CatalogModel[]> {
 	process.exit(1);
 }
 
+function getApiHeaders(token: string): Record<string, string> {
+	return {
+		Authorization: `Bearer ${token}`,
+		"Content-Type": "application/json",
+	};
+}
+
+async function fetchModelList(
+	accountId: string,
+	token: string,
+): Promise<string[]> {
+	const modelIds: string[] = [];
+	let page = 1;
+	let hasMore = true;
+
+	console.log("Fetching model list from Unified Catalog API...");
+	console.log(`  Base URL: ${API_BASE_URL}`);
+
+	while (hasMore) {
+		const url = `${API_BASE_URL}/client/v4/accounts/${accountId}/ai/catalog/models?page=${page}&per_page=${PER_PAGE}`;
+
+		const response = await fetch(url, {
+			headers: getApiHeaders(token),
+		});
+
+		if (!response.ok) {
+			console.error(
+				`API request failed: ${response.status} ${response.statusText}`,
+			);
+			const text = await response.text();
+			console.error(text);
+			process.exit(1);
+		}
+
+		const data = (await response.json()) as CatalogListResponse;
+
+		if (!data.success) {
+			console.error("API returned error:", data.errors);
+			process.exit(1);
+		}
+
+		for (const model of data.result) {
+			modelIds.push(model.model_id);
+		}
+
+		const { count, total_count } = data.result_info!;
+		console.log(
+			`  Page ${page}: ${count} models (${modelIds.length}/${total_count})`,
+		);
+
+		hasMore = modelIds.length < total_count;
+		page++;
+	}
+
+	return modelIds;
+}
+
+async function fetchModelDetail(
+	accountId: string,
+	token: string,
+	modelId: string,
+): Promise<CatalogModel | null> {
+	const encoded = encodeURIComponent(modelId);
+	const url = `${API_BASE_URL}/client/v4/accounts/${accountId}/ai/catalog/models/${encoded}`;
+
+	const response = await fetch(url, {
+		headers: getApiHeaders(token),
+	});
+
+	if (!response.ok) {
+		console.error(`  Failed to fetch ${modelId}: ${response.status}`);
+		return null;
+	}
+
+	const data = (await response.json()) as CatalogDetailResponse;
+
+	if (!data.success) {
+		console.error(`  Error fetching ${modelId}:`, data.errors);
+		return null;
+	}
+
+	return data.result;
+}
+
 async function fetchFromApi(): Promise<CatalogModel[]> {
 	const API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
 	const ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
@@ -128,54 +227,45 @@ async function fetchFromApi(): Promise<CatalogModel[]> {
 		process.exit(1);
 	}
 
-	const allModels: CatalogModel[] = [];
-	let page = 1;
-	let hasMore = true;
+	// Pass 1: get all model IDs from the list endpoint
+	const modelIds = await fetchModelList(ACCOUNT_ID, API_TOKEN);
+	console.log(
+		`\nFetching ${modelIds.length} model details (concurrency: ${CONCURRENCY})...`,
+	);
 
-	console.log("Fetching models from Unified Catalog API...");
+	// Pass 2: fetch full details for each model
+	const models: CatalogModel[] = [];
+	const failed: string[] = [];
 
-	while (hasMore) {
-		const url = `https://api.staging.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/catalog/models?page=${page}&per_page=${PER_PAGE}`;
-
-		const response = await fetch(url, {
-			headers: {
-				Authorization: `Bearer ${API_TOKEN}`,
-				"Content-Type": "application/json",
-			},
-		});
-
-		if (!response.ok) {
-			console.error(
-				`API request failed: ${response.status} ${response.statusText}`,
-			);
-			const text = await response.text();
-			console.error(text);
-			console.error("\nThe catalog API may not be publicly available yet.");
-			console.error(
-				"Try exporting from the dashboard and using --file instead.",
-			);
-			process.exit(1);
-		}
-
-		const data = (await response.json()) as CatalogListResponse;
-
-		if (!data.success) {
-			console.error("API returned error:", data.errors);
-			process.exit(1);
-		}
-
-		allModels.push(...data.result);
-
-		const { count, total_count } = data.result_info!;
-		console.log(
-			`  Page ${page}: fetched ${count} models (${allModels.length}/${total_count})`,
+	for (let i = 0; i < modelIds.length; i += CONCURRENCY) {
+		const batch = modelIds.slice(i, i + CONCURRENCY);
+		const results = await Promise.all(
+			batch.map((id) => fetchModelDetail(ACCOUNT_ID, API_TOKEN, id)),
 		);
 
-		hasMore = allModels.length < total_count;
-		page++;
+		for (let j = 0; j < results.length; j++) {
+			const result = results[j];
+			if (result) {
+				models.push(result);
+			} else {
+				failed.push(batch[j]);
+			}
+		}
+
+		const fetched = Math.min(i + CONCURRENCY, modelIds.length);
+		process.stdout.write(`\r  ${fetched}/${modelIds.length} models fetched`);
 	}
 
-	return allModels;
+	console.log();
+
+	if (failed.length > 0) {
+		console.log(`  Failed: ${failed.length} models`);
+		for (const id of failed) {
+			console.log(`    - ${id}`);
+		}
+	}
+
+	return models;
 }
 
 function getModelFileName(modelId: string): string {

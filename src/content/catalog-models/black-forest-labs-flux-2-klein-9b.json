@@ -94,7 +94,53 @@
 	"code_snippets": [
 		{
 			"label": "curl",
-			"code": "curl https://staging.gateway.ai.cfdata.org/v1/{ACCOUNT_ID}/default/run \\\n  -H \"cf-aig-authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"flux-2-klein-9b\",\n    \"input\": {\n        \"prompt\": \"A serene Japanese garden with cherry blossoms\",\n        \"aspect_ratio\": \"16:9\",\n        \"output_format\": \"jpg\"\n    }\n  }'"
+			"code": "curl https://staging.gateway.ai.cfdata.org/v1/{ACCOUNT_ID}/default/run \\\n  -H \"cf-aig-authorization: Bearer {API_TOKEN}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"black-forest-labs/flux-2-klein-9b\",\n    \"input\": {\n        \"prompt\": \"A serene Japanese garden with cherry blossoms\",\n        \"aspect_ratio\": \"16:9\",\n        \"output_format\": \"jpg\"\n    }\n  }'"
 		}
-	]
+	],
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"width": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"height": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"num_steps": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"guidance": {
+					"type": "number"
+				},
+				"seed": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
 }
