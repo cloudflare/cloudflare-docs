@@ -36,12 +36,24 @@ const displayNames: Record<string, string> = {
 	bash: "Bash",
 };
 
+const iconMap: Record<string, string> = {
+	TypeScript: "seti:typescript",
+	JavaScript: "seti:typescript",
+	Bash: "seti:shell",
+	cURL: "seti:shell",
+	Python: "seti:python",
+};
+
 function getLang(label: string): string {
 	return languageMap[label] ?? languageMap[label.toLowerCase()] ?? "txt";
 }
 
 function getLabel(label: string): string {
 	return displayNames[label] ?? displayNames[label.toLowerCase()] ?? label;
+}
+
+function getIcon(label: string): string | undefined {
+	return iconMap[getLabel(label)];
 }
 ---
 
@@ -59,7 +71,7 @@ function getLabel(label: string): string {
 				) : (
 				<Tabs syncKey="workersAiExamples">
 					{snippets.map((snippet) => (
-						<TabItem label={getLabel(snippet.label)}>
+						<TabItem label={getLabel(snippet.label)} icon={getIcon(snippet.label)}>
 							<Code code={snippet.code} lang={getLang(snippet.label)} />
 						</TabItem>
 					))}
