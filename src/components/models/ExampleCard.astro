@@ -1,5 +1,6 @@
 ---
 import { Code, Tabs, TabItem } from "~/components";
+import type { StarlightIcon } from "@astrojs/starlight/types";
 import type { ModelExample, CodeSnippet } from "~/schemas/catalog-models";
 
 interface Props {
@@ -36,7 +37,7 @@ const displayNames: Record<string, string> = {
 	bash: "Bash",
 };
 
-const iconMap: Record<string, string> = {
+const iconMap: Record<string, StarlightIcon> = {
 	TypeScript: "seti:typescript",
 	JavaScript: "seti:typescript",
 	Bash: "seti:shell",
@@ -52,7 +53,7 @@ function getLabel(label: string): string {
 	return displayNames[label] ?? displayNames[label.toLowerCase()] ?? label;
 }
 
-function getIcon(label: string): string | undefined {
+function getIcon(label: string): StarlightIcon | undefined {
 	return iconMap[getLabel(label)];
 }
 ---
