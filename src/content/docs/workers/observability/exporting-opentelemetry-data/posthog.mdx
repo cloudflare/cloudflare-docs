@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Export to PostHog
 sidebar:
-  order: 5
+  order: 6
 ---
 
 import {WranglerConfig} from "~/components";
@@ -28,7 +28,7 @@ Before you begin, ensure you have:
 ## Step 1: Get your PostHog project API key
 
 1. Log in to your [PostHog account](https://app.posthog.com/)
-2. Navigate to the [**Project settings**](https://app.posthog.com/settings/project#selectedSetting=variables&setting=variables)
+2. Navigate to the [**Project settings**](https://app.posthog.com/settings/project)
 3. Find your **Project API key** in the project details section
 4. Copy the API key - this is the same key used for capturing events and exceptions
 
@@ -58,7 +58,6 @@ Now you'll create a destination in the Cloudflare dashboard that points to PostH
 3. Configure your logs destination:
    - **Destination Name**: `posthog-logs` (or any descriptive name)
    - **Destination Type**: Select **Logs**
-     - PostHog does not support importing Cloudflare traces at this time.
    - **OTLP Endpoint**: Your PostHog logs endpoint (e.g., `https://us.i.posthog.com/i/v1/logs` or `https://eu.i.posthog.com/i/v1/logs`)
    - **Custom Headers**: Add the authentication header:
      - Header name: `Authorization`
@@ -73,7 +72,7 @@ With your destination created in the Cloudflare dashboard, update your Worker's 
 
 <WranglerConfig>
 
-```jsonc
+```json
 {
   "observability": {
     "logs": {
