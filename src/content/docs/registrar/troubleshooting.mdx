@@ -103,6 +103,14 @@ Your domain may not appear on the [Transfer Domains](https://dash.cloudflare.com
 
 Some website builder platforms (such as Block, Shopify, Squarespace, and Wix) do not allow you to change nameservers while the domain is registered with them. Because Cloudflare requires your nameservers to point to Cloudflare before a transfer can begin, a direct transfer from these platforms is not possible. For the recommended workaround, refer to [Transfer from website builders](/registrar/get-started/transfer-domain-to-cloudflare/#transfer-from-website-builders).
 
+## Email verification required
+
+Cloudflare may send a verification email to your registrant contact email address when you register or transfer a domain, or when you update your registrant email. Per ICANN requirements, if the registrant email is not verified within 15 days, a hold is placed on the domain and nameservers are replaced with a parking server until verification is complete. After successful verification, nameservers are automatically restored.
+
+Verification is triggered when your registrant contact email differs from your verified Cloudflare account email.
+
+Some TLDs — including `.mx`, `.nz`, and `.ca` — may send verification through a third-party service. In these cases, the verification email will come from `noreply@emailverification.info` rather than Cloudflare. Check your spam folder if you do not receive it.
+
 ## Restart your transfer
 
 :::note
