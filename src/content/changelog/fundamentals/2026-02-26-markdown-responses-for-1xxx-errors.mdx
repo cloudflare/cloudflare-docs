@@ -1,0 +1,44 @@
+---
+title: Markdown responses for Cloudflare 1xxx errors
+description: "Cloudflare-generated 1xxx errors now return structured Markdown when requested with Accept: text/markdown."
+products:
+  - fundamentals
+date: 2026-02-26
+---
+
+Cloudflare now returns structured Markdown responses for Cloudflare-generated 1xxx errors when clients send `Accept: text/markdown`.
+
+Each response includes YAML frontmatter plus guidance sections (`What happened` / `What you should do`) so agents can make deterministic retry and escalation decisions without parsing HTML.
+
+In measured 1,015 comparisons, Markdown reduced payload size and token footprint by over 98% versus HTML.
+
+Included frontmatter fields:
+
+- `error_code`, `error_name`, `error_category`, `http_status`
+- `ray_id`, `timestamp`, `zone`
+- `cloudflare_error`, `retryable`, `retry_after` (when applicable), `owner_action_required`
+
+Default behavior is unchanged: clients that do not explicitly request Markdown continue to receive HTML error pages.
+
+## Negotiation behavior
+
+Cloudflare uses standard HTTP content negotiation on the `Accept` header.
+
+- `Accept: text/markdown` -> Markdown
+- `Accept: text/markdown, text/html;q=0.9` -> Markdown
+- `Accept: text/*` -> Markdown
+- `Accept: */*` -> HTML (default browser behavior)
+
+When multiple values are present, Cloudflare selects the highest-priority supported media type using `q` values. If Markdown is not explicitly preferred, HTML is returned.
+
+## Availability
+
+Available now for Cloudflare-generated 1xxx errors.
+
+## Get started
+
+```bash
+curl -H "Accept: text/markdown" https://<your-domain>/cdn-cgi/error/1015
+```
+
+Reference: [Cloudflare 1xxx error documentation](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/)

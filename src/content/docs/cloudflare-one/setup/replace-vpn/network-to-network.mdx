@@ -1,0 +1,109 @@
+---
+pcx_content_type: get-started
+title: "Network to network"
+sidebar:
+  order: 3
+  label: Network to network
+description: Connect two private networks using WARP Connectors and Cloudflare's network.
+products:
+  - cloudflare-one
+tags:
+  - Linux
+  - Private networks
+---
+
+import { InlineBadge } from "~/components";
+
+Connect two separate private networks so devices on each network can send and receive traffic in both directions through Cloudflare. This is useful when you need to link office locations, data centers, or cloud environments. For example, employees in one office could access a file server, printer, or internal application in another office.
+
+To explore other connection scenarios, refer to [Replace your VPN](/cloudflare-one/setup/replace-vpn/).
+
+This guide follows the same steps as the **Get Started** experience in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+
+## How it works
+
+[WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) <InlineBadge preset="beta" /> is a network connector that you install on a single Linux device in each network. That device handles traffic for the entire network: it sends outbound traffic to Cloudflare and receives inbound traffic back, then passes it to the right device on the network. Because of this, other devices on the network do not need to install any software.
+
+## Prerequisites
+
+- A Cloudflare account with a Zero Trust organization. If you have not set this up, refer to [Get started](/cloudflare-one/setup/).
+- A Linux device or virtual machine on your first private network. This is where you install your first WARP Connector.
+- A second Linux device or virtual machine on a separate private network. This is where you install your second WARP Connector.
+
+:::note
+WARP Connector is currently Linux-only. For more details on requirements and limitations, refer to [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
+:::
+
+## Step 1: Define a network segment
+
+A network segment identifies the IP range of a private network you want to connect. When you define a segment, the dashboard creates a WARP Connector configuration and sets up the routes that tell Cloudflare how to reach your network. You install and run the connector in the next step.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), select the **Get Started** tab.
+2. For **Replace my client-based or site-to-site VPN**, select **Get started**.
+3. For **Network to network**, select **Continue**.
+4. On the **Route traffic between private networks** screen, select **Continue**.
+5. Enter the IP range of your first network segment (for example, `10.0.0.0/24`).
+6. Enter a name for this network segment (for example, `office-a`).
+7. Select **Continue**.
+
+:::note
+If you are not sure of your network's IP range, check your router or network settings.
+:::
+
+## Step 2: Deploy first connector
+
+Install the WARP Connector on a Linux device in your first network segment. The dashboard generates commands specific to your operating system.
+
+1. Select your device's operating system from the dropdown.
+2. Copy and run the commands shown in the dashboard on your Linux device. The dashboard provides three sets of commands:
+   1. **Install WARP**: Sets up the package repository and installs the `cloudflare-warp` package.
+   2. **Enable IP forwarding**: Allows the device to forward traffic between networks.
+   3. **Run the WARP Connector with token**: Registers the connector with your Cloudflare account and connects it.
+
+3. After the connector deploys, the dashboard confirms your network segment is active.
+4. Select **Continue**.
+
+## Step 3: Define a second segment
+
+Repeat the same process as [Step 1](#step-1-define-a-network-segment) for your second network. The IP range must not overlap with your first segment. Each network needs its own unique range so Cloudflare can route traffic to the correct destination (for example, `10.0.1.0/24` if your first segment is `10.0.0.0/24`).
+
+## Step 4: Deploy second connector
+
+Repeat the same process as [Step 2](#step-2-deploy-first-connector) on a Linux device in your second network segment. After the connector deploys, the dashboard confirms your network segment is active.
+
+## Step 5: Forward device traffic
+
+If the WARP Connector is installed on your network's router (the device that serves as the default gateway), other devices on the network automatically send traffic through it. No additional configuration is needed, and you can skip this step.
+
+If the WARP Connector is installed on a different device, other devices on the network need a static route so they know to send cross-network traffic to the WARP Connector device. Without this route, devices do not know where to send traffic destined for the other network, and the connection does not work. The dashboard provides OS-specific commands for the devices you want to forward traffic from.
+
+1. Select the operating system of the device you want to configure.
+2. Select the tunnel you want to route traffic through.
+3. Copy and run the generated command on the target device.
+4. Repeat for additional devices as needed, or select **Continue** to proceed to the final step.
+
+For more details on routing options, refer to [Connect two or more private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/#4-route-traffic-from-subnet-to-warp-connector).
+
+## Step 6: Verify your connection
+
+The dashboard confirms that your connectors can reach devices in the opposite network segment. Devices on both networks can now communicate through Cloudflare.
+
+To verify connectivity, try reaching a device on the opposite network (for example, `ping 10.0.1.100` from a device on your first network).
+
+## Recommended next steps
+
+After verifying your connection, consider securing your connected networks with policies and access controls:
+
+- **Set up Gateway policies**: By default, all traffic between your network segments flows through Cloudflare without restriction. Gateway policies let you scan, filter, and log traffic between your networks. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/), [Network policies](/cloudflare-one/traffic-policies/network-policies/), and [HTTP policies](/cloudflare-one/traffic-policies/http-policies/).
+- **Create an Access application**: Restrict access to specific services or hosts on your connected networks with identity-based rules. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
+- **Create a device profile**: Control which traffic your connectors route through Cloudflare independently from your user devices. For more information, refer to [Connect two or more private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/).
+- **Explore more with Zero Trust**: Review your connectors, policies, and routes in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+
+For in-depth guidance on policy design and device posture checks, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
+
+## Troubleshoot
+
+If you have issues connecting, refer to these resources:
+
+- [Tips and best practices](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/tips/): review common WARP Connector configuration tips and troubleshooting strategies.
+- [Troubleshoot tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/): diagnose tunnel connectivity and routing problems.

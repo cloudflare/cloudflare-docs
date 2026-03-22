@@ -6,11 +6,11 @@ source: null
 
 ## 499 Client Close Request
 
-The `HTTP 499` error typically occurs when a client terminates the connection before the server is able to respond.
+The `HTTP 499` response code typically occurs when a client terminates the connection before the server is able to respond.
 
 ### Common use cases
 
-Examples of `499` errors include situations where a client times out and closes the connection before the server completes processing, such as during large file uploads or long-running requests. They can also occur due to issues in the TCP three-way handshake, where the client terminates the connection prematurely because of its timeout settings.
+Examples of `499` response code include situations where a client times out and closes the connection before the server completes processing, such as during large file uploads or long-running requests. They can also occur due to issues in the TCP three-way handshake, where the client terminates the connection prematurely because of its timeout settings.
 
 ### Cloudflare-specific information
 
@@ -26,10 +26,10 @@ To provide more context, a TCP connection must be established between Cloudflare
 - **SYN+ACK**: The origin server responds with a SYN+ACK packet.
 - **ACK**: Cloudflare sends an ACK packet back to the origin server.
 
-At this point, the connection is established, and both Cloudflare and the origin server can communicate. However, if the origin server does not send a SYN+ACK back to Cloudflare within 15 seconds, Cloudflare retries once more, with another 15-second timeout.
+At this point, the connection is established, and both Cloudflare and the origin server can communicate. However, if the origin server does not send a SYN+ACK back to Cloudflare within 19 seconds, Cloudflare retries once more, with another 15-second timeout.
 
 Depending on the client-side timeout settings, the following scenarios can occur:
 
-- **Shorter client timeout (less than 30 seconds)**: If the client has a shorter timeout, it will abandon the connection before Cloudflare completes processing, and a `499` error will be logged.
-- **Successful connection (more than 30 seconds)**: If the client has a longer timeout and the TCP connection is successfully established, the HTTP transaction proceeds normally, and Cloudflare returns a standard status code (`HTTP 200`).
+- **Shorter client timeout (less than 38 seconds)**: If the client has a shorter timeout, it will abandon the connection before Cloudflare completes processing, and a `499` response code will be logged.
+- **Successful connection (more than 38 seconds)**: If the client has a longer timeout and the TCP connection is successfully established, the HTTP transaction proceeds normally, and Cloudflare returns a standard status code (`HTTP 200`).
 - **Handshake failure**: If the client has a longer timeout but Cloudflare cannot establish the TCP handshake with the origin server, Cloudflare will return an `HTTP 522` status code.

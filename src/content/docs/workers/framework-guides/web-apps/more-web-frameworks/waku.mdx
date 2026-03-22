@@ -6,6 +6,7 @@ description: Create a Waku application and deploy it to Cloudflare Workers with 
 ---
 
 import {
+	AutoconfigDiagram,
 	Badge,
 	Description,
 	InlineBadge,
@@ -14,6 +15,24 @@ import {
 } from "~/components";
 
 In this guide, you will create a new [Waku](https://waku.gg/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)). Waku is a minimal React framework built for [React 19](https://react.dev/blog/2024/12/05/react-19) and [React Server Components](https://react.dev/reference/rsc/server-components). The use of Server Components is completely optional. It can be configured to run Server Components during build and output static HTML or it can be configured to run with dynamic React server rendering. It is built on top of [Hono](https://hono.dev/) and [Vite](https://vite.dev/).
+
+:::tip[Already have a Waku project?]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect Waku, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="Waku"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: "dist/worker.js" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: dist/public" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+	]}
+/>
 
 ## 1. Set up a new project
 

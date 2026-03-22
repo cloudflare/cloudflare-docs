@@ -36,8 +36,8 @@ The folder of static assets to be served. For many frameworks, this is the `./pu
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"assets": {
-		"directory": "./public/"
-	}
+		"directory": "./public/",
+	},
 }
 ```
 
@@ -83,8 +83,8 @@ Controls whether to invoke the Worker script regardless of a request which would
 	"assets": {
 		"directory": "./public/",
 		"binding": "ASSETS",
-		"run_worker_first": true
-	}
+		"run_worker_first": true,
+	},
 }
 ```
 
@@ -120,6 +120,8 @@ The order in which the patterns are listed is not significant.
 
 In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
 
+Common uses for `run_worker_first` include authentication checks, A/B testing, and [injecting bootstrap data into your SPA shell](/workers/examples/spa-shell/).
+
 ## `binding`
 
 Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
@@ -134,8 +136,8 @@ Configuring the optional [binding](/workers/runtime-apis/bindings) gives you acc
 	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./public/",
-		"binding": "ASSETS"
-	}
+		"binding": "ASSETS",
+	},
 }
 ```
 
@@ -157,7 +159,11 @@ In the example above, assets would be available through `env.ASSETS`.
 
 **Example**
 
-Your dynamic code can make new, or forward incoming requests to your project's static assets using the assets binding. For example, `env.ASSETS.fetch(request)`, `env.ASSETS.fetch(new URL('https://assets.local/my-file'))` or `env.ASSETS.fetch('https://assets.local/my-file')`.
+Your dynamic code can make new, or forward incoming requests to your project's static assets using the assets binding. For example, `env.ASSETS.fetch(request)`, `env.ASSETS.fetch(new URL('https://assets.local/my-file'))` or `env.ASSETS.fetch('https://assets.local/my-file')`. The hostname used in the URL (for example, `assets.local`) is not meaningful — any valid hostname will work. Only the URL pathname is used to match assets.
+
+:::note
+If you need to fetch assets from within an [RPC method](/workers/runtime-apis/rpc/#fetching-static-assets) (where there is no incoming `request`), construct a URL using any hostname — for example, `this.env.ASSETS.fetch(new Request('https://assets.local/path/to/asset'))`.
+:::
 
 Take the following example that configures a Worker script to return a response under all requests headed for `/api/`. Otherwise, the Worker script will pass the incoming request through to the asset binding. In this case, because a Worker script is only invoked when the requested route has not matched any static assets, this will always evaluate [`not_found_handling`](/workers/static-assets/#routing-behavior) behavior.
 
@@ -212,7 +218,7 @@ For the various static asset routing configuration options, refer to [Routing](/
 
 If you desire to run your [Worker code ahead of assets](/workers/static-assets/routing/worker-script/#run-your-worker-script-first) by setting `run_worker_first=true`, all requests must first travel to your Smart-Placed Worker. As a result, you may experience increased latency for asset requests.
 
-Use Smart Placement with `run_worker_first=true` when you need to integrate with other backend services, authenticate requests before serving any assets, or if your want to make modifications to your assets before serving them.
+Use Smart Placement with `run_worker_first=true` when you need to integrate with other backend services, authenticate requests before serving any assets, or if you want to make modifications to your assets before serving them.
 
 If you want some assets served as quickly as possible to the user, but others to be served behind a smart-placed Worker, considering splitting your app into multiple Workers and [using service bindings to connect them](/workers/configuration/placement/#multiple-workers).
 

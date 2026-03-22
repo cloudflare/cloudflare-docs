@@ -1,0 +1,44 @@
+---
+pcx_content_type: navigation
+title: RtkChatSelectorUi
+description: API reference for RtkChatSelectorUi component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `groups` | `ChatGroup[]` | ✅ | - | Participants |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `selectedGroupId` | `string` | ✅ | - | Selected participant |
+| `selfUserId` | `string` | ✅ | - | Self User ID |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `unreadCounts` | `Record<string, number>` | ✅ | - | Unread counts |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkChatSelectorUi } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkChatSelectorUi />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkChatSelectorUi } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkChatSelectorUi
+      groups={[]}
+      selectedGroupId="example"
+      selfUserId="example"
+    />
+  );
+}
+```
+

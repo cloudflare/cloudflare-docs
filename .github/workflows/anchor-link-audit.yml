@@ -14,27 +14,27 @@ jobs:
     permissions:
       issues: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v4
+
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
 
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
-      - uses: actions/cache@v4
-        id: npm-cache
+      - name: Restore node_modules cache
+        id: node-modules-cache
+        uses: actions/cache/restore@v5
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            node-modules-${{ runner.os }}-
 
       - run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      - run: npm run sync
 
       - run: npm run build
         env:
@@ -46,6 +46,13 @@ jobs:
       - name: Check - Broken header links
         id: header-link-check
         run: ./bin/htmltest -c ./bin/.htmltest.yml
+
+      - name: Save node_modules cache
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Create issue on failure
         if: ${{ failure() }}

@@ -53,7 +53,7 @@ So the question is: which of these fragments does Cloudflare drop and which does
 The following diagram shows how the three UDP fragments in the preceding example flow through Cloudflare and {props.productName}. The main takeaways are:
 
 - **Cloudflare never sends incomplete packets to customers**: If Cloudflare does not see all parts of a packet required to fully reassemble that packet, Cloudflare will not send the partial data fragments to the customer.
-- **Magic Firewall operates on fully reassembled packets, not individual fragments**: This means that filters that match on UDP/TCP header information, for example, apply to the fully reassembled packet, not just the initial fragment. Cloudflare will not leak non-initial fragments to customers.
+- **Cloudflare Network Firewall operates on fully reassembled packets, not individual fragments**: This means that filters that match on UDP/TCP header information, for example, apply to the fully reassembled packet, not just the initial fragment. Cloudflare will not leak non-initial fragments to customers.
 - **Customers can still see fragmented packets**: By default (without `clear_dont_fragment_bit` set), Cloudflare fragments packets to fit within the configured MTU of the tunnel before sending the data to the customer. If a packet is larger than 1,476 bytes, Cloudflare will fragment it and send those fragments to the customer for reassembly.
 
 In all cases, Cloudflare sends all fragments to the customer.
@@ -96,9 +96,9 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 ### GRE tunnels as off-ramp
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
-    <Render file="magic-wan/mtu-mss/mss-clamping-gre" product="networking-services" />
+    <Render file="cloudflare-wan/mtu-mss/mss-clamping-gre" product="networking-services" />
   </>
   )
 }
@@ -112,9 +112,9 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 ### IPsec tunnels
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
-    <Render file="magic-wan/mtu-mss/mss-clamping-ipsec" product="networking-services" />
+    <Render file="cloudflare-wan/mtu-mss/mss-clamping-ipsec" product="networking-services" />
   </>
   )
 }

@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: RtkInformationTooltip
+description: API reference for RtkInformationTooltip component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkInformationTooltip } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkInformationTooltip />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkInformationTooltip } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkInformationTooltip
+      iconPack={defaultIconPack}
+    />
+  );
+}
+```
+

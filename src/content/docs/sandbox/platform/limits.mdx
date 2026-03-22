@@ -5,9 +5,11 @@ sidebar:
   order: 2
 ---
 
+import { WranglerConfig } from "~/components";
+
 Since the Sandbox SDK is built on top of the [Containers](/containers/) platform, it shares the same underlying platform characteristics. Refer to these pages to understand how pricing and limits work for your sandbox deployments.
 
-## Container Limits
+## Container limits
 
 Refer to [Containers limits](/containers/platform-details/limits/) for complete details on:
 
@@ -15,10 +17,41 @@ Refer to [Containers limits](/containers/platform-details/limits/) for complete 
 - Instance types and their resource allocations
 - Image size and storage limits
 
-## Best Practices
+## Workers and Durable Objects limits
+
+When using the Sandbox SDK from Workers or Durable Objects, you are subject to [Workers subrequest limits](/workers/platform/limits/#subrequests). By default, the SDK uses HTTP transport where each operation (`exec()`, `readFile()`, `writeFile()`, etc.) counts as one subrequest.
+
+### Subrequest limits
+
+- **Workers Free**: 50 subrequests per request
+- **Workers Paid**: 1,000 subrequests per request
+
+### Avoid subrequest limits with WebSocket transport
+
+Enable WebSocket transport to multiplex all SDK calls over a single persistent connection:
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"SANDBOX_TRANSPORT": "websocket"
+	},
+}
+```
+</WranglerConfig>
+
+With WebSocket transport enabled:
+- The WebSocket upgrade counts as one subrequest
+- All subsequent SDK operations use the existing connection (no additional subrequests)
+- Ideal for workflows with many SDK operations per request
+
+See [Transport modes](/sandbox/configuration/transport/) for a complete guide.
+
+## Best practices
 
 To work within these limits:
 
 - **Right-size your instances** - Choose the appropriate [instance type](/containers/platform-details/limits/#instance-types) based on your workload requirements
-- **Clean up unused sandboxes** - Terminate sandbox sessions when they're no longer needed to free up resources
+- **Clean up unused sandboxes** - Terminate sandbox sessions when they are no longer needed to free up resources
 - **Optimize images** - Keep your [custom Dockerfiles](/sandbox/configuration/dockerfile/) lean to reduce image size
+- **Use WebSocket transport for high-frequency operations** - Enable `SANDBOX_TRANSPORT=websocket` to avoid subrequest limits when making many SDK calls per request

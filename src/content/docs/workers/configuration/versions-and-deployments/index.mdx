@@ -46,8 +46,8 @@ Review the different ways you can create versions of your Worker and deploy them
 
 A new version that is automatically deployed to 100% of traffic when:
 
-- Changes are uploaded with [`wrangler deploy`](/workers/wrangler/commands/#deploy) via the Cloudflare Dashboard
-- Changes are deployed with the command [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) via [Workers Builds](/workers/ci-cd/builds)
+- Changes are uploaded with [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) via the Cloudflare Dashboard
+- Changes are deployed with the command [`npx wrangler deploy`](/workers/wrangler/commands/general/#deploy) via [Workers Builds](/workers/ci-cd/builds)
 - Changes are uploaded with the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/)
 
 #### Upload a new version to be gradually deployed or deployed at a later time
@@ -58,12 +58,12 @@ Wrangler versions before 3.73.0 require you to specify a `--x-versions` flag.
 
 :::
 
-To create a new version of your Worker that is not deployed immediately, use the [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) command or create a new version via the Cloudflare dashboard using the **Save** button. You can find the **Save** option under the down arrow beside the "Deploy" button.
+To create a new version of your Worker that is not deployed immediately, use the [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload) command or create a new version via the Cloudflare dashboard using the **Save** button. You can find the **Save** option under the down arrow beside the "Deploy" button.
 
-Versions created in this way can then be deployed all at once or gradually deployed using the [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy) command or via the Cloudflare dashboard under the **Deployments** tab.
+Versions created in this way can then be deployed all at once or gradually deployed using the [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy) command or via the Cloudflare dashboard under the **Deployments** tab.
 
 :::note
-When using [Wrangler](/workers/wrangler/), changes made to a Worker's triggers [routes, domains](/workers/configuration/routing/) or [cron triggers](/workers/configuration/cron-triggers/) need to be applied with the command [`wrangler triggers deploy`](/workers/wrangler/commands/#triggers).
+When using [Wrangler](/workers/wrangler/), changes made to a Worker's triggers [routes, domains](/workers/configuration/routing/) or [cron triggers](/workers/configuration/cron-triggers/) need to be applied with the command [`wrangler triggers deploy`](/workers/wrangler/commands/general/#triggers).
 :::
 
 :::note
@@ -78,7 +78,7 @@ See examples of creating a Worker, Versions, and Deployments directly with the A
 
 #### Via Wrangler
 
-Wrangler allows you to view the 100 most recent versions and deployments. Refer to the [`versions list`](/workers/wrangler/commands/#list-4) and [`deployments`](/workers/wrangler/commands/#list-5) documentation to view the commands.
+Wrangler allows you to view the 100 most recent versions and deployments. Refer to the [`versions list`](/workers/wrangler/commands/general/#list-4) and [`deployments`](/workers/wrangler/commands/general/#list-5) documentation to view the commands.
 
 #### Via the Cloudflare dashboard
 
@@ -94,16 +94,16 @@ To view your deployments in the Cloudflare dashboard:
 
 ### First upload
 
-You must use [C3](/workers/get-started/guide/#1-create-a-new-worker-project) or [`wrangler deploy`](/workers/wrangler/commands/#deploy) the first time you create a new Workers project. Using [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) the first time you upload a Worker will fail.
+You must use [C3](/workers/get-started/guide/#1-create-a-new-worker-project) or [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) the first time you create a new Workers project. Using [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload) the first time you upload a Worker will fail.
 
 ### Service worker syntax
 
-Service worker syntax is not supported for versions that are uploaded through [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload). You must use ES modules format.
+Service worker syntax is not supported for versions that are uploaded through [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload). You must use ES modules format.
 
 Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate-to-module-workers/#advantages-of-migrating) to learn how to migrate your Workers from the service worker format to the ES modules format.
 
 ### Durable Object migrations
 
-Uploading a version with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).
+Uploading a version with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).
 
 This will be supported in the near future.

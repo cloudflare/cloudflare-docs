@@ -1,13 +1,11 @@
 ---
-title: WAF Release - Scheduled changes for 2026-01-26
-description: WAF managed ruleset changes scheduled for 2026-01-26
-date: 2026-01-20
+title: WAF Release - Scheduled changes for 2026-03-23
+description: WAF managed ruleset changes scheduled for 2026-03-23
+date: 2026-03-16
 scheduled: true
 ---
 
 import { RuleID } from "~/components";
-
-The planned release has been postponed to ensure a smooth deployment.
 
 <table style="width: 100%">
   <thead>
@@ -23,26 +21,48 @@ The planned release has been postponed to ensure a smooth deployment.
   </thead>
   <tbody>
     <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-26</td>
+      <td>2026-03-16</td>
+      <td>2026-03-23</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="7a47683eacce4abd870ab2c630698ff3" />
+        <RuleID id="54ad0465c30d4cd2ac7a707197321c6c" />
       </td>
-      <td>XWiki - Remote Code Execution - CVE:CVE-2025-24893 2</td>
-      <td>This is a new detection. The rule has been renamed to "Wiki - Remote Code Execution - CVE-2025-24893 2", previously known as "XWiki - Remote Code Execution - CVE-2025-24893 – Beta".</td>
+      <td>Command Injection - Generic 9 - URI Vector</td>
+      <td>This is a new detection.</td>
+   </tr>
+   <tr>
+      <td>2026-03-16</td>
+      <td>2026-03-23</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="b31c34a7b29b4aaf9be6883d1eb7a999" />
+      </td>
+      <td>Command Injection - Generic 9 - Header Vector</td>
+      <td>This is a new detection.</td>
    </tr>
     <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-26</td>
+      <td>2026-03-16</td>
+      <td>2026-03-23</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="ad5c52f6ca334ef4a844e5e5da8ba7e6" />
+        <RuleID id="155bb67d1061479e995a38510677175f" />
       </td>
-      <td>Django SQLI - CVE:CVE-2025-64459</td>
+      <td>Command Injection - Generic 9 - Body Vector</td>
       <td>This is a new detection.</td>
-   </tr> 
-  </tbody>
+   </tr>
+   <tr>
+      <td>2026-03-16</td>
+      <td>2026-03-23</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="55fb1c76f0304f6a9d935d03479da68f" />
+      </td>
+      <td>PHP, vBulletin, jQuery File Upload - Code Injection, Dangerous File Upload - CVE:CVE-2018-9206, CVE:CVE-2019-17132 (beta)</td>
+      <td>This rule will be merged into the original rule  "PHP, vBulletin, jQuery File Upload - Code Injection, Dangerous File Upload - CVE:CVE-2018-9206, CVE:CVE-2019-17132" (ID: <RuleID id="0f2da91cec674eb58006929e824b817c" />)</td>
+   </tr>
+</tbody>
 </table>

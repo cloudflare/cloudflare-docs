@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-debugger-video
+description: API reference for rtk-debugger-video component (Web Components (HTML) Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | States object |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-debugger-video></rtk-debugger-video>
+```
+
+### With Properties
+
+```html
+<rtk-debugger-video
+ size="md">
+</rtk-debugger-video>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-debugger-video");
+
+  el.meeting= meeting
+</script>
+```

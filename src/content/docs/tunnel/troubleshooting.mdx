@@ -1,0 +1,153 @@
+---
+title: Troubleshooting
+pcx_content_type: troubleshooting
+sidebar:
+  order: 8
+---
+
+import { Render, Tabs, TabItem } from "~/components";
+
+Use this page to diagnose and resolve common issues with Cloudflare Tunnel. For tunnel health monitoring, logs, and metrics, refer to [Monitoring](/tunnel/monitoring/).
+
+## Connection errors
+
+When `cloudflared` cannot reach the Cloudflare network, it [logs](/tunnel/monitoring/#logs) specific error messages that indicate whether the issue is DNS resolution, QUIC (UDP), or TCP connectivity.
+
+### DNS resolution failures
+
+#### `edge discovery: error looking up Cloudflare edge IPs`
+
+```txt
+ERR edge discovery: error looking up Cloudflare edge IPs: the DNS query failed
+    error="lookup _v2-origintunneld._tcp.argotunnel.com on 172.19.64.1:53: no such host"
+```
+
+This error means the DNS resolver configured on your machine cannot resolve the SRV records that `cloudflared` uses to discover the [Cloudflare Tunnel destination IPs](/tunnel/configuration/#firewall-rules). Common causes include corporate DNS resolvers that strip or block SRV records, and DNS resolvers that return compressed SRV records.
+
+**To diagnose:**
+
+On the `cloudflared` host machine, run:
+
+```sh
+dig SRV _v2-origintunneld._tcp.argotunnel.com
+```
+
+If you receive `SERVFAIL`, `NXDOMAIN`, or an empty answer, test against Cloudflare's public resolver:
+
+```sh
+dig SRV _v2-origintunneld._tcp.argotunnel.com @1.1.1.1
+```
+
+**To resolve:**
+
+- If `1.1.1.1` returns results but your local resolver does not, configure the host to use [Cloudflare DNS (1.1.1.1)](/1.1.1.1/setup/) or another public resolver.
+- If neither resolver returns results, your firewall is likely blocking outbound DNS queries (UDP port `53`). Work with your network administrator to allow DNS traffic.
+
+#### `DNS query failed ... i/o timeout`
+
+```txt {3}
+ERR edge discovery: error looking up Cloudflare edge IPs: the DNS query failed
+    error="lookup _v2-origintunneld._tcp.argotunnel.com on 127.0.0.11:53:
+    read udp 127.0.0.1:53467->127.0.0.11:53: i/o timeout"
+```
+
+This variant means DNS queries from `cloudflared` are being blocked or dropped entirely — the resolver never responds. This is common in container environments (Docker, Kubernetes) where the internal DNS resolver (`127.0.0.11`) is unreachable or misconfigured.
+
+**To resolve:**
+
+- In Docker, verify your container's DNS configuration (`/etc/resolv.conf`). You can override the resolver with `--dns 1.1.1.1` when running the container.
+- In Kubernetes, verify the `kube-dns` or `CoreDNS` service is running and reachable from the pod.
+- On the `cloudflared` host, verify that the resolver listed in `/etc/resolv.conf` is reachable and responding to queries.
+
+### QUIC handshake timeout
+
+#### `Failed to dial a quic connection`
+
+```txt
+ERR Failed to dial a quic connection error="failed to dial to edge with quic:
+    timeout: handshake did not complete in time" connIndex=0 ip=198.41.192.227
+INF Retrying connection in up to 2s connIndex=0 ip=198.41.192.227
+```
+
+This error means `cloudflared` resolved the [Cloudflare Tunnel destination IPs](/tunnel/configuration/#firewall-rules) but could not complete a QUIC handshake over UDP port `7844`. Your network or firewall is blocking outbound UDP traffic to Cloudflare.
+
+`cloudflared` retries with exponential backoff (2, 4, 8, 16, 32, up to 64 seconds). After exhausting retries, it falls back to HTTP/2 over TCP:
+
+```txt
+INF Switching to fallback protocol http2 connIndex=0
+```
+
+If the fallback also fails, you will see a [TCP connection timeout](#tcp-connection-timeout) error.
+
+**To diagnose:**
+
+On the `cloudflared` host machine, test connectivity on port `7844`:
+
+```sh
+nc -uvz -w 3 198.41.192.227 7844
+```
+
+Replace `198.41.192.227` with the IP shown in your [error message](#failed-to-dial-a-quic-connection). If the port is closed or blocked by a firewall, the command will return `Connection refused` or time out.
+
+**To resolve:**
+
+- Allow outbound UDP traffic to port `7844` on your firewall or security group. Refer to the [full list of IPs and ports](/tunnel/configuration/#firewall-rules).
+- If you cannot open UDP, `cloudflared` will fall back to HTTP/2 over TCP automatically. You can also force HTTP/2 by setting the `--protocol http2` [run parameter](/tunnel/configuration/#run-parameters), but QUIC is recommended for better performance.
+
+### TCP connection timeout
+
+#### `DialContext error: dial tcp ... i/o timeout`
+
+```txt
+ERR Unable to establish connection with Cloudflare edge
+    error="DialContext error: dial tcp 198.41.200.43:7844: i/o timeout" connIndex=0
+ERR Serve tunnel error
+    error="DialContext error: dial tcp 198.41.200.43:7844: i/o timeout" connIndex=0
+```
+
+This error means `cloudflared` cannot reach Cloudflare over TCP port `7844`. If you also see the [QUIC handshake timeout](#failed-to-dial-a-quic-connection) above it, both UDP and TCP are blocked — the tunnel cannot connect at all.
+
+**To diagnose:**
+
+As a quick test, run:
+
+```sh
+curl -v https://region1.v2.argotunnel.com:7844
+```
+If the connection hangs, traffic is being dropped between your host and Cloudflare.
+
+To test if `cloudflared` can connect on port `7844`, run:
+
+```sh
+nc -vz -w 3 198.41.200.43 7844
+```
+
+Replace `198.41.200.43` with the IP shown in your [error message](#dialcontext-error-dial-tcp--io-timeout). If the port is closed or blocked by a firewall, the command will return `Connection refused` or time out.
+
+**To resolve:**
+
+- Allow outbound TCP traffic to port `7844` to the [Cloudflare Tunnel IP ranges](/tunnel/configuration/#firewall-rules).
+- If your environment blocks port `7844` entirely (both UDP and TCP), the tunnel cannot function. Work with your network administrator to allow outbound traffic on this port.
+
+<Render
+	file="tunnel/common-errors"
+	product="cloudflare-one"
+	params={{
+		logsURL: "/tunnel/monitoring/#logs",
+		protocolURL: "/tunnel/routing/#supported-protocols",
+		configFileURL:
+			"/tunnel/other-tunnel-types/local-management/configuration-file/",
+		originServerNameURL: "/tunnel/configuration/#originservername",
+		caPoolURL: "/tunnel/configuration/#capool",
+		noTLSVerifyURL: "/tunnel/configuration/#notlsverify",
+		ulimitsURL: "/tunnel/configuration/#ulimits",
+	}}
+/>
+
+## How do I contact support?
+
+<Render
+	file="warp/support-ticket-best-practices"
+	product="cloudflare-one"
+	params={{ tunnelMode: true }}
+/>

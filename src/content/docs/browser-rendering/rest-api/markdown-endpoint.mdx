@@ -2,12 +2,14 @@
 pcx_content_type: how-to
 title: /markdown - Extract Markdown from a webpage
 sidebar:
-  order: 10
+  order: 5
 ---
 
 import { Tabs, TabItem, Render } from "~/components";
 
 The `/markdown` endpoint retrieves a webpage's content and converts it into Markdown format. You can specify a URL and optional parameters to refine the extraction process.
+
+<Render file="rest-api-token-permissions" product="browser-rendering" />
 
 ## Endpoint
 
@@ -44,7 +46,7 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
 ```
 
 ```json output
-
+{
 	"success": true,
 	"result": "# Example Domain\n\nThis domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.\n\n[More information...](https://www.iana.org/domains/example)"
 }
@@ -93,8 +95,8 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
 
 :::note[Looking for more parameters?]
 Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/markdown/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
-:::  
-  
+:::
+
 ### Exclude unwanted requests (for example, CSS)
 
 You can refine the Markdown extraction by using the `rejectRequestPattern` parameter. In this example, requests matching the given regex pattern (such as CSS files) are excluded.
@@ -130,3 +132,8 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
   file="faq"
   product="browser-rendering"
 />
+
+## Other Markdown conversion features
+
+- Workers AI [AI.toMarkdown()](https://developers.cloudflare.com/workers-ai/features/markdown-conversion/) supports multiple document types and summarization.
+- [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) allows real-time document conversion for Cloudflare zones using content negotiation headers.

@@ -1,0 +1,40 @@
+---
+pcx_content_type: navigation
+title: rtk-transcript
+description: API reference for rtk-transcript component (Web Components (HTML) Library)
+---
+A component which shows a transcript.
+ You need to remove the element after you receive the
+ `rtkTranscriptDismiss` event.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `transcript` | `Transcript & { renderedId?: string }` | ❌ | - | Message |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-transcript></rtk-transcript>
+```
+
+### With Properties
+
+```html
+<rtk-transcript
+ transcript="example">
+</rtk-transcript>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-transcript");
+
+  el.transcript= {};
+</script>
+```

@@ -1,0 +1,12 @@
+id: cYCM3p
+name: page-rules
+
+entry:
+  title: Page Rules
+  url: /rules/page-rules/
+  show: false
+
+meta:
+  title: Cloudflare Page Rules docs
+  description: Page Rules trigger one or more actions whenever a certain URL pattern is matched.
+  author: "@cloudflare"

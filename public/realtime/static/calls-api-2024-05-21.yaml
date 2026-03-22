@@ -47,6 +47,151 @@ paths:
                   - $ref: "#/components/schemas/NewSessionResponse"
                   - example:
                       sessionId: e017a2629c754fedc1f7d8587e06d126
+  /apps/{appId}/adapters/websocket/new:
+    post:
+      tags:
+        - Create adapter(s)
+      summary: Create WebSocket adapter(s) for ingest or stream
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewAdapterRequest"
+            examples:
+              local_ingest:
+                description: Ingest audio from a WebSocket endpoint to create a new WebRTC track
+                value:
+                  tracks:
+                    - location: local
+                      trackName: tts-track
+                      endpoint: wss://example.com/ingest
+                      inputCodec: pcm
+                      mode: buffer
+              remote_stream_audio:
+                description: Stream an existing WebRTC audio track to a WebSocket endpoint
+                value:
+                  tracks:
+                    - location: remote
+                      sessionId: 2a45361d5fd7cc14eface0587c276c94
+                      trackName: mic-track
+                      endpoint: wss://example.com/stream-audio
+                      outputCodec: pcm
+                      mode: stream
+              remote_stream_video:
+                description: Stream an existing WebRTC video track as JPEG to a WebSocket endpoint
+                value:
+                  tracks:
+                    - location: remote
+                      sessionId: 2a45361d5fd7cc14eface0587c276c94
+                      trackName: camera-track
+                      endpoint: wss://example.com/stream-video
+                      outputCodec: jpeg
+                      mode: stream
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewAdapterResponse"
+              examples:
+                local_ingest:
+                  value:
+                    tracks:
+                      - trackName: tts-track
+                        adapterId: 4e66a9d5a35e4a0899f6f8d0b63a35c1
+                        sessionId: d6f73f6f0c6645a7bb8f74e3fcb00a2f
+                        endpoint: wss://example.com/ingest
+                remote_stream:
+                  value:
+                    tracks:
+                      - trackName: mic-track
+                        adapterId: 2b2ff7d2e17a4d638be5b6e3075ed6ce
+                        endpoint: wss://example.com/stream-audio
+        "503":
+          description: Service unavailable. No adapter could be created.
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewAdapterResponse"
+              example:
+                tracks:
+                  - trackName: mic-track
+                    errorCode: adapter_unavailable
+                    errorDescription: Failed to create adapter
+  /apps/{appId}/adapters/websocket/close:
+    post:
+      tags:
+        - Close adapter(s)
+      summary: Close WebSocket adapter(s)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CloseAdapterRequest"
+            example:
+              tracks:
+                - adapterId: 4e66a9d5a35e4a0899f6f8d0b63a35c1
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CloseAdapterResponse"
+              example:
+                tracks:
+                  - adapterId: 4e66a9d5a35e4a0899f6f8d0b63a35c1
+                    bytesProcessed: 83492
+        "503":
+          description: Service unavailable. No adapter could be closed.
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CloseAdapterResponse"
+              example:
+                tracks:
+                  - adapterId: 4e66a9d5a35e4a0899f6f8d0b63a35c1
+                    errorCode: adapter_not_found
+                    errorDescription: Adapter not found
   /apps/{appId}/sessions/{sessionId}/tracks/new:
     post:
       tags:
@@ -904,6 +1049,105 @@ components:
                   errorDescription:
                     type: string
           description: Array of track objects with results
+    AdapterObject:
+      type: object
+      properties:
+        location:
+          type: string
+          enum:
+            - local
+            - remote
+          description: Use local to ingest media from an external endpoint. Use remote to stream media from an existing WebRTC track.
+        sessionId:
+          type: string
+          description: Session ID of the track owner. Required for remote adapters.
+        trackName:
+          type: string
+          description: Track name to ingest into or stream from.
+        endpoint:
+          type: string
+          description: WebSocket endpoint URL.
+        outputCodec:
+          type: string
+          enum:
+            - pcm
+            - jpeg
+          description: Codec for outgoing media on remote adapters. Use pcm for audio or jpeg for video.
+        inputCodec:
+          type: string
+          enum:
+            - pcm
+          description: Codec for incoming media on local adapters.
+        mode:
+          type: string
+          enum:
+            - stream
+            - buffer
+          description: Adapter mode. Use buffer for local adapters and stream for remote adapters.
+        adapterId:
+          type: string
+          description: Unique identifier of the adapter instance.
+    AdapterStatObject:
+      type: object
+      properties:
+        adapterId:
+          type: string
+          description: Unique identifier of the adapter instance.
+        bytesProcessed:
+          type: number
+          description: Number of bytes processed before the adapter closed.
+    NewAdapterRequest:
+      type: object
+      properties:
+        tracks:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdapterObject"
+    NewAdapterResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        tracks:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/AdapterObject"
+              - properties:
+                  errorCode:
+                    type: string
+                  errorDescription:
+                    type: string
+    CloseAdapterRequest:
+      type: object
+      properties:
+        tracks:
+          type: array
+          items:
+            type: object
+            properties:
+              adapterId:
+                type: string
+                description: Adapter identifier to close.
+    CloseAdapterResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        tracks:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/AdapterStatObject"
+              - properties:
+                  errorCode:
+                    type: string
+                  errorDescription:
+                    type: string
     DataChannelObject:
       type: object
       properties:

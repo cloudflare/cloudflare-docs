@@ -67,7 +67,7 @@ import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
 
 6. (Optional) Under **Cache status**, disable **Also apply rate limiting to cached assets** to consider only the requests that reach the origin when determining the rate.
 
-7. Under **With the same characteristics**, add one or more [characteristics](/waf/rate-limiting-rules/parameters/#with-the-same-characteristics) that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the rate. For more information, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/).
+7. Under **With the same characteristics**, add one or more [characteristics](/waf/rate-limiting-rules/parameters/#with-the-same-characteristics) that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the rate. For more information, refer to [Request rate calculation](/waf/rate-limiting-rules/request-rate/).
 
 8. (Optional) To define an expression that specifies the conditions for incrementing the rate counter, enable **Use custom counting expression** and set the expression. By default, the counting expression is the same as the rule expression. The counting expression can include [response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response).
 

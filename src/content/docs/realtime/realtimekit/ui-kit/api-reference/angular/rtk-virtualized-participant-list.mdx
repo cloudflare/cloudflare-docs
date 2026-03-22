@@ -1,0 +1,35 @@
+---
+pcx_content_type: navigation
+title: rtk-virtualized-participant-list
+description: API reference for rtk-virtualized-participant-list component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `bufferedItemsCount` | `number` | ✅ | - | Buffer items to render before and after the visible area |
+| `emptyListElement` | `HTMLElement` | ✅ | - | Element to render if list is empty |
+| `itemHeight` | `number` | ✅ | - | Height of each item in pixels (assumed fixed) |
+| `items` | `Peer1[]` | ✅ | - | Items to be virtualized |
+| `renderItem` | `(item: Peer1, index: number)` | ✅ | - | Function to render each item |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-virtualized-participant-list></rtk-virtualized-participant-list>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-virtualized-participant-list
+ bufferedItemsCount="42"
+ [emptyListElement]="htmlelement"
+ itemHeight="42">
+</rtk-virtualized-participant-list>
+```
+

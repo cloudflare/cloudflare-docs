@@ -226,14 +226,6 @@ When you choose mixed deployment, you need to consider that:
 
 Cloudflare offers automated workflows based on continuous analysis and submissions. These features enable Cloudflare to move messages using the API [auto-move](/cloudflare-one/email-security/settings/auto-moves/) policy after delivery. This is best paired with the phish submissions or third-party user submissions.
 
-### Post Delivery Response
-
-Cloudflare will continue to re-evaluate emails already delivered to your inbox at a fixed time interval in search for phishing sites or campaigns not previously known to Cloudflare. If any email messages fitting these new criteria are found, Cloudflare retracts them.
-
-### Phish Submission Response
-
-Cloudflare will [auto-move](/cloudflare-one/email-security/settings/auto-moves/) emails already delivered that are reported by you as phishing, and are found to be malicious by Cloudflare. Auto-move will occur according to your configuration.
-
 ### Submission Handling
 
 Cloudflare prioritizes Administrator Submissions for false positives and negatives through the Cloudflare dashboard. This approach enables faster review times and helps Cloudflare proactively identify and correct issues that may affect multiple users improving the overall product experience. It is recommended that administrators review user submissions, identify all related messages, and submit as verified false positive/false negatives via the Cloudflare dashboard. These submissions will be reviewed and used to improve Machine Learning Models, Detections, and Engines in the future.

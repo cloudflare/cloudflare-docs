@@ -59,9 +59,9 @@ Use managed labels to identify endpoints by use case. Cloudflare may automatical
 
 Cloudflare automatically runs risk scans every 24 hours on your saved endpoints. API Shield applies these labels when a scan finds security risks on your endpoints. A corresponding Security Center Insight is also raised when risks are found.
 
-`cf-risk-missing-auth`: Automatically added when all successful requests lack a session identifier. Refer to the table below for more information.
+`cf-risk-missing-auth`: Automatically added when all successful requests lack a session identifier. Refer to [Authentication Posture](/api-shield/security/authentication-posture/#process) for more information.
 
-`cf-risk-mixed-auth`: Automatically added when some successful requests contain a session identifier and some successful requests lack a session identifier. Refer to the table below for more information.
+`cf-risk-mixed-auth`: Automatically added when some successful requests contain a session identifier and some successful requests lack a session identifier. Refer to [Authentication Posture](/api-shield/security/authentication-posture/#process) for more information.
 
 `cf-risk-sensitive`: Automatically added to endpoints when HTTP responses match the WAF's [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset.
 
@@ -81,7 +81,40 @@ Cloudflare automatically runs risk scans every 24 hours on your saved endpoints.
 Cloudflare will only add authentication labels to endpoints with successful response codes. Refer to the below table for more details.
 :::
 
-<Render file="label-methodology" product="api-shield" />
+#### Recommended action
+
+How you address risks to your endpoints will depend on its label(s). The following steps provide you with general guidelines on how to take action on them.
+
+<Steps>
+1. Review risks to endpoints. 
+   
+   View the endpoints labeled as risks and identify if they have been labeled for other risks. 
+
+   For example, endpoints labeled `cf-risk-sensitive` and `cf-risk-missing-auth` or `cf-risk-mixed-auth` may contain sensitive data that is available to unauthenticated users.
+
+   <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   Go to the details pages for endpoints labeled as `cf-risk-missing-auth` or `cf-risk-mixed-auth`, and check for recent changes in the authenticated traffic profile in the last 24 hours and seven days.
+
+2. Review traffic to these labeled endpoints in Security Analytics.
+
+   Check for unexpected traffic sources and note any irregular traffic patterns. 
+
+   :::caution[Filtering]
+   Filtering by risk label includes all traffic to all endpoints labeled with that risk, not only the traffic that prompted Cloudflare to apply the label.
+   :::
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+3. Review your origin's authorization and authentication policies with your development team.
+
+   Speak with your developers or application owners in your organization to understand whether or not all requests to these endpoints should be authenticated. Modify your application to consistently enforce the authentication requirement for all traffic accessing these endpoints. 
+
+	Refer to [Authentication Posture](/api-shield/security/authentication-posture/) for more information.
+   
+</Steps>
+
+---
 
 ## Create a label
 

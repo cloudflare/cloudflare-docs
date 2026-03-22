@@ -7,6 +7,7 @@ export { Icon as AstroIcon } from "astro-icon/components";
 export { default as AnchorHeading } from "./AnchorHeading.astro";
 export { default as AnimatedWorkflowDiagram } from "./AnimatedWorkflowDiagram.astro";
 export { default as APIRequest } from "./APIRequest.astro";
+export { default as AutoconfigDiagram } from "./AutoconfigDiagram.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
 export { default as Checkbox } from "./Checkbox.astro";
 export { default as CompatibilityFlag } from "./CompatibilityFlag.astro";

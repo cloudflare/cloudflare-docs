@@ -39,13 +39,19 @@ To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dn
 
 Once you save the new DNS record, the Cloudflare dashboard will show a Shopify icon next to the CNAME record value. For example:
 
-![](~/assets/images/cloudflare-for-platforms/provider-guides/shopify-dns-entry.png)
+![Cloudflare dashboard showing a CNAME DNS entry for Shopify with a specific Shopify icon](~/assets/images/cloudflare-for-platforms/provider-guides/shopify-dns-entry.png)
 
-:::note
+:::caution[Do not use Always Use HTTPS]
 
-For questions about Shopify setup, refer to their [support guide](https://help.shopify.com/en/manual/domains/add-a-domain/connecting-domains/connect-domain-manual).
+Do not enable the [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) setting in an O2O scenario with Shopify.
+
+This setting forces a redirect on all requests, including the `/.well-known/acme-challenge/` path used for HTTP-01 domain validation. This prevents Shopify from automatically provisioning or renewing SSL certificates via Let's Encrypt for your domain.
+
+Instead, create a [redirect rule](/rules/url-forwarding/single-redirects/create-dashboard/) to enforce HTTPS while excluding the validation path mentioned above.
 
 :::
+
+For questions about Shopify setup, refer to their [support guide](https://help.shopify.com/en/manual/domains/add-a-domain/connecting-domains/connect-domain-manual).
 
 ## Product compatibility
 

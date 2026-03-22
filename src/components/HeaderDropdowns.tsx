@@ -34,7 +34,7 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 	const { refs, floatingStyles, context } = useFloating({
 		open: isOpen,
 		onOpenChange: setIsOpen,
-		middleware: [shift(), offset(5)],
+		middleware: [shift(), offset(8)],
 		whileElementsMounted: autoUpdate,
 	});
 
@@ -51,23 +51,23 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="hover:bg-cl1-white dark:hover:bg-cl1-gray-0 flex cursor-pointer items-center justify-center gap-2 rounded-sm bg-transparent p-2 font-medium hover:shadow-md"
+				className="flex h-9 cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-transparent px-3 text-sm font-medium text-[var(--color-header-text)] transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)]"
 			>
 				{label}
-				<PiCaretDownBold />
+				<PiCaretDownBold className="size-2.5 text-[var(--color-header-text-subtle)]" />
 			</button>
 			{isOpen && (
 				<ul
 					ref={refs.setFloating}
 					style={floatingStyles}
 					{...getFloatingProps()}
-					className="border-cl1-gray-8 bg-cl1-white dark:border-cl1-gray-1 dark:bg-cl1-gray-0 max-w-80 min-w-60 list-none rounded-sm border pl-0 shadow-md"
+					className="max-w-64 min-w-44 list-none rounded-lg border border-[var(--color-header-overlay-line)] bg-[var(--color-header-overlay-bg)] p-1 shadow-[0_4px_16px_var(--color-header-overlay-shadow)]"
 				>
 					{pages.map((page) => (
-						<li key={page.href}>
+						<li key={page.href} className="list-none">
 							<a
 								href={page.href}
-								className="8 hover:bg-cl1-gray-9 dark:hover:bg-cl1-gray-1 block p-3 text-black no-underline"
+								className="block rounded-md px-2.5 py-1.5 text-sm text-[var(--color-header-text)] no-underline transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)]"
 								target={page.href.startsWith("https") ? "_blank" : undefined}
 							>
 								{page.label}
@@ -82,12 +82,12 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 
 export default function HeaderDropdownsComponent() {
 	return (
-		<div className="flex gap-2 leading-6 text-nowrap">
+		<div className="flex items-center gap-0.5 text-nowrap">
 			{links.map(({ label, href }) => (
 				<a
 					key={href}
 					href={href}
-					className="hover:bg-cl1-white dark:hover:bg-cl1-gray-0 flex items-center justify-center rounded-sm p-2 font-medium text-black no-underline hover:shadow-md"
+					className="flex h-9 items-center justify-center rounded-lg px-3 text-sm font-medium text-[var(--color-header-text)] no-underline transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)]"
 				>
 					{label}
 				</a>

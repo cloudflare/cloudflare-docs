@@ -1,0 +1,40 @@
+---
+pcx_content_type: navigation
+title: RtkAiTranscriptions
+description: API reference for RtkAiTranscriptions component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `initialTranscriptions` | `Transcript[]` | ✅ | - | Initial transcriptions |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkAiTranscriptions } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkAiTranscriptions />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkAiTranscriptions } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkAiTranscriptions
+      initialTranscriptions={[]}
+      meeting={meeting}
+    />
+  );
+}
+```
+

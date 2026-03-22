@@ -1,0 +1,13 @@
+id: ktWAct
+name: Randomness Beacon
+
+entry:
+  title: Randomness Beacon
+  url: /randomness-beacon/
+  wrap: true
+  group: Core platform
+
+meta:
+  title: Cloudflare Randomness Beacon docs
+  description: Explore drand, a distributed service providing randomness to applications
+  author: "@cloudflare"

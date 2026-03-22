@@ -105,10 +105,10 @@ To resolve this issue:
 
 ## Private DNS and internal resources are not working
 
-You have configured Gateway to resolve internal hostnames, but users are unable to access them. For example, a user connected to WARP tries to access an internal service like `jira.mycompany.local`, but the DNS query fails.
+You have configured Gateway to resolve internal hostnames, but users are unable to access them. For example, a user connected to the Cloudflare One Client tries to access an internal service like `jira.mycompany.local`, but the DNS query fails.
 
 | Common causes                              | Solution                                                                                                                                                                                                                  |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Missing or incorrect resolver policy       | Go to **Traffic policies** > **Resolver policies**. Create a policy that matches your internal domain suffix and forwards queries to your internal DNS servers' IP addresses.                                             |
-| Split Tunnel excludes the private IP range | If your internal resources are in a private IP range (such as `10.0.0.0/8`), that range must be included in the tunnel. If it is in the Exclude list of your Split Tunnel configuration, WARP will not proxy the traffic. |
+| Split Tunnel excludes the private IP range | If your internal resources are in a private IP range (such as `10.0.0.0/8`), that range must be included in the tunnel. If it is in the Exclude list of your Split Tunnel configuration, the Cloudflare One Client will not proxy the traffic. |
 | Local Domain Fallback misconfiguration     | Use resolver policies for corporate DNS. Only use Local Domain Fallback for domains specific to a user's immediate physical network.                                                                                      |

@@ -6,7 +6,7 @@ sidebar:
 description: Security rules perform security actions on incoming requests that match specified filters.
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Render } from "~/components";
 
 Security rules perform security-related actions on incoming requests that match specified filters. Rules are evaluated and executed in order, from first to last.
 
@@ -60,3 +60,7 @@ To learn more about DDoS protection overrides, refer to the following resources:
 :::note
 You define [overrides for the Network-layer DDoS attack protection managed ruleset](/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/) at the account level.
 :::
+
+## Interaction between different app security features
+
+<Render file="app-security-interoperability" product="waf" />

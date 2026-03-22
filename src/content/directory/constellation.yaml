@@ -1,0 +1,16 @@
+id: URkHcx
+name: Constellation
+
+entry:
+  title: Constellation
+  url: /constellation/
+  group: Developer platform
+  show: false
+
+meta:
+  title: Constellation docs
+  description: Run machine learning models with Cloudflare Workers.
+  author: "@cloudflare"
+
+resources:
+  community: https://community.cloudflare.com/tag/constellation

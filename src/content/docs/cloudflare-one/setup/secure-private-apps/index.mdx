@@ -1,0 +1,50 @@
+---
+pcx_content_type: navigation
+title: Secure private apps
+sidebar:
+  order: 2
+description: Provide browser-based access to internal web applications, SSH servers, and remote desktops without installing software on user devices.
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+Cloudflare Access lets users reach internal applications through a browser without a VPN or client software on their device. You connect your application to Cloudflare using a secure connection called a tunnel, then protect it with policies that control who can access it. For more background, refer to [What is clientless access?](/learning-paths/clientless-access/concepts/what-is-clientless-access/).
+
+How you set this up depends on the type of application you are securing. Choose the scenario that matches your use case:
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Private web application"
+	href="/cloudflare-one/setup/secure-private-apps/private-web-app/"
+	icon="laptop"
+>
+	Connect an internal web application to Cloudflare and control who can access
+	it. Best for applications like company intranets, internal wikis, or admin
+	panels.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Clientless SSH"
+	href="/cloudflare-one/setup/secure-private-apps/clientless-ssh/"
+	icon="seti:shell"
+>
+	Provide in-browser command line access to an internal server without SSH
+	client software on the user's device.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="In-browser remote desktop"
+	href="/cloudflare-one/setup/secure-private-apps/in-browser-rdp/"
+	icon="seti:windows"
+>
+	Provide in-browser remote desktop access to Windows hosts without remote
+	desktop client software on the user's device.
+</LinkTitleCard>
+
+</CardGrid>
+
+:::note
+
+For in-depth guidance on clientless access and advanced configuration, refer to the [Clientless access learning path](/learning-paths/clientless-access/concepts/what-is-clientless-access/).
+:::

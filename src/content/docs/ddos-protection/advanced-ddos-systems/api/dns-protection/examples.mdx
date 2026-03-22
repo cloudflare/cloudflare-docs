@@ -12,12 +12,12 @@ The following sections contain example requests for common API calls. For a list
 
 The following example retrieves the currently configured rules for Advanced DNS Protection.
 
-```bash
+```bash title="Request"
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Example response"
+```json output
 ---
 {
   "result": [
@@ -43,7 +43,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_
 
 The following example creates an Advanced DNS Protection rule with a global scope.
 
-```bash
+```bash title="Request"
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -56,7 +56,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_
 }'
 ```
 
-```json title="Example response"
+```json output
 {
   "result": {
     "id": "<RULE_ID>",
@@ -83,7 +83,7 @@ The following example updates an existing DNS protection rule with ID `{rule_id}
 
 The request body can contain only the fields you want to update (from `mode`, `profile_sensitivity`, `rate_sensitivity`, and `burst_sensitivity`).
 
-```bash
+```bash title="Request"
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_dns_protection/configs/dns_protection/rules/{rule_id}" \
 --header "Authorization: Bearer <API_TOKEN>" \
@@ -95,7 +95,7 @@ curl --request PATCH \
 }'
 ```
 
-```json title="Example response"
+```json output
 {
   "result": {
     "id": "<RULE_ID>",

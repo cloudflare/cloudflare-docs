@@ -135,11 +135,20 @@ For example, here is how you can define two rate limiting configurations for fre
 
 ## Configuration
 
-A rate limiting binding has three settings:
+A rate limiting binding has the following settings:
 
-1. `namespace_id` (number) - a positive integer that uniquely defines this rate limiting configuration - e.g. `namespace_id = "999"`.
-2. `limit` (number) - the limit (number of requests, number of API calls) to be applied. This is incremented when you call the `limit()` function in your Worker.
-3. `period` (seconds) - must be `10` or `60`. The period to measure increments to the `limit` over, in seconds.
+| Setting | Type | Description |
+| --- | --- | --- |
+| `namespace_id` | `string` | A string containing a positive integer that uniquely defines this rate limiting namespace within your Cloudflare account (for example, `"1001"`). Although the value must be a valid integer, it is specified as a string. This is intentional. |
+| `simple` | `object` | The rate limit configuration. `simple` is the only supported type. |
+| `simple.limit` | `number` | The number of allowed requests (or calls to `limit()`) within the given `period`. |
+| `simple.period` | `number` | The duration of the rate limit window, in seconds. Must be either `10` or `60`. |
+
+:::note
+Two rate limiting bindings that share the same `namespace_id` — even across different Workers on the same account — share the same rate limit counters for a given key. This is intentional and allows you to enforce a single rate limit across multiple Workers.
+
+If you do not want to share rate limit state between bindings, use a unique `namespace_id` for each binding.
+:::
 
 For example, to apply a rate limit of 1500 requests per minute, you would define a rate limiting configuration as follows:
 
@@ -207,6 +216,13 @@ You are not waiting on a network request. You can use the Rate Limiting API with
 The above also means that the Rate Limiting API is permissive, eventually consistent, and intentionally designed to not be used as an accurate accounting system.
 
 For example, if many requests come in to your Worker in a single Cloudflare location, all rate limited on the same key, the [isolate](/workers/reference/how-workers-works) that serves each request will check against its locally cached value of the rate limit. Very quickly, but not immediately, these requests will count towards the rate limit within that Cloudflare location.
+
+## Monitoring
+
+Rate limiting bindings are not currently visible in the Cloudflare dashboard. To monitor rate-limited requests from your Worker:
+
+* **[Workers Observability](/workers/observability/)** — Use [Workers Logs](/workers/observability/logs/workers-logs/) and [Traces](/workers/observability/traces/) to observe HTTP 429 responses returned by your Worker when rate limits are exceeded.
+* **[Workers Analytics Engine](/analytics/analytics-engine/)** — Add an Analytics Engine binding to your Worker and emit custom data points (for example, a `rate_limited` event) when `limit()` returns `{ success: false }`. This lets you build dashboards and query rate limiting metrics over time.
 
 ## Examples
 

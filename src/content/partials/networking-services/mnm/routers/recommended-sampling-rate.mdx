@@ -2,11 +2,13 @@
 {}
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
-Your router <GlossaryTooltip term="sampling">samples</GlossaryTooltip> the traffic that passes through it to create <GlossaryTooltip term="NetFlow">NetFlow</GlossaryTooltip> or <GlossaryTooltip term="sFlow">sFlow</GlossaryTooltip> data. Lower sampling rates increase network flow data accuracy but require more router memory and CPU to generate the data. Higher sampling rates maintain accuracy when your network receives a larger amount of traffic.
+Your router <GlossaryTooltip term="sampling">samples</GlossaryTooltip> the traffic that passes through it to create <GlossaryTooltip term="NetFlow">NetFlow</GlossaryTooltip> or <GlossaryTooltip term="sFlow">sFlow</GlossaryTooltip> data. The sampling rate determines how frequently your router captures a packet — for example, a rate of 1 in 100 means your router captures one out of every 100 packets.
 
-The table below provides general recommendations for sampling rates depending on your traffic volume. Test different sampling rates to find the best option for your network.
+Sampling more frequently (lower ratios like 1 in 100) produces more accurate flow data but uses more router memory and CPU. Sampling less frequently (higher ratios like 1 in 4,000) reduces resource usage and is suitable for networks with larger traffic volumes.
+
+The following table provides general recommendations based on your traffic volume. Test different sampling rates to find the best option for your network.
 
 | Traffic Volume | Router sampling recommendation              |
 | -------------- | ------------------------------------------- |
