@@ -30,9 +30,13 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
         "role": "user"
       }
     ],
-    "filters": {
-      "folder": "llama/logistics/",
-      "timestamp": { "$gte": 1735689600 }
+    "ai_search_options": {
+      "retrieval": {
+        "filters": {
+          "folder": "llama/logistics/",
+          "timestamp": { "$gte": 1735689600 }
+        }
+      }
     }
   }'
 ```
@@ -67,13 +71,25 @@ The REST API uses Vectorize-style metadata filtering. Filters are JSON objects w
 When you provide a direct value without an operator, it is treated as an equality check:
 
 ```json
-{ "folder": "customer-a/" }
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": "customer-a/" }
+		}
+	}
+}
 ```
 
 This is equivalent to:
 
 ```json
-{ "folder": { "$eq": "customer-a/" } }
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": { "$eq": "customer-a/" } }
+		}
+	}
+}
 ```
 
 #### Range queries
@@ -81,7 +97,13 @@ This is equivalent to:
 Combine upper and lower bound operators to filter by ranges:
 
 ```json
-{ "timestamp": { "$gte": 1735689600, "$lt": 1735900000 } }
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "timestamp": { "$gte": 1735689600, "$lt": 1735900000 } }
+		}
+	}
+}
 ```
 
 #### Multiple conditions (implicit AND)
@@ -90,8 +112,14 @@ When you specify multiple keys, all conditions must match:
 
 ```json
 {
-	"folder": "llama/logistics/",
-	"timestamp": { "$gte": 1735689600 }
+	"ai_search_options": {
+		"retrieval": {
+			"filters": {
+				"folder": "llama/logistics/",
+				"timestamp": { "$gte": 1735689600 }
+			}
+		}
+	}
 }
 ```
 
@@ -100,7 +128,13 @@ When you specify multiple keys, all conditions must match:
 Match any value in an array:
 
 ```json
-{ "folder": { "$in": ["customer-a/", "customer-b/"] } }
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": { "$in": ["customer-a/", "customer-b/"] } }
+		}
+	}
+}
 ```
 
 ### "Starts with" filter for folders
@@ -122,7 +156,13 @@ Using `{ "folder": "customer-a/" }` only matches files directly in that folder (
 To match all files starting with `customer-a/`, use a range query:
 
 ```json
-{ "folder": { "$gte": "customer-a/", "$lt": "customer-a0" } }
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": { "$gte": "customer-a/", "$lt": "customer-a0" } }
+		}
+	}
+}
 ```
 
 This works because:

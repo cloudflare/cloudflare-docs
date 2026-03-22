@@ -260,7 +260,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
 
 ## Filter format
 
-The new AI Search REST API uses Vectorize-style metadata filtering, which differs from the AutoRAG API format. For full documentation of the old format, refer to [AutoRAG API filter format](/ai-search/autorag-filter-format/).
+The new AI Search REST API uses Vectorize-style metadata filtering, which differs from the AutoRAG API format. Filters are now nested under `ai_search_options.retrieval.filters` in the request body. For full documentation of the old format, refer to [AutoRAG API filter format](/ai-search/autorag-filter-format/).
 
 ### Operator mapping
 
@@ -292,7 +292,13 @@ filters: {
 **After (AI Search API):**
 
 ```json
-{ "folder": "customer-a/" }
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": "customer-a/" }
+		}
+	}
+}
 ```
 
 #### Compound filter (AND)
@@ -313,8 +319,14 @@ filters: {
 
 ```json
 {
-	"folder": "customer-a/",
-	"timestamp": { "$gte": 1735689600 }
+	"ai_search_options": {
+		"retrieval": {
+			"filters": {
+				"folder": "customer-a/",
+				"timestamp": { "$gte": 1735689600 }
+			}
+		}
+	}
 }
 ```
 
@@ -335,7 +347,13 @@ filters: {
 **After (AI Search API):**
 
 ```json
-{ "folder": { "$gte": "customer-a/", "$lt": "customer-a0" } }
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": { "$gte": "customer-a/", "$lt": "customer-a0" } }
+		}
+	}
+}
 ```
 
 ## API references

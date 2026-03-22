@@ -40,13 +40,15 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
         "role": "user"
       }
     ],
-    "filters": {
-      "folder": "customer-a/contracts/"
+    "ai_search_options": {
+      "retrieval": {
+        "filters": {
+          "folder": { "$gte": "customer-a/", "$lt": "customer-a0" }
+        }
+      }
     }
   }'
 ```
-
-To filter across multiple folders, use the `$in` operator. For date-based filtering, use range operators. Refer to [Metadata filtering](/ai-search/configuration/metadata/) for more examples.
 
 ## Tip: Use "starts with" filter
 
@@ -64,8 +66,12 @@ To achieve this ["starts with"](/ai-search/configuration/metadata/#starts-with-f
 
 ```json
 {
-	"filters": {
-		"folder": { "$gte": "customer-a/", "$lt": "customer-a0" }
+	"ai_search_options": {
+		"retrieval": {
+			"filters": {
+				"folder": { "$gte": "customer-a/", "$lt": "customer-a0" }
+			}
+		}
 	}
 }
 ```
