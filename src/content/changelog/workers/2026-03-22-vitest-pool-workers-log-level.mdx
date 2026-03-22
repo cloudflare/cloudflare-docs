@@ -1,0 +1,28 @@
+---
+title: Configurable log level for @cloudflare/vitest-pool-workers
+description: You can now control the verbosity of pool log messages when using the Workers Vitest integration.
+products:
+  - workers
+date: 2026-03-22
+---
+
+The [`@cloudflare/vitest-pool-workers`](/workers/testing/vitest-integration/) package now supports a `logLevel` option in `cloudflareTest()`, letting you control the verbosity of `[vpw:*]` pool log messages.
+
+Previously, the pool always logged at the `verbose` level. The new default is `"info"`, which reduces noise during test runs. You can set `logLevel` to `"verbose"` or `"debug"` for detailed debugging output, or `"none"` to suppress all pool messages.
+
+```ts
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			logLevel: "warn",
+		}),
+	],
+});
+```
+
+Accepted values are `"none"`, `"error"`, `"warn"`, `"info"`, `"debug"`, and `"verbose"`.
+
+See the [configuration reference](/workers/testing/vitest-integration/configuration/#cloudflaretestoptions) for full details.

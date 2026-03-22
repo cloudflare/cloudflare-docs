@@ -121,6 +121,9 @@ Options passed directly to `cloudflareTest()`.
 - `main`: string optional
   - Entry point to Worker run in the same isolate/context as tests. This option is required to use Durable Objects without an explicit `scriptName` if classes are defined in the same Worker. This file goes through Vite transforms and can be TypeScript. Note that `import module from "<path-to-main>"` inside tests gives exactly the same `module` instance as is used internally for `exports` and Durable Object bindings. If `wrangler.configPath` is defined and this option is not, it will be read from the `main` field in that configuration file.
 
+- `logLevel`: `"none" | "error" | "warn" | "info" | "debug" | "verbose"` optional, defaults to `"info"`
+  - Controls the verbosity of `[vpw:*]` pool log messages. Set to `"verbose"` or `"debug"` for detailed debugging output, or `"none"` to suppress all pool messages.
+
 - `miniflare`: `SourcelessWorkerOptions & { workers?: WorkerOptions\[]; }` optional
   - Use this to provide configuration information that is typically stored within the [Wrangler configuration file](/workers/wrangler/configuration/), such as [bindings](/workers/runtime-apis/bindings/), [compatibility dates](/workers/configuration/compatibility-dates/), and [compatibility flags](/workers/configuration/compatibility-flags/). The `WorkerOptions` interface is defined [here](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions). Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.
 

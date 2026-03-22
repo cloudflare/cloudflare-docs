@@ -85,3 +85,22 @@ To setup VS Code for breakpoint debugging in your Worker tests, create a `.vscod
 ```
 
 Select **Debug Workers tests** at the top of the **Run & Debug** panel to open an inspector with Vitest and attach a debugger to the Workers runtime. Then you can add breakpoints to your test files and start debugging.
+
+## Increase log verbosity
+
+If your tests are failing or behaving unexpectedly, increasing the pool log level can surface useful diagnostic information. Set `logLevel` to `"verbose"` or `"debug"` in your Vitest configuration:
+
+```ts
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			logLevel: "verbose",
+		}),
+	],
+});
+```
+
+The default log level is `"info"`. See the [configuration reference](/workers/testing/vitest-integration/configuration/#cloudflaretestoptions) for all accepted values.
