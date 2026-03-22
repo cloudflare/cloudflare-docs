@@ -1,0 +1,10 @@
+---
+id: 4b75ad2aa58700602e94b148827687a2
+url: set-up-cf-tunnel
+title: Set up Cloudflare Tunnel
+description: "Set up Cloudflare Tunnel to create a secure link between your private environment and the Cloudflare edge."
+products:
+  - cloudflare-one
+pcx_content_type: video
+thumbnail:
+  url: https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/dedf4cb4-40a2-42ff-9d6b-c3041b893400/public

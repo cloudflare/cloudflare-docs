@@ -1,0 +1,36 @@
+---
+pcx_content_type: navigation
+title: rtk-pinned-message-selector
+description: API reference for rtk-pinned-message-selector component (Web Components (HTML) Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-pinned-message-selector></rtk-pinned-message-selector>
+```
+
+### With Properties
+
+```html
+<rtk-pinned-message-selector>
+</rtk-pinned-message-selector>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-pinned-message-selector");
+
+  el.meeting= meeting
+</script>
+```

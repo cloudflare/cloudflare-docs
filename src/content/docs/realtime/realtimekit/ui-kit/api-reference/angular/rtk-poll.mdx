@@ -1,0 +1,38 @@
+---
+pcx_content_type: navigation
+title: rtk-poll
+description: API reference for rtk-poll component (Angular Library)
+---
+A poll component.
+ Shows a poll where a user can vote.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `permissions` | `RTKPermissionsPreset` | ✅ | - | Permissions Object |
+| `poll` | `Poll` | ✅ | - | Poll |
+| `self` | `string` | ✅ | - | Self ID |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-poll></rtk-poll>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-poll
+ [permissions]="rtkpermissionspreset"
+ [poll]="poll"
+ self="example">
+</rtk-poll>
+```
+

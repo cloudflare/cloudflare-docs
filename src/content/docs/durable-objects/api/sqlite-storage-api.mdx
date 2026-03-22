@@ -130,7 +130,7 @@ class MyDurableObject(DurableObject):
 </Tabs>
 
 - SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) and will return an error if called on Durable Object classes with a KV-storage backend.
-- When writing data, every row update of an index counts as an additional row. However, indexes may be beneficial for read-heavy use cases. Refer to [Index for SQLite Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#index-for-sqlite-durable-objects).
+- When writing data, every row update of an index counts as an additional row. However, indexes may be beneficial for read-heavy use cases. Refer to [Index for SQLite Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#indexes-in-sqlite).
 - Writing data to [SQLite virtual tables](https://www.sqlite.org/vtab.html) also counts towards rows written.
 
 <Render file="d1-do-supported-sqlite-extensions" product="d1" params={{ product: "Durable Objects support" }}/>
@@ -278,9 +278,9 @@ This method returns a special bookmark representing the point in time immediatel
 <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-let now = new Date();
+const DAY_MS = 24*60*60*1000;
 // restore to 2 days ago
-let bookmark = ctx.storage.getBookmarkForTime(now - 2);
+let bookmark = ctx.storage.getBookmarkForTime(Date.now() - 2 * DAYS_MS);
 ctx.storage.onNextSessionRestoreBookmark(bookmark);
 ```
 

@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Connect a private hostname
+tags:
+  - Private networks
 sidebar:
   order: 2
   badge:
@@ -34,9 +36,9 @@ Private hostname routing only works for applications connected with `cloudflared
 | Connector                                                                                  | Compatibility | Minimum version |
 | ------------------------------------------------------------------------------------------ | ------------- | -- |
 | [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/)                        | ✅            | 2025.7.0 |
-| [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/)              | ❌             | |
+| [Peer-to-peer](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/)              | ❌             | |
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌             | |
-| [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                                             | ❌             | |
+| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                                             | ❌             | |
 
 ## Connect a private hostname
 
@@ -52,9 +54,9 @@ To connect to private hostnames, your devices must forward the following traffic
 
 Configuration steps vary depending on your [device on-ramp](#device-connectivity):
 
-<Details header="WARP clients">
+<Details header="Cloudflare One Clients">
 1. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
-2. In [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
+2. In [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
 </Details>
 
 <Details header="WARP Connector">
@@ -64,10 +66,10 @@ Configuration steps vary depending on your [device on-ramp](#device-connectivity
 
 </Details>
 
-<Details header="Magic WAN">
+<Details header="Cloudflare WAN">
 
-1. Ensure that the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above [route through Magic WAN](/magic-wan/configuration/manually/how-to/configure-routes/) to Cloudflare.
-2. [Point the DNS resolver](/magic-wan/zero-trust/cloudflare-gateway/#dns-filtering) for your Magic WAN network to Cloudflare Gateway.
+1. Ensure that the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above [route through Cloudflare WAN](/cloudflare-wan/configuration/manually/how-to/configure-routes/) to Cloudflare.
+2. [Point the DNS resolver](/cloudflare-wan/zero-trust/cloudflare-gateway/#dns-filtering) for your Cloudflare WAN network to Cloudflare Gateway.
 
 </Details>
 
@@ -77,17 +79,10 @@ Configuration steps vary depending on your [device on-ramp](#device-connectivity
 
 9. In the **Hostname routes** tab, enter the fully qualified domain name (FQDN) that represents your application (for example, `wiki.internal.local`).
 
-	<Details header="Hostname format restrictions">
-			- **Character limit:** Must be less than 255 characters.
-			- **Supported wildcards:** A single wildcard (`*`) is allowed, and it must represent a full DNS label.
-						Examples: `*.internal.local`, `foo.*.internal.local`
-			- **Unsupported wildcards:** The following wildcard formats are not supported:
-					- Partial wildcards such as `*-dev.internal.local` or `dev-*.internal.local`.
-					- Wildcards in the middle of a label, such as `foo*bar.internal.local`.
-					- Multiple wildcards in the hostname, such as `*.*.internal.local`.
-			- **Wildcard trimming**: Leading wildcards (`*`) are trimmed off and an implicit dot (`.`) is assumed. For example, `*.internal.local` is saved as `internal.local` but will match all subdomains at the wildcard level (covers `foo.internal.local` but not `foo.bar.internal.local`).
-			- **Dot trimming:** Leading and ending dots (`.`) are allowed but trimmed off.
-	</Details>
+    <Render
+      file="tunnel/hostname-format-restrictions"
+      product="cloudflare-one"
+    />
 
 10. Select **Complete setup**.
 
@@ -103,25 +98,11 @@ If the machine running `cloudflared` can already resolve `wiki.internal.local` t
 
 #### Scenario B: Use a specific private DNS server (Advanced)
 
-If you need `cloudflared` to use a specific internal DNS server that is different from the host's default resolver (for example, if you are routing DNS traffic through a separate tunnel for split-horizon DNS), you must explicitly connect that DNS server to Cloudflare via an [IP/CIDR route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/). You will also need to configure a [Gateway resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) to route queries to this specific private DNS server.
-
-1.  To create an IP/CIDR route for the DNS server:
-    1. Go to **Networks** > **Routes** > **CIDR**.
-    2. Select **Add CIDR route**.
-    3. Enter the private IP address of your internal DNS resolver.
-    4. Select the Cloudflare Tunnel that connects to the network where this DNS server resides.
-    5. Select **Create**.
-
-2.  To create a resolver policy:
-    1. Go to **Gateway** > **Resolver policies**.
-    2. Select **Create a policy**.
-    3. Create an expression that matches the private hostname:
-       | Selector | Operator | Value                  |
-       | -------- | -------- | ---------------------- |
-       | Host     | in       | `wiki.internal.local`  |
-    4. Under **Configure custom DNS resolvers**, enter the private IP address of your internal DNS server.
-    5. From the dropdown menu, select the `- Private` routing option and the [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) assigned to the tunnel you selected in the previous step.
-    6. Select **Create policy**.
+<Render
+  file="tunnel/hostname-route-dns-advanced"
+  product="cloudflare-one"
+  params={{ hostname: "wiki.internal.local" }}
+/>
 
 ### 3. (Recommended) Filter network traffic with Gateway
 
@@ -167,7 +148,7 @@ If you prefer to secure the application using a traditional firewall model, you 
   product="cloudflare-one"
 />
 
-Additionally, SNI selectors will only apply to WARP client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector instead of SNI.
+Additionally, SNI selectors will only apply to Cloudflare One Client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector instead of SNI.
 :::
 
 ### 4. Test the connection
@@ -176,9 +157,9 @@ End users can now reach the application by going to its private hostname. For ex
 
 #### Troubleshooting
 
-You can run the following tests to check if private hostname routing is properly configured.
+If you cannot connect, verify the following:
 
-1. From the WARP device, confirm that you can successfully resolve the private hostname:
+1. **Confirm DNS resolution** - From the device, confirm that you can successfully resolve the private hostname:
 
     ```sh
     nslookup wiki.internal.local
@@ -193,11 +174,15 @@ You can run the following tests to check if private hostname routing is properly
     Address: 100.80.200.48
     ```
 
-    The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
+    The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
 
-2. When you connect to the application using its private hostname, the device should make a connection to the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>:
+2. **Check Gateway logs** - Review your [Gateway network logs](/cloudflare-one/insights/logs/gateway-logs/) to see if the connection is being blocked by a policy.
+
+3. **Verify tunnel status** - Confirm that your tunnel is healthy and connected by checking [tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/).
+
+4. **Test connectivity to initial resolved IP** - When you connect to the application using its private hostname, the device should make a connection to the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>:
     ```sh
-    curl -v4 [http://wiki.internal.local](http://wiki.internal.local)
+    curl -v4 http://wiki.internal.local
     ```
     ```sh output
     * Trying 100.80.200.48:80...
@@ -205,7 +190,7 @@ You can run the following tests to check if private hostname routing is properly
     ...
     ```
 
-    If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the application's private IP.
+    If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the application's private IP.
 
 ## Limitations
 

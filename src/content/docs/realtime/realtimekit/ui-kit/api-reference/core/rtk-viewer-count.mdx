@@ -1,0 +1,40 @@
+---
+pcx_content_type: navigation
+title: rtk-viewer-count
+description: API reference for rtk-viewer-count component (Web Components (HTML) Library)
+---
+A component which shows count of total joined participants in a meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ViewerCountVariant` | ✅ | - | Viewer count variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-viewer-count></rtk-viewer-count>
+```
+
+### With Properties
+
+```html
+<rtk-viewer-count
+ variant="primary">
+</rtk-viewer-count>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-viewer-count");
+
+  el.meeting= meeting
+</script>
+```

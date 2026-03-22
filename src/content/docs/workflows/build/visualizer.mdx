@@ -1,0 +1,25 @@
+---
+title: Visualize Workflows
+pcx_content_type: concept
+sidebar:
+  badge:
+    text: Beta
+  order: 12
+---
+
+View a visual representation of your parsed Workflow code as a diagram on the Cloudflare dashboard.
+
+The diagram illustrates your sequenced & parallel steps, conditionals, loops, and nested logic. To see the Workflow at a high level, view the diagram with loops and conditionals collapsed, or expand for a more detailed view.
+
+![Example diagram](~/assets/images/changelog/workflows/2026-02-03-workflows-diagram.png)
+
+Workflow diagrams are currently in beta for all Typescript and Javascript Workers. View your Workflows in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/workflows) to see their diagrams.
+
+:::caution
+
+Note that this feature is currently in beta. 
+
+- Workflows that use a non-default bundler may display unexpected behavior.
+- Python Workflows are not currently supported.
+
+:::

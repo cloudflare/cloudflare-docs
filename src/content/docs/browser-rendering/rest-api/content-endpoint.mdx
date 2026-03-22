@@ -9,6 +9,8 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/content` endpoint instructs the browser to navigate to a website and capture the fully rendered HTML of a page, including the `head` section, after JavaScript execution. This is ideal for capturing content from JavaScript-heavy or interactive websites.
 
+<Render file="rest-api-token-permissions" product="browser-rendering" />
+
 ## Endpoint
 
 ```txt
@@ -82,6 +84,11 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 ```
 
 Many more options exist, like setting HTTP headers using `setExtraHTTPHeaders`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/content/methods/create/) for all available parameters.
+
+<Render
+  file="javascript-heavy-pages"
+  product="browser-rendering"
+/>
 
 <Render
   file="setting-custom-user-agent"

@@ -5,35 +5,49 @@ sidebar:
   order: 4
 ---
 
-import { Tabs, TabItem, Steps, Render } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 This guide explains how to use Cloudflare RealtimeKit SDKs to build fully custom real-time video UIs.
 
-:::note[Prerequisites]
-This page builds upon the [Initialize SDK](/realtime/realtimekit/core/) and [Render Default Meeting UI](/realtime/realtimekit/ui-kit/) & [UI Kit States](/realtime/realtimekit/ui-kit/meeting-lifecycle/) guides. Make sure you've read those first.
+## Prerequisites
+
+This page builds upon the [Initialize SDK](/realtime/realtimekit/core/) and [Render Default Meeting UI](/realtime/realtimekit/ui-kit/) & [UI Kit States](/realtime/realtimekit/ui-kit/state-management/) guides. Make sure you've read those first.
 
 The code examples on this page assume you've already imported the necessary packages and initialized the SDK. We won't repeat those setup steps here for brevity.
-:::
 
-<Render
-	file="realtimekit/common/create-your-own-ui-examples"
-	product="realtime"
-/>
-
-### Building Your Own UI, With UI Kit
+## Building Your Own UI, With UI Kit
 
 If default meeting component is not enough, and you need more control over layout or behavior, use [UI Kit components](/realtime/realtimekit/ui-kit/component-library/) to build a custom interface. The UI Kit provides pre-built components that sit on top of the Core SDK, letting you mix and match pieces while saving time compared to building from scratch.
 
 Building a custom UI requires managing participant audio, notifications, dialogs, component layout, and screen transitions yourself.
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-Similar to `rtk-meeting`, `rtk-ui-provider`, another ui-kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/meeting-lifecycle/) and syncs them with the UI Kit components.
+<RTKSDKSelector />
+
+<RTKCodeSnippet id="web-web-components">
+Similar to `rtk-meeting`, `rtk-ui-provider`, another ui-kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/state-management/) and syncs them with the UI Kit components.
 
 Unlike `rtk-meeting`, `rtk-ui-provider` allows you to pass any child components to it, if any one of the child components is a RealtimeKit component starting with `rtk-`, `rtk-ui-provider` will coordinate with the RealtimeKit component to sync the states.
 
-### Example Code
+</RTKCodeSnippet>
 
+<RTKCodeSnippet id="web-react">
+Similar to `RtkMeeting`, `RtkUiProvider`, another ui-kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/state-management/) and syncs them with the UI Kit components.
+
+Unlike `RtkMeeting`, `RtkUiProvider` allows you to pass any child components to it. If any one of the child components is a RealtimeKit component starting with `Rtk`, `RtkUiProvider` will coordinate with the RealtimeKit component to sync the states.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+Similar to `rtk-meeting`, `rtk-ui-provider`, another ui-kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/state-management/) and syncs them with the UI Kit components.
+
+Unlike `rtk-meeting`, `rtk-ui-provider` allows you to pass any child components to it, if any one of the child components is a RealtimeKit component starting with `rtk-`, `rtk-ui-provider` will coordinate with the RealtimeKit component to sync the states.
+
+</RTKCodeSnippet>
+
+## Example Code
+
+<RTKCodeSnippet id="web-web-components">
 ```html
 <!DOCTYPE html>
 <html>
@@ -45,43 +59,43 @@ Unlike `rtk-meeting`, `rtk-ui-provider` allows you to pass any child components 
 		<script src="https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/browser.js"></script>
 	</head>
 
-	<body style="margin: 0;">
-		<rtk-ui-provider
-			id="rtk-ui-provider"
-			style="display: flex; flex-direction: column; height: 100vh; margin: 0;"
-		>
-			<div
-				id="meeting-container"
-				style="display: flex; flex-direction: column; flex: 1; flex-grow: 1; flex-shrink: 1;"
-			>
-				Meeting will render here...
-			</div>
-			<rtk-participants-audio></rtk-participants-audio>
-			<rtk-dialog-manager></rtk-dialog-manager>
-			<rtk-notifications></rtk-notifications>
-		</rtk-ui-provider>
-		<script type="module">
-			async function initializeMeeting() {
-				let currentState = "idle";
+    <body style="margin: 0;">
+    	<rtk-ui-provider
+    		id="rtk-ui-provider"
+    		style="display: flex; flex-direction: column; height: 100vh; margin: 0;"
+    	>
+    		<div
+    			id="meeting-container"
+    			style="display: flex; flex-direction: column; flex: 1; flex-grow: 1; flex-shrink: 1;"
+    		>
+    			Meeting will render here...
+    		</div>
+    		<rtk-participants-audio></rtk-participants-audio>
+    		<rtk-dialog-manager></rtk-dialog-manager>
+    		<rtk-notifications></rtk-notifications>
+    	</rtk-ui-provider>
+    	<script type="module">
+    		async function initializeMeeting() {
+    			let currentState = "idle";
 
-				const meeting = await RealtimeKitClient.init({
-					authToken: "participant_auth_token",
-				});
+    			const meeting = await RealtimeKitClient.init({
+    				authToken: "participant_auth_token",
+    			});
 
-				function renderSetupScreen() {
-					document.querySelector("#meeting-container").innerHTML = `
+    			function renderSetupScreen() {
+    				document.querySelector("#meeting-container").innerHTML = `
                     <rtk-setup-screen></rtk-setup-screen>
                 `;
-				}
+    			}
 
-				function renderWaitingScreen() {
-					document.querySelector("#meeting-container").innerHTML = `
+    			function renderWaitingScreen() {
+    				document.querySelector("#meeting-container").innerHTML = `
                     <rtk-waiting-screen></rtk-waiting-screen>
                 `;
-				}
+    			}
 
-				function renderJoinedScreen() {
-					document.querySelector("#meeting-container").innerHTML = `
+    			function renderJoinedScreen() {
+    				document.querySelector("#meeting-container").innerHTML = `
                     <rtk-header style="display: flex; justify-content: space-between;"></rtk-header>
                     <rtk-stage style="flex: 1; flex-grow: 1; flex-shrink: 1;">
                         <rtk-grid></rtk-grid>
@@ -89,71 +103,74 @@ Unlike `rtk-meeting`, `rtk-ui-provider` allows you to pass any child components 
                     </rtk-stage>
                     <rtk-controlbar style="display: flex; justify-content: space-between;"></rtk-controlbar>
                 `;
-				}
+    			}
 
-				function renderEndedScreen() {
-					document.querySelector("#meeting-container").innerHTML = `
+    			function renderEndedScreen() {
+    				document.querySelector("#meeting-container").innerHTML = `
                     <rtk-ended-screen></rtk-ended-screen>
                 `;
-				}
+    			}
 
-				// Listen for state updates from rtk-ui-provider
-				document
-					.querySelector("rtk-ui-provider")
-					.addEventListener("rtkStatesUpdate", (event) => {
-						// Store states to update your custom UI
-						const states = event.detail;
+    			// Listen for state updates from rtk-ui-provider
+    			document
+    				.querySelector("rtk-ui-provider")
+    				.addEventListener("rtkStatesUpdate", (event) => {
+    					// Store states to update your custom UI
+    					const states = event.detail;
 
-						if (states.meeting === "idle" && currentState !== "idle") {
-							currentState = "idle";
-							document
-								.querySelector("rtk-ui-provider")
-								.querySelector("#meeting-container").innerHTML =
-								"Meeting is loading...";
-						} else if (states.meeting === "setup" && currentState !== "setup") {
-							currentState = "setup";
-							renderSetupScreen();
-						} else if (
-							states.meeting === "waiting" &&
-							currentState !== "waiting"
-						) {
-							currentState = "waiting";
-							renderWaitingScreen();
-						} else if (
-							states.meeting === "joined" &&
-							currentState !== "joined"
-						) {
-							currentState = "joined";
-							renderJoinedScreen();
-						} else if (states.meeting === "ended" && currentState !== "ended") {
-							currentState = "ended";
-							renderEndedScreen();
-						}
+    					if (states.meeting === "idle" && currentState !== "idle") {
+    						currentState = "idle";
+    						document
+    							.querySelector("rtk-ui-provider")
+    							.querySelector("#meeting-container").innerHTML =
+    							"Meeting is loading...";
+    					} else if (states.meeting === "setup" && currentState !== "setup") {
+    						currentState = "setup";
+    						renderSetupScreen();
+    					} else if (
+    						states.meeting === "waiting" &&
+    						currentState !== "waiting"
+    					) {
+    						currentState = "waiting";
+    						renderWaitingScreen();
+    					} else if (
+    						states.meeting === "joined" &&
+    						currentState !== "joined"
+    					) {
+    						currentState = "joined";
+    						renderJoinedScreen();
+    					} else if (states.meeting === "ended" && currentState !== "ended") {
+    						currentState = "ended";
+    						renderEndedScreen();
+    					}
 
-						const sidebarComponent = document
-							.querySelector("rtk-ui-provider")
-							.querySelector("#meeting-container")
-							.querySelector("rtk-sidebar");
-						if (sidebarComponent) {
-							if (states.activeSidebar) {
-								sidebarComponent.style.display = "block";
-							} else {
-								sidebarComponent.style.display = "none";
-							}
-						}
-					});
+    					const sidebarComponent = document
+    						.querySelector("rtk-ui-provider")
+    						.querySelector("#meeting-container")
+    						.querySelector("rtk-sidebar");
+    					if (sidebarComponent) {
+    						if (states.activeSidebar) {
+    							sidebarComponent.style.display = "block";
+    						} else {
+    							sidebarComponent.style.display = "none";
+    						}
+    					}
+    				});
 
-				document.querySelector("rtk-ui-provider").showSetupScreen = true;
-				document.querySelector("rtk-ui-provider").meeting = meeting;
-			}
-			initializeMeeting();
-		</script>
-	</body>
+    			document.querySelector("rtk-ui-provider").showSetupScreen = true;
+    			document.querySelector("rtk-ui-provider").meeting = meeting;
+    		}
+    		initializeMeeting();
+    	</script>
+    </body>
+
 </html>
 ```
 
 :::note
-It is advised to always use `rtk-ui-provider` to render a custom UI. Without `rtk-ui-provider`, you will have to set props, such as `meeting`, to all the UI Kit components manually.
+It is advised to always use `rtk-ui-provider` to render a custom UI.
+Without `rtk-ui-provider`, you will have to set props, such as `meeting`, to all
+the UI Kit components manually.
 
 `rtk-ui-provider` helps you go from
 
@@ -195,13 +212,9 @@ Please note that you will need to manage the CSS for aligning these components, 
 You must include `rtk-notifications`, `rtk-participants-audio`, and `rtk-dialog-manager`. If you leave them out, features like settings toggles and notifications won’t work, and you won’t hear other participants in the session.
 :::
 
-</TabItem>
-<TabItem label="React">
-Similar to `RtkMeeting`, `RtkUiProvider`, another ui-kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/meeting-lifecycle/) and syncs them with the UI Kit components.
+</RTKCodeSnippet>
 
-Unlike `RtkMeeting`, `RtkUiProvider` allows you to pass any child components to it. If any one of the child components is a RealtimeKit component starting with `Rtk`, `RtkUiProvider` will coordinate with the RealtimeKit component to sync the states.
-
-### Example Code
+<RTKCodeSnippet id="web-react">
 
 ```tsx
 import {
@@ -272,26 +285,26 @@ function MeetingContainer() {
 	};
 
 	// Listen for state updates from RtkUiProvider
-	const handleStatesUpdate = (event: {detail: States}) => {
+	const handleStatesUpdate = (event: { detail: States }) => {
 		const meetingState = event.detail.meeting;
 		const states = event.detail;
 
 		// Store states to update your custom UI
 		if (meetingState === "idle" && currentState !== "idle") {
-		setCurrentState("idle");
+			setCurrentState("idle");
 		} else if (meetingState === "setup" && currentState !== "setup") {
-		setCurrentState("setup");
+			setCurrentState("setup");
 		} else if (meetingState === "waiting" && currentState !== "waiting") {
-		setCurrentState("waiting");
+			setCurrentState("waiting");
 		} else if (meetingState === "joined" && currentState !== "joined") {
-		setCurrentState("joined");
+			setCurrentState("joined");
 		} else if (meetingState === "ended" && currentState !== "ended") {
-		setCurrentState("ended");
+			setCurrentState("ended");
 		}
 
 		// Update sidebar visibility based on state
 		if (states.activeSidebar !== undefined) {
-		setShowSidebar(states.activeSidebar);
+			setShowSidebar(states.activeSidebar);
 		}
 	};
 
@@ -338,6 +351,7 @@ function App() {
 ```
 
 :::note
+
 It is advised to always use `RtkUiProvider` to render a custom UI. Without `RtkUiProvider`, you will have to set props, such as `meeting`, to all the UI Kit components manually.
 
 `RtkUiProvider` helps you go from
@@ -379,5 +393,223 @@ Please note that you will need to manage the CSS for aligning these components, 
 You must include `RtkNotifications`, `RtkParticipantsAudio`, and `RtkDialogManager`. If you leave them out, features like settings toggles and notifications won't work, and you won't hear other participants in the session.
 :::
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+In your app.module.ts, import the RealtimeKitComponentsModule along with all the custom modules you have built using the component library (example shown below).
+
+```typescript title="app.module.ts"
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { FormsModule } from "@angular/forms";
+
+import { AppComponent } from "./app.component";
+import { CustomRtkMeetingComponent } from "./components/custom-rtk-meeting.component";
+import { SetupScreenComponent } from "./components/setup-screen.component";
+import { InMeetingComponent } from "./components/in-meeting.component";
+import { MeetingHeaderComponent } from "./components/meeting-header.component";
+import { MeetingControlBarComponent } from "./components/meeting-control-bar.component";
+import { MeetingSidebarComponent } from "./components/meeting-sidebar.component";
+import { MediaPreviewModalComponent } from "./components/media-preview-modal.component";
+import { AudioPreviewComponent } from "./components/audio-preview.component";
+import { VideoPreviewComponent } from "./components/video-preview.component";
+
+import { RealtimeKitComponentsModule } from "@cloudflare/realtimekit-angular-ui";
+
+@NgModule({
+	declarations: [
+		AppComponent,
+		CustomRtkMeetingComponent,
+		SetupScreenComponent,
+		InMeetingComponent,
+		MeetingHeaderComponent,
+		MeetingControlBarComponent,
+		MeetingSidebarComponent,
+		MediaPreviewModalComponent,
+		AudioPreviewComponent,
+		VideoPreviewComponent,
+	],
+	imports: [BrowserModule, FormsModule, RealtimeKitComponentsModule],
+	providers: [],
+	bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+Initialize the meeting in your app.component.ts
+
+```typescript title="app.component.ts"
+import { Component, OnInit, Inject } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import { StatesService } from "./services/states.service";
+import RealtimeKitClient from "@cloudflare/realtimekit";
+
+@Component({
+	selector: "app-root",
+	templateUrl: "./app.component.html",
+	styleUrls: ["./app.component.css"],
+})
+export class AppComponent implements OnInit {
+	meeting: any = null;
+
+	constructor(
+		private statesService: StatesService,
+		@Inject(DOCUMENT) private document: Document,
+	) {}
+
+	async ngOnInit() {
+		await this.initializeMeeting();
+	}
+
+	private async initializeMeeting() {
+		const searchParams = new URLSearchParams(
+			this.document.defaultView?.location.search,
+		);
+		const authToken = searchParams.get("authToken");
+
+		if (!authToken) {
+			alert(
+				"An authToken wasn't passed, please pass an authToken in the URL query to join a meeting.",
+			);
+			return;
+		}
+
+		if (!this.meeting) {
+			try {
+				// Initialize RealtimeKit client
+				const meeting = await RealtimeKitClient.init({
+					authToken,
+				});
+
+				this.meeting = meeting;
+
+				// Expose meeting object to window for debugging
+				Object.assign(this.document.defaultView as any, {
+					meeting: this.meeting,
+				});
+			} catch (error) {
+				console.error("Failed to initialize meeting:", error);
+			}
+		}
+	}
+
+	onRtkStatesUpdate(event: any) {
+		this.statesService.setStates(event.detail);
+	}
+}
+```
+
+```html title="app.component.html"
+<rtk-ui-provider
+	[meeting]="meeting"
+	(rtkStatesUpdate)="onRtkStatesUpdate($event)"
+	[showSetupScreen]="true"
+	style="height: 100%; width: 100%; display: block;"
+>
+	<app-custom-rtk-meeting></app-custom-rtk-meeting>
+	<rtk-dialog-manager></rtk-dialog-manager>
+</rtk-ui-provider>
+```
+
+This is an example of what a custom element built using UI Kit components looks like:
+
+```typescript title="components/custom-rtk-component.ts"
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Subject, takeUntil } from "rxjs";
+import { StatesService, CustomStatesService } from "../services/states.service";
+import { States } from "@cloudflare/realtimekit-ui";
+import { CustomStates } from "../types";
+
+@Component({
+	selector: "app-custom-rtk-meeting",
+	template: `
+		<rtk-idle-screen *ngIf="states.meeting === 'idle'"></rtk-idle-screen>
+		<app-setup-screen *ngIf="states.meeting === 'setup'"></app-setup-screen>
+		<rtk-waiting-screen
+			*ngIf="states.meeting === 'waiting'"
+		></rtk-waiting-screen>
+		<rtk-ended-screen *ngIf="states.meeting === 'ended'"></rtk-ended-screen>
+		<app-in-meeting
+			*ngIf="states.meeting === 'joined' || !states.meeting"
+		></app-in-meeting>
+	`,
+})
+export class CustomRtkMeetingComponent implements OnInit, OnDestroy {
+	states: States = { meeting: "idle" } as States;
+	customStates: CustomStates = {};
+	private destroy$ = new Subject<void>();
+
+	constructor(
+		private statesService: StatesService,
+		private customStatesService: CustomStatesService,
+	) {}
+
+	ngOnInit() {
+		this.statesService.states$
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((states) => {
+				this.states = states;
+				console.log(states, this.customStates);
+			});
+
+		this.customStatesService.customStates$
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((customStates) => {
+				this.customStates = customStates;
+				console.log(this.states, customStates);
+			});
+	}
+
+	ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
+	}
+}
+```
+
+:::note
+It is advised to always use `rtk-ui-provider` to render a custom UI.
+Without `rtk-ui-provider`, you will have to set props, such as `meeting`, to all
+the UI Kit components manually.
+
+`rtk-ui-provider` helps you go from
+
+```html
+<rtk-header />
+<!-- Later do document.querySelector('rtk-header').meeting = meeting; -->
+```
+
+to just
+
+```html
+<rtk-header />
+```
+
+It is recommended to use either `rtk-meeting` or `rtk-ui-provider` to render a meeting. Using both will result in unexpected behavior.
+For custom UIs, it is recommended to use `rtk-ui-provider` always.
+:::
+
+First level split of `rtk-meeting` using `rtk-ui-provider` has the following components:
+
+[`rtk-header`](/realtime/realtimekit/ui-kit/component-library/#rtk-header) is the header component that shows the session name and the session controls.<br/>
+[`rtk-stage`](/realtime/realtimekit/ui-kit/component-library/#rtk-stage) is the container component that contains the grid and sidebar components.<br/>
+[`rtk-grid`](/realtime/realtimekit/ui-kit/component-library/#rtk-grid) is the grid component that shows the participants in the session.<br/>
+[`rtk-sidebar`](/realtime/realtimekit/ui-kit/component-library/#rtk-sidebar) is the sidebar component that shows the sidebar, in which chat, polls content shows up.<br/>
+[`rtk-controlbar`](/realtime/realtimekit/ui-kit/component-library/#rtk-controlbar) is the controlbar component that shows the controls, such as camera, microphone, etc.<br/>
+[`rtk-notifications`](/realtime/realtimekit/ui-kit/component-library/#rtk-notifications) is the notifications component that shows the notifications for the session.<br/>
+[`rtk-participants-audio`](/realtime/realtimekit/ui-kit/component-library/#rtk-participants-audio) is the audio component that helps you listen other participants in the session.<br/>
+[`rtk-dialog-manager`](/realtime/realtimekit/ui-kit/component-library/#rtk-dialog-manager) is the dialog-manager component that shows the all supported dialogs, such as settings, breakout rooms, etc.<br/>
+
+You can split all of these components further. To see more such components, please refer to our [components library](/realtime/realtimekit/ui-kit/component-library/).
+
+We have our UI Kit open source on GitHub, you can find it [here](https://github.com/cloudflare/realtimekit-ui).
+
+:::note
+Please note that you will need to manage the CSS for aligning these components, yourself. This was previously handled entirely by `rtk-meeting`. All these components can be styled using CSS.
+:::
+
+:::note
+You must include `rtk-notifications`, `rtk-participants-audio`, and `rtk-dialog-manager`. If you leave them out, features like settings toggles and notifications won’t work, and you won’t hear other participants in the session.
+:::
+
+</RTKCodeSnippet>

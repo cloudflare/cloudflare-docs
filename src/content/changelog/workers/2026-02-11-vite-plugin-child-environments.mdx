@@ -1,0 +1,29 @@
+---
+title: Improved React Server Components support in the Cloudflare Vite plugin
+description: The Cloudflare Vite plugin now integrates seamlessly with `@vitejs/plugin-rsc`
+products:
+  - workers
+date: 2026-02-11
+---
+
+The Cloudflare Vite plugin now integrates seamlessly [@vitejs/plugin-rsc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc), the official Vite plugin for [React Server Components](https://react.dev/reference/rsc/server-components).
+
+A `childEnvironments` option has been added to the plugin config to enable using multiple environments within a single Worker.
+The parent environment can then import modules from a child environment in order to access a separate module graph.
+For a typical RSC use case, the plugin might be configured as in the following example:
+
+```ts title="vite.config.ts"
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			viteEnvironment: {
+				name: "rsc",
+				childEnvironments: ["ssr"],
+			},
+		}),
+	],
+});
+```
+
+`@vitejs/plugin-rsc` provides the lower level functionality that frameworks, such as [React Router](https://reactrouter.com/how-to/react-server-components), build upon.
+The GitHub repository includes a [basic Cloudflare example](https://github.com/vitejs/vite-plugin-react/tree/f066114c3e6bf18f5209ff3d3ef6bf1ab46d3866/packages/plugin-rsc/examples/starter-cf-single).

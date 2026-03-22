@@ -1,0 +1,12 @@
+id: FgEzbo
+name: infrastructure-attack-surface
+
+entry:
+  title: Infrastructure
+  url: /security-center/infrastructure/
+  show: false
+
+meta:
+  title: Cloudflare Infrastructure docs
+  description: The Infrastructure tab in Security Center displays an overview of the infrastructure associated with your Cloudflare account after enabling Security Insights.
+  author: "@cloudflare"

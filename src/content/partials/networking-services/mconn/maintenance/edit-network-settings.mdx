@@ -5,7 +5,7 @@ params:
 
 import { DashButton, Markdown } from "~/components";
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -19,15 +19,22 @@ import { DashButton, Markdown } from "~/components";
 	<>
 		<Markdown
 	text={`
-		1. Go to the **Connector on-ramps** page.
+		1. Go to the **Connectors** page.
 		`}
 	inline={false}
 	/>
-		<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
+		<DashButton url="/?to=/:account/magic-networks/connections" />
+
+		<Markdown
+	text={`
+		2. Go to the **Appliances** tab > **Profiles**.
+		`}
+	inline={false}
+	/>
 	</>
 )
 }
-3. Find the Connector that you want to edit > select the three dots next to it > **Edit**.
+3. Find the Appliance that you want to edit > select the three dots next to it > **Edit**.
 4. Go to **Network configuration** > **WAN configuration** or **LAN configuration**.
 5. Find the WAN/LAN you want to edit > select the three dots next to it > **Edit**.
 6. Make the necessary changes.

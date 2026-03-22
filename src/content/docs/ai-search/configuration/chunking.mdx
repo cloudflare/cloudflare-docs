@@ -20,9 +20,7 @@ This way, chunks are easy to embed and retrieve, without cutting off thoughts mi
 
 AI Search exposes two parameters to help you control chunking behavior:
 
-- **Chunk size**: The number of tokens per chunk.
-  - Minimum: `64`
-  - Maximum: `512`
+- **Chunk size**: The number of tokens per chunk. The option range may vary depending on the model.
 - **Chunk overlap**: The percentage of overlapping tokens between adjacent chunks.
   - Minimum: `0%`
   - Maximum: `30%`
@@ -32,16 +30,6 @@ These settings apply during the indexing step, before your data is embedded and 
 ## Choosing chunk size and overlap
 
 Chunking affects both how your content is retrieved and how much context is passed into the generation model. Try out this external [chunk visualizer tool](https://huggingface.co/spaces/m-ric/chunk_visualizer) to help understand how different chunk settings could look.
-
-For chunk size, consider how:
-
-- **Smaller chunks** create more precise vector matches, but may split relevant ideas across multiple chunks.
-- **Larger chunks** retain more context, but may dilute relevance and reduce retrieval precision.
-
-For chunk overlap, consider how:
-
-- **More overlap** helps preserve continuity across boundaries, especially in flowing or narrative content.
-- **Less overlap** reduces indexing time and cost, but can miss context if key terms are split between chunks.
 
 ### Additional considerations:
 

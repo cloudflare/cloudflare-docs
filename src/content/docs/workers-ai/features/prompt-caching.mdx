@@ -1,0 +1,84 @@
+---
+pcx_content_type: concept
+title: Prompt caching
+sidebar:
+  order: 3
+description: Use prefix caching and the x-session-affinity header to reduce latency and inference costs on Workers AI.
+---
+
+Prompt caching (also called prefix caching) is a performance optimization that allows Workers AI to respond faster to requests with prompts that share common inputs. It reduces Time to First Token (TTFT) and increases Tokens Per Second (TPS) throughput by reusing previously computed input tensors instead of reprocessing them from scratch.
+
+Cached input tokens are billed at a discounted rate compared to regular input tokens. Workers AI enables prefix caching by default for select models. Compatibility and pricing details are listed on each [model page](/workers-ai/models/).
+
+## How it works
+
+When an LLM processes a request, it goes through two stages:
+
+1. **Prefill stage** — processes input tokens (system prompts, tool definitions, conversation history).
+2. **Output stage** — generates output tokens.
+
+With prefix caching, Workers AI stores the computed input tensors from the prefill stage. On subsequent requests that share the same prefix, the model skips prefill for the cached portion and only processes the new input tokens. This saves significant compute time, especially for agentic workloads where consecutive requests share large amounts of context.
+
+For example, when a coding agent sends a new prompt, it typically resends all previous prompts, tool definitions, and conversation history. The delta between consecutive requests is often just a few new lines. Prefix caching avoids redundant prefill on all the shared context.
+
+## Session affinity header
+
+Prefix caching only works when a request routes to the same model instance that holds the cached tensors. To maximize cache hit rates, send the `x-session-affinity` header with a unique identifier for your session or agent. This routes requests with the same identifier to the same model instance, increasing the likelihood of a prefix cache hit.
+
+### REST API
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/moonshotai/kimi-k2.5" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -H "x-session-affinity: ses_12345678" \
+  -d '{
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant."
+      },
+      {
+        "role": "user",
+        "content": "What is prefix caching and why does it matter?"
+      }
+    ],
+    "max_tokens": 2400,
+    "stream": true
+  }'
+```
+
+### Workers AI binding
+
+```js
+const response = await env.AI.run(
+	"@cf/moonshotai/kimi-k2.5",
+	{
+		messages: [
+			{ role: "system", content: "You are a helpful assistant." },
+			{ role: "user", content: "Explain prefix caching." },
+		],
+	},
+	{
+		headers: {
+			"x-session-affinity": "ses_12345678",
+		},
+	},
+);
+```
+
+## Structuring prompts for caching
+
+Prefix caching matches the exact token sequence from the start of the prompt. A single token difference invalidates the cache from that point onward.
+
+To maximize cache hits:
+
+- **Place static content first.** System prompts, tool definitions, and shared instructions should appear at the beginning of the prompt. Put user-specific or dynamic content (timestamps, user queries) at the end.
+- **Avoid timestamps in system prompts.** Including a timestamp at the start of a system prompt changes the prefix on every request, defeating the cache entirely. If time context is required, add it to the user message instead.
+- **Reuse tool definitions across requests.** For function-calling agents, tools are part of the prompt prefix. Keeping tool definitions consistent across requests in the same session increases cache reuse.
+
+## Monitoring cached tokens
+
+Workers AI surfaces cached token counts in the response `usage` object. Use this to verify that prefix caching is working and to track cost savings. The first request will usually be cold, so it is expected that cached tokens are not returned on the first hit. Inputs need to be sufficiently large enough in order to be cached due to block size.
+Cached tokens are billed at a lower rate than regular input tokens, which get totalled into your neuron count.

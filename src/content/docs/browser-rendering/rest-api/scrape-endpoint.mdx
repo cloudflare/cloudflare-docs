@@ -9,6 +9,8 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/scrape` endpoint extracts structured data from specific elements on a webpage, returning details such as element dimensions and inner HTML.
 
+<Render file="rest-api-token-permissions" product="browser-rendering" />
+
 ## Endpoint
 
 ```txt
@@ -125,6 +127,11 @@ Many more options exist, like setting HTTP credentials using `authenticate`, set
 :::note[Looking for more parameters?]
 Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/scrape/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
+
+<Render
+  file="javascript-heavy-pages"
+  product="browser-rendering"
+/>
 
 <Render
   file="setting-custom-user-agent"

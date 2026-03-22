@@ -1,6 +1,6 @@
 ---
 description: "validate against the style guide"
-model: opencode/claude-opus-4-5
+model: anthropic/claude-opus-4-5
 ---
 
 Look at all the unstaged changes to markdown (.md, .mdx) files, pull out the lines that have changed, and validate against these rules:

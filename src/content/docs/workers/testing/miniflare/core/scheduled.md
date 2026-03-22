@@ -1,6 +1,6 @@
 ---
 order: 1
-title: "⏰ Scheduled Events"
+title: Scheduled Events
 ---
 
 - [`ScheduledEvent` Reference](/workers/runtime-apis/handlers/scheduled/)

@@ -1,0 +1,47 @@
+---
+pcx_content_type: navigation
+title: RtkBreakoutRoomsToggle
+description: API reference for RtkBreakoutRoomsToggle component (React Library)
+---
+A button which toggles visibility of breakout rooms.
+ You need to pass the `meeting` object to it.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ✅ | - | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ✅ | - | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkBreakoutRoomsToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkBreakoutRoomsToggle />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkBreakoutRoomsToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkBreakoutRoomsToggle
+      iconPack={defaultIconPack}
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

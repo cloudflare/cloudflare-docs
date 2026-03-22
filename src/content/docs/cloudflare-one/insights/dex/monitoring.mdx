@@ -13,7 +13,7 @@ Network and device performance data helps IT administrators troubleshoot perform
 
 ## Device overview
 
-A fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Cloudflare Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
+A fleet is a collection of user devices. All devices in a fleet have the Cloudflare One Client installed and are connected to a [Cloudflare Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization).
 
 To view fleet status:
 
@@ -22,34 +22,34 @@ To view fleet status:
 
 ### View metrics
 
-The **Device overview** tab will show real-time and historical connectivity metrics for all devices in your organization.
+The **Device overview** tab shows real-time and historical connectivity metrics for all devices in your organization.
 
 To view analytics on a per-device level, go to [Device monitoring](/cloudflare-one/insights/dex/monitoring/#device-monitoring).
 
 ### Available metrics
 
-- **Devices connected by colo**: Number of devices that are connected to a given [Cloudflare data center](https://www.cloudflarestatus.com/).
+- **Devices connected by colo**: Number of devices connected to a given [Cloudflare data center](https://www.cloudflarestatus.com/).
 
-- **Connectivity status**: Percentage of devices in a given WARP client state.
+- **Connectivity status**: Percentage of devices in a given Cloudflare One Client state.
 
   | Status       | Description                                                                                                                                                                                                                                                                                                                                                                               |
   | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | Connected    | WARP has successfully established a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                                                          |
-  | Disconnected | WARP has been intentionally or unintentionally disconnected from the Cloudflare global network.                                                                                                                                                                                                                                                                                           |
-  | Paused       | A user or administrator has taken an explicit action to temporarily turn off WARP, for example by entering an [admin override code](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-admin-override-codes). Paused clients will [auto-connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) after a timeout period. |
-  | Connecting   | WARP is pending connection, but is actively trying to establish a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                            |
+  | Connected    | the Cloudflare One Client has successfully established a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                                                          |
+  | Disconnected | the Cloudflare One Client has been intentionally or unintentionally disconnected from the Cloudflare global network.                                                                                                                                                                                                                                                                                           |
+  | Paused       | A user or administrator has taken an explicit action to temporarily turn off WARP, for example by entering an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes). Paused clients will [auto-connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#auto-connect) after a timeout period. |
+  | Connecting   | the Cloudflare One Client is pending connection, but is actively trying to establish a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                            |
 
-- **Mode**: [WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) deployed on the device.
+- **Mode**: [Client mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) deployed on the device.
 
 - **Colo**: Percentage of devices connected to a given Cloudflare data center.
 
 - **Platform**: Operating system of the device.
 
-- **Major Version**: WARP client version installed on the device.
+- **Major Version**: Cloudflare One Client version installed on the device.
 
-- **Device Status Over Time**: WARP client connection status over the selected time period.
+- **Device Status Over Time**: Cloudflare One Client connection status over the selected time period.
 
-- **Connection Methods Over Time**: WARP mode used by the device over the selected time period.
+- **Connection Methods Over Time**: Client mode used by the device over the selected time period.
 
 ## Device monitoring
 
@@ -70,17 +70,17 @@ To view a device's network and device performance metrics:
 
 - **Unique networks over time**: How many unique SSIDs the device was connected to.
 
-- **Network I/O**: How much data has been transferred (uploads and downloads) over the primary network interface.
+- **Network I/O**: How much data the device transferred (uploads and downloads) over the primary network interface.
 
 #### Device performance metrics
 
-- **Battery percentage and cycles**: Displays battery percentage and [battery cycles](https://support.apple.com/en-us/102888) over time. Used to debug potential performance issues possibly related to battery health or power-saving measures that are triggered at low-battery levels.
+- **Battery percentage and cycles**: Displays battery percentage and [battery cycles](https://support.apple.com/en-us/102888) over time. Use this metric to debug potential performance issues possibly related to battery health or power-saving measures that trigger at low-battery levels.
 
-- **CPU usage**: CPU utilization over time. Used to debug slow system performance due to high CPU usage.
+- **CPU usage**: CPU utilization over time. Use this metric to debug slow system performance due to high CPU usage.
 
-- **Memory utilization**: Memory utilization over time. Used to debug performance issues related to an overtaxed memory.
+- **Memory utilization**: Memory utilization over time. Use this metric to debug performance issues related to an overtaxed memory.
 
-- **Disk I/O**: Displays number of disk read/write operations over time. Used to debug performance errors due to heavy disk operations.
+- **Disk I/O**: Displays number of disk read/write operations over time. Use this metric to debug performance errors due to heavy disk operations.
 
 ## Export DEX device state event logs
 

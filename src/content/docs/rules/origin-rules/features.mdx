@@ -24,6 +24,8 @@ A common use case for this functionality is when your content is hosted on a thi
 
 - If you have configured load balancing through Cloudflare and you wish to override the HTTP `Host` header per origin or for a given monitor, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/) in the Load Balancing documentation for more information.
 
+- When an origin rule is configured to override the `Host` header for a request handled by a [Worker](/workers/), this override is not taken into account when evaluating [Workers routes](/workers/configuration/routing/routes/).
+
 :::
 
 ## Server Name Indication (SNI)

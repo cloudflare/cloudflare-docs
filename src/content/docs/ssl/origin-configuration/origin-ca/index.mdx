@@ -8,7 +8,15 @@ head: []
 description: Encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.
 ---
 
-import { Details, FeatureTable, Render, TabItem, Tabs, DashButton, GlossaryTooltip } from "~/components";
+import {
+	Details,
+	FeatureTable,
+	Render,
+	TabItem,
+	Tabs,
+	DashButton,
+	GlossaryTooltip,
+} from "~/components";
 
 If your origin only receives traffic from <GlossaryTooltip term="proxy status">proxied records</GlossaryTooltip>, use Cloudflare origin CA certificates to encrypt traffic between Cloudflare and your origin web server and reduce bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
@@ -130,7 +138,7 @@ Wildcards may only cover one level, but can be used multiple times on the same c
 
 ## API calls
 
-To automate processes involving Origin CA certificates, use the following API calls. To authenticate, use either [Origin CA Keys](/fundamentals/api/get-started/ca-keys/) or an [API token](/fundamentals/api/get-started/create-token/) with **Permissions** that include `Zone`-`SSL and Certificates`-`Edit`.
+To automate processes involving Origin CA certificates, use the following API calls. To authenticate, use an [API token](/fundamentals/api/get-started/create-token/) with **Permissions** that include `Zone`-`SSL and Certificates`-`Edit`.
 
 | Operation                                                                   | Method   | Endpoint                           |
 | --------------------------------------------------------------------------- | -------- | ---------------------------------- |

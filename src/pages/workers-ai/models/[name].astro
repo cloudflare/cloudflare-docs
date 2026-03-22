@@ -22,13 +22,15 @@ import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
-import Flux2Dev from "~/components/models/code/Flux-2-Dev.astro";
+import Flux2 from "~/components/models/code/Flux-2.astro";
 import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
 import MelottsCode from "~/components/models/code/MelottsCode.astro";
 import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
 import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 
+import Render from "~/components/Render.astro";
 import { authorData } from "~/components/models/data";
+import { hasProperty } from "~/util/model-properties";
 import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
 import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
 import DeepgramNova from "~/components/models/code/DeepgramNova.astro";
@@ -98,7 +100,15 @@ if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
 }
 
 if (model.name === "@cf/black-forest-labs/flux-2-dev") {
-	CodeExamples = Flux2Dev;
+	CodeExamples = Flux2;
+}
+
+if (model.name === "@cf/black-forest-labs/flux-2-klein-4b") {
+	CodeExamples = Flux2;
+}
+
+if (model.name === "@cf/black-forest-labs/flux-2-klein-9b") {
+	CodeExamples = Flux2;
 }
 
 if (model.name === "@cf/openai/whisper-large-v3-turbo") {
@@ -138,9 +148,7 @@ if (model.name === "@cf/deepgram/flux") {
 
 const description = model.description;
 
-const isBeta = model.properties.find(
-	({ property_id, value }) => property_id === "beta" && value === "true",
-);
+const isBeta = hasProperty(model.properties, "beta");
 
 let hasPlayground = model.task.name === "Text Generation";
 
@@ -151,6 +159,8 @@ if (model.name.includes("@cf/openai/gpt-oss")) {
 
 const author = (authorData as any)[model.name.split("/")[1]];
 
+const hasSupportedLanguages = model.name === "@cf/deepgram/nova-3";
+
 // Strong type coercion needed due to Starlight's component override for hideTitle
 const starlightPageProps = {
 	frontmatter: {
@@ -159,6 +169,9 @@ const starlightPageProps = {
 		pcx_content_type: "reference",
 	},
 	headings: [
+		hasSupportedLanguages
+			? { depth: 2, slug: "supported-languages", text: "Supported languages" }
+			: false,
 		hasPlayground
 			? { depth: 2, slug: "Playground", text: "Playground" }
 			: false,
@@ -233,6 +246,13 @@ const starlightPageProps = {
 
 	<ModelFeatures model={model} />
 	{
+		(model.name === "@cf/moonshotai/kimi-k2.5" ||
+			model.name === "@cf/nvidia/nemotron-3-120b-a12b" ||
+			model.name === "@cf/zai-org/glm-4.7-flash") && (
+			<Render file="session-affinity-note" product="workers-ai" />
+		)
+	}
+	{
 		model.name === "@cf/deepgram/nova-3" && (
 			<Aside>
 				<p>
@@ -253,6 +273,15 @@ const starlightPageProps = {
 					</ul>
 				</p>
 			</Aside>
+		)
+	}
+
+	{
+		hasSupportedLanguages && (
+			<>
+				<h2 id="supported-languages">Supported languages</h2>
+				<Render file="nova-3-supported-languages" product="workers-ai" />
+			</>
 		)
 	}
 
@@ -293,8 +322,11 @@ const starlightPageProps = {
 		model.schema.output.format === "binary" ? (
 			<>
 				<p>
-					The binding returns a <code>ReadableStream</code> with the image in
-					JPEG or PNG format (check the model's output schema).
+  				{(model.schema.output.contentType as string)?.startsWith("audio/") ? (
+	  				<>The binding returns a <code>ReadableStream</code> with the audio in {(model.schema.output.contentType as string).replace("audio/", "").toUpperCase()} format (check the model's output schema).</>
+		  		) : (
+						<>The binding returns a <code>ReadableStream</code> with the output (check the model's output schema).</>
+					)}
 				</p>
 			</>
 		) : (

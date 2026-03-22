@@ -11,12 +11,20 @@ You can use Cloudflare R2 to store data for indexing. To get started, [configure
 
 AI Search will automatically scan and process supported files stored in that bucket. Files that are unsupported or exceed the size limit will be skipped during indexing and logged as errors.
 
+## Path filtering
+
+You can control which files get indexed by defining include and exclude rules for object paths. Use this to limit indexing to specific folders or to exclude files you do not want searchable.
+
+For example, to index only documentation while excluding drafts:
+
+- **Include:** `/docs/**`
+- **Exclude:** `/docs/drafts/**`
+
+Refer to [Path filtering](/ai-search/configuration/path-filtering/) for pattern syntax, filtering behavior, and more examples.
+
 ## File limits
 
-AI Search has different file size limits depending on the file type:
-
-- **Plain text files:** Up to **4 MB**
-- **Rich format files:** Up to **4 MB**
+AI Search has a file size limit of **up to **4 MB**.
 
 Files that exceed these limits will not be indexed and will show up in the error logs.
 
@@ -52,6 +60,7 @@ AI Search supports the following plain text file types:
 | Rust       | `.rs`                                                                          | `text/rust`                                                           |
 | Swift      | `.swift`                                                                       | `text/swift`                                                          |
 | Dart       | `.dart`                                                                        | `text/dart`                                                           |
+| EMACS Lisp | `.el`                                                                          | `application/x-elisp`, `text/x-elisp`, `text/x-emacs-lisp`            |
 
 ### Rich format file types
 

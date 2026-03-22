@@ -1,0 +1,167 @@
+---
+title: Cloudflare Python SDK v5.0.0-beta.1 now available
+description: Cloudflare Python SDK v5.0.0-beta.1 adds many new resources and fixes
+products:
+  - fundamentals
+date: 2026-02-13
+---
+
+> **Disclaimer:** Please note that v5.0.0-beta.1 is in Beta and we are still testing it for stability.
+
+Full Changelog: [v4.3.1...v5.0.0-beta.1](https://github.com/cloudflare/cloudflare-python/compare/v4.3.1...v5.0.0-beta.1)
+
+In this release, you'll see a large number of breaking changes. This is primarily due to a change in OpenAPI definitions,
+which our libraries are based off of, and codegen updates that we rely on to read those OpenAPI definitions and produce
+our SDK libraries. As the codegen is always evolving and improving, so are our code bases.
+
+There may be changes that are not captured in this changelog. Feel free to open an issue to report any inaccuracies, and we will make sure it gets into the changelog before the v5.0.0 release.
+
+Most of the breaking changes below are caused by improvements to the accuracy of the base OpenAPI schemas, which
+sometimes translates to breaking changes in downstream clients that depend on those schemas.
+
+Please ensure you read through the list of changes below and the migration guide before moving to this version - this
+will help you understand any down or upstream issues it may cause to your environments.
+
+## Breaking Changes
+
+**The following resources have breaking changes. See the [v5 Migration Guide](https://github.com/cloudflare/cloudflare-python/blob/main/docs/v5-migration-guide.md) for detailed migration instructions.**
+
+- `abusereports`
+- `acm.totaltls`
+- `apigateway.configurations`
+- `cloudforceone.threatevents`
+- `d1.database`
+- `intel.indicatorfeeds`
+- `logpush.edge`
+- `origintlsclientauth.hostnames`
+- `queues.consumers`
+- `radar.bgp`
+- `rulesets.rules`
+- `schemavalidation.schemas`
+- `snippets`
+- `zerotrust.dlp`
+- `zerotrust.networks`
+
+## Features
+
+### New API Resources
+
+- `abusereports` - Abuse report management
+- `abusereports.mitigations` - Abuse report mitigation actions
+- `ai.tomarkdown` - AI-powered markdown conversion
+- `aigateway.dynamicrouting` - AI Gateway dynamic routing configuration
+- `aigateway.providerconfigs` - AI Gateway provider configurations
+- `aisearch` - AI-powered search functionality
+- `aisearch.instances` - AI Search instance management
+- `aisearch.tokens` - AI Search authentication tokens
+- `alerting.silences` - Alert silence management
+- `brandprotection.logomatches` - Brand protection logo match detection
+- `brandprotection.logos` - Brand protection logo management
+- `brandprotection.matches` - Brand protection match results
+- `brandprotection.queries` - Brand protection query management
+- `cloudforceone.binarystorage` - CloudForce One binary storage
+- `connectivity.directory` - Connectivity directory services
+- `d1.database` - D1 database management
+- `diagnostics.endpointhealthchecks` - Endpoint health check diagnostics
+- `fraud` - Fraud detection and prevention
+- `iam.sso` - IAM Single Sign-On configuration
+- `loadbalancers.monitorgroups` - Load balancer monitor groups
+- `organizations` - Organization management
+- `organizations.organizationprofile` - Organization profile settings
+- `origintlsclientauth.hostnamecertificates` - Origin TLS client auth hostname certificates
+- `origintlsclientauth.hostnames` - Origin TLS client auth hostnames
+- `origintlsclientauth.zonecertificates` - Origin TLS client auth zone certificates
+- `pipelines` - Data pipeline management
+- `pipelines.sinks` - Pipeline sink configurations
+- `pipelines.streams` - Pipeline stream configurations
+- `queues.subscriptions` - Queue subscription management
+- `r2datacatalog` - R2 Data Catalog integration
+- `r2datacatalog.credentials` - R2 Data Catalog credentials
+- `r2datacatalog.maintenanceconfigs` - R2 Data Catalog maintenance configurations
+- `r2datacatalog.namespaces` - R2 Data Catalog namespaces
+- `radar.bots` - Radar bot analytics
+- `radar.ct` - Radar certificate transparency data
+- `radar.geolocations` - Radar geolocation data
+- `realtimekit.activesession` - Real-time Kit active session management
+- `realtimekit.analytics` - Real-time Kit analytics
+- `realtimekit.apps` - Real-time Kit application management
+- `realtimekit.livestreams` - Real-time Kit live streaming
+- `realtimekit.meetings` - Real-time Kit meeting management
+- `realtimekit.presets` - Real-time Kit preset configurations
+- `realtimekit.recordings` - Real-time Kit recording management
+- `realtimekit.sessions` - Real-time Kit session management
+- `realtimekit.webhooks` - Real-time Kit webhook configurations
+- `tokenvalidation.configuration` - Token validation configuration
+- `tokenvalidation.rules` - Token validation rules
+- `workers.beta` - Workers beta features
+
+### New Endpoints (Existing Resources)
+
+#### `acm.totaltls`
+- `edit()`
+- `update()`
+
+#### `cloudforceone.threatevents`
+- `list()`
+
+#### `contentscanning`
+- `create()`
+- `get()`
+- `update()`
+
+#### `dns.records`
+- `scan_list()`
+- `scan_review()`
+- `scan_trigger()`
+
+#### `intel.indicatorfeeds`
+- `create()`
+- `delete()`
+- `list()`
+
+#### `leakedcredentialchecks.detections`
+- `get()`
+
+#### `queues.consumers`
+- `list()`
+
+#### `radar.ai`
+- `summary()`
+- `timeseries()`
+- `timeseries_groups()`
+
+#### `radar.bgp`
+- `changes()`
+- `snapshot()`
+
+#### `workers.subdomains`
+- `delete()`
+
+#### `zerotrust.networks`
+- `create()`
+- `delete()`
+- `edit()`
+- `get()`
+- `list()`
+
+## General Fixes and Improvements
+
+### Type System & Compatibility
+
+- **Type inference improvements**: Allow Pyright to properly infer TypedDict types within SequenceNotStr
+- **Type completeness**: Add missing types to method arguments and response models
+- **Pydantic compatibility**: Ensure compatibility with Pydantic versions prior to 2.8.0 when using additional fields
+
+### Request/Response Handling
+
+- **Multipart form data**: Correctly handle sending multipart/form-data requests with JSON data
+- **Header handling**: Do not send headers with default values set to omit
+- **GET request headers**: Don't send Content-Type header on GET requests
+- **Response body model accuracy**: Broad improvements to the correctness of models
+
+### Parsing & Data Processing
+
+- **Discriminated unions**: Correctly handle nested discriminated unions in response parsing
+- **Extra field types**: Parse extra field types correctly
+- **Empty metadata**: Ignore empty metadata fields during parsing
+- **Singularization rules**: Update resource name singularization rules for better consistency

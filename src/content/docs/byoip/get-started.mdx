@@ -171,6 +171,11 @@ In IP address management, service bindings map the traffic destined for a given 
 When you onboard your IP prefixes to Cloudflare, there must be one service binding that spans across your entire prefix. Traffic destined for a given IP address will be routed to this service by default. You can also configure [additional service bindings](#optional-additional-bindings) as described in the next step.
 
 1. Make a `GET` request to the [List Services](/api/resources/addressing/subresources/services/methods/list/) endpoint and take note of the `id` associated with the service you want to use.
+
+:::note[CDN egress]
+<Render file="service-bindings-cdn-egress" product="byoip" />
+:::
+
 2. (Optional) If needed, use the [List Prefixes](/api/resources/addressing/subresources/prefixes/methods/list/) endpoint to get or confirm the `id` associated with your prefix.
 3. Make a `POST` request to the [Create service binding](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/create/) endpoint, indicating the entire BYOIP prefix that you are onboarding and the service that should be used for your default binding.
 

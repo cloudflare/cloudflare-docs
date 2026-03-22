@@ -32,7 +32,7 @@ Ensure that you have the necessary DNS records in the **DNS** app of your Clou
 
 :::note
 
-If you have a [partial (CNAME) setup](/dns/zone-setups/partial-setup), ensure your DNS records also exist in your authoritative nameservers.
+If you have a [CNAME setup (partial)](/dns/zone-setups/partial-setup), ensure your DNS records also exist in your authoritative nameservers.
 :::
 
 ### DNSSEC was not disabled before the domain was added to Cloudflare
@@ -50,3 +50,7 @@ This can occur if your domain registrar switches the nameservers for your domain
 In rare cases, the DNS resolver in the client requesting the URL might fail to resolve a DNS record to a valid IP address.
 
 Reload the page after a short wait to note if the problem disappears. This issue is unrelated to Cloudflare, but using [Cloudflare's DNS resolver](/1.1.1.1/setup/) may help. Contact your hosting provider for additional help with your current DNS resolver.
+
+### Account recovery
+
+If you are locked out of the Cloudflare account that contains your DNS configuration, refer to [Account recovery](/fundamentals/user-profiles/account-recovery/).

@@ -1,0 +1,84 @@
+---
+link: "/realtime/realtimekit/release-notes/flutter-ui-kit/"
+productName: RealtimeKit Flutter UI Kit
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2026-01-17"
+    title: RealtimeKit Flutter UI Kit 0.3.0
+    description: |-
+      **Enhancements**
+
+      - Upgraded to [RealtimeKit Flutter Core v0.1.5+1](/realtime/realtimekit/release-notes/flutter-core/#2026-01-17)
+
+      **Fixes**
+
+      - Fixed compatibility with Android API 36
+      - Fixed file picker not working on newer Android versions
+  - publish_date: "2025-12-19"
+    title: RealtimeKit Flutter UI Kit 0.2.0
+    description: |-
+      **Enhancements**
+
+      - Upgraded to [RealtimeKit Flutter Core v0.1.4+1](/realtime/realtimekit/release-notes/flutter-core/#2025-12-18)
+
+      **Fixes**
+
+      - Fixed participant video tiles flickering during updates
+      - Hid audio/video icons for webinar viewers who don't have media permissions
+      - Fixed participants not appearing in grid when joining a meeting
+  - publish_date: "2025-11-25"
+    title: RealtimeKit Flutter UI Kit 0.1.4
+    description: |-
+      **Enhancements**
+
+      - Upgraded to [RealtimeKit Flutter Core v0.1.4](/realtime/realtimekit/release-notes/flutter-core/#2025-11-24)
+
+      **Features**
+
+      - Added menu for webinar hosts to control viewers
+  - publish_date: "2025-11-03"
+    title: RealtimeKit Flutter UI Kit 0.1.3
+    description: |-
+      **Enhancements**
+
+      - Upgraded to [RealtimeKit Flutter Core v0.1.3](/realtime/realtimekit/release-notes/flutter-core/#2025-11-03)
+
+      **Fixes**
+
+      - Camera device names now show human-friendly labels in UI
+      - All participants now appear in the list, not just those on stage
+      - Fixed stage host controls not working for some participants
+  - publish_date: "2025-10-09"
+    title: RealtimeKit Flutter UI Kit 0.1.2+1
+    description: |-
+      **Fixes**
+
+      - Upgraded to [RealtimeKit Flutter Core v0.1.2+1](/realtime/realtimekit/release-notes/flutter-core/#2025-10-09)
+  - publish_date: "2025-10-09"
+    title: RealtimeKit Flutter UI Kit 0.1.2
+    description: |-
+      **Enhancements**
+
+      - Upgraded to [RealtimeKit Flutter Core v0.1.2](/realtime/realtimekit/release-notes/flutter-core/#2025-10-09)
+
+      **Features**
+
+      - Added stage event handling to update participant UI when stage status changes
+
+      **Fixes**
+
+      - Fixed incorrect status icons being displayed for webinar
+      - Fixed canceling stage join request not working
+      - Fixed back navigation handling on newer Flutter versions
+  - publish_date: "2025-09-12"
+    title: RealtimeKit Flutter UI Kit 0.1.1
+    description: |-
+      **Enhancements**
+
+      - Upgraded to [RealtimeKit Flutter Core v0.1.1](/realtime/realtimekit/release-notes/flutter-core/#2025-09-12)
+  - publish_date: "2025-08-26"
+    title: RealtimeKit Flutter UI Kit 0.1.0
+    description: |-
+      **New APIs**
+
+      - Initial release of RealtimeKit Flutter UI Kit with [RealtimeKit Flutter Core v0.1.0+1](/realtime/realtimekit/release-notes/flutter-core/#2025-08-26)

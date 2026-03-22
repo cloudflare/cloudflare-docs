@@ -21,14 +21,14 @@ In this guide, we will learn how to add a custom controlbar for your RealtimeKit
 
 <RTKCodeSnippet id="web-react">
 
-RealtimeKit UI Kit provides the [`RtkControlbar`](https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-controlbar/rtk-controlbar.tsx) component for a default controlbar.
+RealtimeKit UI Kit provides the [`RtkControlbar`](/realtime/realtimekit/ui-kit/component-library/#rtk-controlbar) component for a default controlbar.
 
 If you need additional controls, replace `RtkControlbar` with individual UI Kit components and custom elements.
 
 Import the required components and React hook:
 
 ```jsx
-import { useRef } from 'react';
+import { useRef } from "react";
 import {
 	RtkFullscreenToggle,
 	RtkSettingsToggle,
@@ -46,7 +46,7 @@ import {
 	RtkPollsToggle,
 	RtkParticipantsToggle,
 	RtkPluginsToggle,
-} from '@cloudflare/realtimekit-ui';
+} from "@cloudflare/realtimekit-ui";
 ```
 
 In your `RtkUIProvider` from [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/), replace:
@@ -58,13 +58,27 @@ In your `RtkUIProvider` from [Build Your Own UI](/realtime/realtimekit/ui-kit/bu
 with:
 
 ```jsx
-<div style={{ display: "flex", width: "100%", padding: "8px 12px", color: "white", justifyContent: "space-between" }}>
-	<div id="controlbar-left" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+<div
+	style={{
+		display: "flex",
+		width: "100%",
+		padding: "8px 12px",
+		color: "white",
+		justifyContent: "space-between",
+	}}
+>
+	<div
+		id="controlbar-left"
+		style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+	>
 		<RtkFullscreenToggle targetElement={fullScreenRef.current} />
 		<RtkSettingsToggle />
 		<RtkScreenShareToggle />
 	</div>
-	<div id="controlbar-center" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+	<div
+		id="controlbar-center"
+		style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+	>
 		<RtkMicToggle />
 		<RtkCameraToggle />
 		<RtkStageToggle />
@@ -78,7 +92,10 @@ with:
 			</div>
 		</RtkMoreToggle>
 	</div>
-	<div id="controlbar-right" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+	<div
+		id="controlbar-right"
+		style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+	>
 		<RtkChatToggle />
 		<RtkPollsToggle />
 		<RtkParticipantsToggle />
@@ -122,19 +139,29 @@ RealtimeKit UI Kit provides the [`rtk-controlbar`](/realtime/realtimekit/ui-kit/
 If you need additional controls, replace `rtk-controlbar` with individual UI Kit components and custom elements. In the `renderJoinedScreen` function from [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/), replace:
 
 ```html
-<rtk-controlbar style="display: flex; justify-content: space-between;"></rtk-controlbar>
+<rtk-controlbar
+	style="display: flex; justify-content: space-between;"
+></rtk-controlbar>
 ```
 
 with:
 
 ```html
-<div style="display: flex; width: 100%; padding: 8px 12px; color: white; justify-content: space-between;">
-	<div id="controlbar-left" style="display: flex; align-items: center; justify-content: center;">
+<div
+	style="display: flex; width: 100%; padding: 8px 12px; color: white; justify-content: space-between;"
+>
+	<div
+		id="controlbar-left"
+		style="display: flex; align-items: center; justify-content: center;"
+	>
 		<rtk-fullscreen-toggle id="fullscreen-toggle"></rtk-fullscreen-toggle>
 		<rtk-settings-toggle></rtk-settings-toggle>
 		<rtk-screen-share-toggle></rtk-screen-share-toggle>
 	</div>
-	<div id="controlbar-center" style="display: flex; align-items: center; justify-content: center;">
+	<div
+		id="controlbar-center"
+		style="display: flex; align-items: center; justify-content: center;"
+	>
 		<rtk-mic-toggle></rtk-mic-toggle>
 		<rtk-camera-toggle></rtk-camera-toggle>
 		<rtk-stage-toggle></rtk-stage-toggle>
@@ -143,12 +170,17 @@ with:
 			<div slot="more-elements">
 				<rtk-pip-toggle variant="horizontal"></rtk-pip-toggle>
 				<rtk-mute-all-button variant="horizontal"></rtk-mute-all-button>
-				<rtk-breakout-rooms-toggle variant="horizontal"></rtk-breakout-rooms-toggle>
+				<rtk-breakout-rooms-toggle
+					variant="horizontal"
+				></rtk-breakout-rooms-toggle>
 				<rtk-recording-toggle variant="horizontal"></rtk-recording-toggle>
 			</div>
 		</rtk-more-toggle>
 	</div>
-	<div id="controlbar-right" style="display: flex; align-items: center; justify-content: center;">
+	<div
+		id="controlbar-right"
+		style="display: flex; align-items: center; justify-content: center;"
+	>
 		<rtk-chat-toggle></rtk-chat-toggle>
 		<rtk-polls-toggle></rtk-polls-toggle>
 		<rtk-participants-toggle></rtk-participants-toggle>
@@ -160,9 +192,9 @@ with:
 Register the fullscreen target after rendering:
 
 ```javascript
-const fullscreenToggle = document.querySelector('#fullscreen-toggle');
+const fullscreenToggle = document.querySelector("#fullscreen-toggle");
 if (fullscreenToggle) {
-	const targetElement = document.querySelector('rtk-ui-provider');
+	const targetElement = document.querySelector("rtk-ui-provider");
 	if (targetElement) {
 		fullscreenToggle.targetElement = targetElement;
 	}
@@ -170,5 +202,286 @@ if (fullscreenToggle) {
 ```
 
 A complete example to build your own UI with custom controlbar can be found [here](https://github.com/cloudflare/realtimekit-web-examples/tree/main/html-examples/examples/create-your-own-ui) with the custom controlbar component [here](https://github.com/cloudflare/realtimekit-web-examples/blob/main/html-examples/examples/create-your-own-ui/components/meeting-control-bar.js).
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+RealtimeKit UI Kit provides the [`rtk-controlbar`](/realtime/realtimekit/ui-kit/component-library/#rtk-controlbar) component for a default controlbar.
+
+If you need additional controls, replace `rtk-controlbar` with individual UI Kit components and custom elements. Create a custom controlbar component that uses the RealtimeKit angular components directly.
+
+#### Create Custom Controlbar Component
+
+```typescript title="custom-controlbar.component.ts"
+import { Component, AfterViewInit, ElementRef, ViewChild } from "@angular/core";
+
+@Component({
+	selector: "app-custom-controlbar",
+	template: `
+		<div class="custom-controlbar">
+			<div class="controlbar-left">
+				<rtk-fullscreen-toggle #fullscreenToggle></rtk-fullscreen-toggle>
+				<rtk-settings-toggle></rtk-settings-toggle>
+				<rtk-screen-share-toggle></rtk-screen-share-toggle>
+			</div>
+
+			<div class="controlbar-center">
+				<rtk-mic-toggle></rtk-mic-toggle>
+				<rtk-camera-toggle></rtk-camera-toggle>
+				<rtk-stage-toggle></rtk-stage-toggle>
+				<rtk-leave-button></rtk-leave-button>
+				<rtk-more-toggle>
+					<div slot="more-elements">
+						<rtk-pip-toggle variant="horizontal"></rtk-pip-toggle>
+						<rtk-mute-all-button variant="horizontal"></rtk-mute-all-button>
+						<rtk-breakout-rooms-toggle
+							variant="horizontal"
+						></rtk-breakout-rooms-toggle>
+						<rtk-recording-toggle variant="horizontal"></rtk-recording-toggle>
+					</div>
+				</rtk-more-toggle>
+			</div>
+
+			<div class="controlbar-right">
+				<rtk-chat-toggle></rtk-chat-toggle>
+				<rtk-polls-toggle></rtk-polls-toggle>
+				<rtk-participants-toggle></rtk-participants-toggle>
+				<rtk-plugins-toggle></rtk-plugins-toggle>
+			</div>
+		</div>
+	`,
+	styles: [
+		`
+			.custom-controlbar {
+				display: flex;
+				width: 100%;
+				padding: 8px 12px;
+				color: white;
+				justify-content: space-between;
+				background-color: rgba(0, 0, 0, 0.8);
+				border-radius: 8px;
+			}
+
+			.controlbar-left,
+			.controlbar-center,
+			.controlbar-right {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+			}
+
+			.controlbar-center {
+				flex: 1;
+				justify-content: center;
+			}
+		`,
+	],
+})
+export class CustomControlbarComponent implements AfterViewInit {
+	@ViewChild("fullscreenToggle", { static: true })
+	fullscreenToggle!: ElementRef;
+
+	ngAfterViewInit() {
+		// Register the fullscreen target after rendering
+		this.setupFullscreenToggle();
+	}
+
+	private setupFullscreenToggle() {
+		const fullscreenElement = this.fullscreenToggle?.nativeElement;
+		if (fullscreenElement) {
+			const targetElement = document.querySelector("rtk-ui-provider");
+			if (targetElement) {
+				fullscreenElement.targetElement = targetElement;
+			}
+		}
+	}
+}
+```
+
+#### Use in Your Meeting Component
+
+In your main meeting component template, replace:
+
+```html
+<rtk-controlbar
+	style="display: flex; justify-content: space-between;"
+></rtk-controlbar>
+```
+
+with:
+
+```html
+<app-custom-controlbar></app-custom-controlbar>
+```
+
+#### Complete Meeting Component Example
+
+```typescript title="meeting.component.ts"
+import {
+	Component,
+	ElementRef,
+	OnInit,
+	OnDestroy,
+	ViewChild,
+} from "@angular/core";
+
+@Component({
+	selector: "app-meeting",
+	template: `
+		<rtk-meeting #meetingComponent id="meeting-component">
+			<!-- Other meeting UI components -->
+			<rtk-grid></rtk-grid>
+			<rtk-sidebar></rtk-sidebar>
+
+			<!-- Custom controlbar replaces rtk-controlbar -->
+			<app-custom-controlbar></app-custom-controlbar>
+		</rtk-meeting>
+	`,
+})
+export class MeetingComponent implements OnInit, OnDestroy {
+	@ViewChild("meetingComponent", { static: true }) meetingElement!: ElementRef;
+
+	meeting: any;
+	private authToken = "<participant_auth_token>";
+
+	async ngOnInit() {
+		const RealtimeKitClient = await import(
+			"https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js"
+		);
+
+		this.meeting = await RealtimeKitClient.default.init({
+			authToken: this.authToken,
+		});
+
+		const meetingComponent = this.meetingElement.nativeElement;
+		meetingComponent.showSetupScreen = true;
+		meetingComponent.meeting = this.meeting;
+	}
+
+	ngOnDestroy() {
+		// Cleanup logic
+	}
+}
+```
+
+#### Module Configuration
+
+Don't forget to declare your custom controlbar component in your Angular module:
+
+```typescript title="app.module.ts"
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+
+import { AppComponent } from "./app.component";
+import { MeetingComponent } from "./meeting.component";
+import { CustomControlbarComponent } from "./custom-controlbar.component";
+
+@NgModule({
+	declarations: [AppComponent, MeetingComponent, CustomControlbarComponent],
+	imports: [BrowserModule],
+	providers: [],
+	bootstrap: [AppComponent],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA], // Required for RTK web components
+})
+export class AppModule {}
+```
+
+#### Advanced Customization
+
+You can further customize the controlbar by adding your own buttons or modifying the layout:
+
+```typescript title="enhanced-controlbar.component.ts"
+import { Component, AfterViewInit, ElementRef, ViewChild } from "@angular/core";
+
+@Component({
+	selector: "app-enhanced-controlbar",
+	template: `
+		<div class="custom-controlbar">
+			<div class="controlbar-left">
+				<rtk-fullscreen-toggle #fullscreenToggle></rtk-fullscreen-toggle>
+				<rtk-settings-toggle></rtk-settings-toggle>
+				<button class="custom-button" (click)="onCustomAction()">
+					Custom Action
+				</button>
+			</div>
+
+			<div class="controlbar-center">
+				<rtk-mic-toggle></rtk-mic-toggle>
+				<rtk-camera-toggle></rtk-camera-toggle>
+				<rtk-stage-toggle></rtk-stage-toggle>
+				<rtk-leave-button></rtk-leave-button>
+			</div>
+
+			<div class="controlbar-right">
+				<rtk-chat-toggle></rtk-chat-toggle>
+				<rtk-participants-toggle></rtk-participants-toggle>
+			</div>
+		</div>
+	`,
+	styles: [
+		`
+			.custom-controlbar {
+				display: flex;
+				width: 100%;
+				padding: 8px 12px;
+				color: white;
+				justify-content: space-between;
+				background-color: rgba(0, 0, 0, 0.8);
+				border-radius: 8px;
+			}
+
+			.controlbar-left,
+			.controlbar-center,
+			.controlbar-right {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+			}
+
+			.custom-button {
+				background: #0051c3;
+				border: none;
+				color: white;
+				padding: 8px 12px;
+				border-radius: 4px;
+				cursor: pointer;
+				font-size: 12px;
+			}
+
+			.custom-button:hover {
+				background: #003d99;
+			}
+		`,
+	],
+})
+export class EnhancedControlbarComponent implements AfterViewInit {
+	@ViewChild("fullscreenToggle", { static: true })
+	fullscreenToggle!: ElementRef;
+
+	ngAfterViewInit() {
+		this.setupFullscreenToggle();
+	}
+
+	private setupFullscreenToggle() {
+		const fullscreenElement = this.fullscreenToggle?.nativeElement;
+		if (fullscreenElement) {
+			const targetElement = document.querySelector("rtk-ui-provider");
+			if (targetElement) {
+				fullscreenElement.targetElement = targetElement;
+			}
+		}
+	}
+
+	onCustomAction() {
+		console.log("Custom action triggered");
+		// Add your custom logic here
+	}
+}
+```
+
+This approach gives you complete control over the controlbar layout while maintaining Angular's component architecture and leveraging RealtimeKit's built-in functionality.
 
 </RTKCodeSnippet>

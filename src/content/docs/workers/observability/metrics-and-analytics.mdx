@@ -101,15 +101,15 @@ Worker invocation statuses indicate whether a Worker executed successfully or fa
 | Exceeded resources¹    | Worker exceeded runtime limits                                               | 1102, 1027         | `exceededResources`    |
 | Internal error²        | Workers runtime encountered an error                                         |                    | `internalError`        |
 
-¹ The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-limits). The most common cause is excessive CPU time, but is also caused by a Worker exceeding startup time or free tier limits.
+¹ The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-and-response-limits). The most common cause is excessive CPU time, but is also caused by a Worker exceeding startup time or free tier limits.
 
 ² The Internal Error status may appear when the Workers runtime fails to process a request due to an internal failure in our system. These errors are not caused by any issue with the Worker code nor any resource limit. While requests with Internal Error status are rare, some may appear during normal operation. These requests are not counted towards usage for billing purposes. If you notice an elevated rate of requests with Internal Error status, review [www.cloudflarestatus.com](https://www.cloudflarestatus.com/).
 
-To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/commands/#tail).
+To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/commands/general/#tail).
 
 ### Request duration
 
-The request duration chart shows how long it took your Worker to respond to requests, including code execution and time spent waiting on I/O. The request duration chart is currently only available when your Worker has [Smart Placement](/workers/configuration/smart-placement) enabled.
+The request duration chart shows how long it took your Worker to respond to requests, including code execution and time spent waiting on I/O. The request duration chart is currently only available when your Worker has [Smart Placement](/workers/configuration/placement/) enabled.
 
 In contrast to [execution duration](/workers/observability/metrics-and-analytics/#execution-duration-gb-seconds), which measures only the time a Worker is active, request duration measures from the time a request comes into a data center until a response is delivered.
 
@@ -153,3 +153,18 @@ This chart shows historical data for all Workers on a zone broken down by succes
 ## GraphQL
 
 Worker metrics are powered by GraphQL. Learn more about querying our data sets in the [Querying Workers Metrics with GraphQL tutorial](/analytics/graphql-api/tutorials/querying-workers-metrics/).
+
+## Custom analytics with Analytics Engine
+
+The metrics described above provide insight into Worker performance and runtime behavior. For custom, application-specific analytics, use [Workers Analytics Engine](/analytics/analytics-engine/).
+
+Analytics Engine is useful for:
+
+- **Custom business metrics** - Track events specific to your application, such as signups, purchases, or feature usage.
+- **Per-customer analytics** - Record data with high-cardinality dimensions like customer IDs or API keys.
+- **Usage-based billing** - Count API calls, compute units, or other billable events per customer.
+- **Performance tracking** - Measure response times, cache hit rates, or error rates with custom dimensions.
+
+Writes to Analytics Engine are non-blocking and do not add latency to your Worker. Query your data using SQL through the [Analytics Engine SQL API](/analytics/analytics-engine/sql-api/) or visualize it in [Grafana](/analytics/analytics-engine/grafana/).
+
+Refer to the [Analytics Engine example](/workers/examples/analytics-engine/) to get started.

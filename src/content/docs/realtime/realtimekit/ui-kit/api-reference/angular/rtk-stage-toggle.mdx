@@ -1,0 +1,36 @@
+---
+pcx_content_type: navigation
+title: rtk-stage-toggle
+description: API reference for rtk-stage-toggle component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | States |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-stage-toggle></rtk-stage-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-stage-toggle
+ [meeting]="meeting"
+ size="md"
+ variant="button">
+</rtk-stage-toggle>
+```
+

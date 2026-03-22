@@ -2,7 +2,7 @@
 import WARPRelease from "./WARPRelease.astro";
 import Details from "./Details.astro";
 import { getCollection } from "astro:content";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import { sub } from "date-fns";
 
 type Props = z.infer<typeof props>;

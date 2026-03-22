@@ -118,7 +118,7 @@ The following example grants access to all image repositories under AWS account 
 }
 ```
 
-You can then use the credentials for the IAM User to [configure a registry in Wrangler](/workers/wrangler/commands/#containers-registries).
+You can then use the credentials for the IAM User to [configure a registry in Wrangler](/workers/wrangler/commands/containers/#containers-registries).
 Wrangler will prompt you to create a Secrets Store store if one does not already exist, and then create your secret.
 
 <PackageManagers
@@ -128,6 +128,12 @@ Wrangler will prompt you to create a Secrets Store store if one does not already
 />
 
 Once this is setup, you will be able to use ECR images in your wrangler config.
+
+:::note
+We do not cache ECR images. We will pull images to prewarm and start containers. This may incur egress charges for AWS ECR.
+
+We plan to add image caching in R2 in the future.
+:::
 
 <WranglerConfig>
 

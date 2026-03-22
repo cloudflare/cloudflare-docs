@@ -12,7 +12,7 @@ Query [Apache Iceberg](https://iceberg.apache.org/) tables managed by [R2 Data C
 
 ## Get your warehouse name
 
-To query data with R2 SQL, you'll need your warehouse name associated with your [catalog](/r2/data-catalog/manage-catalogs/). To retrieve it, you can run the [`r2 bucket catalog get` command](/workers/wrangler/commands/#r2-bucket-catalog-get):
+To query data with R2 SQL, you'll need your warehouse name associated with your [catalog](/r2/data-catalog/manage-catalogs/). To retrieve it, you can run the [`r2 bucket catalog get` command](/workers/wrangler/commands/r2/#r2-bucket-catalog-get):
 
 ```bash
 npx wrangler r2 bucket catalog get <BUCKET_NAME>
@@ -40,7 +40,7 @@ WRANGLER_R2_SQL_AUTH_TOKEN=YOUR_API_TOKEN
 
 Where `YOUR_API_TOKEN` is the token you created with the [required permissions](#authentication). For more information on setting environment variables, refer to [Wrangler system environment variables](/workers/wrangler/system-environment-variables/).
 
-To run a SQL query, run the [`r2 sql query` command](/workers/wrangler/commands/#r2-sql-query):
+To run a SQL query, run the [`r2 sql query` command](/workers/wrangler/commands/r2/#r2-sql-query):
 
 ```bash
 npx wrangler r2 sql query <WAREHOUSE> "SELECT * FROM namespace.table_name limit 10;"

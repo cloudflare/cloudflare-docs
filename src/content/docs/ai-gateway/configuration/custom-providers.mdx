@@ -348,15 +348,45 @@ Deleting a custom provider will immediately stop all requests routed through it.
 
 ## Using custom providers with AI Gateway
 
-Once you've created a custom provider, you can route requests through AI Gateway. When referencing your custom provider, you must prefix the slug with `custom-`.
+Once you've created a custom provider, you can route requests through AI Gateway using one of two approaches: the **Unified API** or the **provider-specific endpoint**. When referencing your custom provider with either approach, you must prefix the slug with `custom-`.
 
 :::note[Custom provider prefix]
 All custom provider slugs must be prefixed with `custom-` when making requests through AI Gateway. For example, if your provider slug is `some-provider`, you must use `custom-some-provider` in your requests.
 :::
 
+### How URL routing works
+
+When AI Gateway receives a request for a custom provider, it constructs the upstream URL by combining the provider's configured `base_url` with the path that comes after `custom-{slug}/` in the gateway URL.
+
+**The `base_url` field should contain only the root domain** (or domain with a fixed prefix) of the provider's API. Any API-specific path segments (like `/v1/chat/completions`) go in the request URL, not in `base_url`.
+
+The formula is:
+
+```
+Gateway URL:   https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-{slug}/{provider-path}
+Upstream URL:  {base_url}/{provider-path}
+```
+
+Everything after `custom-{slug}/` in your request URL is appended directly to the `base_url` to form the final upstream URL. This means `{provider-path}` can include multiple path segments, query parameters, or any path structure your provider requires.
+
+### Choosing between Unified API and provider-specific endpoint
+
+| | Unified API (`/compat`) | Provider-specific endpoint |
+|---|---|---|
+| **Best for** | Providers with OpenAI-compatible APIs | Providers with any API structure |
+| **Request format** | Must follow the OpenAI `/chat/completions` schema | Uses the provider's native request format |
+| **Path control** | Fixed to `/compat/chat/completions` | Full control over the upstream path |
+| **How to specify the provider** | `model` field: `custom-{slug}/{model-name}` | URL path: `/custom-{slug}/{path}` |
+
+Use the **Unified API** when your custom provider accepts the OpenAI-compatible `/chat/completions` request format. This is the simplest option and works well with OpenAI SDKs.
+
+Use the **provider-specific endpoint** when your custom provider uses a non-standard API path or request format. This gives you full control over both the URL path and the request body sent to the upstream provider.
+
 ### Via Unified API
 
-```bash title="Request using custom provider"
+The Unified API sends requests to the provider's chat completions endpoint using the OpenAI-compatible format. Specify the model using the format `custom-{slug}/{model-name}`.
+
+```bash title="Request using custom provider via Unified API"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
   -H "Authorization: Bearer $PROVIDER_API_KEY" \
   -H "cf-aig-authorization: Bearer $CF_AIG_TOKEN" \
@@ -367,23 +397,159 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/
   }'
 ```
 
-In the Unified API, specify the model using the format: `custom-{slug}/{model-name}`
-
 ### Via provider-specific endpoint
 
+The provider-specific endpoint gives you full control over the upstream path. Everything after `custom-{slug}/` in the URL is appended to the `base_url`.
+
 ```bash title="Direct provider endpoint"
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-some-provider/your-endpoint \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-some-provider/v1/chat/completions \
   -H "Authorization: Bearer $PROVIDER_API_KEY" \
   -H "cf-aig-authorization: Bearer $CF_AIG_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "your": "request payload"
+    "model": "model-name",
+    "messages": [{"role": "user", "content": "Hello!"}]
   }'
 ```
 
-The request will be proxied to: `https://api.myprovider.com/your-endpoint`
+If `base_url` is `https://api.myprovider.com`, this request is proxied to: `https://api.myprovider.com/v1/chat/completions`
 
-**Path structure:** `/{account_id}/{gateway_id}/custom-{slug}/{provider-path}`
+### Examples
+
+The following examples show how to configure `base_url` and construct request URLs for different types of providers.
+
+#### Example 1: OpenAI-compatible provider (standard `/v1/` path)
+
+Many providers follow the OpenAI convention of hosting their API at `{domain}/v1/chat/completions`.
+
+**Configuration:**
+- `slug`: `my-openai-compat`
+- `base_url`: `https://api.example-provider.com`
+
+**Provider-specific endpoint:**
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-my-openai-compat/v1/chat/completions \
+  -H "Authorization: Bearer $PROVIDER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "example-model",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+**URL mapping:**
+| Component | Value |
+|---|---|
+| Gateway URL | `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-my-openai-compat/v1/chat/completions` |
+| `base_url` | `https://api.example-provider.com` |
+| Provider path | `/v1/chat/completions` |
+| Upstream URL | `https://api.example-provider.com/v1/chat/completions` |
+
+Since this provider is OpenAI-compatible, you could also use the Unified API:
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
+  -H "Authorization: Bearer $PROVIDER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "custom-my-openai-compat/example-model",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+#### Example 2: Provider with a non-standard API path
+
+Some providers use API paths that don't follow the `/v1/` convention. For example, a provider whose chat endpoint is at `https://api.custom-ai.com/api/coding/paas/v4/chat/completions`.
+
+**Configuration:**
+- `slug`: `custom-ai`
+- `base_url`: `https://api.custom-ai.com`
+
+**Provider-specific endpoint:**
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-custom-ai/api/coding/paas/v4/chat/completions \
+  -H "Authorization: Bearer $PROVIDER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "custom-ai-model",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+**URL mapping:**
+| Component | Value |
+|---|---|
+| Gateway URL | `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-custom-ai/api/coding/paas/v4/chat/completions` |
+| `base_url` | `https://api.custom-ai.com` |
+| Provider path | `/api/coding/paas/v4/chat/completions` |
+| Upstream URL | `https://api.custom-ai.com/api/coding/paas/v4/chat/completions` |
+
+:::note
+For providers with non-standard paths, you must use the provider-specific endpoint. The Unified API only supports the `/chat/completions` path and cannot route to custom API paths.
+:::
+
+#### Example 3: Self-hosted model with a path prefix
+
+If you host your own model behind a reverse proxy or on a platform that adds a path prefix, include only the fixed prefix portion in `base_url` if all your endpoints share it. Otherwise, keep `base_url` as just the domain.
+
+**Configuration (domain-only `base_url`):**
+- `slug`: `internal-llm`
+- `base_url`: `https://ml.internal.example.com`
+
+**Provider-specific endpoint:**
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-internal-llm/serving/models/my-model:predict \
+  -H "Authorization: Bearer $INTERNAL_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "instances": [{"prompt": "Summarize the following text:"}]
+  }'
+```
+
+**URL mapping:**
+| Component | Value |
+|---|---|
+| Gateway URL | `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-internal-llm/serving/models/my-model:predict` |
+| `base_url` | `https://ml.internal.example.com` |
+| Provider path | `/serving/models/my-model:predict` |
+| Upstream URL | `https://ml.internal.example.com/serving/models/my-model:predict` |
+
+#### Example 4: Provider using OpenAI SDK with a custom base URL
+
+When using the OpenAI SDK to connect to a custom provider through AI Gateway, set the SDK's `base_url` to the gateway's provider-specific endpoint path (up to and including the API version prefix that your provider expects).
+
+**Configuration:**
+- `slug`: `alt-provider`
+- `base_url`: `https://api.alt-provider.com`
+
+**Python (OpenAI SDK):**
+```python title="Using OpenAI SDK with a custom provider"
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="your-provider-api-key",
+    base_url="https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-alt-provider/v1",
+    default_headers={
+        "cf-aig-authorization": "Bearer {cf_aig_token}",
+    },
+)
+
+# The SDK appends /chat/completions to the base_url automatically.
+# Final upstream URL: https://api.alt-provider.com/v1/chat/completions
+response = client.chat.completions.create(
+    model="alt-model-v2",
+    messages=[{"role": "user", "content": "Hello!"}],
+)
+```
+
+**URL mapping:**
+| Component | Value |
+|---|---|
+| SDK `base_url` | `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-alt-provider/v1` |
+| SDK appends | `/chat/completions` |
+| Full gateway URL | `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-alt-provider/v1/chat/completions` |
+| Provider `base_url` | `https://api.alt-provider.com` |
+| Provider path | `/v1/chat/completions` |
+| Upstream URL | `https://api.alt-provider.com/v1/chat/completions` |
 
 ## Common errors
 
@@ -436,6 +602,14 @@ The specified provider ID does not exist or you don't have access to it. Verify 
 ```
 
 The `base_url` field must be a valid HTTPS URL. HTTP URLs are not supported for security reasons.
+
+### 404 when making requests to a custom provider
+
+If you receive a 404 from the upstream provider, the most common cause is an incorrect path mapping. Verify that:
+
+1. Your `base_url` is set to the provider's **root domain** (for example, `https://api.provider.com`) rather than including API path segments.
+2. Your request URL includes the **full API path** after `custom-{slug}/`. For example, if the upstream endpoint is `https://api.provider.com/api/v2/chat`, your gateway URL should end in `/custom-{slug}/api/v2/chat`.
+3. There is no duplicate or missing path segment. A common mistake is including `/v1` in both `base_url` and the request path, resulting in the upstream receiving `/v1/v1/chat/completions`.
 
 ## Best practices
 

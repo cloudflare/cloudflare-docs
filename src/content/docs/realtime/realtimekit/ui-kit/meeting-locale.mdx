@@ -5,7 +5,9 @@ sidebar:
   order: 9
 ---
 
-import { Tabs, TabItem, Render } from '~/components';
+import { Render } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 RealtimeKit's UI Kit allows you to customize all the text within the video call interface. You can personalize the text to align with your specific locale needs.
 
@@ -13,231 +15,320 @@ RealtimeKit's UI Kit allows you to customize all the text within the video call 
 This page builds upon the [Render Default Meeting UI](/realtime/realtimekit/ui-kit/) & [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/) guides. Make sure you've read it first and understand how to use the default meeting UI components.
 :::
 
+<RTKSDKSelector />
+
 ## Customize the Language Pack
 
 RealtimeKit's default language pack can be customized to match your application's locale requirements. You can override any text string used in the UI Kit components.
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+## Import the Language Utilities
 
-### Import the Language Utilities
+<RTKCodeSnippet id="web-web-components">
 
 RealtimeKit's default language pack can be imported like this:
 
 ```html
 <script type="module">
-    import { useLanguage, defaultLanguage } from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui/dist/esm/index.js';
+	import {
+		useLanguage,
+		defaultLanguage,
+	} from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui/dist/esm/index.js";
 </script>
 ```
 
-### Create Your Custom Language Pack
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+RealtimeKit's default language pack can be imported like this:
+
+```jsx
+import { defaultLanguage, useLanguage } from "@cloudflare/realtimekit-react-ui";
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+RealtimeKit's default language pack can be imported like this:
+
+```typescript
+import {
+	defaultLanguage,
+	useLanguage,
+} from "@cloudflare/realtimekit-angular-ui";
+```
+
+</RTKCodeSnippet>
+
+## Create Your Custom Language Pack
 
 To replace RealtimeKit's default locale with your own, create a custom language pack by spreading the `defaultLanguage` object and overriding specific keys:
 
+<RTKCodeSnippet id="web-web-components">
+
 ```html
 <body>
-    <rtk-meeting id="my-meeting"></rtk-meeting>
+	<rtk-meeting id="my-meeting"></rtk-meeting>
 
-    <script type="module">
-        import RealtimeKitClient from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js';
-        import { useLanguage, defaultLanguage } from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui/dist/esm/index.js';
+	<script type="module">
+		import RealtimeKitClient from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js";
+		import {
+			useLanguage,
+			defaultLanguage,
+		} from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui/dist/esm/index.js";
 
-        // Customize RealtimeKit's default locale object
-        const myLanguagePack = useLanguage({
-            ...defaultLanguage,
-            'mute_all': 'Mute All Users',
-            'leave': 'Exit Call',
-            'join': 'Join Now'
-        });
+		// Customize RealtimeKit's default locale object
+		const myLanguagePack = useLanguage({
+			...defaultLanguage,
+			mute_all: "Mute All Users",
+			leave: "Exit Call",
+			join: "Join Now",
+		});
 
-        const init = async () => {
-            const meeting = await RealtimeKitClient.init({
-                authToken: '<participant_auth_token>'
-            });
+		const init = async () => {
+			const meeting = await RealtimeKitClient.init({
+				authToken: "<participant_auth_token>",
+			});
 
-            const meetingEl = document.getElementById('my-meeting');
-            meetingEl.meeting = meeting;
-            meetingEl.showSetupScreen = true;
-            
-            // Pass custom language pack
-            meetingEl.t = myLanguagePack;
-        };
+			const meetingEl = document.getElementById("my-meeting");
+			meetingEl.meeting = meeting;
+			meetingEl.showSetupScreen = true;
 
-        init();
-    </script>
+			// Pass custom language pack
+			meetingEl.t = myLanguagePack;
+		};
+
+		init();
+	</script>
 </body>
 ```
 
 The `useLanguage` function takes in your custom locale object as an argument and generates a function that retrieves the value associated with the provided key.
 
-### Using Custom Locale with UI Provider
+</RTKCodeSnippet>
 
-You can also pass the custom language pack to the `rtk-ui-provider` component when building your own custom UI:
-
-```html
-<body>
-    <rtk-ui-provider id="ui-provider">
-        <!-- Your custom UI components -->
-    </rtk-ui-provider>
-
-    <script type="module">
-        import RealtimeKitClient from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js';
-        import { useLanguage, defaultLanguage } from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui/dist/esm/index.js';
-
-        const myLanguagePack = useLanguage({
-            ...defaultLanguage,
-            'mute_all': 'Mute All Users'
-        });
-
-        const meeting = await RealtimeKitClient.init({
-            authToken: '<participant_auth_token>'
-        });
-
-        const uiProvider = document.getElementById('ui-provider');
-        uiProvider.meeting = meeting;
-        uiProvider.t = myLanguagePack;
-    </script>
-</body>
-```
-### Default Language Reference
-
-RealtimeKit provides a comprehensive default language pack with all the text strings used throughout the UI Kit. You can override any of these keys to customize the text displayed in your meeting interface.
-
-Here is the complete default language pack offered by RealtimeKit:
-
-<Render
-	file="realtimekit/web/language-pack-json"
-	product="realtime"
-/>
-
-You can override any of these keys in your custom language pack. For example, to translate the interface to Spanish:
-
-```javascript
-const spanishLanguagePack = useLanguage({
-    ...defaultLanguage,
-    'leave': 'Salir',
-    'join': 'Unirse',
-    'mute': 'Silenciar',
-    'participants': 'Participantes',
-    'chat': 'Chat',
-    'settings': 'Configuración'
-});
-```
-
-</TabItem>
-<TabItem label="React">
-
-### Import the Language Utilities
-
-RealtimeKit's default language pack can be imported like this:
+<RTKCodeSnippet id="web-react">
 
 ```jsx
-import { defaultLanguage, useLanguage } from '@cloudflare/realtimekit-react-ui';
-```
-
-### Create Your Custom Language Pack
-
-To replace RealtimeKit's default locale with your own, create a custom language pack by spreading the `defaultLanguage` object and overriding specific keys:
-
-```jsx
-import { RealtimeKitProvider, useRealtimeKitClient } from '@cloudflare/realtimekit-react';
-import { RtkMeeting, defaultLanguage, useLanguage } from '@cloudflare/realtimekit-react-ui';
-import { useEffect, useState } from 'react';
+import {
+	RealtimeKitProvider,
+	useRealtimeKitClient,
+} from "@cloudflare/realtimekit-react";
+import {
+	RtkMeeting,
+	defaultLanguage,
+	useLanguage,
+} from "@cloudflare/realtimekit-react-ui";
+import { useEffect, useState } from "react";
 
 function App() {
-    const [meeting, initMeeting] = useRealtimeKitClient();
-    const [authToken, setAuthToken] = useState('<participant_auth_token>');
+	const [meeting, initMeeting] = useRealtimeKitClient();
+	const [authToken, setAuthToken] = useState("<participant_auth_token>");
 
-    // Customize RealtimeKit's default locale object
-    const myLanguagePack = useLanguage({
-        ...defaultLanguage,
-        'mute_all': 'Mute All Users',
-        'leave': 'Exit Call',
-        'join': 'Join Now'
-    });
+	// Customize RealtimeKit's default locale object
+	const myLanguagePack = useLanguage({
+		...defaultLanguage,
+		mute_all: "Mute All Users",
+		leave: "Exit Call",
+		join: "Join Now",
+	});
 
-    useEffect(() => {
-        if (authToken) {
-            initMeeting({
-                authToken: authToken
-            });
-        }
-    }, [authToken]);
+	useEffect(() => {
+		if (authToken) {
+			initMeeting({
+				authToken: authToken,
+			});
+		}
+	}, [authToken]);
 
-    return (
-        <RealtimeKitProvider value={meeting}>
-            <RtkMeeting 
-                showSetupScreen={true} 
-                meeting={meeting}
-                t={myLanguagePack}
-            />
-        </RealtimeKitProvider>
-    );
+	return (
+		<RealtimeKitProvider value={meeting}>
+			<RtkMeeting showSetupScreen={true} meeting={meeting} t={myLanguagePack} />
+		</RealtimeKitProvider>
+	);
 }
 ```
 
 The `useLanguage` hook takes in your custom locale object as an argument and generates a function that retrieves the value associated with the provided key.
 
-### Using Custom Locale with UI Provider
+</RTKCodeSnippet>
 
-You can also pass the custom language pack to the `RtkUIProvider` component when building your own custom UI:
+<RTKCodeSnippet id="web-angular">
 
-```jsx
-import { RealtimeKitProvider, useRealtimeKitClient } from '@cloudflare/realtimekit-react';
-import { RtkUIProvider, defaultLanguage, useLanguage } from '@cloudflare/realtimekit-react-ui';
-import { useEffect, useState } from 'react';
+```typescript
+import { Component, OnInit } from "@angular/core";
+import RealtimeKitClient from "@cloudflare/realtimekit-angular";
+import {
+	defaultLanguage,
+	useLanguage,
+} from "@cloudflare/realtimekit-angular-ui";
 
-function App() {
-    const [meeting, initMeeting] = useRealtimeKitClient();
-    const [authToken, setAuthToken] = useState('<participant_auth_token>');
+@Component({
+	selector: "app-meeting",
+	template: `
+		<rtk-meeting [meeting]="meeting" [t]="myLanguagePack"></rtk-meeting>
+	`,
+})
+export class MeetingComponent implements OnInit {
+	meeting: any;
+	myLanguagePack: any;
 
-    const myLanguagePack = useLanguage({
-        ...defaultLanguage,
-        'mute_all': 'Mute All Users'
-    });
+	async ngOnInit() {
+		// Customize RealtimeKit's default locale object
+		this.myLanguagePack = useLanguage({
+			...defaultLanguage,
+			mute_all: "Mute All Users",
+			leave: "Exit Call",
+			join: "Join Now",
+		});
 
-    useEffect(() => {
-        if (authToken) {
-            initMeeting({
-                authToken: authToken
-            });
-        }
-    }, [authToken]);
-
-    return (
-        <RealtimeKitProvider value={meeting}>
-            <RtkUIProvider meeting={meeting} t={myLanguagePack}>
-                {/* Your custom UI components */}
-            </RtkUIProvider>
-        </RealtimeKitProvider>
-    );
+		this.meeting = await RealtimeKitClient.init({
+			authToken: "<participant_auth_token>",
+		});
+	}
 }
 ```
 
+The `useLanguage` function takes in your custom locale object as an argument and generates a function that retrieves the value associated with the provided key.
 
-### Default Language Reference
+</RTKCodeSnippet>
+
+## Using Custom Locale with UI Provider
+
+You can also pass the custom language pack to the UI provider component when building your own custom UI:
+
+<RTKCodeSnippet id="web-web-components">
+
+```html
+<body>
+	<rtk-ui-provider id="ui-provider">
+		<!-- Your custom UI components -->
+	</rtk-ui-provider>
+
+	<script type="module">
+		import RealtimeKitClient from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js";
+		import {
+			useLanguage,
+			defaultLanguage,
+		} from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui/dist/esm/index.js";
+
+		const myLanguagePack = useLanguage({
+			...defaultLanguage,
+			mute_all: "Mute All Users",
+		});
+
+		const meeting = await RealtimeKitClient.init({
+			authToken: "<participant_auth_token>",
+		});
+
+		const uiProvider = document.getElementById("ui-provider");
+		uiProvider.meeting = meeting;
+		uiProvider.t = myLanguagePack;
+	</script>
+</body>
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+import {
+	RealtimeKitProvider,
+	useRealtimeKitClient,
+} from "@cloudflare/realtimekit-react";
+import {
+	RtkUIProvider,
+	defaultLanguage,
+	useLanguage,
+} from "@cloudflare/realtimekit-react-ui";
+import { useEffect, useState } from "react";
+
+function App() {
+	const [meeting, initMeeting] = useRealtimeKitClient();
+	const [authToken, setAuthToken] = useState("<participant_auth_token>");
+
+	const myLanguagePack = useLanguage({
+		...defaultLanguage,
+		mute_all: "Mute All Users",
+	});
+
+	useEffect(() => {
+		if (authToken) {
+			initMeeting({
+				authToken: authToken,
+			});
+		}
+	}, [authToken]);
+
+	return (
+		<RealtimeKitProvider value={meeting}>
+			<RtkUIProvider meeting={meeting} t={myLanguagePack}>
+				{/* Your custom UI components */}
+			</RtkUIProvider>
+		</RealtimeKitProvider>
+	);
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+import { Component, OnInit } from "@angular/core";
+import RealtimeKitClient from "@cloudflare/realtimekit-angular";
+import {
+	defaultLanguage,
+	useLanguage,
+} from "@cloudflare/realtimekit-angular-ui";
+
+@Component({
+	selector: "app-meeting",
+	template: `
+		<rtk-ui-provider [meeting]="meeting" [t]="myLanguagePack">
+			<!-- Your custom UI components -->
+		</rtk-ui-provider>
+	`,
+})
+export class MeetingComponent implements OnInit {
+	meeting: any;
+	myLanguagePack: any;
+
+	async ngOnInit() {
+		this.myLanguagePack = useLanguage({
+			...defaultLanguage,
+			mute_all: "Mute All Users",
+		});
+
+		this.meeting = await RealtimeKitClient.init({
+			authToken: "<participant_auth_token>",
+		});
+	}
+}
+```
+
+</RTKCodeSnippet>
+
+## Default Language Reference
 
 RealtimeKit provides a comprehensive default language pack with all the text strings used throughout the UI Kit. You can override any of these keys to customize the text displayed in your meeting interface.
 
 Here is the complete default language pack offered by RealtimeKit:
-<Render
-	file="realtimekit/web/language-pack-json"
-	product="realtime"
-/>
+
+<Render file="realtimekit/web/language-pack-json" product="realtime" />
 
 You can override any of these keys in your custom language pack. For example, to translate the interface to Spanish:
 
 ```javascript
 const spanishLanguagePack = useLanguage({
-    ...defaultLanguage,
-    'leave': 'Salir',
-    'join': 'Unirse',
-    'mute': 'Silenciar',
-    'participants': 'Participantes',
-    'chat': 'Chat',
-    'settings': 'Configuración'
+	...defaultLanguage,
+	leave: "Salir",
+	join: "Unirse",
+	mute: "Silenciar",
+	participants: "Participantes",
+	chat: "Chat",
+	settings: "Configuración",
 });
 ```
-
-</TabItem>
-</Tabs>

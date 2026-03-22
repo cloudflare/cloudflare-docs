@@ -16,12 +16,6 @@ This example provides a step-by-step guide on using [event notifications](/r2/bu
 
 ![Push-Based R2 Event Notifications](~/assets/images/reference-architecture/event-notifications-for-storage/pushed-based-event-notification.svg)
 
-## Prerequisites
-
-To continue, you will need:
-
-- A subscription to [Workers Paid](/workers/platform/pricing/#workers), required for using queues.
-
 ## 1. Install Wrangler
 
 To begin, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/#install-wrangler) to install Wrangler, the Cloudflare Developer Platform CLI.
@@ -41,12 +35,6 @@ npx wrangler r2 bucket create example-log-sink-bucket
 ```
 
 ## 3. Create a queue
-
-:::note
-
-You will need a [Workers Paid plan](/workers/platform/pricing/) to create and use [Queues](/queues/) and Cloudflare Workers to consume event notifications.
-
-:::
 
 Event notifications capture changes to data in `example-upload-bucket`. You will need to create a new queue to receive notifications:
 
@@ -88,20 +76,31 @@ In your Worker project's [[Wrangler configuration file](/workers/wrangler/config
 
 <WranglerConfig>
 
-```toml
-name = "event-notification-writer"
-main = "src/index.ts"
-compatibility_date = "2024-03-29"
-compatibility_flags = ["nodejs_compat"]
-
-[[queues.consumers]]
-queue = "example-event-notification-queue"
-max_batch_size = 100
-max_batch_timeout = 5
-
-[[r2_buckets]]
-binding = "LOG_SINK"
-bucket_name = "example-log-sink-bucket"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "event-notification-writer",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"queues": {
+		"consumers": [
+			{
+				"queue": "example-event-notification-queue",
+				"max_batch_size": 100,
+				"max_batch_timeout": 5
+			}
+		]
+	},
+	"r2_buckets": [
+		{
+			"binding": "LOG_SINK",
+			"bucket_name": "example-log-sink-bucket"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -137,7 +136,7 @@ export default {
 
 ## 7. Deploy your Worker
 
-To deploy your consumer Worker, run the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command:
+To deploy your consumer Worker, run the [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) command:
 
 ```sh
 npx wrangler deploy
@@ -145,7 +144,7 @@ npx wrangler deploy
 
 ## 8. Enable event notifications
 
-Now that you have your consumer Worker ready to handle incoming event notification messages, you need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/#r2-bucket-notification-create) for `example-upload-bucket`:
+Now that you have your consumer Worker ready to handle incoming event notification messages, you need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/r2/#r2-bucket-notification-create) for `example-upload-bucket`:
 
 ```sh
 npx wrangler r2 bucket notification create example-upload-bucket --event-type object-create --queue example-event-notification-queue

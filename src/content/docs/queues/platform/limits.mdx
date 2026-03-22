@@ -8,6 +8,9 @@ sidebar:
 
 import { Render, WranglerConfig } from "~/components"
 
+:::caution
+The following limits apply to both Workers Paid and Workers Free plans with the exception of **Message Retention**, which is non-configurable at 24 hours for the Workers Free plan.
+:::
 
 | Feature                                       									| Limit                                                         |
 | ----------------------------------------------------------------| ------------------------------------------------------------- |
@@ -18,15 +21,13 @@ import { Render, WranglerConfig } from "~/components"
 | Maximum messages per `sendBatch` call         									| 100 (or 256KB in total)                                       |
 | Maximum Batch wait time                       									| 60 seconds                                                    |
 | Per-queue message throughput    																| 5,000 messages per second <sup>2</sup>                        |
-| Message retention period <sup>3</sup>         									| 4 days (default). [Configurable to 14 days](/queues/configuration/configure-queues/#queue-configuration)                                                       |
+| Message retention period <sup>3</sup>         									| [Configurable up to 14 days](/queues/configuration/configure-queues/#queue-configuration). |
 | Per-queue backlog size <sup>4</sup>           									| 25GB                                                          |
 | Concurrent consumer invocations               									| 250 <sup>push-based only</sup>                                |
 | Consumer duration (wall clock time) 														| 15 minutes <sup>5</sup>                                       |
-| [Consumer CPU time](/workers/platform/limits/#cpu-time)| 30 seconds (default). [Configurable to 5 minutes](/queues/platform/limits/#increasing-queue-consumer-worker-cpu-limits) 							|
+| [Consumer CPU time](/workers/platform/limits/#cpu-time)| [Configurable to 5 minutes](/queues/platform/limits/#increasing-queue-consumer-worker-cpu-limits) 							|
 | `visibilityTimeout` (pull-based queues)       									| 12 hours                                                      |
-| `delaySeconds` (when sending or retrying)     									| 12 hours                                                      |
-| Requests to the Queues API (excluding pull consumer operations)<sup>6</sup>     | [1200 requests / 5 mins](/fundamentals/api/reference/limits/) |
-
+| `delaySeconds` (when sending or retrying)     									| 24 hours                                                      |
 
 <sup>1</sup> 1 KB is measured as 1000 bytes. Messages can include up to \~100 bytes of internal metadata that counts towards total message limits.
 
@@ -38,12 +39,10 @@ import { Render, WranglerConfig } from "~/components"
 
 <sup>5</sup> Refer to [Workers limits](/workers/platform/limits/#cpu-time).
 
-<sup>6</sup> [Pull Consumers](/queues/configuration/pull-consumers) allow you to consume messages from a queue over HTTP. Pulls, acknowledgements, and retries over HTTP are not subject to the API rate limit.
-
 <Render file="limits_increase" product="workers" />
 
 ### Increasing Queue Consumer Worker CPU Limits
-[Queue consumer Workers](/queues/reference/how-queues-works/#consumers) are Worker scripts, and share the same [per invocation CPU limits](/workers/platform/limits/#worker-limits) as any Workers do. Note that CPU time is active processing time: not time spent waiting on network requests, storage calls, or other general I/O.
+[Queue consumer Workers](/queues/reference/how-queues-works/#consumers) are Worker scripts, and share the same [per invocation CPU limits](/workers/platform/limits/#account-plan-limits) as any Workers do. Note that CPU time is active processing time: not time spent waiting on network requests, storage calls, or other general I/O.
 
 By default, the maximum CPU time per consumer Worker invocation is set to 30 seconds, but can be increased by setting `limits.cpu_ms` in your Wrangler configuration:
 
@@ -62,3 +61,5 @@ By default, the maximum CPU time per consumer Worker invocation is set to 30 sec
 </WranglerConfig>
 
 To learn more about CPU time and limits, [review the Workers documentation](/workers/platform/limits/#cpu-time).
+
+<Render file="wall-time-limits" product="workers" />

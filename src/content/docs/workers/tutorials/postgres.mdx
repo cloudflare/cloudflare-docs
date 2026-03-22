@@ -92,7 +92,7 @@ postgresql://username:password@host:port/database
 
 Replace `username`, `password`, `host`, `port`, and `database` with the appropriate values for your PostgreSQL database.
 
-Set your connection string as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
+Set your connection string as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/general/#secret) with the example variable name `DB_URL`:
 
 ```sh
 npx wrangler secret put DB_URL
@@ -113,22 +113,25 @@ DB_URL="<ENTER YOUR POSTGRESQL CONNECTION STRING>"
 
 ### Set explicit parameters
 
-Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or in your Wrangler file. Refer to an example of aWrangler file configuration:
+Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or in your Wrangler file. Refer to an example of a Wrangler file configuration:
 
 <WranglerConfig>
 
-```toml
-[vars]
-DB_USERNAME = "postgres"
-# Set your password by creating a secret so it is not stored as plain text
-DB_HOST = "ep-aged-sound-175961.us-east-2.aws.neon.tech"
-DB_PORT = 5432
-DB_NAME = "productsdb"
+```jsonc
+{
+	"vars": {
+		"DB_USERNAME": "postgres",
+		// Set your password by creating a secret so it is not stored as plain text
+		"DB_HOST": "ep-aged-sound-175961.us-east-2.aws.neon.tech",
+		"DB_PORT": 5432,
+		"DB_NAME": "productsdb"
+	}
+}
 ```
 
 </WranglerConfig>
 
-To set your password as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
+To set your password as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/general/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
 npx wrangler secret put DB_PASSWORD
@@ -338,16 +341,23 @@ This command outputs the Hyperdrive configuration `id` that will be used for you
 
 <WranglerConfig>
 
-```toml {7-9}
-name = "hyperdrive-example"
-main = "src/index.ts"
-compatibility_date = "2024-08-21"
-compatibility_flags = ["nodejs_compat"]
-
-# Pasted from the output of `wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string=[...]` above.
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "hyperdrive-example",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	// Pasted from the output of `wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string=[...]` above.
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

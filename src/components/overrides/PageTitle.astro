@@ -18,7 +18,12 @@ const reviewed = frontmatter.reviewed;
 const summary = frontmatter.summary;
 const component = frontmatter.styleGuide?.component;
 
-const slug = Astro.locals.starlightRoute.entry.slug;
+const slug = Astro.locals.starlightRoute.id;
+
+// Currently the officially sanctioned way to alter behaviour on specific routes
+// https://starlight.astro.build/guides/overriding-components/#only-override-on-specific-pages
+const hideTitle = Astro.locals.starlightRoute.hideTitle;
+const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 
 const breadcrumbProps: Record<string, any> = {
 	crumbs: [
@@ -31,46 +36,43 @@ const breadcrumbProps: Record<string, any> = {
 	id: "breadcrumbs",
 };
 
-const segments = slug.split("/");
+if (!hideBreadcrumbs) {
+	const segments = slug.split("/");
 
-for (let i = 0; i < segments.length; i++) {
-	if (i === 0) {
-		const entry = await getEntry("products", segments[0]);
+	for (let i = 0; i < segments.length; i++) {
+		if (i === 0) {
+			const entry = await getEntry("directory", segments[0]);
 
-		let title = segments[0];
+			let title = segments[0];
+			if (entry) {
+				title = entry.data.entry.title;
+			}
+
+			breadcrumbProps.crumbs.push({
+				text: title,
+				href: `/${segments[0]}/`,
+			});
+
+			continue;
+		}
+
+		let path = segments.slice(0, i + 1).join("/");
+
+		const entry = await getEntry("docs", path);
+
+		let title = segments[i];
 		if (entry) {
-			title = entry.data.product.title;
+			title = entry.data.title;
+		} else {
+			continue;
 		}
 
 		breadcrumbProps.crumbs.push({
 			text: title,
-			href: `/${segments[0]}/`,
+			href: `/${path}/`,
 		});
-
-		continue;
 	}
-
-	let path = segments.slice(0, i + 1).join("/");
-
-	const entry = await getEntry("docs", path);
-
-	let title = segments[i];
-	if (entry) {
-		title = entry.data.title;
-	} else {
-		continue;
-	}
-
-	breadcrumbProps.crumbs.push({
-		text: title,
-		href: `/${path}/`,
-	});
 }
-
-// Currently the officially sanctioned way to alter behaviour on specific routes
-// https://starlight.astro.build/guides/overriding-components/#only-override-on-specific-pages
-const hideTitle = Astro.locals.starlightRoute.hideTitle;
-const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 ---
 
 <div class="flex items-center justify-between">
@@ -119,26 +121,29 @@ const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 <style>
 	:root {
 		--color-link-breadcrumbs: var(--sl-color-text-accent);
+	}
 
-		.c-breadcrumbs {
-			--spacing-vertical-separator-breadcrumbs: 0.625rem;
+	:global(.c-breadcrumbs) {
+		--spacing-vertical-separator-breadcrumbs: 0.625rem;
+		padding: 0.5rem 0;
+	}
 
-			padding: 0.5rem 0;
+	:global(main > .content-panel:first-of-type) {
+		padding-block: 1rem;
+	}
 
-			.c-breadcrumbs__link {
-				font-size: 0.75rem;
-				line-height: 1.25rem;
-				font-weight: 600;
-			}
+	:global(.c-breadcrumbs__link) {
+		font-size: 0.75rem;
+		line-height: 1.25rem;
+		font-weight: 600;
+	}
 
-			.c-breadcrumbs__separator {
-				color: var(--color-cl1-brand-orange);
-			}
+	:global(.c-breadcrumbs__separator) {
+		color: var(--color-cl1-brand-orange);
+	}
 
-			.c-breadcrumbs__truncated-button {
-				color: var(--color-cl1-brand-orange);
-			}
-		}
+	:global(.c-breadcrumbs__truncated-button) {
+		color: var(--color-cl1-brand-orange);
 	}
 </style>
 

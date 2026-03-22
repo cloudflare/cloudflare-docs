@@ -4,6 +4,8 @@ title: Error 1020
 source: null
 ---
 
+import { Tabs, TabItem, DashButton } from "~/components";
+
 ## Error 1020: Access denied
 
 This error indicates that access to the website is denied by a Cloudflare firewall rule.
@@ -18,13 +20,28 @@ If you are not the website owner, provide the website owner with a screenshot of
 
 If you are the website owner:
 
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
 1. Retrieve a screenshot of the 1020 error from your customer.
-2. Search the [**Security Events log**](/waf/analytics/security-events/) (available at **Security** > **Events**) for the [**Ray ID**](/fundamentals/reference/cloudflare-ray-id/) or client IP Address from the visitor's 1020 error message.
+2. Search the [Security Events log](/waf/analytics/security-events/) (available at **Security** > **Analytics**, in the **Events** tab) for the [Ray ID](/fundamentals/reference/cloudflare-ray-id/) or client IP address from the visitor's 1020 error message.
 
-:::note
-Convert the UTC timestamp of the `1020` error to your local timezone when
-searching in the **Security Events log**.
-:::
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
 
-3. Assess the cause of the block and either update the **Firewall Rule** or allow the visitor's IP address in [**IP Access Rules**](/waf/tools/ip-access-rules/).
+   :::note
+   Convert the UTC timestamp of the `1020` error to your local timezone when searching in the Security Events log.
+   :::
 
+3. Assess the cause of the block and either update the Firewall Rule or allow the visitor's IP address in [IP Access Rules](/waf/tools/ip-access-rules/).
+
+</TabItem> <TabItem label="Old dashboard">
+
+1. Retrieve a screenshot of the 1020 error from your customer.
+2. Search the [Security Events log](/waf/analytics/security-events/) (available at **Security** > **Events**) for the [Ray ID](/fundamentals/reference/cloudflare-ray-id/) or client IP address from the visitor's 1020 error message.
+
+   :::note
+   Convert the UTC timestamp of the `1020` error to your local timezone when searching in the Security Events log.
+   :::
+
+3. Assess the cause of the block and either update the Firewall Rule or allow the visitor's IP address in [IP Access Rules](/waf/tools/ip-access-rules/).
+
+</TabItem> </Tabs>

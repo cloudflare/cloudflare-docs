@@ -63,9 +63,12 @@ Using Static Assets, you can serve the front-end of your application from your W
 
 <WranglerConfig>
 
-```toml
-[assets]
-directory = "public"
+```jsonc
+{
+	"assets": {
+		"directory": "public"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -237,10 +240,15 @@ To handle the file upload, you will first need to add the R2 binding. In the Wra
 
 <WranglerConfig>
 
-```toml
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "<R2_BUCKET_NAME>"
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "<R2_BUCKET_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -291,12 +299,6 @@ npm run dev
 
 ## 4. Create a queue
 
-:::note
-
-You will need a [Workers Paid plan](/workers/platform/pricing/) to create and use [Queues](/queues/) and Cloudflare Workers to consume event notifications.
-
-:::
-
 Event notifications capture changes to data in your R2 bucket. You will need to create a new queue `pdf-summarize` to receive notifications:
 
 ```sh
@@ -307,9 +309,16 @@ Add the binding to the Wrangler file:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[queues.consumers]]
-queue = "pdf-summarizer"
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				"queue": "pdf-summarizer"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -387,9 +396,12 @@ To use Workers AI, you will need to add the Workers AI binding to the Wrangler f
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[ai]
-binding = "AI"
+```jsonc
+{
+	"ai": {
+		"binding": "AI"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -451,7 +463,7 @@ The queue handler now adds the summary to the R2 bucket as a text file.
 
 ## 9. Enable event notifications
 
-Your `queue` handler is ready to handle incoming event notification messages. You need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/#r2-bucket-notification-create) for your bucket. The following command creates an event notification for the `object-create` event type for the `pdf` suffix:
+Your `queue` handler is ready to handle incoming event notification messages. You need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/r2/#r2-bucket-notification-create) for your bucket. The following command creates an event notification for the `object-create` event type for the `pdf` suffix:
 
 ```sh
 npx wrangler r2 bucket notification create <R2_BUCKET_NAME> --event-type object-create --queue pdf-summarizer --suffix "pdf"
@@ -463,7 +475,7 @@ An event notification is created for the `pdf` suffix. When a new file with the 
 
 ## 10. Deploy your Worker
 
-To deploy your Worker, run the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command:
+To deploy your Worker, run the [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) command:
 
 ```sh
 npx wrangler deploy
@@ -475,7 +487,7 @@ In the output of the `wrangler deploy` command, copy the URL. This is the URL of
 
 To test the application, navigate to the URL of your deployed application and upload a PDF file. Alternatively, you can use the [Cloudflare dashboard](https://dash.cloudflare.com/) to upload a PDF file.
 
-To view the logs, you can use the [`wrangler tail`](/workers/wrangler/commands/#tail) command.
+To view the logs, you can use the [`wrangler tail`](/workers/wrangler/commands/general/#tail) command.
 
 ```sh
 npx wrangler tail
