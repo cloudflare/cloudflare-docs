@@ -119,6 +119,14 @@ export default defineConfig({
 	experimental: {
 		contentIntellisense: true,
 	},
+	incrementalBuild: {
+		partialResolver: (name: string, props: any) => {
+			if (name === "Render" && props.file && props.product) {
+				return `src/content/partials/${props.product}/${props.file}.mdx`;
+			}
+			return null;
+		},
+	},
 	server: {
 		port: 1111,
 	},
