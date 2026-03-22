@@ -3,7 +3,7 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
-  - publish_date: "2026-02-03"
+  - publish_date: "2026-03-23"
     title: Custom metadata filtering
     description: |-
       Define up to 5 custom metadata fields per AI Search instance and filter search results by category, version, or any custom attribute. Attach metadata via R2 custom headers or HTML meta tags.

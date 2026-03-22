@@ -3,7 +3,7 @@ title: Custom metadata filtering for AI Search
 description: Define custom metadata fields and filter search results by category, version, or any custom attribute.
 products:
   - ai-search
-date: 2026-03-06
+date: 2026-03-23
 ---
 
 [AI Search](/ai-search/) now supports custom metadata filtering, allowing you to define your own metadata fields and filter search results based on attributes like category, version, or any custom field you define.
@@ -12,17 +12,20 @@ date: 2026-03-06
 
 You can define up to 5 custom metadata fields per AI Search instance. Each field has a name and data type (`text`, `number`, or `boolean`):
 
-```ts
-const aisearch = await env.AI.aiSearch().create({
-	id: "my-instance",
-	type: "r2",
-	source: "my-bucket",
-	custom_metadata: [
-		{ field_name: "category", data_type: "text" },
-		{ field_name: "version", data_type: "number" },
-		{ field_name: "is_public", data_type: "boolean" },
-	],
-});
+```bash
+curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instances \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  -d '{
+    "id": "my-instance",
+    "type": "r2",
+    "source": "my-bucket",
+    "custom_metadata": [
+      { "field_name": "category", "data_type": "text" },
+      { "field_name": "version", "data_type": "number" },
+      { "field_name": "is_public", "data_type": "boolean" }
+    ]
+  }'
 ```
 
 ## Add metadata to your documents
@@ -36,20 +39,26 @@ How you attach metadata depends on your data source:
 
 Use custom metadata fields in your search queries alongside built-in attributes like `folder` and `timestamp`:
 
-```ts
-const aisearch = env.AI.aiSearch().get("my-instance");
-
-const response = await aisearch.search({
-	messages: [{ role: "user", content: "How do I configure authentication?" }],
-	ai_search_options: {
-		retrieval: {
-			filters: {
-				category: { $eq: "documentation" },
-				version: { $gte: 2.0 },
-			},
-		},
-	},
-});
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instances/{NAME}/search \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  -d '{
+    "messages": [
+      {
+        "content": "How do I configure authentication?",
+        "role": "user"
+      }
+    ],
+    "ai_search_options": {
+      "retrieval": {
+        "filters": {
+          "category": "documentation",
+          "version": { "$gte": 2.0 }
+        }
+      }
+    }
+  }'
 ```
 
 Learn more in the [metadata filtering documentation](/ai-search/configuration/metadata/).
