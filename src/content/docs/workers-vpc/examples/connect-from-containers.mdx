@@ -115,7 +115,7 @@ The key part is the `static outboundByHost` property on the `Container` class. T
 <Tabs>
 	<TabItem label="src/index.ts">
 ```ts
-import { Container } from "@cloudflare/containers";
+import { Container, type OutboundHandlerContext } from "@cloudflare/containers";
 
 interface Env {
 	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
@@ -132,7 +132,7 @@ export class MyContainer extends Container {
 		"my-private-api": async (
 			request: Request,
 			env: Env,
-			ctx: ExecutionContext,
+			ctx: OutboundHandlerContext,
 		) => {
 			// Forward the request through the VPC Service binding.
 			// The VPC binding routes through the Cloudflare Tunnel
