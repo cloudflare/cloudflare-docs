@@ -10,6 +10,12 @@ import { Render, Details, DashButton } from "~/components";
 
 <Render file="cipher-suites-definition" product="ssl" />
 
+## Prerequisites
+
+<Render file="cipher-suites-prerequisites" product="ssl" />
+
+## Selection modes
+
 When configuring cipher suites via dashboard, you can use three different selection modes:
 
 - **By security level**: allows you to select between the predefined [Cloudflare recommendations](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/) (Modern[^1], Compatible, or Legacy).
@@ -33,10 +39,6 @@ For any of the modes, you should keep in mind the following configuration condit
 	page. * It is not possible to configure minimum TLS version nor cipher suites
 	for [Cloudflare Pages](/pages/) hostnames.
 </Details>
-
-## Prerequisites
-
-<Render file="cipher-suites-prerequisites" product="ssl" />
 
 ## Steps
 
