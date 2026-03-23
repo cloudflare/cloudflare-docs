@@ -8,7 +8,7 @@ sidebar:
 ### Scaling container instances with `get()`
 
 :::note
-This section uses helpers from the [Container package](/containers/container-package).
+This section uses helpers from the [Container class](/containers/container-class/).
 :::
 
 Currently, Containers are only scaled manually by getting containers with a unique ID, then
@@ -65,40 +65,3 @@ It will randomly select one of N instances for each request and route to it. Unf
 - It will randomly select each instance, regardless of location.
 
 We plan to fix these issues with built-in autoscaling and routing features in the near future.
-
-### Autoscaling and routing (unreleased)
-
-:::note
-This is an unreleased feature. It is subject to change.
-:::
-
-You will be able to turn autoscaling on for a Container, by setting the `autoscale` property to on the Container class:
-
-```javascript
-class MyBackend extends Container {
-	autoscale = true;
-	defaultPort = 8080;
-}
-```
-
-This instructs the platform to automatically scale instances based on incoming traffic and resource usage (memory, CPU).
-
-Container instances will be launched automatically to serve local traffic, and will be stopped when they are no longer needed.
-
-To route requests to the correct instance, you will use the `getContainer()` helper function to get a container instance, then
-pass requests to it:
-
-```javascript
-export default {
-	async fetch(request, env) {
-		return getContainer(env.MY_BACKEND).fetch(request);
-	},
-};
-```
-
-This will send traffic to the nearest ready instance of a container. If a container is overloaded or has not yet launched,
-requests will be routed to potentially more distant container. Container readiness can be automatically determined based
-on resource use, but will also be configurable with custom readiness checks.
-
-Autoscaling and latency-aware routing will be available in the near future, and will be documented in more detail when released.
-Until then, you can use the `getRandom` helper function to route requests to multiple container instances.
