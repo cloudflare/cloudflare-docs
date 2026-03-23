@@ -49,7 +49,9 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 			return true;
 		};
 
-		const clientName = isLegacyVersion(version) ? "WARP client" : "Cloudflare One Client";
+		const clientName = isLegacyVersion(version)
+			? "WARP client"
+			: "Cloudflare One Client";
 		const title = `${clientName} for ${platformName} (version ${version})`;
 
 		const [platform, track] = release.id.split("/");
