@@ -9,7 +9,7 @@ head:
     content: Fix DNS_PROBE_FINISHED_NXDOMAIN
 ---
 
-import { Render } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 <Render
 	file="dns-errors-ts-intro"
@@ -19,7 +19,7 @@ import { Render } from "~/components";
 
 ## Background
 
-`DNS_PROBE_FINISHED_NXDOMAIN` indicates that the DNS lookup completed and the result was that the domain does not exist. `DNS_PROBE_FINISHED` means that the DNS probe ran to completion and `NXDOMAIN` stands for non-existent domain. Together, these messages mean that the DNS resolver determined the requested domain has no associated DNS records.
+`DNS_PROBE_FINISHED_NXDOMAIN` indicates that the DNS lookup completed and the result was that the domain does not exist. `DNS_PROBE_FINISHED` means that the DNS probe ran to completion and `NXDOMAIN` stands for non-existent domain. Together, these messages mean that the DNS resolver determined the requested domain has no associated <GlossaryTooltip term="DNS record" link="/dns/manage-dns-records/">DNS records</GlossaryTooltip>.
 
 Though visitors sometimes encounter this error — or similarly worded messages from Safari, Edge, or Firefox — because of network or local DNS issues, it might point to an issue with your DNS records in Cloudflare.
 
