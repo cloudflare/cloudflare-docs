@@ -32,14 +32,14 @@ A policy — or content security rule — can perform one of the following actio
 - **Log**: Cloudflare will log any resources not covered by the policy, without blocking any resources. Use this action to validate a new policy before deploying it. Resources not covered by the policy will be reported as [policy violations](/client-side-security/policies/violations/).
 - **Allow**: Cloudflare will block any resources not explicitly allowed by the policy. Switch to the _Allow_ action after validating a new policy with the _Log_ action, so that your policy does not block essential application resources, which would affect your application's end users. Policies with the _Allow_ action will log [policy violations](/client-side-security/policies/violations/) for any blocked resources.
 
-For details on the CSP directives Cloudflare creates for each type of policy action, refer to [How Client-Side Security works](/client-side-security/how-it-works/#positive-security-model-using-policies). For more information on the CSP directives supported by policies, refer to [Supported CSP directives](/client-side-security/policies/csp-directives/).
+For details on the CSP directives Cloudflare creates for each type of policy action, refer to [How client-side security works](/client-side-security/how-it-works/#positive-security-model-using-policies). For more information on the CSP directives supported by policies, refer to [Supported CSP directives](/client-side-security/policies/csp-directives/).
 
 ## Next steps
 
 Refer to the following pages for instructions on creating a policy or content security rule:
 
 - [Create a policy in the dashboard](/client-side-security/policies/create-dashboard/)
-- [Client-Side Security API: Create a policy](/client-side-security/reference/api/#create-a-policy)
+- [Client-side security API: Create a policy](/client-side-security/reference/api/#create-a-policy)
 
 Shortly after you configure policies, the Cloudflare dashboard will start displaying any [violations](/client-side-security/policies/violations/) of those policies.
 

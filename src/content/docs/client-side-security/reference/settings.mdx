@@ -15,7 +15,7 @@ import {
 
 ## Reporting endpoint
 
-When enabled, Client-Side Security's resource monitoring uses a <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> [report-only HTTP header](/client-side-security/reference/csp-header/) to gather information about all the scripts running on your application.
+When enabled, client-side security's resource monitoring uses a <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> [report-only HTTP header](/client-side-security/reference/csp-header/) to gather information about all the scripts running on your application.
 
 By default, reports are sent to a Cloudflare-owned endpoint:
 
@@ -76,7 +76,7 @@ To configure the CSP reporting endpoint:
 
 When connection targets are reported to Cloudflare, their URIs can sometimes include sensitive data such as session ID.
 
-By default, Client-Side Security only checks the domain against malicious threat intelligence feeds. You can choose to let Cloudflare use the full URI when analyzing the connections made from your domain's pages. Any sensitive data present in the URI will be logged in clear text, and any user with access to the connection monitor dashboard will be able to view it.
+By default, client-side security only checks the domain against malicious threat intelligence feeds. You can choose to let Cloudflare use the full URI when analyzing the connections made from your domain's pages. Any sensitive data present in the URI will be logged in clear text, and any user with access to the connection monitor dashboard will be able to view it.
 
 ### Configure the connection target details to use
 
@@ -101,7 +101,7 @@ By default, Client-Side Security only checks the domain against malicious threat
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Client-side security** > **Settings**.
-3. Under **Connection target details**, select **Log host only** to analyze only the hostname or **Log full URI** to use the full URI in Client-Side Security.
+3. Under **Connection target details**, select **Log host only** to analyze only the hostname or **Log full URI** to use the full URI in client-side security.
 4. Select **Apply settings**.
 
 </Steps>
@@ -110,7 +110,7 @@ By default, Client-Side Security only checks the domain against malicious threat
 
 ## Turn off client-side resource monitoring
 
-When you turn off Client-Side Security's resource monitoring, you lose visibility on the scripts running on your zone, the outbound connections made from pages in your domain, and cookies detected in HTTP traffic.
+When you turn off client-side security's resource monitoring, you lose visibility on the scripts running on your zone, the outbound connections made from pages in your domain, and cookies detected in HTTP traffic.
 
 To turn off client-side resource monitoring:
 
@@ -139,7 +139,7 @@ To turn off client-side resource monitoring:
 
 </TabItem> </Tabs>
 
-Turning off Client-Side Security's resource monitoring does not turn off [policies](/client-side-security/policies/) (also known as content security rules). To turn off policies:
+Turning off client-side security's resource monitoring does not turn off [policies](/client-side-security/policies/) (also known as content security rules). To turn off policies:
 
 <Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
