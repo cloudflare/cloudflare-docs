@@ -1,0 +1,24 @@
+---
+title: Connect Containers to private services via Workers VPC
+description: Containers can now reach private endpoints in your VPC through outbound Workers and Workers VPC bindings.
+products:
+  - workers-vpc
+  - containers
+date: 2026-03-23
+---
+
+You can now connect [Containers](/containers/) to private services in your VPC using [Workers VPC](/workers-vpc/) bindings and outbound Workers.
+
+Containers support **outbound Workers** — programmable egress handlers that intercept HTTP requests made by a running container. By combining outbound Workers with Workers VPC Service bindings, your containers can reach private APIs, databases, and services that are not exposed to the public internet.
+
+This works by:
+
+1. Defining an outbound Worker on your `Container` class using `static outboundByHost` to intercept requests to specific hostnames.
+2. Routing intercepted requests through a Workers VPC Service binding (`env.VPC_SERVICE.fetch(...)`) to reach your private endpoint.
+3. Inside the container, making standard HTTP requests to the virtual hostname — no SDK or special client required.
+
+:::note
+Outbound interception currently works with HTTP only. HTTPS interception from the container is not yet supported, but the outbound Worker can upgrade the request to HTTPS/TLS when forwarding through Workers VPC.
+:::
+
+For a complete walkthrough, refer to [Connect from Containers to private services](/workers-vpc/examples/connect-from-containers/).

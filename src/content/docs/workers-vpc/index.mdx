@@ -94,6 +94,10 @@ Route requests to internal microservices in your private network based on URL pa
 
 Build employee-facing applications and MCP servers that aggregate data from multiple private services. Create unified dashboards, admin panels, and internal tools without exposing backend systems.
 
+### Connect Containers to private services
+
+Run existing containerized applications on Cloudflare and connect them to private APIs, databases, and services in your VPC — without exposing public endpoints. Use outbound Workers to intercept container HTTP requests and route them through Workers VPC. Refer to the [Connect from Containers](/workers-vpc/examples/connect-from-containers/) example.
+
 ## Related products
 
 <RelatedProduct header="Workers" href="/workers/" product="workers">
@@ -105,5 +109,11 @@ Build serverless applications and deploy instantly across the globe for exceptio
 <RelatedProduct header="Hyperdrive" href="/hyperdrive/" product="hyperdrive">
 
 Connect to PostgreSQL and MySQL databases from Workers with connection pooling and caching built-in, available to all Workers plans.
+
+</RelatedProduct>
+
+<RelatedProduct header="Containers" href="/containers/" product="containers">
+
+Run containerized applications on Cloudflare. Combine with Workers VPC to connect containers to private services in your network.
 
 </RelatedProduct>

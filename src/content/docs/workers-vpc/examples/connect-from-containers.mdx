@@ -1,0 +1,277 @@
+---
+title: Connect from Containers to private services
+pcx_content_type: example
+reviewed: 2026-03-23
+---
+
+import { Tabs, TabItem, WranglerConfig, PackageManagers } from "~/components";
+
+This example demonstrates how to connect a [Container](/containers/) to a private service in your VPC using Workers VPC. The container makes standard HTTP requests to a virtual hostname, and an outbound Worker intercepts those requests and routes them through a Workers VPC Service binding to reach the private endpoint.
+
+This pattern is useful for:
+
+- Running existing applications (for example, ASP.NET, Node.js, Python) in containers that need to connect to private databases or APIs in AWS, Azure, GCP, or on-premise networks.
+- Avoiding public endpoints for backend services while still running containerized workloads on Cloudflare.
+- Migrating legacy applications to Cloudflare without rewriting networking code — the container just makes HTTP requests to a hostname.
+
+:::note
+Outbound interception currently works with **HTTP only**. HTTPS interception from the container is not yet supported. However, the connection between the container and the outbound Worker runs on the same machine and is secure. The outbound Worker can forward the request over HTTPS through the Workers VPC binding.
+:::
+
+## Prerequisites
+
+- A Cloudflare Tunnel configured and running in your private network (follow the [Get Started guide](/workers-vpc/get-started/#2-set-up-cloudflare-tunnel))
+- A Workers VPC Service configured for your private endpoint (follow [Create a VPC Service](/workers-vpc/get-started/#3-create-a-vpc-service))
+- `@cloudflare/containers` v0.2.0 or later
+
+## How it works
+
+1. A container instance makes a standard HTTP request to a virtual hostname (for example, `http://my-private-api/data`).
+2. The outbound Worker on the `Container` class intercepts the request based on the hostname.
+3. The outbound Worker forwards the request through a Workers VPC Service binding to reach the private service in your network.
+4. The response flows back through the same path to the container.
+
+```
+┌─────────────┐    HTTP     ┌──────────────────┐   VPC Binding   ┌──────────────┐   Tunnel   ┌─────────────────┐
+│  Container   │ ─────────► │  Outbound Worker  │ ─────────────► │  Workers VPC  │ ────────► │  Private Service  │
+│  (your app)  │            │  (same machine)   │                │  (Tunnel)     │           │  (your network)  │
+└─────────────┘            └──────────────────┘                └──────────────┘           └─────────────────┘
+```
+
+## 1. Set up your VPC Service
+
+If you have not already, create a VPC Service for the private endpoint you want to reach:
+
+```bash
+npx wrangler vpc service create my-private-api \
+  --type http \
+  --tunnel-id <YOUR_TUNNEL_ID> \
+  --hostname internal-api.example.com \
+  --http-port 8080
+```
+
+Note the service ID returned.
+
+## 2. Create a new project
+
+Create a new Cloudflare Workers project:
+
+```bash
+npm create cloudflare@latest -- containers-vpc-example
+```
+
+Install the containers package:
+
+<PackageManagers pkg="@cloudflare/containers" />
+
+## 3. Configure your Worker
+
+Add both the Container Durable Object binding and the VPC Service binding to your Wrangler configuration:
+
+<WranglerConfig>
+```jsonc
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "containers-vpc-example",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-03-23",
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"instance_type": "basic",
+			"max_instances": 1
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_CONTAINER",
+				"class_name": "MyContainer"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyContainer"]
+		}
+	],
+	"vpc_services": [
+		{
+			"binding": "PRIVATE_API",
+			"service_id": "<YOUR_SERVICE_ID>",
+			"remote": true
+		}
+	]
+}
+```
+</WranglerConfig>
+
+## 4. Define the Container class with an outbound Worker
+
+The key part is the `static outboundByHost` property on the `Container` class. This defines hostname-based routing for outbound HTTP requests from the container:
+
+<Tabs>
+	<TabItem label="src/index.ts">
+```ts
+import { Container } from "@cloudflare/containers";
+
+interface Env {
+	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
+	PRIVATE_API: Fetcher;
+}
+
+export class MyContainer extends Container {
+	defaultPort = 8080;
+	sleepAfter = "5m";
+
+	// Intercept outbound HTTP requests from the container by hostname
+	// and route them through Workers VPC
+	static outboundByHost = {
+		"my-private-api": async (
+			request: Request,
+			env: Env,
+			ctx: ExecutionContext,
+		) => {
+			// Forward the request through the VPC Service binding.
+			// The VPC binding routes through the Cloudflare Tunnel
+			// to reach the private service.
+			const url = new URL(request.url);
+			return env.PRIVATE_API.fetch(
+				`http://internal-api.example.com:8080${url.pathname}${url.search}`,
+				request,
+			);
+		},
+	};
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const id = env.MY_CONTAINER.idFromName("default");
+		const container = env.MY_CONTAINER.get(id);
+		return container.fetch(request);
+	},
+};
+```
+	</TabItem>
+	<TabItem label="Dockerfile">
+```dockerfile
+FROM node:20-slim
+
+WORKDIR /app
+
+# A simple HTTP server that calls the private API through
+# the virtual hostname intercepted by the outbound Worker
+COPY server.js .
+
+EXPOSE 8080
+CMD ["node", "server.js"]
+```
+	</TabItem>
+	<TabItem label="server.js (container app)">
+```js
+const http = require("http");
+
+const server = http.createServer(async (req, res) => {
+	try {
+		// Make a standard HTTP request to the virtual hostname.
+		// This request is intercepted by the outbound Worker
+		// and routed through Workers VPC to the private service.
+		const response = await fetch("http://my-private-api/data");
+		const data = await response.text();
+
+		res.writeHead(200, { "Content-Type": "application/json" });
+		res.end(
+			JSON.stringify({
+				source: "container",
+				privateApiResponse: data,
+			}),
+		);
+	} catch (error) {
+		res.writeHead(502, { "Content-Type": "application/json" });
+		res.end(JSON.stringify({ error: "Failed to reach private API" }));
+	}
+});
+
+server.listen(8080, () => {
+	console.log("Container server running on port 8080");
+});
+```
+	</TabItem>
+</Tabs>
+
+## 5. How hostname resolution works
+
+When the container makes a request to `http://my-private-api/data`, the outbound Worker intercepts it based on the `Host` header matching the key in `outboundByHost`.
+
+:::note
+On initial release, the container must be able to resolve the hostname. You can either:
+
+1. Add the hostname to `/etc/hosts` inside the container image (for example, `127.0.0.1 my-private-api`).
+2. Make the request to any IP address and set the `Host` header to the desired hostname.
+
+Option 1 is recommended for simplicity.
+:::
+
+To add the hostname in your Dockerfile:
+
+```dockerfile
+FROM node:20-slim
+# Map the virtual hostname so the container can resolve it
+RUN echo "127.0.0.1 my-private-api" >> /etc/hosts
+WORKDIR /app
+COPY server.js .
+EXPOSE 8080
+CMD ["node", "server.js"]
+```
+
+## 6. Deploy and test
+
+Deploy your Worker and container:
+
+```bash
+npx wrangler deploy
+```
+
+Test the endpoint:
+
+```bash
+curl https://containers-vpc-example.<your-subdomain>.workers.dev/
+```
+
+The request flows through: your Worker → Container → outbound Worker (intercepts `my-private-api`) → Workers VPC binding → Cloudflare Tunnel → your private API.
+
+## Multiple private services
+
+You can route to multiple private services by adding more entries to `outboundByHost` and more VPC Service bindings:
+
+```ts
+export class MyContainer extends Container {
+	defaultPort = 8080;
+	sleepAfter = "5m";
+
+	static outboundByHost = {
+		"my-private-api": async (request: Request, env: Env) => {
+			const url = new URL(request.url);
+			return env.PRIVATE_API.fetch(
+				`http://internal-api.example.com:8080${url.pathname}${url.search}`,
+				request,
+			);
+		},
+		"my-private-db": async (request: Request, env: Env) => {
+			const url = new URL(request.url);
+			return env.PRIVATE_DB.fetch(
+				`http://db.internal.example.com:5432${url.pathname}${url.search}`,
+				request,
+			);
+		},
+	};
+}
+```
+
+## Next steps
+
+- Learn more about the [`Container` class and its API](https://github.com/cloudflare/containers)
+- Explore other [Workers VPC examples](/workers-vpc/examples/)
+- Review [Workers VPC configuration](/workers-vpc/configuration/vpc-services/)

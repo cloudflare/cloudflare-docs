@@ -174,6 +174,38 @@ exec /path/to/your-app
 
 For a complete working example, see the [Docker-in-Docker Containers example](https://github.com/th0m/containers-dind).
 
+## How do I connect a container to private services in my VPC?
+
+You can use outbound Workers combined with [Workers VPC](/workers-vpc/) to connect containers to private endpoints in AWS, Azure, GCP, or on-premise networks that are not exposed to the public internet.
+
+Define `static outboundByHost` on your `Container` class to intercept outbound HTTP requests by hostname and route them through a Workers VPC Service binding:
+
+```javascript
+import { Container } from "@cloudflare/containers";
+
+class MyContainer extends Container {
+	defaultPort = 8080;
+
+	static outboundByHost = {
+		"my-private-api": async (request, env, ctx) => {
+			const url = new URL(request.url);
+			return env.PRIVATE_API.fetch(
+				`http://internal-api.example.com:8080${url.pathname}${url.search}`,
+				request,
+			);
+		},
+	};
+}
+```
+
+Inside the container, your application makes a standard HTTP request to `http://my-private-api/data` — no special SDK required.
+
+:::note
+Outbound interception currently works with HTTP only. HTTPS interception from the container is not yet supported.
+:::
+
+For a complete walkthrough, refer to the [Connect from Containers to private services](/workers-vpc/examples/connect-from-containers/) example.
+
 ## How do I allow or disallow egress from my container?
 
 When booting a Container, you can specify `enableInternet`, which will toggle
