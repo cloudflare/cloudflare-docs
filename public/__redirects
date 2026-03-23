@@ -2635,11 +2635,9 @@
 # Main catch-all redirect (must be last)
 /cloudflare-one/team-and-resources/devices/warp/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/:splat 301
 
+/workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
+
 # Changelog (individual entry route moved to /post/)
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
-
-/dynamic-workers/examples/agents-executing-code/ /dynamic-workers/examples/ 301
-/dynamic-workers/examples/running-ai-generated-code/ /dynamic-workers/examples/ 301
-/workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
