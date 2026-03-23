@@ -97,18 +97,6 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 									<td>Yes</td>
 								</tr>
 							)}
-							{properties.reasoning && (
-								<tr>
-									<td>Reasoning</td>
-									<td>Yes</td>
-								</tr>
-							)}
-							{properties.vision && (
-								<tr>
-									<td>Vision</td>
-									<td>Yes</td>
-								</tr>
-							)}
 							{properties.lora && (
 								<tr>
 									<td>LoRA</td>

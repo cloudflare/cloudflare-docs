@@ -19,19 +19,20 @@ describe("WranglerCLI", () => {
 				},
 			}),
 		).resolves.toContain("pnpm wrangler deploy");
-	}, 10_000);
+	});
 
 	test("errors with no props", async () => {
 		await expect(renderWithOptions()).rejects
 			.toThrowErrorMatchingInlineSnapshot(`
 			[ZodError: [
 			  {
-			    "expected": "string",
 			    "code": "invalid_type",
+			    "expected": "string",
+			    "received": "undefined",
 			    "path": [
 			      "command"
 			    ],
-			    "message": "Invalid input: expected string, received undefined"
+			    "message": "Required"
 			  }
 			]]
 		`);

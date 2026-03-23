@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import dedent from "dedent";
-import { isDisallowedByRobots } from "~/util/robots";
 
 export const GET: APIRoute = async ({ url }) => {
 	const base = url.origin;
@@ -31,13 +30,11 @@ export const GET: APIRoute = async ({ url }) => {
 		return false;
 	}
 
-	// Build a set of product IDs that actually have docs pages, are not sub-products,
-	// and are not disallowed by robots.txt
+	// Build a set of product IDs that actually have docs pages and are not sub-products
 	const productsWithDocs = new Set(
 		directory
 			.filter((entry) => {
 				if (isSubProduct(entry.data.entry.url)) return false;
-				if (isDisallowedByRobots(entry.data.entry.url)) return false;
 				const prefix = entry.data.entry.url.slice(1, -1);
 				return docs.some(
 					(e) => e.id.startsWith(prefix + "/") || e.id === prefix,
@@ -54,13 +51,12 @@ export const GET: APIRoute = async ({ url }) => {
 		),
 	).sort(([a], [b]) => a.localeCompare(b));
 
-	// Find ungrouped directory entries that have their own top-level docs section,
-	// are not nested under another product's URL path, and are not disallowed by robots.txt
+	// Find ungrouped directory entries that have their own top-level docs section
+	// (not nested under another product's URL path)
 	const ungrouped = allDirectory
 		.filter((entry) => {
 			if (entry.data.entry.group) return false;
 			if (isSubProduct(entry.data.entry.url)) return false;
-			if (isDisallowedByRobots(entry.data.entry.url)) return false;
 			const prefix = entry.data.entry.url.slice(1, -1);
 			return docs.some((e) => e.id.startsWith(prefix + "/") || e.id === prefix);
 		})

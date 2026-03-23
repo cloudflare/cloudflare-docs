@@ -1,23 +1,42 @@
 import type { WorkersAIModelsSchema } from "~/schemas";
-import { CAPABILITY_PROPERTIES } from "~/util/model-properties";
-
-const CATEGORY_BADGE: Record<string, string> = {
-	model: "default", // gray
-	platform: "caution", // orange
-};
 
 const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
 	const badges = model.properties.flatMap(({ property_id, value }) => {
-		// Boolean capability badges (data-driven)
-		if (property_id in CAPABILITY_PROPERTIES && value === "true") {
-			const def = CAPABILITY_PROPERTIES[property_id];
+		if (property_id === "lora" && value === "true") {
 			return {
-				variant: CATEGORY_BADGE[def.category] ?? "default",
-				text: def.label,
+				variant: "tip",
+				text: "LoRA",
 			};
 		}
 
-		// Special case: deprecation badge (not a boolean capability)
+		if (property_id === "function_calling" && value === "true") {
+			return {
+				variant: "note",
+				text: "Function calling",
+			};
+		}
+
+		if (property_id === "async_queue" && value === "true") {
+			return {
+				variant: "note",
+				text: "Batch",
+			};
+		}
+
+		if (property_id === "partner" && value === "true") {
+			return {
+				variant: "note",
+				text: "Partner",
+			};
+		}
+
+		if (property_id === "realtime" && value === "true") {
+			return {
+				variant: "note",
+				text: "Real-time",
+			};
+		}
+
 		if (property_id === "planned_deprecation_date") {
 			const timestamp = Math.floor(new Date(value as string).getTime());
 
@@ -32,10 +51,10 @@ const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
 	});
 
 	return (
-		<ul className="m-0 flex list-none flex-wrap items-center gap-1.5 p-0 text-xs [&>li]:m-0">
+		<ul className="m-0 flex list-none items-center gap-2 p-0 text-xs">
 			{badges.map((badge) => (
 				<li key={badge.text}>
-					<span className={`sl-badge ${badge.variant}`}>{badge.text}</span>
+					<span className="sl-badge default">{badge.text}</span>
 				</li>
 			))}
 		</ul>

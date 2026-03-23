@@ -33,10 +33,6 @@
         {
             "property_id": "function_calling",
             "value": "true"
-        },
-        {
-            "property_id": "reasoning",
-            "value": "true"
         }
     ],
     "schema": {
@@ -294,21 +290,6 @@
                                 }
                             ],
                             "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                        },
-                        "chat_template_kwargs": {
-                            "type": "object",
-                            "properties": {
-                                "enable_thinking": {
-                                    "type": "boolean",
-                                    "default": true,
-                                    "description": "Whether to enable reasoning, enabled by default."
-                                },
-                                "clear_thinking": {
-                                    "type": "boolean",
-                                    "default": false,
-                                    "description": "If false, preserves reasoning context between turns."
-                                }
-                            }
                         },
                         "response_format": {
                             "anyOf": [
@@ -1551,21 +1532,6 @@
                                 }
                             ],
                             "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                        },
-                        "chat_template_kwargs": {
-                            "type": "object",
-                            "properties": {
-                                "enable_thinking": {
-                                    "type": "boolean",
-                                    "default": true,
-                                    "description": "Whether to enable reasoning, enabled by default."
-                                },
-                                "clear_thinking": {
-                                    "type": "boolean",
-                                    "default": false,
-                                    "description": "If false, preserves reasoning context between turns."
-                                }
-                            }
                         },
                         "response_format": {
                             "anyOf": [

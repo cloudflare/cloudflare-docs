@@ -8,7 +8,7 @@ import {
 	PREVIEW_URL_REGEX,
 } from "./constants";
 
-import { filenameToPath } from "./util";
+import { filenameToPath, branchToSubdomain } from "./util";
 
 async function run(): Promise<void> {
 	try {
@@ -19,48 +19,32 @@ async function run(): Promise<void> {
 
 		const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
 		const ctx = github.context;
-		const payload = ctx.payload;
-
-		// Support both pull_request and push event contexts
-		let branch: string;
-		let commitSha: string;
-		let pull_number: number | undefined;
-
-		if (payload.pull_request) {
-			branch = payload.pull_request.head.ref;
-			commitSha = payload.pull_request.head.sha;
-			pull_number = payload.pull_request.number;
-		} else {
-			branch = ctx.ref.replace("refs/heads/", "");
-			commitSha = ctx.sha;
-
-			core.info(`Finding pull requests for ${ctx.ref}`);
-			const { data: pulls } = await octokit.rest.pulls.list({
-				...ctx.repo,
-				head: `${ctx.repo.owner}:${branch}`,
-			});
-			pull_number = pulls.at(0)?.number;
-		}
-
-		if (!pull_number) {
-			core.setFailed(`Could not find pull request number`);
-			process.exit();
-		}
-		if (!process.env.BRANCH_SLUG) {
-			core.setFailed(`Could not find BRANCH_SLUG in env`);
-			process.exit();
-		}
+		const branch = ctx.ref.replace("refs/heads/", "");
 
 		const previewUrl = {
-			branch: `https://${process.env.BRANCH_SLUG}.preview.developers.cloudflare.com`,
-			commit: `https://${commitSha.slice(0, 8)}.preview.developers.cloudflare.com`,
+			branch: `https://${branchToSubdomain(branch)}.preview.developers.cloudflare.com`,
+			commit: `https://${ctx.sha.slice(0, 8)}.preview.developers.cloudflare.com`,
 		};
 
 		core.info(
 			`Commit URL: ${previewUrl.commit}\nBranch URL: ${previewUrl.branch}`,
 		);
 
-		core.info(`Found PR #${pull_number}`);
+		core.info(`Finding pull requests for ${ctx.ref}`);
+
+		const { data: pulls } = await octokit.rest.pulls.list({
+			...ctx.repo,
+			head: `${ctx.repo.owner}:${branch}`,
+		});
+
+		const pull_number = pulls.at(0)?.number;
+
+		if (!pull_number) {
+			core.setFailed(`Could not find pull requests for ${ctx.ref}`);
+			process.exit();
+		}
+
+		core.info(`Found ${pull_number}`);
 
 		const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
 			...ctx.repo,

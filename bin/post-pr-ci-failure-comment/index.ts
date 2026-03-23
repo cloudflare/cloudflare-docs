@@ -24,32 +24,20 @@ async function run(): Promise<void> {
 			run_id: runId,
 		});
 
-		const ciJobs = run.jobs.filter(
-			(job) =>
-				job.name === "Pre Build" ||
-				job.name === "Build" ||
-				job.name === "Post Build",
-		);
+		const job = run.jobs.findLast((job) => job.name === "Compiles");
 
-		if (ciJobs.length === 0) {
-			core.setFailed(`Could not find Pre Build, Build, or Post Build jobs`);
+		if (!job) {
+			core.setFailed(`Could not find a job called 'Compiles'`);
 			process.exit();
 		}
 
-		const failedJob = ciJobs.find((job) =>
-			job.steps?.some((step) => step.conclusion === "failure"),
-		);
+		const failedStep = job.steps?.find((step) => step.conclusion === "failure");
 
-		if (failedJob) {
-			const failedStep = failedJob.steps?.find(
-				(step) => step.conclusion === "failure",
-			);
-			core.info(
-				`Found failed step ${failedStep?.name} in job ${failedJob.name}`,
-			);
+		if (failedStep) {
+			core.info(`Found failed step ${failedStep.name}`);
 		}
 
-		const conclusion = failedJob ? "failure" : "success";
+		const conclusion = failedStep ? "failure" : "success";
 
 		const { data: comments } = await octokit.rest.issues.listComments({
 			owner,
@@ -70,8 +58,7 @@ async function run(): Promise<void> {
 			core.info(`No existing comment found`);
 		}
 
-		const targetJob = failedJob ?? ciJobs[0];
-		const url = `https://github.com/${owner}/${repo}/actions/runs/${runId}/job/${targetJob.id}`;
+		const url = `https://github.com/${owner}/${repo}/actions/runs/${runId}/job/${job.id}`;
 		const comment = `**CI run failed:** [build logs](${url})`;
 
 		if (conclusion === "failure") {

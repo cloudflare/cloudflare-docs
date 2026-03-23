@@ -6,55 +6,43 @@ on:
 
 jobs:
   publish:
-    if: github.repository == 'cloudflare/cloudflare-docs'
     name: Production
     runs-on: ubuntu-22.04
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v4
         with:
-          node-version: 24.x
+          node-version: 22.x
           cache: npm
-
-      - name: Restore node_modules (cache hit)
-        id: node-modules-cache
-        uses: actions/cache@v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-
-      - name: Install node_modules (cache miss)
-        run: npm ci
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
-
-      - name: Restore Astro assets from cache
-        uses: actions/cache@v5
+      - run: npm ci
+      - uses: actions/cache/restore@v4
         with:
           path: |
             node_modules/.astro/assets
           key: static
-
-      - name: Build
-        run: npm run build
+      - run: npm run build
+        name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
           name: site-html
           path: dist
-
-      - name: Deploy to Cloudflare Workers
-        run: npx wrangler deploy
+      - run: npx wrangler deploy
+        name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: |
+            node_modules/.astro/assets
+          key: static
       - name: Notify Google Chat on failure
         if: failure()
         run: |

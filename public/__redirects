@@ -15,9 +15,6 @@
 /deprecations/ /fundamentals/api/reference/deprecations/ 301
 /learning-paths/ /resources/ 301
 /markdown.zip /llms-full.txt 301
-/dynamic-workers/examples/agents-executing-code/ /dynamic-workers/examples/ 301
-/dynamic-workers/examples/running-ai-generated-code/ /dynamic-workers/examples/ 301
-/workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
@@ -34,7 +31,7 @@
 /cloudflare-one/changelog/gateway/index.xml /changelog/rss/gateway.xml 301
 /cloudflare-one/changelog/risk-score/index.xml /changelog/rss/risk-score.xml 301
 /cloudflare-one/changelog/tunnel/index.xml /changelog/rss/cloudflare-tunnel.xml 301
-/cloudflare-one/changelog/warp/index.xml /changelog/rss/cloudflare-one-client.xml 301
+/cloudflare-one/changelog/warp/index.xml /changelog/rss/zero-trust-warp.xml 301
 /dns/changelog/index.xml /changelog/rss/dns.xml 301
 /fundamentals/changelog/index.xml /changelog/rss/fundamentals.xml 301
 /load-balancing/changelog/index.xml /changelog/rss/load-balancing.xml 301
@@ -52,8 +49,6 @@
 /waf/change-log/index.xml /changelog/rss/waf.xml 301
 /waf/change-log/general-updates/ /waf/change-log/changelog/ 301
 /waf/change-log/general-updates/index.xml /changelog/rss/waf.xml 301
-/changelog/rss/zero-trust-warp.xml /changelog/rss/cloudflare-one-client.xml 301
-
 ## area changelog feeds
 
 /fundamentals/reference/changelog/performance/index.xml /changelog/rss/application-performance.xml 301
@@ -623,7 +618,6 @@
 /fundamentals/reference/developer-spotlight/ /resources/ 301
 /fundamentals/reference/the-internet/ https://www.cloudflare.com/learning/network-layer/how-does-the-internet-work/ 301
 /fundamentals/reference/http-request-headers/ /fundamentals/reference/http-headers/ 301
-/fundamentals/reference/policies-compliances/incident-management-policy/ /support/ 301
 /fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/reference/ /speed/optimization/ 301
@@ -1487,7 +1481,6 @@
 /support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/reference/troubleshooting/ 301
 /support/account-management-billing/billing-cloudflare-add-on-services/ /billing/usage-based-billing/ 301
 /support/cloudflare-client-api/ /fundamentals/api/ 301
-/support/customer-incident-management-policy/ /support/ 301
 /support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/ /network/onion-routing/ 301
 /support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/legacy/old-waf-managed-rules/upgrade/ 301
 /support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
@@ -1648,7 +1641,6 @@
 
 # r2 sql
 /r2-sql/platform/wrangler-commands/ /r2-sql/reference/wrangler-commands/ 301
-/r2-sql/sql-reference/limitations/ /r2-sql/reference/limitations-best-practices/ 301
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 # tenant
@@ -2643,11 +2635,12 @@
 # Main catch-all redirect (must be last)
 /cloudflare-one/team-and-resources/devices/warp/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/:splat 301
 
-# Agents x402 (moved under agentic-payments)
-/agents/x402/* /agents/agentic-payments/x402/:splat 301
-
 # Changelog (individual entry route moved to /post/)
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
 
+
+/dynamic-workers/examples/agents-executing-code/ /dynamic-workers/examples/ 301
+/dynamic-workers/examples/running-ai-generated-code/ /dynamic-workers/examples/ 301
+/workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301

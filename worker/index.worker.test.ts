@@ -109,7 +109,7 @@ describe("Cloudflare Docs", () => {
 	});
 
 	describe("rss endpoints", () => {
-		const parser = new XMLParser({ processEntities: false });
+		const parser = new XMLParser();
 
 		describe("changelog", () => {
 			it("global", async () => {
