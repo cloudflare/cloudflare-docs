@@ -119,9 +119,6 @@ const client = new AgentClient<MyAgent>({
 
 Existing untyped usage continues to work without changes. The RPC type utilities (`AgentMethods`, `AgentStub`, `RPCMethods`) are now exported from `agents/client` for advanced typing scenarios.
 
-:::caution[Breaking change]
-`call` is now an instance property instead of a prototype method. Code that reflects on `AgentClient.prototype.call` or subclasses that override `call` as a method will need adjustment. Normal usage (`client.call(...)`) is unaffected.
-:::
 
 ## Zod 4 required, `ai` runtime dependency removed
 
