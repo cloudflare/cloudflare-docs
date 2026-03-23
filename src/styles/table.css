@@ -20,9 +20,10 @@ table * {
 	overflow-wrap: normal;
 }
 
-/* Inline code inside table cells — matches the RuleID pill style. */
+/* Inline code inside table cells — uses the same prominent-surface token
+   as <Type /> so it stays legible on both plain and striped rows. */
 .sl-markdown-content :is(td, th) code:not(:where(.not-content *)) {
-	background-color: var(--color-table-tint);
+	background-color: var(--sl-color-gray-6);
 	border: 1px solid var(--color-table-fill);
 	border-radius: 0.375rem;
 	padding: 0.125rem 0.375rem;
@@ -57,6 +58,15 @@ table * {
 	border-bottom: 1px solid var(--color-table-fill);
 	padding: 0.75rem;
 	vertical-align: top;
+}
+
+/* Alternating row stripe — only when tbody has more than 4 rows.
+   tbody:has(tr:nth-child(5)) matches any tbody with a 5th row, i.e. >4 rows. */
+.sl-markdown-content
+	tbody:has(tr:nth-child(5))
+	tr:nth-child(even)
+	td:not(:where(.not-content *)) {
+	background-color: var(--color-table-tint);
 }
 
 /* Last row: no bottom border */

@@ -26,7 +26,6 @@
 	 */
 	--color-table-base: var(--sl-color-bg);
 	--color-table-fill: var(--sl-color-gray-6);
-	--color-table-tint: var(--sl-color-gray-7, var(--sl-color-gray-6));
 	--color-table-elevated: var(--sl-color-gray-7, var(--sl-color-gray-6));
 
 	--color-black: var(--sl-color-white);
@@ -185,6 +184,8 @@
 		--blue-accent-600: rgb(46, 105, 255);
 		--blue-accent-900: rgb(62, 116, 255);
 
+		--color-table-tint: var(--sl-color-gray-7, var(--sl-color-gray-6));
+
 		--sidebar-blue-accent-600: rgba(62, 116, 255, 0.2);
 		--sidebar-blue-text: rgb(0, 43, 103);
 
@@ -203,6 +204,12 @@
 		--tw-accent-200: var(--orange-accent-200);
 		--tw-accent-600: var(--orange-accent-600);
 		--tw-accent-900: var(--orange-accent-900);
+
+		--color-table-tint: color-mix(
+			in srgb,
+			var(--sl-color-gray-6) 30%,
+			transparent
+		);
 
 		/* Kumo header tokens — dark mode */
 		--color-header-text: var(--color-cl1-gray-7);
