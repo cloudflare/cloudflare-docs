@@ -38,7 +38,19 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 
 	return releases.map((release) => {
 		const { platformName, version, releaseNotes, releaseDate } = release.data;
-		const title = `WARP client for ${platformName} (version ${version})`;
+
+		const isLegacyVersion = (ver: string): boolean => {
+			const legacyThreshold = [2026, 3, 566, 1];
+			const parts = ver.split(".").map(Number);
+			for (let i = 0; i < legacyThreshold.length; i++) {
+				if ((parts[i] ?? 0) < legacyThreshold[i]) return true;
+				if ((parts[i] ?? 0) > legacyThreshold[i]) return false;
+			}
+			return true;
+		};
+
+		const clientName = isLegacyVersion(version) ? "WARP client" : "Cloudflare One Client";
+		const title = `${clientName} for ${platformName} (version ${version})`;
 
 		const [platform, track] = release.id.split("/");
 
@@ -53,7 +65,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				? "[stable releases downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/)"
 				: "[beta releases downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/beta-releases/)";
 
-		const prefix = `A new ${prettyTrack} release for the ${prettyPlatform} WARP client is now available on the ${link}.`;
+		const prefix = `A new ${prettyTrack} release for the ${prettyPlatform} ${clientName} is now available on the ${link}.`;
 
 		return {
 			id: `${releaseDate.toISOString().slice(0, 10)}-warp-${platform}-${track}`,
