@@ -135,10 +135,10 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"Whether to show the FeedbackPrompt on the page, defaults to true",
 			),
-		wid: z
+		canonical: z
 			.string()
 			.optional()
 			.describe(
-				"What Id? Used as a generic identifier for external data sources",
+				'A canonical URL or path to set as the `<link rel="canonical">` in the page `<head>`, overriding the default derived from the page URL.',
 			),
 	});
