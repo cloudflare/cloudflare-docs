@@ -14,8 +14,10 @@ This pattern is useful for:
 - Avoiding public endpoints for backend services while still running containerized workloads on Cloudflare.
 - Migrating legacy applications to Cloudflare without rewriting networking code — the container just makes HTTP requests to a hostname.
 
-:::note
-Outbound interception currently works with **HTTP only**. HTTPS interception from the container is not yet supported. However, the connection between the container and the outbound Worker runs on the same machine and is secure. The outbound Worker can forward the request over HTTPS through the Workers VPC binding.
+:::caution[HTTP only — HTTPS interception coming soon]
+Outbound interception currently works with **HTTP only**. The container must make requests using `http://`, not `https://`. HTTPS interception is not yet supported.
+
+**This is safe**: the connection between the container and the outbound Worker never leaves the machine — they run in the same physical host with no network hop. The outbound Worker can then forward the request over HTTPS/TLS through the Workers VPC binding to your private service.
 :::
 
 ## Prerequisites
@@ -110,7 +112,9 @@ Add both the Container Durable Object binding and the VPC Service binding to you
 
 ## 4. Define the Container class with an outbound Worker
 
-The key part is the `static outboundByHost` property on the `Container` class. This defines hostname-based routing for outbound HTTP requests from the container:
+The key part is the `static outboundByHost` property on the `Container` class. This defines hostname-based routing for outbound HTTP requests from the container.
+
+Each entry maps a hostname to a handler function that receives the intercepted request and has full access to your Worker's `env` bindings. You must write a handler function — you cannot pass a binding directly to `outboundByHost`:
 
 <Tabs>
 	<TabItem label="src/index.ts">

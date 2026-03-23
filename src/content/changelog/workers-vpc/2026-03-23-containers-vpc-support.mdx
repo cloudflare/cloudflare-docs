@@ -18,7 +18,7 @@ This works by:
 3. Inside the container, making standard HTTP requests to the virtual hostname — no SDK or special client required.
 
 :::note
-Outbound interception currently works with HTTP only. HTTPS interception from the container is not yet supported, but the outbound Worker can upgrade the request to HTTPS/TLS when forwarding through Workers VPC.
+Outbound interception currently works with HTTP only — the container must use `http://` URLs. HTTPS interception from the container is not yet supported. The connection between the container and outbound Worker is secure (same machine, no network hop), and the outbound Worker can forward requests over HTTPS/TLS through Workers VPC.
 :::
 
 For a complete walkthrough, refer to [Connect from Containers to private services](/workers-vpc/examples/connect-from-containers/).
