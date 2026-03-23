@@ -120,6 +120,8 @@ export default defineConfig({
 		contentIntellisense: true,
 	},
 	incrementalBuild: {
+		pageCollections: ["docs"],
+		partialCollections: ["partials"],
 		partialResolver: (name: string, props: any) => {
 			if (name === "Render" && props.file && props.product) {
 				return `src/content/partials/${props.product}/${props.file}.mdx`;
