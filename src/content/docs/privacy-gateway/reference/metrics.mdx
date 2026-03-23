@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Details, MetaInfo } from "~/components";
+import { Details, MetaInfo, Tabs, TabItem } from "~/components";
 
 Privacy Gateway exposes metrics through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). All metrics are queryable through a single endpoint:
 
@@ -19,22 +19,95 @@ To access your metrics, you need a Cloudflare API token. Contact your Cloudflare
 
 ## Making a request
 
-The following example shows a complete request with authentication headers and variables. Replace the placeholder values with your own.
+The following examples show how to query Privacy Gateway metrics using curl or a GraphQL client such as GraphiQL. Replace the placeholder values with your own.
+
+<Tabs>
+<TabItem label="curl">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/graphql \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
-    "query": "query DailyRequestVolume($accountTag: String!, $startDate: Date!, $endDate: Date!, $endpoint: String!) { viewer { accounts(filter: { accountTag: $accountTag }) { ohttpRelayRequestMetricsAdaptiveGroups(filter: { date_geq: $startDate, date_leq: $endDate, endpoint: $endpoint }, limit: 10000, orderBy: [date_ASC]) { sum { requests bytesToGateway bytesToClient } dimensions { date endpoint } } } } }",
+    "query": "query DailyRequestVolume($accountTag: String!, $startDate: Date!, $endDate: Date!) { viewer { accounts(filter: { accountTag: $accountTag }) { ohttpRelayRequestMetricsAdaptiveGroups(filter: { date_geq: $startDate, date_leq: $endDate }, limit: 10000, orderBy: [date_ASC]) { sum { requests bytesToGateway bytesToClient } dimensions { date } } } } }",
     "variables": {
       "accountTag": "<YOUR_ACCOUNT_TAG>",
       "startDate": "2025-01-01",
-      "endDate": "2025-01-31",
-      "endpoint": "<YOUR_ENDPOINT>"
+      "endDate": "2025-01-31"
     }
   }'
 ```
+
+</TabItem>
+<TabItem label="GraphiQL">
+
+**Prerequisites**
+
+Before you begin, ensure you have:
+
+- **API token**: Contact your Cloudflare point of contact to obtain one.
+- **Account tag**: Your Cloudflare account ID, used as `$accountTag` in queries.
+**1. Set up GraphiQL**
+
+Open GraphiQL or any GraphQL client and configure the following:
+
+- **Endpoint**: `https://api.cloudflare.com/client/v4/graphql`
+- **HTTP headers**:
+  - `Authorization`: `Bearer <API_TOKEN>`
+  - `Content-Type`: `application/json`
+
+**2. Paste the query**
+
+Paste the following into the query editor:
+
+```graphql
+query DailyRequestVolume(
+  $accountTag: String!
+  $startDate: Date!
+  $endDate: Date!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      ohttpRelayRequestMetricsAdaptiveGroups(
+        filter: {
+          date_geq: $startDate
+          date_leq: $endDate
+        }
+        limit: 10000
+        orderBy: [date_ASC]
+      ) {
+        sum {
+          requests
+          bytesToGateway
+          bytesToClient
+        }
+        dimensions {
+          date
+        }
+      }
+    }
+  }
+}
+```
+
+**3. Add variables**
+
+Paste the following into the **Query Variables** pane (bottom-left) and replace the placeholder values:
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "startDate": "2025-01-01",
+  "endDate": "2025-01-31"
+}
+```
+
+**4. Run the query**
+
+Select the **Play** button to execute. Results appear in the right-hand response pane.
+
+</TabItem>
+</Tabs>
 
 ---
 
@@ -134,7 +207,6 @@ query DailyRequestVolume(
   $accountTag: String!
   $startDate: Date!
   $endDate: Date!
-  $endpoint: String!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -142,7 +214,6 @@ query DailyRequestVolume(
         filter: {
           date_geq: $startDate
           date_leq: $endDate
-          endpoint: $endpoint
         }
         limit: 10000
         orderBy: [date_ASC]
@@ -154,7 +225,6 @@ query DailyRequestVolume(
         }
         dimensions {
           date
-          endpoint
         }
       }
     }
@@ -166,8 +236,7 @@ query DailyRequestVolume(
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
   "startDate": "2025-01-01",
-  "endDate": "2025-01-31",
-  "endpoint": "<YOUR_ENDPOINT>"
+  "endDate": "2025-01-31"
 }
 ```
 
@@ -182,7 +251,6 @@ query ClientRequestErrors(
   $accountTag: String!
   $start: Time!
   $end: Time!
-  $endpoint: String!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -190,7 +258,6 @@ query ClientRequestErrors(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          endpoint: $endpoint
           relayStatusCode_geq: 400
           relayStatusCode_leq: 499
           gatewayStatusCode: 0
@@ -218,8 +285,7 @@ query ClientRequestErrors(
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
   "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z",
-  "endpoint": "<YOUR_ENDPOINT>"
+  "end": "2025-01-01T23:59:59Z"
 }
 ```
 
@@ -234,7 +300,6 @@ query GatewayResponseErrors(
   $accountTag: String!
   $start: Time!
   $end: Time!
-  $endpoint: String!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -242,7 +307,6 @@ query GatewayResponseErrors(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          endpoint: $endpoint
           gatewayStatusCode_geq: 500
           gatewayStatusCode_leq: 599
         }
@@ -269,8 +333,7 @@ query GatewayResponseErrors(
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
   "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z",
-  "endpoint": "<YOUR_ENDPOINT>"
+  "end": "2025-01-01T23:59:59Z"
 }
 ```
 
@@ -285,7 +348,6 @@ query GatewayTimeouts(
   $accountTag: String!
   $start: Time!
   $end: Time!
-  $endpoint: String!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -293,7 +355,6 @@ query GatewayTimeouts(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          endpoint: $endpoint
           relayStatusCode: 504
           gatewayStatusCode: 0
         }
@@ -319,8 +380,7 @@ query GatewayTimeouts(
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
   "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z",
-  "endpoint": "<YOUR_ENDPOINT>"
+  "end": "2025-01-01T23:59:59Z"
 }
 ```
 
@@ -335,7 +395,6 @@ query RelayInternalErrors(
   $accountTag: String!
   $start: Time!
   $end: Time!
-  $endpoint: String!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -343,7 +402,6 @@ query RelayInternalErrors(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          endpoint: $endpoint
           relayStatusCode_geq: 500
           relayStatusCode_leq: 599
           gatewayStatusCode: 0
@@ -371,8 +429,7 @@ query RelayInternalErrors(
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
   "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z",
-  "endpoint": "<YOUR_ENDPOINT>"
+  "end": "2025-01-01T23:59:59Z"
 }
 ```
 
@@ -387,7 +444,6 @@ query ErrorsByProxyStatus(
   $accountTag: String!
   $start: Time!
   $end: Time!
-  $endpoint: String!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -395,7 +451,6 @@ query ErrorsByProxyStatus(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          endpoint: $endpoint
           proxyStatus_neq: ""
         }
         orderBy: [sum_requests_DESC]
@@ -418,8 +473,7 @@ query ErrorsByProxyStatus(
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
   "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z",
-  "endpoint": "<YOUR_ENDPOINT>"
+  "end": "2025-01-01T23:59:59Z"
 }
 ```
 
@@ -438,7 +492,6 @@ query ClientRelayLatencyByColo(
   $accountTag: String!
   $start: Time!
   $end: Time!
-  $endpoint: String!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -446,7 +499,6 @@ query ClientRelayLatencyByColo(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          endpoint: $endpoint
         }
         limit: 10000
         orderBy: [quantiles_clientRelayRttMsP50_DESC]
@@ -472,8 +524,7 @@ query ClientRelayLatencyByColo(
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
   "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z",
-  "endpoint": "<YOUR_ENDPOINT>"
+  "end": "2025-01-01T23:59:59Z"
 }
 ```
 
@@ -488,7 +539,6 @@ query ProtocolDistribution(
   $accountTag: String!
   $start: Time!
   $end: Time!
-  $endpoint: String!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -496,7 +546,6 @@ query ProtocolDistribution(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          endpoint: $endpoint
         }
         limit: 10000
         orderBy: [datetimeMinute_ASC]
@@ -521,8 +570,7 @@ query ProtocolDistribution(
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
   "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z",
-  "endpoint": "<YOUR_ENDPOINT>"
+  "end": "2025-01-01T23:59:59Z"
 }
 ```
 
@@ -541,7 +589,6 @@ query RelayGatewayLatencyByColo(
   $accountTag: String!
   $start: Time!
   $end: Time!
-  $endpoint: String!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -549,7 +596,6 @@ query RelayGatewayLatencyByColo(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          endpoint: $endpoint
         }
         limit: 10000
         orderBy: [quantiles_relayGatewayRttMsP50_DESC]
@@ -575,8 +621,7 @@ query RelayGatewayLatencyByColo(
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
   "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z",
-  "endpoint": "<YOUR_ENDPOINT>"
+  "end": "2025-01-01T23:59:59Z"
 }
 ```
 
@@ -591,7 +636,6 @@ query RelayGatewayLatencyOverTime(
   $accountTag: String!
   $start: Time!
   $end: Time!
-  $endpoint: String!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
@@ -599,7 +643,6 @@ query RelayGatewayLatencyOverTime(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-          endpoint: $endpoint
         }
         limit: 10000
         orderBy: [datetimeMinute_ASC]
@@ -627,8 +670,7 @@ query RelayGatewayLatencyOverTime(
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
   "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z",
-  "endpoint": "<YOUR_ENDPOINT>"
+  "end": "2025-01-01T23:59:59Z"
 }
 ```
 
