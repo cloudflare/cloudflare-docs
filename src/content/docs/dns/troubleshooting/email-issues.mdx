@@ -29,7 +29,7 @@ NS records are used to delegate the management of a hostname to another DNS prov
 
 When [**CNAME flattening for all CNAME records**](/dns/cname-flattening/set-up-cname-flattening/) is on, queries to all `CNAME` records will flatten to an `A` record; no `CNAME` records will be returned.
 
-Also, if `CNAME` records are not returned by the queried nameserver (sometimes nameservers will return TXT records), this may result in nothing being returned when **CNAME flattening for all CNAME records** is on. Turning off this feature should fix any issues with your CNAME records not being returned.
+Also, if `CNAME` records are not returned by the queried nameserver (sometimes nameservers will return `TXT` records), this may result in nothing being returned when **CNAME flattening for all CNAME records** is on. Turning off this feature should fix any issues with your `CNAME` records not being returned.
 
 ## Is Cloudflare Spectrum enabled on your account?
 
