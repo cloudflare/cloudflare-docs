@@ -124,8 +124,6 @@ Existing untyped usage continues to work without changes. The RPC type utilities
 
 `agents`, `@cloudflare/ai-chat`, and `@cloudflare/codemode` now require `zod ^4.0.0`. Zod v3 is no longer supported.
 
-The `ai` package is no longer a runtime dependency of the agents core. MCP tool schema conversion now uses `z.fromJSONSchema()` from Zod 4 directly, removing the dynamic `import("ai")` call. The `ensureJsonSchema()` helper has been removed.
-
 ## `@cloudflare/ai-chat` fixes
 
 - **Turn serialization** — `onChatMessage()` and `_reply()` work is now queued so user requests, tool continuations, and `saveMessages()` never stream concurrently.
