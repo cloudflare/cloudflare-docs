@@ -3,7 +3,7 @@ link: "/workflows/reference/changelog/"
 productName: Workflows
 productLink: "/workflows/"
 entries:
-  - publish_date: "2026-03-21"
+  - publish_date: "2026-03-23"
     title: "Workflow instances now support pause(), resume(), restart(), and terminate() methods in local development"
     description: |-
       Workflow instance methods `pause()`, `resume()`, `restart()`, and `terminate()` are now available in local development when using `wrangler dev`.
