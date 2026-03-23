@@ -8,7 +8,7 @@ sidebar:
 
 import { WranglerConfig, TypeScriptExample } from "~/components";
 
-Worker Loader lets a Worker create and run other Workers at runtime. Each Dynamic Worker runs in its own isolated sandbox. You provide the code, choose which bindings the Dynamic Worker can access, and control whether the Dynamic Worker can reach the network.
+You can create a Worker that spins up other Workers, called Dynamic Workers, at runtime to execute code on-demand in a secure, sandboxed environment. You provide the code, choose which bindings the Dynamic Worker can access, and control whether the Dynamic Worker can reach the network.
 
 Dynamic Workers support two loading modes:
 
@@ -19,9 +19,17 @@ Dynamic Workers support two loading modes:
 
 ### Try it out
 
-Deploy the Dynamic Workers Playground to get automatically set up with a Worker that bundles and executes Dynamic Workers. Import GitHub repos and deploy them as Dynamic Workers, with real-time logs and observability.
+#### Dynamic Workers Starter
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/dinasaur404/dynamic-workers-playground)
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/dynamic-workers-starter)
+
+Use this "hello world" starter to get a Worker deployed that can load and execute Dynamic Workers.
+
+#### Dynamic Workers Playground
+
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/dynamic-workers-playground)
+
+You can also deploy the Dynamic Workers Playground, where you can write or import code, bundle it at runtime with `@cloudflare/worker-bundler`, execute it through a Dynamic Worker, and see real-time responses and execution logs.
 
 ## Configure Worker Loader
 
