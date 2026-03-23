@@ -75,5 +75,3 @@ table * {
 	:is(th:last-child, td:last-child):not(:where(.not-content *)) {
 	padding-inline-end: 1rem;
 }
-
-
