@@ -136,7 +136,7 @@ Once `AssetBinding` is exported, it becomes available on [`ctx.exports`](/worker
 
 ### Pass the asset binding to the Dynamic Worker
 
-When you call `get()` to create the Dynamic Worker, include the `AssetBinding` in the `env` object so the Dynamic Worker can use it to serve static files. To reference the `AssetBinding` class you defined in the previous step, use `ctx.exports.AssetBinding()` and pass the `projectId` as a [prop](/workers/runtime-apis/context/#props) so it knows which project's assets to serve. This works the same way as [custom bindings](/dynamic-workers/configuration/bindings/#custom-bindings) — `props` is how you pass information to the class, and the class reads it at `this.ctx.props` when it runs.
+When you call `get()` to create the Dynamic Worker, include the `AssetBinding` in the `env` object so the Dynamic Worker can use it to serve static files. To reference the `AssetBinding` class you defined in the previous step, use `ctx.exports.AssetBinding()` and pass the `projectId` as a [prop](/workers/runtime-apis/context/#props) so it knows which project's assets to serve. This works the same way as [custom bindings](/dynamic-workers/usage/bindings/#custom-bindings) — `props` is how you pass information to the class, and the class reads it at `this.ctx.props` when it runs.
 
 ```js
 export default {
