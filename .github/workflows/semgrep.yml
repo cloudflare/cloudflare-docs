@@ -20,7 +20,7 @@ jobs:
     container:
       image: semgrep/semgrep
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # fetch full history so Semgrep can compare against the base branch
           fetch-depth: 0

@@ -13,7 +13,7 @@ Network and device performance data helps IT administrators troubleshoot perform
 
 ## Device overview
 
-A fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Cloudflare Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
+A fleet is a collection of user devices. All devices in a fleet have the Cloudflare One Client installed and are connected to a [Cloudflare Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization).
 
 To view fleet status:
 
@@ -30,26 +30,26 @@ To view analytics on a per-device level, go to [Device monitoring](/cloudflare-o
 
 - **Devices connected by colo**: Number of devices connected to a given [Cloudflare data center](https://www.cloudflarestatus.com/).
 
-- **Connectivity status**: Percentage of devices in a given WARP client state.
+- **Connectivity status**: Percentage of devices in a given Cloudflare One Client state.
 
   | Status       | Description                                                                                                                                                                                                                                                                                                                                                                               |
   | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | Connected    | WARP has successfully established a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                                                          |
-  | Disconnected | WARP has been intentionally or unintentionally disconnected from the Cloudflare global network.                                                                                                                                                                                                                                                                                           |
+  | Connected    | the Cloudflare One Client has successfully established a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                                                          |
+  | Disconnected | the Cloudflare One Client has been intentionally or unintentionally disconnected from the Cloudflare global network.                                                                                                                                                                                                                                                                                           |
   | Paused       | A user or administrator has taken an explicit action to temporarily turn off WARP, for example by entering an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes). Paused clients will [auto-connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#auto-connect) after a timeout period. |
-  | Connecting   | WARP is pending connection, but is actively trying to establish a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                            |
+  | Connecting   | the Cloudflare One Client is pending connection, but is actively trying to establish a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                            |
 
-- **Mode**: [WARP mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) deployed on the device.
+- **Mode**: [Client mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) deployed on the device.
 
 - **Colo**: Percentage of devices connected to a given Cloudflare data center.
 
 - **Platform**: Operating system of the device.
 
-- **Major Version**: WARP client version installed on the device.
+- **Major Version**: Cloudflare One Client version installed on the device.
 
-- **Device Status Over Time**: WARP client connection status over the selected time period.
+- **Device Status Over Time**: Cloudflare One Client connection status over the selected time period.
 
-- **Connection Methods Over Time**: WARP mode used by the device over the selected time period.
+- **Connection Methods Over Time**: Client mode used by the device over the selected time period.
 
 ## Device monitoring
 

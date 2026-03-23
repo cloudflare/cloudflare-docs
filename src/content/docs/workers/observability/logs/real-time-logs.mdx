@@ -36,7 +36,7 @@ To view real-time logs associated with any deployed Worker using the Cloudflare 
 To view real-time logs associated with any deployed Worker using Wrangler:
 
 1. Go to your Worker project directory.
-2. Run [`npx wrangler tail`](/workers/wrangler/commands/#tail).
+2. Run [`npx wrangler tail`](/workers/wrangler/commands/general/#tail).
 
 This will log any incoming requests to your application available in your local terminal.
 
@@ -72,13 +72,13 @@ npx wrangler tail | jq .event.request.url
 "https://www.bytesized.xyz/page-data/app-data.json"
 ```
 
-You can customize how `wrangler tail` works to fit your needs. Refer to [the `wrangler tail` documentation](/workers/wrangler/commands/#tail) for available configuration options.
+You can customize how `wrangler tail` works to fit your needs. Refer to [the `wrangler tail` documentation](/workers/wrangler/commands/general/#tail) for available configuration options.
 
 ## Limits
 
 :::note
 
-You can filter real-time logs in the dashboard or using [`wrangler tail`](/workers/wrangler/commands/#tail). If your Worker has a high volume of messages, filtering real-time logs can help mitgate messages from being dropped.
+You can filter real-time logs in the dashboard or using [`wrangler tail`](/workers/wrangler/commands/general/#tail). If your Worker has a high volume of messages, filtering real-time logs can help mitgate messages from being dropped.
 
 :::
 

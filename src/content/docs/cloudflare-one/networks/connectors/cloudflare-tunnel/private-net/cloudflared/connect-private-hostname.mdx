@@ -36,7 +36,7 @@ Private hostname routing only works for applications connected with `cloudflared
 | Connector                                                                                  | Compatibility | Minimum version |
 | ------------------------------------------------------------------------------------------ | ------------- | -- |
 | [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/)                        | ✅            | 2025.7.0 |
-| [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/)              | ❌             | |
+| [Peer-to-peer](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/)              | ❌             | |
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌             | |
 | [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                                             | ❌             | |
 
@@ -54,7 +54,7 @@ To connect to private hostnames, your devices must forward the following traffic
 
 Configuration steps vary depending on your [device on-ramp](#device-connectivity):
 
-<Details header="WARP clients">
+<Details header="Cloudflare One Clients">
 1. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
 2. In [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
 </Details>
@@ -148,7 +148,7 @@ If you prefer to secure the application using a traditional firewall model, you 
   product="cloudflare-one"
 />
 
-Additionally, SNI selectors will only apply to WARP client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector instead of SNI.
+Additionally, SNI selectors will only apply to Cloudflare One Client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector instead of SNI.
 :::
 
 ### 4. Test the connection
@@ -159,7 +159,7 @@ End users can now reach the application by going to its private hostname. For ex
 
 If you cannot connect, verify the following:
 
-1. **Confirm DNS resolution** - From the WARP device, confirm that you can successfully resolve the private hostname:
+1. **Confirm DNS resolution** - From the device, confirm that you can successfully resolve the private hostname:
 
     ```sh
     nslookup wiki.internal.local

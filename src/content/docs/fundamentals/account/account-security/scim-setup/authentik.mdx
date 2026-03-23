@@ -1,0 +1,61 @@
+---
+pcx_content_type: how-to
+title: Provision with Authentik
+sidebar:
+  label: Authentik
+---
+
+import { Render, DashButton } from "~/components";
+
+<Render file="idp-group-deprecation" product="fundamentals" />
+
+Once you have [gathered the required data](/fundamentals/account/account-security/scim-setup/#gather-the-required-data), the following steps will be required to finish the provisioning with Authentik.
+
+## Set up your Authentik SCIM provider
+
+1. In the Authentik Admin interface, go to **Applications** > **Providers**.
+2. Select **Create** and choose **SCIM Provider**.
+3. Name your provider (for example, `Cloudflare SCIM`).
+4. In **URL**, enter: `https://api.cloudflare.com/client/v4/accounts/<accountID>/scim/v2`, substituting `<accountID>` for your [Cloudflare Account ID](/fundamentals/account/account-security/scim-setup/#get-your-account-id).
+5. In **Token**, Paste the SCIM provisioning API token.
+6. (Optional) Adjust the **User filtering** and **Group filtering** settings to control which users and groups are synchronized.
+7. Select **Finish** to create the provider.
+
+## Create an Authentik application
+
+1. In the Authentik Admin interface, go to **Applications** > **Applications**.
+2. Select **Create**.
+3. Name your application (for example, `Cloudflare Dashboard`).
+4. In **Provider**, select the SCIM provider you created in the previous step.
+5. Select **Create** to save the application.
+
+## Configure user and group sync in Authentik
+
+:::note
+The **Update User Attributes** option is not supported.
+:::
+
+1. In the Authentik Admin interface, go to **Directory** > **Groups**.
+2. Create or select the groups you want to synchronize with Cloudflare. Ensure the users you want to provision are members of these groups.
+3. Return to **Applications** > **Providers** and select your SCIM provider.
+4. Under **Backchannel Providers**, verify that your SCIM provider is correctly linked to the application.
+5. To trigger a manual sync, select **Sync** from the provider page. Authentik will also perform automatic periodic syncs based on your configured schedule.
+
+## Verify the integration
+
+To verify the integration:
+
+1. In Authentik, go to **Applications** > **Providers**, select your SCIM provider, and review the **Sync status** section for any errors.
+2. In the Cloudflare dashboard, go to **Manage Account** > **Members** > **User Groups** to view the synchronized groups.
+3. Check the Audit Logs in the Cloudflare dashboard by going to **Manage Account** > **Audit Log**.
+
+## Assign policies to user groups
+
+After users and groups are synchronized, you can assign [policies](/fundamentals/manage-members/policies/) to user groups:
+
+1. In the Cloudflare dashboard, go to **Manage Account** > **Members** > **User Groups**.
+
+<DashButton url="/?to=/:account/members" />
+
+2. Select the group you want to configure.
+3. Assign the appropriate policies to define the [roles](/fundamentals/manage-members/roles/) for group members.

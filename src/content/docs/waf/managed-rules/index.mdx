@@ -16,13 +16,13 @@ import { FeatureTable, Render, RuleID } from "~/components";
 
 ## Available managed rulesets
 
-- [**Cloudflare Managed Ruleset**](/waf/managed-rules/reference/cloudflare-managed-ruleset/): Created by the Cloudflare security team, this ruleset provides fast and effective protection for all of your applications. The ruleset is updated frequently to cover new vulnerabilities and reduce false positives.<br/>Ruleset ID: <RuleID id="efb7b8c949ac4650a09736fc376e9aee" />
+- [**Cloudflare Managed Ruleset**](/waf/managed-rules/reference/cloudflare-managed-ruleset/): Created by the Cloudflare security team, this ruleset provides fast and effective protection for all of your applications. It covers known attack techniques and zero-day vulnerabilities (newly discovered flaws with no available patch). The ruleset is updated frequently to address new threats and reduce false positives (legitimate requests incorrectly flagged).<br/>Ruleset ID: <RuleID id="efb7b8c949ac4650a09736fc376e9aee" />
 
-- [**Cloudflare OWASP Core Ruleset**](/waf/managed-rules/reference/owasp-core-ruleset/): Cloudflare's implementation of the Open Web Application Security Project, or OWASP ModSecurity Core Rule Set. Cloudflare routinely monitors for updates from OWASP based on the latest version available from the official code repository.<br/>Ruleset ID: <RuleID id="4814384a9e5d4991b9815dcfc25d2f1f" />
+- [**Cloudflare OWASP Core Ruleset**](/waf/managed-rules/reference/owasp-core-ruleset/): Cloudflare's implementation of the Open Web Application Security Project (OWASP) ModSecurity Core Rule Set. This ruleset uses a scoring model — each matching rule adds its score to a cumulative [threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score), and the WAF executes the configured action when the score exceeds the [threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold).<br/>Ruleset ID: <RuleID id="4814384a9e5d4991b9815dcfc25d2f1f" />
 
-- [**Cloudflare Exposed Credentials Check**](/waf/managed-rules/reference/exposed-credentials-check/): Deploy an automated credentials check on your end-user authentication endpoints. For any credential pair, the Cloudflare WAF performs a lookup against a public database of stolen credentials. Cloudflare recommends that you use [leaked credentials detection](/waf/detections/leaked-credentials/) instead of this ruleset.<br/>Ruleset ID: <RuleID id="c2e184081120413c86c3ab7e14069605" />
+- [**Cloudflare Exposed Credentials Check**](/waf/managed-rules/reference/exposed-credentials-check/): Deploys an automated credentials check on your end-user authentication endpoints. For any credential pair, the Cloudflare WAF performs a lookup against a public database of stolen credentials to determine if they were previously compromised. Cloudflare recommends that you use [leaked credentials detection](/waf/detections/leaked-credentials/) instead of this ruleset.<br/>Ruleset ID: <RuleID id="c2e184081120413c86c3ab7e14069605" />
 
-- **Cloudflare Free Managed Ruleset**: Available on all Cloudflare plans. Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this managed ruleset.<br/>Ruleset ID: <RuleID id="77454fe2d30c4220b5701f6fdfb893ba" />
+- **Cloudflare Free Managed Ruleset**: Available on all Cloudflare plans. Provides protection against high-impact and widely exploited vulnerabilities. The rules are safe to deploy on most applications. If you have already deployed the Cloudflare Managed Ruleset, you do not need this ruleset — the Cloudflare Managed Ruleset includes broader coverage.<br/>Ruleset ID: <RuleID id="77454fe2d30c4220b5701f6fdfb893ba" />
 
 The following managed rulesets run in a response phase:
 
@@ -51,16 +51,16 @@ The managed rulesets you can deploy depend on your Cloudflare plan.
 
 ### Maximum body size
 
-Cloudflare analyzes the body of incoming requests up to a certain maximum size that varies according to your Cloudflare plan:
+Managed rules inspect the body of each incoming request up to a maximum size. This limit varies by plan:
 
 - For Enterprise customers, the maximum body size is 128 KB.
-- For other paid plans, the limit is lower by default — reach out to your account team or to Cloudflare Support to increase the limit.
+- For other paid plans, the limit is lower by default — contact your account team or Cloudflare Support to increase the limit.
 - For users in the Free plan, the limit is 1 MB.
 
-This means that the behavior of specific managed rules that analyze request bodies can vary according to your current plan. For example, the OWASP Core Ruleset might have a higher rate of false positives with larger payload sizes because analyzing more data increases the likelihood that the total score exceeds the [threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold).
+Request content beyond this limit may not be fully analyzed, which can affect how managed rules behave. For example, the [OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) calculates a cumulative [threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score) based on the scores of individual rules that match a request. Larger payloads give more content for rules to match against, which increases the score and makes it more likely to exceed the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold) — resulting in a false positive.
 
-If included in your plan, you can use [request body fields](/ruleset-engine/rules-language/fields/reference/?field-category=Body) such as `http.request.body.truncated` or `http.request.headers.truncated` in [custom rules](/waf/custom-rules/) that apply appropriate actions to requests that have not been fully analyzed by Cloudflare due to the maximum body size.
+If included in your plan, you can use [request body fields](/ruleset-engine/rules-language/fields/reference/?field-category=Body) in [custom rules](/waf/custom-rules/) to apply appropriate actions to requests that have not been fully analyzed. The `http.request.body.truncated` field indicates whether the request body was truncated, while `http.request.headers.truncated` indicates whether the request contained too many headers for all of them to be included.
 
 ### Zone-level deployment
 
-At the zone level, you can only deploy each managed ruleset once. At the [account level](/waf/account/managed-rulesets/) you can deploy each managed ruleset multiple times.
+At the zone level, you can deploy each managed ruleset once. At the [account level](/waf/account/managed-rulesets/), you can deploy each managed ruleset multiple times, which allows you to apply different configurations of the same ruleset to different subsets of incoming traffic.

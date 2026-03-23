@@ -34,7 +34,7 @@ In the example below, we use `cf-aig-collect-log` to bypass the default setting 
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
   --header "Authorization: Bearer $TOKEN" \
   --header 'Content-Type: application/json' \
-  --header 'cf-aig-collect-log: false \
+  --header 'cf-aig-collect-log: false' \
   --data ' {
         "model": "gpt-4o-mini",
         "messages": [
@@ -46,6 +46,40 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
       }
 '
 ```
+
+### Collect log payload (`cf-aig-collect-log-payload`)
+
+The `cf-aig-collect-log-payload` header allows you to control whether the raw request and response bodies (payloads) are stored for a given request. Unlike `cf-aig-collect-log`, which controls the entire log entry, this header only affects payload storage — metadata such as token counts, model, provider, status code, cost, and duration will still be logged.
+
+This is useful when you want to maintain visibility into usage metrics and request metadata without persisting sensitive prompt or completion data.
+
+| Header value | Behavior |
+| ------------ | -------- |
+| `true`       | Request and response payloads are stored. |
+| `false`      | Payload storage is skipped. Metadata-only log entries are still saved. |
+
+In the example below, we use `cf-aig-collect-log-payload` to skip storing the request and response bodies while keeping the metadata log.
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header "Authorization: Bearer $TOKEN" \
+  --header 'Content-Type: application/json' \
+  --header 'cf-aig-collect-log-payload: false' \
+  --data ' {
+        "model": "gpt-4o-mini",
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is the email address and phone number of user123?"
+          }
+        ]
+      }
+'
+```
+
+:::note
+If `cf-aig-collect-log` is set to `false`, the entire log entry (including metadata) is skipped regardless of the `cf-aig-collect-log-payload` value. Use `cf-aig-collect-log-payload: false` on its own if you only want to suppress payload storage while retaining metadata logs.
+:::
 
 ## DLP fields in logs
 

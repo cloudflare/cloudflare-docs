@@ -22,18 +22,20 @@ Hyperdrive supports managed Postgres and MySQL databases provided by various pro
 
 Hyperdrive also supports databases that are compatible with the Postgres or MySQL protocol. The following is a non-exhaustive list of Postgres or MySQL-compatible database providers:
 
-| Database Engine | Supported | Known supported versions | Details                                                                                                                  |
-| --------------- | --------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| AWS Aurora            | ✅        | All                      | Postgres-compatible and MySQL-compatible. Refer to AWS Aurora examples for [MySQL](/hyperdrive/examples/connect-to-mysql/mysql-database-providers/aws-rds-aurora/) and [Postgres](/hyperdrive/examples/connect-to-postgres/postgres-database-providers/aws-rds-aurora/).                                                                                       |
-| Neon            | ✅        | All                      | Neon currently runs Postgres 15.x                                                                                        |
-| Supabase        | ✅        | All                      | Supabase currently runs Postgres 15.x                                                                                    |
-| Timescale       | ✅        | All                      | See the [Timescale guide](/hyperdrive/examples/connect-to-postgres/postgres-database-providers/timescale/) to connect.                               |
-| Materialize     | ✅        | All                      | Postgres-compatible. Refer to the [Materialize guide](/hyperdrive/examples/connect-to-postgres/postgres-database-providers/materialize/) to connect. |
-| CockroachDB     | ✅        | All                      | Postgres-compatible. Refer to the [CockroachDB](/hyperdrive/examples/connect-to-postgres/postgres-database-providers/cockroachdb/) guide to connect. |
-| PlanetScale     | ✅        | All                      | PlanetScale provides MySQL-compatible and PostgreSQL databases                                                           |
-| MariaDB         | ✅        | All                      | MySQL-compatible.                                                                                                        |
+| Database Engine | Supported | Known supported versions | Details                                                                                                                                                                                                                                                                  |
+| --------------- | --------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| AWS Aurora      | ✅        | All                      | Postgres-compatible and MySQL-compatible. Refer to AWS Aurora examples for [MySQL](/hyperdrive/examples/connect-to-mysql/mysql-database-providers/aws-rds-aurora/) and [Postgres](/hyperdrive/examples/connect-to-postgres/postgres-database-providers/aws-rds-aurora/). |
+| Neon            | ✅        | All                      | Neon currently runs Postgres 15.x                                                                                                                                                                                                                                        |
+| Supabase        | ✅        | All                      | Supabase currently runs Postgres 15.x                                                                                                                                                                                                                                    |
+| Timescale       | ✅        | All                      | See the [Timescale guide](/hyperdrive/examples/connect-to-postgres/postgres-database-providers/timescale/) to connect.                                                                                                                                                   |
+| Materialize     | ✅        | All                      | Postgres-compatible. Refer to the [Materialize guide](/hyperdrive/examples/connect-to-postgres/postgres-database-providers/materialize/) to connect.                                                                                                                     |
+| CockroachDB     | ✅        | All                      | Postgres-compatible. Refer to the [CockroachDB](/hyperdrive/examples/connect-to-postgres/postgres-database-providers/cockroachdb/) guide to connect.                                                                                                                     |
+| PlanetScale     | ✅        | All                      | PlanetScale provides MySQL-compatible and PostgreSQL databases                                                                                                                                                                                                           |
+| MariaDB         | ✅        | All                      | MySQL-compatible.                                                                                                                                                                                                                                                        |
 
 ## Supported TLS (SSL) modes
+
+### PostgreSQL
 
 Hyperdrive supports the following [PostgreSQL TLS (SSL)](https://www.postgresql.org/docs/current/libpq-ssl.html) connection modes when connecting to your origin database:
 
@@ -45,12 +47,19 @@ Hyperdrive supports the following [PostgreSQL TLS (SSL)](https://www.postgresql.
 | `verify-ca`   | Yes                | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts.  |
 | `verify-full` | Yes                | Identical to `verify-ca`, but also requires the database hostname must match a Subject Alternative Name (SAN) present on the certificate. |
 
-Refer to [SSL/TLS certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) documentation for details on how to configure `verify-ca` or `verify-full` TLS (SSL) modes for Hyperdrive.
-:::note
+### MySQL
 
-Hyperdrive support for `verify-ca` and `verify-full` is not available for MySQL (beta).
+Hyperdrive supports the following [MySQL TLS (SSL)](https://dev.mysql.com/doc/refman/8.0/en/connection-options.html#option_general_ssl-mode) connection modes when connecting to your origin database:
 
-:::
+| Mode              | Supported           | Details                                                                                                                                                        |
+| ----------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DISABLED`        | No                  | Hyperdrive does not support insecure plain text connections.                                                                                                   |
+| `PREFERRED`       | No (use `REQUIRED`) | Hyperdrive will always use TLS.                                                                                                                                |
+| `REQUIRED`        | Yes (default)       | TLS is required, and server certificates are validated (based on WebPKI).                                                                                      |
+| `VERIFY_CA`       | Yes                 | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts.                       |
+| `VERIFY_IDENTITY` | Yes                 | In addition to `VERIFY_CA` checks, Hyperdrive requires the database hostname to match a Subject Alternative Name (SAN) or Common Name (CN) on the certificate. |
+
+Refer to [SSL/TLS certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) documentation for details on how to configure these TLS (SSL) modes for Hyperdrive.
 
 ## Supported PostgreSQL authentication modes
 

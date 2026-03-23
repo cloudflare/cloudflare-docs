@@ -9,11 +9,11 @@ import { Details, Render } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/)    | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/)    | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | <ul> <li> Traffic and DNS mode </li> <li> Traffic only mode </li> </ul> | All plans                                                     |
 
-| System   | Availability | Minimum WARP version |
+| System   | Availability | Minimum client version |
 | -------- | ------------ | -------------------- |
 | Windows  | ✅           | 2023.5.587           |
 | macOS    | ✅           | 2023.5.589           |
@@ -36,7 +36,7 @@ To set up a traceroute test for an application:
 4. Fill in the following fields:
    - **Name**: Enter any name for the test.
    - **Target**: Enter the IP address of the server you want to test (for example, `192.0.2.0`). You can test either a public-facing endpoint or a private endpoint you have connected to Cloudflare.
-   - **Source device profiles**: (Optional) Select the [WARP device profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) that you want to run the test on. If no profiles are selected, the test will run on all supported devices connected to your Zero Trust organization.
+   - **Source device profiles**: (Optional) Select the [device profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) that you want to run the test on. If no profiles are selected, the test will run on all supported devices connected to your Zero Trust organization.
    - **Test type**: Select _Traceroute_.
    - **Test frequency**: Specify how often the test will run. Input a minute value between 5 and 60.
 5. Select **Add test**.

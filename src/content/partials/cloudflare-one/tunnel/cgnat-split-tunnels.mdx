@@ -4,5 +4,5 @@
 
 In your device profile, configure [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) so that traffic to your [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) goes through the WARP tunnel. Configuration depends on your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#change-split-tunnels-mode). For example, if your devices use the default `100.96.0.0/12` range:
 
-- **Exclude mode**: Delete `100.64.0.0/10` from your Split Tunnels list. We recommend [adding back the IP ranges](/cloudflare-one/networks/routes/reserved-ips/#warp-split-tunnel-configuration) that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use the CGNAT address space.
+- **Exclude mode**: Delete `100.64.0.0/10` from your Split Tunnels list. We recommend [adding back the IP ranges](/cloudflare-one/networks/routes/reserved-ips/#split-tunnel-configuration) that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use the CGNAT address space.
 - **Include mode**: Add `100.96.0.0/12` to your Split Tunnels list.

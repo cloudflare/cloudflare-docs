@@ -16,7 +16,7 @@ You can sign up today at [this link](https://one.dash.cloudflare.com). Follow th
 
 ## What is a team domain/team name?
 
-Your team domain is a unique subdomain assigned to your Cloudflare account, for example, `<your-team-name>.cloudflareaccess.com`. [Setting up a team domain](/cloudflare-one/setup/#create-a-zero-trust-organization) is an essential step in your Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) — and will be able to make login requests to them. The customizable portion of your team domain is called **team name**. You can view your team name and team domain in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings**.
+Your team domain is a unique subdomain assigned to your Cloudflare account, for example, `<your-team-name>.cloudflareaccess.com`. [Setting up a team domain](/cloudflare-one/setup/#2-create-a-zero-trust-organization) is an essential step in your Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) — and will be able to make login requests to them. The customizable portion of your team domain is called **team name**. You can view your team name and team domain in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings**.
 
 | team name        | team domain                             |
 | ---------------- | --------------------------------------- |
@@ -32,7 +32,7 @@ Once a team name has been used, even if the team domain is later deleted, the te
 
 :::caution[Warning]
 
-If you change your team name, you need to update your organization's identity providers (IdPs) and the WARP client to reflect the new team name in order to avoid any mismatch errors.
+If you change your team name, you need to update your organization's identity providers (IdPs) and the Cloudflare One Client to reflect the new team name in order to avoid any mismatch errors.
 :::
 
 ### Why is my old team name is still showing up on the Login page and App Launcher?
@@ -55,7 +55,7 @@ To make changes to your subscription, visit the Billing section under **Settings
 
 ## How are active seats measured?
 
-Cloudflare Zero Trust subscriptions consist of seats that users in your account consume. When users authenticate to an application or enroll their agent into WARP, they count against one of your active seats. Seats can be added, removed, or revoked at **Settings** > **Cloudflare One plan**. If all seats are currently consumed, you must first remove users before decreasing your purchased seat count.
+Cloudflare Zero Trust subscriptions consist of seats that users in your account consume. When users authenticate to an application or enroll their agent into the Cloudflare One Client, they count against one of your active seats. Seats can be added, removed, or revoked at **Settings** > **Cloudflare One plan**. If all seats are currently consumed, you must first remove users before decreasing your purchased seat count.
 
 ### Removing users
 
@@ -63,11 +63,11 @@ User seats can be removed for Access and Gateway at **Team & Resources** > **Use
 
 - **Access**: All active sessions for that user will be invalidated. A user will be able to log back into an application unless you create an [Access policy](/cloudflare-one/access-controls/policies/) to block future logins from that user.
 
-- **Gateway**: All active devices for that user will be logged out of your Zero Trust organization, which stops all filtering and routing via the WARP client. A user will be able to re-enroll their device unless you create a [device enrollment policy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) to block them.
+- **Gateway**: All active devices for that user will be logged out of your Zero Trust organization, which stops all filtering and routing via the Cloudflare One Client. A user will be able to re-enroll their device unless you create a [device enrollment policy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) to block them.
 
 :::caution
 
-The Remove action will remove a user's seat, but it will not permanently revoke their ability to authenticate. To permanently disable a user's ability to authenticate, you must modify the policies that allow them to reach a given application or enroll a device in WARP.
+The Remove action will remove a user's seat, but it will not permanently revoke their ability to authenticate. To permanently disable a user's ability to authenticate, you must modify the policies that allow them to reach a given application or enroll a device in the Cloudflare One Client.
 
 :::
 

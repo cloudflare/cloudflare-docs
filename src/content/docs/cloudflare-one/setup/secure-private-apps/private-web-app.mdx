@@ -1,0 +1,52 @@
+---
+pcx_content_type: get-started
+title: "Private web application"
+sidebar:
+  order: 1
+  label: Private web application
+description: Connect a private web application to Cloudflare and protect it with Access.
+products:
+  - cloudflare-one
+tags:
+  - Private networks
+---
+
+import { Render } from "~/components";
+
+Connect a self-hosted web application to Cloudflare so authorized users can access it from a browser without a VPN. This is useful when you need to give employees or contractors secure access to applications like company intranets, internal wikis, or admin panels.
+
+To explore other access scenarios, refer to [Secure private apps](/cloudflare-one/setup/secure-private-apps/).
+
+This guide follows the same steps as the **Get Started** experience in the [Cloudflare One dashboard](https://one.dash.cloudflare.com).
+
+## How it works
+
+[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) connects your private network to Cloudflare without opening any ports on your network. You install `cloudflared`, a connector service that runs in the background, on a device that can reach your application. It creates a secure connection from your network out to Cloudflare, so no firewall changes are required.
+
+[Cloudflare Access](/cloudflare-one/access-controls/) sits in front of the application and verifies who each user is before letting them through. Users sign in through a browser using an email one-time PIN or your identity provider.
+
+## Prerequisites
+
+- A Cloudflare account with a Zero Trust organization. If you have not set this up, refer to [Get started](/cloudflare-one/setup/).
+- An [active domain on your Cloudflare account](/fundamentals/manage-domains/add-site/). A public subdomain is created on this domain for your application.
+- A Linux, Windows, or macOS device on your private network that can reach the application. This is where you install the tunnel.
+- A running web application on your private network (for example, `http://10.10.1.25` or `http://grafana.local`).
+
+## Step 1: Define your application
+
+In this step, you describe the internal application you want to make available through Cloudflare.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), select the **Get Started** tab.
+2. For **Securely access private web apps without an agent**, select **Get started**.
+3. For **Connect a private web application**, select **Continue**.
+4. On the **Connect and access private web applications** screen, select **Continue**.
+5. Enter a name for your application (for example, `grafana-gcp`).
+6. Enter the hostname or IP address where the application is running. Use the IP address if you are not sure (for example, `10.10.1.25`).
+7. Select the protocol your application uses (HTTP or HTTPS).
+8. Enter the port your application listens on. This is usually part of the URL you use to access the application locally (for example, the `80` in `http://10.10.1.25:80`).
+9. Select **Continue**.
+
+<Render
+	file="access/secure-private-apps-shared-steps"
+	product="cloudflare-one"
+/>

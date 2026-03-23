@@ -3,6 +3,24 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-03-19"
+    title: "Service Key Authentication"
+    description: |-
+      Deprecation date: March 19, 2026
+
+      End of life date: September 30, 2026
+
+      Service Key authentication for the Cloudflare API is deprecated and will be removed on September 30, 2026. [API Tokens](/fundamentals/api/get-started/create-token/) are capable of providing all functionality of Service Keys, with additional support for fine-grained permission scoping, expiration, and IP address restrictions.
+
+      Deprecated behavior:
+      * Authenticating API requests using the `X-Auth-User-Service-Key` header.
+      * Generating new Service Keys via the Cloudflare dashboard or API. The ability to generate new Service Keys from the Dashboard will be removed soon.
+
+      Replacement:
+      * [Create an API Token](/fundamentals/api/get-started/create-token/) with the appropriate permissions for your use case. API Tokens support fine-grained scoping, expiration, and revocation.
+
+      Users of `cloudflared` should ensure they are running a version from November 2022 or later, which uses API Tokens instead of Service Keys. Users of [origin-ca-issuer](https://github.com/cloudflare/origin-ca-issuer) should update to a version that supports API Token authentication.
+
   - publish_date: "2026-01-23"
     title: "DNS Record Type Updates via API"
     description: |-

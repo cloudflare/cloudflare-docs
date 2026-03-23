@@ -432,7 +432,7 @@ Using any other type of `ReadableStream` as the body of a request will result in
 The Workers implementation of the `Request` interface includes several extensions to the web standard `Request` API. These differences are intentional and provide additional functionality specific to the Workers runtime.
 
 :::note[TypeScript users]
-Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/#types)) define a `Request` type that includes Workers-specific properties like `cf`. This type is not directly compatible with the standard `Request` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions or create a new `Request` object.
+Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/general/#types)) define a `Request` type that includes Workers-specific properties like `cf`. This type is not directly compatible with the standard `Request` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions or create a new `Request` object.
 :::
 
 ### The `cf` property

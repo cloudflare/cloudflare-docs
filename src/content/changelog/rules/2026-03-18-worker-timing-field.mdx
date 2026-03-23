@@ -1,0 +1,23 @@
+---
+title: Worker execution timing field now available in Rules
+description: Use the new cf.timings.worker_msec field to build rules based on Cloudflare Worker execution time.
+date: 2026-03-18
+---
+
+The `cf.timings.worker_msec` field is now available in the Ruleset Engine. This field reports the wall-clock time that a Cloudflare Worker spent handling a request, measured in milliseconds.
+
+You can use this field to identify slow Worker executions, detect performance regressions, or build rules that respond differently based on Worker processing time, such as logging requests that exceed a latency threshold.
+
+### Field details
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `cf.timings.worker_msec` | Integer | The time spent executing a Cloudflare Worker in milliseconds. Returns `0` if no Worker was invoked. |
+
+Example filter expression:
+
+```
+cf.timings.worker_msec > 500
+```
+
+For more information, refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/cf.timings.worker_msec/).

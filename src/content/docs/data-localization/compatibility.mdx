@@ -21,7 +21,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | ------------------------------------------ | --------------- | ----------------- | -------------------------- |
 | Caching/CDN                                | ✅              | ✅                | ✅                         |
 | Cache Reserve                              | ⚫️             | 🚧                | ✅ [^29]                   |
-| DNS                                        | ⚫️             | 🚧 [^33]          | 🚧 [^32]                   |
+| DNS                                        | ⚫️             | 🚧 [^33]          | ✅                      |
 | HTTP/3 (with QUIC)                         | ⚫️             | ✘                 | ⚫️                        |
 | Image Resizing                             | ✅              | ✅ [^6]           | 🚧 [^1]                    |
 | Load Balancing                             | ✅              | ✅                | 🚧 [^1]                    |
@@ -45,7 +45,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Advanced DDoS Protection     | ✅              | ✅                | 🚧 [^3]                    |
 | API Shield                   | ✅              | ✅                | 🚧 [^4]                    |
 | Bot Management               | ✅              | ✅                | ✅                         |
-| DNS Firewall                 | ⚫️             | ⚫️               | 🚧 [^22]                   |
+| DNS Firewall                 | ⚫️              | ⚫️                | ✅                  |
 | Page Shield                  | ✅              | ✅                | ✅                         |
 | Rate Limiting                | ✅              | ✅                | ✅ [^37]                   |
 | SSL                          | ✅              | ✅                | ✅                         |
@@ -116,7 +116,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Digital Experience | ⚫️             | ⚫️               | 🚧 [^49]                   |
 | DLP                | ⚫️ [^19]       | ⚫️ [^19]         | 🚧 [^31]                   |
 | Gateway            | 🚧 [^20]        | 🚧 [^21]          | 🚧 [^22]                   |
-| WARP               | ⚫️             | ⚫️               | 🚧 [^1]                    |
+| Cloudflare One Client | ⚫️             | ⚫️               | 🚧 [^1]                    |
 
 [^1]: Logs / Analytics not available outside US region when using Customer Metadata Boundary.
 
@@ -156,7 +156,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^20]: You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 
-[^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/) (add-on) is incompatible with DLS.
+[^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and Peer-to-peer proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/) (add-on) is incompatible with DLS.
 
 [^22]: Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.
 
@@ -173,8 +173,6 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^30]: Regular/Generic and Custom Tiered Cache works; Smart Tiered Caching does not work with Customer Metadata Boundary (CMB). <br/> With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.
 
 [^31]: DLP is part of Gateway HTTP, however, [DLP detection entries](/cloudflare-one/data-loss-prevention/detection-entries/) are not available outside US region when using Customer Metadata Boundary.
-
-[^32]: Dashboard Analytics are empty when using CMB outside the US region. Use Logpush instead.
 
 [^33]: [Outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/) will carry Earth region proxy IPs, thus making regional service dysfunctional when non-Cloudflare nameservers respond to the DNS queries.
 

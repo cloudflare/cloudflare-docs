@@ -20,7 +20,7 @@ Only available on Enterprise plans.
 
 :::
 
-This tutorial gives administrators an easy way to allow their users to change their egress IP address between any of your assigned dedicated egress IP addresses. Your users can choose which egress IP to use by switching virtual networks directly from in the WARP client.
+This tutorial gives administrators an easy way to allow their users to change their egress IP address between any of your assigned dedicated egress IP addresses. Your users can choose which egress IP to use by switching virtual networks directly from in the Cloudflare One Client.
 
 Changing egress IPs can be useful in quality assurance (QA) and other similar scenarios in which users both use their local egress location and either switch to or simulate other remote locations.
 
@@ -28,7 +28,7 @@ Changing egress IPs can be useful in quality assurance (QA) and other similar sc
 
 Make sure you have:
 
-- [Deployed the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your users' devices.
+- [Deployed the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your users' devices.
 - [Configured tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) to connect your private network to Cloudflare. This tutorial assumes you have:
   - Created two tunnels [through the dashboard](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
   - Routed `10.0.0.0/8` through one tunnel.
@@ -194,7 +194,7 @@ Each policy you create should correspond to a different primary dedicated egress
 
 <Details header="Windows, macOS, and Linux">
 
-1. On your user's device, log in to your Zero Trust organization in the WARP client.
+1. On your user's device, log in to your Zero Trust organization in the Cloudflare One Client.
 
 2. In a terminal, run the following command to check the default egress IP address.
 
@@ -207,7 +207,7 @@ Each policy you create should correspond to a different primary dedicated egress
 3. In the client GUI, use the **VNET** dropdown to switch to a virtual network you created.
    <Details header="Version 2026.1 and earlier">
 
-   In the WARP client, select the gear icon > **Virtual Networks**.
+   In the Cloudflare One Client, select the gear icon > **Virtual Networks**.
 
    </Details>
 

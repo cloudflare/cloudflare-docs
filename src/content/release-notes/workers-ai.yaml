@@ -3,6 +3,12 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2026-03-19"
+    title: Moonshot AI Kimi K2.5 now available on Workers AI
+    description: |-
+      - [`@cf/moonshotai/kimi-k2.5`](/workers-ai/models/kimi-k2.5/) now available on Workers AI. A frontier-scale open-source model with a 256k context window, multi-turn tool calling, vision inputs, and structured outputs for agentic workloads. Read [changelog](/changelog/post/2026-03-19-kimi-k2-5-workers-ai/) to get started.
+      - New [Prompt caching](/workers-ai/features/prompt-caching/) documentation. Send the `x-session-affinity` header to route requests to the same model instance and maximize prefix cache hit rates across multi-turn conversations.
+      - Redesigned [Asynchronous Batch API](/workers-ai/features/batch-api/) with a pull-based system that processes queued requests as capacity becomes available, avoiding out-of-capacity errors for durable workflows.
   - publish_date: "2026-03-11"
     title: NVIDIA Nemotron 3 Super now available on Workers AI
     description: |-

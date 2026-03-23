@@ -1,0 +1,72 @@
+---
+pcx_content_type: how-to
+title: Create a partial zone using Terraform
+sidebar:
+  order: 1
+  label: Create a partial zone
+head:
+  - tag: title
+    content: Create a partial zone using Terraform
+---
+
+import { Tabs, TabItem } from "~/components";
+
+A [partial zone](/dns/zone-setups/partial-setup/) lets you use Cloudflare for a subdomain while keeping your existing authoritative DNS provider for the parent domain. This guide shows how to automate the setup using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+
+:::caution
+A partial zone cannot be created in the same Cloudflare account as the parent domain's full zone.
+:::
+
+## Prerequisites
+
+- Terraform installed. Refer to [Get started](/terraform/installing/).
+- Your Cloudflare account ID and a configured provider block. Refer to [Initialize Terraform](/terraform/tutorial/initialize-terraform/).
+
+## Create the zone
+
+Add the zone configuration and apply the change to create the zone:
+
+```hcl
+resource "cloudflare_zone" "subdomain_example_com" {
+  account = {
+    id = var.cloudflare_account_id
+  }
+  name = "subdomain.example.com"
+}
+```
+
+Then, in a new Terraform plan and apply cycle, upgrade the zone to a Business plan or higher:
+```hcl
+resource "cloudflare_zone_subscription" "example_zone_subscription" {
+  zone_id = cloudflare_zone.subdomain_example_com.id
+  frequency = "monthly"
+  rate_plan = {
+    id = "business"
+    currency = "USD"
+  }
+}
+```
+
+Then, again in a new Terraform plan and apply cycle, update your Terraform configuration to add `type = "partial"` to the zone:
+
+```hcl
+resource "cloudflare_zone" "subdomain_example_com" {
+  account = {
+    id = var.cloudflare_account_id
+  }
+  name = "subdomain.example.com"
+  type = "partial"
+}
+```
+
+Terraform places the zone in a **Pending** state. You must add the necessary DNS records and verify domain ownership before Cloudflare activates it.
+
+:::note
+Refer to the [cloudflare_zone docs](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone) in the Terraform provider documentation when you need to reference other zone properties.
+:::
+
+## Related resources
+
+- [Partial zone setup](/dns/zone-setups/partial-setup/)
+- [Convert a full zone to partial](/dns/zone-setups/conversions/convert-full-to-partial/)
+- [`cloudflare_zone` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone)

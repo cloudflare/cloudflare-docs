@@ -1,0 +1,35 @@
+---
+pcx_content_type: navigation
+title: Cloudflare One Client checks
+sidebar:
+  order: 1
+
+---
+
+These device posture checks are performed by the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/). To use this feature, you must [deploy the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) to your devices and enable the desired posture checks.
+
+## Supported Client modes
+
+* Traffic and DNS mode
+* Traffic only mode
+* Posture only mode
+
+## Supported operating systems
+
+| Device posture check                                                                          | macOS | Windows | Linux       | iOS | Android/ChromeOS |
+| --------------------------------------------------------------------------------------------- | ----- | ------- | ----------- | --- | ---------------- |
+| [Antivirus](/cloudflare-one/reusable-components/posture-checks/client-checks/antivirus/)           | ❌     | ✅       | ❌           | ❌   | ❌                |
+| [Application check](/cloudflare-one/reusable-components/posture-checks/client-checks/application-check/)   | ✅     | ✅       | ✅           | ❌   | ❌                |
+| [Carbon Black](/cloudflare-one/reusable-components/posture-checks/client-checks/carbon-black/)             | ✅     | ✅       | ✅           | ❌   | ❌                |
+| [Client certificate](/cloudflare-one/reusable-components/posture-checks/client-checks/client-certificate/) | ✅     | ✅       | ✅           | ❌   | ❌                |
+| [Device serial numbers](/cloudflare-one/reusable-components/posture-checks/client-checks/corp-device/)     | ✅     | ✅       | ✅           | ❌   | ❌                |
+| [Device UUID](/cloudflare-one/reusable-components/posture-checks/client-checks/device-uuid/)               | ❌     | ❌       | ❌           | ✅   | ✅                |
+| [Disk encryption](/cloudflare-one/reusable-components/posture-checks/client-checks/disk-encryption/)       | ✅     | ✅       | ✅           | ❌   | ❌                |
+| [Domain joined](/cloudflare-one/reusable-components/posture-checks/client-checks/domain-joined/)           | ❌     | ✅       | ❌           | ❌   | ❌                |
+| [File check](/cloudflare-one/reusable-components/posture-checks/client-checks/file-check/)                 | ✅     | ✅       | ✅           | ❌   | ❌                |
+| [Firewall](/cloudflare-one/reusable-components/posture-checks/client-checks/firewall/)                     | ✅     | ✅       | ❌           | ❌   | ❌                |
+| [OS version](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/)                 | ✅     | ✅       | ✅           | ✅   | ✅                |
+| [Require Gateway](/cloudflare-one/reusable-components/posture-checks/client-checks/require-gateway/)       | ✅     | ✅       | ✅           | ✅   | ✅                |
+| [Require WARP](/cloudflare-one/reusable-components/posture-checks/client-checks/require-warp/)             | ✅     | ✅       | ✅           | ✅   | ✅                |
+| [SentinelOne](/cloudflare-one/reusable-components/posture-checks/client-checks/sentinel-one/)              | ✅     | ✅       | ✅           | ❌   | ❌                |
+| [Tanium (legacy)](/cloudflare-one/reusable-components/posture-checks/client-checks/tanium/)                          | ✅    | ✅      | ✅    | ❌  | ❌  |

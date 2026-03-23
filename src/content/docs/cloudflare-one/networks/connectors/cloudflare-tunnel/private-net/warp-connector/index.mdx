@@ -15,7 +15,7 @@ import { Render, Details } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Traffic and DNS mode                                                                     | All plans                                                     |
 
@@ -34,7 +34,7 @@ import { Render, Details } from "~/components";
 Accounts on Legacy routing mode do not support WARP Connector when [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN) is enabled. Your account needs to be on Unified Routing (beta) for this to be supported. Contact your account team for more information.
 :::
 
-Cloudflare WARP Connector (beta) is a software client[^1] that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP Connector establishes a secure Layer 3 proxy between a private network and Cloudflare, allowing you to:
+WARP Connector (beta) is a software client[^1] that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP Connector establishes a secure Layer 3 proxy between a private network and Cloudflare, allowing you to:
 
 - Connect two or more private networks to each other.
 - Connect IoT devices that cannot run external software, such as printers and IP phones.
@@ -49,7 +49,7 @@ To set up WARP Connector, refer to the guide for your use case:
 
 - **[Site-to-Internet](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-internet/)**: Send requests from your private network to the Internet.
 - **[Site-to-site](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/)**: Send requests between two or more private networks.
-- **[User-to-site](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/)**: Allow WARP client devices to send requests to your private network.
+- **[User-to-site](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/)**: Allow Cloudflare One Client devices to send requests to your private network.
 - **Internet-to-site**: Not supported by WARP Connector. To provide clientless access to applications on your private network, set up a [Cloudflare Tunnel with `cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) and configure a [published application](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/).
 
-[^1]: WARP Connector is an extension of the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/).
+[^1]: WARP Connector is an extension of the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/).

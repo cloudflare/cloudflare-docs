@@ -21,7 +21,7 @@ Events are a powerful part of a Workflow, as you often want a Workflow to act on
 
 You can pass parameters to a Workflow in three ways:
 
-- As an optional argument to the `create` method on a [Workflow binding](/workers/wrangler/commands/#trigger) when triggering a Workflow from a Worker.
+- As an optional argument to the `create` method on a [Workflow binding](/workers/wrangler/commands/general/#trigger) when triggering a Workflow from a Worker.
 - Via the `--params` flag when using the `wrangler` CLI to trigger a Workflow.
 - Via the `step.waitForEvent` API, which allows a Workflow instance to wait for an event (and optional data) to be received _while it is running_. Workflow instances can be sent events from external services over HTTP or via the Workers API for Workflows.
 

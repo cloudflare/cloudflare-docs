@@ -4,21 +4,21 @@
 
 import { GlossaryTooltip, TabItem, Tabs } from "~/components";
 
-Follow this troubleshooting procedure when end users running Cloudflare WARP have issues connecting to a private network behind Cloudflare Tunnel.
+Follow this troubleshooting procedure when end users running the Cloudflare One Client have issues connecting to a private network behind Cloudflare Tunnel.
 
-## 1. Is the WARP client connected to a Cloudflare data center?
+## 1. Is the Cloudflare One Client connected to a Cloudflare data center?
 
-The WARP client GUI should display `Connected` and `Your Internet is protected`.
+The Cloudflare One Client GUI should display `Connected` and `Your Internet is protected`.
 
 <div class="medium-img">
 
-![Cloudflare One client GUI when connected to Cloudflare](~/assets/images/cloudflare-one/connections/warp-connected.png)
+![Cloudflare One Client GUI when connected to Cloudflare](~/assets/images/cloudflare-one/connections/warp-connected.png)
 
 </div>
 
-If WARP is stuck in the `Disconnected` state or frequently changes between `Connected` and `Disconnected`, refer to [Unable to connect WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/common-issues/#unable-to-connect-warp).
+If the Cloudflare One Client is stuck in the `Disconnected` state or frequently changes between `Connected` and `Disconnected`, refer to [Unable to connect WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/common-issues/#unable-to-connect-warp).
 
-## 2. Is the WARP client connecting to your private DNS server?
+## 2. Is the Cloudflare One Client connecting to your private DNS server?
 
 This step is only needed if users access your application via a private hostname (for example, `wiki.internal.local`).
 
@@ -28,11 +28,11 @@ This step is only needed if users access your application via a private hostname
 
 If there are no relevant Gateway logs, it means that WARP was unable to forward the query to your private DNS server. Check your resolver policies or Local Domain Fallback configuration and refer to [How WARP handles DNS requests](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/#how-the-warp-client-handles-dns-requests).
 
-## 3. Is network traffic to the application going through WARP?
+## 3. Is network traffic to the application going through the Cloudflare One Client?
 
 Next, check if your Gateway Network logs (**Insights** > **Logs** > **Network logs**) show any traffic to the destination IP.
 
-If WARP is connected but there are no network logs, it means that your private network IPs are not routing through WARP. You can confirm this by [searching the routing table](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#routing-table) on the device for the IP address of your application. Traffic to your application should route through the Cloudflare WARP interface. If another interface is used, [check your Split Tunnel configuration](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#3-route-private-network-ips-through-warp).
+If the Cloudflare One Client is connected but there are no network logs, it means that your private network IPs are not routing through the Cloudflare One Client. You can confirm this by [searching the routing table](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#routing-table) on the device for the IP address of your application. Traffic to your application should route through the Cloudflare One Client interface. If another interface is used, [check your Split Tunnel configuration](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#3-route-private-network-ips-through-the-cloudflare-one-client).
 
 ## 4. Is the user blocked by a Gateway policy?
 
@@ -57,9 +57,9 @@ Determine whether the user is matching any policy, or if they are matching a pol
    4. In the results, select a log and note its **Policy Name** value.
 2. Go to **Traffic policies** > **Firewall policies** and compare the [order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/) of the matched policy versus the expected policy.
 3. Compare the Gateway log values with the expected policy criteria.
-   - If the mismatched value is related to identity, [check the user registry](/cloudflare-one/team-and-resources/users/users/) and verify the values that are passed to Gateway from your IdP. Cloudflare updates the registry when the user enrolls in the WARP client. If the user's identity is outdated, ask the user to re-authenticate the client (**Profile** > **Account information** > **Re-authenticate**)[^1].
+   - If the mismatched value is related to identity, [check the user registry](/cloudflare-one/team-and-resources/users/users/) and verify the values that are passed to Gateway from your IdP. Cloudflare updates the registry when the user enrolls in the Cloudflare One Client. If the user's identity is outdated, ask the user to re-authenticate the client (**Profile** > **Account information** > **Re-authenticate**)[^1].
 
-[^1]: In WARP version 2026.1 and earlier, select **Preferences** > **Account** > **Re-Authenticate Session**.
+[^1]: In Cloudflare One Client version 2026.1 and earlier, select **Preferences** > **Account** > **Re-Authenticate Session**.
 
    - If the mismatched value is related to device posture, [view posture check results](/cloudflare-one/reusable-components/posture-checks/#2-verify-device-posture-checks) for the user's device. Verify that the device passes the posture checks configured in the policy.
 

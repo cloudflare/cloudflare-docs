@@ -236,7 +236,7 @@ The `main` key is optional for assets-only Workers.
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
 
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
-  - Maps a Durable Object from a class name to a runtime state. This communicates changes to the Durable Object (creation / deletion / rename / transfer) to the Workers runtime and provides the runtime with instructions on how to deal with those changes. Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/#durable-object-migrations-in-wranglertoml).
+  - Maps a Durable Object from a class name to a runtime state. This communicates changes to the Durable Object (creation / deletion / rename / transfer) to the Workers runtime and provides the runtime with instructions on how to deal with those changes. Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/#migration-wrangler-configuration).
 
 * `placement` <Type text="object"/> <MetaInfo text="optional"/>
   - Configures where your Worker runs to minimize latency to back-end services. Refer to [Placement](/workers/configuration/placement/).
@@ -552,7 +552,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 - `migrations_dir` <Type text="string" /> <MetaInfo text="optional" />
   - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migrations_dir` to specify a different folder containing the migration files (for example, if you have a mono-repo setup, and want to use a single D1 instance across your apps/packages).
-  - For more information, refer to [D1 Wrangler `migrations` commands](/workers/wrangler/commands/#migrations-create) and [D1 migrations](/d1/reference/migrations/).
+  - For more information, refer to [D1 Wrangler `migrations` commands](/workers/wrangler/commands/d1/#migrations-create) and [D1 migrations](/d1/reference/migrations/).
 
 :::note
 
@@ -1495,7 +1495,7 @@ You can configure various aspects of local development, such as the local protoc
 
 ### Secrets
 
-[Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/#secret) to your Worker.
+[Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/general/#secret) to your Worker.
 
 <Render file="secrets-in-dev" product="workers" />
 
@@ -1530,6 +1530,18 @@ import { bar } from "foo";
 
 console.log(bar); // returns "baz"
 ```
+
+### Bundling issues
+
+When Wrangler bundles your Worker, it might fail to resolve dependencies. Setting up an alias for such dependencies is a simple way to fix the issue.
+
+However, before doing so, verify that the package is correctly installed in your project, either as a direct dependency in `package.json` or as a transitive dependency.
+
+If an alias is the correct solution for your dependency issue, you have several options:
+
+- **Alternative implementation** — Implement the module's logic in a Worker-compatible manner, ensuring that all the functionality remains intact.
+- **No-op module** — If the module's logic is unused or irrelevant, point the alias to an empty file. This makes the module a no-op while fixing the bundling issue.
+- **Runtime error** — If the module's logic is unused and the Worker should not attempt to use it (for example, because of security vulnerabilities), point the alias to a file with a single top-level `throw` statement. This fixes the bundling issue while ensuring the module is never actually used.
 
 ### Example: Aliasing dependencies from NPM
 
@@ -1588,7 +1600,7 @@ In many cases, this allows you to work provide just enough of an API to make a d
 [Source maps](/workers/observability/source-maps/) translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
 
 - `upload_source_maps` <Type text="boolean" />
-  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy).
+  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy).
 
 Example:
 

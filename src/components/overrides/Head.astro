@@ -35,16 +35,26 @@ if (currentSection) {
 	// For changelog pages there is no directory entry for "changelog" itself; skip
 	// the lookup to avoid spurious "Entry directory → changelog was not found" warnings.
 	// The actual product is resolved below from frontmatter.products[0].
-	let product = currentSection !== "changelog"
-		? await getEntry("directory", currentSection)
-		: undefined;
+	let product =
+		currentSection !== "changelog"
+			? await getEntry("directory", currentSection)
+			: undefined;
 	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
 	if (currentSection === "changelog") {
-		const products = frontmatter.products;
-		if (products && products.length > 0) {
-			const primaryProduct = products[0];
-			product = await getEntry("directory", primaryProduct.id);
+		const originalEntry = Astro.locals.starlightRoute.originalEntry as
+			| CollectionEntry<"changelog">
+			| undefined;
+		if (originalEntry && originalEntry.data.products.length > 0) {
+			const primaryProductRef = originalEntry.data.products[0];
+			product = await getEntry("directory", primaryProductRef.id);
+			// product = await getEntry(originalEntry.data.products[0]);
 		}
+		["pcx_content_type", "algolia_content_type"].map((name) => {
+			metaTags.push({
+				name,
+				content: formatContentType("changelog-entry"),
+			});
+		});
 	}
 
 	if (product) {
@@ -198,7 +208,10 @@ if (frontmatter.external_link) {
 	});
 }
 
-if (frontmatter.pcx_content_type === "changelog") {
+if (
+	frontmatter.pcx_content_type === "changelog" ||
+	currentSection === "changelog"
+) {
 	const href = new URL(entry.id.concat("/index.xml"), Astro.url.origin);
 
 	head.push({

@@ -14,7 +14,7 @@ Setup instructions vary depending on how you want to connect your devices to Clo
 
 | Connection                                                                                                | Mode         | Description                                                                                                          |
 | --------------------------------------------------------------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------- |
-| [Traffic and DNS mode](/cloudflare-one/traffic-policies/get-started/http/)                                | In-line      | Apply identity-based HTTP policies to traffic proxied through the WARP client.                                       |
+| [Traffic and DNS mode](/cloudflare-one/traffic-policies/get-started/http/)                                | In-line      | Apply identity-based HTTP policies to traffic proxied through the Cloudflare One Client.                                       |
 | [Access](/cloudflare-one/access-controls/policies/isolate-application/)                                   | In-line      | Apply identity-based HTTP policies to Access applications that are rendered in a remote browser.                     |
 | [Gateway proxy endpoint](/cloudflare-one/remote-browser-isolation/setup/non-identity/)                    | In-line      | Apply non-identity HTTP policies to traffic forwarded to a proxy endpoint.                                           |
 | [Cloudflare WAN](/cloudflare-one/remote-browser-isolation/setup/non-identity/)                            | In-line      | Apply non-identity HTTP policies to traffic connected through a GRE or IPsec tunnel.                                 |
@@ -62,5 +62,5 @@ Users can see if a webpage is isolated by using one of the following methods:
 
 #### Disconnect Browser Isolation
 
-WARP users can temporarily disable remote browsing by [disconnecting the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#lock-warp-switch).
-Once WARP is disconnected, a refresh will return the non-isolated page.
+Cloudflare One Client users can temporarily disable remote browsing by [disconnecting the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#lock-warp-switch).
+Once the Cloudflare One Client is disconnected, a refresh will return the non-isolated page.

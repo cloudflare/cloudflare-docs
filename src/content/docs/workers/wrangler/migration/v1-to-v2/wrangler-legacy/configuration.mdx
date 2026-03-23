@@ -168,7 +168,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
   - Configures cron triggers for running a Worker on a schedule.
 
 - `usage_model` inherited optional
-  - Specifies the [Usage Model](/workers/platform/pricing/#workers) for your Worker. There are two options - [`bundled`](/workers/platform/limits/#worker-limits) and [`unbound`](/workers/platform/limits/#worker-limits). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
+  - Specifies the [Usage Model](/workers/platform/pricing/#workers) for your Worker. There are two options - [`bundled`](/workers/platform/limits/#account-plan-limits) and [`unbound`](/workers/platform/limits/#account-plan-limits). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
 
 - `build` top level optional
   - Configures a custom build step to be run by Wrangler when building your Worker. Refer to the [custom builds documentation](#build) for more details.
@@ -220,7 +220,7 @@ Alternatively, you can define `vars` using an inline table format. This style sh
 
 :::note
 
-Secrets should be handled using the [`wrangler secret`](/workers/wrangler/commands/#secret) command.
+Secrets should be handled using the [`wrangler secret`](/workers/wrangler/commands/general/#secret) command.
 
 :::
 

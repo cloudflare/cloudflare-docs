@@ -165,6 +165,21 @@ Example response:
 }
 ```
 
+### Errored and blocked pages
+
+If a crawled page returns an HTTP error (such as `402`, `403`, or `500`), the record for that URL will have `"status": "errored"`.
+
+This information is only available in the crawl results (step 2) — the [initiation response](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) only returns the job `id`. Because crawl jobs run asynchronously, the crawler does not fetch page content at initiation time.
+
+To view only errored records, filter by `status=errored`:
+
+```bash
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/{job_id}?status=errored' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN'
+```
+
+The record's `status` field contains the HTTP status code returned by the origin server, and `html` contains the response body. This is useful for understanding site owners' intent when they block crawlers — for example, sites using [AI Crawl Control](https://blog.cloudflare.com/ai-crawl-control) may return a custom status code and message.
+
 ## Cancel a crawl job
 
 To cancel a crawl job that is currently in progress, use the job `id` you received:
@@ -194,6 +209,7 @@ The following optional parameters can be used in your crawl request, in addition
 | `options.includeSubdomains` | Boolean | If true, follows links to subdomains of the starting URL (default is false). |
 | `options.includePatterns` | Array of strings | Only visits URLs that match one of these wildcard patterns. Use `*` to match any characters except `/`, or `**` to match any characters including `/`. |
 | `options.excludePatterns` | Array of strings | Does not visit URLs that match any of these wildcard patterns. Use `*` to match any characters except `/`, or `**` to match any characters including `/`. |
+| `crawlPurposes` | Array of strings | Declares the intended use of crawled content for [Content Signals](https://contentsignals.org/) enforcement. Allowed values: `search`, `ai-input`, `ai-train`. Default is `["search", "ai-input", "ai-train"]`. If a target site's `robots.txt` includes a `Content-Signal` directive that sets any of your declared purposes to `no`, the crawl request will be rejected with a `400` error. Refer to [Content Signals](#content-signals) for details. |
 
 ### Pattern behavior
 
@@ -228,6 +244,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
   -H 'Content-Type: application/json' \
   -d '{
     "url": "https://www.exampledocs.com/docs/",
+    "crawlPurposes": ["search"],
     "limit": 50,
     "depth": 2,
     "formats": ["markdown"],
@@ -281,7 +298,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 
 ### Product catalog extraction with AI
 
-Extract structured product data using the `json` format. This leverages [Workers AI](/workers-ai/) by default.
+Extract structured product data using the `json` format. This leverages [Workers AI](/workers-ai/) by default. Refer to the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) to learn more.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
@@ -430,7 +447,7 @@ The `/crawl` endpoint respects the directives of `robots.txt` files, including `
 :::caution[Bot protection may block crawling]
 Browser Rendering does not bypass CAPTCHAs, Turnstile challenges, or any other bot protection mechanisms. If a target site uses Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the Browser Rendering crawler.
 
-If you are crawling your own site and want Browser Rendering to access it freely, you can create a WAF skip rule to allowlist Browser Rendering. Refer to [How do I allowlist Browser Rendering?](/browser-rendering/faq/#can-i-allowlist-browser-rendering-on-my-own-website) for instructions.
+If you are crawling your own site and want Browser Rendering to access it freely, you can create a WAF skip rule to allowlist Browser Rendering. Refer to [How do I allowlist Browser Rendering?](/browser-rendering/faq/#can-i-allowlist-browser-rendering-on-my-own-website) for instructions. The `/crawl` endpoint uses [bot detection ID](/browser-rendering/reference/automatic-request-headers/#bot-detection) `128292352`.
 :::
 
 ### User-Agent
@@ -438,6 +455,53 @@ If you are crawling your own site and want Browser Rendering to access it freely
 The `/crawl` endpoint uses `CloudflareBrowserRenderingCrawler/1.0` as its User-Agent, which is different from the other [REST API](/browser-rendering/rest-api/) endpoints. This User-Agent is not customizable. Unlike the other REST API endpoints and [Workers Bindings](/browser-rendering/workers-bindings/), the `userAgent` parameter is not supported on the `/crawl` endpoint.
 
 For a full list of default User-Agent strings, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/#user-agent).
+
+### Content Signals
+
+The `/crawl` endpoint respects [Content Signals](https://contentsignals.org/) directives found in a target site's `robots.txt` file. Content Signals are a way for site owners to express preferences about how their content can be used by automated systems. For more background, refer to [Giving users choice with Cloudflare's new Content Signals Policy](https://blog.cloudflare.com/content-signals-policy/).
+
+A site owner can include a `Content-Signal` directive in their `robots.txt` to allow or disallow specific categories of use:
+
+- `search` — Building a search index and providing search results with links and excerpts.
+- `ai-input` — Inputting content into AI models at query time (for example, retrieval-augmented generation or grounding).
+- `ai-train` — Training or fine-tuning AI models.
+
+For example, a `robots.txt` that allows search indexing but disallows AI training:
+
+```txt title="robots.txt"
+User-Agent: *
+Content-Signal: search=yes, ai-train=no
+Allow: /
+```
+
+#### How /crawl enforces Content Signals
+
+By default, `/crawl` declares all three purposes: `["search", "ai-input", "ai-train"]`. If a target site sets any of those content signals to `no`, the crawl request will be rejected at initiation with a `400 Bad Request` error unless you explicitly narrow your declared purposes using the `crawlPurposes` parameter to exclude the disallowed use.
+
+This means:
+
+1. **Site has no Content Signals** — The crawl proceeds normally.
+2. **Site has Content Signals, and all your declared purposes are allowed** — The crawl proceeds normally.
+3. **Site sets a content signal to `no`, and that purpose is in your `crawlPurposes`** — The crawl request is rejected with a `400` error and the message `Crawl purpose(s) completely disallowed by Content-Signal directive`.
+
+To crawl a site that disallows AI training but allows search, set `crawlPurposes` to only the purposes you need:
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com",
+    "crawlPurposes": ["search"],
+    "formats": ["markdown"]
+  }'
+```
+
+In this example, because the operator declared only `search` as their purpose, the crawl will succeed even if the site sets `ai-train=no`.
+
+:::note
+Content Signals are trust-based. By setting `crawlPurposes`, you are declaring to the site owner how you intend to use the crawled content.
+:::
 
 ## Troubleshooting
 
@@ -448,6 +512,10 @@ If your crawl job completes but returns an empty records array, or all URLs show
 - **robots.txt blocking** — The crawler respects `robots.txt` rules. The `/crawl` endpoint identifies itself as `CloudflareBrowserRenderingCrawler/1.0`. Check the target site's `robots.txt` file to verify this user agent is allowed. Blocked URLs appear with `"status": "disallowed"`.
 - **Pattern filters too restrictive** — Your `includePatterns` may not match any URLs on the site. Try crawling without patterns first to confirm URLs are discoverable, then add patterns.
 - **No links found** — The starting URL may not contain links. Try using `source: "sitemaps"`, increasing the `depth` parameter, or setting `includeSubdomains` or `includeExternalLinks` to `true`.
+
+### Crawl rejected by Content Signals
+
+If your crawl request returns a `400 Bad Request` with the message `Crawl purpose(s) completely disallowed by Content-Signal directive`, the target site's `robots.txt` includes a `Content-Signal` directive that disallows one or more of your declared `crawlPurposes`. To resolve this, check the site's `robots.txt` for `Content-Signal:` entries and set `crawlPurposes` to only the purposes you need. For example, if the site sets `ai-train=no` and you only need search indexing, use `"crawlPurposes": ["search"]`. Refer to [Content Signals](#content-signals) for details.
 
 ### Crawl job takes too long
 

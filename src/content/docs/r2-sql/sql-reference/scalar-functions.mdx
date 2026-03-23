@@ -1,0 +1,1119 @@
+---
+title: Scalar functions
+pcx_content_type: reference
+description: Reference for all 163 scalar functions supported in R2 SQL, organized by category.
+tags:
+  - SQL
+sidebar:
+  order: 2
+---
+
+Scalar functions transform individual values and can be used in `SELECT`, `WHERE`, `GROUP BY`, `HAVING`, and `ORDER BY` clauses.
+
+---
+
+## Core functions
+
+### coalesce
+
+Returns the first non-NULL argument.
+
+```sql
+SELECT coalesce(department, region, 'unknown') AS first_val
+FROM my_namespace.sales_data
+LIMIT 5
+```
+
+### nullif
+
+Returns NULL if both arguments are equal, otherwise returns the first argument.
+
+```sql
+SELECT nullif(department, 'Unknown') AS dept
+FROM my_namespace.sales_data
+LIMIT 5
+```
+
+### nvl
+
+Returns the second argument if the first is NULL. Alias: `ifnull`.
+
+```sql
+SELECT nvl(department, 'N/A') AS dept
+FROM my_namespace.sales_data
+LIMIT 5
+```
+
+### nvl2
+
+Returns the second argument if the first is not NULL, otherwise returns the third.
+
+```sql
+SELECT nvl2(department, 'has_dept', 'no_dept') AS dept_status
+FROM my_namespace.sales_data
+LIMIT 5
+```
+
+### greatest
+
+Returns the largest value from a list of arguments.
+
+```sql
+SELECT greatest(total_amount, unit_price, quantity) AS max_val
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 5
+```
+
+### least
+
+Returns the smallest value from a list of arguments.
+
+```sql
+SELECT least(total_amount, unit_price, quantity) AS min_val
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 5
+```
+
+### arrow_typeof
+
+Returns the Arrow data type name of an expression.
+
+```sql
+SELECT arrow_typeof(total_amount) AS amount_type,
+       arrow_typeof(customer_id) AS id_type
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### arrow_cast
+
+Casts an expression to a specific Arrow data type by string name.
+
+```sql
+SELECT arrow_cast(total_amount, 'Float32') AS amount_f32
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 1
+```
+
+### named_struct
+
+Creates a struct with named fields from key-value pairs.
+
+```sql
+SELECT named_struct('customer', customer_id, 'amount', total_amount) AS info
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 1
+```
+
+### get_field
+
+Extracts a field from a struct by name.
+
+```sql
+SELECT get_field(named_struct('customer', customer_id, 'amount', total_amount), 'amount') AS amt
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 1
+```
+
+### struct
+
+Creates a struct with positional fields. Alias: `row`.
+
+```sql
+SELECT struct(customer_id, total_amount, region) AS info
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 1
+```
+
+### overlay
+
+Replaces a substring at a given position.
+
+```sql
+SELECT customer_id,
+       overlay(customer_id PLACING 'XX' FROM 1 FOR 2) AS masked
+FROM my_namespace.sales_data
+LIMIT 3
+```
+
+---
+
+## Datetime functions
+
+### now
+
+Returns the current timestamp. Aliases: `current_timestamp`.
+
+Precision is quantized to 10ms boundaries.
+
+```sql
+SELECT now() AS current_ts
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### current_date
+
+Returns today's date. Alias: `today`.
+
+```sql
+SELECT current_date() AS today_date
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### current_time
+
+Returns the current time. Precision is quantized to 10ms boundaries.
+
+```sql
+SELECT current_time() AS now_time
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### date_part
+
+Extracts a component from a timestamp. Alias: `datepart`.
+
+Supported fields: `year`, `month`, `day`, `hour`, `minute`, `second`, `millisecond`, `microsecond`, `week`, `dow`, `doy`, `quarter`, `epoch`.
+
+```sql
+SELECT date_part('hour', timestamp) AS hr,
+       date_part('minute', timestamp) AS mn
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### date_trunc
+
+Truncates a timestamp to a specified unit. Alias: `datetrunc`.
+
+Supported units: `year`, `month`, `week`, `day`, `hour`, `minute`, `second`.
+
+```sql
+SELECT date_trunc('day', timestamp) AS day_trunc, COUNT(*) AS cnt
+FROM my_namespace.sales_data
+GROUP BY date_trunc('day', timestamp)
+ORDER BY day_trunc
+LIMIT 5
+```
+
+### date_bin
+
+Bins a timestamp into fixed-size intervals aligned to an origin.
+
+```sql
+SELECT date_bin(INTERVAL '1 hour', timestamp, '2025-01-01T00:00:00Z') AS hour_bin,
+       COUNT(*) AS cnt
+FROM my_namespace.sales_data
+GROUP BY date_bin(INTERVAL '1 hour', timestamp, '2025-01-01T00:00:00Z')
+ORDER BY hour_bin
+LIMIT 5
+```
+
+### from_unixtime
+
+Converts a Unix epoch (seconds) to a timestamp.
+
+```sql
+SELECT from_unixtime(1770000000) AS ts
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### make_date
+
+Constructs a date from year, month, and day components.
+
+```sql
+SELECT make_date(2026, 3, 1) AS d
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### make_time
+
+Constructs a time from hour, minute, and second components.
+
+```sql
+SELECT make_time(14, 30, 0) AS t
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_char
+
+Formats a timestamp as a string using strftime format. Alias: `date_format`.
+
+```sql
+SELECT to_char(timestamp, '%Y-%m-%d %H:%M') AS formatted
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_date
+
+Parses a date from a string using a format pattern.
+
+```sql
+SELECT to_date('2026-03-01', '%Y-%m-%d') AS d
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_timestamp
+
+Parses a timestamp from a string using a format pattern.
+
+```sql
+SELECT to_timestamp('2026-03-01 12:00:00', '%Y-%m-%d %H:%M:%S') AS ts
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_timestamp_seconds
+
+Converts seconds since Unix epoch to a timestamp.
+
+```sql
+SELECT to_timestamp_seconds(1770000000) AS ts
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_timestamp_millis
+
+Converts milliseconds since Unix epoch to a timestamp.
+
+```sql
+SELECT to_timestamp_millis(1770000000000) AS ts
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_timestamp_micros
+
+Converts microseconds since Unix epoch to a timestamp.
+
+```sql
+SELECT to_timestamp_micros(1770000000000000) AS ts
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_timestamp_nanos
+
+Converts nanoseconds since Unix epoch to a timestamp. Large values may overflow.
+
+```sql
+SELECT to_timestamp_nanos(1770000000000000000) AS ts
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_unixtime
+
+Converts a timestamp to a Unix epoch (seconds).
+
+```sql
+SELECT to_unixtime(timestamp) AS epoch
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_local_time
+
+Strips timezone information from a timestamp.
+
+```sql
+SELECT to_local_time(timestamp) AS local_ts
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_time
+
+Parses a time from a string using a format pattern.
+
+```sql
+SELECT to_time('14:30:00', '%H:%M:%S') AS t
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+---
+
+## Math functions
+
+### abs
+
+Returns the absolute value of a number.
+
+```sql
+SELECT abs(total_amount - 500) AS distance_from_500
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 5
+```
+
+### ceil
+
+Returns the smallest integer greater than or equal to a number.
+
+```sql
+SELECT ceil(total_amount) AS rounded_up
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 5
+```
+
+### floor
+
+Returns the largest integer less than or equal to a number.
+
+```sql
+SELECT floor(total_amount) AS rounded_down
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 5
+```
+
+### round
+
+Rounds a number to a specified number of decimal places.
+
+```sql
+SELECT round(total_amount, 2) AS rounded
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 5
+```
+
+### trunc
+
+Truncates a number to a specified number of decimal places.
+
+```sql
+SELECT trunc(total_amount, 0) AS truncated
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 5
+```
+
+### sqrt
+
+Returns the square root of a number.
+
+```sql
+SELECT sqrt(CAST(quantity AS DOUBLE)) AS sqrt_qty
+FROM my_namespace.sales_data
+WHERE quantity IS NOT NULL
+LIMIT 5
+```
+
+### cbrt
+
+Returns the cube root of a number.
+
+```sql
+SELECT cbrt(CAST(quantity AS DOUBLE)) AS cbrt_qty
+FROM my_namespace.sales_data
+WHERE quantity IS NOT NULL
+LIMIT 5
+```
+
+### power
+
+Raises a number to a power. Alias: `pow`.
+
+```sql
+SELECT power(total_amount, 2.0) AS amount_squared
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 5
+```
+
+### exp
+
+Returns _e_ raised to the given power.
+
+```sql
+SELECT exp(total_amount / 1000.0) AS exp_val
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 5
+```
+
+### ln
+
+Returns the natural logarithm.
+
+```sql
+SELECT ln(total_amount) AS ln_val
+FROM my_namespace.sales_data
+WHERE total_amount > 0
+LIMIT 5
+```
+
+### log
+
+Returns the logarithm of a value for a given base.
+
+```sql
+SELECT log(10.0, total_amount) AS log10_val
+FROM my_namespace.sales_data
+WHERE total_amount > 0
+LIMIT 5
+```
+
+### log2
+
+Returns the base-2 logarithm.
+
+```sql
+SELECT log2(total_amount) AS log2_val
+FROM my_namespace.sales_data
+WHERE total_amount > 0
+LIMIT 5
+```
+
+### log10
+
+Returns the base-10 logarithm.
+
+```sql
+SELECT log10(total_amount) AS log10_val
+FROM my_namespace.sales_data
+WHERE total_amount > 0
+LIMIT 5
+```
+
+### Trigonometric functions
+
+`sin`, `cos`, `tan`, `asin`, `acos`, `atan`, `atan2`, `cot`
+
+```sql
+SELECT sin(1.0) AS s, cos(1.0) AS c, tan(1.0) AS t,
+       asin(0.5) AS as_val, acos(0.5) AS ac_val, atan(1.0) AS at_val
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### Hyperbolic functions
+
+`sinh`, `cosh`, `tanh`, `asinh`, `acosh`, `atanh`
+
+```sql
+SELECT sinh(1.0) AS sh, cosh(1.0) AS ch, tanh(1.0) AS th
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### degrees
+
+Converts radians to degrees.
+
+```sql
+SELECT degrees(pi()) AS full_circle
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### radians
+
+Converts degrees to radians.
+
+```sql
+SELECT radians(180.0) AS pi_val
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### pi
+
+Returns the value of pi.
+
+```sql
+SELECT pi() AS pi_val
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### random
+
+Returns a random float between 0 and 1.
+
+```sql
+SELECT random() AS rnd
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### factorial
+
+Returns the factorial of a non-negative integer.
+
+```sql
+SELECT factorial(5) AS fact5
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### gcd
+
+Returns the greatest common divisor of two integers.
+
+```sql
+SELECT gcd(12, 8) AS gcd_val
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### lcm
+
+Returns the least common multiple of two integers.
+
+```sql
+SELECT lcm(4, 6) AS lcm_val
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### signum
+
+Returns the sign of a number: -1, 0, or 1.
+
+```sql
+SELECT signum(total_amount - 500) AS sign_val
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 5
+```
+
+### isnan
+
+Returns true if the value is NaN.
+
+```sql
+SELECT isnan(0.0 / 0.0) AS is_nan
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### iszero
+
+Returns true if the value is zero.
+
+```sql
+SELECT iszero(0.0) AS is_zero
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### nanvl
+
+Returns the first argument if it is not NaN, otherwise returns the second.
+
+```sql
+SELECT nanvl(0.0 / 0.0, -1.0) AS safe_val
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+---
+
+## String functions
+
+### ascii
+
+Returns the ASCII code of the first character.
+
+```sql
+SELECT customer_id, ascii(customer_id) AS first_code
+FROM my_namespace.sales_data
+LIMIT 3
+```
+
+### bit_length
+
+Returns the length of a string in bits.
+
+```sql
+SELECT customer_id, bit_length(customer_id) AS bits
+FROM my_namespace.sales_data
+LIMIT 3
+```
+
+### octet_length
+
+Returns the length of a string in bytes.
+
+```sql
+SELECT customer_id, octet_length(customer_id) AS bytes
+FROM my_namespace.sales_data
+LIMIT 3
+```
+
+### lower
+
+Converts a string to lowercase.
+
+```sql
+SELECT lower(department) AS dept_lower
+FROM my_namespace.sales_data
+LIMIT 5
+```
+
+### upper
+
+Converts a string to uppercase.
+
+```sql
+SELECT upper(region) AS region_upper
+FROM my_namespace.sales_data
+LIMIT 5
+```
+
+### concat
+
+Concatenates two or more strings.
+
+```sql
+SELECT concat(department, ' - ', region) AS label
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### concat_ws
+
+Concatenates strings with a separator.
+
+```sql
+SELECT concat_ws('/', region, department) AS path
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### contains
+
+Returns true if a string contains a substring.
+
+```sql
+SELECT customer_id, contains(department, 'Sales') AS is_sales
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### starts_with
+
+Returns true if a string starts with a prefix.
+
+```sql
+SELECT customer_id, starts_with(department, 'Eng') AS is_eng
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### ends_with
+
+Returns true if a string ends with a suffix.
+
+```sql
+SELECT customer_id, ends_with(department, 'ing') AS ends_ing
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### btrim
+
+Trims characters from both sides of a string. Alias: `trim`.
+
+```sql
+SELECT btrim('  hello  ') AS trimmed
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### ltrim
+
+Trims characters from the left side of a string.
+
+```sql
+SELECT ltrim('  hello') AS trimmed
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### rtrim
+
+Trims characters from the right side of a string.
+
+```sql
+SELECT rtrim('hello  ') AS trimmed
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### replace
+
+Replaces all occurrences of a substring.
+
+```sql
+SELECT department, replace(department, ' ', '_') AS underscored
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### repeat
+
+Repeats a string a given number of times.
+
+```sql
+SELECT repeat(region, 2) AS doubled
+FROM my_namespace.sales_data
+LIMIT 3
+```
+
+### split_part
+
+Splits a string by a delimiter and returns the specified part (1-indexed).
+
+```sql
+SELECT customer_id, split_part(customer_id, '-', 1) AS first_part
+FROM my_namespace.sales_data
+WHERE customer_id IS NOT NULL
+LIMIT 5
+```
+
+### levenshtein
+
+Returns the Levenshtein edit distance between two strings.
+
+```sql
+SELECT department, levenshtein(department, 'Engineering') AS dist
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### chr
+
+Returns the character for a given ASCII code.
+
+```sql
+SELECT chr(65) AS letter
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### to_hex
+
+Converts an integer to a hexadecimal string.
+
+```sql
+SELECT to_hex(255) AS hex_ff
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### uuid
+
+Generates a random UUID.
+
+```sql
+SELECT uuid() AS new_id
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+---
+
+## Unicode functions
+
+### character_length
+
+Returns the number of characters in a string. Aliases: `length`, `char_length`.
+
+```sql
+SELECT department, character_length(department) AS len
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### left
+
+Returns the leftmost _n_ characters of a string.
+
+```sql
+SELECT department, left(department, 5) AS prefix
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### right
+
+Returns the rightmost _n_ characters of a string.
+
+```sql
+SELECT department, right(department, 3) AS suffix
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### substr
+
+Returns a substring starting at a position for a given length. Alias: `substring`.
+
+```sql
+SELECT department, substr(department, 1, 8) AS first_eight
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### lpad
+
+Left-pads a string to a specified length.
+
+```sql
+SELECT region, lpad(region, 15, '.') AS padded
+FROM my_namespace.sales_data
+LIMIT 5
+```
+
+### rpad
+
+Right-pads a string to a specified length.
+
+```sql
+SELECT region, rpad(region, 15, '.') AS padded
+FROM my_namespace.sales_data
+LIMIT 5
+```
+
+### reverse
+
+Reverses a string.
+
+```sql
+SELECT department, reverse(department) AS rev
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### strpos
+
+Returns the position of a substring (1-indexed). Aliases: `instr`, `position`.
+
+```sql
+SELECT department, strpos(department, 'a') AS a_pos
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### initcap
+
+Capitalizes the first letter of each word.
+
+```sql
+SELECT initcap('hello world') AS capped
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### translate
+
+Replaces characters in a string based on a mapping.
+
+```sql
+SELECT department, translate(department, 'aeiou', '12345') AS coded
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### find_in_set
+
+Returns the position of a string within a comma-separated list.
+
+```sql
+SELECT find_in_set('North', 'South,North,East,West') AS pos
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### substr_index
+
+Returns the substring before the _n_-th occurrence of a delimiter. Alias: `substring_index`.
+
+```sql
+SELECT customer_id, substr_index(customer_id, '-', 1) AS first_segment
+FROM my_namespace.sales_data
+WHERE customer_id IS NOT NULL
+LIMIT 5
+```
+
+---
+
+## Regex functions
+
+### regexp_like
+
+Returns true if a string matches a regular expression pattern.
+
+```sql
+SELECT department, regexp_like(department, '^[A-Z]{2}') AS starts_two_caps
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### regexp_count
+
+Returns the number of matches of a pattern in a string.
+
+```sql
+SELECT department, regexp_count(department, '[aeiou]') AS vowels
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### regexp_replace
+
+Replaces matches of a pattern with a replacement string.
+
+```sql
+SELECT department, regexp_replace(department, '[0-9]', '#') AS no_digits
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+### regexp_match
+
+Returns the first match of a pattern as an array.
+
+```sql
+SELECT department, regexp_match(department, '([A-Z][a-z]+)') AS first_word
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 3
+```
+
+### regexp_instr
+
+Returns the position of the first match of a pattern.
+
+```sql
+SELECT department, regexp_instr(department, '[0-9]') AS digit_pos
+FROM my_namespace.sales_data
+WHERE department IS NOT NULL
+LIMIT 5
+```
+
+---
+
+## Crypto functions
+
+### md5
+
+Returns the MD5 hash of a string.
+
+```sql
+SELECT customer_id, md5(customer_id) AS hash
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### sha224
+
+Returns the SHA-224 hash of a string.
+
+```sql
+SELECT sha224(customer_id) AS hash
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### sha256
+
+Returns the SHA-256 hash of a string.
+
+```sql
+SELECT customer_id, sha256(customer_id) AS hash
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### sha384
+
+Returns the SHA-384 hash of a string.
+
+```sql
+SELECT sha384(customer_id) AS hash
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### sha512
+
+Returns the SHA-512 hash of a string.
+
+```sql
+SELECT sha512(customer_id) AS hash
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### digest
+
+Returns a hash of a string using a specified algorithm. Supported algorithms: `md5`, `sha224`, `sha256`, `sha384`, `sha512`.
+
+```sql
+SELECT customer_id, digest(customer_id, 'sha256') AS hash
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+---
+
+## Encoding functions
+
+### encode
+
+Encodes binary data to a string. Supported encoding: `base64`.
+
+```sql
+SELECT encode(CAST('hello' AS BYTEA), 'base64') AS b64
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### decode
+
+Decodes a string to binary data. Supported encoding: `base64`.
+
+```sql
+SELECT decode('aGVsbG8=', 'base64') AS raw
+FROM my_namespace.sales_data
+LIMIT 1
+```

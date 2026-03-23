@@ -4,7 +4,7 @@ title: "Device to device"
 sidebar:
   order: 2
   label: Device to device
-description: Create a secure peer-to-peer connection between two devices using the WARP client and Cloudflare's network.
+description: Create a secure peer-to-peer connection between two devices using the Cloudflare One Client and Cloudflare's network.
 products:
   - cloudflare-one
 tags:
@@ -21,7 +21,7 @@ This guide follows the same steps as the **Get Started** onboarding wizard in th
 
 ## How it works
 
-The <GlossaryTooltip term="WARP client">[WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)</GlossaryTooltip> is an app that you install on each device you want to connect. When you sign in to your Cloudflare account through WARP (called "enrolling"), each device is assigned a <GlossaryTooltip term="WARP CGNAT IP">[virtual IP address](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/)</GlossaryTooltip>.
+The <GlossaryTooltip term="Cloudflare One Client">[Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)</GlossaryTooltip> is an app that you install on each device you want to connect. When you sign in to your Cloudflare account through the Cloudflare One Client (called "enrolling"), each device is assigned a <GlossaryTooltip term="WARP CGNAT IP">[virtual IP address](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/)</GlossaryTooltip>.
 
 Devices use these virtual IPs to communicate with each other through Cloudflare's network. This works for most common types of network traffic, including web requests, remote desktop, file sharing, and ping.
 
@@ -34,7 +34,7 @@ Only devices signed in to your Cloudflare account can reach these addresses, so 
 
 ## Step 1: Enroll your first device
 
-Enrollment permissions control which users can connect devices to your account. In this step, you set an enrollment email and download the WARP client. The email you provide becomes the first allowed login for your organization, and anyone with that email address can enroll a device.
+Enrollment permissions control which users can connect devices to your account. In this step, you set an enrollment email and download the Cloudflare One Client. The email you provide becomes the first allowed login for your organization, and anyone with that email address can enroll a device.
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), select the **Get Started** tab.
 2. For **Replace my client-based or site-to-site VPN**, select **Get started**.
@@ -42,14 +42,14 @@ Enrollment permissions control which users can connect devices to your account. 
 4. On the **Create a device mesh on Cloudflare's network** screen, select **Continue**.
 5. Enter the email you want to use to enroll your first device.
 6. Select your device's operating system.
-7. Select **Download to continue** to download the WARP client, or copy the download link to send to a different device.
+7. Select **Download to continue** to download the Cloudflare One Client, or copy the download link to send to a different device.
 8. Select **Continue**.
 
 :::note
 You can manage device enrollment permissions later in **Team & Resources** > **Devices**.
 :::
 
-## Step 2: Complete WARP setup
+## Step 2: Complete Cloudflare One Client setup
 
 <Render
 	file="warp/complete-warp-setup"
@@ -63,8 +63,8 @@ Both devices must be enrolled in your Cloudflare account for the connection to w
 
 1. Select the operating system of your second device.
 2. Copy the download link and send it to your second device (for example, by email or messaging app), or select **Download to continue** if you are on that device.
-3. On the second device, follow the same WARP installation and login steps from [Step 2](#step-2-complete-warp-setup).
-4. The WARP client should show as **Connected** on the second device.
+3. On the second device, follow the same installation and login steps from [Step 2](#step-2-complete-cloudflare-one-client-setup).
+4. The Cloudflare One Client should show as **Connected** on the second device.
 5. Select **Continue** in the dashboard.
 
 ## Step 4: Verify your connection
@@ -91,6 +91,6 @@ For in-depth guidance on policy design and device posture checks, refer to the [
 
 If you have issues connecting, try these steps:
 
-- **Windows users**: Windows Firewall blocks device-to-device traffic by default. You may need to add a firewall rule that allows incoming traffic from `100.96.0.0/12`. For details, refer to [Peer-to-peer connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/#troubleshooting).
-- [Troubleshoot WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/): resolve WARP client connection and enrollment issues.
-- [Peer-to-peer connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/): review WARP-to-WARP setup details and firewall requirements.
+- **Windows users**: Windows Firewall blocks device-to-device traffic by default. You may need to add a firewall rule that allows incoming traffic from `100.96.0.0/12`. For details, refer to [Peer-to-peer connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/#troubleshooting).
+- [Troubleshoot WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/): resolve Cloudflare One Client connection and enrollment issues.
+- [Peer-to-peer connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/): review Peer-to-peer setup details and firewall requirements.

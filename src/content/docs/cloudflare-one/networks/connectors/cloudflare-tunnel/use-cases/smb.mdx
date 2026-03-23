@@ -11,16 +11,16 @@ The Server Message Block (SMB) protocol allows users to read, write, and access 
 
 Cloudflare Zero Trust offers two solutions for connecting to SMB servers:
 
-- [Private subnet routing with Cloudflare WARP to Tunnel](#connect-to-smb-server-with-warp-to-tunnel)
+- [Private subnet routing with the Cloudflare One Client to Tunnel](#connect-to-smb-server-with-the-cloudflare-one-client-to-tunnel)
 - [Public hostname routing with `cloudflared access`](#connect-to-smb-server-with-cloudflared-access)
 
 ## Set up an SMB server on Linux
 
 While SMB was developed for Microsoft Windows, Samba provides SMB connectivity from UNIX-like and BSD systems. A Samba server can be set up using this [guide](https://ubuntu.com/tutorials/install-and-configure-samba#1-overview) on an Ubuntu machine.
 
-## Connect to SMB server with WARP to Tunnel
+## Connect to SMB server with the Cloudflare One Client to Tunnel
 
-You can use Cloudflare Tunnel to create a secure, outbound-only connection from your server to Cloudflare's global network. This requires running the `cloudflared` daemon on the server. Users reach the service by installing the [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device and enrolling in your Zero Trust organization. Remote devices will be able to connect as if they were on your private network. By default, all devices enrolled in your organization can access the service unless you build policies to allow or block specific users.
+You can use Cloudflare Tunnel to create a secure, outbound-only connection from your server to Cloudflare's global network. This requires running the `cloudflared` daemon on the server. Users reach the service by installing the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device and enrolling in your Zero Trust organization. Remote devices will be able to connect as if they were on your private network. By default, all devices enrolled in your organization can access the service unless you build policies to allow or block specific users.
 
 ### 1. Connect the server to Cloudflare
 
@@ -33,7 +33,7 @@ You can use Cloudflare Tunnel to create a secure, outbound-only connection from 
 
 <Render file="tunnel/warp-to-tunnel-client" product="cloudflare-one" />
 
-### 3. Route private network IPs through WARP
+### 3. Route private network IPs through the Cloudflare One Client
 
 <Render
 	file="tunnel/warp-to-tunnel-route-ips"
@@ -63,9 +63,9 @@ You can use Cloudflare Tunnel to create a secure, outbound-only connection from 
 
 ## Connect to SMB server with `cloudflared access`
 
-Cloudflare Tunnel can also route applications through a public hostname, which allows users to connect to the application without the WARP client. This method requires having `cloudflared` installed on both the server machine and on the client machine, as well as an active zone on Cloudflare. The traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
+Cloudflare Tunnel can also route applications through a public hostname, which allows users to connect to the application without the Cloudflare One Client. This method requires having `cloudflared` installed on both the server machine and on the client machine, as well as an active zone on Cloudflare. The traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
 
-The public hostname method can be implemented in conjunction with routing over WARP so that there are multiple ways to connect to the server. You can reuse the same tunnel for both the private network and public hostname routes.
+The public hostname method can be implemented in conjunction with routing over the Cloudflare One Client so that there are multiple ways to connect to the server. You can reuse the same tunnel for both the private network and public hostname routes.
 
 ### 1. Connect the server to Cloudflare
 

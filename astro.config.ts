@@ -145,6 +145,7 @@ export default defineConfig({
 									"/llms.txt",
 									"/llms-full.txt",
 									"**/llms.txt",
+									"**/index.md",
 									"{props.*}",
 									"/",
 									"/glossary/",
@@ -156,10 +157,8 @@ export default defineConfig({
 									"/workers/examples/?tags=*",
 									"/workers/llms-full.txt",
 									"/workers-ai/models/**",
-									"**index.md",
 									"/markdown.zip",
 									"/style-guide/index.md",
-									"/style-guide/fixtures/markdown/index.md",
 									"/videos/**",
 									"/search/**",
 								],
@@ -214,6 +213,12 @@ export default defineConfig({
 				),
 				"../components/Page.astro": fileURLToPath(
 					new URL("./src/components/overrides/Page.astro", import.meta.url),
+				),
+				"./SidebarSublist.astro": fileURLToPath(
+					new URL(
+						"./src/components/overrides/SidebarSublist.astro",
+						import.meta.url,
+					),
 				),
 			},
 		},

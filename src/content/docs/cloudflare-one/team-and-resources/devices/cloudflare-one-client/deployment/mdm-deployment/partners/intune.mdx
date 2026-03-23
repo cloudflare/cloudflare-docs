@@ -120,7 +120,7 @@ The following steps outline deploying the Cloudflare One Client on macOS using I
 ### Prerequisites
 
 - A [Microsoft Intune account](https://login.microsoftonline.com/).
-- A Cloudflare account that has a [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
+- A Cloudflare account that has a [Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization).
 - macOS devices enrolled in Intune.
 
 ### Deployment order
@@ -438,11 +438,11 @@ By completing this step, you deliver the Cloudflare One Client to targeted iOS d
 
 6. Review your configuration in **Review + create** and select **Create**.
 
-By completing this step, you preconfigure the Cloudflare One Agent with your [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization) and connection settings so that enrolled iOS devices automatically apply a consistent Cloudflare One Client configuration when the app installs.
+By completing this step, you preconfigure the Cloudflare One Agent with your [Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization) and connection settings so that enrolled iOS devices automatically apply a consistent Cloudflare One Client configuration when the app installs.
 
 ### Intune configuration
 
-Intune allows you to insert [predefined variables](https://learn.microsoft.com/en-us/mem/intune/apps/app-configuration-policies-use-ios#tokens-used-in-the-property-list) into the XML configuration file. For example, you can set the [`unique_client_id`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#unique_client_id) key to `{{deviceid}}` for a [device UUID posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/device-uuid/) deployment.
+Intune allows you to insert [predefined variables](https://learn.microsoft.com/en-us/mem/intune/apps/app-configuration-policies-use-ios#tokens-used-in-the-property-list) into the XML configuration file. For example, you can set the [`unique_client_id`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#unique_client_id) key to `{{deviceid}}` for a [device UUID posture check](/cloudflare-one/reusable-components/posture-checks/client-checks/device-uuid/) deployment.
 
 ### Per-app VPN for iOS
 
