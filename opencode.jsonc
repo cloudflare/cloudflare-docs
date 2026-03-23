@@ -1,6 +1,15 @@
 {
 	"$schema": "https://opencode.ai/config.json",
 	"permission": "allow",
+
+	// OpenCode tries to auto-run prettier whenever the agent makes an edit, but it seems to run it
+	// in the wrong mode, formatting mdx files as if they were jsx files, causing breaking changes
+	// to the formatting, like adding newlines inside `<code>` elements that actually get rendered
+	// as line breaks. This has caused actual broken formatting in production because people don't
+	// notice it happening. Let's disable it. When you run prettier manually (not through OpenCode),
+	// it doesn't cause problems.
+	"formatter": false,
+
 	"experimental": {
 		"continue_loop_on_deny": true,
 	},
