@@ -1,5 +1,0 @@
-:::note[DNS not available with enableInternet: false]
-When `enableInternet` is set to `false`, DNS is not available inside the container. To make outbound requests by domain name via `outboundByHost`, add the domain to `/etc/hosts` with the target IP, or make requests directly to the IP and set a `Host` header instead.
-
-DNS-only egress (without full internet access) is coming soon, which will remove this requirement.
-:::
