@@ -196,6 +196,7 @@ jobs:
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
+      - name: Restore Astro assets from cache
       - uses: actions/cache@v5
         with:
           path: |
