@@ -195,18 +195,4 @@
 		--color-header-btn-bg: var(--color-cl1-brand-orange);
 		--color-header-btn-text: var(--color-cl1-black);
 	}
-
-	/* Override Starlight's restrictive right-sidebar TOC container width */
-	.right-sidebar-panel .sl-container {
-		width: 100%;
-		max-width: 18rem;
-	}
-
-	/* Align "On this page" baseline with the breadcrumbs / "Copy page" button text.
-	   Content panel top = 1rem + breadcrumb padding-top = 0.5rem → 1.5rem to text baseline.
-	   Starlight's default is 1rem, so bump it to match. */
-	.right-sidebar-panel {
-		padding-top: 1.5rem !important;
-		padding-left: 1.5rem !important;
-	}
 }
