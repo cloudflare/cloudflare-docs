@@ -309,7 +309,7 @@ entries:
     nextSteps: |-
       Review the information in the Client-Side Security dashboard about the detected malicious resources, then update the pages where those resources were detected.
 
-      For more information, refer to [Review scripts and connections considered malicious](/page-shield/detection/review-malicious-scripts/).
+      For more information, refer to [Review scripts and connections considered malicious](/client-side-security/detection/review-malicious-scripts/).
     otherFilters: None.
 
   - name: Client-Side Security New Resources Alert
