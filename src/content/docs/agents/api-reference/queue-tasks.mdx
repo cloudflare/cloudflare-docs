@@ -21,6 +21,7 @@ type QueueItem<T> = {
 	payload: T; // Data to pass to the callback function
 	callback: keyof Agent; // Name of the method to call
 	created_at: number; // Timestamp when the task was created
+	retry?: RetryOptions; // Retry options (if configured)
 };
 ```
 
@@ -31,13 +32,15 @@ type QueueItem<T> = {
 Adds a task to the queue for future execution.
 
 ```ts
-async queue<T>(callback: keyof this, payload: T): Promise<string>
+async queue<T>(callback: keyof this, payload: T, options?: { retry?: RetryOptions }): Promise<string>
 ```
 
 **Parameters:**
 
 - `callback` - The name of the method to call when processing the task
 - `payload` - Data to pass to the callback method
+- `options` (optional) - Configuration options for the task
+  - `retry` - Retry configuration. Refer to [Retries](/agents/api-reference/retries/) for the `RetryOptions` type.
 
 **Returns:** The unique ID of the queued task
 
@@ -195,8 +198,9 @@ const userTasks = agent.getQueues("userId", "12345");
 2. **Automatic processing**: After queuing, the system automatically attempts to flush the queue.
 3. **FIFO order**: Tasks are processed in the order they were created (`created_at` timestamp).
 4. **Context preservation**: Each queued task runs with the same agent context (connection, request, email).
-5. **Automatic dequeue**: Successfully executed tasks are automatically removed from the queue.
-6. **Error handling**: If a callback method does not exist at execution time, an error is logged and the task is skipped.
+5. **Automatic retries**: If a task fails and retry options are configured, the SDK schedules the next attempt with exponential backoff.
+6. **Automatic dequeue**: Successfully executed tasks are automatically removed from the queue.
+7. **Error handling**: If a callback method does not exist at execution time, an error is logged and the task is skipped.
 7. **Persistence**: Tasks are stored in the `cf_agents_queues` SQL table and survive agent restarts.
 
 ## Queue callback methods
@@ -294,31 +298,37 @@ class BatchProcessor extends Agent {
 
 </TypeScriptExample>
 
-## Error handling
+## Error handling and retries
+
+Use the built-in `retry` option on `queue()` to automatically retry failed tasks with exponential backoff. You do not need to manually re-queue tasks on failure.
 
 <TypeScriptExample>
 
 ```ts
 class RobustAgent extends Agent {
-	async reliableTask(payload: any, queueItem: QueueItem) {
-		try {
-			await this.doSomethingRisky(payload);
-		} catch (error) {
-			console.error(`Task ${queueItem.id} failed:`, error);
+	async reliableTask(payload: { userId: string }, queueItem: QueueItem) {
+		// If this throws, the SDK retries automatically based on the retry config
+		await this.doSomethingRisky(payload.userId);
+	}
 
-			// Optionally re-queue with retry logic
-			if (payload.retryCount < 3) {
-				await this.queue("reliableTask", {
-					...payload,
-					retryCount: (payload.retryCount || 0) + 1,
-				});
-			}
-		}
+	async onRequest(request: Request) {
+		await this.queue(
+			"reliableTask",
+			{ userId: "user-123" },
+			{
+				retry: {
+					maxAttempts: 5,
+					baseDelayMs: 500,
+				},
+			},
+		);
 	}
 }
 ```
 
 </TypeScriptExample>
+
+Refer to [Retries](/agents/api-reference/retries/) for the full `RetryOptions` type and backoff behavior.
 
 ## Best practices
 
@@ -342,10 +352,6 @@ The queue system works with other Agent SDK features:
 - Tasks are processed sequentially, not in parallel.
 - No priority system (FIFO only).
 - Queue processing happens during agent execution, not as separate background jobs.
-
-:::note
-Queue tasks support built-in retries with exponential backoff. Pass `{ retry: { maxAttempts, baseDelayMs, maxDelayMs } }` as the third argument to `queue()`. Refer to [Retries](/agents/api-reference/retries/) for details.
-:::
 
 ## Queue vs Schedule
 

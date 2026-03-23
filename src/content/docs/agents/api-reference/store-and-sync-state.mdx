@@ -235,6 +235,12 @@ this.setState({
 
 ## Responding to state changes
 
+:::note[Renamed hook]
+
+`onStateChanged` replaces the deprecated `onStateUpdate` server-side hook. If you are using `onStateUpdate` on your agent class, rename it to `onStateChanged` — the signature and behavior are identical. A console warning fires once per class until you rename it.
+
+:::
+
 Override `onStateChanged()` to react when state changes (notifications/side-effects):
 
 <TypeScriptExample>

@@ -1,0 +1,81 @@
+---
+title: Resumable streaming
+pcx_content_type: reference
+sidebar:
+  order: 5
+  label: Resumable streaming
+---
+
+import { TypeScriptExample, LinkCard } from "~/components";
+
+`AIChatAgent` automatically buffers streaming AI responses in SQLite, so clients can reconnect mid-stream and resume from where they left off. No additional configuration is required to enable this behavior.
+
+## How it works
+
+When the agent streams a response, each chunk is stored in the `cf_agents_stream_chunks` SQLite table as it arrives. When a client reconnects, the agent replays any buffered chunks that have not yet been delivered to that client.
+
+The protocol uses three control frames sent over WebSocket:
+
+| Frame type                       | Direction      | Meaning |
+| -------------------------------- | -------------- | ------- |
+| `CF_AGENT_STREAM_RESUME_REQUEST` | Client → Agent | Client requests resume of an in-progress stream |
+| `CF_AGENT_STREAM_RESUMING`       | Agent → Client | Agent acknowledges the resume request and begins replaying chunks |
+| `CF_AGENT_STREAM_RESUME_ACK`     | Client → Agent | Client acknowledges receipt of each replayed chunk |
+
+Replayed chunks include a `replay: true` flag so clients can distinguish them from new chunks if needed.
+
+## Opting out
+
+To disable resumable streaming for a specific response, pass `resume: false` to `streamText` or the equivalent AI SDK method:
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+import { streamText, convertToModelMessages } from "ai";
+
+export class MyAgent extends AIChatAgent<Env> {
+	async onChatMessage() {
+		const result = streamText({
+			model: this.model,
+			messages: await convertToModelMessages(this.messages),
+			// Disable stream buffering for this response
+			// @ts-expect-error — resume is an Agents SDK extension
+			resume: false,
+		});
+
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Garbage collection
+
+Buffered stream chunks are cleaned up automatically:
+
+| Condition | Cleanup timing |
+| --------- | -------------- |
+| Stream still in progress with no connected clients | After 5 minutes of inactivity |
+| Stream completed | After 24 hours |
+
+## Client behavior
+
+The [Agents client SDK](/agents/api-reference/client-sdk/) handles the resume protocol automatically. When the `useAgentChat` hook or `AgentClient` reconnects, it sends `CF_AGENT_STREAM_RESUME_REQUEST` if a stream was in progress. The agent replays buffered chunks and then continues streaming new chunks normally.
+
+No changes to client code are needed to take advantage of resumable streaming.
+
+## Next steps
+
+<LinkCard
+	title="Chat agents"
+	href="/agents/api-reference/chat-agents/"
+	description="Full reference for AIChatAgent, including message persistence and tool support."
+/>
+
+<LinkCard
+	title="Client SDK"
+	href="/agents/api-reference/client-sdk/"
+	description="Browser and React clients for connecting to agents."
+/>

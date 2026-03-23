@@ -418,6 +418,20 @@ class MyAgent extends Agent {
 }
 ```
 
+### `this.keepAlive` and `this.keepAliveWhile`
+
+`this.keepAlive()` prevents the Durable Object from being evicted due to inactivity by creating a 30-second heartbeat schedule. It returns a disposer function to stop the heartbeat. For scoped work, use `this.keepAliveWhile(fn)`, which automatically cleans up when the function completes. Refer to [Schedule tasks](/agents/api-reference/schedule-tasks/#keeping-the-agent-alive) for details.
+
+### Static class options
+
+Set `static options` on your agent class to configure global behavior. All fields are optional:
+
+| Option                  | Type             | Default | Description |
+| ----------------------- | ---------------- | ------- | ----------- |
+| `hibernate`             | `boolean`        | `true`  | Enable hibernation when inactive |
+| `sendIdentityOnConnect` | `boolean`        | `true`  | Send agent identity to clients on connect |
+| `retry`                 | `RetryOptions`   | —       | Default retry configuration for all retryable operations. Refer to [Retries](/agents/api-reference/retries/) |
+
 ### `this.destroy`
 
 `this.destroy()` drops all tables, deletes alarms, clears storage, and aborts the context. To ensure that the Durable Object is fully evicted, `this.ctx.abort()` is called asynchronously using `setTimeout()` to allow any currently executing handlers (like scheduled tasks) to complete their cleanup operations before the context is aborted.

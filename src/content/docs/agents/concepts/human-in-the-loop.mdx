@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { LinkCard } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 Human-in-the-Loop (HITL) workflows integrate human judgment and oversight into automated processes. These workflows pause at critical points for human review, validation, or decision-making before proceeding.
 
@@ -26,11 +26,33 @@ Human-in-the-Loop (HITL) workflows integrate human judgment and oversight into a
 | AI tool execution   | Confirming tool calls before running |
 | Access control      | Granting permissions, role changes   |
 
-## Patterns for human-in-the-loop
+## Choosing a pattern
 
-Cloudflare provides two main patterns for implementing human-in-the-loop:
+The Agents SDK supports multiple human-in-the-loop patterns. Choose based on your use case:
 
-### Workflow approval
+| Use case | Pattern | Best for |
+| --- | --- | --- |
+| Long-running workflows | Workflow Approval | Multi-step processes, durable approval gates |
+| AI chat tool calls | `needsApproval` | Chat-based tools requiring user confirmation |
+| Browser APIs / user interaction | `onToolCall` | Tools that need geolocation, camera, clipboard |
+| OpenAI Agents SDK | `needsApproval` | Conditional approval with the OpenAI agent SDK |
+| MCP servers | Elicitation | MCP tools requesting structured user input mid-execution |
+
+### Decision guide
+
+```txt
+Is this part of a multi-step workflow?
+├── Yes → Use Workflow Approval (waitForApproval)
+└── No → Are you building an MCP server?
+         ├── Yes → Use MCP Elicitation (elicitInput)
+         └── No → Is this an AI chat interaction?
+                  ├── Yes → Does the tool need browser APIs?
+                  │        ├── Yes → Use onToolCall (client-side execution)
+                  │        └── No → Use needsApproval (server-side with approval)
+                  └── No → Use State + WebSocket for simple confirmations
+```
+
+## Pattern: Workflow approval
 
 For durable, multi-step processes with approval gates that can wait hours, days, or weeks. Use [Cloudflare Workflows](/workflows/) with the `waitForApproval()` method.
 
@@ -42,7 +64,235 @@ For durable, multi-step processes with approval gates that can wait hours, days,
 
 **Best for:** Expense approvals, content publishing pipelines, data export requests
 
-### MCP elicitation
+### How workflows handle approvals
+
+![A human-in-the-loop diagram](~/assets/images/agents/human-in-the-loop.svg)
+
+1. The workflow reaches an approval step and calls `waitForApproval()`
+2. The workflow pauses and reports progress to the agent
+3. The agent updates its state with the pending approval
+4. Connected clients see the pending approval and can approve or reject
+5. When approved, the workflow resumes with the approval metadata
+6. If rejected or timed out, the workflow handles the rejection appropriately
+
+## Pattern: AI tool approval with `needsApproval`
+
+When building AI chat agents, use the `needsApproval` option on a tool to pause execution until the user approves or rejects. The `needsApproval` value can be a static `true` or an async function that receives the tool input and returns a boolean.
+
+### Server
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+import { createWorkersAI } from "workers-ai-provider";
+import { streamText, tool, convertToModelMessages } from "ai";
+import { z } from "zod";
+
+export class MyAgent extends AIChatAgent<Env> {
+	async onChatMessage() {
+		const workersai = createWorkersAI({ binding: this.env.AI });
+
+		const result = streamText({
+			model: workersai("@cf/meta/llama-3.3-70b-instruct-fp8-fast"),
+			messages: await convertToModelMessages(this.messages),
+			tools: {
+				// Requires approval for amounts over 100
+				processPayment: tool({
+					description: "Process a payment",
+					inputSchema: z.object({
+						amount: z.number(),
+						recipient: z.string(),
+					}),
+					needsApproval: async ({ amount }) => amount > 100,
+					execute: async ({ amount, recipient }) => {
+						return await chargeCard(amount, recipient);
+					},
+				}),
+
+				// Always requires approval
+				deleteAccount: tool({
+					description: "Delete a user account",
+					inputSchema: z.object({ userId: z.string() }),
+					needsApproval: true,
+					execute: async ({ userId }) => {
+						return await deleteUser(userId);
+					},
+				}),
+			},
+			maxSteps: 5,
+		});
+
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Client
+
+Use `addToolApprovalResponse` to approve or deny a waiting tool call. Use `isToolUIPart` and `getToolName` from the `ai` package to identify tool parts in the message stream.
+
+<TypeScriptExample>
+
+```tsx
+import { useAgent } from "agents/react";
+import { useAgentChat } from "agents/ai-react";
+import { isToolUIPart, getToolName } from "ai";
+
+function Chat() {
+	const agent = useAgent({ agent: "MyAgent" });
+	const { messages, sendMessage, addToolApprovalResponse } = useAgentChat({
+		agent,
+	});
+
+	return (
+		<div>
+			{messages.map((message) => (
+				<div key={message.id}>
+					{message.parts?.map((part, i) => {
+						if (part.type === "text") {
+							return <p key={i}>{part.text}</p>;
+						}
+
+						if (isToolUIPart(part)) {
+							if ("approval" in part && part.state === "approval-requested") {
+								const approvalId = part.approval?.id;
+								return (
+									<div key={part.toolCallId}>
+										<p>
+											Approve <strong>{getToolName(part)}</strong> with{" "}
+											{JSON.stringify(part.input)}?
+										</p>
+										<button
+											onClick={() =>
+												addToolApprovalResponse({
+													id: approvalId,
+													approved: true,
+												})
+											}
+										>
+											Approve
+										</button>
+										<button
+											onClick={() =>
+												addToolApprovalResponse({
+													id: approvalId,
+													approved: false,
+												})
+											}
+										>
+											Deny
+										</button>
+									</div>
+								);
+							}
+
+							if (part.state === "output-denied") {
+								return (
+									<div key={part.toolCallId}>{getToolName(part)}: Denied</div>
+								);
+							}
+
+							if (part.state === "output-available") {
+								return (
+									<div key={part.toolCallId}>
+										{getToolName(part)}: {JSON.stringify(part.output)}
+									</div>
+								);
+							}
+						}
+
+						return null;
+					})}
+				</div>
+			))}
+		</div>
+	);
+}
+```
+
+</TypeScriptExample>
+
+To send the LLM a specific reason when denying a tool (rather than the default "Tool execution denied." message), use `addToolOutput` with `state: "output-error"`:
+
+<TypeScriptExample>
+
+```tsx
+const { addToolOutput } = useAgentChat({ agent });
+
+addToolOutput({
+	toolCallId: part.toolCallId,
+	state: "output-error",
+	errorText: "User declined: insufficient budget for this quarter",
+});
+```
+
+</TypeScriptExample>
+
+## Pattern: Client-side tool execution with `onToolCall`
+
+For tools that require browser APIs (geolocation, camera, clipboard) or direct user interaction, define the tool on the server without an `execute` function and handle it on the client using the `onToolCall` callback.
+
+### Server
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends AIChatAgent<Env> {
+	async onChatMessage() {
+		const workersai = createWorkersAI({ binding: this.env.AI });
+
+		const result = streamText({
+			model: workersai("@cf/meta/llama-3.3-70b-instruct-fp8-fast"),
+			messages: await convertToModelMessages(this.messages),
+			tools: {
+				// No execute function — client handles this via onToolCall
+				getUserLocation: tool({
+					description: "Get the user's current location from their browser",
+					inputSchema: z.object({}),
+				}),
+			},
+			maxSteps: 3,
+		});
+
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Client
+
+<TypeScriptExample>
+
+```tsx
+const { messages, sendMessage } = useAgentChat({
+	agent,
+	onToolCall: async ({ toolCall, addToolOutput }) => {
+		if (toolCall.toolName === "getUserLocation") {
+			const position = await new Promise<GeolocationPosition>(
+				(resolve, reject) => {
+					navigator.geolocation.getCurrentPosition(resolve, reject);
+				},
+			);
+			addToolOutput({
+				toolCallId: toolCall.toolCallId,
+				output: {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				},
+			});
+		}
+	},
+});
+```
+
+</TypeScriptExample>
+
+## Pattern: MCP elicitation
 
 For MCP servers that need to request additional structured input from users during tool execution. The MCP client renders a form based on your JSON Schema.
 
@@ -52,18 +302,81 @@ For MCP servers that need to request additional structured input from users duri
 
 **Best for:** Interactive tool confirmations, gathering additional parameters mid-execution
 
-## How workflows handle approvals
+## State patterns for approvals
 
-![A human-in-the-loop diagram](~/assets/images/agents/human-in-the-loop.svg)
+Track pending approvals in agent state for UI rendering and persistence:
 
-In a workflow-based approval:
+<TypeScriptExample>
 
-1. The workflow reaches an approval step and calls `waitForApproval()`
-2. The workflow pauses and reports progress to the agent
-3. The agent updates its state with the pending approval
-4. Connected clients see the pending approval and can approve or reject
-5. When approved, the workflow resumes with the approval metadata
-6. If rejected or timed out, the workflow handles the rejection appropriately
+```ts
+type PendingApproval = {
+	id: string;
+	workflowId?: string;
+	type: "expense" | "publish" | "delete";
+	description: string;
+	amount?: number;
+	requestedBy: string;
+	requestedAt: number;
+	expiresAt?: number;
+};
+
+type ApprovalRecord = {
+	id: string;
+	approvalId: string;
+	decision: "approved" | "rejected";
+	decidedBy: string;
+	decidedAt: number;
+	reason?: string;
+};
+
+type ApprovalState = {
+	pending: PendingApproval[];
+	history: ApprovalRecord[];
+};
+```
+
+</TypeScriptExample>
+
+### Multi-approver pattern
+
+For sensitive operations requiring multiple approvers before the action executes:
+
+<TypeScriptExample>
+
+```ts
+import { callable } from "agents";
+
+type MultiApproval = {
+	id: string;
+	requiredApprovals: number;
+	currentApprovals: Array<{ userId: string; approvedAt: number }>;
+	rejections: Array<{
+		userId: string;
+		rejectedAt: number;
+		reason: string;
+	}>;
+};
+
+class SecureAgent extends Agent<Env, { pending: MultiApproval[] }> {
+	@callable()
+	async approveMulti(approvalId: string, userId: string): Promise<boolean> {
+		const approval = this.state.pending.find((p) => p.id === approvalId);
+		if (!approval) throw new Error("Approval not found");
+
+		approval.currentApprovals.push({ userId, approvedAt: Date.now() });
+
+		if (approval.currentApprovals.length >= approval.requiredApprovals) {
+			await this.executeApprovedAction(approval);
+			return true;
+		}
+
+		this.setState({ ...this.state });
+		return false; // Still waiting for more approvals
+	}
+}
+```
+
+</TypeScriptExample>
 
 ## Best practices
 
@@ -82,11 +395,43 @@ Human review processes do not operate on predictable timelines. A reviewer might
 
 ### Timeouts and escalation
 
-Set timeouts to prevent workflows from waiting indefinitely. Use [scheduling](/agents/api-reference/schedule-tasks/) to:
+Set timeouts to prevent workflows from waiting indefinitely. Use [scheduling](/agents/api-reference/schedule-tasks/) to send reminders, escalate to managers, or auto-reject based on business rules:
 
-- Send reminders after a period of inactivity
-- Escalate to managers or alternative approvers
-- Auto-reject or auto-approve based on business rules
+<TypeScriptExample>
+
+```ts
+import { callable } from "agents";
+
+class ApprovalAgent extends Agent<Env, ApprovalState> {
+	@callable()
+	async submitForApproval(request: ApprovalRequest): Promise<string> {
+		const approvalId = crypto.randomUUID();
+
+		this.setState({
+			...this.state,
+			pending: [...this.state.pending, { id: approvalId, ...request }],
+		});
+
+		// Send reminder after 4 hours
+		await this.schedule(
+			new Date(Date.now() + 4 * 60 * 60 * 1000),
+			"sendReminder",
+			{ approvalId },
+		);
+
+		// Escalate after 24 hours
+		await this.schedule(
+			new Date(Date.now() + 24 * 60 * 60 * 1000),
+			"escalateApproval",
+			{ approvalId },
+		);
+
+		return approvalId;
+	}
+}
+```
+
+</TypeScriptExample>
 
 ### Audit trails
 
@@ -119,15 +464,15 @@ Implement clear escalation paths for exceptional cases and automatic checkpointi
 ## Next steps
 
 <LinkCard
-	title="Human-in-the-loop patterns"
-	href="/agents/guides/human-in-the-loop/"
-	description="Implementation examples for approval flows."
-/>
-
-<LinkCard
 	title="Run Workflows"
 	href="/agents/api-reference/run-workflows/"
 	description="Complete API for workflow approvals."
+/>
+
+<LinkCard
+	title="Schedule tasks"
+	href="/agents/api-reference/schedule-tasks/"
+	description="Set up reminders and escalation timers."
 />
 
 <LinkCard

@@ -20,7 +20,9 @@ Agents have several lifecycle hooks that fire at different points:
 | `onConnect(connection, ctx)`                  | When a new WebSocket connection is established            |
 | `onMessage(connection, message)`              | When a WebSocket message is received                      |
 | `onClose(connection, code, reason, wasClean)` | When a WebSocket connection closes                        |
-| `onError(connection, error)`                  | When a WebSocket error occurs                             |
+| `onError(connection, error)`                  | When a WebSocket connection error occurs                  |
+| `onError(error)`                              | When a server-level (non-connection) error occurs         |
+| `shouldSendProtocolMessages(connection, ctx)` | Return `false` to suppress protocol frames for a connection. Refer to [Protocol messages](/agents/api-reference/protocol-messages/) |
 
 ### `onStart`
 
@@ -93,6 +95,7 @@ Each connected client has a unique `Connection` object:
 | Property/Method         | Type     | Description                           |
 | ----------------------- | -------- | ------------------------------------- |
 | `id`                    | `string` | Unique identifier for this connection |
+| `server`                | `string` | Agent instance name this connection belongs to |
 | `state`                 | `State`  | Per-connection state object           |
 | `setState(state)`       | `void`   | Update connection state               |
 | `send(message)`         | `void`   | Send message to this client           |
@@ -133,6 +136,17 @@ export class ChatAgent extends Agent {
 ```
 
 </TypeScriptExample>
+
+## Agent properties
+
+Every agent instance exposes the following built-in properties:
+
+| Property    | Type                   | Description                                            |
+| ----------- | ---------------------- | ------------------------------------------------------ |
+| `this.name` | `string`               | The unique name of this agent instance                 |
+| `this.state`| `State`                | The agent's persisted state object                     |
+| `this.env`  | `Env`                  | The Worker environment bindings                        |
+| `this.ctx`  | `DurableObjectState`   | The underlying Durable Object state and storage APIs   |
 
 ## Broadcasting to all clients
 
@@ -210,12 +224,13 @@ export class ChatAgent extends Agent {
 
 ### Connection management methods
 
-| Method              | Signature                                 | Description                            |
-| ------------------- | ----------------------------------------- | -------------------------------------- |
-| `getConnections`    | `(tag?: string) => Iterable<Connection>`  | Get all connections, optionally by tag |
-| `getConnection`     | `(id: string) => Connection \| undefined` | Get connection by ID                   |
-| `getConnectionTags` | `(connection, ctx) => string[]`           | Override to tag connections            |
-| `broadcast`         | `(message, without?: string[]) => void`   | Send to all connections                |
+| Method                         | Signature                                       | Description                            |
+| ------------------------------ | ----------------------------------------------- | -------------------------------------- |
+| `getConnections`               | `(tag?: string) => Iterable<Connection>`        | Get all connections, optionally by tag |
+| `getConnection`                | `(id: string) => Connection \| undefined`       | Get connection by ID                   |
+| `getConnectionTags`            | `(connection, ctx) => string[]`                 | Override to tag connections            |
+| `broadcast`                    | `(message, without?: string[]) => void`         | Send to all connections                |
+| `isConnectionProtocolEnabled`  | `(connection: Connection) => boolean`           | Returns `true` if protocol messages are enabled for this connection |
 
 ## Handling binary data
 
