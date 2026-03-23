@@ -15,33 +15,18 @@ A `dig` query against your proxied apex domain returns a Cloudflare IP address. 
 
 When your server's IP address is exposed, your server is more vulnerable to direct attacks. It is still possible (but more difficult) for attackers to determine your origin server IP address when proxying traffic to Cloudflare.
 
+---
+
 ## Dashboard warnings
 
 The Cloudflare dashboard displays warnings when DNS records may expose your origin server's IP address. These warnings do not block or affect traffic to your site.
 
-### Page-level banner
-
 When your zone has DNS records that are not proxied, the **DNS Records** page displays the following banner:
 
-> **Proxying is required for most security and performance features**
->
-> Set your DNS records to proxied by clicking "Edit" in the table below, to benefit from DDoS protection, security rules, caching, and more.
+`Proxying is required for most security and performance features. Set your DNS records to proxied by clicking "Edit" in the table below, to benefit from DDoS protection, security rules, caching, and more.`
 
-### Per-record warnings
 
 Individual DNS records may also display warnings. The specific message depends on whether the record can be proxied.
-
-For records that support proxying:
-
-`This record exposes the IP address used in the <RECORD_TYPE> record on <ORIGIN>. Enable the proxy status to protect your origin server.`
-
-For records that do not support proxying (for example, `MX` records):
-
-`This record exposes the IP address used in the <RECORD_TYPE> record on <ORIGIN>, which you have proxied through Cloudflare.`
-
-A zone-level summary may also appear:
-
-`Some of your DNS-only records are exposing IP addresses that are proxied through Cloudflare. Make sure to proxy all A, AAAA, and CNAME records pointing to proxied records to ensure your origin server is fully protected.`
 
 ---
 
