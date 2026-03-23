@@ -118,10 +118,6 @@ const client = new AgentClient<MyAgent>({
 </TypeScriptExample>
 
 Existing untyped usage continues to work without changes. The RPC type utilities (`AgentMethods`, `AgentStub`, `RPCMethods`) are now exported from `agents/client` for advanced typing scenarios.
-
-
-## Zod 4 required, `ai` runtime dependency removed
-
 `agents`, `@cloudflare/ai-chat`, and `@cloudflare/codemode` now require `zod ^4.0.0`. Zod v3 is no longer supported.
 
 ## `@cloudflare/ai-chat` fixes
