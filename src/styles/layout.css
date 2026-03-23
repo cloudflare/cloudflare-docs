@@ -52,8 +52,7 @@ main > .content-panel:first-of-type {
 
 /* h1: small top margin to breathe from breadcrumbs */
 main > .content-panel:first-of-type h1 {
-	margin-top: var(--layout-space-3); /* 12px */
-	margin-bottom: var(--layout-space-4); /* 16px */
+	margin-bottom: var(--layout-space-0);
 }
 
 main > .content-panel + .content-panel {
@@ -76,12 +75,6 @@ main > .content-panel + .content-panel {
 .content-panel + .content-panel {
 	border-top: none;
 	/* background: orange; */
-}
-
-@media (min-width: 72rem) {
-	[data-has-sidebar][data-has-toc] .main-pane {
-		--sl-content-margin-inline: auto var(--layout-space-8);
-	}
 }
 
 .right-sidebar-panel .sl-container {
