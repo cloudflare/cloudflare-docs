@@ -319,6 +319,121 @@ await this.saveMessages(messages);
 
 </TypeScriptExample>
 
+`saveMessages()` waits for any active chat turn to finish before starting a new one, so scheduled or programmatic messages do not overlap an in-flight stream.
+
+### Turn coordination helpers
+
+`AIChatAgent` serializes chat turns — WebSocket requests, tool continuations, and `saveMessages()` calls all run one at a time. The SDK handles queuing automatically for most subclasses.
+
+Coordination becomes relevant when your subclass runs code outside the normal `onChatMessage()` flow — for example, a `schedule()` callback that injects a message, a workflow-switching method, or a custom clear handler. In these situations, your subclass needs to know whether the conversation is mid-stream or waiting on user input before it can safely act on `this.messages`.
+
+Three protected helpers cover these cases:
+
+| Helper                    | Returns            | When to use                                                                                                                         |
+| ------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `waitUntilStable()`       | `Promise<boolean>` | Before reading or writing messages — waits for any active stream, pending tool interactions, and queued continuations to finish      |
+| `resetTurnState()`        | `void`             | When discarding the current conversation state — aborts the active stream and invalidates queued continuations                       |
+| `hasPendingInteraction()` | `boolean`          | When you need a synchronous check for whether a tool is waiting on user input or approval                                           |
+
+#### Waiting before injecting messages
+
+The most common pattern is a `schedule()` callback that needs to inject a synthetic message. Call `waitUntilStable()` before reading `this.messages` or calling `saveMessages()`. Always pass a `timeout` — without one, `waitUntilStable()` waits indefinitely. If a tool is pending user approval and the user closes their browser, the promise never resolves.
+
+<TypeScriptExample>
+
+```ts
+import { nanoid } from "nanoid";
+
+export class ChatAgent extends AIChatAgent {
+	async onTaskComplete(payload: { result: string }) {
+		const ready = await this.waitUntilStable({ timeout: 30_000 });
+		if (!ready) return; // timed out — a pending interaction was not resolved
+
+		const syntheticMessage = {
+			id: nanoid(),
+			role: "user" as const,
+			parts: [{ type: "text" as const, text: `Task result: ${payload.result}` }],
+		};
+
+		await this.saveMessages([...this.messages, syntheticMessage]);
+	}
+}
+```
+
+</TypeScriptExample>
+
+When `waitUntilStable()` returns `true`, `this.messages` is safe to read and `saveMessages()` will not overlap with another turn. When it returns `false`, the conversation is still in flux and you should not assume message state is settled.
+
+#### Checking pending interactions synchronously
+
+`hasPendingInteraction()` is a synchronous check — it scans `this.messages` for any assistant message with a tool part in `input-available` or `approval-requested` state. Use it when you need to branch without awaiting:
+
+<TypeScriptExample>
+
+```ts
+export class ChatAgent extends AIChatAgent {
+	async onConnect(connection, ctx) {
+		if (this.hasPendingInteraction()) {
+			connection.send(
+				JSON.stringify({
+					type: "status",
+					message: "Waiting for your input on a pending tool action",
+				}),
+			);
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+#### Resetting on workflow switch
+
+Call `resetTurnState()` when the user switches context and the current stream and any queued continuations are no longer relevant. It increments the internal epoch (so queued continuations skip themselves), fires the abort signal on the active stream, and clears pending interaction state.
+
+<TypeScriptExample>
+
+```ts
+export class ChatAgent extends AIChatAgent {
+	async switchWorkflow(newWorkflowId: string) {
+		this.resetTurnState();
+		this.workflowId = newWorkflowId;
+	}
+}
+```
+
+</TypeScriptExample>
+
+#### Overriding the clear handler
+
+The SDK's built-in `CF_AGENT_CHAT_CLEAR` handler calls `resetTurnState()` automatically. If your `onMessage` override intercepts `CF_AGENT_CHAT_CLEAR` and returns early — for example, to scope the delete to a specific workflow — the built-in handler never runs, so the active stream continues and queued continuations persist into the newly-cleared conversation. Call `this.resetTurnState()` before performing your scoped delete:
+
+<TypeScriptExample>
+
+```ts
+import { MessageType } from "@cloudflare/ai-chat/types";
+
+export class ChatAgent extends AIChatAgent {
+	onMessage = async (connection, message) => {
+		if (typeof message === "string") {
+			const data = JSON.parse(message);
+			if (data.type === MessageType.CF_AGENT_CHAT_CLEAR) {
+				this.resetTurnState();
+				this.sql`
+					DELETE FROM cf_ai_chat_agent_messages
+					WHERE workflow_id = ${this.workflowId}
+				`;
+				this.messages = [];
+				return;
+			}
+		}
+		return super.onMessage(connection, message);
+	};
+}
+```
+
+</TypeScriptExample>
+
 ### Lifecycle hooks
 
 Override `onConnect` and `onClose` to add custom logic. Stream resumption and message sync are handled for you:
@@ -410,19 +525,20 @@ function Chat() {
 | `resume`                      | `boolean`                                     | `true`   | Enable automatic stream resumption on reconnect                                                                          |
 | `body`                        | `object \| () => object`                      | —        | Custom data sent with every request                                                                                      |
 | `prepareSendMessagesRequest`  | `(options) => { body?, headers? }`            | —        | Advanced per-request customization                                                                                       |
+| `tools`                       | `Record<string, AITool>`                      | —        | Dynamic client-defined tools for SDK/platform use cases. Schemas are sent to the server automatically                    |
 | `getInitialMessages`          | `(options) => Promise<UIMessage[]>` or `null` | —        | Custom initial message loader. Set to `null` to skip the HTTP fetch entirely (useful when providing `messages` directly) |
 
 ### Return values
 
-| Property                  | Type                               | Description                                          |
-| ------------------------- | ---------------------------------- | ---------------------------------------------------- |
-| `messages`                | `UIMessage[]`                      | Current conversation messages                        |
-| `sendMessage`             | `(message) => void`                | Send a message                                       |
-| `clearHistory`            | `() => void`                       | Clear conversation (client and server)               |
-| `addToolOutput`           | `({ toolCallId, output }) => void` | Provide output for a client-side tool                |
-| `addToolApprovalResponse` | `({ id, approved }) => void`       | Approve or reject a tool requiring approval          |
-| `setMessages`             | `(messages \| updater) => void`    | Set messages directly (syncs to server)              |
-| `status`                  | `string`                           | `"idle"`, `"submitted"`, `"streaming"`, or `"error"` |
+| Property                  | Type                                  | Description                                          |
+| ------------------------- | ------------------------------------- | ---------------------------------------------------- |
+| `messages`                | `UIMessage[]`                         | Current conversation messages                        |
+| `sendMessage`             | `(message) => void`                   | Send a message                                       |
+| `clearHistory`            | `() => void`                          | Clear conversation (client and server)               |
+| `addToolOutput`           | `({ toolCallId, output }) => void`    | Provide output for a client-side tool                |
+| `addToolApprovalResponse` | `({ id, approved }) => void`          | Approve or reject a tool requiring approval          |
+| `setMessages`             | `(messages \| updater) => Promise<void>` | Set messages directly (syncs to server)           |
+| `status`                  | `string`                              | `"idle"`, `"submitted"`, `"streaming"`, or `"error"` |
 
 ## Tools
 
@@ -840,15 +956,57 @@ SQLite rows have a maximum size of 2 MB. When a message approaches this limit (f
 
 Compacted messages include `metadata.compactedToolOutputs` so clients can detect and display this gracefully.
 
+### `sanitizeMessageForPersistence`
+
+Override this method to transform or redact messages before they are written to SQLite. It runs after the built-in sanitization (OpenAI metadata stripping, Anthropic provider-executed tool payload truncation, empty reasoning part removal), so built-in cleanup is never bypassed.
+
+The default implementation returns the message unchanged. Return `null` to skip persisting the message entirely.
+
+<TypeScriptExample>
+
+```ts
+import type { UIMessage } from "ai";
+
+export class ChatAgent extends AIChatAgent {
+	protected sanitizeMessageForPersistence(message: UIMessage): UIMessage {
+		return {
+			...message,
+			parts: message.parts.map((part) => {
+				// Strip large tool outputs you do not need to persist
+				if (
+					"output" in part &&
+					typeof part.output === "string" &&
+					part.output.length > 2000
+				) {
+					return { ...part, output: "[redacted — too large to store]" };
+				}
+				return part;
+			}),
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+Built-in sanitization already handles:
+
+- **OpenAI** — strips ephemeral `itemId` and `reasoningEncryptedContent` from `providerMetadata`
+- **Anthropic** — truncates large strings in `input`/`output` of provider-executed tool parts (code execution, text editor)
+- **Reasoning** — removes empty reasoning parts left after metadata stripping
+
+Use `sanitizeMessageForPersistence` for anything the built-in logic does not cover, such as redacting sensitive fields or trimming domain-specific tool outputs.
+
 ### Controlling LLM context vs storage
 
 Storage (`maxPersistedMessages`) and LLM context are independent:
 
-| Concern                         | Control                | Scope       |
-| ------------------------------- | ---------------------- | ----------- |
-| How many messages SQLite stores | `maxPersistedMessages` | Persistence |
-| What the model sees             | `pruneMessages()`      | LLM context |
-| Row size limits                 | Automatic compaction   | Per-message |
+| Concern                         | Control                           | Scope       |
+| ------------------------------- | --------------------------------- | ----------- |
+| How many messages SQLite stores | `maxPersistedMessages`            | Persistence |
+| What the model sees             | `pruneMessages()`                 | LLM context |
+| Custom pre-persist transforms   | `sanitizeMessageForPersistence()` | Per-message |
+| Row size limits                 | Automatic compaction              | Per-message |
 
 <TypeScriptExample>
 
