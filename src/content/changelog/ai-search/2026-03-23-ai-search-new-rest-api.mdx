@@ -22,8 +22,12 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
   -d '{
     "messages": [
       {
-        "content": "How do I get started?",
-        "role": "user"
+        "role": "system",
+        "content": "You are a helpful documentation assistant."
+      },
+      {
+        "role": "user",
+        "content": "How do I get started?"
       }
     ]
   }'
