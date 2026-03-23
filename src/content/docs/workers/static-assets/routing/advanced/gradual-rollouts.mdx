@@ -9,7 +9,7 @@ description: Provide static asset routing solutions for gradual Worker deploymen
 
 import { Example } from "~/components";
 
-[Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) route requests to different Worker versions based on configured percentages. When your Worker serves static assets, this per-request routing can cause asset reference mismatches that result in 404 errors and broken user experiences.
+[Split deployments](/workers/configuration/versions-and-deployments/split-deployments/) route requests to different Worker versions based on configured percentages. When your Worker serves static assets, this per-request routing can cause asset reference mismatches that result in 404 errors and broken user experiences.
 
 Modern JavaScript frameworks commonly generate fingerprinted asset filenames during builds. For example, when you build a React application with Vite, your assets might look like:
 
@@ -46,7 +46,7 @@ This issue affects applications built with any framework that fingerprints asset
 
 ## Preventing asset mismatches with version affinity
 
-[Version affinity](/workers/configuration/versions-and-deployments/gradual-deployments/#version-affinity) ensures all requests from the same user are handled by the same Worker version, preventing asset reference mismatches entirely. You can configure this using [Transform Rules](/rules/transform/request-header-modification/) to automatically set the `Cloudflare-Workers-Version-Key` header.
+[Version affinity](/workers/configuration/versions-and-deployments/split-deployments/#version-affinity) ensures all requests from the same user are handled by the same Worker version, preventing asset reference mismatches entirely. You can configure this using [Transform Rules](/rules/transform/request-header-modification/) to automatically set the `Cloudflare-Workers-Version-Key` header.
 
 ### Session-based affinity
 

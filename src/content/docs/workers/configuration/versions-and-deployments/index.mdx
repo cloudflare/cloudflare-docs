@@ -4,6 +4,7 @@ title: Versions & Deployments
 head: []
 description: Upload versions of Workers and create deployments to release new versions.
 ---
+
 import { DashButton } from "~/components";
 
 Versions track changes to your Worker. Deployments configure how those changes are deployed to your traffic.
@@ -32,7 +33,7 @@ State changes for associated Workers [storage resources](/workers/platform/stora
 
 Deployments track the version(s) of your Worker that are actively serving traffic. A deployment can consist of one or two versions of a Worker.
 
-By default, Workers supports an all-at-once deployment model where traffic is immediately shifted from one version to the newly deployed version automatically. Alternatively, you can use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) to create a rolling deployment strategy.
+By default, Workers supports an all-at-once deployment model where traffic is immediately shifted from one version to the newly deployed version automatically. Alternatively, you can use [split deployments](/workers/configuration/versions-and-deployments/split-deployments/) to create a rolling deployment strategy.
 
 You can also track metadata associated with a deployment, including: the user that created the deployment, deploy source, timestamp and the version(s) in the deployment. Optionally, you can configure a deployment message when you create a deployment.
 
