@@ -132,7 +132,6 @@ The `ai` package is no longer a runtime dependency of the agents core. MCP tool 
 ## `@cloudflare/ai-chat` fixes
 
 - **Turn serialization** — `onChatMessage()` and `_reply()` work is now queued so user requests, tool continuations, and `saveMessages()` never stream concurrently.
-- **Stable turn control API** — `waitForPendingInteractionResolution()` is renamed to `waitUntilStable()`. A new `resetTurnState()` method is available for abort flows. `isChatTurnActive()`, `waitForIdle()`, and `abortActiveTurn()` are demoted to private.
 - **Duplicate messages on stop** — Clicking stop during an active stream no longer splits the assistant message into two entries.
 - **Duplicate messages after tool calls** — Orphaned client IDs no longer leak into persistent storage.
 
