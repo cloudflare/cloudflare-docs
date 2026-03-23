@@ -12,7 +12,7 @@ You can create a Worker that spins up other Workers, called Dynamic Workers, at 
 
 Dynamic Workers support two loading modes:
 
-- `load()` creates a fresh Dynamic Worker for one-time execution.
+- `load(code)` creates a fresh Dynamic Worker for one-time execution.
 - `get(id, callback)` caches a Dynamic Worker by ID so it can stay warm across requests.
 
 `load()` is best for one-time code execution, for example when using [Codemode](/agents/api-reference/codemode/). `get(id, callback)` is better when the same code will receive subsequent requests, for example when you are building applications.
@@ -33,13 +33,9 @@ You can also deploy the Dynamic Workers Playground, where you can write or impor
 
 ## Configure Worker Loader
 
-To use Dynamic Workers, first deploy a Worker with a `worker_loaders` binding, which exposes `env.LOADER` for creating Dynamic Workers at runtime.
+In order for a Worker to be able to create Dynamic Workers, it needs a Worker Loader binding. Unlike most Workers bindings, this binding doesn't point at any external resource in particular; it simply provides access to the Worker Loader API.
 
-This Worker creates and runs Dynamic Workers at runtime. It also defines the platform-level controls for those Dynamic Workers, including:
-
-- which bindings they can access
-- whether they can make outbound network requests
-- any other logic for how they are created and invoked
+Configure it like so, in your Worker's `wrangler.jsonc`:
 
 <WranglerConfig>
 
@@ -55,6 +51,8 @@ This Worker creates and runs Dynamic Workers at runtime. It also defines the pla
 
 </WranglerConfig>
 
+Your Worker will then have access to the Worker Loader API via `env.LOADER`.
+
 ## Run a Dynamic Worker
 
 Use `env.LOADER.load()` to create a Dynamic Worker and run it:
@@ -64,23 +62,31 @@ Use `env.LOADER.load()` to create a Dynamic Worker and run it:
 ```ts
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
+		// Load a worker.
 		const worker = env.LOADER.load({
 			compatibilityDate: "2026-01-01",
+
 			mainModule: "src/index.js",
 			modules: {
 				"src/index.js": `
 					export default {
-						fetch() {
+						fetch(request) {
 							return new Response("Hello from a dynamic Worker");
 						},
 					};
 				`,
 			},
+
 			// Block all outbound network access from the Dynamic Worker.
 			globalOutbound: null,
 		});
 
-		return worker.getEntrypoint().fetch(request);
+		// Get the Dynamic Worker's `export default` entrypoint.
+		// (A Worker can also export separate, named entrypoints.)
+		let entrypoint = worker.getEntrypoint();
+
+		// Forward the HTTP request to it.
+		return entrypoint.fetch(request);
 	},
 };
 ```
@@ -93,25 +99,28 @@ In this example, `env.LOADER.load()` creates a Dynamic Worker from the code defi
 
 ### Reusing a Dynamic Worker across requests
 
-If the same code will handle multiple requests, use [`get(id, callback)`](/dynamic-workers/api-reference/#get) instead of `load()`. The `id` identifies the Dynamic Worker. When the runtime sees the same `id` again, it can reuse the existing Worker instead of creating a new one.
+If you expect to load the exact same Worker more than once, use [`get(id, callback)`](/dynamic-workers/api-reference/#get) instead of `load()`. The `id` should be a unique string identifying the particular code you intend to load. When the runtime sees the same `id` again, it can reuse the existing Worker instead of creating a new one, if it hasn't been evicted yet.
+
+The callback you provide will only be called if the Worker is not already loaded. This lets you skip loading the code from storage when the Worker is already running.
 
 <TypeScriptExample>
 
 ```ts
-const worker = env.LOADER.get("hello-v1", async () => ({
-	compatibilityDate: "2026-01-01",
-	mainModule: "index.js",
-	modules: {
-		"index.js": `
-			export default {
-				fetch() {
-					return new Response("Hello from a dynamic Worker");
-				},
-			};
-		`,
-	},
-	globalOutbound: null,
-}));
+const worker = env.LOADER.get("hello-v1", async () => {
+	// Callback only runs if there is not already a warm
+	// instance available.
+
+	// Load code from storage.
+	let code = await env.MY_CODE_STORAGE.get("hello-v1");
+
+	// Return the same format as `env.LOADER.load()` accepts.
+	return {
+		compatibilityDate: "2026-01-01",
+		mainModule: "index.js",
+		modules: { "index.js": code, },
+		globalOutbound: null,
+	};
+});
 ```
 
 </TypeScriptExample>
@@ -124,7 +133,9 @@ For the full list of supported module types, refer to the [API reference](/dynam
 
 ### Using TypeScript and npm dependencies
 
-If your Dynamic Worker needs TypeScript compilation or npm dependencies, use [`@cloudflare/worker-bundler`](https://www.npmjs.com/package/@cloudflare/worker-bundler) to bundle source files into a format that `load()` and `get()` accept:
+If your Dynamic Worker needs TypeScript compilation or npm dependencies, the code must be transpiled and bundled before passing to the Worker Loader.
+
+[`@cloudflare/worker-bundler`](https://www.npmjs.com/package/@cloudflare/worker-bundler) is a library that handles this for you. Use it to bundle source files into a format that `load()` and `get()` accept:
 
 ```ts
 import { createWorker } from "@cloudflare/worker-bundler";
