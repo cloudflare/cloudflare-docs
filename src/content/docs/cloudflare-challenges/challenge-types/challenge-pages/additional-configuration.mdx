@@ -73,7 +73,7 @@ The custom error token provides diagnostic information or specific functionality
 1. `::CF_WIDGET_BOX::` must appear exactly once in the body. This is where the challenge script is injected.
 2. `<head>` tag must be present.
 3. Cloudflare will set `cTplC: 1` in the browser's `window._cf_chl_opt` when a custom template is in use. Do not add your own `window._cf_chl_opt`. Any existing definition will cause conflicts.
-4. Do not block `/cdn-cgi/challenge-platform/` paths via Content Security Policy (CSP). The orchestrator and its sub-resources must load freely.
+4. Do not block `/cdn-cgi/challenge-platform/` paths via Content Security Policy (CSP). Challenges will not work correctly with this kind of block in place.
 5. The page is served for all three challenge types (managed, interactive, non-interactive) if you use `::CF_WIDGET_BOX::`.
 
 ### Templates
