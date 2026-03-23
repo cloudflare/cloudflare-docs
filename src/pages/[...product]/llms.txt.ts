@@ -1,6 +1,7 @@
 import type { APIRoute, GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 import dedent from "dedent";
+import { isDisallowedByRobots } from "~/util/robots";
 
 /**
  * Maximum number of prose characters allowed alongside a DirectoryListing
@@ -44,6 +45,9 @@ export const getStaticPaths = (async () => {
 			if (!productUrl || productUrl === "/" || productUrl.includes("#"))
 				return null;
 
+			// Skip products whose top-level URL is disallowed by robots.txt
+			if (isDisallowedByRobots(productUrl)) return null;
+
 			const urlPath = productUrl.slice(1, -1); // strip leading/trailing slashes
 			if (!urlPath) return null;
 
@@ -51,7 +55,8 @@ export const getStaticPaths = (async () => {
 			const pages = docs.filter(
 				(e) =>
 					(e.id.startsWith(prefix + "/") || e.id === prefix) &&
-					!isDirectoryOnlyPage(e.body ?? ""),
+					!isDirectoryOnlyPage(e.body ?? "") &&
+					!isDisallowedByRobots(`/${e.id}/`),
 			);
 
 			if (pages.length === 0) return null;
@@ -61,7 +66,7 @@ export const getStaticPaths = (async () => {
 				props: { entry, pages },
 			};
 		})
-		.filter((p) => p !== null);
+		.filter((p): p is NonNullable<typeof p> => p !== null);
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
