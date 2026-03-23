@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Details, MetaInfo } from "~/components";
+import { Details, MetaInfo, Tabs, TabItem } from "~/components";
 
 Privacy Proxy exposes metrics through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). All metrics are queryable through a single endpoint:
 
@@ -19,7 +19,10 @@ To access your metrics, you need a Cloudflare API token. Contact your Cloudflare
 
 ## Making a request
 
-The following example shows a complete request with authentication headers and variables. Replace the placeholder values with your own.
+The following examples show how to query Privacy Proxy metrics using curl or a GraphQL client such as GraphiQL. Replace the placeholder values with your own.
+
+<Tabs>
+<TabItem label="curl">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/graphql \
@@ -34,6 +37,77 @@ curl https://api.cloudflare.com/client/v4/graphql \
     }
   }'
 ```
+
+</TabItem>
+<TabItem label="GraphiQL">
+
+**Prerequisites**
+
+Before you begin, ensure you have:
+
+- **API token**: Contact your Cloudflare point of contact to obtain one.
+- **Account tag**: Your Cloudflare account ID, used as `$accountTag` in queries.
+
+**1. Set up GraphiQL**
+
+Open [GraphiQL](https://github.com/graphql/graphiql) or any GraphQL client and configure the following:
+
+- **Endpoint**: `https://api.cloudflare.com/client/v4/graphql`
+- **HTTP headers**:
+  - `Authorization`: `Bearer <API_TOKEN>`
+  - `Content-Type`: `application/json`
+
+**2. Paste the query**
+
+Paste the following into the query editor:
+
+```graphql
+query DailyRequestVolume(
+  $accountTag: String!
+  $startDate: Date!
+  $endDate: Date!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      privacyProxyRequestMetricsAdaptiveGroups(
+        filter: {
+          date_geq: $startDate
+          date_leq: $endDate
+        }
+        limit: 10000
+        orderBy: [date_ASC]
+      ) {
+        sum {
+          requests
+        }
+        dimensions {
+          date
+          datetimeHour
+        }
+      }
+    }
+  }
+}
+```
+
+**3. Add variables**
+
+Paste the following into the **Query Variables** pane (bottom-left) and replace the placeholder values:
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "startDate": "2025-01-01",
+  "endDate": "2025-01-31"
+}
+```
+
+**4. Run the query**
+
+Select the **Play** button to execute. Results appear in the right-hand response pane.
+
+</TabItem>
+</Tabs>
 
 ---
 
