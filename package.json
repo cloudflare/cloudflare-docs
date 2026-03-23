@@ -39,7 +39,7 @@
 		"@astrojs/react": "5.0.0",
 		"@astrojs/rss": "4.0.17",
 		"@astrojs/sitemap": "3.7.1",
-		"@astrojs/starlight": "0.38.1",
+		"@astrojs/starlight": "0.38.2",
 		"@astrojs/starlight-docsearch": "0.7.0",
 		"@astrojs/starlight-tailwind": "5.0.0",
 		"@cloudflare/vitest-pool-workers": "0.10.7",
