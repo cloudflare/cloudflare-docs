@@ -66,9 +66,13 @@ Delayed and date-scheduled types support opt-in idempotency:
 <TypeScriptExample>
 
 ```ts
-async onStart() {
-	// Safe across restarts — only one row is created
-	await this.schedule(60, "maintenance", undefined, { idempotent: true });
+import { Agent } from "agents";
+
+class MyAgent extends Agent {
+	async onStart() {
+		// Safe across restarts — only one row is created
+		await this.schedule(60, "maintenance", undefined, { idempotent: true });
+	}
 }
 ```
 
@@ -156,4 +160,4 @@ To update to the latest version:
 
 ```sh
 npm i agents@latest @cloudflare/ai-chat@latest
-<PackageManagers type="install" pkg="agents @cloudflare/ai-chat" args="--save" />
+```
