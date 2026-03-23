@@ -34,12 +34,6 @@ html:not([data-has-toc]) {
 }
 
 @media (min-width: 72rem) {
-	html[data-has-sidebar]:not([data-has-toc]) {
-		--sl-content-margin-inline: 0 var(--layout-space-8);
-	}
-}
-
-@media (min-width: 72rem) {
 	:root {
 		--sl-content-pad-x: var(--layout-space-6); /* 24px desktop */
 	}
