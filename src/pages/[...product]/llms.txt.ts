@@ -1,6 +1,7 @@
 import type { APIRoute, GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 import dedent from "dedent";
+import { isExternalRedirect, resolveRedirect } from "~/util/redirects";
 import { isDisallowedByRobots } from "~/util/robots";
 
 /**
@@ -56,7 +57,8 @@ export const getStaticPaths = (async () => {
 				(e) =>
 					(e.id.startsWith(prefix + "/") || e.id === prefix) &&
 					!isDirectoryOnlyPage(e.body ?? "") &&
-					!isDisallowedByRobots(`/${e.id}/`),
+					!isDisallowedByRobots(`/${e.id}/`) &&
+					!isExternalRedirect(`/${e.id}/`),
 			);
 
 			if (pages.length === 0) return null;
@@ -74,7 +76,8 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 type Page = InferGetStaticPropsType<typeof getStaticPaths>["pages"][number];
 
 function formatPage(base: string, e: Page) {
-	const line = `- [${e.data.title}](${base}/${e.id}/index.md)`;
+	const resolved = resolveRedirect(`/${e.id}/`);
+	const line = `- [${e.data.title}](${base}${resolved}index.md)`;
 	return e.data.description ? line.concat(`: ${e.data.description}`) : line;
 }
 
@@ -145,9 +148,10 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 
 	const prefix = productUrl.slice(1, -1);
 	const rootPage = pages.find((e) => e.id === prefix);
+	const resolvedProductUrl = resolveRedirect(productUrl);
 	const rootLink = rootPage
 		? formatPage(base, rootPage)
-		: `- [${title}](${base}${productUrl}index.md)`;
+		: `- [${title}](${base}${resolvedProductUrl}index.md)`;
 
 	const sections = buildSections(prefix, pages);
 
