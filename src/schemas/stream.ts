@@ -1,4 +1,4 @@
-import { z } from "astro/zod";
+import { z } from "astro:schema";
 import { reference } from "astro:content";
 
 export const streamSchema = z.object({

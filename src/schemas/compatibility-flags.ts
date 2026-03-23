@@ -1,4 +1,4 @@
-import { z } from "astro/zod";
+import { z } from "astro:schema";
 
 export type CompatibilityFlagsSchema = z.infer<typeof compatibilityFlagsSchema>;
 

@@ -1,9 +1,9 @@
-import { z } from "astro/zod";
+import { z } from "astro:schema";
 
 export const videosSchema = z
 	.object({
 		id: z.string(),
-		link: z.url(),
+		link: z.string().url(),
 		description: z.string(),
 		tags: z.string().array().optional(),
 		products: z.string().array(),

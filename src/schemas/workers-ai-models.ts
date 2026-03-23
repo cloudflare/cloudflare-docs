@@ -1,4 +1,4 @@
-import { z } from "astro/zod";
+import { z } from "astro:schema";
 
 export type WorkersAIModelsSchema = z.infer<typeof workersAiModelsSchema>;
 
@@ -17,11 +17,11 @@ export const workersAiModelsSchema = z.object({
 	properties: z
 		.object({
 			property_id: z.string(),
-			value: z.string().or(z.array(z.looseObject({}))),
+			value: z.string().or(z.array(z.object({}).passthrough())),
 		})
 		.array(),
 	schema: z.object({
-		input: z.looseObject({}),
-		output: z.looseObject({}),
+		input: z.object({}).passthrough(),
+		output: z.object({}).passthrough(),
 	}),
 });
