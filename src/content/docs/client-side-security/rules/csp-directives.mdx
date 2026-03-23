@@ -4,12 +4,12 @@ pcx_content_type: reference
 sidebar:
   order: 6
 head: []
-description: CSP directives supported by policies
+description: CSP directives supported by content security rules
 ---
 
 import { GlossaryTooltip } from "~/components";
 
-Client-side security [policies](/client-side-security/policies/) support most <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> directives, covering both monitored and unmonitored resources. You can use a policy to control other types of resources besides scripts and their connections, even though Cloudflare is not monitoring these resources.
+[Content security rules](/client-side-security/rules/) support most <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> directives, covering both monitored and unmonitored resources. You can use a content security rule to control other types of resources besides scripts and their connections, even though Cloudflare is not monitoring these resources.
 
 Each CSP directive can contain multiple values, including:
 
@@ -21,7 +21,7 @@ Each CSP directive can contain multiple values, including:
 
 Hostname and URI values support a `*` wildcard for the leftmost subdomain.
 
-The following table lists the supported CSP directives and special values you can use in policies:
+The following table lists the supported CSP directives and special values you can use in content security rules:
 
 | Directive                   | Name in the dashboard     | Supported special values                                                       | Monitored                                                           |
 | --------------------------- | ------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------- |

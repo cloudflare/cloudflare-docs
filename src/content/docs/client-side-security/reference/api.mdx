@@ -31,21 +31,21 @@ The `{connection_id}` argument is the connection ID (a hexadecimal string). This
 
 The following table summarizes the available operations:
 
-| Operation                                  | Method + URL stub                                             | Notes                                                       |
-| ------------------------------------------ | ------------------------------------------------------------- | ----------------------------------------------------------- |
-| [Get client-side security settings][1]     | `GET zones/{zone_id}/page_shield`                             | Fetch client-side security settings (including the status). |
-| [Update client-side security settings][2]  | `PUT zones/{zone_id}/page_shield`                             | Update client-side security settings.                       |
-| [List client-side security scripts][3]     | `GET zones/{zone_id}/page_shield/scripts`                     | Fetch a list of detected scripts.                           |
-| [Get a client-side security script][4]     | `GET zones/{zone_id}/page_shield/scripts/{script_id}`         | Fetch the details of a script.                              |
-| [List client-side security connections][5] | `GET zones/{zone_id}/page_shield/connections`                 | Fetch a list of detected connections.                       |
-| [Get a client-side security connection][6] | `GET zones/{zone_id}/page_shield/connections/{connection_id}` | Fetch the details of a connection.                          |
-| [List client-side security cookies][7]     | `GET zones/{zone_id}/page_shield/cookies`                     | Fetch a list of detected cookies.                           |
-| [Get a client-side security cookie][8]     | `GET zones/{zone_id}/page_shield/cookies/{cookie_id}`         | Fetch the details of a cookie.                              |
-| [List client-side security policies][9]    | `GET zones/{zone_id}/page_shield/policies`                    | Fetch a list of all configured CSP policies.                |
-| [Get a client-side security policy][10]    | `GET zones/{zone_id}/page_shield/policies/{policy_id}`        | Fetch the details of a CSP policy.                          |
-| [Create a client-side security policy][11] | `POST zones/{zone_id}/page_shield/policies`                   | Creates a CSP policy with the provided configuration.       |
-| [Update a client-side security policy][12] | `PUT zones/{zone_id}/page_shield/policies/{policy_id}`        | Updates an existing CSP policy.                             |
-| [Delete a client-side security policy][13] | `DELETE zones/{zone_id}/page_shield/policies/{policy_id}`     | Deletes an existing CSP policy.                             |
+| Operation                                  | Method + URL stub                                             | Notes                                                            |
+| ------------------------------------------ | ------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [Get client-side security settings][1]     | `GET zones/{zone_id}/page_shield`                             | Fetch client-side security settings (including the status).      |
+| [Update client-side security settings][2]  | `PUT zones/{zone_id}/page_shield`                             | Update client-side security settings.                            |
+| [List client-side security scripts][3]     | `GET zones/{zone_id}/page_shield/scripts`                     | Fetch a list of detected scripts.                                |
+| [Get a client-side security script][4]     | `GET zones/{zone_id}/page_shield/scripts/{script_id}`         | Fetch the details of a script.                                   |
+| [List client-side security connections][5] | `GET zones/{zone_id}/page_shield/connections`                 | Fetch a list of detected connections.                            |
+| [Get a client-side security connection][6] | `GET zones/{zone_id}/page_shield/connections/{connection_id}` | Fetch the details of a connection.                               |
+| [List client-side security cookies][7]     | `GET zones/{zone_id}/page_shield/cookies`                     | Fetch a list of detected cookies.                                |
+| [Get a client-side security cookie][8]     | `GET zones/{zone_id}/page_shield/cookies/{cookie_id}`         | Fetch the details of a cookie.                                   |
+| [List content security rules][9]           | `GET zones/{zone_id}/page_shield/policies`                    | Fetch a list of all configured content security rules.           |
+| [Get a content security rule][10]          | `GET zones/{zone_id}/page_shield/policies/{policy_id}`        | Fetch the details of a content security rule.                    |
+| [Create a content security rule][11]       | `POST zones/{zone_id}/page_shield/policies`                   | Creates a content security rule with the provided configuration. |
+| [Update a content security rule][12]       | `PUT zones/{zone_id}/page_shield/policies/{policy_id}`        | Updates an existing content security rule.                       |
+| [Delete a content security rule][13]       | `DELETE zones/{zone_id}/page_shield/policies/{policy_id}`     | Deletes an existing content security rule.                       |
 
 [1]: /api/resources/page_shield/methods/get/
 [2]: /api/resources/page_shield/methods/update/
@@ -89,7 +89,7 @@ This example obtains the current settings of Cloudflare's client-side security, 
 
 ### Enable client-side security
 
-This example enables client-side security in the specified zone.
+This example enables Cloudflare's client-side security in the specified zone.
 
 <APIRequest
 	path="/zones/{zone_id}/page_shield"
@@ -462,28 +462,28 @@ This `GET` request obtains the details of a cookie detected by Cloudflare's clie
 }
 ```
 
-### Create a policy
+### Create a content security rule
 
-This `POST` request creates a client-side security policy (or content security rule) with _Log_ action, defining the following scripts as allowed based on where they are hosted:
+This `POST` request creates a content security rule (previously called a policy) with _Log_ action, defining the following scripts as allowed based on where they are hosted:
 
 - Scripts hosted in `myapp.example.com` (which does not include scripts in `example.com`).
 - Scripts hosted in `cdnjs.cloudflare.com`.
 - The Google Analytics script using its full URL.
 - All scripts in the same origin (same HTTP or HTTPS scheme and hostname).
 
-All other scripts would trigger a policy violation, but those scripts would not be blocked.
+All other scripts would trigger a rule violation, but those scripts would not be blocked.
 
 For more information on <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> directives and values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy).
 
 :::note
-For a list of CSP directives and keywords supported by policies, refer to [Supported CSP directives](/client-side-security/policies/csp-directives/).
+For a list of CSP directives and keywords supported by content security rules, refer to [Supported CSP directives](/client-side-security/rules/csp-directives/).
 :::
 
 <APIRequest
 	path="/zones/{zone_id}/page_shield/policies"
 	method="POST"
 	json={{
-		description: "My first policy in log mode",
+		description: "My first content security rule in log mode",
 		action: "log",
 		expression: 'http.host eq "myapp.example.com"',
 		enabled: "true",
@@ -498,8 +498,8 @@ For a list of CSP directives and keywords supported by policies, refer to [Suppo
 	"errors": [],
 	"messages": [],
 	"result": {
-		"id": "<POLICY_ID>",
-		"description": "My first policy in log mode",
+		"id": "<RULE_ID>",
+		"description": "My first content security rule in log mode",
 		"action": "log",
 		"expression": "http.host eq \"myapp.example.com\"",
 		"enabled": "true",
@@ -508,4 +508,4 @@ For a list of CSP directives and keywords supported by policies, refer to [Suppo
 }
 ```
 
-To create a policy with an _Allow_ action instead of _Log_, use `"action": "allow"` in the request body. In the case of such policy, all scripts not allowed by the policy would be blocked.
+To create a content security rule with an _Allow_ action instead of _Log_, use `"action": "allow"` in the request body. In the case of such rule, all scripts not allowed by the rule would be blocked.

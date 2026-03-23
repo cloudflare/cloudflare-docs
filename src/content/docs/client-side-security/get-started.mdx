@@ -32,7 +32,7 @@ To enable client-side resource monitoring:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Client-side security**.
-3. Select **Enable Client-Side Security**.
+3. Select **Enable client-side security**.
 
 </Steps>
 
@@ -93,36 +93,36 @@ Depending on your Cloudflare plan, you may be able to also review the connection
 
 To learn how you can handle an alert, refer to [Handle a client-side resource alert](/client-side-security/best-practices/handle-an-alert/).
 
-## 4. (Optional) Define policies
+## 4. (Optional) Define content security rules
 
 :::note
-Policies are only available to customers with Client-Side Security Advanced.
+Content security rules are only available to customers with Client-Side Security Advanced.
 :::
 
-[Policies](/client-side-security/policies/) — called content security rules in the [new security dashboard](/security/) — define allowed resources on your websites. Create policies to implement a positive security model[^1].
+[Content security rules](/client-side-security/rules/) (previously called policies) define allowed resources on your websites. Create content security rules to implement a positive security model[^1].
 
 [^1]: A positive security model is one that defines what is allowed and rejects everything else. In contrast, a negative security model defines what will be rejected and accepts the rest.
 
-### 4.1. Create a policy with the Log action
+### 4.1. Create a content security rule with the Log action
 
-When you create a policy with the [_Log_ action](/client-side-security/policies/#policy-actions), Cloudflare logs any resources not covered by the policy, without blocking any resources. Use this action to validate a new policy before deploying it.
+When you create a content security rule with the [_Log_ action](/client-side-security/rules/#rule-actions), Cloudflare logs any resources not covered by the rule, without blocking any resources. Use this action to validate a new rule before deploying it.
 
 <Render
-	file="policy-create"
-	params={{ policyAction: "Log" }}
+	file="rule-create"
+	params={{ ruleAction: "Log" }}
 	product="client-side-security"
 />
 
-### 4.2. Review policy violations
+### 4.2. Review rule violations
 
-Resources not covered by the policy you created will be reported as [policy violations](/client-side-security/policies/violations/). After some time, review the list of policy violations to make sure the policy is correct.
+Resources not covered by the content security rule you created will be reported as [rule violations](/client-side-security/rules/violations/). After some time, review the list of rule violations to make sure the rule is correct.
 
-<Render file="policy-review-violations" product="client-side-security" />
+<Render file="rule-review-violations" product="client-side-security" />
 
-Update the policy if needed.
+Update the rule if needed.
 
-### 4.3. Change policy action to Allow
+### 4.3. Change rule action to Allow
 
-Once you have verified that your policy is correct, change the policy action from _Log_ to _Allow_.
+Once you have verified that your content security rule is correct, change the rule action from _Log_ to _Allow_.
 
-When you use the [_Allow_ action](/client-side-security/policies/#policy-actions), Cloudflare starts blocking any resources not explicitly allowed by the policy.
+When you use the [_Allow_ action](/client-side-security/rules/#rule-actions), Cloudflare starts blocking any resources not explicitly allowed by the rule.

@@ -1,6 +1,6 @@
 ---
 params:
-  - policyAction?
+  - ruleAction?
 ---
 
 import {
@@ -34,7 +34,7 @@ In the [new security dashboard](/security/), policies are called content securit
 
 4. Under **If incoming requests match**, define the scope of the content security rule (or policy). You can use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
-5. Under **Allow these directives**, select the desired [CSP directives](/client-side-security/policies/csp-directives/) for the content security rule by enabling one or more checkboxes.
+5. Under **Allow these directives**, select the desired [CSP directives](/client-side-security/rules/csp-directives/) for the content security rule by enabling one or more checkboxes.
    - To manually enter an allowed source, select **Add source**.
    - To refresh the displayed sources based on detected resources, select **Refresh suggestions**.
 
@@ -43,12 +43,12 @@ In the [new security dashboard](/security/), policies are called content securit
      :::
 
 6. <Render
-   	file="policy-create-action"
-   	params={{ policyAction: props.policyAction }}
+   	file="rule-create-action"
+   	params={{ ruleAction: props.ruleAction }}
    	product="client-side-security"
    />
 
-7. To save and deploy your rule, select **Deploy**. { !props.policyAction && <Markdown text="If you are not ready to deploy your rule, select **Save as Draft**." /> }
+7. To save and deploy your rule, select **Deploy**. { !props.ruleAction && <Markdown text="If you are not ready to deploy your rule, select **Save as Draft**." /> }
 
 </Steps>
 
@@ -62,15 +62,15 @@ Only available to Enterprise customers with a paid add-on.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 
-2. Go to **Security** > **Client-side security** > **Policies**.
+2. Go to **Security** > **Client-side security** > **Rules**.
 
-3. Select **Create policy**.
+3. Select **Create rule**.
 
 4. Enter a descriptive name for the rule in **Description**.
 
-5. Under **If incoming requests match**, define the policy scope. You can use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
+5. Under **If incoming requests match**, define the rule scope. You can use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
-6. Under **Allow these directives**, select the desired [CSP directives](/client-side-security/policies/csp-directives/) for the policy by enabling one or more checkboxes.
+6. Under **Allow these directives**, select the desired [CSP directives](/client-side-security/rules/csp-directives/) for the rule by enabling one or more checkboxes.
    - To manually enter an allowed source, select **Add source**.
    - To refresh the displayed sources based on detected resources, select **Refresh suggestions**.
 
@@ -79,12 +79,12 @@ Only available to Enterprise customers with a paid add-on.
      :::
 
 7. <Render
-   	file="policy-create-action"
-   	params={{ policyAction: props.policyAction }}
+   	file="rule-create-action"
+   	params={{ ruleAction: props.ruleAction }}
    	product="client-side-security"
    />
 
-8. To save and deploy your rule, select **Deploy**. { !props.policyAction && <Markdown text="If you are not ready to deploy your rule, select **Save as Draft**." /> }
+8. To save and deploy your rule, select **Deploy**. { !props.ruleAction && <Markdown text="If you are not ready to deploy your rule, select **Save as Draft**." /> }
 
 </Steps>
 

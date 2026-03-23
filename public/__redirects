@@ -2571,7 +2571,8 @@
 /magic-wan/connector/* /cloudflare-wan/configuration/appliance/:splat 301
 /magic-wan/configuration/connector/dhcp/* /cloudflare-wan/configuration/appliance/network-options/dhcp/:splat 301
 
-# Page Shield → Client-Side Security
+# Page Shield/Client-side security
+/page-shield/policies/* /client-side-security/rules/:splat 301
 /page-shield/* /client-side-security/:splat 301
 
 # Rules
