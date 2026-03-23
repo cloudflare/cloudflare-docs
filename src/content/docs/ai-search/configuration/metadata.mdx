@@ -60,120 +60,135 @@ How you attach custom metadata depends on your data source:
 
 ## Metadata filtering
 
-Metadata filtering narrows down search results based on metadata, so only relevant content is retrieved. Filters apply before retrieval to limit the scope of documents queried.
+Metadata filtering narrows down search results based on metadata, so only relevant content is retrieved. The filter is applied before retrieval, so you only query the documents that matter.
 
-You can filter by both built-in attributes (`folder`, `timestamp`, `filename`) and any custom metadata fields defined in your schema.
+:::note
+If you are using the legacy AutoRAG API, refer to [AutoRAG API filter format](/ai-search/autorag-filter-format/) for the filter syntax.
+:::
 
-Here is an example using [Workers binding](/ai-search/usage/workers-binding/). You can adapt this to use the [REST API](/ai-search/usage/rest-api/).
+Here is an example of metadata filtering using the [REST API](/ai-search/usage/rest-api/):
 
-```js
-const answer = await env.AI.autorag("my-autorag").search({
-	query: "How do I train a llama to deliver coffee?",
-	filters: {
-		type: "and",
-		filters: [
-			{
-				type: "eq",
-				key: "folder",
-				value: "llama/logistics/",
-			},
-			{
-				type: "gte",
-				key: "timestamp",
-				value: "1735689600000", // unix timestamp for 2025-01-01
-			},
-		],
-	},
-});
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instances/{NAME}/search \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  -d '{
+    "messages": [
+      {
+        "content": "How do I train a llama to deliver coffee?",
+        "role": "user"
+      }
+    ],
+    "ai_search_options": {
+      "retrieval": {
+        "filters": {
+          "folder": "llama/logistics/",
+          "timestamp": { "$gte": 1735689600 }
+        }
+      }
+    }
+  }'
 ```
 
 ### Filter by custom metadata
 
-Filter by custom fields using the same syntax as built-in attributes. The following example filters by a custom `category` field and a `version` number:
+| Attribute   | Description                                               | Example                                                                    |
+| ----------- | --------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `filename`  | The name of the file.                                     | `dog.png` or `animals/mammals/cat.png`                                     |
+| `folder`    | The folder or prefix to the object.                       | For the object `animals/mammals/cat.png`, the folder is `animals/mammals/` |
+| `timestamp` | Unix timestamp (seconds) when the file was last modified. | `1735689600` for 2025-01-01 00:00:00 UTC                                   |
 
-```js
-const answer = await env.AI.autorag("my-autorag").search({
-	query: "How do I configure authentication?",
-	filters: {
-		type: "and",
-		filters: [
-			{
-				type: "eq",
-				key: "category",
-				value: "documentation",
-			},
-			{
-				type: "gte",
-				key: "version",
-				value: 2.0,
-			},
-		],
-	},
-});
-```
+### Filter syntax
 
-### Filter schema
+The REST API uses Vectorize-style metadata filtering. Filters are JSON objects where keys are metadata attribute names and values specify the filter condition.
 
-You can create simple comparison filters or an array of comparison filters using a compound filter.
+#### Supported operators
 
-#### Comparison filter
+| Operator | Description                       |
+| -------- | --------------------------------- |
+| `$eq`    | Equals                            |
+| `$ne`    | Not equals                        |
+| `$in`    | In (matches any value in array)   |
+| `$nin`   | Not in (excludes values in array) |
+| `$lt`    | Less than                         |
+| `$lte`   | Less than or equal to             |
+| `$gt`    | Greater than                      |
+| `$gte`   | Greater than or equal to          |
 
-You can compare a metadata attribute (for example, `folder` or `timestamp`) with a target value using a comparison filter.
+#### Implicit `$eq`
 
-```js
-filters: {
-  type: "operator",
-  key: "metadata_attribute",
-  value: "target_value"
+When you provide a direct value without an operator, it is treated as an equality check:
+
+```json
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": "customer-a/" }
+		}
+	}
 }
 ```
 
-The available operators for comparison are:
+This is equivalent to:
 
-| Operator | Description              | Supported types       |
-| -------- | ------------------------ | --------------------- |
-| `eq`     | Equals                   | text, number, boolean |
-| `ne`     | Not equals               | text, number, boolean |
-| `gt`     | Greater than             | number                |
-| `gte`    | Greater than or equal to | number                |
-| `lt`     | Less than                | number                |
-| `lte`    | Less than or equal to    | number                |
-| `in`     | In array                 | text, number          |
-| `nin`    | Not in array             | text, number          |
-
-The `in` and `nin` operators accept an array of values:
-
-```js
-filters: {
-  type: "in",
-  key: "category",
-  value: ["documentation", "tutorial", "guide"]
+```json
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": { "$eq": "customer-a/" } }
+		}
+	}
 }
 ```
 
-#### Compound filter
+#### Range queries
 
-You can use a compound filter to combine multiple comparison filters with a logical operator.
+Combine upper and lower bound operators to filter by ranges:
 
-```js
-filters: {
-  type: "compound_operator",
-  filters: [...]
+```json
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "timestamp": { "$gte": 1735689600, "$lt": 1735900000 } }
+		}
+	}
 }
 ```
 
-The available compound operators are: `and`, `or`.
+#### Multiple conditions (implicit AND)
 
-Note the following limitations with the compound operators:
+When you specify multiple keys, all conditions must match:
 
-- No nesting combinations of `and`'s and `or`'s, meaning you can only pick 1 `and` or 1 `or`.
-- When using `or`:
-  - Only the `eq` operator is allowed.
-  - All conditions must filter on the **same key** (for example, all on `folder`)
+```json
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": {
+				"folder": "llama/logistics/",
+				"timestamp": { "$gte": 1735689600 }
+			}
+		}
+	}
+}
+```
 
-#### "Starts with" filter for folders
+#### `$in` operator
 
-You can use "starts with" filtering on the `folder` metadata attribute to search for all files and subfolders within a specific path.
+Match any value in an array:
+
+```json
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": { "$in": ["customer-a/", "customer-b/"] } }
+		}
+	}
+}
+```
+
+### "Starts with" filter for folders
+
+Use range queries to filter for all files within a folder and its subfolders.
 
 For example, consider this file structure:
 
@@ -181,35 +196,26 @@ For example, consider this file structure:
 	- customer-a - profile.md - contracts - property - contract-1.pdf
 </FileTree>
 
-If you were to filter using an `eq` (equals) operator with `value: "customer-a/"`, it would only match files directly within that folder, like `profile.md`. It would not include files in subfolders like `customer-a/contracts/`.
+Using `{ "folder": "customer-a/" }` only matches files directly in that folder (like `profile.md`), not files in subfolders.
 
-To recursively filter for all items starting with the path `customer-a/`, you can use the following compound filter:
+To match all files starting with `customer-a/`, use a range query:
 
-```js
-filters: {
-    type: "and",
-    filters: [
-      {
-        type: "gt",
-        key: "folder",
-        value: "customer-a//",
-      },
-      {
-        type: "lte",
-        key: "folder",
-        value: "customer-a/z",
-      },
-    ],
-  },
+```json
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": { "folder": { "$gte": "customer-a/", "$lt": "customer-a0" } }
+		}
+	}
+}
 ```
 
-This filter identifies paths starting with `customer-a/` by using:
+This works because:
 
-- The `and` condition to combine the effects of the `gt` and `lte` conditions.
-- The `gt` condition to include paths greater than the `/` ASCII character.
-- The `lte` condition to include paths less than and including the lower case `z` ASCII character.
+- `$gte` includes all paths starting with `customer-a/`
+- `$lt` with `customer-a0` excludes paths that do not start with `customer-a/` (since `0` comes after `/` in ASCII)
 
-Together, these conditions effectively select paths that begin with the provided path value.
+For more details on Vectorize metadata filtering, refer to [Vectorize metadata filtering](/vectorize/reference/metadata-filtering/).
 
 ## Add `context` field to guide AI Search
 
@@ -219,7 +225,7 @@ The `context` field is attached to each chunk and passed to the LLM during an `/
 
 The field can be used for providing document summaries, source links, or custom instructions without modifying the file content.
 
-You can add [custom metadata](/r2/api/workers/workers-api-reference/#r2putoptions) to an object in the `/PUT` operation when uploading the object to your R2 bucket. For example if you are using the [Workers binding with R2](/r2/api/workers/workers-api-usage/):
+You can add [custom metadata](/r2/api/workers/workers-api-reference/#r2putoptions) to an object in the `/PUT` operation when uploading the object to your R2 bucket. For example if you are using the [Workers binding with R2](/r2/api/workers/workers-api-usage/):
 
 ```javascript
 await env.MY_BUCKET.put("cat.png", file, {
@@ -235,31 +241,31 @@ During `/ai-search`, this context appears in the response under `attributes.file
 
 You can see the metadata attributes of your retrieved data in the response under the property `attributes` for each retrieved chunk. For example:
 
-```js
-"data": [
-  {
-    "file_id": "llama001",
-    "filename": "llama/logistics/llama-logistics.md",
-    "score": 0.45,
-    "attributes": {
-      "timestamp": 1735689600000,   // unix timestamp for 2025-01-01
-      "folder": "llama/logistics/",
-      "file": {
-        "url": "www.llamasarethebest.com/logistics",
-        "context": "This file contains information about how llamas can logistically deliver coffee.",
-        "category": "documentation",
-        "version": 2.5
-      }
-    },
-    "content": [
-      {
-        "id": "llama001",
-        "type": "text",
-        "text": "Llamas can carry 3 drinks max."
-      }
-    ]
-  }
-]
+```json
+{
+	"data": [
+		{
+			"file_id": "llama001",
+			"filename": "llama/logistics/llama-logistics.md",
+			"score": 0.45,
+			"attributes": {
+				"timestamp": 1735689600000,
+				"folder": "llama/logistics/",
+				"file": {
+					"url": "www.llamasarethebest.com/logistics",
+					"context": "This file contains information about how llamas can logistically deliver coffee."
+				}
+			},
+			"content": [
+				{
+					"id": "llama001",
+					"type": "text",
+					"text": "Llamas can carry 3 drinks max."
+				}
+			]
+		}
+	]
+}
 ```
 
 Custom metadata fields appear alongside built-in attributes in the `attributes.file` object.
