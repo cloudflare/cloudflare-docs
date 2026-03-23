@@ -2422,6 +2422,8 @@
 # DYNAMIC REDIRECTS
 # ============================================================================
 
+/workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
+
 # Pub/Sub (removed product)
 /pub-sub/* / 301
 
@@ -2634,8 +2636,6 @@
 /cloudflare-one/team-and-resources/devices/warp/download-warp/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/:splat 301
 # Main catch-all redirect (must be last)
 /cloudflare-one/team-and-resources/devices/warp/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/:splat 301
-
-/workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
 
 # Changelog (individual entry route moved to /post/)
 /changelog/2024-* /changelog/post/2024-:splat 301
