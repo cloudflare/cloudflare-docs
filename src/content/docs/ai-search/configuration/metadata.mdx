@@ -193,7 +193,11 @@ Use range queries to filter for all files within a folder and its subfolders.
 For example, consider this file structure:
 
 <FileTree>
-	- customer-a - profile.md - contracts - property - contract-1.pdf
+- customer-a
+  - profile.md
+  - contracts
+    - property
+      - contract-1.pdf
 </FileTree>
 
 Using `{ "folder": "customer-a/" }` only matches files directly in that folder (like `profile.md`), not files in subfolders.
