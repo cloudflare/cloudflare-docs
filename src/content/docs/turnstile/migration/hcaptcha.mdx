@@ -20,7 +20,7 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
       <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
       ```
 
-2.  Locate the `hcaptcha.render()` calls and replace the sitekey with your Turnstile sitekey and the API.
+  2. Locate the `hcaptcha.render()` calls and replace the sitekey with your Turnstile sitekey and the API.
 
       ```js title="Render"
         // before
@@ -41,7 +41,7 @@ Turnstile supports:
 
 - the `render()` call
 - hCaptcha invisible mode with the `execute()` call
-  :::
+:::
 
 ## Server-side integration
 
@@ -54,7 +54,7 @@ Turnstile supports:
         https://challenges.cloudflare.com/turnstile/v0/siteverify
         ```
 
-2.  Replace the `h-captcha-response` input name with the following:
+  2. Replace the `h-captcha-response` input name with the following:
           
       ```txt
       cf-turnstile-response
