@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Per-hostname
 sidebar:
-  order: 2
+  order: 3
 head:
   - tag: title
     content: Per-hostname authenticated origin pulls
@@ -10,7 +10,9 @@ head:
 
 import { AvailableNotifications, Render, Details } from "~/components";
 
-When you enable Authenticated Origin Pulls per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
+When you enable per-hostname Authenticated Origin Pulls (AOP), all proxied traffic to the specified hostname is authenticated at the origin web server using a certificate that you upload. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
+
+[Global](/ssl/origin-configuration/authenticated-origin-pull/set-up/global/), [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/), and per-hostname AOP are independent configurations. Enabling or disabling one does not affect the others. Per-hostname certificates take precedence over zone-level and global certificates for the specified hostname.
 
 ## Before you begin
 
