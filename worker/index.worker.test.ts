@@ -148,6 +148,24 @@ describe("Cloudflare Docs", () => {
 			const text = await response.text();
 			expect(text).toContain("# Cloudflare Developer Documentation");
 		});
+
+		it("index.md requests preserve markdown through redirects", async () => {
+			// /learning-paths/ redirects to /resources/ — an index.md request
+			// should redirect to /resources/index.md, not the HTML page.
+			const request = new Request("http://fakehost/learning-paths/index.md");
+			const response = await SELF.fetch(request, { redirect: "manual" });
+
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe("/resources/index.md");
+		});
+
+		it("index.md requests for non-redirected paths pass through", async () => {
+			const request = new Request("http://fakehost/workers/index.md");
+			const response = await SELF.fetch(request);
+
+			// Should not be a redirect — just serve normally via ASSETS
+			expect(response.status).not.toBe(301);
+		});
 	});
 
 	describe("head tags", async () => {

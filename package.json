@@ -24,25 +24,28 @@
 		"start": "npx astro dev",
 		"sync": "npx astro sync",
 		"test": "npx vitest",
+		"test:prebuild": "npx vitest --project Node --project Astro",
+		"test:postbuild": "npx vitest --project Workers",
 		"lint": "npx eslint",
 		"ai-setup:import-from-opencode": "npx rulesync import --targets opencode --features rules,commands,subagents",
 		"ai-setup:claudecode": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets claudecode --features rules,commands,subagents",
 		"ai-setup:cursor": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets cursor --features commands,subagents",
-		"ai-setup:copilot": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets copilot --features commands,subagents"
+		"ai-setup:copilot": "npm run ai-setup:import-from-opencode && npx rulesync generate --targets copilot --features commands,subagents",
+		"prepare": "husky"
 	},
 	"devDependencies": {
 		"@actions/core": "1.11.1",
-		"@actions/github": "6.0.1",
+		"@actions/github": "9.0.0",
 		"@apidevtools/swagger-parser": "12.0.0",
 		"@astrojs/check": "0.9.8",
 		"@astrojs/react": "5.0.0",
 		"@astrojs/rss": "4.0.17",
 		"@astrojs/sitemap": "3.7.1",
-		"@astrojs/starlight": "0.38.1",
+		"@astrojs/starlight": "0.38.2",
 		"@astrojs/starlight-docsearch": "0.7.0",
 		"@astrojs/starlight-tailwind": "5.0.0",
 		"@cloudflare/vitest-pool-workers": "0.10.7",
-		"@cloudflare/workers-types": "4.20260111.0",
+		"@cloudflare/workers-types": "4.20260317.1",
 		"@codingheads/sticky-header": "1.0.2",
 		"@expressive-code/plugin-collapsible-sections": "0.41.3",
 		"@expressive-code/plugin-line-numbers": "0.41.3",
@@ -78,7 +81,7 @@
 		"eslint-plugin-jsx-a11y": "6.10.2",
 		"eslint-plugin-react": "7.37.5",
 		"fast-glob": "3.3.3",
-		"fast-xml-parser": "5.5.6",
+		"fast-xml-parser": "5.5.7",
 		"github-slugger": "2.0.0",
 		"globals": "16.4.0",
 		"gray-matter": "4.0.3",
@@ -86,6 +89,7 @@
 		"hast-util-select": "6.0.4",
 		"hastscript": "9.0.1",
 		"he": "1.2.0",
+		"husky": "9.1.7",
 		"jsonc-parser": "3.3.1",
 		"ldrs": "1.1.7",
 		"lz-string": "1.5.0",
@@ -142,11 +146,11 @@
 		"unist-util-visit": "5.0.0",
 		"vite-tsconfig-paths": "5.1.4",
 		"vitest": "3.2.4",
-		"wrangler": "4.58.0"
+		"wrangler": "4.75.0"
 	},
 	"engines": {
 		"npm": "10.x",
-		"node": "^22.12.0"
+		"node": "^24.14.0"
 	},
 	"packageManager": "npm@10.9.4+sha512.3a7506f37e85c1ba1021baad79f0cd9724748131f321fc117c4dc3ba235ec01be7327584a41d15117c01945560aa9373220628fcc1e1dddd877a5fe9b336a900"
 }

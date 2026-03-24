@@ -4,7 +4,7 @@ releaseNotes: |-
   **Changes and improvements**
   - The [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) feature has been fixed for devices running WARP client version 2025.4.929.0 and newer. Previously, these devices could experience failures with Local Domain Fallback unless a fallback server was explicitly configured. This configuration is no longer a requirement for the feature to function correctly.
   - Linux [disk encryption posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/disk-encryption/) now supports non-filesystem encryption types like `dm-crypt`.
-  - [Proxy mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/#proxy-mode) now supports transparent HTTP proxying in addition to CONNECT-based proxying.
+  - [Proxy mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/#local-proxy-mode) now supports transparent HTTP proxying in addition to CONNECT-based proxying.
   - Fixed an issue where the GUI becomes unresponsive when the **Re-Authenticate in browser** button is clicked.
 version: 2025.10.118.1
 releaseDate: 2025-12-08T19:35:40.098Z

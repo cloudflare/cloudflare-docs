@@ -9,15 +9,18 @@ sidebar:
 
 import { Details } from "~/components";
 
-This section covers how to validate your Gateway DNS configuration.
+This section covers how to validate your Gateway DNS configuration. Testing your policies after setup helps confirm that queries are being filtered as expected before you rely on them in production.
 
 ## Prerequisites
 
-Before you start, make sure you are connected to a network that is associated with the [DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) where the policy is applied.
+Before you start, make sure your device is sending DNS queries to Gateway. You can do this in one of two ways:
+
+- **WARP** — If your device runs the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), DNS queries route through Gateway automatically.
+- **DNS location** — If you are using a DNS-only deployment (without WARP), verify that your network's DNS resolver points to your [Gateway DNS location's](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) IP address.
 
 ## Test a DNS policy
 
-Once you have created a DNS policy to block a domain, you can use either `dig` or `nslookup` to see if the policy is working as intended.
+Once you have created a DNS policy to block a domain, you can use either `dig` (a command-line DNS lookup tool, available on macOS and Linux) or `nslookup` (available on Windows) to see if the policy is working as intended.
 
 For example, if you created a policy to block `example.com`, you can do the following to see if Gateway is successfully blocking `example.com`:
 
@@ -25,7 +28,7 @@ For example, if you created a policy to block `example.com`, you can do the foll
 
 2. Type `dig example.com` (`nslookup example.com` if you are using Windows) and press **Enter**.
 
-3. If the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) is turned off for the policy, you should see `REFUSED` in the answer section:
+3. In the `dig` output, check the `status:` field in the header line (the line starting with `;; ->>HEADER<<-`). If the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) is turned off for the policy, you should see `REFUSED` — a DNS response code meaning the server declined to answer the query:
 
    ```sh
    dig example.com
@@ -48,7 +51,7 @@ For example, if you created a policy to block `example.com`, you can do the foll
    ;; MSG SIZE  rcvd: 29
    ```
 
-   If the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section with `162.159.36.12` and `162.159.46.12` as the answers:
+   If the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) is enabled for the policy, you should see `NOERROR` (meaning the query was resolved) in the header with `162.159.36.12` and `162.159.46.12` as the answers. These are Cloudflare's block page IP addresses:
 
    ```sh null
    dig example.com
@@ -116,9 +119,9 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 ## Test EDNS configuration
 
-If you [enabled EDNS client subnet](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) for your DNS location, you can validate EDNS as follows:
+EDNS client subnet (ECS) is a DNS extension that sends a portion of the user's IP address to authoritative DNS nameservers, allowing them to return geographically optimal answers. Cloudflare sends the first `/24` of the user's IP address to preserve privacy while still providing location information. If you [enabled EDNS client subnet](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) for your DNS location, you can validate it as follows:
 
-1. Obtain your DNS location's DOH subdomain:
+1. Obtain your DNS location's DoH (DNS over HTTPS) subdomain:
    1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Networks** > **Resolvers & Proxies** > **DNS locations**.
    2. Select the DNS location you are testing.
    3. Note the value of **DNS over HTTPS**.

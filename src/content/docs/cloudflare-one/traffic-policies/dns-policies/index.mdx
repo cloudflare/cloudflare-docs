@@ -9,7 +9,9 @@ sidebar:
 
 import { Details, InlineBadge, Render } from "~/components";
 
-When a user makes a DNS request to Gateway, Gateway matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives an address based on the DNS resolution from Cloudflare's 1.1.1.1 servers. Alternatively, you can use a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) to redirect DNS requests to a custom server.
+DNS policies let you control which websites and services your users can reach by inspecting their DNS queries — the lookups that translate domain names into IP addresses. Because DNS policies act at the lookup stage, they work across all protocols and applications, not just web browsers.
+
+When a user makes a DNS request, [Gateway](/cloudflare-one/traffic-policies/) matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Allow or Override policy, the user's client receives an address based on DNS resolution from Cloudflare's public DNS resolver (1.1.1.1). You can also use a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) to redirect DNS requests to a custom server.
 
 A DNS policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
@@ -31,7 +33,7 @@ When creating a DNS policy, you can select as many security risk categories and 
 
 ## Actions
 
-Just like actions in HTTP policies, actions in DNS policies allow you to choose what to do with a given set of elements. You can assign one action per policy.
+The action determines what Gateway does when a DNS query matches your policy conditions. You can assign one action per policy.
 
 These are the action types you can choose from:
 
@@ -83,7 +85,7 @@ API value: `allow`
 
 </Details>
 
-Policies with Allow actions allow DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration allows DNS queries to reach domains we categorize as belonging to the Education content category:
+Policies with Allow actions explicitly permit DNS queries to resolve. Gateway uses a [first-match principle](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence), which means that if an Allow policy matches a query at a higher precedence than a Block policy, the query will be allowed to resolve. For example, the following configuration allows DNS queries to reach domains categorized as belonging to the Education content category:
 
 | Selector           | Operator | Value       | Action |
 | ------------------ | -------- | ----------- | ------ |
@@ -91,7 +93,7 @@ Policies with Allow actions allow DNS queries to reach destinations you specify 
 
 #### Disable DNSSEC validation
 
-When you select **Disable DNSSEC validation**, Gateway will resolve DNS queries even if the cryptographic signature for the DNS record cannot be validated. We do not recommend disabling DNSSEC validation unless you know that the validation failure is due to DNSSEC configuration issues and not malicious attacks.
+DNSSEC (Domain Name System Security Extensions) verifies that DNS responses have not been tampered with by checking a cryptographic signature attached to the record. When you select **Disable DNSSEC validation**, Gateway will resolve DNS queries even if the signature cannot be validated. We do not recommend disabling DNSSEC validation unless you know that the validation failure is due to DNSSEC configuration issues and not malicious attacks.
 
 ### Block
 
@@ -135,7 +137,7 @@ API value: `block`
 
 </Details>
 
-Policies with Block actions block DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains we categorize as belonging to the Adult Themes content category:
+Policies with Block actions prevent DNS queries from resolving for destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains categorized as belonging to the Adult Themes content category:
 
 | Selector           | Operator | Value          | Action |
 | ------------------ | -------- | -------------- | ------ |
@@ -145,7 +147,7 @@ Policies with Block actions block DNS queries to reach destinations you specify 
 
 When choosing the Block action, turn on **Modify Gateway block behavior** to respond to queries with a block page to display to users who go to blocked websites. Optionally, you can override your global block page setting with a URL redirect for the specific DNS policy. For more information, refer to [Block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/).
 
-If the block page is turned off for a policy, Gateway will respond to queries blocked at the DNS level with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. The browser will display its default connection error page.
+If the block page is turned off for a policy, Gateway will respond to blocked queries with an `A` record (IPv4) of `0.0.0.0` or an `AAAA` record (IPv6) of `::`. Because no server responds at these addresses, the browser will display its default connection error page.
 
 <Render file="gateway/block-page-dns-records" product="cloudflare-one" />
 
@@ -193,7 +195,7 @@ The Override action cannot be used with selectors evaluated during or after DNS 
 
 </Details>
 
-Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of `1.2.3.4` for all queries to `www.example.com` with the following policy:
+Policies with Override actions replace the real DNS answer with a destination you specify. When a user queries a domain that matches the policy, Gateway returns your custom IP address or hostname instead of the actual DNS record. For example, you can provide a custom response IP of `1.2.3.4` for all queries to `www.example.com` with the following policy:
 
 | Selector | Operator | Value             | Action   | Override Hostname |
 | -------- | -------- | ----------------- | -------- | ----------------- |
@@ -285,7 +287,15 @@ This setup ensures users will be blocked from accessing offensive sites using DN
 
 ## Selectors
 
-Gateway matches DNS queries against the following selectors, or criteria:
+Gateway matches DNS queries against the following selectors, or criteria.
+
+Each selector is evaluated during a specific phase of the DNS resolution process:
+
+- **Before DNS resolution** — Gateway inspects properties of the incoming query (for example, the domain name or source IP) before looking up the answer.
+- **During DNS resolution** — Gateway inspects information discovered while resolving the query (for example, the authoritative nameserver IP).
+- **After DNS resolution** — Gateway inspects the DNS answer (for example, the resolved IP or CNAME record) after resolution completes.
+
+The Override action cannot be used with selectors evaluated during or after DNS resolution, because the override must be applied before the answer is returned. For more information on how evaluation phase interacts with precedence, refer to [order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/#dns-policies).
 
 ### Application
 
@@ -353,7 +363,7 @@ Use this selector to filter DNS responses by their `TXT` records.
 | ---------------------- | ------------------------------------------- | -------------------- |
 | DNS TXT Response Value | `any(dns.response.txt[*] in {"your_text"})` | After DNS resolution |
 
-### DoH Subdomain
+### DoH Subdomain (DNS over HTTPS)
 
 <Render file="gateway/selectors/doh-subdomain" product="cloudflare-one" />
 
@@ -428,7 +438,7 @@ Use this selector to filter based on the IP addresses that the query resolves to
 
 ### Request Context Categories
 
-Use this selector to match a dynamic list of [category IDs](/cloudflare-one/traffic-policies/domain-categories/#category-and-subcategory-ids) sent in the [EDNS](https://datatracker.ietf.org/doc/html/rfc6891) portion of a DNS query. Gateway includes request context with the OPT code `65050`.
+Use this selector to match a dynamic list of [category IDs](/cloudflare-one/traffic-policies/domain-categories/#category-and-subcategory-ids) sent in the [EDNS (Extension Mechanisms for DNS)](https://datatracker.ietf.org/doc/html/rfc6891) portion of a DNS query. EDNS allows extra metadata to be attached to a DNS query beyond the standard fields. Gateway reads category IDs from the EDNS OPT code `65050`.
 
 | UI name                    | API example                                 | Evaluation phase      |
 | -------------------------- | ------------------------------------------- | --------------------- |
@@ -473,7 +483,13 @@ Use this selector to apply policies to the source internal IP address of a DNS q
 <Render
 	file="gateway/value"
 	product="cloudflare-one"
-	params={{ selector: "Host", selectordescription: "hostname", operator: "matches regex", valueOne: ".*whispersystems.org", valueTwo: ".*signal.org" }}
+	params={{
+		selector: "Host",
+		selectordescription: "hostname",
+		operator: "matches regex",
+		valueOne: ".*whispersystems.org",
+		valueTwo: ".*signal.org",
+	}}
 />
 
 ## Logical operators
@@ -492,11 +508,11 @@ Use this selector to apply policies to the source internal IP address of a DNS q
 
 ### Cloudflare WAN forwarding
 
-To apply DNS policies to queries forwarded through [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/), you can either point your organization's DNS resolver to an IPv6, DoH, or DoT endpoint or request a dedicated resolver IPv4 address. For more information, refer to [DNS resolver IPs and hostnames](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/).
+To apply DNS policies to queries forwarded through [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/), you can either point your organization's DNS resolver to an IPv6, DNS over HTTPS (DoH), or DNS over TLS (DoT) endpoint or request a dedicated resolver IPv4 address. For more information, refer to [DNS resolver IPs and hostnames](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/).
 
 ### Fallback DNS
 
-Some apps, such as WhatsApp and Android Studio, use hard-coded fallback DNS servers. Fallback DNS can cause unexpected behavior with Gateway DNS policies. For example, if you have a Block DNS policy, Gateway will initially block DNS queries from those apps, but the queries can resolve correctly afterward using the fallback DNS. To mitigate this behavior, you create a [Gateway Network policy](/cloudflare-one/traffic-policies/network-policies/) to block outbound DNS traffic on TCP/UDP port `53` to the fallback DNS servers. For example, to block Google's fallback DNS servers:
+Some applications (for example, WhatsApp and Android Studio) have backup DNS servers built into their code. If their primary DNS query is blocked by Gateway, these apps automatically retry the query against their built-in DNS servers (for example, Google's `8.8.8.8`), which bypasses your policies entirely. To mitigate this behavior, you create a [Gateway Network policy](/cloudflare-one/traffic-policies/network-policies/) to block outbound DNS traffic on TCP/UDP port `53` to the fallback DNS servers. For example, to block Google's fallback DNS servers:
 
 | Selector         | Operator | Value                | Logic | Action |
 | ---------------- | -------- | -------------------- | ----- | ------ |

@@ -12,14 +12,20 @@ import { DashButton, Details, Render } from "~/components";
 Transferring a domain moves your registration from your current registrar to Cloudflare.
 
 - **Active work:** About 30 minutes.
-- **Total time:** Around 5 business days. Your current registrar has up to 5 days to release the domain and DNS changes take time to propagate.
-- **Cost:** One year of registration at Cloudflare's at-cost price, added to your current expiration date.
-
-Before you can transfer, you must first [add your domain to Cloudflare](#1-add-your-domain-to-cloudflare).
+- **Total time:** Up to 10 days, depending on your registrar.
+- **Cost:** Cloudflare domains are at-cost with no markup fees. Most transfers include a one-year extension from your current expiration date. Some country-code domains (such as `.uk`) have no transfer fee.
 
 :::note
-You cannot [enter an authorization code](/registrar/troubleshooting/#cannot-find-where-to-enter-your-authorization-code) until your domain is active on Cloudflare. If your domain is registered with a website builder platform (such as Block, Shopify, Squarespace, or Wix), you may not be able to change nameservers while the domain is registered there. Refer to [Transfer from website builders](#transfer-from-website-builders) for the recommended workaround, or [Troubleshoot failed domain transfers](/registrar/troubleshooting/) if you are running into issues.
+Before you can transfer, you must first [add your domain to Cloudflare](#1-add-your-domain-to-cloudflare). You cannot [enter an authorization code](/registrar/troubleshooting/#cannot-find-where-to-enter-your-authorization-code) until your domain is active on Cloudflare. If your domain is registered with a website builder platform (such as Block, Shopify, Squarespace, or Wix), you may not be able to change nameservers while the domain is registered there. Refer to [Transfer from website builders](#transfer-from-website-builders) for the recommended workaround, or [Troubleshoot failed domain transfers](/registrar/troubleshooting/) if you are running into issues.
 :::
+
+:::note
+If your domain recently expired and you renewed it, wait at least 45 days after the original expiration date before transferring. Otherwise, the registry may not add the extra year. For details, refer to [Why did my domain's expiration date change?](/registrar/faq/#my-domains-registration-was-not-extended-by-one-year-after-transferring-to-cloudflare).
+:::
+
+<Render file="icann-unverified-email" product="registrar" />
+
+---
 
 <Details header="Before you begin">
 
@@ -30,10 +36,6 @@ Confirm the following before you start:
 - Your domain was registered at least 60 days ago and has not been transferred in the last 60 days (ICANN requirement).
 - You have not changed your registrant name, organization, or email address in the last 60 days. Under ICANN rules, changes to these fields trigger a 60-day transfer lock. Some registrars let you opt out of this lock during the change, but not all do.
 - Your account at your current registrar is active. If your domain has expired, renew it at your current registrar first.
-
-:::note
-If your domain recently expired and you renewed it, wait at least 45 days after the original expiration date before transferring. Otherwise, the registry may not add the extra year. For details, refer to [Why did my domain's expiration date change?](/registrar/faq/#my-domains-registration-was-not-extended-by-one-year-after-transferring-to-cloudflare).
-:::
 
 - Your domain uses only standard characters (letters, numbers, hyphens). Cloudflare does not support domains with non-Latin characters (for example, `例え.jp`).
 - If you are transferring a `.us` domain, refer to [Additional requirements for .US domains](/registrar/top-level-domains/us-domains/).
@@ -113,7 +115,7 @@ Some registrars have multiple lock types (domain lock, transfer lock, privacy lo
 
 Request an authorization code for your domain. This is also called an auth code, EPP code, authinfo code, or transfer code. Cloudflare uses this code to verify that the transfer is authorized by the domain owner.
 
-Authorization codes expire within 5-14 days depending on the registrar. Some registrars invalidate the previous code each time you request a new one. Request the code when you are ready to enter it in the next step.
+Authorization codes are usually only valid for a limited period. Request the code when you are ready to enter it in the next step.
 
 ### Enter your authorization code and confirm payment
 
@@ -121,7 +123,7 @@ Authorization codes expire within 5-14 days depending on the registrar. Some reg
 
 <DashButton url="/?to=/:account/registrar/transfer" />
 
-Select your domain and enter the authorization code. The page will show the transfer price, which includes a one-year registration extension from your current expiration date. This is an ICANN requirement — every transfer extends your registration by one year.
+Select your domain and enter the authorization code. For most generic TLDs (such as `.com`, `.net`, and `.org`), the transfer price includes a one-year registration extension from your current expiration date. This is an ICANN requirement for gTLD transfers. Country-code domains follow their own registry policies — for example, `.uk` transfers do not add an extra year or charge a transfer fee.
 
 If you do not have a payment method on file, add one before proceeding.
 

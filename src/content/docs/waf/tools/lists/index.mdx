@@ -5,9 +5,11 @@ sidebar:
   order: 1
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { FeatureTable, Render, GlossaryTooltip } from "~/components";
 
-Use lists to refer to a group of items (such as IP addresses) collectively, by name, in rule expressions of Cloudflare products. You can create your own custom lists or use lists managed by Cloudflare, such as [Managed IP Lists](/waf/tools/lists/managed-lists/#managed-ip-lists).
+Lists allow you to group items such as IP addresses, hostnames, or autonomous system numbers (ASNs), and reference them by name in Cloudflare [rule expressions](/ruleset-engine/rules-language/expressions/). Instead of adding each item individually to every rule that needs it, you define the group once and reuse it across rules and zones.
+
+You can create your own [custom lists](/waf/tools/lists/custom-lists/) or use [Managed Lists](/waf/tools/lists/managed-lists/) maintained by Cloudflare, such as Managed IP Lists that provide threat intelligence data.
 
 Lists have the following advantages:
 
@@ -26,11 +28,11 @@ Refer to each page for details.
 
 - Bulk Redirects use [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists), a different type of list covered in the Rules documentation.
 
-- The lists described in this page are not the same as [Zero Trust lists](/cloudflare-one/reusable-components/lists/). The two types of lists support different data types and have different validation rules (for example, regarding the list name).
-
-- You can also use [inline lists](/ruleset-engine/rules-language/values/#inline-lists) in rule expressions. Inline lists allow you to directly include a list of values in an expression. With an inline list you do not need to configure the list items beforehand, but the items will be hardcoded in the expression.
+- The lists on this page are not the same as [Zero Trust lists](/cloudflare-one/reusable-components/lists/), which support different data types and have different validation rules (for example, regarding the list name).
 
 :::
+
+You can also use [inline lists](/ruleset-engine/rules-language/values/#inline-lists) in rule expressions. Inline lists allow you to include values directly in an expression without creating a separate list first. However, any changes to the values require editing the rule itself.
 
 ## List names
 
@@ -62,9 +64,9 @@ Currently, not all Cloudflare products support lists in their expressions. Refer
 
 You can search for list items in the dashboard or [via API](/api/resources/rules/subresources/lists/subresources/items/methods/list/).
 
-For IP Lists, Cloudflare will return IP addresses/ranges that start with your search query (search by prefix). Currently, you cannot search for an IP address contained in a CIDR range of an IP List.
+For IP lists, Cloudflare returns IP addresses or ranges that start with your search query. For example, searching `192.0.2` matches `192.0.2.1` and `192.0.2.0/24`, but searching for `192.0.2.100` does not match a <GlossaryTooltip term="CIDR">CIDR range</GlossaryTooltip> like `192.0.2.0/24` that contains that address.
 
-For Bulk Redirect Lists, Cloudflare will return the URL redirects in the list where the source URL or target URL contain your search query (search by substring).
+For Bulk Redirect Lists, Cloudflare returns entries where the source URL or target URL contains your search query.
 
 ## Availability
 
@@ -88,10 +90,10 @@ The following user roles have access to the list management functionality:
 
 ## Final remarks
 
-You can only delete a list when there are no rules (enabled or disabled) that reference that list.<br/>
+You can only delete a list when no rules (enabled or disabled) reference it.
 
 <Render file="lists-import-notes" product="fundamentals" />
 
-To replace the entire contents of a list, format the data as an array and use the [Update all list items](/api/resources/rules/subresources/lists/subresources/items/methods/update/) operation in the [Lists API](/waf/tools/lists/lists-api/endpoints/).
+To replace the entire contents of a list at once, format the data as an array and use the [Update all list items](/api/resources/rules/subresources/lists/subresources/items/methods/update/) operation in the [Lists API](/waf/tools/lists/lists-api/endpoints/).
 
-You cannot download a list in CSV format from the Cloudflare dashboard. If you need to download the contents of a list, use the [Get list items](/api/resources/rules/subresources/lists/subresources/items/methods/list/) operation to fetch the list items.
+The Cloudflare dashboard does not support downloading a list as a CSV file. To export list contents, use the [Get list items](/api/resources/rules/subresources/lists/subresources/items/methods/list/) API operation.
