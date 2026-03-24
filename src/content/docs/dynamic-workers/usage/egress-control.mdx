@@ -29,7 +29,7 @@ return {
 
 This causes any `fetch()` or `connect()` request from the dynamic Worker to throw an exception.
 
-In this mode, you can still give the Dynamic Worker direct access to specific resources and services using [bindings](/dynamic-workers/usage/bindings/). This is the cleanest and most secure way to design your sandbox: block the internet, then constructively offer specific capabilities via bindings.
+In this mode, you can still give the Dynamic Worker direct access to specific resources and services using [bindings](/dynamic-workers/usage/bindings/). This is the cleanest and most secure way to design your sandbox: block the Internet, then constructively offer specific capabilities via bindings.
 
 That said, if you need to offer compatibility with existing HTTP client libraries running directly inside your Dynamic Worker sandbox, then blocking `fetch()` may be infeasible, and you may prefer to intercept requests instead.
 
