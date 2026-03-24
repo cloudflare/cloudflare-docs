@@ -8,8 +8,7 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxDynamicRules: 2_000, // Usually 100
 });
 
-const LLMS_FULL_BASE_URL =
-	"https://middlecache.ced.cloudflare.com/v1/cloudflare-docs-llms-full";
+const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 
 /**
  * When a redirect response is returned for an index.md request, rewrite the
@@ -52,14 +51,16 @@ export default class extends WorkerEntrypoint<Env> {
 		if (request.url.endsWith("/llms-full.txt")) {
 			const { pathname } = new URL(request.url);
 			// pathname is e.g. "/llms-full.txt" or "/workers/llms-full.txt"
-			const upstreamUrl = `${LLMS_FULL_BASE_URL}${pathname}`;
+			// R2 key: "v1/cloudflare-docs-llms-full/llms-full.txt" or
+			//         "v1/cloudflare-docs-llms-full/workers/llms-full.txt"
+			const r2Key = `${LLMS_FULL_R2_PREFIX}${pathname}`;
+			const object = await this.env.MIDDLECACHE.get(r2Key);
 
-			const upstream = await fetch(upstreamUrl);
-			if (!upstream.ok) {
+			if (!object) {
 				return new Response("llms-full.txt not found", { status: 404 });
 			}
 
-			return new Response(upstream.body, {
+			return new Response(object.body, {
 				headers: {
 					"Content-Type": "text/markdown; charset=utf-8",
 				},
