@@ -15,6 +15,10 @@ import {
 
 This page provides information about some of the different types of DNS records that you can manage on Cloudflare. For guidance on how to add, edit, or delete DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
 
+:::note
+The wire format size of any single record must not exceed 4,096 bytes. If you have multiple records with the same name and type, their combined content length must not exceed 8,192 characters.
+:::
+
 ---
 
 ## IP address resolution
@@ -251,14 +255,6 @@ At Cloudflare, TXT records are most commonly used to demonstrate domain ownershi
 You could also use TXT to create email authentication records, but we recommend that you use our [Email security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 
 <Render file="api-field-definitions" product="dns" />
-
-:::note
-
-The **Content** for each TXT record must be 2,048 characters or less.
-
-If you have multiple TXT records with the same **Name**, there is also a limit for the sum of their **Content** characters, which must be 8,192 or less.
-
-:::
 
 ### CAA
 
