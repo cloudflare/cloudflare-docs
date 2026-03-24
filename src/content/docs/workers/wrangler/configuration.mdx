@@ -1511,7 +1511,7 @@ You can configure various aspects of local development, such as the local protoc
 This property is experimental and subject to change.
 :::
 
-The `secrets` configuration property lets you declare the secret names your Worker requires. When defined, Wrangler uses it to validate secrets during local development, type generation, and deploy.
+The `secrets` configuration property lets you declare the secret names your Worker requires in your Wrangler configuration file. Required secrets are validated during local development and deploy, and used as the source of truth for type generation.
 
 <WranglerConfig>
 
