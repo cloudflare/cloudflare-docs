@@ -5,7 +5,7 @@ params:
   - wanTransformationURL
 ---
 
-Once traffic reaches Cloudflare through WAN on-ramps (IPsec tunnels, GRE tunnels, CNI, or Connector), you can apply multiple security services inline. This page explains which services apply to WAN traffic, when to use each one, and how they work together.
+Once traffic reaches Cloudflare through WAN on-ramps (IPsec tunnels, GRE tunnels, CNI, or Appliance), you can apply multiple security services inline. This page explains which services apply to WAN traffic, when to use each one, and how they work together.
 
 ## Traffic types
 
@@ -22,7 +22,7 @@ Cloudflare WAN carries three types of traffic, and different security services a
 <a href={props.networkFirewallURL}>Cloudflare Network Firewall</a> provides packet-level filtering at layers 3 and 4. You define allow or block rules based on IP addresses, ports, and protocols.
 
 - **Applies to**: inbound, outbound, and east-west traffic
-- **Included with**: Cloudflare WAN by default
+- **Included with**: Cloudflare WAN by default for [standard features](/cloudflare-network-firewall/plans/)
 
 Use Network Firewall when you need to control traffic at the packet level — for example, blocking specific IP ranges, restricting traffic to certain ports, or filtering protocols between sites.
 
