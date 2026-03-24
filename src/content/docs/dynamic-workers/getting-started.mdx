@@ -64,7 +64,7 @@ export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		// Load a worker.
 		const worker = env.LOADER.load({
-			compatibilityDate: "2026-01-01",
+			compatibilityDate: "$today",
 
 			mainModule: "src/index.js",
 			modules: {
