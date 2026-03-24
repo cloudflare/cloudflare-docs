@@ -8,6 +8,9 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxDynamicRules: 2_000, // Usually 100
 });
 
+const LLMS_FULL_MIDDLECACHE_URL =
+	"https://middlecache.ced.cloudflare.com/v1/cloudflare-docs-llms-full/llms-full.txt";
+
 /**
  * When a redirect response is returned for an index.md request, rewrite the
  * Location header so the agent stays in Markdown land instead of landing on
@@ -46,6 +49,25 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
+		// The root /llms-full.txt (~40 MB) exceeds the Workers 25 MiB per-asset
+		// limit, so it is excluded from static assets via .assetsignore and
+		// proxied from middlecache at request time. Per-product llms-full.txt
+		// files are small enough to be served as static assets.
+		if (request.url.endsWith("/llms-full.txt")) {
+			const { pathname } = new URL(request.url);
+			if (pathname === "/llms-full.txt") {
+				const upstream = await fetch(LLMS_FULL_MIDDLECACHE_URL);
+				if (!upstream.ok) {
+					return new Response("llms-full.txt not found", { status: 404 });
+				}
+				return new Response(upstream.body, {
+					headers: {
+						"Content-Type": "text/markdown; charset=utf-8",
+					},
+				});
+			}
+		}
+
 		const url = new URL(request.url);
 		const isMarkdownRequest = url.pathname.endsWith("/index.md");
 
