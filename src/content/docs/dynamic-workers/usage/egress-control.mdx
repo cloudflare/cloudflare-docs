@@ -73,7 +73,7 @@ From here, you can add any logic to the gateway, such as restricting destination
 
 ## Inject credentials
 
-A common pattern is attaching credentials to outbound requests so the dynamic Worker never sees the secret. Similar to [custom bindings](/dynamic-workers/usage/bindings/#custom-bindings-with-dynamic-workers), you can use [`ctx.props`](http://localhost:1111/workers/runtime-apis/context#props) to pass per-tenant or per-request context to the gateway.
+A common pattern is attaching credentials to outbound requests so the dynamic Worker never sees the secret. Similar to [custom bindings](/dynamic-workers/usage/bindings/#custom-bindings-with-dynamic-workers), you can use [`ctx.props`](/workers/runtime-apis/context/#props) to pass per-tenant or per-request context to the gateway.
 
 The dynamic Worker calls `fetch()` normally. `HttpGateway` intercepts the request, attaches the token from the loader Worker's environment, and forwards it. The dynamic Worker never has access to `API_TOKEN`.
 
