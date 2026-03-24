@@ -27,9 +27,8 @@ jobs:
           path: node_modules
           key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
-      - name: Install node_modules (cache miss)
+      - name: Install node_modules
         run: npm ci
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Restore Astro assets from cache
         uses: actions/cache@v5
