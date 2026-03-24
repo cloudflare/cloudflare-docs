@@ -109,6 +109,7 @@ The `events` values in the API response are standard rrweb event arrays. You can
 
 - Recording is opt-in. It is not enabled by default.
 - Session recording is only available with Workers Bindings via `launch()`. It is not available with the REST API.
+- The minimum recording duration is 1 second. Sessions shorter than 1 second will not produce a viewable recording.
 - The maximum recording duration is 2 hours.
 
 ## rrweb limitations
