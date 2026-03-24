@@ -20,7 +20,7 @@ $ARGUMENTS
 2. **Identify the product**: Determine which Cloudflare product(s) the changes relate to. Common products include:
    - Workers, KV, R2, D1, Queues, Durable Objects (DO), Hyperdrive, Containers, Pipelines
    - Pages, Images, Stream, Calls
-   - WAF, DDoS, Bot Management, API Shield, Client-Side Security
+   - WAF, DDoS, Bot Management, API Shield, Client-side security
    - Zero Trust (ZT), Access, Gateway, WARP, Tunnel, CASB, DLP, DEX
    - DNS, Registrar, SSL/TLS, Load Balancing, Spectrum
    - Analytics, Logs, Notifications

@@ -1909,7 +1909,7 @@
 			}
 		},
 		"page_shield": {
-			"title": "Client-Side Security",
+			"title": "Client-side security",
 			"link": "/client-side-security/",
 			"ent_plus": "Advanced",
 			"properties": {
