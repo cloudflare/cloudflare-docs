@@ -46,17 +46,6 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		if (request.url.endsWith("/llms-full.txt")) {
-			const { pathname } = new URL(request.url);
-			const res = await this.env.VENDORED_MARKDOWN.get(pathname.slice(1));
-
-			return new Response(res?.body, {
-				headers: {
-					"Content-Type": "text/markdown; charset=utf-8",
-				},
-			});
-		}
-
 		const url = new URL(request.url);
 		const isMarkdownRequest = url.pathname.endsWith("/index.md");
 
