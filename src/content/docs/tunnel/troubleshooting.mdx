@@ -154,11 +154,11 @@ Replace `198.41.200.43` with the IP shown in your [error message](#dialcontext-e
 	params={{ tunnelMode: true }}
 />
 
-### Collect logs
+### Collect debug logs
 
-Attach logs when opening a support ticket or investigating an issue.
+To capture verbose output for troubleshooting:
 
-- **Locally-managed tunnels**: Run `cloudflared` with the `--loglevel debug` flag to capture verbose output:
+- **Locally-managed tunnels**: Run `cloudflared` with the `--loglevel debug` flag:
 
   ```sh
   cloudflared tunnel --loglevel debug run
@@ -172,12 +172,4 @@ Attach logs when opening a support ticket or investigating an issue.
 
 - **Remotely-managed tunnels** (created via the dashboard): Configure logging in the tunnel's [run parameters](/tunnel/advanced/run-parameters/#loglevel). You can also stream logs in real time using the [remote log streaming](/tunnel/monitoring/#remote-log-streaming) feature.
 
-### Information to provide for support
-
-When [contacting support](/support/contacting-cloudflare-support/), include the following:
-
-- Tunnel ID and tunnel name
-- `cloudflared` version (`cloudflared --version`)
-- How the tunnel was set up (locally-managed or remotely-managed via the dashboard)
-- Debug log output or `cloudflared.log` file
-- Steps to reproduce the issue
+Attach the debug logs when contacting support — refer to the checklist above for the full list of information to include.
