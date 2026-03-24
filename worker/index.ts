@@ -8,8 +8,7 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxDynamicRules: 2_000, // Usually 100
 });
 
-const LLMS_FULL_MIDDLECACHE_URL =
-	"https://middlecache.ced.cloudflare.com/v1/cloudflare-docs-llms-full/llms-full.txt";
+const LLMS_FULL_R2_KEY = "v1/cloudflare-docs-llms-full/llms-full.txt";
 
 /**
  * When a redirect response is returned for an index.md request, rewrite the
@@ -51,16 +50,16 @@ export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
 		// The root /llms-full.txt (~40 MB) exceeds the Workers 25 MiB per-asset
 		// limit, so it is excluded from static assets via .assetsignore and
-		// proxied from middlecache at request time. Per-product llms-full.txt
-		// files are small enough to be served as static assets.
+		// read from the middlecache R2 bucket at request time. Per-product
+		// llms-full.txt files are small enough to be served as static assets.
 		if (request.url.endsWith("/llms-full.txt")) {
 			const { pathname } = new URL(request.url);
 			if (pathname === "/llms-full.txt") {
-				const upstream = await fetch(LLMS_FULL_MIDDLECACHE_URL);
-				if (!upstream.ok) {
+				const object = await this.env.MIDDLECACHE.get(LLMS_FULL_R2_KEY);
+				if (!object) {
 					return new Response("llms-full.txt not found", { status: 404 });
 				}
-				return new Response(upstream.body, {
+				return new Response(object.body, {
 					headers: {
 						"Content-Type": "text/markdown; charset=utf-8",
 					},
