@@ -27,8 +27,8 @@ Cloudflare WAF includes multiple [managed rulesets](/waf/managed-rules/#availabl
 
 Before taking action, identify which rule blocked the request:
 
-1. Go to **Security** > **Events** in the Cloudflare dashboard.
-2. Filter by the request details (IP address, URI path, timestamp) to find the blocked event.
+1. Go to **Security** > **Analytics** > **Events** in the Cloudflare dashboard.
+2. Filter by the request details (IP address, URI path, timestamp, or Ray ID) to find the blocked event.
 3. Note the **Rule ID** and **Rule message** — these determine which remediation step to follow.
 
 ### Recommended remediation steps
@@ -40,6 +40,8 @@ Follow this decision tree based on the rule that triggered the false positive:
 [WAF exceptions](/waf/managed-rules/waf-exceptions/) let you skip specific rules or entire managed rulesets for requests that match certain conditions. This is the recommended approach because it preserves protection for all other traffic.
 
 Define exceptions in the [Cloudflare dashboard](/waf/managed-rules/waf-exceptions/define-dashboard/) or via the [Rulesets API](/waf/managed-rules/waf-exceptions/define-api/).
+
+To inspect the request payload and confirm whether traffic is a genuine false positive, you can [configure payload logging](/waf/managed-rules/payload-logging/configure/).
 
 #### 2. Adjust OWASP settings (if rule 949110 is triggering)
 
