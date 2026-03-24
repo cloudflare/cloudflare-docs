@@ -41,11 +41,6 @@ export default {
 			// Sample query
 			const [results, fields] = await connection.query("SHOW tables;");
 
-			// Clean up the client after the response is returned.
-			// Hyperdrive keeps the underlying database connection open in its
-			// pool and reuses it for future requests.
-			ctx.waitUntil(connection.end());
-
 			// Return result rows as JSON
 			return Response.json({ results, fields });
 		} catch (e) {

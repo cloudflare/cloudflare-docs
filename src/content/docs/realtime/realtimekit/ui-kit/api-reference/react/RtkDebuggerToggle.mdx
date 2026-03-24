@@ -1,0 +1,44 @@
+---
+pcx_content_type: navigation
+title: RtkDebuggerToggle
+description: API reference for RtkDebuggerToggle component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkDebuggerToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkDebuggerToggle />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkDebuggerToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkDebuggerToggle
+      meeting={meeting}
+      size="md"
+      variant="button"
+    />
+  );
+}
+```
+

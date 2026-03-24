@@ -1,0 +1,12 @@
+name: Dynamic Workers
+
+entry:
+  title: Dynamic Workers
+  url: /dynamic-workers/
+  group: Developer platform
+  additional_groups: [AI]
+
+meta:
+  title: Cloudflare Dynamic Workers docs
+  description: Spin up isolated Workers on demand to execute code
+  author: "@cloudflare"

@@ -1,0 +1,44 @@
+---
+pcx_content_type: navigation
+title: rtk-notifications
+description: API reference for rtk-notifications component (Web Components (HTML) Library)
+---
+A component which handles notifications.
+ You can configure which notifications you want to see and which ones you want to hear.
+ There are also certain limits which you can set as well.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-notifications></rtk-notifications>
+```
+
+### With Properties
+
+```html
+<rtk-notifications
+ size="md">
+</rtk-notifications>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-notifications");
+
+  el.meeting= meeting
+</script>
+```

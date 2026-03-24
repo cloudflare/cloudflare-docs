@@ -1,0 +1,49 @@
+---
+pcx_content_type: navigation
+title: RtkRecordingToggle
+description: API reference for RtkRecordingToggle component (React Library)
+---
+A button which toggles recording state of a meeting.
+ Only a privileged user can perform this action,
+ thus the button will not be visible for participants
+ who don't have the permission to record a meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `disabled` | `boolean` | ✅ | - | Disable the button |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkRecordingToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkRecordingToggle />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkRecordingToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkRecordingToggle
+      disabled={true}
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

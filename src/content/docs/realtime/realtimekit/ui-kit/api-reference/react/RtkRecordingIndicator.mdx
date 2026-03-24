@@ -1,0 +1,44 @@
+---
+pcx_content_type: navigation
+title: RtkRecordingIndicator
+description: API reference for RtkRecordingIndicator component (React Library)
+---
+A component which indicates the recording status of a meeting.
+ It will not render anything if no recording is taking place.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkRecordingIndicator } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkRecordingIndicator />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkRecordingIndicator } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkRecordingIndicator
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

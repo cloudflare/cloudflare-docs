@@ -174,6 +174,26 @@ API values: `"off"`, `"essentially_off"`, `"under_attack"`.
 
 </Details>
 
+## Markdown for Agents
+
+[Markdown for Agents](/fundamentals/reference/markdown-for-agents/) automatically converts HTML to Markdown for requests that use content negotiation headers (`Accept: text/markdown`).
+
+Use this setting to turn on or off Markdown for Agents for matching requests.
+
+<Details header="API information">
+
+API configuration property name: `"content_converter"` (boolean).
+
+```json title="API configuration example"
+"action_parameters": {
+  "content_converter": true
+}
+```
+
+<Render file="configuration-rule-link-to-examples" product="rules" />
+
+</Details>
+
 ## Opportunistic Encryption
 
 [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) allows browsers to access HTTP URIs over an encrypted TLS channel.

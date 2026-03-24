@@ -1,0 +1,38 @@
+---
+pcx_content_type: navigation
+title: rtk-draft-attachment-view
+description: API reference for rtk-draft-attachment-view component (Web Components (HTML) Library)
+---
+A component which renders the draft attachment to send
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `attachment` | `{     type: 'image' \| 'file';     file: File;   }` | ✅ | - | Attachment to display |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-draft-attachment-view></rtk-draft-attachment-view>
+```
+
+### With Properties
+
+```html
+<rtk-draft-attachment-view>
+</rtk-draft-attachment-view>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-draft-attachment-view");
+
+  el.attachment= {};
+</script>
+```

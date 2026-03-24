@@ -1,0 +1,12 @@
+id: QV4kcR
+name: Notifications
+
+entry:
+  title: Notifications
+  group: Core platform
+  url: /notifications/
+
+meta:
+  title: Cloudflare Notifications docs
+  description: Define what you want to be notified about and how
+  author: "@cloudflare"

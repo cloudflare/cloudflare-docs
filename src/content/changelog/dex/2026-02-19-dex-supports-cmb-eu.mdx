@@ -1,0 +1,16 @@
+---
+title: DEX Supports EU Customer Metadata Boundary
+description: Digital Experience Monitoring now fully supports the EU Customer Metadata Boundary
+date: 2026-02-19
+
+---
+
+[Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) provides visibility into [WARP](/warp-client/) device connectivity and performance to any internal or external application.
+
+Now, all DEX logs are fully compatible with Cloudflare's [Customer Metadata Boundary](/data-localization/metadata-boundary/) (CMB) setting for the 'EU' (European Union), which ensures that DEX logs will not be stored outside the 'EU' when the option is configured.
+
+If a Cloudflare One customer using DEX enables CMB 'EU', they will not see any DEX data in the Cloudflare One dashboard. Customers can ingest DEX data via [LogPush](/logs/logpush/), and build their own analytics and dashboards.
+
+If a customer enables CMB in their account, they will see the following message in the Digital Experience dashboard: "DEX data is unavailable because Customer Metadata Boundary configuration is on. Use Cloudflare LogPush to export DEX datasets."
+
+![Digital Experience Monitoring message when Customer Metadata Boundary for the EU is enabled](~/assets/images/changelog/dex/dex_supports_cmb.png)

@@ -26,12 +26,7 @@ We recommend locking down your origin with an Access Control List (ACL) which on
 Actions:
 
 - Block: Ensures that an IP address will never be allowed to access your site.
-- CAPTCHA Challenge: Rules will be shown a CAPTCHA before allowed access.
-- Javascript Challenge: Rules will be shown a five second javascript confirmation.
+- Non-Interactive Challenge: Visitors will be shown a non-interactive challenge before allowed access.
+- Interactive Challenge: Visitors will be shown an interactive challenge before allowed access.
 - Allowlist: Ensures that an IP address will never be blocked from accessing your site. This supersedes any Cloudflare security profile.
-
-:::note
-
-Challenge Passage timeout applies to IP reputation, IUAM mode and user IP Firewall (CAPTCHA or JS Challenge): [cf_clearance cookie](/fundamentals/reference/policies-compliances/cloudflare-cookies/#additional-cookies-used-by-the-challenge-platform) is set with `Max-age=Challenge Passage`.
-:::
 

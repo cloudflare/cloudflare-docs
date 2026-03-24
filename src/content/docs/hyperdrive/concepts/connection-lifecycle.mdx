@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { TypeScriptExample } from "~/components";
+
 Understanding how connections work between Workers, Hyperdrive, and your origin database is essential for building efficient applications with Hyperdrive.
 
 By maintaining a connection pool to your database within Cloudflare's network, Hyperdrive reduces seven round-trips to your database before you can even send a query: the TCP handshake (1x), TLS negotiation (3x), and database authentication (3x).
@@ -41,7 +43,7 @@ In a Cloudflare Worker, database client connections within the Worker are only k
 
 When your Worker finishes processing a request, the database client is automatically garbage collected and the edge connection to Hyperdrive is cleaned up. Hyperdrive keeps the underlying connection to your origin database open in its pool for reuse.
 
-While garbage collection handles cleanup, it is best practice to explicitly close your database client by calling `.end()` via [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil). This ensures the client connection is closed cleanly after the response is sent, without blocking the response to the user:
+You do **not** need to call `client.end()`, `sql.end()`, `connection.end()` (or similar) to clean up database clients. Workers-to-Hyperdrive connections are automatically cleaned up when the request or invocation ends, including when a [Workflow](/workflows/) or [Queue consumer](/queues/) completes, or when a [Durable Object](/durable-objects/) hibernates or is evicted when idle.
 
 ```ts
 import { Client } from "pg";
@@ -55,20 +57,50 @@ export default {
 
 		const result = await client.query("SELECT * FROM pg_tables");
 
-		// Signal Hyperdrive that this client is done. The underlying
-		// pooled connection to your database remains open for reuse.
-		ctx.waitUntil(client.end());
-
+		// No need to call client.end() — Hyperdrive automatically cleans
+		// up the client connection when the request ends. The underlying
+		// pooled connection to your origin database remains open for reuse.
 		return Response.json(result.rows);
 	},
 } satisfies ExportedHandler<Env>;
 ```
 
-:::note
+:::note[Create database clients inside your handlers]
 
-Calling `.end()` on the client only closes the local client connection to Hyperdrive at the edge. It does **not** close the pooled connection to your origin database — Hyperdrive manages those connections and keeps them available for future requests.
+You should always create database clients inside your request handlers (`fetch`, `queue`, and similar), not in the global scope. Workers do not allow [I/O across requests](/workers/runtime-apis/bindings/#making-changes-to-bindings), and Hyperdrive's distributed connection pooling already solves for connection startup latency. Using a driver-level pool (such as `new Pool()` or `createPool()`) in the global script scope will leave you with stale connections that result in failed queries and hard errors.
 
 :::
+
+Do not create database clients or connection pools in the global scope. Instead, create a new client inside each handler invocation — Hyperdrive's connection pool ensures this is fast:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { Client } from "pg";
+
+// 🔴 Bad: Client created in the global scope persists across requests.
+// Workers do not allow I/O across request contexts, so this client
+// becomes stale and subsequent queries will throw hard errors.
+const globalClient = new Client({
+	connectionString: env.HYPERDRIVE.connectionString,
+});
+await globalClient.connect();
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// ✅ Good: Client created inside the handler, scoped to this request.
+		// Hyperdrive pools the underlying connection to your origin database,
+		// so creating a new client per request is fast and reliable.
+		const client = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
+		});
+		await client.connect();
+
+		const result = await client.query("SELECT * FROM pg_tables");
+		return Response.json(result.rows);
+	},
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
 
 ## Connection lifecycle considerations
 

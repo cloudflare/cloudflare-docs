@@ -18,17 +18,17 @@ Runtime does not update time until I/O events take place. This means that some s
 
 The Cloudflare Workers team is exploring security measures that would allow exposing time lengths at millisecond-level granularity in these cases.
 
-### Trace context propagation not yet supported
+### Trace context propagation
 
-Currently, Workers tracing does not propagate trace IDs to different platforms or accept trace IDs from other platforms.
+When exporting traces to external platforms, trace IDs are not propagated. This means traces from your Workers won't link with traces from other services in your observability tools.
 
-This means that spans from Workers will not be nested within traces from services that call Workers (or vice versa).
+We're working on automatic trace context propagation using [W3C Trace Context standards](https://www.w3.org/TR/trace-context/), which will enable complete end-to-end visibility across your existing tools and services.
 
-Ideally, trace context can flow across service boundaries and automatically link spans together to create complete, end-to-end visibility.
-When fully implemented, our automatic trace context propagation will follow [W3C standards](https://www.w3.org/TR/trace-context/) to ensure compatibility across your existing tools and services.
-This will allow for traces to include spans from both Workers and other services.
+### Service bindings and Durable Objects appear as separate traces
 
-Without trace context propagation, calls to separate Workers and to Durable Objects create separate traces, rather than nested spans.
+Calls to other Workers via service bindings or to Durable Objects create separate traces rather than nested spans. This means you'll see multiple independent traces in your dashboard instead of a single unified trace showing the full request flow.
+
+We're working on connecting these traces automatically.
 
 ### Incomplete spans attributes
 

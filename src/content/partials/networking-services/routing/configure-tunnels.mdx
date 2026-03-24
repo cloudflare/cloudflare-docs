@@ -22,13 +22,13 @@ params:
 
 import { AnchorHeading, APIRequest, CURL, DashButton, Details, GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
-Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Shortly after your onboarding kickoff call, Cloudflare will assign two Cloudflare endpoint addresses that you can use as the tunnel destinations on your network location's routers/endpoints.
+Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Cloudflare assigns two endpoint addresses to your account that you can use as the tunnel destinations on your network location's routers/endpoints. You can find these addresses in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 
 ## Before you begin
 
 Before creating a tunnel, make sure you have the following information:
 
-- **Cloudflare endpoint addresses**: Provided by Cloudflare after your onboarding kickoff call.{ props.magicWord === "Magic Transit" && (<> Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information.</>)}
+- **Cloudflare endpoint addresses**: The anycast IP addresses assigned to your account. You can find them in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 - **Customer endpoint IP**: A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf (typically provided by your ISP). Not required if using [Cloudflare Network Interconnect](/network-interconnect/) or for <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (unless your router uses an <GlossaryTooltip term="Internet key exchange (IKE)">IKE</GlossaryTooltip> ID of type `ID_IPV4_ADDR`).
 - **Interface address**: A `/31` (recommended) or `/30` subnet from RFC 1918 private IP space (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) or `169.254.240.0/20`{props.ipRange}.
 
@@ -80,20 +80,20 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 	file="icmp-mfirewall"
 	product="networking-services"
 	params={{
-		mFirewallName: "Magic Firewall rules",
-		mFirewallURL: "/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks"
+		mFirewallName: "Cloudflare Network Firewall rules",
+		mFirewallURL: "/cloudflare-network-firewall/about/ruleset-logic/#cloudflare-network-firewall-rules-and-magic-transit-endpoint-health-checks"
 	}}
 	/>
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
-{ props.magicWord === "WAN Tunnels" && (
+{/* Dashboard steps for CF1 Cloudflare WAN (Cloudflare One dashboard) */}
+{ props.magicWord === "CF1 Cloudflare WAN" && (
 	<>
 	<Markdown
 	text={`
 	1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
-	2. Go to **Connectors** > **WAN Tunnels**, and select **Create**.
+	2. Go to **Connectors** > **Cloudflare WAN**, and select **Create**.
 	3. On the **Add Tunnel** page, choose either a **GRE tunnel** or **IPsec tunnel**.
 	`}
 	inline={false}
@@ -102,8 +102,8 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 )
 }
 
-{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
-{ props.magicWord !== "WAN Tunnels" && (
+{/* Dashboard steps for Cloudflare WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "CF1 Cloudflare WAN" && (
 	<>
 	<Markdown
 	text={`
@@ -135,7 +135,7 @@ Expand the section below for your tunnel type to complete the configuration:
 <Details header="GRE tunnel">
 
 7. In **Customer GRE endpoint**, enter your router's public IP address. You do not need this value if you use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare provides it.
-8. In **Cloudflare GRE endpoint**, enter the anycast address you received from your account team.{ props.magicWord === "Magic Transit" && (<> Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information.</>)}
+8. In **Cloudflare GRE endpoint**, enter one of the anycast addresses assigned to your account. You can find them in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 9. _(Optional)_ Leave the default values for **TTL** and **MTU**, or customize them for your network.
 10. _(Optional)_ Configure health check settings. Expand the following to learn more about each option:
 
@@ -152,7 +152,7 @@ Expand the section below for your tunnel type to complete the configuration:
     />
 
 11. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
-{ props.magicWord !== "Magic Transit" && (<Markdown text={`12. (_Optional_) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
+{ props.magicWord !== "Magic Transit" && (<Markdown text={`12. (_Optional_) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "13" : "12"}. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.`} inline={false} />
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "14" : "13"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "15" : "14"}. (_Optional_) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. <br /> BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
@@ -163,7 +163,7 @@ Expand the section below for your tunnel type to complete the configuration:
 <Details header="IPsec tunnel">
 
 7. _(Optional)_ In **Customer endpoint**, enter your router's public IP address. This value is only required if your router uses an IKE ID of type `ID_IPV4_ADDR`.
-8. In **Cloudflare endpoint**, enter the anycast address you received from your account team.{ props.magicWord === "Magic Transit" && (<> Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information.</>)}
+8. In **Cloudflare endpoint**, enter one of the anycast addresses assigned to your account. You can find them in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 9. _(Optional)_ Configure health check settings. Expand the following to learn more about each option:
 
     <Render
@@ -198,7 +198,7 @@ Expand the section below for your tunnel type to complete the configuration:
     4. Select **Add tunnels**.
 
 12. _(Optional)_ Enable **Replay protection** if you have devices that do not support disabling it. Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information.
-{ props.magicWord !== "Magic Transit" && (<Markdown text={`13. (_Optional_) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
+{ props.magicWord !== "Magic Transit" && (<Markdown text={`13. (_Optional_) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "14" : "13"}. To add multiple tunnels, select **Add IPsec tunnel** for each new tunnel.`} inline={false} />
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "15" : "14"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "16" : "15"}. (_Optional_) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. This feature requires <a href="${props.unifiedRoutingURL}">Unified Routing (beta)</a>. <br /> BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
@@ -460,11 +460,11 @@ To check for tunnel health, Cloudflare sends a <a href={props.tunnelHealthChecks
 
 {/*
 	Conditional logic explanation:
-	- Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Magic WAN"
-	- Magic WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
+	- Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Cloudflare WAN"
+	- Cloudflare WAN/CF1 Cloudflare WAN pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
 	This avoids saying "Magic Transit defaults to...Magic Transit" on the Magic Transit page.
 */}
-Cloudflare defaults to {props.magicWord === "Magic Transit" ? "unidirectional" : "bidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic Transit (direct server return)" : props.productName}, and {props.magicWord === "Magic Transit" ? "bidirectional" : "unidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic WAN" : "Magic Transit (direct server return)"}. However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
+Cloudflare defaults to {props.magicWord === "Magic Transit" ? "unidirectional" : "bidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic Transit (direct server return)" : props.productName}, and {props.magicWord === "Magic Transit" ? "bidirectional" : "unidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Cloudflare WAN" : "Magic Transit (direct server return)"}. However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
 
 { props.magicWord === "Magic Transit" && (
   <>

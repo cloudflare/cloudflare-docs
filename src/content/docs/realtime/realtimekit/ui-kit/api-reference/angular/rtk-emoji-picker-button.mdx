@@ -1,0 +1,31 @@
+---
+pcx_content_type: navigation
+title: rtk-emoji-picker-button
+description: API reference for rtk-emoji-picker-button component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `isActive` | `boolean` | ✅ | - | Active state indicator |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-emoji-picker-button></rtk-emoji-picker-button>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-emoji-picker-button
+ [isActive]="true">
+</rtk-emoji-picker-button>
+```
+

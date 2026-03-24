@@ -1,0 +1,42 @@
+---
+pcx_content_type: how-to
+title: Configure hardware Appliance
+sidebar:
+  order: 3
+  label: Configure hardware Appliance
+---
+
+import { Render } from "~/components";
+
+<Render file="mconn/configure-connectors"
+	product="networking-services"
+	params={{
+	magicWord: "hardware",
+	productName: "Cloudflare One Appliance",
+	maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
+	dashName: "Cloudflare WAN",
+	sfpURL: "/cloudflare-wan/configuration/appliance/configure-hardware-appliance/sfp-port-information/",
+	wan: "refers to the physical Cloudflare One Appliance Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Appliance. <br/> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. For details on hardware support, refer to [SFP+ port information](/cloudflare-wan/configuration/appliance/configure-hardware-appliance/sfp-port-information/).",
+	lan: "refers to the physical Cloudflare One Appliance Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Appliance. <br/> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. For details on hardware support, refer to [SFP+ port information](/cloudflare-wan/configuration/appliance/configure-hardware-appliance/sfp-port-information/).",
+	noConnectorShows: "You need to have bought an Appliance already for it to appear here. Refer to [Prerequisites](#prerequisites) if no Appliance appears in this list.",
+	networkSegmentationURL: "/cloudflare-wan/configuration/appliance/network-options/network-segmentation/",
+	dhcpServerURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-server/",
+  dhcpRelayURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-relay/",
+  reserveIpAddressesURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-static-address-reservation/",
+	shippedLanguage: "The Cloudflare One Appliance is shipped to you deactivated",
+	hardSoftConn: "You need to deploy two Appliances in your premises before you can set up a site in high availability.",
+	hcConfigsURL: "/cloudflare-wan/configuration/appliance/reference/#high-availability-configurations",
+	ipsecTunnelsRefURL: "/cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels",
+	trafficSteeringURL: "/cloudflare-wan/reference/traffic-steering/",
+	vlanIdURL: "/cloudflare-wan/configuration/appliance/reference/#vlan-id",
+	healthCheckFrequencyURL: "/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/",
+	routedSubnetsURL: "/cloudflare-wan/configuration/appliance/network-options/routed-subnets/",
+	interruptWindowURL: "/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window/",
+	tunnelHealthChecksURL: "/cloudflare-wan/reference/tunnel-health-checks/",
+	wanSettingsURL: "/cloudflare-wan/configuration/appliance/reference/#wan-settings",
+	sitesURL: "/cloudflare-wan/configuration/common-settings/sites/",
+	networkOptionsURL: "/cloudflare-wan/configuration/appliance/network-options/",
+  maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
+  referenceInformationURL: "/cloudflare-wan/configuration/appliance/reference/",
+  troubleshootingURL: "/cloudflare-wan/configuration/appliance/troubleshooting/"
+	}} />

@@ -8,7 +8,6 @@ head:
     content: Set up Dedicated CDN Egress IPs
 ---
 
-
 import { APIRequest, Render } from "~/components";
 
 You can use the [Edit Zone Settings API endpoint](/api/resources/zones/subresources/settings/methods/edit/) to set up Dedicated CDN Egress IPs (formerly known as Aegis). If you are not familiar with how Cloudflare API works, refer to [Fundamentals](/fundamentals/api/).
@@ -30,31 +29,58 @@ You must allowlist the IP addresses from this pool in your infrastructure before
 
 1. Contact your account team to get the ID for your dedicated egress pool.
 2. Make a `PATCH` request to the [Edit Zone Setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint:
+
 - Specify `aegis` as the setting ID in the URL.
-- In the request body, set `enabled` to `true` and use the ID from the previous step as `pool_id`.
+- In the request body, set `enabled` to `true` and use the ID from the previous step as the `pool_id` value.
 
 <APIRequest
-  path="/zones/{zone_id}/settings/{setting_id}"
-  method="PATCH"
-  json={{
-		  "id": "aegis",
-			"value": {
-				"enabled": true,
-				"pool_id": "<YOUR_EGRESS_POOL_ID>",
-				},
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="PATCH"
+	json={{
+		id: "aegis",
+		value: {
+			enabled: true,
+			pool_id: "<EGRESS_POOL_ID>",
+		},
 	}}
 	parameters={{
-    setting_id: "aegis",
-  }}
+		setting_id: "aegis",
+	}}
+/>
+
+## Check DCEI status for a zone
+
+<APIRequest
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="GET"
+	parameters={{
+		setting_id: "aegis",
+	}}
+/>
+
+## Turn off DCEI for a zone
+
+<APIRequest
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="PATCH"
+	json={{
+		id: "aegis",
+		value: {
+			enabled: false,
+		},
+	}}
+	parameters={{
+		setting_id: "aegis",
+	}}
 />
 
 ## Check your IPs
 
 <Render
-  file="check-leased-ips"
+	file="check-leased-ips"
 	product="byoip"
 	params={{
-		product: "dedicated IPs for CDN egress"
+		product: "dedicated IPs for CDN egress",
 	}}
 />
 

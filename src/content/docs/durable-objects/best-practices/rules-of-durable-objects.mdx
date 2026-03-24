@@ -482,6 +482,17 @@ Refer to [Access Durable Objects storage](/durable-objects/best-practices/access
 
 Use `blockConcurrencyWhile()` in the constructor to run migrations and initialize state before any requests are processed. This ensures your schema is ready and prevents race conditions during initialization.
 
+:::note
+`PRAGMA user_version` is not supported by Durable Objects SQLite storage. You must use an alternative approach to track your schema version.
+:::
+
+For production applications, use a migration library that handles version tracking and execution automatically:
+
+- [`durable-utils`](https://github.com/lambrospetrou/durable-utils#sqlite-schema-migrations) — provides a `SQLSchemaMigrations` class that tracks executed migrations both in memory and in storage.
+- [`@cloudflare/actors` storage utilities](https://github.com/cloudflare/actors/blob/main/packages/storage/src/sql-schema-migrations.ts) — a reference implementation of the same pattern used by the Cloudflare Actors framework.
+
+If you prefer not to use a library, you can track schema versions manually using a `_sql_schema_migrations` table. The following example demonstrates this approach:
+
 <TypeScriptExample filename="index.ts">
 ```ts
 import { DurableObject } from "cloudflare:workers";
@@ -501,11 +512,21 @@ export class ChatRoom extends DurableObject<Env> {
 	}
 
 	private async migrate() {
-		// Check current schema version
+		// Create the migrations tracking table if it does not exist
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS _sql_schema_migrations (
+				id INTEGER PRIMARY KEY,
+				applied_at TEXT NOT NULL DEFAULT (datetime('now'))
+			);
+		`);
+
+		// Determine the current schema version
 		const version =
 			this.ctx.storage.sql
-				.exec<{ version: number }>("PRAGMA user_version")
-				.one()?.version ?? 0;
+				.exec<{ version: number }>(
+					"SELECT COALESCE(MAX(id), 0) as version FROM _sql_schema_migrations",
+				)
+				.one().version;
 
 		if (version < 1) {
 			this.ctx.storage.sql.exec(`
@@ -516,7 +537,7 @@ export class ChatRoom extends DurableObject<Env> {
 					created_at INTEGER NOT NULL
 				);
 				CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at);
-				PRAGMA user_version = 1;
+				INSERT INTO _sql_schema_migrations (id) VALUES (1);
 			`);
 		}
 
@@ -524,7 +545,7 @@ export class ChatRoom extends DurableObject<Env> {
 			// Future migration: add a new column
 			this.ctx.storage.sql.exec(`
 				ALTER TABLE messages ADD COLUMN edited_at INTEGER;
-				PRAGMA user_version = 2;
+				INSERT INTO _sql_schema_migrations (id) VALUES (2);
 			`);
 		}
 	}
@@ -1389,7 +1410,7 @@ export class Subscription extends DurableObject<Env> {
 
 ### Clean up storage with `deleteAll()`
 
-To fully clear a Durable Object's storage, call `deleteAll()`. Simply deleting individual keys or dropping tables is not sufficient, as some internal metadata may remain. If you have alarms set, delete those first.
+To fully clear a Durable Object's storage, call `deleteAll()`. Simply deleting individual keys or dropping tables is not sufficient, as some internal metadata may remain. Workers with a compatibility date before [2026-02-24](/workers/configuration/compatibility-flags/#durable-object-deleteall-deletes-alarms) and an alarm set should delete the alarm first with `deleteAlarm()`.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -1401,10 +1422,8 @@ export interface Env {
 
 export class ChatRoom extends DurableObject<Env> {
 	async clearStorage() {
-		// If you have an alarm set, delete it first
-		await this.ctx.storage.deleteAlarm();
 
-		// Delete all storage
+		// Delete all storage, including any set alarm
 		await this.ctx.storage.deleteAll();
 
 		// The Durable Object instance still exists, but with empty storage
@@ -1479,8 +1498,8 @@ Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. The integrati
 
 <TypeScriptExample filename="test/chat-room.test.ts">
 ```ts
+import { env } from "cloudflare:workers";
 import {
-	env,
 	runInDurableObject,
 	runDurableObjectAlarm,
 } from "cloudflare:test";
@@ -1524,16 +1543,15 @@ describe("ChatRoom", () => {
 Configure Vitest in your `vitest.config.ts`:
 
 ```ts
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
 
-export default defineWorkersConfig({
-	test: {
-		poolOptions: {
-			workers: {
-				wrangler: { configPath: "./wrangler.jsonc" },
-			},
-		},
-	},
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			wrangler: { configPath: "./wrangler.jsonc" },
+		}),
+	],
 });
 ```
 
@@ -1553,3 +1571,8 @@ For schema changes, run migrations in the constructor using `blockConcurrencyWhi
 </WranglerConfig>
 
 Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) for more details on class migrations, and [Testing with Durable Objects](/durable-objects/examples/testing-with-durable-objects/) for comprehensive testing patterns including SQLite queries and alarm testing.
+
+## Related resources
+
+- [Workers Best Practices](/workers/best-practices/workers-best-practices/): code patterns for request handling, observability, and security that apply to the Workers calling your Durable Objects.
+- [Rules of Workflows](/workflows/build/rules-of-workflows/): best practices for durable, multi-step Workflows — useful when combining Workflows with Durable Objects for long-running orchestration.

@@ -1,0 +1,18 @@
+---
+pcx_content_type: navigation
+title: Locally-managed tunnels
+sidebar:
+  order: 1
+---
+
+import { DirectoryListing, Render } from "~/components";
+
+<Render
+	file="tunnel/locally-managed/overview"
+	product="cloudflare-one"
+	params={{
+		remoteTunnelURL: "/tunnel/setup/",
+	}}
+/>
+
+<DirectoryListing />

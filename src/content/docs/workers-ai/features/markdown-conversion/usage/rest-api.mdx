@@ -1,0 +1,102 @@
+---
+title: REST API
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+import { Type, MetaInfo } from "~/components";
+
+You can also use the Markdown Conversion REST API to convert your documents into Markdown.
+
+## Prerequisite: Get Workers AI API token
+
+To use the Markdown Conversion service via the REST API, you need an API token with permissions for the [Workers AI](/workers-ai/) REST API. Refer to [Get started with the Workers AI REST API](/workers-ai/get-started/rest-api/) for instructions on obtaining an API token with the correct permissions.
+
+## Transform
+
+This endpoint lets you convert any file given to us into markdown.
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown \
+  -X POST \
+  -H 'Authorization: Bearer {API_TOKEN}' \
+  -F "files=@cat.jpeg" \
+  -F "files=@somatosensory.pdf" \
+  -F 'conversionOptions={ ... }'
+```
+
+:::note
+
+You can get your `ACCOUNT_ID` by going to [Workers & Pages on the dashboard](/fundamentals/account/find-account-and-zone-ids/#find-account-id-workers-and-pages).
+
+:::
+
+### Parameters
+
+`files` <Type text="File[]" /> <MetaInfo text="required" />
+
+The files you want to convert.
+
+`conversionOptions` <Type text="ConversionOptions" /> <MetaInfo text="optional" />
+
+Options that allow you to control how your files are converted. Refer to [Conversion Options](/workers-ai/features/markdown-conversion/conversion-options/) for further details.
+
+### Response
+
+```json
+{
+	"success": true,
+	"result": [
+		{
+			"id": "...",
+			"name": "good.html",
+			"mimeType": "text/html",
+			"format": "markdown",
+			"tokens": 49,
+			"data": "# Image Embedded with a Data URI\n\nThis _image_ is directly encoded in the HTML:\n\n\n\nAn image description\n\n \n\nIt's a tiny 5x5 pixel PNG, scaled up to 50x50px.\n\n"
+		},
+		{
+			"id": "...",
+			"name": "bad.pdf",
+			"mimeType": "application/pdf",
+			"format": "error",
+			"error": "Some error that prevented this image from being converted"
+		}
+	]
+}
+```
+
+## Supported
+
+This endpoint lets you programmatically retrieve the full set of rich formats that are supported for conversion.
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown/supported \
+  -H 'Authorization: Bearer {API_TOKEN}'
+```
+
+:::note
+
+You can get your `ACCOUNT_ID` by going to [Workers & Pages on the dashboard](/fundamentals/account/find-account-and-zone-ids/#find-account-id-workers-and-pages).
+
+:::
+
+### Response
+
+```json
+{
+  "success": true,
+  "result": [
+    {
+      "extension": ".html",
+      "mimeType": "text/html"
+    },
+    {
+      "extension": ".pdf",
+      "mimeType": "application/pdf"
+    },
+    ...
+  ]
+}
+```

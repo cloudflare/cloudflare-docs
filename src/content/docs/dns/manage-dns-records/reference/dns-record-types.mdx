@@ -27,10 +27,8 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 These records include the following fields:
 
-- **Name**: A subdomain or the zone apex (`@`), which must:
-  - Be composed of labels of 63 characters or less (`label1.label2.label3`), where the fully qualified domain name (`label1.label2.label3.example.com`) does not exceed 255 characters.
-  - Start with a letter and end with a letter or digit
-  - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
+
+<Render file="records-name-field" product="dns" />
 - **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
 
   :::note
@@ -65,7 +63,7 @@ When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/c
 		proxied: false,
 	}}
 	code={{
-		mark: [8, 10],
+		mark: [5, 7],
 	}}
 />
 
@@ -102,10 +100,8 @@ When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/c
 
 These records include the following fields:
 
-- **Name**: A subdomain or the zone apex (`@`), which must:
-  - Be composed of labels of 63 characters or less (`label1.label2.label3`), where the fully qualified domain name (`label1.label2.label3.example.com`) does not exceed 255 characters.
-  - Start with a letter and end with a letter or digit
-  - Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
+
+<Render file="records-name-field" product="dns" />
 - **Target**: The hostname where traffic should be directed (`example.com`).
 - **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
@@ -148,7 +144,7 @@ In this example, a query for TXT in `abc.example.com` will **not** return the TX
 - If you encounter a CNAME record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration. Refer to [proxying limitations](/dns/proxy-status/limitations/#proxy-eligibility) for details.
 
 :::note
-Specific CNAME record values with traffic proxied through Cloudflare will enable Orange-to-Orange (O2O) routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.
+Specific CNAME record values with traffic proxied through Cloudflare will enable O2O routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.
 :::
 
 #### Example API call
@@ -171,7 +167,7 @@ When creating CNAME records [using the API](/dns/manage-dns-records/how-to/creat
 		proxied: false,
 	}}
 	code={{
-		mark: [8, 10],
+		mark: [5, 7],
 	}}
 />
 
@@ -182,7 +178,7 @@ When creating CNAME records [using the API](/dns/manage-dns-records/how-to/creat
 		"zone_id": "<ZONE_ID>",
 		"zone_name": "example.com",
 		"name": "www.example.com",
-		"type": "A",
+		"type": "CNAME",
 		"content": "www.another-example.com",
 		"proxiable": true,
 		"proxied": false,

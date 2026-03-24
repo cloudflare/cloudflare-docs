@@ -48,3 +48,9 @@ Files must be less than 30 GB, and content should be encoded and uploaded in the
   - 60 or fewer frames per second
 - Closed GOP (_Only required for live streaming._)
 - Mono or Stereo audio. Stream will mix audio tracks with more than two channels down to stereo.
+
+## Frame rates
+
+Stream accepts video uploads at any frame rate. During encoding, Stream re-encodes videos for a maximum of 70 FPS playback. If the original video has a frame rate lower than 70 FPS, Stream re-encodes at the original frame rate.
+
+For variable frame rate content, Stream drops extra frames. For example, if there is more than one frame within a 1/30 second window, Stream drops the extra frames within that period.

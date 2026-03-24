@@ -277,7 +277,7 @@ Retrieve a scheduled task by its ID:
 <TypeScriptExample>
 
 ```ts
-const schedule = await this.getSchedule(scheduleId);
+const schedule = this.getSchedule(scheduleId);
 
 if (schedule) {
 	console.log(
@@ -605,26 +605,29 @@ class SmartScheduler extends Agent {
 
 ### `scheduleSchema`
 
-A Zod schema for validating parsed scheduling data:
+A Zod schema for validating parsed scheduling data. Uses a discriminated union on `when.type` so each variant only contains the fields it needs:
 
 <TypeScriptExample>
 
 ```ts
 import { scheduleSchema } from "agents";
 
-// The schema shape:
+// The schema is a discriminated union:
 // {
 //   description: string,
-//   when: {
-//     type: "scheduled" | "delayed" | "cron" | "no-schedule",
-//     date?: Date,            // for "scheduled"
-//     delayInSeconds?: number, // for "delayed"
-//     cron?: string           // for "cron"
-//   }
+//   when:
+//     | { type: "scheduled", date: string }       // ISO 8601 date string
+//     | { type: "delayed", delayInSeconds: number }
+//     | { type: "cron", cron: string }
+//     | { type: "no-schedule" }
 // }
 ```
 
 </TypeScriptExample>
+
+:::note
+Dates are returned as ISO 8601 strings (not `Date` objects) for compatibility with both Zod v3 and v4 JSON schema generation.
+:::
 
 ## Scheduling vs Queue vs Workflows
 
@@ -632,7 +635,7 @@ import { scheduleSchema } from "agents";
 | ------------------ | ------------------ | ----------------- | ------------------- |
 | **When**           | Immediately (FIFO) | Future time       | Future time         |
 | **Execution**      | Sequential         | At scheduled time | Multi-step          |
-| **Retries**        | Manual             | Manual            | Automatic           |
+| **Retries**        | Built-in           | Built-in          | Automatic           |
 | **Persistence**    | SQLite             | SQLite            | Workflow engine     |
 | **Recurring**      | No                 | Yes (cron)        | No (use scheduling) |
 | **Complex logic**  | No                 | No                | Yes                 |
@@ -665,7 +668,8 @@ Use Workflows when:
 async schedule<T>(
   when: Date | string | number,
   callback: keyof this,
-  payload?: T
+  payload?: T,
+  options?: { retry?: RetryOptions }
 ): Promise<Schedule<T>>
 ```
 
@@ -676,6 +680,7 @@ Schedule a task for future execution.
 - `when` - When to execute: `number` (seconds delay), `Date` (specific time), or `string` (cron expression)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details.
 
 **Returns:** A `Schedule` object with the task details
 
@@ -691,7 +696,8 @@ Tasks that set a callback for a method that does not exist will throw an excepti
 async scheduleEvery<T>(
   intervalSeconds: number,
   callback: keyof this,
-  payload?: T
+  payload?: T,
+  options?: { retry?: RetryOptions }
 ): Promise<Schedule<T>>
 ```
 
@@ -702,6 +708,7 @@ Schedule a task to run repeatedly at a fixed interval.
 - `intervalSeconds` - Number of seconds between executions (must be greater than 0)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details.
 
 **Returns:** A `Schedule` object with `type: "interval"`
 
@@ -715,10 +722,10 @@ Schedule a task to run repeatedly at a fixed interval.
 ### `getSchedule()`
 
 ```ts
-async getSchedule<T>(id: string): Promise<Schedule<T> | undefined>
+getSchedule<T>(id: string): Schedule<T> | undefined
 ```
 
-Get a scheduled task by ID. Returns `undefined` if not found.
+Get a scheduled task by ID. Returns `undefined` if not found. This method is synchronous.
 
 ### `getSchedules()`
 
@@ -730,7 +737,7 @@ getSchedules<T>(criteria?: {
 }): Schedule<T>[]
 ```
 
-Get scheduled tasks matching the criteria.
+Get scheduled tasks matching the criteria. This method is synchronous.
 
 ### `cancelSchedule()`
 
@@ -739,6 +746,102 @@ async cancelSchedule(id: string): Promise<boolean>
 ```
 
 Cancel a scheduled task. Returns `true` if cancelled, `false` if not found.
+
+### `keepAlive()`
+
+```ts
+async keepAlive(): Promise<() => void>
+```
+
+Prevent the Durable Object from being evicted due to inactivity by creating a 30-second heartbeat schedule. Returns a disposer function that cancels the heartbeat when called. The disposer is idempotent — calling it multiple times is safe.
+
+Always call the disposer when the work is done — otherwise the heartbeat continues indefinitely.
+
+<TypeScriptExample>
+
+```ts
+const dispose = await this.keepAlive();
+try {
+	// Long-running work that must not be interrupted
+	const result = await longRunningComputation();
+	await sendResults(result);
+} finally {
+	dispose();
+}
+```
+
+</TypeScriptExample>
+
+### `keepAliveWhile()`
+
+```ts
+async keepAliveWhile<T>(fn: () => Promise<T>): Promise<T>
+```
+
+Run an async function while keeping the Durable Object alive. The heartbeat is automatically started before the function runs and stopped when it completes (whether it succeeds or throws). Returns the value returned by the function.
+
+This is the recommended way to use `keepAlive` — it guarantees cleanup.
+
+<TypeScriptExample>
+
+```ts
+const result = await this.keepAliveWhile(async () => {
+	const data = await longRunningComputation();
+	return data;
+});
+```
+
+</TypeScriptExample>
+
+## Keeping the agent alive
+
+Durable Objects are evicted after a period of inactivity (typically 70-140 seconds with no incoming requests, WebSocket messages, or alarms). During long-running operations — streaming LLM responses, waiting on external APIs, running multi-step computations — the agent can be evicted mid-flight.
+
+`keepAlive()` prevents this by creating a 30-second heartbeat schedule. The internal heartbeat callback is a no-op — the alarm firing itself is what resets the inactivity timer. Because it uses the scheduling system:
+
+- The heartbeat does not conflict with your own schedules (the scheduling system multiplexes through a single alarm slot)
+- The heartbeat shows up in `getSchedules()` if you need to inspect it
+- Multiple concurrent `keepAlive()` calls each get their own schedule, so they do not interfere with each other
+
+### Multiple concurrent callers
+
+Each `keepAlive()` call returns an independent disposer:
+
+<TypeScriptExample>
+
+```ts
+const dispose1 = await this.keepAlive();
+const dispose2 = await this.keepAlive();
+
+// Both heartbeats are active
+dispose1(); // Only cancels the first heartbeat
+// Agent is still alive via dispose2's heartbeat
+
+dispose2(); // Now the agent can go idle
+```
+
+</TypeScriptExample>
+
+### AIChatAgent
+
+`AIChatAgent` automatically calls `keepAlive()` during streaming responses. You do not need to add it yourself when using `AIChatAgent` — every LLM stream is protected from idle eviction by default.
+
+### When to use keepAlive
+
+| Scenario                                    | Use keepAlive?                         |
+| ------------------------------------------- | -------------------------------------- |
+| Streaming LLM responses via `AIChatAgent`   | No — already built in                  |
+| Long-running computation in a custom Agent  | Yes                                    |
+| Waiting on a slow external API call         | Yes                                    |
+| Multi-step tool execution                   | Yes                                    |
+| Short request-response handlers             | No — not needed                        |
+| Background work via scheduling or workflows | No — alarms already keep the DO active |
+
+:::note
+
+`keepAlive()` is marked `@experimental` and may change between releases.
+
+:::
 
 ## Limits
 

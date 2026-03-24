@@ -114,20 +114,9 @@ The instance will be moved from **Active** to **Hidden** within the finding. If 
 
 In addition to detecting and surfacing misconfigurations or issues with SaaS and cloud applications, CASB can also remediate findings directly in applications.
 
-CASB supports remediation for findings from the [Microsoft 365 integration](/cloudflare-one/integrations/cloud-and-saas/microsoft-365/):
-
-<Details header="Supported CASB findings for remediation">
-
-- Microsoft: File publicly accessible with edit access
-- Microsoft: File publicly accessible with view access
-- Microsoft: File publicly accessible with edit access with DLP Profile match
-- Microsoft: File publicly accessible with view access with DLP Profile match
-
-</Details>
-
 ### Configure remediation permissions
 
-Before you can remediate findings, [add a new integration](/cloudflare-one/integrations/cloud-and-saas/#add-an-integration) and choose _Read-Write mode_ during setup. Alternatively, you can update an existing integration:
+Before you can remediate findings, [add a new integration](/cloudflare-one/integrations/cloud-and-saas/) and choose _Read-Write mode_ during setup. Alternatively, you can update an existing integration:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Cloud & SaaS findings** > **Integrations**.
 2. Choose your integration, then select **Configure**.
@@ -182,7 +171,7 @@ CASB supports creating a Gateway policy for findings from the [Google Workspace 
 </Details>
 
 :::note[Before you begin]
-Ensure that you have [enabled HTTP filtering](/cloudflare-one/traffic-policies/initial-setup/http/) for your organization.
+Ensure that you have [enabled HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/) for your organization.
 :::
 
 To create a Gateway policy directly from a CASB finding:

@@ -2,13 +2,47 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 
-import { htmlToMarkdown } from "../src/util/markdown";
-
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
 	maxStaticRules: 10_000, // Usually 2_000
 	maxDynamicRules: 2_000, // Usually 100
 });
+
+/**
+ * When a redirect response is returned for an index.md request, rewrite the
+ * Location header so the agent stays in Markdown land instead of landing on
+ * an HTML page.
+ *
+ * Only rewrites relative (same-origin) Location values — external redirects
+ * (e.g. to GitHub) are left untouched because appending index.md to a
+ * non-docs URL would be nonsensical.
+ */
+function rewriteRedirectForMarkdown(
+	redirect: Response,
+	requestUrl: URL,
+): Response {
+	const location = redirect.headers.get("Location");
+	if (!location) return redirect;
+
+	try {
+		const dest = new URL(location, requestUrl.origin);
+
+		// Only rewrite same-origin redirects that point to a docs path (trailing /)
+		if (dest.origin !== requestUrl.origin) return redirect;
+		if (!dest.pathname.endsWith("/")) return redirect;
+
+		dest.pathname += "index.md";
+
+		const headers = new Headers(redirect.headers);
+		headers.set("Location", dest.pathname + dest.search + dest.hash);
+		return new Response(redirect.body, {
+			status: redirect.status,
+			headers,
+		});
+	} catch {
+		return redirect;
+	}
+}
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
@@ -23,59 +57,28 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
-		if (
-			request.url.endsWith("/index.md") ||
-			request.headers.get("accept")?.includes("text/markdown")
-		) {
-			const htmlUrl = request.url.replace("index.md", "");
-			const res = await this.env.ASSETS.fetch(htmlUrl, request);
-
-			if (res.status === 404) {
-				const redirect = await redirectsEvaluator(
-					new Request(htmlUrl, request),
-					this.env.ASSETS,
-				);
-
-				if (redirect) {
-					const location = redirect.headers.get("location");
-
-					return new Response(null, {
-						status: redirect.status,
-						headers: {
-							Location: location + "index.md",
-						},
-					});
-				}
-
-				return res;
-			}
-
-			if (
-				res.status === 200 &&
-				res.headers.get("content-type")?.startsWith("text/html")
-			) {
-				const html = await res.text();
-
-				const markdown = await htmlToMarkdown(html, request.url);
-
-				if (!markdown) {
-					return new Response("Not Found", { status: 404 });
-				}
-
-				return new Response(markdown, {
-					headers: {
-						"content-type": "text/markdown; charset=utf-8",
-						"x-robots-tag": "noindex",
-					},
-				});
-			}
-		}
+		const url = new URL(request.url);
+		const isMarkdownRequest = url.pathname.endsWith("/index.md");
 
 		try {
 			try {
-				const redirect = await redirectsEvaluator(request, this.env.ASSETS);
+				// For index.md requests, evaluate redirects against the base path
+				// (without the index.md suffix) so that redirect rules written for
+				// the HTML path (e.g. /learning-paths/ → /resources/) still fire.
+				const evalRequest = isMarkdownRequest
+					? new Request(
+							url.origin +
+								url.pathname.slice(0, -"index.md".length) +
+								url.search,
+							request,
+						)
+					: request;
+
+				const redirect = await redirectsEvaluator(evalRequest, this.env.ASSETS);
 				if (redirect) {
-					return redirect;
+					return isMarkdownRequest
+						? rewriteRedirectForMarkdown(redirect, url)
+						: redirect;
 				}
 			} catch (error) {
 				console.error("Could not evaluate redirects", error);
@@ -91,7 +94,9 @@ export default class extends WorkerEntrypoint<Env> {
 					this.env.ASSETS,
 				);
 				if (redirect) {
-					return redirect;
+					return isMarkdownRequest
+						? rewriteRedirectForMarkdown(redirect, url)
+						: redirect;
 				}
 			} catch (error) {
 				console.error(

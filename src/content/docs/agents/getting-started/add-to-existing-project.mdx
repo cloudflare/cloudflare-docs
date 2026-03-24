@@ -36,20 +36,22 @@ Create a new file for your agent (for example, `src/agents/counter.ts`):
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents";
+import { Agent, callable } from "agents";
 
-type CounterState = {
+export type CounterState = {
 	count: number;
 };
 
-export class Counter extends Agent<Env, CounterState> {
+export class CounterAgent extends Agent<Env, CounterState> {
 	initialState: CounterState = { count: 0 };
 
+	@callable()
 	increment() {
 		this.setState({ count: this.state.count + 1 });
 		return this.state.count;
 	}
 
+	@callable()
 	decrement() {
 		this.setState({ count: this.state.count - 1 });
 		return this.state.count;
@@ -69,14 +71,14 @@ Add the Durable Object binding and migration:
 {
 	"name": "my-existing-project",
 	"main": "src/index.ts",
-	"compatibility_date": "2025-01-01",
+	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 
 	"durable_objects": {
 		"bindings": [
 			{
-				"name": "Counter",
-				"class_name": "Counter",
+				"name": "CounterAgent",
+				"class_name": "CounterAgent",
 			},
 		],
 	},
@@ -84,7 +86,7 @@ Add the Durable Object binding and migration:
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": ["Counter"],
+			"new_sqlite_classes": ["CounterAgent"],
 		},
 	],
 }
@@ -94,7 +96,7 @@ Add the Durable Object binding and migration:
 
 **Key points:**
 
-- `name` in bindings becomes the property on `env` (for example, `env.Counter`)
+- `name` in bindings becomes the property on `env` (for example, `env.CounterAgent`)
 - `class_name` must exactly match your exported class name
 - `new_sqlite_classes` enables SQLite storage for state persistence
 - `nodejs_compat` flag is required for the agents package
@@ -107,12 +109,12 @@ Your agent class must be exported from your main entry point. Update your `src/i
 
 ```ts
 // Export the agent class (required for Durable Objects)
-export { Counter } from "./agents/counter";
+export { CounterAgent } from "./agents/counter";
 
 // Your existing exports...
 export default {
 	// ...
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -127,7 +129,7 @@ Choose the approach that matches your project structure:
 
 ```ts
 import { routeAgentRequest } from "agents";
-export { Counter } from "./agents/counter";
+export { CounterAgent } from "./agents/counter";
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
@@ -143,7 +145,7 @@ export default {
 
 		return new Response("Not found", { status: 404 });
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -155,7 +157,7 @@ export default {
 ```ts
 import { Hono } from "hono";
 import { agentsMiddleware } from "hono-agents";
-export { Counter } from "./agents/counter";
+export { CounterAgent } from "./agents/counter";
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -178,7 +180,7 @@ If you are serving static assets alongside agents, static assets are served firs
 
 ```ts
 import { routeAgentRequest } from "agents";
-export { Counter } from "./agents/counter";
+export { CounterAgent } from "./agents/counter";
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
@@ -191,7 +193,7 @@ export default {
 
 		return new Response("Not found", { status: 404 });
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -210,28 +212,17 @@ Configure assets in the Wrangler configuration file:
 
 </WranglerConfig>
 
-## 6. Add TypeScript types
+## 6. Generate TypeScript types
 
-You can generate types automatically from your Wrangler configuration file:
+Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/general/#types) to generate a type definition file that matches your Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
+
+Re-run `wrangler types` whenever you add or rename a binding.
 
 ```sh
-npx wrangler types env.d.ts
+npx wrangler types
 ```
 
-This creates an `env.d.ts` file with all your bindings typed. Alternatively, you can manually update your `Env` type to include the agent namespace:
-
-```ts
-import type { Counter } from "./agents/counter";
-
-interface Env {
-	// Your existing bindings
-	MY_KV: KVNamespace;
-	MY_DB: D1Database;
-
-	// Add agent bindings
-	Counter: DurableObjectNamespace<Counter>;
-}
-```
+This creates a type definition file with all your bindings typed, including your agent Durable Object namespaces. The `Agent` class defaults to using the generated `Env` type, so you do not need to pass it as a type parameter — `extends Agent` is sufficient unless you need to pass a second type parameter for state (for example, `Agent<Env, CounterState>`).
 
 Refer to [Configuration](/agents/api-reference/configuration/#generating-types) for more details on type generation.
 
@@ -244,14 +235,13 @@ Refer to [Configuration](/agents/api-reference/configuration/#generating-types) 
 ```tsx
 import { useState } from "react";
 import { useAgent } from "agents/react";
-
-type CounterState = { count: number };
+import type { CounterAgent, CounterState } from "./agents/counter";
 
 function CounterWidget() {
 	const [count, setCount] = useState(0);
 
-	const agent = useAgent({
-		agent: "Counter",
+	const agent = useAgent<CounterAgent, CounterState>({
+		agent: "CounterAgent",
 		onStateUpdate: (state) => setCount(state.count),
 	});
 
@@ -275,7 +265,7 @@ function CounterWidget() {
 import { AgentClient } from "agents/client";
 
 const agent = new AgentClient({
-	agent: "Counter",
+	agent: "CounterAgent",
 	name: "user-123", // Optional: unique instance name
 	onStateUpdate: (state) => {
 		document.getElementById("count").textContent = state.count;
@@ -316,7 +306,7 @@ Update the Wrangler configuration file:
 {
 	"durable_objects": {
 		"bindings": [
-			{ "name": "Counter", "class_name": "Counter" },
+			{ "name": "CounterAgent", "class_name": "CounterAgent" },
 			{ "name": "Chat", "class_name": "Chat" },
 			{ "name": "Scheduler", "class_name": "Scheduler" },
 		],
@@ -324,7 +314,7 @@ Update the Wrangler configuration file:
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": ["Counter", "Chat", "Scheduler"],
+			"new_sqlite_classes": ["CounterAgent", "Chat", "Scheduler"],
 		},
 	],
 }
@@ -337,7 +327,7 @@ Export all agents from your entry point:
 <TypeScriptExample>
 
 ```ts
-export { Counter } from "./agents/counter";
+export { CounterAgent } from "./agents/counter";
 export { Chat } from "./agents/chat";
 export { Scheduler } from "./agents/scheduler";
 ```
@@ -368,7 +358,7 @@ export default {
 
 		// ... rest of routing
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -404,13 +394,13 @@ export default {
 	async fetch(request: Request, env: Env) {
 		if (request.url.endsWith("/api/increment")) {
 			// Get a specific agent instance
-			const counter = await getAgentByName(env.Counter, "shared-counter");
+			const counter = await getAgentByName(env.CounterAgent, "shared-counter");
 			const newCount = await counter.increment();
 			return Response.json({ count: newCount });
 		}
 		// ...
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>

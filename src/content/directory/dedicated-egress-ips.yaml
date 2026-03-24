@@ -1,0 +1,12 @@
+id: HJhpds
+name: dedicated-egress-ips
+
+entry:
+  title: Dedicated CDN Egress IPs
+  url: /smart-shield/configuration/dedicated-egress-ips/
+  show: false
+
+meta:
+  title: Cloudflare Dedicated CDN Egress IPs docs
+  description: Dedicated CDN Egress IPs allow Enterprise customers to use egress IPs reserved exclusively for their account to increase origin security by only allowing traffic from a small list of IP addresses.
+  author: "@cloudflare"

@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: rtk-settings-toggle
+description: API reference for rtk-settings-toggle component (Web Components (HTML) Library)
+---
+A button which toggles visibility of settings module.
+ When clicked it emits a `rtkStateUpdate` event with the data:
+ ```ts
+ { activeSettings: boolean; }
+ ```
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-settings-toggle></rtk-settings-toggle>
+```
+
+### With Properties
+
+```html
+<rtk-settings-toggle
+ size="md"
+ variant"button">
+</rtk-settings-toggle>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-settings-toggle");
+
+</script>
+```

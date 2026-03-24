@@ -8,6 +8,7 @@ sidebar:
 ---
 
 import {
+	AutoconfigDiagram,
 	Badge,
 	Description,
 	InlineBadge,
@@ -18,6 +19,24 @@ import {
 :::note
 Support for SolidStart projects on Cloudflare Workers is currently in beta.
 :::
+
+:::tip[Already have a Solid Start project?]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect Solid Start, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="Solid Start"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: ".output/server/index.mjs" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: .output/public" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+	]}
+/>
 
 In this guide, you will create a new [Solid](https://www.solidjs.com/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 

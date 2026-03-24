@@ -3,11 +3,15 @@ link: "/workflows/reference/changelog/"
 productName: Workflows
 productLink: "/workflows/"
 entries:
+  - publish_date: "2026-03-23"
+    title: "Workflow instances now support pause(), resume(), restart(), and terminate() methods in local development"
+    description: |-
+      Workflow instance methods `pause()`, `resume()`, `restart()`, and `terminate()` are now available in local development when using `wrangler dev`.
   - publish_date: "2025-09-12"
     title: "Test Workflows locally"
     description: |-
       Workflows can now be tested with new test APIs available in the "cloudflare:test" module.
-      
+
       More information available in the Vitest integration [docs](/workers/testing/vitest-integration/test-apis/#workflows).
   - publish_date: "2025-08-22"
     title: "Python Workflows is now open beta"

@@ -6,7 +6,7 @@ sidebar:
   order: 21
 ---
 
-import { Render, DashButton } from "~/components";
+import { Render, DashButton, Details } from "~/components";
 
 The sections below cover frequently asked questions about Cloudflare authoritative DNS. For DNS Firewall, refer to [DNS Firewall FAQ](/dns/dns-firewall/faq/).
 
@@ -74,7 +74,11 @@ Some country code TLDs may not be supported by ICANN Lookup. If that is the case
 
 Once you identify your registrar, follow their instructions.
 
+<Details header="Provider-specific instructions">
+
 <Render file="ns-update-providers" product="dns" />
+
+</Details>
 
 ### Why have I received an email: (mydomain) stopped using Cloudflare's nameservers?
 

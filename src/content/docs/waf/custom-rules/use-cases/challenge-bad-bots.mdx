@@ -9,6 +9,21 @@ Cloudflare's Bot Management feature scores the likelihood that a request origina
 Access to [Bot Management](/bots/plans/bm-subscription/) requires a Cloudflare Enterprise plan with Bot Management enabled.
 :::
 
+## Bot settings
+
+Before creating custom rules for bot protection, review the settings on your [Security Settings](/security/) page under **Bot traffic**. Built-in features auto-update with new bot signatures, do not count toward your custom rule limits, and are simpler to manage.
+
+| Use case | Bot setting |
+| --- | --- |
+| Block AI crawlers (GPTBot, ClaudeBot, etc.) | **Block AI bots** |
+| Block definitely automated traffic (bot score of 1) | **Definitely automated** |
+| Challenge likely automated traffic (bot score 2-29) | **Likely automated** |
+| Allow verified bots (Googlebot, Bingbot, etc.) | **Verified bots** |
+| Extend bot protection to static resources | **Static resource protection** | **Security Settings** > **Bot traffic** |
+| Allow WordPress loopback requests | **Optimize for WordPress** | **Security Settings** > **Bot traffic** |
+
+Custom rules are still valuable when you need path-specific protection (different handling for `/api/` vs. `/login/`), custom score thresholds (for example, score below 20 instead of 30), conditional logic combining bot score with other fields, or custom actions not available in the built-in settings.
+
 Bot score ranges from 1 through 99. A low score indicates the request comes from a script, API service, or an automated agent. A high score indicates that a human issued the request from a standard desktop or mobile web browser.
 
 These examples use:
@@ -27,6 +42,10 @@ For best results:
 Your rules may also vary based on the [nature of your site](/bots/get-started/bot-management/) and your tolerance for false positives.
 
 ### General protection
+
+:::note
+Custom rules execute before [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/#waf-custom-rules). If you already configured actions for **Definitely automated** and **Likely automated** traffic in **Security Settings**, deploying these custom rules creates additional rules that take priority over those settings on matching traffic.
+:::
 
 The following three custom rules provide baseline protection against malicious bots:
 
