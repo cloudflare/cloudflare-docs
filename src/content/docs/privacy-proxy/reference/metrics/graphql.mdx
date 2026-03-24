@@ -872,7 +872,7 @@ The `proxyStatus` dimension provides proxy-level error classification. This fiel
 - `dns_error` — The proxy encountered a DNS error when resolving the next hop hostname.
 - `dns_timeout` — The proxy timed out while resolving the next hop hostname.
 - `destination_not_found` — The proxy cannot determine the appropriate next hop for this request.
-- `destination_unavailable` — The proxy considers the next hop unavailable (for example, recent failures or health check down).
+- `destination_unavailable` — The proxy considers the next hop unavailable (for example, recent failures or a health check is down).
 - `destination_ip_prohibited` — The proxy is configured to prohibit connections to the next hop IP address.
 - `destination_ip_unroutable` — The proxy cannot find a route to the next hop IP address.
 - `connection_refused` — The proxy's connection to the next hop was refused.
