@@ -280,8 +280,8 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `tail_consumers` <Type text="object" /> <MetaInfo text="optional" />
   - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logs/tail-workers/).
 
-- `secrets` <Type text="object" /> <MetaInfo text="optional experimental" />
-  - Declares the secret names your Worker requires. Refer to [Secrets](#secrets).
+- `secrets` <Type text="object" /> <MetaInfo text="optional" />
+  - Declares the secret names your Worker requires. Used for validation during local development and deploy, and as the source of truth for type generation. Refer to [Secrets](#secrets).
   - `required` <Type text="string[]" /> <MetaInfo text="optional" /> — A list of secret names that must be set to deploy your Worker.
 
 ## Types of routes
@@ -1505,7 +1505,7 @@ You can configure various aspects of local development, such as the local protoc
 
 <Render file="secrets-in-dev" product="workers" />
 
-### `secrets` configuration property (experimental)
+### `secrets` configuration property
 
 :::note
 This property is experimental and subject to change.
