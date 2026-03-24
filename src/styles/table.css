@@ -36,6 +36,7 @@ table * {
 	border-collapse: collapse;
 	text-align: left;
 	font-size: 0.875rem;
+	line-height: 1.4;
 	color: var(--sl-color-text);
 	display: block;
 	overflow-x: auto;
