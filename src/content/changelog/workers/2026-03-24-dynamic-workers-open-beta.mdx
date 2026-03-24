@@ -78,3 +78,17 @@ Use this starter to deploy a Worker that can load and execute Dynamic Workers.
 Deploy the Dynamic Workers Playground to write or import code, bundle it at runtime with `@cloudflare/worker-bundler`, execute it through a Dynamic Worker, and see real-time responses and execution logs.
 
 For the full API reference and configuration options, refer to the [Dynamic Workers documentation](/dynamic-workers/).
+
+## Pricing
+
+Dynamic Workers pricing is based on three dimensions: Dynamic Workers created daily, requests, and CPU time.
+
+|                                   | Included                               | Additional usage                    |
+| --------------------------------- | -------------------------------------- | ----------------------------------- |
+| **Dynamic Workers created daily** | 1,000 unique Dynamic Workers per month | +$0.002 per Dynamic Worker per day  |
+| **Requests** ¹                    | 10 million per month                   | +$0.30 per million requests         |
+| **CPU time** ¹                    | 30 million CPU milliseconds per month  | +$0.02 per million CPU milliseconds |
+
+¹ Uses [Workers Standard rates](/workers/platform/pricing/#workers) and will appear as part of your existing Workers bill, not as separate Dynamic Workers charges.
+
+Note: Dynamic Workers requests and CPU time are already billed as part of your Workers plan and will count toward your Workers requests and CPU usage. The Dynamic Workers created daily charge is not yet active — you will not be billed for the number of Dynamic Workers created at this time. Pricing information is shared in advance so you can estimate future costs.
