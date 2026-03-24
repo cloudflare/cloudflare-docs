@@ -139,7 +139,7 @@ The reason the Cloudflare network exists is to provide services to customers to 
         4. [L7 DDoS](#l7-ddos)
         5. [API Shield](#api-shield)
         6. [Bot Management](#bot-management)
-        7. [Client-side security](/client-side-security/) (formerly known as Page Shield)
+        7. [Client-side security](#client-side-security)
         8. [SSL/TLS](#ssltls)
         9. [Security Center](#security-center)
         10. [Cloudflare for SaaS](#cloudflare-for-saas)
@@ -264,7 +264,7 @@ Client-side attacks like [Magecart](https://blog.cloudflare.com/detecting-mageca
 
 1. What JavaScript files/modules are being loaded
 2. Outbound connections made
-3. Inventory of cookies used by the application (planned to be available late 2024)
+3. Inventory of cookies used by the application
 
 Client-side security uses threat-feed detections of malicious JavaScript domains and URLs. In addition, it can download JavaScript source files and run them through a machine learning classifier to identify malicious behavior and activity; the result is a JS Integrity Score designating if the JavaScript file is malicious. Client-side security can also detect changes to JavaScript files. Alerts using emails, webhooks, and PagerDuty can be set based on different criteria such as new resources identified, code changes, and malicious code/domains/URLs.
 
