@@ -5,8 +5,6 @@ _build:
   list: never
 
 name: "Python Workers"
-sort_date: "2024-01-29"
-enable_date: "2024-01-29"
 enable_flag: "python_workers"
 ---
 
