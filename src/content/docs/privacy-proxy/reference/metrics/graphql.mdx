@@ -539,6 +539,50 @@ query IngressProtocolDistribution(
 
 </Details>
 
+<Details header="Approximate active connections">
+
+Estimate the number of connections that were still open during a short time window by subtracting short-lived connections from the total established. Query a narrow window (one to five minutes) and sum `connections` — this gives the count of connections that started in that window. Connections with a duration longer than your window were established earlier and will not appear, so this query underestimates long-lived connections.
+
+```graphql
+query ApproximateActiveConnections(
+  $accountTag: String!
+  $start: Time!
+  $end: Time!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      privacyProxyIngressConnMetricsAdaptiveGroups(
+        filter: {
+          datetime_geq: $start
+          datetime_leq: $end
+        }
+        limit: 10000
+        orderBy: [datetimeMinute_ASC]
+      ) {
+        sum {
+          connections
+        }
+        dimensions {
+          datetimeMinute
+        }
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "accountTag": "<YOUR_ACCOUNT_TAG>",
+  "start": "2025-01-01T12:00:00Z",
+  "end": "2025-01-01T12:05:00Z"
+}
+```
+
+To approximate active connections, sum the `connections` values returned across all minute buckets in the window. The result represents connections that were initiated during that period. For a more conservative estimate of concurrency, divide the total by the window duration in minutes to get an average connections-per-minute rate.
+
+</Details>
+
 </Details>
 
 <Details header="privacyProxyEgressConnMetricsAdaptiveGroups node">
