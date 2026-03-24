@@ -50,7 +50,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
@@ -145,7 +145,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
@@ -199,10 +199,11 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
-      - name: Install node_modules
+      - name: Install node_modules (cache miss)
         run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Restore Astro assets from cache
         uses: actions/cache@v5
@@ -266,7 +267,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
@@ -309,7 +310,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
@@ -344,7 +345,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci

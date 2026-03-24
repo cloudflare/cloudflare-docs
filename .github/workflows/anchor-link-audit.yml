@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.x
+          node-version: 24
           cache: npm
 
       - name: Restore node_modules (cache hit)
@@ -30,8 +30,9 @@ jobs:
           path: node_modules
           key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
-      - name: Install node_modules
+      - name: Install node_modules (cache miss)
         run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - run: npm run build
         env:
