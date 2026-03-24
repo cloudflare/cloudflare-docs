@@ -1,0 +1,32 @@
+---
+title: Use Docker Hub images with Containers
+description: Use public and private Docker Hub images
+products:
+  - containers
+date: 2026-03-24
+---
+
+import { WranglerConfig } from "~/components";
+
+Containers support Docker Hub images. You can use a fully qualified Docker Hub image reference in your Wrangler configuration instead of first pushing the image to Cloudflare Registry.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			// Example: docker.io/cloudflare/sandbox:0.7.18
+			"image": "docker.io/<NAMESPACE>/<REPOSITORY>:<TAG>",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Official Docker Hub images use the `library` namespace. For example, use `docker.io/library/<IMAGE>:<TAG>` instead of `docker.io/<IMAGE>:<TAG>`.
+
+Containers also support private Docker Hub images. To configure credentials, refer to [Use private Docker Hub images](/containers/platform-details/image-management/#use-private-docker-hub-images).
+
+For more information, refer to [Image management](/containers/platform-details/image-management/).
