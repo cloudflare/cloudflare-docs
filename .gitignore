@@ -8,8 +8,7 @@ distllms/
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
 
-# llms-full.txt files are fetched from middlecache via bin/fetch-llms-full.ts
-public/llms-full.txt
+# Per-product llms-full.txt files are fetched from middlecache via bin/fetch-llms-full.ts
 public/*/llms-full.txt
 
 # dependencies

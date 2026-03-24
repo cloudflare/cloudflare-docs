@@ -13,14 +13,15 @@ const TARBALL_DOT_TMP_PATH = `middlecache/${TARBALL_MIDDLECACHE_PATH}`;
 const MANIFEST_MIDDLECACHE_PATH = "v1/cloudflare-docs-llms-full/manifest.json";
 const MANIFEST_DOT_TMP_PATH = `middlecache/${MANIFEST_MIDDLECACHE_PATH}`;
 
-// The root llms-full.txt is extracted directly into public/ alongside
-// per-product files at public/{product}/llms-full.txt. Astro copies
-// everything in public/ into dist/ as static assets.
+// Per-product llms-full.txt files are extracted into public/{product}/llms-full.txt.
+// Astro copies everything in public/ into dist/ as static assets.
+// The root llms-full.txt (~40 MB) is NOT extracted here — it exceeds the
+// Workers 25 MiB per-asset limit and is served from R2 at request time.
 const OUTPUT_DIR = "./public";
 
-// Sentinel file used to detect a previous successful extraction so we
+// Sentinel directory used to detect a previous successful extraction so we
 // can skip re-extraction when the tarball hasn't changed.
-const SENTINEL = join(OUTPUT_DIR, "llms-full.txt");
+const SENTINEL = join(OUTPUT_DIR, "workers", "llms-full.txt");
 
 // --soft: warn and continue on failure instead of exiting non-zero.
 //         Used by the predev hook so a network failure doesn't block local development.
@@ -44,7 +45,7 @@ const fail = (message: string): never => {
 
 if (fs.existsSync(SENTINEL) && !force) {
 	console.log(
-		"llms-full.txt already exists in public/, skipping fetch. (run `npx tsx bin/fetch-llms-full.ts --force` to re-fetch)",
+		"Per-product llms-full.txt files already exist in public/, skipping fetch. (run `npx tsx bin/fetch-llms-full.ts --force` to re-fetch)",
 	);
 	process.exit(0);
 }
@@ -68,13 +69,22 @@ try {
 
 const tarballPath = join(".tmp", ...TARBALL_DOT_TMP_PATH.split("/"));
 
-// Extract the tarball into public/.
+// Extract per-product files from the tarball into public/.
 // The archive paths are v1/cloudflare-docs-llms-full/{product}/llms-full.txt
-// so we strip the first 2 components to get {product}/llms-full.txt and
-// the root llms-full.txt directly under public/.
+// so we strip the first 2 components to get {product}/llms-full.txt.
+// The root llms-full.txt is excluded because it exceeds the Workers 25 MiB
+// per-asset limit — it is served from the middlecache R2 bucket instead.
 const tar = spawn(
 	"tar",
-	["--strip-components=2", "-xz", "-C", OUTPUT_DIR, "-f", tarballPath],
+	[
+		"--strip-components=2",
+		"--exclude=v1/cloudflare-docs-llms-full/llms-full.txt",
+		"-xz",
+		"-C",
+		OUTPUT_DIR,
+		"-f",
+		tarballPath,
+	],
 	{ stdio: "inherit" },
 );
 
