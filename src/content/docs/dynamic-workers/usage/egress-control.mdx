@@ -52,7 +52,7 @@ export default {
 	async fetch(request, env, ctx) {
 		const worker = env.LOADER.get("my-worker", async () => {
 			return {
-				compatibilityDate: "2026-01-01",
+				compatibilityDate: "$today",
 				mainModule: "index.js",
 				modules: { "index.js": code },
 
