@@ -82,19 +82,6 @@ curl --verbose https://<your-application-load-balancer>
 	}}
 />
 
-3. [Enable the Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/#3-enable-authenticated-origin-pulls-globally) feature on your zone.
-
-<APIRequest
-	path="/zones/{zone_id}/settings/{setting_id}"
-	method="PATCH"
-	json={{
-		value: "on",
-	}}
-	parameters={{
-		setting_id: "tls_client_auth",
-	}}
-/>
-
 :::note
 
 Make sure your [encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Full** or higher. If you only want to adjust this setting for a specific hostname, use [Configuration Rules](/rules/configuration-rules/settings/#ssl).
