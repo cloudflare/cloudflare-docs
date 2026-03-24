@@ -82,7 +82,7 @@ If only certain pages or sections are under attack, use a [configuration rule](/
 
 ### Selectively disable for specific areas
 
-If you have enabled Under Attack mode site-wide but it breaks certain parts of your site (for example, API endpoints or areas that serve non-browser traffic), use a [configuration rule](/rules/configuration-rules/) to set the security level to a lower value for those paths.
+If you have enabled Under Attack mode site-wide but it breaks certain parts of your site (for example, API endpoints or areas that serve non-browser traffic), use a [configuration rule](/rules/configuration-rules/) to disable I'm Under Attack mode for those paths.
 
 ### Use WAF custom rules for targeted challenges
 
@@ -95,7 +95,7 @@ When attack traffic clusters from a specific source, use [WAF custom rules](/waf
 - **Under Attack mode applies challenges at Cloudflare's edge.** Challenge outcomes are recorded in [Cloudflare security analytics](/waf/analytics/security-events/). Requests reach your origin only after a challenge is solved, via a valid `cf_clearance` cookie, or when traffic is excluded from Under Attack mode through configuration rules.
 - **Non-browser traffic will be blocked.** Under Attack mode requires JavaScript execution, so API clients, mobile apps, and automated integrations will fail the challenge. Use configuration rules or WAF custom rules to exclude these paths or traffic types.
 - **Disable when the attack subsides.** Under Attack mode is designed as a temporary measure. Once attack traffic returns to normal, turn it off to avoid unnecessarily challenging legitimate visitors.
-- **Consider customizing the challenge page.** You can brand the interstitial page shown to visitors during the challenge. Go to **Configurations** > **Custom Pages** > **Managed Challenge / I'm Under Attack Mode** to configure a custom page.
+- **Consider customizing the challenge page.** You can brand the interstitial page shown to visitors during the challenge. Go to **Configurations** > **Error Pages** > **Managed Challenge / I'm Under Attack Mode** to configure a custom page.
 
 ---
 
