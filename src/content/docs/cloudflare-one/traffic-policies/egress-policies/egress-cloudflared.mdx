@@ -71,7 +71,7 @@ In your WARP [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudfla
 
 When users connect to a public hostname route, Gateway will assign an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> to the DNS query from the following range:
 
-Gateway's network engine operates at Layer 3/Layer 4 of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/), where it can only see IP addresses — not hostnames. The initial resolved IP acts as a signal: when a packet's destination IP falls within the `100.80.0.0/16` Carrier-Grade NAT (CGNAT) range, Gateway recognizes that the IP maps to a public hostname route and sends the traffic through the corresponding Cloudflare Tunnel.
+Gateway's network engine operates at Layer 3/Layer 4 of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/), where only IP addresses are available — not hostnames. The initial resolved IP acts as a signal: when a packet's destination IP falls within the `100.80.0.0/16` Carrier-Grade NAT (CGNAT) range, Gateway recognizes that the IP maps to a public hostname route and sends the traffic through the corresponding Cloudflare Tunnel.
 
 To route initial resolved IPs through the Cloudflare One Client:
 
