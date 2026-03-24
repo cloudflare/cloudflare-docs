@@ -69,7 +69,7 @@ The categories included in this policy are not always a security threat, but blo
 
 ## Block a dynamic list of categories
 
-You can add a list of category IDs to the [EDNS header](https://datatracker.ietf.org/doc/html/rfc6891) of a request sent to Gateway as a JSON object using OPT code `65050`. For example:
+You can add a list of category IDs to the [EDNS (Extension Mechanisms for DNS)](https://datatracker.ietf.org/doc/html/rfc6891) header of a request sent to Gateway as a JSON object using OPT code `65050`. A client application or custom DNS resolver embeds these IDs in the DNS query so Gateway can filter by categories not known at policy creation time. For example:
 
 ```json
 {
@@ -200,10 +200,10 @@ To protect against [sophisticated phishing attacks](https://blog.cloudflare.com/
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector | Operator      | Value                                       | Logic | Action |
-| -------- | ------------- | ------------------------------------------- | ----- | ------ |
-| Domain   | not in list   | _Corporate Domains_                         | And   | Block  |
-| Domain   | matches regex | `.*okta.*\|.*cloudflare.*\|.*mfa.*\|.sso.*` |       |        |
+| Selector | Operator      | Value                                        | Logic | Action |
+| -------- | ------------- | -------------------------------------------- | ----- | ------ |
+| Domain   | not in list   | _Corporate Domains_                          | And   | Block  |
+| Domain   | matches regex | `.*okta.*\|.*cloudflare.*\|.*mfa.*\|.*sso.*` |       |        |
 
 </TabItem>
 
@@ -220,7 +220,7 @@ To protect against [sophisticated phishing attacks](https://blog.cloudflare.com/
 		action: "block",
 		filters: ["dns"],
 		traffic:
-			'not(any(dns.domains[*] in $<LIST_UUID>)) and any(dns.domains[*] matches ".*okta.*\\|.*cloudflare.*\\|.*mfa.*\\|.sso.*")',
+			'not(any(dns.domains[*] in $<LIST_UUID>)) and any(dns.domains[*] matches ".*okta.*\\|.*cloudflare.*\\|.*mfa.*\\|.*sso.*")',
 		identity: "",
 	}}
 />

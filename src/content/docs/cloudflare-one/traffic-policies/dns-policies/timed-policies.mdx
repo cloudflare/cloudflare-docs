@@ -7,7 +7,7 @@ sidebar:
 
 import { APIRequest, Tabs, TabItem } from "~/components";
 
-By default, Cloudflare Gateway policies apply at all times when turned on. With timed DNS policies, you can control when DNS policies are active. You can configure a policy to be active during specific time periods or set the policy to expire after a certain duration.
+By default, Cloudflare Gateway policies apply at all times when turned on. With timed DNS policies, you can control when DNS policies are active. This is useful for scenarios like restricting social media access during work hours, temporarily allowing a blocked category for a specific project, or enforcing different policies on weekdays versus weekends. You can configure a policy to be active during specific time periods or set the policy to expire after a certain duration.
 
 There are two timed DNS policy options:
 
@@ -30,7 +30,7 @@ To set a duration for a DNS policy:
 
 When a policy turns off, it will remain off until you turn it back on.
 
-Policies with a set duration will retain their duration when turned off or on. For example, you can create a policy at 12:00 PM and set it to turn off after six hours. If you turn the policy off at 3:00 PM and turn it back on 4:00 PM, the policy will still turn off at 6:00 PM, six hours after the original time.
+The expiration time is fixed when the policy is first turned on and does not pause if you temporarily turn the policy off. For example, if you create a policy at 12:00 PM with a six-hour duration, it will expire at 6:00 PM. If you turn the policy off at 3:00 PM and back on at 4:00 PM, the policy will still turn off at 6:00 PM.
 
 ### Reset a policy's duration
 
@@ -87,7 +87,11 @@ The policy's schedule will appear in Cloudflare One under **Traffic policies** >
 
 If you [assign a time zone](#example-fixed-time-zone) to your schedule, Gateway will always use the current time at that time zone regardless of the user's location. This allows you to enable a policy during a certain fixed time period.
 
-If you [do not specify a time zone](#example-users-time-zone), Gateway will enable the DNS policy based on the user's local time zone. The user's time zone is inferred from the IP geolocation of their source IP address. If Gateway is unable to determine the time zone from the source IP, we will fall back to the time zone of the data center where the query was received.
+If you [do not specify a time zone](#example-users-time-zone), Gateway will enable the DNS policy based on the user's local time zone. The user's time zone is inferred from the IP geolocation of their source IP address. If Gateway is unable to determine the time zone from the source IP, it falls back to the time zone of the data center where the query was received.
+
+:::note
+IP-based geolocation may be inaccurate for users on VPNs or mobile networks. If precise time zone control is important, assign an explicit time zone to the schedule.
+:::
 
 #### Example: Fixed time zone
 

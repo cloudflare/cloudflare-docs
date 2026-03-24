@@ -9,7 +9,9 @@ sidebar:
 
 import { Details, InlineBadge, Render } from "~/components";
 
-When a user makes a DNS request to Gateway, Gateway matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives an address based on the DNS resolution from Cloudflare's 1.1.1.1 servers. Alternatively, you can use a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) to redirect DNS requests to a custom server.
+DNS policies allow you to filter and control which domain names users in your organization can resolve. Because DNS policies operate at the DNS layer, they block connections before any data is transferred — making them a fast, low-overhead first layer of security in [Cloudflare Gateway](/cloudflare-one/gateway/).
+
+When a user makes a DNS request to Gateway, Gateway matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives an address based on the DNS resolution from Cloudflare's public DNS resolver (1.1.1.1). Alternatively, you can use a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) to redirect DNS requests to a custom server.
 
 A DNS policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
@@ -145,7 +147,7 @@ Policies with Block actions block DNS queries to reach destinations you specify 
 
 When choosing the Block action, turn on **Modify Gateway block behavior** to respond to queries with a block page to display to users who go to blocked websites. Optionally, you can override your global block page setting with a URL redirect for the specific DNS policy. For more information, refer to [Block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/).
 
-If the block page is turned off for a policy, Gateway will respond to queries blocked at the DNS level with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. The browser will display its default connection error page.
+If the block page is turned off for a policy, Gateway will respond to queries blocked at the DNS level with an `A` record (IPv4 address) of `0.0.0.0`, or with an `AAAA` record (IPv6 address) of `::`. Both are non-routable addresses, so the browser will display its default connection error page.
 
 <Render file="gateway/block-page-dns-records" product="cloudflare-one" />
 
@@ -285,7 +287,13 @@ This setup ensures users will be blocked from accessing offensive sites using DN
 
 ## Selectors
 
-Gateway matches DNS queries against the following selectors, or criteria:
+Gateway matches DNS queries against the following selectors, or criteria.
+
+Each selector is available at a specific **evaluation phase**, which determines when Gateway can inspect that attribute during the DNS query lifecycle:
+
+- **Before DNS resolution** — Gateway has the query (domain name, source IP, user identity) but has not yet resolved it. Most selectors are available at this phase.
+- **During DNS resolution** — Gateway is actively resolving the domain and can inspect metadata such as the authoritative nameserver IP.
+- **After DNS resolution** — Gateway has the resolved answer (IP address, CNAME records, geolocation). Selectors at this phase cannot be used with the [Override](#override) action, because the override replaces the answer before it exists.
 
 ### Application
 
@@ -428,7 +436,7 @@ Use this selector to filter based on the IP addresses that the query resolves to
 
 ### Request Context Categories
 
-Use this selector to match a dynamic list of [category IDs](/cloudflare-one/traffic-policies/domain-categories/#category-and-subcategory-ids) sent in the [EDNS](https://datatracker.ietf.org/doc/html/rfc6891) portion of a DNS query. Gateway includes request context with the OPT code `65050`.
+Use this selector to match a dynamic list of [category IDs](/cloudflare-one/traffic-policies/domain-categories/#category-and-subcategory-ids) sent in the [EDNS (Extension Mechanisms for DNS)](https://datatracker.ietf.org/doc/html/rfc6891) portion of a DNS query. EDNS is a protocol extension that allows extra data to be attached to a standard DNS query. A client application or custom DNS resolver can embed category IDs in the EDNS OPT record (code `65050`), and Gateway will read and match them against your policy.
 
 | UI name                    | API example                                 | Evaluation phase      |
 | -------------------------- | ------------------------------------------- | --------------------- |
@@ -473,7 +481,13 @@ Use this selector to apply policies to the source internal IP address of a DNS q
 <Render
 	file="gateway/value"
 	product="cloudflare-one"
-	params={{ selector: "Host", selectordescription: "hostname", operator: "matches regex", valueOne: ".*whispersystems.org", valueTwo: ".*signal.org" }}
+	params={{
+		selector: "Host",
+		selectordescription: "hostname",
+		operator: "matches regex",
+		valueOne: ".*whispersystems.org",
+		valueTwo: ".*signal.org",
+	}}
 />
 
 ## Logical operators

@@ -9,15 +9,15 @@ sidebar:
 
 import { Details } from "~/components";
 
-This section covers how to validate your Gateway DNS configuration.
+After creating a DNS policy, test it to confirm Gateway is intercepting and filtering queries as expected. Policies can appear to fail because of DNS caching, incorrect DNS location assignment, or fallback DNS servers.
 
 ## Prerequisites
 
-Before you start, make sure you are connected to a network that is associated with the [DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) where the policy is applied.
+Before you start, make sure your device sends DNS queries through a Gateway [DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/). If you use the WARP client, queries are routed automatically. If you use a DNS-only deployment, confirm your device or network resolver points to your location's assigned [DNS resolver IP addresses](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/).
 
 ## Test a DNS policy
 
-Once you have created a DNS policy to block a domain, you can use either `dig` or `nslookup` to see if the policy is working as intended.
+Once you have created a DNS policy to block a domain, you can use either `dig` (Linux/macOS) or `nslookup` (Windows) to query DNS servers from the command line and verify the policy is working as intended.
 
 For example, if you created a policy to block `example.com`, you can do the following to see if Gateway is successfully blocking `example.com`:
 
@@ -25,7 +25,7 @@ For example, if you created a policy to block `example.com`, you can do the foll
 
 2. Type `dig example.com` (`nslookup example.com` if you are using Windows) and press **Enter**.
 
-3. If the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) is turned off for the policy, you should see `REFUSED` in the answer section:
+3. If the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) is turned off for the policy, you should see `REFUSED` in the answer section. `REFUSED` is a DNS response code that means Gateway explicitly declined to answer the query:
 
    ```sh
    dig example.com
@@ -48,7 +48,7 @@ For example, if you created a policy to block `example.com`, you can do the foll
    ;; MSG SIZE  rcvd: 29
    ```
 
-   If the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section with `162.159.36.12` and `162.159.46.12` as the answers:
+   If the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section. The IP addresses `162.159.36.12` and `162.159.46.12` are Cloudflare's block page servers — your browser will load the block page from these addresses:
 
    ```sh null
    dig example.com
@@ -116,7 +116,7 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 ## Test EDNS configuration
 
-If you [enabled EDNS client subnet](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) for your DNS location, you can validate EDNS as follows:
+EDNS client subnet (ECS) sends a portion of the user's IP address to upstream DNS resolvers so they can return geographically optimized answers. If you [enabled EDNS client subnet](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) for your DNS location, you can validate it as follows:
 
 1. Obtain your DNS location's DOH subdomain:
    1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Networks** > **Resolvers & Proxies** > **DNS locations**.
