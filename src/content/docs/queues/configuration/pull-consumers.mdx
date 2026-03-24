@@ -45,7 +45,7 @@ To configure a pull-based consumer and receive messages from a queue, you need t
 You can enable HTTP pull or change a queue from push-based to pull-based via the the `wrangler` CLI or via the [Cloudflare dashboard](https://dash.cloudflare.com/). Enabling HTTP pull from a [Wrangler configuration file](/workers/wrangler/configuration/) is no longer supported.
 
 :::note
-If you have specified `type = "http_pull" in your Wrangler configuration file, remove and redeploy. Your Worker will retain access to the HTTP pull endpoint, and HTTP pull will remain enabled on your queue.
+If you have specified `type = "http_pull"` in your Wrangler configuration file, remove and redeploy. Your Worker will retain access to the HTTP pull endpoint, and HTTP pull will remain enabled on your queue.
 :::
 
 ### wrangler CLI
@@ -141,7 +141,6 @@ headers={
 body=json.dumps({"visibility_timeout_ms": 6000, "batch_size": 50}),
 )
 
-````
 </TabItem>
 </Tabs>
 
@@ -180,7 +179,6 @@ This will return an array of messages (up to the specified `batch_size`) in the 
 		]
 	}
 }
-````
 
 Pull consumers follow a "short polling" approach: if there are messages available to be delivered, Queues will return a response immediately with messages up to the configured `batch_size`. If there are no messages to deliver, Queues will return an empty response. Queues does not hold an open connection (often referred to as "long polling") if there are no messages to deliver.
 
@@ -270,7 +268,6 @@ body=json.dumps({
 }),
 )
 
-````
 </TabItem>
 </Tabs>
 
@@ -285,7 +282,6 @@ You may optionally specify the number of seconds to delay a message for when mar
 	],
 	"retries": [{ "lease_id": "lease_id4", "delay_seconds": 600 }]
 }
-````
 
 Additionally:
 
