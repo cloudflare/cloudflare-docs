@@ -149,8 +149,8 @@
 		"wrangler": "4.75.0"
 	},
 	"engines": {
-		"npm": "11.12.0",
+		"npm": "11.9.0",
 		"node": "^24.14.0"
 	},
-	"packageManager": "npm@11.12.0+sha512.c4f84e6a9e196c95b277b0c03ae90fe7ae161703521aeff615e4d114786288ab6171abb1847fcda64240426db8c43f9c027f1abf9b50d34a618bdf03aad7cbb2"
+	"packageManager": "npm@11.9.0+sha512.BBZoU926FCypj4b7V7ElinxsWcy4Kss88UG3ejFYmKyq7Uc5XnT34Me2nEhgCOaL5qY4HvGu5aI92C4OYd7NaA=="
 }
