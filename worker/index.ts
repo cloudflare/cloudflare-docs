@@ -8,6 +8,9 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxDynamicRules: 2_000, // Usually 100
 });
 
+const LLMS_FULL_BASE_URL =
+	"https://middlecache.ced.cloudflare.com/v1/cloudflare-docs-llms-full";
+
 /**
  * When a redirect response is returned for an index.md request, rewrite the
  * Location header so the agent stays in Markdown land instead of landing on
@@ -48,9 +51,15 @@ export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
 		if (request.url.endsWith("/llms-full.txt")) {
 			const { pathname } = new URL(request.url);
-			const res = await this.env.VENDORED_MARKDOWN.get(pathname.slice(1));
+			// pathname is e.g. "/llms-full.txt" or "/workers/llms-full.txt"
+			const upstreamUrl = `${LLMS_FULL_BASE_URL}${pathname}`;
 
-			return new Response(res?.body, {
+			const upstream = await fetch(upstreamUrl);
+			if (!upstream.ok) {
+				return new Response("llms-full.txt not found", { status: 404 });
+			}
+
+			return new Response(upstream.body, {
 				headers: {
 					"Content-Type": "text/markdown; charset=utf-8",
 				},
