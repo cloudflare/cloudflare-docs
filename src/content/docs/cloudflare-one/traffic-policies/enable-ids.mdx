@@ -10,17 +10,11 @@ head:
 
 import { TabItem, Tabs, DashButton } from "~/components";
 
-Cloudflare's Intrusion Detection System (IDS) is an Cloudflare Advanced Network Firewall feature you can use to actively monitor for a wide range of known threat signatures in your traffic. An IDS expands the security coverage of a firewall to analyze traffic against a broader threat database, detecting a variety of sophisticated attacks such as ransomware, data exfiltration, and network scanning based on signatures or “fingerprints” in network traffic.
+Cloudflare's Intrusion Detection System (IDS) is a Cloudflare Advanced Network Firewall feature that monitors your traffic for known threat signatures — patterns in network packets that match known attacks such as ransomware, data exfiltration, and network scanning. Unlike standard firewall rules that you write yourself, IDS compares traffic against a managed database of thousands of signatures and logs any matches.
 
-With Cloudflare's global anycast network, you get:
+IDS runs on every server in Cloudflare's global [anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) network. Traffic is inspected at the location closest to its source, with built-in redundancy and failover. Cloudflare continuously updates the signature database and IDS capabilities.
 
-- Cloudflare's entire global network capacity is now the capacity of your IDS.
-- Built-in redundancy and failover. Every server runs Cloudflare's IDS software, and traffic is automatically attracted to the closest network location to its source.
-- Continuous deployment for improvements to Cloudflare's IDS capabilities.
-
-Refer to [Enable IDS](/cloudflare-one/traffic-policies/enable-ids/#enable-ids) for more information on enabling IDS and creating new rulesets. After IDS is enabled, your traffic will be scanned to find malicious traffic. The detections are logged to destinations that can be configured from the dashboard. Refer to [Use Logpush with IDS](/cloudflare-one/insights/logs/use-logpush-with-ids) for instructions on configuring a destination to receive the detections. Additionally, all traffic that is analyzed can be accessed via [network analytics](/analytics/network-analytics/). Refer to [GraphQL Analytics](/cloudflare-network-firewall/tutorials/graphql-analytics/) to query the analytics data.
-
-Cloudflare's IDS takes advantage of the threat intelligence powered by our global network and extends the capabilities of the Cloudflare Firewall to monitor and protect your network from malicious actors.
+After IDS is enabled, your traffic will be scanned to find malicious traffic. The detections are logged to destinations that can be configured from the dashboard. Refer to [Use Logpush with IDS](/cloudflare-one/insights/logs/use-logpush-with-ids) for instructions on configuring a destination to receive the detections. Additionally, all traffic that is analyzed can be accessed via [network analytics](/analytics/network-analytics/). Refer to [GraphQL Analytics](/cloudflare-network-firewall/tutorials/graphql-analytics/) to query the analytics data.
 
 ## Enable IDS
 
@@ -99,4 +93,4 @@ IDS rules are run on a subset of packets. IDS also supports the current flows:
 
 ## Next steps
 
-You must configure Logpush to log detected risks. Refer to [Configure a Logpush destination](/cloudflare-network-firewall/how-to/use-logpush-with-ids/) for more information. Additionally, all traffic that is analyzed can be accessed via [network analytics](/analytics/network-analytics/). Refer to [GraphQL Analytics](/cloudflare-network-firewall/tutorials/graphql-analytics/) to query the analytics data.
+You must configure Logpush to receive IDS detections, which are not visible in the standard Gateway activity logs. Refer to [Configure a Logpush destination](/cloudflare-network-firewall/how-to/use-logpush-with-ids/) for setup instructions. To view all analyzed traffic, refer to [network analytics](/analytics/network-analytics/) or query the data with [GraphQL Analytics](/cloudflare-network-firewall/tutorials/graphql-analytics/).

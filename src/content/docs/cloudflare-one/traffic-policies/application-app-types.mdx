@@ -58,7 +58,7 @@ Gateway sorts applications into the following app type groups:
 | Shopping                                       | Online shopping applications                                                                                                |
 | Social Networking                              | Social networking applications                                                                                              |
 | Sports                                         | Sports streaming and news applications                                                                                      |
-| Travel                                         | Travel related applications                                                                                                |
+| Travel                                         | Travel related applications                                                                                                 |
 | Video Streaming & Editing                      | Applications used for streaming and editing video                                                                           |
 | [Do Not Inspect](#do-not-inspect-applications) | Applications incompatible with the TLS certificate required by the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) |
 
@@ -72,9 +72,15 @@ Hostnames are domains that are core to the application and not [used by other ap
 
 ### Support hostnames
 
-Support hostnames are shared resources which applications may call in order to function. Applications can use support hostnames for content delivery, application behavior, or third-party system integrations. Blocking these hostnames may result in unexpected behavior for other policies. In addition, not taking a specific action on one of these hostnames may affect the application's behavior, even if the application hostnames are allowed. For example, assume that `file-sharing-service.com` relies on `content-delivery.com`. If you allow access to `file-sharing-service.com` and its associated subdomains but not `content-delivery.com`, some of the functionality of `file-sharing-service.com` may break when Gateway matches the traffic.
+Support hostnames are shared resources which applications may call in order to function. Applications can use support hostnames for content delivery, application behavior, or third-party system integrations.
 
-To ensure effective application behavior, Gateway only uses support hostnames in Allow policies. Cloudflare explicitly allows support hostname connections in these policies but will not block the connections in Block policies. For example, many Google applications use `accounts.google.com` for authentication. In a Cloudflare One environment with highly restrictive policies, `accounts.google.com` must be allowed for many applications to function correctly. If you use an application with `accounts.google.com` in its support hostnames in an Allow policy, Gateway will allow both `accounts.google.com` and the application's domains.
+:::note
+Gateway uses support hostnames in Allow policies only. When you allow an application, Gateway also allows its support hostnames. When you block an application, Gateway does _not_ block its support hostnames — doing so could break other applications that share those domains.
+:::
+
+Blocking support hostnames directly may result in unexpected behavior for other policies. In addition, not allowing a support hostname may affect an application's behavior, even if its core hostnames are allowed. For example, assume that `file-sharing-service.com` relies on `content-delivery.com`. If you allow access to `file-sharing-service.com` and its associated subdomains but not `content-delivery.com`, some of the functionality of `file-sharing-service.com` may break when Gateway matches the traffic.
+
+Many Google applications use `accounts.google.com` for authentication. In a Cloudflare One environment with highly restrictive policies, `accounts.google.com` must be allowed for many applications to function correctly. If you use an application with `accounts.google.com` in its support hostnames in an Allow policy, Gateway will allow both `accounts.google.com` and the application's domains.
 
 ## Application controls
 

@@ -50,7 +50,16 @@ To get started with resolving internal DNS queries with resolver policies, refer
 
 ### Local Domain Fallback
 
-If your resolver is only reachable by a client device and not by Gateway via a Cloudflare Tunnel, IPsec/GRE tunnel, or other public Internet connections, you should configure [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) for your device. If both Local Domain Fallback and resolver policies are configured for the same device, Cloudflare will apply your client-side Local Domain Fallback rules first. If you onboard DNS queries to Gateway with the Cloudflare One Client and route them with resolver policies, the source IP of the queries will be the IP address assigned by the Cloudflare One Client.
+Use [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) when your DNS server is only reachable from the user's local network and cannot be reached by Gateway through a Cloudflare Tunnel, IPsec/GRE tunnel, or other public Internet connection. Local Domain Fallback resolves DNS directly on the device — the query never reaches Gateway and is not logged or filtered.
+
+If both Local Domain Fallback and resolver policies are configured for the same domain on the same device, Local Domain Fallback takes priority. If you onboard DNS queries to Gateway with the Cloudflare One Client and route them with resolver policies, the source IP of the queries will be the IP address assigned by the Cloudflare One Client.
+
+| Criteria                        | Resolver policies                   | Local Domain Fallback                |
+| ------------------------------- | ----------------------------------- | ------------------------------------ |
+| DNS server reachable by Gateway | Yes (via tunnel or public Internet) | No (local network only)              |
+| Queries logged by Gateway       | Yes                                 | No                                   |
+| Queries filtered by Gateway     | Yes                                 | No                                   |
+| Configured in                   | Zero Trust dashboard                | Cloudflare One Client device profile |
 
 <Render file="warp/ldf-best-practice" product="cloudflare-one" />
 
@@ -161,7 +170,13 @@ Use this selector to filter based on the country where the query arrived to Gate
 <Render
 	file="gateway/value"
 	product="cloudflare-one"
-	params={{ selector: "Host", selectordescription: "hostname", operator: "matches regex", valueOne: ".*whispersystems.org", valueTwo: ".*signal.org" }}
+	params={{
+		selector: "Host",
+		selectordescription: "hostname",
+		operator: "matches regex",
+		valueOne: ".*whispersystems.org",
+		valueTwo: ".*signal.org",
+	}}
 />
 
 ## Logical operators
