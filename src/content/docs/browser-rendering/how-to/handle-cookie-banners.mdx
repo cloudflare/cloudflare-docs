@@ -5,13 +5,15 @@ sidebar:
   order: 3
 ---
 
-import { Tabs, TabItem, TypeScriptExample, WranglerConfig, PackageManagers } from "~/components";
+import { TypeScriptExample, WranglerConfig, PackageManagers } from "~/components";
 
 Cookie consent banners can interfere when you are using Browser Rendering to take screenshots or scrape page content.
 
 ## REST API
 
-If you use the REST API, you can either hide the cookie banner or accept it. Either way, you must know the CSS selectors for the cookie banner on the target site.
+If you use the [REST API](/browser-rendering/rest-api/), you can either hide the cookie banner or accept it. Either way, you must know the CSS selectors for the cookie banner on the target site. You can find these by inspecting the page in your browser's developer tools.
+
+The following examples target the cookie banner on `blog.cloudflare.com`, where the accept button has the selector `#onetrust-accept-btn-handler` and the banner container is `#onetrust-banner-sdk`.
 
 ### Hide a cookie banner with CSS
 
@@ -39,8 +41,6 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 Use `addScriptTag` to inject a script that selects the consent button, then use `waitForSelector` to wait until the banner disappears before the page is captured.
 
-The following example accepts the cookie banner on `blog.cloudflare.com`, where the accept button has the selector `#onetrust-accept-btn-handler` and the banner container is `#onetrust-banner-sdk`:
-
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
@@ -63,21 +63,15 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "screenshot.png"
 ```
 
-In this request:
-
-- `gotoOptions.waitUntil` waits for the page to fully load before running the script.
-- `addScriptTag` injects a script that finds the accept button and clicks it.
-- `waitForSelector` with `hidden: true` pauses until the banner is no longer visible before taking the screenshot.
-
 ## Workers binding
 
-With the [Workers binding](/browser-rendering/workers-bindings/), you have full access to [Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/), which means you can programmatically detect and handle cookie banners across many sites without hardcoding selectors for each one.
+If you use the [Workers binding](/browser-rendering/workers-bindings/), you have full access to [Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/), which means you can programmatically detect and handle cookie banners across many sites without hardcoding selectors for each one.
 
 ### Automatically accept cookie banners
 
-Popular consent management providers (CMPs) like OneTrust, Cookiebot, TrustArc, and others each use their own selectors, but most follow a common pattern: a visible banner with one or more buttons to accept or reject cookies. You can use Puppeteer's `page.evaluateOnNewDocument()` to inject a script that watches for these common patterns and clicks the accept button automatically.
+Most consent management providers (CMPs) use their own selectors, but follow a common pattern: a visible banner with one or more buttons to accept or reject cookies. You can use Puppeteer's `page.evaluateOnNewDocument()` to inject a script that watches for these common patterns and clicks the accept button automatically.
 
-The following example is inspired by the approach used in open-source consent management libraries like `autoconsent`, which maintain rulesets for hundreds of CMPs.
+The following example shows how to set this up:
 
 1. Create a new Worker project and install Puppeteer:
 
@@ -139,7 +133,7 @@ export default {
 		const page = await browser.newPage();
 
 		// Inject a script that runs before each page load.
-		// It watches for known consent banners and clicks
+		// It watches for known consent banners and selects
 		// the accept button when one appears.
 		await page.evaluateOnNewDocument((selectors) => {
 			const observer = new MutationObserver(() => {
@@ -179,6 +173,4 @@ export default {
 
 </TypeScriptExample>
 
-The injected script uses a `MutationObserver` to watch for DOM changes as the page loads. When a known consent button becomes visible, it clicks the button and stops observing. This approach handles banners that appear after initial page load, which is common with CMPs that load asynchronously.
-
-You can extend the `CONSENT_SELECTORS` array to cover additional consent providers. Open-source projects like `autoconsent` maintain comprehensive rulesets for hundreds of CMPs and are a good reference for discovering selectors.
+The injected script uses a `MutationObserver` to watch for DOM changes as the page loads. When a known consent button becomes visible, it selects the button and stops observing. You can extend the `CONSENT_SELECTORS` array to cover additional consent providers.
