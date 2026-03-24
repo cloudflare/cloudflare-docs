@@ -303,6 +303,8 @@ There are two recommended patterns for this:
 
 - **Network latency**: Expect network latency for operations on these remotely connected bindings, as they involve communication over the internet.
 
+- **CI and non-interactive environments**: If your worker uses [Cloudflare Access](/cloudflare-one/), Wrangler must authenticate with Access when connecting to remote bindings. In non-interactive environments such as CI/CD pipelines, set the `CLOUDFLARE_ACCESS_CLIENT_ID` and `CLOUDFLARE_ACCESS_CLIENT_SECRET` [system environment variables](/workers/wrangler/system-environment-variables/) to authenticate using an [Access Service Token](/cloudflare-one/access-controls/service-credentials/service-tokens/). Without these variables, Wrangler throws an error instead of launching the interactive `cloudflared access login` flow.
+
 ### API
 
 Wrangler provides programmatic utilities to help tooling authors support remote binding connections when running Workers code with [Miniflare](/workers/testing/miniflare/).
