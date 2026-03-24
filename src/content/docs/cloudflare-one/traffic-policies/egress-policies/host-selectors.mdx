@@ -24,7 +24,7 @@ import { Tabs, TabItem, Details, APIRequest, Render } from "~/components";
 
 </Details>
 
-Egress policies are evaluated at [Layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) of the OSI model, where Gateway can only see IP addresses — not hostnames. The [Application](/cloudflare-one/traffic-policies/egress-policies/#application), [Content Categories](/cloudflare-one/traffic-policies/egress-policies/#content-categories), [Domain](/cloudflare-one/traffic-policies/egress-policies/#domain), and [Host](/cloudflare-one/traffic-policies/egress-policies/#host) selectors need to match traffic by hostname, so Gateway uses a two-step process:
+Egress policies are evaluated at Layer 4 (https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) of the OSI model, where only IP addresses are available — not hostnames. The [Application](/cloudflare-one/traffic-policies/egress-policies/#application), [Content Categories](/cloudflare-one/traffic-policies/egress-policies/#content-categories), [Domain](/cloudflare-one/traffic-policies/egress-policies/#domain), and [Host](/cloudflare-one/traffic-policies/egress-policies/#host) selectors need to match traffic by hostname, so Gateway uses a two-step process:
 
 1. When Gateway receives a DNS query for a hostname that matches one of these selectors, it initially resolves the query to a temporary IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range.
 2. When traffic arrives with this temporary destination IP, Gateway can identify which hostname the connection belongs to, apply the correct egress policy, then replace the temporary IP with the real destination IP before forwarding the traffic.
