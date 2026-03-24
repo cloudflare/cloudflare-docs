@@ -69,6 +69,7 @@ The following functions are available in this phase:
 - starts_with
 - substring
 - to_string
+- upper
 - url_decode
 - wildcard_replace
 
@@ -162,7 +163,7 @@ Refer to [Create a rule via API](/cache/how-to/cache-response-rules/create-api/)
 
 Modifies Cache-Control header directives in the origin response.
 
-### Supported directives
+#### Supported directives
 
 **Directives with duration value (seconds):**
 
@@ -186,11 +187,11 @@ Modifies Cache-Control header directives in the origin response.
 - `public`
 - `immutable`
 
-### Directive configuration
+#### Directive configuration
 
 The available parameters depend on the directive type.
 
-#### Directives with duration value
+##### Directives with duration value
 
 Applies to `max-age`, `s-maxage`, `stale-if-error`, and `stale-while-revalidate`.
 
@@ -200,7 +201,7 @@ Applies to `max-age`, `s-maxage`, `stale-if-error`, and `stale-while-revalidate`
 | `cloudflare_only` | Boolean | When enabled, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive. |
 | `value` | Integer | Duration in seconds. **Required when operation is `set`.** |
 
-#### Directives with optional qualifiers
+##### Directives with optional qualifiers
 
 Applies to `private` and `no-cache`.
 
@@ -210,7 +211,7 @@ Applies to `private` and `no-cache`.
 | `cloudflare_only` | Boolean | When enabled, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive. |
 | `qualifiers` | Array | Optional list of header names to qualify the directive. |
 
-#### Boolean directives
+##### Boolean directives
 
 Applies to `no-store`, `no-transform`, `must-revalidate`, `proxy-revalidate`, `must-understand`, `public`, and `immutable`.
 
