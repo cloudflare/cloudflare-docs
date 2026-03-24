@@ -124,6 +124,7 @@ let resp = await fetch(
 );
 ```
 </TypeScriptExample>
+
 <TabItem label="Python" icon="seti:python">
 ```python
 import json
@@ -132,14 +133,15 @@ from workers import fetch
 # POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull with the timeout & batch size
 
 resp = await fetch(
-f"https://api.cloudflare.com/client/v4/accounts/{CF_ACCOUNT_ID}/queues/{QUEUE_ID}/messages/pull",
-method="POST",
-headers={
-"content-type": "application/json",
-"authorization": f"Bearer {QUEUES_API_TOKEN}",
-}, # Optional - you can provide an empty object '{}' and the defaults will apply.
-body=json.dumps({"visibility_timeout_ms": 6000, "batch_size": 50}),
+	f"https://api.cloudflare.com/client/v4/accounts/{CF_ACCOUNT_ID}/queues/{QUEUE_ID}/messages/pull",
+	method="POST",
+	headers={
+		"content-type": "application/json",
+		"authorization": f"Bearer {QUEUES_API_TOKEN}",
+	}, # Optional - you can provide an empty object '{}' and the defaults will apply.
+	body=json.dumps({"visibility_timeout_ms": 6000, "batch_size": 50}),
 )
+```
 </TabItem>
 </Tabs>
 
@@ -158,10 +160,10 @@ This will return an array of messages (up to the specified `batch_size`) in the 
 				"id": "1ad27d24c83de78953da635dc2ea208f",
 				"timestamp_ms": 1689615013586,
 				"attempts": 2,
-				"metadata":{
-					"CF-sourceMessageSource":"dash",
-					"CF-Content-Type":"json"
-        },
+				"metadata": {
+					"CF-sourceMessageSource": "dash",
+					"CF-Content-Type": "json"
+				},
 				"lease_id": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..NXmbr8h6tnKLsxJ_AuexHQ.cDt8oBb_XTSoKUkVKRD_Jshz3PFXGIyu7H1psTO5UwI.smxSvQ8Ue3-ymfkV6cHp5Va7cyUFPIHuxFJA07i17sc"
 			},
 			{
@@ -169,15 +171,16 @@ This will return an array of messages (up to the specified `batch_size`) in the 
 				"id": "95494c37bb89ba8987af80b5966b71a7",
 				"timestamp_ms": 1689615013586,
 				"attempts": 2,
-				"metadata":{
-					"CF-sourceMessageSource":"dash",
-					"CF-Content-Type":"json"
-        },
+				"metadata": {
+					"CF-sourceMessageSource": "dash",
+					"CF-Content-Type": "json"
+				},
 				"lease_id": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..QXPgHfzETsxYQ1Vd-H0hNA.mFALS3lyouNtgJmGSkTzEo_imlur95EkSiH7fIRIn2U.PlwBk14CY_EWtzYB-_5CR1k30bGuPFPUx1Nk5WIipFU"
 			}
 		]
 	}
 }
+```
 
 Pull consumers follow a "short polling" approach: if there are messages available to be delivered, Queues will return a response immediately with messages up to the configured `batch_size`. If there are no messages to deliver, Queues will return an empty response. Queues does not hold an open connection (often referred to as "long polling") if there are no messages to deliver.
 
@@ -243,6 +246,7 @@ let resp = await fetch(
 );
 ```
 </TypeScriptExample>
+
 <TabItem label="Python" icon="seti:python">
 ```python
 import json
@@ -251,21 +255,22 @@ from workers import fetch
 # POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
 
 resp = await fetch(
-f"https://api.cloudflare.com/client/v4/accounts/{CF_ACCOUNT_ID}/queues/{QUEUE_ID}/messages/ack",
-method="POST",
-headers={
-"content-type": "application/json",
-"authorization": f"Bearer {QUEUES_API_TOKEN}",
-}, # If you have no messages to retry, you can specify an empty array - retries: []
-body=json.dumps({
-"acks": [
-{"lease_id": "lease_id1"},
-{"lease_id": "lease_id2"},
-{"lease_id": "etc"},
-],
-"retries": [{"lease_id": "lease_id4"}],
-}),
+	f"https://api.cloudflare.com/client/v4/accounts/{CF_ACCOUNT_ID}/queues/{QUEUE_ID}/messages/ack",
+	method="POST",
+	headers={
+		"content-type": "application/json",
+		"authorization": f"Bearer {QUEUES_API_TOKEN}",
+	}, # If you have no messages to retry, you can specify an empty array - retries: []
+	body=json.dumps({
+		"acks": [
+			{"lease_id": "lease_id1"},
+			{"lease_id": "lease_id2"},
+			{"lease_id": "etc"},
+		],
+		"retries": [{"lease_id": "lease_id4"}],
+	}),
 )
+```
 </TabItem>
 </Tabs>
 
@@ -280,6 +285,7 @@ You may optionally specify the number of seconds to delay a message for when mar
 	],
 	"retries": [{ "lease_id": "lease_id4", "delay_seconds": 600 }]
 }
+```
 
 Additionally:
 
