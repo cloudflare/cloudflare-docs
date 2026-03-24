@@ -8,7 +8,14 @@ head:
     content: Zone-level authenticated origin pulls
 ---
 
-import { AvailableNotifications, Render, Details } from "~/components";
+import {
+	AvailableNotifications,
+	Render,
+	Details,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
 When you enable zone-level Authenticated Origin Pulls (AOP), all proxied traffic to your zone is authenticated at the origin web server using a certificate that you upload. Unlike [global AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/global/), which uses a Cloudflare-provided certificate shared across all accounts, zone-level AOP uses your own certificate for stricter security.
 
@@ -29,7 +36,21 @@ Zone-level AOP requires you to upload your own certificate.
 
 ## 1. Upload your certificate to Cloudflare
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to the **Origin Server** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
+
+2. Select the **Authenticated Origin Pulls** tab.
+3. In the **Zone-level** section, select **Upload certificate**.
+4. Paste the certificate and private key, then select **Upload**.
+
+</TabItem> <TabItem label="API">
+
 Follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/create/).
+
+</TabItem> </Tabs>
 
 ## 2. Upload the CA certificate to your origin
 
@@ -48,13 +69,26 @@ Upload the CA root certificate used to sign your client certificate to your orig
 
 ## 4. Enable zone-level Authenticated Origin Pulls
 
-Use the Cloudflare API to send a [`PUT`](/api/resources/origin_tls_client_auth/subresources/settings/methods/update/) request to enable zone-level Authenticated Origin Pulls.
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to the **Origin Server** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
+
+2. Select the **Authenticated Origin Pulls** tab.
+3. In the **Zone-level** section, switch the toggle to **On**.
+
+</TabItem> <TabItem label="API">
+
+Send a [`PUT`](/api/resources/origin_tls_client_auth/subresources/settings/methods/update/) request to enable zone-level Authenticated Origin Pulls.
 
 :::caution
 
-This endpoint is separate from the [global AOP toggle](/ssl/origin-configuration/authenticated-origin-pull/set-up/global/), which uses the zone settings `tls_client_auth` setting. Make sure you use the correct endpoint to enable the configuration you intend.
+This endpoint is separate from the [global AOP toggle](/ssl/origin-configuration/authenticated-origin-pull/set-up/global/), which uses the zone settings `tls_client_auth` setting. Make sure you use the correct endpoint for the configuration you intend.
 
 :::
+
+</TabItem> </Tabs>
 
 ## 5. Enforce validation check on your origin
 

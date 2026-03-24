@@ -8,7 +8,7 @@ head:
     content: Global authenticated origin pulls
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem, DashButton } from "~/components";
 
 When you enable global Authenticated Origin Pulls (AOP), Cloudflare uses a Cloudflare-provided client certificate for all proxied traffic to your zone. This certificate is shared across all Cloudflare accounts and only guarantees that the request is coming from the Cloudflare network.
 
@@ -41,7 +41,20 @@ The Cloudflare-provided certificate is not exclusive to your account. It only gu
 
 ## 3. Enable global Authenticated Origin Pulls
 
-<Render file="aop-enable-feature" product="ssl" />
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to the **Origin Server** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
+
+2. Select the **Authenticated Origin Pulls** tab.
+3. In the **Global** section, switch the toggle to **On**.
+
+</TabItem> <TabItem label="API">
+
+To enable or disable global Authenticated Origin Pulls with the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `tls_client_auth` as the setting name in the URI path, and the `value` parameter set to your desired setting (`"on"` or `"off"`).
+
+</TabItem> </Tabs>
 
 ## 4. Enforce validation check on your origin
 
