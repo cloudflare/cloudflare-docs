@@ -115,7 +115,7 @@ const worker = env.LOADER.get("hello-v1", async () => {
 
 	// Return the same format as `env.LOADER.load()` accepts.
 	return {
-		compatibilityDate: "2026-01-01",
+		compatibilityDate: "$today",
 		mainModule: "index.js",
 		modules: { "index.js": code, },
 		globalOutbound: null,
