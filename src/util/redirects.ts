@@ -52,6 +52,10 @@ function parseRedirects(): {
 // Evaluated once at build time.
 const { staticRules, dynamicRules } = parseRedirects();
 
+function isExternalUrl(url: string): boolean {
+	return url.startsWith("http://") || url.startsWith("https://");
+}
+
 /** Maximum number of redirect hops to follow when resolving chains. */
 const MAX_HOPS = 10;
 
@@ -74,10 +78,7 @@ export function resolveRedirect(urlPath: string): string {
 		// Static lookup
 		const staticDest = staticRules.get(current);
 		if (staticDest) {
-			if (
-				staticDest.startsWith("http://") ||
-				staticDest.startsWith("https://")
-			) {
+			if (isExternalUrl(staticDest)) {
 				return staticDest;
 			}
 			current = staticDest;
@@ -91,7 +92,7 @@ export function resolveRedirect(urlPath: string): string {
 			if (m) {
 				const splat = m.groups?.splat ?? "";
 				const resolved = rule.dest.replace(":splat", splat);
-				if (resolved.startsWith("http://") || resolved.startsWith("https://")) {
+				if (isExternalUrl(resolved)) {
 					return resolved;
 				}
 				current = resolved;
@@ -111,6 +112,5 @@ export function resolveRedirect(urlPath: string): string {
  * `__redirects` (i.e. the final destination starts with `http://` or `https://`).
  */
 export function isExternalRedirect(urlPath: string): boolean {
-	const resolved = resolveRedirect(urlPath);
-	return resolved.startsWith("http://") || resolved.startsWith("https://");
+	return isExternalUrl(resolveRedirect(urlPath));
 }
