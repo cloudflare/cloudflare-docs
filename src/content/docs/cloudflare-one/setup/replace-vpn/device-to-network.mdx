@@ -4,7 +4,7 @@ title: "Device to network"
 sidebar:
   order: 1
   label: Device to network
-description: Connect a remote device to a private network using Cloudflare Tunnel and the WARP client.
+description: Connect a remote device to a private network using Cloudflare Tunnel and the Cloudflare One Client.
 products:
   - cloudflare-one
 tags:
@@ -23,13 +23,13 @@ This guide follows the same steps as the **Get Started** onboarding wizard in th
 
 [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) is a network connector that creates an outbound-only connection between your private network and Cloudflare. No open inbound ports or firewall changes are required.
 
-The <GlossaryTooltip term="WARP client">[WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)</GlossaryTooltip> is an app that you install on each user's device. It routes traffic through Cloudflare and into the tunnel, so users can reach internal resources from anywhere.
+The <GlossaryTooltip term="Cloudflare One Client">[Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)</GlossaryTooltip> is an app that you install on each user's device. It routes traffic through Cloudflare and into the tunnel, so users can reach internal resources from anywhere.
 
 ## Prerequisites
 
 - A Cloudflare account with a Zero Trust organization. If you have not set this up, refer to [Get started](/cloudflare-one/setup/).
 - A Linux, Windows, or macOS device on your private network to run the tunnel.
-- A Linux, Windows, or macOS device to install the WARP client on.
+- A Linux, Windows, or macOS device to install the Cloudflare One Client on.
 
 ## Step 1: Assign a Tunnel
 
@@ -73,18 +73,18 @@ Install the `cloudflared` connector on a device in your private network and run 
 
 ## Step 4: Enroll your devices
 
-Device enrollment controls which users can connect their devices to your private network through Cloudflare. In this step, you register your first device by providing an email address and installing the WARP client.
+Device enrollment controls which users can connect their devices to your private network through Cloudflare. In this step, you register your first device by providing an email address and installing the Cloudflare One Client.
 
 1. Enter the email you want to use to enroll your first device.
 2. Select your device's operating system.
-3. Select **Download to continue** to download the WARP client, or copy the download link to send to a different device.
+3. Select **Download to continue** to download the Cloudflare One Client, or copy the download link to send to a different device.
 4. Select **Continue**.
 
 :::note
 You can manage device enrollment permissions later in **Team & Resources** > **Devices**.
 :::
 
-## Step 5: Complete WARP setup
+## Step 5: Complete Cloudflare One Client setup
 
 <Render
 	file="warp/complete-warp-setup"
@@ -112,5 +112,5 @@ For in-depth guidance on policy design and device posture checks, refer to the [
 
 If you have issues connecting, refer to these resources:
 
-- [Troubleshoot WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/): resolve WARP client connection and enrollment issues.
+- [Troubleshoot WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/): resolve Cloudflare One Client connection and enrollment issues.
 - [Troubleshoot tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/): diagnose tunnel connectivity and routing problems.

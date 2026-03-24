@@ -46,7 +46,7 @@ Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your applica
 
 #### 2. Create a new version of the Worker
 
-To create a new version of the Worker, edit the Worker code by changing the `Response` content to your desired text and upload the Worker by using the [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) command.
+To create a new version of the Worker, edit the Worker code by changing the `Response` content to your desired text and upload the Worker by using the [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload) command.
 
 ```sh
 npx wrangler versions upload
@@ -56,7 +56,7 @@ This will create a new version of the Worker that is not automatically deployed.
 
 #### 3. Create a new deployment
 
-Use the [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy) command to
+Use the [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy) command to
 create a new deployment that splits traffic between two versions of the Worker. Follow the interactive prompts to create a deployment with the versions uploaded in [step #1](/workers/configuration/versions-and-deployments/gradual-deployments/#1-create-and-deploy-a-new-worker) and [step #2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker). Select your desired percentages for each version.
 
 ```sh
@@ -165,7 +165,7 @@ curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-
 
 The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
 
-A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/#deployments-list) command or on the **Workers & Pages** page of the Cloudflare dashboard > Select your Workers > Deployments > Active Deployment.
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/general/#deployments-list) command or on the **Workers & Pages** page of the Cloudflare dashboard > Select your Workers > Deployments > Active Deployment.
 
 :::note[Verifying that the version override was applied]
 
@@ -190,7 +190,7 @@ In this example, your deployment is initially configured to route all traffic to
 | :----------------------------------: | :--------: |
 | db7cd8d3-4425-4fe7-8c81-01bf963b6067 |    100%    |
 
-Create a new deployment using [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy) and specify 0% for the new version whilst keeping the previous version at 100%.
+Create a new deployment using [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy) and specify 0% for the new version whilst keeping the previous version at 100%.
 
 |              Version ID              | Percentage |
 | :----------------------------------: | :--------: |

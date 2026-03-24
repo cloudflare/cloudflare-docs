@@ -149,6 +149,17 @@
 	}
 
 	:root {
+		/* Kumo header tokens — light mode */
+		--color-header-text: var(--color-cl1-gray-4);
+		--color-header-text-subtle: var(--color-cl1-gray-4);
+		--color-header-hover-text: var(--color-cl1-black);
+		--color-header-line: rgb(0 0 0 / 0.12);
+		--color-header-fill: rgb(0 0 0 / 0.05);
+		--color-header-overlay-bg: var(--sl-color-bg);
+		--color-header-overlay-line: rgb(0 0 0 / 0.08);
+		--color-header-overlay-shadow: rgb(0 0 0 / 0.12);
+		--color-header-btn-bg: var(--color-cl1-brand-orange);
+		--color-header-btn-text: var(--color-cl1-black);
 		--blue-accent-200: rgb(15, 0, 107);
 		--blue-accent-600: rgb(46, 105, 255);
 		--blue-accent-900: rgb(62, 116, 255);
@@ -171,5 +182,31 @@
 		--tw-accent-200: var(--orange-accent-200);
 		--tw-accent-600: var(--orange-accent-600);
 		--tw-accent-900: var(--orange-accent-900);
+
+		/* Kumo header tokens — dark mode */
+		--color-header-text: var(--color-cl1-gray-7);
+		--color-header-text-subtle: var(--color-cl1-gray-6);
+		--color-header-hover-text: var(--color-cl1-white);
+		--color-header-line: rgb(255 255 255 / 0.1);
+		--color-header-fill: rgb(255 255 255 / 0.07);
+		--color-header-overlay-bg: var(--sl-color-bg);
+		--color-header-overlay-line: rgb(255 255 255 / 0.08);
+		--color-header-overlay-shadow: rgb(0 0 0 / 0.4);
+		--color-header-btn-bg: var(--color-cl1-brand-orange);
+		--color-header-btn-text: var(--color-cl1-black);
+	}
+
+	/* Override Starlight's restrictive right-sidebar TOC container width */
+	.right-sidebar-panel .sl-container {
+		width: 100%;
+		max-width: 18rem;
+	}
+
+	/* Align "On this page" baseline with the breadcrumbs / "Copy page" button text.
+	   Content panel top = 1rem + breadcrumb padding-top = 0.5rem → 1.5rem to text baseline.
+	   Starlight's default is 1rem, so bump it to match. */
+	.right-sidebar-panel {
+		padding-top: 1.5rem !important;
+		padding-left: 1.5rem !important;
 	}
 }

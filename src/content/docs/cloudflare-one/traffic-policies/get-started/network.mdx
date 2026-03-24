@@ -24,8 +24,8 @@ For a more detailed guide to filtering network traffic and more for your organiz
 
 To filter network traffic from a device such as a laptop or phone:
 
-1. [Install the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your device.
-2. In the WARP client Settings, log in to your organization's <GlossaryTooltip term="team name">Cloudflare One instance</GlossaryTooltip>.
+1. [Install the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your device.
+2. In the Cloudflare One Client Settings, log in to your organization's <GlossaryTooltip term="team name">Cloudflare One instance</GlossaryTooltip>.
 3. (Optional) If you want to display a [custom block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) when users are blocked, [install the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device. Without the certificate, blocked users will see a generic browser connection error instead of an informative page.
 4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP. The Gateway proxy is what routes your device's traffic through Cloudflare so network policies can inspect it — without it enabled, your policies will have no effect. Optionally, enable the UDP proxy to also inspect QUIC traffic (a newer protocol used by HTTP/3 connections) on port 443.
 
@@ -41,18 +41,18 @@ To verify your device is connected to Cloudflare One:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
 2. Under **Log traffic activity**, enable activity logging for all Network logs. This tells Cloudflare to record network-level traffic so you can confirm your device appears in the logs.
-3. On your WARP-enabled device, open a browser and visit any website. This generates traffic that should appear in the logs.
+3. On your Cloudflare One Client device, open a browser and visit any website. This generates traffic that should appear in the logs.
 4. Determine the **Source IP** for your device (the public-facing address Cloudflare sees for your connection):
 
   <Tabs>
 	<TabItem label="Version 2026.2+">
 
-   1. Open the Cloudflare One client.
+   1. Open the Cloudflare One Client.
    2. Go to **Profile**.
    3. Note the **Client Interface IP**. This is the same address that will appear as the Source IP in your network logs.
   </TabItem>
 	<TabItem label="Version 2026.1 and earlier">
-   1. Open the WARP client.
+   1. Open the Cloudflare One Client.
    2. Go to **Settings** (gear icon) **Preferences** > **General**.
    3. Note the **Public IP**. This is the same address that will appear as the Source IP in your network logs.
 
@@ -61,7 +61,7 @@ To verify your device is connected to Cloudflare One:
 
 5. In Cloudflare One, go to **Insights** > **Logs** > **Network logs**. Before building network policies, make sure you see network logs from the Source IP assigned to your device.
 
-If no logs appear after a few minutes, check two things: first, verify that the [Gateway proxy is turned on](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy). Second, confirm that the device is enrolled in your Zero Trust organization by checking the WARP client connection status.
+If no logs appear after a few minutes, check two things: first, verify that the [Gateway proxy is turned on](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy). Second, confirm that the device is enrolled in your Zero Trust organization by checking the Cloudflare One Client connection status.
 
 ## 3. Create your first network policy
 

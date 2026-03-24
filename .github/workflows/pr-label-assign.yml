@@ -41,7 +41,7 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/assign-pr
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -30,6 +30,7 @@ Here are some options to fix or workaround this issue:
   - Certificate is not revoked.
   - Certificate is signed by a [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) (not self-signed).
   - The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**.
+  - The certificate chain is complete - the origin server must serve the leaf certificate along with any required intermediate CA certificates so that Cloudflare can build a trusted chain to a root CA.
   - Your origin web server accepts connections over port SSL port `443`.
   - [Temporarily pause Cloudflare](/fundamentals/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
 

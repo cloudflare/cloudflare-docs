@@ -49,9 +49,9 @@ As admin, you can set a **Timeout** to define how long a user can toggle the cli
 
 :::caution[Troubleshooting]
 
-To learn more about override code timeouts and how Cloudflare calculates an override code's valid duration, refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#i-entered-an-override-code-for-warp-that-was-supposed-to-be-valid-for-3-hours-but-the-override-code-expired-faster-than-i-expected).
+To learn more about override code timeouts and how Cloudflare calculates an override code's valid duration, refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#i-entered-an-override-code-for-the-cloudflare-one-client-that-was-supposed-to-be-valid-for-3-hours-but-the-override-code-expired-faster-than-i-expected).
 
-If [Auto connect](#auto-connect) is enabled, the Cloudflare One Client will automatically reconnect, according to the value set for the auto connect timeout, even when using **Allow admin override codes**. Refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#i-disabled-warp-using-an-override-code-but-warp-turned-on-by-itself-before-my-override-code-expired) for more information.
+If [Auto connect](#auto-connect) is enabled, the Cloudflare One Client will automatically reconnect, according to the value set for the auto connect timeout, even when using **Allow admin override codes**. Refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#i-disabled-the-cloudflare-one-client-using-an-override-code-but-it-turned-on-by-itself-before-my-override-code-expired) for more information.
 
 :::
 
@@ -75,7 +75,7 @@ To activate the override code on a user device:
 <Tabs>
 <TabItem label="Version 2026.2+">
 
-1. Open the Cloudflare One client and go to **Settings**.
+1. Open the Cloudflare One Client and go to **Settings**.
 2. In **Temporarily disconnect Cloudflare One Client**, select **Enter admin code**.
 3. Enter the override code and select **Disconnect**.
 
@@ -144,12 +144,12 @@ The IP assigned to a device is permanent until the device unregisters from your 
 
 </Details>
 
-Allows traffic on-ramped using [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) to route to devices enrolled in your Zero Trust organization.
+Allows traffic on-ramped using [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) to route to devices enrolled in your Zero Trust organization.
 
 Each device is assigned a virtual IP address in the <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP</GlossaryTooltip> space (`100.96.0.0/12`) or a [custom device IP range](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/). With this setting `Enabled`, users on your private network will be able to connect to these device IPs and access [TCP, UDP, and/or ICMP-based services](/cloudflare-one/traffic-policies/proxy/) on your devices. You can create [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to control which users and devices can access the device IPs.
 
 :::note
-Ensure that traffic destined to your device IPs routes from your private network to Cloudflare Gateway. For example, if you are making a [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) connection, you must configure your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) so that traffic to your device IPs routes through the WARP tunnel.
+Ensure that traffic destined to your device IPs routes from your private network to Cloudflare Gateway. For example, if you are making a [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/) connection, you must configure your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) so that traffic to your device IPs routes through the WARP tunnel.
 :::
 
 ## Global disconnection settings
@@ -177,7 +177,7 @@ Ensure that traffic destined to your device IPs routes from your private network
 Requires the [Super Administrator](/cloudflare-one/roles-permissions/) role.
 :::
 
-**Disconnect WARP on all devices** allows administrators to fail open the Cloudflare One Client in case of an incident occurring in your environment, independent from incidents or outages affecting Cloudflare's services. When you turn on **Disconnect WARP on all devices**, Cloudflare will disconnect all Windows, macOS, and Linux Cloudflare One Clients that are connected to your Zero Trust organization. This includes end user devices, [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) hosts, and [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) devices. End users will receive a notification on their device and the Cloudflare One Client will display [`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/client-errors/#admin-directed-disconnect).
+**Disconnect WARP on all devices** allows administrators to fail open the Cloudflare One Client in case of an incident occurring in your environment, independent from incidents or outages affecting Cloudflare's services. When you turn on **Disconnect WARP on all devices**, Cloudflare will disconnect all Windows, macOS, and Linux Cloudflare One Clients that are connected to your Zero Trust organization. This includes end user devices, [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) hosts, and [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/) devices. End users will receive a notification on their device and the Cloudflare One Client will display [`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/client-errors/#admin-directed-disconnect).
 
 To resume normal operations, turn off **Disconnect WARP on all devices**. The Cloudflare One Client will automatically reconnect.
 
@@ -379,7 +379,7 @@ To turn on local network access in the Cloudflare One Client:
 
 <TabItem label="Windows and macOS">
 
-1. Open the Cloudflare One client and go to **Settings**.
+1. Open the Cloudflare One Client and go to **Settings**.
 2. In **Temporarily access local network resources**, select **Access resources**.
 
 <Details header="Version 2026.1 and earlier">

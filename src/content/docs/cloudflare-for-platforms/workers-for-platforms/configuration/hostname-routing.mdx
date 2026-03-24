@@ -8,14 +8,14 @@ sidebar:
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
-You can use [dynamic dispatch](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) Workers to route millions of vanity domains or subdomains to Workers without hitting traditional [route limits](/workers/platform/limits/#number-of-routes-per-zone). These hostnames can be subdomains under your managed domain (e.g. `customer1.saas.com`) or vanity domains controlled by your end customers (e.g. `mystore.com`), which can be managed through [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/).
+You can use [dynamic dispatch](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) Workers to route millions of vanity domains or subdomains to Workers without hitting traditional [route limits](/workers/platform/limits/#routes-and-domains). These hostnames can be subdomains under your managed domain (e.g. `customer1.saas.com`) or vanity domains controlled by your end customers (e.g. `mystore.com`), which can be managed through [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/).
 
 ## (Recommended) Wildcard route with a dispatch Worker
 
 Configure a wildcard [Route](/workers/configuration/routing/routes/) (`*/*`) on your SaaS domain (the domain where you configure custom hostnames) to point to your dynamic dispatch Worker. This allows you to:
 
 - **Support both subdomains and vanity domains**: Handle `customer1.myplatform.com` (subdomain) and `shop.customer.com` (custom hostname) with the same routing logic.
-- **Avoid route limits**: Instead of creating individual routes for every domain, which can cause you to hit [Routes limits](/workers/platform/limits/#number-of-routes-per-zone), you can handle the routing logic in code and proxy millions of domains to individual Workers.
+- **Avoid route limits**: Instead of creating individual routes for every domain, which can cause you to hit [Routes limits](/workers/platform/limits/#routes-and-domains), you can handle the routing logic in code and proxy millions of domains to individual Workers.
 - **Programmatically control routing logic**: Write custom code to route requests based on hostname, [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/), path, or any other properties.
 
 :::note

@@ -43,7 +43,7 @@ The tunnel status only reflects the connection between `cloudflared` and the Clo
 
 ## My tunnel randomly disconnects.
 
-Long-lived connections initiated through Cloudflare One, such as SSH sessions, can last up to eight hours. However, disruptions along the service path may result in more frequent disconnects. Often, these disconnects are caused by regularly scheduled maintenance events such as data center, server, or service updates and restarts. If you believe these events are not the cause of disconnects in your environment, collect the relevant [WARP logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/) and [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) and contact Support.
+Long-lived connections initiated through Cloudflare One, such as SSH sessions, can last up to eight hours. However, disruptions along the service path may result in more frequent disconnects. Often, these disconnects are caused by regularly scheduled maintenance events such as data center, server, or service updates and restarts. If you believe these events are not the cause of disconnects in your environment, collect the relevant [client logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/) and [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) and contact Support.
 
 ## `ping` and `traceroute` commands do not work.
 
@@ -51,7 +51,7 @@ To ping an IP address behind Cloudflare Tunnel, your system must allow ICMP traf
 
 ## I see `Error: This route's network is inside an existing subnet's network at "100.96.0.0/12"`.
 
-This error occurs when you try to add a CIDR route that falls within Cloudflare WARP's <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP range</GlossaryTooltip>. The `100.96.0.0/12` range, which covers addresses from `100.96.0.1` to `100.111.255.254`, is reserved for internal WARP routing and cannot be added as a Cloudflare Tunnel route. To connect your private network, you will need to change its IP/CIDR so that it does not overlap with `100.96.0.0/12`.
+This error occurs when you try to add a CIDR route that falls within the Cloudflare One Client's <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP range</GlossaryTooltip>. The `100.96.0.0/12` range, which covers addresses from `100.96.0.1` to `100.111.255.254`, is reserved for internal WARP routing and cannot be added as a Cloudflare Tunnel route. To connect your private network, you will need to change its IP/CIDR so that it does not overlap with `100.96.0.0/12`.
 
 ## Troubleshooting
 

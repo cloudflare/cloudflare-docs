@@ -74,7 +74,7 @@ In this example, the Worker has access to local-only D1 database. The correspond
 
 Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information. Any changes you make when running against a remote database cannot be undone.
 
-Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
+Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/general/#dev) to learn more about how to configure a local development session.
 
 ## Develop locally with Pages
 
@@ -249,6 +249,6 @@ Review the [`unstable_dev()`](/workers/wrangler/api/#usage) documentation for mo
 
 ## Related resources
 
-- Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.
+- Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) to run your Worker and D1 locally and debug issues before deploying.
 - Learn [how to debug D1](/d1/observability/debug-d1/).
 - Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.

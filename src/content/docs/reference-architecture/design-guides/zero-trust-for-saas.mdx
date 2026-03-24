@@ -118,7 +118,7 @@ IT teams will also benefit from a consistent and automated process for onboardin
 
 Consider a scenario where a user moves to a different group or team within an organization. As soon as the user group information is updated on the IdP, Cloudflare's ZTNA policies will dynamically enforce these changes, ensuring that the user's access to the SaaS applications is immediately adjusted based on their new role. This also helps in SaaS applications' license optimization. For example, if an employee is transferred from the sales team, which uses Salesforce, to a team that does not require access to Salesforce, the ZTNA policies will revoke their access to the application. This automated process helps in reclaiming the license that was previously assigned to the user, ensuring that only those who actually need the application have access to it.
 
-Finally, SaaS applications are accessible over the Internet, allowing any device to access them if a user authenticates successfully. However, with Cloudflare's ZTNA service, IT teams can ensure that only managed devices access a SaaS application by enforcing device posture checks, in addition to identity checks. A common use case is [verifying the presence of an IT-deployed device certificate](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/client-certificate/#configure-the-client-certificate-check) before granting application access.
+Finally, SaaS applications are accessible over the Internet, allowing any device to access them if a user authenticates successfully. However, with Cloudflare's ZTNA service, IT teams can ensure that only managed devices access a SaaS application by enforcing device posture checks, in addition to identity checks. A common use case is [verifying the presence of an IT-deployed device certificate](/cloudflare-one/reusable-components/posture-checks/client-checks/client-certificate/#configure-the-client-certificate-check) before granting application access.
 
 #### Deployment guidelines
 
@@ -165,7 +165,7 @@ Phishing attacks and campaigns to spread malware to take over devices and access
 
 #### Securing access
 
-As described already, implementing ZTNA to secure your email platform offers numerous benefits. One key advantage is ensuring that email access is restricted to trusted, managed devices, even when using a cloud-based email service. This typically involves using Cloudflare to verify the presence of a [client certificate](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/client-certificate/) and confirm that there are no risks detected by an external endpoint management solution, such as [Crowdstrike](/cloudflare-one/integrations/service-providers/crowdstrike/) or [SentinelOne](/cloudflare-one/integrations/service-providers/sentinelone/).
+As described already, implementing ZTNA to secure your email platform offers numerous benefits. One key advantage is ensuring that email access is restricted to trusted, managed devices, even when using a cloud-based email service. This typically involves using Cloudflare to verify the presence of a [client certificate](/cloudflare-one/reusable-components/posture-checks/client-checks/client-certificate/) and confirm that there are no risks detected by an external endpoint management solution, such as [Crowdstrike](/cloudflare-one/integrations/service-providers/crowdstrike/) or [SentinelOne](/cloudflare-one/integrations/service-providers/sentinelone/).
 
 #### Tenant control
 

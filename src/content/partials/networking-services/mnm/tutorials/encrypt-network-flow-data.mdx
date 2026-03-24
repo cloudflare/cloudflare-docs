@@ -4,17 +4,17 @@
 
 import { APIRequest } from "~/components";
 
-You can encrypt the network flow data sent from your router to Cloudflare by [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) your network flow traffic through a device running the WARP client. Encrypted network flow traffic is then forwarded from the WARP-enabled device to Cloudflare's network flow endpoints.
+You can encrypt the network flow data sent from your router to Cloudflare by [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) your network flow traffic through a device running the Cloudflare One Client. Encrypted network flow traffic is then forwarded from the Cloudflare One Client device to Cloudflare's network flow endpoints.
 
-To learn more about the WARP client, and to install the WARP client on Linux, macOS, or Windows, you can visit the [WARP client documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/).
+To learn more about the Cloudflare One Client, and to install it on Linux, macOS, or Windows, refer to the [Cloudflare One Client documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/).
 
-## 1. Configure your WARP devices
+## 1. Configure your devices
 
-Follow the instructions in the [Network Flow (formerly Magic Network Monitoring) API](/api/resources/magic_network_monitoring/subresources/configs/methods/edit/) to configure your WARP devices.
+Follow the instructions in the [Network Flow (formerly Magic Network Monitoring) API](/api/resources/magic_network_monitoring/subresources/configs/methods/edit/) to configure your devices.
 
 The `warp_devices` array at the account level is a list of WARP devices through which you can send encrypted flows. Each WARP device must have:
 
-- The WARP client UUID. You can obtain the UUID in the UI or through the following command:
+- The Cloudflare One Client UUID. You can obtain the UUID in the UI or through the following command:
   ```sh
   warp-cli registration show
   ```
@@ -37,26 +37,26 @@ For example:
 	}}
 />
 
-## 2. Route Network Flow traffic through WARP
+## 2. Route Network Flow traffic through the Cloudflare One Client
 
-Depending on where you installed the WARP client, you may need to configure other devices on the subnet to route traffic through WARP. If you have access to your router and it runs a version/OS supported by the WARP client, we recommend using [Option 1](#option-1-default-gateway). This recommendation also applies if you have a software-based flow exporter (such as `softflowd`) and are not using a physical router to collect and export flows to Cloudflare.
+Depending on where you installed the Cloudflare One Client, you may need to configure other devices on the subnet to route traffic through the Cloudflare One Client. If you have access to your router and it runs a version/OS supported by the Cloudflare One Client, Cloudflare recommends [Option 1](#option-1-default-gateway). This also applies if you use a software-based flow exporter (such as `softflowd`) instead of a physical router to collect and export flows.
 
 ### Option 1: Default gateway
 
-If you installed a WARP client on your router or machine collector (something you can use to collect flow information, such as a computer, virtual machine or server), no additional configuration is necessary. All traffic will use the router as the default gateway. All you need to do is configure your flow export to send flow data to IP address `162.159.65.1` and port `2055` for NetFlow, or `162.159.65.1` and port `6343` for sFlow.
+If you installed the Cloudflare One Client on your router or machine collector (a computer, virtual machine, or server that collects flow information), no additional configuration is necessary. All traffic uses the router as the default gateway. Configure your flow export to send data to IP address `162.159.65.1` and port `2055` for NetFlow, or `162.159.65.1` and port `6343` for sFlow.
 
 ### Option 2: Alternate gateway
 
-If you have access to the router but installed WARP on another machine, you can configure the router to export flow traffic to the machine running WARP. To do this:
+If you have access to the router but installed the Cloudflare One Client on another machine, you can configure the router to export flow traffic to the machine running the Cloudflare One Client. To do this:
 
 1. Set the machine's IP address as the export destination on the router.
-2. Configure the export port on the router to match the listening port on the WARP machine.
-3. Redirect traffic that arrives at your machine running WARP to the following Cloudflare's destination IPs and ports:
+2. Configure the export port on the router to match the listening port on the Cloudflare One Client machine.
+3. Redirect traffic that arrives at your machine running the Cloudflare One Client to the following Cloudflare destination IPs and ports:
    - **For NetFlow**: IP address `162.159.65.1` and port `2055`.
    - **For sFlow**: IP `162.159.65.1` and port `6343`. <br />
      For example, if WARP is running on a machine in your network with the IP `10.10.10.10`, and you configured it to accept traffic on port `2055` or `6343`, you need to configure your flow export-capable router to send data to `10.10.10.10` and port `2055` or `6343`.
 
-In the machine running WARP, you can redirect this traffic to Cloudflare using a proxy or redirect tool of your choice. Options include:
+In the machine running the Cloudflare One Client, you can redirect this traffic to Cloudflare using a proxy or redirect tool of your choice. Options include:
 
 - Using `socat`, listen on the desired port for UDP traffic. Then, proxy that traffic to Network Flow's destination and port.
   - `socat UDP-LISTEN:2055,reuseaddr,fork UDP:162.159.65.1:2055`
@@ -65,4 +65,4 @@ In the machine running WARP, you can redirect this traffic to Cloudflare using a
 
 ## 3. (Optional) Configure split tunnels
 
-If you do not want all the traffic in your device to be WARP-enabled, [configure split tunnels/proxy mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) to either only allow Network Flow traffic towards `162.159.65.1` or exclude everything else.
+If you do not want all traffic on your device to route through the Cloudflare One Client, [configure split tunnels/proxy mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) to either only allow Network Flow traffic towards `162.159.65.1` or exclude everything else.

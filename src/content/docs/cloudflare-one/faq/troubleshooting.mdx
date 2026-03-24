@@ -11,15 +11,15 @@ import { GlossaryTooltip, Render } from "~/components";
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
 
-## I tried to register the WARP client with my Zero Trust domain but received the following error messages: `Authentication Expired` and `Registration error. Please try again later`.
+## I tried to register the Cloudflare One Client with my Zero Trust domain but received the following error messages: `Authentication Expired` and `Registration error. Please try again later`.
 
-When a user logs into an organization, WARP will open a web page so the user can sign in via Cloudflare Access. Access then generates a JSON Web Token (JWT) that is passed from the web page to the WARP client to authenticate the device. This JWT has a timestamp indicating the exact time it was created, as well as a timestamp indicating it will expire 50 seconds into the future.
+When a user logs into an organization, the Cloudflare One Client will open a web page so the user can sign in via Cloudflare Access. Access then generates a JSON Web Token (JWT) that is passed from the web page to the Cloudflare One Client to authenticate the device. This JWT has a timestamp indicating the exact time it was created, as well as a timestamp indicating it will expire 50 seconds into the future.
 
-This error message means that when the JWT is finally passed to the WARP client, it has already expired. One of two things can be happening:
+This error message means that when the JWT is finally passed to the Cloudflare One Client, it has already expired. One of two things can be happening:
 
 1. (Most likely): Your computer system clock is not properly synced using Network Time Protocol (NTP). Visit [https://time.is](https://time.is) on the affected machine to validate your clock is properly synchronized within 20 seconds of the actual time.
 
-2. You are waiting more than one minute to open Cloudflare WARP from the time Cloudflare Access prompts you. Open the WARP client as soon as you get the prompt.
+2. You are waiting more than one minute to open the Cloudflare One Client from the time Cloudflare Access prompts you. Open the Cloudflare One Client as soon as you get the prompt.
 
 ## I see a website is blocked, and it shouldn't be.
 
@@ -43,7 +43,7 @@ Gateway presents an **HTTP Response Code: 526** error page in the following case
   - The server certificate is revoked and fails a CRL check.
   - There is at least one expired certificate in the certificate chain for the server certificate.
   - The common name on the certificate does not match the URL you are trying to reach.
-  - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
+  - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off the Cloudflare One Client.
 
 - **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
   - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
@@ -72,7 +72,7 @@ You may not see analytics on the Overview page for the following reasons:
 
 ## I see a "No Browsers Available" alert.
 
-If you encounter this error, [file feedback](/cloudflare-one/remote-browser-isolation/known-limitations/) via the WARP client and we will investigate.
+If you encounter this error, [file feedback](/cloudflare-one/remote-browser-isolation/known-limitations/) via the Cloudflare One Client and we will investigate.
 
 ## I see a "Maximum Sessions Reached" alert.
 
@@ -92,13 +92,13 @@ This error will appear if a certificate has not been generated for the Access ap
 These mobile applications may use <GlossaryTooltip term="certificate pinning">certificate pinning</GlossaryTooltip> Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
 
-## Firefox shows a network protocol violation when I use the WARP client.
+## Firefox shows a network protocol violation when I use the Cloudflare One Client.
 
 If you see this warning, you may have to disable DNS over HTTPS setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
-## Chrome shows `NET::ERR_CERT_AUTHORITY_INVALID` when I use the WARP client.
+## Chrome shows `NET::ERR_CERT_AUTHORITY_INVALID` when I use the Cloudflare One Client.
 
-Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
+Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) is enabled, the Cloudflare One Client will automatically install a new root certificate whenever you install or update the Cloudflare One Client.
 
 Certain web browsers (such as Chrome and Microsoft Edge) load and cache root certificates when they start. Therefore, if you install a root certificate while the browser is already running, the browser may not detect the new certificate. To resolve the error, restart the browser.
 
@@ -107,7 +107,7 @@ Certain web browsers (such as Chrome and Microsoft Edge) load and cache root cer
 This error appears if you try to change your [team domain](/cloudflare-one/faq/getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare dashboard SSO](/fundamentals/manage-members/dashboard-sso/) feature is enabled on your account.
 Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.
 
-## WARP on Linux shows `DNS connectivity check failed`.
+## The Cloudflare One Client on Linux shows `DNS connectivity check failed`.
 
 This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. You can identify this issue in the [`daemon.log`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#warp-diag-logs) file of the `warp diag` logs, where the error message appears as `ERROR main_loop: warp::warp::connectivity_check: DNS connectivity check failed to resolve host="warp-svc."`.
 
@@ -127,9 +127,9 @@ ResolveUnicastSingleLabel=yes
 sudo systemctl restart systemd-resolved.service
 ```
 
-## Windows incorrectly shows `No Internet access` when WARP is enabled.
+## Windows incorrectly shows `No Internet access` when the Cloudflare One Client is enabled.
 
-[NCSI](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-overview) is a Windows feature for determining network quality and connectivity. When WARP is enabled, NCSI checks can sometimes fail and cause a cosmetic UI error where the user believes they have no Internet even though the device still has full connectivity. Some apps (Outlook, JumpCloud) may refuse to connect because Windows is reporting there is no Internet connectivity.
+[NCSI](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-overview) is a Windows feature for determining network quality and connectivity. When the Cloudflare One Client is enabled, NCSI checks can sometimes fail and cause a cosmetic UI error where the user believes they have no Internet even though the device still has full connectivity. Some apps (Outlook, JumpCloud) may refuse to connect because Windows is reporting there is no Internet connectivity.
 
 To resolve the issue, you will need to edit two Windows registry keys:
 
@@ -142,7 +142,7 @@ To resolve the issue, you will need to edit two Windows registry keys:
    Data: 1
    ```
 
-2. Configure NCSI to use active probing mode, as WARP may be obscuring the number of hops expected by the [passive probe](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-frequently-asked-questions#how-does-passive-probing-determine-connectivity).
+2. Configure NCSI to use active probing mode, as the Cloudflare One Client may be obscuring the number of hops expected by the [passive probe](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-frequently-asked-questions#how-does-passive-probing-determine-connectivity).
 
    ```txt
    HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet
@@ -169,7 +169,7 @@ To enable software rasterization:
 
 ## I cannot send emails on port `25`.
 
-By default, the WARP client blocks outgoing SMTP traffic on port `25` to prevent users from abusing our service to send spam. Modern email service providers use port `587` or `465` to encrypt emails over a TLS/SSL connection. For more information, refer to [What SMTP port should be used?](https://www.cloudflare.com/learning/email-security/smtp-port-25-587/).
+By default, the Cloudflare One Client blocks outgoing SMTP traffic on port `25` to prevent users from abusing our service to send spam. Modern email service providers use port `587` or `465` to encrypt emails over a TLS/SSL connection. For more information, refer to [What SMTP port should be used?](https://www.cloudflare.com/learning/email-security/smtp-port-25-587/).
 
 If you need to unblock port `25`, contact your account team.
 
@@ -191,13 +191,13 @@ If you added a [multi-level subdomain](/cloudflare-one/networks/connectors/cloud
 
 The default global Cloudflare root certificate expired on 2025-02-02 at 16:05 UTC. If you installed the default Cloudflare certificate before 2024-10-17, you must [generate a new certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and activate it for your Zero Trust organization to avoid inspection errors. If you did not generate a new certificate before February 2, 2025, you will encounter browser warnings like `Your connection is not private`.
 
-Starting with WARP client version 2024.12.554.0 and later, the WARP client will automatically install Cloudflare certificates in an end-user device's certificate store as soon as the Cloudflare certificates appear as **Available** in the Cloudflare dashboard.
+Starting with Cloudflare One Client version 2024.12.554.0 and later, the Cloudflare One Client will automatically install Cloudflare certificates in an end-user device's certificate store as soon as the Cloudflare certificates appear as **Available** in the Cloudflare dashboard.
 
-For WARP client versions prior to 2024.12.554.0, certificates had to be marked as **In-Use** in the Cloudflare dashboard before the WARP client could push the Cloudflare certificates to an end-user device's certificate store.
+For Cloudflare One Client versions prior to 2024.12.554.0, certificates had to be marked as **In-Use** in the Cloudflare dashboard before the Cloudflare One Client could push the Cloudflare certificates to an end-user device's certificate store.
 
 ### What do I need to do?
 
-For WARP client versions before and after 2024.12.554.0, certificate propagation will only occur when the WARP client is responsible for automatically installing the certificate on the client device. To enable the WARP client to propogate certificates:
+For Cloudflare One Client versions before and after 2024.12.554.0, certificate propagation will only occur when the Cloudflare One Client is responsible for automatically installing the certificate on the client device. To enable the Cloudflare One Client to propogate certificates:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices**.
 2. Select the **Management** tab.
@@ -212,7 +212,7 @@ After enabling certificate propagation, you must update your certificate:
 3. Select the expiration date for this new certificate (five years is the default, but this can be adjusted) and select **Generate certificate**.
 4. The new certificate will be marked **Inactive** at first. Select the **three dots** to the right of the certificate, then select **Activate** to activate the certificate.
 
-When you activate a certificate, WARP will download the new certificate to end-user devices.
+When you activate a certificate, the Cloudflare One Client will download the new certificate to end-user devices.
 
 Certificate propagation to end-user devices can take up to 10 minutes, but can be expedited by resetting the encryption keys.
 
@@ -220,7 +220,7 @@ To reset the encryption keys:
 
 <Render file="warp/reset-encryption-keys" product="cloudflare-one" />
 
-macOS Big Sur and newer releases do not allow WARP to automatically trust the certificate. You must either [manually trust the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#macos) as the user or [use a MDM to trust the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software).
+macOS Big Sur and newer releases do not allow the Cloudflare One Client to automatically trust the certificate. You must either [manually trust the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#macos) as the user or [use a MDM to trust the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software).
 
 After confirming that the certificate is installed and trusted on the end-user device, mark the certificate as **In-Use**. To mark the certificate as **In-Use**:
 
@@ -229,9 +229,9 @@ After confirming that the certificate is installed and trusted on the end-user d
 3. In the detailed menu under **Basic Information**, select **Confirm and turn on certificate**.
 4. Once turned on, the new certificate will now show as **In-Use** in Cloudflare One. **In-Use** indicates that the certificate is being used for inspection.
 
-It is recommended to have end users disconnect and reconnect WARP to expedite this change being reflected on their local machine. To verify the new certificate is being used correctly:
+It is recommended to have end users disconnect and reconnect the Cloudflare One Client to expedite this change being reflected on their local machine. To verify the new certificate is being used correctly:
 
-1. Connect to WARP.
+1. Connect to the Cloudflare One Client.
 2. Visit an HTTPS site.
 3. Verify that no certificate error is enountered.
 
@@ -243,13 +243,13 @@ The new certificate will be valid until the configured expiration date.
 
 If the new certificate is not activating on the end-user device or you are getting a `Certificate is missing` warning even though the certificate is marked **In-Use**. Refer to the following troubleshooting options:
 
-1. Rotate the keys used by WARP to force activate the new certificate by running:
+1. Rotate the keys used by the Cloudflare One Client to force activate the new certificate by running:
 
    ```sh
    warp-cli tunnel rotate-keys
    ```
 
-2. [Upgrade](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/update/#how-to-update-warp) to WARP version 2024.12.554.0.
+2. [Upgrade](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/update/#how-to-update-warp) to the Cloudflare One Client version 2024.12.554.0.
 
    Some customers who are on versions earlier than 2024.11.309.0 have experienced inconsistencies with certificate installation and may need to upgrade.
 
@@ -263,35 +263,35 @@ Turning off TLS decryption should be a temporary measure. TLS decryption should 
 
 <Render file="access/error-401" product="cloudflare-one" />
 
-## I entered an override code for WARP that was supposed to be valid for 3 hours but the override code expired faster than I expected.
+## I entered an override code for the Cloudflare One Client that was supposed to be valid for 3 hours but the override code expired faster than I expected.
 
 [Admin override codes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) are time-sensitive and adhere to fixed-hour time blocks. Override codes can be reused until the end of their timeout. An override code's timeout begins in the hour the override code was generated in. Refer to the following scenarios.
 
 ### Scenario one: Admin generates an override code at 9:00 AM with a timeout of one hour.
 
-If admin generates an override code with a timeout of one hour at **9:00 AM** and the user inputs the override code in their device at **9:59 AM**, the user will be able to toggle WARP on and off until **10:59 AM** (a one hour duration.)
+If admin generates an override code with a timeout of one hour at **9:00 AM** and the user inputs the override code in their device at **9:59 AM**, the user will be able to toggle the Cloudflare One Client on and off until **10:59 AM** (a one hour duration.)
 
 However, if the user attempts to enter the override code at **10:00 AM**, the override code will not work. The override code will not work because the override code was generated at **9:00 AM** and its one hour validity was counted as used in the 9:00 AM to 10:00 AM hour.
 
 ### Scenario two: Admin generates an override code at 9:30 AM with timeout of three hours.
 
-If admin generates an override code with a timeout of three hours at **9:30 AM** and the user inputs the override code in their device at **9:59 AM**, the user will be able to toggle WARP on and off until **12:59 PM** (a three hour duration.)
+If admin generates an override code with a timeout of three hours at **9:30 AM** and the user inputs the override code in their device at **9:59 AM**, the user will be able to toggle the Cloudflare One Client on and off until **12:59 PM** (a three hour duration.)
 
 However, if the user attempts to enter the override code at **10:00 AM**, the override code will only be valid until **12:00 PM** (a two hour duration). The override code was generated at **9:30 AM** and one hour of its total three hour validity was counted as used in the 9:00 AM to 10:00 AM hour.
 
 ### Scenario three: Admin generates an override code at 12:30 PM with a timeout of 24 hours.
 
-If admin generates an override code with a timeout of 24 hours at **12:30 PM** and the user inputs the override code in their device at **12:59 PM** the same day, the user will be able to toggle WARP on and off until **12:59 PM** the next day (a 24 hour duration.)
+If admin generates an override code with a timeout of 24 hours at **12:30 PM** and the user inputs the override code in their device at **12:59 PM** the same day, the user will be able to toggle the Cloudflare One Client on and off until **12:59 PM** the next day (a 24 hour duration.)
 
 However, if the user attempts to enter the override code at **1:00 PM** the same day, the override code will only be valid until **11:00 AM** the next day (a 23 hour duration). The override code was generated at **12:30 PM** and one hour of its total 24 hour validity was counted as used in the 12:00 PM to 1:00 PM hour.
 
 If the user attempts to enter the override code at **11:59 AM** the next day, the override code will only be valid until **12:59 PM** (a one hour duration). The override code was generated at **12:00 PM** and 23 hours of its total 24 hour validity were counted as used from 12:00 PM to 11:00 AM the next day (a 23 hour duration).
 
-## I disabled WARP using an override code but WARP turned on by itself before my override code expired.
+## I disabled the Cloudflare One Client using an override code but it turned on by itself before my override code expired.
 
-If you are using an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) with [Auto connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#auto-connect) also enabled, WARP will turn on automatically according to the Timeout set for **Auto connect**. Using an override code to override the WARP lock switch will not disable Auto connect. As best practice, review your Auto connect settings before sending the override code to the user.
+If you are using an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) with [Auto connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#auto-connect) also enabled, the Cloudflare One Client will turn on automatically according to the Timeout set for **Auto connect**. Using an override code to override the WARP lock switch will not disable Auto connect. As best practice, review your Auto connect settings before sending the override code to the user.
 
-To prevent WARP from auto connecting while using an admin override code, disable Auto connect or set a longer **Timeout** for **Auto connect**. Note the changes you make to Auto connect while the end user is using the admin override code if you need to revert these changes later.
+To prevent the Cloudflare One Client from auto connecting while using an admin override code, disable Auto connect or set a longer **Timeout** for **Auto connect**. Note the changes you make to Auto connect while the end user is using the admin override code if you need to revert these changes later.
 
 ## I am getting the error `Failed to fetch user/group information from the identity provider`.
 
@@ -301,9 +301,9 @@ For example, [Microsoft Entra](/cloudflare-one/integrations/identity-providers/e
 
 You can also examine logs in your identity provider to identify any denied requests related to API access.
 
-## WSL2 is losing connectivity when using WARP.
+## WSL2 is losing connectivity when using the Cloudflare One Client.
 
-If your WSL2 environment is losing connectivity while using WARP, check your [split tunnel configuration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
+If your WSL2 environment is losing connectivity while using the Cloudflare One Client, check your [split tunnel configuration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
 
 The issue may arise because the IP range that the WSL environment uses to communicate with the host device is included in the split tunnel configuration. Excluding the WSL environment's IP range should restore connectivity.
 
@@ -337,7 +337,7 @@ When you put your Google Workspace behind Access, users will not be able to log 
 
 This configuration creates an authentication loop. Cloudflare Access tries to authenticate the user via Google, but Google itself treats Cloudflare as its identity provider and requires authentication from Cloudflare. Since each system depends on the other to complete login first, the user is caught in an infinite redirect cycle and can never successfully authenticate.
 
-## When installing WARP on Windows, the Setup Wizard ends prematurely.
+## When installing the Cloudflare One Client on Windows, the Setup Wizard ends prematurely.
 
 This error can occur for several reasons, including missing dependencies, like the appropriate .NET Framework version or other Dynamic Link Libraries (DLLs) such as `netstandard2.0`, required during installation.
 
@@ -349,14 +349,14 @@ msiexec /i <PATH_TO_WARP_MSI> /L*V <PATH_TO_OUTPUT_LOG>
 
 Check the logs to verify if there are any missing DLLs (for example, `netstandard2.0`), which may point to a missing or outdated version of the .NET Framework.
 
-One common cause is a missing or outdated version of the [.NET Framework Runtime](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#windows:~:text=NET%20Framework%20version-,4.7.2%20or%20later,-HD%20space). Cloudflare WARP requires a .NET Framework version of `4.7.2` or later.
+One common cause is a missing or outdated version of the [.NET Framework Runtime](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#windows:~:text=NET%20Framework%20version-,4.7.2%20or%20later,-HD%20space). The Cloudflare One Client requires a .NET Framework version of `4.7.2` or later.
 
 Some legacy Windows systems (such as Windows 10 Enterprise 1607 LTSB, which is bundled with .NET `4.6`) do not include this runtime by default and may fail during installation with a `Setup Wizard ended prematurely` error. More recent Windows versions include .NET `4.7.2` or later by default and do not encounter this error.
 
 To fix this:
 
 1. Download and install the [.NET Framework 4.7.2 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net472) (make sure to install the **Runtime**, not the Developer Pack).
-2. Re-run the WARP installer.
+2. Re-run the Cloudflare One Client installer.
 
 If the problem continues, try running the [.NET Repair Tool](https://www.microsoft.com/en-ca/download/details.aspx?id=30135), or check which .NET versions are installed by running the following command in PowerShell:
 

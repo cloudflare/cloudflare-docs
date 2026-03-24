@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Connect private network to WARP clients
+title: Connect private network to Cloudflare One Clients
 tags:
   - Private networks
 sidebar:
@@ -10,7 +10,7 @@ sidebar:
 
 import { Render, Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
 
-This guide covers how to connect WARP client user devices to a private network behind WARP Connector. In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and install it on `10.0.0.1`.
+This guide covers how to connect Cloudflare One Client user devices to a private network behind WARP Connector. In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and install it on `10.0.0.1`.
 
 ```mermaid
     flowchart LR
@@ -21,14 +21,14 @@ This guide covers how to connect WARP client user devices to a private network b
       router1["WARP Connector
         10.0.0.1"]
       end
-      W[WARP clients]-->C((Cloudflare))-->router1
+      W[Cloudflare One Client]-->C((Cloudflare))-->router1
 ```
 
 ## Prerequisites
 
 - A Linux host [^1] on the subnet.
 - For WARP Connector to connect to Cloudflare services, your firewall should allow inbound/outbound traffic for the [WARP IP addresses, ports, and domains](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
-- For WARP clients to connect to your subnet, your firewall should allow inbound traffic from  your [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
+- For Cloudflare One Clients to connect to your subnet, your firewall should allow inbound traffic from your [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
 
 ## 1. Install a WARP Connector
 
@@ -40,13 +40,12 @@ This guide covers how to connect WARP client user devices to a private network b
 
 ## 3. Route device IPs through Cloudflare
 
-WARP clients and WARP Connectors are accessed using their [device IP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/). Therefore, traffic to your device IPs must route through Cloudflare on both the WARP Connector host and WARP client devices.
+Cloudflare One Clients and WARP Connectors are accessed using their [device IP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/). Therefore, traffic to your device IPs must route through Cloudflare on both the WARP Connector host and Cloudflare One Client devices.
 
 1. In your WARP Connector device profile, go to [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
-2.
-	<Render file="tunnel/cgnat-split-tunnels" product="cloudflare-one" />
+2. <Render file="tunnel/cgnat-split-tunnels" product="cloudflare-one" />
 
-3. Repeat the previous steps for all WARP client device profiles.
+3. Repeat the previous steps for all Cloudflare One Client device profiles.
 
 ## 4. Route traffic from subnet to WARP Connector
 
@@ -65,7 +64,7 @@ Depending on where you installed the WARP Connector, you may need to configure o
 
 #### Add IP route to router
 
-`100.96.0.0/12` is the default CIDR for all user devices running the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/). On your router, add a rule that routes the destination IP `100.96.0.0/12` to the WARP Connector host machine (`10.0.0.100`).
+`100.96.0.0/12` is the default CIDR for all user devices running the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/). On your router, add a rule that routes the destination IP `100.96.0.0/12` to the WARP Connector host machine (`10.0.0.100`).
 
 <Render
 	file="tunnel/warp-connector-alternate-gateway-flow"
@@ -109,7 +108,7 @@ route /p add 100.96.0.0/12 mask 255.255.255.255 <WARP-CONNECTOR-IP>
 
 ## 5. Test the WARP Connector
 
-You can now send a request from a WARP client user device to your subnet. To test connections to the WARP Connector host, on the WARP client device run `ping 10.0.0.1`. To connect to a device behind WARP connector, run `ping 10.0.0.2`.
+You can now send a request from a Cloudflare One Client user device to your subnet. To test connections to the WARP Connector host, on the Cloudflare One Client device run `ping 10.0.0.1`. To connect to a device behind WARP connector, run `ping 10.0.0.2`.
 
 ```mermaid
     flowchart LR
@@ -120,7 +119,7 @@ You can now send a request from a WARP client user device to your subnet. To tes
       router1["WARP Connector
         10.0.0.1"]
       end
-      W[WARP client]--ping 10.0.0.2 -->C((Cloudflare))-->router1
+      W[Cloudflare One Client]--ping 10.0.0.2 -->C((Cloudflare))-->router1
 ```
 
 [^1]:
@@ -128,5 +127,3 @@ You can now send a request from a WARP client user device to your subnet. To tes
     	file="tunnel/warp-connector-linux-packages"
     	product="cloudflare-one"
     />
-
-

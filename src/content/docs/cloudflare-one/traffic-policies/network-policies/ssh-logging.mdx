@@ -14,13 +14,13 @@ import { Render } from "~/components";
 This SSH proxy and command logging method is deprecated. For new deployments, use [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) to manage SSH sessions and log SSH commands.
 :::
 
-Cloudflare One supports SSH proxying and command logging using Secure Web Gateway and the WARP client.
+Cloudflare One supports SSH proxying and command logging using Secure Web Gateway and the Cloudflare One Client.
 
 You can create network policies to manage and monitor SSH access to your applications. When a device connects to your origin server over SSH, a session log will be generated showing which user connected, the session duration, and optionally a full replay of all commands run during the session.
 
 ## Prerequisites
 
-- [Install the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/) on end-user devices.
+- [Install the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/) on end-user devices.
 - [Install the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on end-user devices.
 
 ## 1. Ensure Unix usernames match user SSO identities
@@ -79,7 +79,7 @@ cat /etc/ssh/sshd_config
 
 ## 8. Connect as a user
 
-Users can use any SSH client to connect to the target resource, as long as they are logged into the WARP client on their device. Cloudflare One will authenticate, proxy, and optionally encrypt and record all SSH traffic through Gateway.
+Users can use any SSH client to connect to the target resource, as long as they are logged into the Cloudflare One Client on their device. Cloudflare One will authenticate, proxy, and optionally encrypt and record all SSH traffic through Gateway.
 
 Users must specify their desired username to connect with as part of the SSH command:
 

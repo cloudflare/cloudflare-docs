@@ -60,9 +60,13 @@ Mounted buckets are visible across all sessions since they share the filesystem.
 Set credentials as Worker secrets and the SDK automatically detects them:
 
 ```sh
-npx wrangler secret put AWS_ACCESS_KEY_ID
-npx wrangler secret put AWS_SECRET_ACCESS_KEY
+npx wrangler secret put R2_ACCESS_KEY_ID
+npx wrangler secret put R2_SECRET_ACCESS_KEY
 ```
+
+:::note[R2 credentials]
+We also automatically detect `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` for compatibility with other S3-compatible providers.
+:::
 
 <TypeScriptExample>
 ```typescript
@@ -308,6 +312,13 @@ For provider-specific configuration, see the [s3fs-fuse wiki](https://github.com
 **Solution**: Set credentials as Worker secrets:
 
 ```sh
+npx wrangler secret put R2_ACCESS_KEY_ID
+npx wrangler secret put R2_SECRET_ACCESS_KEY
+```
+
+or
+
+```sh
 npx wrangler secret put AWS_ACCESS_KEY_ID
 npx wrangler secret put AWS_SECRET_ACCESS_KEY
 ```
@@ -389,3 +400,4 @@ await sandbox.exec('cp', { args: ['/workspace/results.json', '/data/results/outp
 - [Storage API reference](/sandbox/api/storage/) - Full method documentation
 - [Environment variables](/sandbox/configuration/environment-variables/) - Credential configuration
 - [R2 documentation](/r2/) - Learn about Cloudflare R2
+- [Proxy requests to external APIs](/sandbox/guides/proxy-requests/) - Keep R2 credentials out of the sandbox by proxying requests through a Worker

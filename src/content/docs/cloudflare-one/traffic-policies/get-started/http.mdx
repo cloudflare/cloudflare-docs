@@ -21,13 +21,13 @@ For a more detailed guide to filtering HTTP requests and other traffic for your 
 
 ## 1. Connect to Gateway
 
-HTTP filtering requires three components working together: the WARP client routes device traffic through Cloudflare, a root certificate lets Gateway decrypt HTTPS traffic so it can inspect URLs and content, and the Gateway proxy enables Gateway to intercept and evaluate HTTP requests. Without the certificate, Gateway can only see the domain name — not the full URL or request body.
+HTTP filtering requires three components working together: the Cloudflare One Client routes device traffic through Cloudflare, a root certificate lets Gateway decrypt HTTPS traffic so it can inspect URLs and content, and the Gateway proxy enables Gateway to intercept and evaluate HTTP requests. Without the certificate, Gateway can only see the domain name — not the full URL or request body.
 
 To filter HTTP requests from a device:
 
 1. [Install the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
-2. [Install the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your device.
-3. In the WARP client Settings, log in to your organization's <GlossaryTooltip term="team name">Cloudflare One instance</GlossaryTooltip>.
+2. [Install the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your device.
+3. In the Cloudflare One Client Settings, log in to your organization's <GlossaryTooltip term="team name">Cloudflare One instance</GlossaryTooltip>.
 4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP. Optionally, enable the UDP proxy to also inspect QUIC traffic on port 443 — this covers HTTP/3, a newer protocol some browsers use by default.
 5. To inspect HTTPS traffic, [enable TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#turn-on-tls-decryption). TLS decryption allows Gateway to read encrypted requests. Without it, Gateway can see that a user visited `example.com` but not which specific page or what they uploaded.
 6. (Optional) To scan file uploads and downloads for malware, [enable anti-virus scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/).

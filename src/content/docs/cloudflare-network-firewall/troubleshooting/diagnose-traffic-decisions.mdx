@@ -79,7 +79,7 @@ If you cannot identify the issue from Network Analytics, use [packet captures](/
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. Under **Protect & Connect**, go to **Insights** > **Network health**.
-3. Go to **Diagnostics**, and configure a packet capture filter matching the affected traffic. Try to be as specific as possible to avoid generating too many packet capture files.
+3. Go to **Diagnostics**, and configure a packet capture filter matching the affected traffic. Note that the packet capture (pcap) might be empty because packets were dropped.
 4. Analyze the captured packets to understand traffic characteristics.
 5. Compare against your rule configurations.
 

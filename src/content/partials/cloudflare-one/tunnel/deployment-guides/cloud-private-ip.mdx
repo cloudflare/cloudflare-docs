@@ -5,11 +5,11 @@ inputParameters: networkName;;resourceName;;exampleIp;;splitTunnelCidr;;calcExcl
 import { Code } from "~/components";
 import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
-[Private network routes](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) allow users to connect to your {props.networkName} using the WARP client. To add a private network route for your Cloudflare Tunnel:
+[Private network routes](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) allow users to connect to your {props.networkName} using the Cloudflare One Client. To add a private network route for your Cloudflare Tunnel:
 
 1.  In [Cloudflare One](https://one.dash.cloudflare.com), go to **Networks** > **Routes**.
 2.  In the **CIDR** tab, enter the **Private IP address** of your {props.resourceName} (for example, <code>{props.exampleIp}</code>). You can expand the IP range later if necessary.
-3.  In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#add-a-route), make sure the private IP is routing through WARP. For example, if you are using Split Tunnels in **Exclude** mode, delete <code>{props.splitTunnelCidr}</code>. We recommend re-adding the IPs that are not explicitly used by your {props.resourceName}.
+3.  In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#add-a-route), make sure the private IP is routing through the Cloudflare One Client. For example, if you are using Split Tunnels in **Exclude** mode, delete <code>{props.splitTunnelCidr}</code>. We recommend re-adding the IPs that are not explicitly used by your {props.resourceName}.
 
         To determine which IP addresses to re-add, subtract your {props.resourceName} IPs from <code>{props.splitTunnelCidr}</code>:
 
@@ -24,7 +24,7 @@ import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
         Add the results back to your Split Tunnel Exclude mode list.
 
 4.  To test on a user device:
-    1. [Log in to the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/).
+    1. [Log in to the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/).
     2. Open a terminal window and connect to the service using its private IP:
 
     <Code code={`curl ${props.exampleIp}`} lang="sh" />

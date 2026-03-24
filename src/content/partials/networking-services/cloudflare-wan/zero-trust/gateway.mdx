@@ -31,15 +31,15 @@ To inspect HTTPS traffic, you need to install a Cloudflare root certificate on e
 
 ### Installing certificates
 
-You can use the <a href={props.warpURL}>WARP client</a> to <a href={props.cfAutoCertificatesURL}>automatically install a Cloudflare certificate</a> on supported devices. If your device or application does not support certificate installation through WARP, you can <a href={props.cfManualCertificatesURL}>manually install a certificate</a>.
+You can use the <a href={props.warpURL}>Cloudflare One Client</a> to <a href={props.cfAutoCertificatesURL}>automatically install a Cloudflare certificate</a> on supported devices. If your device or application does not support certificate installation through the Cloudflare One Client, you can <a href={props.cfManualCertificatesURL}>manually install a certificate</a>.
 
 ### Exempting traffic from inspection
 
 If you cannot or do not want to install the certificate, you can create <a href={props.doNotInspectURL}>Do Not Inspect</a> policies to exempt incompatible Cloudflare WAN traffic from inspection or to disable TLS decryption entirely.
 
-Because Gateway cannot discern Cloudflare WAN traffic, you must use <a href={props.warpChecksURL}>WARP client checks</a> or the IP addresses associated with Cloudflare WAN to match traffic with Gateway policies.
+Because Gateway cannot discern Cloudflare WAN traffic, you must use <a href={props.warpChecksURL}>Cloudflare One Client checks</a> or the IP addresses associated with Cloudflare WAN to match traffic with Gateway policies.
 
-For example, if your organization onboards devices to Cloudflare WAN using WARP, you can exempt devices not running WARP using <a href={props.osVersionChecks}>OS version checks</a>:
+For example, if your organization onboards devices to Cloudflare WAN using the Cloudflare One Client, you can exempt devices not running the Cloudflare One Client using <a href={props.osVersionChecks}>OS version checks</a>:
 
 | Selector                     | Operator | Value                | Logic | Action         |
 | ---------------------------- | -------- | -------------------- | ----- | -------------- |
@@ -49,7 +49,7 @@ For example, if your organization onboards devices to Cloudflare WAN using WARP,
 | Passed Device Posture Checks | not in   | iOS (OS version)     | Or    | Do Not Inspect |
 | Passed Device Posture Checks | not in   | Android (OS version) |       | Do Not Inspect |
 
-If your organization onboards users to Cloudflare WAN using an <a href={props.mwanOnrampsURL}>on-ramp other than WARP</a>, you can exempt devices from inspection using the IP addresses for your IPsec tunnels:
+If your organization onboards users to Cloudflare WAN using an <a href={props.mwanOnrampsURL}>on-ramp other than the Cloudflare One Client</a>, you can exempt devices from inspection using the IP addresses for your IPsec tunnels:
 
 | Selector  | Operator | Value            | Action         |
 | --------- | -------- | ---------------- | -------------- |
@@ -89,7 +89,7 @@ accDescr: Shows how DNS queries from Cloudflare WAN and WARP Connector flow thro
 
 By default, the following traffic routed through IPsec/GRE tunnels and destined to public IP addresses is proxied/filtered through Cloudflare Gateway:
 
-- TCP, UDP, and ICMP traffic sourced from [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IPs or WARP devices.
+- TCP, UDP, and ICMP traffic sourced from [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IPs or devices.
 - TCP and UDP traffic sourced from [BYOIP](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/) and destined to a well-known port (`0`-`1023`).
 
 By default, traffic destined to public IPs will be routed over the public Internet. If you want to configure specific public IP ranges to be routed through your IPsec/GRE tunnels instead of over the public Internet after filtering, contact your account team.

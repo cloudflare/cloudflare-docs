@@ -11,10 +11,10 @@ description: Manually add a Cloudflare certificate to mobile devices and
 import { Details, Render, TabItem, Tabs } from "~/components";
 
 :::note
-This procedure is only required to enable specific Cloudflare Zero Trust features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
+This procedure is only required to enable specific Cloudflare Zero Trust features, and should only be done at the direction of your IT department. This procedure is not required to enable the Cloudflare One Client for consumers.
 :::
 
-If your device does not support [certificate installation via WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/), you can manually install a Cloudflare certificate. You must add the certificate to both the [system keychain](#add-the-certificate-to-operating-systems) and to [individual application stores](#add-the-certificate-to-applications). These steps must be performed on each new device that is to be subject to HTTP filtering.
+If your device does not support [certificate installation via the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/), you can manually install a Cloudflare certificate. You must add the certificate to both the [system keychain](#add-the-certificate-to-operating-systems) and to [individual application stores](#add-the-certificate-to-applications). These steps must be performed on each new device that is to be subject to HTTP filtering.
 
 Zero Trust will only inspect traffic using installed certificates set to [**Available** and **In-Use**](/cloudflare-one/team-and-resources/devices/user-side-certificates/#activate-a-root-certificate).
 
@@ -27,7 +27,7 @@ To install a certificate manually, you must:
 ## 1. Download a Cloudflare root certificate
 
 :::note[Download limitation]
-You can only download Cloudflare-generated certificates from the Cloudflare One dashboard or with WARP.
+You can only download Cloudflare-generated certificates from the Cloudflare One dashboard or with the Cloudflare One Client.
 :::
 
 First, [generate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and download a Cloudflare certificate. The certificate is available in both `.pem` and `.crt` file format. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
@@ -38,7 +38,7 @@ First, [generate](/cloudflare-one/team-and-resources/devices/user-side-certifica
 4. Select **More actions**.
 5. Depending on which format you want, choose **Download .pem** and/or **Download .crt**.
 
-Alternatively, you can download and install a certificate [using WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#install-a-certificate-using-warp). WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem`.
+Alternatively, you can download and install a certificate [using the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#install-a-certificate-using-the-cloudflare-one-client). The Cloudflare One Client will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem`.
 
 ## 2. Verify the downloaded certificate
 
@@ -110,7 +110,7 @@ Some applications require a certificate formatted in the `.cer` file type. You c
 
 ## 4. Add the certificate to operating systems
 
-If you are deploying the Cloudflare certificate to desktop devices, use the [Install certificate using WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) method.
+If you are deploying the Cloudflare certificate to desktop devices, use the [Install certificate using the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) method.
 
 Mobile devices require manual installations detailed in the instructions below.
 
@@ -188,7 +188,7 @@ Windows offers two locations to install the certificate, each impacting which us
 The root certificate is now installed and ready to be used.
 
 :::caution
-If your certificate is installed in the **Local Machine Store**, the [device posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) looking for a certificate will fail. Install the certificate in the **Current User Store** to ensure a successful posture device check.
+If your certificate is installed in the **Local Machine Store**, the [device posture check](/cloudflare-one/reusable-components/posture-checks/client-checks/) looking for a certificate will fail. Install the certificate in the **Current User Store** to ensure a successful posture device check.
 :::
 
 ### Linux
@@ -326,7 +326,7 @@ Some applications require the use of a publicly trusted certificate — they do 
 :::
 
 :::caution
-Even if you deployed WARP through the [Install certificate using WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) method, you may still need to add the Cloudflare certificate to certain applications. The Install certificate using WARP method only installs the Cloudflare certificate to the operating system certificate store.
+Even if you deployed WARP through the [Install certificate using the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) method, you may still need to add the Cloudflare certificate to certain applications. The Install certificate using the Cloudflare One Client method only installs the Cloudflare certificate to the operating system certificate store.
 :::
 
 ### Browsers
@@ -365,7 +365,7 @@ For information on installing a Cloudflare certificate for organizations, refer 
 
 ### Mobile device management (MDM) software
 
-Zero Trust integrates with several [mobile device management (MDM) software partners](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/partners/) to deploy WARP across devices.
+Zero Trust integrates with several [mobile device management (MDM) software partners](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/partners/) to deploy the Cloudflare One Client across devices.
 
 #### Microsoft Intune
 

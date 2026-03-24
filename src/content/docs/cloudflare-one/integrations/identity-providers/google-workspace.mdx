@@ -95,17 +95,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to Google Workspace. Your user identity and group membership should return.
 
 :::caution[SCIM Provisioning (Beta)]
-The direct SCIM provisioning integration with Google Workspace is not currently supported. Cloudflare is working with Google to complete the final approval process required to enable this feature. In the meantime, the SCIM endpoint will accept inbound SCIM events from any SCIM compliant service.
-
-To generate the SCIM endpoint, you must:
-
-1. Save your Google Workspace login method in Cloudflare One (step 6 above) and select **Back to Authentication** or return to **Integrations** > **Identity providers** in Cloudflare One.
-2. Find the Google Workspace login method you created > select **Edit**.
-3. Enable the **Enable SCIM** toggle.
-4. Select **Regenerate Secret**.
-
-This will generate a **SCIM Endpoint** that can accept inbound SCIM events from any SCIM compliant service.
-
+The SCIM provisioning integration with Google Workspace is not currently supported.
 :::
 
 :::note[`Failed to fetch group information from the identity provider` error]

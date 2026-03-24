@@ -9,11 +9,11 @@ sidebar:
 
 import { Tabs, TabItem, Render } from "~/components";
 
-The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a `prompt` or a `response_format` parameter which accepts a JSON schema. The endpoint returns the extracted data in JSON format. By default, this endpoint leverages [Workers AI](/workers-ai/). If you would like to specify your own AI model for the extraction, you can use the `custom_ai` parameter.
+The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a `prompt` or a `response_format` parameter which accepts a JSON schema. The endpoint returns the extracted data in JSON format.
 
 :::note[Note]
 
-By default, the `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction. Using this endpoint incurs usage on Workers AI, which you can monitor usage through the Workers AI Dashboard.
+By default, the `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction using [`@cf/meta/llama-3.3-70b-instruct-fp8-fast`](/workers-ai/models/llama-3.3-70b-instruct-fp8-fast/). Using this endpoint incurs usage on Workers AI, which you can monitor in the [Workers AI Dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To use a different model, refer to [Using a custom model (BYO API Key)](/browser-rendering/rest-api/json-endpoint/#using-a-custom-model-byo-api-key).
 
 :::
 

@@ -1,0 +1,58 @@
+---
+title: Pricing
+pcx_content_type: reference
+sidebar:
+  order: 6
+description: Dynamic Workers pricing is based on requests, CPU time, and the number of unique Dynamic Workers created per day.
+---
+
+Dynamic Workers pricing is based on three dimensions: Dynamic Workers created daily, requests, and CPU time.
+
+Dynamic Workers are currently only available on the [Workers Paid plan](/workers/platform/pricing/).
+
+|                                   | Included                               | Additional usage                    |
+| --------------------------------- | -------------------------------------- | ----------------------------------- |
+| **Dynamic Workers created daily** | 1,000 unique Dynamic Workers per month | +$0.002 per Dynamic Worker per day  |
+| **Requests**                      | 10 million per month                   | +$0.30 per million requests         |
+| **CPU time**                      | 30 million CPU milliseconds per month  | +$0.02 per million CPU milliseconds |
+
+:::note[Pricing availability]
+
+You will not be billed for your use of Dynamic Workers at this time. Pricing information here is shared in advance so that you can estimate your costs once Cloudflare starts billing for usage.
+
+:::
+
+## Dynamic Workers created daily
+
+You are billed for each unique Dynamic Worker created in a day. A Dynamic Worker is uniquely identified by its **Worker ID** and **code** — if either changes, it counts as a new Dynamic Worker. The count resets daily.
+
+| Scenario                                   | Counted as                        |
+| ------------------------------------------ | --------------------------------- |
+| Same code, same ID, invoked multiple times | 1 Dynamic Worker                  |
+| Same code, different IDs                   | 1 Dynamic Worker per ID           |
+| Same ID, different code versions           | 1 Dynamic Worker per code version |
+| No ID provided or `.load(code)` used       | 1 Dynamic Worker per invocation   |
+
+:::note
+If your application sends multiple requests to the same Worker, use `.get()` with a stable ID to avoid being billed for multiple creations.
+:::
+
+## Requests
+
+Dynamic Workers reuse [Workers Standard request pricing](/workers/platform/pricing/).
+
+A request is counted each time a Dynamic Worker is invoked:
+
+- Each `fetch()` call into a Dynamic Worker
+- Each RPC method call on a Dynamic Worker stub (billed the same way as [Durable Objects](/durable-objects/platform/pricing/))
+
+If an RPC method returns a stub (an object that extends `RpcTarget`), those returned stubs share the same RPC session as the original call. Subsequent calls on the returned stub are not billed as separate requests.
+
+## CPU time
+
+CPU time is billed at the same rate as [Workers Standard](/workers/platform/pricing/).
+
+Unlike standard Workers (where only execution time is billed), Dynamic Workers bill for two components of CPU time:
+
+- **Startup time**: The compute required to initialize the isolate and parse your code.
+- **Execution time**: The compute time your code spends actively processing logic, excluding time spent waiting on I/O.

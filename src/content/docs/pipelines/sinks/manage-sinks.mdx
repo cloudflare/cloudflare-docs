@@ -30,7 +30,7 @@ Sinks are made available to pipelines as SQL tables using the sink name (e.g., `
 
 ### Wrangler CLI
 
-To create a sink, run the [`pipelines sinks create`](/workers/wrangler/commands/#pipelines-sinks-create) command:
+To create a sink, run the [`pipelines sinks create`](/workers/wrangler/commands/pipelines/#pipelines-sinks-create) command:
 
 ```bash
 npx wrangler pipelines sinks create <SINK_NAME> \
@@ -40,7 +40,7 @@ npx wrangler pipelines sinks create <SINK_NAME> \
 
 For sink-specific configuration options, refer to [Available sinks](/pipelines/sinks/available-sinks/).
 
-Alternatively, to use the interactive setup wizard that helps you configure a stream, sink, and pipeline, run the [`pipelines setup`](/workers/wrangler/commands/#pipelines-setup) command:
+Alternatively, to use the interactive setup wizard that helps you configure a stream, sink, and pipeline, run the [`pipelines setup`](/workers/wrangler/commands/pipelines/#pipelines-setup) command:
 
 ```bash
 npx wrangler pipelines setup
@@ -59,13 +59,13 @@ npx wrangler pipelines setup
 
 ### Wrangler CLI
 
-To view a specific sink, run the [`pipelines sinks get`](/workers/wrangler/commands/#pipelines-sinks-get) command:
+To view a specific sink, run the [`pipelines sinks get`](/workers/wrangler/commands/pipelines/#pipelines-sinks-get) command:
 
 ```bash
 npx wrangler pipelines sinks get <SINK_ID>
 ```
 
-To list all sinks in your account, run the [`pipelines sinks list`](/workers/wrangler/commands/#pipelines-sinks-list) command:
+To list all sinks in your account, run the [`pipelines sinks list`](/workers/wrangler/commands/pipelines/#pipelines-sinks-list) command:
 
 ```bash
 npx wrangler pipelines sinks list
@@ -86,7 +86,7 @@ npx wrangler pipelines sinks list
 
 ### Wrangler CLI
 
-To delete a sink, run the [`pipelines sinks delete`](/workers/wrangler/commands/#pipelines-sinks-delete) command:
+To delete a sink, run the [`pipelines sinks delete`](/workers/wrangler/commands/pipelines/#pipelines-sinks-delete) command:
 
 ```bash
 npx wrangler pipelines sinks delete <SINK_ID>

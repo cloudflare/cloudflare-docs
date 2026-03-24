@@ -48,7 +48,7 @@ The SentinelOne Management Console provides centralized control and visibility, 
 
 Cloudflare's Zero Trust infrastructure provides the policy enforcement layer:
 
-The WARP client must be deployed alongside the SentinelOne agent on managed devices. This client creates the secure connection to Cloudflare's network and enables device posture checking.
+The Cloudflare One Client must be deployed alongside the SentinelOne agent on managed devices. This client creates the secure connection to Cloudflare's network and enables device posture checking.
 
 The Cloudflare dashboard provides the configuration interface for:
 
@@ -64,7 +64,7 @@ The Cloudflare dashboard provides the configuration interface for:
 
 When a user attempts to access a protected resource, the following sequence occurs:
 
-1. The user's device connects to Cloudflare's network through the WARP client.
+1. The user's device connects to Cloudflare's network through the Cloudflare One Client.
 2. Cloudflare queries the SentinelOne API to check the device's security posture.
 3. The SentinelOne platform returns current device status including infection state, threats, and agent health.
 4. Cloudflare evaluates this information against configured policies.
@@ -100,9 +100,11 @@ SentinelOne provides [endpoint detection and response (EDR)](https://www.sentine
 
 ![Figure 2: SentinelOne and Cloudflare Zero Trust technical architecture.](~/assets/images/reference-architecture/cloudflare-sase-with-sentinelone/figure2.svg "Figure 2: SentinelOne and Cloudflare Zero Trust technical architecture.")
 
-The integration architecture begins at the managed endpoint device level, where two critical components coexist. The SentinelOne agent serves as the primary security enforcer, continuously monitoring the device for threats, assessing device health, and providing real-time security status updates. Alongside it, the Cloudflare WARP client establishes secure connectivity and manages the device's interaction with Cloudflare's Zero Trust infrastructure. These components work in tandem to ensure both endpoint security and secure network access.
+_Note: Labels in this image may reflect a previous product name._
 
-When a user attempts to access protected resources, the architecture initiates a sophisticated verification process. The WARP client first establishes a secure tunnel to Cloudflare's global network, creating an encrypted channel for all communications. This connection ensures that all traffic between the device and protected resources remains secure and can be properly evaluated against security policies.
+The integration architecture begins at the managed endpoint device level, where two critical components coexist. The SentinelOne agent serves as the primary security enforcer, continuously monitoring the device for threats, assessing device health, and providing real-time security status updates. Alongside it, the Cloudflare One Client establishes secure connectivity and manages the device's interaction with Cloudflare's Zero Trust infrastructure. These components work in tandem to ensure both endpoint security and secure network access.
+
+When a user attempts to access protected resources, the architecture initiates a sophisticated verification process. The Cloudflare One Client first establishes a secure tunnel to Cloudflare's global network, creating an encrypted channel for all communications. This connection ensures that all traffic between the device and protected resources remains secure and can be properly evaluated against security policies.
 
 ### Cloudflare Zero Trust platform operations
 
@@ -122,11 +124,11 @@ The **Security Analytics** component continuously processes security telemetry f
 
 When a user requires access to protected resources, the architecture follows a specific flow:
 
-First, the device's security status is evaluated through the **SentinelOne agent**, which reports detailed health and security information to the SentinelOne platform. Simultaneously, the **Cloudflare WARP client** initiates the access request to Cloudflare's Zero Trust platform.
+First, the device's security status is evaluated through the **SentinelOne agent**, which reports detailed health and security information to the SentinelOne platform. Simultaneously, the **Cloudflare One Client** initiates the access request to Cloudflare's Zero Trust platform.
 
 Next, Cloudflare's **Device Posture Engine** queries the SentinelOne platform through its **API Services** to verify the device's security status. This check includes all current security metrics, threat status, and compliance information. The **Access Policy Engine** then evaluates this information against defined security policies.
 
-If all security requirements are met, access is granted through the secure tunnel established by the WARP client. Throughout the session, continuous monitoring ensures that any change in device security status can trigger immediate reevaluation of access permissions.
+If all security requirements are met, access is granted through the secure tunnel established by the Cloudflare One Client. Throughout the session, continuous monitoring ensures that any change in device security status can trigger immediate reevaluation of access permissions.
 
 ### Security and monitoring capabilities
 
@@ -150,7 +152,7 @@ Organizations should consider their network architecture when implementing this 
 - Bandwidth and latency requirements for posture checks
 - Integration with existing security tools and workflows
 
-The integration between Cloudflare One and SentinelOne requires thoughtful planning to ensure successful implementation. At its foundation, organizations need to prepare their environment by having the SentinelOne agent and Cloudflare WARP client deployed on all devices that will be subject to posture checks. This foundational step ensures that both security monitoring and secure network connectivity are in place before building additional security controls.
+The integration between Cloudflare One and SentinelOne requires thoughtful planning to ensure successful implementation. At its foundation, organizations need to prepare their environment by having the SentinelOne agent and Cloudflare One Client deployed on all devices that will be subject to posture checks. This foundational step ensures that both security monitoring and secure network connectivity are in place before building additional security controls.
 
 When implementing the integration, organizations should approach it as a service provider relationship where SentinelOne acts as a trusted source of device security information. This relationship is established through secure API communications, with careful attention paid to proper credential management and regular verification of the connection between the platforms. The integration relies on SentinelOne's ability to provide real-time device security status, which Cloudflare then uses to make access decisions.
 

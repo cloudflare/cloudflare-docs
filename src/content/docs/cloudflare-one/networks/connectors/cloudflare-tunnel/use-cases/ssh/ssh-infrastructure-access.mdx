@@ -10,7 +10,7 @@ sidebar:
 
 import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
-[Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
+[Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. Like the [self-managed SSH keys](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/) method, it uses the Cloudflare One Client on user devices and Cloudflare Tunnel on the server to create a secure, private connection through Cloudflare's network. Access for Infrastructure adds application-level policies with per-target and per-username controls, as well as SSH command logging.
 
 <Render
 	file="access/short-lived-certs-intro"
@@ -31,11 +31,11 @@ import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
 To connect your devices to Cloudflare:
 
-1. [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your devices in Traffic and DNS mode.
+1. [Deploy the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your devices in Traffic and DNS mode.
 2. [Enable the Gateway proxy for TCP](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy).
 3. [Create device enrollment rules](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 
-## 3. Route server IPs through WARP
+## 3. Route server IPs through the Cloudflare One Client
 
 <Render
 	file="tunnel/warp-to-tunnel-route-ips"
@@ -57,7 +57,7 @@ To connect your devices to Cloudflare:
 
 ## 6. (Recommended) Configure network policies
 
-Traffic from the WARP client to your infrastructure targets is filtered by both [Gateway network policies](/cloudflare-one/traffic-policies/get-started/network/) and the application-specific Access policies.
+Traffic from the Cloudflare One Client to your infrastructure targets is filtered by both [Gateway network policies](/cloudflare-one/traffic-policies/get-started/network/) and the application-specific Access policies.
 
 ### Catch-all block policy
 
@@ -106,7 +106,7 @@ chmod 600 /etc/ssh/ca.pub
 
 ## 8. Connect as a user
 
-Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. If the target is located within a particular virtual network, ensure that the WARP client is [connected to that virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
+Users can use any SSH client to connect to the target, as long as they are logged into the Cloudflare One Client on their device. If the target is located within a particular virtual network, ensure that the Cloudflare One Client is [connected to that virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
 ```sh
 ssh <username>@<target IP>

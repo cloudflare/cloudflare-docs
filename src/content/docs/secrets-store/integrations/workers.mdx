@@ -23,7 +23,7 @@ This is different from Workers [Variables and Secrets](/workers/configuration/se
 
 - You should also have a store created under the **Secrets Store** tab on the Dashboard. The first store in your account is created automatically when a user with [Super Administrator or Secrets Store Admin role](/secrets-store/access-control/) interacts with it.
 
-		- If no store exists in your account yet and you have the necessary permissions, you can use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store) `secrets-store store create <name> --remote` to create your first store.
+		- If no store exists in your account yet and you have the necessary permissions, you can use the [Wrangler command](/workers/wrangler/commands/secrets-store/#secrets-store-store) `secrets-store store create <name> --remote` to create your first store.
 
 :::caution[Local development mode]
 This guide assumes you are working in production. To use Secrets Store locally, you must use `secrets-store secret` [Wrangler commands](/workers/wrangler/commands/) without the `--remote` flag.
@@ -38,7 +38,7 @@ You may also add account secrets directly from the Workers settings on the dashb
 :::
 <Tabs> <TabItem label="Wrangler">
 
-Use the [Wrangler command](/workers/wrangler/commands/#secrets-store-secret) `secrets-store secret create`.
+Use the [Wrangler command](/workers/wrangler/commands/secrets-store/#secrets-store-secret) `secrets-store secret create`.
 
 To use the following example, replace the store ID and secret name by your actual data. You can find and copy the store ID from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard or use `wrangler secrets-store store list`.
 
@@ -69,7 +69,7 @@ npx wrangler secrets-store secret create <STORE_ID> --name MY_SECRET_NAME --scop
 
 </TabItem> <TabItem label="API">
 
-You can find and copy the store ID from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard or use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store). Also, make sure your secret `name` does not contain spaces.
+You can find and copy the store ID from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard or use the [Wrangler command](/workers/wrangler/commands/secrets-store/#secrets-store-store). Also, make sure your secret `name` does not contain spaces.
 
 Refer to [Secrets Store API](/api/resources/secrets_store/) for the full API documentation.
 

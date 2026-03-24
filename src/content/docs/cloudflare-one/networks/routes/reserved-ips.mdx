@@ -17,14 +17,14 @@ When planning your private network addressing and configuring [Split Tunnel](/cl
 | ------------------------------------------------------------- | ---------------- | ------------ |
 | [Cloudflare source IPs](#cloudflare-source-ips)               | `100.64.0.0/12`  | Yes          |
 | [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `100.80.0.0/16`  | No           |
-| [WARP device IPs](#warp-device-ips)                           | `100.96.0.0/12`  | Yes          |
+| [Device IPs](#device-ips)                           | `100.96.0.0/12`  | Yes          |
 | [Private Load Balancer IPs](#private-load-balancer-ips)       | `100.112.0.0/16` | Yes          |
 
 ## IPv6 ranges
 
 | Name                                                          | Default CIDR               | Configurable |
 | ------------------------------------------------------------- | -------------------------- | ------------ |
-| [WARP device IPs](#warp-device-ips)                           | `2606:4700:0cf1:1000::/64` | No           |
+| [Device IPs](#device-ips)                           | `2606:4700:0cf1:1000::/64` | No           |
 | [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `2606:4700:0cf1:4000::/64` | No           |
 | [Cloudflare source IPs](#cloudflare-source-ips)               | `2606:4700:0cf1:5000::/64` | No           |
 
@@ -51,13 +51,13 @@ The following features use this range:
 
 Initial resolved IPs are assigned from the `100.80.0.0/16` (IPv4) or `2606:4700:0cf1:4000::/64` (IPv6) range. This range is not configurable.
 
-## WARP device IPs
+## Device IPs
 
-WARP device IPs are virtual addresses assigned to each WARP device registration. These IPs identify and route traffic to specific devices for the following features:
+Device IPs are virtual addresses assigned to each Cloudflare One Client registration. These IPs identify and route traffic to specific devices for the following features:
 
-- [Peer-to-peer connectivity (WARP-to-WARP)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) — allows WARP devices to communicate directly with each other over Cloudflare's network.
+- [Peer-to-peer connectivity (Peer-to-peer)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/) — allows devices to communicate directly with each other over Cloudflare's network.
 - [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) — routes traffic between your private network and WARP devices.
-- [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) — on-ramps traffic from WAN tunnels to WARP devices.
+- [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) — on-ramps traffic from WAN tunnels to Cloudflare One Client devices.
 
 The default IPv4 range is `100.96.0.0/12`. If this range conflicts with services on your private network, you can configure custom IPv4 subnets drawn from RFC 1918 or CGNAT address space. For configuration instructions, refer to [Device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
 
@@ -65,17 +65,17 @@ The default IPv4 range is `100.96.0.0/12`. If this range conflicts with services
 
 Private Load Balancer IPs are virtual addresses allocated to [Private Network Load Balancers](/load-balancing/private-network/). Each private load balancer receives a `/32` address from the `100.112.0.0/16` range by default, which serves as the load balancer's virtual IP for traffic distribution to private endpoints. Alternatively, you can configure a custom [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) `/32` address for each load balancer.
 
-## WARP Split Tunnel configuration
+## Split Tunnel configuration
 
-For deployments that use the [WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), ensure that the [reserved IP ranges](#ipv4-ranges) required by your deployment route through [WARP Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) to Cloudflare. Configuration depends on whether your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude IPs and domains** or **Include IPs and domains**.
+For deployments that use the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), ensure that the [reserved IP ranges](#ipv4-ranges) required by your deployment route through [WARP Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) to Cloudflare. Configuration depends on whether your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude IPs and domains** or **Include IPs and domains**.
 
 ### Exclude mode (default)
 
-In **Exclude IPs and domains** mode, the CGNAT range (`100.64.0.0/10`) is excluded from WARP routing by default. You must delete the [reserved IP ranges](#ipv4-ranges) from your Split Tunnels exclude list, or the associated features will stop working.
+In **Exclude IPs and domains** mode, the CGNAT range (`100.64.0.0/10`) is excluded from the Cloudflare One Client routing by default. You must delete the [reserved IP ranges](#ipv4-ranges) from your Split Tunnels exclude list, or the associated features will stop working.
 
 Cloudflare recommends adding back the IPs that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use CGNAT address space.
 
-You can use the calculator below to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if your deployment requires [Gateway initial resolved IPs](#gateway-initial-resolved-ips) (`100.80.0.0/16`) and [WARP device IPs](#warp-device-ips) (`100.96.0.0/12`), delete `100.64.0.0/10` from Split Tunnels and add back `100.64.0.0/12`, `100.81.0.0/16`, `100.82.0.0/15`, `100.84.0.0/14`, `100.88.0.0/13`, and `100.112.0.0/12`.
+You can use the calculator below to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if your deployment requires [Gateway initial resolved IPs](#gateway-initial-resolved-ips) (`100.80.0.0/16`) and [device IPs](#device-ips) (`100.96.0.0/12`), delete `100.64.0.0/10` from Split Tunnels and add back `100.64.0.0/12`, `100.81.0.0/16`, `100.82.0.0/15`, `100.84.0.0/14`, `100.88.0.0/13`, and `100.112.0.0/12`.
 
 <SubtractIPCalculator
 	client:load

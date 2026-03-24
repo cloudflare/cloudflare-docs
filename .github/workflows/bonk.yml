@@ -9,12 +9,13 @@ on:
     types: [submitted]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.event.issue.number || github.ref }}
+  # intentionally hardcoded so that all Bonk workflows coexist peacefully
+  group: bonk-${{ github.event.pull_request.number || github.event.issue.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
   bonk:
-    if: github.event.sender.type != 'Bot' && (contains(github.event.comment.body, '/bonk') || contains(github.event.comment.body, '@ask-bonk'))
+    if: github.event.sender.type != 'Bot' && contains(github.event.comment.body, '/bonk') && !contains(github.event.comment.body, '/bigbonk')
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -24,27 +25,35 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: "package.json"
           cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
-      - name: Run Bonk
+      - name: Install node_modules (cache miss)
+        run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      - name: Run Lil Bonk
         uses: ask-bonk/ask-bonk/github@main
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_AI_GATEWAY_ACCOUNT_ID }}
           CLOUDFLARE_GATEWAY_ID: ${{ secrets.CF_AI_GATEWAY_NAME }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_GATEWAY_TOKEN }}
         with:
-          model: "cloudflare-ai-gateway/anthropic/claude-opus-4-6"
-          agent: docs # use our Docs agent by default in this repo
-          mentions: "/bonk,@ask-bonk"
+          model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.5"
+          agent: docs
+          mentions: "/bonk"
           permissions: CODEOWNERS

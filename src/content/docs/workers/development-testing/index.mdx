@@ -38,7 +38,7 @@ When developing Workers, it's important to understand two distinct concepts:
 
 **You can start a local development server using:**
 
-1. The Cloudflare Workers CLI [**Wrangler**](/workers/wrangler/), using the built-in [`wrangler dev`](/workers/wrangler/commands/#dev) command.
+1. The Cloudflare Workers CLI [**Wrangler**](/workers/wrangler/), using the built-in [`wrangler dev`](/workers/wrangler/commands/general/#dev) command.
 
 <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
@@ -413,7 +413,7 @@ async function startOrUpdateDevSession() {
 
 ## `wrangler dev --remote` (Legacy)
 
-Separate from Miniflare-powered local development, Wrangler also offers a fully remote development mode via [`wrangler dev --remote`](/workers/wrangler/commands/#dev). Remote development is [**not** supported in the Vite plugin](/workers/development-testing/wrangler-vs-vite/).
+Separate from Miniflare-powered local development, Wrangler also offers a fully remote development mode via [`wrangler dev --remote`](/workers/wrangler/commands/general/#dev). Remote development is [**not** supported in the Vite plugin](/workers/development-testing/wrangler-vs-vite/).
 
 <PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
 
@@ -432,4 +432,4 @@ When using remote development, all bindings automatically connect to their remot
 
 ### Limitations
 
-- When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in[ Workers platform limits](/workers/platform/limits/#number-of-routes-per-zone-when-using-wrangler-dev---remote).
+- When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in[ Workers platform limits](/workers/platform/limits/#routes-and-domains-when-using-wrangler-dev---remote).
