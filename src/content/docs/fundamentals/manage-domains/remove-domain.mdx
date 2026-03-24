@@ -69,7 +69,7 @@ Cloudflare periodically checks whether your domain's nameservers still point to 
 
 1. **Moved** — Cloudflare detects that nameservers no longer point to Cloudflare and marks the domain as **Moved**. An email notification is sent to the account owner.
 2. **Deleted** — For Free zones, Cloudflare automatically transitions the domain from Moved to Deleted after 7 days. At this stage, the domain can still be re-added.
-3. **Purged** — 7 days after being marked Deleted, the zone is permanently purged. Zone settings are not preserved.
+3. **Purged** — Seven days after being marked Deleted, the zone is permanently purged. Zone settings are not preserved.
 
 For more details on each status, refer to [Domain status](/dns/zone-setups/reference/domain-status/).
 
@@ -85,4 +85,4 @@ To restore a domain that was automatically removed:
 2. Update the nameservers at your domain registrar to the new Cloudflare nameservers assigned to your zone.
 3. Wait for the domain to become **Active** in the Cloudflare dashboard.
 
-You will need to reconfigure any settings (DNS records, page rules, firewall rules, and so on) that were previously associated with the domain, as they are not preserved after removal.
+You will need to reconfigure any settings (DNS records, Page Rules, Firewall Rules, and so on) that were previously associated with the domain, as they are not preserved after removal.

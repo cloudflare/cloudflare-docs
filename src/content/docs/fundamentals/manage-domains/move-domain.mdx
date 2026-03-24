@@ -26,17 +26,17 @@ To transfer a domain from one Cloudflare account to another, you will need:
 - Access to your domain registrar. If your domain is using Cloudflare Registrar, refer to [Transfer a Cloudflare Registrar domain registration between accounts](/registrar/account-options/inter-account-transfer/).
 - At least one Cloudflare account associated with the domain.
 
+## Domain transfer checklist
+
+Before transferring an active Cloudflare domain to another Cloudflare account, complete the following steps:
+
+1. **Remove DNSSEC configurations** — [Disable DNSSEC](/dns/dnssec/) on the domain before moving it. DNSSEC records at the registrar will prevent the domain from activating in the new account.
+2. **Cancel add-ons and subscriptions** — [Remove all add-on subscriptions](/billing/cancel-subscription/) associated with the domain.
+3. **Remove custom certificates** — Delete any [custom SSL/TLS certificates](/ssl/edge-certificates/custom-certificates/) from the domain. You will need to re-upload them to the new account.
+4. **Export DNS records** — [Export your DNS records](/dns/manage-dns-records/how-to/import-and-export/#export-records) while the domain is still in the previous account. Then [import](/dns/manage-dns-records/how-to/import-and-export/#import-records) them into the new account. If you miss this step, Cloudflare will import your proxied DNS records, which might cause your domain to experience a [1000 error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/).
+5. **Back up configuration** — Consider using [Terraform](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) to export and back up your zone configuration before moving. Settings from the original account (Page Rules, Firewall Rules, cache settings, and so on) do not transfer to the new account and must be recreated manually.
+
 ## Transfer your domain
-
-:::caution
-Before transferring an active Cloudflare domain to another Cloudflare account, complete this pre-transfer checklist:
-
-1. **Remove DNSSEC configurations** — [disable DNSSEC](/dns/dnssec/) on the domain before moving it. DNSSEC records at the registrar will prevent the domain from activating in the new account.
-2. **Cancel add-ons and subscriptions** — [remove all add-on subscriptions](/billing/cancel-subscription/) associated with the domain.
-3. **Remove custom certificates** — delete any [custom SSL/TLS certificates](/ssl/edge-certificates/custom-certificates/) from the domain. You will need to re-upload them to the new account.
-4. **Export DNS records** — [export your DNS records](/dns/manage-dns-records/how-to/import-and-export/#export-records) while the domain is still in the previous account. Then [import](/dns/manage-dns-records/how-to/import-and-export/#import-records) them into the new account. If you miss this step, Cloudflare will import your proxied DNS records, which might cause your domain to experience a [1000 error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/).
-5. **Back up configuration** — consider using [Terraform](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) to export and back up your zone configuration before moving. Settings from the original account (page rules, firewall rules, cache settings, and so on) do not transfer to the new account and must be recreated manually.
-:::
 
 If you still have access to your previous Cloudflare account, you can copy over the Cloudflare account settings manually. You must reissue [SSL/TLS certificates](#issue-new-certificates) and [recreate and validate DNS records](/dns/manage-dns-records/how-to/create-dns-records/) when transferring domains between Cloudflare accounts.
 
