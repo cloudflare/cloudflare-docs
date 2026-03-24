@@ -108,6 +108,10 @@ The Cloudflare One Client must be set to _Traffic and DNS mode_ for traffic affe
 
 <Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one" />
 
+### DNS Override policies bypass host selectors
+
+If a domain matches a [DNS Override policy](/cloudflare-one/traffic-policies/dns-policies/#override), Gateway will not apply the initial resolved IP mapping for that domain. This means host-based egress selectors (Application, Content Categories, Domain, and Host) will not evaluate against traffic to the overridden domain. The traffic will use your default egress settings instead.
+
 ### HTTPS DNS records not supported
 
 Host selectors do not support HTTPS DNS record types. When a domain uses HTTPS records for connection establishment, Gateway cannot map the DNS query to a hostname for egress policy evaluation. Traffic to these domains will use your default egress settings instead of matching a host-based egress policy.
