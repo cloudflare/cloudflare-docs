@@ -28,21 +28,17 @@ import {
 } from "~/components";
 
 <Description>
-	Improve security and performance for your entire corporate network, reducing
-	cost and operational complexity.
+	Connect and secure your entire corporate network through Cloudflare, replacing
+	MPLS circuits and hub-and-spoke routing with cloud-native networking.
 </Description>
 
 <Plan type="enterprise" />
 
-{props.productName} (formerly Magic WAN) provides secure, performant connectivity and [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) for your entire corporate network, reducing cost and operational complexity. [Cloudflare Network Firewall](/cloudflare-network-firewall/) integrates smoothly with {props.productName}, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
+Cloudflare WAN (formerly Magic WAN) connects your data centers, offices, and cloud resources through Cloudflare's global network. Instead of backhauling traffic through a central data center or maintaining dedicated MPLS circuits at every site, your traffic routes through the nearest Cloudflare data center where security policies apply inline.
 
-With {props.productName}, you can securely connect any traffic source - data centers, offices, devices, cloud resources - to Cloudflare's network and configure routing policies to direct traffic where it needs to go, all within one SaaS solution.
+Cloudflare WAN provides secure, performant [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) for your entire corporate network. [Cloudflare Network Firewall](/cloudflare-network-firewall/) integrates with Cloudflare WAN, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
 
-{props.productName} supports a variety of <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip> including any device that supports <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels.{props.magicWord === "Cloudflare WAN" && <> To make it easier to onboard your cloud resources, you can use <a href={props.cloudNetworkingUrl}>Multi-Cloud Networking</a>, which automates creating on-ramps from your cloud networks.</>}
-
-Refer to <a href={props.onRampsUrl}>On-ramps</a> for a full list of supported on-ramps.
-
-Traditional WANs backhaul traffic through central data centers and require dedicated MPLS circuits at every site. {props.productName} eliminates both — security applies inline at the nearest Cloudflare data center, and any site connects over standard Internet.
+You connect your sites to Cloudflare through <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip> — tunnels or direct connections from your network to Cloudflare. Cloudflare WAN supports any device that uses <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels.{props.magicWord === "Cloudflare WAN" && <> To make it easier to onboard your cloud resources, you can use <a href={props.cloudNetworkingUrl}>Multi-Cloud Networking</a>, which automates creating on-ramps from your cloud networks.</>} Refer to <a href={props.onRampsUrl}>On-ramps</a> for a full list of supported on-ramps.
 
 Refer to <a href={props.wanTransformationUrl}>WAN transformation</a> to compare approaches and plan your migration, or go straight to <a href={props.getStartedUrl}>get started</a>.
 
@@ -94,10 +90,9 @@ For more information about Cloudflare One, refer to the [Cloudflare One document
 	href={props.thirdPartyUrl}
 	cta="Use a third-party device"
 >
-	{props.productName} is compatible with a host of third-party devices. If you
-	do not have
-	{props.connectorName}, start here to learn how to set up {props.productName}{" "}
-	manually.
+	Set up Cloudflare WAN with your existing routers and firewalls. If you do
+	not have {props.connectorName}, start here to configure IPsec or GRE tunnels
+	from a third-party device.
 </Feature>
 
 {props.magicWord === "Cloudflare WAN" && (
@@ -123,14 +118,14 @@ cta="Automate your cloud on-ramps"
 	href={props.zeroTrustUrl}
 	cta="Integrate with other Zero Trust products"
 >
-	Learn how you can use {props.productName} with other Cloudflare Zero Trust
+	Learn how you can use Cloudflare WAN with other Cloudflare Zero Trust
 	products.
 </Feature>
 
 <Feature header="BGP peering (beta)" href={props.bgpRoutesUrl}>
-	Use BGP (Border Gateway Protocol) peering between your networks and Cloudflare
-	to automate adding or removing networks and subnets, and take advantage of
-	failure detection and session recovery features.
+	Use Border Gateway Protocol (BGP) peering between your networks and Cloudflare
+	to automatically announce and withdraw routes as your network changes,
+	rather than managing static routes manually.
 </Feature>
 
 <Feature
@@ -154,9 +149,9 @@ cta="Automate your cloud on-ramps"
 		href="/cloudflare-one/"
 		product="cloudflare-one"
 	>
-		Cloudflare One, our SASE platform, replaces legacy security perimeters
-		with our global edge, making the Internet faster and safer for teams
-		around the world.
+		Cloudflare One is the full SASE platform. It extends Cloudflare WAN with
+		identity-based access controls, secure web gateway policies, and
+		user-level security for remote and hybrid workers.
 	</RelatedProduct>
 </>
 ) }
@@ -166,9 +161,9 @@ cta="Automate your cloud on-ramps"
 	href="/cloudflare-network-firewall/"
 	product="cloudflare-network-firewall"
 >
-	Cloudflare Network Firewall is a firewall-as-a-service (FWaaS) delivered from
-	the Cloudflare global network to protect office networks and cloud
-	infrastructure with advanced, and scalable protection.
+	Cloudflare Network Firewall is a firewall-as-a-service (FWaaS) that filters
+	traffic at layers 3 and 4 across Cloudflare's global network. Included with
+	Cloudflare WAN.
 </RelatedProduct>
 
 {props.magicWord === "Cloudflare WAN" && (
@@ -194,9 +189,10 @@ product="multi-cloud-networking"
 	href="/network-interconnect/"
 	product="network-interconnect"
 >
-	Cloudflare Network Interconnect (CNI) allows you to connect your network
-	infrastructure directly with Cloudflare - rather than using the public
-	Internet - for a more reliable and secure experience.
+	Cloudflare Network Interconnect (CNI) provides a private, dedicated connection
+	between your network and Cloudflare instead of routing over the public
+	Internet. Use CNI when you need lower latency or more consistent performance
+	than tunnel-based connectivity.
 </RelatedProduct>
 
 <RelatedProduct
@@ -216,7 +212,7 @@ product="multi-cloud-networking"
 
 <LinkTitleCard title="Reference Architecture" href="/reference-architecture/architectures/sase/" icon="pen">
 
-Deep dive into key architecture and functionalities aspects of Cloudflare One, and learn more about {props.productName} and its structure.
+Explore the architecture of Cloudflare One as a SASE platform, including how Cloudflare WAN handles connectivity, routing, and security.
 
 </LinkTitleCard>
 
