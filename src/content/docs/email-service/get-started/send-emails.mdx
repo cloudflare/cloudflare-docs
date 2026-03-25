@@ -2,7 +2,7 @@
 title: Send emails
 pcx_content_type: get-started
 summary: |
-  Send your first email using Cloudflare Email Service with Workers API.
+  Send your first email using the REST API or Workers binding.
 sidebar:
   order: 1
 ---
@@ -17,7 +17,7 @@ import {
 } from "~/components";
 import DomainSetup from "~/content/partials/email-service/_domain-setup-sending.mdx";
 
-Send emails from your applications using Cloudflare Email Service with the Workers API or the [REST API](https://developers.cloudflare.com/api/resources/email_sending/methods/send).
+Send emails from your applications using Cloudflare Email Service. You can use the **REST API** from any platform or the **Workers binding** for applications built on Cloudflare Workers.
 
 :::note
 You must be using Cloudflare DNS to use Email Service.
@@ -25,11 +25,39 @@ You must be using Cloudflare DNS to use Email Service.
 
 <DomainSetup />
 
-## Send your first email
+## Send your first email with the REST API
 
-Send your first email from Workers using the Workers API.
+Send an email with a single `curl` command. Replace `{account_id}` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/) and `<API_TOKEN>` with an [API token](/fundamentals/api/get-started/create-token/).
 
-Start by creating a new Worker project.
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "to": "recipient@example.com",
+    "from": "welcome@yourdomain.com",
+    "subject": "Welcome to our service!",
+    "html": "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
+    "text": "Welcome! Thanks for signing up."
+  }'
+```
+
+A successful response includes a `messageId`:
+
+```json
+{
+  "success": true,
+  "result": {
+    "messageId": "<unique-message-id>"
+  }
+}
+```
+
+For more details, see the [REST API reference](/email-service/api/send-emails/rest-api/).
+
+## Send your first email with Workers
+
+If you are building on Cloudflare Workers, you can use the Workers binding for native email sending. Start by creating a new Worker project.
 
 1.  Create a new Worker project:
 

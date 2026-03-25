@@ -7,7 +7,7 @@ sidebar:
 
 import { Tabs, TabItem, WranglerConfig } from "~/components";
 
-The Workers API provides native email sending capabilities directly from your Cloudflare Workers. This is the recommended method for applications built on the Cloudflare platform.
+The Workers API provides native email sending capabilities directly from your Cloudflare Workers through bindings. If you are not using Workers, you can send emails using the [REST API](/email-service/api/send-emails/rest-api/) instead.
 
 ## Email binding
 
@@ -243,10 +243,8 @@ const emails = subscribers.map(subscriber => ({
   to: subscriber.email,
   from: "updates@yourdomain.com",
   subject: `Your ${subscriber.plan} plan update`,
-  react: <PlanUpdateEmail
-    name={subscriber.name}
-    plan={subscriber.plan}
-  />
+  html: `<h1>Hi ${subscriber.name}!</h1><p>Here's your ${subscriber.plan} plan update.</p>`,
+  text: `Hi ${subscriber.name}! Here's your ${subscriber.plan} plan update.`,
 }));
 
 const batchResponse = await env.EMAIL.sendBatch(emails);
@@ -453,6 +451,7 @@ export default {
 
 **Next steps:**
 
-- See [practical examples](/email-service/examples/) of Workers API usage
+- See the [REST API](/email-service/api/send-emails/rest-api/) for sending emails without Workers
+- See [practical examples](/email-service/examples/) of email sending patterns
 - Learn about [email routing](/email-service/api/route-emails/) for handling incoming emails
 - Explore [email authentication](/email-service/concepts/email-authentication/) for better deliverability

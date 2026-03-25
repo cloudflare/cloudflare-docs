@@ -5,11 +5,13 @@ sidebar:
   order: 2
 ---
 
-The REST API allows you to send emails from any application using standard HTTP requests. This is useful for applications that are not built on Cloudflare Workers or when you need to send emails from external services.
+import { Tabs, TabItem } from "~/components";
+
+The REST API allows you to send emails from any application using standard HTTP requests. Use it from any backend, serverless function, or CI/CD pipeline — no Cloudflare Workers binding required.
+
+For the full OpenAPI specification, refer to the [Email Sending API reference](https://developers.cloudflare.com/api/resources/email_sending/methods/send).
 
 ## Endpoint
-
-Send an email using the [Email Sending REST API](https://developers.cloudflare.com/api/resources/email_sending/methods/send).
 
 ```txt
 POST https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send
@@ -17,13 +19,16 @@ POST https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/se
 
 ## Authentication
 
-Authenticate using a Cloudflare API token with the appropriate permissions. Include the token in the `Authorization` header:
+Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has permission to send emails. Include it in the `Authorization` header:
 
 ```txt
 Authorization: Bearer <API_TOKEN>
 ```
 
-## Example
+## Send an email
+
+<Tabs>
+<TabItem label="Simple email">
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
@@ -31,14 +36,116 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/s
   --header "Content-Type: application/json" \
   --data '{
     "to": "recipient@example.com",
-    "from": "sender@yourdomain.com",
-    "subject": "Hello from Email Service",
-    "html": "<h1>Hello!</h1><p>This email was sent using the REST API.</p>",
-    "text": "Hello! This email was sent using the REST API."
+    "from": "welcome@yourdomain.com",
+    "subject": "Welcome to our service!",
+    "html": "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
+    "text": "Welcome! Thanks for signing up."
   }'
 ```
 
+</TabItem>
+<TabItem label="Multiple recipients">
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "to": ["user1@example.com", "user2@example.com"],
+    "from": { "email": "newsletter@yourdomain.com", "name": "Newsletter Team" },
+    "subject": "Monthly Newsletter",
+    "html": "<h1>This month'\''s updates</h1>",
+    "text": "This month'\''s updates"
+  }'
+```
+
+</TabItem>
+<TabItem label="With CC and BCC">
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "to": "customer@example.com",
+    "cc": ["manager@company.com"],
+    "bcc": ["archive@company.com"],
+    "from": "orders@yourdomain.com",
+    "replyTo": "support@yourdomain.com",
+    "subject": "Order Confirmation #12345",
+    "html": "<h1>Your order is confirmed</h1>",
+    "text": "Your order is confirmed"
+  }'
+```
+
+</TabItem>
+</Tabs>
+
+## Attachments
+
+Send files by including base64-encoded content in the `attachments` array:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "to": "customer@example.com",
+    "from": "invoices@yourdomain.com",
+    "subject": "Your Invoice",
+    "html": "<h1>Invoice attached</h1><p>Please find your invoice attached.</p>",
+    "attachments": [
+      {
+        "content": "JVBERi0xLjQKJeLjz9MK...",
+        "filename": "invoice-12345.pdf",
+        "type": "application/pdf",
+        "disposition": "attachment"
+      }
+    ]
+  }'
+```
+
+## Custom headers
+
+Set custom headers for threading, list management, or tracking. Refer to the [email headers reference](/email-service/reference/headers/) for the full list of allowed headers.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "to": "user@example.com",
+    "from": "notifications@yourdomain.com",
+    "subject": "Your weekly digest",
+    "html": "<h1>Weekly Digest</h1>",
+    "headers": {
+      "List-Unsubscribe": "<https://yourdomain.com/unsubscribe?id=abc123>",
+      "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+      "X-Campaign-ID": "weekly-digest-2026-03"
+    }
+  }'
+```
+
+## Error handling
+
+The REST API returns standard Cloudflare API responses. A failed request returns an `errors` array:
+
+```json
+{
+  "success": false,
+  "errors": [
+    {
+      "code": "E_SENDER_NOT_VERIFIED",
+      "message": "Sender domain not verified"
+    }
+  ]
+}
+```
+
+Refer to the [error codes table](/email-service/api/send-emails/workers-api/#error-codes) for the full list of error codes and their causes.
+
 ## Next steps
 
-- Refer to the [REST API reference](https://developers.cloudflare.com/api/resources/email_sending/methods/send) for full request and response schemas.
-- See the [Workers API](/email-service/api/send-emails/workers-api/) for sending emails directly from Cloudflare Workers.
+- Refer to the [Email Sending API reference](https://developers.cloudflare.com/api/resources/email_sending/methods/send) for the full request and response schemas.
+- See the [Workers API](/email-service/api/send-emails/workers-api/) for sending emails directly from Cloudflare Workers using bindings.
+- Review [email headers](/email-service/reference/headers/) for threading, list management, and custom tracking headers.

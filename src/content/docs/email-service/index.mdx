@@ -50,10 +50,26 @@ Together, these two features make it possible for you to send and receive emails
 - Custom email addresses (support@, contact@, orders@)
 - Emails as a mode of interaction for agents, such as send an email to create an issue in ticket tracking
 
-Access Email Service from Cloudflare Workers using Workers Bindings or via the [REST API](https://developers.cloudflare.com/api/resources/email_sending/methods/send):
+Access Email Service using the [REST API](/email-service/api/send-emails/rest-api/) from any platform, or directly from Cloudflare Workers using [bindings](/email-service/api/send-emails/workers-api/):
 
 <Tabs>
-<TabItem label="index.ts">
+<TabItem label="REST API (curl)">
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "to": "user@example.com",
+    "from": "welcome@yourdomain.com",
+    "subject": "Welcome to our service!",
+    "html": "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
+    "text": "Welcome! Thanks for signing up."
+  }'
+```
+
+</TabItem>
+<TabItem label="index.ts (Workers)">
 ```ts
 export default {
 	// Handle HTTP requests (Email Sending)
@@ -117,7 +133,7 @@ export default {
 </TabItem>
 </Tabs>
 
-See the full [Workers Email API reference](/email-service/api/send-emails/workers-api/).
+See the full [API reference](/email-service/api/send-emails/) for the REST API and Workers binding.
 
 <LinkButton href="/email-service/get-started/">Get started</LinkButton>
 
@@ -144,8 +160,8 @@ See the full [Workers Email API reference](/email-service/api/send-emails/worker
 	Monitor email performance with comprehensive metrics and alerting.
 </Feature>
 
-<Feature header="Workers API" href="/email-service/api/">
-	Send and route emails using the native Workers API or the [REST API](https://developers.cloudflare.com/api/resources/email_sending/methods/send).
+<Feature header="API" href="/email-service/api/">
+	Send and route emails using the [REST API](/email-service/api/send-emails/rest-api/) or [Workers binding](/email-service/api/send-emails/workers-api/).
 </Feature>
 
 ---

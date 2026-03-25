@@ -6,7 +6,9 @@ sidebar:
   order: 2
 ---
 
-When sending emails with the Cloudflare Email Service, you can set custom headers using the `headers` field in the [`send()` method](/email-service/api/send-emails/workers-api/). The Email Service uses a **whitelist-based approach** — only explicitly approved headers are accepted. Any header not on the whitelist (and not an `X-` prefixed custom header) is rejected at API time with a clear error.
+import { Tabs, TabItem } from "~/components";
+
+When sending emails with Cloudflare Email Service, you can set custom headers using the `headers` field in the [Workers API](/email-service/api/send-emails/workers-api/) or [REST API](/email-service/api/send-emails/rest-api/). The Email Service uses a **whitelist-based approach** — only explicitly approved headers are accepted. Any header not on the whitelist (and not an `X-` prefixed custom header) is rejected at API time with a clear error.
 
 This approach provides:
 
@@ -102,6 +104,32 @@ Any header starting with `X-` is allowed. This covers common headers like `X-Mai
 
 ## Usage examples
 
+<Tabs>
+<TabItem label="REST API (curl)">
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "to": "user@example.com",
+    "from": "notifications@yourdomain.com",
+    "subject": "Your weekly digest",
+    "html": "<h1>Weekly Digest</h1>",
+    "headers": {
+      "In-Reply-To": "<original-message-id@yourdomain.com>",
+      "References": "<original-message-id@yourdomain.com>",
+      "List-Unsubscribe": "<https://yourdomain.com/unsubscribe?id=abc123>",
+      "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+      "X-Campaign-ID": "weekly-digest-2026-03",
+      "X-User-Segment": "premium"
+    }
+  }'
+```
+
+</TabItem>
+<TabItem label="Workers binding">
+
 ```typescript
 const response = await env.EMAIL.send({
   to: "user@example.com",
@@ -123,6 +151,9 @@ const response = await env.EMAIL.send({
   },
 });
 ```
+
+</TabItem>
+</Tabs>
 
 ## Header limits
 

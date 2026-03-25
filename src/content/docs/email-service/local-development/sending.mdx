@@ -10,6 +10,10 @@ import { WranglerConfig } from "~/components";
 
 Test email sending functionality locally using `wrangler dev` to simulate email delivery and verify your sending logic before deploying.
 
+:::note
+If you are using the [REST API](/email-service/api/send-emails/rest-api/) instead of Workers, you can test by sending requests directly with `curl` or any HTTP client — no local development server is required. The rest of this page covers the Workers local development flow.
+:::
+
 ## Prerequisites
 
 - [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/) installed
@@ -137,5 +141,5 @@ You can:
 
 ## Next steps
 
-- Deploy your sending worker: [Email Service configuration](/email-service/configuration/workers/)
+- Deploy your sending worker: [Send emails get started](/email-service/get-started/send-emails/)
 - See advanced patterns: [Email sending examples](/email-service/examples/email-sending/)
