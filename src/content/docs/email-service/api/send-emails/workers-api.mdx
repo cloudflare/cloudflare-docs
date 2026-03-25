@@ -45,7 +45,6 @@ interface EmailMessage {
 	subject: string;
 	html?: string;
 	text?: string;
-	react?: React.ReactElement; // React Email support
 	cc?: string | string[];
 	bcc?: string | string[];
 	replyTo?: string | { email: string; name: string };
@@ -188,95 +187,6 @@ const response = await env.EMAIL.send({
 		},
 	],
 });
-```
-
-</TabItem>
-</Tabs>
-
-### React Email integration
-
-Use React components to build email templates:
-
-<Tabs>
-<TabItem label="React component">
-
-```tsx
-// email-templates/WelcomeEmail.tsx
-import {
-	Html,
-	Head,
-	Body,
-	Container,
-	Text,
-	Button,
-} from "@react-email/components";
-
-interface WelcomeEmailProps {
-	name: string;
-	verificationUrl: string;
-}
-
-export function WelcomeEmail({ name, verificationUrl }: WelcomeEmailProps) {
-	return (
-		<Html>
-			<Head />
-			<Body
-				style={{ fontFamily: "Arial, sans-serif", backgroundColor: "#f6f9fc" }}
-			>
-				<Container style={{ padding: "20px" }}>
-					<Text style={{ fontSize: "24px", fontWeight: "bold" }}>
-						Welcome, {name}!
-					</Text>
-					<Text>
-						Thank you for joining our service. Click the button below to verify
-						your email address.
-					</Text>
-					<Button
-						href={verificationUrl}
-						style={{
-							backgroundColor: "#007ee6",
-							color: "white",
-							padding: "12px 20px",
-							textDecoration: "none",
-							borderRadius: "4px",
-							display: "inline-block",
-						}}
-					>
-						Verify Email
-					</Button>
-				</Container>
-			</Body>
-		</Html>
-	);
-}
-```
-
-</TabItem>
-<TabItem label="Using in Worker">
-
-```typescript
-import { WelcomeEmail } from './email-templates/WelcomeEmail';
-
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const { email, name } = await request.json();
-
-    const verificationToken = generateVerificationToken();
-    const verificationUrl = `https://yourdomain.com/verify?token=${verificationToken}`;
-
-    const response = await env.EMAIL.send({
-      to: email,
-      from: "welcome@yourdomain.com",
-      subject: "Welcome to our service!",
-      react: <WelcomeEmail name={name} verificationUrl={verificationUrl} />
-    });
-
-    return new Response(JSON.stringify({
-      success: true,
-      emailId: response.messageId
-    }));
-  }
-};
 ```
 
 </TabItem>
