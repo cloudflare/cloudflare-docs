@@ -18,4 +18,9 @@ table * {
 	padding-inline-end: 1rem;
 }
 
-
+/*
+	Alternating row shading
+*/
+.sl-markdown-content tr:nth-child(2n):not(:where(.not-content *)) {
+	background-color: var(--sl-color-gray-7, #1f1f1f);
+}

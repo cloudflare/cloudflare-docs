@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Details, MetaInfo, Tabs, TabItem } from "~/components";
+import { Details, MetaInfo } from "~/components";
 
 Privacy Gateway exposes metrics through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). All metrics are queryable through a single endpoint:
 
@@ -13,16 +13,16 @@ Privacy Gateway exposes metrics through Cloudflare's [GraphQL Analytics API](/an
 POST https://api.cloudflare.com/client/v4/graphql
 ```
 
-To access your metrics, you need a Cloudflare API token. Contact your Cloudflare point of contact to obtain one.
+Before you begin, you will need:
+
+- **API token** — Create a token with _Account Analytics_ read permissions. For more information, refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/). You may also contact your Cloudflare point of contact to obtain one.
+- **Account ID** — Your Cloudflare account ID, passed as `accountTag` in queries. For more information, refer to [Find account and zone IDs](/fundamentals/account/find-account-and-zone-ids/). You may also contact your Cloudflare point of contact if you need help locating your account ID.
 
 ---
 
 ## Making a request
 
-The following examples show how to query Privacy Gateway metrics using curl or a GraphQL client such as GraphiQL. Replace the placeholder values with your own.
-
-<Tabs>
-<TabItem label="curl">
+The following example shows how to query Privacy Gateway metrics using curl. Replace the placeholder values with your own.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/graphql \
@@ -32,83 +32,11 @@ curl https://api.cloudflare.com/client/v4/graphql \
     "query": "query DailyRequestVolume($accountTag: String!, $startDate: Date!, $endDate: Date!) { viewer { accounts(filter: { accountTag: $accountTag }) { ohttpRelayRequestMetricsAdaptiveGroups(filter: { date_geq: $startDate, date_leq: $endDate }, limit: 10000, orderBy: [date_ASC]) { sum { requests bytesToGateway bytesToClient } dimensions { date } } } } }",
     "variables": {
       "accountTag": "<YOUR_ACCOUNT_TAG>",
-      "startDate": "2025-01-01",
-      "endDate": "2025-01-31"
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-31"
     }
   }'
 ```
-
-</TabItem>
-<TabItem label="GraphiQL">
-
-**Prerequisites**
-
-Before you begin, ensure you have:
-
-- **API token**: Contact your Cloudflare point of contact to obtain one.
-- **Account tag**: Your Cloudflare account ID, used as `$accountTag` in queries.
-
-**1. Set up GraphiQL**
-
-Open [GraphiQL](https://github.com/graphql/graphiql) or any GraphQL client and configure the following:
-
-- **Endpoint**: `https://api.cloudflare.com/client/v4/graphql`
-- **HTTP headers**:
-  - `Authorization`: `Bearer <API_TOKEN>`
-  - `Content-Type`: `application/json`
-
-**2. Paste the query**
-
-Paste the following into the query editor:
-
-```graphql
-query DailyRequestVolume(
-  $accountTag: String!
-  $startDate: Date!
-  $endDate: Date!
-) {
-  viewer {
-    accounts(filter: { accountTag: $accountTag }) {
-      ohttpRelayRequestMetricsAdaptiveGroups(
-        filter: {
-          date_geq: $startDate
-          date_leq: $endDate
-        }
-        limit: 10000
-        orderBy: [date_ASC]
-      ) {
-        sum {
-          requests
-          bytesToGateway
-          bytesToClient
-        }
-        dimensions {
-          date
-        }
-      }
-    }
-  }
-}
-```
-
-**3. Add variables**
-
-Paste the following into the **Query Variables** pane (bottom-left) and replace the placeholder values:
-
-```json
-{
-  "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31"
-}
-```
-
-**4. Run the query**
-
-Select the **Play** button to execute. Results appear in the right-hand response pane.
-
-</TabItem>
-</Tabs>
 
 ---
 
@@ -117,11 +45,11 @@ Select the **Play** button to execute. Results appear in the right-hand response
 Three GraphQL nodes are available. All three return aggregate data only — no raw per-connection records are exposed.
 
 1. `ohttpRelayRequestMetricsAdaptiveGroups` — Query aggregate request volume, bytes transferred, and error rates, filterable by time, location, endpoint, and relay/gateway status code dimensions.
-2. `ohttpRelayIngressConnMetricsAdaptiveGroups` — Query aggregate client-to-relay connection volume and round-trip latency percentiles (P50/P95/P99), filterable by time, location, endpoint, HTTP version, and TLS version dimensions.
-3. `ohttpRelayEgressConnMetricsAdaptiveGroups` — Query aggregate relay-to-gateway connection volume and round-trip latency percentiles (P50/P95/P99), filterable by time, location, and endpoint dimensions.
+2. `ohttpRelayIngressConnMetricsAdaptiveGroups` — Query the number of client-to-relay connections and round-trip latency percentiles (P50/P95/P99), filterable by time, location, endpoint, HTTP version, and TLS version dimensions.
+3. `ohttpRelayEgressConnMetricsAdaptiveGroups` — Query the number of relay-to-gateway connections and round-trip latency percentiles (P50/P95/P99), filterable by time, location, and endpoint dimensions.
 
 :::note[Adaptive sampling]
-Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudflare automatically scales the sampling rate based on traffic volume to keep query performance consistent. All returned values are extrapolated totals, not raw counts. Because each node has its own sampling rate, figures across nodes are not directly comparable.
+Requests are sampled.
 :::
 
 ---
@@ -236,8 +164,8 @@ query DailyRequestVolume(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31"
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-31"
 }
 ```
 
@@ -285,8 +213,8 @@ query ClientRequestErrors(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -333,8 +261,8 @@ query GatewayResponseErrors(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -380,8 +308,8 @@ query GatewayTimeouts(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -429,8 +357,8 @@ query RelayInternalErrors(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -473,8 +401,8 @@ query ErrorsByProxyStatus(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -524,8 +452,8 @@ query ClientRelayLatencyByColo(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -533,7 +461,7 @@ query ClientRelayLatencyByColo(
 
 <Details header="Protocol distribution">
 
-Monitor HTTP and TLS version adoption across your connections over time. Each row in the result represents a distinct combination of `httpVersion` and `tlsVersion` observed in the selected time window.
+Understanding which HTTP and TLS versions your clients use helps you plan deprecations, detect misconfigured clients, and verify that traffic meets your security requirements. Each row in the result represents a distinct combination of `httpVersion` and `tlsVersion` observed in the selected time window.
 
 ```graphql
 query ProtocolDistribution(
@@ -570,8 +498,8 @@ query ProtocolDistribution(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -621,8 +549,8 @@ query RelayGatewayLatencyByColo(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -670,8 +598,8 @@ query RelayGatewayLatencyOverTime(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -720,11 +648,11 @@ The `gatewayStatusCode` dimension indicates the HTTP status code returned by the
 
 <Details header="Proxy status codes">
 
-The `proxyStatus` dimension indicates the category of failure when the relay could not successfully forward the request to the gateway. This field is `null` when no proxy-level error occurred. For the relay, the next hop is always the gateway — so for example `dns_error` means the relay failed to resolve the gateway's address.
+The `proxyStatus` dimension tells you why the relay failed to deliver a request to the gateway. When a request succeeds, this field is `null`. Because the relay always forwards requests to the gateway, every error listed here describes a problem reaching the gateway — for example, `dns_error` means the relay could not resolve the gateway's hostname.
 
 - `dns_error` — DNS error when resolving the gateway hostname.
 - `dns_timeout` — Timeout while resolving the gateway hostname.
-- `destination_not_found` — Cannot determine the appropriate gateway for this request (for example, not configured).
+- `destination_not_found` — Cannot determine the appropriate gateway for this request (for example, the gateway may not have been configured yet).
 - `destination_unavailable` — Gateway is considered unavailable (for example, recent failures or health check down).
 - `destination_ip_prohibited` — Connection to the gateway IP address is prohibited.
 - `destination_ip_unroutable` — No route to the gateway IP address.
