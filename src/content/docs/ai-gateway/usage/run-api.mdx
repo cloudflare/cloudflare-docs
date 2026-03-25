@@ -5,11 +5,10 @@ tags:
   - AI
 sidebar:
   order: 3
+  badge: Beta
 ---
 
-import { InlineBadge, Tabs, TabItem, WranglerConfig } from "~/components";
-
-<InlineBadge preset="beta" />
+import { Tabs, TabItem, WranglerConfig } from "~/components";
 
 The Run API is a new endpoint for AI Gateway that provides a simplified request/response pattern for running AI models. Unlike the [Unified API](/ai-gateway/usage/chat-completion/), which follows the OpenAI-compatible `/chat/completions` format, the Run API uses its own request envelope designed for a broader range of model types.
 
@@ -47,20 +46,10 @@ POST /v1/{account_id}/{gateway_id}/run
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `model` | `string` | Yes | The model to run. Refer to [Supported models](#supported-models) for available values. |
-| `input` | `object` | Yes | Model-specific input parameters. The accepted fields depend on the model. |
+| `input` | `object` | Yes | Model-specific input parameters. The accepted fields depend on the model. Refer to the model's documentation for details. |
 | `provider` | `string` | No | Pin the request to a specific provider instead of using the default. |
 | `background` | `boolean` | No | When `true`, the request returns immediately with a `runId` that you can poll for results. |
-| `webhookUrl` | `string` | No | A URL to receive a callback when the run completes. Only valid when `background` is `true`. |
 
-### Input fields for `google/nano-banana`
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `prompt` | `string` | Yes | The text prompt describing the image to generate. |
-| `image_input` | `string[]` | No | Up to 3 base64-encoded images to use as input for image-to-image generation. |
-| `aspect_ratio` | `string` | No | Aspect ratio of the output image. One of: `1:1`, `3:2`, `2:3`, `3:4`, `4:3`, `4:5`, `5:4`, `9:16`, `16:9`, `21:9`. |
-| `output_format` | `string` | No | Output image format. One of: `jpg`, `png`, `webp`. |
-| `image_size` | `string` | No | Output image resolution. One of: `1K`, `2K`, `4K`. |
 
 ## Supported models
 
@@ -68,7 +57,7 @@ The Run API currently supports a single model:
 
 | Model | Type | Provider |
 | --- | --- | --- |
-| `google/nano-banana` | Image generation | Google Vertex AI |
+| [`google/nano-banana`](/workers-ai/models/google/nano-banana/) | Image generation | Google Vertex AI |
 
 More models will be added in future updates.
 
@@ -177,22 +166,6 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run/{run_id
   --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-You can also provide a `webhookUrl` to receive a callback when the run completes instead of polling:
-
-```bash
-curl -X POST "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run" \
-  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "model": "google/nano-banana",
-    "input": {
-      "prompt": "a cat riding a burrito"
-    },
-    "background": true,
-    "webhookUrl": "https://example.com/webhook"
-  }'
-```
-
 ## Response
 
 ### Success
@@ -215,7 +188,7 @@ A successful request returns a response with the following envelope:
 | --- | --- |
 | `state` | The request status. `Completed` on success, `Failed` on error. |
 | `result` | The model output. For image models, this contains an `image` field with a URL to the generated image. |
-| `usedBYOKKey` | Whether a BYOK key was used for the request. |
+| `usedBYOKKey` | Indicates how the request was authenticated with the upstream provider. `true` if a BYOK key from the Gateway Key Store was used, `false` if the request was billed through Unified Billing. |
 | `provider` | The provider that served the request. |
 | `model` | The model that was used. |
 
