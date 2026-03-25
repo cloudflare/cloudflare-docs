@@ -11,6 +11,10 @@ import { TabItem, Tabs, Render, Steps, Details } from "~/components";
 
 Hyperdrive can securely connect to your private databases using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Access](/cloudflare-one/access-controls/policies/).
 
+:::note
+You can also connect Hyperdrive to a private database using [Workers VPC](/hyperdrive/configuration/connect-to-private-database-vpc/), which does not require configuring Access applications or service tokens.
+:::
+
 ## How it works
 
 When your database is isolated within a private network (such as a [virtual private cloud](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud) or an on-premise network), you must enable a secure connection from your network to Cloudflare.
