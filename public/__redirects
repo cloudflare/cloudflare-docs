@@ -2404,6 +2404,8 @@
 /cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
 
 # Catch-all redirects (must come last)
+/cloudflare-one/faq/troubleshooting/ /cloudflare-one/troubleshooting/ 301
+/cloudflare-one/faq/troubleshooting/* /cloudflare-one/troubleshooting/ 301
 /cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
 /cloudflare-one/connections/ /cloudflare-one/ 301
