@@ -43,6 +43,7 @@
 		"@astrojs/sitemap": "3.7.1",
 		"@astrojs/starlight": "0.38.2",
 		"@astrojs/starlight-docsearch": "0.7.0",
+		"@astrojs/starlight-tailwind": "5.0.0",
 		"@cloudflare/vitest-pool-workers": "0.10.7",
 		"@cloudflare/workers-types": "4.20260317.1",
 		"@expressive-code/plugin-collapsible-sections": "0.41.3",
