@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components"
+import { Render, DashButton } from "~/components"
 
 :::note[BGP architecture and resiliency]
 CNI supports BGP peering with the Cloudflare Virtual Network routing table. BGP over CNI is in closed beta and is not currently available to new customers. If you are interested in BGP peering over CNI, contact your account team.
@@ -135,8 +135,11 @@ To connect to AWS Direct Connect:
 
 #### Google Cloud interconnect (beta)
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Select **Interconnects** > **Create new**.
+1. In the Cloudflare dashboard, go to **Interconnects**.
+
+	<DashButton url="/?to=/:account/magic-networks/connections/cni-tunnels" />
+
+2. Select **Create an interconnect**.
 3. Under **Cloud Interconnect**, select **Create new**.
 4. Under **Google Integration**, select **Select integration**.
 5. Give your interconnect a name and optionally a description. Make sure the MTU value matches the MTU configured on the [GCP VLAN attachment](https://cloud.google.com/network-connectivity/docs/interconnect/how-to/dedicated/creating-vlan-attachments).

@@ -280,6 +280,10 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `tail_consumers` <Type text="object" /> <MetaInfo text="optional" />
   - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logs/tail-workers/).
 
+- `secrets` <Type text="object" /> <MetaInfo text="optional" />
+  - Declares the secret names your Worker requires. Used for validation during local development and deploy, and as the source of truth for type generation. Refer to [Secrets](#secrets).
+  - `required` <Type text="string[]" /> <MetaInfo text="optional" /> — A list of secret names that must be set to deploy your Worker.
+
 ## Types of routes
 
 There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and [`workers.dev`](/workers/configuration/routing/workers-dev/).
@@ -1493,11 +1497,43 @@ You can configure various aspects of local development, such as the local protoc
 
 </WranglerConfig>
 
-### Secrets
+## Secrets
 
 [Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/general/#secret) to your Worker.
 
+### Local development
+
 <Render file="secrets-in-dev" product="workers" />
+
+### `secrets` configuration property
+
+:::note
+This property is experimental and subject to change.
+:::
+
+The `secrets` configuration property lets you declare the secret names your Worker requires in your Wrangler configuration file. Required secrets are validated during local development and deploy, and used as the source of truth for type generation.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"secrets": {
+		"required": ["API_KEY", "DB_PASSWORD"],
+	},
+}
+```
+
+</WranglerConfig>
+
+**Type generation**
+
+When `secrets` is defined at any config level, `wrangler types` generates typed bindings from the names listed in `secrets.required` and no longer infers secret names from `.dev.vars` or `.env` files. This lets you run type generation in environments where those files are not present.
+
+Per-environment secrets are supported. Each named environment produces its own interface, and the aggregated `Env` type marks secrets that only appear in some environments as optional.
+
+**Deploy**
+
+When `secrets` is defined, `wrangler deploy` and `wrangler versions upload` validate that all secrets in `secrets.required` are configured on the Worker before the operation succeeds. If any required secrets are missing, the command fails with an error listing which secrets need to be set.
 
 ## Module Aliasing
 

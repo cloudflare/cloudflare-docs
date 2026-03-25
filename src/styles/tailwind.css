@@ -8,6 +8,26 @@
 @source not "../content/";
 
 @theme {
+	/*
+	 * Table semantic tokens — mirrors kumo-ui's table token names,
+	 * mapped to Starlight CSS variables.
+	 *
+	 * Starlight's gray scale auto-inverts between light and dark mode,
+	 * so a single declaration covers both themes.
+	 *
+	 * Mapping (verified against kumo theme-kumo.css resolved values):
+	 *   kumo bg-kumo-base      → --sl-color-bg       (page background)
+	 *   kumo border-kumo-fill  → --sl-color-gray-6   (neutral-200/800 ≈ #ebebeb / #444)
+	 *   kumo bg-kumo-tint      → --sl-color-gray-7   (neutral-75 ≈ #f5f6f9, alternating rows)
+	 *   kumo bg-kumo-elevated  → --sl-color-gray-7   (neutral-25/850, header bg)
+	 *
+	 * Note: --sl-color-gray-5 (~neutral-400) was previously used for fill — it is
+	 * too dark in light mode. gray-6 is the correct match for kumo's neutral-200.
+	 */
+	--color-table-base: var(--sl-color-bg);
+	--color-table-fill: var(--sl-color-gray-6);
+	--color-table-elevated: var(--sl-color-gray-7, var(--sl-color-gray-6));
+
 	--color-black: var(--sl-color-white);
 
 	--color-accent-200: var(--tw-accent-200);
@@ -164,6 +184,8 @@
 		--blue-accent-600: rgb(46, 105, 255);
 		--blue-accent-900: rgb(62, 116, 255);
 
+		--color-table-tint: oklch(96.7% 0 0);
+
 		--sidebar-blue-accent-600: rgba(62, 116, 255, 0.2);
 		--sidebar-blue-text: rgb(0, 43, 103);
 
@@ -182,6 +204,9 @@
 		--tw-accent-200: var(--orange-accent-200);
 		--tw-accent-600: var(--orange-accent-600);
 		--tw-accent-900: var(--orange-accent-900);
+
+		--color-table-fill: var(--sl-color-gray-5);
+		--color-table-tint: oklch(26.9% 0 0);
 
 		/* Kumo header tokens — dark mode */
 		--color-header-text: var(--color-cl1-gray-7);

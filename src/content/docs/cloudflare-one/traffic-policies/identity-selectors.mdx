@@ -9,13 +9,19 @@ import { Render } from "~/components";
 
 With Cloudflare One, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require you to deploy the Cloudflare One Client in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/).
 
+For example, you can create different security rules for different teams — block social media for contractors but allow it for marketing.
+
 You may also filter outbound traffic based on additional signals from [device posture checks](/cloudflare-one/reusable-components/posture-checks/).
 
 ## Gateway identity checks
 
 Gateway checks identity when a user logs in or re-authenticates. To check your users' identities and require re-authentication at regular intervals, you can [enforce a Cloudflare One Client session duration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/).
 
-Unless you use an [IdP that supports SCIM provisioning](#automatic-scim-idp-updates), Gateway will not detect when you add or remove a user from a group in your IdP until the user re-authenticates to your Zero Trust instance. There are two ways a user can re-authenticate:
+:::caution
+Unless you use an [identity provider (IdP) that supports SCIM provisioning](#automatic-scim-idp-updates), Gateway will not detect when you add or remove a user from a group in your IdP until the user re-authenticates to your Zero Trust instance.
+:::
+
+There are two ways a user can re-authenticate:
 
 - Log out from an Access-protected application and log back in.
 - In the Cloudflare One Client, re-authenticate the session by going to **Profile** > **Account information** > **Re-authenticate** [^1]. This will open a browser window and prompt the user to log in.
@@ -93,7 +99,7 @@ Use this selector to create identity-based Gateway policies based on an IdP user
 <Render
 	file="gateway/selectors/user-name"
 	product="cloudflare-one"
-		params={{ UIname: "User Name" }}
+	params={{ UIname: "User Name" }}
 />
 
 :::note[Gateway groups vs. Access rule groups]
