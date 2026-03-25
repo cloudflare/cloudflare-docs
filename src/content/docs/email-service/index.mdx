@@ -32,9 +32,7 @@ Cloudflare Email Service is currently in private beta. Access is limited to appr
 **Known limitations:**
 
 - Your domain must use Cloudflare DNS
-- You must use the Workers binding (REST API is not available)
 - Email templates are not available
-- You must onboard the top-level domain to use Email Sending and/or Email Routing
 
 Many of these will be addressed over the course of the private and public beta.
 :::
@@ -52,7 +50,7 @@ Together, these two features make it possible for you to send and receive emails
 - Custom email addresses (support@, contact@, orders@)
 - Emails as a mode of interaction for agents, such as send an email to create an issue in ticket tracking
 
-Access Email Service from Cloudflare Workers using Workers Bindings:
+Access Email Service from Cloudflare Workers using Workers Bindings or via the [REST API](https://developers.cloudflare.com/api/resources/email_sending/methods/send):
 
 <Tabs>
 <TabItem label="index.ts">
@@ -147,7 +145,7 @@ See the full [Workers Email API reference](/email-service/api/send-emails/worker
 </Feature>
 
 <Feature header="Workers API" href="/email-service/api/">
-	Send and route emails using the native Workers API.
+	Send and route emails using the native Workers API or the [REST API](https://developers.cloudflare.com/api/resources/email_sending/methods/send).
 </Feature>
 
 ---
