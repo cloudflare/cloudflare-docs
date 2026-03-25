@@ -3,7 +3,9 @@ params:
   - tunnelStatePath
 ---
 
-Understanding how Cloudflare calculates Tunnel health alerts (formerly Magic Tunnel health alerts) helps you interpret alert notifications and optimize your network reliability. Cloudflare combines different metrics to determine when to send you Tunnel health alerts. The following sections explain the key concepts behind this process.
+Tunnel health alerts notify you when the reliability of your tunnel connections drops below an acceptable threshold. Understanding how Cloudflare calculates these alerts helps you interpret notifications and distinguish between brief, recoverable issues and sustained problems that require attention.
+
+Cloudflare uses a multi-window approach that combines short-term and long-term metrics to avoid alerting on transient issues while still detecting real degradation. The following sections explain the key concepts behind this process.
 
 ### Service-level indicator (SLI)
 

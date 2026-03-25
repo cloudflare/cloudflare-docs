@@ -24,6 +24,8 @@ import { AnchorHeading, Aside, Markdown, Render } from "~/components";
 
 <AnchorHeading depth={2} title={`${props.routingTableName}`} />
 
+When traffic enters Cloudflare's network, it needs to reach the correct destination in your infrastructure — a specific data center, office, or cloud environment. Traffic steering controls how Cloudflare makes these routing decisions.
+
 The {props.virtualNetworkName} is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
 
 - Magic Transit delivery for [Denial of Service (DoS)](/ddos-protection/) and <a href={props.mFirewallURL}>{props.mFirewallName}</a> filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
@@ -65,7 +67,10 @@ The following IPv4 address ranges are allowed in the {props.routingTableName}:
 
 ### Default routing
 
-Traffic destined for Internet routable addresses will be egressed to the Internet if it does not match a route within the virtual network. Any RFC 1918 or CGNAT (RFC 6598) destined traffic that does not match a route within the virtual network will be dropped (null routed).
+If traffic does not match any route you have configured in the virtual network, Cloudflare applies default behavior based on the destination address type:
+
+- **Public (Internet-routable) addresses**: Traffic exits to the Internet.
+- **Private addresses** ([RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) or [CGNAT/RFC 6598](https://datatracker.ietf.org/doc/html/rfc6598)): Traffic is dropped (null routed), because private addresses are not routable on the public Internet and Cloudflare has no path to deliver them without a matching route.
 
 ### Route prioritization
 
