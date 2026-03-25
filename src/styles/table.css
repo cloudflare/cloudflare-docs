@@ -20,8 +20,22 @@ table * {
 	overflow-wrap: normal;
 }
 
+rule-id button {
+	background-color: color-mix(
+		in srgb,
+		var(--sl-color-gray-5) 8%,
+		var(--sl-color-gray-6)
+	);
+	border-color: color-mix(
+		in srgb,
+		var(--sl-color-gray-5) 30%,
+		var(--sl-color-gray-6)
+	);
+}
+
 :root[data-theme="dark"] rule-id button {
 	background-color: var(--sl-color-gray-5);
+	border-color: var(--sl-color-gray-4);
 }
 
 /* Inline code inside table cells — uses the same prominent-surface token
