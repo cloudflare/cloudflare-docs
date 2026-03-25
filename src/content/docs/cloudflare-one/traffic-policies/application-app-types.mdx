@@ -13,7 +13,7 @@ import {
 	Render,
 } from "~/components";
 
-Gateway allows you to create DNS, Network, and HTTP policies based on applications and app types. Instead of writing separate rules for every domain an application uses, you can select the application by name. You can select individual applications or groups of app types to filter specific traffic on your network.
+Gateway allows you to create DNS, Network, and HTTP policies based on applications and application types. Because a single application often spans multiple hostnames, selecting an application by name is easier than writing separate rules for each hostname. You can select individual applications or application types to filter specific traffic on your network.
 
 ## Applications
 
@@ -64,7 +64,7 @@ Gateway sorts applications into the following app type groups:
 
 ## Application hostnames
 
-An application like Google Drive uses its own domains (for example, `drive.google.com`) and shared resources (for example, `accounts.google.com` for login). Gateway separates these into [hostnames](#hostnames) and [support hostnames](#support-hostnames) so that blocking one application does not accidentally break another.
+An application like Google Drive uses its own hostnames (for example, `drive.google.com`) and shared resources used by other applications (for example, `accounts.google.com` for login). Gateway separates these into [hostnames](#hostnames) and [support hostnames](#support-hostnames) so you can control the behavior of each application independently.
 
 ### Hostnames
 
