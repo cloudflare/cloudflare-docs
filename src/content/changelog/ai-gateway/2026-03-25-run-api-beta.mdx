@@ -1,0 +1,25 @@
+---
+title: Run API now available in beta
+description: AI Gateway introduces the Run API, a new endpoint for running AI models with a simplified request/response pattern.
+products:
+  - ai-gateway
+date: 2026-03-25
+---
+
+AI Gateway now offers a new `/run` endpoint for running AI models. The Run API uses its own request envelope, separate from the OpenAI-compatible `/chat/completions` format, and is designed to support a broader range of model types over time.
+
+During the beta, the Run API supports one model — `google/nano-banana` for image generation. Authenticate with [Unified Billing](/ai-gateway/features/unified-billing/) or [BYOK (Gateway Key Store)](/ai-gateway/configuration/bring-your-own-keys/).
+
+```bash
+curl -X POST "https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default/run" \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "google/nano-banana",
+    "input": {
+      "prompt": "a cat riding a burrito"
+    }
+  }'
+```
+
+Additional models and features will be added in future updates. For more information, refer to the [Run API](/ai-gateway/usage/run-api/) documentation.
