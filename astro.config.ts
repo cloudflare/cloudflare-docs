@@ -66,6 +66,7 @@ const RUN_LINK_CHECK =
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
+	trailingSlash: "always",
 	markdown: {
 		smartypants: false,
 		remarkPlugins: [remarkValidateImages],
