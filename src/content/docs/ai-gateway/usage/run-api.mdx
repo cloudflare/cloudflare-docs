@@ -1,0 +1,162 @@
+---
+title: Run API
+pcx_content_type: reference
+tags:
+  - AI
+sidebar:
+  order: 3
+---
+
+import { InlineBadge, Tabs, TabItem, WranglerConfig } from "~/components";
+
+<InlineBadge preset="beta" />
+
+The Run API is a new endpoint for AI Gateway that provides a simplified request/response pattern for running AI models. Unlike the [Unified API](/ai-gateway/usage/chat-completion/), which follows the OpenAI-compatible `/chat/completions` format, the Run API uses its own request envelope designed for a broader range of model types.
+
+:::note
+The Run API is currently in beta with limited model and feature support. Refer to [Current limitations](#current-limitations) for details on what is available today.
+:::
+
+## Endpoint URL
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run
+```
+
+Replace `{account_id}` with your Cloudflare account ID and `{gateway_id}` with your gateway ID (or `default` to use the [default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway)).
+
+## Authentication
+
+The Run API supports the following authentication methods for upstream provider access:
+
+- **Unified Billing** — Use AI Gateway billing to pay for inference requests. Refer to [Unified Billing](/ai-gateway/features/unified-billing/).
+- **BYOK (Gateway Key Store)** — Store your provider API keys with Cloudflare. Refer to [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
+
+:::caution
+Passing provider API keys directly in request headers is not supported with the Run API. You must use Unified Billing or BYOK (Gateway Key Store) to authenticate with upstream providers.
+:::
+
+## Supported models
+
+The Run API currently supports a single model:
+
+| Model | Type | Provider |
+| --- | --- | --- |
+| `google/nano-banana` | Image generation | Google Vertex AI |
+
+More models will be added in future updates.
+
+## Example
+
+<Tabs>
+<TabItem label="curl">
+
+```bash
+curl -X POST "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run" \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "google/nano-banana",
+    "input": {
+      "prompt": "a cat riding a burrito"
+    }
+  }'
+```
+
+</TabItem>
+<TabItem label="Workers AI binding">
+
+<WranglerConfig>
+
+```toml
+name = "run-api-example"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[ai]
+binding = "AI"
+```
+
+</WranglerConfig>
+
+```ts
+export interface Env {
+  AI: Ai;
+}
+
+export default {
+  async fetch(request, env): Promise<Response> {
+    const response = await env.AI.run(
+      "google/nano-banana",
+      {
+        prompt: "a cat riding a burrito",
+      },
+      {
+        gateway: {
+          id: "{gateway_id}",
+        },
+      },
+    );
+
+    return new Response(JSON.stringify(response), {
+      headers: { "Content-Type": "application/json" },
+    });
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem>
+</Tabs>
+
+### Response
+
+A successful request returns a response with the following envelope:
+
+```json
+{
+  "state": "Completed",
+  "result": {
+    "image": "https://...r2.cloudflarestorage.com/..."
+  },
+  "usedBYOKKey": false,
+  "provider": "google-vertex-ai",
+  "model": "google/nano-banana"
+}
+```
+
+| Field | Description |
+| --- | --- |
+| `state` | The request status. `Completed` on success, `Failed` on error. |
+| `result` | The model output. For image models, this contains an `image` field with a URL to the generated image. |
+| `usedBYOKKey` | Whether a BYOK key was used for the request. |
+| `provider` | The provider that served the request. |
+| `model` | The model that was used. |
+
+### Error response
+
+```json
+{
+  "state": "Failed",
+  "error": {
+    "code": "provider_unavailable",
+    "message": "All providers for this model are currently unavailable."
+  },
+  "model": "google/nano-banana"
+}
+```
+
+## Current limitations
+
+The Run API is in beta. The following limitations apply:
+
+- **One model** — Only `google/nano-banana` is supported. Additional models will be added over time.
+- **Image generation only** — Chat and text generation models are not yet available through the Run API.
+- **No caching** — [Caching](/ai-gateway/features/caching/) is not supported for Run API requests.
+- **No rate limiting** — [Rate limiting](/ai-gateway/features/rate-limiting/) rules do not apply to Run API requests.
+- **No guardrails** — [Guardrails](/ai-gateway/guardrails/) are not available for the Run API.
+- **No DLP** — Data loss prevention features are not supported.
+- **No dynamic routing** — [Dynamic routing](/ai-gateway/features/dynamic-routing/) (fallbacks, A/B testing, conditional logic) is not available.
+- **No streaming** — Streaming responses are not supported.
+- **No TypeScript types** — TypeScript type definitions for the Run API are not yet available in `@cloudflare/workers-types`.
+
+More features and broader model support are coming soon.
