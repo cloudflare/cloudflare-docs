@@ -1,6 +1,7 @@
 @layer base, starlight, theme, components, utilities;
 
-@import "@astrojs/starlight-tailwind";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @import "tailwindcss/theme.css" layer(theme) source(none);
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 
