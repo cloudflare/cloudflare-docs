@@ -20,6 +20,10 @@ table * {
 	overflow-wrap: normal;
 }
 
+:root[data-theme="dark"] rule-id button {
+	background-color: var(--sl-color-gray-5);
+}
+
 /* Inline code inside table cells — uses the same prominent-surface token
    as <Type /> so it stays legible on both plain and striped rows. */
 .sl-markdown-content :is(td, th) code:not(:where(.not-content *)) {
