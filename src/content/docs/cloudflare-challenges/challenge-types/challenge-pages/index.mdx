@@ -7,7 +7,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-An interstitial Challenge Page acts as a gate between the visitor and your website or application while Cloudflare verifies the authenticity of the visitor.
+An interstitial Challenge Page (a full-page screen that appears before the visitor reaches the destination URL) acts as a gate between the visitor and your website or application while Cloudflare verifies the authenticity of the visitor.
 
 The Challenge Page intercepts the visitor from getting to the destination URL by holding the request and evaluating the browser environment for automated signals, and serving a Challenge. The visitor cannot reach their destination without passing the Challenge. Based on the signals indicated by their browser environment, the visitor may be asked to perform an interaction such as checking a box or selecting a button for further probing.
 
@@ -33,7 +33,7 @@ Managed Challenges are where Cloudflare dynamically chooses the appropriate type
 
 Most human visitors are automatically verified and the Challenge Page will display **Successful**. However, if Cloudflare detects non-human attributes from the visitor's browser, they may be required to interact with the Challenge to solve it.
 
-Unless there are specific compatibility issues or other reasons to use other types of Challenges, Cloudflare recommends you to use Managed Challenges for your custom rules.
+Cloudflare recommends Managed Challenge for most WAF rules. Unless there are specific compatibility issues, do not use other Challenge types.
 
 :::caution
 Using Cloudflare Challenges along with Rules features may cause Challenge loops. Refer to [Rules troubleshooting](/rules/reference/troubleshooting/) for more information.
@@ -41,9 +41,9 @@ Using Cloudflare Challenges along with Rules features may cause Challenge loops.
 
 ### Interactive Challenge
 
-Interactive Challenge Pages offer the highest security for your website or application because it requires a visitor to interact with the Interstitial Challenge Page, presenting the visitor with an Interactive Challenge to solve.
+Interactive Challenge Pages require a visitor to interact with the Interstitial Challenge Page to pass.
 
-For more information about why Cloudflare does not recommend using Interactive Challenge, in favor of Managed Challenge, refer to our [blog post](https://blog.cloudflare.com/end-cloudflare-captcha/).
+Cloudflare does not recommend Interactive Challenge. Use Managed Challenge instead. For more information, refer to the [Cloudflare blog post](https://blog.cloudflare.com/end-cloudflare-captcha/).
 
 ## Compatibility limitations
 
