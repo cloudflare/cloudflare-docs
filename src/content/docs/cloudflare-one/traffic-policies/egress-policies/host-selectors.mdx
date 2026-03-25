@@ -10,25 +10,28 @@ import { Tabs, TabItem, Details, APIRequest, Render } from "~/components";
 <Details header="Feature availability">
 
 | [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Traffic and DNS mode                                                                        | Enterprise                                                    |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Traffic and DNS mode                                                                              | Enterprise                                                    |
 
 | System   | Availability | Minimum client version |
-| -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2025.4.929.0         |
-| macOS    | ✅           | 2025.4.929.0         |
-| Linux    | ✅           | 2025.4.929.0         |
-| iOS      | ✅           | 1.11                 |
-| Android  | ✅           | 2.4.2                |
-| ChromeOS | ✅           | 2.4.2                |
+| -------- | ------------ | ---------------------- |
+| Windows  | ✅           | 2025.4.929.0           |
+| macOS    | ✅           | 2025.4.929.0           |
+| Linux    | ✅           | 2025.4.929.0           |
+| iOS      | ✅           | 1.11                   |
+| Android  | ✅           | 2.4.2                  |
+| ChromeOS | ✅           | 2.4.2                  |
 
 </Details>
 
-When Gateway receives a DNS query for hostname covered by the [Application](/cloudflare-one/traffic-policies/egress-policies/#application), [Content Categories](/cloudflare-one/traffic-policies/egress-policies/#content-categories), [Domain](/cloudflare-one/traffic-policies/egress-policies/#domain), and [Host](/cloudflare-one/traffic-policies/egress-policies/#host) selectors in an Egress policy, Gateway initially resolves DNS to an IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range. This process allows Gateway to map a destination IP with a hostname at [layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) (where Gateway evaluates Egress policies). The destination IP for a hostname is not usually known at layer 4. Prior to evaluating Egress policies, the initially resolved IP is overwritten with the correct destination IP.
+Egress policies are evaluated at Layer 4 (https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) of the OSI model, where only IP addresses are available — not hostnames. The [Application](/cloudflare-one/traffic-policies/egress-policies/#application), [Content Categories](/cloudflare-one/traffic-policies/egress-policies/#content-categories), [Domain](/cloudflare-one/traffic-policies/egress-policies/#domain), and [Host](/cloudflare-one/traffic-policies/egress-policies/#host) selectors need to match traffic by hostname, so Gateway uses a two-step process:
+
+1. When Gateway receives a DNS query for a hostname that matches one of these selectors, it initially resolves the query to a temporary IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range.
+2. When traffic arrives with this temporary destination IP, Gateway can identify which hostname the connection belongs to, apply the correct egress policy, then replace the temporary IP with the real destination IP before forwarding the traffic.
 
 ![Example egress policy flow](~/assets/images/cloudflare-one/policies/host-selector-diagram.png)
 
-Additional configuration is required when using policies with these selectors.
+These selectors require additional configuration before they work.
 
 ## Turn on Host selectors
 
@@ -63,22 +66,22 @@ Traffic must be on-ramped to Gateway with the following methods:
 
 | On-ramp method                                                                                      | Compatibility |
 | --------------------------------------------------------------------------------------------------- | ------------- |
-| [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)                                            | ✅            |
+| [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)          | ✅            |
 | [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/)                        | ✅            |
 | [Browser Isolation](/cloudflare-one/remote-browser-isolation/)                                      | ✅            |
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌            |
-| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                              | ✅            |
+| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                    | ✅            |
 
-Unsupported traffic will be resolved with your default Gateway settings. If you use DNS locations to send a DNS query to Gateway with IPv4, IPv6, DoT, or DoH, Gateway will not return the initial resolved IP for supported traffic nor resolve unsupported traffic.
+Traffic from unsupported on-ramp methods resolves using your default Gateway settings. If you use DNS locations to send DNS queries to Gateway (over IPv4, IPv6, DNS over TLS, or DNS over HTTPS), Gateway does not return the initial resolved IP and the host selectors do not apply.
 
 ### Configuration changes
 
 To configure your Zero Trust organization to use Host selectors with Egress policies:
 
 1.  Make sure you deploy the following version of the Cloudflare One Client on your users' devices:
-    - **Desktop**: [Cloudflare One Client version 2025.4.929.0](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) or later 
+    - **Desktop**: [Cloudflare One Client version 2025.4.929.0](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) or later
     - **iOS**: [Cloudflare One Client version 1.11](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#ios) or later
-    - **Android and Chrome OS**: [Cloudflare One Client version 2.4.2](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#android) or later. 
+    - **Android and Chrome OS**: [Cloudflare One Client version 2.4.2](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#android) or later.
 
     If you need to support devices running prior versions of WARP, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
 
@@ -95,7 +98,7 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
 
 2. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
 
-The Cloudflare One Client must be set to _Traffic and DNS mode_ mode for traffic affected by these selectors to route correctly.
+The Cloudflare One Client must be set to _Traffic and DNS mode_ for traffic affected by these selectors to route correctly.
 
 {/* prettier-ignore-end */}
 
@@ -103,4 +106,14 @@ The Cloudflare One Client must be set to _Traffic and DNS mode_ mode for traffic
 
 ### Google Chrome restricts local network access
 
-<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one"/>
+<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one" />
+
+### DNS Override policies bypass host selectors
+
+If a domain matches a [DNS Override policy](/cloudflare-one/traffic-policies/dns-policies/#override), Gateway will not apply the initial resolved IP mapping for that domain. This means host-based egress selectors (Application, Content Categories, Domain, and Host) will not evaluate against traffic to the overridden domain. Traffic to these domains will use the default Cloudflare egress method.
+
+### HTTPS DNS records not supported
+
+Host selectors do not support HTTPS DNS record types. When a domain uses HTTPS records for connection establishment, Gateway cannot map the DNS query to a hostname for egress policy evaluation. Traffic to these domains will use the default Cloudflare egress method instead of matching a host-based egress policy.
+
+If you need to apply egress policies to a domain that uses HTTPS records, use an IP-based selector (such as [Destination IP](/cloudflare-one/traffic-policies/egress-policies/#destination-ip)) instead.
