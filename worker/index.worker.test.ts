@@ -12,14 +12,6 @@ describe("Cloudflare Docs", () => {
 			expect(await response.text()).toContain("Cloudflare Docs");
 		});
 
-		// Remove once the whacky double-slash rules get removed
-		it("responds with index.html at `//`", async () => {
-			const request = new Request("http://fakehost//");
-			const response = await SELF.fetch(request);
-			expect(response.status).toBe(200);
-			expect(await response.text()).toContain("Cloudflare Docs");
-		});
-
 		it("responds with 404.html at `/non-existent`", async () => {
 			const request = new Request("http://fakehost/non-existent");
 			const response = await SELF.fetch(request);
