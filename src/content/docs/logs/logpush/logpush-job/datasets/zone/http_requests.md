@@ -247,7 +247,7 @@ List of content types.
 
 Type: `object`
 
-String key-value pairs for Cookies. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
+String key-value pairs for cookies. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
 
 ## EdgeCFConnectingO2O
 
@@ -505,13 +505,13 @@ ID of the request.
 
 Type: `object`
 
-String key-value pairs for RequestHeaders. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
+String key-value pairs for request headers. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
 
 ## ResponseHeaders
 
 Type: `object`
 
-String key-value pairs for ResponseHeaders. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
+String key-value pairs for response headers. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
 
 ## SecurityAction
 
@@ -602,6 +602,18 @@ WAF score for an SQLi attack.
 Type: `int`
 
 WAF score for an XSS attack.
+
+## WebAssetsLabelsManaged
+
+Type: `array[string]`
+
+Cloudflare-defined labels matched for the request.
+
+## WebAssetsOperationID
+
+Type: `string`
+
+UUID of the matched web asset operation.
 
 ## WorkerCPUTime
 

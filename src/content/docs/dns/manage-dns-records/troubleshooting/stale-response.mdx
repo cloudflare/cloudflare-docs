@@ -11,7 +11,7 @@ import { GlossaryTooltip } from "~/components";
 In one of the scenarios below, you notice that stale DNS responses are used. Depending on the scenario and other aspects of your configuration, this can cause wrong content or no content to be returned.
 
 - A <GlossaryTooltip term="proxy status">proxied</GlossaryTooltip> CNAME record ([flattened by default](/dns/cname-flattening/)).
-- A DNS-only CNAME record that has flattening enabled. This can happen either via the specific record configuration or as a consequence of the [zone settings](/dns/cname-flattening/set-up-cname-flattening/).
+- A DNS-only CNAME record that has flattening turned on. This can happen either via the specific record configuration or as a consequence of the [zone settings](/dns/cname-flattening/set-up-cname-flattening/).
 - A [Workers](/workers/) script making a subrequest to an external hostname[^1].
 
 ## Cause

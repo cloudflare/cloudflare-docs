@@ -17,13 +17,9 @@ If you have not yet purchased Email security, you can try Email security with Re
 
 <Description>Protect your email inbox with Email security.</Description>
 
-Email security is the practice of protecting your email inbox from cyber attacks and unwanted communication sent via email.
+Cloudflare Email Security uses AI, threat intelligence, and security rules to analyze every incoming email, protecting your organization from phishing, malware, [Business Email Compromise](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/) (where attackers impersonate executives or authority figures to commit fraud), vendor email fraud, and spam.
 
-Cloudflare's Email security uses Artificial Intelligence (AI), threat intelligence, and expert security rules to analyze every incoming email.
-
-Email security protects your email inbox from phishing attacks, malware, [Business Email Compromise](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/) attacks, and vendor email fraud.
-
-Cloudflare's Email security integrates with your existing email provider (such as Outlook or Gmail), and reduces the amount of spam and phishing emails landing in your inbox. You can configure Email security via [API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/), [BCC](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/gmail-bcc-setup/)/[Journaling](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/), or [MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/) deployment. All three deployments aim at protecting your organization from malicious activities.
+It integrates with your existing email provider (such as Outlook or Gmail) and can be deployed via [API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/), [BCC](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/gmail-bcc-setup/)/[Journaling](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/), or [MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/).
 
 When you complete the [setup process](/cloudflare-one/email-security/setup/), the Cloudflare dashboard will display the Email security overview page.
 
@@ -32,10 +28,10 @@ The Email security overview provides you with:
 - **Quick actions**, where you can:
   - View [submissions](/cloudflare-one/email-security/submissions/)
   - Manage detection settings: manage [allow policies](/cloudflare-one/email-security/settings/detection-settings/allow-policies/), [blocked senders](/cloudflare-one/email-security/settings/detection-settings/blocked-senders/), [trusted domains](/cloudflare-one/email-security/settings/detection-settings/trusted-domains/), [impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/) and [additional detections](/cloudflare-one/email-security/settings/detection-settings/additional-detections/).
-  - [Run screens](/cloudflare-one/email-security/investigation/search-email/#screen-criteria)
-- **Recommendations**: A series of recommendations. For example, you may be recommended to learn how to submit emails for submission, create policies, or protect users at risk of [impersonation](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/)
+  - [Run screens](/cloudflare-one/email-security/investigation/search-email/#screen-criteria): Search, filter, reclassify, and bulk-move emails
+- **Recommendations**: Suggested next steps to improve your configuration. For example, submitting misclassified emails for reclassification, creating policies, or protecting users at risk of [impersonation](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/).
 - **Email security metrics**: Activity from the last seven days.
-- **Recently modified policies** A list of modified policies.
+- **Recently modified policies**: A list of recently changed policies.
 - **Education and resources**: Links to [implementation guides](/cloudflare-one/implementation-guides/), [Email security changelogs](/cloudflare-one/changelog/email-security/), and [API documentation](https://developers.cloudflare.com/api/resources/email_security/subresources/investigate/methods/get/)
 
 To access the Email security overview:

@@ -1645,6 +1645,7 @@
 
 # r2 sql
 /r2-sql/platform/wrangler-commands/ /r2-sql/reference/wrangler-commands/ 301
+/r2-sql/sql-reference/limitations/ /r2-sql/reference/limitations-best-practices/ 301
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 # tenant
@@ -2025,6 +2026,7 @@
 /workers/tutorials/store-data-with-fauna/ https://fauna.com/blog/the-future-of-fauna 301
 /workers/tutorials/live-cursors-with-nextjs-rpc-do/ /resources/ 301
 /workers/tutorials/automated-analytics-reporting/ /resources/ 301
+/workers/ai/ /cloudflare-agent/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -2426,6 +2428,8 @@
 # DYNAMIC REDIRECTS
 # ============================================================================
 
+/workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
+
 # Pub/Sub (removed product)
 /pub-sub/* / 301
 
@@ -2646,4 +2650,3 @@
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
-

@@ -5,11 +5,11 @@ sidebar:
   order: 5
 ---
 
-import { FileTree } from "~/components"
+import { FileTree } from "~/components";
 
 AI Search supports multitenancy by letting you segment content by tenant, so each user, customer, or workspace can only access their own data. This is typically done by organizing documents into per-tenant folders and applying [metadata filters](/ai-search/configuration/metadata/) at query time.
 
-## 1. Organize Content by Tenant
+## 1. Organize content by tenant
 
 When uploading files to R2, structure your content by tenant using unique folder paths.
 
@@ -25,28 +25,34 @@ Example folder structure:
 
 When indexing, AI Search will automatically store the folder path as metadata under the `folder` attribute. It is recommended to enforce folder separation during upload or indexing to prevent accidental data access across tenants.
 
-## 2. Search Using Folder Filters
+## 2. Search using folder filters
 
 To ensure a tenant only retrieves their own documents, apply a `folder` filter when performing a search.
 
-Example using [Workers Binding](/ai-search/usage/workers-binding/):
-
-```js
-const response = await env.AI.autorag("my-autorag").search({
-	query: "When did I sign my agreement contract?",
-	filters: {
-		type: "eq",
-		key: "folder",
-		value: `customer-a/contracts/`,
-	},
-});
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instances/{NAME}/search \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  -d '{
+    "messages": [
+      {
+        "content": "When did I sign my agreement contract?",
+        "role": "user"
+      }
+    ],
+    "ai_search_options": {
+      "retrieval": {
+        "filters": {
+          "folder": { "$gte": "customer-a/", "$lt": "customer-a0" }
+        }
+      }
+    }
+  }'
 ```
 
-To filter across multiple folders, or to add date-based filtering, you can use a compound filter with an array of [comparison filters](/ai-search/configuration/metadata/#compound-filter).
+## Tip: Use "starts with" filter
 
-## Tip: Use "Starts with" filter
-
-While an `eq` filter targets files at the specific folder, you'll often want to retrieve all documents belonging to a tenant regardless if there are files in its subfolders. For example, all files in `customer-a/` with a structure like:
+While an equality filter targets files at a specific folder, you often want to retrieve all documents belonging to a tenant, including files in subfolders. For example, all files in `customer-a/` with a structure like:
 
 <FileTree>
 - customer-a
@@ -56,30 +62,18 @@ While an `eq` filter targets files at the specific folder, you'll often want to 
       - contract-1.pdf
 </FileTree>
 
-To achieve this [starts with](/ai-search/configuration/metadata/#starts-with-filter-for-folders) behavior, use a compound filter like:
+To achieve this ["starts with"](/ai-search/configuration/metadata/#starts-with-filter-for-folders) behavior, use a range filter:
 
-```js
-filters: {
-    type: "and",
-    filters: [
-      {
-        type: "gt",
-        key: "folder",
-        value: "customer-a//",
-      },
-      {
-        type: "lte",
-        key: "folder",
-        value: "customer-a/z",
-      },
-    ],
-  },
+```json
+{
+	"ai_search_options": {
+		"retrieval": {
+			"filters": {
+				"folder": { "$gte": "customer-a/", "$lt": "customer-a0" }
+			}
+		}
+	}
+}
 ```
 
-This filter identifies paths starting with `customer-a/` by using:
-
-- The `and` condition to combine the effects of the `gt` and `lte` conditions.
-- The `gt` condition to include paths greater than the `/` ASCII character.
-- The `lte` condition to include paths less than and including the lower case `z` ASCII character.
-
-This filter captures both files `profile.md` and `contract-1.pdf`.
+This range filter matches all paths starting with `customer-a/` because `0` comes after `/` in ASCII order, capturing both `profile.md` and `contract-1.pdf`.

@@ -4,21 +4,20 @@ title: FAQ
 structured_data: true
 sidebar:
   order: 7
-
 ---
 
 import { DashButton } from "~/components";
 
 Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) to explore more resources.
 
-* [Domain management](#domain-management)
-* [Domain transfers](#domain-transfers)
-* [Domain registrations](#domain-registrations)
-* [Domain restoration](#domain-restoration)
-* [Domain deletions](#domain-deletions)
-* [Billing](#billing)
+- [Domain management](#domain-management)
+- [Domain transfers](#domain-transfers)
+- [Domain registrations](#domain-registrations)
+- [Domain restoration](#domain-restoration)
+- [Domain deletions](#domain-deletions)
+- [Billing](#billing)
 
-***
+---
 
 ## Domain management
 
@@ -34,7 +33,7 @@ If you still need to use different nameservers, you will have to [move your doma
 
 You can update both your default contact information and any individual Registrant, Administrator, Technical or Billing contact for your domain registrations by following [Registrant contact updates](/registrar/account-options/domain-contact-updates/). Details that may be updated include name, email, address, organization and telephone number.
 
-***
+---
 
 ## Domain transfers
 
@@ -56,7 +55,6 @@ Whenever a domain is first registered, the registrant purchases control of that 
 
 Transferring a domain adds time to the current expiration date, unless your domain already has [10 years on the term](#if-i-registered-my-domain-for-10-years-at-another-registrar-will-i-gain-another-year-if-i-transfer-it-to-cloudflare).
 
-
 ### How can I see the status of my domain transfer?
 
 Once you initiate a domain transfer, your previous registrar has five days to release the domain. In most cases, they will send you an email to confirm you want to transfer. If you actively acknowledge that email (through a link or the registrar's dashboard), they can process it immediately.
@@ -68,7 +66,6 @@ To see the progress of your transfer, go to the **Transfer domains** page in the
 To accelerate the process, be sure to check with your old registrar how you can approve the transfer out.
 
 Once successful, you will receive an email from Cloudflare and be able to manage the domain in the dashboard under **Overview** of that site.
-
 
 ### Why am I not allowed to transfer my domain?
 
@@ -88,36 +85,33 @@ If you have an [unverified email address](/fundamentals/user-profiles/verify-ema
 
 If you enter an incorrect auth code (also referred to as authentication code or authorization code), return to the **Domain Registration** page or the **Overview** for your site. You can use the available input field to reenter your authentication code.
 
-
 ### If I registered my domain for 10 years at another registrar, will I gain another year if I transfer it to Cloudflare?
-
 
 No. A domain cannot have more than 10 years on the term. If you registered your domain for 10 years, you will get 10 years upon transferring it to Cloudflare.
 
-***
+---
 
 ## Domain registrations
 
 ### My domain's registration was not extended by one year after transferring to Cloudflare
 
-When you transfer your domain to Cloudflare, the registry will extend your registration by one year. However, in one specific circumstance your transfer could result in you keeping your original expiration date.
+Most transfers add one year to your registration. However, if your domain expired, you renewed it to keep it, and then transferred within 45 days of renewal, you will be charged for the transfer but no additional year will actually be added. This is a registry restriction that applies to all registrars, not just Cloudflare.
 
-When a domain expires, the registration enters the auto-renew grace period. During that time, you can renew the domain at your registrar to avoid losing it. If your domain expires at your current registrar, you renew it and then transfer to Cloudflare within 45 days, the registry can restrict the addition of an extra year.
+For example, say `example.com` expires on March 1. You renew it on March 10, extending the registration to March 10 of the following year. You then transfer to Cloudflare on March 20. Because the transfer is within 45 days of renewal, the registry does not add an additional year. Your expiration date remains March 10 of the following year.
 
-Say you have `example.com` registered and it expires on December 10, 2021. You decide to renew it during the auto-renew grace period on December 20, 2021. That renewal extends the registration to December 20, 2022. You then transfer to Cloudflare on December 30, 2021. Since that transfer is within 45 days of the expiration, the registry may not add the year to your registration. When you transfer to Cloudflare or any registrar in this circumstance, your expiration can still remain December 20th, 2022.
+To avoid this, wait at least 45 days after renewal before transferring.
 
-If a year is not added to your registration, you have effectively paid twice for the same added year. Per ICANN rules, you are entitled to request a refund at your previous registrar.
-
+If this already happened, you have effectively paid twice for the same year. Per ICANN rules, you are entitled to request a refund from your previous registrar.
 
 ### What Happens When a Domain Expires?
 
 In summary, here is what will happen after a domain expires:
 
-* **Day 0**: Expiration Date.
-* **Day 1 - 30**: Grace Period (domain resolves normally).
-* **Day 31 - 40**: Suspension Period (domains resolves to suspension page).
-* **Day 41 - 70**: Redemption Period.
-* **Day 71 - 75**: Pending Delete Period.
+- **Day 0**: Expiration Date.
+- **Day 1 - 30**: Grace Period (domain resolves normally).
+- **Day 31 - 40**: Suspension Period (domains resolves to suspension page).
+- **Day 41 - 70**: Redemption Period.
+- **Day 71 - 75**: Pending Delete Period.
 
 Cloudflare currently offers a 40-day grace period for most top-level domains (TLDs).
 
@@ -129,7 +123,7 @@ If the domain is in a state where it can be restored, the Manage Domain page in 
 
 Cloudflare does not guarantee against domain loss in the sense of fully indemnifying you for business losses if you lose your domain. However, mechanisms are in place to alert you of domain expiration and redemption grace periods should your domain expire. You can also elect to set up your domain registration to renew automatically. For an additional layer of control over your domains, refer to [Domain Protection Service](https://www.cloudflare.com/products/registrar/custom-domain-protection/).
 
-***
+---
 
 ## Domain restoration
 
@@ -169,36 +163,29 @@ No. Once a restore has been completed it can not be reversed. It may be possible
 
 :::note[Note]
 
-
 Domain names should be released after a period of 75 days, although the exact deletion timeline is ultimately determined by the domain's registry. You should monitor the domain status to ascertain when it will become available for registration once again.
-
 
 :::
 
-
-
-***
+---
 
 ## Domain deletions
-
 
 ### Why am I unable to delete my Registrar domain?
 
 A domain can only be deleted if all the following conditions are met:
 
-* The user initiating the action is a Super Admin or Read/Write Administrator.
-* The domain is not delete locked at the registry with either `clientDeleteProhibited` or `serverDeleteProhibited`.
-* The domain is not already in `pendingDelete`, `redemptionPeriod`, or in `pendingTransfer`.
-* The domain has not been administratively locked by Cloudflare.  This typically occurs for legal reasons such as a UDRP filing or court order, but may also be the result of an abuse or payment investigation.
-* The domain is NOT a .UK domain. .UK domains currently cannot be deleted at the registry.
+- The user initiating the action is a Super Admin or Read/Write Administrator.
+- The domain is not delete locked at the registry with either `clientDeleteProhibited` or `serverDeleteProhibited`.
+- The domain is not already in `pendingDelete`, `redemptionPeriod`, or in `pendingTransfer`.
+- The domain has not been administratively locked by Cloudflare. This typically occurs for legal reasons such as a UDRP filing or court order, but may also be the result of an abuse or payment investigation.
+- The domain is NOT a .UK domain. .UK domains currently cannot be deleted at the registry.
 
 If any of the above conditions are not met, the domain cannot be deleted.
 
 ### Who has permission to delete a domain registration?
 
-
-Only Super Admins and Administrators with Read/Write access can initiate the deletion of a domain.  Note that only Super Admins will receive the email with the delete token.
-
+Only Super Admins and Administrators with Read/Write access can initiate the deletion of a domain. Note that only Super Admins will receive the email with the delete token.
 
 ### Will I receive a refund for my deleted domain registration?
 
@@ -218,7 +205,7 @@ If the domain is within 5 days of the initial registration, the domain will be i
 
 If the domain is more than 5 days old, it will enter the redemption period and will remain in account until the redemption period expires and the registry releases the domain.
 
-***
+---
 
 ## Billing
 
@@ -226,14 +213,10 @@ If the domain is more than 5 days old, it will enter the redemption period and w
 
 Refer to [What is Cloudflare Registrar](https://www.cloudflare.com/learning/dns/what-is-cloudflare-registrar/) for more information on pricing.
 
-
 ### When will I be billed?
 
 You will be billed when you input your authorization code and initiate the transfer of your domain to Cloudflare. Currently, Cloudflare Registrar only uses the primary payment method for any associated transaction. Make sure to copy and paste the code to avoid mistakes. The transfer will not initiate if the code is incorrect.
 
-
 ### Is there a fee to transfer a .UK domain?
 
 No, there is no fee to transfer a `.uk` domain. Also, an additional year is NOT added during the transfer process. However, if the domain is nearing the expiration date and is set to auto-renew, it may be automatically renewed shortly after the completion of the transfer.
-
-

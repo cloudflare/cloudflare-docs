@@ -1,0 +1,88 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Layout System
+   ═══════════════════════════════════════════════════════════════════
+   Single source of truth for spacing, column widths, and alignment.
+   Unlayered — overrides Starlight's @layer starlight.* defaults.
+   Everything snaps to an 8px (0.5rem) grid.
+   ─────────────────────────────────────────────────────────────── */
+
+/* ── Spacing Scale ── */
+:root {
+	--layout-space-1: 0.25rem; /*  4px  */
+	--layout-space-2: 0.5rem; /*  8px  */
+	--layout-space-3: 0.75rem; /* 12px  */
+	--layout-space-4: 1rem; /* 16px  */
+	--layout-space-5: 1.25rem; /* 20px  */
+	--layout-space-6: 1.5rem; /* 24px  */
+	--layout-space-8: 2rem; /* 32px  */
+	--layout-space-10: 2.5rem; /* 40px  */
+	--layout-space-12: 3rem; /* 48px  */
+}
+
+/* ── Column Widths ── */
+:root {
+	--sl-content-width: 45rem; /* 720px */
+	--sl-sidebar-width: 18.75rem; /* 300px */
+	--layout-toc-width: 18rem; /* 288px */
+	--sl-content-pad-x: var(--layout-space-4); /* 16px mobile */
+	--sl-content-gap-y: var(--layout-space-4); /* 16px */
+	--sl-main-pad: 0 0 var(--layout-space-6) 0;
+}
+
+html:not([data-has-toc]) {
+	--sl-content-width: 67.5rem;
+}
+
+@media (min-width: 72rem) {
+	:root {
+		--sl-content-pad-x: var(--layout-space-6); /* 24px desktop */
+	}
+}
+
+/* ── First Content Panel (breadcrumbs + title area) ── */
+main > .content-panel:first-of-type {
+	padding-block: var(--layout-space-4);
+}
+
+/* h1: small top margin to breathe from breadcrumbs */
+main > .content-panel:first-of-type h1 {
+	margin-bottom: var(--layout-space-0);
+}
+
+main > .content-panel + .content-panel {
+	padding-top: var(--layout-space-0);
+}
+
+/* ── Right Sidebar (TOC) Alignment ── */
+.right-sidebar-panel {
+	padding-top: var(--layout-space-6);
+	padding-left: var(--layout-space-6);
+}
+
+/* ── Dividers ── */
+/* TOC vertical divider — whitespace does the separation work */
+.right-sidebar {
+	border-inline-start: none;
+}
+
+/* Header/body horizontal divider — replaced by spacing only */
+.content-panel + .content-panel {
+	border-top: none;
+	/* background: orange; */
+}
+
+.right-sidebar-panel .sl-container {
+	width: 100%;
+	max-width: var(--layout-toc-width);
+}
+
+/* ── Breadcrumb Spacing ── */
+.c-breadcrumbs {
+	padding-top: 0;
+	padding-bottom: var(--layout-space-2);
+}
+
+/* ── Pagination ── */
+.pagination-links {
+	margin-top: var(--layout-space-12);
+}

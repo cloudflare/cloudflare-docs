@@ -3,6 +3,18 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-03-23"
+    title: Custom metadata filtering
+    description: |-
+      Define up to 5 custom metadata fields per AI Search instance and filter search results by category, version, or any custom attribute. Attach metadata via R2 custom headers or HTML meta tags.
+  - publish_date: "2026-03-23"
+    title: Public endpoint, UI snippets, and MCP support
+    description: |-
+      AI Search now supports [public endpoints](/ai-search/configuration/public-endpoint/), [UI snippets](/ai-search/configuration/embed-search-snippets/), and [MCP](/ai-search/usage/mcp/), making it easy to add search to your website or connect AI agents.
+  - publish_date: "2026-03-23"
+    title: New REST API endpoints
+    description: |-
+      AI Search introduces new [REST API](/ai-search/usage/rest-api/) endpoints for search that use an OpenAI-compatible format. You can use the familiar `messages` array structure that works with existing OpenAI SDKs and tools. The previous AutoRAG API endpoints will continue working as expected for the time being. New features will only be added to the new API. We will provide at least 90 days notice before any end of life. See the [migration guide](/ai-search/how-to/migrate-from-autorag-api/) for instructions.
   - publish_date: "2026-02-09"
     title: Crawler user agent renamed
     description: |-

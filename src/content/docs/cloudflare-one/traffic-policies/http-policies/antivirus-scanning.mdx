@@ -7,9 +7,9 @@ sidebar:
 
 import { Render, Details } from "~/components";
 
-Cloudflare Gateway protects users as they browse the Internet. When users download or upload a file to an origin on the Internet, that file could potentially contain malicious code that may cause their device to perform undesired behavior. To prevent this, Cloudflare Gateway allows admins to turn on anti-virus (AV) scanning of files that are uploaded or downloaded by users as the file passes through Gateway.
+Cloudflare Gateway can scan files for malware as users upload or download them. Anti-virus (AV) scanning runs inline — Gateway inspects files as they pass through the proxy and blocks any file that contains a known malicious payload.
 
-In addition to scanning files, Gateway can quarantine files as your users download them. Quarantining files helps protect organizations from zero-day vulnerabilities not yet available in anti-virus databases. For more information, refer to [File sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/).
+In addition to AV scanning, Gateway can quarantine previously unseen files into a sandbox to detect zero-day threats not yet in anti-virus databases. For more information, refer to [File sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/).
 
 ## Get started
 
@@ -32,18 +32,16 @@ When a request is blocked due to the presence of malware, Gateway will log the m
 
 ## File scan criteria
 
-If AV scanning is turned on, Gateway will use the following criteria to determine whether a file is present in a request or response, and whether to scan that file. The first match will result in the file being scanned.
+If AV scanning is turned on, Gateway uses the following criteria (in order) to detect and scan files. The first match triggers a scan:
 
-- If the `Content-Disposition` HTTP header is `Attachment`
-- If the byte signature of the body of the request matches a signature Gateway identifies as one of the following file type categories:
-  - **Executable** (for example, `.exe`, `.bat`, `.dll`, and `.wasm`)
-  - **Documents** (for example, `.doc`, `.docx`, `.pdf`, `.ppt`, and `.xls`)
-  - **Compressed** (for example, `.7z`, `.gz`, `.zip`, and `.rar`)
-- If the file name in the `Content-Disposition` header contains a file extension that indicates it is one of the file type categories above
+1. The `Content-Disposition` HTTP header is set to `Attachment`.
+2. The byte signature of the request or response body matches a known file type:
+   - **Executable** (for example, `.exe`, `.bat`, `.dll`, and `.wasm`)
+   - **Documents** (for example, `.doc`, `.docx`, `.pdf`, `.ppt`, and `.xls`)
+   - **Compressed** (for example, `.7z`, `.gz`, `.zip`, and `.rar`)
+3. The file name in the `Content-Disposition` header contains a file extension matching one of the above categories.
 
-If none of the above conditions trigger a file to be scanned, Gateway will use the origin's `Content-Type` header to determine whether or not to scan the file. Additionally, Gateway will not scan files it determines to be image, video, or audio files.
-
-If a file does not trigger a scan based on the three methods above but also does not match criteria to be exempted from scanning, Gateway will default to scanning the file for malware.
+If none of these conditions match, Gateway falls back to the origin's `Content-Type` header. Gateway will not scan files it determines to be image, video, or audio files. All other files default to being scanned.
 
 ## Opt content out from scanning
 
@@ -112,7 +110,7 @@ Gateway cannot scan [certain archive files](#non-scannable-files) regardless of 
 
 ### Non-scannable files
 
-Gateway cannot scan all files for malware. When Gateway encounters a non-scannable file, you can configure AV scanning whether to fail open (allow the file to pass through unscanned) or to fail closed (deny the file transfer).
+Gateway cannot scan all files for malware. When Gateway encounters a non-scannable file, you can configure AV scanning to either fail open (allow the file to pass through unscanned) or fail closed (deny the file transfer).
 
 Gateway cannot scan requests containing the following files:
 

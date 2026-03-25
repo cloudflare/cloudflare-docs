@@ -898,13 +898,47 @@ entries:
     example_value: |-
       true
 
+  - name: cf.edge.l4.delivery_rate
+    data_type: Integer
+    categories: [Request]
+    keywords:
+      [request, l4, delivery rate, bandwidth, network, performance, transport]
+    summary: The most recent data delivery rate estimate for the client connection, in bytes per second.
+    description: |-
+      This metric reflects the rate at which data is being successfully delivered over the connection.
+
+      Returns `0` when L4 statistics are not available for the request.
+    example_value: |-
+      123456
+    example_block: |-
+      # Match requests where the delivery rate is below 100 KB/s
+      cf.edge.l4.delivery_rate < 100000
+
   - name: cf.timings.client_tcp_rtt_msec
     data_type: Number
     categories: [Request]
     keywords: [request, timing, tcp, rtt, performance, latency]
-    summary: The smoothed TCP round-trip time (RTT) from client to Cloudflare in milliseconds.
+    summary: The smoothed TCP round-trip time (RTT) between Cloudflare and the client in milliseconds.
+    description: |-
+      This field is only populated for TCP (HTTP/1, HTTP/2) connections. For QUIC connections, the value is `0`.
     example_value: |-
       20
+    example_block: |-
+      # Match requests over TCP where the RTT exceeds 200 ms
+      cf.timings.client_quic_rtt_msec > 200
+
+  - name: cf.timings.client_quic_rtt_msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timing, quic, rtt, performance, latency, http3]
+    summary: The smoothed QUIC round-trip time (RTT) between Cloudflare and the client in milliseconds.
+    description: |-
+      This field is only populated for QUIC (HTTP/3) connections. For TCP connections, the value is `0`.
+    example_value: |-
+      42
+    example_block: |-
+      # Match requests over QUIC where the RTT exceeds 200 ms
+      cf.timings.client_quic_rtt_msec > 200
 
   - name: cf.timings.edge_msec
     data_type: Integer
