@@ -18,17 +18,17 @@ Enabling this setting immediately exposes your origin IP addresses and removes a
 
 ## Key characteristics
 
-- **Account-level**: Affects all zones in the account simultaneously.
-- **Non-destructive**: Does not modify your DNS records. Disabling the setting restores normal proxy behavior.
-- **API-only**: Available through the API only, not in the Cloudflare dashboard.
+- Account-level: Affects all zones in the account simultaneously.
+- Non-destructive: Does not modify your DNS records. Disabling the setting restores normal proxy behavior.
+- API-only: Available through the API only, not in the Cloudflare dashboard.
 
 ## Before you begin
 
 Before relying on enforce DNS-only as part of your incident response plan, you should:
 
-- **Verify origin server capacity**: Without Cloudflare proxying, your origin servers will handle all traffic directly, including any traffic that Cloudflare would normally cache or filter. Ensure your infrastructure can sustain this load.
-- **Review exposed IP addresses**: When enforce DNS-only is active, all origin IPs configured in proxied records become publicly visible through DNS queries. If your origins rely on IP obscurity for security, plan accordingly.
-- **Test in advance**: Use the API in a staging or test account to confirm that you understand the behavior before you need it in an emergency.
+- Verify origin server capacity: Without Cloudflare proxying, your origin servers handle all traffic directly, including traffic that Cloudflare would normally cache or filter. Ensure your infrastructure can sustain this load.
+- Review exposed IP addresses: When enforce DNS-only is active, all origin IPs configured in proxied records become publicly visible through DNS queries. If your origins rely on IP obscurity for security, plan accordingly.
+- Test in advance: Use the API in a staging or test account to confirm that you understand the behavior before you need it in an emergency.
 
 ## Enable enforce DNS-only
 
@@ -81,15 +81,15 @@ Due to DNS caching by recursive resolvers, the transition back to proxied behavi
 
 The enforce DNS-only setting does not affect the following record types:
 
-- **Spectrum applications** — These are already DNS-only CNAME records pointing to Spectrum endpoints.
-- **Cloudflare for SaaS fallback origin records** — Default origin records for custom hostnames.
-- **Cloudflare for SaaS records in eyeball zones** — Records pointing to SaaS providers. Bypassing the proxy on these records does not help if the SaaS provider's target remains proxied.
-- **Workers custom domains** — Proxied A records pointing to `100::`.
-- **R2 custom domains** — Proxied CNAME records pointing to `public.r2.dev`.
-- **Web3 gateways** — Ethereum and IPFS DNSLink gateways (CNAMEs to `ethereum.cloudflare.com` / `ipfs.cloudflare.com`).
-- **Cloudflare Tunnel records** — Records required for tunnel routing. Setting these to DNS-only may break tunnel connectivity.
+- [Spectrum](/spectrum/) applications: Already DNS-only CNAME records pointing to Spectrum endpoints.
+- [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) fallback origin records: Default origin records for custom hostnames.
+- Cloudflare for SaaS records in eyeball zones: Records pointing to SaaS providers. Bypassing the proxy on these records does not help if the SaaS provider's target remains proxied.
+- [Workers](/workers/) custom domains: Proxied A records pointing to `100::`.
+- [R2](/r2/) custom domains: Proxied CNAME records pointing to `public.r2.dev`.
+- [Web3 gateways](/web3/): Ethereum and IPFS DNSLink gateways (CNAMEs to `ethereum.cloudflare.com` / `ipfs.cloudflare.com`).
+- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) records: Records required for tunnel routing. Setting these to DNS-only may break tunnel connectivity.
 
-The setting does apply to **proxied [Load Balancer](/load-balancing/) records**.
+The setting does apply to proxied [Load Balancer](/load-balancing/) records.
 
 ## Check current status
 
