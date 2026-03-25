@@ -1,0 +1,14 @@
+---
+{}
+---
+
+import { Details } from "~/components";
+
+<Details header="Environment variables" open={true}>
+
+File paths can include environment variables to account for differences across devices.
+
+- **Windows**: Use `%VAR%` syntax. For example, `%PROGRAMFILES%\myfolder\myfile.exe`.
+- **macOS/Linux**: Use `${VAR}` syntax. For example, `${HOME}/myfolder/myfile`.
+
+</Details>
