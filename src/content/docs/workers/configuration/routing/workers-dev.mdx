@@ -60,13 +60,13 @@ To disable the `workers.dev` route for a Worker, include the following in your W
 
 ```jsonc
 {
-	"workers_dev": false
+	"workers_dev": false,
 }
 ```
 
 </WranglerConfig>
 
-When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` route does not disable Preview URLs. Learn how to [disable Preview URLs](/workers/configuration/previews/#disabling-preview-urls).
+When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` route does not disable Preview URLs. Learn how to [disable Preview URLs](/workers/configuration/previews/#toggle-preview-urls-enable-or-disable).
 
 If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your [Wrangler configuration file](/workers/wrangler/configuration/), the value of `workers_dev` will be inferred as `false` on the next deploy.
 

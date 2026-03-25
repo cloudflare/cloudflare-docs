@@ -17,7 +17,7 @@ The following example shows you how to publish messages to a Queue from a Worker
 
 ## Prerequisites
 
-- A [queue created](/queues/get-started/#3-create-a-queue) via the [Cloudflare dashboard](https://dash.cloudflare.com) or the [wrangler CLI](/workers/wrangler/install-and-update/).
+- A [queue created](/queues/get-started/#2-create-a-queue) via the [Cloudflare dashboard](https://dash.cloudflare.com) or the [wrangler CLI](/workers/wrangler/install-and-update/).
 - A [configured **producer** binding](/queues/configuration/configure-queues/#producer-worker-configuration) in the Cloudflare dashboard or Wrangler file.
 
 Configure your Wrangler file as follows:
@@ -32,10 +32,10 @@ Configure your Wrangler file as follows:
 		"producers": [
 			{
 				"queue": "my-queue",
-				"binding": "YOUR_QUEUE"
-			}
-		]
-	}
+				"binding": "YOUR_QUEUE",
+			},
+		],
+	},
 }
 ```
 
@@ -63,7 +63,10 @@ export default {
 			messages = await req.json();
 		} catch {
 			// Return a HTTP 400 (Bad Request) if the payload isn't JSON
-			return Response.json({ error: "payload not valid JSON" }, { status: 400 });
+			return Response.json(
+				{ error: "payload not valid JSON" },
+				{ status: 400 },
+			);
 		}
 
 		// Publish to the Queue

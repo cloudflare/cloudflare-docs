@@ -89,7 +89,7 @@ to understand the basics.
 
 Each Durable Object runs alongside an individual container instance, manages starting and stopping it, and
 can interact with the container through its ports. Containers will likely run near the Worker instance
-requesting them, but not necessarily. Refer to ["How Locations are Selected"](/containers/platform-details/#how-are-locations-are-selected)
+requesting them, but not necessarily. Refer to ["How are container instance locations selected?"](/containers/faq/#how-are-container-instance-locations-selected)
 for details.
 
 In a simple app, the Durable Object may just boot the container and proxy requests to it.
@@ -149,7 +149,7 @@ Your container image must be able to run on the `linux/amd64` architecture, but 
 
 In the example you just deployed, it is a simple Golang server that responds to requests on port 8080 using
 the `MESSAGE` environment variable that will be set in the Worker and an [auto-generated
-environment variable](/containers/platform-details/#environment-variables) `CLOUDFLARE_DEPLOYMENT_ID.`
+environment variable](/containers/platform-details/environment-variables/#runtime-environment-variables) `CLOUDFLARE_DEPLOYMENT_ID.`
 
 ```go
 func handler(w http.ResponseWriter, r *http.Request) {

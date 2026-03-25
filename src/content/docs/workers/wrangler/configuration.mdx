@@ -484,7 +484,7 @@ Example:
 
 ## Limits
 
-You can impose limits on your Worker's behavior at runtime. Limits are only supported for the [Standard Usage Model](/workers/platform/pricing/#example-pricing-standard-usage-model).
+You can impose limits on your Worker's behavior at runtime. Limits are only supported for the [Standard Usage Model](/workers/platform/pricing/#example-pricing).
 Limits are only enforced when deployed to Cloudflare's network, not in local development. The CPU limit
 can be set to a maximum of 300,000 milliseconds (5 minutes).
 
@@ -1050,7 +1050,7 @@ Example:
 
 ### mTLS Certificates
 
-To communicate with origins that require client authentication, a Worker can present a certificate for mTLS in subrequests. Wrangler provides the `mtls-certificate` [command](/workers/wrangler/commands#mtls-certificate) to upload and manage these certificates.
+To communicate with origins that require client authentication, a Worker can present a certificate for mTLS in subrequests. Wrangler provides the `mtls-certificate` [command](/workers/wrangler/commands/certificates/#mtls-certificate) to upload and manage these certificates.
 
 To create a [binding](/workers/runtime-apis/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
 
@@ -1227,7 +1227,7 @@ The following options are available:
 - `instance_type` <Type text="string" /> <MetaInfo text="optional" />
   - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
     instance. The current options are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information,
-    the see [instance types documentation](/containers/platform-details#instance-types).
+    the see [instance types documentation](/containers/platform-details/limits/#instance-types).
 
   - To specify a custom instance type, see [here](#custom-instance-types).
 

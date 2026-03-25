@@ -19,7 +19,7 @@ In this tutorial, you will learn how to use [event notifications](/r2/buckets/ev
 To continue, you will need:
 
 - A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) with access to R2.
-- Have an existing R2 bucket. Refer to [Get started tutorial for R2](/r2/get-started/#2-create-a-bucket).
+- Have an existing R2 bucket. Refer to [Get started tutorial for R2](/r2/get-started/).
 - Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
 <Details header="Node.js version manager">
@@ -66,8 +66,8 @@ Using Static Assets, you can serve the front-end of your application from your W
 ```jsonc
 {
 	"assets": {
-		"directory": "public"
-	}
+		"directory": "public",
+	},
 }
 ```
 
@@ -163,7 +163,7 @@ Select to view the HTML code
 				>R2 Event Notification</a
 			>
 			<a
-				href="https://developers.cloudflare.com/queues/get-started/#3-create-a-queue"
+				href="https://developers.cloudflare.com/queues/get-started/#2-create-a-queue"
 				target="_blank"
 				>Cloudflare Queues</a
 			>
@@ -245,9 +245,9 @@ To handle the file upload, you will first need to add the R2 binding. In the Wra
 	"r2_buckets": [
 		{
 			"binding": "MY_BUCKET",
-			"bucket_name": "<R2_BUCKET_NAME>"
-		}
-	]
+			"bucket_name": "<R2_BUCKET_NAME>",
+		},
+	],
 }
 ```
 
@@ -314,10 +314,10 @@ Add the binding to the Wrangler file:
 	"queues": {
 		"consumers": [
 			{
-				"queue": "pdf-summarizer"
-			}
-		]
-	}
+				"queue": "pdf-summarizer",
+			},
+		],
+	},
 }
 ```
 
@@ -399,8 +399,8 @@ To use Workers AI, you will need to add the Workers AI binding to the Wrangler f
 ```jsonc
 {
 	"ai": {
-		"binding": "AI"
-	}
+		"binding": "AI",
+	},
 }
 ```
 

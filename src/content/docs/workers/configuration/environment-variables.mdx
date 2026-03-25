@@ -5,7 +5,14 @@ head: []
 description: You can add environment variables, which are a type of binding, to attach text strings or JSON values to your Worker.
 ---
 
-import { Render, TabItem, Tabs, TypeScriptExample, WranglerConfig, DashButton } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+	WranglerConfig,
+	DashButton,
+} from "~/components";
 
 ## Background
 
@@ -90,20 +97,20 @@ The example below sets up two environments, `staging` and `production`, with dif
 	"name": "my-worker-dev",
 	// top level environment
 	"vars": {
-		"API_HOST": "api.example.com"
+		"API_HOST": "api.example.com",
 	},
 	"env": {
 		"staging": {
 			"vars": {
-				"API_HOST": "staging.example.com"
-			}
+				"API_HOST": "staging.example.com",
+			},
 		},
 		"production": {
 			"vars": {
-				"API_HOST": "production.example.com"
-			}
-		}
-	}
+				"API_HOST": "production.example.com",
+			},
+		},
+	},
 }
 ```
 
@@ -116,6 +123,7 @@ Learn about [environments in Wrangler](/workers/wrangler/environments).
 ## Add environment variables via the dashboard
 
 To add environment variables via the dashboard:
+
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
@@ -139,7 +147,7 @@ Select the **Secret** type if your environment variable is a [secret](/workers/c
 
 ## Environment variables and Node.js compatibility
 
-When you enable [`nodejs_compat`](/workers/runtime-apis/nodejs/) and the [`nodejs_compat_populate_process_env`](/workers/configuration/compatibility-flags/#nodejs_compat_populate_process_env) compatibility flag (enabled by default for compatibility dates on or after 2025-04-01), environment variables are available via the global `process.env`.
+When you enable [`nodejs_compat`](/workers/runtime-apis/nodejs/) and the [`nodejs_compat_populate_process_env`](/workers/configuration/compatibility-flags/#enable-auto-populating-processenv) compatibility flag (enabled by default for compatibility dates on or after 2025-04-01), environment variables are available via the global `process.env`.
 
 The `process.env` will be populated lazily the first time that `process` is accessed
 in the worker.

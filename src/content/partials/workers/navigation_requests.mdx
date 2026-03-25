@@ -13,7 +13,7 @@ This can lead to surprising but intentional behavior. For example, if you define
 :::
 
 :::note
-If you wish to run the Worker script ahead of serving static assets (e.g. to log requests, or perform some authentication checks), you can additionally configure the [`assets.run_worker_first` setting](/workers/static-assets/routing/worker-script/#run_worker_first). This will retain your `assets.not_found_handling` behavior when no other asset matches, while still allowing you to control access to your application with your Worker script.
+If you wish to run the Worker script ahead of serving static assets (e.g. to log requests, or perform some authentication checks), you can additionally configure the [`assets.run_worker_first` setting](/workers/static-assets/binding/#run_worker_first). This will retain your `assets.not_found_handling` behavior when no other asset matches, while still allowing you to control access to your application with your Worker script.
 :::
 
 #### Client-side callbacks
@@ -30,11 +30,14 @@ In some cases, you might need to pass a value from a navigation request to your 
 		<p>Loading...</p>
 		<script>
 			(async () => {
-				const response = await fetch("/api/oauth/callback" + window.location.search);
+				const response = await fetch(
+					"/api/oauth/callback" + window.location.search,
+				);
 				if (response.ok) {
-					window.location.href = '/';
+					window.location.href = "/";
 				} else {
-					document.querySelector('p').textContent = 'Error: ' + (await response.json()).error;
+					document.querySelector("p").textContent =
+						"Error: " + (await response.json()).error;
 				}
 			})();
 		</script>
@@ -53,7 +56,10 @@ export default class extends WorkerEntrypoint {
 		if (url.pathname === "/api/oauth/callback") {
 			const code = url.searchParams.get("code");
 
-			const sessionId = await exchangeAuthorizationCodeForAccessAndRefreshTokensAndPersistToDatabaseAndGetSessionId(code);
+			const sessionId =
+				await exchangeAuthorizationCodeForAccessAndRefreshTokensAndPersistToDatabaseAndGetSessionId(
+					code,
+				);
 
 			if (sessionId) {
 				return new Response(null, {
@@ -64,7 +70,7 @@ export default class extends WorkerEntrypoint {
 			} else {
 				return Response.json(
 					{ error: "Invalid OAuth code. Please try again." },
-					{ status: 400 }
+					{ status: 400 },
 				);
 			}
 		}

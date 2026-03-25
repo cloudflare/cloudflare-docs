@@ -42,9 +42,9 @@ For example, if you want Worker A to be able to call Worker B — you'd add the 
 	"services": [
 		{
 			"binding": "<BINDING_NAME>",
-			"service": "<WORKER_NAME>"
-		}
-	]
+			"service": "<WORKER_NAME>",
+		},
+	],
 }
 ```
 
@@ -71,7 +71,7 @@ First, create the Worker that you want to communicate with. Let's call this "Wor
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker_b",
-	"main": "./src/workerB.js"
+	"main": "./src/workerB.js",
 }
 ```
 
@@ -104,9 +104,9 @@ Next, create the Worker that will call Worker B. Let's call this "Worker A". Wor
 	"services": [
 		{
 			"binding": "WORKER_B",
-			"service": "worker_b"
-		}
-	]
+			"service": "worker_b",
+		},
+	],
 }
 ```
 
@@ -121,7 +121,7 @@ export default {
 };
 ```
 
-To run both Worker A and Worker B in local development, you must run two instances of [Wrangler](/workers/wrangler) in your terminal. For each Worker, open a new terminal and run [`npx wrangler@latest dev`](/workers/wrangler/commands#dev).
+To run both Worker A and Worker B in local development, you must run two instances of [Wrangler](/workers/wrangler) in your terminal. For each Worker, open a new terminal and run [`npx wrangler@latest dev`](/workers/wrangler/commands/general/#dev).
 
 Each Worker is deployed separately.
 

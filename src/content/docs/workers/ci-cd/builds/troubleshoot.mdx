@@ -33,6 +33,7 @@ On Wrangler v3 and up, Workers Builds automatically matches the name of the conn
 `✘ [ERROR] Missing entry-point: The entry-point should be specified via the command line (e.g. wrangler deploy path/to/script) or the main config field.`
 
 If you see this error, a Wrangler configuration file is likely missing from the root directory. Navigate to **Settings** > **Build** > **Build Configuration** to update the root directory, or add a [Wrangler configuration file](/workers/wrangler/configuration/) to the specified directory.
+
 ### Incorrect account_id
 
 `Could not route to /client/v4/accounts/<Account ID>/workers/services/<Worker name>, perhaps your object identifier is invalid? [code: 7003]`
@@ -53,7 +54,7 @@ There is a maximum build duration of 20 minutes. If a build exceeds this time, t
 
 ### Git integration issues
 
-If you are running into errors associated with your Git integration, you can try removing access to your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#removing-access) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#removing-access) integration from Cloudflare, then reinstalling the [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#reinstall-a-git-integration) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#reinstall-a-git-integration) integration.
+If you are running into errors associated with your Git integration, you can try removing access to your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#remove-access) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#remove-access) integration from Cloudflare, then reinstalling the [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#reinstall-the-cloudflare-github-app) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#reinstall-the-cloudflare-gitlab-app) integration.
 
 ## For additional support
 
