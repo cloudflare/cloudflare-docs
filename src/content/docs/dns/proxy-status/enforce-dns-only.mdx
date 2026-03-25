@@ -77,6 +77,20 @@ After you disable the setting, Cloudflare will resume responding to DNS queries 
 Due to DNS caching by recursive resolvers, the transition back to proxied behavior may not be instantaneous. The TTL of your proxied records (default 300 seconds) determines how long resolvers may continue to serve the origin IP addresses after you disable the setting.
 :::
 
+## Exceptions
+
+The enforce DNS-only setting does not affect the following record types:
+
+- **Spectrum applications** — These are already DNS-only CNAME records pointing to Spectrum endpoints.
+- **Cloudflare for SaaS fallback origin records** — Default origin records for custom hostnames.
+- **Cloudflare for SaaS records in eyeball zones** — Records pointing to SaaS providers. Bypassing the proxy on these records does not help if the SaaS provider's target remains proxied.
+- **Workers custom domains** — Proxied A records pointing to `100::`.
+- **R2 custom domains** — Proxied CNAME records pointing to `public.r2.dev`.
+- **Web3 gateways** — Ethereum and IPFS DNSLink gateways (CNAMEs to `ethereum.cloudflare.com` / `ipfs.cloudflare.com`).
+- **Cloudflare Tunnel records** — Records required for tunnel routing. Setting these to DNS-only may break tunnel connectivity.
+
+The setting does apply to **proxied [Load Balancer](/load-balancing/) records**.
+
 ## Check current status
 
 Use the [Show DNS Settings](/api/resources/dns/subresources/settings/subresources/account/methods/get/) endpoint to verify the current value:
