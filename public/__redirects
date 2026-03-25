@@ -2427,6 +2427,8 @@
 # DYNAMIC REDIRECTS
 # ============================================================================
 
+/workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
+
 # Pub/Sub (removed product)
 /pub-sub/* / 301
 
@@ -2647,4 +2649,3 @@
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
-

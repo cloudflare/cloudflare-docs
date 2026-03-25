@@ -232,6 +232,66 @@ During scheduled or manual [sync jobs](/ai-search/configuration/indexing/), the 
 
 If the `<lastmod>` attribute is not defined, AI Search uses the `<changefreq>` attribute to determine how often to re-crawl the URL. If neither `<lastmod>` nor `<changefreq>` is defined, AI Search automatically crawls each link once a day.
 
+## Custom metadata
+
+You can attach custom metadata to web pages using HTML `<meta>` tags. AI Search extracts metadata from the `<head>` section of each crawled page.
+
+Before custom metadata can be extracted, you must [define a schema](/ai-search/configuration/metadata/#define-a-schema) in your AI Search configuration.
+
+### Add metadata to web pages
+
+Add `<meta>` tags using either the `name` or `property` attribute:
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="title" content="Getting Started Guide" />
+		<meta name="description" content="Learn how to set up the application" />
+		<meta property="og:title" content="Getting Started Guide" />
+		<meta property="og:image" content="https://example.com/og-image.png" />
+		<meta name="category" content="documentation" />
+		<meta name="version" content="2.5" />
+		<meta name="is_public" content="true" />
+	</head>
+	<body>
+		<!-- Page content -->
+	</body>
+</html>
+```
+
+### Recognized fields
+
+For the following fields, AI Search knows which meta tags to extract from. You must still define these in your schema to enable extraction.
+
+| Field         | Source                                                            |
+| ------------- | ----------------------------------------------------------------- |
+| `title`       | `<meta name="title">` or `<meta property="og:title">`             |
+| `description` | `<meta name="description">` or `<meta property="og:description">` |
+| `image`       | `<meta property="og:image">`                                      |
+
+When both a standard meta tag and an Open Graph tag are present, the standard meta tag takes precedence.
+
+### How metadata extraction works
+
+When the crawler fetches a page:
+
+1. All `<meta>` tags with `name` or `property` attributes are parsed from the `<head>` section.
+2. Tag names are matched against your schema (case-insensitive).
+3. The `content` attribute value is cast to the configured data type.
+4. Extracted metadata is stored in R2 alongside the cached HTML.
+5. On subsequent processing, metadata flows into Vectorize.
+
+### Boolean value parsing
+
+For `boolean` fields, the following values are accepted (case-insensitive):
+
+| True values        | False values       |
+| ------------------ | ------------------ |
+| `true`, `1`, `yes` | `false`, `0`, `no` |
+
+Any other value is treated as invalid and the field is omitted.
+
 ## Limits
 
 The regular AI Search [limits](/ai-search/platform/limits-pricing/) apply when using the Website data source.

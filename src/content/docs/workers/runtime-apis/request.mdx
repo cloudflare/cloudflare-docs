@@ -227,6 +227,14 @@ All plans have access to:
 
   * If Cloudflare replaces the value of the `Accept-Encoding` header, the original value is stored in the `clientAcceptEncoding` property, for example, `"gzip, deflate, br"`.
 
+* `clientQuicRtt` number | undefined
+
+  * The smoothed round-trip time (RTT) between Cloudflare and the client for QUIC connections, in milliseconds. Only present when the client connected over QUIC (HTTP/3). For example, `42`.
+
+* `clientTcpRtt` number | undefined
+
+  * The smoothed round-trip time (RTT) between the client and Cloudflare for TCP connections, in milliseconds. Only present when the client connected over TCP (HTTP/1 and HTTP/2). For example, `22`.
+
 * `colo` string
 
   * The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, for example, `"DFW"`.
@@ -234,6 +242,12 @@ All plans have access to:
 * `country` string | null
 
   * Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, for example, `"US"`.
+
+* `edgeL4` Object | undefined
+
+  * Layer 4 transport statistics for the connection between the client and Cloudflare. Contains the following property:
+    * `deliveryRate` number - The most recent data delivery rate estimate for the connection, in bytes per second. For example, `123456`.
+
 
 * `isEUCountry` string | null
 

@@ -13,7 +13,7 @@ Available as an add-on to Zero Trust Enterprise plans. For more information, con
 
 In addition to [anti-virus (AV) scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/), Gateway can quarantine previously unseen files downloaded by your users into a sandbox and scan them for malware.
 
-If AV scanning does not detect malware in a file download, Gateway will quarantine the file in the [sandbox](#sandbox-environment). If the file has not been downloaded before, Gateway will monitor any actions taken by the file and compare them to known malware patterns. During this process, Gateway will display an interstitial page in the user's browser. If the sandbox does not detect malicious activity, Gateway will release the file from quarantine and download it to your user's device. If the sandbox detects malicious activity, Gateway will block the download. For any subsequent downloads of the file, Gateway will remember and apply its allow/block decision.
+When a file download passes AV scanning without a malware detection, Gateway quarantines the file in the [sandbox](#sandbox-environment). If the file has not been downloaded before, Gateway monitors the file's behavior and compares it to known malware patterns. During this process, Gateway displays an interstitial page in the user's browser. If the sandbox does not detect malicious activity, Gateway releases the file and downloads it to the user's device. If the sandbox detects malicious activity, Gateway blocks the download. For any subsequent downloads of the same file, Gateway remembers and applies its previous allow/block decision.
 
 Gateway will log any file sandbox decisions in your [HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs).
 
@@ -59,7 +59,7 @@ You can now create [Quarantine HTTP policies](/cloudflare-one/traffic-policies/h
 
 To test if file sandboxing is working, you can create a Quarantine policy that matches the [Cloudflare Sandbox Test](https://sandbox.cloudflaredemos.com/):
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies**, then select **HTTP**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Select **Add a policy**.
 3. Add the following expression:
 
@@ -75,7 +75,7 @@ Gateway will quarantine and scan the file, display an interstitial status page i
 
 ## Sandbox environment
 
-Gateway executes quarantined files in a sandboxed Windows operating system environment. Using machine learning, the sandbox compares how files of a certain type behave compared to how these files should behave. The sandbox detects file actions down to the kernel level and compare these a real-time malware database. In addition, Gateway checks the sandbox's network activity for malicious behavior and data exfiltration.
+Gateway executes quarantined files in a sandboxed Windows operating system environment. Using machine learning, the sandbox compares how files of a certain type behave compared to how these files should behave. The sandbox detects file actions down to the kernel level and compares them against a real-time malware database. In addition, Gateway checks the sandbox's network activity for malicious behavior and data exfiltration.
 
 ## Compatibility
 

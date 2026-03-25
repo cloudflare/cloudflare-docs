@@ -11,9 +11,11 @@ params:
 
 import { Render } from "~/components";
 
-A tunnel health check probe consists of an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) payload encapsulated in the protocol of the tunnel the probe is being conducted for. For example, if the tunnel is an Internet Protocol Security (IPsec) tunnel, the ICMP [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) is encrypted within the Encapsulating Security Payload (ESP) packet of the tunnel.
+Cloudflare continuously monitors whether each tunnel connecting your network to Cloudflare is reachable and performing well. When a tunnel becomes unhealthy, Cloudflare automatically steers traffic to an alternate path — without requiring manual intervention. This monitoring relies on tunnel health check probes.
 
-A tunnel health check probe comes from Cloudflare to the tunnel origin, then returns a response to Cloudflare. Cloudflare uses this response to determine the probe outcome and calculate the tunnel state (the following sections explain this in greater detail).
+A tunnel health check probe consists of an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) payload encapsulated in the protocol of the tunnel being tested. For example, if the tunnel is an Internet Protocol Security (IPsec) tunnel, the ICMP [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) is encrypted within the Encapsulating Security Payload (ESP) packet of the tunnel.
+
+A tunnel health check probe travels from Cloudflare to the tunnel origin, then returns a response to Cloudflare. Cloudflare uses this response to determine the probe outcome and calculate the tunnel state (the following sections explain this in greater detail).
 
 <Render
 	file="tunnel-health/health-checks-compatible-cmb-eu"
@@ -35,7 +37,7 @@ You can access tunnel health check results [through the API](/analytics/graphql-
 
 ### Endpoint health checks
 
-Endpoint health checks evaluate connectivity from Cloudflare distributed data centers to your origin network. Designed to provide a broad picture of Internet health, endpoint probes flow over available tunnels and do not inform tunnel selection or steering logic.
+Endpoint health checks evaluate connectivity from Cloudflare distributed data centers to your origin network. Unlike tunnel health checks, endpoint probes are designed to provide a broad picture of Internet health between Cloudflare and your network. They flow over available tunnels but do not inform tunnel selection or steering logic.
 
 Cloudflare global network servers issue endpoint health checks outside of customer network namespaces and typically target endpoints beyond the tunnel-terminating border router. During onboarding, you specify IP addresses to configure endpoint health checks.
 

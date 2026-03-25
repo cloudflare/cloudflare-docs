@@ -7,7 +7,56 @@ sidebar:
 
 import { FileTree } from "~/components";
 
-Use metadata to filter documents before retrieval and provide context to guide AI responses. This page covers how to apply filters and attach optional context metadata to your files.
+Use metadata to filter documents before retrieval and provide context to guide AI responses. This page covers built-in metadata attributes, custom metadata schemas, filter syntax, and the optional `context` field.
+
+## Built-in metadata attributes
+
+AI Search automatically extracts the following metadata attributes from your indexed documents:
+
+| Attribute   | Description                                                                                         | Example                                                             |
+| ----------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `filename`  | The name of the file.                                                                               | `dog.png` or `animals/mammals/cat.png`                              |
+| `folder`    | The folder or prefix to the object.                                                                 | For `animals/mammals/cat.png`, the folder is `animals/mammals/`     |
+| `timestamp` | Unix timestamp (milliseconds) when the object was last modified. Comparisons round down to seconds. | `1735689600000` rounds to `1735689600000` (2025-01-01 00:00:00 UTC) |
+
+## Custom metadata
+
+Custom metadata allows you to define additional fields for filtering search results. You can attach structured metadata to documents and filter queries by attributes such as category, version, or any custom field.
+
+### Supported data types
+
+| Type      | Description                        | Example values                         |
+| --------- | ---------------------------------- | -------------------------------------- |
+| `text`    | String values (max 500 characters) | `"documentation"`, `"blog-post"`       |
+| `number`  | Numeric values (parsed as float)   | `2.5`, `100`, `-3.14`                  |
+| `boolean` | Boolean values                     | `true`, `false`, `1`, `0`, `yes`, `no` |
+
+### Define a schema
+
+Before custom metadata can be extracted, define a schema in your AI Search configuration using the `custom_metadata` field. The schema specifies which fields to extract and their data types.
+
+```ts
+custom_metadata: [
+	{ field_name: "category", data_type: "text" },
+	{ field_name: "version", data_type: "number" },
+	{ field_name: "is_public", data_type: "boolean" },
+];
+```
+
+**Schema constraints:**
+
+- Maximum of 5 custom metadata fields per AI Search instance
+- Field names are case-insensitive and stored as lowercase
+- Field names cannot use reserved names: `timestamp`, `folder`, `filename`
+- Text values are truncated to 500 characters
+- Changing the schema triggers a full re-index of all documents
+
+### Add custom metadata to documents
+
+How you attach custom metadata depends on your data source:
+
+- **R2 bucket**: Set metadata using S3-compatible custom headers (`x-amz-meta-*`). Refer to [R2 custom metadata](/ai-search/configuration/data-source/r2/#custom-metadata) for examples.
+- **Website**: Add `<meta>` tags to your HTML pages. Refer to [Website custom metadata](/ai-search/configuration/data-source/website/#custom-metadata) for details.
 
 ## Metadata filtering
 
@@ -41,7 +90,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
   }'
 ```
 
-### Metadata attributes
+### Filter by custom metadata
 
 | Attribute   | Description                                               | Example                                                                    |
 | ----------- | --------------------------------------------------------- | -------------------------------------------------------------------------- |
@@ -222,3 +271,33 @@ You can see the metadata attributes of your retrieved data in the response under
 	]
 }
 ```
+
+Custom metadata fields appear alongside built-in attributes in the `attributes.file` object.
+
+## Re-indexing behavior
+
+When you modify the `custom_metadata` schema:
+
+1. New fields are added to the Vectorize metadata index.
+2. Removed fields are deleted from the Vectorize metadata index.
+3. A full re-index is triggered for all documents.
+4. Existing vectors are updated with the new metadata structure.
+
+## Limitations
+
+| Constraint                | Limit                             |
+| ------------------------- | --------------------------------- |
+| Maximum custom fields     | 5 per AI Search instance          |
+| Maximum text value length | 500 characters                    |
+| Reserved field names      | `timestamp`, `folder`, `filename` |
+| Field name matching       | Case-insensitive                  |
+
+If R2 file metadata exceeds Vectorize size limits, the metadata is replaced with an error indicator:
+
+```json
+{
+	"file": { "error": "r2 metadata is too large" }
+}
+```
+
+To avoid this, keep individual metadata values concise.
