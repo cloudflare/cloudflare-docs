@@ -36,6 +36,32 @@ The Run API supports the following authentication methods for upstream provider 
 Passing provider API keys directly in request headers is not supported with the Run API. You must use Unified Billing or BYOK (Gateway Key Store) to authenticate with upstream providers.
 :::
 
+## Request
+
+```txt
+POST /v1/{account_id}/{gateway_id}/run
+```
+
+### Request body
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `model` | `string` | Yes | The model to run. Refer to [Supported models](#supported-models) for available values. |
+| `input` | `object` | Yes | Model-specific input parameters. The accepted fields depend on the model. |
+| `provider` | `string` | No | Pin the request to a specific provider instead of using the default. |
+| `background` | `boolean` | No | When `true`, the request returns immediately with a `runId` that you can poll for results. |
+| `webhookUrl` | `string` | No | A URL to receive a callback when the run completes. Only valid when `background` is `true`. |
+
+### Input fields for `google/nano-banana`
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `prompt` | `string` | Yes | The text prompt describing the image to generate. |
+| `image_input` | `string[]` | No | Up to 3 base64-encoded images to use as input for image-to-image generation. |
+| `aspect_ratio` | `string` | No | Aspect ratio of the output image. One of: `1:1`, `3:2`, `2:3`, `3:4`, `4:3`, `4:5`, `5:4`, `9:16`, `16:9`, `21:9`. |
+| `output_format` | `string` | No | Output image format. One of: `jpg`, `png`, `webp`. |
+| `image_size` | `string` | No | Output image resolution. One of: `1K`, `2K`, `4K`. |
+
 ## Supported models
 
 The Run API currently supports a single model:
@@ -46,7 +72,9 @@ The Run API currently supports a single model:
 
 More models will be added in future updates.
 
-## Example
+## Examples
+
+### Basic request
 
 <Tabs>
 <TabItem label="curl">
@@ -108,7 +136,66 @@ export default {
 </TabItem>
 </Tabs>
 
-### Response
+### With input options
+
+```bash
+curl -X POST "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run" \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "google/nano-banana",
+    "input": {
+      "prompt": "a cat riding a burrito",
+      "aspect_ratio": "16:9",
+      "output_format": "png",
+      "image_size": "2K"
+    }
+  }'
+```
+
+### Background run
+
+Set `background` to `true` to run the request asynchronously. The API returns a `runId` immediately, which you can poll for results.
+
+```bash
+curl -X POST "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run" \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "google/nano-banana",
+    "input": {
+      "prompt": "a cat riding a burrito"
+    },
+    "background": true
+  }'
+```
+
+Poll for the result using the returned `runId`:
+
+```bash
+curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run/{run_id}" \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+You can also provide a `webhookUrl` to receive a callback when the run completes instead of polling:
+
+```bash
+curl -X POST "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run" \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "google/nano-banana",
+    "input": {
+      "prompt": "a cat riding a burrito"
+    },
+    "background": true,
+    "webhookUrl": "https://example.com/webhook"
+  }'
+```
+
+## Response
+
+### Success
 
 A successful request returns a response with the following envelope:
 
@@ -132,7 +219,7 @@ A successful request returns a response with the following envelope:
 | `provider` | The provider that served the request. |
 | `model` | The model that was used. |
 
-### Error response
+### Error
 
 ```json
 {
@@ -150,13 +237,9 @@ A successful request returns a response with the following envelope:
 The Run API is in beta. The following limitations apply:
 
 - **One model** — Only `google/nano-banana` is supported. Additional models will be added over time.
-- **Image generation only** — Chat and text generation models are not yet available through the Run API.
 - **No caching** — [Caching](/ai-gateway/features/caching/) is not supported for Run API requests.
 - **No rate limiting** — [Rate limiting](/ai-gateway/features/rate-limiting/) rules do not apply to Run API requests.
-- **No guardrails** — [Guardrails](/ai-gateway/guardrails/) are not available for the Run API.
-- **No DLP** — Data loss prevention features are not supported.
+- **No guardrails or DLP** — [Guardrails](/ai-gateway/guardrails/) and data loss prevention features are not available for the Run API.
 - **No dynamic routing** — [Dynamic routing](/ai-gateway/features/dynamic-routing/) (fallbacks, A/B testing, conditional logic) is not available.
 - **No streaming** — Streaming responses are not supported.
 - **No TypeScript types** — TypeScript type definitions for the Run API are not yet available in `@cloudflare/workers-types`.
-
-More features and broader model support are coming soon.
