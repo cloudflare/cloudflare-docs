@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Details, MetaInfo, Tabs, TabItem } from "~/components";
+import { Details, MetaInfo } from "~/components";
 
 Privacy Proxy exposes metrics through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). All metrics are queryable through a single endpoint:
 
@@ -13,16 +13,16 @@ Privacy Proxy exposes metrics through Cloudflare's [GraphQL Analytics API](/anal
 POST https://api.cloudflare.com/client/v4/graphql
 ```
 
-To access your metrics, you need a Cloudflare API token. Contact your Cloudflare point of contact to obtain one.
+Before you begin, you will need:
+
+- **API token** — Create a token with _Account Analytics_ read permissions. For more information, refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/). You may also contact your Cloudflare point of contact to obtain one.
+- **Account ID** — Your Cloudflare account ID, passed as `accountTag` in queries. For more information, refer to [Find account and zone IDs](/fundamentals/account/find-account-and-zone-ids/). You may also contact your Cloudflare point of contact if you need help locating your account ID.
 
 ---
 
 ## Making a request
 
-The following examples show how to query Privacy Proxy metrics using curl or a GraphQL client such as GraphiQL. Replace the placeholder values with your own.
-
-<Tabs>
-<TabItem label="curl">
+The following example shows how to query Privacy Proxy metrics using curl. Replace the placeholder values with your own.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/graphql \
@@ -32,82 +32,11 @@ curl https://api.cloudflare.com/client/v4/graphql \
     "query": "query DailyRequestVolume($accountTag: String!, $startDate: Date!, $endDate: Date!) { viewer { accounts(filter: { accountTag: $accountTag }) { privacyProxyRequestMetricsAdaptiveGroups(filter: { date_geq: $startDate, date_leq: $endDate }, limit: 10000, orderBy: [date_ASC]) { sum { requests } dimensions { date datetimeHour } } } } }",
     "variables": {
       "accountTag": "<YOUR_ACCOUNT_TAG>",
-      "startDate": "2025-01-01",
-      "endDate": "2025-01-31"
+      "startDate": "2026-01-01",
+      "endDate": "2026-01-31"
     }
   }'
 ```
-
-</TabItem>
-<TabItem label="GraphiQL">
-
-**Prerequisites**
-
-Before you begin, ensure you have:
-
-- **API token**: Contact your Cloudflare point of contact to obtain one.
-- **Account tag**: Your Cloudflare account ID, used as `$accountTag` in queries.
-
-**1. Set up GraphiQL**
-
-Open [GraphiQL](https://github.com/graphql/graphiql) or any GraphQL client and configure the following:
-
-- **Endpoint**: `https://api.cloudflare.com/client/v4/graphql`
-- **HTTP headers**:
-  - `Authorization`: `Bearer <API_TOKEN>`
-  - `Content-Type`: `application/json`
-
-**2. Paste the query**
-
-Paste the following into the query editor:
-
-```graphql
-query DailyRequestVolume(
-  $accountTag: String!
-  $startDate: Date!
-  $endDate: Date!
-) {
-  viewer {
-    accounts(filter: { accountTag: $accountTag }) {
-      privacyProxyRequestMetricsAdaptiveGroups(
-        filter: {
-          date_geq: $startDate
-          date_leq: $endDate
-        }
-        limit: 10000
-        orderBy: [date_ASC]
-      ) {
-        sum {
-          requests
-        }
-        dimensions {
-          date
-          datetimeHour
-        }
-      }
-    }
-  }
-}
-```
-
-**3. Add variables**
-
-Paste the following into the **Query Variables** pane (bottom-left) and replace the placeholder values:
-
-```json
-{
-  "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31"
-}
-```
-
-**4. Run the query**
-
-Select the **Play** button to execute. Results appear in the right-hand response pane.
-
-</TabItem>
-</Tabs>
 
 ---
 
@@ -116,12 +45,12 @@ Select the **Play** button to execute. Results appear in the right-hand response
 Four GraphQL nodes are available. All four return aggregate data only — no raw per-connection records are exposed.
 
 1. `privacyProxyRequestMetricsAdaptiveGroups` — Query aggregate request volume, CONNECT request handling and tunnel setup latency percentiles (P50/P95/P99), filterable by time, location, endpoint, status code, proxy status, and tunnel type dimensions.
-2. `privacyProxyIngressConnMetricsAdaptiveGroups` — Query aggregate client-to-proxy connection volume, bytes transferred, connection duration and round-trip latency percentiles (P50/P95/P99), filterable by time, location, endpoint, transport protocol, and TLS version dimensions.
-3. `privacyProxyEgressConnMetricsAdaptiveGroups` — Query aggregate proxy-to-origin connection volume, bytes transferred, connection duration and round-trip latency percentiles (P50/P95/P99), filterable by time, location, endpoint, and transport protocol dimensions.
+2. `privacyProxyIngressConnMetricsAdaptiveGroups` — Query the number of client-to-proxy connections, bytes transferred, connection duration and round-trip latency percentiles (P50/P95/P99), filterable by time, location, endpoint, transport protocol, and TLS version dimensions.
+3. `privacyProxyEgressConnMetricsAdaptiveGroups` — Query the number of proxy-to-origin connections, bytes transferred, connection duration and round-trip latency percentiles (P50/P95/P99), filterable by time, location, endpoint, and transport protocol dimensions.
 4. `privacyProxyAuthMetricsAdaptiveGroups` — Query aggregate authentication attempt volume, filterable by time, location, endpoint, authentication method, and authentication result dimensions.
 
 :::note[Adaptive sampling]
-Each node uses an independent adaptive bit-rate (ABR) sampling pipeline. Cloudflare automatically scales the sampling rate based on traffic volume to keep query performance consistent. All returned values are extrapolated totals, not raw counts. Because each node has its own sampling rate, figures across nodes are not directly comparable.
+Requests are sampled.
 :::
 
 ---
@@ -263,8 +192,8 @@ query DailyRequestVolume(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31"
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-31"
 }
 ```
 
@@ -308,8 +237,8 @@ query ErrorBreakdown(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -352,8 +281,8 @@ query TopProxyErrors(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -395,8 +324,8 @@ query TunnelTypeDistribution(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31"
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-31"
 }
 ```
 
@@ -444,8 +373,8 @@ query IngressTrafficOverview(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31"
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-31"
 }
 ```
 
@@ -488,8 +417,8 @@ query IngressDurationByColo(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31"
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-31"
 }
 ```
 
@@ -497,7 +426,7 @@ query IngressDurationByColo(
 
 <Details header="Protocol and TLS version distribution">
 
-Monitor the breakdown of QUIC versus TCP and TLS version adoption over time.
+Understanding which transport protocols (QUIC versus TCP) and TLS versions your clients use helps you plan deprecations, detect misconfigured clients, and verify that traffic meets your security requirements.
 
 ```graphql
 query IngressProtocolDistribution(
@@ -532,8 +461,8 @@ query IngressProtocolDistribution(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
@@ -574,8 +503,8 @@ query ApproximateActiveConnections(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T12:00:00Z",
-  "end": "2025-01-01T12:05:00Z"
+  "start": "2026-01-01T12:00:00Z",
+  "end": "2026-01-01T12:05:00Z"
 }
 ```
 
@@ -625,8 +554,8 @@ query EgressBytesOverview(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31"
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-31"
 }
 ```
 
@@ -669,8 +598,8 @@ query EgressRttByColo(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31"
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-31"
 }
 ```
 
@@ -716,8 +645,8 @@ query EgressPerformanceTrend(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T08:00:00Z",
-  "end": "2025-01-01T14:00:00Z"
+  "start": "2026-01-01T08:00:00Z",
+  "end": "2026-01-01T14:00:00Z"
 }
 ```
 
@@ -764,8 +693,8 @@ query AuthVolumeByMethod(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31"
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-31"
 }
 ```
 
@@ -809,8 +738,8 @@ query AuthFailureSpike(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T10:00:00Z",
-  "end": "2025-01-01T14:00:00Z"
+  "start": "2026-01-01T10:00:00Z",
+  "end": "2026-01-01T14:00:00Z"
 }
 ```
 
@@ -852,8 +781,8 @@ query AuthSuccessRate(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2025-01-01T00:00:00Z",
-  "end": "2025-01-01T23:59:59Z"
+  "start": "2026-01-01T00:00:00Z",
+  "end": "2026-01-01T23:59:59Z"
 }
 ```
 
