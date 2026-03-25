@@ -8,7 +8,7 @@ sidebar:
   badge: Beta
 ---
 
-import { Tabs, TabItem, WranglerConfig } from "~/components";
+import { Tabs, TabItem, TypeScriptExample, WranglerConfig } from "~/components";
 
 The Run API is a new endpoint for AI Gateway that provides a simplified request/response pattern for running AI models. Unlike the [Unified API](/ai-gateway/usage/chat-completion/), which follows the OpenAI-compatible `/chat/completions` format, the Run API uses its own request envelope designed for a broader range of model types.
 
@@ -96,6 +96,8 @@ binding = "AI"
 
 </WranglerConfig>
 
+<TypeScriptExample>
+
 ```ts
 export interface Env {
   AI: Ai;
@@ -121,6 +123,8 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 </TabItem>
 </Tabs>
