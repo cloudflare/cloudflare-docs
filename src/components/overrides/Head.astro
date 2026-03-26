@@ -277,7 +277,9 @@ metaTags.map((attrs) => {
 		if (localStorage.getItem("cf-docs-sidebar-collapsed") === "true") {
 			document.documentElement.setAttribute("data-sidebar-collapsed", "");
 		}
-	} catch (_) {}
+	} catch (_) {
+		// Silently ignore localStorage errors (e.g., private browsing mode)
+	}
 })();
 </script>
 
