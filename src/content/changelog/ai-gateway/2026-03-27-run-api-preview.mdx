@@ -1,0 +1,21 @@
+---
+title: AI Gateway Run API (preview) and third-party model support in Workers AI binding
+description: AI Gateway introduces the Run API in preview and adds support for running third-party models through the Workers AI binding.
+products:
+  - ai-gateway
+date: 2026-03-27
+---
+
+AI Gateway introduces the Run API (`/run`), a new endpoint with its own request envelope separate from the OpenAI-compatible `/chat/completions` format. The Run API is in preview. Authenticate with [Unified Billing](/ai-gateway/features/unified-billing/) or [BYOK (Gateway Key Store)](/ai-gateway/configuration/bring-your-own-keys/).
+
+The Workers AI binding (`env.AI.run()`) now supports calling third-party models available through the Run API. You can run these models directly from a Cloudflare Worker without managing provider credentials in your code:
+
+```ts
+const response = await env.AI.run(
+  "google/nano-banana",
+  { prompt: "a cat riding a burrito" },
+  { gateway: { id: "my-gateway" } },
+);
+```
+
+For more information, refer to the [Run API](/ai-gateway/usage/run-api/) documentation.
