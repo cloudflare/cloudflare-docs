@@ -357,39 +357,6 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 				sessionStorage.setItem(storageKey, JSON.stringify(state));
 			} catch (_) {} // eslint-disable-line no-empty
 		});
-
-		document.addEventListener(
-			"keydown",
-			(keyboardEvent) => {
-				const target = keyboardEvent.target;
-
-				const isInput =
-					target instanceof EventTarget &&
-					(("tagName" in target &&
-						(target.tagName === "INPUT" ||
-							target.tagName === "TEXTAREA" ||
-							target.tagName === "SELECT")) ||
-						("isContentEditable" in target && target.isContentEditable));
-
-				if (keyboardEvent.key === "/" && !isInput) {
-					keyboardEvent.preventDefault();
-					keyboardEvent.stopPropagation();
-
-					// Auto-expand sidebar if collapsed so search input is visible.
-					// Uses expandSidebar() directly to avoid a focus race —
-					// .click() on the reopen tab would trigger transitionend focus
-					// management that steals focus from the search input.
-					if (document.documentElement.hasAttribute("data-sidebar-collapsed")) {
-						(window as any).__expandSidebar?.();
-					}
-
-					searchInput.focus();
-				}
-			},
-			{
-				capture: true,
-			},
-		);
 	}
 
 	// Initialize when DOM is loaded

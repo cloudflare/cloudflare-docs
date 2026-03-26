@@ -86,5 +86,3 @@ main > .content-panel + .content-panel {
 .pagination-links {
 	margin-top: var(--layout-space-12);
 }
-
-/* ── Sidebar Collapse — main content stays in place ── */

@@ -90,12 +90,9 @@ import AgentDirective from "../AgentDirective.astro";
 		line-height: 1;
 		white-space: nowrap;
 		text-decoration: none;
-		transition: color 150ms, background-color 150ms, border-color 150ms;
-	}
-
-	.header-login {
 		background-color: var(--color-header-fill);
 		color: var(--color-header-text);
+		transition: color 150ms, background-color 150ms, border-color 150ms;
 	}
 
 	.header-login:hover {
@@ -152,44 +149,7 @@ import AgentDirective from "../AgentDirective.astro";
 		gap: 0.25rem;
 	}
 
-	/* ── Sidebar Reopen Tab ── */
-	#sidebar-reopen-tab {
-		display: none;
-		position: fixed;
-		top: calc(var(--sl-nav-height) + 0.75rem);
-		left: 0;
-		z-index: var(--sl-z-index-menu);
-		align-items: center;
-		justify-content: center;
-		width: 2rem;
-		height: 2.5rem;
-		padding: 0;
-		border: 1px solid var(--sl-color-hairline-shade);
-		border-left: none;
-		border-radius: 0 0.5rem 0.5rem 0;
-		background: var(--sl-color-bg-sidebar);
-		color: var(--sidebar-text-strong, #1a1a1a);
-		cursor: pointer;
-		box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.08);
-		transition: color 150ms, background-color 150ms, box-shadow 150ms;
-	}
-
-	#sidebar-reopen-tab:hover {
-		background: var(--sidebar-hover-bg, #f0f0f0);
-		color: var(--sidebar-hover-text, #1a1a1a);
-		box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
-	}
-
-	#sidebar-reopen-tab:focus-visible {
-		outline: 2px solid var(--sl-color-accent);
-		outline-offset: 2px;
-	}
-
 	@media (min-width: 50rem) {
-		:global([data-sidebar-collapsed]) #sidebar-reopen-tab {
-			display: flex;
-		}
-
 		#right-group {
 			display: flex;
 		}
@@ -223,30 +183,39 @@ import AgentDirective from "../AgentDirective.astro";
 		});
 
 	// ── Sidebar collapse/expand ──
+	// Keep in sync with the inline IIFE in Head.astro (FOUC prevention).
 	const STORAGE_KEY = "cf-docs-sidebar-collapsed";
-	const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+	const html = document.documentElement;
+	const sidebar = document.querySelector<HTMLElement>(".sidebar-pane");
 	const reopenTab =
 		document.querySelector<HTMLButtonElement>("#sidebar-reopen-tab");
 	const collapseBtn =
 		document.querySelector<HTMLButtonElement>("#sidebar-collapse-btn");
+	const searchInput =
+		document.querySelector<HTMLInputElement>("#sidebar-search");
+
+	/** Check whether an event target is an editable field. */
+	function isEditable(el: EventTarget | null): boolean {
+		if (!el || !("tagName" in el)) return false;
+		const t = el as HTMLElement;
+		return (
+			t.tagName === "INPUT" ||
+			t.tagName === "TEXTAREA" ||
+			t.tagName === "SELECT" ||
+			t.isContentEditable
+		);
+	}
+
+	function isCollapsed(): boolean {
+		return html.hasAttribute("data-sidebar-collapsed");
+	}
 
 	function applySidebarState(collapsed: boolean, animate: boolean) {
-		const html = document.documentElement;
-		const sidebar =
-			document.querySelector<HTMLElement>(".sidebar-pane");
-
 		if (!animate) {
-			// Suppress transitions on initial load to prevent animation flash.
-			// CSS handles the layout via [data-sidebar-collapsed] selectors;
-			// we only need to temporarily disable transitions.
-			const mainFrame =
-				document.querySelector<HTMLElement>(".main-frame");
-			mainFrame?.style.setProperty("transition", "none");
 			sidebar?.style.setProperty("transition", "none");
-			requestAnimationFrame(() => {
-				mainFrame?.style.removeProperty("transition");
-				sidebar?.style.removeProperty("transition");
-			});
+			requestAnimationFrame(() =>
+				sidebar?.style.removeProperty("transition"),
+			);
 		}
 
 		if (collapsed) {
@@ -259,59 +228,22 @@ import AgentDirective from "../AgentDirective.astro";
 			sidebar?.removeAttribute("aria-hidden");
 		}
 
-		// Update aria-expanded on both toggle buttons
 		collapseBtn?.setAttribute("aria-expanded", String(!collapsed));
 		reopenTab?.setAttribute("aria-expanded", String(!collapsed));
 	}
 
-	/** Move focus to a target element, using transitionend when appropriate. */
-	function focusAfterTransition(
-		target: HTMLElement,
-		transitionEl?: HTMLElement | null,
-	) {
-		if (reducedMotion.matches || !transitionEl) {
-			requestAnimationFrame(() => target.focus());
-		} else {
-			transitionEl.addEventListener(
-				"transitionend",
-				() => target.focus(),
-				{ once: true },
-			);
-		}
-	}
-
 	function toggleSidebar(moveFocus: "reopen" | "collapse" | null = null) {
-		const willCollapse =
-			!document.documentElement.hasAttribute("data-sidebar-collapsed");
+		const willCollapse = !isCollapsed();
 		applySidebarState(willCollapse, true);
 		localStorage.setItem(STORAGE_KEY, String(willCollapse));
 		track(willCollapse ? "sidebar collapsed" : "sidebar expanded");
 
-		// Move focus to the appropriate toggle after transition
 		if (moveFocus === "reopen" && reopenTab) {
 			requestAnimationFrame(() => reopenTab.focus());
 		} else if (moveFocus === "collapse" && collapseBtn) {
-			const sidebar =
-				document.querySelector<HTMLElement>(".sidebar-pane");
-			focusAfterTransition(collapseBtn, sidebar);
+			requestAnimationFrame(() => collapseBtn.focus());
 		}
 	}
-
-	/**
-	 * Expand the sidebar without triggering focus management.
-	 * Used by the "/" shortcut to avoid a focus race — the shortcut
-	 * needs focus to land on the search input, not the collapse button.
-	 */
-	function expandSidebar() {
-		if (!document.documentElement.hasAttribute("data-sidebar-collapsed"))
-			return;
-		applySidebarState(false, true);
-		localStorage.setItem(STORAGE_KEY, "false");
-		track("sidebar expanded");
-	}
-
-	// Expose expandSidebar for Sidebar.astro's "/" shortcut handler
-	(window as any).__expandSidebar = expandSidebar;
 
 	// Restore persisted state on load (no animation)
 	if (localStorage.getItem(STORAGE_KEY) === "true") {
@@ -319,28 +251,33 @@ import AgentDirective from "../AgentDirective.astro";
 	}
 
 	// Reopen tab click — expand sidebar, move focus to collapse button
-	reopenTab?.addEventListener("click", () =>
-		toggleSidebar("collapse"),
-	);
+	reopenTab?.addEventListener("click", () => toggleSidebar("collapse"));
 
 	// Collapse button inside sidebar — collapse, move focus to reopen tab
-	collapseBtn?.addEventListener("click", () =>
-		toggleSidebar("reopen"),
-	);
+	collapseBtn?.addEventListener("click", () => toggleSidebar("reopen"));
 
-	// Keyboard shortcut: [ to toggle
-	document.addEventListener("keydown", (e) => {
-		if (e.key !== "[") return;
-		const t = e.target as HTMLElement | null;
-		if (
-			t?.tagName === "INPUT" ||
-			t?.tagName === "TEXTAREA" ||
-			t?.tagName === "SELECT" ||
-			t?.isContentEditable
-		)
-			return;
-		const willCollapse =
-			!document.documentElement.hasAttribute("data-sidebar-collapsed");
-		toggleSidebar(willCollapse ? "reopen" : "collapse");
-	});
+	// Keyboard shortcuts: "[" to toggle, "/" to expand + focus search
+	document.addEventListener(
+		"keydown",
+		(e) => {
+			if (isEditable(e.target)) return;
+
+			if (e.key === "[") {
+				toggleSidebar(isCollapsed() ? "collapse" : "reopen");
+				return;
+			}
+
+			if (e.key === "/" && searchInput) {
+				e.preventDefault();
+				e.stopPropagation();
+				if (isCollapsed()) {
+					applySidebarState(false, true);
+					localStorage.setItem(STORAGE_KEY, "false");
+					track("sidebar expanded");
+				}
+				searchInput.focus();
+			}
+		},
+		{ capture: true },
+	);
 </script>

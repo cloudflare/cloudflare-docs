@@ -270,7 +270,8 @@ metaTags.map((attrs) => {
 <script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>
 
-{/* Sidebar collapse: apply persisted state before first paint to prevent flash */}
+{/* Sidebar collapse: apply persisted state before first paint to prevent flash.
+    Key must stay in sync with STORAGE_KEY in Header.astro. */}
 <script is:inline>
 (function () {
 	try {
