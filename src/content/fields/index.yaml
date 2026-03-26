@@ -856,9 +856,9 @@ entries:
     data_type: Boolean
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor, rfc9440, certificate]
-    summary: Returns `true` if the client leaf certificate exceeded the 16 KB encoding limit and was omitted from `cf.tls_client_auth.cert_rfc9440`.
+    summary: Returns `true` if the client leaf certificate exceeded the 10 KB encoding limit and was omitted from `cf.tls_client_auth.cert_rfc9440`.
     description: |-
-      When `true`, [`cf.tls_client_auth.cert_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440/) will be empty. In practice, leaf certificates are almost always well under 16 KB, so this field will almost always be `false`.
+      When `true`, [`cf.tls_client_auth.cert_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440/) will be empty. In practice, leaf certificates are almost always well under 10 KB, so this field will almost always be `false`.
 
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 

@@ -13,7 +13,7 @@ Each certificate is DER-encoded, Base64-encoded, and wrapped in colons. For exam
 | Field                                             | Type    | Description                                                                                                                                                      |
 | ------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `cf.tls_client_auth.cert_rfc9440`                 | String  | The client leaf certificate in RFC 9440 format. Empty if no client certificate was presented.                                                                    |
-| `cf.tls_client_auth.cert_rfc9440_too_large`       | Boolean | `true` if the leaf certificate exceeded 16 KB and was omitted. In practice this will almost always be `false`.                                                   |
+| `cf.tls_client_auth.cert_rfc9440_too_large`       | Boolean | `true` if the leaf certificate exceeded 10 KB and was omitted. In practice this will almost always be `false`.                                                   |
 | `cf.tls_client_auth.cert_chain_rfc9440`           | String  | The intermediate certificate chain in RFC 9440 format as a comma-separated list. Empty if no intermediate certificates were sent or if the chain exceeded 16 KB. |
 | `cf.tls_client_auth.cert_chain_rfc9440_too_large` | Boolean | `true` if the intermediate chain exceeded 16 KB and was omitted.                                                                                                 |
 
