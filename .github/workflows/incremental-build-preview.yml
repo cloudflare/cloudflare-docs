@@ -70,17 +70,27 @@ jobs:
       - name: Install ced-astro over regular astro
         run: npm install "${{ steps.pack.outputs.tarball }}" --no-save
 
-      # -- Restore previous build from cache for incremental build --
-      - name: Restore previous build from cache
-        id: previous-build-cache
-        uses: actions/cache/restore@v5
-        with:
-          path: |
-            .incremental-cache/dist
-            .incremental-cache/dist-meta
-          key: incremental-build-${{ github.event.pull_request.base.sha }}
-          restore-keys: |
-            incremental-build-
+      # -- Restore previous build from R2 for incremental build --
+      - name: Download previous build from R2
+        id: previous-build
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          # Try the PR base SHA first, then fall back to listing the latest
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          if npx wrangler r2 object get "cloudflare-docs-production-build-cache/builds/${BASE_SHA}.tar" --file /tmp/previous-build.tar 2>/dev/null; then
+            echo "Found build cache for base SHA ${BASE_SHA}"
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No build cache found for base SHA ${BASE_SHA}"
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Extract previous build
+        if: steps.previous-build.outputs.found == 'true'
+        run: |
+          mkdir -p .previous-build
+          tar -xf /tmp/previous-build.tar -C .previous-build
 
       # -- Run the build --
       - name: Restore Astro assets from cache
@@ -91,7 +101,7 @@ jobs:
           key: static
 
       - name: Full build (no previous build cached)
-        if: steps.previous-build-cache.outputs.cache-hit != 'true'
+        if: steps.previous-build.outputs.found != 'true'
         run: |
           export NODE_OPTIONS='--max-old-space-size=8192'
           npx astro build
@@ -99,32 +109,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Incremental build (previous build cached)
-        if: steps.previous-build-cache.outputs.cache-hit == 'true'
+        if: steps.previous-build.outputs.found == 'true'
         run: |
           export NODE_OPTIONS='--max-old-space-size=8192'
-          npx astro build --previous-dist .incremental-cache/dist
+          npx astro build --previous-dist .previous-build/dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # -- Cache this build for future incremental runs --
-      - name: Prepare build cache
+      # -- Upload build to R2 for future incremental runs --
+      - name: Upload build cache to R2
         if: always() && hashFiles('dist/index.html') != ''
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
-          rm -rf .incremental-cache
-          mkdir -p .incremental-cache
-          cp -r dist .incremental-cache/dist
-          if [ -d dist-meta ]; then
-            cp -r dist-meta .incremental-cache/dist-meta
-          fi
-
-      - name: Save build to cache
-        if: always() && hashFiles('dist/index.html') != ''
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            .incremental-cache/dist
-            .incremental-cache/dist-meta
-          key: incremental-build-${{ github.sha }}
+          tar -cf /tmp/build-cache.tar dist/ $([ -d dist-meta ] && echo "dist-meta/")
+          npx wrangler r2 object put "cloudflare-docs-production-build-cache/builds/${{ github.sha }}.tar" --file /tmp/build-cache.tar
 
       # -- Deploy preview --
       - name: Deploy to Cloudflare Workers
