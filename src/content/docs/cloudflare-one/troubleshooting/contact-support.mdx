@@ -38,7 +38,7 @@ For issues related to authentication loops, blocked websites, or policy enforcem
 - **HAR file**: Provide a [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) captured while reproducing the issue.
 - **Ray ID**: If you see a Cloudflare error page, provide the **Ray ID** displayed at the bottom of the page.
 - **Identity Provider logs**: Relevant logs from your identity provider (IdP) if the issue involves login failures.
-- **Request ID**: For Gateway issues, you can find the `oxy.request_id` in your [Gateway logs](/cloudflare-one/traffic-policies/troubleshooting/).
+- **Request ID**: For Gateway issues, you can find the `request_id` (HTTP logs) or `query_id` (DNS logs) in your [Gateway logs](/cloudflare-one/traffic-policies/troubleshooting/).
 
 ### Digital Experience Monitoring (DEX)
 For issues with DEX tests or device monitoring, provide a [remote capture](/cloudflare-one/insights/dex/remote-captures/) from the Zero Trust dashboard.
