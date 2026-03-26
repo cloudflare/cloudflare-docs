@@ -44,9 +44,8 @@ jobs:
       - name: Download ced-astro tarball from R2
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CED_ASTRO_R2_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: 2f3dc21d188ba781322b520bbde5fb5a
         run: |
-          npx wrangler r2 object get ced-astro/builds/latest.tgz --file /tmp/astro.tgz --remote \
+          npx wrangler r2 object get ced-astro/builds/latest.tgz --file /tmp/astro.tgz --remote --account-id 2f3dc21d188ba781322b520bbde5fb5a \
             || { echo "::error::Failed to download ced-astro tarball from R2. Has the GitLab CI pipeline run?"; exit 1; }
 
       # -- Override astro with the fork --
