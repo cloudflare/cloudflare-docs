@@ -1,11 +1,12 @@
 ---
 title: Agents API
+description: Reference the core Agents SDK APIs, client SDKs, and related packages.
 pcx_content_type: reference
 sidebar:
   order: 1
 ---
 
-import { Render, LinkCard } from "~/components";
+import { Render, LinkCard, TypeScriptExample } from "~/components";
 
 This page provides an overview of the Agents SDK. For detailed documentation on each feature, refer to the linked reference pages.
 
@@ -28,6 +29,8 @@ Agents require [Cloudflare Durable Objects](/durable-objects/). Refer to [Config
 
 An Agent is a class that extends the base `Agent` class:
 
+<TypeScriptExample filename="src/server.ts">
+
 ```ts
 import { Agent } from "agents";
 
@@ -37,6 +40,8 @@ class MyAgent extends Agent<Env, State> {
 
 export default MyAgent;
 ```
+
+</TypeScriptExample>
 
 Each Agent can have millions of instances. Each instance is a separate micro-server that runs independently, allowing horizontal scaling. Instances are addressed by a unique identifier (user ID, email, ticket number, etc.).
 
@@ -68,10 +73,10 @@ flowchart TD
 
 | Property     | Type               | Description                            |
 | ------------ | ------------------ | -------------------------------------- |
-| `this.env`   | `Env`              | Environment variables and bindings     |
-| `this.ctx`   | `ExecutionContext` | Execution context for the request      |
-| `this.state` | `State`            | Current persisted state                |
-| `this.sql`   | Function           | Execute SQL queries on embedded SQLite |
+| `this.env`   | `Env`                | Environment variables and bindings     |
+| `this.ctx`   | `DurableObjectState` | Durable Object state and storage APIs  |
+| `this.state` | `State`              | Current persisted state                |
+| `this.sql`   | Function             | Execute SQL queries on embedded SQLite |
 
 ## Server-side API reference
 
@@ -83,6 +88,8 @@ flowchart TD
 | **Queue**             | `queue()`, `dequeue()`, `dequeueAll()`, `getQueue()`                                 | [Queue tasks](/agents/api-reference/queue-tasks/)                   |
 | **WebSockets**        | `onConnect()`, `onMessage()`, `onClose()`, `broadcast()`                             | [WebSockets](/agents/api-reference/websockets/)                     |
 | **HTTP/SSE**          | `onRequest()`                                                                        | [HTTP and SSE](/agents/api-reference/http-sse/)                     |
+| **Voice**             | `withVoice()`, `withVoiceInput()`, `onTurn()`                                        | [Voice agents](/agents/api-reference/voice-agents/)                 |
+| **Workspace**         | `readFile()`, `writeFile()`, `glob()`, `diff()` via `Workspace`                      | [Workspace](/agents/api-reference/workspace/)                       |
 | **Email**             | `onEmail()`, `replyToEmail()`                                                        | [Email routing](/agents/api-reference/email/)                       |
 | **Workflows**         | `runWorkflow()`, `waitForApproval()`                                                 | [Run Workflows](/agents/api-reference/run-workflows/)               |
 | **MCP Client**        | `addMcpServer()`, `removeMcpServer()`, `getMcpServers()`                             | [MCP Client API](/agents/api-reference/mcp-client-api/)             |
@@ -95,6 +102,8 @@ flowchart TD
 
 Each Agent instance has an embedded SQLite database accessed via `this.sql`:
 
+<TypeScriptExample>
+
 ```ts
 // Create tables
 this.sql`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, name TEXT)`;
@@ -106,6 +115,8 @@ this.sql`INSERT INTO users (id, name) VALUES (${id}, ${name})`;
 const users = this.sql<User>`SELECT * FROM users WHERE id = ${id}`;
 ```
 
+</TypeScriptExample>
+
 For state that needs to sync with clients, use the [State API](/agents/api-reference/store-and-sync-state/) instead.
 
 ## Client-side API reference
@@ -116,15 +127,22 @@ For state that needs to sync with clients, use the [State API](/agents/api-refer
 | **HTTP client**      | `agentFetch()`   | [Client SDK](/agents/api-reference/client-sdk/#http-requests-with-agentfetch) |
 | **React hook**       | `useAgent()`     | [Client SDK](/agents/api-reference/client-sdk/#react)                         |
 | **Chat hook**        | `useAgentChat()` | [Client SDK](/agents/api-reference/client-sdk/)                               |
+| **Voice hooks**      | `useVoiceAgent()`, `useVoiceInput()` | [Voice agents](/agents/api-reference/voice-agents/)                 |
 
 ### Quick example
+
+<TypeScriptExample filename="src/client.tsx">
 
 ```ts
 import { useAgent } from "agents/react";
 import type { MyAgent } from "./server";
 
+type CounterState = {
+	count: number;
+};
+
 function App() {
-	const agent = useAgent<MyAgent, State>({
+	const agent = useAgent<MyAgent, CounterState>({
 		agent: "my-agent",
 		name: "user-123",
 	});
@@ -137,12 +155,16 @@ function App() {
 }
 ```
 
+</TypeScriptExample>
+
 ## Chat agents
 
 For AI chat applications, extend `AIChatAgent` instead of `Agent`:
 
+<TypeScriptExample filename="src/server.ts">
+
 ```ts
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
 
 class ChatAgent extends AIChatAgent {
 	async onChatMessage(onFinish) {
@@ -151,6 +173,8 @@ class ChatAgent extends AIChatAgent {
 	}
 }
 ```
+
+</TypeScriptExample>
 
 Features include:
 
@@ -170,18 +194,22 @@ https://your-worker.workers.dev/agents/:agent-name/:instance-name
 
 Use `routeAgentRequest()` in your Worker to route requests:
 
+<TypeScriptExample filename="src/server.ts">
+
 ```ts
 import { routeAgentRequest } from "agents";
 
 export default {
 	async fetch(request: Request, env: Env) {
 		return (
-			routeAgentRequest(request, env) ||
+			(await routeAgentRequest(request, env)) ||
 			new Response("Not found", { status: 404 })
 		);
 	},
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 Refer to [Routing](/agents/api-reference/routing/) for custom paths, CORS, and instance naming patterns.
 
@@ -203,6 +231,18 @@ Refer to [Routing](/agents/api-reference/routing/) for custom paths, CORS, and i
 	title="WebSockets"
 	href="/agents/api-reference/websockets/"
 	description="Real-time bidirectional communication with clients."
+/>
+
+<LinkCard
+	title="Voice agents"
+	href="/agents/api-reference/voice-agents/"
+	description="Speech-to-text, text-to-speech, and real-time voice interactions."
+/>
+
+<LinkCard
+	title="Workspace"
+	href="/agents/api-reference/workspace/"
+	description="Durable filesystem storage for code, files, and generated artifacts."
 />
 
 <LinkCard

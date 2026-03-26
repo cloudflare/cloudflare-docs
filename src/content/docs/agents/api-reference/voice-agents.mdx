@@ -1,0 +1,232 @@
+---
+title: Voice agents
+description: Build voice agents with speech-to-text, text-to-speech, and durable conversation history.
+pcx_content_type: reference
+sidebar:
+  order: 20
+---
+
+import {
+	InlineBadge,
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+	LinkCard,
+} from "~/components";
+
+<InlineBadge preset="beta" />
+
+Build voice-first agents with `@cloudflare/voice`. The package adds speech-to-text (STT), text-to-speech (TTS), optional voice activity detection (VAD), and real-time audio streaming over the same WebSocket connection your agent already uses.
+
+:::caution
+Voice agents are experimental and may change between releases. Pin your package versions before deploying to production.
+:::
+
+## Overview
+
+`@cloudflare/voice` adds two server-side mixins and matching client APIs:
+
+| Export | Import | Use it for |
+| --- | --- | --- |
+| `withVoice` | `@cloudflare/voice` | Full voice conversations with STT, LLM turns, and TTS |
+| `withVoiceInput` | `@cloudflare/voice` | Speech-to-text only, without spoken responses |
+| `useVoiceAgent` | `@cloudflare/voice/react` | React client for full voice agents |
+| `useVoiceInput` | `@cloudflare/voice/react` | React client for dictation and transcription |
+| `VoiceClient` | `@cloudflare/voice/client` | Framework-agnostic voice client |
+
+Voice agents support:
+
+- Streaming microphone audio to your agent over WebSocket.
+- Persistent conversation history stored in the agent's SQLite database.
+- Turn-by-turn voice interactions with interruption handling.
+- Workers AI providers by default, with third-party providers when needed.
+
+## Install
+
+Install the voice package and the base Agents SDK:
+
+<PackageManagers pkg="@cloudflare/voice agents" />
+
+If your `onTurn()` method calls an LLM through the AI SDK, also install a model provider package:
+
+<PackageManagers pkg="ai workers-ai-provider" />
+
+## Build a full voice agent
+
+Extend `withVoice(Agent)` and implement `onTurn()`. This method runs after the SDK transcribes the user's utterance.
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Agent } from "agents";
+import {
+	withVoice,
+	WorkersAISTT,
+	WorkersAITTS,
+	WorkersAIVAD,
+	type VoiceTurnContext,
+} from "@cloudflare/voice";
+import { streamText } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+
+const VoiceAgent = withVoice(Agent);
+
+export class SupportAgent extends VoiceAgent<Env> {
+	stt = new WorkersAISTT(this.env.AI);
+	tts = new WorkersAITTS(this.env.AI);
+	vad = new WorkersAIVAD(this.env.AI);
+
+	async onTurn(transcript: string, context: VoiceTurnContext) {
+		const workersai = createWorkersAI({ binding: this.env.AI });
+
+		const result = streamText({
+			model: workersai("@cf/moonshotai/kimi-k2.5"),
+			system:
+				"You are a concise voice assistant. Keep responses short and easy to speak aloud.",
+			messages: [
+				...context.messages.map((message) => ({
+					role: message.role as "user" | "assistant",
+					content: message.content,
+				})),
+				{ role: "user", content: transcript },
+			],
+			abortSignal: context.signal,
+		});
+
+		return result.textStream;
+	}
+}
+```
+
+</TypeScriptExample>
+
+On the client, connect with `useVoiceAgent()`:
+
+<TypeScriptExample filename="src/client.tsx">
+
+```tsx
+import { useVoiceAgent } from "@cloudflare/voice/react";
+
+export function VoiceUI() {
+	const {
+		status,
+		transcript,
+		interimTranscript,
+		isMuted,
+		startCall,
+		endCall,
+		toggleMute,
+	} = useVoiceAgent({ agent: "SupportAgent" });
+
+	return (
+		<div>
+			<p>Status: {status}</p>
+			<button onClick={status === "idle" ? startCall : endCall}>
+				{status === "idle" ? "Start call" : "End call"}
+			</button>
+			<button onClick={toggleMute}>{isMuted ? "Unmute" : "Mute"}</button>
+			{interimTranscript ? <p>{interimTranscript}</p> : null}
+			<ul>
+				{transcript.map((message, index) => (
+					<li key={index}>
+						<strong>{message.role}:</strong> {message.text}
+					</li>
+				))}
+			</ul>
+		</div>
+	);
+}
+```
+
+</TypeScriptExample>
+
+## Wrangler configuration
+
+Add an AI binding and a Durable Object binding for your agent class:
+
+<WranglerConfig>
+
+```toml
+ai = { binding = "AI" }
+durable_objects = { bindings = [{ name = "SupportAgent", class_name = "SupportAgent" }] }
+migrations = [{ tag = "v1", new_sqlite_classes = ["SupportAgent"] }]
+compatibility_date = "$today"
+```
+
+</WranglerConfig>
+
+## Built-in Workers AI providers
+
+Workers AI covers the common voice pipeline without extra API keys:
+
+| Provider | Purpose | Default model |
+| --- | --- | --- |
+| `WorkersAISTT` | Batch transcription | `@cf/deepgram/nova-3` |
+| `WorkersAIFluxSTT` | Streaming transcription | `@cf/deepgram/nova-3` |
+| `WorkersAITTS` | Text-to-speech | `@cf/deepgram/aura-1` |
+| `WorkersAIVAD` | End-of-turn detection | `@cf/pipecat-ai/smart-turn-v2` |
+
+If you need a different provider, the upstream repo also ships adapters such as `@cloudflare/voice-deepgram`, `@cloudflare/voice-elevenlabs`, and `@cloudflare/voice-twilio`.
+
+## Lifecycle hooks
+
+`withVoice()` adds voice-specific hooks on top of the normal `Agent` lifecycle:
+
+| Hook | When it runs |
+| --- | --- |
+| `onTurn(transcript, context)` | After the user finishes speaking and transcription completes |
+| `beforeCallStart(connection)` | Before a call begins. Return `false` to reject it |
+| `onCallStart(connection)` | After a call is accepted |
+| `onCallEnd(connection)` | When the call ends |
+| `onInterrupt(connection)` | When the user interrupts playback |
+| `beforeTranscribe(audio, connection)` | Before STT runs |
+| `afterTranscribe(transcript, connection)` | After STT completes |
+| `beforeSynthesize(text, connection)` | Before TTS runs |
+| `afterSynthesize(audio, text, connection)` | After TTS completes |
+
+Use these hooks to filter noise, adjust spoken output, or enforce your own call policies.
+
+## Voice input without TTS
+
+If you only need speech-to-text, use `withVoiceInput()` instead:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Agent } from "agents";
+import { withVoiceInput, WorkersAIFluxSTT } from "@cloudflare/voice";
+
+const VoiceInputAgent = withVoiceInput(Agent);
+
+export class DictationAgent extends VoiceInputAgent<Env> {
+	streamingStt = new WorkersAIFluxSTT(this.env.AI);
+
+	onTranscript(text: string) {
+		console.log("Transcribed:", text);
+	}
+}
+```
+
+</TypeScriptExample>
+
+This pattern works well for dictation, voice search, and forms that need live transcription but do not need spoken responses.
+
+## Related resources
+
+<LinkCard
+	title="Chat agents"
+	href="/agents/api-reference/chat-agents/"
+	description="Build text-first assistants with persistent chat history."
+/>
+
+<LinkCard
+	title="WebSockets"
+	href="/agents/api-reference/websockets/"
+	description="Understand the real-time transport used by voice agents."
+/>
+
+<LinkCard
+	title="Using AI models"
+	href="/agents/api-reference/using-ai-models/"
+	description="Connect Workers AI, OpenAI, Anthropic, or other AI SDK providers."
+/>

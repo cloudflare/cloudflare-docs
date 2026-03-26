@@ -1,0 +1,158 @@
+---
+title: Workspace
+description: Persist files for your agents with a durable virtual filesystem.
+pcx_content_type: reference
+sidebar:
+  order: 21
+---
+
+import {
+	InlineBadge,
+	PackageManagers,
+	TypeScriptExample,
+	LinkCard,
+} from "~/components";
+
+<InlineBadge preset="beta" />
+
+`Workspace` from `@cloudflare/shell` gives an agent a durable filesystem. Files live in the agent's SQLite storage, with optional R2 spillover for large objects, so the same agent instance can keep project files, generated code, and intermediate artifacts between requests.
+
+:::caution
+Workspace is experimental and may change between releases. Pin your package versions before using it in production.
+:::
+
+## Install
+
+Install the filesystem package:
+
+<PackageManagers pkg="@cloudflare/shell" />
+
+If you want the agent to run structured multi-file edits in an isolated Worker, also install Codemode:
+
+<PackageManagers pkg="@cloudflare/codemode" />
+
+## Create a workspace
+
+The common Agents pattern is to back `Workspace` with the Durable Object's built-in SQLite database:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Agent } from "agents";
+import { Workspace } from "@cloudflare/shell";
+
+export class ProjectAgent extends Agent<Env> {
+	workspace = new Workspace({
+		sql: this.ctx.storage.sql,
+		name: () => this.name,
+	});
+
+	async onRequest(_request: Request) {
+		await this.workspace.mkdir("/src", { recursive: true });
+		await this.workspace.writeFile("/src/index.ts", "export const ready = true;\\n");
+
+		const file = await this.workspace.readFile("/src/index.ts");
+		const files = await this.workspace.readDir("/src");
+
+		return Response.json({ file, files });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Use `name: () => this.name` instead of `name: this.name` so the agent name is resolved lazily when the workspace needs it.
+
+## What Workspace stores
+
+Workspace keeps file metadata in SQL and stores file contents either inline or in R2, depending on size.
+
+Use Workspace when your agent needs to:
+
+- Persist a repo or project tree between sessions.
+- Generate and edit multiple files.
+- Compare files with `diff()` before applying changes.
+- Expose file tools to an LLM through Codemode or your own tool layer.
+
+## Core operations
+
+| Method | Use it for |
+| --- | --- |
+| `writeFile()` / `writeFileBytes()` | Create or replace files |
+| `readFile()` / `readFileBytes()` | Read text or binary files |
+| `mkdir()` / `readDir()` | Manage directories |
+| `glob()` | Find files by pattern |
+| `rm()` / `deleteFile()` | Remove directories or files |
+| `cp()` / `mv()` | Copy or move files |
+| `stat()` / `exists()` | Inspect metadata or test for existence |
+| `diff()` / `diffContent()` | Show changes before applying them |
+
+For large files, add an R2 binding and pass `r2: this.env.MY_BUCKET` to the constructor. Workspace stores metadata in SQL and spills larger blobs to R2 automatically.
+
+## Use Workspace with Codemode
+
+Workspace is especially useful when you want an agent to make coordinated edits across many files. Pair it with `stateTools()` from `@cloudflare/shell/workers` and `DynamicWorkerExecutor` from `@cloudflare/codemode`.
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Agent } from "agents";
+import { Workspace } from "@cloudflare/shell";
+import { stateTools } from "@cloudflare/shell/workers";
+import { DynamicWorkerExecutor, resolveProvider } from "@cloudflare/codemode";
+
+export class CodingAgent extends Agent<Env> {
+	workspace = new Workspace({
+		sql: this.ctx.storage.sql,
+		name: () => this.name,
+	});
+
+	async runStateCode(code: string) {
+		const executor = new DynamicWorkerExecutor({
+			loader: this.env.LOADER,
+		});
+
+		return executor.execute(code, [
+			resolveProvider(stateTools(this.workspace)),
+		]);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Inside the sandbox, the generated code can call `state.readFile()`, `state.writeFile()`, `state.glob()`, `state.replaceInFiles()`, and other coarse-grained helpers without exposing direct filesystem access to the model.
+
+## SQL backends
+
+`Workspace` is not limited to Agents. It can also use:
+
+- Durable Object SQLite storage.
+- D1 databases.
+- A custom SQL backend that implements the required query and run methods.
+
+That makes it useful both for agent-local project state and for shared durable storage patterns.
+
+## When to use Workspace vs state
+
+Use [agent state](/agents/api-reference/store-and-sync-state/) for small structured data that must sync to clients in real time. Use Workspace for files, directories, diffs, and artifacts that should persist but do not belong in the synced state payload.
+
+## Related resources
+
+<LinkCard
+	title="Codemode"
+	href="/agents/api-reference/codemode/"
+	description="Run structured multi-file edits in an isolated Worker sandbox."
+/>
+
+<LinkCard
+	title="Store and sync state"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Keep small UI-facing state in sync with connected clients."
+/>
+
+<LinkCard
+	title="Chat agents"
+	href="/agents/api-reference/chat-agents/"
+	description="Combine a persistent workspace with an AI chat interface."
+/>

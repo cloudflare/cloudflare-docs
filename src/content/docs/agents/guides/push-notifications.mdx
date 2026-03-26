@@ -1,0 +1,334 @@
+---
+title: Push notifications
+description: Send browser push notifications from an agent.
+pcx_content_type: how-to
+sidebar:
+  order: 14
+---
+
+import {
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+	LinkCard,
+} from "~/components";
+
+Use an agent to store push subscriptions, schedule delivery, and notify browsers that are no longer connected. This is a good fit for reminders, alerts, and any workflow that should reach a user after they close the tab.
+
+## Install dependencies
+
+Install the Agents SDK and the Web Push library:
+
+<PackageManagers pkg="agents web-push" />
+
+## Generate VAPID keys
+
+Web Push requires a VAPID key pair:
+
+```bash
+npx web-push generate-vapid-keys
+```
+
+Store the private key and subject as Worker secrets. You can keep the public key in a secret or regular environment variable.
+
+```bash
+wrangler secret put VAPID_PRIVATE_KEY
+wrangler secret put VAPID_SUBJECT
+```
+
+## Build the agent
+
+This agent stores subscriptions in state, schedules reminders, and sends a push notification when the scheduled callback fires:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Agent, callable, routeAgentRequest } from "agents";
+import webpush from "web-push";
+
+type Subscription = {
+	endpoint: string;
+	expirationTime: number | null;
+	keys: {
+		p256dh: string;
+		auth: string;
+	};
+};
+
+type Reminder = {
+	id: string;
+	message: string;
+	scheduledAt: number;
+	sent: boolean;
+};
+
+type ReminderAgentState = {
+	subscriptions: Subscription[];
+	reminders: Reminder[];
+};
+
+export class ReminderAgent extends Agent<Env, ReminderAgentState> {
+	initialState: ReminderAgentState = {
+		subscriptions: [],
+		reminders: [],
+	};
+
+	@callable()
+	getVapidPublicKey() {
+		return this.env.VAPID_PUBLIC_KEY;
+	}
+
+	@callable()
+	async subscribe(subscription: Subscription) {
+		const exists = this.state.subscriptions.some(
+			(entry) => entry.endpoint === subscription.endpoint,
+		);
+
+		if (!exists) {
+			this.setState({
+				...this.state,
+				subscriptions: [...this.state.subscriptions, subscription],
+			});
+		}
+
+		return { ok: true };
+	}
+
+	@callable()
+	async createReminder(message: string, delaySeconds: number) {
+		const id = crypto.randomUUID();
+		const reminder = {
+			id,
+			message,
+			scheduledAt: Date.now() + delaySeconds * 1000,
+			sent: false,
+		};
+
+		this.setState({
+			...this.state,
+			reminders: [...this.state.reminders, reminder],
+		});
+
+		await this.schedule(delaySeconds, "sendReminder", { id, message });
+
+		return reminder;
+	}
+
+	async sendReminder(payload: { id: string; message: string }) {
+		webpush.setVapidDetails(
+			this.env.VAPID_SUBJECT,
+			this.env.VAPID_PUBLIC_KEY,
+			this.env.VAPID_PRIVATE_KEY,
+		);
+
+		const deadEndpoints: string[] = [];
+
+		await Promise.all(
+			this.state.subscriptions.map(async (subscription) => {
+				try {
+					await webpush.sendNotification(
+						subscription,
+						JSON.stringify({
+							title: "Reminder",
+							body: payload.message,
+							tag: `reminder-${payload.id}`,
+						}),
+					);
+				} catch (error) {
+					const statusCode =
+						error instanceof webpush.WebPushError ? error.statusCode : 0;
+
+					if (statusCode === 404 || statusCode === 410) {
+						deadEndpoints.push(subscription.endpoint);
+					}
+				}
+			}),
+		);
+
+		if (deadEndpoints.length > 0) {
+			this.setState({
+				...this.state,
+				subscriptions: this.state.subscriptions.filter(
+					(subscription) => !deadEndpoints.includes(subscription.endpoint),
+				),
+			});
+		}
+
+		this.setState({
+			...this.state,
+			reminders: this.state.reminders.map((reminder) =>
+				reminder.id === payload.id ? { ...reminder, sent: true } : reminder,
+			),
+		});
+
+		this.broadcast(
+			JSON.stringify({
+				type: "reminder_sent",
+				id: payload.id,
+				timestamp: Date.now(),
+			}),
+		);
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		return (
+			(await routeAgentRequest(request, env)) ||
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+This pattern combines three Agents features:
+
+- [State](/agents/api-reference/store-and-sync-state/) for durable subscriptions and reminder metadata.
+- [Scheduling](/agents/api-reference/schedule-tasks/) for delivery at a future time.
+- [WebSockets](/agents/api-reference/websockets/) for live updates to currently connected clients.
+
+## Add a service worker
+
+Serve a service worker from the same origin as your app, for example `public/sw.js`:
+
+```js title="public/sw.js"
+self.addEventListener("push", (event) => {
+	if (!event.data) return;
+
+	const data = event.data.json();
+
+	event.waitUntil(
+		self.registration.showNotification(data.title || "Notification", {
+			body: data.body || "",
+			tag: data.tag,
+			icon: data.icon || "/favicon.ico",
+			data: data.data,
+		}),
+	);
+});
+
+self.addEventListener("notificationclick", (event) => {
+	event.notification.close();
+
+	event.waitUntil(
+		self.clients.matchAll({ type: "window" }).then((clients) => {
+			for (const client of clients) {
+				if (client.url.includes(self.location.origin) && "focus" in client) {
+					return client.focus();
+				}
+			}
+
+			return self.clients.openWindow("/");
+		}),
+	);
+});
+```
+
+## Subscribe from the client
+
+Request notification permission after a user interaction, register the service worker, and send the subscription to your agent:
+
+<TypeScriptExample filename="src/client.tsx">
+
+```tsx
+import { useAgent } from "agents/react";
+
+function base64urlToUint8Array(value: string) {
+	const padded = value + "=".repeat((4 - (value.length % 4)) % 4);
+	const binary = atob(padded.replace(/-/g, "+").replace(/_/g, "/"));
+	const bytes = new Uint8Array(binary.length);
+
+	for (let i = 0; i < binary.length; i++) {
+		bytes[i] = binary.charCodeAt(i);
+	}
+
+	return bytes;
+}
+
+export function ReminderControls() {
+	const agent = useAgent({ agent: "ReminderAgent", name: "user-123" });
+
+	async function enablePush() {
+		await navigator.serviceWorker.register("/sw.js");
+
+		const permission = await Notification.requestPermission();
+		if (permission !== "granted") return;
+
+		const vapidPublicKey = await agent.stub.getVapidPublicKey();
+		const registration = await navigator.serviceWorker.ready;
+		const subscription = await registration.pushManager.subscribe({
+			userVisibleOnly: true,
+			applicationServerKey: base64urlToUint8Array(vapidPublicKey),
+		});
+
+		const json = subscription.toJSON();
+		await agent.stub.subscribe({
+			endpoint: json.endpoint,
+			expirationTime: json.expirationTime ?? null,
+			keys: json.keys,
+		});
+	}
+
+	async function createReminder() {
+		await agent.stub.createReminder("Check the oven", 300);
+	}
+
+	return (
+		<>
+			<button onClick={enablePush}>Turn on notifications</button>
+			<button onClick={createReminder}>Create reminder</button>
+		</>
+	);
+}
+```
+
+</TypeScriptExample>
+
+## Wrangler configuration
+
+The `web-push` package requires `nodejs_compat`:
+
+<WranglerConfig>
+
+```toml
+name = "push-notifications"
+main = "src/server.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+durable_objects = { bindings = [{ name = "ReminderAgent", class_name = "ReminderAgent" }] }
+migrations = [{ tag = "v1", new_sqlite_classes = ["ReminderAgent"] }]
+```
+
+</WranglerConfig>
+
+Add `VAPID_PUBLIC_KEY` as a regular environment variable or a secret so `getVapidPublicKey()` can return it to the client.
+
+## Production considerations
+
+- Remove subscriptions when the push service returns `404` or `410`.
+- Keep one agent instance per user if reminders and subscriptions should stay isolated.
+- Use `this.broadcast()` alongside push so connected tabs update immediately.
+- Serve your service worker from the same origin as the page that requests push access.
+
+## Related resources
+
+<LinkCard
+	title="Schedule tasks"
+	href="/agents/api-reference/schedule-tasks/"
+	description="Run callbacks later, at a fixed time, or on a cron schedule."
+/>
+
+<LinkCard
+	title="Store and sync state"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Persist subscriptions and reminder metadata in the agent."
+/>
+
+<LinkCard
+	title="WebSockets"
+	href="/agents/api-reference/websockets/"
+	description="Keep connected clients in sync while offline users receive push notifications."
+/>

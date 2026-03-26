@@ -1,5 +1,6 @@
 ---
 title: Schedule tasks
+description: Run agent callbacks later, at a fixed time, or on recurring intervals.
 pcx_content_type: concept
 sidebar:
   order: 10
@@ -205,6 +206,29 @@ await this.scheduleEvery(90, "syncData", { destination: "warehouse" });
 
 </TypeScriptExample>
 
+**Idempotency:**
+
+`scheduleEvery()` is idempotent for the combination of callback name, interval, and payload. Calling it again with the same arguments returns the existing schedule instead of creating a duplicate row. This makes it safe to call from `onStart()`.
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	async onStart() {
+		// Safe on every Durable Object wake
+		await this.scheduleEvery(30, "tick");
+	}
+
+	async tick() {
+		console.log("tick", new Date().toISOString());
+	}
+}
+```
+
+</TypeScriptExample>
+
+Calling `scheduleEvery()` with a different interval or payload creates a separate schedule.
+
 **Key differences from cron:**
 
 | Feature             | Cron                                  | Interval               |
@@ -397,6 +421,7 @@ type Schedule<T> = {
 	id: string; // Unique identifier
 	callback: string; // Method name to call
 	payload: T; // Data passed to the callback
+	retry?: RetryOptions; // Retry options (if configured)
 	time: number; // Unix timestamp (seconds) of next execution
 } & (
 	| { type: "scheduled" } // One-time at specific date
@@ -418,6 +443,7 @@ console.log(schedule);
 //   id: "abc123xyz",
 //   callback: "myTask",
 //   payload: { foo: "bar" },
+//   retry: undefined,
 //   time: 1706745600,
 //   type: "delayed",
 //   delayInSeconds: 60
@@ -552,7 +578,7 @@ Returns a system prompt for parsing natural language into scheduling parameters:
 <TypeScriptExample>
 
 ```ts
-import { getSchedulePrompt, scheduleSchema } from "agents";
+import { getSchedulePrompt, scheduleSchema } from "agents/schedule";
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 
@@ -610,7 +636,7 @@ A Zod schema for validating parsed scheduling data. Uses a discriminated union o
 <TypeScriptExample>
 
 ```ts
-import { scheduleSchema } from "agents";
+import { scheduleSchema } from "agents/schedule";
 
 // The schema is a discriminated union:
 // {
@@ -628,6 +654,8 @@ import { scheduleSchema } from "agents";
 :::note
 Dates are returned as ISO 8601 strings (not `Date` objects) for compatibility with both Zod v3 and v4 JSON schema generation.
 :::
+
+If you use OpenAI models with `generateObject()`, pass `providerOptions: { openai: { strictJsonSchema: false } }` because this discriminated union schema is not compatible with OpenAI strict structured outputs.
 
 ## Scheduling vs Queue vs Workflows
 
@@ -669,7 +697,7 @@ async schedule<T>(
   when: Date | string | number,
   callback: keyof this,
   payload?: T,
-  options?: { retry?: RetryOptions }
+  options?: { retry?: RetryOptions; idempotent?: boolean }
 ): Promise<Schedule<T>>
 ```
 
@@ -681,8 +709,13 @@ Schedule a task for future execution.
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
 - `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details.
+- `options.idempotent` - Deduplicate repeated schedules with the same callback and payload. Cron schedules are idempotent by default; delayed and `Date` schedules opt in with `true`.
 
 **Returns:** A `Schedule` object with the task details
+
+For recurring cron work, calling `schedule()` with the same cron expression, callback, and payload returns the existing schedule unless you explicitly set `idempotent: false`.
+
+If you call delayed or `Date`-based `schedule()` inside `onStart()`, pass `{ idempotent: true }` to avoid duplicate rows across Durable Object restarts.
 
 :::caution
 
@@ -715,6 +748,7 @@ Schedule a task to run repeatedly at a fixed interval.
 **Behavior:**
 
 - First execution occurs after `intervalSeconds` (not immediately)
+- Repeating the same `callback`, `intervalSeconds`, and `payload` returns the existing schedule
 - If callback is still running when next execution is due, it is skipped (overlap prevention)
 - If callback throws an error, the interval continues
 - Cancel with `cancelSchedule(id)` to stop the entire interval
@@ -753,7 +787,7 @@ Cancel a scheduled task. Returns `true` if cancelled, `false` if not found.
 async keepAlive(): Promise<() => void>
 ```
 
-Prevent the Durable Object from being evicted due to inactivity by creating a 30-second heartbeat schedule. Returns a disposer function that cancels the heartbeat when called. The disposer is idempotent — calling it multiple times is safe.
+Prevent the Durable Object from being evicted due to inactivity by creating a 30-second heartbeat alarm. Returns a disposer function that cancels the heartbeat when called. The disposer is idempotent — calling it multiple times is safe.
 
 Always call the disposer when the work is done — otherwise the heartbeat continues indefinitely.
 
@@ -797,11 +831,12 @@ const result = await this.keepAliveWhile(async () => {
 
 Durable Objects are evicted after a period of inactivity (typically 70-140 seconds with no incoming requests, WebSocket messages, or alarms). During long-running operations — streaming LLM responses, waiting on external APIs, running multi-step computations — the agent can be evicted mid-flight.
 
-`keepAlive()` prevents this by creating a 30-second heartbeat schedule. The internal heartbeat callback is a no-op — the alarm firing itself is what resets the inactivity timer. Because it uses the scheduling system:
+`keepAlive()` prevents this by keeping a 30-second heartbeat alarm active while work is in flight. It uses an in-memory reference count and the Durable Object alarm system directly. Because of that:
 
-- The heartbeat does not conflict with your own schedules (the scheduling system multiplexes through a single alarm slot)
-- The heartbeat shows up in `getSchedules()` if you need to inspect it
-- Multiple concurrent `keepAlive()` calls each get their own schedule, so they do not interfere with each other
+- The heartbeat does not conflict with your own schedules because everything still shares the same Durable Object alarm slot
+- The heartbeat does **not** create rows in `cf_agents_schedules`
+- The heartbeat does **not** appear in `getSchedules()` or scheduling diagnostics events
+- Multiple concurrent `keepAlive()` calls increment the same internal reference count
 
 ### Multiple concurrent callers
 
@@ -813,11 +848,11 @@ Each `keepAlive()` call returns an independent disposer:
 const dispose1 = await this.keepAlive();
 const dispose2 = await this.keepAlive();
 
-// Both heartbeats are active
-dispose1(); // Only cancels the first heartbeat
-// Agent is still alive via dispose2's heartbeat
+// Ref count is 2
+dispose1(); // Ref count becomes 1
+// Agent is still kept alive
 
-dispose2(); // Now the agent can go idle
+dispose2(); // Ref count reaches 0; the agent can go idle
 ```
 
 </TypeScriptExample>

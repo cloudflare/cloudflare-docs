@@ -1,5 +1,6 @@
 ---
 title: Queue tasks
+description: Run background tasks in FIFO order without blocking the current request.
 pcx_content_type: concept
 sidebar:
   order: 11
@@ -7,7 +8,7 @@ sidebar:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-The Agents SDK provides a built-in queue system that allows you to schedule tasks for asynchronous execution. This is useful for background processing, delayed operations, and managing workloads that do not need immediate execution.
+The Agents SDK provides a built-in queue system for asynchronous background execution. Queue tasks run as soon as possible in FIFO order, which is useful for work that should not block the current request.
 
 ## Overview
 
@@ -29,7 +30,7 @@ type QueueItem<T> = {
 
 ### `queue()`
 
-Adds a task to the queue for future execution.
+Adds a task to the queue for background execution as soon as the agent can process it.
 
 ```ts
 async queue<T>(callback: keyof this, payload: T, options?: { retry?: RetryOptions }): Promise<string>
@@ -139,7 +140,7 @@ agent.dequeueAllByCallback("processEmail");
 Retrieves a specific queued task by ID. This method is synchronous.
 
 ```ts
-getQueue<T>(id: string): QueueItem<T> | undefined
+getQueue(id: string): QueueItem<string> | undefined
 ```
 
 **Parameters:**
@@ -169,7 +170,7 @@ if (task) {
 Retrieves all queued tasks that match a specific key-value pair in their payload. This method is synchronous.
 
 ```ts
-getQueues<T>(key: string, value: string): QueueItem<T>[]
+getQueues(key: string, value: string): QueueItem<string>[]
 ```
 
 **Parameters:**
@@ -198,10 +199,10 @@ const userTasks = agent.getQueues("userId", "12345");
 2. **Automatic processing**: After queuing, the system automatically attempts to flush the queue.
 3. **FIFO order**: Tasks are processed in the order they were created (`created_at` timestamp).
 4. **Context preservation**: Each queued task runs with the same agent context (connection, request, email).
-5. **Automatic retries**: If a task fails and retry options are configured, the SDK schedules the next attempt with exponential backoff.
-6. **Automatic dequeue**: Successfully executed tasks are automatically removed from the queue.
+5. **Automatic retries**: Tasks retry with exponential backoff. If you do not pass `retry`, the Agent's retry defaults apply.
+6. **Automatic dequeue**: Tasks are removed after they succeed or after all retry attempts are exhausted.
 7. **Error handling**: If a callback method does not exist at execution time, an error is logged and the task is skipped.
-7. **Persistence**: Tasks are stored in the `cf_agents_queues` SQL table and survive agent restarts.
+8. **Persistence**: Tasks are stored in the `cf_agents_queues` SQL table and survive agent restarts.
 
 ## Queue callback methods
 
@@ -300,7 +301,7 @@ class BatchProcessor extends Agent {
 
 ## Error handling and retries
 
-Use the built-in `retry` option on `queue()` to automatically retry failed tasks with exponential backoff. You do not need to manually re-queue tasks on failure.
+Queued tasks retry automatically with exponential backoff. If you do not provide `retry`, the Agent falls back to its default retry settings, which are three attempts unless you override them in Agent options. You do not need to manually re-queue tasks on failure.
 
 <TypeScriptExample>
 
@@ -344,6 +345,7 @@ The queue system works with other Agent SDK features:
 
 - **State management**: Access agent state within queued callbacks.
 - **Scheduling**: Combine with [`schedule()`](/agents/api-reference/schedule-tasks/) for time-based queue processing.
+- **Retries**: Queue callbacks use the same retry system described in [Retries](/agents/api-reference/retries/).
 - **Context**: Queued tasks maintain the original request context.
 - **Database**: Uses the same database as other agent data.
 
@@ -352,6 +354,7 @@ The queue system works with other Agent SDK features:
 - Tasks are processed sequentially, not in parallel.
 - No priority system (FIFO only).
 - Queue processing happens during agent execution, not as separate background jobs.
+- There is no dead-letter queue after retries are exhausted.
 
 ## Queue vs Schedule
 
