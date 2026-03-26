@@ -1911,7 +1911,7 @@
 		"page_shield": {
 			"title": "Client-side security",
 			"link": "/client-side-security/",
-			"ent_plus": "Enterprise with add-on",
+			"ent_plus": "Advanced",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -1969,7 +1969,7 @@
 				},
 				"h_malicious_scripts": {
 					"title": "Malicious script detection\n and alerting",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1978,7 +1978,7 @@
 				},
 				"j_code_change_detection": {
 					"title": "Code change detection\n and alerting",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1987,7 +1987,7 @@
 				},
 				"k_malicious_connections": {
 					"title": "Malicious connection detection\n and alerting",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1996,7 +1996,7 @@
 				},
 				"l_cookie_advanced_fields": {
 					"title": "Cookie monitoring\n advanced fields",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -2005,7 +2005,7 @@
 				},
 				"m_policies": {
 					"title": "Number of content security rules (positive blocking)",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": 0,
 					"pro": 0,
 					"biz": 0,
@@ -2014,7 +2014,7 @@
 				},
 				"n_logpush_jobs": {
 					"title": "Number of Logpush jobs",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": 0,
 					"pro": 0,
 					"biz": 0,
