@@ -1,0 +1,41 @@
+---
+title: New mTLS certificate fields for Transform Rules
+description: Four new fields expose client certificates and chain data in RFC 9440 format, making it simpler to forward mTLS certificate information to your origin server.
+date: 2026-03-25
+---
+
+Cloudflare now exposes four new fields in the Transform Rules phase that encode client certificate data in [RFC 9440](https://www.rfc-editor.org/rfc/rfc9440) format. Previously, forwarding client certificate information to your origin required custom parsing of PEM-encoded fields or non-standard HTTP header formats. These new fields produce output in the standardized `Client-Cert` and `Client-Cert-Chain` header format defined by RFC 9440, so your origin can consume them directly without any additional decoding logic.
+
+Each certificate is DER-encoded, Base64-encoded, and wrapped in colons. For example, `:MIIDsT...Vw==:`. A chain of intermediates is expressed as a comma-separated list of such values.
+
+### New fields
+
+| Field                                             | Type    | Description                                                                                                                                                      |
+| ------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cf.tls_client_auth.cert_rfc9440`                 | String  | The client leaf certificate in RFC 9440 format. Empty if no client certificate was presented.                                                                    |
+| `cf.tls_client_auth.cert_rfc9440_too_large`       | Boolean | `true` if the leaf certificate exceeded 16 KB and was omitted. In practice this will almost always be `false`.                                                   |
+| `cf.tls_client_auth.cert_chain_rfc9440`           | String  | The intermediate certificate chain in RFC 9440 format as a comma-separated list. Empty if no intermediate certificates were sent or if the chain exceeded 16 KB. |
+| `cf.tls_client_auth.cert_chain_rfc9440_too_large` | Boolean | `true` if the intermediate chain exceeded 16 KB and was omitted.                                                                                                 |
+
+The chain encoding follows the same ordering as the TLS handshake: the certificate closest to the leaf appears first, working up toward the trust anchor. The root certificate is not included.
+
+### Example: Forwarding client certificate headers to your origin server
+
+Add a request header transform rule to set the `Client-Cert` and `Client-Cert-Chain` headers on requests forwarded to your origin server. For example, to forward headers for verified, non-revoked certificates:
+
+**Rule expression:**
+
+```txt
+cf.tls_client_auth.cert_verified and not cf.tls_client_auth.cert_revoked
+```
+
+**Header modifications:**
+
+| Operation | Header name         | Value                                   |
+| --------- | ------------------- | --------------------------------------- |
+| Set       | `Client-Cert`       | `cf.tls_client_auth.cert_rfc9440`       |
+| Set       | `Client-Cert-Chain` | `cf.tls_client_auth.cert_chain_rfc9440` |
+
+To get the most out of these fields, upload your client CA certificate to Cloudflare so that Cloudflare validates the client certificate at the edge and populates `cf.tls_client_auth.cert_verified` and `cf.tls_client_auth.cert_revoked`.
+
+For more information, refer to [Mutual TLS authentication](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/), [Request Header Transform Rules](/rules/transform/request-header-modification/), and the [fields reference](/ruleset-engine/rules-language/fields/reference/).

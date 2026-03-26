@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: rtk-debugger-system
+description: API reference for rtk-debugger-system component (Web Components (HTML) Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | States object |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-debugger-system></rtk-debugger-system>
+```
+
+### With Properties
+
+```html
+<rtk-debugger-system
+ size="md">
+</rtk-debugger-system>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-debugger-system");
+
+  el.meeting= meeting
+</script>
+```

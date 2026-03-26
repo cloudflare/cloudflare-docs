@@ -36,7 +36,13 @@ const reader = readable.getReader({ mode: 'byob' });
 
 * <code>readAtLeast(minBytes, bufferArrayBufferView)</code> : Promise\<ReadableStreamBYOBReadResult>
 
-  * Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minBytes` have been read.
+  * Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minBytes` bytes have been read. However, fewer than `minBytes` bytes may be returned if the end of the stream is reached or the underlying stream is closed. Specifically:
+
+    * If `minBytes` or more bytes are available, the promise resolves with `{ value: <buffer view sized to bytes read>, done: false }`.
+    * If the stream ends after some bytes have been read but fewer than `minBytes`, the promise resolves with the partial data: `{ value: <buffer view sized to bytes actually read>, done: false }`. The next call to `read` or `readAtLeast` will then return `{ value: undefined, done: true }`.
+    * If the stream ends with zero bytes available (that is, the stream is already at EOF), the promise resolves with `{ value: <zero-length view>, done: true }`.
+    * If the stream errors, the promise rejects.
+    * `minBytes` must be at least 1, and must not exceed the byte length of `bufferArrayBufferView`, or the promise rejects with a `TypeError`.
 
 
 
@@ -51,7 +57,7 @@ const reader = readable.getReader({ mode: 'byob' });
 
 In practice, the Workers team has found that `read` typically fills only 1% of the provided buffer.
 
-`readAtLeast` is a non-standard extension to the Streams API which allows users to specify that at least `minBytes` bytes must be read into the buffer before resolving the read.
+`readAtLeast` is a non-standard extension to the Streams API which allows users to specify that at least `minBytes` bytes must be read into the buffer before resolving the read. If the stream ends before `minBytes` bytes are available, the partial data that was read is still returned rather than throwing an error — refer to the [`readAtLeast` method documentation above](#methods) for the full details.
 
 
 :::

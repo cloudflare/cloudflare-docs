@@ -1,0 +1,134 @@
+---
+import { Icon, Badge } from "@astrojs/starlight/components";
+import type { SidebarEntry } from "~/util/sidebar";
+
+interface Props {
+	sublist: SidebarEntry[];
+	nested?: boolean;
+}
+
+const { sublist, nested } = Astro.props;
+
+/** Flatten a sidebar tree into a flat list of link entries. */
+function flattenSidebar(entries: SidebarEntry[]): SidebarEntry[] {
+	return entries.flatMap((entry: SidebarEntry) =>
+		entry.type === "group" ? flattenSidebar(entry.entries) : entry,
+	);
+}
+
+/**
+ * SidebarRestorePoint counter — inlined from Starlight's internal component.
+ * Each <details> needs a unique, incrementing index for the sidebar persister.
+ */
+const currentGroupIndexSymbol = Symbol.for("starlight-sidebar-group-index");
+const locals = Astro.locals as typeof Astro.locals & {
+	[currentGroupIndexSymbol]: number;
+};
+
+function nextRestoreIndex(): number {
+	const index = locals[currentGroupIndexSymbol] || 0;
+	locals[currentGroupIndexSymbol] = index + 1;
+	return index;
+}
+
+// Pre-compute restore indices for each group entry in this sublist
+const restoreIndices = sublist.map((entry) =>
+	entry.type === "group" ? nextRestoreIndex() : -1,
+);
+---
+
+<ul
+	class:list={[
+		!nested
+			? "top-level list-none p-0"
+			: "mt-0.5 ml-3 list-none border-l border-[var(--sidebar-border)] p-0 pl-2",
+	]}
+>
+	{
+		sublist.map((entry, idx) => (
+			<li class="break-words">
+				{entry.type === "link" ? (
+					<a
+						href={entry.href}
+						aria-current={entry.isCurrent ? "page" : undefined}
+						class:list={[
+							"flex min-h-[2.125rem] items-start rounded-lg px-3 py-1.5 text-sm font-medium no-underline",
+							"outline-2 outline-offset-[-2px] outline-transparent focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400",
+							entry.isCurrent
+								? "!bg-[var(--sidebar-active-bg)] !font-semibold !text-[var(--sidebar-active-text)]"
+								: "transition-colors duration-150 text-[var(--sidebar-text)] hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)]",
+							!nested && "large",
+							entry.attrs.class,
+						]}
+						{...entry.attrs}
+					>
+						<span>{entry.label}</span>
+						{entry.badge && (
+							<Badge
+								variant={entry.badge.variant}
+								class={`ml-[0.5em] ${entry.badge.class ?? ""}`}
+								text={entry.badge.text}
+							/>
+						)}
+					</a>
+				) : (
+					<details
+						class="group/accordion"
+						open={
+							flattenSidebar(entry.entries).some(
+								(i) => i.type === "link" && i.isCurrent,
+							) || !entry.collapsed
+						}
+					>
+						<summary class:list={[
+							"group/expander flex min-h-[2.125rem] cursor-pointer items-center justify-between rounded-lg px-3 py-1.5 text-sm no-underline outline-2 outline-offset-[-2px] outline-transparent transition-colors duration-150 select-none focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400 [&::-webkit-details-marker]:hidden [&::marker]:hidden",
+							"hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)]",
+							entry.hasActivePage
+								? "font-semibold text-[var(--sidebar-text-strong)]"
+								: "font-medium text-[var(--sidebar-text)]",
+						]}>
+							<span class="group-label">
+								<span class:list={[!nested && "large"]}>{entry.label}</span>
+								{entry.badge && (
+									<Badge
+										variant={entry.badge.variant}
+										class={`ml-[0.5em] ${entry.badge.class ?? ""}`}
+										text={entry.badge.text}
+									/>
+								)}
+							</span>
+							<Icon
+								name="right-caret"
+								class="caret shrink-0 ml-auto -mr-px text-base text-[var(--sidebar-text)] opacity-50 group-hover/expander:text-[var(--sidebar-hover-text)] transition-transform duration-250"
+								size="1.25rem"
+							/>
+						</summary>
+						<sl-sidebar-restore data-index={restoreIndices[idx]} />
+						<div class="sidebar-accordion grid grid-rows-[0fr] group-open/accordion:grid-rows-[1fr]">
+							<div class="sidebar-accordion-inner overflow-hidden min-h-0">
+								<Astro.self sublist={entry.entries} nested />
+							</div>
+						</div>
+					</details>
+				)}
+			</li>
+		))
+	}
+</ul>
+
+<style is:global>
+	/* Caret rotation — must be global because .caret is on an SVG from a child component */
+	.sidebar-content [open] > summary .caret {
+		transform: rotate(90deg);
+	}
+	.sidebar-content [dir="rtl"] .caret {
+		transform: rotateZ(180deg);
+	}
+</style>
+
+<style>
+	/* Spacing between sibling items — top-level and nested */
+	ul > li + li {
+		margin-top: 1px;
+	}
+</style>

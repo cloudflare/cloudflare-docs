@@ -7,7 +7,7 @@ sidebar:
 
 import { Details } from "~/components";
 
-Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP.
+HTTP/3 uses the QUIC protocol over UDP instead of TCP. Because Gateway's default proxy only handles TCP traffic, HTTP/3 inspection requires turning on the UDP proxy. Without it, HTTP/3 traffic bypasses HTTP inspection. [Network policies](/cloudflare-one/traffic-policies/network-policies/) still apply to the underlying UDP traffic.
 
 Gateway applies HTTP policies to HTTP/3 traffic last. For more information, refer to the [order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/#http3-traffic).
 
@@ -26,7 +26,11 @@ To turn on the Gateway proxy for UDP and TLS decryption:
 
 Gateway can inspect HTTP/3 traffic from Mozilla Firefox and Microsoft Edge by establishing an HTTP/3 proxy connection. Gateway will then terminate the HTTP/3 connection, decrypt and inspect the traffic, and connect to the destination server over HTTP/2. Gateway can also inspect other HTTP applications, such as cURL.
 
-If both the UDP proxy and TLS decryption are turned on in Cloudflare One, Google Chrome will cancel all HTTP/3 connections and retry them with HTTP/2, allowing you to enforce your HTTP policies. If either the UDP proxy or TLS decryption is turned off, HTTP/3 traffic from Chrome will bypass inspection.
+If both the UDP proxy and TLS decryption are turned on, Google Chrome will automatically cancel HTTP/3 connections and retry them over HTTP/2, which Gateway can inspect. If either the UDP proxy or TLS decryption is turned off, HTTP/3 traffic from Chrome bypasses inspection entirely.
+
+:::caution
+If you do not turn on the UDP proxy, HTTP/3 traffic from browsers other than Chrome will bypass HTTP policy enforcement. Network policies still apply.
+:::
 
 ## Exempt HTTP/3 traffic from inspection
 

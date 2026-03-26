@@ -1,0 +1,27 @@
+---
+pcx_content_type: how-to
+title: Windows
+sidebar:
+  order: 31
+head:
+  - tag: title
+    content: Run as a service on Windows
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="tunnel/locally-managed/as-a-service/windows"
+	product="cloudflare-one"
+	params={{
+		configFileURL:
+			"/tunnel/other-tunnel-types/local-management/configuration-file/",
+		downloadsURL: "/tunnel/downloads/",
+		credentialsFileURL:
+			"/tunnel/other-tunnel-types/local-management/local-tunnel-terms/#credentials-file",
+		createConfigFileURL:
+			"/tunnel/other-tunnel-types/local-management/create-local-tunnel/#4-create-a-configuration-file",
+		routeTrafficURL:
+			"/tunnel/other-tunnel-types/local-management/create-local-tunnel/#5-start-routing-traffic",
+	}}
+/>

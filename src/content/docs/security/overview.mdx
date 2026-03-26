@@ -7,15 +7,59 @@ sidebar:
 
 import { DashButton } from "~/components";
 
-Security overview provides a high-level overview of your domain. It allows you to identify security action items and review the security posture of your domain.
+Security overview provides an overview of your domain's security posture and allows you to quickly identify security action items that may need your attention.
 
-To acess Security overview in the new security dashboard, go to the **Overview** page.
+To access Security overview in the new security dashboard, go to the **Overview** page.
 
 <DashButton url="/?to=/:account/:zone/security/overview" />
 
-The Security overview page displays the following information:
+The Security overview page displays:
 
-- **Traffic last 24 hours** (Free plan only): Allows you to review traffic from the last 24 hours that has been mitigated by Cloudflare.
-- **Traffic last 7 days** (paid plans): Allows you to review traffic from the last seven days that has been mitigated by Cloudflare.
-- **Security category**: Displays security suggestions categorized by the different types of threats that Cloudflare detects and mitigates.
-- **All suggestions**: Displays the full list of available suggestions to improve your security posture.
+- Security action items
+- Detection tools
+- Traffic overview
+
+## Security action items
+
+**Security action items** shows you insights and recommendations related to misconfigurations, exposed infrastructure, and suspicious activity. 
+  - **Action item types**:
+    - Suspicious activity
+    - Security insight
+- **Criticality**: Your action items are ranked by the highest criticality, showing critical first, moderate, and low respectively.
+- **Filters**: You can filter your action items by Criticality, Insight Type, and Security Category.
+  - Criticality:
+    - Low
+    - Moderate
+    - Critical
+  - Insight Types:
+    - Suspicious activity 
+    - Exposed infrastructure 
+    - Insecure configuration 
+    - Configuration suggestion
+    - Compliance Violation
+    - Email Security
+    - Weak Authentication
+  - Security Category: 
+    - Web application exploits
+    - AI exploits
+    - DDoS attacks 
+    - Bot traffic 
+    - API abuse 
+    - Client-side abuse 
+    - Fraud
+- **Review**: Review your security action items for more detailed information and recommended actions to resolve.
+- **Archiving**: You can archive security action items you do not wish to display in the main list.
+- **Load more**: View the full list of security action items.
+
+## Detection tools
+
+Review the available detection tools and what services are currently running to protect your domain against threats.
+
+## Traffic overview
+
+View the patterns and highlights from your domain's traffic in the past 30 days.
+
+The Cloudflare dashboard displays:
+
+- **Monthly requests**: View the monthly requests and traffic that has been mitigated by Cloudflare.
+- **How you compare to your peers**: For enterprise plans, understand how your security posture compares to others in your industry protected by Cloudflare.

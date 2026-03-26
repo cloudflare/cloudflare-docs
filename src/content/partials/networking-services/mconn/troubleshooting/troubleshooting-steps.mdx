@@ -5,13 +5,13 @@ params:
 
 import { DashButton, Markdown } from "~/components";
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks** > **Connectors**.
 		2. Go to **Appliances** > **Profiles**.
-		3. Select your Connector > **View analytics**.
+		3. Select your Appliance > **View analytics**.
 	`}
 	inline={false}
 	/>
@@ -27,7 +27,7 @@ import { DashButton, Markdown } from "~/components";
 		<DashButton url="/?to=/:account/magic-networks/connections" />
 		<Markdown
 	text={`
-		2. Go to the **Appliances** tab > **Appliances**, and select the Magic WAN Connector you want to check analytics for.
+		2. Go to the **Appliances** tab > **Appliances**, and select the Cloudflare One Appliance you want to check analytics for.
 		3. Select **View analytics**.
 	`}
 	inline={false}

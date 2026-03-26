@@ -1,0 +1,110 @@
+---
+title: "Agents SDK v0.4.0: Readonly connections, MCP security improvements, x402 v2 migration, and custom MCP OAuth providers"
+description: The latest release of the Agents SDK brings readonly connections, MCP protocol and security improvements, x402 payment protocol v2 migration, and the ability to customize OAuth for MCP server connections.
+products:
+  - agents
+  - workers
+date: 2026-02-09
+---
+
+import { TypeScriptExample } from "~/components";
+
+The latest release of the [Agents SDK](https://github.com/cloudflare/agents) brings readonly connections, MCP protocol and security improvements, x402 payment protocol v2 migration, and the ability to customize OAuth for MCP server connections.
+
+## Readonly connections
+
+Agents can now restrict WebSocket clients to read-only access, preventing them from modifying agent state. This is useful for dashboards, spectator views, or any scenario where clients should observe but not mutate.
+
+New hooks: `shouldConnectionBeReadonly`, `setConnectionReadonly`, `isConnectionReadonly`. Readonly connections block both client-side `setState()` and mutating `@callable()` methods, and the readonly flag survives hibernation.
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	shouldConnectionBeReadonly(connection) {
+		// Make spectators readonly
+		return connection.url.includes("spectator");
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Custom MCP OAuth providers
+
+The new `createMcpOAuthProvider` method on the `Agent` class allows subclasses to override the default OAuth provider used when connecting to MCP servers. This enables custom authentication strategies such as pre-registered client credentials or mTLS, beyond the built-in dynamic client registration.
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	createMcpOAuthProvider(callbackUrl: string): AgentMcpOAuthProvider {
+		return new MyCustomOAuthProvider(this.ctx.storage, this.name, callbackUrl);
+	}
+}
+```
+
+</TypeScriptExample>
+
+## MCP SDK upgrade to 1.26.0
+
+Upgraded the MCP SDK to 1.26.0 to prevent cross-client response leakage. Stateless MCP Servers should now create a new `McpServer` instance per request instead of sharing a single instance. A guard is added in this version of the MCP SDK which will prevent connection to a Server instance that has already been connected to a transport. Developers will need to modify their code if they declare their `McpServer` instance as a global variable.
+
+## MCP OAuth callback URL security fix
+
+Added `callbackPath` option to `addMcpServer` to prevent instance name leakage in MCP OAuth callback URLs. When `sendIdentityOnConnect` is `false`, `callbackPath` is now required — the default callback URL would expose the instance name, undermining the security intent. Also fixes callback request detection to match via the `state` parameter instead of a loose `/callback` URL substring check, enabling custom callback paths.
+
+## Deprecate `onStateUpdate` in favor of `onStateChanged`
+
+`onStateChanged` is a drop-in rename of `onStateUpdate` (same signature, same behavior). `onStateUpdate` still works but emits a one-time console warning per class. `validateStateChange` rejections now propagate a `CF_AGENT_STATE_ERROR` message back to the client.
+
+## x402 v2 migration
+
+Migrated the x402 MCP payment integration from the legacy `x402` package to `@x402/core` and `@x402/evm` v2.
+
+**Breaking changes for x402 users:**
+
+- Peer dependencies changed: replace `x402` with `@x402/core` and `@x402/evm`
+- `PaymentRequirements` type now uses v2 fields (e.g. `amount` instead of `maxAmountRequired`)
+- `X402ClientConfig.account` type changed from `viem.Account` to `ClientEvmSigner` (structurally compatible with `privateKeyToAccount()`)
+
+```bash
+npm uninstall x402
+npm install @x402/core @x402/evm
+```
+
+Network identifiers now accept both legacy names and CAIP-2 format:
+
+```ts
+// Legacy name (auto-converted)
+{
+	network: "base-sepolia",
+}
+
+// CAIP-2 format (preferred)
+{
+	network: "eip155:84532",
+}
+```
+
+**Other x402 changes:**
+
+- `X402ClientConfig.network` is now optional — the client auto-selects from available payment requirements
+- Server-side lazy initialization: facilitator connection is deferred until the first paid tool invocation
+- Payment tokens support both v2 (`PAYMENT-SIGNATURE`) and v1 (`X-PAYMENT`) HTTP headers
+- Added `normalizeNetwork` export for converting legacy network names to CAIP-2 format
+- Re-exports `PaymentRequirements`, `PaymentRequired`, `Network`, `FacilitatorConfig`, and `ClientEvmSigner` from `agents/x402`
+
+## Other improvements
+
+- Fix `useAgent` and `AgentClient` crashing when using `basePath` routing
+- CORS handling delegated to partyserver's native support (simpler, more reliable)
+- Client-side `onStateUpdateError` callback for handling rejected state updates
+
+### Upgrade
+
+To update to the latest version:
+
+```sh
+npm i agents@latest
+```

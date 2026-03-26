@@ -182,6 +182,8 @@ export interface Env {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
+		// Create a new client on each request. Hyperdrive maintains the underlying
+		// database connection pool, so creating a new client is fast.
 		const client = new Client({
 			connectionString: env.HYPERDRIVE.connectionString,
 		});

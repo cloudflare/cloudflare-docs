@@ -11,7 +11,7 @@ Below is a quick guide on how to set your Google Cloud Account:
    - Sign up for a [GCP account](https://cloud.google.com/vertex-ai). New users may be eligible for credits (valid for 90 days).
 
 2. Enable the Vertex AI API
-   - Navigate to [Enable Vertex AI API](https://console.cloud.google.com/marketplace/product/google/aiplatform.googleapis.com) and activate the API for your project.
+   - Go to [Enable Vertex AI API](https://console.cloud.google.com/marketplace/product/google/aiplatform.googleapis.com) and activate the API for your project.
 
 3. Apply for access to desired models.
 
@@ -23,14 +23,14 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai
 
 ## Prerequisites
 
-When making requests to Google Vertex, you will need:
+When making requests to Google Vertex AI, you will need:
 
 - AI Gateway account tag
 - AI Gateway gateway name
-- Google Vertex API key
-- Google Vertex Project Name
-- Google Vertex Region (for example, us-east4)
-- Google Vertex model
+- Google Vertex AI credentials (service account JSON or access token)
+- Google Vertex AI Project Name
+- Google Vertex AI Region (for example, `us-central1`)
+- Google Vertex AI model
 
 ## URL structure
 
@@ -40,43 +40,87 @@ Then you can append the endpoint you want to hit, for example: `/publishers/goog
 
 So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-2.5-flash:generateContent`
 
+:::note[Use a specific region]
+Use a specific regional endpoint like `us-central1` or `us-east4` rather than `global`. The `global` endpoint has limited model support and may not work with all Vertex AI operations.
+:::
+
 ## Authenticating with Vertex AI
 
-Authenticating with Vertex AI normally requires generating short-term credentials using the [Google Cloud SDKs](https://cloud.google.com/vertex-ai/docs/authentication) with a complicated setup, but AI Gateway simplifies this for you with multiple options:
+Authenticating with Vertex AI normally requires generating short-term credentials using the [Google Cloud SDKs](https://cloud.google.com/vertex-ai/docs/authentication) with a complicated setup, but AI Gateway simplifies this for you with multiple options.
 
-### Option 1: Service Account JSON
+### Authentication methods comparison
 
-AI Gateway supports passing a Google service account JSON directly in the `Authorization` header on requests or through AI Gateway's [Bring Your Own Keys](/ai-gateway/configuration/bring-your-own-keys/) feature.
+| Method                             | `cf-aig-authorization` header | `Authorization` header                | Region handling              |
+| ---------------------------------- | ----------------------------- | ------------------------------------- | ---------------------------- |
+| **BYOK (Recommended)**             | `Bearer {CF_AIG_TOKEN}`       | Not needed                            | Select in dashboard dropdown |
+| **Service account JSON in header** | `Bearer {CF_AIG_TOKEN}`       | Base64-encoded JSON with `region` key | Include `region` key in JSON |
+| **Direct access token**            | `Bearer {CF_AIG_TOKEN}`       | `Bearer {gcloud_access_token}`        | Included in URL path         |
 
-You can [create a service account key](https://cloud.google.com/iam/docs/keys-create-delete) in the Google Cloud Console. Ensure that the service account has the required permissions for the Vertex AI endpoints and models you plan to use.
+:::caution[Do not confuse the headers]
+`cf-aig-authorization` authenticates your request to AI Gateway. `Authorization` passes credentials to the upstream provider (Google). When using BYOK, you only need `cf-aig-authorization` because AI Gateway injects the stored Google credentials for you.
+:::
+
+### Option 1: BYOK (Recommended)
+
+The recommended approach is to store your Google service account credentials using AI Gateway's [Bring Your Own Keys (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) feature. This keeps your credentials secure and out of your application code.
+
+1. [Create a service account key](https://cloud.google.com/iam/docs/keys-create-delete) in the Google Cloud Console. Ensure that the service account has the required permissions for the Vertex AI endpoints and models you plan to use.
+2. In the Cloudflare dashboard, go to **AI** > **AI Gateway** > your gateway > **Provider Keys**.
+3. Select **Add API Key** and choose **Google Vertex AI** as the provider.
+4. Paste your service account JSON and select your region from the dropdown. AI Gateway automatically applies this selected region to your stored credentials, so you do not need to manually add a `region` field to the JSON.
+5. Select **Save**.
+
+With BYOK configured, you only need to include the `cf-aig-authorization` header in your requests. AI Gateway handles the Vertex AI authentication automatically.
+
+```bash
+curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-2.5-flash:generateContent" \
+    -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tell me more about Cloudflare"
+              }
+            ]
+          }
+        ]
+      }'
+```
+
+### Option 2: Service Account JSON in Header
+
+You can pass a Google service account JSON directly in the `Authorization` header on each request with a base64-encoded version of the JSON. This option is useful for testing or when you cannot use BYOK.
+
+[Create a service account key](https://cloud.google.com/iam/docs/keys-create-delete) in the Google Cloud Console. Ensure that the service account has the required permissions for the Vertex AI endpoints and models you plan to use.
 
 AI Gateway uses your service account JSON to generate short-term access tokens which are cached and used for consecutive requests, and are automatically refreshed when they expire.
 
 :::note
-The service account JSON must include an additional key called `region` with the GCP region code (for example, `us-east1`) you intend to use for your [Vertex AI endpoint](https://cloud.google.com/vertex-ai/docs/reference/rest#service-endpoint). You can also pass the region code `global` to use the global endpoint.
+When passing the service account JSON directly in the header (not using BYOK), you must include an additional key called `region` in the JSON with the GCP region code (for example, `us-central1`) you intend to use for your [Vertex AI endpoint](https://cloud.google.com/vertex-ai/docs/reference/rest#service-endpoint).
 :::
 
 #### Example service account JSON structure
 
 ```json
 {
-  "type": "service_account",
-  "project_id": "your-project-id",
-  "private_key_id": "your-private-key-id",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n",
-  "client_email": "your-service-account@your-project.iam.gserviceaccount.com",
-  "client_id": "your-client-id",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/your-service-account%40your-project.iam.gserviceaccount.com",
-  "region": "us-east1"
+	"type": "service_account",
+	"project_id": "your-project-id",
+	"private_key_id": "your-private-key-id",
+	"private_key": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n",
+	"client_email": "your-service-account@your-project.iam.gserviceaccount.com",
+	"client_id": "your-client-id",
+	"auth_uri": "https://accounts.google.com/o/oauth2/auth",
+	"token_uri": "https://oauth2.googleapis.com/token",
+	"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+	"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/your-service-account%40your-project.iam.gserviceaccount.com",
+	"region": "us-central1"
 }
 ```
 
-You can pass this JSON in the `Authorization` header or configure it in [Bring Your Own Keys](/ai-gateway/configuration/bring-your-own-keys/).
-
-### Option 2: Direct Access Token
+### Option 3: Direct Access Token
 
 If you are already using the Google Cloud SDKs and generating a short-term access token (for example, with `gcloud auth print-access-token`), you can directly pass this as a Bearer token in the `Authorization` header of the request.
 
@@ -86,17 +130,20 @@ This option is only supported for the provider-specific endpoint, not for the un
 
 ```bash
 curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-2.5-flash:generateContent" \
+    -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
     -H "Authorization: Bearer ya29.c.b0Aaekm1K..." \
     -H 'Content-Type: application/json' \
     -d '{
-        "contents": {
-          "role": "user",
-          "parts": [
-            {
-              "text": "Tell me more about Cloudflare"
-            }
-          ]
-        }
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tell me more about Cloudflare"
+              }
+            ]
+          }
+        ]
       }'
 ```
 
@@ -110,24 +157,57 @@ AI Gateway provides a [Unified API](/ai-gateway/usage/chat-completion/) that wor
 https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions
 ```
 
+### Example with BYOK
+
+With BYOK configured, you only need to include the `cf-aig-authorization` header:
+
+```bash
+curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions" \
+    -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "model": "google-vertex-ai/google/gemini-2.5-pro",
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is Cloudflare?"
+          }
+        ]
+      }'
+```
+
 ### Example with OpenAI SDK
 
+If not using BYOK, pass the base64-encoded service account JSON (with `region` key included) as the API key:
+
 ```javascript
-import OpenAI from 'openai';
+import OpenAI from "openai";
+
+// Service account JSON must include "region" key when not using BYOK
+const serviceAccountJson = JSON.stringify({
+	type: "service_account",
+	project_id: "your-project-id",
+	// ... other fields from your downloaded JSON
+	region: "us-central1", // Required: add this to your service account JSON
+});
 
 const client = new OpenAI({
-  apiKey: '{service_account_json}',
-  baseURL: 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat'
+	apiKey: Buffer.from(serviceAccountJson).toString("base64"),
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
+	defaultHeaders: {
+		"cf-aig-authorization": `Bearer {cf_aig_token}`,
+	},
 });
 
 const response = await client.chat.completions.create({
-  model: 'google-vertex-ai/google/gemini-2.5-pro',
-  messages: [
-    {
-      role: 'user',
-      content: 'What is Cloudflare?'
-    }
-  ]
+	model: "google-vertex-ai/google/gemini-2.5-pro",
+	messages: [
+		{
+			role: "user",
+			content: "What is Cloudflare?",
+		},
+	],
 });
 
 console.log(response.choices[0].message.content);
@@ -136,8 +216,12 @@ console.log(response.choices[0].message.content);
 ### Example with cURL
 
 ```bash
+# First, base64-encode your service account JSON (must include "region" key)
+SERVICE_ACCOUNT_BASE64=$(base64 < service-account.json | tr -d '\n')
+
 curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions" \
-    -H "Authorization: Bearer {service_account_json}" \
+    -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+    -H "Authorization: Bearer $SERVICE_ACCOUNT_BASE64" \
     -H 'Content-Type: application/json' \
     -d '{
         "model": "google-vertex-ai/google/gemini-2.5-pro",
@@ -151,28 +235,75 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat
 ```
 
 :::note
-See the [Authenticating with Vertex AI](#authenticating-with-vertex-ai) section below for details on the service account JSON structure and authentication options.
+When not using BYOK, the service account JSON must include the `region` key and be base64-encoded. Refer to [Option 2: Service Account JSON in Header](#option-2-service-account-json-in-header) for the required JSON structure.
 :::
 
 ## Using Provider-Specific Endpoint
 
 You can also use the provider-specific endpoint to access the full Vertex AI API.
 
-### cURL
+### cURL with BYOK
 
-```bash title="Example fetch request"
+With BYOK configured, you only need the `cf-aig-authorization` header:
+
+```bash
 curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-2.5-flash:generateContent" \
-    -H "Authorization: Bearer {vertex_api_key}" \
+    -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
     -H 'Content-Type: application/json' \
     -d '{
-        "contents": {
-          "role": "user",
-          "parts": [
-            {
-              "text": "Tell me more about Cloudflare"
-            }
-          ]
-        }'
-
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tell me more about Cloudflare"
+              }
+            ]
+          }
+        ]
+      }'
 ```
 
+### cURL with Service Account JSON
+
+If not using BYOK, pass the base64-encoded service account JSON (with `region` key included) in the Authorization header:
+
+```bash
+# First, base64-encode your service account JSON (must include "region" key) as a single line
+SERVICE_ACCOUNT_BASE64=$(base64 < service-account.json | tr -d '\n')
+
+curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-2.5-flash:generateContent" \
+    -H 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+    -H "Authorization: Bearer $SERVICE_ACCOUNT_BASE64" \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tell me more about Cloudflare"
+              }
+            ]
+          }
+        ]
+      }'
+```
+
+## Troubleshooting
+
+For general AI Gateway troubleshooting, refer to [Troubleshooting](/ai-gateway/reference/troubleshooting/).
+
+### 401 Unauthenticated errors
+
+If you receive a `CREDENTIALS_MISSING` or `UNAUTHENTICATED` error from Google, check the following Vertex AI-specific issues:
+
+1. **Check your region**: Use a specific regional endpoint (like `us-central1`) in your URL, not `global`. The `global` endpoint has limited model support.
+
+2. **Verify BYOK configuration**: If using BYOK, confirm in the dashboard that:
+   - Your service account JSON was saved correctly
+   - A region was selected from the dropdown
+
+3. **Check service account permissions**: Ensure your service account has the `Vertex AI User` role or equivalent permissions in Google Cloud.
+
+4. **Verify the region key** (non-BYOK only): If passing service account JSON directly in the `Authorization` header, make sure the JSON includes the `region` key.

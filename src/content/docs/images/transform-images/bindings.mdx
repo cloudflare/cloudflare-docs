@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, TypeScriptExample } from "~/components";
 
 A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Images](/images/transform-images/transform-via-workers/), [R2 buckets](/r2/buckets/), or [KV Namespaces](/kv/concepts/kv-namespaces/).
 
@@ -18,6 +18,12 @@ For example, when you allow Workers to interact with Images, you can:
 - Resize an image, overlay the output over a second image as a watermark, then resize this output into a final result.
 
 Bindings can be configured in the Cloudflare dashboard for your Worker or in the Wrangler configuration file in your project's directory.
+
+:::note[Billing]
+
+Every call to the Images binding counts as one unique transformation. Refer to [Images pricing](/images/pricing/) for more information about transformation billing.
+
+:::
 
 ## Setup
 
@@ -55,53 +61,69 @@ Within your Worker code, you can interact with this binding by using `env.IMAGES
 
 For example, to draw a resized watermark on an image:
 
+<TypeScriptExample>
+
 ```ts
 // Fetch the watermark from Workers Assets, R2, KV etc
-const watermark: ReadableStream = ...
+const watermark: ReadableStream = getWatermarkStream();
 
 // Fetch the main image
-const image: ReadableStream = ...
+const image: ReadableStream = getImageStream();
 
 const response = (
-  await env.IMAGES.input(image)
-    .draw(
-        env.IMAGES.input(watermark)
-          .transform({ width: 32, height: 32}),
-        { bottom: 32, right: 32 }
-    )
-    .output({ format: "image/avif" })
-).response()
-
-return response;
-```
-
-### `.output()`
-
-- Defines the [output format](/images/transform-images/) for the transformed image such as AVIF, WebP, and JPEG.
-- Image [quality](/images/transform-images/transform-via-url/#quality) can be altered by specifying `quality` on a 1-100 scale.
-
-For example, to rotate, resize, and blur an image, then output the image as AVIF:
-
-```ts
-const info = await env.IMAGES.info(stream);
-// stream contains a valid image, and width/height is available on the info object
-
-const response = (
-	await env.IMAGES.input(stream)
-		.transform({ rotate: 90 })
-		.transform({ width: 128 })
-		.transform({ blur: 20 })
+	await env.IMAGES.input(image)
+		.draw(env.IMAGES.input(watermark).transform({ width: 32, height: 32 }), {
+			bottom: 32,
+			right: 32,
+		})
 		.output({ format: "image/avif" })
 ).response();
 
 return response;
 ```
 
+</TypeScriptExample>
+
+### `.output()`
+
+- You must define [a supported format](/images/transform-images/#supported-output-formats) such as AVIF, WebP, or JPEG for the [transformed image](/images/transform-images/).
+- This is required since there is no default format to fallback to.
+- [Image quality](/images/transform-images/transform-via-url/#quality) can be altered by specifying `quality` on a 1-100 scale.
+- [Animation preservation](/images/transform-images/transform-via-url/#anim) can be controlled with the `anim` parameter. Set `anim: false` to reduce animations to still images.
+
+For example, to rotate, resize, and blur an image, then output the image as AVIF:
+
+<TypeScriptExample>
+
+```ts
+const info = await env.IMAGES.info(stream);
+// Stream contains a valid image, and width/height is available on the info object
+
+// You can determine the format based on the use case
+const outputFormat = "image/avif";
+
+const response = (
+	await env.IMAGES.input(stream)
+		.transform({ rotate: 90 })
+		.transform({ width: 128 })
+		.transform({ blur: 20 })
+		.output({ format: outputFormat })
+).response();
+
+return response;
+```
+
+</TypeScriptExample>
+
 ### `.info()`
 
 - Outputs information about the image, such as `format`, `fileSize`, `width`, and `height`.
 
-Responses from the Images binding are not automatically cached. Workers lets you interact directly with the Cache API to customize cache behavior using Workers. You can implement logic in your script to store transformations in Cloudflare’s cache.
+:::note
+
+Responses from the Images binding are not automatically cached. Workers lets you interact directly with the [Cache API](/workers/runtime-apis/cache/) to customize cache behavior. You can implement logic in your script to store transformations in Cloudflare's cache.
+
+:::
 
 ## Interact with your Images binding locally
 

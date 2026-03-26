@@ -133,6 +133,60 @@ await sandbox.exec('python /workspace/analyze.py data.csv');
 ```
 </TypeScriptExample>
 
+## Timeouts
+
+Set a maximum execution time for commands to prevent long-running operations from blocking indefinitely.
+
+### Per-command timeout
+
+Pass `timeout` in the options to set a timeout for a single command:
+
+<TypeScriptExample>
+```
+const result = await sandbox.exec('npm run build', {
+  timeout: 30000 // 30 seconds
+});
+```
+</TypeScriptExample>
+
+### Session-level timeout
+
+Set a default timeout for all commands in a session with `commandTimeoutMs`:
+
+<TypeScriptExample>
+```
+const session = await sandbox.createSession({
+  commandTimeoutMs: 10000 // 10s default for all commands
+});
+
+await session.exec('npm install');    // Times out after 10s
+await session.exec('npm run build');  // Times out after 10s
+
+// Per-command timeout overrides the session default
+await session.exec('npm test', { timeout: 60000 }); // 60s for this command
+```
+</TypeScriptExample>
+
+### Global timeout
+
+Set the `COMMAND_TIMEOUT_MS` [environment variable](/sandbox/configuration/environment-variables/#command_timeout_ms) to define a global default timeout for every `exec()` call across all sessions.
+
+### Timeout precedence
+
+When multiple timeouts are configured, the most specific value wins:
+
+1. **Per-command** `timeout` on `exec()` (highest priority)
+2. **Session-level** `commandTimeoutMs` on `createSession()`
+3. **Global** `COMMAND_TIMEOUT_MS` environment variable (lowest priority)
+
+If none are set, commands run without a timeout.
+
+### Timeout does not kill the process
+
+:::caution
+When a command times out, the SDK raises an error and closes the connection. The underlying process **continues running** inside the container. To stop a timed-out process, delete the session with [`deleteSession()`](/sandbox/api/sessions/#deletesession) or destroy the sandbox with [`destroy()`](/sandbox/api/lifecycle/#destroy).
+:::
+
 ## Best practices
 
 - **Check exit codes** - Always verify `result.success` and `result.exitCode`

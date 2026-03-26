@@ -1,0 +1,12 @@
+id: E9QHNA
+name: DMARC Management
+
+entry:
+  title: DMARC Management
+  url: /dmarc-management/
+  group: Application security
+
+meta:
+  title: Cloudflare DMARC Management docs
+  description: Protect your email domain and stop brand impersonation
+  author: "@cloudflare"

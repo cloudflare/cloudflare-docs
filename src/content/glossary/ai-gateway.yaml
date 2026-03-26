@@ -57,6 +57,10 @@ entries:
     general_definition: |-
       Header to customize the backoff type for [request retries](/ai-gateway/configuration/request-handling/#request-retries) of a request.
 
+  - term: cf-aig-dlp
+    general_definition: |-
+      A response header returned when a [DLP policy](/ai-gateway/features/dlp/set-up-dlp/#dlp-response-header) matches a request or response. Contains JSON with the action taken (Flag or Block), matched policy IDs, matched profile IDs, and detection entry IDs.
+
   # Deprecated headers
   - term: cf-cache-ttl
     general_definition: |-

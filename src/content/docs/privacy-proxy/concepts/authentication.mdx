@@ -9,12 +9,13 @@ Privacy Proxy requires clients to authenticate before proxying traffic. This pag
 
 ## Authentication methods
 
-Privacy Proxy supports two authentication methods:
+Privacy Proxy supports three authentication methods:
 
 | Method | Use case | Privacy level |
 | -------- | ---------- | --------------- |
 | Pre-shared key (PSK) | Proof of concept, testing | Lower |
-| Privacy Pass tokens | Production deployments | Higher |
+| Privacy Pass tokens | Client to server | High |
+| mTLS | Server to server | Higher |
 
 ---
 
@@ -131,6 +132,22 @@ For production deployments using Privacy Pass:
 3. Distribute issuer configuration. Clients need the issuer's public key and endpoint to request tokens.
 
 [Contact us](https://www.cloudflare.com/lp/privacy-edge/) to configure Privacy Pass for your deployment.
+
+---
+
+## Mutual TLS (mTLS)
+
+[Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) ensures that traffic is both secure and trusted in both directions. The client presents a certificate to the proxy, and the proxy validates it before allowing the connection.
+
+### How it works
+
+The client includes a TLS client certificate during the TLS handshake. The proxy validates the certificate against a configured certificate authority (CA) and allows the connection if the certificate is trusted.
+
+### Limitations
+
+You must provision and manage certificates for each client or service. mTLS is designed for server-to-server communication, not for authenticating individual users. The proxy can identify the client by its certificate, which reduces privacy compared to Privacy Pass.
+
+Use mTLS for server-to-server integrations where both parties are trusted services.
 
 ---
 

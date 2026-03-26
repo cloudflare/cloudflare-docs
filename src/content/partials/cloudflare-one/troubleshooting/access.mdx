@@ -1,0 +1,55 @@
+Review common troubleshooting scenarios for Cloudflare Access.
+
+## Authentication and login
+
+### AJAX/CORS errors
+Cloudflare Access requires that the `credentials: same-origin` parameter be added to JavaScript when using the Fetch API to include cookies. AJAX requests fail if this parameter is missing, resulting in an error such as `No Access-Control-Allow-Origin header is present on the requested resource`. For more information, refer to [CORS settings](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/).
+
+### SAML verification failure
+The error `SAML Verify: Invalid SAML response, SAML Verify: No certificate selected to verify` occurs when the identity provider (IdP) does not include the signing public key in the SAML response. Cloudflare Access requires the public key to match the **Signing certificate** uploaded to Zero Trust. Configure your IdP to include the public key in the response.
+
+### Identity provider user/group info error
+The error `Failed to fetch user/group information from the identity provider` occurs when Cloudflare lacks the necessary API permissions to communicate with your IdP. Review the [SSO integration guide](/cloudflare-one/integrations/identity-providers/) for your specific IdP and ensure the application has the correct permissions (for example, Microsoft Entra or Okta).
+
+### Google Workspace redirect loop
+If you place your Google Workspace behind Access, you cannot use Google or Google Workspace as an identity provider for that application. This creates an infinite redirect cycle because both systems depend on each other to complete the login.
+
+### Invalid session error
+The error `Invalid session. Please try logging in again` indicates that Access was unable to validate your `CF_Session` cookie. This can happen if software or a firewall on your device interferes with requests to Access. Ensure that the same browser instance is used to both initiate and complete the sign-in.
+
+### Firefox Private Window
+Firefox's default tracking prevention in Private Windows may prevent the `CF_authorization` cookie from being sent, especially for XHR requests. To resolve this, you may need to exempt your application domain and your [team domain](/cloudflare-one/glossary/#team-name) from tracking protection.
+
+### Workers routes on the login path
+If you have a Cloudflare Worker route assigned to your application's login path, the Worker may overwrite the `cf-authorization` cookie. To prevent this, ensure your Worker script does not modify or strip the `Set-Cookie` header for Access cookies.
+
+## Identity providers
+
+### OTP email not received
+If a user does not receive a one-time PIN (OTP) email:
+- **Policy denial**: If the user's email address does not match any **Allow** policies for the application, Cloudflare will not send an OTP email. The login page will still display a message saying the email was sent to prevent account enumeration.
+- **Email suppression**: The user's email may be on a suppression list due to previous delivery failures. Check your email logs or contact Support to clear suppressions.
+
+### Google Super Admin login
+If you use Access as the SSO provider for your Google Workspace, Google Super Admins cannot sign in via Access when accessing `admin.google.com`. Google requires Super Admins to use their original Google password to ensure they can always access the admin console.
+
+### Missing SAML attributes
+If you receive a `Required attributes are missing` error during SAML authentication, verify that your IdP is sending the mandatory **email** attribute. Additionally, check for typos in attribute names (for example, `groups` vs `gropus`) in your [IdP configuration](/cloudflare-one/integrations/identity-providers/).
+
+## Applications and certificates
+
+### SSH short-lived certificates
+The error `Error 0: Bad Request. Please create a ca for application` appears if a certificate has not been generated for the Access application. Refer to [SSH short-lived certificates](/cloudflare-one/access-controls/applications/non-http/short-lived-certificates-legacy/) to generate a CA for the application.
+
+### SSH "Origin auth failed"
+This error often indicates a configuration issue on the target server's SSH daemon (`sshd`):
+- **SSHD config**: Verify that `PubkeyAuthentication` is set to `yes` and `TrustedUserCAKeys` points to the correct Cloudflare CA file.
+- **Multiple auth methods**: Cloudflare Access for Infrastructure currently does not support `AuthenticationMethods` with multiple comma-separated requirements (for example, `publickey,keyboard-interactive`).
+
+### Team domain change error
+The error `Access api error auth_domain_cannot_be_updated_dash_sso` occurs if you try to change your team domain while [Cloudflare dashboard SSO](/fundamentals/manage-members/dashboard-sso/) is enabled. Dashboard SSO does not currently support team domain changes.
+
+### Long-lived SSH sessions disconnect
+All connections proxied through Cloudflare Gateway, including traffic to [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) SSH targets, have a maximum guaranteed duration of 10 hours. If a connection is active during a Gateway release, it will be terminated 10 hours later.
+
+To prevent unexpected disconnects, we recommend terminating sessions on a predefined schedule (for example, an 8-hour idle timeout). You can configure this using `ChannelTimeout` in your SSH server or client configuration.

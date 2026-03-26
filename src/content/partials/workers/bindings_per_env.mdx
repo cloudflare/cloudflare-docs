@@ -4,9 +4,9 @@
 
 ## Local development
 
-**Local simulations**: During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
+**Local simulations**: During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/general/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
-**Remote binding connections:**: Allows you to connect to remote resources on a [per-binding basis](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
+**Remote binding connections:**: Allows you to connect to remote resources on a [per-binding basis](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/general/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 | Binding                                 | Local simulations | Remote binding connections |
 | --------------------------------------- | :---------------: | :------------------------: |
@@ -15,12 +15,13 @@
 | **Analytics Engine**                    |        ✅         |             ❌             |
 | **Browser Rendering**                   |        ✅         |             ✅             |
 | **D1**                                  |        ✅         |             ✅             |
-| **Durable Objects**                     |        ✅         |             ❌ [^1]            |
+| **Durable Objects**                     |        ✅         |          ❌ [^1]           |
 | **Containers**                          |        ✅         |             ❌             |
 | **Email Bindings**                      |        ✅         |             ✅             |
 | **Hyperdrive**                          |        ✅         |             ❌             |
 | **Images**                              |        ✅         |             ✅             |
 | **KV**                                  |        ✅         |             ✅             |
+| **Media Transformations**               |        ❌         |             ✅             |
 | **mTLS**                                |        ❌         |             ✅             |
 | **Queues**                              |        ✅         |             ✅             |
 | **R2**                                  |        ✅         |             ✅             |
@@ -35,7 +36,7 @@
 
 During remote development, all of your Worker code is uploaded and executed on Cloudflare's infrastructure, and bindings always connect to remote resources. **We recommend using local development with remote binding connections instead** for faster iteration and debugging.
 
-Supported only in [`wrangler dev --remote`](/workers/wrangler/commands/#dev) - there is **no Vite plugin equivalent**.
+Supported only in [`wrangler dev --remote`](/workers/wrangler/commands/general/#dev) - there is **no Vite plugin equivalent**.
 
 | Binding                                 | Remote development |
 | --------------------------------------- | :----------------: |
@@ -50,6 +51,7 @@ Supported only in [`wrangler dev --remote`](/workers/wrangler/commands/#dev) - t
 | **Hyperdrive**                          |         ✅         |
 | **Images**                              |         ✅         |
 | **KV**                                  |         ✅         |
+| **Media Transformations**               |         ✅         |
 | **mTLS**                                |         ✅         |
 | **Queues**                              |         ❌         |
 | **R2**                                  |         ✅         |

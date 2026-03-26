@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: rtk-ai
+description: API reference for rtk-ai component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `view` | `AIView` | ✅ | - | View type |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-ai></rtk-ai>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-ai
+ [meeting]="meeting"
+ size="md"
+ [view]="aiview">
+</rtk-ai>
+```
+

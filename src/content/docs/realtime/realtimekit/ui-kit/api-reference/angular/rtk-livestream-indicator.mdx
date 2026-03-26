@@ -1,0 +1,33 @@
+---
+pcx_content_type: navigation
+title: rtk-livestream-indicator
+description: API reference for rtk-livestream-indicator component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-livestream-indicator></rtk-livestream-indicator>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-livestream-indicator
+ [meeting]="meeting"
+ size="md">
+</rtk-livestream-indicator>
+```
+

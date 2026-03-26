@@ -38,7 +38,7 @@ When developing Workers, it's important to understand two distinct concepts:
 
 **You can start a local development server using:**
 
-1. The Cloudflare Workers CLI [**Wrangler**](/workers/wrangler/), using the built-in [`wrangler dev`](/workers/wrangler/commands/#dev) command.
+1. The Cloudflare Workers CLI [**Wrangler**](/workers/wrangler/), using the built-in [`wrangler dev`](/workers/wrangler/commands/general/#dev) command.
 
 <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
@@ -303,6 +303,8 @@ There are two recommended patterns for this:
 
 - **Network latency**: Expect network latency for operations on these remotely connected bindings, as they involve communication over the internet.
 
+- **CI and non-interactive environments**: If your worker uses [Cloudflare Access](/cloudflare-one/), Wrangler must authenticate with Access when connecting to remote bindings. In non-interactive environments such as CI/CD pipelines, set the `CLOUDFLARE_ACCESS_CLIENT_ID` and `CLOUDFLARE_ACCESS_CLIENT_SECRET` [system environment variables](/workers/wrangler/system-environment-variables/) to authenticate using an [Access Service Token](/cloudflare-one/access-controls/service-credentials/service-tokens/). Without these variables, Wrangler throws an error instead of launching the interactive `cloudflared access login` flow.
+
 ### API
 
 Wrangler provides programmatic utilities to help tooling authors support remote binding connections when running Workers code with [Miniflare](/workers/testing/miniflare/).
@@ -413,7 +415,7 @@ async function startOrUpdateDevSession() {
 
 ## `wrangler dev --remote` (Legacy)
 
-Separate from Miniflare-powered local development, Wrangler also offers a fully remote development mode via [`wrangler dev --remote`](/workers/wrangler/commands/#dev). Remote development is [**not** supported in the Vite plugin](/workers/development-testing/wrangler-vs-vite/).
+Separate from Miniflare-powered local development, Wrangler also offers a fully remote development mode via [`wrangler dev --remote`](/workers/wrangler/commands/general/#dev). Remote development is [**not** supported in the Vite plugin](/workers/development-testing/wrangler-vs-vite/).
 
 <PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
 
@@ -432,4 +434,4 @@ When using remote development, all bindings automatically connect to their remot
 
 ### Limitations
 
-- When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in[ Workers platform limits](/workers/platform/limits/#number-of-routes-per-zone-when-using-wrangler-dev---remote).
+- When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in[ Workers platform limits](/workers/platform/limits/#routes-and-domains-when-using-wrangler-dev---remote).

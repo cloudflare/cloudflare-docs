@@ -36,10 +36,13 @@ The **Overview** tab provides a snapshot of AI crawler activity:
 
 The **Crawlers** tab provides detailed information about individual AI crawlers and allows you to set **Block** or **Allow** controls:
 
-| Metric                  | Description                                                             |
-| ----------------------- | ----------------------------------------------------------------------- |
-| **Total requests**      | Total number of requests to crawl your website from common AI crawlers. |
-| **Requests by crawler** | Number of requests made by each AI crawler.                             |
+| Column            | Description                                                                      |
+| ----------------- | -------------------------------------------------------------------------------- |
+| **Crawler**       | The name of the AI crawler.                                                      |
+| **Operator**      | The company that operates the crawler.                                           |
+| **Data transfer** | Total bandwidth consumed by this crawler's requests. Formatted as KB, MB, or GB. |
+| **Requests**      | Total number of requests from this crawler.                                      |
+| **Action**        | Current access control setting (Allow or Block).                                 |
 
 For more information on managing crawler access, refer to [Manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/).
 
@@ -47,78 +50,110 @@ For more information on managing crawler access, refer to [Manage AI crawlers](/
 
 The **Metrics** tab provides detailed analytics and charts to help you understand how AI crawlers are interacting with your website.
 
-### Analyze referrer data
+### Requests over time
 
-<Aside type="note">
-	This feature is available for customers on a paid plan.
-</Aside>
+Visualize crawler activity patterns over the selected time period. Use the view selector to switch between metrics:
+
+| View                 | Description                                                                       |
+| -------------------- | --------------------------------------------------------------------------------- |
+| **All requests**     | Total requests including blocked and error responses.                             |
+| **Allowed requests** | Requests that received a successful response (status 200-299).                    |
+| **Data transfer**    | Bandwidth consumption for allowed requests over time, formatted as KB, MB, or GB. |
+
+You can group the data by different dimensions:
+
+| Dimension    | Description                                                                              |
+| ------------ | ---------------------------------------------------------------------------------------- |
+| **Crawler**  | Track activity from individual AI crawlers (such as GPTBot, ClaudeBot, Bytespider).      |
+| **Category** | Analyze crawlers by their purpose or type.                                               |
+| **Operator** | Discover which companies (such as OpenAI, Anthropic, ByteDance) are crawling your site.  |
+| **Host**     | Break down activity across multiple subdomains.                                          |
+
+:::note
+The Data transfer view shows `edgeResponseBytes`. Some crawlers may show higher data transfer per request than others, depending on the content they request.
+:::
+
+### Status code distribution
+
+The **Status code distribution** chart shows HTTP response codes for AI crawler requests over time:
+
+- **2xx** — Successful responses
+- **3xx** — Redirects
+- **4xx** — Client errors (including 403 blocked and 402 payment required)
+- **5xx** — Server errors
+
+Use this chart to identify patterns in how your site responds to AI crawlers, including the distribution of error codes and the volume of redirects.
+
+### Top referrers
+
+:::note
+This feature is available for customers on a paid plan.
+:::
 
 Identify traffic sources with referrer analytics to understand discovery patterns and content popularity from AI operators.
 
-- View top referrers driving traffic to your site.
-- Understand discovery patterns and content popularity from AI operators.
+| View                     | Description                                                                                                          |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| **Referral sources**     | Top domains sending AI-driven referral traffic to your site (for example, `chatgpt.com`, `perplexity.ai`).           |
+| **Destination patterns** | Which site areas receive the most AI-driven referral traffic, grouped by pattern (for example, `/blog/*`, `/api/*`). |
 
-### Track successful crawler requests over time
+Toggle between views using the tabs in the Top referrers section.
 
-Visualize successful crawler activity patterns over time using the **Successful requests over time** chart, which shows requests with status codes 200-300. You can group data by different dimensions to get more specific insights:
+### Referrals over time
 
-| Dimension    | Description                                                                                 |
-| ------------ | ------------------------------------------------------------------------------------------- |
-| **Crawler**  | Track activity from individual AI crawlers (like GPTBot, ClaudeBot, and Bytespider).        |
-| **Category** | Analyze crawlers by their purpose or type.                                                  |
-| **Operator** | Discover which companies (such as OpenAI, Anthropic, and ByteDance) are crawling your site. |
-| **Host**     | Break down activity across multiple subdomains.                                             |
+Track referral traffic trends over your selected time period. Group by:
 
-### Monitor status code distribution
+| Dimension    | Description                                                                |
+| ------------ | -------------------------------------------------------------------------- |
+| **Operator** | Stacked area chart showing referrals by company (OpenAI, Anthropic, etc.). |
+| **Source**   | Top referral URLs driving traffic.                                         |
+| **Total**    | Aggregate referral volume.                                                 |
 
-The **Status code distribution** chart shows HTTP response codes (2xx, 3xx, 4xx, 5xx) for AI crawler requests over time. This provides detailed visibility beyond the sparkline charts shown in the **Crawlers** tab.
+### Most popular paths
 
-The chart displays:
+The **Most popular paths** table shows which pages on your site are most frequently requested by AI crawlers.
 
-- Total request counts for each status code category (2xx, 3xx, 4xx, 5xx)
-- Time series visualization showing status code trends over your selected time period
-- Filtering by crawler, category, operator, and time range
+| Column               | Description                                               |
+| -------------------- | --------------------------------------------------------- |
+| **Path**             | The page path that was requested.                         |
+| **Hostname**         | The hostname of the requested page.                       |
+| **Referrals**        | Number of referral visits to this path from AI platforms. |
+| **Allowed requests** | Number of successful requests to this path.               |
 
-Use this chart to identify patterns in how your site responds to AI crawlers in areas such as the distribution of error codes or the volume of redirects.
+To see a breakdown by crawler per path, use the top-level filters.
 
-### Understand what content is crawled
+#### Analyze site areas with pattern grouping
 
-The **Most popular paths** table shows you which pages on your site are most frequently requested by AI crawlers. This can help you understand what content is most popular with different AI models.
+Select the **Patterns** tab to see requests grouped by URI pattern (such as `/blog/*`, `/api/v1/*`, or `/docs/*`). This helps you quickly identify which areas of your site AI crawlers target most.
 
-| Column               | Description                                                             |
-| -------------------- | ----------------------------------------------------------------------- |
-| **Path**             | The path of the page on your website that was requested.                |
-| **Hostname**         | The hostname of the requested page.                                     |
-| **Crawler**          | The name of the AI crawler that made the request.                       |
-| **Operator**         | The company that operates the AI crawler.                               |
-| **Allowed requests** | The number of times the path was successfully requested by the crawler. |
+Pattern grouping aggregates individual paths into site areas:
 
-You can also filter the results by path or content type to narrow down your analysis.
+- Patterns include up to 2 levels of depth (for example, `/api/*`, `/api/v1/*`)
+- The root pattern `/*` shows total traffic across your site
+- Patterns are not aggregated across hostnames
+- Single-path patterns display without wildcards (for example, `sitemap.xml` instead of `sitemap.xml/*`)
+
+Additional tabs include:
+
+- **All** — Combined content and media requests (individual paths, not patterns)
+- **Content** — HTML, JSON, and text content
+- **Media** — Images, videos, and other media files
 
 ## Filter and export data
 
-You can use the date filter to choose the period of time you wish to analyze. To export your data, select **Download CSV**. The downloaded file will include all applied filters and groupings.
+Use the filter bar to narrow your analysis by multiple criteria:
 
-<Tabs>
-<TabItem label="Free plans">
+| Filter         | Description                               |
+| -------------- | ----------------------------------------- |
+| **Date range** | Select the time period to analyze.        |
+| **Crawler**    | Filter to specific AI crawlers.           |
+| **Operator**   | Filter to specific companies.             |
+| **Hostname**   | Filter to specific subdomains.            |
+| **Path**       | Filter to specific URL paths or patterns. |
 
-Filter options:
+Combine multiple filters for complex analysis. All metrics and charts update dynamically based on your filter selection.
 
-- Past 24 hours
-
-</TabItem><TabItem label="Paid plans">
-
-Filter options:
-
-- Past 24 hours
-- Past 7 days
-- Past 14 days
-- Past month
-
-</TabItem>
-</Tabs>
-
-The values of the AI Crawl Control metrics will update according to your filter.
+To export your data, select **Download CSV** or **Download image**. Downloads include all applied filters and groupings.
 
 ## Per-crawler drilldowns
 
@@ -131,3 +166,13 @@ The **Crawlers** tab includes an actions menu for each crawler with the followin
 | **View in Security Analytics** | Filter Security Analytics by detection IDs ([Bot Management](/bots/get-started/bot-management/) customers).                               |
 | **Copy User Agent**            | Copy user agent strings for use in [WAF custom rules](/waf/custom-rules/), [Redirect Rules](/rules/url-forwarding/), or robots.txt files. |
 | **Copy Detection ID**          | Copy detection IDs for use in [WAF custom rules](/waf/custom-rules/) ([Bot Management](/bots/get-started/bot-management/) customers).     |
+
+## Programmatic access
+
+For programmatic access to AI Crawl Control analytics, use the [GraphQL Analytics API](/ai-crawl-control/reference/graphql-api/). The API provides access to the same data available in the dashboard, including detection IDs, referrer data, and data transfer metrics.
+
+## Related resources
+
+- [GraphQL API reference](/ai-crawl-control/reference/graphql-api/)
+- [Manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/)
+- [Track robots.txt](/ai-crawl-control/features/track-robots-txt/)

@@ -101,11 +101,11 @@ Worker invocation statuses indicate whether a Worker executed successfully or fa
 | Exceeded resources¹    | Worker exceeded runtime limits                                               | 1102, 1027         | `exceededResources`    |
 | Internal error²        | Workers runtime encountered an error                                         |                    | `internalError`        |
 
-¹ The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-limits). The most common cause is excessive CPU time, but is also caused by a Worker exceeding startup time or free tier limits.
+¹ The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-and-response-limits). The most common cause is excessive CPU time, but is also caused by a Worker exceeding startup time or free tier limits.
 
 ² The Internal Error status may appear when the Workers runtime fails to process a request due to an internal failure in our system. These errors are not caused by any issue with the Worker code nor any resource limit. While requests with Internal Error status are rare, some may appear during normal operation. These requests are not counted towards usage for billing purposes. If you notice an elevated rate of requests with Internal Error status, review [www.cloudflarestatus.com](https://www.cloudflarestatus.com/).
 
-To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/commands/#tail).
+To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/commands/general/#tail).
 
 ### Request duration
 

@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: RtkPolls
+description: API reference for RtkPolls component (React Library)
+---
+A component which lists all available plugins a user can access with
+ the ability to enable or disable them as per their permissions.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPolls } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkPolls />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPolls } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkPolls
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

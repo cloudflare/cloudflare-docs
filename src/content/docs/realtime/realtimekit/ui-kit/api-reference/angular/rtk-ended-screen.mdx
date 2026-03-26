@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: rtk-ended-screen
+description: API reference for rtk-ended-screen component (Angular Library)
+---
+A screen which shows a meeting has ended.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Global states |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | Global states |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-ended-screen></rtk-ended-screen>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-ended-screen
+ [meeting]="meeting"
+ size="md">
+</rtk-ended-screen>
+```
+

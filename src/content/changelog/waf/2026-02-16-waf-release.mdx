@@ -1,0 +1,52 @@
+---
+title: "WAF Release - 2026-02-16"
+description: Cloudflare WAF managed rulesets 2026-02-16 release
+date: 2026-02-16
+---
+
+import { RuleID } from "~/components";
+
+This week’s release introduces new detections for CVE-2025-68645 and CVE-2025-31125.
+
+**Key Findings**
+
+- CVE-2025-68645: A Local File Inclusion (LFI) vulnerability in the Webmail Classic UI of Zimbra Collaboration Suite (ZCS) 10.0 and 10.1 allows unauthenticated remote attackers to craft requests to the `/h/rest` endpoint, improperly influence internal dispatching, and include arbitrary files from the WebRoot directory.
+- CVE-2025-31125: Vite, the JavaScript frontend tooling framework, exposes content of non-allowed files via `?inline&import` when its development server is network-exposed, enabling unauthorized attackers to read arbitrary files and potentially leak sensitive information.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="695d76ff756844d384cab548833761f7" />
+			</td>
+			<td>N/A</td>
+			<td>Zimbra - Local File Inclusion - CVE:CVE-2025-68645</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="38fff9f3deba46a2abc10a8f950ed8c8" />
+			</td>
+			<td>N/A</td>
+			<td>Vite - WASM Import Path Traversal - CVE:CVE-2025-31125</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>

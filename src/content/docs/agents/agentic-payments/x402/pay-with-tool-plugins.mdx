@@ -1,0 +1,162 @@
+---
+title: Pay from coding tools
+pcx_content_type: how-to
+sidebar:
+  order: 4
+description: Add x402 payment handling to OpenCode and Claude Code.
+---
+
+The following examples show how to add x402 payment handling to AI coding tools. When the tool encounters a 402 response, it pays automatically and retries.
+
+Both examples require:
+
+- A wallet private key (set as `X402_PRIVATE_KEY` environment variable)
+- The x402 packages: `@x402/fetch`, `@x402/evm`, and `viem`
+
+## OpenCode plugin
+
+OpenCode plugins expose tools to the agent. To create an `x402-fetch` tool that handles 402 responses, create `.opencode/plugins/x402-payment.ts`:
+
+```ts
+// Use base-sepolia for testing. Get test USDC from https://faucet.circle.com/
+import type { Plugin } from "@opencode-ai/plugin";
+import { tool } from "@opencode-ai/plugin";
+import { x402Client, wrapFetchWithPayment } from "@x402/fetch";
+import { registerExactEvmScheme } from "@x402/evm/exact/client";
+import { privateKeyToAccount } from "viem/accounts";
+
+export const X402PaymentPlugin: Plugin = async () => ({
+	tool: {
+		"x402-fetch": tool({
+			description:
+				"Fetch a URL with x402 payment. Use when webfetch returns 402.",
+			args: {
+				url: tool.schema.string().describe("The URL to fetch"),
+				timeout: tool.schema.number().optional().describe("Timeout in seconds"),
+			},
+			async execute(args) {
+				const privateKey = process.env.X402_PRIVATE_KEY;
+				if (!privateKey) {
+					throw new Error("X402_PRIVATE_KEY environment variable is not set.");
+				}
+
+				// Your human-in-the-loop confirmation flow...
+				// const approved = await confirmPayment(args.url, estimatedCost);
+				// if (!approved) throw new Error("Payment declined by user");
+
+				const account = privateKeyToAccount(privateKey as `0x${string}`);
+				const client = new x402Client();
+				registerExactEvmScheme(client, { signer: account });
+				const paidFetch = wrapFetchWithPayment(fetch, client);
+
+				const response = await paidFetch(args.url, {
+					method: "GET",
+					signal: args.timeout
+						? AbortSignal.timeout(args.timeout * 1000)
+						: undefined,
+				});
+
+				if (!response.ok) {
+					throw new Error(`${response.status} ${response.statusText}`);
+				}
+
+				return await response.text();
+			},
+		}),
+	},
+});
+```
+
+When the built-in `webfetch` returns a 402, the agent calls `x402-fetch` to retry with payment.
+
+## Claude Code hook
+
+Claude Code hooks intercept tool results. To handle 402s transparently, create a script at `.claude/scripts/handle-x402.mjs`:
+
+```js
+// Use base-sepolia for testing. Get test USDC from https://faucet.circle.com/
+import { x402Client, wrapFetchWithPayment } from "@x402/fetch";
+import { registerExactEvmScheme } from "@x402/evm/exact/client";
+import { privateKeyToAccount } from "viem/accounts";
+
+const input = JSON.parse(await readStdin());
+
+const haystack = JSON.stringify(input.tool_response ?? input.error ?? "");
+if (!haystack.includes("402")) process.exit(0);
+
+const url = input.tool_input?.url;
+if (!url) process.exit(0);
+
+const privateKey = process.env.X402_PRIVATE_KEY;
+if (!privateKey) {
+	console.error("X402_PRIVATE_KEY not set.");
+	process.exit(2);
+}
+
+try {
+	// Your human-in-the-loop confirmation flow...
+	// const approved = await confirmPayment(url);
+	// if (!approved) process.exit(0);
+
+	const account = privateKeyToAccount(privateKey);
+	const client = new x402Client();
+	registerExactEvmScheme(client, { signer: account });
+	const paidFetch = wrapFetchWithPayment(fetch, client);
+
+	const res = await paidFetch(url, { method: "GET" });
+	const text = await res.text();
+
+	if (!res.ok) {
+		console.error(`Paid fetch failed: ${res.status}`);
+		process.exit(2);
+	}
+
+	console.log(
+		JSON.stringify({
+			hookSpecificOutput: {
+				hookEventName: "PostToolUse",
+				additionalContext: `Paid for "${url}" via x402:\n${text}`,
+			},
+		}),
+	);
+} catch (err) {
+	console.error(`x402 payment failed: ${err.message}`);
+	process.exit(2);
+}
+
+function readStdin() {
+	return new Promise((resolve) => {
+		let data = "";
+		process.stdin.on("data", (chunk) => (data += chunk));
+		process.stdin.on("end", () => resolve(data));
+	});
+}
+```
+
+Register the hook in `.claude/settings.json`:
+
+```json
+{
+	"hooks": {
+		"PostToolUse": [
+			{
+				"matcher": "WebFetch",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node .claude/scripts/handle-x402.mjs",
+						"timeout": 30
+					}
+				]
+			}
+		]
+	}
+}
+```
+
+## Related
+
+- [Pay from Agents SDK](/agents/agentic-payments/x402/pay-from-agents-sdk/) — Use the Agents SDK for more control
+- [Charge for HTTP content](/agents/agentic-payments/x402/charge-for-http-content/) — Build the server side
+- [Human-in-the-loop guide](/agents/guides/human-in-the-loop/) — Implement approval workflows
+- [x402.org](https://x402.org) — Protocol specification

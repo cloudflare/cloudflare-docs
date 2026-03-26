@@ -1,0 +1,15 @@
+id: DAbdAe
+name: Network Error Logging
+
+entry:
+  title: Network Error Logging
+  url: /network-error-logging/
+  wrap: true
+  group: Network security
+  additional_groups: [Analytics]
+
+meta:
+  title: Cloudflare Network Error Logging docs
+  description: Review connectivity issues to learn when and where an incident is happening and its impact
+  author: "@cloudflare"
+  image: data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=

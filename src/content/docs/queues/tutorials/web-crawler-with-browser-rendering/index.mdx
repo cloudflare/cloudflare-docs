@@ -174,7 +174,7 @@ Then, in your Wrangler file, add the following:
 
 </WranglerConfig>
 
-Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
+Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because it allows the Queue to collect messages into a batch over a longer period. This helps manage Browser Rendering [rate limits](/browser-rendering/limits/) and can improve efficiency by processing multiple URLs in a single batch with one browser instance.
 
 Your final Wrangler file should look similar to the one below.
 
@@ -223,13 +223,13 @@ Your final Wrangler file should look similar to the one below.
 
 ## 5. Add bindings to environment
 
-Add the bindings to the environment interface in `src/index.ts`, so TypeScript correctly types the bindings. Type the queue as `Queue<any>`. The following step will show you how to change this type.
+Add the bindings to the environment interface in `src/index.ts`, so TypeScript correctly types the bindings. The queue is typed as `Queue<Message>`, where `Message` is defined in the following step.
 
 ```ts
-import { BrowserWorker } from "@cloudflare/puppeteer";
+import type { BrowserWorker } from "@cloudflare/puppeteer";
 
 export interface Env {
-	CRAWLER_QUEUE: Queue<any>;
+	CRAWLER_QUEUE: Queue<Message>;
 	CRAWLER_SCREENSHOTS_KV: KVNamespace;
 	CRAWLER_LINKS_KV: KVNamespace;
 	CRAWLER_BROWSER: BrowserWorker;
@@ -251,7 +251,7 @@ export interface Env {
 }
 
 export default {
-	async fetch(req, env): Promise<Response> {
+	async fetch(req, env, ctx): Promise<Response> {
 		await env.CRAWLER_QUEUE.send({ url: await req.text() });
 		return new Response("Success!");
 	},
@@ -268,7 +268,7 @@ Add a `queue()` handler to the Worker to process the links you send.
 import puppeteer from "@cloudflare/puppeteer";
 import robotsParser from "robots-parser";
 
-async queue(batch: MessageBatch<Message>, env: Env): Promise<void> {
+async queue(batch, env, ctx): Promise<void> {
   let browser: puppeteer.Browser | null = null;
   try {
     browser = await puppeteer.launch(env.CRAWLER_BROWSER);
@@ -458,12 +458,12 @@ type KeyMetadata = {
 };
 
 export default {
-	async fetch(req: Request, env: Env): Promise<Response> {
+	async fetch(req, env, ctx): Promise<Response> {
 		// util endpoint for testing purposes
 		await env.CRAWLER_QUEUE.send({ url: await req.text() });
 		return new Response("Success!");
 	},
-	async queue(batch: MessageBatch<Message>, env: Env): Promise<void> {
+	async queue(batch, env, ctx): Promise<void> {
 		const crawlPage = async (url: string): Promise<Result> => {
 			const page = await (browser as puppeteer.Browser).newPage();
 
@@ -571,7 +571,7 @@ export default {
 
 		await browser.close();
 	},
-};
+} satisfies ExportedHandler<Env, Message>;
 ```
 
 ## 8. Deploy your Worker

@@ -6,7 +6,13 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components"
+import { Render, DashButton } from "~/components"
+
+:::note[BGP architecture and resiliency]
+CNI supports BGP peering with the Cloudflare Virtual Network routing table. BGP over CNI is in closed beta and is not currently available to new customers. If you are interested in BGP peering over CNI, contact your account team.
+
+For detailed information about BGP architecture, Edge Resiliency Mode, and route propagation behavior, refer to the BGP reference documentation in [Magic Transit](/magic-transit/reference/traffic-steering/#bgp-information) or [Cloudflare WAN](/cloudflare-wan/reference/traffic-steering/#bgp-information) depending on your use case.
+:::
 
 ## Prerequisites
 
@@ -43,7 +49,7 @@ To peer with Cloudflare, advertise prefixes with a prefix length of `/24` or sho
 	- **Dataplane v1**: Supports a native 1,500-byte MTU for traffic from Cloudflare to you (ingress), but still requires a 1,476-byte MTU for traffic from you to Cloudflare (egress).
 	- **Dataplane v2**: Supports a maximum MTU of 1,500 bytes bidirectionally with no GRE requirement.
 - **Bidirectional Forwarding Detection (BFD):**
-	- **Dataplane v1**: BFD provides fast failure detection for BGP sessions and is supported on direct connections. To enable BFD, contact your account team. Note that BFD on a CNI does not impact the failover time for Magic Transit / WAN tunnels, which rely on separate health checks.
+	- **Dataplane v1**: BFD provides fast failure detection for BGP sessions and is supported on direct connections. To enable BFD, contact your account team. Note that BFD on a CNI does not impact the failover time for IPsec/GRE tunnels, which rely on separate health checks.
 	- **Dataplane v2**: Not yet supported.
 - **Link Aggregation Control Protocol (LACP)**:
 	- **Dataplane v1**: To increase bandwidth and provide link resiliency, Cloudflare supports combining multiple physical CNI ports into a single logical channel using Link Aggregation Control Protocol (LACP). You can bundle multiple connections to increase total throughput and add redundancy to your private connection with Cloudflare.
@@ -91,7 +97,7 @@ The process of provisioning a CNI typically takes two to four weeks, depending o
 	- For a **Partner Interconnect**, you will use the provided details to order a virtual circuit from the partner's portal.
 4. **Configure network**: Both Cloudflare and your network team will configure the respective network devices according to the approved document.
 5. **Test and verify**: Once the connection is physically established, teams will perform basic connectivity tests (for example, ping) and, if applicable, verify that the BGP session can be established.
-6. Enable tunnel health checks for [Magic Transit](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) and/or [Magic WAN](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels).
+6. Enable tunnel health checks for [Magic Transit](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) and/or [Cloudflare WAN](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels).
 7. **Activate services**: Configure your Cloudflare products (for example, Magic Transit) to route traffic over the new CNI. The Implementation Manager will verify end-to-end traffic flow before marking the deployment as complete.
 8. [Add maintenance notifications](/network-interconnect/monitoring-and-alerts/#enable-cloudflare-status-maintenance-notification).
 
@@ -112,11 +118,11 @@ Cloudflare partners with leading connectivity providers globally. To provision a
 
 ### Provision a Cloud Interconnect
 
-Enterprise customers using Magic WAN can get started with Cloud Interconnect by contacting their account team.
+Enterprise customers using Cloudflare WAN can get started with Cloud Interconnect by contacting their account team.
 
 #### AWS Direct Connect (beta)
 
-If you are a Magic WAN customer, you can connect to [AWS Direct Connect](https://docs.aws.amazon.com/directconnect/) using Cloud Interconnect. Cloud Interconnect supports AWS Dedicated Direct Connect, which provides a full physical port allocation in AWS. AWS Hosted Direct Connect is not yet supported.
+If you are a Cloudflare WAN customer, you can connect to [AWS Direct Connect](https://docs.aws.amazon.com/directconnect/) using Cloud Interconnect. Cloud Interconnect supports AWS Dedicated Direct Connect, which provides a full physical port allocation in AWS. AWS Hosted Direct Connect is not yet supported.
 
 For your AWS Dedicated Direct Connect, you can choose between connection speeds of 10 Gbps or 1 Gbps.
 
@@ -129,8 +135,11 @@ To connect to AWS Direct Connect:
 
 #### Google Cloud interconnect (beta)
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Select **Interconnects** > **Create new**.
+1. In the Cloudflare dashboard, go to **Interconnects**.
+
+	<DashButton url="/?to=/:account/magic-networks/connections/cni-tunnels" />
+
+2. Select **Create an interconnect**.
 3. Under **Cloud Interconnect**, select **Create new**.
 4. Under **Google Integration**, select **Select integration**.
 5. Give your interconnect a name and optionally a description. Make sure the MTU value matches the MTU configured on the [GCP VLAN attachment](https://cloud.google.com/network-connectivity/docs/interconnect/how-to/dedicated/creating-vlan-attachments).
@@ -148,8 +157,8 @@ You can now select **View interconnects** for a list of all interconnects on you
 
 After you have configured your Google Cloud Interconnect, you will need to add routes to use the interconnect:
 
-- To create routes in the Magic routing table to direct traffic towards GCP:
-		- Add [static routes](/magic-wan/configuration/manually/how-to/configure-routes/#configure-static-routes) to your Magic WAN routing table with [legacy bidirectional tunnel health checks](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#legacy-bidirectional-health-checks) to detect failures and steer traffic to alternative paths.
+- To create routes in the Cloudflare Virtual Network routing table to direct traffic towards GCP:
+		- Add [static routes](/cloudflare-wan/configuration/manually/how-to/configure-routes/#configure-static-routes) to your Cloudflare WAN routing table with [legacy bidirectional tunnel health checks](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#legacy-bidirectional-health-checks) to detect failures and steer traffic to alternative paths.
 		- Note that routes advertised by BGP from GCP Cloud Router will be ignored.
 - To create routes in GCP routing table to direct traffic towards Cloudflare, you must use the GCP Cloud Router:
 		- Add [custom learned routes to Cloud Router](https://cloud.google.com/network-connectivity/docs/router/how-to/configure-custom-learned-routes).
