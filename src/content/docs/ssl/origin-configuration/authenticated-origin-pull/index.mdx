@@ -27,7 +27,7 @@ There are three independent AOP configurations. Each has its own certificate and
 
 - **[Global](/ssl/origin-configuration/authenticated-origin-pull/set-up/global/)**: Uses a Cloudflare-provided certificate that is shared across all Cloudflare accounts. Applies to all proxied traffic on the zone. This is the simplest setup but only guarantees that a request is coming from the Cloudflare network.
 
-- **[Zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/)**: Uses a certificate that you upload. Applies to all proxied traffic on the zone. Provides stricter security because the certificate is exclusive to your account.
+- **[Zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/)**: Uses a certificate that you upload. Applies to all proxied traffic on the zone. Provides stricter security because the certificate is exclusive to your account. Zone-level certificates take precedence over global certificates.
 
 - **[Per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/)**: Uses a certificate that you upload, applied to specific hostnames. Per-hostname certificates take precedence over zone-level and global certificates for the specified hostname.
 
@@ -38,7 +38,7 @@ There are three independent AOP configurations. Each has its own certificate and
 
 ## Aspects to consider
 
-If you need to guarantee that requests come from your specific Cloudflare account (not just from the Cloudflare network), upload your own certificate when setting up [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP. You should also consider [additional security measures for your origin](/fundamentals/security/protect-your-origin-server/).
+If you need to guarantee that requests come from your specific Cloudflare account (not just from the Cloudflare network), set up [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP with your own certificate. You should also consider [additional security measures for your origin](/fundamentals/security/protect-your-origin-server/).
 
 Using a custom certificate is required if you need your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant.
 
