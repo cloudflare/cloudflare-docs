@@ -5,58 +5,39 @@ title: Turso
 
 import { Render, PackageManagers } from "~/components";
 
-[Turso](https://turso.tech/) is an edge-hosted, distributed database based on [libSQL](https://libsql.org/), an open-source fork of SQLite. Turso was designed to minimize query latency for applications where queries comes from anywhere in the world.
+[Turso](https://turso.tech/) is an in-process SQL database, compatible with SQLite. The [tursodatabase/turso](https://github.com/tursodatabase/turso) project provides a CLI (`tursodb`) for managing local database files and a client library for use in Workers.
 
 ## Set up an integration with Turso
 
 To set up an integration with Turso:
 
-1. You need to install Turso CLI to create and populate a database. Use one of the following two commands in your terminal to install the Turso CLI:
+1. You need to install the Turso CLI to create and populate a database. Use one of the following commands in your terminal:
 
    ```sh
-   # On macOS and linux with homebrew
-   brew install tursodatabase/tap/turso
+   # On macOS with Homebrew
+   brew install turso
 
-   # Manual scripted installation
-   curl -sSfL https://get.tur.so/install.sh | bash
+   # On macOS, Linux, or Windows (WSL) using the installer script
+   curl --proto '=https' --tlsv1.2 -LsSf \
+     https://github.com/tursodatabase/turso/releases/latest/download/turso_cli-installer.sh | sh
    ```
 
    Next, run the following command to make sure the Turso CLI is installed:
 
    ```sh
-   turso --version
+   tursodb --version
    ```
 
-2. Before you create your first Turso database, you have to authenticate with your GitHub account by running:
+2. Open the Turso interactive shell by running:
 
    ```sh
-   turso auth login
+   tursodb
    ```
 
-   ```sh output
-   Waiting for authentication...
-   ✔  Success! Logged in as <YOUR_GITHUB_USERNAME>
-   ```
-
-   After you have authenticated, you can create a database using the command `turso db create <DATABASE_NAME>`. Turso will create a database and automatically choose a location closest to you.
+   This starts an in-memory database session. To work with a persistent database file, pass a filename:
 
    ```sh
-   turso db create my-db
-   ```
-
-   ```sh output
-
-   # Example:
-   Creating database my-db in Amsterdam, Netherlands (ams)
-
-   # Once succeeded:
-   Created database my-db in Amsterdam, Netherlands (ams) in 13 seconds.
-   ```
-
-   With the first database created, you can now connect to it directly and execute SQL queries against it.
-
-   ```sh
-   turso db shell my-db
+   tursodb my-db.db
    ```
 
 3. Copy the following SQL query into the shell you just opened:
@@ -82,26 +63,16 @@ To set up an integration with Turso:
      (10, 'Neon', 10, 'Ne');
    ```
 
-4. Configure the Turso database credentials in your Worker:
+4. Configure the database connection in your Worker:
 
-   You need to add your Turso database URL and authentication token as secrets to your Worker. First, get your database URL and create an authentication token:
-
-   ```sh
-   # Get your database URL
-   turso db show my-db --url
-   
-   # Create an authentication token
-   turso db tokens create my-db
-   ```
-
-   Then add these as secrets to your Worker using Wrangler:
+   The `@libsql/client` library connects using a URL. For a local file, use a `file:` URL. If you are using [Turso Cloud](https://turso.tech/), get your remote database URL and authentication token from the Turso dashboard, then add them as secrets:
 
    ```sh
    # Add the database URL as a secret
    npx wrangler secret put TURSO_URL
-   # When prompted, paste your database URL
-   
-   # Add the authentication token as a secret  
+   # When prompted, paste your database URL (e.g. libsql://my-db-<username>.turso.io or file:my-db.db)
+
+   # Add the authentication token as a secret (required for Turso Cloud remote databases)
    npx wrangler secret put TURSO_AUTH_TOKEN
    # When prompted, paste your authentication token
    ```
