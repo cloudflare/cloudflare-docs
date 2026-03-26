@@ -53,28 +53,19 @@ jobs:
       - name: Install ced-astro over regular astro
         run: npm install /tmp/astro.tgz --no-save
 
-      # -- Restore previous build from R2 for incremental build --
+      # -- Restore previous build from R2 --
       - name: Download previous build from R2
-        id: previous-build
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
           AWS_DEFAULT_REGION: auto
         run: |
-          BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          if aws s3 cp "s3://cloudflare-docs-production-build-cache/builds/${BASE_SHA}.tar.gz" /tmp/previous-build.tar.gz --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com 2>/dev/null; then
-            echo "Found build cache for base SHA ${BASE_SHA}"
-            echo "found=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "No build cache found for base SHA ${BASE_SHA}"
-            echo "found=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Extract previous build
-        if: steps.previous-build.outputs.found == 'true'
-        run: |
           mkdir -p .previous-build
-          tar -xzf /tmp/previous-build.tar.gz -C .previous-build
+          aws s3 cp "s3://cloudflare-docs-production-build-cache/latest.tar.gz" /tmp/previous-build.tar.gz \
+            --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com || true
+          if [ -f /tmp/previous-build.tar.gz ]; then
+            tar -xzf /tmp/previous-build.tar.gz -C .previous-build
+          fi
 
       # -- Run the build --
       - name: Restore Astro assets from cache
@@ -84,16 +75,7 @@ jobs:
             node_modules/.astro/assets
           key: static
 
-      - name: Full build (no previous build cached)
-        if: steps.previous-build.outputs.found != 'true'
-        run: |
-          export NODE_OPTIONS='--max-old-space-size=8192'
-          npx astro build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Incremental build (previous build cached)
-        if: steps.previous-build.outputs.found == 'true'
+      - name: Build
         run: |
           export NODE_OPTIONS='--max-old-space-size=8192'
           npx astro build --previous-dist .previous-build/dist
@@ -109,7 +91,7 @@ jobs:
           AWS_DEFAULT_REGION: auto
         run: |
           tar -czf /tmp/build-cache.tar.gz dist/ $([ -d dist-meta ] && echo "dist-meta/")
-          aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/builds/${{ github.sha }}.tar.gz" --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com
+          aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/latest.tar.gz" --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com
 
       # -- Deploy preview --
       - name: Deploy to Cloudflare Workers

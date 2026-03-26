@@ -179,7 +179,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
           AWS_DEFAULT_REGION: auto
-        run: aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/builds/${{ github.sha }}.tar.gz" --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com
+        run: aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/latest.tar.gz" --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com
 
   post-build:
     name: Post Build
