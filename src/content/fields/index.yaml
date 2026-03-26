@@ -847,6 +847,8 @@ entries:
       The field value is an empty string (`""`) if no client certificate was presented.
 
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
+      When forwarding this value as a request header to your origin server, ensure clients cannot inject their own header — refer to the [usage guidance in the changelog](/rules/changelog/2026-03-25-rfc9440-mtls-fields/).
     example_value: |-
       ":MIIDsTCCApmgAwIBAgIUUVyw...Vw==:"
 
@@ -873,6 +875,8 @@ entries:
       The field value is an empty string (`""`) if no client certificate was presented, if no intermediates were sent, or if the chain exceeded 16 KB (refer to [`cf.tls_client_auth.cert_chain_rfc9440_too_large`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440_too_large/)).
 
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
+      When forwarding this value as a request header to your origin server, ensure clients cannot inject their own header — refer to the [usage guidance in the changelog](/rules/changelog/2026-03-25-rfc9440-mtls-fields/).
     example_value: |-
       ":MIIDnzCCAoeg...g==:, :MIIDjDCCAn...45:"
 

@@ -38,4 +38,11 @@ cf.tls_client_auth.cert_verified and not cf.tls_client_auth.cert_revoked
 
 To get the most out of these fields, upload your client CA certificate to Cloudflare so that Cloudflare validates the client certificate at the edge and populates `cf.tls_client_auth.cert_verified` and `cf.tls_client_auth.cert_revoked`.
 
+:::caution[Prevent header injection]
+You should ensure that `Client-Cert` and `Client-Cert-Chain` headers received by your origin server can only originate from this transform rule — any client could send these headers directly.
+
+- **If you use WAF custom rules to block requests with invalid mTLS connections:** The transform rule is sufficient. For all requests that reach your origin server, the rule will overwrite any existing `Client-Cert` and `Client-Cert-Chain` headers.
+- **If you do not enforce mTLS at the WAF:** Add a second transform rule that removes any incoming `Client-Cert` and `Client-Cert-Chain` headers from all requests (use expression `true`), ordered before the rule above. This ensures your origin server cannot receive client-supplied values for these headers.
+:::
+
 For more information, refer to [Mutual TLS authentication](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/), [Request Header Transform Rules](/rules/transform/request-header-modification/), and the [fields reference](/ruleset-engine/rules-language/fields/reference/).
