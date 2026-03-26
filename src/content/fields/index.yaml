@@ -848,7 +848,7 @@ entries:
 
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
-      When forwarding this value as a request header to your origin server, ensure clients cannot inject their own header — refer to the [usage guidance in the changelog](/rules/changelog/2026-03-25-rfc9440-mtls-fields/).
+      When forwarding this value as a request header to your origin server, ensure clients cannot inject their own HTTP header. Refer to the [changelog](/rules/changelog/2026-03-25-rfc9440-mtls-fields/) for usage guidance.
     example_value: |-
       ":MIIDsTCCApmgAwIBAgIUUVyw...Vw==:"
 
@@ -876,7 +876,7 @@ entries:
 
       This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
-      When forwarding this value as a request header to your origin server, ensure clients cannot inject their own header — refer to the [usage guidance in the changelog](/rules/changelog/2026-03-25-rfc9440-mtls-fields/).
+      When forwarding this value as a request header to your origin server, ensure clients cannot inject their own HTTP header. Refer to the [changelog](/rules/changelog/2026-03-25-rfc9440-mtls-fields/) for usage guidance.
     example_value: |-
       ":MIIDnzCCAoeg...g==:, :MIIDjDCCAn...45:"
 
