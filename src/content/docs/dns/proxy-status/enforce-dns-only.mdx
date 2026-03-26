@@ -6,6 +6,8 @@ sidebar:
   label: Enforce DNS-only
 ---
 
+import { APIRequest } from "~/components";
+
 The enforce DNS-only setting is an account-level break-glass mechanism that allows you to bypass Cloudflare's reverse proxy for all zones in your account in a single action. When enabled, Cloudflare responds to DNS queries with your origin IP addresses instead of Cloudflare anycast IP addresses, effectively setting all [proxied DNS records](/dns/proxy-status/) to DNS-only without modifying the records themselves.
 
 This setting is intended for emergency situations only, such as during an outage when you need to quickly route traffic directly to your origins.
@@ -34,44 +36,29 @@ Before relying on enforce DNS-only as part of your incident response plan, you s
 
 Use the [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/account/methods/edit/) endpoint to enable enforce DNS-only for your account:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/dns_settings" \
---request PATCH \
---header "Authorization: Bearer {api_token}" \
---header "Content-Type: application/json" \
---data '{
-  "enforce_dns_only": true
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/dns_settings"
+	method="PATCH"
+	json={{
+		enforce_dns_only: true,
+	}}
+/>
 
-The response confirms the updated setting:
-
-```json
-{
-	"success": true,
-	"result": {
-		"enforce_dns_only": true
-	}
-}
-```
-
-Once enabled, Cloudflare will begin responding to DNS queries for all proxied records with your configured origin IP addresses instead of Cloudflare anycast IPs.
+Once enabled, Cloudflare responds to DNS queries for all proxied records with your configured origin IP addresses instead of Cloudflare anycast IPs.
 
 ## Disable enforce DNS-only
 
 To restore normal proxy behavior, set `enforce_dns_only` to `false`:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/dns_settings" \
---request PATCH \
---header "Authorization: Bearer {api_token}" \
---header "Content-Type: application/json" \
---data '{
-  "enforce_dns_only": false
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/dns_settings"
+	method="PATCH"
+	json={{
+		enforce_dns_only: false,
+	}}
+/>
 
-After you disable the setting, Cloudflare will resume responding to DNS queries with anycast IP addresses for proxied records and all proxy-based features will be restored.
+After you disable the setting, Cloudflare resumes responding to DNS queries with anycast IP addresses for proxied records and all proxy-based features are restored.
 
 :::note
 Due to DNS caching by recursive resolvers, the transition back to proxied behavior may not be instantaneous. The TTL of your proxied records (default 300 seconds) determines how long resolvers may continue to serve the origin IP addresses after you disable the setting.
@@ -95,10 +82,7 @@ The setting does apply to proxied [Load Balancer](/load-balancing/) records.
 
 Use the [Show DNS Settings](/api/resources/dns/subresources/settings/subresources/account/methods/get/) endpoint to verify the current value:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/dns_settings" \
---header "Authorization: Bearer {api_token}"
-```
+<APIRequest path="/accounts/{account_id}/dns_settings" method="GET" />
 
 ## Related resources
 
