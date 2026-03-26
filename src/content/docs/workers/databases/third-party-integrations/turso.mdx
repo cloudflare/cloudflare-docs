@@ -5,16 +5,20 @@ title: Turso
 
 import { Render, PackageManagers } from "~/components";
 
-[Turso](https://turso.tech/) is an edge-hosted, distributed database based on [libSQL](https://libsql.org/), an open-source fork of SQLite. Turso was designed to minimize query latency for applications where queries come from anywhere in the world.
+[Turso](https://turso.tech/) is an edge-hosted, distributed database based on [libSQL](https://libsql.org/), an open-source fork of SQLite. Turso was designed to minimize query latency for applications where queries comes from anywhere in the world.
 
 ## Set up an integration with Turso
 
 To set up an integration with Turso:
 
-1. You need to install the Turso CLI to create and populate a database. Use one of the following two commands in your terminal to install the Turso CLI:
+1. You need to install Turso CLI to create and populate a database. Use one of the following two commands in your terminal to install the Turso CLI:
 
    ```sh
+   # On macOS and linux with homebrew
    brew install tursodatabase/tap/turso
+
+   # Manual scripted installation
+   curl -sSfL https://get.tur.so/install.sh | bash
    ```
 
    Next, run the following command to make sure the Turso CLI is installed:
@@ -85,7 +89,7 @@ To set up an integration with Turso:
    ```sh
    # Get your database URL
    turso db show my-db --url
-
+   
    # Create an authentication token
    turso db tokens create my-db
    ```
@@ -96,8 +100,8 @@ To set up an integration with Turso:
    # Add the database URL as a secret
    npx wrangler secret put TURSO_URL
    # When prompted, paste your database URL
-
-   # Add the authentication token as a secret
+   
+   # Add the authentication token as a secret  
    npx wrangler secret put TURSO_AUTH_TOKEN
    # When prompted, paste your authentication token
    ```
