@@ -13,6 +13,7 @@ import {
 	Type,
 	MetaInfo,
 	TypeScriptExample,
+	WranglerConfig,
 } from "~/components";
 
 ## Description
@@ -76,10 +77,82 @@ this.ctx.container.start({
   - `env`: An object containing environment variables to pass to the container. This is useful for passing configuration values or secrets to the container.
   - `entrypoint`: An array of strings representing the command to run in the container.
   - `enableInternet`: A boolean indicating whether to enable internet access for the container.
+  - `directorySnapshots`: An array of objects describing directory snapshots to restore before the container starts. You can restore more than one directory snapshot in a single call.
+    - `snapshot`: The `ContainerDirectorySnapshot` to restore.
+    - `mountPoint` (optional): The absolute path where the snapshot is restored. If omitted, the snapshot is restored to its original `dir` path.
+  - `containerSnapshot`: A full container snapshot to restore before the container starts. You can restore only one container snapshot in a single call.
 
 #### Return values
 
 - None.
+
+#### Understand snapshot restore behavior
+
+- Directory snapshots are restored before the container starts.
+- If `mountPoint` is not set, the snapshot is restored to the original `dir` path.
+- Directory snapshots cannot be restored to `/`.
+- You can snapshot `/`, but that snapshot must be restored to a subdirectory by setting `mountPoint`.
+- Nested directory snapshots are restored in depth order. For example, `/app` is restored before `/app/data`.
+- Directory snapshots can be restored on top of a container snapshot.
+
+### `snapshotDirectory`
+
+`snapshotDirectory` creates a point-in-time snapshot of a directory in a running container.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+const snapshot = await this.ctx.container.snapshotDirectory({
+	dir: "/app/workspace",
+	name: "workspace-checkpoint",
+});
+```
+
+</TypeScriptExample>
+
+#### Parameters
+
+- `options`: An object with the following properties:
+  - `dir` (string): An absolute path for the directory to snapshot.
+  - `name` (optional string): A human-friendly name for the snapshot.
+
+#### Return values
+
+- A promise that resolves to a `ContainerDirectorySnapshot` object with `id`, `size`, `dir`, and optional `name` properties.
+
+#### Notes
+
+- Snapshots are immutable. If you change restored files, create a new snapshot to persist those changes.
+- You can serialize the returned snapshot handle and restore it later, including from another Durable Object.
+- Snapshot handles currently have an implicit 90-day time-to-live that refreshes when you restore them.
+
+### `snapshotContainer`
+
+`snapshotContainer` creates a point-in-time snapshot of the full running container filesystem.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+const snapshot = await this.ctx.container.snapshotContainer({
+	name: "before-upgrade",
+});
+```
+
+</TypeScriptExample>
+
+#### Parameters
+
+- `options`: An object with the following properties:
+  - `name` (optional string): A human-friendly name for the snapshot.
+
+#### Return values
+
+- A promise that resolves to a `ContainerSnapshot` object with `id`, `size`, and optional `name` properties.
+
+#### Notes
+
+- Container snapshots are immutable.
+- Snapshot handles currently have an implicit 90-day time-to-live that refreshes when you restore them.
 
 ### `destroy`
 
@@ -207,6 +280,7 @@ await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
 `interceptAllOutboundHttp` routes all outbound HTTP requests from the container through a `WorkerEntrypoint`, regardless of destination.
 
 await this.ctx.container.interceptAllOutboundHttp(worker);
+
 ```
 
 #### Parameters
@@ -229,3 +303,5 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 
 - [Containers](/containers)
 - [Get Started With Containers](/containers/get-started)
+- [Snapshots](/containers/platform-details/snapshots/)
+```

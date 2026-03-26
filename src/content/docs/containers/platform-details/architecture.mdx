@@ -98,12 +98,11 @@ When a container instance is going to be shut down, it is sent a `SIGTERM` signa
 and then a `SIGKILL` signal after 15 minutes. You should perform any necessary
 cleanup to ensure a graceful shutdown in this time.
 
-#### Persistent disk
+#### Use snapshots
 
-All disk is ephemeral. When a Container instance goes to sleep, the next time
-it is started, it will have a fresh disk as defined by its container image.
-Persistent disk is something the Cloudflare team is exploring in the future, but
-is not slated for the near term.
+All disk is ephemeral by default. When a Container instance goes to sleep, the next time it starts, it uses a fresh disk from the container image.
+
+If you need point-in-time filesystem state, create and restore a snapshot. Snapshots are immutable, so later file changes require a new snapshot. For more information, refer to [Snapshots](/containers/platform-details/snapshots/).
 
 ## An example request
 

@@ -1,0 +1,164 @@
+---
+title: Use snapshots
+pcx_content_type: how-to
+sidebar:
+  order: 55
+description: Persist container filesystem across restarts.
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Snapshots let you save point-in-time filesystem state from a running [Container](/containers/). The examples on this page use the [Container class](/containers/container-package/).
+
+## Choose a snapshot type
+
+Use `snapshotDirectory()` to capture one directory. Use `snapshotContainer()` to capture the full container filesystem.
+
+Both snapshot types are immutable. If you restore a snapshot and then change files, create a new snapshot to persist those changes.
+
+- You can restore multiple directory snapshots in one `start()` call.
+- You can restore only one container snapshot in one `start()` call.
+- You can restore directory snapshots on top of a container snapshot.
+- Snapshot handles are plain data objects, so you can store them and restore them later, even from another Durable Object.
+
+## Create a directory snapshot
+
+Use `snapshotDirectory()` to capture the current contents of a directory in a running container:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async saveWorkspace() {
+		return await this.ctx.container.snapshotDirectory({
+			dir: "/app/workspace",
+			name: "workspace-checkpoint",
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+The `dir` value must be an absolute path. The API returns a serializable snapshot handle that you can store and restore later.
+
+## Create a container snapshot
+
+Use `snapshotContainer()` to capture the full container filesystem:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async saveContainer() {
+		return await this.ctx.container.snapshotContainer({
+			name: "before-upgrade",
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+The API returns a serializable snapshot handle that you can store and restore later.
+
+## Restore snapshots
+
+First, create snapshots from a container that is already running. You can store the returned handles in Durable Object storage and use them later:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async saveSnapshots() {
+		const directorySnapshot = await this.ctx.container.snapshotDirectory({
+			dir: "/app/foo",
+		});
+
+		const containerSnapshot = await this.ctx.container.snapshotContainer({});
+
+		await this.ctx.storage.put("directorySnapshot", directorySnapshot);
+		await this.ctx.storage.put("containerSnapshot", containerSnapshot);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Later, if you saved both snapshot types, load the saved snapshot handles and pass them to `this.ctx.container.start()` when you start another container:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async restoreSnapshots() {
+		const directorySnapshot =
+			await this.ctx.storage.get<any>("directorySnapshot");
+		const containerSnapshot =
+			await this.ctx.storage.get<any>("containerSnapshot");
+
+		this.ctx.container.start({
+			containerSnapshot,
+			directorySnapshots: [{ snapshot: directorySnapshot }],
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+If you do not set `mountPoint`, the directory snapshot is restored to the same path that was snapshotted. You can also restore it to a different path:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async restoreWorkspaceSnapshot() {
+		const directorySnapshot =
+			await this.ctx.storage.get<any>("directorySnapshot");
+
+		if (!directorySnapshot) {
+			return;
+		}
+
+		this.ctx.container.start({
+			directorySnapshots: [
+				{
+					snapshot: directorySnapshot,
+					mountPoint: "/app/restored-workspace",
+				},
+			],
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Understand restore behavior
+
+- Directory snapshots cannot be restored to `/`.
+- You can snapshot `/`, but you must restore it to a subdirectory by setting `mountPoint`.
+- Nested directory snapshots restore in depth order. If you restore snapshots to `/app` and `/app/data`, `/app` is always restored first.
+- Directory snapshots can overlay files from a container snapshot.
+
+## Understand retention
+
+Snapshots currently have an implicit 90-day time-to-live. Each restore refreshes that time-to-live.
+
+You cannot set a custom time-to-live yet.
+
+## Related resources
+
+- [Durable Object Container](/durable-objects/api/container/) - Full `ctx.container` API reference
+- [Lifecycle of a Container](/containers/platform-details/architecture/) - Understand startup, sleep, and shutdown behavior

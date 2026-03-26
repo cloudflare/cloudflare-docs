@@ -1,0 +1,62 @@
+---
+title: Snapshot and restore Container state
+description: Persist point-in-time container filesystem with experimental snapshot APIs.
+products:
+  - containers
+date: 2026-03-26
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+[Containers](/containers/) now support experimental snapshot APIs for saving and restoring point-in-time filesystem state. Create a snapshot first, then pass it back to `start()` to restore files after container sleep, restart, or handoff to another Durable Object.
+
+You can snapshot a single directory with `snapshotDirectory()` or the full container with `snapshotContainer()`. The example uses the [Container class](/containers/container-package/). Create snapshots from a container that is already running:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async saveSnapshots() {
+		const directorySnapshot = await this.ctx.container.snapshotDirectory({
+			dir: "/app/foo",
+		});
+
+		const containerSnapshot = await this.ctx.container.snapshotContainer({});
+
+		await this.ctx.storage.put("directorySnapshot", directorySnapshot);
+		await this.ctx.storage.put("containerSnapshot", containerSnapshot);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Later, if you saved both snapshot types, load the saved snapshot handles and restore them with `start()`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async restoreSnapshots() {
+		const directorySnapshot =
+			await this.ctx.storage.get<any>("directorySnapshot");
+		const containerSnapshot =
+			await this.ctx.storage.get<any>("containerSnapshot");
+
+		this.ctx.container.start({
+			containerSnapshot,
+			directorySnapshots: [{ snapshot: directorySnapshot }],
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Snapshots are immutable. Directory snapshots can be restored to a different `mountPoint`. You can restore multiple directory snapshots in one `start()` call, but only one container snapshot.
+
+For more information, refer to [Snapshots](/containers/platform-details/snapshots/) and [Durable Object Container](/durable-objects/api/container/).
