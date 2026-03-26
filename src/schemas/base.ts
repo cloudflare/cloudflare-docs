@@ -3,7 +3,7 @@ import { reference, type SchemaContext } from "astro:content";
 
 import { sidebar } from "./types/sidebar";
 
-export const baseSchema = (_: SchemaContext) =>
+export const baseSchema = (context: SchemaContext) =>
 	z.object({
 		pcx_content_type: z
 			.string()
