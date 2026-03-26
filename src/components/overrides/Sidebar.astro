@@ -10,13 +10,25 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 <div
 	class="sticky top-0 z-[1] flex flex-col gap-2 bg-[var(--sl-color-black)] py-3.5 min-[50rem]:bg-[var(--sl-color-bg-sidebar)]"
 >
-	<div class="sidebar-product-title">
+	<div class="sidebar-product-title flex items-center justify-between">
 		<a href={"/" + product + "/"} class="flex items-center gap-1 no-underline">
 			<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
 			<span class="text-xl font-semibold text-black">
 				{lookupProductTitle(product, module)}
 			</span>
 		</a>
+		<button
+			type="button"
+			id="sidebar-collapse-btn"
+			aria-label="Collapse sidebar navigation"
+			aria-controls="starlight__sidebar"
+			aria-expanded="true"
+			class="hidden min-[50rem]:flex items-center justify-center w-7 h-7 shrink-0 rounded-md border-none bg-transparent text-[var(--sidebar-text)] cursor-pointer transition-colors duration-150 hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="16" height="16" fill="currentColor" aria-hidden="true">
+				<path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H80V200H40ZM216,200H96V56H216V200Z"/>
+			</svg>
+		</button>
 	</div>
 
 	<!-- Search Input -->
@@ -362,6 +374,15 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 				if (keyboardEvent.key === "/" && !isInput) {
 					keyboardEvent.preventDefault();
 					keyboardEvent.stopPropagation();
+
+					// Auto-expand sidebar if collapsed so search input is visible.
+					// Uses expandSidebar() directly to avoid a focus race —
+					// .click() on the reopen tab would trigger transitionend focus
+					// management that steals focus from the search input.
+					if (document.documentElement.hasAttribute("data-sidebar-collapsed")) {
+						(window as any).__expandSidebar?.();
+					}
+
 					searchInput.focus();
 				}
 			},

@@ -269,4 +269,16 @@ metaTags.map((attrs) => {
 <script src="src/scripts/footnotes.ts"></script>
 <script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>
+
+{/* Sidebar collapse: apply persisted state before first paint to prevent flash */}
+<script is:inline>
+(function () {
+	try {
+		if (localStorage.getItem("cf-docs-sidebar-collapsed") === "true") {
+			document.documentElement.setAttribute("data-sidebar-collapsed", "");
+		}
+	} catch (_) {}
+})();
+</script>
+
 <Default><slot /></Default>

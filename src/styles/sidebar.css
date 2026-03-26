@@ -38,3 +38,22 @@
 	--sl-color-sidebar-active: var(--sidebar-text-strong);
 	--sl-color-sidebar-hover: var(--color-cl1-gray-2);
 }
+
+/* ── Sidebar Collapse ── */
+@media (min-width: 50rem) {
+	.sidebar-pane {
+		transition: transform 250ms cubic-bezier(0.77, 0, 0.175, 1);
+		will-change: transform;
+	}
+
+	[data-sidebar-collapsed] .sidebar-pane {
+		transform: translateX(-100%);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sidebar-pane,
+	.main-frame {
+		transition: none !important;
+	}
+}
