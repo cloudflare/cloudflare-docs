@@ -1,9 +1,18 @@
 ---
-{}
+params:
+  - magicWord?
 ---
 
 import { Aside, GlossaryTooltip } from "~/components";
 
-Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare — rather than using the public Internet — for a more reliable and secure experience. With CNI, you can bring Cloudflare's full suite of network functions to your physical network edge.
+{props.magicWord === "Cloudflare WAN" && (
+<>
+Cloudflare WAN (formerly Magic WAN) typically connects to Cloudflare through IPsec or GRE tunnels over the public Internet. Cloudflare Network Interconnect (CNI) is an alternative that provides a private, dedicated link — useful when you need lower latency, more consistent throughput, or want to avoid public Internet transit entirely.
+</>
+)}
+
+Cloudflare Network Interconnect (CNI) provides a private, dedicated connection between your network and Cloudflare — bypassing the public Internet entirely. This is useful when you need consistent latency, higher throughput, or an additional layer of security that public Internet paths cannot guarantee.
+
+With CNI, you get the same Cloudflare network services (firewall, routing, traffic management) applied to your traffic, but over a connection that does not traverse shared Internet infrastructure.
 
 For more information about Network Interconnect, refer to the [Cloudflare Network Interconnect documentation](/network-interconnect/).

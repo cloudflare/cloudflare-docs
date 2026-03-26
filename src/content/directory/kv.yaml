@@ -1,0 +1,13 @@
+id: mUXdjW
+name: KV
+
+entry:
+  title: KV
+  url: /kv/
+  group: Developer platform
+  additional_groups: [Storage]
+
+meta:
+  title: Cloudflare Workers KV docs
+  description: Global, low-latency, key-value data storage
+  author: "@cloudflare"

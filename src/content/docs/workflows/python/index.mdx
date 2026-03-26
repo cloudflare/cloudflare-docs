@@ -31,7 +31,7 @@ class MyWorkflow(WorkflowEntrypoint):
 For example, a Workflow may be defined as:
 
 ```python
-from workers import Response, WorkflowEntrypoint
+from workers import Response, WorkflowEntrypoint, WorkerEntrypoint
 
 class PythonWorkflowStarter(WorkflowEntrypoint):
     async def run(self, event, step):
@@ -46,26 +46,36 @@ class PythonWorkflowStarter(WorkflowEntrypoint):
             # does stuff
             print('executing step2')
 
-        await await_step(step_1,step_2)
+        await step_1()
+        await step_2()
 
-async def on_fetch(request, env):
-    await env.MY_WORKFLOW.create()
-    return Response("Hello world!")
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        await self.env.MY_WORKFLOW.create()
+        return Response("Hello world!")
 ```
 
-You must add both `python_workflows` and `python_workers` compatibility flags to your `wrangler.toml` file.
+You must add both `python_workflows` and `python_workers` compatibility flags to your Wrangler configuration file.
 
 <WranglerConfig>
-```toml
-name = "hello-python"
-main = "src/entry.py"
-compatibility_flags = ["python_workers", "experimental", "python_workflows"]
-compatibility_date = "2024-03-29"
-
-[[workflows]]
-name = "workflows-demo"
-binding = "MY_WORKFLOW"
-class_name = "PythonWorkflowStarter"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "hello-python",
+	"main": "src/entry.py",
+	"compatibility_flags": [
+		"python_workers",
+		"python_workflows"
+	],
+	"compatibility_date": "$today",
+	"workflows": [
+		{
+			"name": "workflows-demo",
+			"binding": "MY_WORKFLOW",
+			"class_name": "PythonWorkflowStarter"
+		}
+	]
+}
 ```
 </WranglerConfig>
 
@@ -75,7 +85,7 @@ To run a Python Workflow locally, use [Wrangler](/workers/wrangler/), the CLI fo
 npx wrangler@latest dev
 ```
 
-To deploy a Python Workflow to Cloudflare, run [`wrangler deploy`](/workers/wrangler/commands/#deploy):
+To deploy a Python Workflow to Cloudflare, run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy):
 
 ```bash
 npx wrangler@latest deploy

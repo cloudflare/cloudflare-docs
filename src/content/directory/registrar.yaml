@@ -1,0 +1,12 @@
+id: VgcrxJ
+name: Registrar
+
+entry:
+  title: Registrar
+  url: /registrar/
+  group: Core platform
+
+meta:
+  title: Cloudflare Registrar docs
+  description: Buy and renew your domain at cost, add another layer of security to your DNS records for free
+  author: "@cloudflare"

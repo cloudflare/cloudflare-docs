@@ -9,6 +9,8 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/snapshot` endpoint captures both the HTML content and a screenshot of the webpage in one request. It returns the HTML as a text string and the screenshot as a Base64-encoded image.
 
+<Render file="rest-api-token-permissions" product="browser-rendering" />
+
 ## Endpoint
 
 ```txt
@@ -86,7 +88,7 @@ console.log(snapshot.content);
 :::note[Looking for more parameters?]
 Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/snapshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
-  
+
 ### Create a snapshot from custom HTML
 
 The `html` property in the JSON payload, it sets the html to `<html><body>Advanced Snapshot</body></html>` then does the following steps:

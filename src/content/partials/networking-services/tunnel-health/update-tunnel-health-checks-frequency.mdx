@@ -18,9 +18,9 @@ import {
 
 By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, Cloudflare Network Interconnect (CNI), or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from {props.productName}.
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
-		<p>For Magic WAN Connector, Cloudflare sends health checks to IPsec tunnel endpoints.</p>
+		<p>For Cloudflare One Appliance (formerly Magic WAN Connector), Cloudflare sends health checks to IPsec tunnel endpoints.</p>
   </>
   )
 }
@@ -29,14 +29,14 @@ You can configure the health check frequency through the dashboard or [the API](
 
 Available options are `low`, `mid`, and `high`.
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
-		<p>To configure health checks frequency in Magic WAN Connector, refer to <a href="#configure-connector">Configure Connector</a></p>
+		<p>To configure health checks frequency in Cloudflare One Appliance, refer to <a href="#configure-connector">Configure Connector</a></p>
   </>
   )
 }
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
 		<AnchorHeading depth={2} title="Manual configuration" />
   </>
@@ -45,7 +45,7 @@ Available options are `low`, `mid`, and `high`.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Refer to <a href={props.addTunnelsPath}>Add tunnels</a> to learn how to create or edit your tunnel.
+1. To create or edit your tunnel, refer to <a href={props.addTunnelsPath}>Add tunnels</a>.
 2. Change the **Health check rate** to your desired rate. For example, _Low_.
 3. Save your changes.
 
@@ -68,25 +68,27 @@ The following example adjusts tunnel health check frequency to `low`. Note that 
 
 </TabItem> </Tabs>
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
 
   <>
 		<AnchorHeading depth={2} title="Configure Connector" />
 
-		{ props.magicWord === "Magic WAN" ? (
+		{ props.magicWord === "Cloudflare WAN" ? (
 			<>
 				<Markdown
 				text={`
-1. Go to the **Network overview** page.
+1. Go to the **Connector** page.
 				`}
 				inline={false}
 				/>
 
-				<DashButton url="/?to=/:account/magic-wan/network" />
+				<DashButton url="/?to=/:account/magic-networks/connections" />
 
 				<Markdown
 				text={`
-2. Select your site > **Edit**.
+2. Go the **Appliances** tab > **Profiles**.
+3. Find the Connector profile you want to edit > select the three dots > **Edit**.
+4. In **Network Configuration** > **WAN configuration** > select your WAN > **Edit**.
 				`}
 				inline={false}
 				/>
@@ -94,8 +96,10 @@ The following example adjusts tunnel health check frequency to `low`. Note that 
 		) : (
 			<Markdown
 			text={`
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
-2. In **Network overview**, select your site > **Edit**
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Networks**.
+2. Go to **Connectors** > **Appliances**.
+3. In **Profiles**, find the Connector profile you want to edit > select the three dots > **Edit**.
+4. In **Network Configuration** > **WAN configuration** > select your WAN > **Edit**.
 			`}
 			inline={false}
 			/>
@@ -103,9 +107,9 @@ The following example adjusts tunnel health check frequency to `low`. Note that 
 
 		<Markdown
 		text={`
-3. In **Network** > **WAN configuration** > select your WAN > **Edit**.
-4. Change the **Health check rate** to your desired rate.
-5. Select **Save**.
+
+5. Change the **Health check rate** to your desired rate.
+6. Select **Save**.
 		`}
 		inline={false}
 		/>

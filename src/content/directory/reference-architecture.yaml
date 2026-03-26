@@ -1,0 +1,14 @@
+id: perfAu
+name: Reference Architecture
+
+entry:
+  title: Reference Architecture
+  url: /reference-architecture/
+  wrap: true
+  group: Core platform
+  additional_groups: [Docs collections]
+
+meta:
+  title: Cloudflare Reference Architecture docs
+  description: Guides and diagrams explain Cloudflare products and how to integrate with IT architectures
+  author: "@cloudflare"

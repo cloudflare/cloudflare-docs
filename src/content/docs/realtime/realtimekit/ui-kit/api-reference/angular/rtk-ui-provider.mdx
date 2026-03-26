@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: rtk-ui-provider
+description: API reference for rtk-ui-provider component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ✅ | - | Config |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting \| null` | ❌ | `null` | Meeting |
+| `mode` | `MeetingMode1` | ✅ | - | Fill type |
+| `overrides` | `Overrides1` | ❌ | `defaultOverrides` | UI Kit Overrides |
+| `showSetupScreen` | `boolean` | ✅ | - | Whether to show setup screen or not |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language utility |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-ui-provider></rtk-ui-provider>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-ui-provider
+ [config]="defaultUiConfig"
+ [mode]="meeting"
+ [showSetupScreen]="true">
+</rtk-ui-provider>
+```
+

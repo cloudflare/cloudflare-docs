@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: rtk-polls
+description: API reference for rtk-polls component (Angular Library)
+---
+A component which lists all available plugins a user can access with
+ the ability to enable or disable them as per their permissions.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-polls></rtk-polls>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-polls
+ [meeting]="meeting"
+ size="md">
+</rtk-polls>
+```
+

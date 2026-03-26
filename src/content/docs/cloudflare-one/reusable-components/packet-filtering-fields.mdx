@@ -1,5 +1,5 @@
 ---
-title: Packet filtering (Magic Firewall) fields
+title: Packet filtering (Cloudflare Network Firewall) fields
 pcx_content_type: reference
 head:
   - tag: title
@@ -9,7 +9,7 @@ head:
 import { Type } from "~/components";
 
 :::note
-Some Magic Firewall fields are available only to customers who purchased Magic Firewall's advanced features. Refer to [Magic Firewall plans](/magic-firewall/plans/) for more information.
+Some Cloudflare Network Firewall fields are available only to customers who purchased Cloudflare Network Firewall's advanced features. Refer to [Cloudflare Network Firewall plans](/cloudflare-network-firewall/plans/) for more information.
 :::
 
 ## `cf.colo.name`
@@ -100,7 +100,7 @@ Example value: `GB`
 
 For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
 
-For Magic Firewall, the `ip.geoip.country` field (which is deprecated) will match on either source or destination address. The `ip.geoip.country` field is still available for new and existing rules, but you should use the `ip.src.country` and/or `ip.dst.country` fields instead.
+For Cloudflare Network Firewall, the `ip.geoip.country` field (which is deprecated) will match on either source or destination address. The `ip.geoip.country` field is still available for new and existing rules, but you should use the `ip.src.country` and/or `ip.dst.country` fields instead.
 
 ---
 

@@ -1,0 +1,63 @@
+---
+import { z } from "astro/zod";
+import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const workerCode = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const form = new FormData();
+		form.append('prompt', 'a sunset with a dog');
+		form.append('width', '1024');
+		form.append('height', '1024');
+
+		// FormData doesn't expose its serialized body or boundary. Passing it to a
+		// Request (or Response) constructor serializes it and generates the Content-Type
+		// header with the boundary, which is required for the server to parse the multipart fields.
+		const formResponse = new Response(form);
+		const formStream = formResponse.body;
+		const formContentType = formResponse.headers.get('content-type')!;
+
+		const resp = await env.AI.run("${name}", {
+			multipart: {
+				body: formStream,
+				contentType: formContentType
+			}
+		});
+
+		return Response.json(resp);
+	},
+} satisfies ExportedHandler<Env>;
+`;
+
+const curl = `
+curl --request POST \\
+  --url 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT}/ai/run/${name}' \\
+  --header 'Authorization: Bearer {TOKEN}' \\
+  --header 'Content-Type: multipart/form-data' \\
+  --form 'prompt=a sunset at the alps' \\
+  --form steps=25 \\
+  --form width=1024 \\
+  --form height=1024
+`;
+---
+
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript" icon="seti:typescript">
+		<Code code={workerCode} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="curl" icon="seti:shell">
+		<Code code={curl} lang="sh" />
+	</TabItem>
+</Tabs>

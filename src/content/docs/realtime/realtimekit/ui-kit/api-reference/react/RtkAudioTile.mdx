@@ -1,0 +1,45 @@
+---
+pcx_content_type: navigation
+title: RtkAudioTile
+description: API reference for RtkAudioTile component (React Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ✅ | - | Config |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting |
+| `participant` | `Peer` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | States |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkAudioTile } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkAudioTile />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkAudioTile } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkAudioTile
+      config={defaultUiConfig}
+      meeting={meeting}
+      participant={participant}
+    />
+  );
+}
+```
+

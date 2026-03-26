@@ -39,10 +39,15 @@ For example, if you have a Worker called `workflows-starter`, you would create a
 
 <WranglerConfig>
 
-```toml
-services = [
-{ binding = "WORKFLOW_SERVICE", service = "workflows-starter" }
-]
+```jsonc
+{
+	"services": [
+		{
+			"binding": "WORKFLOW_SERVICE",
+			"service": "workflows-starter"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

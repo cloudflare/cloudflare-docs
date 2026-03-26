@@ -1,0 +1,67 @@
+---
+title: Overview
+pcx_content_type: overview
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Overview
+---
+
+import {
+	Description,
+	Feature,
+	GlossaryTooltip,
+	Plan,
+	RelatedProduct,
+} from "~/components";
+
+<Description>
+	Protect your cloud infrastructure or network offices with advanced, scalable
+	firewall-as-a-service protection.
+</Description>
+
+<Plan type="enterprise" />
+
+Unwanted network traffic — from DDoS floods to unauthorized scans — can overwhelm your infrastructure. Cloudflare Network Firewall is a <GlossaryTooltip term="firewall-as-a-service">firewall-as-a-service (FWaaS)</GlossaryTooltip> delivered from the Cloudflare global network, meaning Cloudflare runs the firewall for you in the cloud instead of on your own hardware. You can apply filter rules on a variety of criteria, such as protocol (for example, TCP or UDP) and <GlossaryTooltip term="data packet">packet</GlossaryTooltip> length, to filter unwanted traffic before it reaches your network.
+
+Cloudflare Network Firewall uses Wireshark display filter syntax — a rule language originally from the popular network analysis tool [Wireshark](https://www.wireshark.org/), widely used in networking and the same syntax used across other Cloudflare products. With this syntax, you can craft rules to precisely allow or deny any traffic in or out of your network.
+
+Cloudflare Network Firewall is available with the purchase of [Magic Transit](/magic-transit/) or [Cloudflare WAN](/cloudflare-wan/).
+
+---
+
+## Features
+
+<Feature
+	header="Intrusion Detection System (IDS)"
+	href="/cloudflare-one/traffic-policies/ids/"
+>
+
+    Actively monitor for a wide range of known threat signatures in your
+    traffic. IDS scans packets for patterns that match known attacks (such as malware
+    signatures or exploit attempts) and alerts you when it finds a match.
+
+</Feature>
+
+---
+
+## Related products
+
+<RelatedProduct
+	header="Cloudflare Magic Transit"
+	href="/magic-transit/"
+	product="cloudflare-one"
+>
+	Secure your network from incoming Internet traffic, and improve performance at
+	Cloudflare scale.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Cloudflare WAN"
+	href="/cloudflare-wan/"
+	product="cloudflare-wan"
+>
+	Improve security and performance for your entire corporate networking,
+	reducing cost and operation complexity.
+</RelatedProduct>

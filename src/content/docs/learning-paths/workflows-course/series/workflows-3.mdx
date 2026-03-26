@@ -54,12 +54,11 @@ Cloudflare Workflows provide a powerful way to manage asynchronous, durable proc
 
       This workflow can be scheduled to run periodically to update the leaderboard data.
 
-      ### Wrangler.toml Configuration
+      ### Wrangler Configuration
 
-      The `wrangler.toml` file is used to configure your Worker and Workflows. This includes defining bindings to resources like KV namespaces and setting up triggers for workflows.
+      The Wrangler configuration file is used to configure your Worker and Workflows. This includes defining bindings to resources like KV namespaces and setting up triggers for workflows.
 
-      Open `wrangler.toml` and find the `[triggers]` section.
-
+      Open the Wrangler configuration file and find the `[triggers]` section.
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/wrangler.toml#L68)
 
       The `crons` array allows you to define scheduled triggers for your main Worker. The example shows a cron job configured to run every 30 minutes.

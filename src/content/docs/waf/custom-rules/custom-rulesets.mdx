@@ -20,10 +20,12 @@ Consider creating custom rulesets instead of managing individual custom rules at
 Currently, the Cloudflare dashboard does not support working with custom rulesets at the zone level. You will need to use the Cloudflare API to configure or deploy these rulesets.
 :::
 
+Creating a custom ruleset does not activate it. Custom rulesets only run when a rule with the `execute` action references them from a [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) — the top-level ruleset that Cloudflare evaluates for each request in a given [phase](/ruleset-engine/about/phases/).
+
 To deploy a custom ruleset for a zone:
 
 1. Create a custom ruleset at the zone level with one or more rules. Alternatively, identify the existing custom ruleset you want to deploy using the [List zone rulesets](/api/resources/rulesets/methods/list/) API operation.
-2. Deploy the custom ruleset so that it gets executed. To deploy a custom ruleset, create a rule with the `execute` action.
+2. Add a rule with the `execute` action to the `http_request_firewall_custom` phase entry point ruleset, referencing the custom ruleset ID. This rule tells Cloudflare to run the custom ruleset when the rule expression matches.
 
 ### 1. Create custom ruleset
 
@@ -220,7 +222,7 @@ Deploy the custom ruleset by adding a rule with `"action": "execute"` to the `ht
 
 ## Next steps
 
-Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the custom ruleset you created and deployed. The following table has a list of common tasks for working with custom rulesets at the account level:
+Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the custom ruleset you created and deployed. The following table has a list of common tasks for working with custom rulesets at the zone level:
 
 | Task                               | Procedure                                                                                                                                                                                                                                                    |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

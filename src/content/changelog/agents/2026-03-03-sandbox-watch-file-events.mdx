@@ -1,0 +1,69 @@
+---
+title: Real-time file watching in Sandboxes
+description: sandbox.watch() returns an SSE stream of filesystem change events using native inotify, enabling real-time detection of file create, modify, delete, and move operations.
+products:
+  - agents
+date: 2026-03-03
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Sandboxes](/sandbox/) now support real-time filesystem watching via `sandbox.watch()`. The method returns a [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) stream backed by native inotify, so your Worker receives `create`, `modify`, `delete`, and `move` events as they happen inside the container.
+
+## `sandbox.watch(path, options)`
+
+Pass a directory path and optional filters. The returned stream is a standard `ReadableStream` you can proxy directly to a browser client or consume server-side.
+
+<TypeScriptExample>
+
+```ts
+// Stream events to a browser client
+const stream = await sandbox.watch("/workspace/src", {
+	recursive: true,
+	include: ["*.ts", "*.js"],
+});
+
+return new Response(stream, {
+	headers: { "Content-Type": "text/event-stream" },
+});
+```
+
+</TypeScriptExample>
+
+## Server-side consumption with `parseSSEStream`
+
+Use `parseSSEStream` to iterate over events inside a Worker without forwarding them to a client.
+
+<TypeScriptExample>
+
+```ts
+import { parseSSEStream } from "@cloudflare/sandbox";
+import type { FileWatchSSEEvent } from "@cloudflare/sandbox";
+
+const stream = await sandbox.watch("/workspace/src", { recursive: true });
+
+for await (const event of parseSSEStream<FileWatchSSEEvent>(stream)) {
+	console.log(event.type, event.path);
+}
+```
+
+</TypeScriptExample>
+
+Each event includes a `type` field (`create`, `modify`, `delete`, or `move`) and the affected `path`. Move events also include a `from` field with the original path.
+
+## Options
+
+| Option      | Type       | Description                                                 |
+| ----------- | ---------- | ----------------------------------------------------------- |
+| `recursive` | `boolean`  | Watch subdirectories. Defaults to `false`.                  |
+| `include`   | `string[]` | Glob patterns to filter events. Omit to receive all events. |
+
+## Upgrade
+
+To update to the latest version:
+
+```sh
+npm i @cloudflare/sandbox@latest
+```
+
+For full API details, refer to the [Sandbox file watching reference](/sandbox/api/file-watching/).

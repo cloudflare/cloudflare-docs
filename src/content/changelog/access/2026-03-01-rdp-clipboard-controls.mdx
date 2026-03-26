@@ -1,0 +1,26 @@
+---
+title: Clipboard controls for browser-based RDP
+description: Administrators can now restrict copy and paste actions between a user's local machine and their browser-based RDP session.
+date: 2026-03-01
+products:
+  - access
+---
+
+You can now configure clipboard controls for browser-based RDP with Cloudflare Access. Clipboard controls allow administrators to restrict whether users can copy or paste text between their local machine and the remote Windows server.
+
+![Enable users to copy and paste content from their local machine to remote RDP sessions in the Cloudflare One dashboard](~/assets/images/changelog/access/rdp-clipboard-controls.png)
+
+This feature is useful for organizations that support bring-your-own-device (BYOD) policies or third-party contractors using unmanaged devices. By restricting clipboard access, you can prevent sensitive data from being transferred out of the remote session to a user's personal device.
+
+## Configuration options
+
+Clipboard controls are configured per policy within your Access application. For each policy, you can independently allow or deny:
+
+- **Copy from local client to remote RDP session** — Users can copy/paste text from their local machine into the browser-based RDP session.
+- **Copy from remote RDP session to local client** — Users can copy/paste text from the browser-based RDP session to their local machine.
+
+By default, both directions are denied for new policies. For existing Access applications created before this feature was available, clipboard access remains enabled to preserve backwards compatibility.
+
+When a user attempts a restricted clipboard action, the clipboard content is replaced with an error message informing them that the action is not allowed.
+
+For more information, refer to [Clipboard controls for browser-based RDP](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-browser/#clipboard-controls).

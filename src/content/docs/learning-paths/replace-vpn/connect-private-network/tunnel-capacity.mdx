@@ -8,14 +8,14 @@ sidebar:
 
 import { Render } from "~/components"
 
-Now that you have a Cloudflare Tunnel up and running, evaluate whether `cloudflared` has enough system resources to handle the expected volume of requests from end users. <Render file="tunnel/tunnel-capacity-intro" product="cloudflare-one" />
+Now that you have a Cloudflare Tunnel up and running, evaluate whether `cloudflared` has enough system resources to handle the expected volume of requests from end users. <Render file="tunnel/availability/tunnel-capacity-intro" product="cloudflare-one" />
 If you have exhausted the ports on a single machine, you will need to add additional servers running `cloudflared`.
 
 ## Size the tunnel
 
 To determine how many `cloudflared` host servers you need:
 
-1. Start with our baseline recommendations: <Render file="tunnel/tunnel-capacity-baseline" product="cloudflare-one" />
+1. Start with our baseline recommendations: <Render file="tunnel/availability/tunnel-capacity-baseline" product="cloudflare-one" />
 
 2. After you have completed this learning path and have users actively engaging with the network, [calculate](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/#calculate-your-tunnel-capacity) your actual tunnel usage.
 

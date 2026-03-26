@@ -11,11 +11,11 @@ params:
 
 import { AnchorHeading, Markdown } from "~/components";
 
-Use these troubleshooting options to gather information at the start of your troubleshooting process. Then, use more detailed network data collection and analysis to identify the root cause.
+Use these options to gather information at the start of your troubleshooting workflow. Then, use more detailed network data collection and analysis to identify the root cause.
 
 <Markdown
 	text={`
-		${props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels" ? "- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)" : ""}
+		${props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN" ? "- View your entire network at a glance in [Network overview](#network-overview)" : ""}
 		- Analyze network traffic over time in [Network Analytics](#network-analytics)
 		- Perform more detailed troubleshooting with:
 		  - [Traceroutes](#traceroutes)
@@ -24,14 +24,14 @@ Use these troubleshooting options to gather information at the start of your tro
 	inline={false}
 />
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
-		<AnchorHeading title="Network overview (beta)" depth={2} slug="network-overview-beta" />
+		<AnchorHeading title="Network overview" depth={2} slug="network-overview" />
 		<Markdown
 		text={`
-		Network overview (beta) shows the connectivity status and traffic analytics for all Magic WAN sites. Use it when you receive an alert, start troubleshooting, or perform routine monitoring.
+		Network overview shows the connectivity status and traffic analytics for all Cloudflare WAN sites. Use it when you receive an alert, start troubleshooting, or perform routine monitoring.
 
-		Refer to [${props.magicWord === "WAN Tunnels" ? "Network health" : "Network overview (beta)"}](${props.siteAnalyticsURL}) to learn more.
+		For details, refer to [${props.magicWord === "CF1 Cloudflare WAN" ? "Network health" : "Network overview"}](${props.siteAnalyticsURL}).
 		`}
 		inline={false}
 		/>
@@ -43,23 +43,23 @@ Use these troubleshooting options to gather information at the start of your tro
 
 Network Analytics provides detailed analytics on your {props.productName} traffic over time. You can filter data by traffic characteristics and review traffic trends over time.
 
-Refer to <a href={props.networkAnalyticsURL}>{props.productName} Network Analytics</a> to learn more.
+For details, refer to <a href={props.networkAnalyticsURL}>{props.productName} Network Analytics</a>.
 
 ## Traceroutes
 
-Traceroutes provide a hop-by-hop breakdown of the Internet path that network traffic follows from Cloudflare's network to your network.
+Traceroutes provide a hop-by-hop breakdown of the Internet path network traffic follows from Cloudflare's network to your network.
 
-Refer to <a href={props.traceRoutes}>Traceroutes</a> to learn more.
+For details, refer to <a href={props.traceRoutes}>Traceroutes</a>.
 
 ## Packet captures
 
 Packet captures allow you to analyze the raw packet data your network sends to and receives from Cloudflare's network.
 
-Refer to [packet captures](/magic-firewall/packet-captures/) to learn more.
+For details, refer to [packet captures](/cloudflare-network-firewall/packet-captures/).
 
 ## Query analytics with GraphQL
 
-GraphQL Analytics provides a GraphQL API you can query to receive raw JSON data for your {props.productName} traffic analytics. You can ingest this data into a security information and event management (SIEM) tool or another platform for further analysis.
+GraphQL Analytics provides a GraphQL API to query raw JSON data for your {props.productName} traffic analytics. You can ingest this data into a Security Information and Event Management (SIEM) tool or another platform for further analysis.
 
 - <a href={props.graphQlTunnelBandwidthURL}>Querying {props.productName} tunnel bandwidth analytics with GraphQL</a>
 - <a href={props.graphQlTunnelHealthURL}>Querying {props.productName} tunnel health check results with GraphQL</a>

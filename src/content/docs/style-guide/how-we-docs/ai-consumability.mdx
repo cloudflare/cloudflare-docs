@@ -41,13 +41,13 @@ The references to the panels `id`, usually handled by JavaScript, are visible bu
 
 ### Turning our components into "Markdownable" HTML
 
-To solve this, we created a [`rehype plugin`](https://github.com/cloudflare/cloudflare-docs/blob/d5a19deded110bce6a7c5d45e702d36527da0a4e/src/plugins/rehype/filter-elements.ts) for:
+To solve this, we use [Markdown for Agents](/fundamentals/reference/markdown-for-agents/), which converts HTML to Markdown at the Cloudflare network layer. It handles:
 
-- Removing non-content tags (`script`, `style`, `link`, etc) via a [tags allowlist](https://github.com/cloudflare/cloudflare-docs/blob/d5a19deded110bce6a7c5d45e702d36527da0a4e/src/plugins/rehype/filter-elements.ts#L19-L104)
-- [Transforming custom elements](https://github.com/cloudflare/cloudflare-docs/blob/d5a19deded110bce6a7c5d45e702d36527da0a4e/src/plugins/rehype/filter-elements.ts#L189-L227) like `starlight-tabs` into standard unordered lists
-- [Adapting our Expressive Code codeblocks HTML](https://github.com/cloudflare/cloudflare-docs/blob/d5a19deded110bce6a7c5d45e702d36527da0a4e/src/plugins/rehype/filter-elements.ts#L143-L178) to the [HTML that CommonMark expects](https://spec.commonmark.org/0.31.2/#example-142)
+- Removing non-content tags (`script`, `style`, `link`, etc.)
+- Transforming custom elements like `starlight-tabs` into standard unordered lists
+- Adapting code block HTML into clean Markdown fenced code blocks
 
-Taking the `Tabs` example from the previous section and running it through our plugin will now give us a normal unordered list with the content properly associated with a given list item:
+Taking the `Tabs` example from the previous section, Markdown for Agents will give us a normal unordered list with the content properly associated with a given list item:
 
 ```md
 - One
@@ -59,20 +59,25 @@ Taking the `Tabs` example from the previous section and running it through our p
   Two Content
 ```
 
-For example, take a look at our Markdown test fixture (or any page by appending `/index.md` to the URL):
+You can request any page as Markdown in two ways:
 
-- [`/style-guide/fixtures/markdown/`](/style-guide/fixtures/markdown/)
-- [`/style-guide/fixtures/markdown/index.md`](/style-guide/fixtures/markdown/index.md)
+- Send a request with an `Accept: text/markdown` header:
+
+  ```bash
+  curl "https://developers.cloudflare.com/style-guide/ai-tooling/" \
+    --header "Accept: text/markdown"
+  ```
+
+- Append `index.md` to the URL — for example, [`/style-guide/ai-tooling/index.md`](/style-guide/ai-tooling/index.md)
 
 ### Saving on tokens
 
-Most AI pricing is around input & output tokens and our approach greatly reduces the amount of input tokens required.
+Most AI pricing is around input & output tokens and Markdown greatly reduces the amount of input tokens required.
 
 For example, let's take a look at the amount of tokens required for the [Workers Get Started](/workers/get-started/guide/) using [OpenAI's tokenizer](https://platform.openai.com/tokenizer):
 
 - HTML: 15,229 tokens
-- turndown: 3,401 tokens (4.48x less than HTML)
-- index.md: 2,110 tokens (7.22x less than HTML)
+- Markdown: 2,110 tokens (7.22x less than HTML)
 
 When providing our content to AI, we can see a real-world ~7x saving in input tokens cost.
 

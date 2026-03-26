@@ -1,7 +1,7 @@
 ---
 import Details from "./Details.astro";
 import { marked } from "marked";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import prettyBytes from "pretty-bytes";
 import { warpReleasesSchema } from "~/schemas";
 import platforms from "~/util/warp-platforms.json";

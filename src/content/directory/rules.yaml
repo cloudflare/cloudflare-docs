@@ -1,0 +1,14 @@
+id: bHoP3c
+name: Rules
+
+entry:
+  title: Rules
+  url: /rules/
+  group: Core platform
+  additional_groups:
+    [Application performance, Application security, Network security]
+
+meta:
+  title: Cloudflare Rules docs
+  description: Modify incoming requests, change Cloudflare settings, or trigger actions
+  author: "@cloudflare"

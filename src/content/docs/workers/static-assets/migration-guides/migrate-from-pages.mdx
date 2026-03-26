@@ -70,7 +70,7 @@ Now, with **Cloudflare Workers**:
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./dist/client/"
 	}
@@ -98,7 +98,7 @@ For a Single Page Application (SPA):
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./dist/client/",
 		"not_found_handling": "single-page-application"
@@ -115,7 +115,7 @@ For custom 404 pages:
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./dist/client/",
 		"not_found_handling": "404-page"
@@ -156,7 +156,7 @@ Then, update your configuration file's `main` field to point to the location of 
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./dist/client/_worker.js", // or some other location if you moved the script out of the static asset directory
 	"assets": {
 		"directory": "./dist/client/"
@@ -168,7 +168,7 @@ Then, update your configuration file's `main` field to point to the location of 
 
 ##### Pages Functions with a `functions/` folder
 
-If you use **Pages Functions with a [folder of `functions/`](/pages/functions/)**, you must first compile these functions into a single Worker script with the [`wrangler pages functions build`](/workers/wrangler/commands/#functions-build) command.
+If you use **Pages Functions with a [folder of `functions/`](/pages/functions/)**, you must first compile these functions into a single Worker script with the [`wrangler pages functions build`](/workers/wrangler/commands/pages/#pages-functions-build) command.
 
 <PackageManagers
 	type="exec"
@@ -185,7 +185,7 @@ Once the Worker script has been compiled, you can update your configuration file
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./dist/worker/index.js",
 	"assets": {
 		"directory": "./dist/client/"
@@ -206,7 +206,7 @@ Workers, on the other hand, will default to serving static assets ahead of your 
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./dist/worker/index.js",
 	"assets": {
 		"directory": "./dist/client/",
@@ -240,7 +240,7 @@ export default class extends WorkerEntrypoint {
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
 	"assets": {
 		"directory": "./dist/client/"
@@ -259,7 +259,7 @@ Pages automatically provided [an `ASSETS` binding](/pages/functions/api-referenc
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
 	"assets": {
 		"directory": "./dist/client/",
@@ -272,14 +272,14 @@ Pages automatically provided [an `ASSETS` binding](/pages/functions/api-referenc
 
 #### Runtime
 
-If you had customized [placement](/workers/configuration/smart-placement/), or set a [compatibility date](/workers/configuration/compatibility-dates/) or any [compatibility flags](/workers/configuration/compatibility-flags/) in your Pages project, you can define the same in your Wrangler configuration file:
+If you had customized [placement](/workers/configuration/placement/), or set a [compatibility date](/workers/configuration/compatibility-dates/) or any [compatibility flags](/workers/configuration/compatibility-flags/) in your Pages project, you can define the same in your Wrangler configuration file:
 
 <WranglerConfig>
 
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./worker/index.ts",
 	"placement": {
@@ -302,7 +302,7 @@ If you are [using Workers Builds](#builds), ensure you also [configure any varia
 
 ### Wrangler commands
 
-Where previously you used [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) and [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1), now instead use [`wrangler dev`](/workers/wrangler/commands/#dev) and [`wrangler deploy`](/workers/wrangler/commands/#deploy). Additionally, if you are using a Vite-powered framework, [our new Vite plugin](/workers/vite-plugin/) may be able offer you an even simpler development experience.
+Where previously you used [`wrangler pages dev`](/workers/wrangler/commands/pages/#pages-dev) and [`wrangler pages deploy`](/workers/wrangler/commands/general/#deploy), now instead use [`wrangler dev`](/workers/wrangler/commands/general/#dev) and [`wrangler deploy`](/workers/wrangler/commands/general/#deploy). Additionally, if you are using a Vite-powered framework, [our new Vite plugin](/workers/vite-plugin/) may be able offer you an even simpler development experience.
 
 :::note[Wrangler uses a different default port for the local development]
 
@@ -328,7 +328,7 @@ To get a similar experience in Workers, you must:
    ```json
    {
    	"name": "my-worker",
-   	"compatibility_date": "2025-04-01",
+   	"compatibility_date": "$today",
    	"main": "./worker/index.ts",
    	"assets": {
    		"directory": "./dist/client/"
@@ -362,7 +362,7 @@ Where previously you were offered a `pages.dev` subdomain for your Pages project
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
 	"workers_dev": true
 }
@@ -422,7 +422,7 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 | [Custom HTTP headers for static assets](/workers/static-assets/headers/)                                    | ✅      | ✅      |
 | [Middleware](/workers/static-assets/binding/#run_worker_first)                                              | ✅ [^1] | ✅      |
 | [Redirects](/workers/static-assets/redirects/)                                                              | ✅      | ✅      |
-| [Smart Placement](/workers/configuration/smart-placement/)                                                  | ✅      | ✅      |
+| [Smart Placement](/workers/configuration/placement/)                                                        | ✅      | ✅      |
 | [Serve assets on a path](/workers/static-assets/routing/advanced/serving-a-subdirectory/)                   | ✅      | ❌      |
 | **Observability**                                                                                           |         |         |
 | [Workers Logs](/workers/observability/)                                                                     | ✅      | ❌      |
@@ -475,6 +475,6 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 
 [^3]: Workers Builds supports enabling [non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds), though does not yet have the same level of configurability as Pages does.
 
-[^4]: Workers [supports popular frameworks](/workers/framework-guides/), many of which implement file-based routing. Additionally, you can use Wrangler to [compile your folder of `functions/`](#folder-of-functions) into a Worker to help ease the migration from Pages to Workers.
+[^4]: Workers [supports popular frameworks](/workers/framework-guides/), many of which implement file-based routing. Additionally, you can use Wrangler to [compile your folder of `functions/`](#pages-functions-with-a-functions-folder) into a Worker to help ease the migration from Pages to Workers.
 
-[^5]: As in <sup>4</sup>, Wrangler can [compile your Pages Functions into a Worker](#folder-of-functions). Or if you are starting from scratch, everything that is possible with Pages Functions can also be achieved by adding code to your Worker or by using framework-specific plugins for relevant third party tools.
+[^5]: As in <sup>4</sup>, Wrangler can [compile your Pages Functions into a Worker](#pages-functions-with-a-functions-folder). Or if you are starting from scratch, everything that is possible with Pages Functions can also be achieved by adding code to your Worker or by using framework-specific plugins for relevant third party tools.

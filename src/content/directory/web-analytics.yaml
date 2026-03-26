@@ -1,0 +1,13 @@
+id: qLsgnN
+name: Cloudflare Web Analytics
+
+entry:
+  title: Cloudflare Web Analytics
+  url: /web-analytics/
+  group: Application performance
+  additional_groups: [Analytics, Developer platform]
+
+meta:
+  title: Cloudflare Web Analytics docs
+  description: Get vital web analytics for your website
+  author: "@cloudflare"

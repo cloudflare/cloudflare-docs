@@ -1,0 +1,12 @@
+id: ucdDRs
+name: WAF
+
+entry:
+  title: WAF
+  url: /waf/
+  group: Application security
+
+meta:
+  title: Cloudflare Web Application Firewall (WAF) docs
+  description: Filter incoming traffic and protect against web app vulnerabilities
+  author: "@cloudflare"

@@ -90,10 +90,17 @@ To set a fixed maximum number of concurrent consumer invocations for a given que
 
 <WranglerConfig>
 
-```toml
-[[queues.consumers]]
-  queue = "my-queue"
-  max_concurrency = 1
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				"queue": "my-queue",
+				"max_concurrency": 1
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>

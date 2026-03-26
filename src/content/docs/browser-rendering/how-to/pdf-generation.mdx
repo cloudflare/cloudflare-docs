@@ -32,8 +32,12 @@ The following example shows you how to generate a PDF using [Puppeteer](/browser
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-browser = { binding = "BROWSER" }
+```jsonc
+{
+	"browser": {
+		"binding": "BROWSER"
+	}
+}
 ```
 
 </WranglerConfig>

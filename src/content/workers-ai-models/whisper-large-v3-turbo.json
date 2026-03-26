@@ -12,6 +12,10 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "async_queue",
+            "value": "true"
+        },
+        {
             "property_id": "price",
             "value": [
                 {
@@ -27,8 +31,23 @@
             "type": "object",
             "properties": {
                 "audio": {
-                    "type": "string",
-                    "description": "Base64 encoded value of the audio data."
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "description": "Base64 encoded value of the audio data."
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "body": {
+                                    "type": "object"
+                                },
+                                "contentType": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    ]
                 },
                 "task": {
                     "type": "string",
@@ -50,7 +69,36 @@
                 },
                 "prefix": {
                     "type": "string",
-                    "description": "The prefix it appended the the beginning of the output of the transcription and can guide the transcription result."
+                    "description": "The prefix appended to the beginning of the output of the transcription and can guide the transcription result."
+                },
+                "beam_size": {
+                    "type": "integer",
+                    "default": 5,
+                    "description": "The number of beams to use in beam search decoding. Higher values may improve accuracy at the cost of speed."
+                },
+                "condition_on_previous_text": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to condition on previous text during transcription. Setting to false may help prevent hallucination loops."
+                },
+                "no_speech_threshold": {
+                    "type": "number",
+                    "default": 0.6,
+                    "description": "Threshold for detecting no-speech segments. Segments with no-speech probability above this value are skipped."
+                },
+                "compression_ratio_threshold": {
+                    "type": "number",
+                    "default": 2.4,
+                    "description": "Threshold for filtering out segments with high compression ratio, which often indicate repetitive or hallucinated text."
+                },
+                "log_prob_threshold": {
+                    "type": "number",
+                    "default": -1,
+                    "description": "Threshold for filtering out segments with low average log probability, indicating low confidence."
+                },
+                "hallucination_silence_threshold": {
+                    "type": "number",
+                    "description": "Optional threshold (in seconds) to skip silent periods that may cause hallucinations."
                 }
             },
             "required": [

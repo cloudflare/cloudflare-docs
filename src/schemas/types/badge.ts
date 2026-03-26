@@ -1,5 +1,5 @@
 // Vendored from https://github.com/withastro/starlight/blob/a171a996b842f1fdb37a0bdbb2c9d86e1073e1a4/packages/starlight/schemas/badge.ts#
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
 const badgeBaseSchema = z.object({
 	variant: z
@@ -13,14 +13,13 @@ const badgeSchema = badgeBaseSchema.extend({
 });
 
 const i18nBadgeSchema = badgeBaseSchema.extend({
-	text: z.union([z.string(), z.record(z.string())]),
+	text: z.union([z.string(), z.record(z.string(), z.string())]),
 });
 
-export const BadgeComponentSchema = badgeSchema
-	.extend({
-		size: z.enum(["small", "medium", "large"]).default("small"),
-	})
-	.passthrough();
+export const BadgeComponentSchema = z.looseObject({
+	...badgeSchema.shape,
+	size: z.enum(["small", "medium", "large"]).default("small"),
+});
 
 export type BadgeComponentProps = z.input<typeof BadgeComponentSchema>;
 

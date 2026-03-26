@@ -50,6 +50,9 @@ The following methods are available per the [Worker Global Scope](https://develo
 - clearTimeout()
   - Cancels the delayed execution set using [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout).
 
+- [`scheduler.wait()`](/workers/runtime-apis/scheduler/)
+  - Returns a Promise that resolves after a given number of milliseconds. An `await`-able alternative to `setTimeout()`.
+
 :::note
 
 Timers are only available inside of [the Request Context](/workers/runtime-apis/request/#the-request-context).

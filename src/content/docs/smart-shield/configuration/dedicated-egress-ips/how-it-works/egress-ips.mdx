@@ -10,7 +10,7 @@ head:
 
 import { Render } from "~/components";
 
-When you use Cloudflare [as a reverse proxy](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy), [Cloudflare's global network](https://www.cloudflare.com/network/) sits between client requests and your origin servers.
+When you use Cloudflare [as a reverse proxy](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy), [Cloudflare's global network](https://www.cloudflare.com/network/) sits between client requests and your origin servers.
 
 ```mermaid
 flowchart LR
@@ -37,14 +37,14 @@ Traditionally, Cloudflare maintains a very large pool of egress IPs that are use
 Each dedicated CDN egress IP pool can consist of either IPs from a [BYOIP prefix](/byoip/) or Cloudflare-leased IPs. A single dedicated CDN egress IP pool cannot contain both BYOIPs and leased IPs.
 
 <Render
-  file="check-leased-ips"
+	file="check-leased-ips"
 	product="byoip"
 	params={{
-		product: "dedicated IPs for CDN egress"
+		product: "dedicated IPs for CDN egress",
 	}}
 />
 
-If you are using BYOIP, refer to [**IP addresses** > **BYOIP prefixes**](https://dash.cloudflare.com/?to=/:account/ip-addresses/ip-prefixes) instead.
+If you are using BYOIP, refer to **BYOIP prefixes** instead.
 
 ## IPs allocation
 

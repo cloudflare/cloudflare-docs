@@ -4,10 +4,16 @@ pcx_content_type: concept
 title: Authentication Posture
 sidebar:
   order: 9
-
 ---
 
-import { GlossaryTooltip, Render, Steps, Tabs, TabItem, DashButton } from "~/components"
+import {
+	GlossaryTooltip,
+	Render,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
 Authentication Posture helps users identify authentication misconfigurations for APIs and alerts of their presence.
 
@@ -23,16 +29,9 @@ After configuring [session identifiers](/api-shield/get-started/#session-identif
 
 ### Examine an endpoint's authentication details
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Security** > **API Shield** > **Endpoint Management**.
-      3. Filter Endpoint Management by the `cf-risk-missing-auth` or `cf-risk-mixed-auth` labels.
-      4. Select an endpoint to see its authentication posture details on the endpoint details page.
-      5. Choose between the 24-hour and 7-day view options, and note any authentication changes over time.
-    </Steps>
-  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -44,7 +43,18 @@ After configuring [session identifiers](/api-shield/get-started/#session-identif
       5. Choose between the 24-hour and 7-day view options, and note any authentication changes over time.
     </Steps>
   </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **API Shield** > **Endpoint Management**.
+      3. Filter Endpoint Management by the `cf-risk-missing-auth` or `cf-risk-mixed-auth` labels.
+      4. Select an endpoint to see its authentication posture details on the endpoint details page.
+      5. Choose between the 24-hour and 7-day view options, and note any authentication changes over time.
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 The main authentication widget displays how many successful requests over the last seven days had session identifiers included with them, and which identifiers were included with the traffic.
 

@@ -1,0 +1,60 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import type { GetStaticPaths } from "astro";
+
+import Header from "~/components/changelog/Header.astro";
+import Pagination from "~/components/changelog/Pagination.astro";
+import SearchAll from "~/components/changelog/SearchAll.astro";
+import ChangelogEntryList from "~/components/changelog/ChangelogEntryList.astro";
+
+import { getChangelogs } from "~/util/changelog";
+import { directoryByGroup } from "~/util/directory";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const allNotes = await getChangelogs({
+		filter: (entry) => !entry.data.hidden,
+	});
+
+	return directoryByGroup.flatMap(([groupName, groupProducts]) => {
+		const groupProductIds = groupProducts.map((p) => p.id);
+		const notes = allNotes.filter((note) =>
+			note.data.products.some((p) => groupProductIds.includes(p.id)),
+		);
+		const slug = groupName.replaceAll(" ", "-").toLowerCase();
+
+		if (notes.length === 0) return [];
+
+		return paginate(notes, {
+			params: { group: slug },
+			props: { groupName },
+			pageSize: 25,
+		});
+	});
+}) satisfies GetStaticPaths;
+
+const { page, groupName } = Astro.props;
+
+const props = {
+	frontmatter: {
+		title: `${groupName} Changelog`,
+		tableOfContents: false,
+		template: "splash",
+		chatbot_deprioritize: true,
+	},
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<Header />
+	<ChangelogEntryList entries={page.data} />
+	<Pagination
+		currentPage={page.currentPage}
+		lastPage={page.lastPage}
+		baseUrl={`/changelog/product-group/${Astro.params.group}/`}
+	/>
+	<SearchAll />
+</StarlightPage>

@@ -23,11 +23,15 @@ To configure which paths are included and excluded:
 The configuration fields can be filled in two ways:
 
 - **Static filepaths**: Enter the precise name of the file you are looking to include or exclude (for example, `docs/README.md`).
-- **Wildcard syntax:** Use wildcards to match multiple path directories. You can specify wildcards at the start or end of your rule.
+- **Wildcard syntax:** Use wildcards to match multiple paths. You can specify wildcards at the start or end of your rule.
 
 :::note[Wildcard syntax]
 
-A wildcard (`*`) is a character that is used within rules. It can be placed alone to match anything or placed at the start or end of a rule to allow for better control over branch configuration. A wildcard will match zero or more characters.For example, if you wanted to match all branches that started with `fix/` then you would create the rule `fix/*` to match strings like `fix/1`, `fix/bugs`or `fix/`.
+A wildcard (`*`) matches zero or more characters, **including path separators (`/`)**. This means a single `*` at the end of a path pattern will match files in nested subdirectories as well. For example:
+
+- `docs/*` matches `docs/README.md`, `docs/guides/setup.md`, and `docs/guides/advanced/config.md`.
+- `*.md` matches `README.md`, `docs/README.md`, and `src/content/guide.md`.
+- `*` alone matches all files in the repository.
 
 :::
 
@@ -39,28 +43,35 @@ For each path in a push event, build watch paths will be evaluated as follows:
 
 Pages will bypass the path matching for a push event and default to building the project if:
 
-- A push event contains 0 file changes, in case a user pushes a empty push event to trigger a build
+- A push event contains 0 file changes, in case a user pushes an empty push event to trigger a build
 - A push event contains 3000+ file changes or 20+ commits
 
 ## Examples
 
-### Example 1
+### Trigger builds for specific directories (monorepo)
 
-If you want to trigger a build from all changes within a set of directories, such as all changes in the folders `project-a/` and `packages/`
+If you want to trigger a build only when files change within specific directories, such as `project-a/` and `packages/`. Because `*` matches across path separators, this includes changes in nested subdirectories like `project-a/src/index.js` or `packages/utils/lib/helpers.ts`.
 
 - Include paths: `project-a/*, packages/*`
 - Exclude paths: \`\`
 
-### Example 2
+### Exclude a directory from triggering builds
 
-If you want to trigger a build for any changes, but want to exclude changes to a certain directory, such as all changes in a docs/ directory
+If you want to trigger a build for any changes, but want to exclude changes to a certain directory, such as all changes in a `docs/` directory (including nested paths like `docs/guides/setup.md`).
 
 - Include paths: `*`
 - Exclude paths: `docs/*`
 
-### Example 3
+### Trigger builds for a specific filetype
 
-If you want to trigger a build for a specific file or specific filetype, for example all files ending in `.md`.
+If you want to trigger a build for a specific file or specific filetype, for example all `.md` files anywhere in the repository.
 
 - Include paths: `*.md`
 - Exclude paths: \`\`
+
+### Trigger builds for a directory but exclude a subdirectory
+
+If you want to trigger a build for changes in `src/` but want to ignore changes in `src/tests/`.
+
+- Include paths: `src/*`
+- Exclude paths: `src/tests/*`

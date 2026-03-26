@@ -1,0 +1,46 @@
+---
+pcx_content_type: navigation
+title: RtkScreenShareToggle
+description: API reference for RtkScreenShareToggle component (React Library)
+---
+A button which toggles your screenshare.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkScreenShareToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkScreenShareToggle />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkScreenShareToggle } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkScreenShareToggle
+      meeting={meeting}
+      size="md"
+      variant="button"
+    />
+  );
+}
+```
+

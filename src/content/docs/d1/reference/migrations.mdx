@@ -14,9 +14,9 @@ Database migrations are a way of versioning your database. Each migration is sto
 
 Currently, the migrations system aims to be simple yet effective. With the current implementation, you can:
 
-* [Create](/workers/wrangler/commands/#d1-migrations-create) an empty migration file.
-* [List](/workers/wrangler/commands/#d1-migrations-list) unapplied migrations.
-* [Apply](/workers/wrangler/commands/#d1-migrations-apply) remaining migrations.
+* [Create](/workers/wrangler/commands/d1/#d1-migrations-create) an empty migration file.
+* [List](/workers/wrangler/commands/d1/#d1-migrations-list) unapplied migrations.
+* [Apply](/workers/wrangler/commands/d1/#d1-migrations-apply) remaining migrations.
 
 Every migration file in the `migrations` folder has a specified version number in the filename. Files are listed in sequential order. Every migration file is an SQL file where you can specify queries to be run.
 
@@ -34,14 +34,19 @@ This location and table name can be customized in your Wrangler file, inside the
 
 <WranglerConfig>
 
-```toml
-[[ d1_databases ]]
-binding = "<BINDING_NAME>" # i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
-database_name = "<DATABASE_NAME>"
-database_id = "<UUID>"
-preview_database_id = "<UUID>"
-migrations_table = "<d1_migrations>" # Customize this value to change your applied migrations table name
-migrations_dir = "<FOLDER_NAME>" # Specify your custom migration directory
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "<BINDING_NAME>", // i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
+			"database_name": "<DATABASE_NAME>",
+			"database_id": "<UUID>",
+			"preview_database_id": "<UUID>",
+			"migrations_table": "<d1_migrations>", // Customize this value to change your applied migrations table name
+			"migrations_dir": "<FOLDER_NAME>" // Specify your custom migration directory
+		}
+	]
+}
 ```
 
 </WranglerConfig>

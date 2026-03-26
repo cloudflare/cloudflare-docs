@@ -58,18 +58,23 @@ In this example, the Worker has access to local-only D1 database. The correspond
 
 <WranglerConfig>
 
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "test-db"
-database_id = "c020574a-5623-407b-be0c-cd192bab9545"
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "test-db",
+			"database_id": "c020574a-5623-407b-be0c-cd192bab9545"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
 
 Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information. Any changes you make when running against a remote database cannot be undone.
 
-Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
+Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/general/#dev) to learn more about how to configure a local development session.
 
 ## Develop locally with Pages
 
@@ -84,13 +89,18 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) should rese
 
 <WranglerConfig>
 
-```toml
-# If you are only using Pages + D1, you only need the below in your Wrangler config file to interact with D1 locally.
-[[d1_databases]]
-binding = "DB" # Should match preview_database_id
-database_name = "YOUR_DATABASE_NAME"
-database_id = "the-id-of-your-D1-database-goes-here" # wrangler d1 info YOUR_DATABASE_NAME
-preview_database_id = "DB" # Required for Pages local development
+```jsonc
+{
+	// If you are only using Pages + D1, you only need the below in your Wrangler config file to interact with D1 locally.
+	"d1_databases": [
+		{
+			"binding": "DB", // Should match preview_database_id
+			"database_name": "YOUR_DATABASE_NAME",
+			"database_id": "the-id-of-your-D1-database-goes-here", // wrangler d1 info YOUR_DATABASE_NAME
+			"preview_database_id": "DB" // Required for Pages local development
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -128,11 +138,16 @@ You can use Miniflare's [support for D1](https://miniflare.dev/storage/d1) to cr
 
 <WranglerConfig>
 
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "test-db"
-database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "test-db",
+			"database_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -164,12 +179,17 @@ Given the below Wrangler configuration:
 
 <WranglerConfig>
 
-```toml
-[[ d1_databases ]]
-binding = "DB" # i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
-database_name = "your-database" # the name of your D1 database, set when created
-database_id = "<UUID>" # The unique ID of your D1 database, returned when you create your database or run `
-preview_database_id = "local-test-db" # A user-defined ID for your local test database.
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB", // i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
+			"database_name": "your-database", // the name of your D1 database, set when created
+			"database_id": "<UUID>", // The unique ID of your D1 database, returned when you create your database or run `
+			"preview_database_id": "local-test-db" // A user-defined ID for your local test database.
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -229,6 +249,6 @@ Review the [`unstable_dev()`](/workers/wrangler/api/#usage) documentation for mo
 
 ## Related resources
 
-- Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.
+- Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) to run your Worker and D1 locally and debug issues before deploying.
 - Learn [how to debug D1](/d1/observability/debug-d1/).
 - Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.

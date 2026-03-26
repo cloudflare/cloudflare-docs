@@ -11,12 +11,12 @@ import type {
 } from "astro";
 
 export const getStaticPaths = (async () => {
-	const products = await getCollection("products", (e) =>
-		Boolean(e.data.product.group),
+	const products = await getCollection("directory", (e) =>
+		Boolean(e.data.entry.group),
 	);
 
 	const areas = Object.entries(
-		Object.groupBy(products, (p) => p.data.product.group),
+		Object.groupBy(products, (p) => p.data.entry.group),
 	);
 
 	return areas.map(([area, products]) => {

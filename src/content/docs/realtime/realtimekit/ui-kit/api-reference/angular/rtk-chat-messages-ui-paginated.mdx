@@ -1,0 +1,35 @@
+---
+pcx_content_type: navigation
+title: rtk-chat-messages-ui-paginated
+description: API reference for rtk-chat-messages-ui-paginated component (Angular Library)
+---
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `privateChatRecipient` | `Participant \| null` | ✅ | - | Selected recipient for private chat; when unset, messages are loaded for public chat (Everyone). |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-chat-messages-ui-paginated></rtk-chat-messages-ui-paginated>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-chat-messages-ui-paginated
+ [meeting]="meeting"
+ [privateChatRecipient]="participant | null"
+ size="md">
+</rtk-chat-messages-ui-paginated>
+```
+

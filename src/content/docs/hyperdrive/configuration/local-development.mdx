@@ -48,17 +48,22 @@ export CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE="postgres://user
 npx wrangler dev
 ```
 
-### Configure in wrangler.toml
+### Configure in Wrangler configuration file
 
 Alternatively, you can set `localConnectionString` in your [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
-```toml
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "c020574a-5623-407b-be0c-cd192bab9545"
-localConnectionString = "postgres://user:password@localhost:5432/databasename"
+```jsonc
+{
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "c020574a-5623-407b-be0c-cd192bab9545",
+			"localConnectionString": "postgres://user:password@localhost:5432/databasename"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -111,10 +116,10 @@ Use `wrangler dev --remote` with caution. Since your Worker runs in Cloudflare's
 
 :::
 
-Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
+Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/general/#dev) to learn more about how to configure a local development session.
 
 ## Related resources
 
-- Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and Hyperdrive locally and debug issues before deploying.
+- Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) to run your Worker and Hyperdrive locally and debug issues before deploying.
 - Learn [how Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/).
 - Understand how to [configure query caching in Hyperdrive](/hyperdrive/concepts/query-caching/).

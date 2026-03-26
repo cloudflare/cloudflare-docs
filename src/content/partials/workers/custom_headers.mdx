@@ -102,16 +102,20 @@ To enable other domains to fetch every static asset from your {props.product ===
   Access-Control-Allow-Origin: *
 ```
 
-This applies the `Access-Control-Allow-Origin` header to any incoming URL. To be more restrictive, you can define a URL pattern that applies to a <code>{props.product === 'workers' ? '\*.\*.workers.dev' : '\*.pages.dev'}</code> subdomain, which then only allows access from its {props.product === 'workers' ? <a href="/workers/configuration/previews/">preview URLs</a> : <><code>staging</code> branch's subdomain</>}:
+{props.product === "workers" ? (
+<>
+This applies the `Access-Control-Allow-Origin` header to any incoming URL. Note that the CORS specification only allows `*`, `null`, or an exact origin as valid `Access-Control-Allow-Origin` values — wildcard patterns within origins are not supported. To allow CORS from specific <a href="/workers/configuration/previews/">preview URLs</a>, you will need to handle this dynamically in your Worker code rather than through the `_headers` file.
+</>
+) : (
+<>
+This applies the `Access-Control-Allow-Origin` header to any incoming URL. To be more restrictive, you can define a URL pattern that applies to a <code>{'\*.pages.dev'}</code> subdomain, which then only allows access from its <code>staging</code> branch's subdomain:
 
 <Code
 	lang="txt"
-	code={
-		props.product === "workers"
-			? `https://:worker.:subdomain.workers.dev/*\n\tAccess-Control-Allow-Origin: https://*-:worker.:subdomain.workers.dev/`
-			: `https://:project.pages.dev/*\n\tAccess-Control-Allow-Origin: https://staging.:project.pages.dev/`
-	}
+	code={`https://:project.pages.dev/*\n\tAccess-Control-Allow-Origin: https://staging.:project.pages.dev/`}
 />
+</>
+)}
 
 ##### Prevent your workers.dev URLs showing in search results
 

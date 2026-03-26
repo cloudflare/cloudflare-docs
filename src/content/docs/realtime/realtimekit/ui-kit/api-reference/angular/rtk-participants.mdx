@@ -1,0 +1,40 @@
+---
+pcx_content_type: navigation
+title: rtk-participants
+description: API reference for rtk-participants component (Angular Library)
+---
+A component which lists all participants, with ability to
+ run privileged actions on each participant according to your permissions.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `defaultParticipantsTabId` | `ParticipantsTabId` | ✅ | - | Default section |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-participants></rtk-participants>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-participants
+ [defaultParticipantsTabId]="participantstabid"
+ [meeting]="meeting"
+ size="md">
+</rtk-participants>
+```
+

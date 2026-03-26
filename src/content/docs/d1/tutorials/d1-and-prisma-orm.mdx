@@ -17,6 +17,8 @@ import {
 	FileTree,
 	PackageManagers,
 	GitHubCode,
+	Tabs,
+	TabItem,
 } from "~/components";
 
 ## What is Prisma ORM?
@@ -137,18 +139,26 @@ Copy the last part of the command output and paste it into your Wrangler file. I
 
 <WranglerConfig>
 
-```toml
-name = "prisma-d1-example"
-main = "src/index.ts"
-compatibility_date = "2024-03-20"
-compatibility_flags = ["nodejs_compat"]
-[observability]
-enabled = true
-
-[[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "prisma-demo-db"
-database_id = "<D1_DATABASE_ID>"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "prisma-d1-example",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			"binding": "DB", // i.e. available in your Worker on env.DB
+			"database_name": "prisma-demo-db",
+			"database_id": "<D1_DATABASE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -204,10 +214,23 @@ Open the `schema.prisma` file and add the following `User` model to your schema:
 
 Now, run the following command in your terminal to generate the SQL statement that creates a `User` table equivalent to the `User` model above:
 
+<Tabs syncKey="prisma">
+<TabItem label="Prisma (v7)">
+
+```sh
+npx prisma migrate diff --from-empty --to-schema ./prisma/schema.prisma --script --output migrations/0001_create_user_table.sql
+```
+
+</TabItem>
+<TabItem label="Prisma (v6)">
+
 ```sh
 npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script --output migrations/0001_create_user_table.sql
 ```
 
+</TabItem>
+</Tabs>
+ 
 This stores a SQL statement to create a new `User` table in your migration file from before, here is what it looks like:
 
 <GitHubCode

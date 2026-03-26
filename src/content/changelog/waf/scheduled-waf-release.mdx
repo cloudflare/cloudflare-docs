@@ -1,13 +1,11 @@
 ---
-title: WAF Release - Scheduled changes for 2026-01-05
-description: WAF managed ruleset changes scheduled for 2026-01-05
-date: 2025-12-22
+title: WAF Release - Scheduled changes for 2026-03-30
+description: WAF managed ruleset changes scheduled for 2026-03-30
+date: 2026-03-23
 scheduled: true
 ---
 
 import { RuleID } from "~/components";
-
-The planned release has been postponed to ensure a smooth deployment.
 
 <table style="width: 100%">
   <thead>
@@ -22,94 +20,60 @@ The planned release has been postponed to ensure a smooth deployment.
     </tr>
   </thead>
   <tbody>
-   <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-05</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="72963b917ef74697b5bde02f48a1841a" />
-      </td>
-      <td>SQLi - AND/OR MAKE_SET/ELT - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - AND/OR MAKE_SET/ELT" (ID: <RuleID id="0f41a593c8fe42c38a26f709252d3934" />)</td>
-   </tr>
-   <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-05</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="adf076af09b2484ca9e7881f9e553ad3" />
-      </td>
-      <td>SQLi - Benchmark Function - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - Benchmark Function" (ID: <RuleID id="ac4e9ebfb43a4f3998f6072d2ebc44ad" />)</td>
-   </tr>
-   <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-05</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="a291bd530fa346d18cc1ce5a68d90c8f" />
-      </td>
-      <td>SQLi - Comment - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - Comment" (ID: <RuleID id="42c424998d2a42c9808ab49c6d8d8fe4" />)</td>
-   </tr>
-   <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-05</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="da289f9e692e4f5397d915fbfaa045cf" />
-      </td>
-      <td>SQLi - Comparison - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "8166da327a614849bfa29317e7907480" (ID: <RuleID id="8166da327a614849bfa29317e7907480" />)</td>
-   </tr>
     <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-05</td>
+      <td>2026-03-23</td>
+      <td>2026-03-30</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="eb3f44c07266448b9fa54ee7ad7dad3e" />
+        <RuleID id="4f7d513cea424c2a853881982f7f95e9" />
       </td>
-      <td>SQLi - String Function - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - String Function" (ID: <RuleID id="63e03eecddfc4b3fb0cad587d32b798c" />)</td>
+      <td>Generic Rules - Parameter Pollution - Body</td>
+      <td>This is a new detection.</td>
    </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-05</td>
+   <tr>
+      <td>2026-03-23</td>
+      <td>2026-03-30</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="aa776a8f1be84c05afd9f801307a9e8f" />
+        <RuleID id="60d023f3be414d379428add3319731a4" />
       </td>
-      <td>SQLi - Sub Query - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - Sub Query" (ID: <RuleID id="6ec5ecf52c094330aff99a38743e66b1" />)</td>
-   </tr>
-
-    <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-05</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="7a47683eacce4abd870ab2c630698ff3" />
-      </td>
-      <td>XWiki - Remote Code Execution - CVE:CVE-2025-24893 - Beta</td>
+      <td>Generic Rules - Parameter Pollution - Header - Form</td>
       <td>This is a new detection.</td>
    </tr>
     <tr>
-      <td>2025-12-01</td>
-      <td>2026-01-05</td>
+      <td>2026-03-23</td>
+      <td>2026-03-30</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="ad5c52f6ca334ef4a844e5e5da8ba7e6" />
+        <RuleID id="2dde02d792ad41ec8fd65c2bdef262dd" />
       </td>
-      <td>Django SQLI - CVE:CVE-2025-64459</td>
+      <td>Generic Rules - Parameter Pollution - URI</td>
       <td>This is a new detection.</td>
-   </tr> 
-  </tbody>
+   </tr>
+   <tr>
+      <td>2026-03-23</td>
+      <td>2026-03-30</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="ab8a96ed13034d56a81a79e570a36147" />
+      </td>
+      <td>Magento 2 - Unrestricted file upload</td>
+      <td>This is a new detection.</td>
+   </tr>
+   <tr>
+      <td>2026-03-23</td>
+      <td>2026-03-30</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="0a13a38dd81c44688950444e2ffcca9f" />
+      </td>
+      <td>Fortinet FortiCloud SSO - Authentication Bypass - CVE:CVE-2025-59718</td>
+      <td>This is a new detection.</td>
+   </tr>
+</tbody>
 </table>

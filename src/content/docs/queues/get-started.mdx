@@ -72,10 +72,17 @@ To create a binding, open your newly generated `wrangler.jsonc` file and add the
 
 <WranglerConfig>
 
-```toml
-[[queues.producers]]
- queue = "MY-QUEUE-NAME"
- binding = "MY_QUEUE"
+```jsonc
+{
+	"queues": {
+		"producers": [
+			{
+				"queue": "MY-QUEUE-NAME",
+				"binding": "MY_QUEUE"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -95,13 +102,13 @@ In your Worker project directory, open the `src` folder and add the following to
 ```ts null {8}
 export default {
   async fetch(request, env, ctx): Promise<Response> {
-    let log = {
+    const log = {
       url: request.url,
       method: request.method,
       headers: Object.fromEntries(request.headers),
     };
     await env.<MY_QUEUE>.send(log);
-    return new Response('Success!');
+    return new Response("Success!");
   },
 } satisfies ExportedHandler<Env>;
 ```
@@ -112,7 +119,7 @@ Also add the queue to `Env` interface in `index.ts`.
 
 ```ts null {2}
 export interface Env {
-   <MY_QUEUE>: Queue<any>;
+   <MY_QUEUE>: Queue;
 }
 ```
 
@@ -144,7 +151,7 @@ You have built a queue and a producer Worker to publish messages to the queue. Y
 
 A consumer Worker receives messages from your queue. When the consumer Worker receives your queue's messages, it can write them to another source, such as a logging console or storage objects.
 
-In this guide, you will create a consumer Worker and use it to log and inspect the messages with [`wrangler tail`](/workers/wrangler/commands/#tail). You will create your consumer Worker in the same Worker project that you created your producer Worker.
+In this guide, you will create a consumer Worker and use it to log and inspect the messages with [`wrangler tail`](/workers/wrangler/commands/general/#tail). You will create your consumer Worker in the same Worker project that you created your producer Worker.
 
 :::note
 
@@ -157,17 +164,18 @@ To create a consumer Worker, open your `index.ts` file and add the following `qu
 ```ts null {11}
 export default {
   async fetch(request, env, ctx): Promise<Response> {
-    let log = {
+    const log = {
       url: request.url,
       method: request.method,
       headers: Object.fromEntries(request.headers),
     };
     await env.<MY_QUEUE>.send(log);
-    return new Response('Success!');
+    return new Response("Success!");
   },
-  async queue(batch, env): Promise<void> {
-    let messages = JSON.stringify(batch.messages);
-    console.log(`consumed from our queue: ${messages}`);
+  async queue(batch, env, ctx): Promise<void> {
+    for (const message of batch.messages) {
+      console.log("consumed from our queue:", JSON.stringify(message.body));
+    }
   },
 } satisfies ExportedHandler<Env>;
 ```
@@ -190,13 +198,20 @@ To connect your queue to your consumer Worker, open your Wrangler file and add t
 
 <WranglerConfig>
 
-```toml
-[[queues.consumers]]
- queue = "<MY-QUEUE-NAME>"
- # Required: this should match the name of the queue you created in step 3.
- # If you misspell the name, you will receive an error when attempting to publish your Worker.
- max_batch_size = 10 # optional: defaults to 10
- max_batch_timeout = 5 # optional: defaults to 5 seconds
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				"queue": "<MY-QUEUE-NAME>",
+				// Required: this should match the name of the queue you created in step 3.
+				// If you misspell the name, you will receive an error when attempting to publish your Worker.
+				"max_batch_size": 10, // optional: defaults to 10
+				"max_batch_timeout": 5 // optional: defaults to 5 seconds
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
