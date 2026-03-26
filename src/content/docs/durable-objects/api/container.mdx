@@ -206,14 +206,6 @@ await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
 
 `interceptAllOutboundHttp` routes all outbound HTTP requests from the container through a `WorkerEntrypoint`, regardless of destination.
 
-```js
-const worker = this.ctx.exports.MyWorker({ props: {} });
-	fetch() {
-		return new Response("hello world!");
-	}
-}
-const worker = this.ctx.exports.MyWorker({ props: {} });
-
 await this.ctx.container.interceptAllOutboundHttp(worker);
 ```
 
