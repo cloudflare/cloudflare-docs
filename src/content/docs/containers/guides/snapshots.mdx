@@ -1,0 +1,71 @@
+---
+title: Use snapshots
+pcx_content_type: how-to
+sidebar:
+  order: 7
+description: Persist container filesystem across restarts.
+---
+
+import { TypeScriptExample } from "~/components";
+
+Snapshots let you save point-in-time filesystem state from a running [Container](/containers/). The examples on this page use the [low-level Durable Object container API](/durable-objects/api/container/).
+
+## Create a container snapshot
+
+Use `snapshotContainer()` to capture the full container filesystem. Snapshots are immutable. If you restore a snapshot and then change files, create a new snapshot to persist those changes.
+
+The returned snapshot handle is a plain data object. You can store it and restore it later, including from another Durable Object:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
+	async saveContainer() {
+		const containerSnapshot = await this.ctx.container.snapshotContainer({
+			name: "before-upgrade",
+		});
+
+		await this.ctx.storage.put("containerSnapshot", containerSnapshot);
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Restore a container snapshot
+
+Load the saved snapshot handle. Then, pass it to `this.ctx.container.start()` when you start another container:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
+	async restoreContainer() {
+		const containerSnapshot =
+			await this.ctx.storage.get<ContainerSnapshot>("containerSnapshot");
+
+		if (!containerSnapshot) {
+			return;
+		}
+
+		this.ctx.container.start({ containerSnapshot });
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Understand retention
+
+Snapshots currently have an implicit 30-day time-to-live. Each restore refreshes that time-to-live.
+
+You cannot set a custom time-to-live yet.
+
+## Related resources
+
+- [Durable Object Container](/durable-objects/api/container/) - Full `ctx.container` API reference
+- [Lifecycle of a Container](/containers/concepts/architecture/) - Understand startup, sleep, and shutdown behavior
