@@ -1,0 +1,37 @@
+---
+title: Choosing roles for your team
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+---
+
+## Why this matters
+
+Cloudflare has over 60 roles. Assigning `Administrator` or `Super Administrator - All Privileges` to everyone is the path of least resistance and the most common mistake teams make. When a broad-access account is compromised or a team member makes an unintended change, the impact depends entirely on what roles were assigned.
+
+## Our recommendation
+
+Match roles to job functions. The table below covers the most common team archetypes and the roles that fit them. Default to the narrower option when in doubt.
+
+| Team member | Recommended roles |
+|---|---|
+| Senior engineer or tech lead | `Administrator` (account-scoped, if truly needed) |
+| Developer working on a specific domain | `DNS`, `Workers Editor` — scoped to that zone |
+| Security engineer | `Firewall`, `API Gateway`, `Bot Management (Account-Wide)` as needed |
+| DevOps / CI-CD automation | Use API tokens, not member accounts (refer to [API tokens and programmatic access](/learning-paths/secure-cloudflare-account/api-tokens/)) |
+| Billing administrator | `Billing` (account-scoped) |
+| Read-only auditor or moderate-risk organizations | `Administrator Read Only` |
+| External contractor | Resource-scoped role for the specific Worker or zone they work on |
+
+## Key considerations
+
+- **`Administrator Read Only` is a practical choice for many organizations.** Teams with a moderate risk profile often assign `Administrator Read Only` broadly because it provides full visibility with no write access. It reduces friction for people who need to understand the account configuration without the risk of accidental changes.
+- **`Super Administrator - All Privileges` should not be used for day-to-day work.** This role bypasses all scope restrictions. It exists for account recovery, ownership transfer, and creating Account API tokens. Assign it to as few people as possible.
+- **The `Administrator` role is account-wide.** Before assigning it, consider whether the person needs access to all zones, all products, and all account settings. If they only need access to specific zones or resources, a narrower scoped role is a better fit.
+- **Audit your current member list.** If you already have members with broad roles, review and narrow them. Look especially for former contractors or employees who may still have active access.
+- **Roles can be combined.** A member who needs to manage DNS for one domain and billing for the whole account can hold a `DNS` role scoped to that domain and a `Billing` role scoped to the account.
+
+## Next steps
+
+- [Roles reference](/fundamentals/manage-members/roles/) — full list of roles with permission details
+- [Add or remove members](/fundamentals/manage-members/manage/)

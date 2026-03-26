@@ -1,0 +1,37 @@
+---
+title: Securing KV, D1, and Durable Objects
+pcx_content_type: learning-unit
+sidebar:
+  order: 6
+---
+
+## Why this matters
+
+KV namespaces, D1 databases, and Durable Objects are all private by design — they have no external HTTP endpoints and are not reachable without a Workers binding. The security model is simpler than R2, but there are still practices worth following to keep access tight.
+
+## Key considerations
+
+### KV
+
+- **Access is exclusively through Workers bindings.** There is no external API that allows direct reads or writes to a KV namespace outside of a Worker with a declared binding. A namespace that is not bound to a Worker is not reachable at all.
+- **Namespace-level bindings mean all keys are accessible.** A Worker bound to a KV namespace can read and write any key in it. If you need finer-grained access control, separate data into distinct namespaces and bind each Worker only to the namespaces it needs.
+- **Preview and production namespaces should be separate.** Use different KV namespace IDs in your `[env.production]` and `[env.staging]` Wrangler config blocks so that preview deployments cannot read or overwrite production data.
+
+### D1
+
+- **Access is through Workers bindings or the Cloudflare API.** D1 databases are not publicly accessible. The Cloudflare API provides direct query access for administrative tasks, but application access should go through a bound Worker.
+- **All data is encrypted at rest with AES-256** and in transit. Encryption is automatic and requires no configuration.
+- **Use separate databases per environment.** As with KV, declare different D1 database IDs in your per-environment Wrangler config blocks.
+
+### Durable Objects
+
+- **Storage is private to each object instance.** A Durable Object's attached storage cannot be accessed by other objects, other Workers, or any external system. The only way to interact with a Durable Object is through a Worker that has a declared namespace binding.
+- **Namespace bindings grant access to all objects in that namespace.** A Worker bound to a Durable Object namespace can instantiate or call any object in it. Structure namespaces to reflect access boundaries, not just organizational convenience.
+- **Durable Objects handle coordination, not just storage.** Because each object processes requests sequentially, they are often used to manage shared state across concurrent requests. Keep this in mind when designing access boundaries: a single compromised Worker with a namespace binding can interact with every object in that namespace.
+
+## Next steps
+
+- [KV](/kv/)
+- [D1](/d1/)
+- [Durable Objects](/durable-objects/)
+- [Storage options on the Cloudflare Developer Platform](/workers/platform/storage-options/)

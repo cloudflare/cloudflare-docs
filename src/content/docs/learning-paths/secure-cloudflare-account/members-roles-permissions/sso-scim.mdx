@@ -1,0 +1,30 @@
+---
+title: SSO and SCIM provisioning
+pcx_content_type: learning-unit
+sidebar:
+  order: 5
+---
+
+## Why this matters
+
+Without SSO and SCIM, access to Cloudflare is managed manually and independently of your organization's identity system. Team members keep their Cloudflare access after leaving the company until someone remembers to remove it. Password resets, account recovery, and credential hygiene are all handled separately from your central directory.
+
+SSO connects Cloudflare authentication to your identity provider (IdP). SCIM automates provisioning and deprovisioning based on changes in your directory.
+
+## Our recommendation
+
+If your organization uses an identity provider (Okta, Microsoft Entra ID, Google Workspace, or similar), configure SSO for the Cloudflare dashboard. Then configure SCIM so that deprovisioning in your IdP automatically removes access in Cloudflare.
+
+For most teams, SSO alone is a significant improvement. SCIM is the higher-value addition — offboarding employees is where access management fails most often.
+
+## Key considerations
+
+- **SSO does not replace strong account owner credentials.** The account owner email address is not governed by SSO — it can still be used to log in directly. Keep that credential in a password manager with a strong, unique password and a hardware security key if possible.
+- **SSO enforces your IdP's authentication policies.** Once SSO is configured, members must authenticate through your IdP, which means your IdP's 2FA requirements apply. This is why SSO is generally more secure than Cloudflare's native 2FA enforcement alone.
+- **SCIM requires an Enterprise plan.** If you are on a lower plan, SSO is still available but automated deprovisioning is not. In this case, build a manual offboarding checklist that includes removing Cloudflare access.
+- **Test deprovisioning before you rely on it.** Create a test user, provision them via SCIM, then deprovision them and verify that access is removed. Do not assume it works until you have confirmed it.
+
+## Next steps
+
+- [Set up dashboard SSO](/fundamentals/manage-members/dashboard-sso/) — configuring your IdP connector
+- [SCIM provisioning setup](/fundamentals/account/account-security/scim-setup/) — automating member provisioning and deprovisioning

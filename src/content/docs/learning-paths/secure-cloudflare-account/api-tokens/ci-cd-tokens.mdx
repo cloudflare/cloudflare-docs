@@ -1,0 +1,67 @@
+---
+title: Tokens in CI/CD pipelines
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+## Why this matters
+
+CI/CD pipelines are a common source of leaked credentials. Tokens get hardcoded in configuration files, committed to version control, printed in build logs, or inherited by forks of a repository. A leaked CI token can give an attacker the ability to deploy arbitrary code to your Workers, modify DNS records, or alter firewall rules, depending on what the token was scoped to.
+
+## Our recommendation
+
+Never hardcode a Cloudflare API token in your codebase. Always use your CI platform's native secrets management to store and inject tokens as environment variables.
+
+Follow these principles for every pipeline:
+
+1. **One token per pipeline.** Create a dedicated token for each CI/CD workflow. Do not reuse the same token across multiple pipelines or repositories.
+2. **Scope to what the pipeline deploys.** A deployment pipeline for a single Worker should have a token scoped to that Worker's zone (or account for Workers without a custom domain), with Workers Scripts Edit permission only.
+3. **Store tokens in CI secrets, not in code.** In GitHub Actions, use [encrypted secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions). In GitLab CI, use [CI/CD variables marked as masked and protected](https://docs.gitlab.com/ci/variables/). Never store tokens in `.env` files or `wrangler.toml`.
+4. **Rotate tokens on a schedule.** Set a calendar reminder to rotate CI tokens every 90 days, or immediately after any team member who had access to the secrets store leaves.
+5. **Audit token usage.** After rotation, monitor your audit logs for any continued activity from the old token. Activity after rotation indicates the old token leaked somewhere else.
+
+## Storing tokens in your CI platform
+
+### GitHub Actions
+
+Add your token as a repository or organization secret named `CLOUDFLARE_API_TOKEN`. Reference it in your workflow:
+
+```yaml
+- name: Deploy Worker
+  env:
+    CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  run: npx wrangler deploy
+```
+
+### GitLab CI
+
+Add your token as a CI/CD variable with **Masked** and **Protected** checked. Reference it in your pipeline:
+
+```yaml
+deploy:
+  script:
+    - npx wrangler deploy
+  variables:
+    CLOUDFLARE_API_TOKEN: $CLOUDFLARE_API_TOKEN
+```
+
+## Rotating a token without downtime
+
+1. Create a new token with the same scope as the one you are replacing.
+2. Update the CI secret to use the new token value.
+3. Trigger a test pipeline run to confirm the new token works.
+4. Delete the old token in the Cloudflare dashboard.
+
+The old and new tokens can coexist during the transition. Cloudflare does not enforce a one-token-per-scope limit.
+
+## Key considerations
+
+- **Wrangler reads `CLOUDFLARE_API_TOKEN` automatically.** You do not need to configure anything extra in `wrangler.toml` to use an environment variable token. Export the variable before running Wrangler commands.
+- **Forked repositories cannot access parent secrets** in GitHub Actions by default. This protects your tokens from pull requests opened by external contributors. Do not change this default.
+- **Build logs can expose secrets** if you `echo` or `print` environment variables. Review your pipeline scripts to ensure tokens are never logged.
+
+## Next steps
+
+- [Roll an API token](/fundamentals/api/how-to/roll-token/)
+- [Account-owned tokens](/fundamentals/api/get-started/account-owned-tokens/) — use for tokens shared across pipelines

@@ -1,0 +1,27 @@
+---
+title: Using user groups
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+## Why this matters
+
+Managing permissions for individual members works until it does not. When your team reaches five or more people, individual assignments create two problems: onboarding new members requires manually recreating the right set of roles, and when a role needs to change (a policy update, a new product rollout), you have to update every affected member one by one.
+
+## Our recommendation
+
+Use user groups whenever you have three or more people who share the same role set, or whenever your team has recurring onboarding and offboarding. Define groups by function (for example, `developers`, `security-engineers`, `billing`) rather than by team or project.
+
+Assign permissions to the group, not the individual. When someone joins or leaves, you add or remove them from the group — the permissions follow automatically.
+
+## Key considerations
+
+- **Groups are not a substitute for least-privilege design.** Define what the group needs before creating it. A group called `engineering` with account-wide Administrator access is not an improvement over individual assignments with the same problem.
+- **Review group membership regularly.** Group-based access can drift silently — someone gets added to a group for a short-term project and never gets removed. Quarterly reviews catch this.
+- **Groups work well with SSO and SCIM.** When SCIM is configured, your identity provider can automatically add and remove members from Cloudflare groups based on changes in your directory. This is the most reliable way to ensure access is revoked when someone leaves.
+- **A member can belong to multiple groups.** Permissions from all groups are combined additively.
+
+## Next steps
+
+- [User groups](/fundamentals/manage-members/user-groups/)

@@ -1,0 +1,52 @@
+---
+title: Zero Trust Access for internal tools
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+## Why this matters
+
+VPNs give everyone on the network access to everything on the network. A compromised device or a leaked VPN credential can expose your entire internal infrastructure. Zero Trust Access inverts this: access to each internal application is granted explicitly, per user, per application, based on identity and policy.
+
+## Our recommendation
+
+Start with one internal application. Pick the highest-risk internal tool your team uses, such as an admin panel, an internal API, or a deployment dashboard, and put Cloudflare Access in front of it. The initial setup takes less than an hour.
+
+You do not need to deploy WARP or replace your VPN on day one. Access (the application proxy) and Gateway (the DNS and network filter) are independent. Start with Access.
+
+### Choose an identity provider
+
+Access requires an identity provider (IdP) or one-time PIN (OTP) to authenticate users. These options have different security tradeoffs:
+
+- **Identity provider (recommended)**: Connect Access to your existing IdP — Okta, Microsoft Entra ID, Google Workspace, GitHub, and others are supported. IdP integration lets you gate access on group membership (for example, "must be in the `engineers` group"), enforce MFA requirements configured in the IdP, and inherit the IdP's revocation model. If you already configured SSO in [Module 2](/learning-paths/secure-cloudflare-account/members-roles-permissions/sso-scim/), you can reuse that connection.
+- **One-time PIN**: OTP requires no IdP setup. Access sends a PIN to the user's email address, valid for 10 minutes. OTP is a good option for guests and contractors from outside your organization who do not have an account in your IdP. It is not suitable as the primary authentication method for employees, because it only validates email ownership at login time and cannot evaluate group membership or enforce IdP-level MFA.
+
+Multiple IdPs and OTP can be configured simultaneously, allowing users to select their own authentication method.
+
+### Connect your application with Cloudflare Tunnel
+
+For self-hosted applications, Cloudflare Tunnel (`cloudflared`) is how your origin connects to Cloudflare's network without opening inbound firewall ports. The `cloudflared` daemon runs in your infrastructure and creates outbound-only connections to Cloudflare's edge. You can configure your firewall to block all inbound traffic and allow only these outbound connections, so your origin is never directly reachable from the internet.
+
+The flow when a user requests access to a protected application:
+
+1. The user's request reaches Cloudflare's edge.
+2. Access checks for a valid `CF_Authorization` JWT. If none is present, Access redirects the user to authenticate with the configured IdP or OTP.
+3. After authentication, Access issues a signed JWT scoped to that application and forwards the request through the Tunnel to your origin.
+4. Your origin receives only authenticated, Access-verified requests.
+
+For non-self-hosted applications, Access can add an authentication layer in front of SaaS apps via SAML or OIDC without requiring a Tunnel.
+
+## Key considerations
+
+- **Access policies are per-application.** Each application you protect gets its own policy. A policy can require group membership, specific email domains, device posture checks, or multifactor authentication.
+- **Zero Trust roles are separate from account roles.** Users who manage Zero Trust configuration need a Zero Trust-specific role (`Cloudflare Zero Trust` or `Cloudflare Access`) assigned in the dashboard, not just an account-level role.
+- **Start narrow, then expand.** Protect one application first. Once you understand how policies and identity provider groups interact, expanding to additional applications is straightforward.
+
+## Next steps
+
+- [Zero Trust roles and permissions](/cloudflare-one/roles-permissions/)
+- [Get started with Zero Trust](/cloudflare-one/setup/)
+- [Connect to Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
+- [Configure an identity provider](/cloudflare-one/integrations/identity-providers/)
+- [Replace your VPN learning path](/learning-paths/replace-vpn/) — a full walkthrough for teams migrating from VPN

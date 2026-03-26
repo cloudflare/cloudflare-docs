@@ -1,0 +1,27 @@
+---
+title: Workers bindings and environment isolation
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+## Why this matters
+
+A Worker only has access to the resources you explicitly bind to it. This is the security model: bindings are capabilities you grant deliberately. The underlying credential for each bound resource is never exposed to your Worker's code and cannot be leaked through it.
+
+## Our recommendation
+
+Apply least-privilege to every binding. Before adding one, confirm the Worker actually needs access to that resource. Separate bindings by environment — production Workers should not share bindings with preview or staging environments.
+
+## Key considerations
+
+- **Bindings are declared in `wrangler.toml` and enforced at runtime.** If a resource is not listed in the Worker's configuration, the Worker cannot access it regardless of what the account contains. You can also configure secrets through the Cloudflare dashboard under **Workers & Pages** > your Worker > **Settings** > **Variables and Secrets**.
+- **Use separate bindings per environment.** Declare different bindings in `[env.production]` and `[env.staging]` sections in your Wrangler config. This prevents a staging Worker from reading or writing production data.
+- **Service bindings are also a permission boundary.** If Worker A binds to Worker B, Worker A can invoke Worker B. Audit service bindings as you would any access grant.
+- **Binding names are not secret.** The name you give a binding (for example, `MY_KV_NAMESPACE`) is visible in your source code. Do not put sensitive identifiers in binding names.
+
+## Next steps
+
+- [Workers security model](/workers/reference/security-model/)
+- [Bindings overview](/workers/runtime-apis/bindings/)
+- [Storage options on the Cloudflare Developer Platform](/workers/platform/storage-options/)

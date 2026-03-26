@@ -1,0 +1,33 @@
+---
+title: Alerts and notifications
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+---
+
+## Why this matters
+
+Audit logs tell you what happened. Notifications tell you what is happening right now. For security events that require a fast response, such as a DDoS attack starting, an API token being created by an unexpected actor, or a new member being added, waiting to notice a change in the dashboard is too slow. Notifications push the information to you.
+
+## Our recommendation
+
+Configure notifications for the following event types at minimum. These cover the most important security-relevant changes in a typical Cloudflare account:
+
+| Event | Why it matters |
+|---|---|
+| New member added | Someone may have been added without your knowledge |
+| API token created or deleted | Token management changes are high-value audit events |
+| Zone settings changed | DNS, SSL, and WAF changes can break sites or reduce security |
+| DDoS attack detected | Immediate awareness lets you tune response rules if needed |
+| Worker deployment | Track code changes pushed to production |
+
+## Key considerations
+
+- **Notifications support multiple delivery channels.** You can receive alerts via email, PagerDuty, webhooks (for Slack, Teams, or custom integrations), and SMS. Configure the channel that matches your team's incident response workflow. Email alone is often too slow for time-sensitive events.
+- **Not every alert needs to page someone.** Route low-urgency notifications (member additions, DNS changes) to an email alias or a Slack channel your team monitors. Route high-urgency alerts (DDoS attacks, Worker failures) to PagerDuty or an on-call rotation.
+- **Review and prune alerts regularly.** Alert fatigue is real. If your team is consistently ignoring a notification, either the threshold is too sensitive or the alert is not actionable. Tune it or remove it.
+- **Test your notification delivery.** After setting up a new notification policy, trigger the event if you can (for example, add a test member to verify the "member added" notification fires) or use the test delivery option in the Notifications dashboard. Do not assume it works until you have confirmed it.
+
+## Next steps
+
+- [Cloudflare notifications](/notifications/)

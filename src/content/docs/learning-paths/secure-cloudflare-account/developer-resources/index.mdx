@@ -1,0 +1,18 @@
+---
+title: Developer platform security
+pcx_content_type: overview
+sidebar:
+  order: 4
+---
+
+The Cloudflare Developer Platform — Workers, Pages, R2, KV, D1, Durable Objects, and related services — is designed so that resources are private and isolated by default. Code running in a Worker cannot access account resources unless you explicitly bind them. Storage products like R2 and D1 are never publicly accessible unless you opt in. This module covers how to configure and maintain that boundary as your team builds on the platform.
+
+## Objectives
+
+By the end of this module, you will be able to:
+
+- Explain how Workers bindings enforce least-privilege access to platform resources.
+- Choose the right mechanism for storing sensitive values used by Workers.
+- Apply access controls to R2 buckets.
+- Apply access controls to KV namespaces, D1 databases, and Durable Objects.
+- Control who can trigger Pages deployments and configure deploy hook security.

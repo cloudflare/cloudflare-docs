@@ -1,0 +1,52 @@
+---
+title: Initial account security
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+---
+
+## Why this matters
+
+Account takeovers typically exploit three things: weak credentials, no second factor, and super admin access tied to an individual who eventually leaves. Addressing these before you add team members takes minutes and prevents incidents that take days to recover from.
+
+## Our recommendation
+
+### Authentication: prefer SSO over 2FA
+
+The strongest authentication setup for teams is SSO connected to your identity provider (IdP). SSO enforces your organization's authentication policies — including MFA — for all dashboard users, and integrates with your existing identity lifecycle management.
+
+Two-factor authentication (2FA) is a good baseline for smaller teams or accounts that do not yet have an IdP integration. All accounts should enforce one or the other. Leaving authentication as opt-in per user is not acceptable for production accounts.
+
+For more information, refer to [SSO and SCIM provisioning](/learning-paths/secure-cloudflare-account/members-roles-permissions/sso-scim/).
+
+### Super admin access
+
+Super admin is the highest-privilege role in a Cloudflare account. It cannot be scoped and always has full account access. Treat it like a root credential.
+
+**Follow these steps before onboarding team members:**
+
+1. **Ensure at least two people hold the super admin role.** If a single super admin loses access, account recovery becomes difficult. If you are not using SCIM, maintain a minimum of two super admins at all times.
+2. **If you use SCIM**, your IdP manages member provisioning and deprovisioning automatically, including super admin assignment. Privileged identity management (PIM) features built into enterprise IdPs — such as Microsoft Entra PIM or Okta Access Requests — allow users to request elevated permissions on demand rather than holding them permanently. This is the recommended approach for Enterprise customers.
+3. **Save your API key before configuring SSO or SCIM.** Store it in a password manager or secrets vault accessible to your security team. If your SSO or SCIM integration has a misconfiguration and locks you out of the dashboard, the API key lets you recover access programmatically.
+
+
+### Account owner email
+
+Some organizations use a shared mailbox (for example, `cloudflare-admin@yourcompany.com`) as the account owner email so that multiple people can access it. This is a reasonable practice for smaller customers who are not yet using SCIM.
+
+For Enterprise customers using SCIM, the account owner email matters less because member management — including super admin assignment — is automated through the IdP. Prioritize getting SCIM configured over setting up a shared mailbox.
+
+For Organizations (Enterprise beta), each organization has its own super admin role that spans all member accounts. For more information, refer to [Cloudflare organizations](/fundamentals/organizations/).
+
+## Key considerations
+
+- Cloudflare does not enforce 2FA or SSO by default. You must configure your authentication policy explicitly.
+- The super admin role bypasses all scope restrictions. Assign it to as few people as possible.
+- If you use an organization-level super admin role, that role grants access across all member accounts in the organization, not just one.
+
+## Next steps
+
+- [Set up dashboard SSO](/fundamentals/manage-members/dashboard-sso/)
+- [SCIM provisioning](/fundamentals/account/account-security/scim-setup/)
+- [Transfer super admin](/fundamentals/account/change-super-admin/)
+- [Cloudflare organizations](/fundamentals/organizations/)

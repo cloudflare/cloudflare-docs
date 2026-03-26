@@ -1,0 +1,32 @@
+---
+title: Accounts, zones, and organizations
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+## Why this matters
+
+How you structure your accounts shapes how you manage permissions, billing, and access across your team. Getting this right early avoids expensive restructuring later.
+
+## Our recommendation
+
+A **single account** works well for most teams up to around 20 people. Cloudflare's role-based access control (RBAC) system gives you fine-grained control within a single account — you rarely need separate accounts for isolation.
+
+As your organization grows beyond that point, or if you have regulatory requirements for environment separation, additional accounts may make sense. To create additional accounts as an Enterprise customer, contact your account team.
+
+The common instinct to create separate accounts for "prod" and "staging" adds management overhead without a meaningful security benefit. Cloudflare's scope system already gives you the isolation you need within a single account.
+
+## Key considerations
+
+- **Accounts are the top-level billing and permission boundary.** All zones, Workers, R2 buckets, and other resources belong to an account. Members are added at the account level and their permissions scoped down from there.
+- **Zones represent individual domains.** You can assign members permissions for specific zones only, which is how you give a team member access to `example.com` without giving them access to every other domain in the account.
+- **Resource-level permissions let you go further.** Beyond zone-level scoping, Cloudflare's RBAC system supports resource-level permissions for specific Workers, KV namespaces, R2 buckets, and other resources. This is useful for contractors or external collaborators who need access to one project only. For more information, refer to [Scope](/fundamentals/manage-members/scope/).
+- **Avoid personal accounts for shared resources.** Production zones, Workers, and API tokens should live in an account that the organization controls, not an individual's personal Cloudflare account.
+- **Cloudflare Organizations** (currently in beta and available to Enterprise customers) allow you to group multiple accounts under a single management layer, with centralized member management and organization-level super admin roles. If you manage multiple accounts today, Organizations is worth evaluating. For more information, refer to [Cloudflare organizations](/fundamentals/organizations/).
+
+## Next steps
+
+- [Accounts and zones](/fundamentals/concepts/accounts-and-zones/) — how the hierarchy works
+- [Scope](/fundamentals/manage-members/scope/) — account, zone, and resource-level permissions
+- [Cloudflare organizations](/fundamentals/organizations/) — multi-account management for Enterprise customers

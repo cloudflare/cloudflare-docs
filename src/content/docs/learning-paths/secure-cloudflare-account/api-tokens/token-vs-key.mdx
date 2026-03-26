@@ -1,0 +1,30 @@
+---
+title: API tokens vs. global API keys
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+## Why this matters
+
+Cloudflare's legacy global API key grants full access to your entire account, covering every zone, every product, and every setting, with no way to restrict what it can do or which IP addresses can use it. There is no expiry. There is no per-key audit trail. If it leaks, the attacker has everything.
+
+API tokens were introduced to replace this. They are scoped, auditable, and can be configured to expire.
+
+## Our recommendation
+
+Use API tokens for everything. There is no use case where a global API key is the better choice for new integrations. If you currently use global API keys in any scripts or tools, treat migrating to tokens as a security debt item, not an optional improvement.
+
+The one narrow exception: some very old third-party integrations do not support API tokens and still require the global API key. In those cases, document the dependency, track it, and prioritize migrating away from it.
+
+## Key considerations
+
+- **Global API keys cannot be audited individually.** All API requests made with the global key appear in audit logs attributed to the account owner, not to the specific key or workflow. With tokens, each token has a name and you can correlate activity to a specific pipeline or use case.
+- **Tokens can be restricted to specific IP addresses.** For automation running from a known IP range (such as a CI/CD runner), adding an IP restriction significantly reduces the impact of a leaked token.
+- **Tokens support TTLs.** Tokens used in long-lived automations should have an expiry set. Rotating tokens on a schedule is better than waiting for a leak to force your hand.
+- **You can have multiple tokens.** Create a separate token for each distinct use case: one for your deployment pipeline, one for your monitoring integration, one for manual scripting. Narrowing scope per token limits the blast radius of any single compromise.
+
+## Next steps
+
+- [API token permissions reference](/fundamentals/api/reference/permissions/)
+- [Create an API token](/fundamentals/api/get-started/create-token/)

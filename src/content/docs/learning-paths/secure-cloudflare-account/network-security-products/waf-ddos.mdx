@@ -1,0 +1,27 @@
+---
+title: WAF and DDoS protection
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+## Why this matters
+
+Every public-facing zone is a target for automated attacks. Web application firewall (WAF) rules block common exploit attempts: SQL injection, cross-site scripting, and known vulnerability probes. DDoS protection absorbs volumetric attacks before they reach your origin. Neither requires detailed configuration to provide substantial protection at baseline.
+
+## Our recommendation
+
+Enable the Cloudflare Managed Ruleset and configure DDoS protection to "high" sensitivity for all public-facing zones. These are the two highest-value, lowest-effort security improvements available in the WAF, and they should be on by default for every production zone.
+
+## Key considerations
+
+- **The Cloudflare Managed Ruleset covers the OWASP Top 10 and known CVEs.** It is updated automatically as new threats emerge. Enabling it takes one click and requires no ongoing maintenance. The default action is to block, but you can set rules to log-only first if you want to observe what it would block before committing.
+- **DDoS Override rules let you configure sensitivity and action per zone.** The default DDoS protection is always on and cannot be turned off, but you can tune it. For most production sites, increasing sensitivity to "high" and setting the action to "block" (rather than "challenge") is appropriate. Legitimate traffic patterns rarely trigger high-sensitivity DDoS rules.
+- **WAF rules fire before your origin sees the request.** A blocked request never reaches your Workers, Pages deployment, or origin server. This reduces origin load during attacks and ensures your application code is not involved in handling malicious traffic.
+- **Custom rules let you express your own policies.** After the managed ruleset is running, add custom rules for application-specific patterns: blocking traffic from unexpected geographies, requiring specific headers, or rate-limiting aggressive crawlers. Start with the managed ruleset and add custom rules only where you have a specific need.
+
+## Next steps
+
+- [Cloudflare Managed Ruleset](/waf/managed-rules/)
+- [DDoS protection settings](/ddos-protection/managed-rulesets/http/)
+- [WAF custom rules](/waf/custom-rules/)

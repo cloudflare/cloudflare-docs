@@ -1,0 +1,27 @@
+---
+title: Pages deployment access controls
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+## Why this matters
+
+Cloudflare Pages connects your code repository to Cloudflare's infrastructure. Every push to your repository can trigger a deployment. Without intentional access controls, a contributor with repository write access has indirect deployment access, deploy hooks can be discovered and triggered by unintended parties, and preview deployments can expose pre-production code publicly.
+
+## Our recommendation
+
+Treat Pages deployment access as part of your overall permission model. Decide explicitly who and what can trigger deployments, and configure branch controls to match how your team works.
+
+## Key considerations
+
+- **Branch build controls let you restrict which branches trigger production builds.** Configure your project to only build from your main production branch automatically. Require manual promotion or protected branch rules for anything that deploys to production.
+- **Preview deployments are public by default.** Any pull request from a contributor will generate a publicly accessible preview URL. If your staging or preview environments contain sensitive data, customer information, or unreleased features, consider restricting preview deployment access or disabling automatic previews for external pull requests.
+- **Deploy hooks are unauthenticated URLs.** Any request to a deploy hook URL triggers a deployment. Treat them like API tokens: do not commit them to version control, do not share them unnecessarily, and regenerate them if they may have been exposed. Store deploy hook URLs in CI secrets, not in code.
+- **Account roles control who can configure Pages projects.** A team member with Cloudflare Workers Admin or Cloudflare Pages access can modify project settings, including deploy hooks and environment variables. Review who has these roles in the context of your Pages projects.
+
+## Next steps
+
+- [Branch build controls](/pages/configuration/branch-build-controls/)
+- [Preview deployments](/pages/configuration/preview-deployments/)
+- [Deploy hooks](/pages/configuration/deploy-hooks/)

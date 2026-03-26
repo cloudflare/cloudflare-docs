@@ -1,0 +1,29 @@
+---
+title: Securing R2 object storage
+pcx_content_type: learning-unit
+sidebar:
+  order: 5
+---
+
+## Why this matters
+
+R2 buckets are private by default, but it is easy to accidentally make one public. A misconfigured public bucket can expose data to the entire internet. Even when public access is intentional, it needs to be controlled.
+
+## Our recommendation
+
+Keep buckets private unless you have a specific reason to expose them. When you do need public access, put Cloudflare Access or WAF Token Authentication in front of it — do not rely on obscurity.
+
+## Key considerations
+
+- **Buckets are private by default.** A new R2 bucket is never publicly accessible without explicit opt-in. Workers with a declared R2 binding are the primary access pattern and require no additional credentials.
+- **The `r2.dev` subdomain is for development only.** Enabling the `r2.dev` public subdomain exposes your bucket without authentication and is rate-limited. Disable it for any bucket that is not used for local development or testing. Use a custom domain for production public access instead.
+- **Secure public buckets with Access or WAF Token Authentication.** If a bucket must be publicly readable, restrict it further. Cloudflare Access lets you require authentication before serving bucket content. WAF Token Authentication lets you issue signed, expiring URLs. If you use either, disable the `r2.dev` subdomain — it bypasses both controls.
+- **Scope R2 API tokens to the minimum required permissions.** When using the S3-compatible API, create a dedicated token for each consumer and grant only what it needs: Object Read, Object Read & Write, Admin Read, or Admin Read & Write. Scope tokens to specific buckets rather than all buckets in the account.
+- **Temporary credentials are available for short-lived access.** R2 supports temporary credentials for use cases where you need to grant time-limited access to a bucket without issuing a long-lived token.
+- **All data is encrypted at rest and in transit.** Encryption is automatic and requires no configuration.
+
+## Next steps
+
+- [R2 data security](/r2/reference/data-security/)
+- [Public buckets](/r2/buckets/public-buckets/)
+- [R2 API tokens](/r2/api/tokens/)

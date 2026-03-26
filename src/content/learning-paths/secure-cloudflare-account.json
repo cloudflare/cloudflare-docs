@@ -1,0 +1,8 @@
+{
+	"title": "Setting up Cloudflare for secure collaboration",
+	"uid": "secure-cloudflare-account",
+	"path": "/learning-paths/secure-cloudflare-account/account-structure/",
+	"pcx_content_type": "learning-path",
+	"description": "Configure your Cloudflare account, permissions, and products for safe, secure team collaboration.",
+	"products": ["fundamentals", "workers", "cloudflare-one"]
+}

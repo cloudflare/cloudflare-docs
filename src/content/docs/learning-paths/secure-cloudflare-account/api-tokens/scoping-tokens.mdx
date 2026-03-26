@@ -1,0 +1,34 @@
+---
+title: Designing least-privilege tokens
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+---
+
+## Why this matters
+
+A token with more permissions than it needs is a liability. If a deployment pipeline's token also has DNS edit permissions, a compromised pipeline can modify your DNS records. Scope determines what an attacker can do with a stolen token.
+
+## Our recommendation
+
+Design each token to have exactly the permissions the workflow using it requires, and nothing more. Before creating a token, write down the specific API operations the workflow needs to perform. If you are not sure, start with less and expand as needed.
+
+Apply this checklist to every token:
+
+1. **Permissions** — select only the product permissions and access levels (Read/Edit) required.
+2. **Zone scope** — if the token only needs to touch specific zones, restrict it to those zones. Do not select "All zones" unless the workflow genuinely operates across all zones.
+3. **Account scope** — if the token does not need account-level access (billing, account members, Workers), do not grant it.
+4. **TTL** — set an expiry for tokens used in automated workflows. For tokens that never expire, add a calendar reminder to rotate them at least annually.
+5. **IP restriction** — if the consumer has a known IP or IP range, add it. This adds meaningful protection against token theft.
+
+## Key considerations
+
+- **Read vs. Edit matters.** Many workflows only need to read data (for example, a monitoring script reading DNS records). Granting Edit access when Read is sufficient doubles the potential impact of a compromise.
+- **Token templates are a good starting point**, not a final answer. The "Edit zone DNS" template gives you a reasonable starting scope, but review it and narrow further if the workflow only needs to touch one zone.
+- **Account-owned API tokens** (available on Enterprise plans) are managed at the account level rather than by an individual user. Only members with the `Super Administrator - All Privileges` role can create them. Use Account API tokens for CI/CD pipelines and shared automation so that the token is not tied to a specific employee's account.
+
+## Next steps
+
+- [Create an API token](/fundamentals/api/get-started/create-token/)
+- [Restrict tokens by IP address](/fundamentals/api/how-to/restrict-tokens/)
+- [Account-owned tokens](/fundamentals/api/get-started/account-owned-tokens/)

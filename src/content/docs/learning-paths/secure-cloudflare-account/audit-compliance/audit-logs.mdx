@@ -1,0 +1,38 @@
+---
+title: Audit logs
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+## Why this matters
+
+When something goes wrong, such as a configuration change breaking a site, an unauthorized member being added, or a WAF rule being disabled, audit logs are how you find out what happened and who did it. Without logs, you are debugging in the dark. With them, you can reconstruct the sequence of events and identify the source of a problem in minutes.
+
+## Our recommendation
+
+Review audit logs after any significant team or configuration change. For production accounts, forward logs to a SIEM or logging platform. This gives your security team continuous visibility without having to check the dashboard manually.
+
+## What audit logs capture
+
+Cloudflare audit logs record changes made through the dashboard, API, and Wrangler, including:
+
+- Member additions, removals, and role changes
+- API token creation, modification, and deletion
+- Zone settings changes (SSL mode, WAF rules, page rules, firewall rules)
+- Workers deployments and configuration changes
+- Account settings changes (2FA policy, SSO configuration)
+
+Logs include the actor (the user or API token that made the change), the action taken, the target resource, and a timestamp.
+
+## Key considerations
+
+- **Review logs after team changes.** When you add a new member, change a role, or remove someone, check the audit logs to confirm the change was applied correctly and no unexpected side effects occurred.
+- **Review logs after incidents.** If a zone goes down, a Worker starts behaving unexpectedly, or a security alert fires, the audit log is your first stop for understanding what changed and when.
+- **Forward logs for continuous monitoring.** The Cloudflare dashboard retains audit logs, but if your security team needs to correlate Cloudflare activity with events from other systems, integrate with your SIEM. Cloudflare supports log forwarding via Logpush.
+- **Audit logs are not a substitute for access controls.** Logs tell you what happened after the fact. Good permission design and notification policies (covered in the next section) reduce the number of events you need to investigate.
+
+## Next steps
+
+- [Audit logs overview](/fundamentals/account/account-security/audit-logs/)
+- [Review audit logs](/fundamentals/account/account-security/review-audit-logs/)

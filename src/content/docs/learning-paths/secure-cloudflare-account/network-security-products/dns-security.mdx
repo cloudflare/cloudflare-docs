@@ -1,0 +1,26 @@
+---
+title: DNS security
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+---
+
+## Why this matters
+
+DNS is the phonebook of the internet. Attackers who can tamper with your DNS records can redirect your users, intercept traffic, and issue fraudulent TLS certificates. Two of the most common DNS-based attacks, DNS cache poisoning and subdomain takeover, are preventable with straightforward configuration.
+
+## Our recommendation
+
+Enable DNSSEC for every zone you control and review your DNS records for dangling entries that could be taken over by a third party.
+
+## Key considerations
+
+- **DNSSEC prevents cache poisoning.** It cryptographically signs your DNS records so that resolvers can verify they have not been tampered with. Enabling DNSSEC in the Cloudflare dashboard is a one-click operation for zones using Cloudflare as the authoritative nameserver.
+- **DNSSEC requires registrar support.** After enabling DNSSEC in Cloudflare, you need to add the DS record at your domain registrar. If your registrar does not support DNSSEC, consider transferring the domain to Cloudflare Registrar, which handles DS record management automatically.
+- **Subdomain takeover is a real risk.** A dangling DNS record, such as a CNAME pointing to a cloud service or CDN origin that no longer exists, can be claimed by an attacker who registers the abandoned resource. Audit your DNS records periodically for CNAMEs pointing to deprovisioned services. Look especially at records pointing to third-party platforms where the associated account or resource may have been removed.
+- **Minimize exposed records.** Do not create DNS records for internal services that do not need to be publicly discoverable. If an internal hostname needs to be in DNS, use a private zone or ensure it points to an access-controlled endpoint.
+
+## Next steps
+
+- [DNS best practices](/dns/reference/best-practices/)
+- [Set up DNSSEC](/dns/dnssec/)
