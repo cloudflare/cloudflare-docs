@@ -66,7 +66,8 @@ export function getCommand(
 	if (dev && type === "add") cmd += ` ${commands[mgr].dev}`;
 	if (pkg) {
 		// For `yarn create`, strip only a trailing @version tag (e.g. `pkg@latest` → `pkg`).
-		// The original /@[^\s]+/ matches the very first @, which destroys scoped packages
+		// For yarn create, strip only trailing version tags (e.g., @latest).
+		// This regex strips @ that is NOT followed by / (not a scope prefix) at the end.
 		// like `@cloudflare/workers` (first @ is the scope, not a version).
 		// The corrected regex only strips an @ that is NOT immediately followed by a `/`
 		// (i.e. not a scope prefix) and only at the end of the package name.
