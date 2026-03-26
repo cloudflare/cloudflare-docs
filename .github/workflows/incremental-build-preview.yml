@@ -57,11 +57,12 @@ jobs:
       - name: Download previous build from R2
         id: previous-build
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
+          AWS_DEFAULT_REGION: auto
         run: |
-          # Try the PR base SHA first, then fall back to listing the latest
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          if npx wrangler r2 object get "cloudflare-docs-production-build-cache/builds/${BASE_SHA}.tar" --file /tmp/previous-build.tar --remote 2>/dev/null; then
+          if aws s3 cp "s3://cloudflare-docs-production-build-cache/builds/${BASE_SHA}.tar.gz" /tmp/previous-build.tar.gz --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com 2>/dev/null; then
             echo "Found build cache for base SHA ${BASE_SHA}"
             echo "found=true" >> "$GITHUB_OUTPUT"
           else
@@ -73,7 +74,7 @@ jobs:
         if: steps.previous-build.outputs.found == 'true'
         run: |
           mkdir -p .previous-build
-          tar -xf /tmp/previous-build.tar -C .previous-build
+          tar -xzf /tmp/previous-build.tar.gz -C .previous-build
 
       # -- Run the build --
       - name: Restore Astro assets from cache
@@ -103,10 +104,12 @@ jobs:
       - name: Upload build cache to R2
         if: always() && hashFiles('dist/index.html') != ''
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
+          AWS_DEFAULT_REGION: auto
         run: |
-          tar -cf /tmp/build-cache.tar dist/ $([ -d dist-meta ] && echo "dist-meta/")
-          npx wrangler r2 object put "cloudflare-docs-production-build-cache/builds/${{ github.sha }}.tar" --file /tmp/build-cache.tar --remote
+          tar -czf /tmp/build-cache.tar.gz dist/ $([ -d dist-meta ] && echo "dist-meta/")
+          aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/builds/${{ github.sha }}.tar.gz" --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com
 
       # -- Deploy preview --
       - name: Deploy to Cloudflare Workers

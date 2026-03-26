@@ -172,12 +172,14 @@ jobs:
 
       # -- Upload build artifacts to R2 for incremental builds --
       - name: Archive build for incremental cache
-        run: tar -cf /tmp/build-cache.tar dist/ $([ -d dist-meta ] && echo "dist-meta/")
+        run: tar -czf /tmp/build-cache.tar.gz dist/ $([ -d dist-meta ] && echo "dist-meta/")
 
       - name: Upload build cache to R2
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: npx wrangler r2 object put "cloudflare-docs-production-build-cache/builds/${{ github.sha }}.tar" --file /tmp/build-cache.tar --remote
+          AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/builds/${{ github.sha }}.tar.gz" --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com
 
   post-build:
     name: Post Build
