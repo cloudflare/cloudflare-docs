@@ -1,0 +1,169 @@
+name: Incremental Build Preview
+
+on:
+  pull_request:
+    branches:
+      - production
+
+concurrency:
+  group: incremental-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  incremental-build:
+    name: Incremental Build
+    # Only run for PRs from the same repo (not forks), same as the regular preview
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          cache: npm
+
+      # -- Install docs dependencies (gets regular astro from npm) --
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+
+      - name: Install node_modules (cache miss)
+        run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      # -- Clone and build the ced-astro fork --
+      - name: Clone ced-astro fork
+        run: |
+          git clone --depth 1 --branch partial-builds \
+            https://gitlab+deploy-token-90:${{ secrets.CED_ASTRO_TOKEN }}@gitlab.cfdata.org/cloudflare/ced/ced-astro.git \
+            /tmp/ced-astro
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install ced-astro dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: /tmp/ced-astro
+
+      - name: Build ced-astro
+        run: pnpm -C packages/astro run build:ci
+        working-directory: /tmp/ced-astro
+
+      - name: Pack ced-astro
+        id: pack
+        run: |
+          TARBALL=$(npm pack --pack-destination /tmp 2>&1 | tail -1)
+          echo "tarball=/tmp/$TARBALL" >> "$GITHUB_OUTPUT"
+        working-directory: /tmp/ced-astro/packages/astro
+
+      # -- Override astro with the fork --
+      - name: Install ced-astro over regular astro
+        run: npm install "${{ steps.pack.outputs.tarball }}" --no-save
+
+      # -- Restore previous build from cache for incremental build --
+      - name: Restore previous build from cache
+        id: previous-build-cache
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            .incremental-cache/dist
+            .incremental-cache/dist-meta
+          key: incremental-build-${{ github.event.pull_request.base.sha }}
+          restore-keys: |
+            incremental-build-
+
+      # -- Run the build --
+      - name: Restore Astro assets from cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            node_modules/.astro/assets
+          key: static
+
+      - name: Full build (no previous build cached)
+        if: steps.previous-build-cache.outputs.cache-hit != 'true'
+        run: |
+          export NODE_OPTIONS='--max-old-space-size=8192'
+          npx astro build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Incremental build (previous build cached)
+        if: steps.previous-build-cache.outputs.cache-hit == 'true'
+        run: |
+          export NODE_OPTIONS='--max-old-space-size=8192'
+          npx astro build --previous-dist .incremental-cache/dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # -- Cache this build for future incremental runs --
+      - name: Prepare build cache
+        if: always() && hashFiles('dist/index.html') != ''
+        run: |
+          rm -rf .incremental-cache
+          mkdir -p .incremental-cache
+          cp -r dist .incremental-cache/dist
+          if [ -d dist-meta ]; then
+            cp -r dist-meta .incremental-cache/dist-meta
+          fi
+
+      - name: Save build to cache
+        if: always() && hashFiles('dist/index.html') != ''
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            .incremental-cache/dist
+            .incremental-cache/dist-meta
+          key: incremental-build-${{ github.sha }}
+
+      # -- Deploy preview --
+      - name: Deploy to Cloudflare Workers
+        id: deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          SHORT_SHA="${{ github.event.pull_request.head.sha }}"
+          SHORT_SHA="${SHORT_SHA:0:8}"
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          BRANCH_SLUG=$(echo "$BRANCH" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
+
+          echo "branch_slug=incr-$BRANCH_SLUG" >> "$GITHUB_OUTPUT"
+
+          npx wrangler deploy --dispatch-namespace preview-deployments --name "incr-$SHORT_SHA"
+          npx wrangler deploy --dispatch-namespace preview-deployments --name "incr-$BRANCH_SLUG"
+
+      - name: Post preview URL on PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH_SLUG="${{ steps.deploy.outputs.branch_slug }}"
+          PREVIEW_URL="https://${BRANCH_SLUG}.preview.developers.cloudflare.com"
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+
+          # Check for existing incremental build comment
+          EXISTING=$(gh api \
+            "repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
+            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("Incremental Build Preview"))) | .id' \
+            | head -1)
+
+          BODY="**Incremental Build Preview:** ${PREVIEW_URL}"
+
+          if [ -n "$EXISTING" ]; then
+            gh api \
+              "repos/${{ github.repository }}/issues/comments/${EXISTING}" \
+              -X PATCH -f body="$BODY"
+          else
+            gh api \
+              "repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
+              -f body="$BODY"
+          fi
