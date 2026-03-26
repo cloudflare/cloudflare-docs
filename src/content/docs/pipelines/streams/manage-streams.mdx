@@ -30,13 +30,13 @@ Streams are made available to pipelines as SQL tables using the stream name (for
 
 ### Wrangler CLI
 
-To create a stream, run the [`pipelines streams create`](/workers/wrangler/commands/#pipelines-streams-create) command:
+To create a stream, run the [`pipelines streams create`](/workers/wrangler/commands/pipelines/#pipelines-streams-create) command:
 
 ```bash
 npx wrangler pipelines streams create <STREAM_NAME>
 ```
 
-Alternatively, to use the interactive setup wizard that helps you configure a stream, sink, and pipeline, run the [`pipelines setup`](/workers/wrangler/commands/#pipelines-setup) command:
+Alternatively, to use the interactive setup wizard that helps you configure a stream, sink, and pipeline, run the [`pipelines setup`](/workers/wrangler/commands/pipelines/#pipelines-setup) command:
 
 ```bash
 npx wrangler pipelines setup
@@ -128,13 +128,13 @@ Events that do not match the defined schema are accepted during ingestion but wi
 
 ### Wrangler CLI
 
-To view a specific stream, run the [`pipelines streams get`](/workers/wrangler/commands/#pipelines-streams-get) command:
+To view a specific stream, run the [`pipelines streams get`](/workers/wrangler/commands/pipelines/#pipelines-streams-get) command:
 
 ```bash
 npx wrangler pipelines streams get <STREAM_ID>
 ```
 
-To list all streams in your account, run the [`pipelines streams list`](/workers/wrangler/commands/#pipelines-streams-list) command:
+To list all streams in your account, run the [`pipelines streams list`](/workers/wrangler/commands/pipelines/#pipelines-streams-list) command:
 
 ```bash
 npx wrangler pipelines streams list
@@ -180,7 +180,7 @@ For details on configuring authentication tokens and making authenticated reques
 
 ### Wrangler CLI
 
-To delete a stream, run the [`pipelines streams delete`](/workers/wrangler/commands/#pipelines-streams-delete) command:
+To delete a stream, run the [`pipelines streams delete`](/workers/wrangler/commands/pipelines/#pipelines-streams-delete) command:
 
 ```bash
 npx wrangler pipelines streams delete <STREAM_ID>

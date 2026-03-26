@@ -30,7 +30,7 @@ Pipelines execute SQL statements that define how data flows from streams to sink
 
 ### Wrangler CLI
 
-To create a pipeline, run the [`pipelines create`](/workers/wrangler/commands/#pipelines-create) command:
+To create a pipeline, run the [`pipelines create`](/workers/wrangler/commands/pipelines/#pipelines-create) command:
 
 ```bash
 npx wrangler pipelines create my-pipeline \
@@ -44,7 +44,7 @@ npx wrangler pipelines create my-pipeline \
   --sql-file pipeline.sql
 ```
 
-Alternatively, to use the interactive setup wizard that helps you configure a stream, sink, and pipeline, run the [`pipelines setup`](/workers/wrangler/commands/#pipelines-setup) command:
+Alternatively, to use the interactive setup wizard that helps you configure a stream, sink, and pipeline, run the [`pipelines setup`](/workers/wrangler/commands/pipelines/#pipelines-setup) command:
 
 ```bash
 npx wrangler pipelines setup
@@ -112,13 +112,13 @@ FROM my_stream
 
 ### Wrangler CLI
 
-To view a specific pipeline, run the [`pipelines get`](/workers/wrangler/commands/#pipelines-get) command:
+To view a specific pipeline, run the [`pipelines get`](/workers/wrangler/commands/pipelines/#pipelines-get) command:
 
 ```bash
 npx wrangler pipelines get <PIPELINE_ID>
 ```
 
-To list all pipelines in your account, run the [`pipelines list`](/workers/wrangler/commands/#pipelines-list) command:
+To list all pipelines in your account, run the [`pipelines list`](/workers/wrangler/commands/pipelines/#pipelines-list) command:
 
 ```bash
 npx wrangler pipelines list
@@ -139,7 +139,7 @@ Deleting a pipeline stops data flow from the connected stream to sink.
 
 ### Wrangler CLI
 
-To delete a pipeline, run the [`pipelines delete`](/workers/wrangler/commands/#pipelines-delete) command:
+To delete a pipeline, run the [`pipelines delete`](/workers/wrangler/commands/pipelines/#pipelines-delete) command:
 
 ```bash
 npx wrangler pipelines delete <PIPELINE_ID>

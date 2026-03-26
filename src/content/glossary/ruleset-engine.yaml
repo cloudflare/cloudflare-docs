@@ -1,0 +1,8 @@
+---
+productName: Ruleset Engine
+entries:
+  - term: terminating action
+    general_definition: |-
+      a rule action like _Block_ that stops the evaluation of remaining rules.
+    associated_products:
+      - WAF

@@ -10,8 +10,8 @@ import { Details, Render } from "~/components";
 <Details header="Feature availability">
 
 | [WARP modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All modes                                                                                | All plans                                                     |
+| ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All modes                                                                                       | All plans                                                     |
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
@@ -91,7 +91,7 @@ The following flowchart shows how Cloudflare One Client registration settings ta
 
 ```mermaid
 flowchart TB
-    start(["Enable multi-user mode"])-->reg["Active Windows user is prompted to register WARP"]
+    start(["Enable multi-user mode"])-->reg["Active Windows user is prompted to register Cloudflare One Client"]
 		reg--"Log out of Windows"-->prelogin
 		reg--"Switch user"-->regexists
 
@@ -103,7 +103,7 @@ flowchart TB
 		preloginno["Stay registered as <br />previous Windows user"]
 		end
 
-		preloginbehavior--"Log in to Windows"---->regexists{{"Has the user already registered with WARP?"}}
+		preloginbehavior--"Log in to Windows"---->regexists{{"Has the user already registered with Cloudflare One Client?"}}
 		regexists--"Yes"-->user["Switch to that user's registration"]
 		regexists-. "No" .->reg
 ```

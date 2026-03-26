@@ -7,14 +7,14 @@ import { lookupProductTitle } from "~/util/sidebar";
 const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 ---
 
-<div class="sidebar-header">
-	<div class="sidebar-product-title px-1">
-		<a href={"/" + product + "/"} class="flex items-center gap-2 no-underline">
+<div
+	class="sticky top-0 z-[1] flex flex-col gap-2 bg-[var(--sl-color-black)] py-3.5 min-[50rem]:bg-[var(--sl-color-bg-sidebar)]"
+>
+	<div class="sidebar-product-title">
+		<a href={"/" + product + "/"} class="flex items-center gap-1 no-underline">
 			<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
-			<span class="text-xl text-black">
-				<strong>
-					{lookupProductTitle(product, module)}
-				</strong>
+			<span class="text-xl font-semibold text-black">
+				{lookupProductTitle(product, module)}
 			</span>
 		</a>
 	</div>
@@ -22,10 +22,13 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	<!-- Search Input -->
 	<div class="relative">
 		<input
-			type="text"
+			type="search"
 			id="sidebar-search"
 			placeholder="Search sidebar..."
-			class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 pr-10 text-base sm:text-sm text-gray-900 placeholder-gray-500 transition-colors duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:focus:border-orange-500 dark:focus:ring-orange-500"
+			aria-label="Search sidebar navigation"
+			autocomplete="off"
+			spellcheck="false"
+			class="box-border min-h-[2.125rem] w-full rounded-lg border border-neutral-200 bg-transparent px-3 pr-10 text-sm text-neutral-950 placeholder-[var(--color-cl1-gray-4)] outline-2 outline-offset-2 outline-transparent transition-colors duration-150 focus-visible:outline-blue-500 dark:border-neutral-700 dark:text-neutral-100 dark:placeholder-[var(--color-cl1-gray-6)] dark:focus-visible:outline-blue-400"
 		/>
 		<div class="sidebar-search-icon"></div>
 	</div>
@@ -69,6 +72,69 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		)
 			return;
 
+		// ── Animated <details> toggle ──
+		const animating = new WeakSet<HTMLDetailsElement>();
+		const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+		const DURATION = 250;
+		const EASING = "cubic-bezier(0.87, 0, 0.13, 1)";
+
+		function animateAccordion(
+			details: HTMLDetailsElement,
+			from: string,
+			to: string,
+			onDone?: () => void,
+		) {
+			const el = details.querySelector<HTMLElement>(
+				":scope > .sidebar-accordion",
+			);
+			if (!el || reducedMotion.matches) {
+				onDone?.();
+				return;
+			}
+			if (animating.has(details)) el.getAnimations().forEach((a) => a.cancel());
+			animating.add(details);
+
+			const anim = el.animate(
+				[{ gridTemplateRows: from }, { gridTemplateRows: to }],
+				{
+					duration: DURATION,
+					easing: EASING,
+					fill: onDone ? "forwards" : "none",
+				},
+			);
+			const cleanup = () => animating.delete(details);
+			anim.oncancel = cleanup;
+			anim.onfinish = () => {
+				onDone?.();
+				anim.cancel();
+				cleanup();
+			};
+		}
+		sidebarContent.addEventListener("click", (e) => {
+			const summary = (e.target as HTMLElement).closest("summary");
+			if (!summary) return;
+			const details = summary.parentElement as HTMLDetailsElement | null;
+			if (!details || details.tagName !== "DETAILS") return;
+
+			e.preventDefault();
+
+			if (details.open) {
+				animateAccordion(details, "1fr", "0fr", () => {
+					details.open = false;
+				});
+			} else {
+				details.open = true;
+				animateAccordion(details, "0fr", "1fr");
+			}
+		});
+
+		// Cancel in-flight animations before Astro page transitions.
+		document.addEventListener("astro:before-swap", () => {
+			sidebarContent
+				?.querySelectorAll<HTMLElement>(".sidebar-accordion")
+				.forEach((el) => el.getAnimations().forEach((a) => a.cancel()));
+		});
+
 		const originalState: Map<Element, boolean> = new Map();
 
 		// Store original state of details elements
@@ -90,7 +156,9 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		// Show only direct children of a folder (not recursive)
 		function showDirectChildren(details: HTMLDetailsElement) {
 			details.open = true;
-			const directList = details.querySelector(":scope > ul");
+			const directList = details.querySelector(
+				":scope > .sidebar-accordion > .sidebar-accordion-inner > ul",
+			);
 			if (directList) {
 				const directChildren = directList.querySelectorAll(":scope > li");
 				directChildren.forEach((child) => {
@@ -326,91 +394,8 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		background-color: currentColor;
 		pointer-events: none;
 	}
-
-	:root {
-		/* Sticky header: position: sticky works because .sidebar-pane (overflow-y: auto)
-		   is the scroll container, and we remove min-height: max-content from
-		   .sidebar-content so the containing block height is bounded by the viewport. */
-		.sidebar-header {
-			position: sticky;
-			top: 0;
-			z-index: 1;
-			display: flex;
-			flex-direction: column;
-			gap: 0.5rem;
-			background-color: var(--sl-color-black);
-			padding-top: 1rem;
-			padding-bottom: 1rem;
-
-			@media (min-width: 50rem) {
-				background-color: var(--sl-color-bg-sidebar);
-			}
-		}
-
-		/* Override Starlight's height: 100% / min-height: max-content.
-		   Let .sidebar-content size to its content so sticky has the full
-		   scroll range to work within, not just one viewport height. */
-		.sidebar-content {
-			height: auto !important;
-			min-height: 0 !important;
-
-			--sl-color-hairline-light: #cacaca !important;
-
-			& > * {
-				a {
-					padding: 0.2375em var(--sl-sidebar-item-padding-inline) !important;
-
-					&[aria-current="page"] {
-						background-color: unset !important;
-						border: unset !important;
-						border-color: unset !important;
-						color: var(--sl-color-accent) !important;
-						font-weight: 600 !important;
-					}
-				}
-
-				/* Style parent navigation items that contain the current page */
-				details:has(a[aria-current="page"]) > summary,
-				details:has(a[aria-current="page"]) > summary * {
-					color: var(--sl-color-accent-high) !important;
-					font-weight: 600 !important;
-				}
-
-				/* Override to keep caret default color */
-				details:has(a[aria-current="page"]) > summary svg,
-				details:has(a[aria-current="page"]) > summary .caret,
-				details:has(a[aria-current="page"]) > summary [class*="caret"] {
-					fill: var(--sl-color-gray-3) !important;
-				}
-
-				summary {
-					padding: 0.1375em var(--sl-sidebar-item-padding-inline) !important;
-				}
-
-				.large {
-					color: var(--sl-color-gray-2) !important;
-					font-weight: unset !important;
-					font-size: unset !important;
-
-					@media (min-width: 50rem) {
-						font-size: var(--sl-text-sm) !important;
-					}
-				}
-
-				.caret {
-					font-size: 1rem !important;
-				}
-			}
-		}
-	}
-
-	:root[data-theme="dark"] {
-		.sidebar-content {
-			--sl-color-hairline-light: #444444 !important;
-
-			& > * a[aria-current="page"] {
-				color: var(--sl-color-accent-high) !important;
-			}
-		}
+	.sidebar-content {
+		height: auto !important;
+		min-height: 0 !important;
 	}
 </style>

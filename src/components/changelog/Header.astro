@@ -19,7 +19,8 @@ const products = directory.filter(
 );
 
 const filteredGroups = groups.filter((group) => {
-	const groupProducts = directoryByGroup.find(([name]) => name === group)?.[1] ?? [];
+	const groupProducts =
+		directoryByGroup.find(([name]) => name === group)?.[1] ?? [];
 	return groupProducts.some((p) => changelogProductIds.includes(p.id));
 });
 
@@ -43,16 +44,18 @@ const currentPath = Astro.url.pathname;
 				icon="right-caret"
 			/>
 		</div>
-		{showProductSelect && (
-			<div class="not-content">
-				<ProductSelect
-					client:load
-					products={products}
-					groups={filteredGroups}
-					currentPath={currentPath}
-				/>
-			</div>
-		)}
+		{
+			showProductSelect && (
+				<div class="not-content">
+					<ProductSelect
+						client:load
+						products={products}
+						groups={filteredGroups}
+						currentPath={currentPath}
+					/>
+				</div>
+			)
+		}
 	</div>
 	<Image
 		src={HeroImage}

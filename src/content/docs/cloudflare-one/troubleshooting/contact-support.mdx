@@ -1,0 +1,48 @@
+---
+title: Contact Cloudflare Support
+pcx_content_type: how-to
+sidebar:
+  order: 100
+---
+
+import { Render } from "~/components";
+
+If you cannot resolve an issue using our troubleshooting guides, you can [open a support case](/support/contacting-cloudflare-support/).
+
+To help us investigate your issue quickly, please collect and provide the following information when you contact Cloudflare Support.
+
+## 1. Gather general information
+
+For all issues, please include:
+
+- **Timestamp (UTC)**: The exact time the issue occurred.
+- **Detailed description**: A clear description of the problem and the steps to reproduce it.
+- **Actual vs. Expected**: What happened versus what you expected to happen.
+- **Problem frequency**: How often does the issue occur?
+- **Screenshots**: Any relevant screenshots or videos of the error.
+- **Example URLs**: Specific URLs where the issue is occurring.
+
+## 2. Collect product diagnostics
+
+Depending on the product, providing diagnostic files is critical for a technical investigation.
+
+### Cloudflare One Client (WARP)
+If the issue involves the Cloudflare One Client, run the `warp-diag` command on the affected device and attach the resulting `.zip` file to your case. For more information, refer to [Diagnostic logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/).
+
+### Cloudflare Tunnel
+If the issue involves Cloudflare Tunnel, run the `cloudflared tunnel diag` command and provide the generated report. For more information, refer to [Tunnel diagnostic logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/diag-logs/).
+
+### Access and Gateway
+For issues related to authentication loops, blocked websites, or policy enforcement:
+
+- **HAR file**: Provide a [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) captured while reproducing the issue.
+- **Ray ID**: If you see a Cloudflare error page, provide the **Ray ID** displayed at the bottom of the page.
+- **Identity Provider logs**: Relevant logs from your identity provider (IdP) if the issue involves login failures.
+- **Request ID**: For Gateway issues, you can find the `oxy.request_id` in your [Gateway logs](/cloudflare-one/traffic-policies/troubleshooting/).
+
+### Digital Experience Monitoring (DEX)
+For issues with DEX tests or device monitoring, provide a [remote capture](/cloudflare-one/insights/dex/remote-captures/) from the Zero Trust dashboard.
+
+---
+
+For more information, refer to [Contacting Cloudflare Support](/support/contacting-cloudflare-support/).

@@ -1,0 +1,97 @@
+---
+title: "Moonshot AI Kimi K2.5 now available on Workers AI"
+description: A frontier-scale open-source model with 256k context, multi-turn tool calling, vision inputs, and structured outputs for agentic workloads.
+products:
+  - workers-ai
+date: 2026-03-19
+---
+
+Workers AI is officially in the big models game. [`@cf/moonshotai/kimi-k2.5`](/workers-ai/models/kimi-k2.5/) is the first frontier-scale open-source model on our AI inference platform — a large model with a full 256k context window, multi-turn tool calling, vision inputs, and structured outputs. By bringing a frontier-scale model directly onto the Cloudflare Developer Platform, you can now run the entire agent lifecycle on a single, unified platform.
+
+The model has proven to be a fast, efficient alternative to larger proprietary models without sacrificing quality. As AI adoption increases, the volume of inference is skyrocketing — now you can access frontier intelligence at a fraction of the cost.
+
+## Key capabilities
+
+- **256,000 token context window** for retaining full conversation history, tool definitions, and entire codebases across long-running agent sessions
+- **Multi-turn tool calling** for building agents that invoke tools across multiple conversation turns
+- **Vision inputs** for processing images alongside text
+- **Structured outputs** with JSON mode and JSON Schema support for reliable downstream parsing
+- **Function calling** for integrating external tools and APIs into agent workflows
+
+## Prefix caching and session affinity
+
+When an agent sends a new prompt, it resends all previous prompts, tools, and context from the session. The delta between consecutive requests is usually just a few new lines of input. Prefix caching avoids reprocessing the shared context, saving time and compute from the prefill stage. This means faster Time to First Token (TTFT) and higher Tokens Per Second (TPS) throughput.
+
+Workers AI has done prefix caching, but we are now surfacing cached tokens as a usage metric and offering a discount on cached tokens compared to input tokens (pricing is listed on the [model page](/workers-ai/models/kimi-k2.5/)).
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/moonshotai/kimi-k2.5" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -H "x-session-affinity: ses_12345678" \
+  -d '{
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant."
+      },
+      {
+        "role": "user",
+        "content": "What is prefix caching and why does it matter?"
+      }
+    ],
+    "max_tokens": 2400,
+    "stream": true
+  }'
+```
+
+Some clients like [OpenCode](https://opencode.ai) implement session affinity automatically. The [Agents SDK](https://github.com/cloudflare/agents) starter also sets up the wiring for you.
+
+## Redesigned asynchronous API
+
+For volumes of requests that exceed synchronous rate limits, you can submit batches of inferences to be completed asynchronously. We have revamped the [Asynchronous Batch API](/workers-ai/features/batch-api/) with a pull-based system that processes queued requests as soon as capacity is available. With internal testing, async requests usually execute within 5 minutes, but this depends on live traffic.
+
+The async API is the best way to avoid capacity errors in durable workflows. It is ideal for use cases that are not real-time, such as code scanning agents or research agents.
+
+To use the asynchronous API, pass `queueRequest: true`:
+
+```js
+// 1. Push a batch of requests into the queue
+const res = await env.AI.run(
+	"@cf/moonshotai/kimi-k2.5",
+	{
+		requests: [
+			{
+				messages: [{ role: "user", content: "Tell me a joke" }],
+			},
+			{
+				messages: [{ role: "user", content: "Explain the Pythagoras theorem" }],
+			},
+		],
+	},
+	{ queueRequest: true },
+);
+
+// 2. Grab the request ID
+const requestId = res.request_id;
+
+// 3. Poll for the result
+const result = await env.AI.run("@cf/moonshotai/kimi-k2.5", {
+	request_id: requestId,
+});
+
+if (result.status === "queued" || result.status === "running") {
+	// Retry by polling again
+} else {
+	return Response.json(result);
+}
+```
+
+You can also set up [event notifications](/workers-ai/platform/event-subscriptions/) to know when inference is complete instead of polling.
+
+## Get started
+
+Use Kimi K2.5 through the [Workers AI binding](/workers-ai/configuration/bindings/) (`env.AI.run()`), the REST API at `/run` or `/v1/chat/completions`, [AI Gateway](/ai-gateway/), or via the [OpenAI-compatible endpoint](/workers-ai/configuration/open-ai-compatibility/).
+
+For more information, refer to the [Kimi K2.5 model page](/workers-ai/models/kimi-k2.5/), [pricing](/workers-ai/platform/pricing/), and [prompt caching](/workers-ai/features/prompt-caching/).

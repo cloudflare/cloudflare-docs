@@ -615,21 +615,13 @@
 					"biz": "No",
 					"ent": "Yes"
 				},
-				"t_open_proxies_list": {
-					"title": "Managed IP List: Cloudflare Open Proxies",
+				"t_managed_ip_lists": {
+					"title": "Managed IP Lists",
 					"link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
 					"ent": "Yes"
-				},
-				"u_all_managed_ip_lists": {
-					"title": "All Managed IP Lists",
-					"link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "With separate add-on"
 				}
 			}
 		}
@@ -1789,12 +1781,11 @@
 				},
 				"managed_rulesets_response": {
 					"title": "Cloudflare Sensitive Data Detection",
-					"summary": "Enterprise with add-on",
 					"link": "/waf/managed-rules/reference/sensitive-data-detection/",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Yes"
 				}
 			}
 		},
@@ -1910,11 +1901,10 @@
 				"z_custom_rulesets_account": {
 					"title": "Account-level custom rulesets",
 					"link": "/waf/account/custom-rulesets/",
-					"summary": "Enterprise with add-on",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Yes"
 				}
 			}
 		},

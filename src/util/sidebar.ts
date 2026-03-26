@@ -9,6 +9,7 @@ type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
 };
 type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 	order?: number;
+	hasActivePage?: boolean;
 };
 
 export type SidebarEntry = Link | Group;
@@ -165,6 +166,7 @@ function setSidebarCurrentEntry(
 			entry.type === "group" &&
 			setSidebarCurrentEntry(entry.entries, pathname)
 		) {
+			entry.hasActivePage = true;
 			return true;
 		}
 

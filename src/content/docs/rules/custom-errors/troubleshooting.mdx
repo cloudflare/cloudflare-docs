@@ -16,11 +16,11 @@ Make sure that no WAF rule is blocking or challenging Custom Errors product when
 
 ## Error pages for blocked requests
 
-If you block countries or IP addresses with an [IP Access rule](/waf/tools/ip-access-rules/), affected visitors will get a `1005` error and your **IP/Country Block** custom page.
+If you block countries or IP addresses with an [IP Access rule](/waf/tools/ip-access-rules/), affected visitors will get a [1005 error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1005/) and your **IP/Country Block** custom page.
 
 If you block countries or IP addresses with a [WAF custom rule](/waf/custom-rules/) and you do not configure a [custom error rule](/rules/custom-errors/create-rules/#create-a-custom-error-rule-dashboard) or a [WAF custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for blocked requests, affected visitors will get your **WAF Block** page.
 
-If you block requests due to a [rate limiting rule](/waf/rate-limiting-rules/) and you do not configure a [custom error rule](/rules/custom-errors/create-rules/#create-a-custom-error-rule-dashboard) or a [WAF custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configure-a-custom-response-for-blocked-requests) for blocked requests, affected visitors will get your **429 Errors** page displaying a Cloudflare `1015` error.
+If you block requests due to a [rate limiting rule](/waf/rate-limiting-rules/) and you do not configure a [custom error rule](/rules/custom-errors/create-rules/#create-a-custom-error-rule-dashboard) or a [WAF custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configure-a-custom-response-for-blocked-requests) for blocked requests, affected visitors will get your **429 Errors** page displaying a Cloudflare [1015 error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1015/).
 
 If you block countries or IP addresses with a firewall rule (now deprecated), affected visitors will get your **1000 Class Errors** page.
 

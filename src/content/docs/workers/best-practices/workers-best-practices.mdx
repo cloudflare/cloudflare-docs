@@ -56,7 +56,7 @@ For more information, refer to [Node.js compatibility](/workers/runtime-apis/nod
 
 ### Generate binding types with wrangler types
 
-Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/#types) to generate a type definition file that matches your actual Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
+Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/general/#types) to generate a type definition file that matches your actual Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
 
 Re-run `wrangler types` whenever you add or rename a binding.
 
@@ -79,7 +79,7 @@ export default {
 
 </TypeScriptExample>
 
-For more information, refer to [wrangler types](/workers/wrangler/commands/#types).
+For more information, refer to [wrangler types](/workers/wrangler/commands/general/#types).
 
 ### Store secrets with wrangler secret, not in source
 
@@ -918,7 +918,7 @@ One known pitfall: the Vitest pool automatically injects `nodejs_compat`, so tes
 
 ```ts
 import { describe, it, expect } from "vitest";
-import { env } from "cloudflare:test";
+import { env } from "cloudflare:workers";
 
 describe("KV operations", () => {
 	it("should store and retrieve a value", async () => {

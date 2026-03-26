@@ -12,13 +12,13 @@ description: >-
 
 import { Render, PackageManagers, Details, WranglerConfig } from "~/components";
 
-In this tutorial, you will learn how to build a seat reservation app using Durable Objects. This app will allow users to book a seat for a flight. The app will be written in TypeScript and will use the new [SQLite storage backend in Durable Object](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) to store the data.
+In this tutorial, you will learn how to build a seat reservation app using Durable Objects. This app will allow users to book a seat for a flight. The app will be written in TypeScript and will use the new [SQLite storage backend in Durable Object](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) to store the data.
 
 Using Durable Objects, you can write reusable code that can handle coordination and state management for multiple clients. Moreover, writing data to SQLite in Durable Objects is synchronous and uses local disks, therefore all queries are executed with great performance. You can learn more about SQLite storage in Durable Objects in the [SQLite in Durable Objects blog post](https://blog.cloudflare.com/sqlite-in-durable-objects).
 
 :::note[SQLite in Durable Objects]
 
-SQLite in Durable Objects is currently in beta. You can learn more about the limitations of SQLite in Durable Objects in the [SQLite in Durable Objects documentation](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend).
+SQLite in Durable Objects is currently in beta. You can learn more about the limitations of SQLite in Durable Objects in the [SQLite in Durable Objects documentation](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class).
 
 :::
 

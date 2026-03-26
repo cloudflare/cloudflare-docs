@@ -19,8 +19,8 @@ not_found_handling = "404-page"
 run_worker_first = true
 
 [[r2_buckets]]
-binding = "VENDORED_MARKDOWN"
-bucket_name = "vendored-markdown"
+binding = "MIDDLECACHE"
+bucket_name = "middlecache"
 
 [observability]
 enabled = true

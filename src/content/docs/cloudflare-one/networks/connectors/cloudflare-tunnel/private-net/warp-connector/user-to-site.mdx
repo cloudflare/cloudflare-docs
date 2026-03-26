@@ -21,14 +21,14 @@ This guide covers how to connect Cloudflare One Client user devices to a private
       router1["WARP Connector
         10.0.0.1"]
       end
-      W[WARP clients]-->C((Cloudflare))-->router1
+      W[Cloudflare One Client]-->C((Cloudflare))-->router1
 ```
 
 ## Prerequisites
 
 - A Linux host [^1] on the subnet.
 - For WARP Connector to connect to Cloudflare services, your firewall should allow inbound/outbound traffic for the [WARP IP addresses, ports, and domains](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
-- For Cloudflare One Clients to connect to your subnet, your firewall should allow inbound traffic from  your [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
+- For Cloudflare One Clients to connect to your subnet, your firewall should allow inbound traffic from your [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
 
 ## 1. Install a WARP Connector
 
@@ -43,8 +43,7 @@ This guide covers how to connect Cloudflare One Client user devices to a private
 Cloudflare One Clients and WARP Connectors are accessed using their [device IP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/). Therefore, traffic to your device IPs must route through Cloudflare on both the WARP Connector host and Cloudflare One Client devices.
 
 1. In your WARP Connector device profile, go to [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
-2.
-	<Render file="tunnel/cgnat-split-tunnels" product="cloudflare-one" />
+2. <Render file="tunnel/cgnat-split-tunnels" product="cloudflare-one" />
 
 3. Repeat the previous steps for all Cloudflare One Client device profiles.
 
@@ -120,7 +119,7 @@ You can now send a request from a Cloudflare One Client user device to your subn
       router1["WARP Connector
         10.0.0.1"]
       end
-      W[WARP client]--ping 10.0.0.2 -->C((Cloudflare))-->router1
+      W[Cloudflare One Client]--ping 10.0.0.2 -->C((Cloudflare))-->router1
 ```
 
 [^1]:
@@ -128,5 +127,3 @@ You can now send a request from a Cloudflare One Client user device to your subn
     	file="tunnel/warp-connector-linux-packages"
     	product="cloudflare-one"
     />
-
-

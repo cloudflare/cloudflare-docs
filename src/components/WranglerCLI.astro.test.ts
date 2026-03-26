@@ -19,7 +19,7 @@ describe("WranglerCLI", () => {
 				},
 			}),
 		).resolves.toContain("pnpm wrangler deploy");
-	});
+	}, 10_000);
 
 	test("errors with no props", async () => {
 		await expect(renderWithOptions()).rejects

@@ -1,6 +1,7 @@
 ---
 params:
   - unifiedRoutingLink
+  - connectivityOptionsLink
 ---
 
 import { APIRequest, DashButton, Tabs, TabItem } from "~/components";
@@ -35,16 +36,24 @@ Before you begin, ensure that:
     - Private Load Balancers (`100.112.0.0/16`)
   - The source subnet cannot match or contain any existing route in your Cloudflare One routing table. The source subnet can be within a supernet route.
 
-## Affected Connectors
+## Affected connectors and services
 
-Except for Cloudflare Tunnel, all Cloudflare One Connectors (network offramps) receive traffic from the `cloudflare_source` subnet (default `100.64.0.0/12`) as the source when a Cloudflare service, such as Cloudflare Load Balancing, sends traffic to a private network.
+### Connectors
 
-The following Connectors are affected:
-- GRE
-- IPsec
-- CNI
-- WARP Connector
-- Cloudflare One Client
+Cloudflare One supports multiple <a href={props.connectivityOptionsLink}>connectivity options</a>. The following connectors will receive traffic from the `cloudflare_source` subnet when a Cloudflare service initiates a request to the connected network or endpoint as an offramp:
+
+- **Anycast tunnels:** GRE, IPsec, and CNI
+- **Software connectors:** Cloudflare One Client and WARP Connector
+
+Networks or endpoints connected via Cloudflare Tunnel will not receive traffic from the Cloudflare source IP subnet. Instead, the source IP address will be that of the host running the `cloudflared` software.
+
+### Services that originate or proxy connections
+
+All Cloudflare services that originate or proxy connections will send traffic from a Cloudflare source IP.
+
+This includes traffic that is proxied from a private network or endpoint onramp.
+
+For example, traffic onramped from a Cloudflare One Client through Cloudflare Load Balancer or Gateway DNS Resolver will present a Cloudflare source IP to the destination offramp.
 
 ## Configure source IPs
 

@@ -128,6 +128,28 @@ wrangler containers registries delete [DOMAIN] [OPTIONS]
 - `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
   - domain of the registry to delete
 
+<AnchorHeading
+	title="`registries credentials`"
+	slug="containers-registries-credentials"
+	depth={4}
+/>
+
+Generate temporary credentials to push or pull images from the Cloudflare managed registry (`registry.cloudflare.com`).
+
+```txt
+wrangler containers registries credentials [OPTIONS]
+```
+
+- `--push` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Generate credentials with push permission.
+- `--pull` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Generate credentials with pull permission.
+- `--expiration-minutes` <Type text="number" /> <MetaInfo text="optional" />
+  - How long the credentials should be valid for (in minutes).
+  - Default: 15
+
+At least one of `--push` or `--pull` must be specified.
+
 <AnchorHeading title="`info`" slug="containers-info" depth={3} />
 
 Get information about a specific Container, including top-level details and a list of instances.

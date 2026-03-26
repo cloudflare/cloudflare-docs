@@ -1410,7 +1410,7 @@ export class Subscription extends DurableObject<Env> {
 
 ### Clean up storage with `deleteAll()`
 
-To fully clear a Durable Object's storage, call `deleteAll()`. Simply deleting individual keys or dropping tables is not sufficient, as some internal metadata may remain. Workers with a compatibility date before [2026-02-24](/workers/configuration/compatibility-flags/#delete-all-deletes-alarms) and an alarm set should delete the alarm first with `deleteAlarm()`.
+To fully clear a Durable Object's storage, call `deleteAll()`. Simply deleting individual keys or dropping tables is not sufficient, as some internal metadata may remain. Workers with a compatibility date before [2026-02-24](/workers/configuration/compatibility-flags/#durable-object-deleteall-deletes-alarms) and an alarm set should delete the alarm first with `deleteAlarm()`.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -1498,8 +1498,8 @@ Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. The integrati
 
 <TypeScriptExample filename="test/chat-room.test.ts">
 ```ts
+import { env } from "cloudflare:workers";
 import {
-	env,
 	runInDurableObject,
 	runDurableObjectAlarm,
 } from "cloudflare:test";
@@ -1543,16 +1543,15 @@ describe("ChatRoom", () => {
 Configure Vitest in your `vitest.config.ts`:
 
 ```ts
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
 
-export default defineWorkersConfig({
-	test: {
-		poolOptions: {
-			workers: {
-				wrangler: { configPath: "./wrangler.jsonc" },
-			},
-		},
-	},
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			wrangler: { configPath: "./wrangler.jsonc" },
+		}),
+	],
 });
 ```
 

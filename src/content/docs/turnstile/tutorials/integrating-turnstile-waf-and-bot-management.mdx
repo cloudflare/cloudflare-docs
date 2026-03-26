@@ -84,7 +84,7 @@ Add the Turnstile widget to your existing login form:
 ```html
 <form id="login-form">
 	<input type="text" id="username" placeholder="Username" required />
-	<input type="password" id="password" placeholder="Password" required />
+	<input type="password" id="password" placeholder="Password" autocomplete="off" required />
 	<div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
 	<button type="submit">Log in</button>
 </form>

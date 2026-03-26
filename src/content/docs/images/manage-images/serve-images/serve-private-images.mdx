@@ -29,7 +29,7 @@ Signed URLs are generated server-side to protect your signing key. The example b
 The Worker accepts a regular Images URL and returns a signed URL that expires after one day. Adjust the `EXPIRATION` value to set a different expiry period.
 
 :::note
-Never hardcode your signing key in source code. Store it as a secret using [`npx wrangler secret put`](/workers/wrangler/commands/#secret) and access it via the `env` parameter. For more information, refer to [Secrets](/workers/configuration/secrets/).
+Never hardcode your signing key in source code. Store it as a secret using [`npx wrangler secret put`](/workers/wrangler/commands/general/#secret) and access it via the `env` parameter. For more information, refer to [Secrets](/workers/configuration/secrets/).
 :::
 
 <TypeScriptExample>
