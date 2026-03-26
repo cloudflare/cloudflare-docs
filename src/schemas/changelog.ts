@@ -1,7 +1,7 @@
 import { reference, type SchemaContext } from "astro:content";
 import { z } from "astro/zod";
 
-export const changelogSchema = (context: SchemaContext) =>
+export const changelogSchema = (_context: SchemaContext) =>
 	z.object({
 		title: z.string(),
 		description: z.string(),
