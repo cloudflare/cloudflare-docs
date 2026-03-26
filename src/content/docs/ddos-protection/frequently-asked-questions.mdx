@@ -1,13 +1,12 @@
 ---
 title: FAQ
-pcx_content_type: FAQ
+pcx_content_type: faq
 sidebar:
   order: 18
   label: FAQ
 head:
   - tag: title
     content: Frequently asked questions for DDoS Protection
-
 ---
 
 ## What is a DDoS attack event?
@@ -17,17 +16,17 @@ When Cloudflare's DDoS systems detect and mitigate attacks, they drop, rate-limi
 There are three main DDoS mitigation systems:
 
 1. [DDoS managed rulesets](/ddos-protection/managed-rulesets/)
-    
-    a. [Network-layer DDoS managed ruleset](/ddos-protection/managed-rulesets/network/)
-    
-    b. [HTTP DDoS managed ruleset](/ddos-protection/managed-rulesets/http/)
 
-3. [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/)
-4. [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
+   a. [Network-layer DDoS managed ruleset](/ddos-protection/managed-rulesets/network/)
 
-The DDoS managed ruleset includes many individual rules. Each rule provides the heuristics that instructs the system how to identify DDoS attack traffic. When the DDoS managed ruleset identifies an attack, it will generate a real-time fingerprint to match against the attack traffic, and install an ephemeral mitigation rule to mitigate the attack using that fingerprint. 
+   b. [HTTP DDoS managed ruleset](/ddos-protection/managed-rulesets/http/)
 
-The start time of the attack is when the mitigation rule is installed. The attack ends when there is no more traffic matching the rule. This is a single DDoS attack event. 
+2. [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/)
+3. [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
+
+The DDoS managed ruleset includes many individual rules. Each rule provides the heuristics that instructs the system how to identify DDoS attack traffic. When the DDoS managed ruleset identifies an attack, it will generate a real-time fingerprint to match against the attack traffic, and install an ephemeral mitigation rule to mitigate the attack using that fingerprint.
+
+The start time of the attack is when the mitigation rule is installed. The attack ends when there is no more traffic matching the rule. This is a single DDoS attack event.
 
 A DDoS attack has a start time, end time, and additional attack metadata such as:
 
@@ -62,7 +61,7 @@ Additionally, the reverse proxy will timeout incomplete HTTP requests after a se
 
 There is not a minimum threshold for activation. However, to provide additional security, custom firewall rules check for payload sizes and conducts basic sanity checks to ensure the content looks like what is expected.
 
-The RUDY (R-U-Dead-Yet?) DDoS attack is another type of denial-of-service (DoS) tool that performs slow-rate attacks on targeted servers. 
+The RUDY (R-U-Dead-Yet?) DDoS attack is another type of denial-of-service (DoS) tool that performs slow-rate attacks on targeted servers.
 
 Unlike conventional DDoS attacks that overwhelm servers with a high volume of requests in a short period, RUDY focuses on creating a few prolonged requests. It does this by submitting form data at an extremely slow pace to keep the web server tied up and unavailable to legitimate traffic. This approach makes RUDY attacks difficult to detect, because the traffic can appear legitimate and does not flood the server with requests that would typically trigger conventional DDoS protection mechanisms​​​​​​.
 
@@ -74,7 +73,7 @@ Refer to the [learning center](https://www.cloudflare.com/learning/ddos/ddos-att
 
 ## How does Cloudflare deal with SSL/TLS negotiation attacks or floods?
 
-SSL/TLS based attacks such as BEAST, Poodle, and CRIME are mitigated by Cloudflare's TLS settings, configuration, and cipher limitations. Because Cloudflare serves as the HTTP reverse proxy, TLS exhaustion style attacks are mitigated by terminating TLS sessions before passing HTTP requests to origin servers. TLS traffic is not proxied to origin servers without completing a proper TLS handshake. Additionally, our automated DDoS detection and mitigation systems leverage cipher suites, packet fields, HTTP request attributes and metadata, origin health, traffic profiling, Machine Learning models, and threat intelligence to detect and mitigate additional SSL-based attacks. 
+SSL/TLS based attacks such as BEAST, Poodle, and CRIME are mitigated by Cloudflare's TLS settings, configuration, and cipher limitations. Because Cloudflare serves as the HTTP reverse proxy, TLS exhaustion style attacks are mitigated by terminating TLS sessions before passing HTTP requests to origin servers. TLS traffic is not proxied to origin servers without completing a proper TLS handshake. Additionally, our automated DDoS detection and mitigation systems leverage cipher suites, packet fields, HTTP request attributes and metadata, origin health, traffic profiling, Machine Learning models, and threat intelligence to detect and mitigate additional SSL-based attacks.
 
 ---
 
@@ -86,7 +85,7 @@ Yes. Using our anycast network, along with Traffic Manager, Unimog, and Plurimog
 
 ## Where can I see latest DDoS trends?
 
-Cloudflare publishes quarterly DDoS reports and coverage of significant DDoS attacks. The publications are available on our [blog website](https://blog.cloudflare.com/tag/ddos-reports/) and as interactive reports on the [Cloudflare Radar Reports website](https://radar.cloudflare.com/reports?q=DDoS). 
+Cloudflare publishes quarterly DDoS reports and coverage of significant DDoS attacks. The publications are available on our [blog website](https://blog.cloudflare.com/tag/ddos-reports/) and as interactive reports on the [Cloudflare Radar Reports website](https://radar.cloudflare.com/reports?q=DDoS).
 
 Learn more about the [methodologies](/radar/reference/quarterly-ddos-reports/) behind these reports.
 
@@ -118,21 +117,21 @@ You can then adjust the [sensitivity level](/ddos-protection/managed-rulesets/ht
 
 Refer to the guide on how to [create an override](/ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard/#create-a-ddos-override).
 
-The use of expression fields is subject to [availability](/ddos-protection/#availability). 
+The use of expression fields is subject to [availability](/ddos-protection/#availability).
 
 ---
 
 ## Does Cloudflare charge for DDoS attack traffic?
 
-No. Since 2017, Cloudflare offers [free, unmetered, and unlimited DDoS protection](https://blog.cloudflare.com/unmetered-mitigation/). There is no limit to the number of DDoS attacks, their duration, or their size. Cloudflare's billing systems automatically exclude DDoS attack traffic from your usage. 
+No. Since 2017, Cloudflare offers [free, unmetered, and unlimited DDoS protection](https://blog.cloudflare.com/unmetered-mitigation/). There is no limit to the number of DDoS attacks, their duration, or their size. Cloudflare's billing systems automatically exclude DDoS attack traffic from your usage.
 
 ---
 
 ## How does DDoS Protection determine whether a SYN flood attack is mitigated by `dosd` or Advanced TCP Protection?
 
-DDoS [managed rules](/ddos-protection/managed-rulesets/) detect and mitigate attacks by finding commonality between attack packets and generating a real-time fingerprint to mitigate the attack. 
+DDoS [managed rules](/ddos-protection/managed-rulesets/) detect and mitigate attacks by finding commonality between attack packets and generating a real-time fingerprint to mitigate the attack.
 
-When the attacks are highly randomized and DDoS managed rules are unable to detect a common pattern among the attack packets, [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) uses its stateful TCP flowtracking capabilities to determine whether or not packets are legitimate. Advanced TCP Protection also mitigates simpler TCP-based attacks. 
+When the attacks are highly randomized and DDoS managed rules are unable to detect a common pattern among the attack packets, [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) uses its stateful TCP flowtracking capabilities to determine whether or not packets are legitimate. Advanced TCP Protection also mitigates simpler TCP-based attacks.
 
 Advanced TCP Protection is only necessary and available to [Magic Transit](/magic-transit/) customers. For [Spectrum](/spectrum/) and our HTTP services, we leverage the reverse proxy to mitigate sophisticated randomized TCP-based DDoS attacks.
 
@@ -150,13 +149,13 @@ Anycast allows multiple servers (PoPs) to share the same IP address, and the Bor
 
 #### Process
 
-When one PoP is overwhelmed due to a local DDoS flood or as a result of limited capacity, BGP route propagation can be adjusted to shift traffic away from that PoP. Cloudflare can also withdraw BGP announcements from specific peers or upstreams to force traffic to reroute through better-equipped PoPs. Because DDoS traffic originates from multiple geographic regions, Anycast and traffic engineering distributes the attack across [Cloudflare's full capacity Anycast network](https://www.cloudflare.com/network/) to reduce the burden on a single PoP. 
+When one PoP is overwhelmed due to a local DDoS flood or as a result of limited capacity, BGP route propagation can be adjusted to shift traffic away from that PoP. Cloudflare can also withdraw BGP announcements from specific peers or upstreams to force traffic to reroute through better-equipped PoPs. Because DDoS traffic originates from multiple geographic regions, Anycast and traffic engineering distributes the attack across [Cloudflare's full capacity Anycast network](https://www.cloudflare.com/network/) to reduce the burden on a single PoP.
 
 ### Intelligent Traffic Engineering
 
 Cloudflare uses real-time data and intelligence systems to make decisions about traffic routing, load balancing, and congestion management.
 
-#### Process 
+#### Process
 
 If a specific PoP becomes saturated or experiences attack traffic, Cloudflare's internal traffic engineering systems dynamically steer traffic across alternative paths using traffic shaping, path-aware routing, and dynamic DNS responses.
 
@@ -181,3 +180,11 @@ The Protected Learning functionality enables the [Advanced TCP Protection](/ddos
 Anycast and BGP are protocols that help route Internet traffic by sending it to the nearest or most optimal data center. Occasional network events—such as a data center being taken offline for maintenance or changes in Internet routing—can cause an established connection to be rerouted to a different data center.
 
 Cloudflare's flow inference functionality, also known as Protected Learning, is specifically designed to handle this. When a TCP connection, such as a flow, shifts to a new data center, our system observes that it is an existing connection that does not appear in the local flow table. Instead of immediately blocking the flow as an unknown connection that may be part of a DDoS attack, our system uses a proprietary process to verify if the connection is legitimate. It might challenge the acknowledgment (ACK) packets of the flow to ensure it is not part of a DDoS attack. Once the flow passes our checks, we allow it to continue without interruption. This ensures that even rare, legitimate shifts in traffic do not break your long-running connections while keeping your network protected against DDoS attacks.
+
+---
+
+## Does DDoS Protection protect against email-based attacks?
+
+No. Cloudflare DDoS Protection safeguards web and network infrastructure against DDoS attacks at layers 3, 4, and 7 of the OSI model. This includes TCP, UDP, DNS, and HTTP/S traffic.
+
+DDoS Protection does not inspect or mitigate threats delivered over email protocols such as SMTP, IMAP, or POP3. To protect against email-borne threats such as phishing, business email compromise (BEC), spoofing, and malware delivered via email, use [Cloudflare Email Security](/email-security/).
