@@ -218,7 +218,7 @@ CNI requires an Enterprise plan and is available only in locations where Cloudfl
 :::
 
 :::note[Important to know]
-CNI supports both Magic Transit (DDoS protection) and Cloudflare WAN (private networking). CNI also supports [BGP peering](/network-interconnect/get-started/) (beta) with the Cloudflare Virtual Network routing table for dynamic route exchange. When used with Magic Transit, cleaned inbound traffic always flows over CNI. Return traffic can either egress directly to the Internet (Direct Server Return, default) or route back through Cloudflare via [Magic Transit Egress](/magic-transit/reference/egress/).
+CNI supports both Magic Transit (DDoS protection) and Cloudflare WAN (private networking). CNI also supports [BGP peering](/network-interconnect/get-started/) (closed beta) with the Cloudflare Virtual Network routing table for dynamic route exchange. BGP over CNI is not currently available to new customers — contact your account team if you are interested. When used with Magic Transit, cleaned inbound traffic always flows over CNI. Return traffic can either egress directly to the Internet (Direct Server Return, default) or route back through Cloudflare via [Magic Transit Egress](/magic-transit/reference/egress/).
 :::
 
 For detailed configuration, refer to the <a href={props.cniURL}>Cloudflare Network Interconnect documentation</a>.

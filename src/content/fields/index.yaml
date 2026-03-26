@@ -836,6 +836,60 @@ entries:
     example_value: |-
       "8204924CF49D471E855862706D889F58F6B784D3"
 
+  - name: cf.tls_client_auth.cert_rfc9440
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor, rfc9440, certificate]
+    summary: The client leaf certificate encoded in RFC 9440 format.
+    description: |-
+      Contains the client leaf certificate as a DER-encoded, Base64-encoded value wrapped in colons. For example, `:MIIDsT...Vw==:`. This is the format defined by [RFC 9440](https://www.rfc-editor.org/rfc/rfc9440) for the `Client-Cert` HTTP header.
+
+      The field value is an empty string (`""`) if no client certificate was presented.
+
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
+      When forwarding this value as a request header to your origin server, ensure clients cannot inject their own HTTP header. Refer to the [changelog](/changelog/post/2026-03-25-rfc9440-mtls-fields/) for usage guidance.
+    example_value: |-
+      ":MIIDsTCCApmgAwIBAgIUUVyw...Vw==:"
+
+  - name: cf.tls_client_auth.cert_rfc9440_too_large
+    data_type: Boolean
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor, rfc9440, certificate]
+    summary: Returns `true` if the client leaf certificate exceeded the 16 KB encoding limit and was omitted from `cf.tls_client_auth.cert_rfc9440`.
+    description: |-
+      When `true`, [`cf.tls_client_auth.cert_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440/) will be empty. In practice, leaf certificates are almost always well under 16 KB, so this field will almost always be `false`.
+
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
+  - name: cf.tls_client_auth.cert_chain_rfc9440
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor, rfc9440, certificate, chain]
+    summary: The intermediate certificate chain in RFC 9440 format.
+    description: |-
+      Contains the intermediate certificates (all certificates between the leaf and the root, excluding both) as a comma-separated list of RFC 9440-encoded values. For example, `:MIIDnz...g==:, :MIIDjD...45:`. This is the format defined by [RFC 9440](https://www.rfc-editor.org/rfc/rfc9440) for the `Client-Cert-Chain` HTTP header.
+
+      The chain order follows TLS ordering: the certificate closest to the leaf appears first, working up toward the trust anchor. The root certificate is not included.
+
+      The field value is an empty string (`""`) if no client certificate was presented, if no intermediates were sent, or if the chain exceeded 16 KB (refer to [`cf.tls_client_auth.cert_chain_rfc9440_too_large`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440_too_large/)).
+
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
+      When forwarding this value as a request header to your origin server, ensure clients cannot inject their own HTTP header. Refer to the [changelog](/changelog/post/2026-03-25-rfc9440-mtls-fields/) for usage guidance.
+    example_value: |-
+      ":MIIDnzCCAoeg...g==:, :MIIDjDCCAn...45:"
+
+  - name: cf.tls_client_auth.cert_chain_rfc9440_too_large
+    data_type: Boolean
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor, rfc9440, certificate, chain]
+    summary: Returns `true` if the intermediate certificate chain exceeded the 16 KB encoding limit and was omitted from `cf.tls_client_auth.cert_chain_rfc9440`.
+    description: |-
+      When `true`, [`cf.tls_client_auth.cert_chain_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440/) will be empty. This occurs when a client presents an unusually deep or large certificate chain.
+
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
   - name: cf.tls_client_extensions_sha1
     data_type: String
     categories: [Request, SSL/TLS]
@@ -898,13 +952,47 @@ entries:
     example_value: |-
       true
 
+  - name: cf.edge.l4.delivery_rate
+    data_type: Integer
+    categories: [Request]
+    keywords:
+      [request, l4, delivery rate, bandwidth, network, performance, transport]
+    summary: The most recent data delivery rate estimate for the client connection, in bytes per second.
+    description: |-
+      This metric reflects the rate at which data is being successfully delivered over the connection.
+
+      Returns `0` when L4 statistics are not available for the request.
+    example_value: |-
+      123456
+    example_block: |-
+      # Match requests where the delivery rate is below 100 KB/s
+      cf.edge.l4.delivery_rate < 100000
+
   - name: cf.timings.client_tcp_rtt_msec
     data_type: Number
     categories: [Request]
     keywords: [request, timing, tcp, rtt, performance, latency]
-    summary: The smoothed TCP round-trip time (RTT) from client to Cloudflare in milliseconds.
+    summary: The smoothed TCP round-trip time (RTT) between Cloudflare and the client in milliseconds.
+    description: |-
+      This field is only populated for TCP (HTTP/1, HTTP/2) connections. For QUIC connections, the value is `0`.
     example_value: |-
       20
+    example_block: |-
+      # Match requests over TCP where the RTT exceeds 200 ms
+      cf.timings.client_quic_rtt_msec > 200
+
+  - name: cf.timings.client_quic_rtt_msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timing, quic, rtt, performance, latency, http3]
+    summary: The smoothed QUIC round-trip time (RTT) between Cloudflare and the client in milliseconds.
+    description: |-
+      This field is only populated for QUIC (HTTP/3) connections. For TCP connections, the value is `0`.
+    example_value: |-
+      42
+    example_block: |-
+      # Match requests over QUIC where the RTT exceeds 200 ms
+      cf.timings.client_quic_rtt_msec > 200
 
   - name: cf.timings.edge_msec
     data_type: Integer

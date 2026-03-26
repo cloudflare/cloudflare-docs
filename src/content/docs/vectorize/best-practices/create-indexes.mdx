@@ -33,7 +33,7 @@ To create an index with `wrangler`:
 npx wrangler vectorize create your-index-name --dimensions=NUM_DIMENSIONS --metric=SELECTED_METRIC
 ```
 
-To create an index that can accept vector embeddings from Worker's AI's [`@cf/baai/bge-base-en-v1.5`](/workers-ai/models/#text-embeddings) embedding model, which outputs vectors with 768 dimensions, use the following command:
+To create an index that can accept vector embeddings from Worker's AI's [`@cf/baai/bge-base-en-v1.5`](/workers-ai/models/?tasks=Text+Embeddings) embedding model, which outputs vectors with 768 dimensions, use the following command:
 
 ```sh
 npx wrangler vectorize create your-index-name --dimensions=768 --metric=cosine
@@ -89,7 +89,7 @@ The following table highlights some example embeddings models and their output d
 | Google Cloud - `multimodalembedding`     | 1408              | Multi-modal (text, images) |
 
 :::note[Learn more about Workers AI]
-Refer to the [Workers AI documentation](/workers-ai/models/#text-embeddings) to learn about its built-in embedding models.
+Refer to the [Workers AI documentation](/workers-ai/models/?tasks=Text+Embeddings) to learn about its built-in embedding models.
 :::
 
 ## Distance metrics

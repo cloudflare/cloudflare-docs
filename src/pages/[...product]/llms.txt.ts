@@ -1,6 +1,35 @@
 import type { APIRoute, GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 import dedent from "dedent";
+import { isExternalRedirect, resolveRedirect } from "~/util/redirects";
+import { isDisallowedByRobots } from "~/util/robots";
+
+/**
+ * Maximum number of prose characters allowed alongside a DirectoryListing
+ * component before a page is considered to have real standalone content.
+ * Pages at or below this threshold are treated as pure navigation containers
+ * and excluded from llms.txt — their child pages are already listed individually.
+ */
+const DIRECTORY_PROSE_THRESHOLD = 250;
+
+/**
+ * Returns true if the page body consists of a DirectoryListing component with
+ * DIRECTORY_PROSE_THRESHOLD characters or fewer of surrounding prose. These
+ * pages are pure section index/navigation containers with no standalone content
+ * worth including in llms.txt — the child pages are already listed individually.
+ */
+function isDirectoryOnlyPage(body: string): boolean {
+	if (!body.includes("DirectoryListing")) return false;
+	// Strip import lines
+	let prose = body.replace(/^import\s+.*?from\s+['"].*?['"];?\s*\n?/gm, "");
+	// Strip self-closing component tags e.g. <DirectoryListing />
+	prose = prose.replace(/<[A-Z][^>]*\/>/g, "");
+	// Strip paired component tags and their children e.g. <Description>...</Description>
+	prose = prose.replace(/<[A-Z][^>]*>[\s\S]*?<\/[A-Z][^>]*>/g, "");
+	// Strip JSX comments
+	prose = prose.replace(/\{\/\*[\s\S]*?\*\/\}/g, "");
+	return prose.trim().length <= DIRECTORY_PROSE_THRESHOLD;
+}
 
 export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
@@ -17,12 +46,19 @@ export const getStaticPaths = (async () => {
 			if (!productUrl || productUrl === "/" || productUrl.includes("#"))
 				return null;
 
+			// Skip products whose top-level URL is disallowed by robots.txt
+			if (isDisallowedByRobots(productUrl)) return null;
+
 			const urlPath = productUrl.slice(1, -1); // strip leading/trailing slashes
 			if (!urlPath) return null;
 
 			const prefix = urlPath;
 			const pages = docs.filter(
-				(e) => e.id.startsWith(prefix + "/") || e.id === prefix,
+				(e) =>
+					(e.id.startsWith(prefix + "/") || e.id === prefix) &&
+					!isDirectoryOnlyPage(e.body ?? "") &&
+					!isDisallowedByRobots(`/${e.id}/`) &&
+					!isExternalRedirect(`/${e.id}/`),
 			);
 
 			if (pages.length === 0) return null;
@@ -32,7 +68,7 @@ export const getStaticPaths = (async () => {
 				props: { entry, pages },
 			};
 		})
-		.filter((p) => p !== null);
+		.filter((p): p is NonNullable<typeof p> => p !== null);
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
@@ -40,7 +76,8 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 type Page = InferGetStaticPropsType<typeof getStaticPaths>["pages"][number];
 
 function formatPage(base: string, e: Page) {
-	const line = `- [${e.data.title}](${base}/${e.id}/index.md)`;
+	const resolved = resolveRedirect(`/${e.id}/`);
+	const line = `- [${e.data.title}](${base}${resolved}index.md)`;
 	return e.data.description ? line.concat(`: ${e.data.description}`) : line;
 }
 
@@ -111,9 +148,10 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 
 	const prefix = productUrl.slice(1, -1);
 	const rootPage = pages.find((e) => e.id === prefix);
+	const resolvedProductUrl = resolveRedirect(productUrl);
 	const rootLink = rootPage
 		? formatPage(base, rootPage)
-		: `- [${title}](${base}${productUrl}index.md)`;
+		: `- [${title}](${base}${resolvedProductUrl}index.md)`;
 
 	const sections = buildSections(prefix, pages);
 

@@ -9,15 +9,15 @@ sidebar:
 
 This guide covers potential errors and limitations you may encounter when using R2 SQL. R2 SQL is in open beta, and supported functionality will evolve and change over time.
 
-## Query Structure Errors
+## Query structure errors
 
-### Missing Required Clauses
+### Missing required clauses
 
 <div className="error-box">
 	**Error**: `expected exactly 1 table in FROM clause`
 </div>
 
-**Problem**: R2 SQL requires specific clauses in your query.
+**Problem**: R2 SQL requires a `FROM` clause in your query.
 
 ```sql
 -- Invalid - Missing FROM clause
@@ -25,86 +25,33 @@ SELECT user_id WHERE status = 200;
 
 -- Valid
 SELECT user_id
-FROM http_requests
+FROM my_namespace.http_requests
 WHERE status = 200 AND timestamp BETWEEN '2025-09-24T01:00:00Z' AND '2025-09-25T01:00:00Z';
 ```
 
-**Solution**: Always include `FROM` in your queries.
+**Solution**: Always include `FROM` with a fully qualified table name (`namespace_name.table_name`).
 
 ---
 
-## SELECT Clause Issues
+## FROM clause issues
 
-### Unsupported SQL Functions
-
-<div className="error-box">**Error**: `Function not supported`</div>
-
-**Problem**: Cannot use aggregate or SQL functions in SELECT.
-
-```sql
--- Invalid - Aggregate functions not supported
-SELECT COUNT(*) FROM events WHERE timestamp > '2025-09-24T01:00:00Z'
-SELECT AVG(response_time) FROM http_requests WHERE status = 200
-SELECT MAX(timestamp) FROM logs WHERE user_id = '123'
-```
-
-**Solution**: Use basic column selection, and handle aggregation in your application code.
-
-### JSON Field Access
-
-<div className="error-box">**Error**: `Cannot access nested fields`</div>
-
-**Problem**: Cannot query individual fields from JSON objects.
-
-```sql
--- Invalid - JSON field access not supported
-SELECT metadata.user_id FROM events
-SELECT json_field->>'property' FROM logs
-
--- Valid - Select entire JSON field
-SELECT metadata FROM events
-SELECT json_field FROM logs
-```
-
-**Solution**: Select the entire JSON column and parse it in your application.
-
-### Synthetic Data
-
-<div className="error-box">**Error**: `aliases (AS) are not supported`</div>
-
-**Problem**: Cannot create synthetic columns with literal values.
-
-```sql
--- Invalid - Synthetic data not supported
-SELECT user_id, 'active' as status, 1 as priority FROM users
-
--- Valid
-SELECT user_id, status, priority FROM users WHERE status = 'active'
-```
-
-**Solution**: Add the required data to your table schema, or handle it in post-processing.
-
----
-
-## FROM Clause Issues
-
-### Multiple Tables
+### Multiple tables
 
 <div className="error-box">
-	**Error**: `Multiple tables not supported` or `JOIN operations not allowed`
+	**Error**: `unsupported feature: JOIN operations are not supported`
 </div>
 
-**Problem**: Cannot query multiple tables or use JOINs.
+**Problem**: R2 SQL queries reference exactly one table. JOINs and multiple tables are not supported.
 
 ```sql
 -- Invalid - Multiple tables not supported
-SELECT a.*, b.* FROM table1 a, table2 b WHERE a.id = b.id
-SELECT * FROM events JOIN users ON events.user_id = users.id
+SELECT a.*, b.* FROM my_namespace.table1 a, my_namespace.table2 b WHERE a.id = b.id
+SELECT * FROM my_namespace.events JOIN my_namespace.users ON events.user_id = users.id
 
 -- Valid - Separate queries
-SELECT * FROM table1 WHERE id IN ('id1', 'id2', 'id3')
--- Then in application code, query table2 separately
-SELECT * FROM table2 WHERE id IN ('id1', 'id2', 'id3')
+SELECT * FROM my_namespace.table1 WHERE id IN ('id1', 'id2', 'id3') LIMIT 100
+-- Then query the second table separately in your application
+SELECT * FROM my_namespace.table2 WHERE id IN ('id1', 'id2', 'id3') LIMIT 100
 ```
 
 **Solution**:
@@ -114,68 +61,39 @@ SELECT * FROM table2 WHERE id IN ('id1', 'id2', 'id3')
 
 ### Subqueries
 
-<div className="error-box">
-	**Error**: `only table name is supported in FROM clause`
-</div>
+<div className="error-box">**Error**: `unsupported feature: subqueries`</div>
 
-**Problem**: Cannot use subqueries in FROM clause.
+**Problem**: Subqueries in `FROM`, `WHERE`, and scalar positions are not supported.
 
 ```sql
 -- Invalid - Subqueries not supported
-SELECT * FROM (SELECT user_id FROM events WHERE status = 200) as active_users
+SELECT * FROM (SELECT user_id FROM my_namespace.events WHERE status = 200)
 
 -- Valid - Use direct query with appropriate filters
-SELECT user_id FROM events WHERE status = 200
+SELECT user_id FROM my_namespace.events WHERE status = 200 LIMIT 100
 ```
 
 **Solution**: Flatten your query logic or use multiple sequential queries.
 
 ---
 
-## WHERE Clause Issues
+## WHERE clause issues
 
-### Array Filtering
-
-<div className="error-box">
-	**Error**: `This feature is not implemented: GetFieldAccess`
-</div>
-
-**Problem**: Cannot filter on array fields.
-
-```sql
--- Invalid - Array filtering not supported
-SELECT * FROM logs WHERE tags[0] = 'error'
-SELECT * FROM events WHERE 'admin' = ANY(roles)
-
--- Valid alternatives - denormalize or use string contains
-SELECT * FROM logs WHERE tags_string LIKE '%error%'
--- Or restructure data to avoid arrays
-```
-
-**Solution**:
-
-- Denormalize array data into separate columns.
-- Use string concatenation of array values for pattern matching.
-- Restructure your schema to avoid array types.
-
-### JSON Object Filtering
+### JSON object filtering
 
 <div className="error-box">
 	**Error**: `unsupported binary operator` or `Error during planning: could not
 	parse compound`
 </div>
 
-**Problem**: Cannot filter on fields inside JSON objects.
+**Problem**: JSON functions are not yet implemented. You cannot filter on fields inside JSON objects using JSON path operators.
 
 ```sql
--- Invalid - JSON field filtering not supported
-SELECT * FROM requests WHERE metadata.country = 'US'
-SELECT * FROM logs WHERE json_data->>'level' = 'error'
+-- Invalid - JSON path operators not supported
+SELECT * FROM my_namespace.requests WHERE json_data->>'level' = 'error'
 
--- Valid alternatives
-SELECT * FROM requests WHERE country = 'US'  -- If denormalized
--- Or filter entire JSON field and parse in application
-SELECT * FROM logs WHERE json_data IS NOT NULL
+-- Valid - Filter on the entire JSON column
+SELECT * FROM my_namespace.logs WHERE json_data IS NOT NULL LIMIT 100
 ```
 
 **Solution**:
@@ -183,115 +101,125 @@ SELECT * FROM logs WHERE json_data IS NOT NULL
 - Denormalize frequently queried JSON fields into separate columns.
 - Filter on the entire JSON field, and handle parsing in your application.
 
-### Column Comparisons
-
-<div className="error-box">
-	**Error**: `right argument to a binary expression must be a literal`
-</div>
-
-**Problem**: Cannot compare one column to another in WHERE clause.
+:::note
+Struct columns are supported and can be filtered using bracket notation. Refer to [Complex types](/r2-sql/sql-reference/complex-types/) for details.
 
 ```sql
--- Invalid - Column comparisons not supported
-SELECT * FROM events WHERE start_time < end_time
-SELECT * FROM logs WHERE request_size > response_size
-
--- Valid - Use computed columns or application logic
--- Add a computed column 'duration' to your schema
-SELECT * FROM events WHERE duration > 0
+SELECT * FROM my_namespace.products WHERE pricing['price'] > 50 LIMIT 100
 ```
 
-**Solution**: Handle comparisons in your application layer.
+:::
 
 ---
 
-## LIMIT Clause Issues
+## LIMIT clause issues
 
-### Invalid Limit Values
+### Invalid limit values
 
 <div className="error-box">**Error**: `maximum LIMIT is 10000`</div>
 
-**Problem**: Cannot use invalid LIMIT values.
+**Problem**: LIMIT values must be between 1 and 10,000.
 
 ```sql
--- Invalid - Out of range limits
-SELECT * FROM events LIMIT 50000  -- Maximum is 10,000
+-- Invalid - Out of range
+SELECT * FROM my_namespace.events LIMIT 50000
 
 -- Valid
-SELECT * FROM events LIMIT 1
-SELECT * FROM events LIMIT 10000
+SELECT * FROM my_namespace.events LIMIT 10000
 ```
 
 **Solution**: Use LIMIT values between 1 and 10,000.
 
-### Pagination Attempts
+### Pagination attempts
 
-<div className="error-box">**Error**: `OFFSET not supported`</div>
+<div className="error-box">
+	**Error**: `unsupported feature: OFFSET clause is not supported`
+</div>
 
-**Problem**: Cannot use pagination syntax.
+**Problem**: OFFSET is not supported.
 
 ```sql
 -- Invalid - Pagination not supported
-SELECT * FROM events LIMIT 100 OFFSET 200
-SELECT * FROM events LIMIT 100, 100
+SELECT * FROM my_namespace.events LIMIT 100 OFFSET 200
 
--- Valid alternatives - Use ORDER BY with conditional filters
+-- Valid - Use cursor-based pagination with ORDER BY and WHERE
 -- Page 1
-SELECT * FROM events WHERE timestamp >= '2024-01-01' ORDER BY timestamp LIMIT 100
+SELECT * FROM my_namespace.events
+WHERE timestamp >= '2024-01-01'
+ORDER BY timestamp
+LIMIT 100
 
--- Page 2 - Use last timestamp from previous page
-SELECT * FROM events WHERE timestamp > '2024-01-01T10:30:00Z' ORDER BY timestamp LIMIT 100
+-- Page 2 - Use the last timestamp from the previous page
+SELECT * FROM my_namespace.events
+WHERE timestamp > '2024-01-01T10:30:00Z'
+ORDER BY timestamp
+LIMIT 100
 ```
 
-**Solution**: Implement cursor-based pagination using ORDER BY and WHERE conditions.
+**Solution**: Implement cursor-based pagination using `ORDER BY` and `WHERE` conditions.
 
 ---
 
-## Schema Issues
+## Schema issues
 
-### Dynamic Schema Changes
+### DDL and DML operations
 
-<div className="error-box">
-	**Error**: `invalid SQL: only top-level SELECT clause is supported`
-</div>
+<div className="error-box">**Error**: `only read-only queries are allowed`</div>
 
-**Problem**: Cannot modify table schema or reference non-existent columns.
+**Problem**: R2 SQL is a read-only query engine. DDL and DML statements are not supported.
 
 ```sql
 -- Invalid - Schema changes not supported
-ALTER TABLE events ADD COLUMN new_field STRING
-UPDATE events SET status = 200 WHERE user_id = '123'
+ALTER TABLE my_namespace.events ADD COLUMN new_field STRING
+UPDATE my_namespace.events SET status = 200 WHERE user_id = '123'
+CREATE TABLE my_namespace.test (id INT)
+DROP TABLE my_namespace.events
 ```
 
-**Solution**:
-
-- Plan your schema carefully before data ingestion.
-- Ensure all column names exist in your current schema.
+**Solution**: Manage your schema through your data ingestion pipeline and R2 Data Catalog.
 
 ---
 
-## Performance Optimization
+## Performance optimization
 
-### Query Performance Issues
+### Query performance issues
 
 If your queries are running slowly:
 
 1. **Always include partition (timestamp) filters**: This is the most important optimization.
 
    ```sql
-   -- Good
+   -- Good - Narrows data scan to one day
+   SELECT * FROM my_namespace.events
    WHERE timestamp BETWEEN '2024-01-01' AND '2024-01-02'
+   LIMIT 100
    ```
 
 2. **Use selective filtering**: Include specific conditions to reduce result sets.
 
    ```sql
-   -- Good
-   WHERE status = 200 AND country = 'US' AND timestamp > '2024-01-01'
+   -- Good - Multiple filters reduce scanned data
+   SELECT * FROM my_namespace.events
+   WHERE status = 200 AND region = 'US' AND timestamp > '2024-01-01'
+   LIMIT 100
    ```
 
-3. **Limit result size**: Use appropriate LIMIT values.
+3. **Select specific columns**: Avoid `SELECT *` when you only need a few fields.
+
    ```sql
-   -- Good for exploration
-   SELECT * FROM events WHERE timestamp > '2024-01-01' LIMIT 100
+   -- Good - Only reads the columns you need
+   SELECT user_id, status, timestamp
+   FROM my_namespace.events
+   WHERE timestamp > '2024-01-01'
+   LIMIT 100
    ```
+
+4. **Use EXPLAIN to inspect the execution plan**: Verify that predicate pushdown and file pruning are working.
+
+   ```sql
+   EXPLAIN SELECT user_id, status
+   FROM my_namespace.events
+   WHERE timestamp > '2024-01-01' AND status = 200
+   ```
+
+5. **Enable compaction**: Enable compaction in R2 Data Catalog to reduce the number of small files scanned per query.

@@ -1,7 +1,5 @@
 ---
 import { z } from "astro/zod";
-import { Badge } from "@astrojs/starlight/components";
-import { componentToString } from "~/util/container";
 
 type Props = z.infer<typeof props>;
 
@@ -12,17 +10,10 @@ const props = z
 	.strict();
 
 const { text } = props.parse(Astro.props);
-
-const html = await componentToString(Badge, {
-	text,
-	style: {
-		color: "var(--sl-text-white)",
-		backgroundColor: "var(--sl-color-gray-6)",
-		borderColor: "var(--sl-color-gray-3)",
-		fontSize: "0.7rem",
-		fontWeight: "bold",
-	},
-});
 ---
 
-<Fragment set:html={html.trim()} />
+<code
+	class="inline-flex items-center rounded-md border border-[color:var(--color-table-fill)] bg-[var(--sl-color-gray-6)] px-1.5 py-0.5 text-[0.75rem] leading-none font-semibold"
+>
+	{text}
+</code>

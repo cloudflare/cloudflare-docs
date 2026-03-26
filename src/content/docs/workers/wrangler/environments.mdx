@@ -152,7 +152,7 @@ In the example below, we have two Workers, both with a `staging` environment. `w
 
 ### Secrets for production
 
-You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#secret-put). You can also create `dotenv` type files named `.dev.vars.<environment-name>`.
+You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/general/#secret-put). You can also create `dotenv` type files named `.dev.vars.<environment-name>`.
 
 Like other environment variables, secrets are [non-inheritable](/workers/wrangler/configuration/#non-inheritable-keys) and must be defined per environment.
 

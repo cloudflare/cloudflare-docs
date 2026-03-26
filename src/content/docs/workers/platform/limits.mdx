@@ -281,7 +281,7 @@ To reduce Worker size:
 
 A Worker must parse and execute its global scope (top-level code outside of handlers) within 1 second. Larger bundles and expensive initialization code in global scope increase startup time.
 
-When the platform rejects a deployment because the Worker exceeds the startup time limit, the validation returns the error `Script startup exceeded CPU time limit` (error code `10021`). Wrangler automatically generates a CPU profile that you can import into Chrome DevTools or open in VS Code. Refer to [`wrangler check startup`](/workers/wrangler/commands/#startup) for more details.
+When the platform rejects a deployment because the Worker exceeds the startup time limit, the validation returns the error `Script startup exceeded CPU time limit` (error code `10021`). Wrangler automatically generates a CPU profile that you can import into Chrome DevTools or open in VS Code. Refer to [`wrangler check startup`](/workers/wrangler/commands/general/#startup) for more details.
 
 To measure startup time, run `npx wrangler@latest deploy` or `npx wrangler@latest versions upload`. Wrangler reports `startup_time_ms` in the output.
 

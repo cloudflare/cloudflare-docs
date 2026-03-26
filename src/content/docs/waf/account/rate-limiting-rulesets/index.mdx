@@ -7,13 +7,18 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components";
 
-A rate limiting rule defines a <GlossaryTooltip term="rate limiting">rate limit</GlossaryTooltip> for requests matching an expression, and the action to perform when that rate limit is reached. At the account level, rate limiting rules are always grouped into rate limiting rulesets, which you then deploy.
+[Rate limiting rules](/waf/rate-limiting-rules/) allow you to define a <GlossaryTooltip term="rate limiting">rate limit</GlossaryTooltip> for requests matching an [expression](/ruleset-engine/rules-language/expressions/), and the action to perform when that rate limit is reached. You can configure rate limiting rules for a single zone or at the account level.
+
+Account-level rate limiting rulesets allow you to define rate limiting rules once and deploy them to multiple Enterprise zones. Instead of configuring the same rules in each zone, you create a ruleset at the account level and control which zones it applies to.
 
 :::note
 This feature requires an Enterprise plan.
 :::
 
-To apply a rate limiting ruleset at the account level, create a custom rate limiting ruleset with one or more [rate limiting rules](/waf/rate-limiting-rules/), and then deploy it to one or more zones on an Enterprise plan.
+To apply a rate limiting ruleset at the account level:
+
+1. Create a rate limiting ruleset with one or more rate limiting rules.
+2. Deploy the ruleset to one or more zones on an Enterprise plan.
 
 For more information on how Cloudflare calculates request rates, refer to [Request rate calculation](/waf/rate-limiting-rules/request-rate/).
 

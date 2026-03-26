@@ -17,11 +17,11 @@ import {
 	DashButton,
 } from "~/components";
 
-Traffic detections check incoming requests for malicious or potentially malicious activity. Each enabled detection provides one or more attributes classifying incoming requests. These attributes are available as filters in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, and use can use them in rule expressions.
+Traffic detections check incoming requests for malicious or potentially malicious activity. Each enabled detection scores or classifies requests by populating one or more fields. These fields appear as filters in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, and you can use them in rule expressions.
 
-Once enabled, detections are always on, even if there are no security rules configured with the attributes that detections provide. This means that you can use detection results in [Security Analytics](/waf/analytics/security-analytics/) to identify traffic patterns and check for potentially malicious traffic. For example, you can analyze incoming traffic based on attack score, bot score, [content scan results](/waf/detections/malicious-uploads/), or the [presence of personally identifiable information (PII)](/waf/detections/ai-security-for-apps/) in large language model (LLM) prompts.
+Detections are always on once enabled, even if you have not configured any security rules that use them. You can review detection results in [Security Analytics](/waf/analytics/security-analytics/) to identify traffic patterns and spot potentially malicious traffic. For example, you can analyze traffic based on [attack score](/waf/detections/attack-score/), [bot score](/bots/concepts/bot-score/), [content scan results](/waf/detections/malicious-uploads/), or the [presence of personally identifiable information (PII)](/waf/detections/ai-security-for-apps/) in large language model (LLM) prompts.
 
-Cloudflare currently provides the following detections for finding security threats in incoming requests:
+Cloudflare provides the following detections:
 
 <DirectoryListing />
 
@@ -64,9 +64,9 @@ Enabled detections will run for all incoming traffic.
 
 :::note[Notes]
 
-On Free plans, the leaked credentials detection is enabled by default, and no action is required.
+- On Free plans, the leaked credentials detection is enabled by default, and no action is required.
 
-Currently, you cannot manage the [bot score](/bots/concepts/bot-score/) and [attack score](/waf/detections/attack-score/) detections from the **Settings** page. Refer to the documentation of each feature for availability details.
+- Currently, you cannot manage the [bot score](/bots/concepts/bot-score/) and [attack score](/waf/detections/attack-score/) detections from the **Settings** page. Refer to the documentation of each feature for availability details.
 
 :::
 

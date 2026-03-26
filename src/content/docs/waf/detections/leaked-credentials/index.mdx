@@ -17,18 +17,25 @@ If you are currently using [exposed credentials check](/waf/managed-rules/check-
 
 ## How it works
 
-Once enabled, leaked credentials detection will scan incoming HTTP requests for known authentication patterns from common web apps and any custom detection locations you configure.
+When you turn on leaked credentials detection, Cloudflare scans incoming HTTP requests for usernames and passwords. The scan checks authentication patterns from [common web applications](#default-scan-locations) and any [custom detection locations](#custom-detection-locations) you configure.
 
-If Cloudflare detects authentication credentials in the request, those credentials are checked against a list of known leaked credentials. This list of credentials consists of:
+Detected credentials are compared against a database of known leaked credentials. This database consists of:
 
-- The [Have I been Pwned (HIBP)](https://haveibeenpwned.com) matched passwords dataset (passwords only)
+- The [Have I Been Pwned (HIBP)](https://haveibeenpwned.com) matched passwords dataset (passwords only)
 - Cloudflare-collected credentials (usernames)
 
-Cloudflare will populate the existing [leaked credentials fields](#leaked-credentials-fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, and use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against the usage of compromised credentials by your end users, and also against leaked credential attacks. Cloudflare may detect leaked credentials either because an attacker is performing a [credential stuffing](https://www.cloudflare.com/learning/bots/what-is-credential-stuffing/) attack or because a legitimate end user is reusing a previously leaked password.
+Based on the results, Cloudflare populates [leaked credentials fields](#leaked-credentials-fields) for scanned requests. You can use these fields in two ways:
 
-In addition, leaked credentials detection provides a [managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) that adds an `Exposed-Credential-Check` request header with a value indicating which field was leaked. For example, if both username and password were previously leaked, the header value will be `1`; if only the password was leaked, the value will be `4`.
+- **Analyze traffic**: Review detection results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard to understand how often leaked credentials appear in your traffic.
+- **Create rules**: Use the fields in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to challenge or block requests that contain compromised credentials.
 
-One common approach used in web applications when detecting the use of stolen credentials is to warn end users about the situation and ask them to update their password. You can do this based on the managed header received at your origin server.
+Leaked credentials can appear in your traffic for different reasons. An attacker may be performing a [credential stuffing](https://www.cloudflare.com/learning/bots/what-is-credential-stuffing/) attack, or a legitimate user may be reusing a previously leaked password.
+
+### Notify your origin server
+
+Leaked credentials detection provides a [managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) that adds an `Exposed-Credential-Check` request header to matching requests. The header value indicates what was leaked — for example, `1` if both username and password were previously leaked, or `4` if only the password was leaked.
+
+You can use this header at your origin server to warn users and prompt them to reset their password.
 
 :::note
 Cloudflare does not store, log, or retain plaintext end-user passwords when performing leaked credential checks. Passwords are hashed, converted into a cryptographic representation, and then compared against a database of leaked credentials.
@@ -60,9 +67,9 @@ You can also configure [custom detection locations](#custom-detection-locations)
 Only available for Enterprise customers.
 :::
 
-Sometimes, you may wish to specify where to find credentials in HTTP requests for the specific case of your web applications.
+The default scan covers [common web applications](#default-scan-locations), but your application may send credentials in a different format or field name. Custom detection locations allow you to tell Cloudflare exactly where to find usernames and passwords in HTTP requests.
 
-For example, if the JSON body of an HTTP authenticating a user looked like the following in your web application:
+For example, if the JSON body of an HTTP request authenticating a user looks like the following:
 
 ```json
 { "user": "<username>", "secret": "<password>" }
@@ -101,6 +108,8 @@ Expressions used to specify custom detection locations can include the following
 For instructions on configuring a custom detection location, refer to [Get started](/waf/detections/leaked-credentials/get-started/#4-optional-configure-a-custom-detection-location).
 
 ## Leaked credentials fields
+
+The following fields indicate the type of leaked credential match Cloudflare detected. Use these fields in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to act on requests containing compromised credentials.
 
 | Field                                                                                                                    | Description                                                                                                                                                     |
 | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |

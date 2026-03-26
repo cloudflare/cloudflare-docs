@@ -45,9 +45,9 @@ If your live stream is buffering, freezing, experiencing latency issues, or havi
 	The upload-to-duration ratio is a measurement of how long it takes to upload a part of the stream compared to how long that part would take to play. A ratio of less than 100% means that the stream is uploading at least as fast as it would take to play, so most users should not experience buffering or freezing. A ratio of 100% or more means that your video is uploading slower than it would take to play, so it is likely that most users will experience buffering and freezing.
 	</Details>
 
-## Not starting, not connecting, or disconnecting
+## Encoder failing to connect or keeps disconnecting
 
-If your broadcast software shows a connection error or the stream fails to start, try the following:
+If your encoder shows a connection error such as "Failed to connect to server" or repeatedly disconnects shortly after starting, try the following:
 
 - Verify that your RTMPS URL, stream key, and encoder software are copied correctly into your broadcasting software.
 
@@ -71,3 +71,15 @@ If your broadcast software shows a connection error or the stream fails to start
    ```
 
 - If you use [Live Webhooks](/stream/stream-live/webhooks/), check for a `live_input.errored` event. The webhook payload includes an [error code](/stream/stream-live/webhooks/#error-codes) that can help you troubleshoot the specific cause.
+
+## Connecting but the player says "Stream has not started yet"
+
+If your encoder is connected and the dashboard shows a green **Connected** status with valid metrics, but the player preview says `Stream has not started yet`, try the following:
+
+- Wait thirty seconds. There is a brief delay between when your encoder connects and the stream becomes playable.
+
+- Restart the stream to clear any bad state from the initial connection.
+
+- Verify that your encoder is sending [AAC audio](/stream/stream-live/start-stream-live/#recommendations-requirements-and-limitations). If it is not, set your encoder's settings to AAC explicitly.
+
+- Verify that your encoder is sending keyframes at a fixed interval between two and eight seconds. If the keyframe interval is set to *variable* or *automatic*, change it to a specific value such as four seconds. For more details, refer to the keyframe information in the [Buffering, freezing, and latency](#buffering-freezing-and-latency) section above.

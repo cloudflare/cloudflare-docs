@@ -4,9 +4,23 @@
 # ============================================================================
 
 # homepage
+/cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
+/cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
+/cloudflare-one/connections/ /cloudflare-one/ 301
+/cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
+/cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
+/cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/submissions/invalid-submissions/ 301
+/cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
+/cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/ /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-warp-to-tunnel/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-device-client/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/ 301
+/cloudflare-one/tutorials/warp-on-headless-linux/ /cloudflare-one/tutorials/deploy-client-headless-linux/ 301
+/cloudflare-wan/zero-trust/warp/ /cloudflare-wan/zero-trust/cloudflare-one-client/ 301
+/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/warp/ /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-one-client/ 301
+/workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
 /docs/ /directory/ 301
 /support/ai/ / 301
-/api /api/ 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
 /dashboard-landing/ / 301
@@ -31,7 +45,7 @@
 /cloudflare-one/changelog/gateway/index.xml /changelog/rss/gateway.xml 301
 /cloudflare-one/changelog/risk-score/index.xml /changelog/rss/risk-score.xml 301
 /cloudflare-one/changelog/tunnel/index.xml /changelog/rss/cloudflare-tunnel.xml 301
-/cloudflare-one/changelog/warp/index.xml /changelog/rss/zero-trust-warp.xml 301
+/cloudflare-one/changelog/warp/index.xml /changelog/rss/cloudflare-one-client.xml 301
 /dns/changelog/index.xml /changelog/rss/dns.xml 301
 /fundamentals/changelog/index.xml /changelog/rss/fundamentals.xml 301
 /load-balancing/changelog/index.xml /changelog/rss/load-balancing.xml 301
@@ -49,6 +63,8 @@
 /waf/change-log/index.xml /changelog/rss/waf.xml 301
 /waf/change-log/general-updates/ /waf/change-log/changelog/ 301
 /waf/change-log/general-updates/index.xml /changelog/rss/waf.xml 301
+/changelog/rss/zero-trust-warp.xml /changelog/rss/cloudflare-one-client.xml 301
+
 ## area changelog feeds
 
 /fundamentals/reference/changelog/performance/index.xml /changelog/rss/application-performance.xml 301
@@ -1643,6 +1659,7 @@
 
 # r2 sql
 /r2-sql/platform/wrangler-commands/ /r2-sql/reference/wrangler-commands/ 301
+/r2-sql/sql-reference/limitations/ /r2-sql/reference/limitations-best-practices/ 301
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 # tenant
@@ -2023,6 +2040,7 @@
 /workers/tutorials/store-data-with-fauna/ https://fauna.com/blog/the-future-of-fauna 301
 /workers/tutorials/live-cursors-with-nextjs-rpc-do/ /resources/ 301
 /workers/tutorials/automated-analytics-reporting/ /resources/ 301
+/workers/ai/ /cloudflare-agent/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -2401,29 +2419,13 @@
 /cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
 
 # Catch-all redirects (must come last)
-/cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
-/cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
-/cloudflare-one/connections/ /cloudflare-one/ 301
-
-# Email Security nav revamp (statics)
-/cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
-/cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
-/cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/submissions/invalid-submissions/ 301
-/cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
-/cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
-
-# WARP Client rename — file/folder slug renames
-/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/ /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/ 301
-/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-warp-to-tunnel/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-device-client/ 301
-/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/ 301
-/cloudflare-one/tutorials/warp-on-headless-linux/ /cloudflare-one/tutorials/deploy-client-headless-linux/ 301
-/cloudflare-wan/zero-trust/warp/ /cloudflare-wan/zero-trust/cloudflare-one-client/ 301
-/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/warp/ /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-one-client/ 301
+/cloudflare-one/faq/troubleshooting/ /cloudflare-one/troubleshooting/ 301
 
 # ============================================================================
 # DYNAMIC REDIRECTS
 # ============================================================================
 
+/cloudflare-one/faq/troubleshooting/* /cloudflare-one/troubleshooting/ 301
 # Pub/Sub (removed product)
 /pub-sub/* / 301
 
@@ -2637,8 +2639,10 @@
 # Main catch-all redirect (must be last)
 /cloudflare-one/team-and-resources/devices/warp/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/:splat 301
 
+# Agents x402 (moved under agentic-payments)
+/agents/x402/* /agents/agentic-payments/x402/:splat 301
+
 # Changelog (individual entry route moved to /post/)
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
-
