@@ -101,20 +101,15 @@ jobs:
         run: |
           SHORT_SHA="${{ github.event.pull_request.head.sha }}"
           SHORT_SHA="${SHORT_SHA:0:8}"
-          BRANCH="${{ github.event.pull_request.head.ref }}"
-          BRANCH_SLUG=$(echo "$BRANCH" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
-
-          echo "branch_slug=incr-$BRANCH_SLUG" >> "$GITHUB_OUTPUT"
-
-          npx wrangler deploy --dispatch-namespace preview-deployments --name "incr-$SHORT_SHA"
-          npx wrangler deploy --dispatch-namespace preview-deployments --name "incr-$BRANCH_SLUG"
+          echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          npx wrangler deploy --dispatch-namespace preview-deployments --name "incr-${SHORT_SHA}"
 
       - name: Post preview URL on PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH_SLUG="${{ steps.deploy.outputs.branch_slug }}"
-          PREVIEW_URL="https://${BRANCH_SLUG}.preview.developers.cloudflare.com"
+          SHORT_SHA="${{ steps.deploy.outputs.short_sha }}"
+          PREVIEW_URL="https://incr-${SHORT_SHA}.preview.developers.cloudflare.com"
           PR_NUMBER="${{ github.event.pull_request.number }}"
 
           # Check for existing incremental build comment
