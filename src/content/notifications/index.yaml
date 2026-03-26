@@ -266,64 +266,64 @@ entries:
       * Environments
       * Different events: **Deployment started**, **Deployment failed**, or **Deployment success**
 
-  - name: Page Shield New Code Change Detection Alert
-    audience: "[Page Shield](/page-shield/) customers who want to receive a notification when JavaScript dependencies change in the pages of their domain."
+  - name: Client-side security New Code Change Detection Alert
+    audience: "[Client-side security](/client-side-security/) customers who want to receive a notification when JavaScript dependencies change in the pages of their domain."
     availability: Enterprise plans with paid add-on.
-    associatedProducts: Page Shield
+    associatedProducts: Client-side security
     nextSteps: Investigate to confirm that it is an expected change.
     otherFilters: None.
     additional_information: Triggered daily. If configured with a zone filter, the alert is triggered immediately.
 
-  - name: Page Shield New Domain Alert
-    audience: "[Page Shield](/page-shield/) customers who want to receive a notification when resources from new host domains appear in their domain."
+  - name: Client-side security New Domain Alert
+    audience: "[Client-side security](/client-side-security/) customers who want to receive a notification when resources from new host domains appear in their domain."
     availability: Business plans or higher.
-    associatedProducts: Page Shield
+    associatedProducts: Client-side security
     nextSteps: Investigate to confirm that it is an expected change.
     otherFilters: None.
     additional_information: Triggered hourly. If configured with a zone filter, the alert is triggered immediately.
 
-  - name: Page Shield New Malicious Domain Alert
-    audience: "[Page Shield](/page-shield/) customers who want to receive a notification when resources from a known malicious domain appear in their domain. For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/)."
+  - name: Client-side security New Malicious Domain Alert
+    audience: "[Client-side security](/client-side-security/) customers who want to receive a notification when resources from a known malicious domain appear in their domain. For more information, refer to [Malicious script and connection detection](/client-side-security/how-it-works/malicious-script-detection/)."
     availability: Enterprise plans with paid add-on.
-    associatedProducts: Page Shield
+    associatedProducts: Client-side security
     nextSteps: |-
-      Review the information in the Page Shield dashboard about the detected malicious resources, then update the pages where those resources were detected.
+      Review the information in the client-side security dashboard about the detected malicious resources, then update the pages where those resources were detected.
 
-      For more information, refer to [Review scripts and connections considered malicious](/page-shield/detection/review-malicious-scripts/).
+      For more information, refer to [Review scripts and connections considered malicious](/client-side-security/detection/review-malicious-scripts/).
     otherFilters: None.
 
-  - name: Page Shield New Malicious Script Alert
-    audience: "[Page Shield](/page-shield/) customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious. For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/)."
+  - name: Client-side security New Malicious Script Alert
+    audience: "[Client-side security](/client-side-security/) customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious. For more information, refer to [Malicious script and connection detection](/client-side-security/how-it-works/malicious-script-detection/)."
     availability: Enterprise plans with paid add-on.
-    associatedProducts: Page Shield
+    associatedProducts: Client-side security
     nextSteps: |-
-      Review the information in the Page Shield dashboard about the detected malicious resources, then update the pages where those resources were detected.
+      Review the information in the client-side security dashboard about the detected malicious resources, then update the pages where those resources were detected.
 
-      For more information, refer to [Review scripts and connections considered malicious](/page-shield/detection/review-malicious-scripts/).
+      For more information, refer to [Review scripts and connections considered malicious](/client-side-security/detection/review-malicious-scripts/).
     otherFilters: None.
 
-  - name: Page Shield New Malicious URL Alert
-    audience: "[Page Shield](/page-shield/) customers who want to receive a notification when resources from a known malicious URL appear in their domain. For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/)."
+  - name: Client-side security New Malicious URL Alert
+    audience: "[Client-side security](/client-side-security/) customers who want to receive a notification when resources from a known malicious URL appear in their domain. For more information, refer to [Malicious script and connection detection](/client-side-security/how-it-works/malicious-script-detection/)."
     availability: Enterprise plans with paid add-on.
-    associatedProducts: Page Shield
+    associatedProducts: Client-side security
     nextSteps: |-
-      Review the information in the Page Shield dashboard about the detected malicious resources, then update the pages where those resources were detected.
+      Review the information in the client-side security dashboard about the detected malicious resources, then update the pages where those resources were detected.
 
-      For more information, refer to [Review scripts and connections considered malicious](/page-shield/detection/review-malicious-scripts/).
+      For more information, refer to [Review scripts and connections considered malicious](/client-side-security/detection/review-malicious-scripts/).
     otherFilters: None.
 
-  - name: Page Shield New Resources Alert
-    audience: "[Page Shield](/page-shield/) customers who want to receive a notification when new resources appear in their domain."
+  - name: Client-side security New Resources Alert
+    audience: "[Client-side security](/client-side-security/) customers who want to receive a notification when new resources appear in their domain."
     availability: Business plans or higher.
-    associatedProducts: Page Shield
+    associatedProducts: Client-side security
     nextSteps: Investigate to confirm that it is an expected change.
     otherFilters: None.
     additional_information: Triggered daily. If configured with a zone filter, the alert is triggered immediately.
 
-  - name: Page Shield New Resource Exceeds Max URL Length Alert
-    audience: "[Page Shield](/page-shield/) customers who want to receive a notification when a resource's URL exceeds the maximum allowed length."
+  - name: Client-side security New Resource Exceeds Max URL Length Alert
+    audience: "[Client-side security](/client-side-security/) customers who want to receive a notification when a resource's URL exceeds the maximum allowed length."
     availability: Business plans or higher.
-    associatedProducts: Page Shield
+    associatedProducts: Client-side security
     nextSteps: Manually check the resource.
     otherFilters: None.
 

@@ -21,7 +21,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | ------------------------------------------ | --------------- | ----------------- | -------------------------- |
 | Caching/CDN                                | ✅              | ✅                | ✅                         |
 | Cache Reserve                              | ⚫️             | 🚧                | ✅ [^29]                   |
-| DNS                                        | ⚫️             | 🚧 [^33]          | ✅                      |
+| DNS                                        | ⚫️             | 🚧 [^33]          | ✅                         |
 | HTTP/3 (with QUIC)                         | ⚫️             | ✘                 | ⚫️                        |
 | Image Resizing                             | ✅              | ✅ [^6]           | 🚧 [^1]                    |
 | Load Balancing                             | ✅              | ✅                | 🚧 [^1]                    |
@@ -39,20 +39,20 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 ## Application Security
 
-| Product                      | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| ---------------------------- | --------------- | ----------------- | -------------------------- |
-| Advanced Certificate Manager | ⚫️             | ⚫️               | ⚫️                        |
-| Advanced DDoS Protection     | ✅              | ✅                | 🚧 [^3]                    |
-| API Shield                   | ✅              | ✅                | 🚧 [^4]                    |
-| Bot Management               | ✅              | ✅                | ✅                         |
-| DNS Firewall                 | ⚫️              | ⚫️                | ✅                  |
-| Page Shield                  | ✅              | ✅                | ✅                         |
-| Rate Limiting                | ✅              | ✅                | ✅ [^37]                   |
-| SSL                          | ✅              | ✅                | ✅                         |
-| Cloudflare for SaaS          | ✘               | ✅                | ✅                         |
-| Turnstile                    | ⚫️             | ✘                 | ✅ [^38]                   |
-| WAF/L7 Firewall              | ✅              | ✅                | ✅                         |
-| DMARC Management             | ⚫️             | ⚫️               | ✅                         |
+| Product                                     | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| ------------------------------------------- | --------------- | ----------------- | -------------------------- |
+| Advanced Certificate Manager                | ⚫️             | ⚫️               | ⚫️                        |
+| Advanced DDoS Protection                    | ✅              | ✅                | 🚧 [^3]                    |
+| API Shield                                  | ✅              | ✅                | 🚧 [^4]                    |
+| Bot Management                              | ✅              | ✅                | ✅                         |
+| Client-side security (formerly Page Shield) | ✅              | ✅                | ✅                         |
+| DNS Firewall                                | ⚫️             | ⚫️               | ✅                         |
+| Rate Limiting                               | ✅              | ✅                | ✅ [^37]                   |
+| SSL                                         | ✅              | ✅                | ✅                         |
+| Cloudflare for SaaS                         | ✘               | ✅                | ✅                         |
+| Turnstile                                   | ⚫️             | ✘                 | ✅ [^38]                   |
+| WAF/L7 Firewall                             | ✅              | ✅                | ✅                         |
+| DMARC Management                            | ⚫️             | ⚫️               | ✅                         |
 
 ---
 
@@ -107,15 +107,15 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 ## Zero Trust
 
-| Product            | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| ------------------ | --------------- | ----------------- | -------------------------- |
-| Access             | 🚧 [^14]        | 🚧 [^15]          | ✅ [^16]                   |
-| Browser Isolation  | ⚫️             | 🚧 [^17]          | ✅                         |
-| CASB               | ⚫️             | ⚫️               | ✘                          |
-| Cloudflare Tunnel  | ⚫️             | 🚧 [^18]          | ⚫️                        |
-| Digital Experience | ⚫️             | ⚫️               | 🚧 [^49]                   |
-| DLP                | ⚫️ [^19]       | ⚫️ [^19]         | 🚧 [^31]                   |
-| Gateway            | 🚧 [^20]        | 🚧 [^21]          | 🚧 [^22]                   |
+| Product               | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| --------------------- | --------------- | ----------------- | -------------------------- |
+| Access                | 🚧 [^14]        | 🚧 [^15]          | ✅ [^16]                   |
+| Browser Isolation     | ⚫️             | 🚧 [^17]          | ✅                         |
+| CASB                  | ⚫️             | ⚫️               | ✘                          |
+| Cloudflare Tunnel     | ⚫️             | 🚧 [^18]          | ⚫️                        |
+| Digital Experience    | ⚫️             | ⚫️               | 🚧 [^49]                   |
+| DLP                   | ⚫️ [^19]       | ⚫️ [^19]         | 🚧 [^31]                   |
+| Gateway               | 🚧 [^20]        | 🚧 [^21]          | 🚧 [^22]                   |
 | Cloudflare One Client | ⚫️             | ⚫️               | 🚧 [^1]                    |
 
 [^1]: Logs / Analytics not available outside US region when using Customer Metadata Boundary.

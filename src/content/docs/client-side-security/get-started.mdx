@@ -1,0 +1,129 @@
+---
+title: Get started with client-side security
+pcx_content_type: get-started
+sidebar:
+  order: 2
+  label: Get started
+description: Learn how to get started with Cloudflare's client-side security.
+---
+
+import { Tabs, TabItem, Render, Steps, DashButton } from "~/components";
+
+## 1. Activate client-side resource monitoring
+
+To enable client-side resource monitoring:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Client-side abuse**.
+3. Turn on **Continuous script monitoring**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Client-side security**.
+3. Go to the **Settings** tab.
+4. Next to **Continuous monitoring and alerting**, select **Enable**.
+
+</Steps>
+
+</TabItem> </Tabs>
+
+If you do not have access to client-side security settings in the Cloudflare dashboard, check if your user has one of the [necessary roles](/client-side-security/reference/roles-and-permissions/).
+
+## 2. Review detected resources
+
+When you enable client-side resource monitoring, it may take a while to get the list of detected scripts in your domain.
+
+To review the scripts detected by Cloudflare:
+
+<Steps>
+
+{/* prettier-ignore-start */}
+
+1. Go to the client-side resources page:
+
+   <Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+   1. In the Cloudflare dashboard, go to the **Web assets** page.
+
+      <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   2. Select the **Client-side resources** tab.
+
+   </TabItem> <TabItem label="Old dashboard">
+
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+   2. Go to **Security** > **Client-side security**.
+
+   </TabItem> </Tabs>
+
+2. Review the list of detected scripts, checking for any unknown or unexpected scripts.<br/>
+   [Depending on your plan and subscriptions](/client-side-security/#availability), Cloudflare will also:
+   - Inform you if a script is [considered malicious](/client-side-security/how-it-works/malicious-script-detection/).
+   - [Show the details](/client-side-security/detection/monitor-connections-scripts/#view-details) about each detected script.
+
+{/* prettier-ignore-end */}
+
+</Steps>
+
+Depending on your Cloudflare plan, you may be able to also review the connections made by scripts in your domain's pages and check them for malicious activity.
+
+## 3. (Optional) Configure alerts
+
+<Render
+	file="alerts-intro"
+	product="client-side-security"
+	params={{
+		availabilityDetails:
+			"The [available alert types](/client-side-security/alerts/alert-types/) depend on your Cloudflare plan and subscriptions.",
+	}}
+/>
+
+<Render file="alerts-configure" product="client-side-security" />
+
+To learn how you can handle an alert, refer to [Handle a client-side resource alert](/client-side-security/best-practices/handle-an-alert/).
+
+## 4. (Optional) Define content security rules
+
+:::note
+Only available to Enterprise customers with a paid add-on.
+:::
+
+[Content security rules](/client-side-security/rules/) (previously called policies) define allowed resources on your websites. Create content security rules to implement a positive security model[^1].
+
+[^1]: A positive security model is one that defines what is allowed and rejects everything else. In contrast, a negative security model defines what will be rejected and accepts the rest.
+
+### 4.1. Create a content security rule with the Log action
+
+When you create a content security rule with the [_Log_ action](/client-side-security/rules/#rule-actions), Cloudflare logs any resources not covered by the rule, without blocking any resources. Use this action to validate a new rule before deploying it.
+
+<Render
+	file="rule-create"
+	params={{ ruleAction: "Log" }}
+	product="client-side-security"
+/>
+
+### 4.2. Review rule violations
+
+Resources not covered by the content security rule you created will be reported as [rule violations](/client-side-security/rules/violations/). After some time, review the list of rule violations to make sure the rule is correct.
+
+<Render file="rule-review-violations" product="client-side-security" />
+
+Update the rule if needed.
+
+### 4.3. Change rule action to Allow
+
+Once you have verified that your content security rule is correct, change the rule action from _Log_ to _Allow_.
+
+When you use the [_Allow_ action](/client-side-security/rules/#rule-actions), Cloudflare starts blocking any resources not explicitly allowed by the rule.

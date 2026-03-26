@@ -1,0 +1,184 @@
+---
+title: Handle outbound traffic
+pcx_content_type: how-to
+sidebar:
+  order: 16
+description: Intercept and handle outbound HTTP from sandboxes using Workers.
+---
+
+import { TypeScriptExample, Render } from "~/components";
+
+Outbound Workers are Workers that handle HTTP requests made by your sandbox. They act as programmable egress proxies, running on the same machine as the sandbox with access to all Workers bindings.
+
+Use outbound Workers to route requests to Workers functions and their bindings (KV, R2, Durable Objects, etc.)
+
+## Defining outbound handlers
+
+Use `outbound` to intercept outbound HTTP traffic regardless of destination:
+
+<TypeScriptExample>
+```ts
+import { Sandbox } from "@cloudflare/sandbox";
+
+export class MySandbox extends Sandbox {}
+
+MySandbox.outbound = async (request: Request, env: Env, ctx: OutboundHandlerContext) => {
+if (request.method !== "GET") {
+console.log(`Blocked ${request.method} to ${request.url}`);
+return new Response("Method Not Allowed", { status: 405 });
+}
+return fetch(request);
+};
+
+````
+</TypeScriptExample>
+
+:::note[TLS support coming soon]
+Sandboxes currently only intercept HTTP traffic. HTTPS interception is coming soon. This will enable using Workers as a transparent proxy for credential injection.
+
+Even though this is just using HTTP, traffic to Workers is secure and runs on the same machine as the Sandbox.
+If needed, you can also upgrade requests to TLS from the Worker itself.
+:::
+
+Use `outboundByHost` to map specific domain names or IP addresses to handler functions:
+
+<TypeScriptExample>
+```ts
+import { Sandbox } from "@cloudflare/sandbox";
+
+export class MySandbox extends Sandbox {}
+
+MySandbox.outboundByHost = {
+  "my.worker": async (request: Request, env: Env, ctx: OutboundHandlerContext) => {
+    // Run arbitrary Workers logic from this hostname
+    return await someWorkersFunction(request.body);
+  },
+};
+````
+
+</TypeScriptExample>
+
+The sandbox calls `http://my.worker` and the handler runs entirely inside the Workers runtime, outside of the sandbox.
+
+If you define both, `outboundByHost` handlers take precedence over the catch-all `outbound` handler.
+
+## Use Workers bindings in handlers
+
+Outbound handlers have access to your Worker's bindings. Route sandbox traffic to internal platform resources without changing application code.
+
+<TypeScriptExample>
+```ts
+export class MySandbox extends Sandbox {}
+
+MySandbox.outboundByHost = {
+"my.kv": async (request: Request, env: Env, ctx: OutboundHandlerContext) => {
+const url = new URL(request.url);
+const key = url.pathname.slice(1);
+const value = await env.KV.get(key);
+return new Response(value ?? "", { status: value ? 200 : 404 });
+},
+"my.r2": async (request: Request, env: Env, ctx: OutboundHandlerContext) => {
+const url = new URL(request.url);
+// Scope access to this sandbox's ID
+const path = `${ctx.containerId}${url.pathname}`;
+const object = await env.R2.get(path);
+return new Response(object?.body ?? null, { status: object ? 200 : 404 });
+},
+};
+
+````
+</TypeScriptExample>
+
+The sandbox calls `http://my.kv/some-key` and the outbound handler resolves it using the KV binding.
+
+## Access Durable Object state
+
+The `ctx` argument exposes `containerId`, which lets you interact with the sandbox's own Durable Object from an outbound handler.
+
+<TypeScriptExample>
+```ts
+export class MySandbox extends Sandbox {}
+
+MySandbox.outboundByHost = {
+  "get-state.do": async (request: Request, env: Env, ctx: { containerId: string }) => {
+    const id = env.MY_SANDBOX.idFromString(ctx.containerId);
+    const stub = env.MY_SANDBOX.get(id);
+    // Assumes getStateForKey is defined on your DO
+    return stub.getStateForKey(request.body);
+  },
+};
+````
+
+</TypeScriptExample>
+
+:::note
+You can also use `containerId` to apply different rules per sandbox instance — for example, to look up per-instance configuration from KV.
+:::
+
+## Change policies at runtime
+
+Use `outboundHandlers` to define named handlers, then assign them to specific hosts at runtime using `setOutboundByHost()`. You can also apply a handler globally with `setOutboundHandler()`.
+
+{/* TODO: replace this example with credential injection once TLS interception ships */}
+
+<TypeScriptExample>
+```ts
+import { Sandbox } from "@cloudflare/sandbox";
+
+export class MySandbox extends Sandbox {}
+
+MySandbox.outboundHandlers = {
+kvAccess: async (request: Request, env: Env, ctx: OutboundHandlerContext) => {
+const key = new URL(request.url).pathname.slice(1);
+const value = await env.KV.get(key);
+return new Response(value ?? "", { status: value ? 200 : 404 });
+},
+};
+
+````
+</TypeScriptExample>
+
+Apply handlers to hosts programmatically from your Worker:
+
+<TypeScriptExample>
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const sandbox = getSandbox(env.Sandbox, "agent-session");
+
+    // Give the sandbox access to KV on a specific host during setup
+    await sandbox.setOutboundByHost("my.kv", "kvAccess");
+    await sandbox.exec("node setup.js");
+
+    // Remove access once setup is complete
+    await sandbox.removeOutboundByHost("my.kv");
+
+},
+};
+
+````
+
+</TypeScriptExample>
+
+## Local development
+
+`wrangler dev` supports outbound interception. A sidecar process is spawned inside the sandbox's network namespace. It applies `TPROXY` rules to route matching traffic to the local Workerd instance, mirroring production behavior.
+
+:::caution
+Hostnames that do not resolve via DNS do not work in local development yet. These hostnames do work in production. This limitation will be corrected in a future update.
+:::
+
+## Related resources
+
+- [Handle outbound traffic (Containers)](/containers/platform-details/outbound-traffic/) — Container SDK API for outbound handlers
+- [Sandbox options](/sandbox/configuration/sandbox-options/) — Configure sandbox behavior
+- [Environment variables](/sandbox/configuration/environment-variables/) — Configure secrets and environment variables
+
+## Related resources
+
+- [Handle outbound traffic (Containers)](/containers/platform-details/outbound-traffic/) — Container SDK API for outbound handlers
+- [Sandbox options](/sandbox/configuration/sandbox-options/) — Configure sandbox behavior
+- [Environment variables](/sandbox/configuration/environment-variables/) — Configure secrets and environment variables
+

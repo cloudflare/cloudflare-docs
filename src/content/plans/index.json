@@ -1909,8 +1909,8 @@
 			}
 		},
 		"page_shield": {
-			"title": "Page Shield",
-			"link": "/page-shield/",
+			"title": "Client-side security",
+			"link": "/client-side-security/",
 			"ent_plus": "Enterprise with add-on",
 			"properties": {
 				"availability": {
@@ -2004,7 +2004,7 @@
 					"ent_plus": "Yes"
 				},
 				"m_policies": {
-					"title": "Number of policies\n(positive blocking)",
+					"title": "Number of content security rules (positive blocking)",
 					"summary": "Enterprise with add-on",
 					"free": 0,
 					"pro": 0,

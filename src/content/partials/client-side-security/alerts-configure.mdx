@@ -1,0 +1,22 @@
+---
+{}
+---
+
+import { Steps, DashButton } from "~/components";
+
+To configure an alert:
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Notifications** page.
+
+   <DashButton url="/?to=/:account/notifications" />
+
+2. Choose **Add** and then select **Client-side security (formerly Page Shield)** in the **Product** dropdown.
+3. Select an [alert type](/client-side-security/alerts/alert-types/).
+4. Enter the notification name and description.
+5. (Optional) If you are an Enterprise customer with a paid add-on, you can [define the zones for which you want to filter alerts](/client-side-security/alerts/#scoped-alerts) in **Rules of these zones**. This option requires that you define [content security rules](/client-side-security/rules/) in the selected zones.
+6. Select one or more notification destinations (notification email, webhooks, and connected notification services).
+7. Select **Create**.
+
+</Steps>

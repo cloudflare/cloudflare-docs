@@ -21,7 +21,6 @@
 /workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
 /docs/ /directory/ 301
 /support/ai/ / 301
-/api /api/ 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
 /dashboard-landing/ / 301
@@ -1262,13 +1261,14 @@
 /partners/email-security/ /email-security/partners/ 301
 
 # page-shield
-/page-shield/use-dashboard/monitor-connections/ /page-shield/detection/monitor-connections-scripts/ 301
-/page-shield/use-dashboard/monitor-scripts/ /page-shield/detection/monitor-connections-scripts/ 301
-/support/firewall/tools/troubleshooting-page-shield/ /page-shield/troubleshooting/ 301
-/page-shield/reference/alerts/ /page-shield/alerts/alert-types/ 301
-/page-shield/detection/configure-alerts/ /page-shield/alerts/configure/ 301
-/page-shield/changelog/ /page-shield/release-notes/ 301
-/page-shield/changelog/index.xml /page-shield/release-notes/index.xml 301
+/page-shield/use-dashboard/monitor-connections/ /client-side-security/detection/monitor-connections-scripts/ 301
+/page-shield/use-dashboard/monitor-scripts/ /client-side-security/detection/monitor-connections-scripts/ 301
+/support/firewall/tools/troubleshooting-page-shield/ /client-side-security/troubleshooting/ 301
+/page-shield/reference/alerts/ /client-side-security/alerts/alert-types/ 301
+/page-shield/detection/configure-alerts/ /client-side-security/alerts/configure/ 301
+/page-shield/changelog/ /client-side-security/release-notes/ 301
+/page-shield/changelog/index.xml /client-side-security/release-notes/index.xml 301
+/page-shield/reference/page-shield-api/ /client-side-security/reference/api/ 301
 
 # pipelines
 /pipelines/concepts/how-pipelines-work/ /pipelines/ 301
@@ -2572,6 +2572,10 @@
 /magic-wan/third-party/* /cloudflare-wan/configuration/manually/third-party/:splat 301
 /magic-wan/connector/* /cloudflare-wan/configuration/appliance/:splat 301
 /magic-wan/configuration/connector/dhcp/* /cloudflare-wan/configuration/appliance/network-options/dhcp/:splat 301
+
+# Page Shield/Client-side security
+/page-shield/policies/* /client-side-security/rules/:splat 301
+/page-shield/* /client-side-security/:splat 301
 
 # Rules
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
