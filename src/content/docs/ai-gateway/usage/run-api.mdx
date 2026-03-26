@@ -5,7 +5,7 @@ tags:
   - AI
 sidebar:
   order: 3
-  badge: Beta
+  badge: Preview
 ---
 
 import { Tabs, TabItem, TypeScriptExample, WranglerConfig } from "~/components";
@@ -13,7 +13,7 @@ import { Tabs, TabItem, TypeScriptExample, WranglerConfig } from "~/components";
 The Run API is a new endpoint for AI Gateway that provides a simplified request/response pattern for running AI models. Unlike the [Unified API](/ai-gateway/usage/chat-completion/), which follows the OpenAI-compatible `/chat/completions` format, the Run API uses its own request envelope designed for a broader range of model types.
 
 :::note
-The Run API is currently in beta with limited model and feature support. Refer to [Current limitations](#current-limitations) for details on what is available today.
+The Run API is currently in preview with limited model and feature support. Refer to [Current limitations](#current-limitations) for details on what is available today.
 :::
 
 ## Endpoint URL
@@ -184,7 +184,7 @@ A successful request returns a response with the following envelope:
 
 ## Current limitations
 
-The Run API is in beta. The following limitations apply:
+The Run API is in preview. The following limitations apply:
 
 - **One model** — Only `google/nano-banana` is supported. Additional models will be added over time.
 - **No caching** — [Caching](/ai-gateway/features/caching/) is not supported for Run API requests.
