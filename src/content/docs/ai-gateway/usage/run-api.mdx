@@ -48,7 +48,6 @@ POST /v1/{account_id}/{gateway_id}/run
 | `model` | `string` | Yes | The model to run. Refer to [Supported models](#supported-models) for available values. |
 | `input` | `object` | Yes | Model-specific input parameters. The accepted fields depend on the model. Refer to the model's documentation for details. |
 | `provider` | `string` | No | Pin the request to a specific provider instead of using the default. |
-| `background` | `boolean` | No | When `true`, the request returns immediately with a `runId` that you can poll for results. |
 
 
 ## Supported models
@@ -146,30 +145,6 @@ curl -X POST "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run
   }'
 ```
 
-### Background run
-
-Set `background` to `true` to run the request asynchronously. The API returns a `runId` immediately, which you can poll for results.
-
-```bash
-curl -X POST "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run" \
-  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "model": "google/nano-banana",
-    "input": {
-      "prompt": "a cat riding a burrito"
-    },
-    "background": true
-  }'
-```
-
-Poll for the result using the returned `runId`:
-
-```bash
-curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/run/{run_id}" \
-  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
-
 ## Response
 
 ### Success
@@ -182,7 +157,6 @@ A successful request returns a response with the following envelope:
   "result": {
     "image": "https://...r2.cloudflarestorage.com/..."
   },
-  "usedBYOKKey": false,
   "provider": "google-vertex-ai",
   "model": "google/nano-banana"
 }
@@ -192,7 +166,6 @@ A successful request returns a response with the following envelope:
 | --- | --- |
 | `state` | The request status. `Completed` on success, `Failed` on error. |
 | `result` | The model output. For image models, this contains an `image` field with a URL to the generated image. |
-| `usedBYOKKey` | Indicates how the request was authenticated with the upstream provider. `true` if a BYOK key from the Gateway Key Store was used, `false` if the request was billed through Unified Billing. |
 | `provider` | The provider that served the request. |
 | `model` | The model that was used. |
 
