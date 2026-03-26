@@ -170,17 +170,6 @@ jobs:
           name: link-validation-report
           path: .starlight-links-validator/errors.json
 
-      # -- Upload build artifacts to R2 for incremental builds --
-      - name: Archive build for incremental cache
-        run: tar -czf /tmp/build-cache.tar.gz dist/ $([ -d dist-meta ] && echo "dist-meta/")
-
-      - name: Upload build cache to R2
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
-          AWS_DEFAULT_REGION: auto
-        run: aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/latest.tar.gz" --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com
-
   post-build:
     name: Post Build
     needs: build
