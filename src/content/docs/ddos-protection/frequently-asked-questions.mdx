@@ -58,7 +58,7 @@ The best practice to defend against low and slow attacks is by using an HTTP rev
 
 The request will be served from Cloudflare's [Cache](/cache/) or [Workers](/workers/), if applicable. If not, it will only be sent to the origin — assuming it was fully completed and has passed WAF checks. So the attack does not exist, similar to TCP Slowloris attacks protection.
 
-Additionally, the reverse proxy will timeout incomplete HTTP requests after a series of [keepalive probes](/fundamentals/reference/tcp-connections/#tcp-connections-and-keepalives).
+Additionally, the reverse proxy will timeout incomplete HTTP requests after a series of [keepalive probes](/fundamentals/reference/tcp-connections/#tcp-connections-and-keep-alives).
 
 There is not a minimum threshold for activation. However, to provide additional security, custom firewall rules check for payload sizes and conducts basic sanity checks to ensure the content looks like what is expected.
 
