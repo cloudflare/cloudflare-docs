@@ -8,7 +8,7 @@ description: Configure the Cloudflare One Client to use a custom root certificat
   Cloudflare certificate.
 ---
 
-import { Render, Tabs, TabItem, APIRequest } from "~/components";
+import { Render, Tabs, TabItem, APIRequest, Details } from "~/components";
 
 :::note
 Only available on Enterprise plans.
@@ -28,14 +28,6 @@ If your users need to connect to self-signed origin servers, create an HTTP Allo
 
 ## Generate a custom root CA
 
-Before you generate a custom root CA, make sure you have [OpenSSL](https://www.openssl.org/) **1.1.1 or later** installed. The certificate generation command uses the `-addext` flag, which is not available in older versions.
-
-To check your OpenSSL version, run:
-
-```sh
-openssl version
-```
-
 1. Open a terminal.
 
 2. (Optional) Create a directory for the root CA and change into it.
@@ -53,7 +45,11 @@ openssl version
    openssl genrsa -out <CUSTOM-ROOT-PRIVATE-KEY>.pem 2048
    ```
 
-   The `2048` value specifies the RSA key size in bits. You can use `4096` for stronger security at the cost of slightly slower TLS handshakes. Keep this file secure — if it is compromised, an attacker could issue trusted certificates on your behalf.
+   The `2048` value specifies the RSA key size in bits. You can use `4096` for stronger security at the cost of slightly slower TLS handshakes.
+
+	 :::caution
+	 Keep the private key secure — if it is compromised, an attacker could issue trusted certificates on your behalf.
+	 :::
 
 4. Generate a self-signed root certificate.
 
@@ -70,8 +66,8 @@ openssl version
 
    The `-days 365` value controls certificate expiry. A shorter duration reduces risk if the key is compromised, but requires more frequent rotation. Rotating a deployed BYOPKI certificate is a disruptive operation, so choose an expiry that balances security with operational overhead.
 
-   :::note[OpenSSL older than 1.1.1]
-   If your system runs OpenSSL older than 1.1.1, the `-addext` flag is not available. Use a config file instead:
+   <Details header="Error: `Unknown cipher or option -addext`">
+   If your system runs OpenSSL versions older than 1.1.1, the `-addext` flag is not available. Use a config file instead:
 
    ```sh
    openssl req -x509 -sha256 -new -nodes \
@@ -81,40 +77,38 @@ openssl version
      -config <(printf '[req]\ndistinguished_name=dn\n[dn]\n[v3_ca]\nbasicConstraints=critical,CA:TRUE\nkeyUsage=critical,keyCertSign,cRLSign') \
      -extensions v3_ca
    ```
-   :::
+   </Details>
+
+5. Verify the required RFC 5280 extensions are present:
+
+	```sh
+	openssl x509 -in <CUSTOM-ROOT-CERT>.pem -noout -ext keyUsage,basicConstraints
+	```
+
+	The output should include:
+
+	```txt
+	X509v3 Basic Constraints: critical
+			CA:TRUE
+	X509v3 Key Usage: critical
+			Certificate Sign, CRL Sign
+	```
+
+	If these fields are missing, regenerate the certificate using the command in step 4.
+
+6. To review the private key, run the following command:
+
+	```sh
+	openssl rsa -in <CUSTOM-ROOT-PRIVATE-KEY>.pem -text
+	```
+
+	To review the certificate, run the following command:
+
+	```sh
+	openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
+	```
 
 When preparing your certificate and private key for upload, be sure to remove any unwanted characters, such as mismatching subdomains in the certificate's common name.
-
-To review the private key, run the following command:
-
-```sh
-openssl rsa -in <CUSTOM-ROOT-PRIVATE-KEY>.pem -text
-```
-
-To review the certificate, run the following command:
-
-```sh
-openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
-```
-
-:::tip
-Verify the required RFC 5280 extensions are present before uploading:
-
-```sh
-openssl x509 -in <CUSTOM-ROOT-CERT>.pem -noout -ext keyUsage,basicConstraints
-```
-
-The output should include:
-
-```txt
-X509v3 Basic Constraints: critical
-    CA:TRUE
-X509v3 Key Usage: critical
-    Certificate Sign, CRL Sign
-```
-
-If these fields are missing, regenerate the certificate using the command in step 4.
-:::
 
 ## Deploy a custom root certificate
 
@@ -233,12 +227,14 @@ When you upload a private key to Zero Trust, Cloudflare encrypts the key and sto
 
 To use a custom root certificate you generated and uploaded to Cloudflare, refer to [Activate a root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#activate-a-root-certificate).
 
-## Troubleshoot HTTP errors
+## Troubleshooting
 
-If Gateway returns an **HTTP Response Code: 526** after deploying a custom certificate, you can [troubleshoot errors with Gateway](/cloudflare-one/traffic-policies/troubleshooting/#error-526-invalid-ssl-certificate).
+### Error 526: Invalid SSL certificate
+
+If Gateway returns an **HTTP Response Code: 526** after deploying a custom certificate, refer to the [Error 526 documentation](/cloudflare-one/traffic-policies/troubleshooting/#error-526-invalid-ssl-certificate).
 
 ### Python 3.13+ SSL errors with the Cloudflare One Client
 
-Python 3.13 and later enable `ssl.VERIFY_X509_STRICT` by default, which requires CA certificates to comply with [RFC 5280](https://datatracker.ietf.org/doc/html/rfc5280). If your BYOPKI certificate was generated without the `keyUsage` and `basicConstraints` extensions, Python HTTPS requests will fail when the Cloudflare One Client is active.
+Python 3.13 and later enable `ssl.VERIFY_X509_STRICT` by default, which requires CA certificates to comply with [RFC 5280](https://datatracker.ietf.org/doc/html/rfc5280). If your BYOPKI certificate was generated without the `keyUsage` and `basicConstraints` extensions, Python HTTPS requests will fail when the Cloudflare One Client is active. To resolve the issue, [generate a new custom root CA](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/#generate-a-custom-root-ca) and upload it to Cloudflare.
 
 
