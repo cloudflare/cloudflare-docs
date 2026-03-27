@@ -2,4 +2,6 @@
 {}
 ---
 
-Virtual networks allow you to connect private networks that have overlapping IP ranges without creating conflicts for users or services. For example, an organization may want to expose two distinct virtual private cloud (VPC) networks which they consider to be "production" and "staging". However, if the two private networks happened to receive the same RFC 1918 IP assignment, there may be two different resources with the same IP address. By creating two separate virtual networks, you can deterministically route traffic to duplicative private addresses like `10.128.0.1/32` staging and `10.128.0.1/32` production. These virtual networks will appear as user-selectable options within the Cloudflare One Client GUI.
+Virtual networks allow you to connect private networks that have overlapping IP ranges without creating conflicts for users or services.
+
+For example, an organization may have separate "production" and "staging" VPC networks that both use the same private IP range (such as `10.128.0.0/24`). Without virtual networks, Cloudflare cannot distinguish between `10.128.0.1` in production and `10.128.0.1` in staging. By creating two virtual networks, you can deterministically route traffic to the correct environment. Users select which virtual network they want to connect to in the Cloudflare One Client GUI.
