@@ -154,7 +154,7 @@ const admin = await sandbox.exposePort(3001, { hostname, name: "admin" });
 - Raw TCP/UDP connections
 - Custom protocols (must wrap in HTTP)
 - Ports outside range 1024-65535
-- Port 3000 (used internally by the SDK)
+- Port 8671 (used internally by the SDK, configurable via [`SANDBOX_CONTROL_PORT`](/sandbox/configuration/environment-variables/#sandbox_control_port))
 
 ## WebSocket Support
 
@@ -246,10 +246,10 @@ For custom domain issues, see [Production Deployment troubleshooting](/sandbox/g
 When using `wrangler dev`, you must expose ports in your Dockerfile:
 
 ```dockerfile
-FROM docker.io/cloudflare/sandbox:0.3.3
+FROM docker.io/cloudflare/sandbox:0.8.0
 
 # Required for local development
-EXPOSE 3000
+EXPOSE 8671
 EXPOSE 8080
 ```
 

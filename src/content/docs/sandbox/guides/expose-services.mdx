@@ -306,21 +306,21 @@ In production, all ports are available and controlled programmatically via `expo
 
 ## Troubleshooting
 
-### Port 3000 is reserved
+### Control plane port is reserved
 
-Port 3000 is used by the internal Bun server and cannot be exposed:
+Port 8671 is used by the SDK control plane and cannot be exposed. If you configured a custom control port via [`SANDBOX_CONTROL_PORT`](/sandbox/configuration/environment-variables/#sandbox_control_port), that port is reserved instead.
 
 <TypeScriptExample>
 ```
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
-// ❌ This will fail
-await sandbox.exposePort(3000, { hostname });  // Error: Port 3000 is reserved
+// ❌ This will fail — 8671 is the default control plane port
+await sandbox.exposePort(8671, { hostname });  // Error: Port 8671 is reserved
 
-// ✅ Use a different port
-await sandbox.startProcess('node server.js', { env: { PORT: '8080' } });
-await sandbox.exposePort(8080, { hostname });
+// ✅ Port 3000 is available for your services
+await sandbox.startProcess('node server.js', { env: { PORT: '3000' } });
+await sandbox.exposePort(3000, { hostname });
 ```
 </TypeScriptExample>
 
@@ -384,7 +384,7 @@ See [Sandbox options - normalizeId](/sandbox/configuration/sandbox-options/#norm
 
 **Local development**: `http://localhost:8787/...`
 
-**Note**: Port 3000 is reserved for the internal Bun server and cannot be exposed.
+**Note**: Port 8671 (the default control plane port) is reserved and cannot be exposed. See [`SANDBOX_CONTROL_PORT`](/sandbox/configuration/environment-variables/#sandbox_control_port) to configure a different control port.
 
 ## Related resources
 

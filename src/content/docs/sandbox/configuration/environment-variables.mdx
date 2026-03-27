@@ -34,6 +34,31 @@ Controls the transport protocol for SDK-to-container communication. WebSocket tr
 
 See [Transport modes](/sandbox/configuration/transport/) for a complete guide including when to use each transport, performance considerations, and migration instructions.
 
+### SANDBOX_CONTROL_PORT
+
+| | |
+|---|---|
+| **Type** | `number` (as string) |
+| **Default** | `8671` |
+
+Configures the internal port used for SDK-to-container communication. The default port was changed from `3000` to `8671` to avoid conflicts with common user services (Express, Next.js, etc.) that bind to port 3000.
+
+Most users do not need to set this. Only change it if port 8671 conflicts with a service you need to run inside the container.
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"SANDBOX_CONTROL_PORT": "9500"
+	}
+}
+```
+</WranglerConfig>
+
+:::note
+For local development with `wrangler dev`, update the `EXPOSE` directive in your Dockerfile to match the custom port. This is not required in production, where all container ports are accessible automatically.
+:::
+
 ### COMMAND_TIMEOUT_MS
 
 | | |

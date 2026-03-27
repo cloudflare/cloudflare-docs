@@ -36,6 +36,14 @@ Always match the Docker image version to your npm package version. If you're usi
 See [Version compatibility](/sandbox/concepts/sandboxes/#version-compatibility) for troubleshooting version mismatch warnings.
 :::
 
+:::note[Control port changed from 3000 to 8671]
+The internal control plane port changed from `3000` to `8671`. If you upgrade the SDK but your Docker image still uses an older version, the SDK will automatically fall back to port 3000 and log a deprecation warning. This keeps existing deployments working during the transition, but adds a one-time startup delay while the SDK detects the mismatch.
+
+Update your base image to match the SDK version to avoid this fallback. This backwards compatibility will be removed in a future release.
+
+If your Dockerfile has `EXPOSE 3000` for the control port, update it to `EXPOSE 8671`. Port 3000 is now available for your own services. See [`SANDBOX_CONTROL_PORT`](/sandbox/configuration/environment-variables/#sandbox_control_port) for details.
+:::
+
 ### Default image
 
 The default image is optimized for JavaScript and TypeScript workloads:
