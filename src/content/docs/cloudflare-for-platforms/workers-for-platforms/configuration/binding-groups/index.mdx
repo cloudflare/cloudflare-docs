@@ -1,0 +1,90 @@
+---
+title: Binding groups
+pcx_content_type: concept
+sidebar:
+  order: 6
+---
+
+import { DirectoryListing, TypeScriptExample } from "~/components";
+
+A Binding Group is a collection of resources of the same type — [KV](/kv/) stores, [R2](/r2/) buckets, [AI Search](/ai-search/) instances, [Durable Objects](/durable-objects/) — managed together under a single binding. Instead of creating and binding to each resource individually, you bind to the group once and access individual resources within it at runtime.
+
+Binding groups solve a core problem when building multi-tenant platforms: giving each customer their own isolated resources without changing your configuration or redeploying your Worker for every new customer.
+
+## Why use binding groups
+
+- **No pre-provisioning required** — Access a resource by name. If it does not exist, it is created on first use.
+- **Dynamic resource creation** — Create resources for each customer without changing your configuration or redeploying your Worker.
+- **Runtime resource selection** — Access any resource in the group by name. Pass in the customer identifier at runtime.
+- **Simple configuration** — One binding per resource type, regardless of how many customers you serve.
+
+## The Binding Group interface
+
+A binding group exposes the following methods:
+
+```ts
+interface BindingGroup<T, CreateOptions> {
+	// Get an existing resource by name — returns the standard binding type
+	get(name: string): T;
+
+	// Create a new resource in the group
+	create(name: string, options?: CreateOptions): Promise<T>;
+
+	// Delete a resource from the group
+	delete(name: string): Promise<void>;
+
+	// List all resources in the group
+	list(): Promise<string[]>;
+}
+```
+
+For most resource types, `.get()` is all you need. The resource is created automatically on first use. For resources that require configuration to provision, such as [Hyperdrive](/hyperdrive/) or [Vectorize](/vectorize/), use `.create()` to set them up before first use.
+
+## How it works
+
+From the customer's perspective, their Worker has simple, familiar bindings — `env.KV`, `env.SEARCH`, `env.STORAGE`. They do not know they are part of a group. They do not have access to any other customer's resources. The isolation is enforced by the runtime.
+
+<TypeScriptExample filename="customer-worker.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env) {
+		const url = new URL(request.url);
+
+		// Index a document
+		if (request.method === "POST" && url.pathname === "/docs") {
+			const doc = await request.json();
+			await env.SEARCH.upsert([doc]);
+			return new Response("Indexed", { status: 201 });
+		}
+
+		// Search
+		if (url.pathname === "/search") {
+			const q = url.searchParams.get("q");
+			const results = await env.SEARCH.search(q);
+			return Response.json(results);
+		}
+
+		// Read a setting from KV
+		if (url.pathname === "/settings") {
+			const settings = await env.KV.get("settings", "json");
+			return Response.json(settings);
+		}
+
+		// Serve a file from R2
+		if (url.pathname.startsWith("/files/")) {
+			const file = await env.STORAGE.get(url.pathname.slice(7));
+			if (!file) return new Response("Not found", { status: 404 });
+			return new Response(file.body);
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+};
+```
+
+</TypeScriptExample>
+
+On the platform side, your dispatcher resolves the right resources from each binding group and passes them into the customer's Worker. Refer to [Get started](/cloudflare-for-platforms/workers-for-platforms/configuration/binding-groups/get-started/) for the full configuration and dispatcher examples.
+
+<DirectoryListing />

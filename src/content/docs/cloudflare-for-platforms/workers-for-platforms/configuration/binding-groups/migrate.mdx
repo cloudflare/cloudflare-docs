@@ -1,0 +1,91 @@
+---
+title: Migrate to binding groups
+pcx_content_type: how-to
+sidebar:
+  order: 5
+---
+
+import { TypeScriptExample } from "~/components";
+
+If you have existing user Workers with bindings configured at deploy time, you can move those resources into binding groups and start passing them at dispatch time instead. This does not require redeploying your user Workers or copying any data.
+
+## Adopt existing resources
+
+Move an existing resource into a binding group with the Wrangler CLI. The resource keeps all its data — adoption is a metadata operation, not a data migration.
+
+```sh
+wrangler kv namespace move --namespace-id "abc123" --into-group "platform-customer-stores" --name "acme-corp"
+```
+
+You can also bulk-import resources from a file:
+
+```sh
+wrangler kv namespace import --into-group "platform-customer-stores" --from-file customers.csv
+```
+
+After adoption, the resource is accessible through the binding group with `.get()`:
+
+```ts
+// The existing KV namespace is now accessible by name
+env.CUSTOMER_KV.get("acme-corp");
+```
+
+The namespace ID does not change. The resource gains a name within the group and becomes accessible through the binding group API.
+
+## Adopt resources from deploy-time bindings
+
+If you use Workers for Platforms and currently attach bindings at deploy time through the [upload API](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/), you can adopt those resources into a binding group.
+
+<TypeScriptExample filename="src/migrate.ts">
+
+```ts
+// One-time migration: adopt existing resources into binding groups
+const existingKVNamespaceId = await getWorkerBindingConfig("acme-corp", "KV");
+await env.CUSTOMER_KV.adopt(existingKVNamespaceId, "acme-corp");
+```
+
+</TypeScriptExample>
+
+After adoption, the resource is accessible through `env.CUSTOMER_KV.get("acme-corp")` and can be passed at dispatch time. The underlying KV namespace and all its data stays the same.
+
+## Migrate incrementally
+
+Bindings passed at dispatch time override deploy-time bindings with the same name. This means you can move one binding at a time.
+
+<TypeScriptExample filename="src/dispatcher.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env) {
+		const customerId = new URL(request.url).hostname.split(".")[0];
+
+		// Phase 1: Move KV to binding groups first.
+		// DB, SEARCH, STORAGE still come from deploy-time config.
+		const userWorker = env.DISPATCHER.get(customerId, {
+			bindings: {
+				KV: env.CUSTOMER_KV.get(customerId),
+			},
+		});
+
+		return userWorker.fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+Once you have verified that the migrated binding works correctly, move the next binding. Repeat until all bindings are passed at dispatch time.
+
+## Verify the migration
+
+After moving a binding to dispatch-time injection:
+
+1. Confirm reads return existing data (the resource was adopted, not recreated).
+2. Confirm writes persist as expected.
+3. Monitor logs and error rates for the affected user Workers.
+
+Only remove the deploy-time binding configuration after you have confirmed the dispatch-time binding works correctly.
+
+:::note
+If a customer gets a new [D1](/d1/) database from a binding group instead of adopting an existing one, that database starts empty. Apply the schema with `db.exec()` before sending production traffic.
+:::

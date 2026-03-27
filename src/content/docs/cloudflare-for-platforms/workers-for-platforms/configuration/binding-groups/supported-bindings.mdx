@@ -1,0 +1,43 @@
+---
+title: Supported bindings
+pcx_content_type: reference
+sidebar:
+  order: 3
+---
+
+This page lists the bindings that binding groups support and how each resource is created.
+
+## Auto-created bindings
+
+These bindings create the underlying resource automatically on first use. You do not need a separate provisioning step.
+
+| Binding                                                     | What gets created | Creation trigger                                                 |
+| ----------------------------------------------------------- | ----------------- | ---------------------------------------------------------------- |
+| [KV](/kv/)                                                  | KV namespace      | First write                                                      |
+| [R2](/r2/)                                                  | R2 bucket         | First `put()`                                                    |
+| [D1](/d1/)                                                  | D1 database       | First use (empty SQLite database, apply schema with `db.exec()`) |
+| [AI Search](/ai-search/)                                    | Search index      | First `upsert()`                                                 |
+| [Durable Objects](/durable-objects/)                        | DO namespace      | First `.get()` of an object within the namespace                 |
+| [Queues](/queues/)                                          | Queue             | First `send()`                                                   |
+| [Analytics Engine](/analytics/analytics-engine/)            | Dataset           | First write                                                      |
+| [Rate Limiting](/workers/runtime-apis/bindings/rate-limit/) | Rate limiter      | First `.limit()` call                                            |
+| [Workflows](/workflows/)                                    | Workflow instance | First `.create()` call                                           |
+
+## Explicitly created bindings
+
+These bindings require configuration before they can be used. Create the resource with `.create()` during customer onboarding or setup, then reference it with `.get()` at runtime.
+
+| Binding                                                              | What gets created         | Required configuration                 |
+| -------------------------------------------------------------------- | ------------------------- | -------------------------------------- |
+| [Hyperdrive](/hyperdrive/)                                           | Hyperdrive config         | Connection string                      |
+| [Vectorize](/vectorize/)                                             | Vectorize index           | Dimensions and metric                  |
+| [mTLS](/workers/runtime-apis/bindings/mtls/)                         | Client certificate        | Certificate and private key            |
+| [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) | Binding to another Worker | Target Worker name                     |
+| [Pipelines](/pipelines/)                                             | Pipeline                  | Destination config (R2 bucket, format) |
+
+## Limited support
+
+| Binding                                  | Status                                                                          |
+| ---------------------------------------- | ------------------------------------------------------------------------------- |
+| [Browser Rendering](/browser-rendering/) | Per-instance support does not exist yet. Each account gets one shared instance. |
+| [Secrets Store](/secrets-store/)         | Per-customer support does not exist yet.                                        |

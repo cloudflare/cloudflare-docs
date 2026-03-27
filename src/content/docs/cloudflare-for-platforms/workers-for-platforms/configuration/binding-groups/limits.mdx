@@ -1,0 +1,185 @@
+---
+title: Limits
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { TypeScriptExample } from "~/components";
+
+Binding group limits let you cap how much of a resource each tenant can consume. Limits map to the billable dimensions of each product — the same things you get charged for — so you can control costs and offer differentiated plan tiers.
+
+This extends the same model as [custom limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/) on Workers today. Custom limits apply to the Worker itself (CPU time, subrequests). Binding group limits apply to the resources the Worker uses (KV reads, D1 rows, R2 storage).
+
+## Set limits on a resource
+
+Pass `limits` as the second argument to `.get()`. Limits are enforced for the tenant over the billing cycle.
+
+<TypeScriptExample>
+
+```ts
+const customerKV = env.CUSTOMER_KV.get(customerId, {
+	limits: {
+		reads: 100_000, // per month
+		writes: 10_000, // per month
+		storedBytes: 1_073_741_824, // 1 GB total
+	},
+});
+```
+
+</TypeScriptExample>
+
+When a tenant exceeds a limit, the operation fails with an error. Your dispatcher can catch this and return an appropriate response — for example, a `429` with an upgrade prompt.
+
+## Set limits by plan tier
+
+Look up the tenant's plan at dispatch time and apply the corresponding limits. This is the same pattern as setting CPU and subrequest limits per plan — extended to resources.
+
+<TypeScriptExample filename="src/dispatcher.ts">
+
+```ts
+const PLAN_LIMITS = {
+	free: {
+		kv: {
+			reads: 100_000,
+			writes: 10_000,
+			storedBytes: 100 * 1024 * 1024,
+		},
+		d1: {
+			rowsRead: 5_000_000,
+			rowsWritten: 100_000,
+			storedBytes: 500 * 1024 * 1024,
+		},
+		r2: {
+			classAOps: 100_000,
+			classBOps: 1_000_000,
+			storedBytes: 1024 * 1024 * 1024,
+		},
+	},
+	pro: {
+		kv: {
+			reads: 10_000_000,
+			writes: 1_000_000,
+			storedBytes: 10 * 1024 * 1024 * 1024,
+		},
+		d1: {
+			rowsRead: 25_000_000_000,
+			rowsWritten: 50_000_000,
+			storedBytes: 5 * 1024 * 1024 * 1024,
+		},
+		r2: {
+			classAOps: 10_000_000,
+			classBOps: 100_000_000,
+			storedBytes: 100 * 1024 * 1024 * 1024,
+		},
+	},
+};
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const customerId = new URL(request.url).hostname.split(".")[0];
+		const planType = (await env.PLANS.get(customerId)) || "free";
+		const plan = PLAN_LIMITS[planType];
+
+		const userWorker = env.DISPATCHER.get(
+			customerId,
+			{
+				bindings: {
+					KV: env.CUSTOMER_KV.get(customerId, { limits: plan.kv }),
+					DB: env.CUSTOMER_DBS.get(customerId, { limits: plan.d1 }),
+					STORAGE: env.CUSTOMER_STORAGE.get(customerId, { limits: plan.r2 }),
+				},
+			},
+			{
+				// Worker-level limits
+				limits: {
+					cpuMs: planType === "free" ? 10 : 30,
+					subRequests: planType === "free" ? 5 : 20,
+				},
+			},
+		);
+
+		return userWorker.fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Handle limit errors
+
+When a tenant exceeds a limit, the operation throws an exception. Catch it in your dispatcher to return an appropriate response.
+
+<TypeScriptExample filename="src/dispatcher.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env) {
+		try {
+			const customerId = new URL(request.url).hostname.split(".")[0];
+			const plan = PLAN_LIMITS[(await env.PLANS.get(customerId)) || "free"];
+
+			const userWorker = env.DISPATCHER.get(customerId, {
+				bindings: {
+					KV: env.CUSTOMER_KV.get(customerId, { limits: plan.kv }),
+				},
+			});
+
+			return userWorker.fetch(request);
+		} catch (e) {
+			if (e.message.includes("limit exceeded")) {
+				return new Response("Usage limit exceeded. Upgrade your plan.", {
+					status: 429,
+				});
+			}
+			return new Response(e.message, { status: 500 });
+		}
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Operations vs. storage limits
+
+Limits fall into two categories:
+
+**Operation limits** count actions over the billing cycle. They reset at the start of each monthly billing period.
+
+- KV reads, writes, deletes, lists
+- D1 rows read, rows written
+- R2 Class A and Class B operations
+
+**Storage limits** cap how much data a tenant can store. They are checked against current usage and do not reset.
+
+- KV stored data
+- D1 database size
+- R2 bucket size
+
+When a storage limit is reached, write operations that would increase stored data fail. Read operations are unaffected.
+
+## Supported limit fields
+
+| Binding          | Field               | Type      | Description                                             |
+| ---------------- | ------------------- | --------- | ------------------------------------------------------- |
+| KV               | `reads`             | Operation | Keys read per month                                     |
+|                  | `writes`            | Operation | Keys written per month                                  |
+|                  | `deletes`           | Operation | Keys deleted per month                                  |
+|                  | `lists`             | Operation | List operations per month                               |
+|                  | `storedBytes`       | Storage   | Maximum stored data in bytes                            |
+| D1               | `rowsRead`          | Operation | Rows read per month                                     |
+|                  | `rowsWritten`       | Operation | Rows written per month                                  |
+|                  | `storedBytes`       | Storage   | Maximum database size in bytes                          |
+| R2               | `classAOps`         | Operation | Class A operations per month (writes, lists, multipart) |
+|                  | `classBOps`         | Operation | Class B operations per month (reads, heads)             |
+|                  | `storedBytes`       | Storage   | Maximum stored data in bytes                            |
+| Durable Objects  | `requests`          | Operation | Requests per month (HTTP, RPC, WebSocket messages)      |
+|                  | `rowsRead`          | Operation | SQLite rows read per month                              |
+|                  | `rowsWritten`       | Operation | SQLite rows written per month                           |
+|                  | `storedBytes`       | Storage   | Maximum stored data in bytes                            |
+| Queues           | `operations`        | Operation | Standard operations per month (per 64 KB chunk)         |
+| Analytics Engine | `dataPointsWritten` | Operation | Data points written per month                           |
+|                  | `readQueries`       | Operation | Read queries per month                                  |
+| Vectorize        | `queriedDimensions` | Operation | Queried vector dimensions per month                     |
+|                  | `storedDimensions`  | Storage   | Maximum stored vector dimensions                        |
+| Hyperdrive       | `queries`           | Operation | Database queries per month                              |

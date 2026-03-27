@@ -1,0 +1,178 @@
+---
+title: Get started
+pcx_content_type: how-to
+sidebar:
+  order: 2
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+This guide walks through configuring binding groups and using them to inject per-customer resources at runtime. Binding groups work with both [Dynamic Workers](/dynamic-workers/) and the Workers for Platforms [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/).
+
+## Configure the bindings
+
+On your platform Worker (the Worker Loader or dispatch Worker), add binding groups for each resource type your customers need. Each binding group is a single binding that manages many customer-scoped resources.
+
+<WranglerConfig>
+
+```toml
+name = "my-platform"
+
+[[kv_namespaces]]
+binding = "CUSTOMER_KV"
+namespace_id = "platform-customer-stores"
+
+[[ai_search]]
+binding = "CUSTOMER_SEARCH"
+namespace = "platform-customer-indexes"
+
+[[r2_buckets]]
+binding = "CUSTOMER_STORAGE"
+bucket_name = "platform-customer-uploads"
+```
+
+</WranglerConfig>
+
+## Use with Dynamic Workers
+
+In the Worker Loader, resolve each customer's resources from the binding groups and pass them as bindings to the Dynamic Worker.
+
+<TypeScriptExample filename="src/loader.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env) {
+		const customerId = await authenticateRequest(request);
+
+		// Get this customer's resources from each binding group
+		const customerKV = env.CUSTOMER_KV.get(customerId);
+		const customerSearch = env.CUSTOMER_SEARCH.get(customerId);
+		const customerBucket = env.CUSTOMER_STORAGE.get(customerId);
+
+		// Load or reuse this customer's Dynamic Worker
+		const worker = env.LOADER.get(`customer-${customerId}`, async () => {
+			const code = await env.PLATFORM_CODE.get(`${customerId}/worker.js`);
+
+			return {
+				compatibilityDate: "2026-01-01",
+				mainModule: "index.js",
+				modules: { "index.js": code },
+
+				// Pass in ONLY this customer's resources.
+				// The Dynamic Worker sees these as its own bindings.
+				bindings: {
+					KV: customerKV,
+					SEARCH: customerSearch,
+					STORAGE: customerBucket,
+				},
+				globalOutbound: null,
+			};
+		});
+
+		return worker.getEntrypoint().fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+The Dynamic Worker receives `env.KV`, `env.SEARCH`, and `env.STORAGE` as standard bindings. The customer's code does not need to know about binding groups.
+
+## Use with Workers for Platforms dispatcher
+
+Pass binding groups when you dispatch to a user Worker. The bindings are injected at dispatch time instead of deploy time.
+
+<TypeScriptExample filename="src/dispatcher.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env) {
+		const customerId = new URL(request.url).hostname.split(".")[0];
+
+		const userWorker = env.DISPATCHER.get(customerId, {
+			bindings: {
+				KV: env.CUSTOMER_KV.get(customerId),
+				DB: env.CUSTOMER_DBS.get(customerId),
+				SEARCH: env.CUSTOMER_SEARCH.get(customerId),
+				STORAGE: env.CUSTOMER_STORAGE.get(customerId),
+			},
+		});
+
+		return userWorker.fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Understand resource auto-creation
+
+Resources within a binding group are created automatically on first use. You do not need a separate provisioning step.
+
+The flow works as follows:
+
+1. Your customer writes a normal Worker that calls `env.KV.put("key", "value")`.
+2. On the platform side, you pass in the binding group scoped to the customer ID.
+3. When the customer's Worker calls `env.KV.put()` for the first time, the runtime sees "this is a write to binding group `CUSTOMER_KV`, scoped to `acme-corp`" — and if a KV store for `acme-corp` does not exist yet, it creates one.
+4. Each resource is created as a real, first-class resource with its own ID and data.
+
+<TypeScriptExample filename="customer-worker.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env) {
+		// First time this runs, the platform auto-creates a KV store
+		// scoped to this customer
+		await env.KV.put(
+			"visits",
+			String(Number((await env.KV.get("visits")) || 0) + 1),
+		);
+
+		const visits = await env.KV.get("visits");
+		return new Response(`Visit count: ${visits}`);
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Resource naming
+
+The name passed to `.get()` becomes the resource name within the binding group. The binding group namespace provides the scope:
+
+```ts
+// Creates a KV namespace named "acme-corp"
+// within the "platform-customer-stores" group
+env.CUSTOMER_KV.get("acme-corp");
+```
+
+## Create resources that require configuration
+
+Some resources cannot be auto-created from just a name — they need configuration that you provide. For these, create the resource explicitly before it is used.
+
+<TypeScriptExample filename="src/onboard.ts">
+
+```ts
+async function onboardCustomer(
+	customerId: string,
+	connectionString: string,
+	env: Env,
+) {
+	// Create a Hyperdrive config within the binding group
+	await env.CUSTOMER_DBS.create(customerId, {
+		connectionString: connectionString,
+	});
+}
+```
+
+</TypeScriptExample>
+
+Then at request time, pass it into the Worker the same way as any other binding group resource:
+
+```ts
+bindings: {
+  DB: env.CUSTOMER_DBS.get(customerId),
+}
+```
+
+For the full list of which bindings auto-create and which require explicit creation, refer to [Supported bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/binding-groups/supported-bindings/).
