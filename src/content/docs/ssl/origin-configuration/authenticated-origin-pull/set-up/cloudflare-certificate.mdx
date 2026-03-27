@@ -1,0 +1,71 @@
+---
+pcx_content_type: how-to
+title: Cloudflare certificate
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Authenticated origin pulls with Cloudflare certificate
+description: Set up Authenticated Origin Pulls using the shared Cloudflare certificate. This certificate is not exclusive to your account and only guarantees that a request is coming from the Cloudflare network.
+---
+
+import { AvailableNotifications, Render } from "~/components";
+
+When you enable Authenticated Origin Pulls (AOP) using the Cloudflare certificate, all proxied traffic to your zone is authenticated at the origin web server using a certificate provided by Cloudflare.
+
+:::caution
+
+The Cloudflare-provided certificate is shared across all Cloudflare accounts. It is not exclusive to your account and only guarantees that a request comes from the Cloudflare network. For stricter security, use a [zone-level custom certificate](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or [per-hostname certificate](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) instead.
+
+Using a custom certificate is required if you need your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant.
+
+:::
+
+## Before you begin
+
+Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
+
+:::caution
+
+Cloudflare certificate AOP is applied to all proxied hostnames on your zone, including [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) configured on a Cloudflare for SaaS zone.
+If you need a different AOP certificate to apply to different custom hostnames, use [per-hostname AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
+
+:::
+
+## 1. Upload certificate to origin
+
+[Download the Cloudflare authenticated origin pull certificate (.PEM file)](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin server. This certificate is **not** the same as the [Cloudflare Origin CA certificate](/ssl/origin-configuration/origin-ca/) and will not appear on your Dashboard.
+
+## 2. Configure origin to accept client certificates
+
+<Render
+	file="aop-configure-origin"
+	product="ssl"
+	params={{
+		one: "To use the Cloudflare certificate, download it from step 1 above, rename the .PEM file, and then upload it to `/path/to/origin-pull-ca.pem` before applying the settings.",
+		two: " To use the Cloudflare certificate, download it from step 1 above, rename the .PEM file, and then upload it to `/etc/nginx/certs/cloudflare.crt` before applying the settings.",
+	}}
+/>
+
+## 3. Configure Cloudflare to use client certificate
+
+<Render file="aop-enable-feature" product="ssl" />
+
+## 4. Enforce validation check on your origin
+
+<Render file="aop-enforce-validation" product="ssl" />
+
+## 5. (Optional) Set up expiration alerts
+
+You can configure alerts to receive notifications before your AOP certificates expire.
+
+<AvailableNotifications
+	product="SSL/TLS"
+	notificationFilter="Zone-level Authenticated Origin Pulls Certificate Expiration Alert"
+/>
+
+<Render file="get-started" product="notifications" />
+
+## Further options
+
+Refer to [Manage certificates](/ssl/origin-configuration/authenticated-origin-pull/set-up/manage-certificates/) for further options.

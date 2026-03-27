@@ -2,15 +2,24 @@
 pcx_content_type: how-to
 title: Zone-level
 sidebar:
-  order: 1
+  order: 2
 head:
   - tag: title
-    content: Zone-level authenticated origin pulls
+    content: Zone-level authenticated origin pulls with custom certificate
+description: Set up zone-level Authenticated Origin Pulls using your own custom certificate uploaded via the API. This provides stricter security than the shared Cloudflare certificate.
 ---
 
-import { AvailableNotifications, Render } from "~/components";
+import { AvailableNotifications, Render, Details } from "~/components";
 
-When you enable Authenticated Origin Pulls (AOP) for a zone, all proxied traffic to your zone is authenticated at the origin web server.
+Zone-level Authenticated Origin Pulls (AOP) with a custom certificate authenticates all proxied traffic to your zone at the origin web server. The certificate is exclusive to your account. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
+
+Unlike the [Cloudflare certificate](/ssl/origin-configuration/authenticated-origin-pull/set-up/cloudflare-certificate/) option, a custom zone-level certificate is not shared across Cloudflare accounts. This provides stronger security because only your zone's traffic can present this specific certificate to your origin.
+
+:::note
+
+For a simpler setup without account-exclusive authentication, use the [Cloudflare certificate](/ssl/origin-configuration/authenticated-origin-pull/set-up/cloudflare-certificate/) option instead.
+
+:::
 
 ## Before you begin
 
@@ -19,40 +28,60 @@ Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configurat
 :::caution
 
 Zone-level AOP certificates are also applied to [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) configured on a Cloudflare for SaaS zone.
-If you need a different AOP certificate to apply to different custom hostnames, use [Per-hostname AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
+If you need a different AOP certificate to apply to different custom hostnames, use [per-hostname AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
 :::
 
-## 1. Upload certificate to origin
+Refer to the steps below for an example of how to generate a custom certificate using OpenSSL. The CA root certificate that you use to issue the custom certificate should be the same CA that you will [upload to your origin](#2-configure-origin-to-accept-client-certificates).
 
-First, upload a certificate to your origin.
+<Details header="OpenSSL example">
+	<Render file="custom-cert-openssl-commands" product="ssl" />
+</Details>
 
-To use a Cloudflare certificate (which uses a specific CA), [download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin. This certificate is **not** the same as the [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca/) and will not appear on your Dashboard.
+## 1. Upload custom certificate
 
-To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/create/). Then, upload the certificate to your origin.
+Use the [Upload a zone-level client certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/create/) endpoint to upload your custom certificate.
 
-:::caution
+:::note
 
-Although Cloudflare provides you a certificate to easily configure zone-level authenticated origin pulls, this certificate is not exclusive to your account and only guarantees that a request is coming from the Cloudflare network. If you want more strict security, you should upload your own certificate.
-
-Using a custom certificate is required if you need your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant.
-
+You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the API will return a `missing leaf certificate` error.
 :::
+
+```bash
+MYCERT="$(cat cert.crt|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
+MYKEY="$(cat cert.key|perl -pe 's/\r?\n/\\n/'|sed -e's/..$//')"
+
+request_body=$(< <(cat <<EOF
+{
+"certificate": "$MYCERT",
+"private_key": "$MYKEY"
+}
+EOF
+))
+
+curl --silent \
+"https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth" \
+--header "Content-Type: application/json" \
+--header "X-Auth-Email: $MYAUTHEMAIL" \
+--header "X-Auth-Key: $MYAUTHKEY" \
+--data "$request_body"
+```
+
+In the API response, save the certificate `id` since it will be required in step 3.
 
 ## 2. Configure origin to accept client certificates
 
 <Render
 	file="aop-configure-origin"
+	params={{ one: " ", two: " " }}
 	product="ssl"
-	params={{
-		one: "To use the Cloudflare certificate, download it from step 1 above, rename the .PEM file, and then upload it to `/path/to/origin-pull-ca.pem` before applying the settings.",
-		two: " To use the Cloudflare certificate, download it from step 1 above, rename the .PEM file, and then upload it to `/etc/nginx/certs/cloudflare.crt` before applying the settings.",
-	}}
 />
 
-## 3. Configure Cloudflare to use client certificate
+## 3. Enable Authenticated Origin Pulls for the zone
 
-<Render file="aop-enable-feature" product="ssl" />
+Use the Cloudflare API to send a [`PUT`](/api/resources/origin_tls_client_auth/subresources/settings/methods/update/) request to enable Authenticated Origin Pulls for the zone.
+
+If you had set up logging on your origin during step 2, test and confirm that Authenticated Origin Pulls is working.
 
 ## 4. Enforce validation check on your origin
 
@@ -68,6 +97,19 @@ You can configure alerts to receive notifications before your AOP certificates e
 />
 
 <Render file="get-started" product="notifications" />
+
+## API reference
+
+The following API endpoints are available for managing zone-level custom AOP certificates:
+
+| Operation                 | Endpoint                                                                                                                |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Upload certificate        | [Create a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/create/) |
+| List certificates         | [List zone-level certificates](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/list/)      |
+| Get certificate details   | [Get a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/get/)       |
+| Delete certificate        | [Delete a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/delete/) |
+| Get zone-level setting    | [Get zone-level AOP setting](/api/resources/origin_tls_client_auth/subresources/settings/methods/get/)                  |
+| Update zone-level setting | [Update zone-level AOP setting](/api/resources/origin_tls_client_auth/subresources/settings/methods/update/)            |
 
 ## Further options
 

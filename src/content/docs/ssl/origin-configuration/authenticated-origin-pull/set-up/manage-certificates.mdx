@@ -2,11 +2,10 @@
 pcx_content_type: how-to
 title: Manage certificates
 sidebar:
-  order: 3
+  order: 4
 head:
   - tag: title
     content: Manage AOP certificates
-
 ---
 
 import { APIRequest } from "~/components";
@@ -27,7 +26,7 @@ Make sure you have [notifications](/notifications/notification-available/#ssltls
 
 To apply different client certificates simultaneously at both the zone and hostname level, you can combine zone-level and per-hostname custom certificates.
 
-First, set up [zone-level pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) using a certificate. Then, upload multiple, specialized certificates for [individual hostnames](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/). Since per-hostname certificates are more specific, they take precedence over zone certificates.
+First, set up zone-level pulls using a [Cloudflare certificate](/ssl/origin-configuration/authenticated-origin-pull/set-up/cloudflare-certificate/) or a [custom certificate](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/). Then, upload multiple, specialized certificates for [individual hostnames](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/). Since per-hostname certificates are more specific, they take precedence over zone certificates.
 
 ---
 
@@ -47,13 +46,13 @@ Cloudflare does not delete client certificates upon expiration unless you send a
 	path="/zones/{zone_id}/origin_tls_client_auth/hostnames"
 	method="PUT"
 	json={{
-		"config": [
+		config: [
 			{
-				"enabled": true,
-				"hostname": "<HOSTNAME>",
-				"cert_id": "<CERT_ID>"
-			}
-		]
+				enabled: true,
+				hostname: "<HOSTNAME>",
+				cert_id: "<CERT_ID>",
+			},
+		],
 	}}
 />
 

@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Per-hostname
 sidebar:
-  order: 2
+  order: 3
 head:
   - tag: title
     content: Per-hostname authenticated origin pulls
@@ -66,6 +66,19 @@ You can configure alerts to receive notifications before your AOP certificates e
 />
 
 <Render file="get-started" product="notifications" />
+
+## API reference
+
+The following API endpoints are available for managing per-hostname AOP certificates:
+
+| Operation                  | Endpoint                                                                                                                               |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Upload certificate         | [Upload a hostname client certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/create/)       |
+| List certificates          | [List hostname client certificates](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/list/)            |
+| Get certificate details    | [Get a hostname client certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/get/)             |
+| Delete certificate         | [Delete a hostname client certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/delete/)       |
+| Get hostname status        | [Get the hostname status for client authentication](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/get/)         |
+| Enable or disable hostname | [Enable or disable a hostname for client authentication](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) |
 
 ## Further options
 
