@@ -28,7 +28,13 @@ If your users need to connect to self-signed origin servers, create an HTTP Allo
 
 ## Generate a custom root CA
 
-Before you generate a custom root CA, make sure you have [OpenSSL](https://www.openssl.org/) installed.
+Before you generate a custom root CA, make sure you have [OpenSSL](https://www.openssl.org/) **1.1.1 or later** installed. The certificate generation command uses the `-addext` flag, which is not available in older versions.
+
+To check your OpenSSL version, run:
+
+```sh
+openssl version
+```
 
 1. Open a terminal.
 
@@ -64,6 +70,19 @@ Before you generate a custom root CA, make sure you have [OpenSSL](https://www.o
 
    The `-days 365` value controls certificate expiry. A shorter duration reduces risk if the key is compromised, but requires more frequent rotation. Rotating a deployed BYOPKI certificate is a disruptive operation, so choose an expiry that balances security with operational overhead.
 
+   :::note[OpenSSL older than 1.1.1]
+   If your system runs OpenSSL older than 1.1.1, the `-addext` flag is not available. Use a config file instead:
+
+   ```sh
+   openssl req -x509 -sha256 -new -nodes \
+     -key <CUSTOM-ROOT-PRIVATE-KEY>.pem \
+     -days 365 \
+     -out <CUSTOM-ROOT-CERT>.pem \
+     -config <(printf '[req]\ndistinguished_name=dn\n[dn]\n[v3_ca]\nbasicConstraints=critical,CA:TRUE\nkeyUsage=critical,keyCertSign,cRLSign') \
+     -extensions v3_ca
+   ```
+   :::
+
 When preparing your certificate and private key for upload, be sure to remove any unwanted characters, such as mismatching subdomains in the certificate's common name.
 
 To review the private key, run the following command:
@@ -78,7 +97,8 @@ To review the certificate, run the following command:
 openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 ```
 
-(Recommended) Verify the required RFC 5280 extensions are present before uploading:
+:::tip
+Verify the required RFC 5280 extensions are present before uploading:
 
 ```sh
 openssl x509 -in <CUSTOM-ROOT-CERT>.pem -noout -ext keyUsage,basicConstraints
@@ -94,6 +114,7 @@ X509v3 Key Usage: critical
 ```
 
 If these fields are missing, regenerate the certificate using the command in step 4.
+:::
 
 ## Deploy a custom root certificate
 
@@ -226,9 +247,16 @@ If rotating the certificate is not immediately feasible, users can work around t
 
 ```python
 import ssl
+import urllib.request
+
 ctx = ssl.create_default_context()
 ctx.verify_flags &= ~ssl.VERIFY_X509_STRICT
+
+# Pass the context to your HTTP call, for example:
+urllib.request.urlopen("https://example.com", context=ctx)
 ```
+
+For third-party libraries, pass the context using their SSL configuration option — for example, `httpx.Client(verify=ctx)` or `requests` via a custom `HTTPAdapter`.
 
 :::note
 This workaround must be applied to every Python script or library that opens SSL connections. It is not a global setting.
