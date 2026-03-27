@@ -18,7 +18,8 @@ Use `outbound` to intercept outbound HTTP traffic regardless of destination:
 
 <TypeScriptExample>
 ```ts
-import { Sandbox } from "@cloudflare/sandbox";
+import { Sandbox, ContainerProxy } from "@cloudflare/sandbox";
+export { ContainerProxy }
 
 export class MySandbox extends Sandbox {}
 
@@ -44,7 +45,8 @@ Use `outboundByHost` to map specific domain names or IP addresses to handler fun
 
 <TypeScriptExample>
 ```ts
-import { Sandbox } from "@cloudflare/sandbox";
+import { Sandbox, ContainerProxy } from "@cloudflare/sandbox";
+export { ContainerProxy }
 
 export class MySandbox extends Sandbox {}
 
@@ -123,7 +125,8 @@ Use `outboundHandlers` to define named handlers, then assign them to specific ho
 
 <TypeScriptExample>
 ```ts
-import { Sandbox } from "@cloudflare/sandbox";
+import { Sandbox, ContainerProxy } from "@cloudflare/sandbox";
+export { ContainerProxy }
 
 export class MySandbox extends Sandbox {}
 
@@ -142,7 +145,8 @@ Apply handlers to hosts programmatically from your Worker:
 
 <TypeScriptExample>
 ```ts
-import { getSandbox } from "@cloudflare/sandbox";
+import { Sandbox, ContainerProxy, getSandbox } from "@cloudflare/sandbox";
+export { ContainerProxy }
 
 export default {
   async fetch(request: Request, env: Env) {

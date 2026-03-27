@@ -17,7 +17,8 @@ Use outbound Workers to route requests to Workers functions and their bindings (
 Use `outbound` to intercept outbound HTTP traffic regardless of destination:
 
 ```js
-import { Container } from "@cloudflare/containers";
+import { Container, ContainerProxy } from "@cloudflare/containers";
+export { ContainerProxy };
 
 export class MyContainer extends Container {}
 
@@ -40,7 +41,8 @@ If needed, you can also upgrade requests to TLS from the Worker itself.
 Use `outboundByHost` to map specific domain names or IP addresses to handler functions:
 
 ```js
-import { Container } from "@cloudflare/containers";
+import { Container, ContainerProxy } from "@cloudflare/containers";
+export { ContainerProxy };
 
 export class MyContainer extends Container {}
 
