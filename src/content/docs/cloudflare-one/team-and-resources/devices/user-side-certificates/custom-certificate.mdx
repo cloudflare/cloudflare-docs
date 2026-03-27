@@ -241,4 +241,4 @@ If Gateway returns an **HTTP Response Code: 526** after deploying a custom certi
 
 Python 3.13 and later enable `ssl.VERIFY_X509_STRICT` by default, which requires CA certificates to comply with [RFC 5280](https://datatracker.ietf.org/doc/html/rfc5280). If your BYOPKI certificate was generated without the `keyUsage` and `basicConstraints` extensions, Python HTTPS requests will fail when the Cloudflare One Client is active.
 
-To resolve this permanently, generate a new certificate using the updated command in step 4 and re-upload it.
+
