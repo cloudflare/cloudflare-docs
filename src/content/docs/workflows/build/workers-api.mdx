@@ -78,20 +78,57 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 {/* prettier-ignore */}
 - <code>step.do(name: string, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
 - <code>step.do(name: string, config?: WorkflowStepConfig, callback: ():
-  	RpcSerializable): Promise&lt;T&gt;</code>
+	RpcSerializable): Promise&lt;T&gt;</code>
   - `name` - the name of the step, up to 256 characters.
   - `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
-  - `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist.
+  - `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
 
 :::note[Returning state]
 
 When returning state from a `step`, ensure that the object you return is _serializable_.
 
-Primitive types like `string`, `number`, and `boolean`, along with composite structures such as `Array` and `Object` (provided they only contain serializable values), can be serialized.
+Primitive types like `string`, `number`, and `boolean`, along with composite structures such as `Array` and `Object` (provided they only contain serializable values), can be serialized. Any [structured-cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone) type can be serialized, as long it is no longer than 1 MB.
 
-Objects that include `Function` or `Symbol` types, and objects with circular references, cannot be serialized and the Workflow instance will throw an error if objects with those types is returned.
+On the other hand, objects that include `Function` or `Symbol` types, and objects with circular references, cannot be serialized. The Workflow instance will throw an error if objects with those types is returned.
+
+In JavaScript Workflows, `ReadableStream<Uint8Array>` is a supported serializable return type when a step needs to persist larger binary output than the normal 1 MiB non-stream step-result limit. 
+
+Return a new stream from the callback. 
+
+:::caution
+Do not return a locked stream or a stream that has already been read. BYOB streams and BYOB readers are not supported. 
+:::
+
+After a `ReadableStream<Uint8Array>` object has been persisted within a step, it should not be reused - rely on the new fresh stream that gets returned from step. The bytes are preserved from the original stream, but the implementation might differ.
 
 :::
+
+<TypeScriptExample>
+
+```ts
+type Env = {
+	MY_BUCKET: R2Bucket;
+};
+
+export class MyWorkflow extends WorkflowEntrypoint<Env> {
+	async run(_event: WorkflowEvent<unknown>, step: WorkflowStep) {
+		const reportStream = await step.do("read report from R2", async () => {
+			const object = await this.env.MY_BUCKET.get("reports/latest.csv");
+
+			if (!object?.body) {
+				throw new Error("Could not read reports/latest.csv from R2.");
+			}
+
+			return object.body;
+		});
+
+		const preview = await new Response(reportStream).text();
+		return { preview };
+	}
+}
+```
+
+</TypeScriptExample>
 
 {/* prettier-ignore */}
 - <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
