@@ -24,9 +24,12 @@ To use AI Search with other model providers:
 
 1. Add provider keys to [AI Gateway](/ai-gateway/configuration/bring-your-own-keys/)
 2. Connect the gateway to AI Search
+
 - When creating a new AI Search, select the AI Gateway with your provider keys.
 - For an existing AI Search, go to **Settings** and switch to a gateway that has your keys under **Resources**.
+
 3. Select models
+
 - Embedding model: Only available to be changed when creating a new AI Search.
 - Generation model: Can be selected when creating a new AI Search and can be changed at any time in **Settings**.
 
@@ -38,12 +41,14 @@ If you choose **Smart Default** in your model selection, then AI Search will sel
 
 ### Per-request generation model override
 
-While the generation model can be set globally at the AI Search instance level, you can also override it on a per-request basis in the [AI Search API](/ai-search/usage/rest-api/#ai-search). This is useful if your [RAG application](/ai-search/) requires dynamic selection of generation models based on context or user preferences.
+While the generation model can be set globally at the AI Search instance level, you can also override it on a per-request basis in the [AI Search API](/ai-search/usage/rest-api/#chat-completions). This is useful if your [RAG application](/ai-search/) requires dynamic selection of generation models based on context or user preferences.
 
 ## Model deprecation
+
 AI Search may deprecate support for a given model in order to provide support for better-performing models with improved capabilities. When a model is being deprecated, we announce the change and provide an end-of-life date after which the model will no longer be accessible. Applications that depend on AI Search may therefore require occasional updates to continue working reliably.
 
 ### Model lifecycle
+
 AI Search models follow a defined lifecycle to ensure stability and predictable deprecation:
 
 1. **Production:** The model is actively supported and recommended for use. It is included in Smart Defaults and receives ongoing updates and maintenance.
