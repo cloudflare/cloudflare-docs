@@ -33,3 +33,9 @@ Depending on your zone configuration, you might have your DNS records unlocked. 
 Select **View DNS records** for a list of the required `MX` and sender policy framework (SPF) records Email Routing is using.
 
 If you are having trouble with your account's DNS records, refer to the [Troubleshooting](/email-routing/troubleshooting/) section.
+
+## _dc-mx records
+
+If you see a DNS record with a `_dc-mx` prefix (for example, `_dc-mx.a1b2c3d4e5f6.example.com`), Cloudflare created it automatically. This record appears when your `MX` record points to a hostname that is [proxied](/dns/proxy-status/) through Cloudflare. The `_dc-mx` record resolves directly to your origin IP address so that mail traffic bypasses the proxy and reaches your mail server.
+
+For more information, refer to [dc-##### and _dc-mx subdomains](/dns/manage-dns-records/troubleshooting/unexpected-dns-records/#dc--and-_dc-mx-subdomains).
