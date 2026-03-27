@@ -248,10 +248,13 @@ When using `wrangler dev`, you must expose ports in your Dockerfile:
 ```dockerfile
 FROM docker.io/cloudflare/sandbox:0.8.0
 
-# Required for local development
+# SDK control plane port (required for local dev)
 EXPOSE 8671
+# Your application port
 EXPOSE 8080
 ```
+
+`EXPOSE 8671` is needed because that is the default SDK control plane port. If you set [`SANDBOX_CONTROL_PORT`](/sandbox/configuration/environment-variables/#sandbox_control_port) to a different value, expose that port instead.
 
 Without `EXPOSE`, you'll see: `connect(): Connection refused: container port not found`
 
