@@ -106,7 +106,7 @@ jobs:
     needs: pre-build
     runs-on: ubuntu-latest
     outputs:
-      link_validation_failed: ${{ steps.build_step.outputs.link_validation_failed }}
+      link_check_failed: ${{ steps.check_link_result.outputs.failed }}
     permissions:
       contents: read
       pull-requests: write
@@ -148,14 +148,34 @@ jobs:
           restore-keys: |
             astro-assets-
 
-      - name: Build
+      # The starlight-links-validator plugin runs in astro:build:done, which fires
+      # AFTER all pages have been written to dist/. If link validation fails, the
+      # build exits non-zero but dist/ is complete. We use continue-on-error so the
+      # job succeeds (allowing deploy + post-build to run), then check the outcome below.
+      # We tee stdout+stderr to build.log so post-build can parse it for annotations.
+      - run: pnpm run build 2>&1 | tee build.log; exit ${PIPESTATUS[0]}
         id: build_step
+        name: Build
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_LINK_CHECK: true
+
+      # Distinguish between "link check failed" (dist/ exists) and "real build failure" (no dist/).
+      # If the build produced no output, we must fail the job immediately.
+      - name: Check build result
+        id: check_link_result
         run: |
-          set -o pipefail
-          pnpm run build 2>&1 | tee /tmp/build-output.log
+          if [ ! -d dist ] || [ -z "$(ls -A dist)" ]; then
+            echo "::error::Build failed before producing output. Check the Build job logs for the error."
+            exit 1
+          fi
+          if [ "${{ steps.build_step.outcome }}" = "failure" ]; then
+            echo "failed=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::Build succeeded but link validation failed. Preview will still be deployed."
+          else
+            echo "failed=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Upload build artifact
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
@@ -163,12 +183,12 @@ jobs:
           name: dist
           path: dist
 
-      - name: Upload link validation report
-        if: steps.build_step.outputs.link_validation_failed == 'true'
+      - name: Upload build log
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        if: always()
         with:
-          name: link-validation-report
-          path: .starlight-links-validator/errors.json
+          name: build-log
+          path: build.log
 
   post-build:
     name: Post Build
@@ -215,15 +235,15 @@ jobs:
       - name: Tests (Workers)
         run: pnpm run test:postbuild
 
-      - name: Download link validation report
-        if: needs.build.outputs.link_validation_failed == 'true'
+      - name: Download build log
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        if: needs.build.outputs.link_check_failed == 'true'
         with:
-          name: link-validation-report
-          path: .starlight-links-validator
+          name: build-log
 
       - name: Link validation
-        run: pnpm exec tsx bin/check-link-validation/index.ts
+        if: needs.build.outputs.link_check_failed == 'true'
+        run: pnpm exec tsx bin/annotate-link-errors.ts build.log
 
   notify:
     name: Notify
@@ -267,20 +287,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm exec tsx bin/post-pr-ci-failure-comment/index.ts
-
-      - name: Download link validation report
-        if: needs.build.outputs.link_validation_failed == 'true' && github.event.pull_request.head.repo.full_name == github.repository
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: link-validation-report
-          path: .starlight-links-validator
-
-      - name: Post link validation comment
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm exec tsx bin/post-link-validation-comment/index.ts
 
   publish-preview:
     name: Deploy Preview
